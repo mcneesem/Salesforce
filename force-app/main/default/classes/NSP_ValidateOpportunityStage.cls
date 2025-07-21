@@ -22,7 +22,6 @@ public with sharing class NSP_ValidateOpportunityStage {
     public static List<string> nonOwnerBasedCriteriaProducts = System.Label.NSP_NonOwnerBasedCriteriaProducts.split(',');
     public static List<string> closeLostRoleinOpportunityTeam = System.Label.Close_Lost_Role_in_Opportunity_Team.split(',');
     public static List<Opportunity_Stage_Validation__mdt> optyStageVals = Opportunity_Stage_Validation__mdt.getAll().values();
-    public static Map<String, String> opptyBidStatus = retrieveFieldPicklistValues(Opportunity.NSP_Bid_Status__c);
     private static Boolean hasAllowClosedLostPermission = CustomPermissionController.checkUserPermission( 'Allow_Closed_Lost_Opportunity' , UserInfo.getUserId() );
     private static Boolean hasCLSOOppOwnerPermission = CustomPermissionController.checkUserPermission( 'Opportunity_Closed_Lost_SO_Opp_Owner' , UserInfo.getUserId() );
     private static Boolean hasCLSOOppPermission = CustomPermissionController.checkUserPermission( 'Opportunity_Closed_Lost_SO_Opp' , UserInfo.getUserId() );
@@ -57,14 +56,13 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
         Map<Id,User> opportunityOwnerRoleMap = getUserRole( oppOwnerIdList ); 
 
-        if( !OpportunityStageSettings__c.getInstance(UserInfo.getUserId()).Is_Enabled_WO_WS_Stage_Entry__c ){// Kill switch added on 6/10/2024
+        if( !OpportunityStageSettings__c.getInstance(UserInfo.getUserId()).Is_Enabled_WO_WS_Stage_Entry__c ){ // Kill switch added on 6/10/2024
             validateOpportunityStageOld(newList, opportunityOwnerRoleMap);
         } else if( (newList != null) && !newList.isEmpty() ){
             Map<ID, Opportunity> oppEventTaskOCRMap = new Map<ID, Opportunity>(
                                     [ SELECT AccountId , Id , 
                                         (SELECT Id , Status , NSP_Task_Type__c , Subject 
-                                            FROM Tasks WHERE NSP_Task_Type__c != NULL),
-                                            //FROM Tasks WHERE CreatedBy.ProfileId =: NSP_ValidateOpportunityStage.integUserProfileId AND NSP_Task_Type__c != NULL),
+                                            FROM Tasks WHERE CreatedBy.ProfileId =: NSP_ValidateOpportunityStage.integUserProfileId AND NSP_Task_Type__c != NULL),
                                         (SELECT Id , NSP_Event_Subtype__c , NSP_Method__c , NSP_Status__c 
                                             FROM Events WHERE NSP_Event_Subtype__c != NULL AND NSP_Status__c != :NSP_SalesConstants.Cancelled),
                                         (SELECT Id 
@@ -141,24 +139,24 @@ public with sharing class NSP_ValidateOpportunityStage {
 
     private static void evaluateSingleCriteria(Opportunity opp, Map<String,List<SObject>> relatedObjectMap, List<Opportunity_Stage_Validation__mdt> currentOptyStageVals){
         Integer passCheckCount = 0;
-        for(Opportunity_Stage_Validation__mdt currentOptyStageVal : currentOptyStageVals){
-            if( currentOptyStageVal.Object__c == OPPORTUNITY_OBJ && String.isBlank(currentOptyStageVal.Group__c) ){
-                if( !checkCondition(opp.get(currentOptyStageVal.Field__c), currentOptyStageVal.Value__c, currentOptyStageVal.Operation__c) ){
-                    opp.addError(currentOptyStageVal.Error_Message__c);
+        for(Opportunity_Stage_Validation__mdt val : currentOptyStageVals){     
+            if( val.Object__c == OPPORTUNITY_OBJ && String.isBlank(val.Group__c) ){
+                if( !checkCondition(val.Object__c , val.Field__c, opp.get(val.Field__c) , val.Value__c , val.Operation__c) ){
+                    opp.addError(val.Error_Message__c);
                 }
-            } else if( String.isBlank(currentOptyStageVal.Group__c) ){ // check any related objects
-                passCheckCount = evaluateRelatedObjCriteria( currentOptyStageVal , relatedObjectMap );
+            } else if( String.isBlank(val.Group__c) ){ // check any related objects
+                passCheckCount = evaluateRelatedObjCriteria( val , relatedObjectMap );
                 if( passCheckCount < 1 ){
-                    opp.addError(currentOptyStageVal.Error_Message__c);
+                    opp.addError(val.Error_Message__c);
                 }
             }
         }
     }
 
-    private static Integer evaluateRelatedObjCriteria( Opportunity_Stage_Validation__mdt currentOptyStageVal , Map<String,List<SObject>> relatedObjectMap ){
+    private static Integer evaluateRelatedObjCriteria( Opportunity_Stage_Validation__mdt val , Map<String,List<SObject>> relatedObjectMap ){
         Integer passCheckCount = 0;
-        for( SObject relatedObject : relatedObjectMap.get(currentOptyStageVal.Object__c) ){
-            if( checkCondition(relatedObject.get(currentOptyStageVal.Field__c), currentOptyStageVal.Value__c, currentOptyStageVal.Operation__c) ){
+        for( SObject relatedObject : relatedObjectMap.get(val.Object__c) ){
+            if( checkCondition(val.Object__c , val.Field__c , relatedObject.get(val.Field__c) , val.Value__c , val.Operation__c) ){
                 passCheckCount++;
             }
         }
@@ -168,14 +166,18 @@ public with sharing class NSP_ValidateOpportunityStage {
     private static void evaluateGroupedCriteria(Opportunity opp, Map<String,List<SObject>> relatedObjectMap, Map<String, List<Opportunity_Stage_Validation__mdt>> groupedStageValMap){
         for( String groupName : groupedStageValMap.keySet() ){
             Boolean passCheck = false;
+            Boolean passCheckDNE = true;
             String groupRelatedObjName = getGroupRelatedObjName( groupName , groupedStageValMap );
             for( SObject relatedObject : relatedObjectMap.get(groupRelatedObjName) ){
                 Integer passCheckCount = evaluateOneCriteriaGroup( opp, groupName , relatedObject, groupedStageValMap );
                 if( passCheckCount >= groupedStageValMap.get(groupName).size() ){
                     passCheck = true;
                 }
+                if( passCheckCount == 99 ){ // when one record violates DOES NOT EXIST case
+                    passCheckDNE = false;
+                }
             }
-            if( !passCheck ){
+            if( !passCheck || !passCheckDNE ){
                 opp.addError(groupedStageValMap.get(groupName)[0].Error_Message__c);
             }
         }
@@ -184,24 +186,27 @@ public with sharing class NSP_ValidateOpportunityStage {
     public static Integer evaluateOneCriteriaGroup( Opportunity opp , String groupName , SObject relatedObject, Map<String, List<Opportunity_Stage_Validation__mdt>> groupedStageValMap ){
         Integer passCheckCount = 0;
         String groupCheckType = '';
-        for( Opportunity_Stage_Validation__mdt groupOptyStageVal : groupedStageValMap.get(groupName) ){
+        for( Opportunity_Stage_Validation__mdt val : groupedStageValMap.get(groupName) ){
             Object valFieldValue = null;
-            if( groupOptyStageVal.Operation__c == Operator.DOES_NOT_EXIST.name() ){
+            if( val.Operation__c == Operator.DOES_NOT_EXIST.name() ){
                 groupCheckType = Operator.DOES_NOT_EXIST.name();
-            } else if( groupOptyStageVal.Object__c == OPPORTUNITY_OBJ ){
-                valFieldValue = opp.get(groupOptyStageVal.Field__c);
+            } else if( val.Object__c == OPPORTUNITY_OBJ ){
+                valFieldValue = opp.get(val.Field__c);
             } else {
-                valFieldValue = relatedObject.get(groupOptyStageVal.Field__c);
+                valFieldValue = relatedObject.get(val.Field__c);
             }
-
-            if( (checkCondition(valFieldValue , groupOptyStageVal.Value__c , groupOptyStageVal.Operation__c))
-             || (groupCheckType == Operator.DOES_NOT_EXIST.name()) )
+            if( checkCondition(val.Object__c , val.Field__c , valFieldValue , val.Value__c , val.Operation__c) )
             {
                 passCheckCount++;
             }
         }
-        if( groupCheckType == Operator.DOES_NOT_EXIST.name() && passCheckCount >= groupedStageValMap.get(groupName).size() ){
-            passCheckCount = 0; // if record exists that should not, return 0 to trip error message
+        if( groupCheckType != Operator.DOES_NOT_EXIST.name() ){
+            return passCheckCount;
+        }
+        if( passCheckCount >= (groupedStageValMap.get(groupName).size() - 1) ){
+            passCheckCount = 99; // if record exists that should not, return 99 to trip error message
+        } else {
+            passCheckCount = groupedStageValMap.get(groupName).size(); // if not all criteria met, make sure error message is skipped
         }
         return passCheckCount;
     }
@@ -223,7 +228,8 @@ public with sharing class NSP_ValidateOpportunityStage {
                primProduct = ( NSP_ValidateOpportunityStage.namedProducts.CONTAINS(primProduct) ) ? primProduct : DEFAULT_PRODUCT; // treat unmatched Product as Default
 
         for(Opportunity_Stage_Validation__mdt optyStageVal : optyStageVals){
-            List<String> valPrimProducts = optyStageVal.Primary_Product__c.split(',');
+            String valPrimProductValues = getValueByLabel( 'Opportunity' , 'NSP_PrimaryProduct__c' , optyStageVal.Primary_Product__c );
+            List<String> valPrimProducts = valPrimProductValues.split(',');
             if( optyStageVal.IsActive__c && valPrimProducts.CONTAINS(primProduct) && optyStageVal.Stage__c == opp.StageName ){
                 currentOptyStageVals.add(optyStageVal);
             }
@@ -714,72 +720,98 @@ public with sharing class NSP_ValidateOpportunityStage {
         );
         return userMap;
     }
+
+    public static String getValueByLabel( String objectName , String fieldName , String ruleValue ) {
+        Map<String, String> fieldPicklistValues = retrieveFieldPicklistValuesByLabel( objectName , fieldName );
+        String ruleValueByLabel = '';
+        if ( String.isBlank(ruleValue) || String.isBlank(ruleValue) || fieldPicklistValues == null || fieldPicklistValues.isEmpty() ) {
+            return ruleValue;
+        }
+        Set<String> ruleValueSet = new Set<String>(String.valueOf(ruleValue).split(','));
+        for ( String ruleValueItem : ruleValueSet ) {
+            if ( fieldPicklistValues.containsKey( String.valueOf(ruleValueItem) ) ) {
+                ruleValueByLabel += ',' + fieldPicklistValues.get( String.valueOf(ruleValueItem) );
+            }
+        }
+        ruleValueByLabel = ruleValueByLabel.removeStart(',');
+        return ruleValueByLabel;
+    }
     
-    private static Map<String, String> retrieveFieldPicklistValues(Schema.sObjectField field) {
+    private static Map<String, String> retrieveFieldPicklistValuesByLabel( String objectName , String fieldName ) {
         Map<String, String> fieldPicklistValues = new Map<String, String>();
-        if(field != null)
-        {
-            for(Schema.PicklistEntry sp : field.getDescribe().getPicklistValues()) {
-                fieldPicklistValues.put(sp.getValue(), sp.getLabel());
+        Schema.SObjectType objType = Schema.getGlobalDescribe().get(objectName);
+        if (objType == null) {
+            return fieldPicklistValues;
+        }
+        Schema.DescribeSObjectResult objDescribe = objType.getDescribe();
+        Map<String, Schema.SObjectField> fieldMap = objDescribe.fields.getMap();
+        if (fieldMap.containsKey(fieldName.toLowerCase())) {
+            Schema.DescribeFieldResult fieldDescribe = fieldMap.get(fieldName.toLowerCase()).getDescribe();
+            if ( fieldDescribe.getType() == Schema.DisplayType.PICKLIST || fieldDescribe.getType() == Schema.DisplayType.MULTIPICKLIST ){
+                for( Schema.PicklistEntry sp : fieldMap.get(fieldName.toLowerCase()).getDescribe().getPicklistValues() ) {
+                    fieldPicklistValues.put( sp.getLabel() , sp.getValue() );
+                }
             }
         }
         return fieldPicklistValues;
     }
 
-    public static Boolean checkCondition(Object fieldValue, String ruleValue, String operation){
-        if (fieldValue instanceOf Date) {
-            Date ruleValueDate = null;
-            if( ruleValue.indexOf('TODAY') > -1 ) {
-                ruleValueDate = Date.today();
-                return checkConditionDate( Date.valueOf(fieldValue) , ruleValueDate , operation );
-            } else if( String.isBlank(ruleValue) ){
-                return checkConditionTyped( fieldValue , ruleValueDate , operation );
+    public static Boolean checkCondition(String objName , String fieldName , Object fieldValue , String ruleValueLabel , String operation){
+        String ruleValue = getValueByLabel( objName , fieldName , ruleValueLabel );
+        if( operation == Operator.IS_BLANK.name() ){
+            return String.isBlank(String.valueOf(fieldValue)) || fieldValue == null;
+        } else if ( operation == Operator.IS_NOT_BLANK.name() ){
+            return !String.isBlank(String.valueOf(fieldValue)) && fieldValue != null;
+        } else if ( !String.isBlank(ruleValue)
+             && (operation == Operator.EQUALS.name()
+              || operation == Operator.DOES_NOT_EQUAL.name()
+              || operation == Operator.GREATER_THAN_OR_EQUALS.name()
+              || operation == Operator.LESS_THAN_OR_EQUALS.name()) ){
+            if (fieldValue instanceOf Date) {
+                Date ruleValueDate = null;
+                if( ruleValue.indexOf('TODAY') > -1 ){
+                    ruleValueDate = Date.today();
+                    return checkConditionDate( Date.valueOf(fieldValue) , ruleValueDate , operation );
+                }
+            } else if ( (fieldValue instanceOf Decimal) || (fieldValue instanceOf Double) || (fieldValue instanceOf Integer) ){
+                return checkConditionDecimal( Decimal.valueOf(String.valueOf(fieldValue)) , Decimal.valueOf(ruleValue) , operation );
+            } else if ( fieldValue instanceOf Boolean ){
+                return checkConditionBoolean( Boolean.valueOf(fieldValue) , Boolean.valueOf(ruleValue) , operation );
             }
-        } else if ( (fieldValue instanceOf Decimal) || (fieldValue instanceOf Double) || (fieldValue instanceOf Integer) ) {
-            Decimal ruleValueDecimal = null;
-            if( !String.isBlank(ruleValue) ){
-                ruleValueDecimal = Decimal.valueOf(ruleValue);
-                return checkConditionDecimal( Decimal.valueOf(String.valueOf(fieldValue)) , ruleValueDecimal , operation );
-            } else {
-                return checkConditionTyped( fieldValue , ruleValueDecimal , operation );
-            }
-        } else if (fieldValue instanceOf String) {
-            return checkConditionTyped( fieldValue , ruleValue , operation );
-        } else if (fieldValue instanceOf Boolean) {
-            Boolean ruleValueBoolean = null;
-            if( !String.isBlank(ruleValue) ){
-                ruleValueBoolean = Boolean.valueOf(ruleValue);
-            }
-            return checkConditionTyped( fieldValue , ruleValueBoolean , operation );
         }
-        return false;
+        return checkConditionString( fieldValue , ruleValue , operation );
     }
 
-    public static Boolean checkConditionTyped( Object fieldValue , Object ruleValue , String operation ) {
-        if ( operation == Operator.EQUALS.name() ){
+    public static Boolean checkConditionString( Object fieldValue , Object ruleValue , String operation ) {
+        if ( operation == Operator.EQUALS.name() ) {
             return fieldValue == ruleValue;
-        } else if ( operation == Operator.DOES_NOT_EQUAL.name() ){
+        } else if ( operation == Operator.DOES_NOT_EQUAL.name() ) {
             return fieldValue != ruleValue;
         } else if ( operation == Operator.CONTAINS.name() ){
             return fieldValue != null && String.valueOf(fieldValue).CONTAINS(String.valueOf(ruleValue));
         } else if ( operation == Operator.DOES_NOT_CONTAIN.name() ){
             return fieldValue != null && !String.valueOf(fieldValue).CONTAINS(String.valueOf(ruleValue));
         } else if ( operation == Operator.IS_IN.name() ){
-            if (fieldValue != null && !String.isBlank(String.valueOf(fieldValue)) && ruleValue != null && !String.isBlank(String.valueOf(ruleValue))) {
+            if ( ruleValue != null && !String.isBlank(String.valueOf(ruleValue)) ){
                 Set<String> ruleValueSet = new Set<String>(String.valueOf(ruleValue).split(','));
                 return ruleValueSet.CONTAINS(String.valueOf(fieldValue));
             }
             return false;
         } else if ( operation == Operator.IS_NOT_IN.name() ){
-            if (fieldValue != null && !String.isBlank(String.valueOf(fieldValue)) && ruleValue != null && !String.isBlank(String.valueOf(ruleValue))) {
+            if ( ruleValue != null && !String.isBlank(String.valueOf(ruleValue)) ){
                 Set<String> ruleValueSet = new Set<String>(String.valueOf(ruleValue).split(','));
                 return !ruleValueSet.CONTAINS(String.valueOf(fieldValue));
             }
             return true;
-        } else if ( operation == Operator.IS_BLANK.name() ){
-            return String.isBlank(String.valueOf(fieldValue)) || fieldValue == null;
-        } else if ( operation == Operator.IS_NOT_BLANK.name() ){
-            return !String.isBlank(String.valueOf(fieldValue)) && fieldValue != null;
+        }
+        return false;
+    }
+
+    public static Boolean checkConditionBoolean( Boolean fieldValue , Boolean ruleValue , String operation ){
+        if ( operation == Operator.EQUALS.name() ) {
+            return fieldValue == ruleValue;
+        } else if ( operation == Operator.DOES_NOT_EQUAL.name() ) {
+            return fieldValue != ruleValue;
         }
         return false;
     }
