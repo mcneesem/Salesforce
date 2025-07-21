@@ -544,7 +544,7 @@
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Get_IP_Email_List</name>
         <label>Get IP Email List</label>
