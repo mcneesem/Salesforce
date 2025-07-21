@@ -223,7 +223,6 @@
     <permissionSets>Account - View All, Modify All</permissionSets>
     <permissionSets>Account Management Permission Set</permissionSets>
     <permissionSets>Active Assets Report Permission</permissionSets>
-    <permissionSets>Activity Metrics C2C Integration User</permissionSets>
     <permissionSets>Advanced Approvals Admin</permissionSets>
     <permissionSets>Advanced Approvals User</permissionSets>
     <permissionSets>Advanced User Details Hire Date, Termination Date</permissionSets>
@@ -432,6 +431,8 @@
     <permissionSets>FDN User Management - User Information - Edit</permissionSets>
     <permissionSets>FDN User Management - User Information - Read</permissionSets>
     <permissionSets>FDN Workspaces - System Administration</permissionSets>
+    <permissionSets>Certinia Configurable Components</permissionSets>
+    <permissionSets>Certinia Configuration Builders</permissionSets>
     <permissionSets>FLSA Permission Set</permissionSets>
     <permissionSets>Field Service Admin License</permissionSets>
     <permissionSets>Field Service Agent License</permissionSets>
@@ -454,12 +455,14 @@
     <permissionSets>Financial Force Read Only Perm Set</permissionSets>
     <permissionSets>HVS C2C User Perm</permissionSets>
     <permissionSets>Handbook Permission Set</permissionSets>
+    <permissionSets>Highspot APEX Class controls</permissionSets>
     <permissionSets>Hosted Payment User</permissionSets>
     <permissionSets>IES e-verify &amp; Background Screening Contact Permission Set</permissionSets>
     <permissionSets>IHC - Configure Mappings</permissionSets>
     <permissionSets>IHC Concur to PSA</permissionSets>
     <permissionSets>IHC Jira to PSA</permissionSets>
     <permissionSets>ITA CQA Case</permissionSets>
+    <permissionSets>Implementation Profile (Edit)</permissionSets>
     <permissionSets>Inbox Included</permissionSets>
     <permissionSets>Inbox With Einstein Activity Capture</permissionSets>
     <permissionSets>Inbox Without Einstein Activity Capture</permissionSets>
@@ -578,6 +581,7 @@
     <permissionSets>PSA - Manage Project Tasks</permissionSets>
     <permissionSets>PSA - Manage Projects</permissionSets>
     <permissionSets>PSA - Manage Resource Requests for an Opportunity</permissionSets>
+    <permissionSets>PSA - Manage Resource Requests for a Project</permissionSets>
     <permissionSets>PSA - Manage Resources and Skills</permissionSets>
     <permissionSets>PSA - Manage Resourcing for Project Tasks</permissionSets>
     <permissionSets>PSA - Manage Self-Nominations on Work Opportunities</permissionSets>
@@ -613,6 +617,7 @@
     <permissionSets>PSA - Utilization Analytics</permissionSets>
     <permissionSets>PSA - View All Forecasts</permissionSets>
     <permissionSets>PSA - View Cost and Revenue Summary for Opportunity</permissionSets>
+    <permissionSets>PSA - View Financial Information for Project</permissionSets>
     <permissionSets>PSA - View Forecast</permissionSets>
     <permissionSets>PSA - View PSA Online Help</permissionSets>
     <permissionSets>PSA - View Project Team Schedule</permissionSets>
@@ -623,6 +628,7 @@
     <permissionSets>PSA - Workspaces - Services Billing</permissionSets>
     <permissionSets>PSA - Workspaces - Services Delivery</permissionSets>
     <permissionSets>PSA - Workspaces - Services Revenue Forecasting</permissionSets>
+    <permissionSets>PS Cloud Analytics Integration User Read Access</permissionSets>
     <permissionSets>PSA ApexLib - Batch Process</permissionSets>
     <permissionSets>PSA ApexLib - Batch Process - Read Access</permissionSets>
     <permissionSets>PSA ApexLib - Scheduler Configuration</permissionSets>
@@ -739,28 +745,42 @@
     <permissionSets>CSS</permissionSets>
     <permissionSets>Channel Operations</permissionSets>
     <permissionSets>Channel Program Manager</permissionSets>
+    <permissionSets>Contact Center Service User</permissionSets>
     <permissionSets>DA</permissionSets>
     <permissionSets>DM</permissionSets>
     <permissionSets>Data Goverance</permissionSets>
     <permissionSets>Data Science</permissionSets>
     <permissionSets>Deals</permissionSets>
+    <permissionSets>Certinia - PSA - Line Manager</permissionSets>
+    <permissionSets>Certinia - PSA - Ops Team Member</permissionSets>
+    <permissionSets>Certinia - PSA - Project Manager</permissionSets>
+    <permissionSets>Certinia - PSA - Resource</permissionSets>
+    <permissionSets>Certinia - PSA - Resource Manager</permissionSets>
+    <permissionSets>Certinia - PSA - Services Leader</permissionSets>
+    <permissionSets>Certinia - PSA - System Administrator</permissionSets>
     <permissionSets>HCM</permissionSets>
     <permissionSets>Inbound Sales</permissionSets>
+    <permissionSets>L1 Support</permissionSets>
     <permissionSets>Loyalty Program (Advisor, Manager)</permissionSets>
     <permissionSets>Marketing</permissionSets>
     <permissionSets>Mid Market Admin</permissionSets>
+    <permissionSets>Minimum Access</permissionSets>
     <permissionSets>New Client Sales Permission set Group</permissionSets>
+    <permissionSets>PEO Service User</permissionSets>
     <permissionSets>Recruiting</permissionSets>
     <permissionSets>Regional Manager</permissionSets>
     <permissionSets>Regional Team</permissionSets>
     <permissionSets>Retirement Services</permissionSets>
     <permissionSets>Retirement_Services_User</permissionSets>
     <permissionSets>SSS (Sales Support Specialist)</permissionSets>
+    <permissionSets>Sales Administrator</permissionSets>
     <permissionSets>Sales Compensation</permissionSets>
     <permissionSets>Sales Engineer</permissionSets>
     <permissionSets>Sales Engineer Manager</permissionSets>
     <permissionSets>Sales Executive</permissionSets>
     <permissionSets>Service</permissionSets>
+    <permissionSets>System Admin Lite</permissionSets>
+    <permissionSets>Team L1</permissionSets>
     <!-- END PSGs -->
     <profiles>CPQ Admin</profiles>
     <profiles>CPQ Sales User</profiles>
