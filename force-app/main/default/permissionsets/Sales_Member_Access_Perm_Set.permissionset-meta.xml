@@ -77,10 +77,6 @@
         <visible>true</visible>
     </applicationVisibilities>
     <applicationVisibilities>
-        <application>standard__OnlineSales</application>
-        <visible>true</visible>
-    </applicationVisibilities>
-    <applicationVisibilities>
         <application>standard__Sales</application>
         <visible>true</visible>
     </applicationVisibilities>
