@@ -54,14 +54,6 @@
                     </lightning-layout-item>
 
                 <lightning-layout-item size="4">
-                    <div class="slds-var-m-around_medium ">
-                        <lightning-input name="cemail" data-fname="emailAddress" class='emailAddress' type="email" label="Email address" value={cemail} 
-                        pattern="[A-Za-z0-9._\-]+@[a-z0-9.\-]+\.[a-zA-Z]{2,6}" message-when-pattern-mismatch="Please enter a valid email" disabled={disableContact} >
-                        </lightning-input>
-                    </div>
-                </lightning-layout-item>
-
-                <lightning-layout-item size="4">
                     <div class="slds-m-top_medium slds-align_absolute-center slds-p-around_medium">
 
                         <lightning-button variant="brand" label="Add" disabled={showButton} onclick={handleAddContact}>
@@ -73,8 +65,8 @@
         </template>
 <!-- Remove contact -->
             <lightning-layout>
-                <lightning-layout-item size="12">
-                    <lightning-datatable key-field="email" data={mergeObjectList} columns={columns}
+                <lightning-layout-item size="7">
+                    <lightning-datatable key-field="Id" data={mergeObjectList} columns={columns}
                         onrowaction={handleRowAction} hide-checkbox-column>
                     </lightning-datatable>
                         <div  class="slds-var-p-bottom_large" style={showErroMsg}>
