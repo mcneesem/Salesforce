@@ -3,9 +3,9 @@
     <fullName>NSP_CC_Emails__c</fullName>
     <description>STY-00711 To emails will be populated with , sperated</description>
     <encryptionScheme>None</encryptionScheme>
-    <externalId>false</externalId>
     <label>CC Emails</label>
     <length>32768</length>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>LongTextArea</type>

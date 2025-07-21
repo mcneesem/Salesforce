@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Competitor_savings_new_terms__c</fullName>
     <encryptionScheme>None</encryptionScheme>
-    <externalId>false</externalId>
     <label>Competitor savings/new terms</label>
     <length>32768</length>
     <trackFeedHistory>false</trackFeedHistory>

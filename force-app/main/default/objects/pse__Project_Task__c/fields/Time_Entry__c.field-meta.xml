@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Time_Entry__c</fullName>
-    <externalId>false</externalId>
     <label>Time Entry</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
@@ -9,7 +8,6 @@
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
-        <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
@@ -598,46 +596,64 @@
                 <label>Year-end Activities - Fid</label>
             </value>
             <value>
-                <fullName>Fiduciary</fullName>
+                <fullName>Secure 2.0 - Emerg Savings Acct</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
-                <label>Fiduciary</label>
+                <label>Secure 2.0 - Emerg Savings Acct</label>
             </value>
             <value>
-                <fullName>General Business</fullName>
+                <fullName>Secure 2.0 - Expanded Distributions</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
-                <label>General Business</label>
+                <label>Secure 2.0 - Expanded Distributions</label>
             </value>
             <value>
-                <fullName>Non Reimbursable</fullName>
+                <fullName>Secure 2.0 - Catch Up Limits by Age</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
-                <label>Non Reimbursable</label>
+                <label>Secure 2.0 - Catch Up Limits by Age</label>
             </value>
             <value>
-                <fullName>PTO</fullName>
+                <fullName>Secure 2.0 - Student Loan Matching Contribs</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
-                <label>PTO</label>
+                <label>Secure 2.0 - Student Loan Matching Contribs</label>
             </value>
             <value>
-                <fullName>Placeholder A</fullName>
+                <fullName>Secure 2.0 - ER Roth Contribs</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
-                <label>Placeholder A</label>
+                <label>Secure 2.0 - ER Roth Contribs</label>
             </value>
             <value>
-                <fullName>Placeholder B</fullName>
+                <fullName>Secure 2.0 - SIMPLE IRA/401(k) Limits</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
-                <label>Placeholder B</label>
+                <label>Secure 2.0 - SIMPLE IRA/401(k) Limits</label>
             </value>
             <value>
-                <fullName>Settlor</fullName>
+                <fullName>Secure 2.0 - Auto enroll</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
-                <label>Settlor</label>
+                <label>Secure 2.0 - Auto enroll</label>
+            </value>
+            <value>
+                <fullName>Secure 2.0 - Starter 401(k)</fullName>
+                <default>false</default>
+                <label>Secure 2.0 - Starter 401(k)</label>
+            </value>
+            <value>
+                <fullName>Secure 2.0 - Relaxed Disclosure for Unrolled ppts</fullName>
+                <default>false</default>
+                <label>Secure 2.0 - Relaxed Disclosure for Unrolled ppts</label>
+            </value>
+            <value>
+                <fullName>Secure 2.0 - RMD Changes</fullName>
+                <default>false</default>
+                <label>Secure 2.0 - RMD Changes</label>
+            </value>
+            <value>
+                <fullName>Secure 2.0 - LTPT EE Period from 3 to 2 yrs</fullName>
+                <default>false</default>
+                <label>Secure 2.0 - LTPT EE Period from 3 to 2 yrs</label>
+            </value>
+            <value>
+                <fullName>Secure 2.0 - Roth Catchup</fullName>
+                <default>false</default>
+                <label>Secure 2.0 - Roth Catchup</label>
             </value>
         </valueSetDefinition>
     </valueSet>
