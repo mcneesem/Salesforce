@@ -22,7 +22,6 @@ public with sharing class NSP_ValidateOpportunityStage {
     public static List<string> nonOwnerBasedCriteriaProducts = System.Label.NSP_NonOwnerBasedCriteriaProducts.split(',');
     public static List<string> closeLostRoleinOpportunityTeam = System.Label.Close_Lost_Role_in_Opportunity_Team.split(',');
     public static List<Opportunity_Stage_Validation__mdt> optyStageVals = Opportunity_Stage_Validation__mdt.getAll().values();
-    public static Map<String, String> opptyBidStatus = retrieveFieldPicklistValues(Opportunity.NSP_Bid_Status__c);
     private static Boolean hasAllowClosedLostPermission = CustomPermissionController.checkUserPermission( 'Allow_Closed_Lost_Opportunity' , UserInfo.getUserId() );
     private static Boolean hasCLSOOppOwnerPermission = CustomPermissionController.checkUserPermission( 'Opportunity_Closed_Lost_SO_Opp_Owner' , UserInfo.getUserId() );
     private static Boolean hasCLSOOppPermission = CustomPermissionController.checkUserPermission( 'Opportunity_Closed_Lost_SO_Opp' , UserInfo.getUserId() );
@@ -33,9 +32,7 @@ public with sharing class NSP_ValidateOpportunityStage {
     private static Boolean hasAllowCLTechnologyPerm = CustomPermissionController.checkUserPermission( 'Opportunity_Allow_Closed_Lost_Technology' , UserInfo.getUserId() );
     private static Boolean hasAllowCWNCSUserPerm = CustomPermissionController.checkUserPermission( 'Opportunity_Closed_Won_NCS_User' , UserInfo.getUserId() );
     public static final String DEFAULT_PRODUCT = 'Default';
-    public static final String ID_FIELD = 'Id';
     public static final String OPPORTUNITY_OBJ = 'Opportunity';
-    public static final String DOES_NOT_EXIST = 'Does Not Exist';
     public static final String HAS_DISCOVERY = ' has Discovery ';
     public static final String HAS_OPEN_EVENT = ' has Open Event ';
     public static final String HAS_OPEN_WO_PROP = ' has Open WO Proposal Event ';
@@ -59,7 +56,6 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
         Map<Id,User> opportunityOwnerRoleMap = getUserRole( oppOwnerIdList ); 
 
-        //  Kill switch added on 6/10/2024
         if( !OpportunityStageSettings__c.getInstance(UserInfo.getUserId()).Is_Enabled_WO_WS_Stage_Entry__c ){ // Kill switch added on 6/10/2024
             validateOpportunityStageOld(newList, opportunityOwnerRoleMap);
         } else if( (newList != null) && !newList.isEmpty() ){
@@ -87,7 +83,7 @@ public with sharing class NSP_ValidateOpportunityStage {
                                     ]);
 
             for( Opportunity opp : newList ){
-                if( String.isBlank(opp.StageName) || (hasAllowClosedLostPermission && opp.StageName.equals(NSP_SalesConstants.CLOSED_LOST)) ){
+                if( String.isBlank(opp.StageName) || (hasAllowClosedLostPermission && opp.StageName.EQUALS(NSP_SalesConstants.CLOSED_LOST)) ){
                     continue;
                 }
 
@@ -107,39 +103,35 @@ public with sharing class NSP_ValidateOpportunityStage {
                 relatedObjectMap.put('SBQQ__Quote__c' , new List<SBQQ__Quote__c>{oppQuoteMap.get(opp.Id)});
 
                 List<Opportunity_Stage_Validation__mdt> currentOptyStageVals = getCurrentOptyStageVals(opp);
-                List<Opportunity_Stage_Validation__mdt> ungroupedStageVals = getUngroupedStageVals(currentOptyStageVals);
                 Map<String, List<Opportunity_Stage_Validation__mdt>> groupedStageValMap = getGroupedStageValMap(currentOptyStageVals);
-                Boolean passCheck = false;
-                Integer passCheckCount = 0;
-                String checkType = '';
 
-                evaluateSingleCriteria(opp, relatedObjectMap, ungroupedStageVals);
+                evaluateSingleCriteria(opp, relatedObjectMap, currentOptyStageVals);
                 evaluateGroupedCriteria(opp, relatedObjectMap, groupedStageValMap);
 
                 //Analysis
-                if( opp.StageName.equals(NSP_SalesConstants.ANALYSIS_STAGE) ){//evaluate exit criteria to move to analysis stage
-                    evaluateAnalysisStageCriteria( opp , eventList , taskList );
+                if( opp.StageName.EQUALS(NSP_SalesConstants.ANALYSIS_STAGE) ){//evaluate exit criteria to move to analysis stage
+                    evaluateAnalysisStageCriteria( opp , eventList );
                 }
 
                 //Proposal
-                if( opp.StageName.equals(NSP_SalesConstants.PROPOSAL_STAGE) ){
+                if( opp.StageName.EQUALS(NSP_SalesConstants.PROPOSAL_STAGE) ){
                     evaluateQuoteCriteria( opp , oppQuoteMap );
                 }
 
                 //Closing
-                if( opp.StageName.equals( NSP_SalesConstants.CLOSING_STAGE ) ){
+                if( opp.StageName.EQUALS( NSP_SalesConstants.CLOSING_STAGE ) ){
                     evaluateClosingStageCriteria( opp );
                 }
 
                 //Closed Won
-                if( opp.StageName.equals(NSP_SalesConstants.CLOSED_WON) ){
+                if( opp.StageName.EQUALS(NSP_SalesConstants.CLOSED_WON) ){
                     //first check if primary quote is created and approved on primary products it is applicable on then check user based criteria
                     evaluateQuoteCriteria(opp , oppQuoteMap);
                     evaluateClosedWonStageCriteria( opp );
                 }
 
                 //Closed Lost
-                if( opp.StageName.equals(NSP_SalesConstants.CLOSED_LOST) ){
+                if( opp.StageName.EQUALS(NSP_SalesConstants.CLOSED_LOST) ){
                     evaluateClosedLostStageCriteria( opp , opportunityOwnerRoleMap );
                 }
             }
@@ -148,76 +140,98 @@ public with sharing class NSP_ValidateOpportunityStage {
 
     private static void evaluateSingleCriteria(Opportunity opp, Map<String,List<SObject>> relatedObjectMap, List<Opportunity_Stage_Validation__mdt> currentOptyStageVals){
         Integer passCheckCount = 0;
-        for(Opportunity_Stage_Validation__mdt currentOptyStageVal : currentOptyStageVals){
-            if( currentOptyStageVal.Object__c == OPPORTUNITY_OBJ ){
-                if( !checkCondition(opp.get(currentOptyStageVal.Field__c), currentOptyStageVal.Value__c, currentOptyStageVal.Operation__c) ){
-                    opp.addError(currentOptyStageVal.Error_Message__c);
+        for(Opportunity_Stage_Validation__mdt val : currentOptyStageVals){     
+            if( val.Object__c == OPPORTUNITY_OBJ && String.isBlank(val.Group__c) ){
+                if( !checkCondition(val.Object__c , val.Field__c, opp.get(val.Field__c) , val.Value__c , val.Operation__c) ){
+                    opp.addError(val.Error_Message__c);
                 }
-            } else if( String.isBlank(currentOptyStageVal.Group__c) ){ // check any related objects
-                passCheckCount = 0;
-                for( SObject relatedObject : relatedObjectMap.get(currentOptyStageVal.Object__c) ){
-                    if( checkCondition(relatedObject.get(currentOptyStageVal.Field__c), currentOptyStageVal.Value__c, currentOptyStageVal.Operation__c) ){
-                        passCheckCount++;
-                    }
+            } else if( String.isBlank(val.Group__c) ){ // check any related objects
+                passCheckCount = evaluateRelatedObjCriteria( val , relatedObjectMap );
+                if( passCheckCount < 1 ){
+                    opp.addError(val.Error_Message__c);
                 }
-                if( passCheckCount < 1 ) opp.addError(currentOptyStageVal.Error_Message__c);
             }
         }
     }
 
-    private static void evaluateGroupedCriteria(Opportunity opp, Map<String,List<SObject>> relatedObjectMap, Map<String, List<Opportunity_Stage_Validation__mdt>> groupedStageValMap){
-        Boolean passCheck = false;
+    private static Integer evaluateRelatedObjCriteria( Opportunity_Stage_Validation__mdt val , Map<String,List<SObject>> relatedObjectMap ){
         Integer passCheckCount = 0;
-        String checkType = '';
-        for( String groupName : groupedStageValMap.keySet() ){
-            checkType = '';
-            passCheck = false;
-            String errMsg = groupedStageValMap.get(groupName)[0].Error_Message__c;
-            String relatedObjName = '';
-            for( Opportunity_Stage_Validation__mdt groupOptyStageVal : groupedStageValMap.get(groupName) ){
-                if( groupedStageValMap.get(groupName)[0].Object__c != OPPORTUNITY_OBJ){
-                    relatedObjName = groupedStageValMap.get(groupName)[0].Object__c;
-                    break;
-                }
-            }
-            for( SObject relatedObject : relatedObjectMap.get(relatedObjName) ){
-                passCheckCount = 0;
-                for( Opportunity_Stage_Validation__mdt groupOptyStageVal : groupedStageValMap.get(groupName) ){
-                    if( groupOptyStageVal.Field__c == ID_FIELD && groupOptyStageVal.Operation__c == DOES_NOT_EXIST ){
-                        checkType = DOES_NOT_EXIST;
-                        continue;
-                    } else if( groupOptyStageVal.Object__c == OPPORTUNITY_OBJ ){ // in case criteria group is blend of Opportunity and related object
-                        // when a group contains an Opportunity object val record, it means the rest of the group only needs checking if the Opty condition is true
-                        if( checkCondition(opp.get(groupOptyStageVal.Field__c), groupOptyStageVal.Value__c, groupOptyStageVal.Operation__c) ){
-                            passCheckCount++;
-                        } else {
-                            passCheck = true;
-                            break;
-                        }
-                    } else if( checkCondition(relatedObject.get(groupOptyStageVal.Field__c), groupOptyStageVal.Value__c, groupOptyStageVal.Operation__c) ){
-                        passCheckCount++;
-                    }
-                }
-                if( checkType == DOES_NOT_EXIST && passCheckCount < groupedStageValMap.get(groupName).size() - 1 ){
-                    passCheck = true;
-                } else if( passCheckCount >= groupedStageValMap.get(groupName).size() ){
-                    passCheck = true;
-                }
-            }
-            if( !passCheck ){
-                opp.addError(errMsg);
+        for( SObject relatedObject : relatedObjectMap.get(val.Object__c) ){
+            if( checkCondition(val.Object__c , val.Field__c , relatedObject.get(val.Field__c) , val.Value__c , val.Operation__c) ){
+                passCheckCount++;
             }
         }
+        return passCheckCount;
+    }
+
+    private static void evaluateGroupedCriteria(Opportunity opp, Map<String,List<SObject>> relatedObjectMap, Map<String, List<Opportunity_Stage_Validation__mdt>> groupedStageValMap){
+        for( String groupName : groupedStageValMap.keySet() ){
+            Boolean passCheck = false;
+            Boolean passCheckDNE = true;
+            String groupRelatedObjName = getGroupRelatedObjName( groupName , groupedStageValMap );
+            for( SObject relatedObject : relatedObjectMap.get(groupRelatedObjName) ){
+                Integer passCheckCount = evaluateOneCriteriaGroup( opp, groupName , relatedObject, groupedStageValMap );
+                if( passCheckCount >= groupedStageValMap.get(groupName).size() ){
+                    passCheck = true;
+                }
+                if( passCheckCount == 99 ){ // when one record violates DOES NOT EXIST case
+                    passCheckDNE = false;
+                }
+            }
+            if( !passCheck || !passCheckDNE ){
+                opp.addError(groupedStageValMap.get(groupName)[0].Error_Message__c);
+            }
+        }
+    }
+
+    public static Integer evaluateOneCriteriaGroup( Opportunity opp , String groupName , SObject relatedObject, Map<String, List<Opportunity_Stage_Validation__mdt>> groupedStageValMap ){
+        Integer passCheckCount = 0;
+        String groupCheckType = '';
+        for( Opportunity_Stage_Validation__mdt val : groupedStageValMap.get(groupName) ){
+            Object valFieldValue = null;
+            if( val.Operation__c == Operator.DOES_NOT_EXIST.name() ){
+                groupCheckType = Operator.DOES_NOT_EXIST.name();
+            } else if( val.Object__c == OPPORTUNITY_OBJ ){
+                valFieldValue = opp.get(val.Field__c);
+            } else {
+                valFieldValue = relatedObject.get(val.Field__c);
+            }
+            if( checkCondition(val.Object__c , val.Field__c , valFieldValue , val.Value__c , val.Operation__c) )
+            {
+                passCheckCount++;
+            }
+        }
+        if( groupCheckType != Operator.DOES_NOT_EXIST.name() ){
+            return passCheckCount;
+        }
+        if( passCheckCount >= (groupedStageValMap.get(groupName).size() - 1) ){
+            passCheckCount = 99; // if record exists that should not, return 99 to trip error message
+        } else {
+            passCheckCount = groupedStageValMap.get(groupName).size(); // if not all criteria met, make sure error message is skipped
+        }
+        return passCheckCount;
+    }
+
+    public static String getGroupRelatedObjName( String groupName , Map<String, List<Opportunity_Stage_Validation__mdt>> groupedStageValMap ){
+        String groupRelatedObjName = '';
+        for( Opportunity_Stage_Validation__mdt groupOptyStageVal : groupedStageValMap.get(groupName) ){
+            if( groupedStageValMap.get(groupName)[0].Object__c != OPPORTUNITY_OBJ){ // first object name other than Opportunity
+                groupRelatedObjName = groupedStageValMap.get(groupName)[0].Object__c;
+                break;
+            }
+        }
+        return groupRelatedObjName;
     }
 
     public static List<Opportunity_Stage_Validation__mdt> getCurrentOptyStageVals(Opportunity opp){
         List<Opportunity_Stage_Validation__mdt> currentOptyStageVals = new List<Opportunity_Stage_Validation__mdt>();
         String primProduct = ( String.isNotBlank(opp.NSP_PrimaryProduct__c) ) ? opp.NSP_PrimaryProduct__c : NSP_SalesConstants.WO; // treat empty opty Product as WO
-               primProduct = ( NSP_ValidateOpportunityStage.namedProducts.contains(primProduct) ) ? primProduct : DEFAULT_PRODUCT; // treat unmatched Product as Default
+               primProduct = ( NSP_ValidateOpportunityStage.namedProducts.CONTAINS(primProduct) ) ? primProduct : DEFAULT_PRODUCT; // treat unmatched Product as Default
 
         for(Opportunity_Stage_Validation__mdt optyStageVal : optyStageVals){
-            List<String> valPrimProducts = optyStageVal.Primary_Product__c.split(',');
-            if( optyStageVal.IsActive__c && valPrimProducts.contains(primProduct) && optyStageVal.Stage__c == opp.StageName ){
+            String valPrimProductValues = getValueByLabel( 'Opportunity' , 'NSP_PrimaryProduct__c' , optyStageVal.Primary_Product__c );
+            List<String> valPrimProducts = valPrimProductValues.split(',');
+            if( optyStageVal.IsActive__c && valPrimProducts.CONTAINS(primProduct) && optyStageVal.Stage__c == opp.StageName ){
                 currentOptyStageVals.add(optyStageVal);
             }
         }
@@ -244,16 +258,6 @@ public with sharing class NSP_ValidateOpportunityStage {
         return groupedStageValMap;
     }
 
-    public static List<Opportunity_Stage_Validation__mdt> getUngroupedStageVals(List<Opportunity_Stage_Validation__mdt> currentOptyStageVals){
-        List<Opportunity_Stage_Validation__mdt> ungroupedStageVals = new List<Opportunity_Stage_Validation__mdt>();
-        for(Opportunity_Stage_Validation__mdt currentOptyStageVal : currentOptyStageVals){
-            if( String.isBlank(currentOptyStageVal.Group__c) ){
-                ungroupedStageVals.add(currentOptyStageVal);
-            }
-        }
-        return ungroupedStageVals;
-    }
-
     private static void validateOpportunityStageOld(List<Opportunity> newList, Map<Id,User> opportunityOwnerRoleMap){
         List<Id> oppIdList= new List<Id>();
         for(Opportunity opp:newList){
@@ -276,14 +280,14 @@ public with sharing class NSP_ValidateOpportunityStage {
             if(opp.StageName != null){
                 
                 //  Added 275639
-                if(FeatureManagement.checkPermission('Allow_Closed_Lost_Opportunity') && opp.StageName.equals(NSP_SalesConstants.CLOSED_LOST)){
+                if(FeatureManagement.checkPermission('Allow_Closed_Lost_Opportunity') && opp.StageName.EQUALS(NSP_SalesConstants.CLOSED_LOST)){
                     continue;
                 }
                 
                 //Analysis
-                if ( opp.StageName.equals(NSP_SalesConstants.ANALYSIS_STAGE)
-                    || opp.StageName.equals(NSP_SalesConstants.PROPOSAL_STAGE)
-                    || opp.StageName.equals(NSP_SalesConstants.CLOSING_STAGE)
+                if ( opp.StageName.EQUALS(NSP_SalesConstants.ANALYSIS_STAGE)
+                    || opp.StageName.EQUALS(NSP_SalesConstants.PROPOSAL_STAGE)
+                    || opp.StageName.EQUALS(NSP_SalesConstants.CLOSING_STAGE)
                     )
                 {
                     //add Proposal
@@ -298,16 +302,16 @@ public with sharing class NSP_ValidateOpportunityStage {
                         opp.addError(System.Label.NSP_EnterOpportunityType);
                     }
                 }
-                if(opp.StageName.equals(NSP_SalesConstants.ANALYSIS_STAGE)){//evaluate exit criteria to move to analysis stage
+                if(opp.StageName.EQUALS(NSP_SalesConstants.ANALYSIS_STAGE)){//evaluate exit criteria to move to analysis stage
                     evaluateAnalysisStageCriteriaOld(opp,eventList);
                 }
                 /////Proposal
-                if(opp.StageName.equals(NSP_SalesConstants.PROPOSAL_STAGE)){
+                if(opp.StageName.EQUALS(NSP_SalesConstants.PROPOSAL_STAGE)){
                     //Modified: Primary Quote required only for Non WO opptys, hence moved Primary Quote validation to else if block
                     //Perform WO
                     // Added WS condition as part of DF-01869
-                    if ( proposeStageCriteraTypes.contains( opp.Type )
-                        && validHRProducts.contains( opp.NSP_PrimaryProduct__c )
+                    if ( proposeStageCriteraTypes.CONTAINS( opp.Type )
+                        && validHRProducts.CONTAINS( opp.NSP_PrimaryProduct__c )
                         )
                     {
                         String scannedTask='';
@@ -326,7 +330,7 @@ public with sharing class NSP_ValidateOpportunityStage {
                             }
                         }
                         //Show error
-                        if(!scannedTask.contains(HAS_WO) ){
+                        if(!scannedTask.CONTAINS(HAS_WO) ){
                             opp.addError(System.Label.NSP_AddWOBusinessProfile);
                         }
                         if(opp.NSP_BidNumber__c == '' || opp.NSP_BidNumber__c == null){
@@ -337,15 +341,15 @@ public with sharing class NSP_ValidateOpportunityStage {
                 }
                 //CR-031 removed Executive summary check and have added BPS Products condition
                 // 205583/208335 - bypass QuoteCriteria is Fee Inclusive is checked
-                if(!opp.Fee_Inclusive__c && opp.StageName.equals(NSP_SalesConstants.CLOSING_STAGE)){
+                if(!opp.Fee_Inclusive__c && opp.StageName.EQUALS(NSP_SalesConstants.CLOSING_STAGE)){
                     if(opp.NSP_PrimaryProduct__c!=NSP_SalesConstants.WO && !opp.NSP_Bypass_Docusign_Signature__c && !opp.NSP_Order_Generated__c){
-                        if(!exitCriteriaProductException.contains(opp.NSP_PrimaryProduct__c)){
+                        if(!exitCriteriaProductException.CONTAINS(opp.NSP_PrimaryProduct__c)){
                             opp.addError(System.Label.NSP_Create_Signed_Delivery_Order);
                         } else if(opp.NSP_PrimaryProduct__c == NSP_SalesConstants.HR_CONSULTING_SERVICES && opp.NSP_Client_For_Life__c != NSP_SalesConstants.WO_WS){
                             opp.addError(System.Label.NSP_Create_Signed_Delivery_Order);
                         }
                     } else if (
-                        ( validHRProducts.contains( opp.NSP_PrimaryProduct__c ) || opp.NSP_Order_Generated__c )
+                        ( validHRProducts.CONTAINS( opp.NSP_PrimaryProduct__c ) || opp.NSP_Order_Generated__c )
                         && !opp.NSP_Closing_Appointment__c
                         )
                     {
@@ -353,42 +357,38 @@ public with sharing class NSP_ValidateOpportunityStage {
                     }
                 }
                 //closed-won criteria CR-031
-                if(opp.StageName.equals(NSP_SalesConstants.CLOSED_WON)){//evaluate criteria to move to closed won stage
+                if(opp.StageName.EQUALS(NSP_SalesConstants.CLOSED_WON)){//evaluate criteria to move to closed won stage
                     //first check if primary quote is created and approved on primary products it is applicable on then check user based criteria
                     evaluateQuoteCriteria(opp,quoteMap);
                     evaluateClosedWonStageCriteriaOld(opp);
                 }
                 //closed-Lost criteria DF-1769
-                if(opp.StageName.equals(NSP_SalesConstants.CLOSED_LOST)){//evaluate criteria to move to closed lost stage
+                if(opp.StageName.EQUALS(NSP_SalesConstants.CLOSED_LOST)){//evaluate criteria to move to closed lost stage
                     evaluateClosedLostStageCriteria(opp, opportunityOwnerRoleMap);
                 }
             }
         }
     }
 
-    private static void evaluateAnalysisStageCriteria(Opportunity opp, List<Event> eventList, List<Task> taskList){
+    private static void evaluateAnalysisStageCriteria( Opportunity opp, List<Event> eventList ){
         String scannedTask='';
-        String evalTaskMsg='';
-        if( analysisStageCriteraTypes.contains(opp.Type)
+        if( analysisStageCriteraTypes.CONTAINS(opp.Type)
             && (opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WX || opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WA) ){
-            
-            if(eventList!=null){
-                for(Event event:eventList){////looking for discovery
-                    if(event.NSP_Event_Subtype__c == NSP_SalesConstants.DISCOVERY_CALL_ACTIVITY &&
-                    event.NSP_Status__c !=NSP_SalesConstants.Cancelled){
-                        scannedTask += HAS_DISCOVERY;
-                        if(event.NSP_Status__c !=NSP_SalesConstants.DISCOVERY_CALL_COMPLETED){
-                            scannedTask += HAS_OPEN_EVENT;
-                        }
+
+            for(Event event:eventList){ // looking for Discovery Call
+                if( event.NSP_Event_Subtype__c == NSP_SalesConstants.DISCOVERY_CALL_ACTIVITY ){
+                    scannedTask += HAS_DISCOVERY;
+                    if( event.NSP_Status__c != NSP_SalesConstants.DISCOVERY_CALL_COMPLETED ){
+                        scannedTask += HAS_OPEN_EVENT;
                     }
                 }
             }
             
             //Show error
-            if(!scannedTask.contains(HAS_DISCOVERY)){
+            if(!scannedTask.CONTAINS(HAS_DISCOVERY)){
                 opp.addError(System.Label.NSP_AddDiscoveryCalls);
             }
-            if(scannedTask.contains(HAS_OPEN_EVENT)){
+            if(scannedTask.CONTAINS(HAS_OPEN_EVENT)){
                 opp.addError(System.Label.NSP_CloseDiscoveryCallEvents);
             }
         }
@@ -396,9 +396,9 @@ public with sharing class NSP_ValidateOpportunityStage {
 
     private static void evaluateAnalysisStageCriteriaOld( Opportunity opp , List<Event> eventList ) {
         String scannedTask='';
-        if ( validHRProducts.contains( opp.NSP_PrimaryProduct__c )
+        if ( validHRProducts.CONTAINS( opp.NSP_PrimaryProduct__c )
             || (
-                analysisStageCriteraTypes.contains( opp.Type )
+                analysisStageCriteraTypes.CONTAINS( opp.Type )
                 && (
                     ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WX )
                     || ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WA )
@@ -419,10 +419,10 @@ public with sharing class NSP_ValidateOpportunityStage {
             }
             
             //Show error
-            if(!scannedTask.contains(HAS_DISCOVERY)){
+            if(!scannedTask.CONTAINS(HAS_DISCOVERY)){
                 opp.addError(System.Label.NSP_AddDiscoveryCalls);
             }
-            if(scannedTask.contains(HAS_OPEN_EVENT)){
+            if(scannedTask.CONTAINS(HAS_OPEN_EVENT)){
                 opp.addError(System.Label.NSP_CloseDiscoveryCallEvents);
             }
         }
@@ -438,14 +438,14 @@ public with sharing class NSP_ValidateOpportunityStage {
         try {
             // 205583/208335 - bypass QuoteCriteria is Fee Inclusive is checked
             if ( !opp.Fee_Inclusive__c
-                && !validHRProducts.contains( opp.NSP_PrimaryProduct__c )
+                && !validHRProducts.CONTAINS( opp.NSP_PrimaryProduct__c )
                 )
             {
                 SBQQ__Quote__c primaryQuote = null;
                 if ( quoteMap != null ) {
                     primaryQuote = quoteMap.get( opp.SBQQ__PrimaryQuote__c ); // prevent NullPointerExceptions...
                 }
-                if ( exitCriteriaProductException.contains( opp.NSP_PrimaryProduct__c ) ) {
+                if ( exitCriteriaProductException.CONTAINS( opp.NSP_PrimaryProduct__c ) ) {
                     if ( ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.HR_CONSULTING_SERVICES )
                         && ( opp.NSP_Client_For_Life__c != NSP_SalesConstants.WO_WS )
                         )
@@ -455,7 +455,7 @@ public with sharing class NSP_ValidateOpportunityStage {
                                 if ( primaryQuote.SBQQ__Status__c != NSP_SalesConstants.APPROVAL_STATUS_APPROVED ) {
                                     opp.addError(System.Label.NSP_Approve_Primary_Quote);
                                 } else if ( !test.isRunningTest()
-                                    && opp.StageName.equals( NSP_SalesConstants.CLOSED_WON )
+                                    && opp.StageName.EQUALS( NSP_SalesConstants.CLOSED_WON )
                                     && ( ( opp.NSP_PrimaryProduct__c != primaryQuote.NSP_Opportunity_Primary_Product__c ) || ( opp.NSP_Client_For_Life__c != primaryQuote.NSP_Client_For_Life__c ) )
                                     )
                                 {
@@ -474,7 +474,7 @@ public with sharing class NSP_ValidateOpportunityStage {
                             if ( primaryQuote.SBQQ__Status__c != NSP_SalesConstants.APPROVAL_STATUS_APPROVED ) {
                                 opp.addError( System.Label.NSP_Approve_Primary_Quote );
                             } else if ( !test.isRunningTest()
-                                && opp.StageName.equals( NSP_SalesConstants.CLOSED_WON )
+                                && opp.StageName.EQUALS( NSP_SalesConstants.CLOSED_WON )
                                 && ( ( opp.NSP_PrimaryProduct__c != primaryQuote.NSP_Opportunity_Primary_Product__c ) || ( opp.NSP_Client_For_Life__c != primaryQuote.NSP_Client_For_Life__c ) )
                                 )
                             {
@@ -507,12 +507,12 @@ public with sharing class NSP_ValidateOpportunityStage {
     private static void evaluateClosingStageCriteria( Opportunity opp ) {
         if ( !opp.Fee_Inclusive__c )
         {
-            if ( !validHRProducts.contains( opp.NSP_PrimaryProduct__c )
+            if ( !validHRProducts.CONTAINS( opp.NSP_PrimaryProduct__c )
                 && !opp.NSP_Bypass_Docusign_Signature__c
                 && !opp.NSP_Order_Generated__c
                 )
             {
-                if ( !exitCriteriaProductException.contains( opp.NSP_PrimaryProduct__c ) ) {
+                if ( !exitCriteriaProductException.CONTAINS( opp.NSP_PrimaryProduct__c ) ) {
                     opp.addError( System.Label.NSP_Create_Signed_Delivery_Order );
                 } else if ( ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.HR_CONSULTING_SERVICES )
                             && ( opp.NSP_Client_For_Life__c != NSP_SalesConstants.WO_WS )
@@ -521,7 +521,7 @@ public with sharing class NSP_ValidateOpportunityStage {
                     opp.addError( System.Label.NSP_Create_Signed_Delivery_Order );
                 }
             } else if ( !opp.NSP_Closing_Appointment__c
-                        && ( validHRProducts.contains(opp.NSP_PrimaryProduct__c) || opp.NSP_Order_Generated__c )
+                        && ( validHRProducts.CONTAINS(opp.NSP_PrimaryProduct__c) || opp.NSP_Order_Generated__c )
                       )
             {
                 opp.addError(System.Label.NSP_WO_Closing_Appointment_or_Docusign);
@@ -530,28 +530,27 @@ public with sharing class NSP_ValidateOpportunityStage {
     }
  
     private static void evaluateClosedWonStageCriteria( Opportunity opp ) {
-        String scannedSTP = '';
-        if ( NSP_ValidateOpportunityStage.permittedCWOppOwnerUserMap.containsKey( opp.OwnerId )
+        if ( NSP_ValidateOpportunityStage.permittedCWOppOwnerUserMap.CONTAINSKey( opp.OwnerId )
             && ( !hasAllowCWNCSUserPerm )
-            && ownerBasedCriteriaProducts.contains( opp.NSP_PrimaryProduct__c )
+            && ownerBasedCriteriaProducts.CONTAINS( opp.NSP_PrimaryProduct__c )
             )
         {
             opp.addError( System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON );
-        } else if ( nonOwnerBasedCriteriaProducts.contains( opp.NSP_PrimaryProduct__c )
+        } else if ( nonOwnerBasedCriteriaProducts.CONTAINS( opp.NSP_PrimaryProduct__c )
             && ( UserInfo.getUserId() != opp.OwnerId )
             && ( !hasAllowCWNCSUserPerm )
             )
         {
             opp.addError( System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON );
-        } else if ( ownerBasedCriteriaProducts.contains( opp.NSP_PrimaryProduct__c )
-            && !NSP_ValidateOpportunityStage.permittedCWOppOwnerUserMap.containsKey( opp.OwnerId )
+        } else if ( ownerBasedCriteriaProducts.CONTAINS( opp.NSP_PrimaryProduct__c )
+            && !NSP_ValidateOpportunityStage.permittedCWOppOwnerUserMap.CONTAINSKey( opp.OwnerId )
             && ( UserInfo.getUserId() != opp.OwnerId )
             && ( !hasAllowCWNCSUserPerm )
             )
         {
             opp.addError( System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON );
         } else if ( !hasAllowCWNCSUserPerm
-            && validHRProducts.contains( opp.NSP_PrimaryProduct__c )
+            && validHRProducts.CONTAINS( opp.NSP_PrimaryProduct__c )
             )
         {
             opp.addError( System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON );
@@ -559,27 +558,27 @@ public with sharing class NSP_ValidateOpportunityStage {
     }
 
     private static void evaluateClosedWonStageCriteriaOld( Opportunity opp ) {
-        if ( ownerBasedCriteriaProducts.contains(opp.NSP_PrimaryProduct__c)
+        if ( ownerBasedCriteriaProducts.CONTAINS(opp.NSP_PrimaryProduct__c)
             && !hasAllowCWNCSUserPerm
-            && NSP_ValidateOpportunityStage.permittedCWOppOwnerUserMap.containsKey( opp.OwnerId )
+            && NSP_ValidateOpportunityStage.permittedCWOppOwnerUserMap.CONTAINSKey( opp.OwnerId )
             )
         {
             opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON);
-        } else if ( nonOwnerBasedCriteriaProducts.contains(opp.NSP_PrimaryProduct__c)
+        } else if ( nonOwnerBasedCriteriaProducts.CONTAINS(opp.NSP_PrimaryProduct__c)
             && ( UserInfo.getUserId() != opp.OwnerId )
             && !hasAllowCWNCSUserPerm
             )
         {
             opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON);
-        } else if ( ownerBasedCriteriaProducts.contains(opp.NSP_PrimaryProduct__c)
+        } else if ( ownerBasedCriteriaProducts.CONTAINS(opp.NSP_PrimaryProduct__c)
             && !hasAllowCWNCSUserPerm
-            && !NSP_ValidateOpportunityStage.permittedCWOppOwnerUserMap.containsKey( opp.OwnerId )
+            && !NSP_ValidateOpportunityStage.permittedCWOppOwnerUserMap.CONTAINSKey( opp.OwnerId )
             && ( UserInfo.getUserId() != opp.OwnerId )
             )
         {
             opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON);
         } else if ( !hasAllowCWNCSUserPerm
-            && validHRProducts.contains( opp.NSP_PrimaryProduct__c )
+            && validHRProducts.CONTAINS( opp.NSP_PrimaryProduct__c )
             )
         {
             opp.AddError( System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON );
@@ -598,7 +597,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         List<String> salesOfficeList = new List<String>();
         if ( ( oppSalesOfficeMap != null )
             && !oppSalesOfficeMap.isEmpty()
-            && oppSalesOfficeMap.containsKey( opp.Id )
+            && oppSalesOfficeMap.CONTAINSKey( opp.Id )
             )
         {
             Opportunity check = oppSalesOfficeMap.get( opp.Id );
@@ -612,7 +611,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         
         //Added for 579280
         String opportunitySalesOffMemb = null;
-        if ( opportunityOwnerRoleMap.containsKey( opp.OwnerId ) ) {
+        if ( opportunityOwnerRoleMap.CONTAINSKey( opp.OwnerId ) ) {
             User opportunityOwner = opportunityOwnerRoleMap.get( opp.OwnerId );
             if ( opportunityOwner != null ) {
                 opportunitySalesOffMemb = opportunityOwner.NSP_Sales_Office_Membership__c;
@@ -650,7 +649,7 @@ public with sharing class NSP_ValidateOpportunityStage {
             canCloseLost++;
         } else if( opp.ownerid == UserInfo.getUserId() ){
             canCloseLost++;
-        } else if( teamMemberList.contains(UserInfo.getUserId()) ){
+        } else if( teamMemberList.CONTAINS(UserInfo.getUserId()) ){
             canCloseLost++;
         } else if( ( opp.NSP_Account_Segment__c == NSP_SalesConstants.MIDMARKET_SALES )
              && hasAllowCLMMPerm ){
@@ -668,27 +667,27 @@ public with sharing class NSP_ValidateOpportunityStage {
 
     private static Integer checkProductAllowClosedLost( Opportunity opp ) {
         Integer canCloseLost = 0;
-        if ( NSP_ValidateOpportunityStage.permittedBPCUserMap.containsKey( opp.OwnerId )
+        if ( NSP_ValidateOpportunityStage.permittedBPCUserMap.CONTAINSKey( opp.OwnerId )
             && hasAllowCLMMPerm
             )
         {
             canCloseLost++;
-        } else if ( NSP_ValidateOpportunityStage.permittedRETSCUserMap.containsKey( opp.OwnerId )
+        } else if ( NSP_ValidateOpportunityStage.permittedRETSCUserMap.CONTAINSKey( opp.OwnerId )
             && hasAllowCLRETPerm
             )
         {
             canCloseLost++;
-        } else if ( NSP_ValidateOpportunityStage.permittedInsSalesUserMap.containsKey( opp.OwnerId )
+        } else if ( NSP_ValidateOpportunityStage.permittedInsSalesUserMap.CONTAINSKey( opp.OwnerId )
             && hasAllowCLInsurancePerm
             )
         {
             canCloseLost++;
-        } else if ( NSP_ValidateOpportunityStage.permittedRecSalesUserMap.containsKey( opp.OwnerId )
+        } else if ( NSP_ValidateOpportunityStage.permittedRecSalesUserMap.CONTAINSKey( opp.OwnerId )
             && hasAllowCLRecruitingPerm
             )
         {
             canCloseLost++;
-        } else if ( NSP_ValidateOpportunityStage.permittedTechSalesUserMap.containsKey( opp.OwnerId )
+        } else if ( NSP_ValidateOpportunityStage.permittedTechSalesUserMap.CONTAINSKey( opp.OwnerId )
             && hasAllowCLTechnologyPerm
             )
         {
@@ -722,177 +721,128 @@ public with sharing class NSP_ValidateOpportunityStage {
         );
         return userMap;
     }
+
+    public static String getValueByLabel( String objectName , String fieldName , String ruleValue ) {
+        Map<String, String> fieldPicklistValues = retrieveFieldPicklistValuesByLabel( objectName , fieldName );
+        String ruleValueByLabel = '';
+        if ( String.isBlank(ruleValue) || String.isBlank(ruleValue) || fieldPicklistValues == null || fieldPicklistValues.isEmpty() ) {
+            return ruleValue;
+        }
+        Set<String> ruleValueSet = new Set<String>(String.valueOf(ruleValue).split(','));
+        for ( String ruleValueItem : ruleValueSet ) {
+            if ( fieldPicklistValues.containsKey( String.valueOf(ruleValueItem) ) ) {
+                ruleValueByLabel += ',' + fieldPicklistValues.get( String.valueOf(ruleValueItem) );
+            }
+        }
+        ruleValueByLabel = ruleValueByLabel.removeStart(',');
+        return ruleValueByLabel;
+    }
     
-    private static Map<String, String> retrieveFieldPicklistValues(Schema.sObjectField field) {
+    private static Map<String, String> retrieveFieldPicklistValuesByLabel( String objectName , String fieldName ) {
         Map<String, String> fieldPicklistValues = new Map<String, String>();
-        if(field != null)
-        {
-            for(Schema.PicklistEntry sp : field.getDescribe().getPicklistValues()) {
-                fieldPicklistValues.put(sp.getValue(), sp.getLabel());
+        Schema.SObjectType objType = Schema.getGlobalDescribe().get(objectName);
+        if (objType == null) {
+            return fieldPicklistValues;
+        }
+        Schema.DescribeSObjectResult objDescribe = objType.getDescribe();
+        Map<String, Schema.SObjectField> fieldMap = objDescribe.fields.getMap();
+        if (fieldMap.containsKey(fieldName.toLowerCase())) {
+            Schema.DescribeFieldResult fieldDescribe = fieldMap.get(fieldName.toLowerCase()).getDescribe();
+            if ( fieldDescribe.getType() == Schema.DisplayType.PICKLIST || fieldDescribe.getType() == Schema.DisplayType.MULTIPICKLIST ){
+                for( Schema.PicklistEntry sp : fieldMap.get(fieldName.toLowerCase()).getDescribe().getPicklistValues() ) {
+                    fieldPicklistValues.put( sp.getLabel() , sp.getValue() );
+                }
             }
         }
         return fieldPicklistValues;
     }
 
-    public static Boolean checkCondition(Object fieldValue, String ruleValue, String operation){
-        if (fieldValue instanceOf Date) {
-            Date ruleValueDate = null;
-            if( ruleValue == null || String.isBlank(ruleValue) ){
-                ruleValueDate = ruleValueDate;
-            } else if( ruleValue.indexOf('TODAY') > -1 ) {
-                ruleValueDate = Date.today();
-            } else if( ruleValue.indexOf('TOMORROW') > -1 ) {
-                ruleValueDate = Date.today().addDays(1);
-            } else if( ruleValue.indexOf('YESTERDAY') > -1 ) {
-                ruleValueDate = Date.today().addDays(-1);
-            }
-            return checkConditionTyped(Date.valueOf(fieldValue), ruleValueDate, operation);
-        } else if (fieldValue instanceOf Double) {
-            Double ruleValueDouble = null;
-            if( !String.isBlank(ruleValue) ){
-                ruleValueDouble = Double.valueOf(ruleValue);
-            }
-            return checkConditionTyped(Double.valueOf(fieldValue), ruleValueDouble, operation);
-        } else if (fieldValue instanceOf Integer) {
-            Integer ruleValueInteger = null;
-            if( !String.isBlank(ruleValue) ){
-                ruleValueInteger = Integer.valueOf(ruleValue);
-            }
-            return checkConditionTyped(Integer.valueOf(fieldValue), ruleValueInteger, operation);
-        } else if (fieldValue instanceOf String) {
-            return checkConditionTyped(String.valueOf(fieldValue), ruleValue, operation);
-        } else if (fieldValue instanceOf Boolean) {
-            Boolean ruleValueBoolean = null;
-            if( !String.isBlank(ruleValue) ){
-                ruleValueBoolean = Boolean.valueOf(ruleValue);
-            }
-            return checkConditionTyped(Boolean.valueOf(fieldValue), ruleValueBoolean, operation);
-        }
-        return false;
-    }
-
-    public static Boolean checkConditionTyped(Date fieldValue, Date ruleValue, String operation){
-        switch on operation {
-            when 'Equals' {
-                return fieldValue == ruleValue;
-            }
-            when 'Does Not Equal' {
-                return fieldValue != ruleValue;
-            }
-            when 'Greater Than or Equals' {
-                return fieldValue != null && !String.isBlank(String.valueOf(fieldValue)) && fieldValue >= ruleValue;
-            }
-            when 'Less Than or Equals' {
-                return fieldValue != null && !String.isBlank(String.valueOf(fieldValue)) && fieldValue <= ruleValue;
-            }
-            when 'Is Blank' {
-                return fieldValue == null || String.isBlank(String.valueOf(fieldValue));
-            }
-            when 'Is Not Blank' {
-                return fieldValue != null && !String.isBlank(String.valueOf(fieldValue));
-            }
-        }
-        return false;
-    }
-
-    public static Boolean checkConditionTyped(Double fieldValue, Double ruleValue, String operation){
-        switch on operation {
-            when 'Equals' {
-                return fieldValue == ruleValue;
-            }
-            when 'Does Not Equal' {
-                return fieldValue != ruleValue;
-            }
-            when 'Greater Than or Equals' {
-                return fieldValue != null && !String.isBlank(String.valueOf(fieldValue)) && fieldValue >= ruleValue;
-            }
-            when 'Less Than or Equals' {
-                return fieldValue != null && !String.isBlank(String.valueOf(fieldValue)) && fieldValue <= ruleValue;
-            }
-            when 'Is Blank' {
-                return fieldValue == null || String.isBlank(String.valueOf(fieldValue));
-            }
-            when 'Is Not Blank' {
-                return fieldValue != null && !String.isBlank(String.valueOf(fieldValue));
-            }
-        }
-        return false;
-    }
-
-    public static Boolean checkConditionTyped(Integer fieldValue, Integer ruleValue, String operation){
-        switch on operation {
-            when 'Equals' {
-                return fieldValue == ruleValue;
-            }
-            when 'Does Not Equal' {
-                return fieldValue != ruleValue;
-            }
-            when 'Greater Than or Equals' {
-                return fieldValue != null && !String.isBlank(String.valueOf(fieldValue)) && fieldValue >= ruleValue;
-            }
-            when 'Less Than or Equals' {
-                return fieldValue != null && !String.isBlank(String.valueOf(fieldValue)) && fieldValue <= ruleValue;
-            }
-            when 'Is Blank' {
-                return fieldValue == null || String.isBlank(String.valueOf(fieldValue));
-            }
-            when 'Is Not Blank' {
-                return fieldValue != null && !String.isBlank(String.valueOf(fieldValue));
-            }
-        }
-        return false;
-    }
-
-    public static Boolean checkConditionTyped(String fieldValue, String ruleValue, String operation){
-        switch on operation {
-            when 'Equals' {
-                return fieldValue == ruleValue;
-            }
-            when 'Does Not Equal' {
-                return fieldValue != ruleValue;
-            }
-            when 'Contains' {
-                return fieldValue != null && fieldValue.contains(ruleValue);
-            }
-            when 'Does Not Contain' {
-                return fieldValue != null && !fieldValue.contains(ruleValue);
-            }
-            when 'In' {
-            if (fieldValue != null && ruleValue != null) {
-                Set<String> ruleValueSet = new Set<String>(ruleValue.split(','));
-                return ruleValueSet.contains(fieldValue);
-            }
-                return false;
-            }
-            when 'Not In' {
-                if (fieldValue != null && ruleValue != null) {
-                    Set<String> ruleValueSet = new Set<String>(ruleValue.split(','));
-                    return !ruleValueSet.contains(fieldValue);
+    public static Boolean checkCondition(String objName , String fieldName , Object fieldValue , String ruleValueLabel , String operation){
+        String ruleValue = getValueByLabel( objName , fieldName , ruleValueLabel );
+        if( operation == Operator.IS_BLANK.name() ){
+            return String.isBlank(String.valueOf(fieldValue)) || fieldValue == null;
+        } else if ( operation == Operator.IS_NOT_BLANK.name() ){
+            return !String.isBlank(String.valueOf(fieldValue)) && fieldValue != null;
+        } else if ( !String.isBlank(ruleValue)
+             && (operation == Operator.EQUALS.name()
+              || operation == Operator.DOES_NOT_EQUAL.name()
+              || operation == Operator.GREATER_THAN_OR_EQUALS.name()
+              || operation == Operator.LESS_THAN_OR_EQUALS.name()) ){
+            if (fieldValue instanceOf Date) {
+                Date ruleValueDate = null;
+                if( ruleValue.indexOf('TODAY') > -1 ){
+                    ruleValueDate = Date.today();
+                    return checkConditionDate( Date.valueOf(fieldValue) , ruleValueDate , operation );
                 }
-                return true;
+            } else if ( (fieldValue instanceOf Decimal) || (fieldValue instanceOf Double) || (fieldValue instanceOf Integer) ){
+                return checkConditionDecimal( Decimal.valueOf(String.valueOf(fieldValue)) , Decimal.valueOf(ruleValue) , operation );
+            } else if ( fieldValue instanceOf Boolean ){
+                return checkConditionBoolean( Boolean.valueOf(fieldValue) , Boolean.valueOf(ruleValue) , operation );
             }
-            when 'Is Blank' {
-                return String.isBlank(fieldValue) || fieldValue == null;
+        }
+        return checkConditionString( fieldValue , ruleValue , operation );
+    }
+
+    public static Boolean checkConditionString( Object fieldValue , Object ruleValue , String operation ) {
+        if ( operation == Operator.EQUALS.name() ) {
+            return fieldValue == ruleValue;
+        } else if ( operation == Operator.DOES_NOT_EQUAL.name() ) {
+            return fieldValue != ruleValue;
+        } else if ( operation == Operator.CONTAINS.name() ){
+            return fieldValue != null && String.valueOf(fieldValue).CONTAINS(String.valueOf(ruleValue));
+        } else if ( operation == Operator.DOES_NOT_CONTAIN.name() ){
+            return fieldValue != null && !String.valueOf(fieldValue).CONTAINS(String.valueOf(ruleValue));
+        } else if ( operation == Operator.IS_IN.name() ){
+            if ( ruleValue != null && !String.isBlank(String.valueOf(ruleValue)) ){
+                Set<String> ruleValueSet = new Set<String>(String.valueOf(ruleValue).split(','));
+                return ruleValueSet.CONTAINS(String.valueOf(fieldValue));
             }
-            when 'Is Not Blank' {
-                return !String.isBlank(fieldValue) && fieldValue != null;
-            }   
+            return false;
+        } else if ( operation == Operator.IS_NOT_IN.name() ){
+            if ( ruleValue != null && !String.isBlank(String.valueOf(ruleValue)) ){
+                Set<String> ruleValueSet = new Set<String>(String.valueOf(ruleValue).split(','));
+                return !ruleValueSet.CONTAINS(String.valueOf(fieldValue));
+            }
+            return true;
         }
         return false;
     }
 
-    public static Boolean checkConditionTyped(Boolean fieldValue, Boolean ruleValue, String operation){
-        switch on operation {
-            when 'Equals' {
-                return fieldValue == ruleValue;
-            }
-            when 'Does Not Equal' {
-                return fieldValue != ruleValue;
-            }  
+    public static Boolean checkConditionBoolean( Boolean fieldValue , Boolean ruleValue , String operation ){
+        if ( operation == Operator.EQUALS.name() ) {
+            return fieldValue == ruleValue;
+        } else if ( operation == Operator.DOES_NOT_EQUAL.name() ) {
+            return fieldValue != ruleValue;
         }
         return false;
     }
-    
+
+    public static Boolean checkConditionDate( Date fieldValue , Date ruleValue , String operation ){
+        if ( operation == Operator.EQUALS.name() ) {
+            return fieldValue == ruleValue;
+        } else if ( operation == Operator.DOES_NOT_EQUAL.name() ) {
+            return fieldValue != ruleValue;
+        } else if ( operation == Operator.GREATER_THAN_OR_EQUALS.name() ) {
+            return fieldValue != null && !String.isBlank(String.valueOf(fieldValue)) && fieldValue >= ruleValue;
+        } else if ( operation == Operator.LESS_THAN_OR_EQUALS.name() ) {
+            return fieldValue != null && !String.isBlank(String.valueOf(fieldValue)) && fieldValue <= ruleValue;
+        }
+        return false;
+    }
+
+    public static Boolean checkConditionDecimal( Decimal fieldValue , Decimal ruleValue , String operation ){
+        if ( operation == Operator.EQUALS.name() ) {
+            return fieldValue == ruleValue;
+        } else if ( operation == Operator.DOES_NOT_EQUAL.name() ) {
+            return fieldValue != ruleValue;
+        } else if ( operation == Operator.GREATER_THAN_OR_EQUALS.name() ) {
+            return fieldValue != null && !String.isBlank(String.valueOf(fieldValue)) && fieldValue >= ruleValue;
+        } else if ( operation == Operator.LESS_THAN_OR_EQUALS.name() ) {
+            return fieldValue != null && !String.isBlank(String.valueOf(fieldValue)) && fieldValue <= ruleValue;
+        }
+        return false;
+    }
+   
     private static Map<Id,User> permittedRETSCUserMap {
         private get {
             if ( permittedRETSCUserMap == null ) {
@@ -988,5 +938,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
         private set;
     }
+
+    public enum Operator { EQUALS, DOES_NOT_EQUAL, CONTAINS, DOES_NOT_CONTAIN, IS_IN, IS_NOT_IN , GREATER_THAN_OR_EQUALS, LESS_THAN_OR_EQUALS, IS_BLANK, IS_NOT_BLANK, DOES_NOT_EXIST }
 }
 //
