@@ -4,7 +4,6 @@
     <defaultValue>false</defaultValue>
     <description>This field is populated for implementation projects when created from Automation . 
 Added as part of STY-02129</description>
-    <externalId>false</externalId>
     <label>Asset Implementation Project</label>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>

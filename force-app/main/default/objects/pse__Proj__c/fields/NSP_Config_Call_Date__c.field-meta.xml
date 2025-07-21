@@ -3,7 +3,6 @@
     <fullName>NSP_Config_Call_Date__c</fullName>
     <description>This field is created as a part of DF-02047</description>
     <encryptionScheme>None</encryptionScheme>
-    <externalId>false</externalId>
     <label>Config Call Date</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

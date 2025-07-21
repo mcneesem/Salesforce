@@ -3,7 +3,6 @@
     <fullName>NSP_Client_Approved__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Checkbox field to update the project status to Active</description>
-    <externalId>false</externalId>
     <label>Client Approved</label>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>

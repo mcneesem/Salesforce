@@ -3,7 +3,6 @@
     <fullName>NSP_ProjectOwner__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <description>Captures the Project owner</description>
-    <externalId>false</externalId>
     <label>Project Owner</label>
     <referenceTo>User</referenceTo>
     <relationshipName>Projects2</relationshipName>
