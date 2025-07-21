@@ -47,7 +47,7 @@
         <inputParameters>
             <name>emailBody</name>
             <value>
-                <stringValue>&lt;p&gt;The&lt;a href=&quot;{!Project_Task_Link}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;Policy Review &amp;amp; Accrual Profile&lt;/a&gt; task for {!$Record.NSP_Account_Id__r.Name} ({!$Record.NSP_AIMS_Account__c}) is complete.&lt;/p&gt;</stringValue>
+                <stringValue>&lt;p&gt;The &lt;a href=&quot;{!Project_Task_Link}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;Policy Review &amp;amp; Accrual Profile&lt;/a&gt; task for {!$Record.NSP_Account_Id__r.Name} ({!$Record.NSP_AIMS_Account__c}) is complete.&lt;/p&gt;</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
