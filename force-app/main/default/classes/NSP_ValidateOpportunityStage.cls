@@ -11,7 +11,7 @@ Apex Class Name      :  NSP_ValidateOpportunityStage
  * Tejas                 12/24/2021            First Iteration
  */
 public with sharing class NSP_ValidateOpportunityStage {
-    // test w/ NSP_ValidateOpportunityStageTest (83%)
+    // test w/ NSP_ValidateOpportunityStageTest (84%)
 
     public static Id soldToCheckListRecordTypeId = NSP_GenericRecordType.getRecordTypeId('NSP_Checklist__c' , 'NSP_Sold_to_Paid_Checklist');
     public static Set<String> validHRProducts = new Set<String>{NSP_SalesConstants.WO, NSP_SalesConstants.WS, NSP_SalesConstants.HRScale};
