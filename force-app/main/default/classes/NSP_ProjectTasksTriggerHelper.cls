@@ -1377,16 +1377,23 @@ public class NSP_ProjectTasksTriggerHelper {
             NSP_ProjectTaskTriggerEmailNotification.emailNotifyClientTransition(mapofClientProjectTask, mapOfProjectTaskOwner);
         }
     }
+
     //Email On Site Discovery
-    private void discoveryProject(pse__Project_Task__c oProjectTask) {
-        Map<Id, Id> mapofDiscoveryProjectTask = new Map<Id,Id>();
-        Map<Id, Id> mapOfDiscoveryProjectTaskOwner = new Map<Id, Id>();
-        if( oProjectTask !=null && oProjectTask.Name==NSP_ServiceConstants.ONSITEDISCOVERY){
-            mapOfDiscoveryProjectTaskOwner.put(oProjectTask.pse__Project__c, oProjectTask.OwnerId);
-            mapofDiscoveryProjectTask.put(oProjectTask.pse__Project__c,oProjectTask.id);
+    private void discoveryProject( pse__Project_Task__c oProjectTask ) {
+        Map<Id,Id> mapofDiscoveryProjectTask = new Map<Id,Id>();
+        Map<Id,Id> mapOfDiscoveryProjectTaskOwner = new Map<Id,Id>();
+        if ( ( oProjectTask != null )
+            && ( oProjectTask.Name == NSP_ServiceConstants.ONSITEDISCOVERY )
+            )
+        {
+            mapOfDiscoveryProjectTaskOwner.put( oProjectTask.pse__Project__c , oProjectTask.OwnerId );
+            mapofDiscoveryProjectTask.put( oProjectTask.pse__Project__c , oProjectTask.id );
         }
-        if(mapofDiscoveryProjectTask.size()>0){
-            NSP_ProjectTaskTriggerEmailNotification.emailNotifyOnsiteDiscovery(mapofDiscoveryProjectTask, mapOfDiscoveryProjectTaskOwner);
+        if ( !mapofDiscoveryProjectTask.isEmpty() ) {
+            NSP_ProjectTaskTriggerEmailNotification.emailNotifyOnsiteDiscovery(
+                mapofDiscoveryProjectTask ,
+                mapOfDiscoveryProjectTaskOwner
+            );
         }
     }
 
@@ -1645,11 +1652,11 @@ public class NSP_ProjectTasksTriggerHelper {
     public static void sendEmail( List<String> listOfToAddresses , String subject , String body ) {
         try {
             Map<String,Object> inputs = new Map<String,Object>();
-            if (!listOfToAddresses.isEmpty()){
-                inputs.put('toEmailAddresses', listOfToAddresses);
-                inputs.put('emailSubject', subject);
-                inputs.put('emailBody', body);
-                Flow.Interview.Send_Email sendEmailFlow = new Flow.Interview.Send_Email(inputs);
+            if ( ( listOfToAddresses != null ) && !listOfToAddresses.isEmpty() ) {
+                inputs.put( 'toEmailAddresses' , listOfToAddresses );
+                inputs.put( 'emailSubject' , subject );
+                inputs.put( 'emailBody' , body );
+                Flow.Interview.Send_Email sendEmailFlow = new Flow.Interview.Send_Email( inputs );
                 sendEmailFlow.start();
             }
         } catch ( Exception e ) {
