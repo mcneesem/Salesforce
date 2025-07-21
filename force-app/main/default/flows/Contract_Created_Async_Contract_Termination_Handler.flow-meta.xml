@@ -289,7 +289,7 @@
         <locationY>0</locationY>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>SBQQ__Order__c</field>
+            <field>SBQQ__Quote__c</field>
             <operator>IsNull</operator>
             <value>
                 <booleanValue>false</booleanValue>
