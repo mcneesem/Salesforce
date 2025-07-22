@@ -2467,17 +2467,17 @@
         <isRequired>false</isRequired>
     </availableFields>
     <availableFields>
+        <field>Owner.LastName</field>
+        <isFieldManaged>false</isFieldManaged>
+        <isRequired>false</isRequired>
+    </availableFields>
+    <availableFields>
         <field>pse__Resource__r.LastName</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </availableFields>
     <availableFields>
         <field>pse__Staffer_Resource__r.LastName</field>
-        <isFieldManaged>false</isFieldManaged>
-        <isRequired>false</isRequired>
-    </availableFields>
-    <availableFields>
-        <field>Owner.LastName</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </availableFields>
@@ -2697,6 +2697,11 @@
         <isRequired>false</isRequired>
     </availableFields>
     <availableFields>
+        <field>Owner.Name</field>
+        <isFieldManaged>false</isFieldManaged>
+        <isRequired>false</isRequired>
+    </availableFields>
+    <availableFields>
         <field>pse__Group__r.Name</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
@@ -2758,11 +2763,6 @@
     </availableFields>
     <availableFields>
         <field>pse__Staffer_Resource__r.Name</field>
-        <isFieldManaged>false</isFieldManaged>
-        <isRequired>false</isRequired>
-    </availableFields>
-    <availableFields>
-        <field>Owner.Name</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </availableFields>
@@ -3262,17 +3262,17 @@
         <isRequired>false</isRequired>
     </availableFields>
     <availableFields>
+        <field>Owner.Phone</field>
+        <isFieldManaged>false</isFieldManaged>
+        <isRequired>false</isRequired>
+    </availableFields>
+    <availableFields>
         <field>pse__Resource__r.Phone</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </availableFields>
     <availableFields>
         <field>pse__Staffer_Resource__r.Phone</field>
-        <isFieldManaged>false</isFieldManaged>
-        <isRequired>false</isRequired>
-    </availableFields>
-    <availableFields>
-        <field>Owner.Phone</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </availableFields>
@@ -3672,12 +3672,12 @@
         <isRequired>false</isRequired>
     </availableFields>
     <availableFields>
-        <field>pse__Primary_Skill_Certification__r.RecordTypeId</field>
+        <field>Owner.RecordTypeId</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </availableFields>
     <availableFields>
-        <field>Owner.RecordTypeId</field>
+        <field>pse__Primary_Skill_Certification__r.RecordTypeId</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </availableFields>
@@ -4542,17 +4542,17 @@
         <isRequired>false</isRequired>
     </availableFields>
     <availableFields>
+        <field>Owner.Title</field>
+        <isFieldManaged>false</isFieldManaged>
+        <isRequired>false</isRequired>
+    </availableFields>
+    <availableFields>
         <field>pse__Resource__r.Title</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </availableFields>
     <availableFields>
         <field>pse__Staffer_Resource__r.Title</field>
-        <isFieldManaged>false</isFieldManaged>
-        <isRequired>false</isRequired>
-    </availableFields>
-    <availableFields>
-        <field>Owner.Title</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </availableFields>
@@ -4692,12 +4692,12 @@
         <isRequired>false</isRequired>
     </availableFields>
     <availableFields>
-        <field>pse__Opportunity__r.Type</field>
+        <field>Owner.Type</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </availableFields>
     <availableFields>
-        <field>Owner.Type</field>
+        <field>pse__Opportunity__r.Type</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </availableFields>

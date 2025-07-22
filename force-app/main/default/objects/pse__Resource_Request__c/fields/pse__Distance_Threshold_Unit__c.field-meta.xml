@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>pse__Distance_Threshold_Unit__c</fullName>
+    <deprecated>false</deprecated>
+    <description>The unit of distance.</description>
+    <label>Distance Unit</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Kilometers (km)</fullName>
+                <default>false</default>
+                <label>Kilometers (km)</label>
+            </value>
+            <value>
+                <fullName>Miles (mi)</fullName>
+                <default>false</default>
+                <label>Miles (mi)</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
