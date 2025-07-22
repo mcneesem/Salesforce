@@ -2071,6 +2071,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Bid_Status__c</fieldItem>
+                <identifier>RecordNSP_Bid_Status_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_BidVersion__c</fieldItem>
                 <identifier>RecordNSP_BidVersion_cField2</identifier>
             </fieldInstance>
