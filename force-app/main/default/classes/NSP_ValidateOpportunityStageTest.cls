@@ -796,7 +796,6 @@ private class NSP_ValidateOpportunityStageTest {
         if(oppty!=null){
             try{            
                 oppty.StageName='Closed Lost';
-                //oppty.Loss_Reason__c='';
                 Update oppty;
             }catch(Exception ex){
                 ex.getStackTraceString();
