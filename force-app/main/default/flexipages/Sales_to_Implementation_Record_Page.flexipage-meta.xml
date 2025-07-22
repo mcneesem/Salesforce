@@ -294,6 +294,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Controlled_Group__c</fieldItem>
+                <identifier>RecordControlled_Group_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Record_ID__c</fieldItem>
                 <identifier>RecordNSP_Record_ID_cField</identifier>
             </fieldInstance>
