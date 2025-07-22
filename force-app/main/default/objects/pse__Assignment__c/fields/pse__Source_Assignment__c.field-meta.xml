@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>pse__Source_Assignment__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <deprecated>false</deprecated>
+    <description>The source assignment from which the new assignment is copied.</description>
+    <label>Source Assignment</label>
+    <referenceTo>pse__Assignment__c</referenceTo>
+    <relationshipLabel>Copied Assignments</relationshipLabel>
+    <relationshipName>Copied_Assignments</relationshipName>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>
