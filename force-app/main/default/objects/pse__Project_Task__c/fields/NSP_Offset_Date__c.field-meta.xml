@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Offset_Date__c</fullName>
     <description>This field is used to determine object which is used to calculate Start and End date.</description>
-    <externalId>false</externalId>
     <label>Offset Date</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
