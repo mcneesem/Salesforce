@@ -1,28 +1,22 @@
-/**
-Apex Class Name      :   NSP_AccountTerminationBatch_Test
-Version              :  1.0                                                                          
-Created Date         :   7/25/2022   
-Function             :  This class is used as a test class to NSP_AccountTerminationBatch
-Story                :                                                                      
-Modification Log     :                                                                              
-*--------------------------------------------------------------------------------------------------  
-* Developer                   Date                   Description                                    
-* -------------------------------------------------------------------------------------------------  
-* Bindu                     8/23/2022            First Iteration
-*/
-
-@isTest(SeeAllData=false)
+@isTest
 public class NSP_AccountTerminationBatch_Test {
     public static final String OPP_TYPE = 'CAMS';
     private static final List<String> ASSET_FIELDS = new List<String>{
         'Id',
-        'Status'   
+        'Status',
+        'Account.NSP_Sales_Service_Account_Status__c'
     };
     @testSetup
-    static void setupTestData(){
-        
+    static void setupTestData() {
+        AccountTerminationBatchSettings__c sett = new AccountTerminationBatchSettings__c();
+        sett.IsEnabled__c = true;
+        sett.BatchSize__c = 100;
+        insert sett;
+
         //Account creation
         Account accRecord = NSP_TestHelper.createAccount(true);
+        Account accRecord2 = NSP_TestHelper.createAccount(true);
+        Account accRecord3 = NSP_TestHelper.createAccount(true);
         List<Asset> assetList = new List<Asset>();
         //Create Asset
         Asset assetObj = new Asset();
@@ -38,38 +32,71 @@ public class NSP_AccountTerminationBatch_Test {
         assetObj1.NSP_Client__c = 'asset2';
         assetObj1.name = 'asset2';
         assetObj1.Status = 'Terminated';
+        assetObj1.NSP_Termination_Date__c = system.today().addDays(-30);
         assetList.add(assetObj1);
+
+        Asset assetObj3 = new Asset();
+        assetObj3.accountId = accRecord2.Id;
+        assetObj3.RecordTypeId = '0124x0000019l8yAAA';
+        assetObj3.NSP_Client__c = 'asset3';
+        assetObj3.name = 'asset3';
+        assetObj3.Status = 'Active';
+        assetList.add(assetObj3);
+
+        Asset assetObj4 = new Asset();
+        assetObj4.accountId = accRecord2.Id;
+        assetObj4.NSP_Client__c = 'asset4';
+        assetObj4.name = 'asset4';
+        assetObj4.RecordTypeId = '0124x0000019l8yAAA';
+        assetList.add(assetObj4);
+
+        Asset assetObj5 = new Asset();
+        assetObj5.accountId = accRecord3.Id;
+        assetObj5.RecordTypeId = '0124x0000019l8yAAA';
+        assetObj5.NSP_Client__c = 'asset5';
+        assetObj5.name = 'asset5';
+        assetObj5.Status = 'Active';
+        assetList.add(assetObj5);
         insert assetList;
-        
+
         Opportunity  opportuniytObject = NSP_TestHelper.createOpenOpportunity(accRecord.Id, OPP_TYPE, false);
+        opportuniytObject.StageName = NSP_ServiceConstants.CLOSED_WON;
         opportuniytObject.NSP_PrimaryProduct__c = 'WX';
         opportuniytObject.NSP_Number_of_Employees__c = 100;
+        opportuniytObject.CloseDate = Date.newInstance(2025,6,25);
         insert opportuniytObject;
-        
+
         Opportunity  opportuniytObject1 = NSP_TestHelper.createOpenOpportunity(accRecord.Id, OPP_TYPE, false);
         opportuniytObject1.StageName = NSP_ServiceConstants.CLOSED_WON;
         opportuniytObject1.NSP_PrimaryProduct__c = 'WX';
         opportuniytObject1.NSP_Number_of_Employees__c = 100;
+        opportuniytObject1.CloseDate = Date.newInstance(2025,6,25);
         insert opportuniytObject1;
     }
-    
+
     @isTest
-    static void terminateAccount(){
+    static void terminateAccount() {
+        List<Asset> astList = [SELECT RecordTypeName__c, Status, Name, NSP_Client__c,NSP_Termination_Date__c,Account.NSP_Sales_Service_Account_Status__c  FROM Asset WHERE NSP_Client__c IN ('asset3','asset5')];
         try{
             test.startTest();
-            NSP_AccountTerminationBatch batchSch = new NSP_AccountTerminationBatch();
+            NSP_AccountTerminationBatch.schedule();
+            astList[0].Status = 'Terminated';
+            astList[1].Status = 'Terminated';
+            update astList;
+            astList[0].NSP_Termination_Date__c = system.today().addDays(-30);
+            astList[1].NSP_Termination_Date__c = system.today().addDays(-30);
+            update astList;
+            NSP_AccountTerminationBatch batchSch = new NSP_AccountTerminationBatch('Asset');
             Database.executeBatch(batchSch, 100);
             batchSch.execute(null);
             test.stopTest();
             String query1 = new NSP_QueryBuilder('Asset', ASSET_FIELDS)
-                           .addFilter('Name', 'asset1' ).addLimit(1).build();
+                           .addFilter('NSP_Client__c', 'asset5' ).addLimit(1).build();
             Asset asst = Database.query( query1 );
-
-            system.assertEquals('Terminated' , asst.Status);
+            system.assertEquals('Terminated' , asst.Account.NSP_Sales_Service_Account_Status__c );
         } catch(Exception ex){
             System.debug( ' ~ ex=' + ex );
         }
     }
- 
-   
+
 }
