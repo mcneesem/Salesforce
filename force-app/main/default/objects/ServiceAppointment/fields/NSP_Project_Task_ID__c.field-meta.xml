@@ -7,7 +7,7 @@
     <label>Project Task ID</label>
     <length>25</length>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Text</type>
     <unique>false</unique>
 </CustomField>
