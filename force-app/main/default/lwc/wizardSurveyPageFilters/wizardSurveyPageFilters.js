@@ -370,7 +370,6 @@ export default class WizardSurveyPageFilters extends LightningElement {
     handleSuccess(event) {
         if(!this.isSaveClick && !this.isPrevClick){
             this.reReqId = event.detail.id;
-            //recordField.Id=event.detail.id;
             this.dispatchEvent(new CustomEvent('next', {detail: this.reReqId }));
         }else if(this.isSaveClick){
             const saveEvent = new CustomEvent('saveexit', { bubbles: true });
@@ -396,7 +395,6 @@ export default class WizardSurveyPageFilters extends LightningElement {
     }
     handlePrev(event){
         this.isPrevClick=true;
-        //const reReqId = event.detail.id;
         this.dispatchEvent(new CustomEvent('prev', {detail: this.reReqId}));
       }
       handleError(event){
