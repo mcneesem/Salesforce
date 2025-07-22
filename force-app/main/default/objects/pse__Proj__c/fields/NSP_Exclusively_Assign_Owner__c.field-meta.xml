@@ -3,7 +3,6 @@
     <fullName>NSP_Exclusively_Assign_Owner__c</fullName>
     <defaultValue>false</defaultValue>
     <description>This field is created as part of DF-02179.If we want to set Owner exclusively during the creation of project, this field should be checked to true</description>
-    <externalId>false</externalId>
     <label>Exclusively Assign Owner</label>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>

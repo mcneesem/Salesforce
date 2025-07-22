@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>pse__Bill_To_Budget_Cap_Bulk_Release__c</fullName>
+    <defaultValue>false</defaultValue>
+    <deprecated>false</deprecated>
+    <description>If selected, billing up to the budget cap is enabled for bulk release of billing events. This is dependent on Disable Billing Closer to Cap (Billing Settings custom setting) being false.</description>
+    <inlineHelpText>If selected, billing up to the budget cap is enabled for bulk release of billing events. This is dependent on Disable Billing Closer to Cap (Billing Settings custom setting) being false.</inlineHelpText>
+    <label>Bill to Budget Cap</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

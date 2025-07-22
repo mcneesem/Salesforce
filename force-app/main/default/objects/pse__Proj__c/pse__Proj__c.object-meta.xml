@@ -170,12 +170,12 @@
         <encryptionScheme>None</encryptionScheme>
         <label>Project Name</label>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Text</type>
     </nameField>
     <pluralLabel>Projects</pluralLabel>
     <recordTypeTrackFeedHistory>false</recordTypeTrackFeedHistory>
-    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypeTrackHistory>true</recordTypeTrackHistory>
     <searchLayouts>
         <customTabListAdditionalFields>pse__Project_Manager__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>pse__Account__c</customTabListAdditionalFields>

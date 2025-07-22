@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_BPS_Project_Template__c</fullName>
-    <externalId>false</externalId>
     <label>BPS Project Template</label>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
@@ -315,6 +315,12 @@
                 <fullName>XML Utility Rework</fullName>
                 <default>false</default>
                 <label>XML Utility Rework</label>
+            </value>
+            <value>
+                <fullName>iSolve – Hardware</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>iSolve – Hardware</label>
             </value>
         </valueSetDefinition>
     </valueSet>

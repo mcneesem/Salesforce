@@ -3,7 +3,6 @@
     <fullName>NSP_Account_Executive__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <description>This field is created as a part of STY-03071</description>
-    <externalId>false</externalId>
     <label>Account Executive</label>
     <referenceTo>Contact</referenceTo>
     <relationshipLabel>Projects (Account Executive)</relationshipLabel>
