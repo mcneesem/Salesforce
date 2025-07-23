@@ -42,7 +42,7 @@ public class NSP_ImpprofileServiceHelper_Test {
         impl.RecordTypeId = fsoRecordTypeId;
         impl.NSP_Form_Completed__c = True;
         impl.Client_Profile_Information__c = 'Related Clients';
-        IMPL.NSP_Orientation_Coordinator__c=con.id;
+        impl.NSP_Orientation_Coordinator__c=con.id;
         ipListFSA.add(impl);
         
         Implementation_Profile__c impl4 = (Implementation_Profile__c) NSP_TestExtendedDataFactory.createSObject(new Implementation_Profile__c());
@@ -58,6 +58,10 @@ public class NSP_ImpprofileServiceHelper_Test {
         impl4.Client_part_of_entity_w_o_NSP__c = NSP_ServiceConstants.YES;
         impl4.NSP_Transition_Specialist__c = con.Id;
         impl4.NSP_Orientation_Coordinator__c=con.id;
+        impl4.Would_the_client_like_a_FLSA_Exemption__c = NSP_ServiceConstants.YES;
+        impl4.NSP_HR_Specialist__c = con.id;
+        impl4.NSP_Related_Clients__c = acc.Id;
+        impl4.Who_should_the_FLSA_team_reach_out_to__c = 'Test, Test2';
         ipListFSA.add(impl4);
         
         Implementation_Profile__c impl7 = (Implementation_Profile__c) NSP_TestExtendedDataFactory.createSObject(new Implementation_Profile__c());
@@ -121,8 +125,14 @@ public class NSP_ImpprofileServiceHelper_Test {
         fsoIp1.NSP_Payroll_Specialist__c=con.id;
         fsoIp1.NSP_Onboarding_Specialist_Coordinator__c=con.Id;
         fsoIp1.NSP_Project_Manager__c=con.id;
-        fsoIp.NSP_Orientation_Coordinator__c=con.id;
+        fsoIp1.NSP_Orientation_Coordinator__c=con.id;
+        fsoIp1.NSP_HR_Specialist__c = con.id;
+        fsoIp1.NSP_HR_Quality_Support_Team_Member__c = con.Id;
         fsoIp1.Does_this_client_have_an_AWW__c = 'No';
+        fsoIp1.Would_the_client_like_a_FLSA_Exemption__c = NSP_ServiceConstants.YES;
+        fsoIp1.Is_the_client_Emerging_Growth__c = NSP_ServiceConstants.No;
+        fsoIp1.NSP_Related_Clients__c = acc.Id;
+        impl4.Who_should_the_FLSA_team_reach_out_to__c = 'Test';
         ipListFSA.add(fsoIp1);
          
         Implementation_Profile__c fsoIpAutomationObj = (Implementation_Profile__c) NSP_TestExtendedDataFactory.createSObject(new Implementation_Profile__c());
@@ -146,7 +156,7 @@ public class NSP_ImpprofileServiceHelper_Test {
         fsoIpAutomationObj.NSP_Payroll_Specialist__c=con.id;
         fsoIpAutomationObj.NSP_Onboarding_Specialist_Coordinator__c=con.Id;
         fsoIpAutomationObj.NSP_Project_Manager__c=con.id;
-        fsoIpAutomationObj.NSP_Orientation_Coordinator__c=con.id;
+         fsoIpAutomationObj.NSP_Orientation_Coordinator__c=con.id;
         fsoIpAutomationObj.NSP_PC_Client_Email__c = 'Test@Testmail.com';
         fsoIpAutomationObj.NSP_PC_Client_Name__c = 'Test';
         fsoIpAutomationObj.Employees_work_in_the_following_states__c = 'NH';
@@ -163,6 +173,7 @@ public class NSP_ImpprofileServiceHelper_Test {
         fsoIpAutomationObj.Chngs_for_cafeteria_plan_questionnaire__c=NSP_ServiceConstants.YES;
         fsoIpAutomationObj.Client_have_any_Commission_only_EEs__c=NSP_ServiceConstants.YES;
         fsoIpAutomationObj.NSP_OT_Representative__c =con.Id;
+        fsoIpAutomationObj.NSP_HR_Specialist__c = con.id;
         fsoIpAutomationObj.Employees_work_in_the_following_states__c ='MA';
         fsoIpAutomationObj.Client_does_business_in_MA_NY_or_VA__c= 'Yes';
         fsoIpAutomationObj.Effective_Date_Payroll_Worker_comp_EPLI__c = system.today();
@@ -191,6 +202,10 @@ public class NSP_ImpprofileServiceHelper_Test {
         fsoIpAutomationObj.Does_this_client_have_an_AWW__c = 'No';
         fsoIpAutomationObj.Are_you_registered_with_the_CSLB__c = NSP_ServiceConstants.YES;
         fsoIpAutomationObj.Contractor_s_License__c = 'TestLicense';
+        fsoIpAutomationObj.Would_the_client_like_a_FLSA_Exemption__c = NSP_ServiceConstants.YES;
+        fsoIpAutomationObj.Is_the_client_Emerging_Growth__c = NSP_ServiceConstants.YES;
+        fsoIpAutomationObj.NSP_Related_Clients__c = acc.Id;
+        impl4.Who_should_the_FLSA_team_reach_out_to__c = 'Test';
         ipListFSA.add(fsoIpAutomationObj);
         insert ipListFSA;
         
@@ -226,15 +241,25 @@ public class NSP_ImpprofileServiceHelper_Test {
                                                                                               Review_Employee_Orientations__c, Review_Insperity_Online_Enrollment_Steps__c, Reviewed_deductible_carryover_w_client__c, San_Diego_Earned_Sick__c, Select_all_enrollments__c, Select_client_urgent_HR_needs__c, Sep_doc_specifying_pay_breakdown__c, Sick_Leave_balance_type__c, Special_Agreement_Addendum_details__c, NSP_Sr_Onboarding_Benefit_Rep__c, Terming_life_insurance_disability_plan__c, Uses_WageWorks_for_commuter_benefit_plan__c, What_type_and_how_many_splits__c, When_was_the_handbook_last_updated__c, When_was_the_last_Open_Enrollment_period__c, Where_is_the_policy_located__c, Who_in_client_gets_std_insperity_comm__c, Who_is_the_current_custodian_bank__c, Who_is_the_provider__c, Workers_Comp_Safety_Notes__c, Written_doc_pay_plan_for_how_EE_is_paid__c, sample_new_empl_info_packet_collected__c, PC_Client_Number__c, Back_up_PC_Client_Number__c, Back_up_PC__c, Can_client_provide_EEO_filing_address__c, Checks_delivered__c, Documentation_Status__c, EE_Visa_Type__c, Emp_deferral_loan_amount__c, HR_Contact_Cell_Phone__c, HR_Contact_Office_Phone__c, Insperity_last_day_of_2nd_pay_period__c, Is_Insperity_s_group_health_plan_replaci__c, KDM_Client_Number__c, KDM__c, Misc_Contact_Cell_Phone__c, Misc_Contact_Number__c, Misc_Contact_Office_Phone__c, Misc_Contact__c, 
                                                                                               NSP_AIMS_ClientNo__c, NSP_AIMS_Client_Name__c, NSP_Any_active_severance_agreement__c, NSP_Any_employee_with_temporary_status__c, NSP_Assignment_Notes__c, NSP_BPS_Notes__c, NSP_Client_Sponsored_Plan__c, NSP_Client_retaining_benefit_plan__c, NSP_Does_arrearage_comply_with_state_law__c, NSP_Does_the_client_have_prior_wages__c, NSP_EE_Name__c, NSP_Employee_Notes__c, NSP_Employee_with_compensation_other__c, NSP_FLSA_EE_exemption_category_provided__c, NSP_Final_pay_date_prior_to_Insperity__c, NSP_Final_pay_period_prior_to_Insperity__c, NSP_Frequency__c, NSP_Have_credit_services_approved__c, NSP_How_e_verify_be_completed__c, NSP_How_employee_hours_be_reported_to_I__c, NSP_How_hours_currently_captured__c, NSP_Immediate_payroll_needs_or_concerns__c, NSP_Inspeirty_last_day_of_1st_pay_period__c, NSP_Insperity_1st_day_of_1st_pay_period__c, NSP_Insperity_1st_day_of_2nd_pay_period__c, NSP_Insperity_1st_pay_date__c, NSP_Insperity_2nd_pay_date__c, NSP_Is_arrearage_7_days__c, NSP_Onsite_Safety_Inspection_Details__c, NSP_Other_Urgent_HR_Needs__c, NSP_Overtime_owed_after_hours__c, NSP_Payment_Details__c, NSP_Payroll_Specialist_to_confirm__c, NSP_Plan_for_EE_Payment__c, NSP_Project__c, NSP_Review_Cigna_Enrollment_Process__c, NSP_Separate_Vacation_Policy__c, NSP_Service_Model__c, NSP_Standard_No_of_Hours_worked_for_EEs__c, NSP_State_require_specific_priming_field__c,
                                                                                               NSP_Subaccount__c, NSP_Urgent_HR_Needs_Details__c, NSP_When_where_and_quantity_needed__c, NSP_Who_receives_Insperity_Communication__c, NSP_Who_will_approve_the_payroll__c, NSP_Who_will_submit_payroll__c, NSP_collected_copies_of_state_WC_policy__c,NSP_current_waiting_period__c, NSP_how_future_payment_will_be_done__c, NSP_prior_medical_contributions__c, NSP_remote_EEs_not_working_physical_loc__c, NSP_separate_pay_document_specify__c, WC__c, received_introductory_email_frm_ORK_Team__c, remove_employee_directory_from_premier__c, NSP_AIMS_ClientNo_KDM__c, NSP_AIMS_ClientNo_OSS__c, NSP_AIMS_ClientNo_PC__c, NSP_AIMS_ClientNo_WC__c, NSP_Benefit_Notes__c, NSP_Commission_Provide_Details__c, NSP_DoYouPay_Other_Provide_details__c, NSP_Non_paid_users_Enter_User_Names__c, NSP_compensation_structu_Provide_Details__c, NSP_Govt_Type_Other_Provide_Details__c, NSP_employee_40_hour_work_Week_PDetails__c, NSP_Any_OT_Expections_Provide_Details__c, NSP_PD_different_contact_for_subaccount__c, NSP_Provide_Details_Relabeling_Needed__c, NSP_Any_special_pay_code_Provide_Details__c, Insperity_pay_frequency__c,
-                                                                                              NSP_Payroll_Specialist__r.NSP_Work_email__c,NSP_Asset__r.AccountId, NSP_Payroll_Specialist__r.pse__Salesforce_User__c,  NSP_Project_Manager__r.pse__Salesforce_User__c,  NSP_Project_Manager__r.pse__Salesforce_User__r.Email,NSP_Urgent_Medical_Needs_Emp_Details__c, NSP_Employees_on_LOA__c,NSP_Employee_Details_On_LOA__c ,NSP_Old_Benefits_Package__c,NSP_Old_Effective_Date_EPLI__c,NSP_Old_Insperity_Ben_effective_date__c,NSP_OT_Representative__r.NSP_Work_email__c,Does_this_client_have_an_AWW__c,Is_client_CA_docs_submitted_for_approval__c,Are_you_registered_with_the_CSLB__c,Contractor_s_License__c,NSP_Legal_Name__c,Federal_Labor_Law_poster__c FROM Implementation_Profile__c WHERE Implementing_biz_Performance_solutions__c = 'YES' LIMIT 1]);
+                                                                                              NSP_Payroll_Specialist__r.NSP_Work_email__c,NSP_Asset__r.AccountId, NSP_Payroll_Specialist__r.pse__Salesforce_User__c,  NSP_Project_Manager__r.pse__Salesforce_User__c,  NSP_Project_Manager__r.pse__Salesforce_User__r.Email,NSP_Urgent_Medical_Needs_Emp_Details__c, NSP_Employees_on_LOA__c,NSP_Employee_Details_On_LOA__c ,NSP_Old_Benefits_Package__c,NSP_Old_Effective_Date_EPLI__c,NSP_Old_Insperity_Ben_effective_date__c,NSP_OT_Representative__r.NSP_Work_email__c,Does_this_client_have_an_AWW__c,Is_client_CA_docs_submitted_for_approval__c,Are_you_registered_with_the_CSLB__c,Contractor_s_License__c,NSP_Legal_Name__c,Federal_Labor_Law_poster__c,Would_the_client_like_a_FLSA_Exemption__c FROM Implementation_Profile__c WHERE Implementing_biz_Performance_solutions__c = 'YES' LIMIT 1]);
+        
+        Map<Id,Implementation_Profile__c> ipRecordMap2 =new Map<Id,Implementation_Profile__c>([SELECT ID, NSP_Form_Completed__c 
+                                                                                              FROM Implementation_Profile__c
+                                                                                              WHERE Is_the_client_Emerging_Growth__c = 'No' LIMIT 1]);
         
         Implementation_Pay_Period__c additionalIpPayPeriods = [ SELECT Id, Frequency__c, NSP_Implementation_Profile__c, Final_pay_period_prior_to_Insperity__c, Final_pay_date_prior_to_Insperity__c,Does_the_client_have_prior_wages__c
                                                                FROM Implementation_Pay_Period__c WHERE NSP_Implementation_Profile__c IN: ipRecordMap.keyset() Limit 1 ];
         
         for(Implementation_Profile__c ip: ipRecordMap.values()){
             ip.NSP_Form_Completed__c = true;       
+            ip.Would_the_client_like_a_FLSA_Exemption__c = NSP_ServiceConstants.No;
         }                                                               
         update  ipRecordMap.values();                                              
+        for(Implementation_Profile__c ip: ipRecordMap2.values()){
+            ip.NSP_Form_Completed__c = true;
+        }                                                               
+        update  ipRecordMap2.values();  
+        
         NSP_Implementationprofile_ServiceHelper helper = new NSP_Implementationprofile_ServiceHelper(ipRecordMap, new Map<Id, Implementation_Profile__c>());
         helper.isRerun = True;
         helper.executeAutomation();
@@ -261,7 +286,7 @@ public class NSP_ImpprofileServiceHelper_Test {
                                                                                               Review_Employee_Orientations__c, Review_Insperity_Online_Enrollment_Steps__c, Reviewed_deductible_carryover_w_client__c, San_Diego_Earned_Sick__c, Select_all_enrollments__c, Select_client_urgent_HR_needs__c, Sep_doc_specifying_pay_breakdown__c, Sick_Leave_balance_type__c, Special_Agreement_Addendum_details__c, NSP_Sr_Onboarding_Benefit_Rep__c, Terming_life_insurance_disability_plan__c, Uses_WageWorks_for_commuter_benefit_plan__c, What_type_and_how_many_splits__c, When_was_the_handbook_last_updated__c, When_was_the_last_Open_Enrollment_period__c, Where_is_the_policy_located__c, Who_in_client_gets_std_insperity_comm__c, Who_is_the_current_custodian_bank__c, Who_is_the_provider__c, Workers_Comp_Safety_Notes__c, Written_doc_pay_plan_for_how_EE_is_paid__c, sample_new_empl_info_packet_collected__c, PC_Client_Number__c, Back_up_PC_Client_Number__c, Back_up_PC__c, Can_client_provide_EEO_filing_address__c, Checks_delivered__c, Documentation_Status__c, EE_Visa_Type__c, Emp_deferral_loan_amount__c, HR_Contact_Cell_Phone__c, HR_Contact_Office_Phone__c, Insperity_last_day_of_2nd_pay_period__c, Is_Insperity_s_group_health_plan_replaci__c, KDM_Client_Number__c, KDM__c, Misc_Contact_Cell_Phone__c, Misc_Contact_Number__c, Misc_Contact_Office_Phone__c, Misc_Contact__c, 
                                                                                               NSP_AIMS_ClientNo__c, NSP_AIMS_Client_Name__c, NSP_Any_active_severance_agreement__c, NSP_Any_employee_with_temporary_status__c, NSP_Assignment_Notes__c, NSP_BPS_Notes__c, NSP_Client_Sponsored_Plan__c, NSP_Client_retaining_benefit_plan__c, NSP_Does_arrearage_comply_with_state_law__c, NSP_Does_the_client_have_prior_wages__c, NSP_EE_Name__c, NSP_Employee_Notes__c, NSP_Employee_with_compensation_other__c, NSP_FLSA_EE_exemption_category_provided__c, NSP_Final_pay_date_prior_to_Insperity__c, NSP_Final_pay_period_prior_to_Insperity__c, NSP_Frequency__c, NSP_Have_credit_services_approved__c, NSP_How_e_verify_be_completed__c, NSP_How_employee_hours_be_reported_to_I__c, NSP_How_hours_currently_captured__c, NSP_Immediate_payroll_needs_or_concerns__c, NSP_Inspeirty_last_day_of_1st_pay_period__c, NSP_Insperity_1st_day_of_1st_pay_period__c, NSP_Insperity_1st_day_of_2nd_pay_period__c, NSP_Insperity_1st_pay_date__c, NSP_Insperity_2nd_pay_date__c, NSP_Is_arrearage_7_days__c, NSP_Onsite_Safety_Inspection_Details__c, NSP_Other_Urgent_HR_Needs__c, NSP_Overtime_owed_after_hours__c, NSP_Payment_Details__c, NSP_Payroll_Specialist_to_confirm__c, NSP_Plan_for_EE_Payment__c, NSP_Project__c, NSP_Review_Cigna_Enrollment_Process__c, NSP_Separate_Vacation_Policy__c, NSP_Service_Model__c, NSP_Standard_No_of_Hours_worked_for_EEs__c, NSP_State_require_specific_priming_field__c,
                                                                                               NSP_Subaccount__c, NSP_Urgent_HR_Needs_Details__c, NSP_When_where_and_quantity_needed__c, NSP_Who_receives_Insperity_Communication__c, NSP_Who_will_approve_the_payroll__c, NSP_Who_will_submit_payroll__c, NSP_collected_copies_of_state_WC_policy__c,NSP_current_waiting_period__c, NSP_how_future_payment_will_be_done__c, NSP_prior_medical_contributions__c, NSP_remote_EEs_not_working_physical_loc__c, NSP_separate_pay_document_specify__c, WC__c, received_introductory_email_frm_ORK_Team__c, remove_employee_directory_from_premier__c, NSP_AIMS_ClientNo_KDM__c, NSP_AIMS_ClientNo_OSS__c, NSP_AIMS_ClientNo_PC__c, NSP_AIMS_ClientNo_WC__c, NSP_Benefit_Notes__c, NSP_Commission_Provide_Details__c, NSP_DoYouPay_Other_Provide_details__c, NSP_Non_paid_users_Enter_User_Names__c, NSP_compensation_structu_Provide_Details__c, NSP_Govt_Type_Other_Provide_Details__c, NSP_employee_40_hour_work_Week_PDetails__c, NSP_Any_OT_Expections_Provide_Details__c, NSP_PD_different_contact_for_subaccount__c, NSP_Provide_Details_Relabeling_Needed__c, NSP_Any_special_pay_code_Provide_Details__c, Insperity_pay_frequency__c,
-                                                                                              NSP_Payroll_Specialist__r.NSP_Work_email__c,NSP_Asset__r.AccountId, NSP_Payroll_Specialist__r.pse__Salesforce_User__c,  NSP_Project_Manager__r.pse__Salesforce_User__c,  NSP_Project_Manager__r.pse__Salesforce_User__r.Email,NSP_Urgent_Medical_Needs_Emp_Details__c, NSP_Employees_on_LOA__c,NSP_Employee_Details_On_LOA__c ,NSP_Old_Benefits_Package__c,NSP_Old_Effective_Date_EPLI__c,NSP_Old_Insperity_Ben_effective_date__c,NSP_OT_Representative__r.NSP_Work_email__c,Federal_Labor_Law_poster__c FROM Implementation_Profile__c WHERE recordType.Name= 'Middle Market' LIMIT 1 ]);
+                                                                                              NSP_Payroll_Specialist__r.NSP_Work_email__c,NSP_Asset__r.AccountId, NSP_Payroll_Specialist__r.pse__Salesforce_User__c,  NSP_Project_Manager__r.pse__Salesforce_User__c,  NSP_Project_Manager__r.pse__Salesforce_User__r.Email,NSP_Urgent_Medical_Needs_Emp_Details__c, NSP_Employees_on_LOA__c,NSP_Employee_Details_On_LOA__c ,NSP_Old_Benefits_Package__c,NSP_Old_Effective_Date_EPLI__c,NSP_Old_Insperity_Ben_effective_date__c,NSP_OT_Representative__r.NSP_Work_email__c,Federal_Labor_Law_poster__c,NSP_HR_Specialist__c,Would_the_client_like_a_FLSA_Exemption__c FROM Implementation_Profile__c WHERE recordType.Name= 'Middle Market' LIMIT 1 ]);
         
         for(Implementation_Profile__c ip: ipRecordMap.values()){
             ip.NSP_Form_Completed__c = true;
@@ -278,6 +303,7 @@ public class NSP_ImpprofileServiceHelper_Test {
             ip.Client_part_of_entity_w_o_NSP__c = NSP_ServiceConstants.YES; 
             ip.Is_the_client_a_federal_contractor__c = NSP_ServiceConstants.YES;
             ip.remove_employee_directory_from_premier__c = NSP_ServiceConstants.YES;
+            ip.Would_the_client_like_a_FLSA_Exemption__c = NSP_ServiceConstants.No;
         }                                                                                     
         update  ipRecordMap.values();
         
@@ -391,6 +417,8 @@ public class NSP_ImpprofileServiceHelper_Test {
         getImpProfileList[0].NSP_BPA_BPC_Ids__c =userInfo.getUserId();
         getImpProfileList[0].NSP_Form_Completed__c = TRUE;
         getImpProfileList[0].Federal_Labor_Law_poster__c = NSP_ServiceConstants.NO;
+        getImpProfileList[0].Would_the_client_like_a_FLSA_Exemption__c = NSP_ServiceConstants.YES;
+        getImpProfileList[0].Is_the_client_Emerging_Growth__c = NSP_ServiceConstants.YES;
         update getImpProfileList[0];
         
         database.update(updateIPList);
