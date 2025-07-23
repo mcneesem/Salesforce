@@ -352,37 +352,38 @@ public with sharing class NSP_ValidateOpportunityStage {
 
     private static void evaluateAnalysisStageCriteriaOld( Opportunity opp , List<Event> eventList ) {
         String scannedTask='';
-        if ( validHRProducts.CONTAINS( opp.NSP_PrimaryProduct__c )
-            || (
-                analysisStageCriteraTypes.CONTAINS( opp.Type )
-                && (
-                    ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WX )
-                    || ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WA )
-                    )
+        if ( !validHRProducts.CONTAINS( opp.NSP_PrimaryProduct__c )
+              && ( !analysisStageCriteraTypes.CONTAINS( opp.Type )
+                || (
+                        ( opp.NSP_PrimaryProduct__c != NSP_SalesConstants.WX )
+                     && ( opp.NSP_PrimaryProduct__c != NSP_SalesConstants.WA )
+                   )
                 )
             )
         {
-            for(Event event : eventList){////looking for discovery
-                if( event.NSP_Event_Subtype__c == NSP_SalesConstants.DISCOVERY_CALL_ACTIVITY
-                    && event.NSP_Status__c !=NSP_SalesConstants.Cancelled )
+            return;
+        }
+
+        for(Event event : eventList){////looking for discovery
+            if( event.NSP_Event_Subtype__c == NSP_SalesConstants.DISCOVERY_CALL_ACTIVITY
+                && event.NSP_Status__c !=NSP_SalesConstants.Cancelled )
+            {
+                scannedTask += HAS_DISCOVERY;
+                if(event.NSP_Status__c !=NSP_SalesConstants.DISCOVERY_CALL_COMPLETED)
                 {
-                    scannedTask += HAS_DISCOVERY;
-                    if(event.NSP_Status__c !=NSP_SalesConstants.DISCOVERY_CALL_COMPLETED)
-                    {
-                        scannedTask += HAS_OPEN_EVENT;
-                    }
+                    scannedTask += HAS_OPEN_EVENT;
                 }
-            }
-            
-            //Show error
-            if( !scannedTask.CONTAINS(HAS_DISCOVERY) ){
-                opp.addError(System.Label.NSP_AddDiscoveryCalls);
-            }
-            if( scannedTask.CONTAINS(HAS_OPEN_EVENT) ){
-                opp.addError(System.Label.NSP_CloseDiscoveryCallEvents);
             }
         }
         
+        //Show error
+        if( !scannedTask.CONTAINS(HAS_DISCOVERY) ){
+            opp.addError(System.Label.NSP_AddDiscoveryCalls);
+        }
+        if( scannedTask.CONTAINS(HAS_OPEN_EVENT) ){
+            opp.addError(System.Label.NSP_CloseDiscoveryCallEvents);
+        }
+       
     }
 
     // Evaluate criteria related to quote
@@ -403,31 +404,25 @@ public with sharing class NSP_ValidateOpportunityStage {
             }
             if ( exitCriteriaProductException.CONTAINS( opp.NSP_PrimaryProduct__c ) ) {
                 evaluateQuoteCriteriaProductException( opp , primaryQuote );
-            } else {
-                if ( opp.SBQQ__PrimaryQuote__c != null ) {
-                    if ( primaryQuote != null ) {
-                        if ( primaryQuote.SBQQ__Status__c != NSP_SalesConstants.APPROVAL_STATUS_APPROVED ) {
-                            opp.addError( System.Label.NSP_Approve_Primary_Quote );
-                        } else if ( !test.isRunningTest()
+            } else if ( opp.SBQQ__PrimaryQuote__c != null && primaryQuote != null ){
+                if ( primaryQuote.SBQQ__Status__c != NSP_SalesConstants.APPROVAL_STATUS_APPROVED ){
+                    opp.addError( System.Label.NSP_Approve_Primary_Quote );
+                } else if ( !test.isRunningTest()
                             && opp.StageName.EQUALS( NSP_SalesConstants.CLOSED_WON )
-                            && ( ( opp.NSP_PrimaryProduct__c != primaryQuote.NSP_Opportunity_Primary_Product__c ) || ( opp.NSP_Client_For_Life__c != primaryQuote.NSP_Client_For_Life__c ) )
+                            && ( ( opp.NSP_PrimaryProduct__c != primaryQuote.NSP_Opportunity_Primary_Product__c ) 
+                                || ( opp.NSP_Client_For_Life__c != primaryQuote.NSP_Client_For_Life__c ) )
                             )
-                        {
-                            opp.addError( System.label.NSP_Sync_Primary_Quote_With_Opportunity );
-                        }
-                    }
-                } else {
-                    if ( ( opp.SBQQ__PrimaryQuote__c == null )
-                        && (
-                            ( opp.Type == NSP_SalesConstants.NEW_BUSINESS_OPPORTUNITY )
-                            || ( ( opp.Type == NSP_SalesConstants.OPPORTUNITY_TYPE_EXISTING_PRODUCT ) && ( opp.NSP_AddonType__c == NSP_SalesConstants.OPPORTUNITY_SUBTYPE_AMENDMENT ) )
-                            )
-                        )
-                    {
-                        //DF-01080 subtype Amendment check added
-                        opp.addError(System.Label.NSP_AddPrimaryQuote);
-                    }
+                {
+                    opp.addError( System.label.NSP_Sync_Primary_Quote_With_Opportunity );
                 }
+            } else if ( ( opp.SBQQ__PrimaryQuote__c == null )
+                   && ( ( opp.Type == NSP_SalesConstants.NEW_BUSINESS_OPPORTUNITY )
+                        || ( ( opp.Type == NSP_SalesConstants.OPPORTUNITY_TYPE_EXISTING_PRODUCT )
+                          && ( opp.NSP_AddonType__c == NSP_SalesConstants.OPPORTUNITY_SUBTYPE_AMENDMENT ) )
+                      )
+                )
+            {
+                opp.addError(System.Label.NSP_AddPrimaryQuote);
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
