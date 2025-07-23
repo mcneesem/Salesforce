@@ -22,6 +22,7 @@ public with sharing class NSP_ValidateOpportunityStage {
     public static List<string> nonOwnerBasedCriteriaProducts = System.Label.NSP_NonOwnerBasedCriteriaProducts.split(',');
     public static List<string> closeLostRoleinOpportunityTeam = System.Label.Close_Lost_Role_in_Opportunity_Team.split(',');
     public static List<Opportunity_Stage_Validation__mdt> optyStageVals = Opportunity_Stage_Validation__mdt.getAll().values();
+    public static String validationObjects = 'Opportunity,Event,Task,OpportunityContactRole,NSP_Employee_Split__c,SBQQ__Quote__c,NSP_Checklist__c';
     private static Boolean hasAllowClosedLostPermission = CustomPermissionController.checkUserPermission( 'Allow_Closed_Lost_Opportunity' , UserInfo.getUserId() );
     private static Boolean hasCLSOOppOwnerPermission = CustomPermissionController.checkUserPermission( 'Opportunity_Closed_Lost_SO_Opp_Owner' , UserInfo.getUserId() );
     private static Boolean hasCLSOOppPermission = CustomPermissionController.checkUserPermission( 'Opportunity_Closed_Lost_SO_Opp' , UserInfo.getUserId() );
@@ -672,13 +673,8 @@ public with sharing class NSP_ValidateOpportunityStage {
     }
     
     private static Map<String, String> retrieveFieldPicklistValuesByLabel( String objectName , String fieldName ) {
-        Map<String, String> fieldPicklistValues = new Map<String, String>();
-        Schema.SObjectType objType = Schema.getGlobalDescribe().get(objectName);
-        if (objType == null) {
-            return fieldPicklistValues;
-        }
-        Schema.DescribeSObjectResult objDescribe = objType.getDescribe();
-        Map<String, Schema.SObjectField> fieldMap = objDescribe.fields.getMap();
+        Map<String, String> fieldPicklistValues = new Map<String, String>();  
+        Map<String, Schema.SObjectField> fieldMap = NSP_ValidateOpportunityStage.sObjDetails.get(objectName);
         if (fieldMap.containsKey(fieldName.toLowerCase())) {
             Schema.DescribeFieldResult fieldDescribe = fieldMap.get(fieldName.toLowerCase()).getDescribe();
             if ( fieldDescribe.getType() == Schema.DisplayType.PICKLIST || fieldDescribe.getType() == Schema.DisplayType.MULTIPICKLIST ){
@@ -862,6 +858,21 @@ public with sharing class NSP_ValidateOpportunityStage {
             return integUserProfileId;
         }
         private set;
+    }
+
+    public static Map<String, Map<String,Schema.SObjectField>> sObjDetails {
+        get { 
+            if(sObjDetails == null){
+                sObjDetails = new Map<String, Map<String,Schema.SObjectField>>();
+                List<String> types = validationObjects.split(',');
+                Schema.DescribeSobjectResult[] results = Schema.describeSObjects(types);
+
+                for(Schema.DescribeSobjectResult sObj : Schema.describeSObjects(types)){
+                    sObjDetails.put(sObj.getName(), Schema.getGlobalDescribe().get(sObj.getName()).getDescribe().fields.getMap());
+                }
+            }
+            return sObjDetails;
+        } private set;
     }
 
     public enum Operator { EQUALS, DOES_NOT_EQUAL, CONTAINS, DOES_NOT_CONTAIN, IS_IN, IS_NOT_IN , GREATER_THAN_OR_EQUALS, LESS_THAN_OR_EQUALS, IS_BLANK, IS_NOT_BLANK, DOES_NOT_EXIST }
