@@ -4,6 +4,53 @@
     <active>true</active>
     <label>RET Project Task</label>
     <picklistValues>
+        <picklist>Canceled_Reason__c</picklist>
+        <values>
+            <fullName>Blocked by Dependencies</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Declined</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Termed After Engagement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Termed Before Engagement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Unresponsive</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Duplicate Task</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insufficient Information</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No Engagement Needed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No Form Needed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Out of Scope</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Resource Constraints</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_Competitor_s_that_won_the_business__c</picklist>
         <values>
             <fullName>ADP</fullName>

@@ -621,6 +621,23 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Canceled_Reason__c</fieldItem>
+                <identifier>RecordCanceled_Reason__cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.pse__Status__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Canceled</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Percentage_Complete__c</fieldItem>
                 <identifier>RecordNSP_Percentage_Complete_cField2</identifier>
             </fieldInstance>
