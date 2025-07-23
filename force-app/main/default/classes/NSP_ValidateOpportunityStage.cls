@@ -1,11 +1,11 @@
 public with sharing class NSP_ValidateOpportunityStage {
     // test w/ NSP_ValidateOpportunityStageTest (84%)
 
-    // ************************************************************************************************************************
+    // ***************************************************************************************************************************
     //  ClassName:      NSP_ValidateOpportunityStage
-    //  Description :   Class for validating Opportunity Stage changes based on various User permissions and sales process
-    //                  criteria. Process criteria are stored in Opportunity_Stage_Validation__mdt custom metadata records. The
-    //                  class provides methods to validate whether an Opportunity can move to a specific stage based on the
+    //  Description :   Class for validating Opportunity Stage changes based on various User criteria and sales process
+    //                  criteria. Sales process criteria are stored in Opportunity_Stage_Validation__mdt custom metadata records.
+    //                  The class provides methods to validate whether an Opportunity can move to a specific stage based on the
     //                  criteria defined in the metadata matching the Opportunity's Primary_Product__c and Stage fields. The
     //                  condition defined in each matching metadata record must be met or the Stage change will be prevented
     //                  and the corresponding error message in the metadata will be displayed to the user. Some metadata
@@ -17,10 +17,10 @@ public with sharing class NSP_ValidateOpportunityStage {
     //                         object, validation fails if the Opportunity being validated matches all the other criteria
     //                         in the group.
     //                      3. When the records in a group are for Opportunity object and some related object, at least one 
-    //                         related object record matching all the matching related object criteria in the group must be 
-    //                         found but only if the Opportunity condition in the group is true. If the Opportunity condition
-    //                         is not true, related object criteria in the group is not required and the validation passes.
-    // ************************************************************************************************************************
+    //                         related object record matching all the related object criteria in the group must be 
+    //                         found but only if the Opportunity condition in the group is met. If the Opportunity condition
+    //                         is not met, related object criteria in the group is not required and the validation passes.
+    // ***************************************************************************************************************************
 
     public static Id soldToCheckListRecordTypeId = NSP_GenericRecordType.getRecordTypeId('NSP_Checklist__c' , 'NSP_Sold_to_Paid_Checklist');
     public static Set<String> validHRProducts = new Set<String>{NSP_SalesConstants.WO, NSP_SalesConstants.WS, NSP_SalesConstants.HRScale};
@@ -72,71 +72,79 @@ public with sharing class NSP_ValidateOpportunityStage {
     }
 
     public static void validateOpportunityStageNew(List<Opportunity> newList , List<Id> oppIdList , Map<Id,User> opportunityOwnerRoleMap){
-        Map<ID, Opportunity> oppEventTaskOCRMap = new Map<ID, Opportunity>(
-                                [ SELECT AccountId , Id , 
-                                    (SELECT Id , Status , NSP_Task_Type__c , Subject 
-                                        FROM Tasks WHERE CreatedBy.ProfileId =: NSP_ValidateOpportunityStage.integUserProfileId AND NSP_Task_Type__c != NULL),
-                                    (SELECT Id , NSP_Event_Subtype__c , NSP_Method__c , NSP_Status__c 
-                                        FROM Events WHERE NSP_Event_Subtype__c != NULL AND NSP_Status__c != :NSP_SalesConstants.Cancelled),
-                                    (SELECT Id 
-                                        FROM OpportunityContactRoles),
-                                    (SELECT Id 
-                                        FROM Employee_Splits__r),
-                                    (SELECT Id , Status__c 
-                                        FROM Checklists__r WHERE RecordTypeId =: soldToCheckListRecordTypeId)
-                                    FROM Opportunity
-                                    WHERE Id IN :oppIdList
-                                ]);
+        try{
+            Map<ID, Opportunity> oppEventTaskOCRMap = new Map<ID, Opportunity>(
+                                    [ SELECT AccountId , Id , 
+                                        (SELECT Id , Status , NSP_Task_Type__c , Subject 
+                                            FROM Tasks WHERE CreatedBy.ProfileId =: NSP_ValidateOpportunityStage.integUserProfileId AND NSP_Task_Type__c != NULL),
+                                        (SELECT Id , NSP_Event_Subtype__c , NSP_Method__c , NSP_Status__c 
+                                            FROM Events WHERE NSP_Event_Subtype__c != NULL AND NSP_Status__c != :NSP_SalesConstants.Cancelled),
+                                        (SELECT Id 
+                                            FROM OpportunityContactRoles),
+                                        (SELECT Id 
+                                            FROM Employee_Splits__r),
+                                        (SELECT Id , Status__c 
+                                            FROM Checklists__r WHERE RecordTypeId =: soldToCheckListRecordTypeId)
+                                        FROM Opportunity
+                                        WHERE Id IN :oppIdList
+                                    ]);
 
-        Map<Id, SBQQ__Quote__c> oppQuoteMap = new Map<Id,SBQQ__Quote__c>(
-                                [ SELECT Id , SBQQ__Status__c , NSP_Opportunity_Primary_Product__c , NSP_Client_For_Life__c 
-                                    FROM SBQQ__Quote__c 
-                                    WHERE SBQQ__Opportunity2__c IN :oppIdList AND SBQQ__Primary__c = TRUE 
-                                ]);
+            Map<Id, SBQQ__Quote__c> oppQuoteMap = new Map<Id,SBQQ__Quote__c>(
+                                    [ SELECT Id , SBQQ__Status__c , NSP_Opportunity_Primary_Product__c , NSP_Client_For_Life__c 
+                                        FROM SBQQ__Quote__c 
+                                        WHERE SBQQ__Opportunity2__c IN :oppIdList AND SBQQ__Primary__c = TRUE 
+                                    ]);
 
-        for( Opportunity opp : newList ){
-            if( String.isBlank(opp.StageName) || (hasAllowClosedLostPermission && opp.StageName.EQUALS(NSP_SalesConstants.CLOSED_LOST)) ){
-                continue;
+            for( Opportunity opp : newList ){
+                if( String.isBlank(opp.StageName) || (hasAllowClosedLostPermission && opp.StageName.EQUALS(NSP_SalesConstants.CLOSED_LOST)) ){
+                    continue;
+                }
+
+                Opportunity oppFromMap = oppEventTaskOCRMap.get(opp.Id);
+                List<Task> taskList = oppFromMap?.Tasks;
+                List<Event> eventList=oppFromMap?.Events;
+                List<OpportunityContactRole> ocrList = oppFromMap?.OpportunityContactRoles;
+                List<NSP_Employee_Split__c> oppCreditList = oppFromMap?.Employee_Splits__r;
+                List<NSP_Checklist__c> stpList = oppFromMap?.Checklists__r;
+
+                Map<String,List<SObject>> relObjectMap = new Map<String,List<SObject>>();
+                relObjectMap.put('Opportunity' , new List<SObject>{opp});
+                relObjectMap.put('Event' , eventList);
+                relObjectMap.put('Task' , taskList);
+                relObjectMap.put('OpportunityContactRole' , ocrList);
+                relObjectMap.put('NSP_Employee_Split__c' , oppCreditList);
+                relObjectMap.put('NSP_Checklist__c' , stpList);
+                relObjectMap.put('SBQQ__Quote__c' , new List<SBQQ__Quote__c>{oppQuoteMap.get(opp.Id)});
+
+                List<Opportunity_Stage_Validation__mdt> currentOptyStageVals = getCurrentOptyStageVals(opp);
+                Map<String, List<Opportunity_Stage_Validation__mdt>> groupedStageValMap = getGroupedStageValMap(currentOptyStageVals);
+
+                evaluateSingleCriteria(opp, relObjectMap, currentOptyStageVals);
+                evaluateGroupedCriteria(opp, relObjectMap, groupedStageValMap);
+
+                //Proposal
+                if( opp.StageName.EQUALS(NSP_SalesConstants.PROPOSAL_STAGE) ){
+                    evaluateQuoteCriteria( opp , oppQuoteMap );
+                }
+
+                //Closed Won
+                if( opp.StageName.EQUALS(NSP_SalesConstants.CLOSED_WON) ){
+                    //first check if primary quote is created and approved on primary products it is applicable on then check user based criteria
+                    evaluateQuoteCriteria(opp , oppQuoteMap);
+                    evaluateClosedWonStageCriteria( opp );
+                }
+
+                //Closed Lost
+                if( opp.StageName.EQUALS(NSP_SalesConstants.CLOSED_LOST) ){
+                    evaluateClosedLostStageCriteria( opp , opportunityOwnerRoleMap );
+                }
             }
-
-            Opportunity oppFromMap = oppEventTaskOCRMap.get(opp.Id);
-            List<Task> taskList = oppFromMap?.Tasks;
-            List<Event> eventList=oppFromMap?.Events;
-            List<OpportunityContactRole> ocrList = oppFromMap?.OpportunityContactRoles;
-            List<NSP_Employee_Split__c> oppCreditList = oppFromMap?.Employee_Splits__r;
-            List<NSP_Checklist__c> stpList = oppFromMap?.Checklists__r;
-
-            Map<String,List<SObject>> relObjectMap = new Map<String,List<SObject>>();
-            relObjectMap.put('Opportunity' , new List<SObject>{opp});
-            relObjectMap.put('Event' , eventList);
-            relObjectMap.put('Task' , taskList);
-            relObjectMap.put('OpportunityContactRole' , ocrList);
-            relObjectMap.put('NSP_Employee_Split__c' , oppCreditList);
-            relObjectMap.put('NSP_Checklist__c' , stpList);
-            relObjectMap.put('SBQQ__Quote__c' , new List<SBQQ__Quote__c>{oppQuoteMap.get(opp.Id)});
-
-            List<Opportunity_Stage_Validation__mdt> currentOptyStageVals = getCurrentOptyStageVals(opp);
-            Map<String, List<Opportunity_Stage_Validation__mdt>> groupedStageValMap = getGroupedStageValMap(currentOptyStageVals);
-
-            evaluateSingleCriteria(opp, relObjectMap, currentOptyStageVals);
-            evaluateGroupedCriteria(opp, relObjectMap, groupedStageValMap);
-
-            //Proposal
-            if( opp.StageName.EQUALS(NSP_SalesConstants.PROPOSAL_STAGE) ){
-                evaluateQuoteCriteria( opp , oppQuoteMap );
-            }
-
-            //Closed Won
-            if( opp.StageName.EQUALS(NSP_SalesConstants.CLOSED_WON) ){
-                //first check if primary quote is created and approved on primary products it is applicable on then check user based criteria
-                evaluateQuoteCriteria(opp , oppQuoteMap);
-                evaluateClosedWonStageCriteria( opp );
-            }
-
-            //Closed Lost
-            if( opp.StageName.EQUALS(NSP_SalesConstants.CLOSED_LOST) ){
-                evaluateClosedLostStageCriteria( opp , opportunityOwnerRoleMap );
-            }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ValidateOpportunityStage.class.getName() ,
+                'validateOpportunityStageNew' ,
+                e
+            );
         }
     }
 
@@ -209,8 +217,8 @@ public with sharing class NSP_ValidateOpportunityStage {
     public static String getGroupRelObjName( String groupName , Map<String, List<Opportunity_Stage_Validation__mdt>> groupedStageValMap ){
         String groupRelObjName = OPPORTUNITY_OBJ;
         for( Opportunity_Stage_Validation__mdt groupOptyStageVal : groupedStageValMap.get(groupName) ){
-            if( groupedStageValMap.get(groupName)[0].Object__c != OPPORTUNITY_OBJ){ // first object name other than Opportunity
-                groupRelObjName = groupedStageValMap.get(groupName)[0].Object__c;
+            if( groupOptyStageVal.Object__c != OPPORTUNITY_OBJ){ // first object name other than Opportunity
+                groupRelObjName = groupOptyStageVal.Object__c;
                 break;
             }
         }
@@ -412,19 +420,10 @@ public with sharing class NSP_ValidateOpportunityStage {
             if ( quoteMap != null ) {
                 primaryQuote = quoteMap.get( opp.SBQQ__PrimaryQuote__c ); // prevent NullPointerExceptions...
             }
-            if ( exitCriteriaProductException.CONTAINS( opp.NSP_PrimaryProduct__c ) ) {
+            if ( exitCriteriaProductException.CONTAINS( opp.NSP_PrimaryProduct__c ) ){
                 evaluateQuoteCriteriaProductException( opp , primaryQuote );
             } else if ( opp.SBQQ__PrimaryQuote__c != null && primaryQuote != null ){
-                if ( primaryQuote.SBQQ__Status__c != NSP_SalesConstants.APPROVAL_STATUS_APPROVED ){
-                    opp.addError( System.Label.NSP_Approve_Primary_Quote );
-                } else if ( !test.isRunningTest()
-                            && opp.StageName.EQUALS( NSP_SalesConstants.CLOSED_WON )
-                            && ( ( opp.NSP_PrimaryProduct__c != primaryQuote.NSP_Opportunity_Primary_Product__c ) 
-                                || ( opp.NSP_Client_For_Life__c != primaryQuote.NSP_Client_For_Life__c ) )
-                            )
-                {
-                    opp.addError( System.label.NSP_Sync_Primary_Quote_With_Opportunity );
-                }
+                evaluateQuoteExistingQuote( opp , primaryQuote );
             } else if ( ( opp.SBQQ__PrimaryQuote__c == null )
                    && ( ( opp.Type == NSP_SalesConstants.NEW_BUSINESS_OPPORTUNITY )
                         || ( ( opp.Type == NSP_SalesConstants.OPPORTUNITY_TYPE_EXISTING_PRODUCT )
@@ -438,6 +437,27 @@ public with sharing class NSP_ValidateOpportunityStage {
             NSP_ErrorLogHandler.logException(
                 NSP_ValidateOpportunityStage.class.getName() ,
                 'evaluateQuoteCriteria' ,
+                e
+            );
+        }
+    }
+
+    public static void evaluateQuoteExistingQuote( Opportunity opp , SBQQ__Quote__c primaryQuote ){
+        try {
+            if ( primaryQuote.SBQQ__Status__c != NSP_SalesConstants.APPROVAL_STATUS_APPROVED ){
+                opp.addError( System.Label.NSP_Approve_Primary_Quote );
+            } else if ( !test.isRunningTest()
+                        && opp.StageName.EQUALS( NSP_SalesConstants.CLOSED_WON )
+                        && ( ( opp.NSP_PrimaryProduct__c != primaryQuote.NSP_Opportunity_Primary_Product__c ) 
+                            || ( opp.NSP_Client_For_Life__c != primaryQuote.NSP_Client_For_Life__c ) )
+                        )
+            {
+                opp.addError( System.label.NSP_Sync_Primary_Quote_With_Opportunity );
+            }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ValidateOpportunityStage.class.getName() ,
+                'evaluateQuoteExistingQuote' ,
                 e
             );
         }
