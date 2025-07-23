@@ -37,14 +37,14 @@
                 <label>Custom</label>
             </value>
             <value>
-                <fullName>Return to Work Readiness</fullName>
+                <fullName>Readiness to Return to the Office</fullName>
                 <default>false</default>
-                <label>Return to Work Readiness</label>
+                <label>Readiness to Return to the Office</label>
             </value>
             <value>
-                <fullName>COVID-19 Well-Being &amp; Support</fullName>
+                <fullName>Work from Home</fullName>
                 <default>false</default>
-                <label>COVID-19 Well-Being &amp; Support</label>
+                <label>Work from Home</label>
             </value>
             <value>
                 <fullName>General Well-Being</fullName>
@@ -57,19 +57,19 @@
                 <label>Diversity, Equity &amp; Inclusion</label>
             </value>
             <value>
-                <fullName>Onboarding - One-time survey</fullName>
+                <fullName>Belonging</fullName>
                 <default>false</default>
-                <label>Onboarding - One-time survey</label>
+                <label>Belonging</label>
+            </value>
+            <value>
+                <fullName>Onboarding - One-time</fullName>
+                <default>false</default>
+                <label>Onboarding - One-time</label>
             </value>
             <value>
                 <fullName>Onboarding - Week 2/Week 5</fullName>
                 <default>false</default>
                 <label>Onboarding - Week 2/Week 5</label>
-            </value>
-            <value>
-                <fullName>Work from Home</fullName>
-                <default>false</default>
-                <label>Work from Home</label>
             </value>
             <value>
                 <fullName>Stay</fullName>
