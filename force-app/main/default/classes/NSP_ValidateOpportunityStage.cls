@@ -746,15 +746,6 @@ public with sharing class NSP_ValidateOpportunityStage {
         return false;
     }
 
-    public static Boolean checkConditionBoolean( Boolean fieldValue , Boolean ruleValue , String operation ){
-        if ( operation == Operator.EQUALS.name() ) {
-            return fieldValue == ruleValue;
-        } else if ( operation == Operator.DOES_NOT_EQUAL.name() ) {
-            return fieldValue != ruleValue;
-        }
-        return false;
-    }
-
     public static Boolean checkConditionDate( Date fieldValue , Date ruleValue , String operation ){
         if ( operation == Operator.EQUALS.name() ) {
             return fieldValue == ruleValue;
