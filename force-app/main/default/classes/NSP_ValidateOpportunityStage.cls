@@ -1,5 +1,5 @@
 public with sharing class NSP_ValidateOpportunityStage {
-    // test w/ NSP_ValidateOpportunityStageTest (84%)
+    // test w/ NSP_ValidateOpportunityStageTest (83%)
 
     // ***************************************************************************************************************************
     //  ClassName:      NSP_ValidateOpportunityStage
@@ -894,10 +894,8 @@ public with sharing class NSP_ValidateOpportunityStage {
             if(sObjDetails == null){
                 sObjDetails = new Map<String, Map<String,Schema.SObjectField>>();
                 List<String> types = validationObjects.split(',');
-                Schema.DescribeSobjectResult[] results = Schema.describeSObjects(types);
-
                 for(Schema.DescribeSobjectResult sObj : Schema.describeSObjects(types)){
-                    sObjDetails.put(sObj.getName(), Schema.getGlobalDescribe().get(sObj.getName()).getDescribe().fields.getMap());
+                    sObjDetails.put(sObj.getName(), sObj.fields.getMap());
                 }
             }
             return sObjDetails;
