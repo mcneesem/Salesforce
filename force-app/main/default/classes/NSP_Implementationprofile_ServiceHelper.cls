@@ -2043,21 +2043,55 @@ public class NSP_Implementationprofile_ServiceHelper {
         }
     }
     
-    private List<NSP_Implementation_Profile_Automation__c> runEmailAutomation(Implementation_Profile__c ipWithValue, String fnName, String subject, String body, String mdtName,List<String> emailAddress){
+    private List<NSP_Implementation_Profile_Automation__c> runEmailAutomation(
+        Implementation_Profile__c ipWithValue ,
+        String fnName ,
+        String subject ,
+        String body ,
+        String mdtName ,
+        List<String> emailAddress
+        )
+    {
         List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
-        if(String.isNotBlank(fnName) && String.isNotBlank(subject) && String.isNotBlank(body) && String.isNotBlank(mdtName)){
+        String recordType = '';
+        if ( ipWithValue.RecordTypeId == ipFSORecordTypeId ) {
+            recordType = NSP_ServiceConstants.FSOProfile;
+        } else {
+            recordType = NSP_ServiceConstants.MIDDLEMARKET;
+        }
+        if ( String.isNotBlank( fnName )
+            && String.isNotBlank( subject )
+            && String.isNotBlank( body )
+            && String.isNotBlank( mdtName )
+            && String.isNotBlank( recordType )
+            )
+        {
             NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(mdtName);
-            if((isRerun || ipWithValue.NSP_Form_Completed__c) && !isSaveForm && ipa != null) {
-                if(!isRerun && !ipAutomationdata?.get(IP_AUTOMATION_IDENTIFIER).contains(ipWithValue.Id+'_'+fnName+'_'+NSP_ServiceConstants.FSOProfile)){
-                    sendMailUsingFlowAction(emailAddress,subject,body);
-                    ipAutomationRecords.add(ipAutomationHelper.createIPAutomation(ipWithValue, ipa.NSP_Automation_Name__c, ipa.NSP_Method_Name__c,ipa.NSP_Section__c));
-                } else if(isRerun){
-                    sendMailUsingFlowAction(emailAddress,subject,body);
+            if ( ( isRerun || ipWithValue.NSP_Form_Completed__c )
+                && !isSaveForm
+                && ( ipa != null )
+                )
+            {
+                if ( !isRerun
+                    && !ipAutomationdata?.get(IP_AUTOMATION_IDENTIFIER).contains(ipWithValue.Id+'_'+fnName+'_'+recordType )
+                    )
+                {
+                    sendMailUsingFlowAction( emailAddress , subject , body );
+                    ipAutomationRecords.add(
+                        ipAutomationHelper.createIPAutomation(
+                            ipWithValue ,
+                            ipa.NSP_Automation_Name__c ,
+                            ipa.NSP_Method_Name__c ,
+                            ipa.NSP_Section__c
+                        )
+                    );
+                } else if ( isRerun ) {
+                    sendMailUsingFlowAction( emailAddress , subject , body );
                     impRecordId = ipWithValue.Id;
                     impAutomationName = ipa.NSP_Automation_Name__c;
                     impMethodName = ipa.NSP_Method_Name__c;
                     impAutomationSection = ipa.NSP_Section__c;
-                    impAutomationRecordType=NSP_ServiceConstants.FSOProfile;
+                    impAutomationRecordType = recordType;
                 }
             }
         }
