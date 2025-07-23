@@ -570,6 +570,13 @@
         <value>Is payroll entry itemized or simple entry?</value>
     </labels>
     <labels>
+        <fullName>Is_the_client_Emerging_Growth</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Is the client Emerging Growth</shortDescription>
+        <value>Is the client Emerging Growth or have related accounts with over +50 total WSEEs?</value>
+    </labels>
+    <labels>
         <fullName>Is_the_Employee_an_Intern</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -6735,6 +6742,20 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <protected>false</protected>
         <shortDescription>What months is the Intern working?</shortDescription>
         <value>What months is the Intern working?</value>
+    </labels>
+    <labels>
+        <fullName>Who_should_the_FLSA_team_reach_out_to</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Who should the FLSA team reach out to</shortDescription>
+        <value>Who should the FLSA team reach out to at the client for the FLSA Review? Please provide Client Contact name(s) and phone and/or email information.</value>
+    </labels>
+    <labels>
+        <fullName>Would_the_client_like_a_FLSA_Exemption</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Would the client like a FLSA Exemption</shortDescription>
+        <value>Would the client like a FLSA Exemption Classification Review?</value>
     </labels>
     <labels>
         <fullName>Would_you_like_automation_for_your_general_ledger</fullName>
