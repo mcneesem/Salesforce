@@ -1,17 +1,26 @@
-/**
-Apex Class Name      :  NSP_ValidateOpportunityStage
-    Version              :  1.0
-    Created Date         :  12/24/2021
-    Function             :  class for validating opportunity stages rules
-    Story                :
-    Modification Log     :
-     *--------------------------------------------------------------------------------------------------
- * Developer                   Date                   Description
- * -------------------------------------------------------------------------------------------------
- * Tejas                 12/24/2021            First Iteration
- */
 public with sharing class NSP_ValidateOpportunityStage {
     // test w/ NSP_ValidateOpportunityStageTest (84%)
+
+    // ************************************************************************************************************************
+    //  ClassName:      NSP_ValidateOpportunityStage
+    //  Description :   Class for validating Opportunity Stage changes based on various User permissions and sales process
+    //                  criteria. Process criteria are stored in Opportunity_Stage_Validation__mdt custom metadata records. The
+    //                  class provides methods to validate whether an Opportunity can move to a specific stage based on the
+    //                  criteria defined in the metadata matching the Opportunity's Primary_Product__c and Stage fields. The
+    //                  condition defined in each matching metadata record must be met or the Stage change will be prevented
+    //                  and the corresponding error message in the metadata will be displayed to the user. Some metadata
+    //                  records are grouped together. Grouped criteria are evaluated as follows:
+    //                      1. When all records in a group are for same Object name (e.g., Event), at least one related record
+    //                         (of specified Object) matching all the criteria in the group must be found or validation fails.
+    //                      2. If group contains a Does Not Exist condition, validation fails if any related record matching 
+    //                         all the other group criteria is found. If the metadata records in the group are for Opportunity
+    //                         object, validation fails if the Opportunity being validated matches all the other criteria
+    //                         in the group.
+    //                      3. When the records in a group are for Opportunity object and some related object, at least one 
+    //                         related object record matching all the matching related object criteria in the group must be 
+    //                         found but only if the Opportunity condition in the group is true. If the Opportunity condition
+    //                         is not true, related object criteria in the group is not required and the validation passes.
+    // ************************************************************************************************************************
 
     public static Id soldToCheckListRecordTypeId = NSP_GenericRecordType.getRecordTypeId('NSP_Checklist__c' , 'NSP_Sold_to_Paid_Checklist');
     public static Set<String> validHRProducts = new Set<String>{NSP_SalesConstants.WO, NSP_SalesConstants.WS, NSP_SalesConstants.HRScale};
