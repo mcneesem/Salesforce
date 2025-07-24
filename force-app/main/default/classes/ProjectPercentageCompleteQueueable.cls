@@ -1,5 +1,5 @@
 public with sharing class ProjectPercentageCompleteQueueable implements Queueable {
-    // test w/ ProjectPercentageCompleteQueueable (86%)
+    // test w/ ProjectPercentageCompleteQueueableTest (86%)
 
     //
     // public entry points...
