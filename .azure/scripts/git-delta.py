@@ -1,33 +1,57 @@
 # git-delta.py
 import argparse
+import subprocess
 import os
 import shutil
 
 parser = argparse.ArgumentParser( description="Evalute the current git checkout and determine the delta required for a build." )
-parser.add_argument( "--diff" , required=True , help="File containing results of 'git diff' command." )
-parser.add_argument( "--files" , required=True , help="File containing results of 'git ls-files' command." )
+parser.add_argument( "--start" , default="HEAD" , help="From commit for 'git diff' command." )
+parser.add_argument( "--end" , default="HEAD" , help="To commit for 'git diff' command." )
 parser.add_argument( "--output" , required=True , help="Output directory for delta package." )
 parser.add_argument( "--verbose" , action="store_true" , help="Enable verbose output" )
 args = parser.parse_args()
 
 # Copy File
-def copyFile( filepath , output , verbose=False ):
-    if verbose:
-        print( "git-delta.py: copyFile" )
-        print( filepath )
-        print( output )
+def copyFile( filepath , output ):
     if filepath:
         if os.path.exists( filepath ):
             if os.path.isfile( filepath ):
                 if output:
                     if os.path.exists( output ):
                         if os.path.isdir( output ):
-                            filedir = os.path.dirname( filepath )
-                            destination = os.path.join( output , filedir )
+                            destination = os.path.join(
+                                output ,
+                                os.path.dirname( filepath )
+                            )
                             os.makedirs( destination , exist_ok=True )
                             shutil.copy( filepath , destination )
-    if verbose:
-        print( " ----- " )
+
+# Copy Directory Recurse
+def copyDirectoryRecurse( filedir , output ):
+    if filedir:
+        if os.path.exists( filedir ):
+            if os.path.isdir( filedir ):
+                for i , sub in enumerate( os.listdir( filedir ) ):
+                    subpath = os.path.join( filedir , sub )
+                    copyFile( subpath , output )
+                    if subpath:
+                        if os.path.exists( subpath ):
+                            if os.path.isdir( subpath ):
+                                copyDirectoryRecurse( subpath , output )
+
+# Get File Path Without Extension
+def getFilePathWithoutExtension( filepath ):
+    filepathWithoutExtension = filepath
+    if filepath:
+        if os.path.exists( filepath ):
+            if os.path.isfile( filepath ):
+                filesplit = os.path.splitext( os.path.basename( filepath ) )
+                if ( len( filesplit ) > 0 ):
+                    filepathWithoutExtension = os.path.join(
+                        os.path.dirname( filepath ) ,
+                        filesplit[0]
+                    )
+    return filepathWithoutExtension
 
 # Copy File Paths
 def copyFilePaths( filepaths , output , verbose=False ):
@@ -36,8 +60,34 @@ def copyFilePaths( filepaths , output , verbose=False ):
         print( filepaths )
         print( output )
     if filepaths:
+        metaFileSuffix = "-meta.xml"
         for i , filepath in enumerate( filepaths ):
-            copyFile( filepath , output , verbose )
+            # always copy the requested file...
+            copyFile( filepath , output )
+            if filepath.endswith( metaFileSuffix ):
+                # is-a *-meta.xml file...
+                # ~ also copy the source file...
+                copyFile( filepath.removesuffix( metaFileSuffix ) , output )
+            else:
+                # is-not-a *-meta.xml file...
+                # ~ also copy the meta file...
+                copyFile( filepath + metaFileSuffix , output )
+            # conditionally copy more related files...
+            filedir = os.path.dirname( filepath )
+            if any( metadataType in filepath for metadataType in [ "/aura/" , "/lwc/" ] ):
+                copyDirectoryRecurse( filedir , output )
+            if "/staticresources/" in filepath:
+                copyFile(
+                    getFilePathWithoutExtension( filepath ) + ".resource" + metaFileSuffix ,
+                    output
+                )
+                if not filedir.endswith( "/staticresources" ):
+                    # is-a zipped static resource...
+                    copyDirectoryRecurse( filedir , output )
+                    copyFile(
+                        filedir + ".resource" + metaFileSuffix ,
+                        output
+                    )
     if verbose:
         print( " ----- " )
 
@@ -50,10 +100,13 @@ def copyPackageFiles( gitDiffs , output , verbose=False ):
     if gitDiffs:
         for key in gitDiffs:
             if verbose:
-                print( key )
+                print( key + ": " + str( len( gitDiffs[key] ) ) )
                 print( gitDiffs[key] )
-            if key != "D":
+            if ( ( key == "A" ) or ( key == "M" ) ):
                 copyFilePaths( gitDiffs[key] , output , verbose )
+            elif key != "D":
+                if verbose:
+                    print( "destructiveChanges" )
 
 # Scan Git Diff Lines
 def scanGitDiffLines( lines , verbose=False ):
@@ -106,27 +159,94 @@ def parseFile( filepath , verbose=False ):
                         lines.append( stripped )
     return lines
 
+# Parse Command Response
+def parseCommandResponse( stdout , verbose=False ):
+    if args.verbose:
+        print( "git-delta.py: parseCommandResponse" )
+        # print( stdout )
+    lines = []
+    if stdout:
+        for i , line in enumerate( stdout.splitlines() ):
+            stripped = line.strip()
+            if verbose:
+                print( stripped )
+            lines.append( stripped )
+    return lines
+
+# Run Command
+def runCommand( command , verbose=False ):
+    if args.verbose:
+        print( "git-delta.py: runCommand" )
+    if verbose:
+        print( command )
+    response = ""
+    if command:
+        # Running a simple command and capturing its output
+        try:
+            result = subprocess.run(
+                command ,  # Command and its arguments as a list
+                capture_output=True,  # Capture stdout and stderr
+                text=True ,  # Decode output as text (UTF-8 by default)
+                check=True  # Raise CalledProcessError if the command returns a non-zero exit code
+            )
+            if result:
+                if verbose:
+                    print( result.returncode )
+                if ( result.returncode == 0 ):
+                    response = result.stdout
+                else:
+                    response = result.stderr
+        except subprocess.CalledProcessError as e:
+            response = e
+    if verbose:
+        print( response )
+    return response
+
 # Main function
 def main():
     if args.verbose:
         print( "git-delta.py: main" )
-        print( args.diff )
-        print( args.files )
+        print( args.start )
+        print( args.end )
         print( args.output )
         print( args.verbose )
         print( " ----- " )
 
-    gitLsFileLines = parseFile( args.files , False )
-    if args.verbose:
-        print( "gitLsFileLines:" )
-        print( gitLsFileLines )
-        if gitLsFileLines:
-            print( len( gitLsFileLines ) )
-        print( " ----- " )
+    if False: # disabled git-ls-file for now...
+        gitLsFileLines = parseCommandResponse(
+            runCommand(
+                [
+                    'git' ,
+                    'ls-files'
+                ] ,
+                False
+            ) ,
+            False
+        )
+        if args.verbose:
+            print( "gitLsFileLines:runCommand:parseCommandResponse:" )
+            print( gitLsFileLines )
+            if gitLsFileLines:
+                print( len( gitLsFileLines ) )
+            print( " ----- " )
 
-    gitDiffLines = parseFile( args.diff , True )
+    gitDiffLines = parseCommandResponse(
+        runCommand(
+            [
+                'git' ,
+                '--no-pager' ,
+                'diff' ,
+                '--name-status' ,
+                '--no-renames' ,
+                args.start ,
+                args.end
+            ] ,
+            True
+        ) ,
+        False
+    )
     if args.verbose:
-        print( "gitDiffLines:" )
+        print( "gitDiffLines:runCommand:parseCommandResponse:" )
         print( gitDiffLines )
         if gitDiffLines:
             print( len( gitDiffLines ) )
