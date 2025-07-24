@@ -89,6 +89,9 @@
     &apos;108&apos; , &apos;Halo Investment Partners&apos; ,
     &apos;109&apos; , &apos;Dudani Enterprises&apos; ,
     &apos;110&apos; , &apos;Institute for NonProfit News&apos; ,
+    &apos;118&apos; , &apos;JLL&apos; ,
+    &apos;119&apos; , &apos;MSO&apos; ,
+    &apos;120&apos; , &apos;The Anderson Group&apos; ,
     TEXT( Account.WO_Asset__r.NSP_National_Account_Group__c )
   )
 )</formula>
