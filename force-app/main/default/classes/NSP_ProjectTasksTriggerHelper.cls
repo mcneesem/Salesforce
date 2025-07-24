@@ -1,5 +1,7 @@
 public class NSP_ProjectTasksTriggerHelper {
     // test w/ NSP_ProjectTasksTriggerHelperTest, NSP_Implprofile_ServiceHelperUpdate_Test (78%)
+    // test w/ NSP_ProjectTasksTriggerHelperTest (72%)
+    // test w/ NSP_Implprofile_ServiceHelperUpdate_Test (34%)
 
     private static final String HUNDRED_PERCENT =  '100%';
     private static final String COBRA_MM ='NSP_COBRA';
@@ -1106,8 +1108,19 @@ public class NSP_ProjectTasksTriggerHelper {
     // @return void
     // STY-00717
     //
-    @future
     private static void updateProjectPercentageComplete( Set<Id> projectIds ) {
+        if ( ProjectTaskTriggerSettings__c.getInstance( UserInfo.getUserId() ).IsEnabledQueueablePercentage__c
+            && ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() )
+            )
+        {
+            ProjectPercentageCompleteQueueable.enqueueJob( projectIds );
+        } else {
+            NSP_ProjectTasksTriggerHelper.updateProjectPercentageCompleteFuture( projectIds );
+        }
+    }
+
+    @future
+    private static void updateProjectPercentageCompleteFuture( Set<Id> projectIds ) {
         try {
             AggregateResult[] groupedResults = [
                 SELECT
