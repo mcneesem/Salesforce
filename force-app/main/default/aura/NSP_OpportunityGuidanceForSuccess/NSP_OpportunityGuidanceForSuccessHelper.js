@@ -19,21 +19,5 @@
             });
             $A.enqueueAction(action);
         }
-    },
-
-    //557355 - get opportunity details and then select the appropriate guidance message for the opportunity
-    getOpportunityDetails: function (component, opportunityRecordId) {
-        let action = component.get("c.getOpportunityDetails");
-        action.setParams({ recordId: opportunityRecordId });
-        action.setCallback(this, function (response) {
-            let state = response.getState();
-            if (state === "SUCCESS") {
-                let opportunityDetails = response.getReturnValue();
-                component.set("v.opportunityRecord", opportunityDetails);
-                this.setGuidanceMessages(component, component.get("v.opportunityRecord"));
-            }
-
-        });
-        $A.enqueueAction(action);
     }
 })
