@@ -3,7 +3,6 @@
     <!--557355 - removed default=null from opportunityRecord attribute -->
     <aura:attribute name="opportunityRecord" type="Opportunity" />
     <aura:attribute name="guidanceMessage" type="String"/>
-    <aura:attribute name="guidanceForSuccessMdtRecords" type="NSP_Opportunity_Stage_Guidance_Path__mdt[]" default="null"/>
     <aura:handler name="change" value="{!v.opportunityRecord}" action="{!c.onRecordChange}" />
     <force:recordData aura:id="recordLoader"
                       recordId="{!v.recordId}"
@@ -20,16 +19,3 @@
     </lightning:card>
     
 </aura:component>
-
-<!-- 
-
-
-
-            <aura:if isTrue="{!v.opportunityRecord.StageName == 'Analysis'}">
-                <ul class="slds-text-align_left">
-                    <li>Analysis</li>
-                    <li>Analysis</li>
-                    <li>Analysis</li>
-                </ul>
-            </aura:if>
--->

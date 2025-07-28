@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Analysis HR360 Select Edition</label>
+    <protected>false</protected>
+    <values>
+        <field>NSP_Account_Segment__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>NSP_Is_Active__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>NSP_Message__c</field>
+        <value xsi:type="xsd:string">Internal Analysis
+•	Review preliminary pricing from P&amp;R
+•	Complete medical reconciliation to determine $ offset, % discount
+•	Complete WC true up to determine $ offset, % discount
+•	Build preliminary Financial Analysis to determine delta
+Value Development with Prospect
+•	Discuss prioritized key drivers and validate business impact
+•	Discuss benefits strategy, Insperity benefits value propositions, and offset
+•	Introduce Insperity service model and engage service team
+•	Engage Sales Engineer for a technology demo, if needed
+•	Engage Sales Partners for ancillary products</value>
+    </values>
+    <values>
+        <field>NSP_PrimaryProduct__c</field>
+        <value xsi:type="xsd:string">WS</value>
+    </values>
+    <values>
+        <field>NSP_StageName__c</field>
+        <value xsi:type="xsd:string">Analysis</value>
+    </values>
+</CustomMetadata>

@@ -1,20 +1,41 @@
-public class NSP_GuidanceForSuccessController {
-    /*
-* Author: Tejas Patkar
-* Description: method used to retrieve all mdt records of type NSP_Opportunity_Stage_Guidance_Path__mdt
-* arguments: void
-* return type, List<NSP_Opportunity_Stage_Guidance_Path__mdt>
-* Try Catch has been moved to a single line to fix test coverage.
-*/
+public without sharing class  NSP_GuidanceForSuccessController {
+    // test w/ NSP_GuidanceForSuccessControllerTest (85%)
+    
+    /* Description: This method queries the guidance for success from the custom metadata "NSP_Opportunity_Stage_Guidance_Path__mdt"
+     * @param: stageName
+     * @param: productId
+     * @param: segmentId
+     * @return: guidance message (String)
+     * Modification History:
+     * -------------------------------------------------------------------------------------
+     * author           | Date              | Description
+     * -------------------------------------------------------------------------------------
+     * Niguel Florian   07/28/2025         created this new method - ADO-442075
+     */
     @AuraEnabled
-    public static List<NSP_Opportunity_Stage_Guidance_Path__mdt> getGuidanceForSuccessMessages(){
-        List<NSP_Opportunity_Stage_Guidance_Path__mdt> guidanceMessages = new List<NSP_Opportunity_Stage_Guidance_Path__mdt>();
+    public static String getMessage(String stageName, String productId, String segmentId){
+        String segment = !String.isEmpty(segmentId) ? segmentId : null;
         try{
-            guidanceMessages = [SELECT MasterLabel,NSP_Message__c,NSP_PrimaryProduct__c,NSP_StageName__c,NSP_Account_Segment__c 
-                                FROM NSP_Opportunity_Stage_Guidance_Path__mdt 
-                                WHERE NSP_Is_Active__c = true ORDER BY NSP_Account_Segment__c NULLS LAST LIMIT 100];
-        } catch(Exception ex) {throw new AuraHandledException('Exceptions occured: '+ex.getMessage());} 
-        return guidanceMessages;
+            //  Get guidance text
+            List<NSP_Opportunity_Stage_Guidance_Path__mdt> guidanceMessages =
+                [SELECT NSP_Message__c FROM NSP_Opportunity_Stage_Guidance_Path__mdt 
+            WHERE NSP_StageName__c =: stageName AND NSP_PrimaryProduct__c =:productId AND NSP_Account_Segment__c =: segment
+            AND NSP_Is_Active__c = true];
+            
+            //  If not found then get default guidance text (non techology product)
+            if(guidanceMessages.size() == 0){
+                guidanceMessages = [SELECT NSP_Message__c FROM NSP_Opportunity_Stage_Guidance_Path__mdt 
+                WHERE NSP_StageName__c =: stageName AND NSP_PrimaryProduct__c = 'Technology' AND NSP_Is_Active__c = true];
+            }
+            
+            if(guidanceMessages.size() > 0){
+                return  guidanceMessages[0].NSP_Message__c;
+            }
+            
+        } catch(Exception ex){
+            throw new AuraHandledException('Exceptions occured: '+ ex.getMessage());
+        }
+        return '';
     }
     
     /* Description: This method queries the required field from opportunity with recordId
@@ -25,7 +46,7 @@ public class NSP_GuidanceForSuccessController {
      * author           | Date              | Description
      * -------------------------------------------------------------------------------------
      * Harsha Khiroya    07/14/2022          created this new method - ticket 557355
-    */
+     */
     @AuraEnabled
     public static Opportunity getOpportunityDetails(String recordId){
         Opportunity opportunityRecord;
