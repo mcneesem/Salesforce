@@ -22,7 +22,6 @@ public with sharing class NSP_ValidateOpportunityStage {
     //                         is not met, related object criteria in the group is not required and the validation passes.
     // ***************************************************************************************************************************
 
-    public static Id soldToCheckListRecordTypeId = NSP_GenericRecordType.getRecordTypeId('NSP_Checklist__c' , 'NSP_Sold_to_Paid_Checklist');
     public static Set<String> validHRProducts = new Set<String>{NSP_SalesConstants.WO, NSP_SalesConstants.WS, NSP_SalesConstants.HRScale};
     public static List<string> analysisStageCriteraTypes = System.Label.NSP_AnalysisStageCriteria.split(',');
     public static List<string> proposeStageCriteraTypes = System.Label.NSP_ProposeStageCriteria.split(',');
@@ -30,8 +29,8 @@ public with sharing class NSP_ValidateOpportunityStage {
     public static List<string> ownerBasedCriteriaProducts = System.Label.NSP_OwnerBasedCriteriaProducts.split(',');
     public static List<string> nonOwnerBasedCriteriaProducts = System.Label.NSP_NonOwnerBasedCriteriaProducts.split(',');
     public static List<string> closeLostRoleinOpportunityTeam = System.Label.Close_Lost_Role_in_Opportunity_Team.split(',');
-    public static List<Opportunity_Stage_Validation__mdt> optyStageVals = Opportunity_Stage_Validation__mdt.getAll().values();
-    public static String validationObjects = 'Opportunity,Event,Task,OpportunityContactRole,NSP_Employee_Split__c,SBQQ__Quote__c,NSP_Checklist__c';
+    private static List<Opportunity_Stage_Validation__mdt> optyStageVals = Opportunity_Stage_Validation__mdt.getAll().values();
+    private static String validationObjects = 'Opportunity,Event,Task,OpportunityContactRole,NSP_Employee_Split__c,SBQQ__Quote__c,NSP_Checklist__c';
     private static Boolean hasAllowClosedLostPermission = CustomPermissionController.checkUserPermission( 'Allow_Closed_Lost_Opportunity' , UserInfo.getUserId() );
     private static Boolean hasCLSOOppOwnerPermission = CustomPermissionController.checkUserPermission( 'Opportunity_Closed_Lost_SO_Opp_Owner' , UserInfo.getUserId() );
     private static Boolean hasCLSOOppPermission = CustomPermissionController.checkUserPermission( 'Opportunity_Closed_Lost_SO_Opp' , UserInfo.getUserId() );
@@ -41,8 +40,9 @@ public with sharing class NSP_ValidateOpportunityStage {
     private static Boolean hasAllowCLRecruitingPerm = CustomPermissionController.checkUserPermission( 'Opportunity_Allow_Closed_Lost_Recruiting' , UserInfo.getUserId() );
     private static Boolean hasAllowCLTechnologyPerm = CustomPermissionController.checkUserPermission( 'Opportunity_Allow_Closed_Lost_Technology' , UserInfo.getUserId() );
     private static Boolean hasAllowCWNCSUserPerm = CustomPermissionController.checkUserPermission( 'Opportunity_Closed_Won_NCS_User' , UserInfo.getUserId() );
-    public static final String DEFAULT_PRODUCT = 'Default';
-    public static final String OPPORTUNITY_OBJ = 'Opportunity';
+    private static final String DEFAULT_PRODUCT = 'Default';
+    private static final String OPPORTUNITY_OBJ = 'Opportunity';
+    private static final String SOLD_TO_PAID = 'Sold to Paid';
     public static final String HAS_DISCOVERY = ' has Discovery ';
     public static final String HAS_OPEN_EVENT = ' has Open Event ';
     public static final String HAS_OPEN_WO_PROP = ' has Open WO Proposal Event ';
@@ -76,15 +76,15 @@ public with sharing class NSP_ValidateOpportunityStage {
             Map<ID, Opportunity> oppEventTaskOCRMap = new Map<ID, Opportunity>(
                                     [ SELECT AccountId , Id , 
                                         (SELECT Id , Status , NSP_Task_Type__c , Subject 
-                                            FROM Tasks WHERE CreatedBy.ProfileId =: NSP_ValidateOpportunityStage.integUserProfileId AND NSP_Task_Type__c != NULL),
+                                            FROM Tasks WHERE CreatedBy.ProfileId = :NSP_ValidateOpportunityStage.integUserProfileId AND NSP_Task_Type__c != null) ,
                                         (SELECT Id , NSP_Event_Subtype__c , NSP_Method__c , NSP_Status__c 
-                                            FROM Events WHERE NSP_Event_Subtype__c != NULL AND NSP_Status__c != :NSP_SalesConstants.Cancelled),
+                                            FROM Events WHERE NSP_Event_Subtype__c != NULL AND NSP_Status__c != :NSP_SalesConstants.Cancelled) ,
                                         (SELECT Id 
-                                            FROM OpportunityContactRoles),
+                                            FROM OpportunityContactRoles) ,
                                         (SELECT Id 
-                                            FROM Employee_Splits__r),
+                                            FROM Employee_Splits__r) ,
                                         (SELECT Id , Status__c 
-                                            FROM Checklists__r WHERE RecordTypeId =: soldToCheckListRecordTypeId)
+                                            FROM Checklists__r WHERE Checklist_Type__c = :SOLD_TO_PAID)
                                         FROM Opportunity
                                         WHERE Id IN :oppIdList
                                     ]);
