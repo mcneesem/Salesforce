@@ -299,6 +299,60 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.National_Account_Type__c</fieldItem>
+                <identifier>RecordNational_Account_Type_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2 AND 3</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Retirement Svc-Education</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET Education</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.National_Account_Type__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.National_Account_Group__c</fieldItem>
+                <identifier>RecordNational_Account_Group_cField2</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2 AND 3</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Retirement Svc-Education</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET Education</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.National_Account_Group__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Segment__c</fieldItem>
                 <identifier>RecordNSP_Segment_cField2</identifier>
             </fieldInstance>
@@ -312,7 +366,7 @@
                 <fieldItem>Record.National_Account_Type__c</fieldItem>
                 <identifier>RecordNational_Account_Type__cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND (2 OR 3 OR 4 OR 5 OR 6)</booleanFilter>
+                    <booleanFilter>1 AND NOT (7 AND 8) AND (2 OR 3 OR 4 OR 5 OR 6)</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.National_Account_Type__c}</leftValue>
                         <operator>NE</operator>
@@ -342,6 +396,16 @@
                         <operator>EQUAL</operator>
                         <rightValue>BPS</rightValue>
                     </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Retirement Svc-Education</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET Education</rightValue>
+                    </criteria>
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
@@ -354,7 +418,7 @@
                 <fieldItem>Record.National_Account_Group__c</fieldItem>
                 <identifier>RecordNational_Account_Group_cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND (2 OR 3 OR 4 OR 5 OR 6)</booleanFilter>
+                    <booleanFilter>1 AND NOT (7 AND 8) AND (2 OR 3 OR 4 OR 5 OR 6)</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.National_Account_Group__c}</leftValue>
                         <operator>NE</operator>
@@ -384,6 +448,16 @@
                         <operator>EQUAL</operator>
                         <rightValue>BPS</rightValue>
                     </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Retirement Svc-Education</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET Education</rightValue>
+                    </criteria>
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
@@ -395,6 +469,19 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Instructions__c</fieldItem>
                 <identifier>RecordNSP_Instructions_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>NOT( 1 AND 2 )</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Retirement Svc-Education</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET Education</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -457,6 +544,29 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Comments</fieldItem>
+                <identifier>RecordCommentsField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Retirement Svc-Education</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET Education</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.First_Call_Resolution__c</fieldItem>
                 <identifier>RecordFirst_Call_Resolution_cField</identifier>
                 <visibilityRule>
@@ -501,6 +611,29 @@
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.CaseNumber</fieldItem>
+                <identifier>RecordCaseNumberField2</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Retirement Svc-Education</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET Education</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
@@ -563,6 +696,19 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Reason</fieldItem>
                 <identifier>RecordReasonField</identifier>
+                <visibilityRule>
+                    <booleanFilter>NOT( 1 AND 2 )</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Retirement Svc-Education</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET Education</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -603,6 +749,42 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Rating__c</fieldItem>
                 <identifier>RecordNSP_Rating_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Retirement Svc-Education</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET Education</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Project__c</fieldItem>
+                <identifier>RecordProject_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Retirement Svc-Education</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET Education</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -613,6 +795,19 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Entries_Processed__c</fieldItem>
                 <identifier>RecordEntries_Processed_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>NOT( 1 AND 2 )</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Retirement Svc-Education</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET Education</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -623,6 +818,19 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Case_Quick_Rate_Number__c</fieldItem>
                 <identifier>RecordNSP_Case_Quick_Rate_Number_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>NOT( 1 AND 2 )</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Retirement Svc-Education</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET Education</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -786,6 +994,268 @@
             </componentInstance>
         </itemInstances>
         <name>Facet-039e2b71-b1dc-48f5-afe5-4a3a0a481fd8</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_RET_Subplan__c</fieldItem>
+                <identifier>RecordNSP_RET_Subplan_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Retirement Svc-Education</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET Education</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_RET_Subplan_Form__c</fieldItem>
+                <identifier>RecordNSP_RET_Subplan_Form_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Retirement Svc-Education</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET Education</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_RET_Process_Area__c</fieldItem>
+                <identifier>RecordNSP_RET_Process_Area_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Retirement Svc-Education</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET Education</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Intro_Demo_Date__c</fieldItem>
+                <identifier>RecordIntro_Demo_Date_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Retirement Svc-Education</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET Education</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Date_of_Education__c</fieldItem>
+                <identifier>RecordDate_of_Education_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Retirement Svc-Education</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET Education</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-aaa333e3-2306-4da9-867a-86f8d8acb10a</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_RET_Education__c</fieldItem>
+                <identifier>RecordNSP_RET_Education_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Retirement Svc-Education</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET Education</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Education_Activity__c</fieldItem>
+                <identifier>RecordNSP_Education_Activity_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Retirement Svc-Education</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET Education</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Education_Sessions__c</fieldItem>
+                <identifier>RecordEducation_Sessions_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Retirement Svc-Education</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET Education</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Attendees__c</fieldItem>
+                <identifier>RecordAttendees_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Retirement Svc-Education</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET Education</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_RET_Education_Comments__c</fieldItem>
+                <identifier>RecordNSP_RET_Education_Comments_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Retirement Svc-Education</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET Education</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-b91020f8-1bfd-4def-95bf-0c8d998f7d11</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-aaa333e3-2306-4da9-867a-86f8d8acb10a</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column12</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-b91020f8-1bfd-4def-95bf-0c8d998f7d11</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column13</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-69de070e-5161-46f0-8177-5e959de8b23c</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -1028,6 +1498,19 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.CaseNumber</fieldItem>
                 <identifier>RecordCaseNumberField</identifier>
+                <visibilityRule>
+                    <booleanFilter>NOT( 1 AND 2 )</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Retirement Svc-Education</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET Education</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1122,6 +1605,19 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_OneVoice_External_ID__c</fieldItem>
                 <identifier>RecordNSP_OneVoice_External_ID_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>NOT( 1 AND 2 )</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Retirement Svc-Education</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET Education</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1142,6 +1638,19 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_NiceCx_Case__c</fieldItem>
                 <identifier>RecordNSP_NiceCx_Case_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>NOT( 1 AND 2 )</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Retirement Svc-Education</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET Education</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1172,6 +1681,19 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_First_Assigned_Queue__c</fieldItem>
                 <identifier>RecordNSP_First_Assigned_Queue_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>NOT( 1 AND 2 )</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Retirement Svc-Education</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET Education</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1182,6 +1704,19 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_NiceCx_Contact_ID__c</fieldItem>
                 <identifier>RecordNSP_NiceCx_Contact_ID_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>NOT( 1 AND 2 )</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Retirement Svc-Education</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET Education</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1192,6 +1727,19 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_NiceCX_ContactID_Leg__c</fieldItem>
                 <identifier>RecordNSP_NiceCX_ContactID_Leg_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>NOT( 1 AND 2 )</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Retirement Svc-Education</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET Education</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-1d27dd44-ca49-49ec-adf6-bd66f0d73344</name>
@@ -1483,6 +2031,37 @@
                         <leftValue>{!Record.NSP_Category__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Payroll - Fulfillment</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
+                    <value>Facet-69de070e-5161-46f0-8177-5e959de8b23c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Retirement Services</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection7</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Retirement Svc-Education</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET Education</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
