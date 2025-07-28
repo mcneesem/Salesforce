@@ -24,9 +24,11 @@ public class NSP_GuidanceForSuccessControllerTest {
     @isTest
     public static void getGuidanceForSuccessMessagesTest(){
         Test.startTest();
-        List<NSP_Opportunity_Stage_Guidance_Path__mdt> guidanceMessages = NSP_GuidanceForSuccessController.getGuidanceForSuccessMessages();
+        String message1 = NSP_GuidanceForSuccessController.getMessage('Discovery', 'WS', null);
+        String message2 = NSP_GuidanceForSuccessController.getMessage('Discovery', '', null);
         Test.stopTest();
-         system.assert(guidanceMessages.size()>1); // Added as part of code fix
+        system.assert(message1.length() > 0); 
+        system.assert(message2.length() > 0); 
     }
     
     @isTest
