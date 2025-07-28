@@ -63,9 +63,9 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
                 checkStatusChange( checkStatusChangeSaList );
             }
 
-            //call deleteCancelledEvent
+            //call deleteledEvent
             if(!saIdToDeletEvent.isEmpty()){
-                deleteCancelledEvent( saIdToDeletEvent );
+                EventDeletion.deleteCancelledEvent ( saIdToDeletEvent );
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
@@ -733,42 +733,6 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
         }
     }
 
-    //
-    // MethodName: deleteCancelledEvent
-    // Description : delete evevt of cancelled SA
-    // Params: Set<Id> saIdToDeletEvent
-    //
-    public static void deleteCancelledEvent( Set<Id> saIdToDeletEvent ) {
-        if ( ( saIdToDeletEvent != null ) && !saIdToDeletEvent.isEmpty() ) {
-            List<Event> eventRecListDelete = new List<Event>();
-            for ( Event eachEvent : [
-                        SELECT Id , WhatId
-                        FROM Event
-                        WHERE ( WhatId IN :saIdToDeletEvent )
-                    ]
-                )
-            {
-                eachEvent.WhatId = null;
-                eventRecListDelete.add( eachEvent );
-            }
-            if( !eventRecListDelete.isEmpty() ) {
-                List<Database.SaveResult> results =  Database.update( eventRecListDelete , false );
-                NSP_ErrorLogHandler.logResults(
-                    NSP_ServiceAppointmentTriggerHelper.class.getName() , 
-                    'deleteCancelledEvent:update' ,
-                    results
-                );
-                List<Database.DeleteResult> results1 = Database.delete( eventRecListDelete ,false); 
-                NSP_ErrorLogHandler.logResults(
-                    NSP_ServiceAppointmentTriggerHelper.class.getName() , 
-                    'deleteCancelledEvent:delete' ,
-                    results1
-                );
-            }
-        }
-    }
-
-    //
     // MethodName: createNewEventRec
     // Description : return new related Event record
     // Params: ServiceAppointment relatedSa
