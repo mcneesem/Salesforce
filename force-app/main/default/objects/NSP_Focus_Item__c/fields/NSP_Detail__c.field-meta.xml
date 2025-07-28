@@ -241,6 +241,46 @@
                 <default>false</default>
                 <label>Client views Insperity technology as generally lacking or lagging alternative solutions in the market</label>
             </value>
+            <value>
+                <fullName>Former Insperity employee influence</fullName>
+                <default>false</default>
+                <label>Former Insperity employee influence</label>
+            </value>
+            <value>
+                <fullName>Reporting complexity/needs unmet/missing data</fullName>
+                <default>false</default>
+                <label>Reporting complexity/needs unmet/missing data</label>
+            </value>
+            <value>
+                <fullName>Dissatisfied with Payroll service model (not as expected at purchase)</fullName>
+                <default>false</default>
+                <label>Dissatisfied with Payroll service model (not as expected at purchase)</label>
+            </value>
+            <value>
+                <fullName>Dissatisfied with ancillary solutions</fullName>
+                <default>false</default>
+                <label>Dissatisfied with ancillary solutions</label>
+            </value>
+            <value>
+                <fullName>Unable to support specific industry needs</fullName>
+                <default>false</default>
+                <label>Unable to support specific industry needs</label>
+            </value>
+            <value>
+                <fullName>Lack of autonomy or limited access due to PEO relationship</fullName>
+                <default>false</default>
+                <label>Lack of autonomy or limited access due to PEO relationship</label>
+            </value>
+            <value>
+                <fullName>Internal/External integrations unmet</fullName>
+                <default>false</default>
+                <label>Internal/External integrations unmet</label>
+            </value>
+            <value>
+                <fullName>Exploration of other Insperity models</fullName>
+                <default>false</default>
+                <label>Exploration of other Insperity models</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Rapid Growth or Decline</controllingFieldValue>
@@ -307,6 +347,18 @@
             <valueName>Dissatisfied with service engagement</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>General Dissatisfaction</controllingFieldValue>
+            <valueName>Dissatisfied with Payroll service model (not as expected at purchase)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>General Dissatisfaction</controllingFieldValue>
+            <valueName>Dissatisfied with ancillary solutions</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>General Dissatisfaction</controllingFieldValue>
+            <valueName>Unable to support specific industry needs</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Navigation &amp; Workflow Challenges</controllingFieldValue>
             <valueName>Difficulty with Insperity processes and workflows</valueName>
         </valueSettings>
@@ -321,6 +373,14 @@
         <valueSettings>
             <controllingFieldValue>Technology &amp; Seamless Data Transfer</controllingFieldValue>
             <valueName>Client views Insperity technology as generally lacking or lagging alternative solutions in the market</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Technology &amp; Seamless Data Transfer</controllingFieldValue>
+            <valueName>Internal/External integrations unmet</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Navigation &amp; Workflow Challenges</controllingFieldValue>
+            <valueName>Lack of autonomy or limited access due to PEO relationship</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Administrative Relief/ Staffing Up</controllingFieldValue>
@@ -346,9 +406,17 @@
             <controllingFieldValue>Communication &amp; Engagement</controllingFieldValue>
             <valueName>Notable increase/decrease in engagement or communication</valueName>
         </valueSettings>
+         <valueSettings>
+            <controllingFieldValue>Communication &amp; Engagement</controllingFieldValue>
+            <valueName>Former Insperity employee influence</valueName>
+        </valueSettings>
         <valueSettings>
             <controllingFieldValue>Early Tenure</controllingFieldValue>
             <valueName>Early Tenure Client</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Data &amp; Reporting Availability</controllingFieldValue>
+            <valueName>Reporting complexity/needs unmet/missing data</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Service Continuity</controllingFieldValue>
@@ -391,8 +459,8 @@
             <valueName>Partial or whole ownership by International parent company</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Key Client Contact Changes</controllingFieldValue>
-            <valueName>Key stakeholder changes</valueName>
+            <controllingFieldValue>Rapid Growth or Decline</controllingFieldValue>
+            <valueName>Growing 20% or more in WSEE over 12 months or less</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Evaluating Alternative Solutions</controllingFieldValue>
@@ -409,6 +477,10 @@
         <valueSettings>
             <controllingFieldValue>Evaluating Alternative Solutions</controllingFieldValue>
             <valueName>Shopping a competitor with intent</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Evaluating Alternative Solutions</controllingFieldValue>
+            <valueName>Exploration of other Insperity models</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>M&amp;A Activity</controllingFieldValue>
