@@ -23,6 +23,7 @@ public with sharing class NSP_ValidateOpportunityStage {
     // ***************************************************************************************************************************
 
     public static Set<String> validHRProducts = new Set<String>{NSP_SalesConstants.WO, NSP_SalesConstants.WS, NSP_SalesConstants.HRScale};
+    private static Set<String> validHR360Products = new Set<String>{NSP_SalesConstants.WO, NSP_SalesConstants.WS, NSP_SalesConstants.HRScale};
     public static List<string> analysisStageCriteraTypes = System.Label.NSP_AnalysisStageCriteria.split(',');
     public static List<string> proposeStageCriteraTypes = System.Label.NSP_ProposeStageCriteria.split(',');
     public static List<string> exitCriteriaProductException = System.Label.NSP_ExitCriteriaProductException.split(',');
@@ -45,14 +46,9 @@ public with sharing class NSP_ValidateOpportunityStage {
     private static final String SOLD_TO_PAID = 'Sold to Paid';
     public static final String HAS_DISCOVERY = ' has Discovery ';
     public static final String HAS_OPEN_EVENT = ' has Open Event ';
-    public static final String HAS_OPEN_WO_PROP = ' has Open WO Proposal Event ';
     public static final String HAS_WO_TASK = ' has WO Task ';
     public static final String HAS_WO_EVENT = ' has WO Event ';
     public static final String HAS_WO = 'has WO';
-    public static final String HAS_BUSINESS_PROFILE_STARTED_TASK_COMPLETED = ' Business profile started task completed ';
-    public static final String HAS_BID_GENERATED_IN_AIMS_TASK_COMPLETED = ' Bid Generated In AIMS task completed ';
-    public static final String HAS_BID_SENT_FROM_PRICING_REVIEW_TASK_COMPLETED = ' Sent From Pricing Review Task completed ';
-    public static final String HAS_COMPLETED_STP = ' Sold to Paid Checklist completed ';
 
     public static void validateOpportunityStage(List<Opportunity> newList){
         List<Id> oppIdList = new List<Id>();
@@ -412,7 +408,7 @@ public with sharing class NSP_ValidateOpportunityStage {
     public static void evaluateQuoteCriteria( Opportunity opp , Map<Id,SBQQ__Quote__c> quoteMap ) {
         try {
             // 205583/208335 - bypass QuoteCriteria is Fee Inclusive is checked
-            if ( opp.Fee_Inclusive__c || validHRProducts.CONTAINS( opp.NSP_PrimaryProduct__c ) ){
+            if ( opp.Fee_Inclusive__c || validHR360Products.CONTAINS( opp.NSP_PrimaryProduct__c ) ){
                 return;
             }
 
@@ -513,7 +509,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         {
             opp.addError( System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON );
         } else if ( !hasAllowCWNCSUserPerm
-            && validHRProducts.CONTAINS( opp.NSP_PrimaryProduct__c )
+            && validHR360Products.CONTAINS( opp.NSP_PrimaryProduct__c )
             )
         {
             opp.addError( System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON );
