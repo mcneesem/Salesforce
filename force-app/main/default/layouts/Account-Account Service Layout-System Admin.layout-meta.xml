@@ -450,12 +450,12 @@
     </platformActionList>
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
-        <fields>NAME</fields>
         <fields>CASES.SUBJECT</fields>
-        <fields>CASES.PRIORITY</fields>
-        <fields>CASES.CREATED_DATE_DATE_ONLY</fields>
+        <fields>NSP_Category__c</fields>
+        <fields>NSP_SubCategory__c</fields>
         <fields>CASES.STATUS</fields>
-        <fields>OWNER_NAME</fields>
+        <fields>CASES.CREATED_DATE_DATE_ONLY</fields>
+        <fields>NSP_Owner__c</fields>
         <relatedList>RelatedCaseList</relatedList>
     </relatedLists>
     <relatedLists>
@@ -517,10 +517,10 @@
     </relatedLists>
     <relatedLists>
         <fields>CONTACT.FULL_NAME</fields>
-        <fields>NSP_Preferred_First_Name__c</fields>
+        <fields>Contact.NSP_Preferred_First_Name__c</fields>
         <fields>NSP_Job_Title__c</fields>
         <fields>NSP_Employee_Status__c</fields>
-        <fields>NSP_Per_ID__c</fields>
+        <fields>Contact.NSP_Per_ID__c</fields>
         <fields>NSP_Work_Email__c</fields>
         <fields>NSP_Work_Phone__c</fields>
         <relatedList>RelatedAccountContactRelationList</relatedList>
