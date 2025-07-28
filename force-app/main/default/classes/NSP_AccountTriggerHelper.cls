@@ -10,10 +10,10 @@
 public class NSP_AccountTriggerHelper {
     // test w/ NSP_AccountTriggerHelperTest, NSP_AccountContactRelationHelperTest, NSP_AccountContactServiceHelperTest (80%)
     // test w/ NSP_AccountTriggerHelperTest, NSP_LeadTriggerHelperTest (79%)
-    // test w/ NSP_AccountTriggerHelperTest (76%)
+    // test w/ NSP_AccountTriggerHelperTest (77%)
     // test w/ NSP_AccountContactRelationHelperTest (34%)
     // test w/ NSP_AccountContactServiceHelperTest (38%)
-
+    private static Set<String> lockedSalesSegments = new Set<String>{NSP_SalesConstants.MIDMARKET_SALES, NSP_SalesConstants.WS, NSP_SalesConstants.ENTERPRISE_SALES};
     private static final string PARTNER_RECORDTYPE = 'NSP_Partner_Client';
     private static final Id PARTNER_RECORDTYPE_ID = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(PARTNER_RECORDTYPE).getRecordTypeId();
     private static final string DA_ROLE = 'District Administrator';
@@ -59,7 +59,13 @@ public class NSP_AccountTriggerHelper {
                 if ( !String.isBlank(accountObj.NSP_Template_Selection__c) ) {
                     acctListToStampDocusignTemplateId.add(accountObj);
                 }
-                updateAccountSegment( accountObj );
+                
+                //  Bypass sales segment - ADO-334282
+                if(!( CustomPermissionController.checkUserPermission( 'Bypass_Sales_Segment' , UserInfo.getUserId() )
+                    && lockedSalesSegments.contains(accountObj.NSP_Account_Segment__c))){
+                    updateAccountSegment( accountObj );
+                }
+
                 // update ready to sync to true whenever opportunity is cloned
                 if ( accountObj.isClone() ) {
                     accountObj.NSP_Ready_for_Integration_Sync__c = true;
@@ -157,9 +163,9 @@ public class NSP_AccountTriggerHelper {
                 if (accountNewMap.get(accountId).Ownerid != accountOldMap.get(accountId).Ownerid) {
                     accountownerChangedList.add(accountNewMap.get(accountId));
                 }
+                //  Adding Enterpise sales segment - ADO-334282
                 if ( ( accountNewMap.get(accountId).NumberOfEmployees != accountOldMap.get(accountId).NumberOfEmployees )
-                    && ( accountOldMap.get(accountId).NSP_Account_Segment__c != NSP_SalesConstants.MIDMARKET_SALES )
-                    )
+                    && !lockedSalesSegments.contains(accountOldMap.get(accountId).NSP_Account_Segment__c))
                 {
                     updateAccountSegment(accountNewMap.get(accountId));
                 }
@@ -500,7 +506,7 @@ public class NSP_AccountTriggerHelper {
     // param accountObject
     // returns void
     //
-    public static void updateAccountSegment( Account accountObject ) {
+    private static void updateAccountSegment( Account accountObject ) {
         if ( accountObject != null ) {
             if ( Account_Segment_Threshold_Settings__c.getInstance( UserInfo.getUserId() ).Is_Enabled__c ) {
                 accountObject.NSP_Account_Segment__c = NSP_LeadTriggerHelper.getSalesSegment( accountObject.NumberOfEmployees );

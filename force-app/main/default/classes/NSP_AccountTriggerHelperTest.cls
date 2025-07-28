@@ -818,4 +818,36 @@
              Test.stopTest();
          }
      }
+
+    @isTest
+    private static void testBypassSalesSegment() {
+        
+        Map<Id,User> bypassSegment = CustomPermissionController.getPermittedUsersMap('Bypass_Sales_Segment');
+        List<User> users = [
+             SELECT Id
+             FROM User
+             WHERE (
+                 ( Id IN :bypassSegment.keySet() )
+                 AND ( IsActive = true )
+             )
+             ORDER BY CreatedDate ASC
+             LIMIT 1
+         ];
+
+        System.runAs (users[0]) {
+            Test.startTest();
+            
+            Account actt = new Account();
+            actt.Name = 'Account test segment';
+            actt.NumberOfEmployees = 5;
+            actt.NSP_Account_Segment__c = 'Enterprise';
+
+            insert actt;
+
+            actt = [SELECT NSP_Account_Segment__c FROM Account WHERE name = 'Account test segment' LIMIT 1];
+            System.assertEquals('Enterprise', actt.NSP_Account_Segment__c);
+            
+            Test.stopTest();
+         }
+    }
  }
