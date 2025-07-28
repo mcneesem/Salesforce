@@ -1,34 +1,25 @@
-/**
-* @description  : Test Class for NSP_ServiceAppointmentTriggerHelper .
-* @date 11/14/2022
-* Name : NSP_ServiceAppointmentTrigger_Test
-*/
 @isTest
-public with sharing class NSP_ServiceAppointmentTrigger_Test {
+private class NSP_ServiceAppointmentTrigger_Test {
     private static final String DESCRIPTION = 'Updated from test clas';
     private static final List<String> EVENT_FIELDS = new List<String>{
         'Id',
         'ShowAs',
         'Subject',
         'StartDateTime',
-        'EndDateTime',                              
+        'EndDateTime',
         'WhatId',
         'Location'
     };
-    /***********************************************************************************************
-* MethodName: testData
-* Description : Test Data Method
-* ********************************************************************************************/
-    
+
     @testSetup
-    public static void setupProjectTaskdata(){
+    private static void setupProjectTaskdata() {
         String pEOProjectTaskRecordTypeId = Schema.SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE).getRecordTypeId();
         Id retProjectRecordTypeId = NSP_GenericRecordType.getRecordTypeId('pse__Proj__c', NSP_ServiceConstants.PROJECT_RET_RECORDTYPE);
         Id peoProjectRecordTypeId = NSP_GenericRecordType.getRecordTypeId('pse__Proj__c', 'PEO_Project');
         
         
         User newUser = [select Id,NSP_Salesforce_Field_Service__c FROM User WHERE ID =: userInfo.getUserId()];
-		newUser.NSP_Salesforce_Field_Service__c = 'Dispatcher';
+        newUser.NSP_Salesforce_Field_Service__c = 'Dispatcher';
         Update newUser;
             
         //Creating Account
@@ -103,14 +94,9 @@ public with sharing class NSP_ServiceAppointmentTrigger_Test {
         srv.RelatedRecordId = userInfo.getUserId();
         insert srv;
     }
-    
-    /**
-* Classes Covered
-* syncBackFieldsToProjectTask.afterUpdate
-* NSP_ServiceAppointmentTriggerHelper.syncBackFieldsToProjectTask
-*/
+
     @isTest
-    static void syncProjectTaskTest(){
+    private static void syncProjectTaskTest() {
         ServiceAppointment sappointment = [SELECT Id, EarliestStartTime, Description, NSP_Orientation_Address__c,Subject FROM ServiceAppointment WHERE Subject != NULL LIMIT 1];
         sappointment.EarliestStartTime = system.now().addHours(1);
         sappointment.Description = DESCRIPTION;
@@ -129,14 +115,9 @@ public with sharing class NSP_ServiceAppointmentTrigger_Test {
         System.assertEquals(DESCRIPTION, pTask.pse__Long_Description__c,'Description Field Updated ');
         System.assertEquals('Orientation Address from SA', pTask.NSP_Orientation_Address__c,'Description Field Updated ');
     }
-    
-    /**
-* Classes Covered
-* syncBackFieldsToProjectTask.afterUpdate
-* NSP_ServiceAppointmentTriggerHelper.syncBackFieldsToProjectTask
-*/
+
     @isTest
-    static void syncProjectTaskScheduleTest(){
+    private static void syncProjectTaskScheduleTest() {
         FSL.GlobalAPIS.addStatusTransition('Unscheduled', 'Scheduled');
         pse__Project_Task__c oProjectTask = [SELECT Id, Name, NSP_Percentage_Complete__c, pse__Start_Date_Time__c, pse__End_Date_Time__c, NSP_Create_Work_Order__c,NSP_Dispatch_Region__c,pse__Status__c 
                                              FROM pse__Project_Task__c 
@@ -177,13 +158,8 @@ public with sharing class NSP_ServiceAppointmentTrigger_Test {
         
     }
 
-/**
-* Classes Covered
-* syncBackFieldsToProjectTask.afterUpdate
-* NSP_ServiceAppointmentTriggerHelper.syncBackFieldsToProjectTask
-*/
     @isTest
-    static void syncProjectTaskDuration(){
+    private static void syncProjectTaskDuration() {
         ServiceAppointment sappointment = [SELECT Id, EarliestStartTime, Description, NSP_Orientation_Address__c,
                                            Subject, Duration 
                                            FROM ServiceAppointment 
@@ -202,14 +178,9 @@ public with sharing class NSP_ServiceAppointmentTrigger_Test {
             //checking for sync between Service Appointment & (work order and project task)
             System.assertEquals(sappointment.Duration, workOrder.Duration);        
     }
-    
-    /**
-* Classes Covered
-* syncBackFieldsToProjectTask.afterUpdate
-* NSP_ServiceAppointmentTriggerHelper.syncBackFieldsToProjectTask
-*/
+
     @isTest
-    static void syncProjectTaskTestNegative(){
+    private static void syncProjectTaskTestNegative() {
         Profile profile = [SELECT Id FROM Profile WHERE Name =: NSP_ServiceConstants.PEOSERVICE LIMIT 1];
         
         User newUser = (User)NSP_TestExtendedDataFactory.createSObject(new User(), 'NSP_TestDataFactory.UserDefaults', false);
@@ -234,12 +205,9 @@ public with sharing class NSP_ServiceAppointmentTrigger_Test {
         
         system.assertNotEquals(sappointment.Description, pTask.pse__Long_Description__c, 'Updated');
     }
-    /**
-    * Classes Covered
-    * Unit Test for sync project task owner with SA
-    */
+
     @isTest
-    static void syncProjTaskOwnerSATest(){
+    private static void syncProjTaskOwnerSATest() {
         Test.startTest();
         FSL.GlobalAPIS.addStatusTransition('Unscheduled', 'Scheduled');
         pse__Proj__c oproj = [SELECT Id, Name, Templates_Used__c FROM pse__Proj__c WHERE Templates_Used__c = 'Temp Used'];
@@ -283,12 +251,9 @@ public with sharing class NSP_ServiceAppointmentTrigger_Test {
         System.Assert(workOrder1[0].OwnerId == srv.RelatedRecordId);
         System.Assert(oprojTask[0].OwnerId == srv.RelatedRecordId);
     }
-        /**
-    * Classes Covered
-    * Unit Test for CreateFreeEvent
-    */
+
     @isTest
-    static void serviceAppointmentScheduledEventTest(){
+    private static void serviceAppointmentScheduledEventTest() {
         FSL.GlobalAPIS.addStatusTransition('Unscheduled', 'Scheduled');
         //Given
         pse__Proj__c oproj = [SELECT Id, Name, Templates_Used__c FROM pse__Proj__c WHERE Templates_Used__c = 'Temp Used'];
@@ -306,12 +271,9 @@ public with sharing class NSP_ServiceAppointmentTrigger_Test {
         //Then
         system.assertEquals( sappointment.Status, 'Scheduled');
     }
-        /**
-    * Classes Covered
-    * Unit Test for Dispatch SA 
-    */
+
     @isTest
-    static void serviceAppointmentDispacthedEventTest(){
+    private static void serviceAppointmentDispacthedEventTest() {
         FSL.GlobalAPIS.addStatusTransition('Unscheduled', 'Scheduled');
         //Given
         pse__Proj__c oproj = [SELECT Id, Name, Templates_Used__c FROM pse__Proj__c WHERE Templates_Used__c = 'Temp Used'];
@@ -333,12 +295,8 @@ public with sharing class NSP_ServiceAppointmentTrigger_Test {
       system.assertEquals( sappointment.Status, 'Dispatched');
     }
 
-        /**
-    * Classes Covered
-    * Unit Test for Cancel SA event
-    */
     @isTest
-    static void serviceAppointmentCancelledEventTest(){
+    private static void serviceAppointmentCancelledEventTest() {
         //Given
         ServiceAppointment sappointment = [SELECT Id, Status FROM ServiceAppointment WHERE Subject = 'Subject Abc' LIMIT 1];
         sappointment.Status = 'Canceled';  
@@ -350,12 +308,8 @@ public with sharing class NSP_ServiceAppointmentTrigger_Test {
         system.assertEquals(0, [ SELECT COUNT() FROM Event WHERE WhatId =: sappointment.Id ],'No Event related to Cancelled SA');
     }
 
-        /**
-    * Classes Covered
-    * Unit Test for UpdateSaRelatedEvent
-    */
     @isTest
-    public static void UpdateSaRelatedEventTest(){
+    private static void UpdateSaRelatedEventTest() {
         FSL.GlobalAPIS.addStatusTransition('Unscheduled', 'Scheduled');
         List<String> EVENT_FIELD = new List<String>{'Id', 'Subject'};
         //Given
@@ -390,13 +344,9 @@ public with sharing class NSP_ServiceAppointmentTrigger_Test {
         Event  relatedEvent = Database.query(query);
         system.assertEquals( relatedEvent.Subject, '[SF] Updated Subject');
     }
-    
-        /**
-    * Classes Covered
-    * Unit Test for EventDeletion
-    */
+
     @isTest
-    private static void eventDeletionTest(){
+    private static void eventDeletionTest() {
         FSL.GlobalAPIS.addStatusTransition('Unscheduled', 'Scheduled');
         FSL.GlobalAPIS.addStatusTransition('Scheduled', 'Canceled');
         List<String> EVENT_FIELD = new List<String>{'Id', 'Subject'};
@@ -427,4 +377,6 @@ public with sharing class NSP_ServiceAppointmentTrigger_Test {
         update sappointment;
         Test.stopTest();
     }
+
 }
+//
