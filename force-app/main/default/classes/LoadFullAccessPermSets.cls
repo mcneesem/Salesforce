@@ -19,6 +19,7 @@ public class LoadFullAccessPermSets {
     // ********************************************************************************************************
 
     public static void runLoadFullAccessPermSets(String readPermSetName, String editPermSetName, List<String> objectApiNames, List<String> filterNamespaces) {
+        List<String> extIdObjList = new List<String>();
         Map<String, Integer> depRetry = new Map<String, Integer>();
         Map<String, Id> mPermSets = new Map<String, Id>();
         for (PermissionSet ps : [SELECT Id, Name FROM PermissionSet WHERE Name IN (:readPermSetName, :editPermSetName)]) {
@@ -59,9 +60,18 @@ public class LoadFullAccessPermSets {
             }
         }
 
+        OrgSettings__c orgSettings = OrgSettings__c.getOrgDefaults();
+        Set<String> orgSettingsFields = Schema.SObjectType.OrgSettings__c.fields.getMap().keySet();
+        for ( String orgSettingsField : orgSettingsFields ){
+            if( orgSettings.IsSandbox__c && orgSettingsField.contains('externalidobjects') ){
+                String fieldValue = (String) orgSettings.get(orgSettingsField);
+                extIdObjList.addAll(fieldValue.split(','));
+            }
+        }
+
         loadRecTypeVisibility(mPermSets.get(editPermSetName));
         if (!Test.isRunningTest()) {
-            System.enqueueJob(new LoadFullAccessPermSetsQueueable(objectApiNames, mPermSets.get(readPermSetName), mPermSets.get(editPermSetName), depRetry));
+            System.enqueueJob(new LoadFullAccessPermSetsQueueable( objectApiNames , mPermSets.get(readPermSetName) , mPermSets.get(editPermSetName) , depRetry , filterNamespaces , extIdObjList ) );
         }
         LoadFullAccessPermSetsQueueable.createErrorLog( 'runLoadFullAccessPermSets' , null , 'Loading RecTypeVisibilities' );
         LoadFullAccessPermSetsQueueable.createErrorLog( 'runLoadFullAccessPermSets' , null , 'Launching LoadFullAccessPermSetsQueueable; objectCount=' + objectApiNames.size() );
