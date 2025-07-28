@@ -390,4 +390,41 @@ public with sharing class NSP_ServiceAppointmentTrigger_Test {
         Event  relatedEvent = Database.query(query);
         system.assertEquals( relatedEvent.Subject, '[SF] Updated Subject');
     }
+    
+        /**
+    * Classes Covered
+    * Unit Test for EventDeletion
+    */
+    @isTest
+    private static void eventDeletionTest(){
+        FSL.GlobalAPIS.addStatusTransition('Unscheduled', 'Scheduled');
+        FSL.GlobalAPIS.addStatusTransition('Scheduled', 'Canceled');
+        List<String> EVENT_FIELD = new List<String>{'Id', 'Subject'};
+        //Given
+        pse__Proj__c oproj = [SELECT Id, Name, Templates_Used__c FROM pse__Proj__c WHERE Templates_Used__c = 'Temp Used' LIMIT 1];
+        pse__Project_Task__c oprojTask = [SELECT Id, Name, OwnerId FROM pse__Project_Task__c WHERE pse__Project__c =: oProj.Id LIMIT 1];
+        WorkOrder workOrder2 = [SELECT Id, NSP_Project_Task__c, StartDate, Description, OwnerId FROM WorkOrder WHERE NSP_Project_Task__c =: oprojTask.Id LIMIT 1];
+        ServiceAppointment sappointment = [SELECT Id, NSP_IsDispatched__c,Subject,Status,SchedEndTime, SchedStartTime,Description,NSP_Orientation_Address__c, OwnerId FROM ServiceAppointment WHERE ParentRecordId =: workOrder2.Id LIMIT 1];
+        sappointment.SchedStartTime = Date.today();
+        sappointment.SchedEndTime = Date.today().addDays(1);
+        sappointment.OwnerId = userInfo.getUserId();
+        sappointment.Status = 'Scheduled';  
+        update sappointment;
+
+        Event newEvent = new Event();
+        newEvent.WhatId = sappointment.id;
+        newEvent.ShowAs = 'Free';
+        newEvent.Subject = sappointment.Subject;
+        newEvent.Description = sappointment.Description;
+        newEvent.Location = sappointment.NSP_Orientation_Address__c;
+        newEvent.StartDateTime = sappointment.SchedStartTime;
+        newEvent.EndDateTime = sappointment.SchedEndTime;
+        insert newEvent;
+
+        sappointment.Status = 'Canceled';
+        //When
+        Test.startTest();
+        update sappointment;
+        Test.stopTest();
+    }
 }
