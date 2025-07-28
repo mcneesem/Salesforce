@@ -3,7 +3,6 @@
 // record visibility to the desired child Opportunities.
 public without sharing class NSP_ChildOpportunitiesHelperFunctions {
     //  test w/ NSP_OpportunityTriggerHelperTest (91%)
-
     public NSP_ChildOpportunitiesHelperFunctions() { }
 
     //
@@ -11,7 +10,7 @@ public without sharing class NSP_ChildOpportunitiesHelperFunctions {
     // @param opportunityList lsit of New Opportunity.
     // @return void
     //
-    public void updatesOnChildOpportunity( List<String> opportunityList ) {
+    public void updatesOnChildOpportunity( List<String> opportunityList, Id lockedOpportunityRecordTypeId ) {
         List<Opportunity> opportunityToUpdateList = new List<Opportunity>();
         //Querying the child oppotunities that is not closed lost and is not parent
         for ( Opportunity opportunityObject : [
@@ -20,7 +19,8 @@ public without sharing class NSP_ChildOpportunitiesHelperFunctions {
                         StageName ,
                         NSP_PrimaryProduct__c ,
                         NSP_Parent_Opportunity__r.NSP_PrimaryProduct__c ,
-                        NSP_Parent_Opportunity__r.NSP_Lost_Reason__c
+                        NSP_Parent_Opportunity__r.NSP_Lost_Reason__c,
+                        NSP_Parent_Opportunity__r.stagename
                     FROM Opportunity
                     WHERE (
                         NSP_Parent_Opportunity__c IN :opportunityList
@@ -29,6 +29,12 @@ public without sharing class NSP_ChildOpportunitiesHelperFunctions {
                 ]
             )
         {
+            //  ADO-340819
+            //  Update close date and lock record
+            if(opportunityObject.NSP_Parent_Opportunity__r.stagename == NSP_SalesConstants.CLOSED_LOST){
+                opportunityObject.CloseDate = Date.today();
+                opportunityObject.RecordTypeId = lockedOpportunityRecordTypeId;
+            }
             //Querying the child oppotunities that has product type as Retirement Services
             if ( opportunityObject.NSP_PrimaryProduct__c == NSP_SalesConstants.RETIREMENT_SERVICE ) {
                 //Update the stage to closed lost on child optys
