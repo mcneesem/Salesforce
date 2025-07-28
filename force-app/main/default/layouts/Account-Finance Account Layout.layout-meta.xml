@@ -407,10 +407,10 @@
     </relatedLists>
     <relatedLists>
         <fields>CONTACT.FULL_NAME</fields>
-        <fields>NSP_Preferred_First_Name__c</fields>
+        <fields>Contact.NSP_Preferred_First_Name__c</fields>
         <fields>CONTACT.FIRST_NAME</fields>
         <fields>CONTACT.LAST_NAME</fields>
-        <fields>NSP_Per_ID__c</fields>
+        <fields>Contact.NSP_Per_ID__c</fields>
         <fields>CONTACT.TITLE</fields>
         <fields>CONTACT.EMAIL</fields>
         <fields>NSP_Work_Phone__c</fields>
