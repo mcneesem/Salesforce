@@ -13,19 +13,15 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
     // ***************************************************************************************************
 
     private List<String> objectApiNames = new List<String>();
-    private List<String> filterNamespaces = new List<String>();
-    private List<String> extIdObjList = new List<String>();
     private Id readPermSetId;
     private Id editPermSetId;
     Map<String, Integer> depRetry = new Map<String, Integer>();
 
-    public LoadFullAccessPermSetsQueueable(List<String> objectApiNames, Id readPermSetId, Id editPermSetId, Map<String, Integer> depRetry, List<String> filterNamespaces, List<String> extIdObjList){
+    public LoadFullAccessPermSetsQueueable(List<String> objectApiNames, Id readPermSetId, Id editPermSetId, Map<String, Integer> depRetry) {
         this.objectApiNames = objectApiNames;
         this.readPermSetId = readPermSetId;
         this.editPermSetId = editPermSetId;
         this.depRetry = depRetry;
-        this.filterNamespaces = filterNamespaces;
-        this.extIdObjList = extIdObjList;
     }
 
     public void execute(QueueableContext context) {
@@ -39,16 +35,11 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
         createErrorLog( 'execute' , currObjName , 'Loading FieldPermissions' );
         loadFieldPermissions(readPermSetId, false, currObjName); // upsert read Field Permissions for first object in list
         loadFieldPermissions(editPermSetId, true, currObjName); // upsert edit Field Permissions for first object in list
-        
-        if( filterNamespaces.isEmpty() && extIdObjList.contains(currObjName) ) {
-            createErrorLog( 'execute' , currObjName , 'Loading ExternalIds' );
-            loadExternalIds(currObjName);
-        }
 
         if (!String.isBlank(readPermSetId) || !String.isBlank(editPermSetId)) {
             if (QueueableSettings__c.getOrgDefaults().EnableLoadPermSetChain__c) {
                 if ( objectApiNames.size() > 0 ) { // chain new job for next object
-                    System.enqueueJob(new LoadFullAccessPermSetsQueueable(objectApiNames, readPermSetId, editPermSetId, depRetry, filterNamespaces, extIdObjList));
+                    System.enqueueJob(new LoadFullAccessPermSetsQueueable(objectApiNames, readPermSetId, editPermSetId, depRetry));
                     createErrorLog( 'execute' , null , 'objectCount remaining=' + objectApiNames.size() );
                 } else {
                     sendCompletionEmail();
@@ -171,38 +162,6 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
             }
             if ( errLogCount > 0 ) {
                 createErrorLog( 'loadFieldPermissions' , currObjName , errLogCount + ' FieldPermissions errors occurred on Perm Set: ' + permSetId );
-            }
-        }
-    }
-
-    // ************************************** External Ids ***************************************
-    //  Description :   Upserts FieldPermssions for all fields of specified object name into
-    //                  specified Perm Set.
-    // *******************************************************************************************
-    public static void loadExternalIds( String currObjName ) {
-        if (!String.isBlank(currObjName)) {
-            String dynamicQuery = 'SELECT Id, NSP_External_Id__c FROM ' + String.escapeSingleQuotes(currObjName) + ' WHERE NSP_External_Id__c = null';
-            List<SObject> updObjList = Database.query(dynamicQuery);
-
-            for (SObject updObj : updObjList)
-            {
-                updObj.put('NSP_External_Id__c', updObj.Id);
-            }
-
-            Database.SaveResult[] updObjResultList = Database.update(updObjList, false);
-
-            Integer errLogCount = 0;
-            for (Database.SaveResult updObjResult : updObjResultList) { // retrieve errors for failed record upserts
-                if (!updObjResult.isSuccess()) {
-                    for(Database.Error err : updObjResult.getErrors()) {
-                        if ( errLogCount++ < 1 ) {
-                            createErrorLog( 'loadExternalIds' , currObjName , 'ExternalIds error occurred on Id: ' + updObjResult.getId() + ' : ' + err.getMessage() );
-                        }
-                    }                
-                }
-            }
-            if ( errLogCount > 0 ) {
-                createErrorLog( 'loadExternalIds' , currObjName , errLogCount + ' ExternalId errors occurred' );
             }
         }
     }
