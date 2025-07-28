@@ -1,11 +1,7 @@
-//
-// @description  :  Helper class for ServiceAppointment trigger.
-// @date 07/28/2025
-// Author : Ruchi
-// Name : EventDeletion
-//
+// intentionally `without sharing` to prevent ~ INSUFFICIENT_ACCESS_OR_READONLY, insufficient access rights on object id
 public without sharing class EventDeletion {
-// test w/ NSP_ServiceAppointmentTrigger_Test (80%)
+    // test w/ NSP_ServiceAppointmentTrigger_Test (80%)
+
     //
     // MethodName: deleteCancelledEvent
     // Description : delete evevt of cancelled SA
@@ -16,36 +12,38 @@ public without sharing class EventDeletion {
             if ( ( saIdToDeletEvent != null ) && !saIdToDeletEvent.isEmpty() ) {
                 List<Event> eventRecListDelete = new List<Event>();
                 for ( Event eachEvent : [
-                    SELECT Id , WhatId
-                    FROM Event
-                    WHERE ( WhatId IN :saIdToDeletEvent )
-                ]
+                            SELECT Id , WhatId
+                            FROM Event
+                            WHERE ( WhatId IN :saIdToDeletEvent )
+                        ]
                     )
                 {
                     eachEvent.WhatId = null;
                     eventRecListDelete.add( eachEvent );
                 }
-                if( !eventRecListDelete.isEmpty() ) {
-                    List<Database.SaveResult> results =  Database.update( eventRecListDelete , false );
+                if ( !eventRecListDelete.isEmpty() ) {
+                    List<Database.SaveResult> resultsUpdate =  Database.update( eventRecListDelete , false );
                     NSP_ErrorLogHandler.logResults(
-                        EventDeletion.class.getName() , 
+                        EventDeletion.class.getName() ,
                         'deleteCancelledEvent:update' ,
-                        results
+                        resultsUpdate
                     );
-                    List<Database.DeleteResult> results1 = Database.delete( eventRecListDelete ,false); 
+                    List<Database.DeleteResult> resultsDelete = Database.delete( eventRecListDelete , false );
                     NSP_ErrorLogHandler.logResults(
-                        EventDeletion.class.getName() , 
+                        EventDeletion.class.getName() ,
                         'deleteCancelledEvent:delete' ,
-                        results1
+                        resultsDelete
                     );
                 }
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
-                EventDeletion.class.getName() , 
+                EventDeletion.class.getName() ,
                 'deleteCancelledEvent' ,
                 e
             );
         }
     }
+
 }
+//
