@@ -13,9 +13,13 @@ public class NSP_AccountTriggerHelper {
     // test w/ NSP_AccountTriggerHelperTest (77%)
     // test w/ NSP_AccountContactRelationHelperTest (34%)
     // test w/ NSP_AccountContactServiceHelperTest (38%)
-    private static Set<String> lockedSalesSegments = new Set<String>{NSP_SalesConstants.MIDMARKET_SALES, NSP_SalesConstants.WS, NSP_SalesConstants.ENTERPRISE_SALES};
-    private static final string PARTNER_RECORDTYPE = 'NSP_Partner_Client';
-    private static final Id PARTNER_RECORDTYPE_ID = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(PARTNER_RECORDTYPE).getRecordTypeId();
+
+    private static Set<String> lockedSalesSegments = new Set<String>{
+        NSP_SalesConstants.MIDMARKET_SALES ,
+        NSP_SalesConstants.WS ,
+        NSP_SalesConstants.ENTERPRISE_SALES
+    };
+    private static final Id PARTNER_RECORDTYPE_ID = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get( 'NSP_Partner_Client' ).getRecordTypeId();
     private static final string DA_ROLE = 'District Administrator';
     //Added as part of 128176
     public static List<string> salesRoles = System.Label.Sales_Roles.split(',');
@@ -24,23 +28,20 @@ public class NSP_AccountTriggerHelper {
     // Added as part of 215091
     private static Boolean hasPartnerLoyaltyPermission = CustomPermissionController.checkUserPermission('Account_Partner_Update_Loyalty_from_SO', UserInfo.getUserId());
     private static Boolean hasPartnerMMPermission = CustomPermissionController.checkUserPermission('Account_Partner_MidMarket_Seller', UserInfo.getUserId());
-    
-    /**
-     * Iterates throught the list of new Account and passes the required attributes to other methods.
-     * @param newList List of New Accounts.
-     * @return void
-     *
-     */
+
+    //
+    // Iterates throught the list of new Account and passes the required attributes to other methods.
+    // @param newList List of New Accounts.
+    // @return void
+    //
     public void beforeInsertDirector( List<Account> newList ) {
         try {
-            //List < Account > partnerAccountList = new List < Account > ();
-            //Set < Id > userIdsSet = new Set < Id > ();
-            /* Added as part of DF-01906 */
-            List < Account > bpaAccountList = new List < Account > ();
-            Set < string > salesOfficeSet = new Set < String > ();
+            // Added as part of DF-01906
+            List<Account> bpaAccountList = new List<Account>();
+            Set<String> salesOfficeSet = new Set<String>();
             User userDetails = [SELECT Id, Name, UserRole.Name, ToLabel(NSP_Sales_Office__c) FROM User WHERE Id =: userinfo.getUserId()];
-            /* Added as part of DF-01906 */
-            List < Account > acctListToStampDocusignTemplateId = new List < Account > ();
+            // Added as part of DF-01906
+            List<Account> acctListToStampDocusignTemplateId = new List<Account>();
             for ( Account accountObj: newList ) {
                 // Added as part of DF-01906 to populate CPM and LA based on Sales office of loggedin BPA
                 if ( accountObj.RecordTypeId == PARTNER_RECORDTYPE_ID ) {
@@ -59,17 +60,12 @@ public class NSP_AccountTriggerHelper {
                 if ( !String.isBlank(accountObj.NSP_Template_Selection__c) ) {
                     acctListToStampDocusignTemplateId.add(accountObj);
                 }
-                
                 //  Bypass sales segment - ADO-334282
-                if(!( CustomPermissionController.checkUserPermission( 'Bypass_Sales_Segment' , UserInfo.getUserId() )
-                    && lockedSalesSegments.contains(accountObj.NSP_Account_Segment__c))){
+                Boolean hasBypassSalesSegment = CustomPermissionController.checkUserPermission( 'Bypass_Sales_Segment' , UserInfo.getUserId() );
+                if ( !( hasBypassSalesSegment && lockedSalesSegments.contains(accountObj.NSP_Account_Segment__c) ) ) {
                     updateAccountSegment( accountObj );
                 }
-
-                // update ready to sync to true whenever opportunity is cloned
-                if ( accountObj.isClone() ) {
-                    accountObj.NSP_Ready_for_Integration_Sync__c = true;
-                }
+                this.syncClonedAccount( accountObj );
             }
             if ( !bpaAccountList.isEmpty() ) {
                 setChannelPartnerAndLoyaltyAdvisor(bpaAccountList, salesOfficeSet);
@@ -81,6 +77,13 @@ public class NSP_AccountTriggerHelper {
             setSalesOfficeDetails(newList, null);
         } catch ( Exception e ) {
             NSP_AccountTriggerHelper.handleException( e , 'beforeInsertDirector' );
+        }
+    }
+
+    private void syncClonedAccount( Account accountObj ) {
+        // update ready to sync to true whenever Account is cloned
+        if ( ( accountObj != null ) && accountObj.isClone() ) {
+            accountObj.NSP_Ready_for_Integration_Sync__c = true;
         }
     }
 
@@ -135,21 +138,20 @@ public class NSP_AccountTriggerHelper {
         }
     }
 
-    /**
-     * Iterates throught the Account map and identifies the records that needs to worked based on various criterias.
-     * @param accountNewMap Map of New Account.
-     * @param accountOldMap Map of Old Account.
-     * @return void
-     *
-     */
+    //
+    // Iterates throught the Account map and identifies the records that needs to worked based on various criterias.
+    // @param accountNewMap Map of New Account.
+    // @param accountOldMap Map of Old Account.
+    // @return void
+    //
     public void beforeUpdateDirector( Map<Id,Account> accountNewMap , Map<Id,Account> accountOldMap ) {
 
         try {
-            List < Account > accountList = new List < Account > ();
-            List < Account > accountownerChangedList = new List < Account > ();
+            List<Account> accountList = new List<Account>();
+            List<Account> accountownerChangedList = new List<Account>();
             List<Account> partnerAccountList = new List<Account>();
             Set<Id> userIdsSet = new Set<Id>();
-            List < Account > acctListToStampDocusignTemplateId = new List < Account > ();
+            List<Account> acctListToStampDocusignTemplateId = new List<Account>();
             //Iterating over the new Account map
             for (Id accountId: accountNewMap.keySet()) {
                 Account newAccount = accountNewMap.get(accountId);
@@ -165,9 +167,10 @@ public class NSP_AccountTriggerHelper {
                 }
                 //  Adding Enterpise sales segment - ADO-334282
                 if ( ( accountNewMap.get(accountId).NumberOfEmployees != accountOldMap.get(accountId).NumberOfEmployees )
-                    && !lockedSalesSegments.contains(accountOldMap.get(accountId).NSP_Account_Segment__c))
+                    && !lockedSalesSegments.contains( accountOldMap.get(accountId).NSP_Account_Segment__c )
+                    )
                 {
-                    updateAccountSegment(accountNewMap.get(accountId));
+                    updateAccountSegment( accountNewMap.get(accountId) );
                 }
                 //create list to populate docusign template id for merge on demand templates
                 if (!String.isBlank(newAccount.NSP_Template_Selection__c) &&
