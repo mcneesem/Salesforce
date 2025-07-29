@@ -1,8 +1,8 @@
 ({
-    setGuidanceMessages: function (component, opportunityRecord) {
-
+    setGuidanceMessages: function (component) {
+        let opportunityRecord = component.get( "v.opportunityRecord" );
         component.set("v.guidanceMessage", "");
-        if (opportunityRecord != null && opportunityRecord.StageName != null && opportunityRecord.NSP_PrimaryProduct__c != null) {
+        if ( opportunityRecord && opportunityRecord.hasOwnProperty( "StageName" ) && opportunityRecord.hasOwnProperty( "NSP_PrimaryProduct__c" ) ) {
 
             let product = opportunityRecord.NSP_PrimaryProduct__c;
             let segment = product == "WX" && opportunityRecord.NSP_Account_Segment__c &&

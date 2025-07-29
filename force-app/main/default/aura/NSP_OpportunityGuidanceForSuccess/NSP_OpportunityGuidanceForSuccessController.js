@@ -1,9 +1,9 @@
 ({
 	onInit : function(component, event, helper) {
-        helper.setGuidanceMessages(component, component.get("v.opportunityRecord"));            
+        helper.setGuidanceMessages(component);            
     },
     
     onRecordChange : function(component, event, helper){
-        helper.setGuidanceMessages(component, component.get("v.opportunityRecord"));            
+        helper.setGuidanceMessages(component);            
     }
 })
