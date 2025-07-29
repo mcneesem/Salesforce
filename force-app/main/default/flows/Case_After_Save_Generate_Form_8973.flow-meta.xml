@@ -78,7 +78,7 @@
             <assignToReference>caseRecord.OwnerId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Implementation_Profile.NSP_Project_Manager__r.pse__Salesforce_User__r.Id</elementReference>
+                <elementReference>Get_Implementation_Profile.NSP_Project_Manager__r.pse__Salesforce_User__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -194,7 +194,7 @@
             <assignToReference>caseRecord.OwnerId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Implementation_Profile.NSP_Project_Manager__r.pse__Salesforce_User__r.Id</elementReference>
+                <elementReference>Get_Implementation_Profile.NSP_Project_Manager__r.pse__Salesforce_User__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -316,14 +316,14 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Get_Implementation_Profile.NSP_Payroll_Project_Manager__r.pse__Salesforce_User__r.Id</leftValueReference>
+                <leftValueReference>Get_Implementation_Profile.NSP_Payroll_Project_Manager__r.pse__Salesforce_User__c</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Get_Implementation_Profile.NSP_Project_Manager__r.pse__Salesforce_User__r.Id</leftValueReference>
+                <leftValueReference>Get_Implementation_Profile.NSP_Project_Manager__r.pse__Salesforce_User__c</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
