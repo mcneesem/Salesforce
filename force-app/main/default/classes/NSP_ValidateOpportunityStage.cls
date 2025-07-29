@@ -149,7 +149,7 @@ public with sharing class NSP_ValidateOpportunityStage {
             Integer passCheckCount = 0;
             if( String.isBlank(val.Group__c) ){
                 for( SObject relObject : relObjectMap.get(val.Object__c) ){
-                    if( checkCondition(val.Object__c , val.Field__c , relObject.get(val.Field__c) , val.Value__c , val.Operation__c) ){
+                    if( checkCondition(relObject.get(val.Field__c) , val.Value__c , val.Operation__c) ){
                         passCheckCount++;
                     }
                 }
@@ -192,7 +192,7 @@ public with sharing class NSP_ValidateOpportunityStage {
             } else {
                 valFieldValue = relatedObject.get(val.Field__c);
             }
-            if( checkCondition(val.Object__c , val.Field__c , valFieldValue , val.Value__c , val.Operation__c) )
+            if( checkCondition(valFieldValue , val.Value__c , val.Operation__c) )
             {
                 passCheckCount++;
             }
@@ -227,8 +227,7 @@ public with sharing class NSP_ValidateOpportunityStage {
                currentPrimProduct = ( NSP_ValidateOpportunityStage.namedProducts.CONTAINS(currentPrimProduct) ) ? currentPrimProduct : DEFAULT_PRODUCT; // treat unmatched Product as Default
 
         for(Opportunity_Stage_Validation__mdt optyStageVal : optyStageVals){
-            String valPrimProductValues = getValueByLabel( 'Opportunity' , 'NSP_PrimaryProduct__c' , optyStageVal.Primary_Product__c );
-                   valPrimProductValues = ( String.isBlank(valPrimProductValues) ) ? DEFAULT_PRODUCT : valPrimProductValues; // treat empty Primary Product as Default
+            String valPrimProductValues = ( String.isBlank(optyStageVal.Primary_Product__c) ) ? DEFAULT_PRODUCT : optyStageVal.Primary_Product__c; // treat empty Primary Product as Default
             List<String> valPrimProducts = valPrimProductValues.split(',');
             if( optyStageVal.IsActive__c && valPrimProducts.CONTAINS(currentPrimProduct) && optyStageVal.Stage__c == opp.StageName ){
                 currentOptyStageVals.add(optyStageVal);
@@ -681,38 +680,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         return userMap;
     }
 
-    public static String getValueByLabel( String objectName , String fieldName , String ruleValue ) {
-        Map<String, String> fieldPicklistValues = retrieveFieldPicklistValuesByLabel( objectName , fieldName );
-        String ruleValueByLabel = '';
-        if ( ruleValue == null || String.isBlank(ruleValue) || fieldPicklistValues == null || fieldPicklistValues.isEmpty() ) {
-            return ruleValue;
-        }
-        Set<String> ruleValueSet = new Set<String>(String.valueOf(ruleValue).split(','));
-        for ( String ruleValueItem : ruleValueSet ) {
-            if ( fieldPicklistValues.containsKey( String.valueOf(ruleValueItem) ) ) {
-                ruleValueByLabel += ',' + fieldPicklistValues.get( String.valueOf(ruleValueItem) );
-            }
-        }
-        ruleValueByLabel = ruleValueByLabel.removeStart(',');
-        return ruleValueByLabel;
-    }
-    
-    private static Map<String, String> retrieveFieldPicklistValuesByLabel( String objectName , String fieldName ) {
-        Map<String, String> fieldPicklistValues = new Map<String, String>();  
-        Map<String, Schema.SObjectField> fieldMap = NSP_ValidateOpportunityStage.sObjDetails.get(objectName);
-        if (fieldMap.containsKey(fieldName.toLowerCase())) {
-            Schema.DescribeFieldResult fieldDescribe = fieldMap.get(fieldName.toLowerCase()).getDescribe();
-            if ( fieldDescribe.getType() == Schema.DisplayType.PICKLIST || fieldDescribe.getType() == Schema.DisplayType.MULTIPICKLIST ){
-                for( Schema.PicklistEntry sp : fieldMap.get(fieldName.toLowerCase()).getDescribe().getPicklistValues() ) {
-                    fieldPicklistValues.put( sp.getLabel() , sp.getValue() );
-                }
-            }
-        }
-        return fieldPicklistValues;
-    }
-
-    public static Boolean checkCondition(String objName , String fieldName , Object fieldValue , String ruleValueLabel , String operation){
-        String ruleValue = getValueByLabel( objName , fieldName , ruleValueLabel );
+    public static Boolean checkCondition( Object fieldValue , String ruleValue , String operation ){
         if( operation == Operator.IS_BLANK.name() ){
             return String.isBlank(String.valueOf(fieldValue)) || fieldValue == null;
         } else if ( operation == Operator.IS_NOT_BLANK.name() ){
@@ -857,13 +825,31 @@ public with sharing class NSP_ValidateOpportunityStage {
                                                                           WHERE Primary_Product__c != null ];
                 if ( optyStageVals != null && !optyStageVals.isEmpty() ) {
                     for ( Opportunity_Stage_Validation__mdt optyStageVal : optyStageVals ) {
-                        String valPrimProductLabels = getValueByLabel( 'Opportunity' , 'NSP_PrimaryProduct__c' , optyStageVal.Primary_Product__c );
-                        List<String> valPrimProducts = valPrimProductLabels.split(',');
+                        List<String> valPrimProducts = optyStageVal.Primary_Product__c.split(',');
                         namedProducts.addAll(valPrimProducts);
                     }
                 }
             }
             return namedProducts;
+        }
+        private set;
+    }
+
+    private static Set<String> userGroupMembership {
+        private get {
+            if ( userGroupMembership == null ) {
+                userGroupMembership = new Set<String>();
+                for ( GroupMember userGroupMember : [ SELECT Id , Group.Name , UserOrGroupId
+                                                      FROM GroupMember
+                                                      WHERE
+                                                        ( UserOrGroupId = :UserInfo.getUserId() )
+                                                    ]
+                    )
+                {
+                    userGroupMembership.add(userGroupMember.Group.Name);
+                }
+            }
+            return userGroupMembership;
         }
         private set;
     }
@@ -883,19 +869,6 @@ public with sharing class NSP_ValidateOpportunityStage {
             return integUserProfileId;
         }
         private set;
-    }
-
-    public static Map<String, Map<String,Schema.SObjectField>> sObjDetails {
-        get { 
-            if(sObjDetails == null){
-                sObjDetails = new Map<String, Map<String,Schema.SObjectField>>();
-                List<String> types = validationObjects.split(',');
-                for(Schema.DescribeSobjectResult sObj : Schema.describeSObjects(types)){
-                    sObjDetails.put(sObj.getName(), sObj.fields.getMap());
-                }
-            }
-            return sObjDetails;
-        } private set;
     }
 
     public enum Operator { EQUALS, DOES_NOT_EQUAL, CONTAINS, DOES_NOT_CONTAIN, IS_IN, IS_NOT_IN , GREATER_THAN_OR_EQUALS, LESS_THAN_OR_EQUALS, IS_BLANK, IS_NOT_BLANK, DOES_NOT_EXIST }

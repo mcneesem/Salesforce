@@ -28,7 +28,7 @@
     </values>
     <values>
         <field>Primary_Product__c</field>
-        <value xsi:type="xsd:string">HRCore Solution,HRCore - Select Edition</value>
+        <value xsi:type="xsd:string">WA,WX</value>
     </values>
     <values>
         <field>Stage__c</field>

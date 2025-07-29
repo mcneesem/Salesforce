@@ -28,7 +28,7 @@
     </values>
     <values>
         <field>Primary_Product__c</field>
-        <value xsi:type="xsd:string">HR360 Solution,HR360 - Select Edition</value>
+        <value xsi:type="xsd:string">WO,WS</value>
     </values>
     <values>
         <field>Stage__c</field>
