@@ -1,13 +1,14 @@
 @isTest
-public class NSP_AccountTerminationBatch_Test {
-    public static final String OPP_TYPE = 'CAMS';
+private class NSP_AccountTerminationBatch_Test {
+    private static final String OPP_TYPE = 'CAMS';
     private static final List<String> ASSET_FIELDS = new List<String>{
         'Id',
         'Status',
         'Account.NSP_Sales_Service_Account_Status__c'
     };
+
     @testSetup
-    static void setupTestData() {
+    private static void setupTestData() {
         AccountTerminationBatchSettings__c sett = new AccountTerminationBatchSettings__c();
         sett.IsEnabled__c = true;
         sett.BatchSize__c = 100;
@@ -75,7 +76,7 @@ public class NSP_AccountTerminationBatch_Test {
     }
 
     @isTest
-    static void terminateAccount() {
+    private static void terminateAccount() {
         List<Asset> astList = [SELECT RecordTypeName__c, Status, Name, NSP_Client__c,NSP_Termination_Date__c,Account.NSP_Sales_Service_Account_Status__c  FROM Asset WHERE NSP_Client__c IN ('asset3','asset5')];
         try{
             test.startTest();
