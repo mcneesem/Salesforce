@@ -11,21 +11,24 @@ public without sharing class  NSP_GuidanceForSuccessController {
     //
     @AuraEnabled
     public static String getMessage( String stageName , String primaryProduct , String accountSegment ) {
-        String segment = ( String.isNotBlank( accountSegment ) ? accountSegment : null );
+        accountSegment = ( String.isNotBlank( accountSegment ) ? accountSegment : null );
         String message = '';
         try {
-            if ( String.isNotBlank( stageName ) && String.isNotBlank( primaryProduct ) ) {
+            if ( String.isNotBlank( stageName ) ) {
                 // Get guidance text
-                List<NSP_Opportunity_Stage_Guidance_Path__mdt> guidanceMessages = [
-                    SELECT NSP_Message__c
-                    FROM NSP_Opportunity_Stage_Guidance_Path__mdt
-                    WHERE (
-                        NSP_StageName__c = :stageName
-                        AND NSP_PrimaryProduct__c = :primaryProduct
-                        AND NSP_Account_Segment__c = :segment
-                        AND NSP_Is_Active__c = true
-                    )
-                ];
+                List<NSP_Opportunity_Stage_Guidance_Path__mdt> guidanceMessages = new List<NSP_Opportunity_Stage_Guidance_Path__mdt>();
+                if ( String.isNotBlank( primaryProduct ) ) {
+                    guidanceMessages = [
+                        SELECT NSP_Message__c
+                        FROM NSP_Opportunity_Stage_Guidance_Path__mdt
+                        WHERE (
+                            NSP_StageName__c = :stageName
+                            AND NSP_PrimaryProduct__c = :primaryProduct
+                            AND NSP_Account_Segment__c = :accountSegment
+                            AND NSP_Is_Active__c = true
+                        )
+                    ];
+                }
                 //  If not found then get default guidance text (non techology product)
                 if ( guidanceMessages.isEmpty() ) {
                     guidanceMessages = [
