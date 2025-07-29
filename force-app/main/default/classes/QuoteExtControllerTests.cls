@@ -1,13 +1,13 @@
-/**************************************************************************************************   
+/**************************************************************************************************
 Apex Controller Name :  QuoteExtControllerTests
-Version              :  1.0                                                                          
-Created Date         :  October 10, 2021                                                             
+Version              :  1.0
+Created Date         :  October 10, 2021
 Function             :  This class is used as controller  class for QuoteExtControllerTests.
-Story                :                                                                             
-Modification Log     :                                                                               
-*--------------------------------------------------------------------------------------------------  
-* Developer                   Date                   Description                                     
-* -------------------------------------------------------------------------------------------------  
+Story                :
+Modification Log     :
+*--------------------------------------------------------------------------------------------------
+* Developer                   Date                   Description
+* -------------------------------------------------------------------------------------------------
 
 *	Sumit                  October 10, 2021          First Iteration
 ***************************************************************************************************/
@@ -27,26 +27,28 @@ private class QuoteExtControllerTests {
 ***********************************************************************************************/
     testMethod static void testSubmit() {
         SBQQ__Quote__c quote = new SBQQ__Quote__c();
+        quote.NSP_Product_Type__c = NSP_CPQConstants.QUOTE_PRODUCT_TYPE_CM;
         //Create Quote
         insert quote;
-        
+
         Test.startTest();
         QuoteExtController con = new QuoteExtController(new ApexPages.StandardController(quote));
         con.onSubmit();
         quote = [SELECT ApprovalStatus__c FROM SBQQ__Quote__c WHERE Id = :quote.Id LIMIT 1];
         Test.stopTest();
-        
+
         System.assertEquals(null, quote.ApprovalStatus__c);
     }
-    
+
     /**********************************************************************************************
 * Method Name:testRecall
 * Purpose: This method will get recall record
 ***********************************************************************************************/
     testMethod static void testRecall() {
         SBQQ__Quote__c quote = new SBQQ__Quote__c();
+        quote.NSP_Product_Type__c = NSP_CPQConstants.QUOTE_PRODUCT_TYPE_CM;
         insert quote;
-        
+
         Test.startTest();
         QuoteExtController con = new QuoteExtController(new ApexPages.StandardController(quote));
         con.onRecall();
@@ -54,7 +56,7 @@ private class QuoteExtControllerTests {
         Test.stopTest();
         System.assertEquals('Recalled', quote.ApprovalStatus__c);
     }
-    
+
     /**********************************************************************************************
 * Method Name:validateApprovalTest
 * Purpose: This method will get validate approval record
@@ -85,7 +87,7 @@ private class QuoteExtControllerTests {
         productGroup.SBQQ__Number__c =10;
         //productGroup.SBQQ__Feature__c = featureUpshell.id;
         productGroup.SBQQ__ConfiguredSKU__c = testProduct.id;
-        productGroup.SBQQ__OptionalSKU__c   = testChildProduct.id;    
+        productGroup.SBQQ__OptionalSKU__c   = testChildProduct.id;
         insert productGroup;
         test.startTest();
         NSP_TestHelper.createPriceBookEntry(testProduct.Id,1,true);
@@ -111,18 +113,18 @@ private class QuoteExtControllerTests {
              obj1quote.NSP_Customer_Role__c = contactObj.Id;
              obj1quote.SBQQ__PrimaryContact__c = contactObj.Id;
              insert obj1quote;
-         //Create QuoteLine    
+         //Create QuoteLine
          SBQQ__QuoteLine__c parentqli =  new SBQQ__QuoteLine__c(SBQQ__Product__c = testProduct.id,SBQQ__Quote__c = obj1quote.id);
         insert parentqli;
         SBQQ__QuoteLine__c childqli = new SBQQ__QuoteLine__c(SBQQ__Product__c = testChildProduct.id,SBQQ__Quote__c = obj1quote.id,SBQQ__ProductOption__c = productGroup.Id,SBQQ__RequiredBy__c=parentqli.Id	);
         insert childqli;
-        
+
         QuoteExtController con = new QuoteExtController(new ApexPages.StandardController(obj1quote));
         con.onSubmit();
         test.stopTest();
         system.assert(parentqli != null);
     }
-    
+
       /**********************************************************************************************
 * Method Name:validateApprovalPassTest
 * Purpose: This method will get validate approval pass record
@@ -160,14 +162,14 @@ private class QuoteExtControllerTests {
              obj1quote.NSP_Has_WA_product__c = false;
              obj1quote.NSP_Invoice_To_Email__c = con1.Id;
              insert obj1quote;
-       
+
         test.startTest();
         QuoteExtController con = new QuoteExtController(new ApexPages.StandardController(obj1quote));
         con.onCancel();
         test.stopTest();
         system.assert(obj1quote!=null);
     }
-    
+
     /**********************************************************************************************
 * Method Name:validateApprovalNewQuoteTest
 * Purpose: This method will get validate approval record for new Quote
@@ -201,7 +203,7 @@ private class QuoteExtControllerTests {
         productGroup.SBQQ__Number__c =10;
         //productGroup.SBQQ__Feature__c = featureUpshell.id;
         productGroup.SBQQ__ConfiguredSKU__c = testProduct.id;
-        productGroup.SBQQ__OptionalSKU__c   = testChildProduct.id;    
+        productGroup.SBQQ__OptionalSKU__c   = testChildProduct.id;
         insert productGroup;
         test.startTest();
         //Create Pricebook Entry
@@ -239,15 +241,15 @@ private class QuoteExtControllerTests {
              insert parentqli;
              SBQQ__QuoteLine__c childqli = new SBQQ__QuoteLine__c(SBQQ__Product__c = testChildProduct.id,SBQQ__Quote__c = obj1quote.id,SBQQ__ProductOption__c = productGroup.Id,SBQQ__RequiredBy__c=parentqli.Id	);
              insert childqli;
-        	 
-             
-            
+
+
+
             QuoteExtController con = new QuoteExtController(new ApexPages.StandardController(obj1quote));
             con.onSubmit();
             test.stopTest();
             system.assert(parentqli != null);
     }
-    
-    
-    
+
+
+
 }
