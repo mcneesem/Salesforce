@@ -9,6 +9,7 @@
     <permissionSets>BPS_Service_Field_Permissions</permissionSets>
     <permissionSets>BPS_Service_Flow_Access</permissionSets>
     <permissionSets>BPS_Service_Object_Permissions</permissionSets>
+    <permissionSets>BPS_Service_Record_Type_Assignments</permissionSets>
     <permissionSets>BPS_Service_System_Permissions</permissionSets>
     <permissionSets>BPS_Service_Visualforce_Page_Access</permissionSets>
     <status>Updated</status>
