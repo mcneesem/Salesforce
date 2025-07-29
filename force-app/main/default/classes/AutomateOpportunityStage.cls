@@ -38,7 +38,8 @@ public class AutomateOpportunityStage {
             try{
                 for(Opportunity opp : [SELECT Id, NSP_Ready_for_Integration_Sync__c, OwnerId, StageName, NSP_PrimaryProduct__c, NSP_Number_of_Employees__c, Type, 
                                         NSP_Bid_Status__c, Fee_Inclusive__c, NSP_Order_Generated__c, NSP_Bypass_Docusign_Signature__c, NSP_Closing_Appointment__c, 
-                                        NSP_Client_For_Life__c, NSP_Forecast_Status__c FROM Opportunity WHERE ID IN: autoStageOppIds]) {
+                                        NSP_Client_For_Life__c, NSP_Forecast_Status__c, NSP_TotalAnnualPayroll__c, NSP_Booked_Date__c, NSP_CountAsSale__c, 
+                                        CloseDate FROM Opportunity WHERE ID IN: autoStageOppIds]) {
                     if(optyAutoStages != null && !optyAutoStages.isEmpty() && opp.StageName != null) {
                         for(Opportunity_Stage_Progression__mdt stageAuto:optyAutoStages) {
                             if(opp.StageName == stageAuto.Stage__c && opp.NSP_PrimaryProduct__c == stageAuto.Primary_Product__c) {
