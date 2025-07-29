@@ -32,6 +32,11 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
 
         String currObjName = objectApiNames.remove(0); // remove top item from objectApiNames in each link in chain
 
+        if( filterNamespaces.isEmpty() && extIdObjList.contains(currObjName) ){
+            createErrorLog( 'execute' , currObjName , 'Loading ExternalIds' );
+            loadExternalIds(currObjName);
+        }
+
         createErrorLog( 'execute' , currObjName , 'Loading ObjectPermissions' );
         loadObjectPermissions(readPermSetId, false, objectApiNames, currObjName, depRetry, true); // upsert read Object Permissions for first object in list
         loadObjectPermissions(editPermSetId, true, objectApiNames, currObjName, depRetry, true); // upsert edit Object Permissions for first object in list
@@ -39,11 +44,6 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
         createErrorLog( 'execute' , currObjName , 'Loading FieldPermissions' );
         loadFieldPermissions(readPermSetId, false, currObjName); // upsert read Field Permissions for first object in list
         loadFieldPermissions(editPermSetId, true, currObjName); // upsert edit Field Permissions for first object in list
-        
-        if( filterNamespaces.isEmpty() && extIdObjList.contains(currObjName) ) {
-            createErrorLog( 'execute' , currObjName , 'Loading ExternalIds' );
-            loadExternalIds(currObjName);
-        }
 
         if (!String.isBlank(readPermSetId) || !String.isBlank(editPermSetId)) {
             if (QueueableSettings__c.getOrgDefaults().EnableLoadPermSetChain__c) {
@@ -195,7 +195,7 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
             for (Database.SaveResult updObjResult : updObjResultList) { // retrieve errors for failed record upserts
                 if (!updObjResult.isSuccess()) {
                     for(Database.Error err : updObjResult.getErrors()) {
-                        if ( errLogCount++ < 1 ) {
+                        if ( errLogCount++ < 10 ) {
                             createErrorLog( 'loadExternalIds' , currObjName , 'ExternalIds error occurred on Id: ' + updObjResult.getId() + ' : ' + err.getMessage() );
                         }
                     }                
