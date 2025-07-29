@@ -10,11 +10,11 @@ public class NSP_CPQConstants {
     public static Boolean TEST_CODE_COVERAGE = False;
 
     // To set the Quote Approval status Pending
-    public static final String QUOTE_APPROVAL_STATUS_PENDING = 'Pending'; 
-    // To set the Quote Approval status Approved  
-    public static final String QUOTE_APPROVAL_STATUS_APPROVED = 'Approved';  
+    public static final String QUOTE_APPROVAL_STATUS_PENDING = 'Pending';
+    // To set the Quote Approval status Approved
+    public static final String QUOTE_APPROVAL_STATUS_APPROVED = 'Approved';
     // To set the Quote Approval status Reject
-    public static final String QUOTE_APPROVAL_STATUS_REJECTED ='Rejected';  
+    public static final String QUOTE_APPROVAL_STATUS_REJECTED ='Rejected';
     // To set the Quote Approval status Recalled
     public static final String QUOTE_APPROVAL_STATUS_RECALLED ='Recalled';
     // To set the Quote status Submitted for Approval
@@ -25,7 +25,7 @@ public class NSP_CPQConstants {
     public static final String QUOTE_STATUS_REJECTED ='Draft';
     // To set the Quote status Draft
     public static final String QUOTE_STATUS_RECALLED ='Draft';
-    
+
     public static final String SCHOLARSHIP_PUBLIC_GROUP ='Scholarship Applicable BPA';
     public static final String SE_APPROVAL_Chain = 'SE Approval Chain';
     public static final String APPLICABLE_TRANSACTION_TYPE = 'Supplemental';
@@ -49,6 +49,7 @@ public class NSP_CPQConstants {
     public static final String QUOTE_PRODUCT_TYPE_ORGPLUS ='Organizational Planning';
     public static final String QUOTE_PRODUCT_TYPE_PERFORMSMART ='Performance Management';
     public static final String QUOTE_PRODUCT_TYPE_LEARNDEV ='Learning and Development';
+    public static final String QUOTE_PRODUCT_TYPE_CM = 'Contractor Management';
     public static final String QUOTE_NEW_SHOW_DISCOUNT_BPS = 'BPSWithDiscount';
     public static final String QUOTE_NEW_SHOW_DISCOUNT_Timestar = 'TimestarWithDiscount';
     public static final String QUOTE_AMENDMENT_SHOW_DISCOUNT_BPS = 'AmendmentBPSWithDiscount';
@@ -70,12 +71,12 @@ public class NSP_CPQConstants {
     public static final String QUOTELINE_APPLICANTTRACKING = 'Applicant Tracking';
 
     public static final String PRODUCT_CHARGETYPE_RECURRING = 'Recurring';
-    
+
     public static final String NOT_ASSIGNED ='Not Assigned';
     public static final String SBQQ_TYPE_FIELD_API ='SBQQ__Type__c';
     public static final String ADDRESS ='Address';
     public static final String ACCOUNT ='Account';
-    
+
     //Static Codes for Order Product Activation Trigger
     public static final String  FIRSTUSAGEUPLOAD ='First Usage Upload';
     public static final String  PROJGOLIVEDATE ='Project Go Live';
@@ -91,7 +92,7 @@ public class NSP_CPQConstants {
     public static final String BLNGFREQ_ANNUAL ='Annual';
     public static final String ORDER_TYPE_NEW ='New Product';
     public static final String ORDER_TYPE_AMENDMENT ='Amendment';
-    
+
     public static final String ORDERITEM_RECALCULATIONSTATUS_NA ='Not Applicable';
 
     //Quote Line Actions
@@ -108,7 +109,7 @@ public class NSP_CPQConstants {
     public static final String BLNGTYPE_ARREARS = 'Arrears';
     public static final String FIRSTDAYOFMONTH = '1';
     public static final String INVRUN_PENDING = 'Pending Billing';
-    
+
     //Recurssion Flag
     public static Boolean HAS_BLK_RAN = false;
 
@@ -173,7 +174,7 @@ public class NSP_CPQConstants {
      public static final String TESTICONNAME = 'Test iconName';
 
      //FocusItem
-     public static final String FOCUSITEM_NAME = 'Focus Item';    
+     public static final String FOCUSITEM_NAME = 'Focus Item';
 
      //AccountGroup
      public static final String ACCOUNTGROUP_NAME1 = 'OrgPlus Support Group - Test Grp 2';
