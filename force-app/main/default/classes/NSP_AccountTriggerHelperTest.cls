@@ -1,3 +1,4 @@
+@isTest
 private class NSP_AccountTriggerHelperTest {
     private static final Id availableUserId = '0054x000008PgqNAAS';
     private static final String emailencodingkey = 'UTF-8';
