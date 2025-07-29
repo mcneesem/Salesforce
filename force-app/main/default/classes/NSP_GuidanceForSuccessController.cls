@@ -1,8 +1,9 @@
+// intentionally `without sharing` to ensure that aura/NSP_OpportunityGuidanceForSuccess has access to all NSP_Opportunity_Stage_Guidance_Path__mdt records.
 public without sharing class  NSP_GuidanceForSuccessController {
     // test w/ NSP_GuidanceForSuccessControllerTest (86%)
 
     //
-    // Description: This method queries the guidance for success from the custom metadata "NSP_Opportunity_Stage_Guidance_Path__mdt"
+    // Description: This method queries the guidance for success from the custom metadata NSP_Opportunity_Stage_Guidance_Path__mdt
     // @param: stageName
     // @param: productId
     // @param: segmentId
