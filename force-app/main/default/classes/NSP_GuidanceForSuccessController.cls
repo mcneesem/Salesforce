@@ -14,7 +14,7 @@ public without sharing class  NSP_GuidanceForSuccessController {
      */
     @AuraEnabled
     public static String getMessage(String stageName, String primaryProduct, String accountSegment){
-        String segment = !String.isNotBlank(accountSegment) ? accountSegment : null;
+        String segment = String.isNotBlank(accountSegment) ? accountSegment : null;
         String message = '';
         try{
             if ( String.isNotBlank( stageName ) && String.isNotBlank( primaryProduct ) ) {
