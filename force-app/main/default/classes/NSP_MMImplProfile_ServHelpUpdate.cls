@@ -2025,8 +2025,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
         )
     {
         if(automation ==JOBDESCRIPTION_MM){
-            String milestoneKey = createMilestoneForProjectTask(proj, pta);
-            pse__Project_Task__c eachProjecttask = createProjectTaskfromIP(proj,  pta.NSP_Category__c, ipRecId,milestoneKey);
+            pse__Project_Task__c eachProjecttask = hrSpecialistOwner(proj,pta,ipRecId,ipwithValue,workCalendarId);
             NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(automation);
             Implementation_Profile__c ipRec = newIPs.get(ipRecId);
             ipAutomationRecords.add(
