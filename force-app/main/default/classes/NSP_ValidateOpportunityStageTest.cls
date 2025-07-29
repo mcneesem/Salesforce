@@ -796,6 +796,7 @@ private class NSP_ValidateOpportunityStageTest {
         if(oppty!=null){
             try{            
                 oppty.StageName='Closed Lost';
+                //oppty.Loss_Reason__c='';
                 Update oppty;
             }catch(Exception ex){
                 ex.getStackTraceString();
@@ -1060,31 +1061,31 @@ private class NSP_ValidateOpportunityStageTest {
         test.startTest();
 
         // Test Date
-        System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition('Opportunity', 'Id', today, 'TODAY', 'EQUALS'));
-        System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition('Opportunity', 'Id', today, null, 'IS_NOT_BLANK'));
-        System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition('Opportunity', 'Id', null, null, 'IS_BLANK'));
+        System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition(today, 'TODAY', 'EQUALS'));
+        System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition(today, null, 'IS_NOT_BLANK'));
+        System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition(null, null, 'IS_BLANK'));
 
         // Test Double
-        System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition('Opportunity', 'Id', 1.0, '1.0', 'EQUALS'));
-        System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition('Opportunity', 'Id', 1.0, '2.0', 'DOES_NOT_EQUAL'));
+        System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition(1.0, '1.0', 'EQUALS'));
+        System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition(1.0, '2.0', 'DOES_NOT_EQUAL'));
 
         // Test Integer
-        System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition('Opportunity', 'Id', 1, '1', 'EQUALS'));
-        System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition('Opportunity', 'Id', 1, '2', 'DOES_NOT_EQUAL'));
-        System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition('Opportunity', 'Id', 1, '2', 'LESS_THAN_OR_EQUALS'));
-        System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition('Opportunity', 'Id', 3, '2', 'GREATER_THAN_OR_EQUALS'));
+        System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition(1, '1', 'EQUALS'));
+        System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition(1, '2', 'DOES_NOT_EQUAL'));
+        System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition(1, '2', 'LESS_THAN_OR_EQUALS'));
+        System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition(3, '2', 'GREATER_THAN_OR_EQUALS'));
 
         // Test String
-        System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition('Opportunity', 'Id', 'test', 'test', 'EQUALS'));
-        System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition('Opportunity', 'Id', 'test', 'test2', 'DOES_NOT_EQUAL'));
-        System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition('Opportunity', 'Id', 'test22', 'test2', 'CONTAINS'));
-        System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition('Opportunity', 'Id', 'test', 'test2', 'DOES_NOT_CONTAIN'));
-        System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition('Opportunity', 'Id', 'test2', 'test2', 'IS_IN'));
-        System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition('Opportunity', 'Id', 'test', 'test2', 'IS_NOT_IN'));
+        System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition('test', 'test', 'EQUALS'));
+        System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition('test', 'test2', 'DOES_NOT_EQUAL'));
+        System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition('test22', 'test2', 'CONTAINS'));
+        System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition('test', 'test2', 'DOES_NOT_CONTAIN'));
+        System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition('test2', 'test2', 'IS_IN'));
+        System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition('test', 'test2', 'IS_NOT_IN'));
 
         // Test Boolean
-        System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition('Opportunity', 'Id', true, 'true', 'EQUALS'));
-        System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition('Opportunity', 'Id', false, 'true', 'DOES_NOT_EQUAL'));
+        System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition(true, 'true', 'EQUALS'));
+        System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition(false, 'true', 'DOES_NOT_EQUAL'));
         test.stopTest();
     }
 }
