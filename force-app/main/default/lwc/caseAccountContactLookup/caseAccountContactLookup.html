@@ -1,8 +1,8 @@
 <template>
-    <div class="slds-grid slds-grid_pull-padded-small">
+    <div class="slds-grid slds-wrap slds-grid_pull-padded-small">
         <!-- Account Lookup Section -->
-        <div class="slds-size_1-of-2">
-            <label class="slds-p-left_small" for="account-lookup">Account</label>
+        <div class="slds-col slds-p-horizontal_small">
+            <label class="slds-p-left_x-small slds-p-bottom_small" style="color: #444444;" for="account-lookup">Account</label>
             <c-nsp_case-custom-look-up
                 s-object-api-name="Account"
                 icon-name="standard:account"
@@ -15,14 +15,10 @@
                 id="account-lookup"
                 >
             </c-nsp_case-custom-look-up>
-            <!-- warning message for multiple accounts -->
-            <div lwc:if={showAccountWarning} class="slds-text-color_error slds-text-body_small slds-m-top_x-small">
-                <strong style="color: red;">{multipleAccountsLabel}</strong>
-            </div>
         </div>
         <!-- Contact Lookup Section -->
-        <div class="slds-size_1-of-2">
-            <label class="slds-p-left_small" for="contact-lookup">Contact</label>
+        <div class="slds-col slds-p-horizontal_small">
+            <label class="slds-p-left_x-small slds-p-bottom_small" style="color: #444444;" for="contact-lookup">Contact</label>
             <c-nsp_case-custom-look-up
                 s-object-api-name="Contact"
                 icon-name="standard:contact"
@@ -35,5 +31,11 @@
                 >
             </c-nsp_case-custom-look-up>
         </div>
+        <!-- warning message for multiple accounts -->
+        <template lwc:if={showAccountWarning}>
+            <div class="slds-col slds-size_12-of-12 slds-p-horizontal_small slds-text-color_error slds-text-body_small slds-m-top_x-small">
+                <strong>{multipleAccountsLabel}</strong>
+            </div>
+        </template>
     </div>
 </template>
