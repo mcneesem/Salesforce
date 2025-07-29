@@ -197,16 +197,16 @@ public with sharing class NSP_ValidateOpportunityStage {
                 passCheckCount++;
             }
         }
-        if( groupCheckType != Operator.DOES_NOT_EXIST.name() ){
-            return passCheckCount;
-        }
 
         // handle DOES_NOT_EXIST case
-        if( passCheckCount >= (groupedStageValMap.get(groupName).size() - 1) ){
-            passCheckCount = 99; // if record exists that should not, return 99 to trip error message
-        } else {
-            passCheckCount = groupedStageValMap.get(groupName).size(); // if not all criteria met, make sure error message is skipped
+        if( groupCheckType == Operator.DOES_NOT_EXIST.name() ){
+            if( passCheckCount >= (groupedStageValMap.get(groupName).size() - 1) ){
+                passCheckCount = 99; // if record exists that should not, return 99 to trip error message
+            } else {
+                passCheckCount = groupedStageValMap.get(groupName).size(); // if not all criteria met, make sure error message is skipped
+            }
         }
+
         return passCheckCount;
     }
 
@@ -677,10 +677,11 @@ public with sharing class NSP_ValidateOpportunityStage {
     }
 
     public static Boolean checkCondition( Object fieldValue , String ruleValue , String operation ){
+        Boolean retVal = false;
         if( operation == Operator.IS_BLANK.name() ){
-            return String.isBlank(String.valueOf(fieldValue)) || fieldValue == null;
+            retVal = String.isBlank(String.valueOf(fieldValue)) || fieldValue == null;
         } else if ( operation == Operator.IS_NOT_BLANK.name() ){
-            return !String.isBlank(String.valueOf(fieldValue)) && fieldValue != null;
+            retVal = !String.isBlank(String.valueOf(fieldValue)) && fieldValue != null;
         } else if ( !String.isBlank(ruleValue)
              && (operation == Operator.EQUALS.name()
               || operation == Operator.DOES_NOT_EQUAL.name()
@@ -690,66 +691,71 @@ public with sharing class NSP_ValidateOpportunityStage {
                 Date ruleValueDate = null;
                 if( ruleValue.indexOf('TODAY') > -1 ){
                     ruleValueDate = Date.today();
-                    return checkConditionDate( Date.valueOf(fieldValue) , ruleValueDate , operation );
+                    retVal = checkConditionDate( Date.valueOf(fieldValue) , ruleValueDate , operation );
                 }
             } else if ( (fieldValue instanceOf Decimal) || (fieldValue instanceOf Double) || (fieldValue instanceOf Integer) ){
-                return checkConditionDecimal( Decimal.valueOf(String.valueOf(fieldValue)) , Decimal.valueOf(ruleValue) , operation );
+                retVal = checkConditionDecimal( Decimal.valueOf(String.valueOf(fieldValue)) , Decimal.valueOf(ruleValue) , operation );
             } else if ( fieldValue instanceOf Boolean ){
-                return checkConditionString( String.valueOf(fieldValue).toLowerCase() , ruleValue.toLowerCase() , operation );
+                retVal = checkConditionString( String.valueOf(fieldValue).toLowerCase() , ruleValue.toLowerCase() , operation );
+            } else {
+                retVal = checkConditionString( fieldValue , ruleValue , operation );
             }
+        } else {
+            retVal = checkConditionString( fieldValue , ruleValue , operation );
         }
-        return checkConditionString( fieldValue , ruleValue , operation );
+        return retVal;
     }
 
     public static Boolean checkConditionString( Object fieldValue , Object ruleValue , String operation ){
+        Boolean retVal = false;
         if ( operation == Operator.EQUALS.name() ){
-            return fieldValue == ruleValue;
+            retVal = fieldValue == ruleValue;
         } else if ( operation == Operator.DOES_NOT_EQUAL.name() ){
-            return fieldValue != ruleValue;
+            retVal = fieldValue != ruleValue;
         } else if ( operation == Operator.CONTAINS.name() ){
-            return fieldValue != null && String.valueOf(fieldValue).CONTAINS(String.valueOf(ruleValue));
+            retVal = fieldValue != null && String.valueOf(fieldValue).contains(String.valueOf(ruleValue));
         } else if ( operation == Operator.DOES_NOT_CONTAIN.name() ){
-            return fieldValue != null && !String.valueOf(fieldValue).CONTAINS(String.valueOf(ruleValue));
+            retVal = fieldValue != null && !String.valueOf(fieldValue).contains(String.valueOf(ruleValue));
         } else if ( operation == Operator.IS_IN.name() ){
             if ( ruleValue != null && !String.isBlank(String.valueOf(ruleValue)) ){
                 Set<String> ruleValueSet = new Set<String>(String.valueOf(ruleValue).split(','));
-                return ruleValueSet.CONTAINS(String.valueOf(fieldValue));
+                retVal = ruleValueSet.contains(String.valueOf(fieldValue));
             }
-            return false;
         } else if ( operation == Operator.IS_NOT_IN.name() ){
             if ( ruleValue != null && !String.isBlank(String.valueOf(ruleValue)) ){
                 Set<String> ruleValueSet = new Set<String>(String.valueOf(ruleValue).split(','));
-                return !ruleValueSet.CONTAINS(String.valueOf(fieldValue));
+                retVal = !ruleValueSet.contains(String.valueOf(fieldValue));
             }
-            return true;
         }
-        return false;
+        return retVal;
     }
 
     public static Boolean checkConditionDate( Date fieldValue , Date ruleValue , String operation ){
+        Boolean retVal = false;
         if ( operation == Operator.EQUALS.name() ) {
-            return fieldValue == ruleValue;
+            retVal = fieldValue == ruleValue;
         } else if ( operation == Operator.DOES_NOT_EQUAL.name() ) {
-            return fieldValue != ruleValue;
+            retVal = fieldValue != ruleValue;
         } else if ( operation == Operator.GREATER_THAN_OR_EQUALS.name() ) {
-            return fieldValue != null && !String.isBlank(String.valueOf(fieldValue)) && fieldValue >= ruleValue;
+            retVal = fieldValue != null && !String.isBlank(String.valueOf(fieldValue)) && fieldValue >= ruleValue;
         } else if ( operation == Operator.LESS_THAN_OR_EQUALS.name() ) {
-            return fieldValue != null && !String.isBlank(String.valueOf(fieldValue)) && fieldValue <= ruleValue;
+            retVal = fieldValue != null && !String.isBlank(String.valueOf(fieldValue)) && fieldValue <= ruleValue;
         }
-        return false;
+        return retVal;
     }
 
     public static Boolean checkConditionDecimal( Decimal fieldValue , Decimal ruleValue , String operation ){
+        Boolean retVal = false;
         if ( operation == Operator.EQUALS.name() ) {
-            return fieldValue == ruleValue;
+            retVal = fieldValue == ruleValue;
         } else if ( operation == Operator.DOES_NOT_EQUAL.name() ) {
-            return fieldValue != ruleValue;
+            retVal = fieldValue != ruleValue;
         } else if ( operation == Operator.GREATER_THAN_OR_EQUALS.name() ) {
-            return fieldValue != null && !String.isBlank(String.valueOf(fieldValue)) && fieldValue >= ruleValue;
+            retVal = fieldValue != null && !String.isBlank(String.valueOf(fieldValue)) && fieldValue >= ruleValue;
         } else if ( operation == Operator.LESS_THAN_OR_EQUALS.name() ) {
-            return fieldValue != null && !String.isBlank(String.valueOf(fieldValue)) && fieldValue <= ruleValue;
+            retVal = fieldValue != null && !String.isBlank(String.valueOf(fieldValue)) && fieldValue <= ruleValue;
         }
-        return false;
+        return retVal;
     }
    
     private static Map<Id,User> permittedRETSCUserMap {
