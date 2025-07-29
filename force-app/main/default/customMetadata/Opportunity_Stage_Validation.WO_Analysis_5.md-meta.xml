@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Error_Message__c</field>
-        <value xsi:type="xsd:string">Please complete the following Task before moving to Analysis stage: Bid Sent to Pricing &amp; Review</value>
+        <value xsi:type="xsd:string">Please complete the following Task before moving to Analysis stage: Bid Sent to Pricing and Review</value>
     </values>
     <values>
         <field>Field__c</field>
