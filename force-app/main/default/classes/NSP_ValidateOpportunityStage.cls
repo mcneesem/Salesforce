@@ -612,10 +612,10 @@ public with sharing class NSP_ValidateOpportunityStage {
         } else if( ( opp.NSP_Account_Segment__c == NSP_SalesConstants.MIDMARKET_SALES )
              && hasAllowCLMMPerm ){
             canCloseLost++;
-        } else if( ( getSalesOfficeGroup(UserInfo.getUserId(),salesOfficeMembership) != '' )
+        } else if( ( getSalesOfficeGroup(UserInfo.getUserId(),salesOfficeMembership) )
              && hasCLSOOppOwnerPermission ){
             canCloseLost++;
-        } else if( ( getSalesOfficeGroup(UserInfo.getUserId(),salesOfficeList) != '' )
+        } else if( ( getSalesOfficeGroup(UserInfo.getUserId(),salesOfficeList) )
              && hasCLSOOppPermission){
             canCloseLost++;
         }
@@ -654,19 +654,15 @@ public with sharing class NSP_ValidateOpportunityStage {
         return canCloseLost;
     }
 
-    public static String getSalesOfficeGroup( Id recordId , List<String> salesOffice ) {
-        List <GroupMember> groupMemberList = [
-            SELECT Id , Group.Name , UserOrGroupId
-            FROM GroupMember
-            WHERE (
-                ( UserOrGroupId = :recordId )
-                AND ( Group.Name IN :salesOffice )
-            )
-        ];
-        if(!groupMemberList.isEmpty()){
-            return groupMemberList[0].Group.Name;
+    public static Boolean getSalesOfficeGroup( Id recordId , List<String> salesOffices ){
+        Boolean isMember = false;
+        for (String salesOffice : salesOffices) {
+            if (NSP_ValidateOpportunityStage.userGroupMembership.contains(salesOffice)) {
+                isMember = true;
+                break;
+            }
         }
-        return '';
+        return isMember;
     }
 
     public static Map<Id,User> getUserRole( List<Id> recordId ) {
