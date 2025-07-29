@@ -63,7 +63,7 @@ public class LoadFullAccessPermSets {
         OrgSettings__c orgSettings = OrgSettings__c.getOrgDefaults();
         Set<String> orgSettingsFields = Schema.SObjectType.OrgSettings__c.fields.getMap().keySet();
         for ( String orgSettingsField : orgSettingsFields ){
-            if( orgSettings.IsSandbox__c && orgSettingsField.contains('externalidobjects') ){
+            if( !orgSettings.IsSandbox__c && orgSettingsField.contains('externalidobjects') ){
                 String fieldValue = (String) orgSettings.get(orgSettingsField);
                 extIdObjList.addAll(fieldValue.split(','));
             }
