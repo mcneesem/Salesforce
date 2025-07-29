@@ -1,6 +1,6 @@
 // Batch Class to update Account's status to terminated if all assets are terminated and their termination date is in previous month
 public without sharing class NSP_AccountTerminationBatch implements ISelfSchedulable , Schedulable , Database.Batchable<SObject> , Database.Stateful {
-    // test w/ NSP_AccountTerminationBatch_Test (93%)
+    // test w/ NSP_AccountTerminationBatch_Test (89%)
 
     private static final String OBJ_AST = 'Asset';
     private static final String OBJ_OPP = 'Opportunity';
@@ -53,8 +53,8 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
                     SELECT Id , AccountId
                     FROM Opportunity
                     WHERE (
-                        ( CloseDate != null )
-                        AND ( CloseDate = LAST_N_MONTHS:1 )
+                        ( LastStageChangeDate != null )
+                        AND ( LastStageChangeDate = LAST_N_MONTHS:1 )
                         AND ( StageName IN ( 'Closed Lost' , 'Closed Won' ) )
                         AND ( Account.NSP_Sales_Service_Account_Status__c != :NSP_ServiceConstants.TERMINATED_STATUS )
                     )
