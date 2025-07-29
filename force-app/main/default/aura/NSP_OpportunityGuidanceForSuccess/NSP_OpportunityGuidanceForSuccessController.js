@@ -1,9 +1,8 @@
 ({
-	onInit : function(component, event, helper) {
-        helper.setGuidanceMessages(component);            
-    },
-    
-    onRecordChange : function(component, event, helper){
-        helper.setGuidanceMessages(component);            
-    }
+    onInit : function( component , event , helper ) {
+        helper.setGuidanceMessages( component );
+    } ,
+    onRecordChange : function( component , event , helper ) {
+        helper.setGuidanceMessages( component );
+    } ,
 })
