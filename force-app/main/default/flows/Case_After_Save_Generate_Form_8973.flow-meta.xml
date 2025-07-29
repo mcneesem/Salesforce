@@ -585,13 +585,6 @@
         <objectType>Case</objectType>
     </variables>
     <variables>
-        <name>NewCaseID</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
         <name>NewLinks</name>
         <dataType>SObject</dataType>
         <isCollection>true</isCollection>
