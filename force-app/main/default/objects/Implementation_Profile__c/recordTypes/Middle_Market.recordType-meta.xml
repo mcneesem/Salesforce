@@ -1758,6 +1758,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Colorado *HMO and UHC National Plans</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Hawaii *Hawaii Plan options only</fullName>
             <default>false</default>
         </values>
@@ -1767,6 +1771,22 @@
         </values>
         <values>
             <fullName>NA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NW %28Oregon %26 SW Washington%29 *HMO and UHC National Plans</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Hampshire *HMO and UHC National Plans</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rhode Island *HMO and UHC National Plans</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Washington *HMO and UHC National Plans</fullName>
             <default>false</default>
         </values>
     </picklistValues>
