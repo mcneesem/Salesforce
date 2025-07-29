@@ -36,6 +36,6 @@
     </values>
     <values>
         <field>Value__c</field>
-        <value xsi:type="xsd:string">Bid Sent to Pricing &amp; Review</value>
+        <value xsi:type="xsd:string">Bid Sent to Pricing and Review</value>
     </values>
 </CustomMetadata>
