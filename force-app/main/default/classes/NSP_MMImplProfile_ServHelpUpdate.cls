@@ -1,5 +1,5 @@
 public class NSP_MMImplProfile_ServHelpUpdate {
-    // test w/ NSP_MMImplProfile_UpdateTest (93%)
+    // test w/ NSP_MMImplProfile_UpdateTest (92%)
 
     private  Boolean isRerun =false;
     private Map<Id,Implementation_Profile__c> newIPs = null;
