@@ -190,15 +190,10 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
         if (!String.isBlank(currObjName)) {
             String dynamicQuery = 'SELECT Id, NSP_External_Id__c FROM ' + String.escapeSingleQuotes(currObjName) + ' WHERE NSP_External_Id__c = null';
             List<SObject> updObjList = Database.query(dynamicQuery);
-
-            for (SObject updObj : updObjList)
-            {
+            for ( SObject updObj : updObjList ) {
                 updObj.put('NSP_External_Id__c', updObj.Id);
             }
-
             Database.SaveResult[] updObjResultList = Database.update(updObjList, false);
-
-            Integer errLogCount = 0;
             for (Database.SaveResult updObjResult : updObjResultList) { // retrieve errors for failed record upserts
                 if (!updObjResult.isSuccess()) {
                     createErrorLog( 'loadExternalIds' , currObjName , 'ExternalId errors occurred' );
