@@ -10,67 +10,57 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Equals</fullName>
+                <fullName>EQUALS</fullName>
                 <default>true</default>
                 <label>Equals</label>
             </value>
             <value>
-                <fullName>Does Not Equal</fullName>
+                <fullName>DOES_NOT_EQUAL</fullName>
                 <default>false</default>
                 <label>Does Not Equal</label>
             </value>
             <value>
-                <fullName>Is Null</fullName>
-                <default>false</default>
-                <label>Is Null</label>
-            </value>
-            <value>
-                <fullName>Is Not Null</fullName>
-                <default>false</default>
-                <label>Is Not Null</label>
-            </value>
-            <value>
-                <fullName>Is Blank</fullName>
+                <fullName>IS_BLANK</fullName>
                 <default>false</default>
                 <label>Is Blank</label>
             </value>
             <value>
-                <fullName>Is Not Blank</fullName>
+                <fullName>IS_NOT_BLANK</fullName>
                 <default>false</default>
                 <label>Is Not Blank</label>
             </value>
             <value>
-                <fullName>Greater Than or Equals</fullName>
+                <fullName>GREATER_THAN_OR_EQUALS</fullName>
                 <default>false</default>
                 <label>Greater Than or Equals</label>
             </value>
             <value>
-                <fullName>Less Than or Equals</fullName>
+                <fullName>LESS_THAN_OR_EQUALS</fullName>
                 <default>false</default>
                 <label>Less Than or Equals</label>
             </value>
             <value>
-                <fullName>Contains</fullName>
+                <fullName>CONTAINS</fullName>
                 <default>false</default>
                 <label>Contains</label>
             </value>
             <value>
-                <fullName>Does Not Contain</fullName>
+                <fullName>DOES_NOT_CONTAIN</fullName>
                 <default>false</default>
                 <label>Does Not Contain</label>
             </value>
             <value>
-                <fullName>In</fullName>
+                <fullName>IS_IN</fullName>
                 <default>false</default>
                 <label>In</label>
             </value>
             <value>
-                <fullName>Not In</fullName>
+                <fullName>IS_NOT_IN</fullName>
                 <default>false</default>
                 <label>Not In</label>
             </value>
             <value>
-                <fullName>Does Not Exist</fullName>
+                <fullName>DOES_NOT_EXIST</fullName>
                 <default>false</default>
                 <label>Does Not Exist</label>
             </value>
