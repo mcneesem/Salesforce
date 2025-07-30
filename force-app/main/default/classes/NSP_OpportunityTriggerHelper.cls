@@ -295,7 +295,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
                      && ( opptyStageOrder.get( newStageName ) < opptyStageOrder.get( oldStageName ) )
                      && ( opportunityNewMap.get(opportunityId).NSP_PrimaryProduct__c == NSP_SalesConstants.WO
                       || opportunityNewMap.get(opportunityId).NSP_PrimaryProduct__c == NSP_SalesConstants.WS )
-                    )
+                   )
                 {
                     opportunityNewMap.get(opportunityId).addError(Label.Opportunity_Backward_Stage);
                 }
@@ -571,6 +571,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
                  || newOpportunity.NSP_Bypass_Docusign_Signature__c != oldOpportunity.NSP_Bypass_Docusign_Signature__c
                  || newOpportunity.NSP_Order_Generated__c != oldOpportunity.NSP_Order_Generated__c
                  || newOpportunity.NSP_Client_For_Life__c != oldOpportunity.NSP_Client_For_Life__c
+                 || newOpportunity.StageName != oldOpportunity.StageName
                  || newOpportunity.Type != oldOpportunity.Type
                )
             )
