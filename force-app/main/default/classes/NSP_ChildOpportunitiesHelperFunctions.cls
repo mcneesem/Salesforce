@@ -19,8 +19,7 @@ public without sharing class NSP_ChildOpportunitiesHelperFunctions {
                         StageName ,
                         NSP_PrimaryProduct__c ,
                         NSP_Parent_Opportunity__r.NSP_PrimaryProduct__c ,
-                        NSP_Parent_Opportunity__r.NSP_Lost_Reason__c,
-                        NSP_Parent_Opportunity__r.stagename
+                        NSP_Parent_Opportunity__r.NSP_Lost_Reason__c
                     FROM Opportunity
                     WHERE (
                         NSP_Parent_Opportunity__c IN :opportunityList
@@ -29,19 +28,18 @@ public without sharing class NSP_ChildOpportunitiesHelperFunctions {
                 ]
             )
         {
-            //  ADO-340819
-            //  Update close date and lock record
-            if(opportunityObject.NSP_Parent_Opportunity__r.stagename == NSP_SalesConstants.CLOSED_LOST){
-                opportunityObject.CloseDate = Date.today();
-                opportunityObject.RecordTypeId = lockedOpportunityRecordTypeId;
-            }
-            //Querying the child oppotunities that has product type as Retirement Services
+            //  Querying the child oppotunities that has product type as Retirement Services
             if ( opportunityObject.NSP_PrimaryProduct__c == NSP_SalesConstants.RETIREMENT_SERVICE ) {
                 //Update the stage to closed lost on child optys
                 opportunityObject.stagename = NSP_SalesConstants.CLOSED_LOST;
                 //Entering the lost reason as well
                 opportunityObject.NSP_Lost_Reason__c = opportunityObject.NSP_Parent_Opportunity__r.NSP_Lost_Reason__c;
                 opportunityObject.NSP_Is_Parent_Opportunity_Closed_Lost__c = TRUE;
+                //  ADO-340819
+                //  Update close date and lock record
+                opportunityObject.CloseDate = Date.today();
+                opportunityObject.RecordTypeId = lockedOpportunityRecordTypeId;
+                opportunityObject.NSP_Lock_Opportunity__c = true;
                 opportunityToUpdateList.add( opportunityObject );
             }
             //569718-Querying the child oppotunities that has product type as Non- Retirement Services
