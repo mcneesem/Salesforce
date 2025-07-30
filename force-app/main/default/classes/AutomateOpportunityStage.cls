@@ -14,17 +14,24 @@ public class AutomateOpportunityStage {
     public static void automateOpportunityStageAsync(List<Id> autoStageOppIds) {
         if ( ( autoStageOppIds != null )
             && !autoStageOppIds.isEmpty()
-            && ( Limits.getFutureCalls() < Limits.getLimitFutureCalls() ) // prevents LimitExceptions
-            )
+            && ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() )
+           )
         {
-            automateOpportunityStageFuture( autoStageOppIds );
+            System.enqueueJob(new AutomateOpportunityStageQueueable(autoStageOppIds));
         }
     }
 
-    @future
-    public static void automateOpportunityStageFuture( List<Id> autoStageOppIds ) {
-        if ( ( autoStageOppIds != null ) && !autoStageOppIds.isEmpty() ) {
-            automateOpportunityStage( autoStageOppIds );
+    public class AutomateOpportunityStageQueueable implements Queueable {
+        private List<Id> autoStageOppIds;
+
+        public AutomateOpportunityStageQueueable(List<Id> autoStageOppIds) {
+            this.autoStageOppIds = autoStageOppIds;
+        }
+
+        public void execute(QueueableContext context) {
+            if ( ( autoStageOppIds != null ) && !autoStageOppIds.isEmpty() ) {
+                automateOpportunityStage( autoStageOppIds );
+            }
         }
     }
 
