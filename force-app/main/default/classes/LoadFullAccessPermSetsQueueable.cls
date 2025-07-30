@@ -1,5 +1,5 @@
 public class LoadFullAccessPermSetsQueueable implements Queueable {
-    // test w/ LoadFullAccessPermSetsQueueableTest (78%)
+    // test w/ LoadFullAccessPermSetsQueueableTest (76%)
 
     // **************************************************************************************************
     //  Author:         Matthew McNeese
@@ -31,6 +31,13 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
     public void execute(QueueableContext context) {
 
         String currObjName = objectApiNames.remove(0); // remove top item from objectApiNames in each link in chain
+        
+        if (filterNamespaces == null) {
+            filterNamespaces = new List<String>();
+        }
+        if (extIdObjList == null) {
+            extIdObjList = new List<String>();
+        }
 
         if( filterNamespaces.isEmpty() && extIdObjList.contains(currObjName) ){
             createErrorLog( 'execute' , currObjName , 'Loading ExternalIds' );
@@ -197,6 +204,7 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
                     for(Database.Error err : updObjResult.getErrors()) {
                         if ( errLogCount++ < 10 ) {
                             createErrorLog( 'loadExternalIds' , currObjName , 'ExternalIds error occurred on Id: ' + updObjResult.getId() + ' : ' + err.getMessage() );
+                            System.debug('err.getMessage(): ' + err.getMessage());
                         }
                     }                
                 }
