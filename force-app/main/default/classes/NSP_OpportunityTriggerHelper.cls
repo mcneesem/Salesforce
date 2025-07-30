@@ -287,16 +287,17 @@ public with sharing class NSP_OpportunityTriggerHelper {
                 }
             }
 
-            if(opportunityNewMap.get(opportunityId).StageName != opportunityOldMap.get(opportunityId).StageName) {
-                if ( NSP_OpportunityTriggerHelper.Is_Enabled_WO_WS_Stage_Entry ) {
-                    String newStageName = opportunityNewMap.get(opportunityId).StageName;
-                    String oldStageName = opportunityOldMap.get(opportunityId).StageName;
-                    if ( !NSP_OpportunityTriggerHelper.hasAdminPermission 
+            if(opportunityNewMap.get(opportunityId).StageName != opportunityOldMap.get(opportunityId).StageName){
+                String newStageName = opportunityNewMap.get(opportunityId).StageName;
+                String oldStageName = opportunityOldMap.get(opportunityId).StageName;
+                if ( Is_Enabled_WO_WS_Stage_Entry
+                        && !NSP_OpportunityTriggerHelper.hasAdminPermission 
                         && ( opptyStageOrder.get( newStageName ) < opptyStageOrder.get( oldStageName ) )
-                        )
-                    {
-                        opportunityNewMap.get(opportunityId).addError(Label.Opportunity_Backward_Stage);
-                    }
+                        && ( opportunityNewMap.get(opportunityId).NSP_PrimaryProduct__c == NSP_SalesConstants.WO
+                        || opportunityNewMap.get(opportunityId).NSP_PrimaryProduct__c == NSP_SalesConstants.WS )
+                    )
+                {
+                    opportunityNewMap.get(opportunityId).addError(Label.Opportunity_Backward_Stage);
                 }
                 stageChangedOpportunityList.add(opportunityNewMap.get(opportunityId));
             }
