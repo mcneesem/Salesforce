@@ -45,7 +45,7 @@ public class LoadFullAccessPermSets {
                 WHERE KeyPrefix != null AND PublisherId != 'CDC' AND IsCustomSetting = false 
                 ORDER BY InternalSharingModel];
 
-            objectApiNames = getobjectApiNames(entities);
+            objectApiNames = getobjectApiNames(entities , filterNamespaces);
         }
 
         OrgSettings__c orgSettings = OrgSettings__c.getOrgDefaults();
@@ -105,7 +105,8 @@ public class LoadFullAccessPermSets {
         }
     }
 
-    private static List<String> getobjectApiNames(List<EntityDefinition> entities){
+    private static List<String> getobjectApiNames(List<EntityDefinition> entities , List<String> filterNamespaces){
+        List<String> objectApiNames = new List<String>();
         for ( EntityDefinition entity : entities ) {
             if( !entity.QualifiedApiName.endsWith('__mdt')
                 && !entity.QualifiedApiName.endsWith('Share')
@@ -119,5 +120,6 @@ public class LoadFullAccessPermSets {
                 objectApiNames.add(entity.QualifiedApiName);
             }
         }
+        return objectApiNames;
     }
 }
