@@ -33,9 +33,10 @@ private class NSP_ValidateOpportunityStageTest {
         );
         insert ocr;
 
-        Id soldToCheckListRecordTypeId = Schema.SObjectType.NSP_Checklist__c.getRecordTypeInfosByDeveloperName().get('NSP_Sold_to_Paid_Checklist').getRecordTypeId();
+        Id baseCheckListRecordTypeId = Schema.SObjectType.NSP_Checklist__c.getRecordTypeInfosByDeveloperName().get('Base').getRecordTypeId();
         NSP_Checklist__c stpCheckList = new NSP_Checklist__c(
-            RecordTypeId = soldToCheckListRecordTypeId,
+            RecordTypeId = baseCheckListRecordTypeId,
+            Checklist_Type__c = 'Sold To Paid',
             NSP_Opportunity__c = opp.Id,
             NSP_Requested_First_Pay_Date__c = system.today(),
             Status__c = 'Completed'
