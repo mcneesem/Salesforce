@@ -201,16 +201,8 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
             Integer errLogCount = 0;
             for (Database.SaveResult updObjResult : updObjResultList) { // retrieve errors for failed record upserts
                 if (!updObjResult.isSuccess()) {
-                    for(Database.Error err : updObjResult.getErrors()) {
-                        if ( errLogCount++ < 10 ) {
-                            createErrorLog( 'loadExternalIds' , currObjName , 'ExternalIds error occurred on Id: ' + updObjResult.getId() + ' : ' + err.getMessage() );
-                            System.debug('err.getMessage(): ' + err.getMessage());
-                        }
-                    }                
+                    createErrorLog( 'loadExternalIds' , currObjName , 'ExternalId errors occurred' );
                 }
-            }
-            if ( errLogCount > 0 ) {
-                createErrorLog( 'loadExternalIds' , currObjName , errLogCount + ' ExternalId errors occurred' );
             }
         }
     }
