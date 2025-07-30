@@ -65,7 +65,9 @@ public class LoadFullAccessPermSets {
         for ( String orgSettingsField : orgSettingsFields ){
             if( !orgSettings.IsSandbox__c && orgSettingsField.contains('externalidobjects') ){
                 String fieldValue = (String) orgSettings.get(orgSettingsField);
-                extIdObjList.addAll(fieldValue.split(','));
+                if( fieldValue != null ){
+                    extIdObjList.addAll(fieldValue.split(','));
+                }
             }
         }
 
