@@ -602,16 +602,17 @@ public class NSP_MMImplProfile_ServHelpUpdate {
         NSP_ProjectTask_Automation__mdt pta ,
         Id ipRecId ,
         Implementation_Profile__c ipwithValue ,
-        Id workCalendarId
+        Id workCalendarId ,
+        String ownerId
         )
     {
         String milestoneKey = createMilestoneForProjectTask(proj, pta);
         pse__Project_Task__c eachProjecttask = createProjectTaskfromIP(proj,  pta.NSP_Category__c, ipRecId,milestoneKey);
         genericProjectTask(proj,eachProjecttask, pta, workCalendarId);
-        if(ipwithValue.NSP_Project_Manager__c!=null && ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c!=null){
-            eachProjecttask.OwnerId=ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
+        if(!String.isBlank(ownerId)){
+            eachProjecttask.OwnerId = ownerId;
         }
-
+        
         if(eachProjecttask != null){
             projectTaskToInsertList.add(eachProjecttask);
         }
@@ -1171,6 +1172,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
         )
     {
         if(automation ==TIMESTAR_MM){
+            String userId = '';
             pse__Project_Task__c eachProjecttask = genericPMTask(proj,pta,ipRecId,ipwithValue,workCalendarId);
             NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(automation);
             Implementation_Profile__c ipRec = newIPs.get(ipRecId);
@@ -1191,15 +1193,19 @@ public class NSP_MMImplProfile_ServHelpUpdate {
             NSP_ProjectTask_Automation__mdt pta7 =  NSP_ProjectTask_Automation__mdt.getInstance(TIMESTAR_TA_SYSTEM_MM);
             NSP_ProjectTask_Automation__mdt pta8 =  NSP_ProjectTask_Automation__mdt.getInstance(TIMESTAR_TA_PAYROLL_EXPERT_MM);
             NSP_ProjectTask_Automation__mdt pta9 =  NSP_ProjectTask_Automation__mdt.getInstance(TIMESTAR_TA_CONFIG_MM);
-            subTask(proj,pta1,ipRecId,ipwithValue,workCalendarId);
-            subTask(proj,pta2,ipRecId,ipwithValue,workCalendarId);
-            subTask(proj,pta3,ipRecId,ipwithValue,workCalendarId);
-            subTask(proj,pta4,ipRecId,ipwithValue,workCalendarId);
-            subTask(proj,pta5,ipRecId,ipwithValue,workCalendarId);
-            subTask(proj,pta6,ipRecId,ipwithValue,workCalendarId);
-            subTask(proj,pta7,ipRecId,ipwithValue,workCalendarId);
-            subTask(proj,pta8,ipRecId,ipwithValue,workCalendarId);
-            subTask(proj,pta9,ipRecId,ipwithValue,workCalendarId);
+            subTask(proj,pta2,ipRecId,ipwithValue,workCalendarId,userId);
+            subTask(proj,pta3,ipRecId,ipwithValue,workCalendarId,userId);
+            subTask(proj,pta4,ipRecId,ipwithValue,workCalendarId,userId);
+            subTask(proj,pta5,ipRecId,ipwithValue,workCalendarId,userId);
+            subTask(proj,pta7,ipRecId,ipwithValue,workCalendarId,userId);
+            subTask(proj,pta9,ipRecId,ipwithValue,workCalendarId,userId);
+            userId = '';
+            if(ipwithValue.NSP_Payroll_Project_Manager__c!=null && ipwithValue.NSP_Payroll_Project_Manager__r.pse__Salesforce_User__c!=null){
+                userId = ipwithValue.NSP_Payroll_Project_Manager__r.pse__Salesforce_User__c;
+            }
+            subTask(proj,pta1,ipRecId,ipwithValue,workCalendarId,userId);
+            subTask(proj,pta6,ipRecId,ipwithValue,workCalendarId,userId);
+            subTask(proj,pta8,ipRecId,ipwithValue,workCalendarId,userId);
             if(eachProjecttask != null){
                 projectTaskToInsertList.add(eachProjecttask);
             }
@@ -1879,6 +1885,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
         )
     {
         if(automation ==RETIRE_PLANORK_MM){
+            String userId = '';
             pse__Project_Task__c eachProjecttask = genericPMTask(proj,pta,ipRecId,ipwithValue,workCalendarId);
             NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(automation);
             Implementation_Profile__c ipRec = newIPs.get(ipRecId);
@@ -1898,14 +1905,18 @@ public class NSP_MMImplProfile_ServHelpUpdate {
             NSP_ProjectTask_Automation__mdt pta6 =  NSP_ProjectTask_Automation__mdt.getInstance(RETIRE_PLAN_401K_LOAN_MM);
             NSP_ProjectTask_Automation__mdt pta7 =  NSP_ProjectTask_Automation__mdt.getInstance(RETIRE_PLAN_401K_YTD_MM);
             NSP_ProjectTask_Automation__mdt pta8 =  NSP_ProjectTask_Automation__mdt.getInstance(RETIRE_PLAN_401K_YTD_UP_MM);
-            subTask(proj,pta1,ipRecId,ipwithValue,workCalendarId);
-            subTask(proj,pta2,ipRecId,ipwithValue,workCalendarId);
-            subTaskFor401k(proj,pta3,ipRecId,ipwithValue,workCalendarId);
-            subTaskFor401k(proj,pta4,ipRecId,ipwithValue,workCalendarId);
-            subTaskFor401k(proj,pta5,ipRecId,ipwithValue,workCalendarId);
-            subTaskFor401k(proj,pta6,ipRecId,ipwithValue,workCalendarId);
-            subTask(proj,pta7,ipRecId,ipwithValue,workCalendarId);
-            subTask(proj,pta8,ipRecId,ipwithValue,workCalendarId);
+            subTask(proj,pta1,ipRecId,ipwithValue,workCalendarId,userId);
+            subTask(proj,pta2,ipRecId,ipwithValue,workCalendarId,userId);
+            subTask(proj,pta7,ipRecId,ipwithValue,workCalendarId,userId);
+            subTask(proj,pta8,ipRecId,ipwithValue,workCalendarId,userId);
+            subTaskFor401k(proj,pta3,ipRecId,ipwithValue,workCalendarId,userId);
+            subTaskFor401k(proj,pta4,ipRecId,ipwithValue,workCalendarId,userId);
+            userId = '';
+            if(ipwithValue.NSP_Payroll_Project_Manager__c!=null && ipwithValue.NSP_Payroll_Project_Manager__r.pse__Salesforce_User__c!=null){
+            	userId = ipwithValue.NSP_Payroll_Project_Manager__r.pse__Salesforce_User__c;
+            }
+            subTaskFor401k(proj,pta6,ipRecId,ipwithValue,workCalendarId,userId);
+            subTaskFor401k(proj,pta5,ipRecId,ipwithValue,workCalendarId,userId);
             if(eachProjecttask != null){
                 projectTaskToInsertList.add(eachProjecttask);
             }
@@ -1921,14 +1932,15 @@ public class NSP_MMImplProfile_ServHelpUpdate {
         NSP_ProjectTask_Automation__mdt pta ,
         Id ipRecId ,
         Implementation_Profile__c ipwithValue ,
-        Id workCalendarId
+        Id workCalendarId,
+        String ownerId
         )
     {
         String milestoneKey = createMilestoneForProjectTask(proj, pta);
         pse__Project_Task__c eachProjecttask = createProjectTaskfromIP(proj,  pta.NSP_Category__c, ipRecId,milestoneKey);
         genericProjectTask(proj,eachProjecttask, pta, workCalendarId);
-        if(ipwithValue.NSP_Payroll_Project_Manager__r!=null && ipwithValue.NSP_Payroll_Project_Manager__r.pse__Salesforce_User__c!=null){
-            eachProjecttask.OwnerId=ipwithValue.NSP_Payroll_Project_Manager__r.pse__Salesforce_User__c;
+        if(!String.isBlank(ownerId)){
+             eachProjecttask.OwnerId = ownerId;
         }
         if(eachProjecttask != null){
             projectTaskToInsertList.add(eachProjecttask);
@@ -1946,9 +1958,14 @@ public class NSP_MMImplProfile_ServHelpUpdate {
         )
     {
         if(automation ==NSP401K_MM){
+            String userId = ''; 
             pse__Project_Task__c eachProjecttask = genericPMTask(proj,pta,ipRecId,ipwithValue,workCalendarId);
             NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(automation);
             Implementation_Profile__c ipRec = newIPs.get(ipRecId);
+            if(ipwithValue.NSP_Project_Manager__c!=null && ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c!=null){
+                userId = ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
+                eachProjectTask.OwnerId = userId;
+            }
             ipAutomationRecords.add(
                 createIPAutomation(
                     ipRec,
@@ -1963,12 +1980,12 @@ public class NSP_MMImplProfile_ServHelpUpdate {
             NSP_ProjectTask_Automation__mdt pta4 =  NSP_ProjectTask_Automation__mdt.getInstance(NSP401K_PLAN_MM);
             NSP_ProjectTask_Automation__mdt pta5 =  NSP_ProjectTask_Automation__mdt.getInstance(NSP401K_COLLECT_MM);
             NSP_ProjectTask_Automation__mdt pta6 =  NSP_ProjectTask_Automation__mdt.getInstance(NSP401K_EMP_TRAIN_MM);
-            subTask(proj,pta1,ipRecId,ipwithValue,workCalendarId);
-            subTask(proj,pta2,ipRecId,ipwithValue,workCalendarId);
-            subTask(proj,pta3,ipRecId,ipwithValue,workCalendarId);
-            subTask(proj,pta4,ipRecId,ipwithValue,workCalendarId);
-            subTask(proj,pta5,ipRecId,ipwithValue,workCalendarId);
-            subTask(proj,pta6,ipRecId,ipwithValue,workCalendarId);
+            subTask(proj,pta1,ipRecId,ipwithValue,workCalendarId,userId);
+            subTask(proj,pta2,ipRecId,ipwithValue,workCalendarId,userId);
+            subTask(proj,pta3,ipRecId,ipwithValue,workCalendarId,userId);
+            subTask(proj,pta4,ipRecId,ipwithValue,workCalendarId,userId);
+            subTask(proj,pta5,ipRecId,ipwithValue,workCalendarId,userId);
+            subTask(proj,pta6,ipRecId,ipwithValue,workCalendarId,userId);
             if(eachProjecttask != null){
                 projectTaskToInsertList.add(eachProjecttask);
             }
