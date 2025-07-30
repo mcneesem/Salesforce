@@ -9,7 +9,7 @@
 // ********************************************************************************************************
 
 public class AutomateOpportunityStage {
-    // test w/ AutomateOpportunityStageTest (91%)
+    // test w/ AutomateOpportunityStageTest (92%)
 
     public static void automateOpportunityStageAsync(List<Id> autoStageOppIds) {
         if ( ( autoStageOppIds != null )
