@@ -45,19 +45,7 @@ public class LoadFullAccessPermSets {
                 WHERE KeyPrefix != null AND PublisherId != 'CDC' AND IsCustomSetting = false 
                 ORDER BY InternalSharingModel];
 
-            for ( EntityDefinition entity : entities ) {
-                if( !entity.QualifiedApiName.endsWith('__mdt')
-                    && !entity.QualifiedApiName.endsWith('Share')
-                    && !entity.QualifiedApiName.endsWith('History')
-                    && !entity.QualifiedApiName.endsWith('Feed')
-                    && !entity.QualifiedApiName.endsWith('Trigger')
-                    && !entity.QualifiedApiName.endsWith('View')
-                    && !filterNamespaces.contains(entity.NamespacePrefix)
-                    )
-                {
-                    objectApiNames.add(entity.QualifiedApiName);
-                }
-            }
+            objectApiNames = getobjectApiNames(entities);
         }
 
         OrgSettings__c orgSettings = OrgSettings__c.getOrgDefaults();
@@ -113,6 +101,22 @@ public class LoadFullAccessPermSets {
                 if ( !results[0].success ) {
                     LoadFullAccessPermSetsQueueable.createErrorLog( 'loadRecTypeVisibility' , null , 'RecTypeVisibility errors: ' + results[0].errors[0].message );
                 }
+            }
+        }
+    }
+
+    private static List<String> getobjectApiNames(List<EntityDefinition> entities){
+        for ( EntityDefinition entity : entities ) {
+            if( !entity.QualifiedApiName.endsWith('__mdt')
+                && !entity.QualifiedApiName.endsWith('Share')
+                && !entity.QualifiedApiName.endsWith('History')
+                && !entity.QualifiedApiName.endsWith('Feed')
+                && !entity.QualifiedApiName.endsWith('Trigger')
+                && !entity.QualifiedApiName.endsWith('View')
+                && !filterNamespaces.contains(entity.NamespacePrefix)
+                )
+            {
+                objectApiNames.add(entity.QualifiedApiName);
             }
         }
     }
