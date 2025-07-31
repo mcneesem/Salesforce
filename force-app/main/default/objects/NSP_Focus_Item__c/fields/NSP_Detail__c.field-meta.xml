@@ -47,9 +47,9 @@
                 <label>Client indicates they are willing to be a reference for prospects</label>
             </value>
             <value>
-                <fullName>Client indicates they have outgrown the PEO/WX/WA</fullName>
+                <fullName>Client indicates they have outgrown HR360/HRCore</fullName>
                 <default>false</default>
-                <label>Client indicates they have outgrown the PEO/WX/WA</label>
+                <label>Client indicates they have outgrown HR360/HRCore/label>
             </value>
             <value>
                 <fullName>Client is unresponsive to meeting request/phone calls</fullName>
