@@ -404,8 +404,6 @@ public static String validateContacts(Id cId,Id accountId,String errMessage,Bool
           Contact contactObj=[SELECT Email FROM Contact WHERE Id =:cId];
             if(contactObj.Email == null){
                 return INVOICE_EMAIL_ERR_MESSAGE;
-                //CUSTOMER_STAKEHOLDER_ERR_MESSAGE,INVOICE_EMAIL_ERR_MESSAGE
-
             }
        }
         return null;
