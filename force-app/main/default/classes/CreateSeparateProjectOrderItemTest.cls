@@ -1,15 +1,15 @@
 @isTest private class CreateSeparateProjectOrderItemTest {
-    
+
     private static String accountDefaults = 'NSP_TestDataFactory.AccountDefaults';
     private static String accountName = 'Account Test1';
-    
+
     @testSetup private static void setupTestData() {
         Order_Settings__c orderSetting = Order_Settings__c.getOrgDefaults();
         orderSetting.EffectiveDateStartOfMonth__c = true;
         orderSetting.Bypass_Rule_PreventStatusChange__c = true;
         upsert orderSetting;
     }
-    
+
     @isTest private static void testSeperateProject() {
         List<User> deploymentManagers = [
             SELECT Id
@@ -22,7 +22,7 @@
         Assert.isTrue( ( deploymentManagers.size() == 1 ) , 'Incorrect Deployment Manager query results.' );
         User deploymentManager = deploymentManagers[0];
         System.runas( deploymentManager ) {
-            //Creating Account
+             //Creating Account
             List<Account> accList = new List<Account>();
             Account oAccount = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), accountDefaults, false);
             oAccount.Name = accountName;
@@ -32,7 +32,7 @@
             if(!accList.isEmpty()){
                 Database.insert(accList);
             }
-            
+           
             blng__BillingRule__c bRule=NSP_TestHelper.createBillingRule();
             blng__RevenueRecognitionRule__c rRule=NSP_TestHelper.createRevrecRule(NSP_CPQConstants.PROJ_REV_REC);
             blng__TaxRule__c tRule=NSP_TestHelper.createRevTaxRule();
@@ -66,9 +66,9 @@
             trProdNames.add('Test Product');
             trProdNames.add('Test Product1');
             trProdNames.add('Test Product2');
-            
+   
             list<Product2> productlst = [Select Id, Name,ProductCode,NSP_Product_Type__c,SBQQ__SubscriptionPricing__c,Separate_Project__c ,Matching_Product_Code__c	 from Product2 WHERE Name IN:trProdNames LIMIT 4]; //Added WHERE Condition as part of code fix
-            
+
             productlst[0].ProductCode = 'HCMRETIntegration';
             productlst[0].NSP_Product_Type__c = 'IWX Bundle';
             //product1.SBQQ__SubscriptionType__c = 'Evergreen';
@@ -85,7 +85,7 @@
             productlist.add(productlst[2]);
             
             update productlist;
-            
+
             Opportunity objOpprtunity1 = NSP_TestHelper.createOpenOpportunity(oAccount.Id,NSP_CPQConstants.OPPORTUNITY_TYPE_NEW_BUSINESS,true);
             Opportunity objOpprtunity2 = NSP_TestHelper.createOpenOpportunity(oAccount.Id,NSP_CPQConstants.OPPORTUNITY_TYPE_NEW_BUSINESS,true);
             PriceBookEntry objPbe     = NSP_TestHelper.createPriceBookEntry(productlst[0].Id,200.0,true);
@@ -95,16 +95,16 @@
             Id stdPriceBookId = Test.getStandardPricebookId();
             SBQQ__Quote__c objQuote1   = NSP_TestHelper.createCPQQuote(oAccount.Id,objOpprtunity1.Id,true);
             SBQQ__Quote__c objQuote2   = NSP_TestHelper.createCPQQuote(oAccount.Id,objOpprtunity2.Id,true);
-            
+
             List<SBQQ__Quoteline__c> quoteLines1 = NSP_TestHelper.createCPQQuotelinesSeperateProject(objQuote1,productlist,new List<PriceBookEntry> {objPbe,objPbe1,objPbe2}, true);
             List<SBQQ__Quoteline__c> quoteLines2 = NSP_TestHelper.createCPQQuotelinesSeperateProject(objQuote2,productlist,new List<PriceBookEntry> {objPbe,objPbe1,objPbe2}, true);
             
-            
+
             // create order from quote separate project
             objQuote1.SBQQ__Primary__c = true;
             objQuote1.SBQQ__Type__c=NSP_CPQConstants.QUOTE_TYPE_NEW;
             objQuote1.SBQQ__Ordered__c = true;
-            // create order from quote separate project
+             // create order from quote separate project
             objQuote2.SBQQ__Primary__c = true;
             objQuote2.SBQQ__Type__c=NSP_CPQConstants.QUOTE_TYPE_AMENDMENT;
             objQuote2.SBQQ__Ordered__c = true;
@@ -114,15 +114,15 @@
             list<SBQQ__Quote__c> quotelist = new list<SBQQ__Quote__c>();
             set<id> quoteids=  new set<id>();
             set<id> productids=  new set<id>();
-            
+
             quoteids.add(objQuote1.id);
             quoteids.add(objQuote2.id);
-            
+
             quotelist.add(objQuote1);
             quotelist.add(objQuote2);
             
             productids.add(productlst[0].id);
-            
+
             Test.startTest();
             update quotelist;
             
@@ -148,7 +148,7 @@
             list<OrderItem> orderItemList = new list<OrderItem>([select Id,SBQQ__BillingFrequency__c,NSP_Project__c,NSP_Project_Name_New_Sales__c,Separate_Project__c,blng__RevenueRecognitionRule__r.NSP_Rev_Rec_Model__c,Order.Type, Matching_Product_Code__c, SBQQ__QuoteLine__r.SBQQ__EffectiveQuantity__c, Product2.ProductCode, OrderId, Order.NSP_Project__c from OrderItem WHERE Order.SBQQ__Quote__c IN:quoteids AND Product2.Name != 'Test Product1']);
             integer nTwice=0;
             for ( OrderItem oi : orderItemList ) {
-                if(oi.Separate_Project__c == true) {                 
+                 if(oi.Separate_Project__c == true) {
                     if(nTwice <=1) {
                         oi.NSP_Project__c = oProj3.id;
                         nTwice++;
@@ -159,7 +159,7 @@
                 }
                 orderitemUpdlist.add(oi);
             }
-            
+
             update orderitemUpdlist;
             
             list<Order> orderList1 = new list<Order>([select Id,NSP_Project_Name__c,Type, NSP_Project__c from Order WHERE SBQQ__Quote__c IN:quoteids]);
@@ -180,9 +180,9 @@
             CreateSeparateProjectOrderItem.processMatchingOPs(orderItemList);
             orderItemList[1].Matching_Product_Code__c = 'HCMRETIntegration';
             update orderItemList;
-            CreateSeparateProjectOrderItem.processMatchingOPs(orderItemList);            
+            CreateSeparateProjectOrderItem.processMatchingOPs(orderItemList);
         }
     }
-    
+
 }
 //
