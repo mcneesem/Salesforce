@@ -19,6 +19,7 @@ public class LoadFullAccessPermSets {
     // ********************************************************************************************************
 
     public static void runLoadFullAccessPermSets(String readPermSetName, String editPermSetName, List<String> objectApiNames, List<String> filterNamespaces) {
+        List<String> extIdObjList = new List<String>();
         Map<String, Integer> depRetry = new Map<String, Integer>();
         Map<String, Id> mPermSets = new Map<String, Id>();
         for (PermissionSet ps : [SELECT Id, Name FROM PermissionSet WHERE Name IN (:readPermSetName, :editPermSetName)]) {
@@ -44,24 +45,23 @@ public class LoadFullAccessPermSets {
                 WHERE KeyPrefix != null AND PublisherId != 'CDC' AND IsCustomSetting = false 
                 ORDER BY InternalSharingModel];
 
-            for ( EntityDefinition entity : entities ) {
-                if( !entity.QualifiedApiName.endsWith('__mdt')
-                    && !entity.QualifiedApiName.endsWith('Share')
-                    && !entity.QualifiedApiName.endsWith('History')
-                    && !entity.QualifiedApiName.endsWith('Feed')
-                    && !entity.QualifiedApiName.endsWith('Trigger')
-                    && !entity.QualifiedApiName.endsWith('View')
-                    && !filterNamespaces.contains(entity.NamespacePrefix)
-                    )
-                {
-                    objectApiNames.add(entity.QualifiedApiName);
+            objectApiNames = getobjectApiNames(entities , filterNamespaces);
+        }
+
+        OrgSettings__c orgSettings = OrgSettings__c.getOrgDefaults();
+        Set<String> orgSettingsFields = Schema.SObjectType.OrgSettings__c.fields.getMap().keySet();
+        for ( String orgSettingsField : orgSettingsFields ){
+            if( !orgSettings.IsSandbox__c && orgSettingsField.contains('externalidobjects') ){
+                String fieldValue = (String) orgSettings.get(orgSettingsField);
+                if( fieldValue != null ){
+                    extIdObjList.addAll(fieldValue.split(','));
                 }
             }
         }
 
         loadRecTypeVisibility(mPermSets.get(editPermSetName));
         if (!Test.isRunningTest()) {
-            System.enqueueJob(new LoadFullAccessPermSetsQueueable(objectApiNames, mPermSets.get(readPermSetName), mPermSets.get(editPermSetName), depRetry));
+            System.enqueueJob(new LoadFullAccessPermSetsQueueable( objectApiNames , mPermSets.get(readPermSetName) , mPermSets.get(editPermSetName) , depRetry , filterNamespaces , extIdObjList ) );
         }
         LoadFullAccessPermSetsQueueable.createErrorLog( 'runLoadFullAccessPermSets' , null , 'Loading RecTypeVisibilities' );
         LoadFullAccessPermSetsQueueable.createErrorLog( 'runLoadFullAccessPermSets' , null , 'Launching LoadFullAccessPermSetsQueueable; objectCount=' + objectApiNames.size() );
@@ -103,5 +103,23 @@ public class LoadFullAccessPermSets {
                 }
             }
         }
+    }
+
+    private static List<String> getobjectApiNames(List<EntityDefinition> entities , List<String> filterNamespaces){
+        List<String> objectApiNames = new List<String>();
+        for ( EntityDefinition entity : entities ) {
+            if( !entity.QualifiedApiName.endsWith('__mdt')
+                && !entity.QualifiedApiName.endsWith('Share')
+                && !entity.QualifiedApiName.endsWith('History')
+                && !entity.QualifiedApiName.endsWith('Feed')
+                && !entity.QualifiedApiName.endsWith('Trigger')
+                && !entity.QualifiedApiName.endsWith('View')
+                && !filterNamespaces.contains(entity.NamespacePrefix)
+                )
+            {
+                objectApiNames.add(entity.QualifiedApiName);
+            }
+        }
+        return objectApiNames;
     }
 }
