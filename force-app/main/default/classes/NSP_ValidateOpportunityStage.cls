@@ -165,7 +165,10 @@ public with sharing class NSP_ValidateOpportunityStage {
             Boolean passCheck = false;
             Boolean passCheckDNE = true;
             String groupRelObjName = getGroupRelObjName( groupName , groupedStageValMap );
-            for( SObject relObject : relObjectMap.get(groupRelObjName) ){
+
+            Integer i = 0;
+            do {
+                SObject relObject = ( relObjectMap.get(groupRelObjName).size() == 0 ) ? null : relObjectMap.get(groupRelObjName)[i];
                 Integer passCheckCount = evaluateOneCriteriaGroup( opp, groupName , relObject , groupedStageValMap );
                 if( passCheckCount >= groupedStageValMap.get(groupName).size() ){
                     passCheck = true;
@@ -173,14 +176,16 @@ public with sharing class NSP_ValidateOpportunityStage {
                 if( passCheckCount == 99 ){ // when any record violates DOES NOT EXIST case
                     passCheckDNE = false;
                 }
-            }
+                i++;
+            } while ( i < relObjectMap.get(groupRelObjName).size() );
+
             if( !passCheck || !passCheckDNE ){
                 opp.addError(groupedStageValMap.get(groupName)[0].Error_Message__c);
             }
         }
     }
 
-    public static Integer evaluateOneCriteriaGroup( Opportunity opp , String groupName , SObject relatedObject, Map<String, List<Opportunity_Stage_Validation__mdt>> groupedStageValMap ){
+    public static Integer evaluateOneCriteriaGroup( Opportunity opp , String groupName , SObject relObject, Map<String, List<Opportunity_Stage_Validation__mdt>> groupedStageValMap ){
         Integer passCheckCount = 0;
         String groupCheckType = '';
         for( Opportunity_Stage_Validation__mdt val : groupedStageValMap.get(groupName) ){
@@ -190,7 +195,9 @@ public with sharing class NSP_ValidateOpportunityStage {
             } else if( val.Object__c == OPPORTUNITY_OBJ ){
                 valFieldValue = opp.get(val.Field__c);
             } else {
-                valFieldValue = relatedObject.get(val.Field__c);
+                if( relObject != null ){
+                    valFieldValue = relObject.get(val.Field__c);
+                }
             }
             if( checkCondition(valFieldValue , val.Value__c , val.Operation__c) )
             {
