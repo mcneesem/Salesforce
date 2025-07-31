@@ -1,5 +1,5 @@
 public class NSP_Implementationprofile_ServiceHelper {
-    // test w/ NSP_FSOImplementationControllerTest, NSP_ImpprofileServiceHelper_Test, NSP_MMImplProfile_UpdateTest (80%)
+    // test w/ NSP_FSOImplementationControllerTest, NSP_ImpprofileServiceHelper_Test, NSP_MMImplProfile_UpdateTest (83%)
 
     private List<Case> caseToInsertList = new List<Case>();
     private List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
@@ -28,7 +28,8 @@ public class NSP_Implementationprofile_ServiceHelper {
     private static Id ipFSORecordTypeId = SObjectType.Implementation_Profile__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.FSOProfile).getRecordTypeId();
     private static Id ipMMRecordTypeId = SObjectType.Implementation_Profile__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.MMProfile).getRecordTypeId();
     private static Id casePEORecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PEO).getRecordTypeId();
-    
+    private static final String RELATED_ACCOUNTS = 'Related Accounts:';
+
     private static final String EMP_HOURS_FN = 'NSP_Emp_Hours_Reported';
     private static final String SEASONAL_EE_FN = 'NSP_SEASONAL_EE';
     private static final String LEAVE_ABSENCE_FN = 'NSP_Leave_Absence';
@@ -78,6 +79,11 @@ public class NSP_Implementationprofile_ServiceHelper {
     private static final String NSP_New_401_k_FSO='NSP_New_401_k_FSO';
     private static final String CLIENT_AWW_YES = 'clientAWWYes';
     private static final String CLIENT_AWW_NO = 'clientAWWNo';
+    private static final String FLSA_REVIEW_EG ='FLSA_Review_EG';
+    private static final String FLSA_REVIEW_YES_MM ='FLSA_Review_Yes_MM';
+    private static final String FLSA_REVIEW_NO ='flsaReviewNo';
+    private static final String FLSA_REVIEW_NO_MM ='FLSA_Review_No_MM';
+    private static final String FLSA_EXEMPTION_REVIEW_EMAIL ='FLSA_Exemption_Review_non_EG_Email';
 
     private Map<Id, Id> mapOfProjectManagers = new Map<Id, Id>();
     private Map<Id, Id> mapOfPayrollSpecialist = new Map<Id, Id>();
@@ -184,8 +190,13 @@ public class NSP_Implementationprofile_ServiceHelper {
             AdditionalBPSes_FSO ,
             CLIENT_AWW_YES ,
             CLIENT_AWW_NO ,
+            FLSA_REVIEW_EG ,
+            FLSA_REVIEW_YES_MM ,
             Licensed_Contractor_Yes_FSO ,
-            Licensed_Contractor_Yes_MM
+            Licensed_Contractor_Yes_MM ,
+            FLSA_REVIEW_NO ,
+            FLSA_REVIEW_NO_MM ,
+            FLSA_EXEMPTION_REVIEW_EMAIL
         });
     }
     
@@ -392,6 +403,18 @@ public class NSP_Implementationprofile_ServiceHelper {
         if(ipRecordsByAutomation.containsKey(CLIENT_AWW_NO)){
             emailNotifyforclientAWWNo();
         }
+        if(ipRecordsByAutomation.containsKey(FLSA_REVIEW_NO)){
+            emailNotifyforFlsaReviewNo();
+        }
+        
+        if(ipRecordsByAutomation.containsKey(FLSA_REVIEW_NO_MM)){
+            emailNotifyforFlsaReviewNoMM();
+        }
+        
+        if(ipRecordsByAutomation.containsKey(FLSA_EXEMPTION_REVIEW_EMAIL)){
+            emailNotifyforFlsaExemptionReview();
+        }
+		
         if (ipRecordsByAutomation.containsKey(LICENSED_CONTRACTOR_YES_FSO)) {  
             emailNotifyForLicensedContractor(LICENSED_CONTRACTOR_YES_FSO, Licensed_Automation_Name_FSO);  
         }  
@@ -429,6 +452,11 @@ public class NSP_Implementationprofile_ServiceHelper {
             // All the automation methods will check the eligibility of the current record.
             checkForFederalCompliancePosters( ipRec , existingRec );
             checkForFederalCompliancePostersMM( ipRec , existingRec );
+            checkForFlsaReviewEg( ipRec , existingRec );
+            checkForFlsaReviewYes_MM( ipRec , existingRec );
+            checkforFlsaReviewNo( ipRec, existingRec );
+            checkforFlsaReviewNoMM( ipRec, existingRec );
+            checkforFlsaExemptionReview( ipRec, existingRec );
             if(automationsToExecute.contains(CLIENT_PROFILE_FN)){
                 checkForClientProfileInfo(ipRec, existingRec);
             }
@@ -847,6 +875,40 @@ public class NSP_Implementationprofile_ServiceHelper {
             )
         {
             updateEligibleRecordsMap( ipRecordsByAutomation , newRec.Id , FEDERAL_COMPLIANCE_POSTERS_MM );
+        }
+    }
+    
+    private void checkForFlsaReviewEg( Implementation_Profile__c newRec , Implementation_Profile__c existingRec ) {
+        if ( ( automationsToExecute != null )
+            && automationsToExecute.contains( FLSA_REVIEW_EG )
+            && ( newRec != null )
+            && ( newRec.RecordTypeId == ipFSORecordTypeId )
+            && ( newRec.Would_the_client_like_a_FLSA_Exemption__c == NSP_ServiceConstants.Yes )
+            && ( newRec.Is_the_client_Emerging_Growth__c == NSP_ServiceConstants.Yes )
+            && ( ( existingRec == null )
+                || ( newRec.NSP_Form_Completed__c )
+                || ( newRec.Would_the_client_like_a_FLSA_Exemption__c != existingRec.Would_the_client_like_a_FLSA_Exemption__c )
+                || ( newRec.Is_the_client_Emerging_Growth__c != existingRec.Is_the_client_Emerging_Growth__c )
+                )
+            )
+        {
+            updateEligibleRecordsMap( ipRecordsByAutomation , newRec.Id , FLSA_REVIEW_EG );
+        }
+    }
+    
+    private void checkForFlsaReviewYes_MM( Implementation_Profile__c newRec , Implementation_Profile__c existingRec ) {
+        if ( ( automationsToExecute != null )
+            && automationsToExecute.contains( FLSA_REVIEW_YES_MM )
+            && ( newRec != null )
+            && ( newRec.RecordTypeId == ipMMRecordTypeId )
+            && ( newRec.Would_the_client_like_a_FLSA_Exemption__c == NSP_ServiceConstants.Yes )
+            && ( ( existingRec == null )
+                || ( newRec.NSP_Form_Completed__c )
+                || ( newRec.Would_the_client_like_a_FLSA_Exemption__c != existingRec.Would_the_client_like_a_FLSA_Exemption__c )
+                )
+            )
+        {
+            updateEligibleRecordsMap( ipRecordsByAutomation , newRec.Id , FLSA_REVIEW_YES_MM );
         }
     }
 
@@ -1353,6 +1415,7 @@ public class NSP_Implementationprofile_ServiceHelper {
             Implementation_Profile__c ipwithValue=(Implementation_Profile__c)data.get( IP_IDENTIFIER ).get( ipRecId );
             //Add here Case automations for IP
             createPostersCase( automation , caseMdt , ipRecId , ipwithValue );
+            createFlsaReviewEgCase( automation , caseMdt , ipRecId , ipwithValue );
         }
     }
 
@@ -1435,6 +1498,57 @@ public class NSP_Implementationprofile_ServiceHelper {
             );
             if ( eachCase != null ) {
                 caseToInsertList.add( eachCase );
+            }
+        }
+    }
+    
+    private void createFlsaReviewEgCase(
+        String automation ,
+        Case_Automation__mdt caseMdt ,
+        Id ipRecId ,
+        Implementation_Profile__c ipwithValue
+    )
+    {
+        if ( automation == FLSA_REVIEW_EG || automation == FLSA_REVIEW_YES_MM ) {
+            Case eachCase = createComplianceCase( caseMdt , ipRecId , ipwithValue );
+            NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance( automation );
+            List<Group> flsaComplianceQueue = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = 'FLSA_Compliance' LIMIT 1];
+            Date today = Date.today();
+            Date dueDate = today.addDays(90);
+            String clients = relatedClients(ipWithValue, FALSE);
+            String contacts = flsaReviewContacts(ipWithValue);
+            String relatedAccounts = '';
+            String bulletList = '';
+            String flsReviewContacts = '';
+            String lineBreak = '\n';
+            if(String.isNotBlank(clients)) {
+                relatedAccounts = RELATED_ACCOUNTS + lineBreak;  
+                bulletList = clients;
+            }
+            if ( String.isNotBlank( contacts ) ) {
+                flsReviewContacts = 'FLSA Review Contact(s):'+lineBreak + contacts;
+            }
+            if(eachCase != null && ipa != null) {
+                if(flsaComplianceQueue != null) {
+                    eachCase.OwnerId = flsaComplianceQueue[0].Id;
+                }
+                eachCase.NSP_Due_Date__c = dueDate;
+                eachCase.Description = flsReviewContacts
+                    + lineBreak
+                    + lineBreak
+                    + relatedAccounts
+                    + bulletList;
+                ipAutomationRecords.add(
+                    ipAutomationHelper.createIPAutomation(
+                        ipwithValue ,
+                        ipa.NSP_Automation_Name__c ,
+                        ipa.NSP_Method_Name__c ,
+                        ipa.NSP_Section__c
+                    )
+                );
+                if ( eachCase != null ) {
+                    caseToInsertList.add( eachCase );
+                }
             }
         }
     }
@@ -1721,6 +1835,267 @@ public class NSP_Implementationprofile_ServiceHelper {
         if(impRecordId!=null && impAutomationName !=null){
             NSP_Implprofile_ServiceHelperUpdate.automationRecordUpdate(impRecordId,impAutomationName,impMethodName,impAutomationRecordType,impAutomationSection );
         }
+    }
+    
+    private void checkforFlsaReviewNo( Implementation_Profile__c newRec , Implementation_Profile__c existingRec ) {
+        if ( automationsToExecute != null
+            && automationsToExecute.contains( FLSA_REVIEW_NO )
+            && newRec != null 
+            && newRec.RecordTypeId == ipFSORecordTypeId
+            && newRec.Would_the_client_like_a_FLSA_Exemption__c == NSP_ServiceConstants.No
+            && newRec.NSP_HR_Specialist__c != null
+            && ( existingRec == null
+                || newRec.NSP_Form_Completed__c
+                || newRec.Would_the_client_like_a_FLSA_Exemption__c != existingRec.Would_the_client_like_a_FLSA_Exemption__c
+                )
+            )
+        {
+            updateEligibleRecordsMap( ipRecordsByAutomation , newRec.Id , FLSA_REVIEW_NO );
+        }
+    }
+    
+    private void emailNotifyforFlsaReviewNo() {
+        if(ipRecordsByAutomation != null) {
+            for(Id ipRecId : ipRecordsByAutomation.get(FLSA_REVIEW_NO)) {
+                Implementation_Profile__c ipWithValue=(Implementation_Profile__c) data.get(IP_IDENTIFIER).get(ipRecId);
+                if(ipWithValue != null) {
+                    
+                    String clients = relatedClients(ipWithValue, TRUE);
+                    String relatedAccounts = '';
+                    String bulletList = '';
+                    if(String.isNotBlank(clients)) {
+                        relatedAccounts = RELATED_ACCOUNTS;  
+                        bulletList = clients;
+                    }
+
+                    String subject = ipWithValue.Account__r.Name + ' ('+ ipWithValue.NSP_AIMS_ClientNo__c+') FLSA Exemption Classification Review Declined';
+                    String body = ipWithValue.Account__r.Name + ' ('+ ipWithValue.NSP_AIMS_ClientNo__c+') does not want to have an exemption classification '
+                        +'review during implementation.'
+                        +'<p> No action is required on your part for FLSA Exemption Classification Review. </p>'
+                        +'<p> Service Team HR Professional: You have been included on this message for information purposes only. ' 
+                        + 'No action is required on your part. Please do not make FLSA Review a part of your initial client meetings or conversations. '
+                        + 'FLSA Review is only to be initiated when a client asks for this service in the future. </p>'
+                        + relatedAccounts
+                        + bulletList;
+                    emailFlsaReviewNo(ipWithValue, FLSA_REVIEW_NO, subject, body, 'FLSA_Review_No');       
+                }
+            }
+        }
+        if(impRecordId!=null && impAutomationName !=null){
+            NSP_Implprofile_ServiceHelperUpdate.automationRecordUpdate(impRecordId,impAutomationName,impMethodName,impAutomationRecordType,impAutomationSection );
+        }
+    }
+    
+    private void emailFlsaReviewNo(Implementation_Profile__c ipWithValue, String fnName, String subject, String body, String mdtName) {
+        if( ipWithValue != null ) {
+            List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
+            List<String> emailAddress = new List<String>();
+            NSP_PEO_Implementations__mdt pf = NSP_PEO_Implementations__mdt.getInstance(FLSA_REVIEW_NO);
+            if ( String.isNotBlank( pf.NSP_Email_Address__c ) ) {
+                emailAddress.add(pf.NSP_Email_Address__c);
+            }
+            if(ipWithValue.NSP_HR_Specialist__c != null && ipWithValue.NSP_HR_Specialist__r.NSP_Work_email__c != null) {
+                emailAddress.add(ipWithValue.NSP_HR_Specialist__r.NSP_Work_email__c);
+            }
+            
+            ipAutomationRecords = runEmailAutomation(ipWithValue,fnName,subject,body,mdtName,emailAddress);
+            if(ipAutomationRecords != null) {
+                recToInsert.addAll(ipAutomationRecords);
+            }
+        }
+    }
+    
+    private void checkforFlsaReviewNoMM( Implementation_Profile__c newRec , Implementation_Profile__c existingRec ) {
+        if ( automationsToExecute != null
+            && automationsToExecute.contains( FLSA_REVIEW_NO_MM )
+            && newRec != null 
+            && newRec.RecordTypeId == ipMMRecordTypeId
+            && newRec.Would_the_client_like_a_FLSA_Exemption__c == NSP_ServiceConstants.No
+            && newRec.NSP_HR_Specialist__c != null
+            && ( existingRec == null
+                || newRec.NSP_Form_Completed__c
+                || newRec.Would_the_client_like_a_FLSA_Exemption__c != existingRec.Would_the_client_like_a_FLSA_Exemption__c
+                )
+            )
+        {
+            updateEligibleRecordsMap( ipRecordsByAutomation , newRec.Id , FLSA_REVIEW_NO_MM );
+        }
+    }
+    
+    private void emailNotifyforFlsaReviewNoMM() {
+        if(ipRecordsByAutomation != null) {
+            for(Id ipRecId : ipRecordsByAutomation.get(FLSA_REVIEW_NO_MM)) {
+                Implementation_Profile__c ipWithValue=(Implementation_Profile__c) data.get(IP_IDENTIFIER).get(ipRecId);
+                if(ipWithValue != null) {
+                    
+                    String clients = relatedClients(ipWithValue, TRUE);
+                    String relatedAccounts = '';
+                    String bulletList = '';
+                    if(String.isNotBlank(clients)) {
+                        relatedAccounts = RELATED_ACCOUNTS;  
+                        bulletList = clients;
+                    }
+
+                    String subject = ipWithValue.Account__r.Name + ' ('+ ipWithValue.NSP_AIMS_ClientNo__c+') FLSA Exemption Classification Review declined';
+                    String body = ipWithValue.Account__r.Name + ' ('+ ipWithValue.NSP_AIMS_ClientNo__c+') has declined a FLSA Exemption Classification Review. '
+                        +'<p>HR Specialist: Please do not make FLSA Review a part of your initial client meetings or conversations. '
+                        + 'FLSA Review is only to be initiated when a client asks for this service in the future. </p>'
+                        + relatedAccounts
+                        + bulletList;
+                    emailFlsaReviewNoMM(ipWithValue, FLSA_REVIEW_NO_MM, subject, body, 'FLSA_Review_No_MM');       
+                }
+            }
+        }
+        if(impRecordId!=null && impAutomationName !=null){
+            NSP_Implprofile_ServiceHelperUpdate.automationRecordUpdate(impRecordId,impAutomationName,impMethodName,impAutomationRecordType,impAutomationSection );
+        }
+    }
+    
+    private void emailFlsaReviewNoMM(Implementation_Profile__c ipWithValue, String fnName, String subject, String body, String mdtName) {
+        if( ipWithValue != null ) {
+            List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
+            List<String> emailAddress = new List<String>();
+            NSP_PEO_Implementations__mdt pf = NSP_PEO_Implementations__mdt.getInstance(FLSA_REVIEW_NO_MM);
+            if ( String.isNotBlank( pf.NSP_Email_Address__c ) ) {
+                emailAddress.add(pf.NSP_Email_Address__c);
+            }
+            if(ipWithValue.NSP_HR_Specialist__c != null && ipWithValue.NSP_HR_Specialist__r.NSP_Work_email__c != null) {
+                emailAddress.add(ipWithValue.NSP_HR_Specialist__r.NSP_Work_email__c);
+            }
+            
+            ipAutomationRecords = runEmailAutomation(ipWithValue,fnName,subject,body,mdtName,emailAddress);
+            if(ipAutomationRecords != null) {
+                recToInsert.addAll(ipAutomationRecords);
+            }
+        }
+    }
+    
+    private void checkforFlsaExemptionReview( Implementation_Profile__c newRec , Implementation_Profile__c existingRec ) {
+        if (automationsToExecute.contains(FLSA_EXEMPTION_REVIEW_EMAIL)
+            && newRec != null
+            && newRec.RecordTypeId == ipFSORecordTypeId
+            && newRec.Would_the_client_like_a_FLSA_Exemption__c == NSP_ServiceConstants.YES
+            && newRec.Is_the_client_Emerging_Growth__c == NSP_ServiceConstants.No
+            && newRec.NSP_HR_Quality_Support_Team_Member__c != null
+            && newRec.NSP_HR_Specialist__c != null
+            && (existingRec == null
+                || newRec.NSP_Form_Completed__c
+                || newRec.Would_the_client_like_a_FLSA_Exemption__c != existingRec.Would_the_client_like_a_FLSA_Exemption__c
+                || newRec.Is_the_client_Emerging_Growth__c != existingRec.Is_the_client_Emerging_Growth__c
+                )
+            )
+        {
+            updateEligibleRecordsMap( ipRecordsByAutomation , newRec.Id , FLSA_EXEMPTION_REVIEW_EMAIL );
+        }
+    }
+    
+    private void emailNotifyforFlsaExemptionReview() {
+        if(ipRecordsByAutomation != null) {
+            for(Id ipRecId : ipRecordsByAutomation.get( FLSA_EXEMPTION_REVIEW_EMAIL ) ) {
+                Implementation_Profile__c ipWithValue=(Implementation_Profile__c) data.get(IP_IDENTIFIER).get(ipRecId);
+                if(ipWithValue != null) {
+                    
+                    String clients = relatedClients(ipWithValue, TRUE);
+                    String relatedAccounts = '';
+                    String bulletList = '';
+                    if(String.isNotBlank(clients)) {
+                        relatedAccounts = RELATED_ACCOUNTS;  
+                        bulletList = clients;
+                    }
+
+                    String subject = ipWithValue.Account__r.Name + ' ('+ ipWithValue.NSP_AIMS_ClientNo__c+') FLSA Exemption Classification Review Requested';
+                    String body = ipWithValue.Account__r.Name + ' ('+ ipWithValue.NSP_AIMS_ClientNo__c+') would like to have an exemption classification review during implementation.'
+                        +'<p> Payroll Quality Support: Please proceed with your review of client exemption classifications. </p>'
+                        +'<p> Implementation: Once Payroll Quality Support has finished their review, please proceed with your client notification steps.</p>' 
+                        +'<p>Service Team HR Professional: You have been included on this message for information purposes only. No action is required on your part. '
+                        +'Please do not make FLSA Review a part of your initial client meetings or conversations. FLSA Review is only to be initiated when a client '
+                        +'asks for this service in the future.</p>'
+                        + relatedAccounts
+                        + bulletList;
+                    emailFlsaExemptionReview(ipWithValue, FLSA_EXEMPTION_REVIEW_EMAIL, subject, body, 'FLSA_Exemption_Review_non_EG_Email');       
+                }
+            }
+        }
+        if(impRecordId!=null && impAutomationName !=null){
+            NSP_Implprofile_ServiceHelperUpdate.automationRecordUpdate(impRecordId,impAutomationName,impMethodName,impAutomationRecordType,impAutomationSection );
+        }
+    }
+    
+    private void emailFlsaExemptionReview(Implementation_Profile__c ipWithValue, String fnName, String subject, String body, String mdtName) {
+        if( ipWithValue != null ) {
+            List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
+            List<String> emailAddress = new List<String>();
+            NSP_PEO_Implementations__mdt pf = NSP_PEO_Implementations__mdt.getInstance(FLSA_REVIEW_NO);
+            if ( String.isNotBlank( pf.NSP_Email_Address__c ) ) {
+                emailAddress.add(pf.NSP_Email_Address__c);
+            }
+            if( ipWithValue.NSP_HR_Specialist__c != null 
+               && ipWithValue.NSP_HR_Specialist__r.NSP_Work_email__c != null ) {
+                   emailAddress.add(ipWithValue.NSP_HR_Specialist__r.NSP_Work_email__c);  
+               }
+            if( ipWithValue.NSP_HR_Quality_Support_Team_Member__r.NSP_Work_email__c != null) {
+                emailAddress.add(ipWithValue.NSP_HR_Quality_Support_Team_Member__r.NSP_Work_email__c);
+            }
+            ipAutomationRecords = runEmailAutomation(ipWithValue,fnName,subject,body,mdtName,emailAddress);
+            if(ipAutomationRecords != null) {
+                recToInsert.addAll(ipAutomationRecords);
+            }
+        }
+    }
+    
+    private List<NSP_Implementation_Profile_Automation__c> runEmailAutomation(
+        Implementation_Profile__c ipWithValue ,
+        String fnName ,
+        String subject ,
+        String body ,
+        String mdtName ,
+        List<String> emailAddress
+        )
+    {
+        List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
+        String recordType = '';
+        if ( ipWithValue.RecordTypeId == ipFSORecordTypeId ) {
+            recordType = NSP_ServiceConstants.FSOProfile;
+        } else {
+            recordType = NSP_ServiceConstants.MIDDLEMARKET;
+        }
+        if ( String.isNotBlank( fnName )
+            && String.isNotBlank( subject )
+            && String.isNotBlank( body )
+            && String.isNotBlank( mdtName )
+            && String.isNotBlank( recordType )
+            )
+        {
+            NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(mdtName);
+            if ( ( isRerun || ipWithValue.NSP_Form_Completed__c )
+                && !isSaveForm
+                && ( ipa != null )
+                )
+            {
+                if ( !isRerun
+                    && !ipAutomationdata?.get(IP_AUTOMATION_IDENTIFIER).contains(ipWithValue.Id+'_'+fnName+'_'+recordType )
+                    )
+                {
+                    sendMailUsingFlowAction( emailAddress , subject , body );
+                    ipAutomationRecords.add(
+                        ipAutomationHelper.createIPAutomation(
+                            ipWithValue ,
+                            ipa.NSP_Automation_Name__c ,
+                            ipa.NSP_Method_Name__c ,
+                            ipa.NSP_Section__c
+                        )
+                    );
+                } else if ( isRerun ) {
+                    sendMailUsingFlowAction( emailAddress , subject , body );
+                    impRecordId = ipWithValue.Id;
+                    impAutomationName = ipa.NSP_Automation_Name__c;
+                    impMethodName = ipa.NSP_Method_Name__c;
+                    impAutomationSection = ipa.NSP_Section__c;
+                    impAutomationRecordType = recordType;
+                }
+            }
+        }
+        return ipAutomationRecords;
     }
 
     //
@@ -2903,6 +3278,7 @@ public class NSP_Implementationprofile_ServiceHelper {
                 NSP_Orientation_Rep__r.NSP_Work_Email__c ,
                 NSP_Onboarding_Specialist_Coordinator__r.NSP_Work_email__c ,
                 NSP_HR_Specialist__c ,
+            	NSP_HR_Specialist__r.NSP_Work_email__c ,
                 NSP_HR_Specialist__r.pse__Salesforce_User__c ,
                 NSP_Payroll_Specialist__r.NSP_Work_email__c ,
                 NSP_Project_Manager__c ,
@@ -2910,6 +3286,8 @@ public class NSP_Implementationprofile_ServiceHelper {
                 NSP_Project_Manager__r.Name ,
                 NSP_Project_Manager__r.pse__Salesforce_User__c ,
                 NSP_Project_Manager__r.NSP_Job_Title__c,
+            	NSP_HR_Quality_Support_Team_Member__c ,
+            	NSP_HR_Quality_Support_Team_Member__r.NSP_Work_email__c ,
                 RecordTypeId ,
                 Account__r.NSP_Service_Segment__c,
                 NSP_Sr_Onboarding_Benefit_Rep__c,
@@ -2923,7 +3301,9 @@ public class NSP_Implementationprofile_ServiceHelper {
                 NSP_Legal_Name__c ,
                 Contractor_s_License__c ,
                 Effective_Date_Payroll_Worker_comp_EPLI__c ,
-                NSP_Project__c
+            	NSP_Project__c,
+            	Who_should_the_FLSA_team_reach_out_to__c ,
+            	NSP_Related_Clients__c
             FROM Implementation_Profile__c
             WHERE ( Id IN :ipIds )
         ]);
@@ -3576,4 +3956,65 @@ public class NSP_Implementationprofile_ServiceHelper {
         }
     }
 
+    //Retrieves Related Clients of the Implementation Profile 
+    private String relatedClients(Implementation_Profile__c ipwithValue, Boolean isEmail) {
+        List<String> clientIds = new List<String>();
+        clientIds = splitRelatedClient(ipwithValue);
+        Map<Id, Account> clientsMap = new Map<Id, Account>();
+
+        if(!clientIds.isEmpty()) {
+            clientsMap = new Map<Id, Account>([SELECT Id, Name,NSP_AIMS_Client__c FROM Account WHERE Id IN: clientIds]);
+        }
+        
+        String bulletList = '';
+        for(String id: clientIds) {
+            Account client = null;
+            if(clientsMap.containsKey(Id) && clientsMap.get(Id) != null){
+                client = clientsMap.get(Id);
+            }
+            if( client != null && isEmail ) {
+                //Email formatting
+                bulletList += '<li>'+ client.Name + '</li>';    
+            } else if (client != null && !isEmail){
+                //Long Text Area field formatting
+                bulletList += '• '+ client.Name + '\n';
+            }
+        }
+        return  bulletList;
+    }
+    //Splits the Related Clients of the Implementation Profile
+    private List<String> splitRelatedClient(Implementation_Profile__c ipwithValue){
+        String relatedClients = '';
+        List<String> clientIds = new List<String>();
+        if(ipwithValue != null) {
+            relatedClients = ipwithValue.NSP_Related_Clients__c;
+        }
+        if(String.isNotBlank(relatedClients)) {
+            for(String ids: relatedClients.split(',')) {
+                if(String.isNotBlank(ids)) {
+                    clientIds.add(ids.trim());
+                }
+            }
+        }
+        return clientIds;
+    }
+    
+    private String flsaReviewContacts(Implementation_Profile__c ipwithValue) {
+        String contacts = '';
+        if( ipwithValue != null ) {
+            contacts = ipwithValue.Who_should_the_FLSA_team_reach_out_to__c;
+        }
+        
+        String contactsFormatted = '';
+        if(String.isNotBlank(contacts)) {
+            if(contacts.contains(','))
+            {
+                //Handles either 'A,B,C,D' or 'A\nB\nC\nD'
+                contactsFormatted = contacts.replaceAll(',', '\n');
+            } else {
+                contactsFormatted = contacts;
+            }
+        }
+        return contactsFormatted;
+    }
 }

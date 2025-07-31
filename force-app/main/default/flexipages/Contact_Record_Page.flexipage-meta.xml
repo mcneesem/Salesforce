@@ -2791,23 +2791,6 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>height</name>
-                    <value>400px</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>tabName</name>
-                </componentInstanceProperties>
-                <componentName>highspot:HighspotContent</componentName>
-                <identifier>highspot_HighspotContent</identifier>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-1fe61350-3058-4fec-a944-b9a71dcf8c33</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
                     <name>active</name>
                     <value>true</value>
                 </componentInstanceProperties>
@@ -2867,20 +2850,6 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>customTab2</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-1fe61350-3058-4fec-a944-b9a71dcf8c33</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>title</name>
-                    <value>Highspot</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:tab</componentName>
-                <identifier>flexipage_tab2</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -3057,23 +3026,6 @@
             <componentInstance>
                 <componentName>lbpm:actionList</componentName>
                 <identifier>lbpm_actionList</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>displayNumber</name>
-                    <value>3</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>isUsedInStandardPage</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>title</name>
-                </componentInstanceProperties>
-                <componentName>runtime_sales_activities:activityRecommendedConnections</componentName>
-                <identifier>runtime_sales_activities_activityRecommendedConnections</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>

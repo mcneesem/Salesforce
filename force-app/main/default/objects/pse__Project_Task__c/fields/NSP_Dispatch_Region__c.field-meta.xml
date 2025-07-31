@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Dispatch_Region__c</fullName>
     <description>created a Dispatch/Service Territory (Region) field based on STY-02085</description>
-    <externalId>false</externalId>
     <label>Dispatch Region</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
@@ -10,7 +9,6 @@
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
-        <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>

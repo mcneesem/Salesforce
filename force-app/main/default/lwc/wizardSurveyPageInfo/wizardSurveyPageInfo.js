@@ -25,7 +25,6 @@ export default class WizardSurveyPageInfo extends LightningElement {
     currentConactId;
     nameField;
     showButton = false;
-    cemail;
     NSP_End_Date__c;
     disableContact =true;
     enableContact = true;
@@ -47,8 +46,6 @@ export default class WizardSurveyPageInfo extends LightningElement {
 
     columns = [
         { label: 'Name', fieldName: 'name' },
-        { label: 'Email', fieldName: 'NSP_Work_email__c' },
-
         {
             type: 'button-icon',
             typeAttributes:
@@ -209,7 +206,7 @@ export default class WizardSurveyPageInfo extends LightningElement {
 
             if( this.fieldsData.NSP_Survey_Type__c != null && this.fieldsData.NSP_Survey_Type__c.value != null ){
                 this.NSP_Survey_Type__c = this.fieldsData.NSP_Survey_Type__c.value ;
-                if (this.NSP_Survey_Type__c === 'Exit') {
+                if (this.NSP_Survey_Type__c === 'Exit' || this.NSP_Survey_Type__c === 'Onboarding - One-time' || this.NSP_Survey_Type__c === 'Onboarding - Week 2/Week 5') {
                     this.showEndDate = "display:none;";
                     this.endDateRequired= false;
                     this.NSP_End_Date__c =null;
@@ -284,7 +281,7 @@ export default class WizardSurveyPageInfo extends LightningElement {
 
     handleRowAction(event) {
         if (event.detail.action.name === 'delete') {
-            this.mergeObjectList = this.mergeObjectList.filter((row => row.NSP_Work_email__c !== event.detail.row.NSP_Work_email__c) && 
+            this.mergeObjectList = this.mergeObjectList.filter( 
             (row => row.name !== event.detail.row.name));
         }
     }
@@ -294,17 +291,7 @@ export default class WizardSurveyPageInfo extends LightningElement {
      
   }
 
-  handleChangeEmail(event){
-    if(event.currentTarget.name == 'cemail'){
-      //  this.cemail = event.currentTarget.value;
-    }
-  }
-
-  changeEmail(event){
-  }
-
     handleAddContact(event) {
-    let emailAddress;
         if(this.template.querySelector('lightning-input-field[data-fname="NSP_Contact__c"]') != null && this.template.querySelector('lightning-input-field[data-fname="NSP_Contact__c"]').value !=null ){
             let contactID =this.template.querySelector('lightning-input-field[data-fname="NSP_Contact__c"]').value ;
             if(contactID != null &&  contactID.length > 17){
@@ -315,31 +302,22 @@ export default class WizardSurveyPageInfo extends LightningElement {
                 this.cname = '';
               }
         }
-        if( this.template.querySelector('lightning-input[data-fname="emailAddress"]') !=null && this.template.querySelector('lightning-input[data-fname="emailAddress"]').checkValidity() == true
-        && this.template.querySelector('lightning-input[data-fname="emailAddress"]').value !=''){
-            emailAddress = this.template.querySelector('lightning-input[data-fname="emailAddress"]').value;
-        }else{
-            emailAddress =null
-        }
-
-        if(emailAddress != null && this.cname != null) {
+        if(this.cname != null) {
         /*
         var obj = this.mergeObjectList.filter(row => row.email === emailAddress);
         if (obj.length == 0) {*/
           var tempContact = new Object();
           tempContact.name = this.cname;
-          tempContact.NSP_Work_email__c = emailAddress;
+          tempContact.Id = this.currentConactId;
           this.mergeObjectList = [...this.mergeObjectList, tempContact]; 
           this.NSP_Contact__c = '';
-          this.cemail = null;
           this.cname = '';
-          this.template.querySelector('lightning-input[data-fname="emailAddress"]').value = null;
           this.template.querySelector('lightning-input-field[data-fname="NSP_Contact__c"]').value = '';
         /*}else{
             alert('This email address already exit');
         }*/
       } else{
-            alert('Please enter valid Email / Contact');
+            alert('Please enter valid Contact');
       }
         // this.accContacts = this.accContacts.filter(row => row.Id !== this.currentConactId);
     }
@@ -347,7 +325,7 @@ export default class WizardSurveyPageInfo extends LightningElement {
     handleChange(event) {
         if (event.currentTarget.name == 'NSP_Survey_Type__c') {
             this.NSP_Survey_Type__c = event.currentTarget.value;
-            if (this.NSP_Survey_Type__c === 'Exit') {
+            if (this.NSP_Survey_Type__c === 'Exit' || this.NSP_Survey_Type__c === 'Onboarding - One-time' || this.NSP_Survey_Type__c === 'Onboarding - Week 2/Week 5') {
                 this.showEndDate = "display:none;";
                 this.endDateRequired= false;
                 if(this.template.querySelector('lightning-input-field.NSP_End_Date__c') != null ){
@@ -373,7 +351,6 @@ export default class WizardSurveyPageInfo extends LightningElement {
             this.isOnloaded = false ;
             this.isOnloadCalled=true;
             this.cname = '';
-            this.cemail = null;
             this.enableContact =false;
             this.clientId = event.target.value;
             // this.template.querySelector('lightning-record-edit-form.NSP_ClientName__c').submit(formObj);
@@ -438,7 +415,7 @@ export default class WizardSurveyPageInfo extends LightningElement {
                 let obj = {};
                 if(values != null && values != "" && values != " " && values[0] != null && values[1] != null ){
                     obj['name'] = values[0].trim();
-                    obj['NSP_Work_email__c'] = values[1].trim().replace(',', '');
+                    obj['Id'] = values[1].trim().replace(',', '');
                 }
                 if( Object.keys(obj).length != 0){
                 loadObjectList.push(obj);
@@ -513,10 +490,8 @@ get arrayToTextArea(){
             this.currentConactId =this.NSP_Contact__c;
             const conObj = this.accContacts.find(row => row.ContactId === this.currentConactId);
             this.cname = conObj.Contact.name;
-            this.cemail = conObj.NSP_Work_Email__c;
           }else{
             this.cname = '';
-            this.cemail = null;
             this.NSP_Contact__c=''; 
           }
     }

@@ -3,7 +3,6 @@
     <fullName>pse__Project_Status__c</fullName>
     <deprecated>false</deprecated>
     <description>Select the current project status from the picklist. Alternatively, use Process Builder or workflow rules to use your own logic to control the behavior of the corresponding color indicator field.</description>
-    <externalId>false</externalId>
     <label>Project Status</label>
     <required>false</required>
     <trackFeedHistory>true</trackFeedHistory>

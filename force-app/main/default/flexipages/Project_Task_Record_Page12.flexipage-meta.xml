@@ -315,6 +315,23 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Canceled_Reason__c</fieldItem>
+                <identifier>RecordCanceled_Reason_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.pse__Status__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Canceled</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.pse__Assigned_Resources__c</fieldItem>
                 <identifier>Recordpse_Assigned_Resources_cField</identifier>
             </fieldInstance>

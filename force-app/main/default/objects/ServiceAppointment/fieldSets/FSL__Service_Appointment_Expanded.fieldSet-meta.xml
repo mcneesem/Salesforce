@@ -17,7 +17,17 @@
         <isRequired>false</isRequired>
     </availableFields>
     <availableFields>
+        <field>AppointmentNumber</field>
+        <isFieldManaged>false</isFieldManaged>
+        <isRequired>false</isRequired>
+    </availableFields>
+    <availableFields>
         <field>FSL__Appointment_Grade__c</field>
+        <isFieldManaged>false</isFieldManaged>
+        <isRequired>false</isRequired>
+    </availableFields>
+    <availableFields>
+        <field>ApptBookingInfoUrl</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </availableFields>
@@ -33,6 +43,11 @@
     </availableFields>
     <availableFields>
         <field>FSL__Auto_Schedule__c</field>
+        <isFieldManaged>false</isFieldManaged>
+        <isRequired>false</isRequired>
+    </availableFields>
+    <availableFields>
+        <field>BundlePolicyId</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </availableFields>
@@ -117,6 +132,11 @@
         <isRequired>false</isRequired>
     </availableFields>
     <availableFields>
+        <field>FSL__Gantt_Label_Details__c</field>
+        <isFieldManaged>false</isFieldManaged>
+        <isRequired>false</isRequired>
+    </availableFields>
+    <availableFields>
         <field>Id</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
@@ -147,7 +167,17 @@
         <isRequired>false</isRequired>
     </availableFields>
     <availableFields>
+        <field>IsManuallyBundled</field>
+        <isFieldManaged>false</isFieldManaged>
+        <isRequired>false</isRequired>
+    </availableFields>
+    <availableFields>
         <field>FSL__IsMultiDay__c</field>
+        <isFieldManaged>false</isFieldManaged>
+        <isRequired>false</isRequired>
+    </availableFields>
+    <availableFields>
+        <field>IsOffsiteAppointment</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </availableFields>
@@ -218,6 +248,11 @@
     </availableFields>
     <availableFields>
         <field>FSL__Prevent_Geocoding_For_Chatter_Actions__c</field>
+        <isFieldManaged>false</isFieldManaged>
+        <isRequired>false</isRequired>
+    </availableFields>
+    <availableFields>
+        <field>RelatedBundleId</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </availableFields>

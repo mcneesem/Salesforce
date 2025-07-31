@@ -96,11 +96,6 @@
         <visible>false</visible>
     </applicationVisibilities>
     <applicationVisibilities>
-        <application>standard__OnlineSales</application>
-        <default>false</default>
-        <visible>true</visible>
-    </applicationVisibilities>
-    <applicationVisibilities>
         <application>standard__Platform</application>
         <default>false</default>
         <visible>false</visible>
@@ -1066,12 +1061,12 @@
         <editable>false</editable>
         <field>Lead.account6Sense_Account_6QA_Age__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
 	<fieldPermissions>
         <editable>true</editable>
         <field>Lead.Do_Not_Contact__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Contact.Due_to_OneTrust_Opt_Out_on_File__c</field>
@@ -1096,7 +1091,7 @@
         <editable>false</editable>
         <field>Opportunity.MidMarket_National_Account__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Contact.DoNotCall</field>
@@ -5252,7 +5247,7 @@
         <field>NSP_Address__c.NSP_City__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    
+
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Address__c.NSP_Contact__c</field>
@@ -5298,7 +5293,7 @@
         <field>NSP_Address__c.NSP_Postal_Code__c</field>
         <readable>false</readable>
     </fieldPermissions>
-    
+
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Address__c.NSP_Related_Site__c</field>
@@ -7349,8 +7344,8 @@
         <field>NSP_Reward__c.NSP_Benefits_Non_Profit__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    
-    
+
+
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_SObject_Field_Update_Integration__mdt.NSP_Field_Name__c</field>
@@ -7526,7 +7521,7 @@
         <field>NSP_Sub_Client__c.NSP_Actual_Part_Time_EE_Count__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    
+
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Sub_Client__c.NSP_Actual_Seasonal_Time_EE_Count__c</field>
@@ -7592,7 +7587,7 @@
         <field>NSP_Sub_Client__c.NSP_Contractual_Part_time_EE_Count__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    
+
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Sub_Client__c.NSP_Contractual_Seasonal_Time_EE_Count__c</field>
@@ -7618,7 +7613,7 @@
         <field>NSP_Sub_Client__c.NSP_Full_Time_EE_Count__c</field>
         <readable>false</readable>
     </fieldPermissions>
-    
+
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Sub_Client__c.NSP_InitialTerminationReasonDescription__c</field>
@@ -14050,7 +14045,7 @@
     <layoutAssignments>
         <layout>OpportunityLineItem-Opportunity Product Layout</layout>
     </layoutAssignments>
-    
+
     <layoutAssignments>
         <layout>OpportunityTeamMember-Opportunity Team Member Layout</layout>
     </layoutAssignments>
@@ -14989,10 +14984,6 @@
         <recordType>Task.Task</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
-    <tabVisibilities>
-        <tab>Highspot_Content</tab>
-        <visibility>DefaultOn</visibility>
-    </tabVisibilities>
     <tabVisibilities>
         <tab>MindTickle</tab>
         <visibility>Hidden</visibility>

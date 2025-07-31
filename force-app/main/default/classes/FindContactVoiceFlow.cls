@@ -4,39 +4,47 @@ public without sharing class FindContactVoiceFlow {
     @InvocableMethod(label='Get Contacts by Phone')
     public static List<List<Contact>> getContactsByPhone( List<String> phoneNumbers ) {
         List<List<Contact>> result = new List<List<Contact>>();
-        if ( ( phoneNumbers != null )
-            && !phoneNumbers.isEmpty()
-            && String.isNotBlank( phoneNumbers[0] )
-            )
-        {
-            String input = String.valueOf( phoneNumbers[0] ).trim();
-            if ( input.length() > 1 ) {
-                Date limitDate = System.today().addDays( -1 * FindContactVoiceFlow.limitCreatedDate );
-                List<List<Contact>> searchResults = [
-                    FIND :input
-                    IN PHONE FIELDS
-                    RETURNING Contact(
-                            Id ,
-                            Name ,
-                            Email ,
-                            HomePhone ,
-                            OtherAddress ,
-                            MobilePhone ,
-                            NSP_Date_of_Birth__c ,
-                            NSP_Last_4Digit_Of_SSN__c ,
-                            NSP_Per_ID__c ,
-                            NSP_Work_Phone__c ,
-                            Contact_Center_Email__c
-                        WHERE ( CreatedDate >= :(limitDate) )
-                        LIMIT :FindContactVoiceFlow.limitSearch
-                    )
-                ];
-                List<Contact> records = new List<Contact>();
-                for ( List<Contact> resultList : searchResults ) {
-                    records.addAll( resultList );
+        try {
+            if ( ( phoneNumbers != null )
+                && !phoneNumbers.isEmpty()
+                && String.isNotBlank( phoneNumbers[0] )
+                )
+            {
+                String input = String.valueOf( phoneNumbers[0] ).trim();
+                if ( input.length() > 1 ) {
+                    Date limitDate = System.today().addDays( -1 * FindContactVoiceFlow.limitCreatedDate );
+                    List<List<Contact>> searchResults = [
+                        FIND :input
+                        IN PHONE FIELDS
+                        RETURNING Contact(
+                                Id ,
+                                Name ,
+                                Email ,
+                                HomePhone ,
+                                OtherAddress ,
+                                MobilePhone ,
+                                NSP_Date_of_Birth__c ,
+                                NSP_Last_4Digit_Of_SSN__c ,
+                                NSP_Per_ID__c ,
+                                NSP_Work_Phone__c ,
+                                Contact_Center_Email__c
+                            WHERE ( CreatedDate >= :(limitDate) )
+                            LIMIT :FindContactVoiceFlow.limitSearch
+                        )
+                    ];
+                    List<Contact> records = new List<Contact>();
+                    for ( List<Contact> resultList : searchResults ) {
+                        records.addAll( resultList );
+                    }
+                    result.add( records );
                 }
-                result.add( records );
             }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                FindContactVoiceFlow.class.getName() ,
+                'getContactsByPhone' ,
+                e
+            );
         }
         return result;
     }

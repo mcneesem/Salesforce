@@ -3,7 +3,6 @@
     <fullName>NSP_Create_Work_Order__c</fullName>
     <defaultValue>false</defaultValue>
     <description>If this is update to true , it will create a new Work Order under this Project Task</description>
-    <externalId>false</externalId>
     <label>Create Work Order</label>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>

@@ -112,6 +112,12 @@ const DYNAMIC_FIELDS = {
       dependentFields: ["Has_FLSA_team_approved__c"],
     },
   ],
+  Would_the_client_like_a_FLSA_Exemption__c: [
+    {
+      expValue: ['Yes'],
+      dependentFields: ['Who_should_the_FLSA_team_reach_out_to__c','Is_the_client_Emerging_Growth__c'],
+    },
+  ],
   Does_client_employ_ministers_or_teachers__c: [
     {
       expValue: ["Yes"],

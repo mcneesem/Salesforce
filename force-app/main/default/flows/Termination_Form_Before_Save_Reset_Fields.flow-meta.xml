@@ -75,6 +75,10 @@
             <assignToReference>$Record.NSP_REMINDER__c</assignToReference>
             <operator>Assign</operator>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.NSP_Note_regarding_Attachment__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
         <connector>
             <targetReference>Parent_field_is_Client_moving_to_an_insperity_offering</targetReference>
         </connector>
@@ -188,6 +192,13 @@
             <assignToReference>$Record.NSP_REMINDER__c</assignToReference>
             <operator>Assign</operator>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.NSP_Note_regarding_Attachment__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>noteRegardingAttachment</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Parent_field_is_Client_moving_to_an_insperity_offering</targetReference>
         </connector>
@@ -257,6 +268,10 @@
             <value>
                 <booleanValue>false</booleanValue>
             </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.NSP_Note_regarding_Attachment__c</assignToReference>
+            <operator>Assign</operator>
         </assignmentItems>
         <connector>
             <targetReference>Parent_field_is_Client_moving_to_an_insperity_offering</targetReference>
@@ -344,6 +359,10 @@
             <assignToReference>$Record.NSP_REMINDER__c</assignToReference>
             <operator>Assign</operator>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.NSP_Note_regarding_Attachment__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
         <connector>
             <targetReference>Parent_field_is_Client_moving_to_an_insperity_offering</targetReference>
         </connector>
@@ -368,13 +387,6 @@
         <assignmentItems>
             <assignToReference>$Record.NSP_Next_Scheduled_Pay_Date__c</assignToReference>
             <operator>Assign</operator>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>$Record.NSP_ClientDocumentRequesting_Termination__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>$Record.NSP_New_Client_Number__c</assignToReference>
@@ -412,6 +424,10 @@
         </assignmentItems>
         <assignmentItems>
             <assignToReference>$Record.NSP_REMINDER__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.NSP_Note_regarding_Attachment__c</assignToReference>
             <operator>Assign</operator>
         </assignmentItems>
         <connector>
@@ -494,6 +510,10 @@
         </assignmentItems>
         <assignmentItems>
             <assignToReference>$Record.NSP_REMINDER__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.NSP_Note_regarding_Attachment__c</assignToReference>
             <operator>Assign</operator>
         </assignmentItems>
         <connector>
@@ -897,6 +917,14 @@
         </rules>
     </decisions>
     <environments>Default</environments>
+    <formulas>
+        <name>noteRegardingAttachment</name>
+        <dataType>String</dataType>
+        <expression>CASE( {!$Record.NSP_Term_Reason__c} ,
+&quot;1900 Merger with Insperity Client&quot;, &quot;The original CSA for the terming client and the CSA for the client where the EE’s are being moved to MUST be attached prior to submitting the Termination Checklist&quot;,
+&quot;2700 Change in FEIN&quot;, &quot;The Letter of Assignment for the client where the EE’s were moved MUST be attached prior to submitting the Termination Checklist&quot;,
+&quot; &quot;)</expression>
+    </formulas>
     <interviewLabel>Termination Form - Before Save - Reset Fields {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Termination Form - Before Save - Reset Fields</label>
     <processMetadataValues>

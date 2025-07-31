@@ -961,7 +961,7 @@
     <picklistValues>
         <picklist>NSP_Survey_Type__c</picklist>
         <values>
-            <fullName>COVID-19 Well-Being %26 Support</fullName>
+            <fullName>Belonging</fullName>
             <default>false</default>
         </values>
         <values>
@@ -993,7 +993,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Onboarding - One-time survey</fullName>
+            <fullName>Onboarding - One-time</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1001,7 +1001,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Return to Work Readiness</fullName>
+            <fullName>Readiness to Return to the Office</fullName>
             <default>false</default>
         </values>
         <values>

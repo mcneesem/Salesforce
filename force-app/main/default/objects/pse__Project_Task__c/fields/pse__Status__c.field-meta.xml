@@ -3,7 +3,6 @@
     <fullName>pse__Status__c</fullName>
     <deprecated>false</deprecated>
     <description>Pick list for Project Task status that may be customized as needed for possible Task status values</description>
-    <externalId>false</externalId>
     <label>Status</label>
     <required>false</required>
     <trackFeedHistory>true</trackFeedHistory>

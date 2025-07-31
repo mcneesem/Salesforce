@@ -365,7 +365,7 @@
     </profileSearchLayouts>
     <profileSearchLayouts>
         <fields>FULL_NAME</fields>
-        <fields>NSP_Last_4Digit_Of_SSN__c</fields>
+        <fields>NSP_SSN__c</fields>
         <fields>NSP_Per_ID__c</fields>
         <fields>ACCOUNT.NAME</fields>
         <fields>CONTACT.PHONE1</fields>

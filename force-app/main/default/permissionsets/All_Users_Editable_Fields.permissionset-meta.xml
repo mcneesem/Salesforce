@@ -65,6 +65,11 @@
         <field>pse__Proj__c.Level_of_Effort__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>pse__Project_Task__c.Canceled_Reason__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>All Users Editable Fields</label>
 </PermissionSet>

@@ -161,7 +161,7 @@
     <nameField>
         <displayFormat>PTA-{0}</displayFormat>
         <label>Project Task Assignment Number</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Project Task Assignments</pluralLabel>

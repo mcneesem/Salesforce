@@ -1,7 +1,7 @@
 // intentionally `without sharing` to prevent ~ INSUFFICIENT_ACCESS_ON_CROSS_REFERENCE_ENTITY, insufficient access rights on cross-reference id
 public without sharing class NSP_EnrollmentFeePaymentSharing {
     // test w/ NSP_EnrollmentFeePaymentTriggerClassTest, NSP_OpportunityTeamMemberTriggerTest (81%)
-    // test w/ NSP_EnrollmentFeePaymentTriggerClassTest (68%)
+    // test w/ NSP_EnrollmentFeePaymentTriggerClassTest (71%)
     // test w/ NSP_OpportunityTeamMemberTriggerTest (23%)
 
     // ~ EnrollmentFeePaymentTrigger
@@ -68,13 +68,18 @@ public without sharing class NSP_EnrollmentFeePaymentSharing {
                     opportunityStageName
                 );
             }
-            if ( !efpShareList.isEmpty() ) {
+            if ( NSP_EnrollmentFeePaymentSharing.isEnabled
+                && !efpShareList.isEmpty()
+                )
+            {
                 List<Database.SaveResult> results = Database.insert( efpShareList , false );
-                NSP_ErrorLogHandler.logResults(
-                    NSP_EnrollmentFeePaymentSharing.class.getName() ,
-                    'onEfpRecordInsert:insert' ,
-                    results
-                );
+                if ( NSP_EnrollmentFeePaymentSharing.isEnabledLogResults ) {
+                    NSP_ErrorLogHandler.logResults(
+                        NSP_EnrollmentFeePaymentSharing.class.getName() ,
+                        'onEfpRecordInsert:insert' ,
+                        results
+                    );
+                }
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
@@ -185,13 +190,19 @@ public without sharing class NSP_EnrollmentFeePaymentSharing {
             newList ,
             oppIdEfpRecordsMap
         );
-        if ( ( efpShareList != null ) && !efpShareList.isEmpty() ) {
+        if ( NSP_EnrollmentFeePaymentSharing.isEnabled
+            && ( efpShareList != null )
+            && !efpShareList.isEmpty()
+            )
+        {
             List<Database.SaveResult> results = Database.insert( efpShareList , false );
-            NSP_ErrorLogHandler.logResults(
-                NSP_EnrollmentFeePaymentSharing.class.getName() ,
-                'onOppTeamMemberInsert:insert' ,
-                results
-            );
+            if ( NSP_EnrollmentFeePaymentSharing.isEnabledLogResults ) {
+                NSP_ErrorLogHandler.logResults(
+                    NSP_EnrollmentFeePaymentSharing.class.getName() ,
+                    'onOppTeamMemberInsert:insert' ,
+                    results
+                );
+            }
         }
     }
 
@@ -246,13 +257,23 @@ public without sharing class NSP_EnrollmentFeePaymentSharing {
                 }
             }
         }
-        if ( !efpDeleteList.isEmpty() ) {
+        NSP_EnrollmentFeePaymentSharing.handleDmlOperations( efpDeleteList );
+    }
+
+    // helper method to defeat sonar cognitive complexity...
+    private static void handleDmlOperations( List<NSP_Enrollment_Fee_Payment__Share> efpDeleteList ) {
+        if ( NSP_EnrollmentFeePaymentSharing.isEnabled
+            && !efpDeleteList.isEmpty()
+            )
+        {
             List<Database.DeleteResult> results = Database.delete( efpDeleteList , false );
-            NSP_ErrorLogHandler.logResults(
-                NSP_EnrollmentFeePaymentSharing.class.getName() ,
-                'onOppTeamMemberDelete:delete' ,
-                results
-            );
+            if ( NSP_EnrollmentFeePaymentSharing.isEnabledLogResults ) {
+                NSP_ErrorLogHandler.logResults(
+                    NSP_EnrollmentFeePaymentSharing.class.getName() ,
+                    'handleDmlOperations:delete' ,
+                    results
+                );
+            }
         }
     }
 
@@ -271,13 +292,18 @@ public without sharing class NSP_EnrollmentFeePaymentSharing {
             oppIdEfpShareRecordsMap = NSP_EnrollmentFeePaymentSharing.efpSharedRecordsToProcess( closedOpps );
         }
         List<NSP_Enrollment_Fee_Payment__Share> efpUpdateList = NSP_EnrollmentFeePaymentSharing.prepareEfpUpdateList( oppIdEfpShareRecordsMap );
-        if ( !efpUpdateList.isEmpty() ) {
+        if ( NSP_EnrollmentFeePaymentSharing.isEnabled
+            && !efpUpdateList.isEmpty()
+            )
+        {
             List<Database.SaveResult> results = Database.update( efpUpdateList , false );
-            NSP_ErrorLogHandler.logResults(
-                NSP_EnrollmentFeePaymentSharing.class.getName() ,
-                'onOppClose:update' ,
-                results
-            );
+            if ( NSP_EnrollmentFeePaymentSharing.isEnabledLogResults ) {
+                NSP_ErrorLogHandler.logResults(
+                    NSP_EnrollmentFeePaymentSharing.class.getName() ,
+                    'onOppClose:update' ,
+                    results
+                );
+            }
         }
     }
 
@@ -366,6 +392,48 @@ public without sharing class NSP_EnrollmentFeePaymentSharing {
                 efpSharingUserMap = CustomPermissionController.getPermittedUsersMap( 'Enrollment_Fee_Payment_Edit_Sharing' );
             }
             return efpSharingUserMap;
+        }
+        private set;
+    }
+
+    //
+    //
+    //
+
+    private static EnrollmentFeePaymentSharingSettings__c settings {
+        private get {
+            if ( settings == null ) {
+                settings = EnrollmentFeePaymentSharingSettings__c.getInstance( UserInfo.getUserId() );
+            }
+            return settings;
+        }
+        private set;
+    }
+
+    private static Boolean isEnabled {
+        private get {
+            if ( isEnabled == null ) {
+                Boolean local = False;
+                if ( settings != null ) {
+                    local = settings.IsEnabled__c;
+                }
+                isEnabled = local;
+            }
+            return isEnabled;
+        }
+        private set;
+    }
+
+    private static Boolean isEnabledLogResults {
+        private get {
+            if ( isEnabledLogResults == null ) {
+                Boolean local = False;
+                if ( settings != null ) {
+                    local = settings.IsEnabledLogResults__c;
+                }
+                isEnabledLogResults = local;
+            }
+            return isEnabledLogResults;
         }
         private set;
     }

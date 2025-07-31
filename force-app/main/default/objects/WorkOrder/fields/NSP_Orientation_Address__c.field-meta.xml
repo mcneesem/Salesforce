@@ -3,11 +3,10 @@
     <fullName>NSP_Orientation_Address__c</fullName>
     <description>Orientation Address from Project Task or Service Appointment</description>
     <encryptionScheme>None</encryptionScheme>
-    <externalId>false</externalId>
     <label>Orientation Address</label>
     <length>32768</length>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>LongTextArea</type>
     <visibleLines>3</visibleLines>
 </CustomField>

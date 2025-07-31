@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Opportunity_influence_fav_decision__c</fullName>
-    <externalId>false</externalId>
     <inlineHelpText>Opportunity to influence a favorable decision</inlineHelpText>
     <label>Opportunity to influence fav decision</label>
     <required>false</required>
