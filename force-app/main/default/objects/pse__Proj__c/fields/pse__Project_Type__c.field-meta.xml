@@ -3,7 +3,6 @@
     <fullName>pse__Project_Type__c</fullName>
     <deprecated>false</deprecated>
     <description>A descriptive classification of the project</description>
-    <externalId>false</externalId>
     <label>Project Type</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

@@ -3,9 +3,8 @@
     <fullName>NSP_Old_End_Time__c</fullName>
     <description>To save value of old SchedEndTime</description>
     <encryptionScheme>None</encryptionScheme>
-    <externalId>false</externalId>
     <label>Old End Time</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>DateTime</type>
 </CustomField>

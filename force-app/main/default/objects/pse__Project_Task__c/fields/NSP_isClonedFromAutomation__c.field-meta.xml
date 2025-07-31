@@ -3,10 +3,9 @@
     <fullName>NSP_isClonedFromAutomation__c</fullName>
     <defaultValue>false</defaultValue>
     <description>For Internal use, to avoid owner overriding</description>
-    <externalId>false</externalId>
     <label>is Cloned From Automation</label>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

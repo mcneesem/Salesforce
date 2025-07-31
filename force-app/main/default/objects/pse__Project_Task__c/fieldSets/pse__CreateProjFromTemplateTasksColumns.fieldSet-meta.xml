@@ -987,6 +987,11 @@
         <isRequired>false</isRequired>
     </availableFields>
     <availableFields>
+        <field>Owner.Name</field>
+        <isFieldManaged>false</isFieldManaged>
+        <isRequired>false</isRequired>
+    </availableFields>
+    <availableFields>
         <field>pse__Milestone__r.Name</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
@@ -1003,11 +1008,6 @@
     </availableFields>
     <availableFields>
         <field>pse__Top_level_Parent_Task__r.Name</field>
-        <isFieldManaged>false</isFieldManaged>
-        <isRequired>false</isRequired>
-    </availableFields>
-    <availableFields>
-        <field>Owner.Name</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </availableFields>
@@ -1868,6 +1868,11 @@
     </availableFields>
     <availableFields>
         <field>pse__WBS_Element_Number__c</field>
+        <isFieldManaged>false</isFieldManaged>
+        <isRequired>false</isRequired>
+    </availableFields>
+    <availableFields>
+        <field>pse__Work_Calendar__c</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </availableFields>

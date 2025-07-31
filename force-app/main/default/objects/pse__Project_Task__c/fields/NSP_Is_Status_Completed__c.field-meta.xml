@@ -3,7 +3,6 @@
     <fullName>NSP_Is_Status_Completed__c</fullName>
     <defaultValue>false</defaultValue>
     <description>This field is used as a flag to track if the project task status is set to &apos;Completed&apos; for the first time.</description>
-    <externalId>false</externalId>
     <label>Is Status Completed</label>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>

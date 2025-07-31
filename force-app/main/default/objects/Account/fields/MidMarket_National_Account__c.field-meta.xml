@@ -183,9 +183,9 @@
                 <label>The Union for Reform Judaism</label>
             </value>
             <value>
-                <fullName>The Union for Reform Judiasm (Conservative Judiasm)</fullName>
+                <fullName>The Union for Reform Judaism (Conservative Judaism)</fullName>
                 <default>false</default>
-                <label>The Union for Reform Judiasm (Conservative Judiasm)</label>
+                <label>The Union for Reform Judaism (Conservative Judaism)</label>
             </value>
             <value>
                 <fullName>The Veterinary Cooperative</fullName>
@@ -215,10 +215,10 @@
                 <label>PREVEER (UFG franchise)</label>
             </value>
             <value>
-                <fullName>The Union for Reform Judaism (Conservative Judaism)</fullName>
+                <fullName>The Union for Reform Judiasm (Conservative Judiasm)</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
-                <label>The Union for Reform Judaism (Conservative Judaism)</label>
+                <label>The Union for Reform Judiasm (Conservative Judiasm)</label>
             </value>
             <value>
                 <fullName>United Franchise Group (UFG)</fullName>

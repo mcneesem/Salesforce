@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>pse__Utilization_Run__c</fullName>
+    <deprecated>false</deprecated>
+    <description>The ID of the utilization run that most recently processed this assignment.</description>
+    <encryptionScheme>None</encryptionScheme>
+    <externalId>false</externalId>
+    <inlineHelpText>The ID of the utilization run that most recently processed this assignment.</inlineHelpText>
+    <label>DEPRECATED: Utilization Run</label>
+    <length>255</length>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

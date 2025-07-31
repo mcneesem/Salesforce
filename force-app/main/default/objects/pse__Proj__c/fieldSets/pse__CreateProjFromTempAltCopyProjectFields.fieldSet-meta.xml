@@ -82,6 +82,11 @@
         <isRequired>false</isRequired>
     </availableFields>
     <availableFields>
+        <field>pse__Bill_To_Budget_Cap_Bulk_Release__c</field>
+        <isFieldManaged>false</isFieldManaged>
+        <isRequired>false</isRequired>
+    </availableFields>
+    <availableFields>
         <field>pse__Billable_Expense_Fee_Flat__c</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
@@ -363,11 +368,6 @@
     </availableFields>
     <availableFields>
         <field>pse__Other_Costs__c</field>
-        <isFieldManaged>false</isFieldManaged>
-        <isRequired>false</isRequired>
-    </availableFields>
-    <availableFields>
-        <field>OwnerId</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </availableFields>

@@ -3,7 +3,6 @@
     <fullName>pse__Project_Status_Notes__c</fullName>
     <deprecated>false</deprecated>
     <encryptionScheme>None</encryptionScheme>
-    <externalId>false</externalId>
     <inlineHelpText>If you change the Status, save the record first, then add Project Status Notes - otherwise you will lose the Note information.</inlineHelpText>
     <label>Project Status Notes</label>
     <required>false</required>

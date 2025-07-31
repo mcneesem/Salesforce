@@ -37,7 +37,19 @@
     <formulas>
         <name>LocalTemplateUnitPrice</name>
         <dataType>Currency</dataType>
-        <expression>IF(ISPICKVAL({!$Record.blng__Product__r.SBQQ__PricingMethod__c}, &apos;Block&apos;),{!$Record.blng__Subtotal__c},IF( ISNULL({!$Record.blng__UsageSummary__c}) || ISBLANK({!$Record.blng__UsageSummary__c}) ,({!$Record.blng__Subtotal__c}/{!$Record.blng__Quantity__c}),{!$Record.blng__UnitPrice__c}))</expression>
+        <expression>IF(
+     ISPICKVAL({!$Record.blng__Product__r.SBQQ__PricingMethod__c}, &apos;Block&apos;)
+     ,{!$Record.blng__Subtotal__c}
+     ,IF(
+          ISNULL({!$Record.blng__UsageSummary__c}) || ISBLANK({!$Record.blng__UsageSummary__c}) 
+          ,IF(
+               {!$Record.blng__Quantity__c}&lt;0
+               ,-({!$Record.blng__Subtotal__c}/{!$Record.blng__Quantity__c})
+               ,({!$Record.blng__Subtotal__c}/{!$Record.blng__Quantity__c})
+          )
+          ,{!$Record.blng__UnitPrice__c}
+     )
+)</expression>
         <scale>2</scale>
     </formulas>
     <interviewLabel>InvoiceLineUpdate {!$Flow.CurrentDateTime}</interviewLabel>
@@ -124,13 +136,6 @@
             </value>
         </filters>
         <filters>
-            <field>OrderProductActionType__c</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <stringValue></stringValue>
-            </value>
-        </filters>
-        <filters>
             <field>Amendment_Unit_Price__c</field>
             <operator>IsNull</operator>
             <value>
@@ -144,8 +149,22 @@
                 <booleanValue>true</booleanValue>
             </value>
         </filters>
+        <filters>
+            <field>Invoice_Run_Completed__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Invoice_Run_Completed__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
         <object>blng__InvoiceLine__c</object>
-        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
     <status>Draft</status>
@@ -156,6 +175,9 @@
         <isInput>true</isInput>
         <isOutput>true</isOutput>
         <scale>2</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
     </variables>
     <variables>
         <name>NegativeTempUnitPrice</name>
@@ -164,5 +186,8 @@
         <isInput>true</isInput>
         <isOutput>true</isOutput>
         <scale>2</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
     </variables>
 </Flow>

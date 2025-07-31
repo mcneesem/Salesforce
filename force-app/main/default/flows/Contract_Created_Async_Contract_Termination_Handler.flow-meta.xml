@@ -233,7 +233,7 @@
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>QuoteId</field>
+            <field>SBQQ__Quote__c</field>
             <operator>EqualTo</operator>
             <value>
                 <elementReference>$Record.SBQQ__Quote__c</elementReference>
@@ -289,7 +289,7 @@
         <locationY>0</locationY>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>SBQQ__Order__c</field>
+            <field>SBQQ__Quote__c</field>
             <operator>IsNull</operator>
             <value>
                 <booleanValue>false</booleanValue>

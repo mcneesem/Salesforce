@@ -12,6 +12,11 @@
         <isRequired>false</isRequired>
     </availableFields>
     <availableFields>
+        <field>AssetWarrantyId</field>
+        <isFieldManaged>false</isFieldManaged>
+        <isRequired>false</isRequired>
+    </availableFields>
+    <availableFields>
         <field>BusinessHoursId</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
@@ -82,6 +87,11 @@
         <isRequired>false</isRequired>
     </availableFields>
     <availableFields>
+        <field>IsGeneratedFromMaintenancePlan</field>
+        <isFieldManaged>false</isFieldManaged>
+        <isRequired>false</isRequired>
+    </availableFields>
+    <availableFields>
         <field>LastModifiedById</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
@@ -117,6 +127,11 @@
         <isRequired>false</isRequired>
     </availableFields>
     <availableFields>
+        <field>MaintenanceWorkRuleId</field>
+        <isFieldManaged>false</isFieldManaged>
+        <isRequired>false</isRequired>
+    </availableFields>
+    <availableFields>
         <field>MinimumCrewSize</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
@@ -147,7 +162,27 @@
         <isRequired>false</isRequired>
     </availableFields>
     <availableFields>
+        <field>ProductServiceCampaignId</field>
+        <isFieldManaged>false</isFieldManaged>
+        <isRequired>false</isRequired>
+    </availableFields>
+    <availableFields>
+        <field>ProductServiceCampaignItemId</field>
+        <isFieldManaged>false</isFieldManaged>
+        <isRequired>false</isRequired>
+    </availableFields>
+    <availableFields>
         <field>RecommendedCrewSize</field>
+        <isFieldManaged>false</isFieldManaged>
+        <isRequired>false</isRequired>
+    </availableFields>
+    <availableFields>
+        <field>ReturnOrderId</field>
+        <isFieldManaged>false</isFieldManaged>
+        <isRequired>false</isRequired>
+    </availableFields>
+    <availableFields>
+        <field>ReturnOrderLineItemId</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </availableFields>
@@ -163,6 +198,11 @@
     </availableFields>
     <availableFields>
         <field>ServiceAppointmentCount</field>
+        <isFieldManaged>false</isFieldManaged>
+        <isRequired>false</isRequired>
+    </availableFields>
+    <availableFields>
+        <field>ServiceReportLanguage</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </availableFields>

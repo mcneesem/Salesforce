@@ -1160,6 +1160,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Implementation_Profile__c.Is_the_client_Emerging_Growth__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Implementation_Profile__c.Is_the_client_required_to_track__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -3395,6 +3400,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Implementation_Profile__c.Who_should_the_FLSA_team_reach_out_to__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Implementation_Profile__c.Who_will_be_the_TimeStar_admin__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -3456,6 +3466,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Implementation_Profile__c.Workers_Comp_Safety_Notes__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Implementation_Profile__c.Would_the_client_like_a_FLSA_Exemption__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

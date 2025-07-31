@@ -3839,23 +3839,6 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>height</name>
-                    <value>800px</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>tabName</name>
-                </componentInstanceProperties>
-                <componentName>highspot:HighspotContent</componentName>
-                <identifier>highspot_HighspotContent</identifier>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-129b2df1-db5e-488e-a69f-3bd896464c21</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>height</name>
                     <value>800</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -4181,20 +4164,6 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>flexipage_tab2</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-129b2df1-db5e-488e-a69f-3bd896464c21</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>title</name>
-                    <value>Highspot</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:tab</componentName>
-                <identifier>customTab2</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>

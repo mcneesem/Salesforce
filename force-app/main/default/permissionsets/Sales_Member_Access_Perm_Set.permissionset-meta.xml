@@ -77,10 +77,6 @@
         <visible>true</visible>
     </applicationVisibilities>
     <applicationVisibilities>
-        <application>standard__OnlineSales</application>
-        <visible>true</visible>
-    </applicationVisibilities>
-    <applicationVisibilities>
         <application>standard__Sales</application>
         <visible>true</visible>
     </applicationVisibilities>
@@ -21709,10 +21705,6 @@
     </tabSettings>
     <tabSettings>
         <tab>DOZISF__ZoomInfo_Scoop__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
-        <tab>Highspot_Content</tab>
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>

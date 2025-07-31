@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>pse__Distance_Threshold__c</fullName>
+    <deprecated>false</deprecated>
+    <description>The maximum limit of the distance between the location of the resource and the resource request site.</description>
+    <externalId>false</externalId>
+    <label>Maximum Distance</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

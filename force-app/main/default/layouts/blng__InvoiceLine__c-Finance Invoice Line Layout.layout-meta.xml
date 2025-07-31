@@ -39,6 +39,10 @@
                 <behavior>Readonly</behavior>
                 <field>Invoice_Line_ID_18__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Invoice_Run_Completed__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

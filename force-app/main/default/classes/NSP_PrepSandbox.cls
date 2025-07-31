@@ -151,7 +151,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             NSP_PrepSandbox.handleException( e , 'doUserImport' );
         }
     }
-    
+
     public static void doCMetadata(String sandboxName) {
         try{
             MetadataService.MetadataPort service = createService();
@@ -185,7 +185,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         customField1.field = field; // the custom field API Name to be updated
         customField1.value = value;
         if (cMdUpd.values != null) { //add the changes to list of changes to be deployed
-            cMdUpd.values.add(customField1); 
+            cMdUpd.values.add(customField1);
         } else {
             cMdUpd.values = new MetadataService.CustomMetadataValue[] { customField1 };
         }
@@ -247,10 +247,14 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         for (NSP_PEO_Implementations__mdt cMdRecord : cMdPEOImps) {
             String name = cMdRecord.DeveloperName;
             String fullName = 'NSP_PEO_Implementations.' + name; //custom metadata full name
-            String value = cMdRecord.NSP_Email_Address__c.substringBefore(STRING_INVALID).trim() + STRING_INVALID;
+            String defaultValue = cMdRecord.NSP_Email_Address__c.substringBefore(STRING_INVALID).trim() + STRING_INVALID;
+            String value = defaultValue;
             switch on sandboxName {
                 when 'merge','test','stage','devserva','devservb','devservx' {
                     value = 'monica.adams@insperity.com';
+                }
+                when else {
+                    value = defaultValue;
                 }
             }
 
@@ -445,7 +449,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             wfaNames.add(new String[]{});
             MetadataService.MetadataPort service = createService();
             List<List<MetadataService.Metadata>> allMetadataList = new List<List<MetadataService.Metadata>>();
-            
+
             //  Get the list of alerts Ids where CCemails is not empty
             HttpRequest request = new HttpRequest();
             request.setEndpoint(endPoint + 'query/?q=SELECT+id+FROM+WorkflowAlert+WHERE+CCemails+>+\'\'');
@@ -454,7 +458,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             HTTPResponse response = new HTTPResponse();
             AlertResult results = new AlertResult();
             RecordAlert[] records = new RecordAlert[]{};
-                
+
             if(!Test.isRunningTest()){
                 response = new Http().send(request);
                 results = (AlertResult)JSON.deserialize(response.getBody(), AlertResult.class);
@@ -681,7 +685,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             NSP_PrepSandbox.handleException( e , 'doE2CAddresses' );
         }
     }
-    
+
     public static void doQueues() {
         try {
             List<Group> updateQueue = new List<Group>();
@@ -824,7 +828,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     private static void updateUserLogins(Database.UpsertResult[] userResults) {
         Set<Id> userIdSet = new Set<Id>();
         List<UserLogin> userLoginList = new List<UserLogin>(); // list of UserLogin records to update
-        try {            
+        try {
             for (Database.UpsertResult userResult : userResults) {
                 if (userResult.isSuccess()) {
                     userIdSet.add(userResult.getId());

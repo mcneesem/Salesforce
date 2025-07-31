@@ -1,5 +1,5 @@
 public class NSP_ProjectTaskTriggerEmailNotification {
-    // test w/ NSP_ProjectTaskTriggerEmailTest (91%)
+    // test w/ NSP_ProjectTaskTriggerEmailTest (90%)
 
     /***********************************************************************************************
     * MethodName: updateImplementationProfile
@@ -792,8 +792,7 @@ public class NSP_ProjectTaskTriggerEmailNotification {
         mailBody += user.Title+'<br/>';
         mailBody += user.Email;
         
-        sendMail(subjectString,mailBody,listOfTOAddresses,null,null,null, projectTaskId,null);
-    
+        NSP_ProjectTasksTriggerHelper.sendEmail(listOfTOAddresses, subjectString, mailBody);
     } 
     
     private static void getEmailTemplates(){

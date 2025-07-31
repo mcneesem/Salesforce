@@ -44,6 +44,8 @@ private class NSP_Implprofile_ServiceHelperUpdate_Test {
        impProfile.NSP_Project__c = oProject.Id;
        impProfile.NSP_Form_Completed__c = true;
        impProfile.NSP_Project_Manager__c = oContact.Id ;
+       impProfile.NSP_HR_Quality_Support_Team_Member__c = oContact.Id;
+       impProfile.NSP_HR_Specialist__c = oContact.Id;
        impProfile.RecordTypeId = ipFSORecordTypeId;
        impProfList.add(impProfile);
         
@@ -161,8 +163,9 @@ private class NSP_Implprofile_ServiceHelperUpdate_Test {
     
     @isTest private static void checkforPayrollDepartments() {
         
+        Contact cc =[SELECT Id from Contact WHERE Name != null limit 1];
         pse__Proj__c project  = [SELECT Id, Name, pse__Project_Type__c FROM pse__Proj__c WHERE TemplateName__c=:label.FSOImplementationProject LIMIT 1];
-        Implementation_Profile__c ip = [SELECT Id,Name, NSP_Project__c, NSP_Project__r.Name,Client_has_any_special_payroll_needs__c, Select_all_payroll_needs_that_apply__c  FROM Implementation_Profile__c WHERE NSP_Project__c =: project.Id LIMIT 1];
+        Implementation_Profile__c ip = [SELECT Id,Name, NSP_Project__c, NSP_Project__r.Name,Client_has_any_special_payroll_needs__c, Select_all_payroll_needs_that_apply__c, NSP_HR_Quality_Support_Team_Member__c,NSP_HR_Specialist__c FROM Implementation_Profile__c WHERE NSP_Project__c =: project.Id LIMIT 1];
         ip.Client_has_any_special_payroll_needs__c = NSP_ServiceConstants.YES ;
         ip.Select_all_payroll_needs_that_apply__c = NSP_ServiceConstants.DEPARTMENTS ;
         ip.NSP_Select_all_that_apply__c = NSP_ServiceConstants.INTEGRA_ASSET ;
@@ -177,6 +180,10 @@ private class NSP_Implprofile_ServiceHelperUpdate_Test {
         ip.Is_there_a_need_for_Integra__c = NSP_ServiceConstants.YES;
         ip.Does_this_client_have_an_AWW__c = NSP_ServiceConstants.YES;
         ip.First_Pay_Date__c = system.today();
+        ip.Would_the_client_like_a_FLSA_Exemption__c= NSP_ServiceConstants.YES;
+       	ip.Is_the_client_Emerging_Growth__c= NSP_ServiceConstants.NO;
+        ip.NSP_HR_Quality_Support_Team_Member__c = cc.Id ;
+        ip.NSP_HR_Specialist__c = cc.Id ;
         Test.startTest();
         update ip;
         List<pse__Project_Task__c> projTaskList = [Select Id from pse__Project_Task__c WHERE pse__Project__c=: project.id];

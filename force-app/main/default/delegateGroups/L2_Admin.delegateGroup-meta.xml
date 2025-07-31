@@ -32,7 +32,6 @@
     <groups>1081 Miami 1</groups>
     <groups>1101 Atlanta 1</groups>
     <groups>1102 Atlanta 2</groups>
-    <groups>1103 Atlanta</groups>
     <groups>1103 Atlanta 3</groups>
     <groups>1104 Atlanta 4</groups>
     <groups>1401 Chicago 1</groups>
@@ -182,7 +181,6 @@
     <groups>RSAP Object Read/Edit</groups>
     <groups>Sales Compensation</groups>
     <groups>Sales Technology Admin</groups>
-    <groups>SandboxAccess_wysiwyg</groups>
     <groups>Scholarship Applicable BPA</groups>
     <groups>SE Group 1</groups>
     <groups>SE Group 1 Approver Group</groups>
@@ -225,7 +223,6 @@
     <permissionSets>Account - View All, Modify All</permissionSets>
     <permissionSets>Account Management Permission Set</permissionSets>
     <permissionSets>Active Assets Report Permission</permissionSets>
-    <permissionSets>Activity Metrics C2C Integration User</permissionSets>
     <permissionSets>Advanced Approvals Admin</permissionSets>
     <permissionSets>Advanced Approvals User</permissionSets>
     <permissionSets>Advanced User Details Hire Date, Termination Date</permissionSets>
@@ -324,7 +321,6 @@
     <permissionSets>Create and Customize Dashboards</permissionSets>
     <permissionSets>D&amp;B Lead Dataload FLS</permissionSets>
     <permissionSets>D&amp;B Optimizer - Manual Match</permissionSets>
-    <permissionSets>DNB Optimizer Admin User</permissionSets>
     <permissionSets>Data Import Wizard</permissionSets>
     <permissionSets>Data Migration User</permissionSets>
     <permissionSets>Delete   Opportunities</permissionSets>
@@ -435,8 +431,8 @@
     <permissionSets>FDN User Management - User Information - Edit</permissionSets>
     <permissionSets>FDN User Management - User Information - Read</permissionSets>
     <permissionSets>FDN Workspaces - System Administration</permissionSets>
-    <permissionSets>FF Configurable Components</permissionSets>
-    <permissionSets>FF Configuration Builders</permissionSets>
+    <permissionSets>Certinia Configurable Components</permissionSets>
+    <permissionSets>Certinia Configuration Builders</permissionSets>
     <permissionSets>FLSA Permission Set</permissionSets>
     <permissionSets>Field Service Admin License</permissionSets>
     <permissionSets>Field Service Agent License</permissionSets>
@@ -466,7 +462,7 @@
     <permissionSets>IHC Concur to PSA</permissionSets>
     <permissionSets>IHC Jira to PSA</permissionSets>
     <permissionSets>ITA CQA Case</permissionSets>
-    <permissionSets>Implementation Profile permission set</permissionSets>
+    <permissionSets>Implementation Profile (Edit)</permissionSets>
     <permissionSets>Inbox Included</permissionSets>
     <permissionSets>Inbox With Einstein Activity Capture</permissionSets>
     <permissionSets>Inbox Without Einstein Activity Capture</permissionSets>
@@ -585,7 +581,7 @@
     <permissionSets>PSA - Manage Project Tasks</permissionSets>
     <permissionSets>PSA - Manage Projects</permissionSets>
     <permissionSets>PSA - Manage Resource Requests for an Opportunity</permissionSets>
-    <permissionSets>PSA - Manage Resource Requests for an Project</permissionSets>
+    <permissionSets>PSA - Manage Resource Requests for a Project</permissionSets>
     <permissionSets>PSA - Manage Resources and Skills</permissionSets>
     <permissionSets>PSA - Manage Resourcing for Project Tasks</permissionSets>
     <permissionSets>PSA - Manage Self-Nominations on Work Opportunities</permissionSets>
@@ -621,7 +617,7 @@
     <permissionSets>PSA - Utilization Analytics</permissionSets>
     <permissionSets>PSA - View All Forecasts</permissionSets>
     <permissionSets>PSA - View Cost and Revenue Summary for Opportunity</permissionSets>
-    <permissionSets>PSA - View Cost and Revenue Summary for Project</permissionSets>
+    <permissionSets>PSA - View Financial Information for Project</permissionSets>
     <permissionSets>PSA - View Forecast</permissionSets>
     <permissionSets>PSA - View PSA Online Help</permissionSets>
     <permissionSets>PSA - View Project Team Schedule</permissionSets>
@@ -632,7 +628,7 @@
     <permissionSets>PSA - Workspaces - Services Billing</permissionSets>
     <permissionSets>PSA - Workspaces - Services Delivery</permissionSets>
     <permissionSets>PSA - Workspaces - Services Revenue Forecasting</permissionSets>
-    <permissionSets>PSA Analytics Integration User Read Access</permissionSets>
+    <permissionSets>PS Cloud Analytics Integration User Read Access</permissionSets>
     <permissionSets>PSA ApexLib - Batch Process</permissionSets>
     <permissionSets>PSA ApexLib - Batch Process - Read Access</permissionSets>
     <permissionSets>PSA ApexLib - Scheduler Configuration</permissionSets>
@@ -652,7 +648,6 @@
     <permissionSets>Privacy Center</permissionSets>
     <permissionSets>Program Agreement Functionality</permissionSets>
     <permissionSets>Project Community User</permissionSets>
-    <permissionSets>Query_All_Files</permissionSets>
     <permissionSets>RET Asset Create Edit</permissionSets>
     <permissionSets>RET Sales permission set</permissionSets>
     <permissionSets>RSAP Create and Edit permission</permissionSets>
@@ -709,7 +704,6 @@
     <permissionSets>Service Plan</permissionSets>
     <permissionSets>Service Replies User</permissionSets>
     <permissionSets>Service Reporting specific fields</permissionSets>
-    <permissionSets>Set Audit Fields Upon Record Creation (Service)</permissionSets>
     <permissionSets>Set Audit Fields upon Record Creation</permissionSets>
     <permissionSets>Shield Permission</permissionSets>
     <permissionSets>Slack Service User</permissionSets>
@@ -740,7 +734,6 @@
     <permissionSets>ZoomInfo Admin</permissionSets>
     <permissionSets>ZoomInfo User</permissionSets>
     <permissionSets>inContact Agent Permission</permissionSets>
-    <permissionSets>sfdc.activityplatform</permissionSets>
     <!-- START PSGs -->
     <permissionSets>BPA</permissionSets>
     <permissionSets>BPC</permissionSets>
@@ -752,47 +745,42 @@
     <permissionSets>CSS</permissionSets>
     <permissionSets>Channel Operations</permissionSets>
     <permissionSets>Channel Program Manager</permissionSets>
-    <permissionSets>Contact_Center_Service_User</permissionSets>
+    <permissionSets>Contact Center Service User</permissionSets>
     <permissionSets>DA</permissionSets>
-    <permissionSets>DA RA and SSS</permissionSets>
     <permissionSets>DM</permissionSets>
     <permissionSets>Data Goverance</permissionSets>
     <permissionSets>Data Science</permissionSets>
     <permissionSets>Deals</permissionSets>
-    <permissionSets>FF Group - PSA - Line Manager</permissionSets>
-    <permissionSets>FF Group - PSA - Ops Team Member</permissionSets>
-    <permissionSets>FF Group - PSA - Project Manager</permissionSets>
-    <permissionSets>FF Group - PSA - Resource</permissionSets>
-    <permissionSets>FF Group - PSA - Resource Manager</permissionSets>
-    <permissionSets>FF Group - PSA - Services Leader</permissionSets>
-    <permissionSets>FF Group - PSA - System Administrator</permissionSets>
-    <permissionSets>Finance Admin</permissionSets>
-    <permissionSets>Finance User</permissionSets>
+    <permissionSets>Certinia - PSA - Line Manager</permissionSets>
+    <permissionSets>Certinia - PSA - Ops Team Member</permissionSets>
+    <permissionSets>Certinia - PSA - Project Manager</permissionSets>
+    <permissionSets>Certinia - PSA - Resource</permissionSets>
+    <permissionSets>Certinia - PSA - Resource Manager</permissionSets>
+    <permissionSets>Certinia - PSA - Services Leader</permissionSets>
+    <permissionSets>Certinia - PSA - System Administrator</permissionSets>
     <permissionSets>HCM</permissionSets>
     <permissionSets>Inbound Sales</permissionSets>
-    <permissionSets>L1 Support</permissionSets><!-- XXX -->
+    <permissionSets>L1 Support</permissionSets>
     <permissionSets>Loyalty Program (Advisor, Manager)</permissionSets>
     <permissionSets>Marketing</permissionSets>
     <permissionSets>Mid Market Admin</permissionSets>
-    <permissionSets>Mid Market Sales Leader</permissionSets>
-    <permissionSets>Minimum Access</permissionSets><!-- XXX -->
+    <permissionSets>Minimum Access</permissionSets>
     <permissionSets>New Client Sales Permission set Group</permissionSets>
-    <permissionSets>PEO Service User</permissionSets><!-- XXX -->
+    <permissionSets>PEO Service User</permissionSets>
     <permissionSets>Recruiting</permissionSets>
     <permissionSets>Regional Manager</permissionSets>
     <permissionSets>Regional Team</permissionSets>
     <permissionSets>Retirement Services</permissionSets>
     <permissionSets>Retirement_Services_User</permissionSets>
     <permissionSets>SSS (Sales Support Specialist)</permissionSets>
-    <permissionSets>Sales Administrator</permissionSets><!-- XXX -->
+    <permissionSets>Sales Administrator</permissionSets>
     <permissionSets>Sales Compensation</permissionSets>
     <permissionSets>Sales Engineer</permissionSets>
     <permissionSets>Sales Engineer Manager</permissionSets>
     <permissionSets>Sales Executive</permissionSets>
-    <permissionSets>Sales Operations</permissionSets>
     <permissionSets>Service</permissionSets>
-    <permissionSets>System Admin Lite</permissionSets><!-- XXX -->
-    <permissionSets>Team L1</permissionSets><!-- XXX -->
+    <permissionSets>System Admin Lite</permissionSets>
+    <permissionSets>Team L1</permissionSets>
     <!-- END PSGs -->
     <profiles>CPQ Admin</profiles>
     <profiles>CPQ Sales User</profiles>
@@ -814,7 +802,6 @@
     <profiles>Sales Operations</profiles>
     <profiles>Sales Profile</profiles>
     <profiles>Sales Support</profiles>
-    <profiles>Support</profiles>
     <profiles>BPS Service</profiles>
     <profiles>Contact Center</profiles>
     <profiles>PEO Service</profiles>

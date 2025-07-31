@@ -3,9 +3,9 @@
     <fullName>pse__Priority__c</fullName>
     <deprecated>false</deprecated>
     <description>Pick list that may be customized to reflect possible priority levels that can be associated with Project Tasks.</description>
-    <externalId>false</externalId>
     <label>Priority</label>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>

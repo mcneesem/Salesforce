@@ -1,12 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>54.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Nullify_Completed_Date</name>
+        <label>Nullify Completed Date</label>
+        <locationX>314</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.NSP_Completed_Date__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Update_Completed_Date</name>
+        <label>Update Completed Date</label>
+        <locationX>50</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.NSP_Completed_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>TodayDate</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Update_Record_Type</name>
+        <label>Update Record Type</label>
+        <locationX>578</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.RecordTypeId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>idTaskEloquaRT</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
     <decisions>
         <description>Checks whether status is completed or not.</description>
         <name>Is_Completed</name>
         <label>Is Completed?</label>
-        <locationX>522</locationX>
-        <locationY>594</locationY>
+        <locationX>446</locationX>
+        <locationY>287</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>isStatusCompleted</name>
@@ -26,7 +63,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Update_Complete_Date</targetReference>
+                <targetReference>Update_Completed_Date</targetReference>
             </connector>
             <label>isStatusCompleted</label>
         </rules>
@@ -48,7 +85,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Update_Completed_Date_to_Null</targetReference>
+                <targetReference>Nullify_Completed_Date</targetReference>
             </connector>
             <label>isStatusOpen</label>
         </rules>
@@ -70,12 +107,13 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Update_Eloqua_Record_Type</targetReference>
+                <targetReference>Update_Record_Type</targetReference>
             </connector>
             <label>ifEloquaRecord</label>
         </rules>
     </decisions>
     <description>This flow describes about the updation of Completed Date on Task based on Status.</description>
+    <environments>Default</environments>
     <formulas>
         <description>This Formula is used to store today&apos;s date.</description>
         <name>TodayDate</name>
@@ -93,7 +131,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>FREE_FORM_CANVAS</stringValue>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -103,86 +141,11 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordLookups>
-        <description>Get the record type id for the task Eloqua Recordtype</description>
-        <name>Get_Eloqua_Task_Id</name>
-        <label>Get Eloqua Task RecordId</label>
-        <locationX>518</locationX>
-        <locationY>347</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+    <start>
+        <locationX>320</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>Is_Completed</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>SobjectType</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Task</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>DeveloperName</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Eloqua_Task_RT</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>IsActive</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>RecordType</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordUpdates>
-        <description>Completed Date is updated to Today based on Status.</description>
-        <name>Update_Complete_Date</name>
-        <label>Update Complete Date</label>
-        <locationX>217</locationX>
-        <locationY>662</locationY>
-        <inputAssignments>
-            <field>NSP_Completed_Date__c</field>
-            <value>
-                <elementReference>TodayDate</elementReference>
-            </value>
-        </inputAssignments>
-        <inputReference>$Record</inputReference>
-    </recordUpdates>
-    <recordUpdates>
-        <description>Completed Date is updated to Null If Status is Open.</description>
-        <name>Update_Completed_Date_to_Null</name>
-        <label>Update Completed Date to Null</label>
-        <locationX>409</locationX>
-        <locationY>675</locationY>
-        <inputAssignments>
-            <field>NSP_Completed_Date__c</field>
-        </inputAssignments>
-        <inputReference>$Record</inputReference>
-    </recordUpdates>
-    <recordUpdates>
-        <description>This node is created to update the record type id for the Eloqua Tasks which are created by integration user for Eloqua</description>
-        <name>Update_Eloqua_Record_Type</name>
-        <label>Update Eloqua Record Type</label>
-        <locationX>732</locationX>
-        <locationY>675</locationY>
-        <inputAssignments>
-            <field>RecordTypeId</field>
-            <value>
-                <elementReference>Get_Eloqua_Task_Id.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputReference>$Record</inputReference>
-    </recordUpdates>
-    <start>
-        <locationX>458</locationX>
-        <locationY>48</locationY>
-        <connector>
-            <targetReference>Get_Eloqua_Task_Id</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -192,16 +155,40 @@
                 <stringValue></stringValue>
             </value>
         </filters>
+        <filters>
+            <field>Status</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Cancelled</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
         <object>Task</object>
-        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>idTaskEloquaRT</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+        <value>
+            <stringValue>0124x000000yRvTAAU</stringValue>
+        </value>
     </variables>
 </Flow>

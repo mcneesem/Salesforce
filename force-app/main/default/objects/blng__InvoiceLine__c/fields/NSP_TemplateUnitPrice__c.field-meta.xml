@@ -3,8 +3,19 @@
     <fullName>NSP_TemplateUnitPrice__c</fullName>
     <description>This field is used in docusign template to display unit price. Non-usage and non-Block price products should show Amount Due/Qty</description>
     <externalId>false</externalId>
-    <formula>/*IF( ISPICKVAL(blng__BillingFrequency__c,&apos;Invoice Plan&apos;), blng__UnitPrice__c/ blng__Quantity__c,IF(ISPICKVAL(blng__Product__r.SBQQ__PricingMethod__c, &apos;Block&apos;), blng__Subtotal__c,  blng__UnitPrice__c ))*/
-IF(ISPICKVAL(blng__Product__r.SBQQ__PricingMethod__c, &apos;Block&apos;),blng__Subtotal__c,IF( ISNULL(blng__UsageSummary__c) || ISBLANK(blng__UsageSummary__c) ,(blng__Subtotal__c/blng__Quantity__c),blng__UnitPrice__c))</formula>
+    <formula>IF(
+  ISPICKVAL(blng__Product__r.SBQQ__PricingMethod__c, &apos;Block&apos;),
+  blng__Subtotal__c,
+  IF(
+    ISNULL(blng__UsageSummary__c) || ISBLANK(blng__UsageSummary__c),
+    IF(
+      blng__Quantity__c &lt; 0,
+      - (blng__Subtotal__c / blng__Quantity__c),
+      (blng__Subtotal__c / blng__Quantity__c)
+    ),
+    blng__UnitPrice__c
+  )
+)</formula>
     <label>Template Unit Price</label>
     <precision>18</precision>
     <required>false</required>

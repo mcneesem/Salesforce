@@ -2071,6 +2071,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Bid_Status__c</fieldItem>
+                <identifier>RecordNSP_Bid_Status_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_BidVersion__c</fieldItem>
                 <identifier>RecordNSP_BidVersion_cField2</identifier>
             </fieldInstance>
@@ -8952,23 +8962,6 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>height</name>
-                    <value>400px</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>tabName</name>
-                </componentInstanceProperties>
-                <componentName>highspot:HighspotContent</componentName>
-                <identifier>highspot_HighspotContent</identifier>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-c7586dc6-29d5-486d-b529-39bbb0cc6148</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
                     <name>PreviewStyle</name>
                     <value>Popup</value>
                 </componentInstanceProperties>
@@ -9123,20 +9116,6 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>flexipage_tab</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-c7586dc6-29d5-486d-b529-39bbb0cc6148</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>title</name>
-                    <value>HighSpot</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:tab</componentName>
-                <identifier>customTab3</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
