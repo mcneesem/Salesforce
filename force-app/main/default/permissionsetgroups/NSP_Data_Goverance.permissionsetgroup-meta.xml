@@ -13,6 +13,7 @@
     <permissionSets>Core_Sales</permissionSets>
     <permissionSets>Data_Import_Wizard</permissionSets>
     <permissionSets>List_View_Enhanced_Access</permissionSets>
+    <permissionSets>Monitor_Login_History</permissionSets>
     <permissionSets>NSP_Billing_View_All</permissionSets>
     <permissionSets>NSP_Finance_Service_Objects_Permission</permissionSets>
     <permissionSets>NSP_Main_Service_Contacts</permissionSets>
