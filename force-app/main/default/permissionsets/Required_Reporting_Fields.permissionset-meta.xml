@@ -68,6 +68,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.NSP_Partner_Lifecycle__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.NSP_Reserve__c</field>
         <readable>true</readable>
     </fieldPermissions>
