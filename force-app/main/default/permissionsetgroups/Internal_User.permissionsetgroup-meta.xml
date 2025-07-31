@@ -70,6 +70,7 @@
     <permissionSets>Organization_Wide_Email_Address_isolved_Time</permissionSets>
     <permissionSets>Request_CTM_and_Employee_Orientation_Meeting_Detail</permissionSets>
     <permissionSets>Request_Employee_Orientation_Meeting_Detail</permissionSets>
+    <permissionSets>Required_Apex_Class_Access</permissionSets>
     <permissionSets>Required_Reporting_Fields</permissionSets>
     <permissionSets>Required_Reporting_Objects</permissionSets>
     <permissionSets>Traction_Complete_Fields_Edit_Access</permissionSets>
