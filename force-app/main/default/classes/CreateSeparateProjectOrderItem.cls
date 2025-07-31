@@ -123,7 +123,7 @@ public with sharing class CreateSeparateProjectOrderItem {
             && ( orderLine.Order != null )
             && ( orderLine.Order.Type == NSP_CPQConstants.ORDER_TYPE_AMENDMENT )
             && String.isNotBlank( orderLine.NSP_QL_ActionType__c )
-           )
+            )
         {
             if ( orderLine.Order.NSP_Transaction_Type__c != NSP_CPQConstants.QUOTE_TYPE_TERMINATION ) {
                 //non termination
