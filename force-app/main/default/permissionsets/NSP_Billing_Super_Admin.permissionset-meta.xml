@@ -21545,7 +21545,7 @@
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
-        <object>SBQQ__PriceRule__c</object>
+        <object>SBQQ__PriceRule__c</object> 
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
@@ -22778,6 +22778,10 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>NSP_Client_Sub_Plan_History__c.WO</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>NSP_Participation_SaaS_Activity__c.Contractor_Management</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
