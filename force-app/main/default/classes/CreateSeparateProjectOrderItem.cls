@@ -1,5 +1,5 @@
 public with sharing class CreateSeparateProjectOrderItem {
-    // test w/ CreateSeparateProjectOrderItemTest (80%)
+    // test w/ CreateSeparateProjectOrderItemTest (82%)
 
     @InvocableMethod(label='Create Separate Project' description='Create Separate Project for Order')
     public static void createSeparateProject( List<String> records ) {
@@ -16,8 +16,9 @@ public with sharing class CreateSeparateProjectOrderItem {
             FROM OrderItem
             WHERE (
                 ( OrderId IN :records )
-                AND ( Separate_Project__c = true )
-            ) 
+                AND ( Separate_Project__c = true ) 
+                AND ( Quantity > 0 )
+            )
             ORDER BY OrderId,Separate_Project_Sort__c
         ];
         //sorted OPs ensure priority wise evaluation
@@ -26,6 +27,19 @@ public with sharing class CreateSeparateProjectOrderItem {
                 || String.isBlank( orderProdObj.Matching_Product_Code__c )
                 )
             {
+                if(
+                    (
+                        ( orderProdObj.Order.Type == 'Amendment' ) 
+                        && (
+                            ( orderProdObj.NSP_QL_ActionType__c == '' ) 
+                            || ( orderProdObj.NSP_QL_ActionType__c == null )
+                           )
+                    ) 
+                    || ( orderProdObj.NSP_Project__c != null )
+                ){
+                    //skip separate project creation if (for an amendment, action type is blank or null) OR (if project is populated on OP)
+                    continue;
+                }
                 //separate project creation logic
                 projectCreationService( oiUpdateList , orderProdObj );
             } else {
@@ -109,7 +123,7 @@ public with sharing class CreateSeparateProjectOrderItem {
             && ( orderLine.Order != null )
             && ( orderLine.Order.Type == NSP_CPQConstants.ORDER_TYPE_AMENDMENT )
             && String.isNotBlank( orderLine.NSP_QL_ActionType__c )
-            )
+           )
         {
             if ( orderLine.Order.NSP_Transaction_Type__c != NSP_CPQConstants.QUOTE_TYPE_TERMINATION ) {
                 //non termination
