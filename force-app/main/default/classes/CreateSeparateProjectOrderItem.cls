@@ -7,19 +7,33 @@ public with sharing class CreateSeparateProjectOrderItem {
         List<OrderItem> oiUpdateList = new List<OrderItem>();
         List<OrderItem> orderItemList = [
             SELECT
-                Id , NSP_Project_Name_New_Sales__c , NSP_Project__c , SBQQ__RequiredBy__c ,
-                SBQQ__RequiredBy__r.Product2.ProductCode , Product2.ProductCode , Order.AccountId ,
-                NSP_Project_Name_Amendment__c , NSP_QL_ActionType__c , NSP_Transaction_for_Project__c ,
-                NSP_ApplicableProductAmendNew__c , NSP_ApplicableProduct_AmendDowngrade__c ,
-                NSP_ApplicableProduct_AmendUpsell__c , Order.NSP_Project_Name__c ,
-                Order.Type , Order.NSP_Transaction_Type__c, Matching_Product_Code__c, OrderId, Order.NSP_Project__c, SBQQ__QuoteLine__r.SBQQ__EffectiveQuantity__c
+                Id ,
+                NSP_Project_Name_New_Sales__c ,
+                NSP_Project__c ,
+                SBQQ__RequiredBy__c ,
+                SBQQ__RequiredBy__r.Product2.ProductCode ,
+                Product2.ProductCode ,
+                Order.AccountId ,
+                NSP_Project_Name_Amendment__c ,
+                NSP_QL_ActionType__c ,
+                NSP_Transaction_for_Project__c ,
+                NSP_ApplicableProductAmendNew__c ,
+                NSP_ApplicableProduct_AmendDowngrade__c ,
+                NSP_ApplicableProduct_AmendUpsell__c ,
+                Order.NSP_Project_Name__c ,
+                Order.Type ,
+                Order.NSP_Transaction_Type__c ,
+                Matching_Product_Code__c ,
+                OrderId ,
+                Order.NSP_Project__c ,
+                SBQQ__QuoteLine__r.SBQQ__EffectiveQuantity__c
             FROM OrderItem
             WHERE (
                 ( OrderId IN :records )
-                AND ( Separate_Project__c = true ) 
+                AND ( Separate_Project__c = true )
                 AND ( Quantity > 0 )
             )
-            ORDER BY OrderId,Separate_Project_Sort__c
+            ORDER BY OrderId , Separate_Project_Sort__c
         ];
         //sorted OPs ensure priority wise evaluation
         for ( OrderItem orderProdObj : orderItemList ) {
@@ -27,16 +41,10 @@ public with sharing class CreateSeparateProjectOrderItem {
                 || String.isBlank( orderProdObj.Matching_Product_Code__c )
                 )
             {
-                if(
-                    (
-                        ( orderProdObj.Order.Type == 'Amendment' ) 
-                        && (
-                            ( orderProdObj.NSP_QL_ActionType__c == '' ) 
-                            || ( orderProdObj.NSP_QL_ActionType__c == null )
-                           )
-                    ) 
+                if ( ( ( orderProdObj.Order.Type == 'Amendment' ) && String.isBlank( orderProdObj.NSP_QL_ActionType__c ) )
                     || ( orderProdObj.NSP_Project__c != null )
-                ){
+                    )
+                {
                     //skip separate project creation if (for an amendment, action type is blank or null) OR (if project is populated on OP)
                     continue;
                 }
