@@ -17,30 +17,30 @@ public class NSP_QuoteApprovalPreValidation {
     //constructor
     private NSP_QuoteApprovalPreValidation(){}
 
-    //Static strings for storing error messages from labels.
-    Static final String IRSO_ONDEMAND='IRSOOnDemand';
-    Static final String ERR_MESSAGE=System.Label.NSP_QuoteApprovalPreValidationMessage;
-    Static final String NO_PRODUCTS_ERR_MESSAGE=System.Label.NSP_No_Products_Added_Error;
-    Static final String INVALID_NOTES_ERR_MSG = System.Label.NSP_Invalid_Notes_Error;
-    Static final String REQ_DATE_ERR_MESSAGE=System.Label.NSP_RequestFirstCheckDate;
-    Static final String DESC_SERVICES_ERR_MESSAGE=System.Label.NSP_Description_Of_Service;
-    Static final String INVOICE_EMAIL_ERR_MESSAGE=System.Label.NSP_InvoiceToEmailonQuote;
-    Static final String CUSTOMER_STAKEHOLDER_ERR_MESSAGE = System.Label.NSP_CustomerStakeholderQuote;
-    Static final String QUOTE_EXPIRATION_DATE_ERR_MESSAGE=System.Label.NSP_QuoteExpirationDate;
-    Static final String QUOTE_OWNER_MISMATCH_ERR_MESSAGE=System.Label.NSP_Quote_Owner_Mismatch_Message;
-    Static final String INVOICE_BILLING_ERR=System.Label.NSP_InvoiceEmailBilling;
-    Static final String INVOICE_SHIPPING_ERR=System.Label.NSP_InvoiceEmailShipping;
+    //static strings for storing error messages from labels.
+    static final String IRSO_ONDEMAND='IRSOOnDemand';
+    static final String ERR_MESSAGE=System.Label.NSP_QuoteApprovalPreValidationMessage;
+    static final String NO_PRODUCTS_ERR_MESSAGE=System.Label.NSP_No_Products_Added_Error;
+    static final String INVALID_NOTES_ERR_MSG = System.Label.NSP_Invalid_Notes_Error;
+    static final String REQ_DATE_ERR_MESSAGE=System.Label.NSP_RequestFirstCheckDate;
+    static final String DESC_SERVICES_ERR_MESSAGE=System.Label.NSP_Description_Of_Service;
+    static final String INVOICE_EMAIL_ERR_MESSAGE=System.Label.NSP_InvoiceToEmailonQuote;
+    static final String CUSTOMER_STAKEHOLDER_ERR_MESSAGE = System.Label.NSP_CustomerStakeholderQuote;
+    static final String QUOTE_EXPIRATION_DATE_ERR_MESSAGE=System.Label.NSP_QuoteExpirationDate;
+    static final String QUOTE_OWNER_MISMATCH_ERR_MESSAGE=System.Label.NSP_Quote_Owner_Mismatch_Message;
+    static final String INVOICE_BILLING_ERR=System.Label.NSP_InvoiceEmailBilling;
+    static final String INVOICE_SHIPPING_ERR=System.Label.NSP_InvoiceEmailShipping;
     static final String SEASONAL_ERR = System.label.Seasonal_Pricing_Error;
 
-    Static final String BILLING_ADDRESS_ERR=System.Label.NSP_QuoteBillingAddressValidationMessage;
-    Static final String SHIPPING_ADDRESS_ERR=System.Label.NSP_QuoteShippingAddressValidationMessage;
-    Static final String CUSTOMER_BILLING_ADDRESS_ERR=System.Label.NSP_QuoteCustomerBillingAddressValidationMessage;
-    Static final String CUSTOMER_SHIPPING_ADDRESS_ERR=System.Label.NSP_QuoteCustomerShippingAddressValidationMessage;
-    Static final String BENCHMARK_JOB_DATE_ERR=System.Label.NSP_Benchmark_Date_Validation;
-    Static final String SERIAL_IDS_ERR=System.Label.NSP_SerialId_Validation;
-    Static final String ET_SERIAL_IDS_ERR=System.Label.NSP_ET_Serial_Id_Validation;
+    static final String BILLING_ADDRESS_ERR=System.Label.NSP_QuoteBillingAddressValidationMessage;
+    static final String SHIPPING_ADDRESS_ERR=System.Label.NSP_QuoteShippingAddressValidationMessage;
+    static final String CUSTOMER_BILLING_ADDRESS_ERR=System.Label.NSP_QuoteCustomerBillingAddressValidationMessage;
+    static final String CUSTOMER_SHIPPING_ADDRESS_ERR=System.Label.NSP_QuoteCustomerShippingAddressValidationMessage;
+    static final String BENCHMARK_JOB_DATE_ERR=System.Label.NSP_Benchmark_Date_Validation;
+    static final String SERIAL_IDS_ERR=System.Label.NSP_SerialId_Validation;
+    static final String ET_SERIAL_IDS_ERR=System.Label.NSP_ET_Serial_Id_Validation;
     //Map to prepare kay value pair of notes field for each corresponsing product.
-    Static final Map<String,String> productFieldMap=new Map<String,String>{
+    static final Map<String,String> productFieldMap=new Map<String,String>{
          'NSP_OnDemand_Notes__c' => 'IRSOOnDemand',
          'NSP_Personality_Assessment_Notes__c' => 'IRSOPALicense',
          'NSP_Skills_Based_Assessment_Notes__c' => 'IRSOSBALicense',
@@ -156,19 +156,59 @@ public class NSP_QuoteApprovalPreValidation {
 
         List<SBQQ__Quote__c> quoteRecord = [
             SELECT
-                Id, Ready_for_Approval__c, Seasonal_Pricing__c,Name,NSP_Requested_First_Check_Date__c,NSP_Has_WA_product__c,
-                NSP_Has_WX_product__c,NSP_Has_WOSS_product__c,SBQQ__ExpirationDate__c,SBQQ__Type__c,NSP_Submitted_User_Role_L2__c,
-                SBQQ__Account__r.Id,NSP_Invoice_To_Email__r.Id,NSP_Billing_Account__r.Id,NSP_DO_Signed_By_Billing_Account__c,
-                SBQQ__BillingStreet__c,SBQQ__BillingState__c,SBQQ__BillingCity__c,SBQQ__BillingPostalCode__c,SBQQ__BillingCountry__c,
-                SBQQ__ShippingStreet__c,SBQQ__ShippingState__c,SBQQ__ShippingCity__c,SBQQ__ShippingPostalCode__c,SBQQ__ShippingCountry__c,
-                NSP_Bill_To_Street__c,NSP_Bill_To_State__c,NSP_Bill_To_City__c,NSP_Bill_To_Postal_Code__c,NSP_Bill_To_Country__c,
-                NSP_Ship_To_Street__c,NSP_Ship_To_State__c,NSP_Ship_To_City__c,NSP_Ship_To_Postal_Code__c,NSP_Ship_To_Country__c,
-                NSP_Benchmark_Job_End_Date__c,NSP_Benchmark_Job_Start_Date__c,NSP_Implementation_Start_Date__c,
-                NSP_Talent_Connect_Subscription_End_Date__c,NSP_Talent_Connect_Subscription_Date__c,
-                NSP_RPO_End_Date__c,NSP_RPO_Start_Date__c,NSP_ProjRec_Start_Date__c,NSP_ProjRec_End_Date__c,
-                NSP_Target_Date__c,NSP_Customer_Stakeholder__c,NSP_Authorized_Purchaser_1__c,
-                NSP_Authorized_Purchaser_2__c,NSP_Customer_Role__c,SBQQ__PrimaryContact__c,
-                NSP_TerminationDate__c,NSP_TransactionType__c,NSP_Product_Type__c
+                Id ,
+                Ready_for_Approval__c ,
+                Seasonal_Pricing__c ,
+                Name ,
+                NSP_Requested_First_Check_Date__c ,
+                NSP_Has_WA_product__c ,
+                NSP_Has_WX_product__c ,
+                NSP_Has_WOSS_product__c ,
+                SBQQ__ExpirationDate__c ,
+                SBQQ__Type__c ,
+                NSP_Submitted_User_Role_L2__c ,
+                SBQQ__Account__r.Id ,
+                NSP_Invoice_To_Email__r.Id ,
+                NSP_Billing_Account__r.Id ,
+                NSP_DO_Signed_By_Billing_Account__c ,
+                SBQQ__BillingStreet__c ,
+                SBQQ__BillingState__c ,
+                SBQQ__BillingCity__c ,
+                SBQQ__BillingPostalCode__c ,
+                SBQQ__BillingCountry__c ,
+                SBQQ__ShippingStreet__c ,
+                SBQQ__ShippingState__c ,
+                SBQQ__ShippingCity__c ,
+                SBQQ__ShippingPostalCode__c ,
+                SBQQ__ShippingCountry__c ,
+                NSP_Bill_To_Street__c ,
+                NSP_Bill_To_State__c ,
+                NSP_Bill_To_City__c ,
+                NSP_Bill_To_Postal_Code__c ,
+                NSP_Bill_To_Country__c ,
+                NSP_Ship_To_Street__c ,
+                NSP_Ship_To_State__c ,
+                NSP_Ship_To_City__c ,
+                NSP_Ship_To_Postal_Code__c ,
+                NSP_Ship_To_Country__c ,
+                NSP_Benchmark_Job_End_Date__c ,
+                NSP_Benchmark_Job_Start_Date__c ,
+                NSP_Implementation_Start_Date__c ,
+                NSP_Talent_Connect_Subscription_End_Date__c ,
+                NSP_Talent_Connect_Subscription_Date__c ,
+                NSP_RPO_End_Date__c ,
+                NSP_RPO_Start_Date__c ,
+                NSP_ProjRec_Start_Date__c ,
+                NSP_ProjRec_End_Date__c ,
+                NSP_Target_Date__c ,
+                NSP_Customer_Stakeholder__c ,
+                NSP_Authorized_Purchaser_1__c ,
+                NSP_Authorized_Purchaser_2__c ,
+                NSP_Customer_Role__c ,
+                SBQQ__PrimaryContact__c ,
+                NSP_TerminationDate__c ,
+                NSP_TransactionType__c ,
+                NSP_Product_Type__c
             FROM SBQQ__Quote__c
             WHERE ( Id = :QuoteId )
         ];
@@ -178,17 +218,18 @@ public class NSP_QuoteApprovalPreValidation {
             if(quoteRec.NSP_Invoice_To_Email__c == null && quoteRec.NSP_TransactionType__c!=NSP_CPQConstants.QUOTE_TYPE_TERMINATION){
                 errorMessageList.add(INVOICE_EMAIL_ERR_MESSAGE);
             }
-
-            if(quoteRec.NSP_Customer_Stakeholder__c == null && quoteRec.SBQQ__Type__c == NSP_CPQConstants.QUOTE_TYPE_NEW
-               && String.isNotBlank(quoteRec.NSP_Product_Type__c)
-               && quoteRec.NSP_Product_Type__c.contains(NSP_CPQConstants.QUOTE_PRODUCT_TYPE_CM)){
-                errorMessageList.add(CUSTOMER_STAKEHOLDER_ERR_MESSAGE);
+            if ( ( quoteRec.NSP_Customer_Stakeholder__c == null )
+                && ( quoteRec.SBQQ__Type__c == NSP_CPQConstants.QUOTE_TYPE_NEW )
+                && String.isNotBlank( quoteRec.NSP_Product_Type__c )
+                && quoteRec.NSP_Product_Type__c.contains( NSP_CPQConstants.QUOTE_PRODUCT_TYPE_CM )
+                )
+            {
+                errorMessageList.add( CUSTOMER_STAKEHOLDER_ERR_MESSAGE );
             }
-
             if((quoteRec.SBQQ__ExpirationDate__c == null)  || (quoteRec.SBQQ__ExpirationDate__c <= system.today())) {
                 errorMessageList.add(QUOTE_EXPIRATION_DATE_ERR_MESSAGE);
             }
-            /* check for quote owner mismatch */
+            // check for quote owner mismatch
             if(!profilesToSkip.contains(userprofileName)) {
             if(quoteRec.NSP_Submitted_User_Role_L2__c != null && ((groupList.isEmpty()) || (!groupList.contains(quoteRec.NSP_Submitted_User_Role_L2__c)))) {
                 errorMessageList.add(QUOTE_OWNER_MISMATCH_ERR_MESSAGE);
