@@ -22781,6 +22781,10 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
+        <recordType>NSP_Participation_SaaS_Activity__c.Contractor_Management</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
         <recordType>NSP_Plan_SubPlan__c.Choice</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
