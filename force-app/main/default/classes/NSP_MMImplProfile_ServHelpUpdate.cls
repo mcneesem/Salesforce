@@ -1471,7 +1471,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                     if(String.isNotBlank(System.label.HSA_With_Optum_Bank)){
                         eachProjecttask.pse__Long_Description__c = System.label.HSA_With_Optum_Bank;
                     }
-                    if(ipWithValue != null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r!=null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c!=null){
+                    if(ipWithValue != null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__c!=null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c!=null){
                         eachProjecttask.OwnerId=ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c;
                     }
                     subTaskAutomationList.add(
@@ -1510,7 +1510,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                     if(String.isNotBlank(System.label.HSA_With_No_Optum_Bank)){
                         eachProjecttask.pse__Long_Description__c = System.label.HSA_With_No_Optum_Bank;
                     }
-                    if(ipWithValue != null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r!=null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c!=null){
+                    if(ipWithValue != null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__c!=null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c!=null){
                         eachProjecttask.OwnerId=ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c;
                     }
                     subTaskAutomationList.add(
