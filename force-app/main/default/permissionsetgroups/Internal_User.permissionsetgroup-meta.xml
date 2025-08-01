@@ -23,6 +23,7 @@
     <permissionSets>Label_Access</permissionSets>
     <permissionSets>NSP_Payroll_Data_Sheet_Read_Only</permissionSets>
     <permissionSets>Named_Account_Group_Edit_Access</permissionSets>
+    <permissionSets>New_Task_Aura</permissionSets>
     <permissionSets>Onboarding_Meeting_Request_Detail_Edit</permissionSets>
     <permissionSets>Organization_Wide_Email_Address_Accounts_Receivable</permissionSets>
     <permissionSets>Organization_Wide_Email_Address_BPS_Customer_Success_Team_Box</permissionSets>
