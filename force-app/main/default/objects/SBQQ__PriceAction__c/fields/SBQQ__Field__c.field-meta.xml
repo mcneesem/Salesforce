@@ -507,6 +507,11 @@
                 <default>false</default>
                 <label>WX_WA_Minimum_Fee_Discount__c</label>
             </value>
+            <value>
+                <fullName>Has_Legacy_1099_Product__c</fullName>
+                <default>false</default>
+                <label>Has_Legacy_1099_Product__c</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Quote</controllingFieldValue>
@@ -710,6 +715,11 @@
         <valueSettings>
             <controllingFieldValue>Quote</controllingFieldValue>
             <valueName>WX_WA_Minimum_Fee_Discount__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <valueName>Has_Legacy_1099_Product__c</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Quote Line</controllingFieldValue>

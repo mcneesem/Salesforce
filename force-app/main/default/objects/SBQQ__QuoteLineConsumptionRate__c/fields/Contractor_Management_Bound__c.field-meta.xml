@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Contractor_Management_Bound__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(
+( SBQQ__ProcessingOrder__c = 5 ) ,
+&quot;1,000 or more&quot; ,
+TEXT( SBQQ__LowerBound__c ) &amp; &quot;-&quot; &amp; TEXT( SBQQ__UpperBound__c )
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Contractor Management Bound</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
