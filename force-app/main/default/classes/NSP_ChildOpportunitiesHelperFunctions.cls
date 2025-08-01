@@ -39,7 +39,6 @@ public without sharing class NSP_ChildOpportunitiesHelperFunctions {
                 //  Update close date and lock record
                 opportunityObject.CloseDate = Date.today();
                 opportunityObject.RecordTypeId = lockedOpportunityRecordTypeId;
-                opportunityObject.NSP_Lock_Opportunity__c = true;
                 opportunityToUpdateList.add( opportunityObject );
             }
             //569718-Querying the child oppotunities that has product type as Non- Retirement Services
