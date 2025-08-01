@@ -49,7 +49,7 @@
             <value>
                 <fullName>Client indicates they have outgrown HR360/HRCore</fullName>
                 <default>false</default>
-                <label>Client indicates they have outgrown HR360/HRCore/label>
+                <label>Client indicates they have outgrown HR360/HRCore</label>
             </value>
             <value>
                 <fullName>Client is unresponsive to meeting request/phone calls</fullName>
