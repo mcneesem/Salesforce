@@ -3,9 +3,9 @@
     <fullName>Contractor_Management_Bound__c</fullName>
     <externalId>false</externalId>
     <formula>IF(
-( SBQQ__ProcessingOrder__c = 5 ) ,
-&quot;1,000 or more&quot; ,
-TEXT( SBQQ__LowerBound__c ) &amp; &quot;-&quot; &amp; TEXT( SBQQ__UpperBound__c )
+  ( SBQQ__ProcessingOrder__c = 5 ) ,
+  &quot;1,000 or more&quot; ,
+  TEXT( SBQQ__LowerBound__c ) &amp; &quot;-&quot; &amp; TEXT( SBQQ__UpperBound__c )
 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Contractor Management Bound</label>
