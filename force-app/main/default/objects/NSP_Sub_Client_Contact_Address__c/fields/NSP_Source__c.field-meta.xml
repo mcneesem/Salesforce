@@ -20,6 +20,11 @@
                 <default>false</default>
                 <label>Salesforce</label>
             </value>
+            <value>
+                <fullName>Integration</fullName>
+                <default>false</default>
+                <label>Integration</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
