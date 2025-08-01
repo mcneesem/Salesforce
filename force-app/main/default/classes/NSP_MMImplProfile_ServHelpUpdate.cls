@@ -1972,7 +1972,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
             String userId = ''; 
             pse__Project_Task__c eachProjecttask = genericPMTask(proj,pta,ipRecId,ipwithValue,workCalendarId);
             NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(automation);
-            Implementation_Profile__c ipRec = newIPs.get(ipRecId)
+            Implementation_Profile__c ipRec = newIPs.get(ipRecId);
             if(ipwithValue != null && ipwithValue.NSP_Project_Manager__c!=null && ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c!=null){
                 userId = ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
                 eachProjectTask.OwnerId = userId;
