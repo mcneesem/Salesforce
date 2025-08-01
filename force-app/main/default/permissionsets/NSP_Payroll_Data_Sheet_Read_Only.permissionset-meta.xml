@@ -752,7 +752,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>NSP_Payroll__c.Pay_Group_has_Union_EEs__c</field>
+        <field>NSP_Payroll__c.Pay_Group_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Payroll__c.Pay_Group_has_Union_EEs_Formula__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -790,11 +795,6 @@
         <field>NSP_Payroll__c.User__c</field>
         <readable>true</readable>
      </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NSP_Payroll__c.Pay_Group_Number__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Payroll__c.View_Payroll_Paperwork__c</field>

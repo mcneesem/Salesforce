@@ -1134,8 +1134,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Pay_Group_has_Union_EEs__c</fieldItem>
-                <identifier>RecordPay_Group_has_Union_EEs_cField</identifier>
+                <fieldItem>Record.Pay_Group_has_Union_EEs_Formula__c</fieldItem>
+                <identifier>RecordPay_Group_has_Union_EEs_Formula_cField</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.Source__c}</leftValue>
