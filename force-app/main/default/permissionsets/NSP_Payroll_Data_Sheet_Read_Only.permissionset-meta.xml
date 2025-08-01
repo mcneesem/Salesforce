@@ -762,11 +762,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>NSP_Payroll__c.Pay_Group_has_Union_EEs__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>NSP_Payroll__c.Payroll_Reviewers__c</field>
         <readable>true</readable>
     </fieldPermissions>
