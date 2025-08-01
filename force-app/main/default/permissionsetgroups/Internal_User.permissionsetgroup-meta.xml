@@ -23,6 +23,7 @@
     <permissionSets>Label_Access</permissionSets>
     <permissionSets>NSP_Payroll_Data_Sheet_Read_Only</permissionSets>
     <permissionSets>Named_Account_Group_Edit_Access</permissionSets>
+    <permissionSets>New_Task_Aura</permissionSets>
     <permissionSets>Onboarding_Meeting_Request_Detail_Edit</permissionSets>
     <permissionSets>Organization_Wide_Email_Address_Accounts_Receivable</permissionSets>
     <permissionSets>Organization_Wide_Email_Address_BPS_Customer_Success_Team_Box</permissionSets>
@@ -70,7 +71,6 @@
     <permissionSets>Organization_Wide_Email_Address_isolved_Time</permissionSets>
     <permissionSets>Request_CTM_and_Employee_Orientation_Meeting_Detail</permissionSets>
     <permissionSets>Request_Employee_Orientation_Meeting_Detail</permissionSets>
-    <permissionSets>Required_Apex_Class_Access</permissionSets>
     <permissionSets>Required_Reporting_Fields</permissionSets>
     <permissionSets>Required_Reporting_Objects</permissionSets>
     <permissionSets>Traction_Complete_Fields_Edit_Access</permissionSets>
