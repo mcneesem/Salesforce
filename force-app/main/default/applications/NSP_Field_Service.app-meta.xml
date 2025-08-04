@@ -32,42 +32,6 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>PEO_Project_Record_Page</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
-        <recordType>pse__Proj__c.PEO_Project</recordType>
-        <type>Flexipage</type>
-        <profile>PEO Service</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>PEO_Project_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
-        <recordType>pse__Proj__c.PEO_Project</recordType>
-        <type>Flexipage</type>
-        <profile>PEO Service</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>PEO_Billable_Project_Record_Page</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
-        <recordType>pse__Proj__c.PEO_Project_Billable</recordType>
-        <type>Flexipage</type>
-        <profile>PEO Service</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>PEO_Billable_Project_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
-        <recordType>pse__Proj__c.PEO_Project_Billable</recordType>
-        <type>Flexipage</type>
-        <profile>PEO Service</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
         <content>Project_Task_Record_Page11</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>pse__Project_Task__c</pageOrSobjectType>
@@ -83,60 +47,6 @@
         <recordType>pse__Project_Task__c.PEO_Project_Task</recordType>
         <type>Flexipage</type>
         <profile>PEO Service</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Record_Page11</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
-        <recordType>pse__Proj__c.RET_Deconversion_2020_Form</recordType>
-        <type>Flexipage</type>
-        <profile>PEO Service</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Record_Page11</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
-        <recordType>pse__Proj__c.RET_Deconversion_2020_Form</recordType>
-        <type>Flexipage</type>
-        <profile>PEO Service</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Record_Page</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
-        <recordType>pse__Proj__c.TES_BPS</recordType>
-        <type>Flexipage</type>
-        <profile>PEO Service</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
-        <recordType>pse__Proj__c.TES_BPS</recordType>
-        <type>Flexipage</type>
-        <profile>PEO Service</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Record_Page</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
-        <recordType>pse__Proj__c.TES_BPS</recordType>
-        <type>Flexipage</type>
-        <profile>System Admin Lite</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Project_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>pse__Proj__c</pageOrSobjectType>
-        <recordType>pse__Proj__c.TES_BPS</recordType>
-        <type>Flexipage</type>
-        <profile>System Admin Lite</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
