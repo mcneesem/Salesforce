@@ -14,7 +14,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Case_Assignment</targetReference>
+            <targetReference>Segment_is_blank</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -30,7 +30,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Case_Assignment</targetReference>
+            <targetReference>Client_Number_is_blank</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -152,14 +152,41 @@
         </connector>
     </assignments>
     <decisions>
-        <description>Optional fields are checked if not blank and assigned here.</description>
-        <name>Optional_Fields</name>
-        <label>Optional Fields</label>
+        <name>Client_Number_is_blank</name>
+        <label>Client Number is blank</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Segment_is_blank</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Origin</name>
+            <name>Client_Number_Not_blank</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ClientNumber</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Client_Number</targetReference>
+            </connector>
+            <label>Client Number Not blank</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Origin_is_blank</name>
+        <label>Origin is blank</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Client_Number_is_blank</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Not_blank</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>CaseOrigin</leftValueReference>
@@ -171,25 +198,20 @@
             <connector>
                 <targetReference>Assign_Origin</targetReference>
             </connector>
-            <label>Origin</label>
+            <label>Not blank</label>
         </rules>
+    </decisions>
+    <decisions>
+        <name>Segment_is_blank</name>
+        <label>Segment is blank</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Case_Assignment</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Client_Number</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>ClientNumber</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Assign_Client_Number</targetReference>
-            </connector>
-            <label>Client Number</label>
-        </rules>
-        <rules>
-            <name>Segment_isBlank</name>
+            <name>Segment_Not_blank</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Segment</leftValueReference>
@@ -201,7 +223,7 @@
             <connector>
                 <targetReference>Assign_Segment</targetReference>
             </connector>
-            <label>Segment</label>
+            <label>Segment Not blank</label>
         </rules>
     </decisions>
     <description>Sub flow used to create Cases when a Project Task gets completed.</description>
@@ -241,7 +263,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Optional_Fields</targetReference>
+            <targetReference>Origin_is_blank</targetReference>
         </connector>
     </start>
     <status>Draft</status>
