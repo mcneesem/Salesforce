@@ -1807,309 +1807,6 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.pse__Region__c</fieldItem>
-                <identifier>Recordpse_Region_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.pse__Work_Calendar__c</fieldItem>
-                <identifier>Recordpse_Work_Calendar_cField2</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.pse__Is_Template__c</fieldItem>
-                <identifier>Recordpse_Is_Template_cField2</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.TemplateName__c</fieldItem>
-                <identifier>RecordTemplateName_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Templates_Used__c</fieldItem>
-                <identifier>RecordTemplates_Used_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.pse__Is_Active__c</fieldItem>
-                <identifier>Recordpse_Is_Active_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Auto_Resource_Project__c</fieldItem>
-                <identifier>RecordNSP_Auto_Resource_Project_cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>TalentConnect</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>RET</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.pse__Copy_Child_Records_from_Template_Async__c</fieldItem>
-                <identifier>Recordpse_Copy_Child_Records_from_Template_Async_cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>TalentConnect</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>RET</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-4079ab0e-e8b8-4dcd-8cf9-3973f8335418</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.RecordTypeId</fieldItem>
-                <identifier>RecordRecordTypeIdField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.pse__Project_Type__c</fieldItem>
-                <identifier>Recordpse_Project_Type_cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>BPS Generic</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>RET</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_BPS_Project_Template__c</fieldItem>
-                <identifier>RecordNSP_BPS_Project_Template_cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 OR 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>BPS Generic</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>ITA Impl</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Queued_for_Delete__c</fieldItem>
-                <identifier>RecordNSP_Queued_for_Delete_cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND (2 OR 3 OR 4)</booleanFilter>
-                    <criteria>
-                        <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>PEO Billable</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>BPS Generic</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>ITA Impl</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.CreatedById</fieldItem>
-                <identifier>RecordCreatedByIdField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.LastModifiedById</fieldItem>
-                <identifier>RecordLastModifiedByIdField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldItem>Record.pse__Account__r.WO_Asset_Name__c</fieldItem>
-                <identifier>Recordpse_Account_rWO_Asset_Name_cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 and (2 OR 3 OR 4 OR 5 OR 6)</booleanFilter>
-                    <criteria>
-                        <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>PEO Billable</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>PEO FSO Impl</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>PEO Generic</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>PEO MM Impl</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>PEO SCS LDS</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Layout_BOB__c</fieldItem>
-                <identifier>RecordLayout_cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-d2ef4e63-5db4-4610-b6c0-227e95a58351</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-4079ab0e-e8b8-4dcd-8cf9-3973f8335418</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:column</componentName>
-                <identifier>flexipage_column3</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-d2ef4e63-5db4-4610-b6c0-227e95a58351</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:column</componentName>
-                <identifier>flexipage_column4</identifier>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-95bc49ad-f354-4042-b320-55eba55600ca</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
                     <name>columns</name>
@@ -2420,24 +2117,6 @@
                         <rightValue>PEO Billable</rightValue>
                     </criteria>
                 </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>columns</name>
-                    <value>Facet-95bc49ad-f354-4042-b320-55eba55600ca</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>horizontalAlignment</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>label</name>
-                    <value>System Information</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:fieldSection</componentName>
-                <identifier>flexipage_fieldSection2</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -3381,229 +3060,6 @@
             </componentInstance>
         </itemInstances>
         <name>Facet-a36b8267-b75a-41b8-8ade-3e0407f8d18f</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.pse__Region__c</fieldItem>
-                <identifier>Recordpse_Region_cField2</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.pse__Work_Calendar__c</fieldItem>
-                <identifier>Recordpse_Work_Calendar_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.pse__Is_Template__c</fieldItem>
-                <identifier>Recordpse_Is_Template_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.TemplateName__c</fieldItem>
-                <identifier>RecordTemplateName_cField2</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Templates_Used__c</fieldItem>
-                <identifier>RecordTemplates_Used_cField2</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.pse__Is_Active__c</fieldItem>
-                <identifier>Recordpse_Is_Active_cField2</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Auto_Resource_Project__c</fieldItem>
-                <identifier>RecordNSP_Auto_Resource_Project_cField2</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>PEO Billable</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.pse__Copy_Child_Records_from_Template_Async__c</fieldItem>
-                <identifier>Recordpse_Copy_Child_Records_from_Template_Async_cField2</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>PEO Billable</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-87a9cd45-81ce-478c-8717-ad487fea146a</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.RecordTypeId</fieldItem>
-                <identifier>RecordRecordTypeIdField2</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.pse__Project_Type__c</fieldItem>
-                <identifier>Recordpse_Project_Type_cField3</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>PEO Billable</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_BPS_Project_Template__c</fieldItem>
-                <identifier>RecordNSP_BPS_Project_Template_cField2</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Queued_for_Delete__c</fieldItem>
-                <identifier>RecordNSP_Queued_for_Delete_cField2</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 OR 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>BPS Generic</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>PEO Billable</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.CreatedById</fieldItem>
-                <identifier>RecordCreatedByIdField2</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.LastModifiedById</fieldItem>
-                <identifier>RecordLastModifiedByIdField2</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Layout_BOB__c</fieldItem>
-                <identifier>RecordLayout_BOB_cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-3483c097-0312-4784-b023-b2c384279796</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-87a9cd45-81ce-478c-8717-ad487fea146a</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:column</componentName>
-                <identifier>flexipage_column29</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-3483c097-0312-4784-b023-b2c384279796</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:column</componentName>
-                <identifier>flexipage_column30</identifier>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-2dbff1ac-0147-4312-985d-0414b58f3857</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -4750,7 +4206,7 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
-        <name>Facet-8f64f720-79b9-4af4-9753-281e10953ccd</name>
+        <name>Facet-4079ab0e-e8b8-4dcd-8cf9-3973f8335418</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -4919,7 +4375,7 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
-        <name>Facet-8dfa46fd-7484-4d31-9c4f-c6c98bd759e3</name>
+        <name>Facet-d2ef4e63-5db4-4610-b6c0-227e95a58351</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -4927,7 +4383,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-8f64f720-79b9-4af4-9753-281e10953ccd</value>
+                    <value>Facet-4079ab0e-e8b8-4dcd-8cf9-3973f8335418</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
                 <identifier>flexipage_column3</identifier>
@@ -4937,13 +4393,13 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-8dfa46fd-7484-4d31-9c4f-c6c98bd759e3</value>
+                    <value>Facet-d2ef4e63-5db4-4610-b6c0-227e95a58351</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
                 <identifier>flexipage_column4</identifier>
             </componentInstance>
         </itemInstances>
-        <name>Facet-ff1030f5-8d62-456c-8772-6cd41ed44027</name>
+        <name>Facet-95bc49ad-f354-4042-b320-55eba55600ca</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -5127,45 +4583,6 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
-                <fieldItem>Record.pse__Account__r.WO_Asset_Name__c</fieldItem>
-                <identifier>Recordpse_Account_rWO_Asset_Name_cField2</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 and (2 OR 3 OR 4 OR 5 OR 6)</booleanFilter>
-                    <criteria>
-                        <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>PEO Billable</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>PEO FSO Impl</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>PEO Generic</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>PEO MM Impl</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>PEO SCS LDS</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
                     <value>none</value>
@@ -5213,7 +4630,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>columns</name>
-                    <value>Facet-ff1030f5-8d62-456c-8772-6cd41ed44027</value>
+                    <value>Facet-95bc49ad-f354-4042-b320-55eba55600ca</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>horizontalAlignment</name>
@@ -5259,7 +4676,7 @@
                 </visibilityRule>
             </componentInstance>
         </itemInstances>
-        <name>Facet-b9d04e0a-5612-4987-85b6-95f3957f915f</name>
+        <name>Facet-3bf7d100-79bf-419e-a98e-3405cad8e225</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -5277,6 +4694,10 @@
             </componentInstance>
         </itemInstances>
         <name>Facet-40501f6d-3b74-473b-b2ac-265df596292a</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <name>Facet-680e6d06-8d23-4c0c-a4f3-13afafd6a701</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -5358,7 +4779,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-b9d04e0a-5612-4987-85b6-95f3957f915f</value>
+                    <value>Facet-3bf7d100-79bf-419e-a98e-3405cad8e225</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>title</name>
@@ -5380,6 +4801,20 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>flexipage_tab4</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-680e6d06-8d23-4c0c-a4f3-13afafd6a701</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Standard.Tab.detail</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab2</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
