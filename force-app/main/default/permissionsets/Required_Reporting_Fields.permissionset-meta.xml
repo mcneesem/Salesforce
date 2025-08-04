@@ -743,6 +743,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_Amendment_Checklist__c.LTPT_ER_Contributions__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Amendment_Checklist__c.Plan_Subplan_Relationship_Form__c</field>
         <readable>true</readable>
     </fieldPermissions>
