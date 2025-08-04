@@ -1,13 +1,13 @@
-/**************************************************************************************************   
+/**************************************************************************************************
 Apex Controller Name :  QuoteExtControllerTests
-Version              :  1.0                                                                          
-Created Date         :  October 10, 2021                                                             
+Version              :  1.0
+Created Date         :  October 10, 2021
 Function             :  Represents the Quote Extension Controller. Contains validation and logic for Quote Submit For Approval button.
-Story                :                                                                             
-Modification Log     :                                                                               
-*--------------------------------------------------------------------------------------------------  
-* Developer                   Date                   Description                                     
-* -------------------------------------------------------------------------------------------------  
+Story                :
+Modification Log     :
+*--------------------------------------------------------------------------------------------------
+* Developer                   Date                   Description
+* -------------------------------------------------------------------------------------------------
 * CPQ Team                  October 10, 2021          First Iteration
 ***************************************************************************************************/
 public with sharing class QuoteExtController {
@@ -22,6 +22,7 @@ public with sharing class QuoteExtController {
     public String descriptionOfService{get;set;}
     public Boolean invalidRequestedDate{get;set;}
     public Boolean isInvoiceEmailBlank{get;set;}
+    public Boolean isCustomerStakeholderBlank{get;set;}
     public Boolean isQuoteExpirationInvalid{get;set;}
     public Boolean isDescriptionOfServiceBlank{get;set;}
     public Boolean quoteOwnerMismatch{get;set;}
@@ -59,11 +60,12 @@ public with sharing class QuoteExtController {
     static final String REQ_DATE_ERR_MESSAGE=System.Label.NSP_RequestFirstCheckDate;
     static final String DESC_SERVICES_ERR_MESSAGE=System.Label.NSP_Description_Of_Service;
     static final String INVOICE_EMAIL_ERR_MESSAGE=System.Label.NSP_InvoiceToEmailonQuote;
+    Static final String CUSTOMER_STAKEHOLDER_ERR_MESSAGE = System.Label.NSP_CustomerStakeholderQuote;
     static final String QUOTE_EXPIRATION_DATE_ERR_MESSAGE=System.Label.NSP_QuoteExpirationDate;
     static final String QUOTE_OWNER_MISMATCH_ERR_MESSAGE=System.Label.NSP_Quote_Owner_Mismatch_Message;
     public static final String INVOICE_BILLING_ERR=System.Label.NSP_InvoiceEmailBilling;
     public static final String INVOICE_SHIPPING_ERR=System.Label.NSP_InvoiceEmailShipping;
-    
+
     static final String BILLING_ADDRESS_ERR=System.Label.NSP_QuoteBillingAddressValidationMessage;
     static final String SHIPPING_ADDRESS_ERR=System.Label.NSP_QuoteShippingAddressValidationMessage;
     static final String CUSTOMER_BILLING_ADDRESS_ERR=System.Label.NSP_QuoteCustomerBillingAddressValidationMessage;
@@ -91,7 +93,7 @@ public with sharing class QuoteExtController {
 
     public QuoteExtController( ApexPages.StandardController stdController ) {
         objQuote = (SBQQ__Quote__c )stdController.getRecord();
-        Map<Id,Profile> profileMap = new Map<Id,Profile>(); 
+        Map<Id,Profile> profileMap = new Map<Id,Profile>();
         if(String.isNotBlank(system.label.NSP_Quote_Approval_Bypass_Profile)){
             profileMap = new Map<Id,Profile>([SELECT Id,Name FROM profile WHERE Name in : system.label.NSP_Quote_Approval_Bypass_Profile.split(',')]);
         }
@@ -112,6 +114,7 @@ public with sharing class QuoteExtController {
                 isDescriptionOfServiceBlank = false;
                 invalidRequestedDate = false;
                 isInvoiceEmailBlank = false;
+                isCustomerStakeholderBlank = false;
                 isQuoteExpirationInvalid = false;
                 quoteOwnerMismatch = false;
                 invoiceToEmailBilling = false;
@@ -153,6 +156,10 @@ public with sharing class QuoteExtController {
                         isInvoiceEmailBlank = true;
                         showQuoteError = true;
                     }
+                    if(errorMessage.contains(CUSTOMER_STAKEHOLDER_ERR_MESSAGE)){
+                        isCustomerStakeholderBlank = true;
+                        showQuoteError = true;
+                    }
                     if(errorMessage.contains(INVOICE_BILLING_ERR)){
                         invoiceToEmailBilling = true;
                         showQuoteError = true;
@@ -167,7 +174,7 @@ public with sharing class QuoteExtController {
                     }
                     if(errorMessage.contains(DESC_SERVICES_ERR_MESSAGE)){
                         isDescriptionOfServiceBlank = true;
-                        showQuoteError = true; 
+                        showQuoteError = true;
                     }
                     if(errorMessage.contains(QUOTE_OWNER_MISMATCH_ERR_MESSAGE)){
                         quoteOwnerMismatch = true;
@@ -284,7 +291,7 @@ public with sharing class QuoteExtController {
     }
 
     //
-    // Method Name : onSubmit 
+    // Method Name : onSubmit
     // Description : This method will be called on click of Submit for Approval button
     //
     public PageReference onSubmit() {
