@@ -9,7 +9,8 @@
     <permissionSets>PEO_Service_Field_Permissions</permissionSets>
     <permissionSets>PEO_Service_Flow_Access</permissionSets>
     <permissionSets>PEO_Service_Object_Permissions</permissionSets>
+    <permissionSets>PEO_Service_Record_Type_Assignments</permissionSets>
     <permissionSets>PEO_Service_System_Permissions</permissionSets>
     <permissionSets>PEO_Service_Visualforce_Page_Access</permissionSets>
-    <status>Updating</status>
+    <status>Updated</status>
 </PermissionSetGroup>
