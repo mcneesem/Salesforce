@@ -240,6 +240,7 @@
         <relatedList>NSP_Address__c.NSP_Contact__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>NewCase</excludeButtons>
         <fields>CASES.CASE_NUMBER</fields>
         <fields>NSP_Category__c</fields>
         <fields>NSP_SubCategory__c</fields>

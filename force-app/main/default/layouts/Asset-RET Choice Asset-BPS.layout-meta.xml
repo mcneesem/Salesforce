@@ -428,6 +428,7 @@
         <relatedList>Project_Asset__c.Asset__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>NewCase</excludeButtons>
         <fields>CASES.CASE_NUMBER</fields>
         <fields>ACCOUNT.NAME</fields>
         <fields>CASES.SUBJECT</fields>
