@@ -21,20 +21,6 @@ public class AutomateOpportunityStage {
         }
     }
 
-    public class AutomateOpportunityStageQueueable implements Queueable {
-        private List<Id> autoStageOppIds;
-
-        public AutomateOpportunityStageQueueable(List<Id> autoStageOppIds) {
-            this.autoStageOppIds = autoStageOppIds;
-        }
-
-        public void execute(QueueableContext context) {
-            if ( ( autoStageOppIds != null ) && !autoStageOppIds.isEmpty() ) {
-                automateOpportunityStage( autoStageOppIds );
-            }
-        }
-    }
-
     @InvocableMethod(label='Automate Opportunity Stage' description='Automates Opportunity Stage progression' category='Opportunity')
     public static void automateOpportunityStage(List<Id> autoStageOppIds) {
         if ( ( autoStageOppIds != null ) && !autoStageOppIds.isEmpty() ) {
