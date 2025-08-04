@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>SBQQ__Field__c</fullName>
     <deprecated>false</deprecated>
-    <externalId>false</externalId>
     <inlineHelpText>Select the field you want updated when the conditions are met.</inlineHelpText>
     <label>Target Field</label>
     <required>false</required>
@@ -507,6 +506,16 @@
                 <default>false</default>
                 <label>WX_WA_Minimum_Fee_Discount__c</label>
             </value>
+            <value>
+                <fullName>Has_Legacy_1099_Product__c</fullName>
+                <default>false</default>
+                <label>Has_Legacy_1099_Product__c</label>
+            </value>
+            <value>
+                <fullName>Has_Legacy_1099_Product_Text__c</fullName>
+                <default>false</default>
+                <label>Has_Legacy_1099_Product_Text__c</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Quote</controllingFieldValue>
@@ -710,6 +719,16 @@
         <valueSettings>
             <controllingFieldValue>Quote</controllingFieldValue>
             <valueName>WX_WA_Minimum_Fee_Discount__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <valueName>Has_Legacy_1099_Product__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <valueName>Has_Legacy_1099_Product_Text__c</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Quote Line</controllingFieldValue>
