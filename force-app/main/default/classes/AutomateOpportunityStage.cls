@@ -8,7 +8,7 @@
 //                 
 // ********************************************************************************************************
 
-public inherited sharing class AutomateOpportunityStage {
+public class AutomateOpportunityStage {
     // test w/ AutomateOpportunityStageTest (92%)
 
     public static void automateOpportunityStageAsync(List<Id> autoStageOppIds) {
