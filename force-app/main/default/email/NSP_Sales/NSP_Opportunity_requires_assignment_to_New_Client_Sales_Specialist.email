@@ -3,4 +3,5 @@ Please note that {!Opportunity.Name} with product {!Opportunity.NSP_PrimaryProdu
 <BR/> 
 <BR/> 
 Primary Product: {!Opportunity.NSP_PrimaryProduct__c}<BR/> 
+MidMarket National Account: {!Opportunity.MidMarket_National_Account__c}<BR/> 
 Created by Title: {!Opportunity.OwnerTitle}
