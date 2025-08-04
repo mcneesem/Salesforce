@@ -231,13 +231,14 @@ public with sharing class NSP_ValidateOpportunityStage {
     public static List<Opportunity_Stage_Validation__mdt> getCurrentOptyStageVals(Opportunity opp){
         List<Opportunity_Stage_Validation__mdt> currentOptyStageVals = new List<Opportunity_Stage_Validation__mdt>();
         String currentPrimProduct = ( String.isNotBlank(opp.NSP_PrimaryProduct__c) ) ? opp.NSP_PrimaryProduct__c : NSP_SalesConstants.WO; // treat empty opty Product as WO
-               currentPrimProduct = ( NSP_ValidateOpportunityStage.namedProducts.CONTAINS(currentPrimProduct) ) ? currentPrimProduct : DEFAULT_PRODUCT; // treat unmatched Product as Default
 
         for(Opportunity_Stage_Validation__mdt optyStageVal : optyStageVals){
             String valPrimProductValues = ( String.isBlank(optyStageVal.Primary_Product__c) ) ? DEFAULT_PRODUCT : optyStageVal.Primary_Product__c; // treat empty Primary Product as Default
             List<String> valPrimProducts = valPrimProductValues.split(',');
             if( optyStageVal.IsActive__c && valPrimProducts.CONTAINS(currentPrimProduct) && optyStageVal.Stage__c == opp.StageName ){
                 currentOptyStageVals.add(optyStageVal);
+            } else if( optyStageVal.IsActive__c && valPrimProducts.CONTAINS(DEFAULT_PRODUCT) && optyStageVal.Stage__c == opp.StageName ){
+                currentOptyStageVals.add(optyStageVal); // if not match for Product/Stage, see if there is a Default Product match for the Stage
             }
         }
         return currentOptyStageVals;
@@ -821,25 +822,6 @@ public with sharing class NSP_ValidateOpportunityStage {
                 permittedCWOppOwnerUserMap = CustomPermissionController.getPermittedUsersMap( 'Opportunity_Closed_Won_Opp_Owner' );
             }
             return permittedCWOppOwnerUserMap;
-        }
-        private set;
-    }
-
-    private static Set<String> namedProducts {
-        private get {
-            if ( namedProducts == null ) {
-                namedProducts = new Set<String>();
-                List<Opportunity_Stage_Validation__mdt> optyStageVals = [ SELECT Primary_Product__c 
-                                                                          FROM Opportunity_Stage_Validation__mdt 
-                                                                          WHERE Primary_Product__c != null ];
-                if ( optyStageVals != null && !optyStageVals.isEmpty() ) {
-                    for ( Opportunity_Stage_Validation__mdt optyStageVal : optyStageVals ) {
-                        List<String> valPrimProducts = optyStageVal.Primary_Product__c.split(',');
-                        namedProducts.addAll(valPrimProducts);
-                    }
-                }
-            }
-            return namedProducts;
         }
         private set;
     }
