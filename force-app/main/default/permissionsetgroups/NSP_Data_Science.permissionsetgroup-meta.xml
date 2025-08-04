@@ -9,6 +9,7 @@
     <permissionSets>Contact_View_All</permissionSets>
     <permissionSets>Lead_Create</permissionSets>
     <permissionSets>List_View_Enhanced_Access</permissionSets>
+    <permissionSets>Monitor_Login_History</permissionSets>
     <permissionSets>NSP_Main_Service_Contacts</permissionSets>
     <permissionSets>Report_export_and_print_access</permissionSets>
     <permissionSets>Sales_Service_Object_Permission</permissionSets>
