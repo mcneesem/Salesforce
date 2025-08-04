@@ -1,4 +1,5 @@
 public class AutomateOpportunityStageQueueable implements Queueable {
+    // test w/ AutomateOpportunityStageTest (100%)
     private List<Id> autoStageOppIds;
 
     public AutomateOpportunityStageQueueable(List<Id> autoStageOppIds) {

@@ -25,9 +25,10 @@ public class AutomateOpportunityStage {
     public static void automateOpportunityStage(List<Id> autoStageOppIds) {
         if ( ( autoStageOppIds != null ) && !autoStageOppIds.isEmpty() ) {
             List<Opportunity> stageAutoOpptyList = new List<Opportunity>(); // oppty records eligible for automatic Stage progression
-            List<Opportunity_Stage_Progression__mdt> optyAutoStages = [SELECT Primary_Product__c, Stage__c, Next_Stage__c FROM Opportunity_Stage_Progression__mdt
-            WHERE Is_Automated__c = true];
-            
+            List<Opportunity_Stage_Progression__mdt> optyAutoStages = [ SELECT Primary_Product__c, Stage__c, Next_Stage__c
+                                                                        FROM Opportunity_Stage_Progression__mdt
+                                                                        WHERE Is_Automated__c = true ];
+
             try{
                 for(Opportunity opp : [SELECT Id, NSP_Ready_for_Integration_Sync__c, OwnerId, StageName, NSP_PrimaryProduct__c, NSP_Number_of_Employees__c, Type, 
                                         NSP_Bid_Status__c, Fee_Inclusive__c, NSP_Order_Generated__c, NSP_Bypass_Docusign_Signature__c, NSP_Closing_Appointment__c, 
