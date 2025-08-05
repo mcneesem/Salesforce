@@ -454,10 +454,10 @@ public with sharing class NSP_ValidateOpportunityStage {
             if ( primaryQuote.SBQQ__Status__c != NSP_SalesConstants.APPROVAL_STATUS_APPROVED ){
                 opp.addError( System.Label.NSP_Approve_Primary_Quote );
             } else if ( !test.isRunningTest()
-                        && opp.StageName.equals( NSP_SalesConstants.CLOSED_WON )
-                        && ( ( opp.NSP_PrimaryProduct__c != primaryQuote.NSP_Opportunity_Primary_Product__c ) 
-                            || ( opp.NSP_Client_For_Life__c != primaryQuote.NSP_Client_For_Life__c ) )
-                        )
+                && opp.StageName.equals( NSP_SalesConstants.CLOSED_WON )
+                && ( ( opp.NSP_PrimaryProduct__c != primaryQuote.NSP_Opportunity_Primary_Product__c ) 
+                    || ( opp.NSP_Client_For_Life__c != primaryQuote.NSP_Client_For_Life__c ) )
+                )
             {
                 opp.addError( System.label.NSP_Sync_Primary_Quote_With_Opportunity );
             }
@@ -480,9 +480,9 @@ public with sharing class NSP_ValidateOpportunityStage {
                     if ( primaryQuote.SBQQ__Status__c != NSP_SalesConstants.APPROVAL_STATUS_APPROVED ) {
                         opp.addError(System.Label.NSP_Approve_Primary_Quote);
                     } else if ( opp.StageName.equals( NSP_SalesConstants.CLOSED_WON )
-                                && ( ( opp.NSP_PrimaryProduct__c != primaryQuote.NSP_Opportunity_Primary_Product__c )
-                                  || ( opp.NSP_Client_For_Life__c != primaryQuote.NSP_Client_For_Life__c ) )
-                              )
+                        && ( ( opp.NSP_PrimaryProduct__c != primaryQuote.NSP_Opportunity_Primary_Product__c )
+                            || ( opp.NSP_Client_For_Life__c != primaryQuote.NSP_Client_For_Life__c ) )
+                        )
                     {
                         opp.addError(System.label.NSP_Sync_Primary_Quote_With_Opportunity);
                     }
@@ -875,11 +875,11 @@ public with sharing class NSP_ValidateOpportunityStage {
         private get {
             if ( userGroupMembership == null ) {
                 userGroupMembership = new Set<String>();
-                for ( GroupMember userGroupMember : [ SELECT Id , Group.Name , UserOrGroupId
-                                                      FROM GroupMember
-                                                      WHERE
-                                                        ( UserOrGroupId = :UserInfo.getUserId() )
-                                                    ]
+                for ( GroupMember userGroupMember : [
+                            SELECT Id , Group.Name , UserOrGroupId
+                            FROM GroupMember
+                            WHERE ( UserOrGroupId = :UserInfo.getUserId() )
+                        ]
                     )
                 {
                     userGroupMembership.add(userGroupMember.Group.Name);
@@ -893,12 +893,14 @@ public with sharing class NSP_ValidateOpportunityStage {
     private static Id integUserProfileId {
         private get {
             if ( integUserProfileId == null ) {
-                List<NSP_Profile_Detail__mdt> profileDetailList = [ SELECT Profile_ID__c , Profile_Name__c 
-                                                                    FROM NSP_Profile_Detail__mdt 
-                                                                    WHERE Profile_Name__c =: System.label.NSP_Integration_User_Profile_Name LIMIT 1 ];
+                List<NSP_Profile_Detail__mdt> profileDetailList = [
+                    SELECT Profile_ID__c , Profile_Name__c 
+                    FROM NSP_Profile_Detail__mdt 
+                    WHERE ( Profile_Name__c = :System.label.NSP_Integration_User_Profile_Name )
+                    LIMIT 1
+                ];
                 integUserProfileId = NSP_SalesConstants.INTEGRATION_USER_PROFILE_ID;
-                if(profileDetailList != null && !profileDetailList.isEmpty())
-                {
+                if ( ( profileDetailList != null ) && !profileDetailList.isEmpty() ) {
                     integUserProfileId = profileDetailList[0].Profile_ID__c;
                 }
             }
@@ -907,6 +909,18 @@ public with sharing class NSP_ValidateOpportunityStage {
         private set;
     }
 
-    public enum Operator { EQUALS, DOES_NOT_EQUAL, CONTAINS, DOES_NOT_CONTAIN, IS_IN, IS_NOT_IN , GREATER_THAN_OR_EQUALS, LESS_THAN_OR_EQUALS, IS_BLANK, IS_NOT_BLANK, DOES_NOT_EXIST }
+    private enum Operator {
+        CONTAINS ,
+        DOES_NOT_CONTAIN ,
+        DOES_NOT_EQUAL ,
+        DOES_NOT_EXIST ,
+        EQUALS ,
+        GREATER_THAN_OR_EQUALS ,
+        IS_BLANK ,
+        IS_IN ,
+        IS_NOT_BLANK ,
+        IS_NOT_IN ,
+        LESS_THAN_OR_EQUALS
+    }
 }
 //
