@@ -3,6 +3,7 @@
 // record visibility to the desired child Opportunities.
 public without sharing class NSP_ChildOpportunitiesHelperFunctions {
     //  test w/ NSP_OpportunityTriggerHelperTest (91%)
+    private static final Id lockedOpportunityRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Opportunity' , 'Opportunity_Locked' );
     public NSP_ChildOpportunitiesHelperFunctions() { }
 
     //
@@ -10,7 +11,7 @@ public without sharing class NSP_ChildOpportunitiesHelperFunctions {
     // @param opportunityList lsit of New Opportunity.
     // @return void
     //
-    public void updatesOnChildOpportunity( List<String> opportunityList, Id lockedOpportunityRecordTypeId ) {
+    public void updatesOnChildOpportunity( List<String> opportunityList) {
         List<Opportunity> opportunityToUpdateList = new List<Opportunity>();
         //Querying the child oppotunities that is not closed lost and is not parent
         for ( Opportunity opportunityObject : [

@@ -480,7 +480,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
         }
         if ( !closedOpportunityIdList.isEmpty() ) {
             NSP_ChildOpportunitiesHelperFunctions childHlprObj = new NSP_ChildOpportunitiesHelperFunctions();
-            childHlprObj.updatesOnChildOpportunity( closedOpportunityIdList, lockedOpportunityRecordTypeId);
+            childHlprObj.updatesOnChildOpportunity( closedOpportunityIdList );
         }
         //569718-to send notification to open child opportunities - upsell opportunities enhancement
         if ( !closedWonOpportunityIdList.isEmpty() ) {
