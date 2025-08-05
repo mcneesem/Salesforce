@@ -17672,6 +17672,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>NSP_Termination_Form__c.Approval_DateTime__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Project_Account__c.NSP_Project_Account_External_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
