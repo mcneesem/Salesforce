@@ -575,7 +575,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
                 || newOpportunity.NSP_Client_For_Life__c != oldOpportunity.NSP_Client_For_Life__c
                 || newOpportunity.StageName != oldOpportunity.StageName
                 || newOpportunity.Type != oldOpportunity.Type
-               )
+                )
             )
         {
             stageAutoOpportunityIds.add(newOpportunity.Id);
