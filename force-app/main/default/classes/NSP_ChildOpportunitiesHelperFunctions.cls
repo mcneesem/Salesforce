@@ -4,7 +4,6 @@
 public without sharing class NSP_ChildOpportunitiesHelperFunctions {
     // test w/ NSP_OpportunityTriggerHelperTest (91%)
 
-    private static final Id lockedOpportunityRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Opportunity' , 'Opportunity_Locked' );
     public NSP_ChildOpportunitiesHelperFunctions() { }
 
     //
@@ -12,9 +11,10 @@ public without sharing class NSP_ChildOpportunitiesHelperFunctions {
     // @param opportunityList lsit of New Opportunity.
     // @return void
     //
-    public void updatesOnChildOpportunity( List<String> opportunityList) {
+    public void updatesOnChildOpportunity( List<String> opportunityList ) {
+        Id lockedOpportunityRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Opportunity' , 'Opportunity_Locked' );
         List<Opportunity> opportunityToUpdateList = new List<Opportunity>();
-        //Querying the child oppotunities that is not closed lost and is not parent
+        // Querying the child oppotunities that is not closed lost and is not parent
         for ( Opportunity opportunityObject : [
                     SELECT
                         Id ,
@@ -30,20 +30,20 @@ public without sharing class NSP_ChildOpportunitiesHelperFunctions {
                 ]
             )
         {
-            //  Querying the child oppotunities that has product type as Retirement Services
+            // Querying the child oppotunities that has product type as Retirement Services
             if ( opportunityObject.NSP_PrimaryProduct__c == NSP_SalesConstants.RETIREMENT_SERVICE ) {
-                //Update the stage to closed lost on child optys
+                // Update the stage to closed lost on child optys
                 opportunityObject.stagename = NSP_SalesConstants.CLOSED_LOST;
-                //Entering the lost reason as well
+                // Entering the lost reason as well
                 opportunityObject.NSP_Lost_Reason__c = opportunityObject.NSP_Parent_Opportunity__r.NSP_Lost_Reason__c;
                 opportunityObject.NSP_Is_Parent_Opportunity_Closed_Lost__c = TRUE;
-                //  ADO-340819
-                //  Update close date and lock record
+                // ADO-340819
+                // Update close date and lock record
                 opportunityObject.CloseDate = Date.today();
                 opportunityObject.RecordTypeId = lockedOpportunityRecordTypeId;
                 opportunityToUpdateList.add( opportunityObject );
             }
-            //569718-Querying the child oppotunities that has product type as Non- Retirement Services
+            // 569718-Querying the child oppotunities that has product type as Non- Retirement Services
             if ( opportunityObject.NSP_PrimaryProduct__c != null
                 && opportunityObject.NSP_PrimaryProduct__c != NSP_SalesConstants.RETIREMENT_SERVICE
                 )
