@@ -742,24 +742,42 @@ public with sharing class NSP_ValidateOpportunityStage {
         return retVal;
     }
 
-    public static Boolean checkConditionString( Object fieldValue , Object ruleValue , String operation ){
+    public static Boolean checkConditionString( Object fieldValue , Object ruleValue , String operation ) {
         Boolean retVal = false;
-        if ( operation == Operator.EQUALS.name() ){
-            retVal = fieldValue == ruleValue;
-        } else if ( operation == Operator.DOES_NOT_EQUAL.name() ){
-            retVal = fieldValue != ruleValue;
-        } else if ( operation == Operator.CONTAINS.name() ){
-            retVal = fieldValue != null && String.valueOf(fieldValue).contains(String.valueOf(ruleValue));
-        } else if ( operation == Operator.DOES_NOT_CONTAIN.name() ){
-            retVal = fieldValue != null && !String.valueOf(fieldValue).contains(String.valueOf(ruleValue));
-        } else if ( operation == Operator.IS_IN.name() )
-                   && ( ruleValue != null && !String.isBlank(String.valueOf(ruleValue)) ){
-            Set<String> ruleValueSet = new Set<String>(String.valueOf(ruleValue).split(','));
-            retVal = ruleValueSet.contains(String.valueOf(fieldValue));
-        } else if ( operation == Operator.IS_NOT_IN.name() )
-                   && ( ruleValue != null && !String.isBlank(String.valueOf(ruleValue)) ){
-            Set<String> ruleValueSet = new Set<String>(String.valueOf(ruleValue).split(','));
-            retVal = !ruleValueSet.contains(String.valueOf(fieldValue));
+        if ( operation == Operator.EQUALS.name() ) {
+            retVal = ( fieldValue == ruleValue );
+        } else if ( operation == Operator.DOES_NOT_EQUAL.name() ) {
+            retVal = ( fieldValue != ruleValue );
+        } else if ( operation == Operator.CONTAINS.name() ) {
+            retVal = (
+                ( fieldValue != null )
+                && String.valueOf( fieldValue ).contains( String.valueOf( ruleValue ) )
+            );
+        } else if ( operation == Operator.DOES_NOT_CONTAIN.name() ) {
+            retVal = (
+                ( fieldValue != null )
+                && !String.valueOf( fieldValue ).contains( String.valueOf( ruleValue ) )
+            );
+        } else if (
+            ( operation == Operator.IS_IN.name() )
+            && ( ruleValue != null )
+            && !String.isBlank( String.valueOf( ruleValue ) )
+            )
+        {
+            Set<String> ruleValueSet = new Set<String>(
+                String.valueOf( ruleValue ).split( ',' )
+            );
+            retVal = ruleValueSet.contains( String.valueOf( fieldValue ) );
+        } else if (
+            ( operation == Operator.IS_NOT_IN.name() )
+            && ( ruleValue != null )
+            && !String.isBlank( String.valueOf( ruleValue ) )
+            )
+        {
+            Set<String> ruleValueSet = new Set<String>(
+                String.valueOf( ruleValue ).split( ',' )
+            );
+            retVal = !ruleValueSet.contains( String.valueOf( fieldValue ) );
         }
         return retVal;
     }
