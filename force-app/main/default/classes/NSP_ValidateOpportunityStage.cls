@@ -696,16 +696,14 @@ public with sharing class NSP_ValidateOpportunityStage {
         } else if ( operation == Operator.IS_NOT_BLANK.name() ){
             retVal = !String.isBlank(String.valueOf(fieldValue)) && fieldValue != null;
         } else if ( !String.isBlank(ruleValue)
-             && (operation == Operator.EQUALS.name()
-              || operation == Operator.DOES_NOT_EQUAL.name()
-              || operation == Operator.GREATER_THAN_OR_EQUALS.name()
-              || operation == Operator.LESS_THAN_OR_EQUALS.name()) ){
-            if (fieldValue instanceOf Date) {
-                Date ruleValueDate = null;
-                if( ruleValue.indexOf('TODAY') > -1 ){
-                    ruleValueDate = Date.today();
-                    retVal = checkConditionDate( Date.valueOf(fieldValue) , ruleValueDate , operation );
-                }
+                    && ( operation == Operator.EQUALS.name()
+                        || operation == Operator.DOES_NOT_EQUAL.name()
+                        || operation == Operator.GREATER_THAN_OR_EQUALS.name()
+                        || operation == Operator.LESS_THAN_OR_EQUALS.name()) ){
+            if ( fieldValue instanceOf Date )
+                 && ( ruleValue.indexOf('TODAY') > -1 ){
+                Date ruleValueDate = Date.today();
+                retVal = checkConditionDate( Date.valueOf(fieldValue) , ruleValueDate , operation );
             } else if ( (fieldValue instanceOf Decimal) || (fieldValue instanceOf Double) || (fieldValue instanceOf Integer) ){
                 retVal = checkConditionDecimal( Decimal.valueOf(String.valueOf(fieldValue)) , Decimal.valueOf(ruleValue) , operation );
             } else if ( fieldValue instanceOf Boolean ){
@@ -729,16 +727,14 @@ public with sharing class NSP_ValidateOpportunityStage {
             retVal = fieldValue != null && String.valueOf(fieldValue).contains(String.valueOf(ruleValue));
         } else if ( operation == Operator.DOES_NOT_CONTAIN.name() ){
             retVal = fieldValue != null && !String.valueOf(fieldValue).contains(String.valueOf(ruleValue));
-        } else if ( operation == Operator.IS_IN.name() ){
-            if ( ruleValue != null && !String.isBlank(String.valueOf(ruleValue)) ){
-                Set<String> ruleValueSet = new Set<String>(String.valueOf(ruleValue).split(','));
-                retVal = ruleValueSet.contains(String.valueOf(fieldValue));
-            }
-        } else if ( operation == Operator.IS_NOT_IN.name() ){
-            if ( ruleValue != null && !String.isBlank(String.valueOf(ruleValue)) ){
-                Set<String> ruleValueSet = new Set<String>(String.valueOf(ruleValue).split(','));
-                retVal = !ruleValueSet.contains(String.valueOf(fieldValue));
-            }
+        } else if ( operation == Operator.IS_IN.name() )
+                   && ( ruleValue != null && !String.isBlank(String.valueOf(ruleValue)) ){
+            Set<String> ruleValueSet = new Set<String>(String.valueOf(ruleValue).split(','));
+            retVal = ruleValueSet.contains(String.valueOf(fieldValue));
+        } else if ( operation == Operator.IS_NOT_IN.name() )
+                   && ( ruleValue != null && !String.isBlank(String.valueOf(ruleValue)) ){
+            Set<String> ruleValueSet = new Set<String>(String.valueOf(ruleValue).split(','));
+            retVal = !ruleValueSet.contains(String.valueOf(fieldValue));
         }
         return retVal;
     }
