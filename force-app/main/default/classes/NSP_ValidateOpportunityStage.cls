@@ -68,35 +68,70 @@ public with sharing class NSP_ValidateOpportunityStage {
     }
 
     private static void validateOpportunityStageNew( List<Opportunity> newList , List<Id> oppIdList , Map<Id,User> opportunityOwnerRoleMap ) {
-        try{
-            Map<ID, Opportunity> oppEventTaskOCRMap = new Map<ID, Opportunity>(
-                                    [ SELECT AccountId , Id , 
-                                        (SELECT Id , Status , NSP_Task_Type__c , Subject 
-                                            FROM Tasks WHERE CreatedBy.ProfileId = :NSP_ValidateOpportunityStage.integUserProfileId AND NSP_Task_Type__c != null) ,
-                                        (SELECT Id , NSP_Event_Subtype__c , NSP_Method__c , NSP_Status__c 
-                                            FROM Events WHERE NSP_Event_Subtype__c != NULL AND NSP_Status__c != :NSP_SalesConstants.Cancelled) ,
-                                        (SELECT Id 
-                                            FROM OpportunityContactRoles) ,
-                                        (SELECT Id 
-                                            FROM Employee_Splits__r) ,
-                                        (SELECT Id , Status__c 
-                                            FROM Checklists__r WHERE Checklist_Type__c = :SOLD_TO_PAID)
-                                        FROM Opportunity
-                                        WHERE Id IN :oppIdList
-                                    ]);
-
+        try {
+            Map<Id,Opportunity> oppEventTaskOCRMap = new Map<Id,Opportunity>(
+                [
+                    SELECT
+                        Id ,
+                        AccountId ,
+                        (
+                            SELECT Id , Status , NSP_Task_Type__c , Subject
+                            FROM Tasks
+                            WHERE (
+                                ( CreatedBy.ProfileId = :NSP_ValidateOpportunityStage.integUserProfileId )
+                                AND ( NSP_Task_Type__c != null )
+                            )
+                        ) ,
+                        (
+                            SELECT Id , NSP_Event_Subtype__c , NSP_Method__c , NSP_Status__c
+                            FROM Events
+                            WHERE (
+                                ( NSP_Event_Subtype__c != null )
+                                AND ( NSP_Status__c != :NSP_SalesConstants.Cancelled )
+                            )
+                        ) ,
+                        (
+                            SELECT Id
+                            FROM OpportunityContactRoles
+                        ) ,
+                        (
+                            SELECT Id
+                            FROM Employee_Splits__r
+                        ) ,
+                        (
+                            SELECT Id , Status__c
+                            FROM Checklists__r
+                            WHERE ( Checklist_Type__c = :SOLD_TO_PAID )
+                        )
+                    FROM Opportunity
+                    WHERE ( Id IN :oppIdList )
+                ]
+            );
             Map<Id, SBQQ__Quote__c> oppQuoteMap = new Map<Id,SBQQ__Quote__c>(
-                                    [ SELECT Id , SBQQ__Status__c , NSP_Opportunity_Primary_Product__c , NSP_Client_For_Life__c 
-                                        FROM SBQQ__Quote__c 
-                                        WHERE SBQQ__Opportunity2__c IN :oppIdList AND SBQQ__Primary__c = TRUE 
-                                    ]);
-
-            for( Opportunity opp : newList ){
-                if( String.isBlank(opp.StageName) || (hasAllowClosedLostPermission && opp.StageName.equals(NSP_SalesConstants.CLOSED_LOST)) ){
+                [
+                    SELECT
+                        Id ,
+                        SBQQ__Status__c ,
+                        NSP_Opportunity_Primary_Product__c ,
+                        NSP_Client_For_Life__c
+                    FROM SBQQ__Quote__c
+                    WHERE (
+                        ( SBQQ__Opportunity2__c IN :oppIdList )
+                        AND ( SBQQ__Primary__c = true )
+                    )
+                ]
+            );
+            for ( Opportunity opp : newList ) {
+                if ( String.isBlank( opp.StageName )
+                    || ( hasAllowClosedLostPermission
+                        && opp.StageName.equals( NSP_SalesConstants.CLOSED_LOST )
+                        )
+                    )
+                {
                     continue;
                 }
 
-                Opportunity oppFromMap = oppEventTaskOCRMap.get(opp.Id);
+                Opportunity oppFromMap = oppEventTaskOCRMap.get( opp.Id );
                 List<Task> taskList = oppFromMap?.Tasks;
                 List<Event> eventList=oppFromMap?.Events;
                 List<OpportunityContactRole> ocrList = oppFromMap?.OpportunityContactRoles;
@@ -112,27 +147,24 @@ public with sharing class NSP_ValidateOpportunityStage {
                 relObjectMap.put('NSP_Checklist__c' , stpList);
                 relObjectMap.put('SBQQ__Quote__c' , new List<SBQQ__Quote__c>{oppQuoteMap.get(opp.Id)});
 
-                List<Opportunity_Stage_Validation__mdt> currentOptyStageVals = getCurrentOptyStageVals(opp);
-                Map<String, List<Opportunity_Stage_Validation__mdt>> groupedStageValMap = getGroupedStageValMap(currentOptyStageVals);
+                List<Opportunity_Stage_Validation__mdt> currentOptyStageVals = NSP_ValidateOpportunityStage.getCurrentOptyStageVals( opp );
+                Map<String,List<Opportunity_Stage_Validation__mdt>> groupedStageValMap = NSP_ValidateOpportunityStage.getGroupedStageValMap( currentOptyStageVals );
 
-                evaluateSingleCriteria(opp, relObjectMap, currentOptyStageVals);
-                evaluateGroupedCriteria(opp, relObjectMap, groupedStageValMap);
-
+                NSP_ValidateOpportunityStage.evaluateSingleCriteria( opp , relObjectMap , currentOptyStageVals );
+                NSP_ValidateOpportunityStage.evaluateGroupedCriteria( opp , relObjectMap , groupedStageValMap );
                 //Proposal
-                if( opp.StageName.equals(NSP_SalesConstants.PROPOSAL_STAGE) ){
+                if ( opp.StageName.equals( NSP_SalesConstants.PROPOSAL_STAGE ) ) {
                     evaluateQuoteCriteria( opp , oppQuoteMap );
                 }
-
                 //Closed Won
-                if( opp.StageName.equals(NSP_SalesConstants.CLOSED_WON) ){
+                if ( opp.StageName.equals( NSP_SalesConstants.CLOSED_WON ) ) {
                     //first check if primary quote is created and approved on primary products it is applicable on then check user based criteria
-                    evaluateQuoteCriteria(opp , oppQuoteMap);
-                    evaluateClosedWonStageCriteria( opp );
+                    NSP_ValidateOpportunityStage.evaluateQuoteCriteria( opp , oppQuoteMap );
+                    NSP_ValidateOpportunityStage.evaluateClosedWonStageCriteria( opp );
                 }
-
                 //Closed Lost
-                if( opp.StageName.equals(NSP_SalesConstants.CLOSED_LOST) ){
-                    evaluateClosedLostStageCriteria( opp , opportunityOwnerRoleMap );
+                if( opp.StageName.equals( NSP_SalesConstants.CLOSED_LOST ) ) {
+                    NSP_ValidateOpportunityStage.evaluateClosedLostStageCriteria( opp , opportunityOwnerRoleMap );
                 }
             }
         } catch ( Exception e ) {
