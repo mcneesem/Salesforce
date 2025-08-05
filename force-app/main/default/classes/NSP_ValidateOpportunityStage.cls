@@ -684,30 +684,60 @@ public with sharing class NSP_ValidateOpportunityStage {
         return userMap;
     }
 
-    public static Boolean checkCondition( Object fieldValue , String ruleValue , String operation ){
+    public static Boolean checkCondition( Object fieldValue , String ruleValue , String operation ) {
         Boolean retVal = false;
-        if( operation == Operator.IS_BLANK.name() ){
-            retVal = String.isBlank(String.valueOf(fieldValue)) || fieldValue == null;
-        } else if ( operation == Operator.IS_NOT_BLANK.name() ){
-            retVal = !String.isBlank(String.valueOf(fieldValue)) && fieldValue != null;
-        } else if ( !String.isBlank(ruleValue)
-                    && ( operation == Operator.EQUALS.name()
-                        || operation == Operator.DOES_NOT_EQUAL.name()
-                        || operation == Operator.GREATER_THAN_OR_EQUALS.name()
-                        || operation == Operator.LESS_THAN_OR_EQUALS.name()) ){
-            if ( fieldValue instanceOf Date )
-                 && ( ruleValue.indexOf('TODAY') > -1 ){
+        if ( operation == Operator.IS_BLANK.name() ) {
+            retVal = ( String.isBlank( String.valueOf( fieldValue ) ) || ( fieldValue == null ) );
+        } else if ( operation == Operator.IS_NOT_BLANK.name() ) {
+            retVal = ( !String.isBlank( String.valueOf( fieldValue ) ) && ( fieldValue != null ) );
+        } else if ( !String.isBlank( ruleValue )
+            && ( ( operation == Operator.EQUALS.name() )
+                || ( operation == Operator.DOES_NOT_EQUAL.name() )
+                || ( operation == Operator.GREATER_THAN_OR_EQUALS.name() )
+                || ( operation == Operator.LESS_THAN_OR_EQUALS.name() )
+                )
+            )
+        {
+            if ( ( fieldValue instanceOf Date )
+                && ( ruleValue.indexOf( 'TODAY' ) > -1 )
+                )
+            {
                 Date ruleValueDate = Date.today();
-                retVal = checkConditionDate( Date.valueOf(fieldValue) , ruleValueDate , operation );
-            } else if ( (fieldValue instanceOf Decimal) || (fieldValue instanceOf Double) || (fieldValue instanceOf Integer) ){
-                retVal = checkConditionDecimal( Decimal.valueOf(String.valueOf(fieldValue)) , Decimal.valueOf(ruleValue) , operation );
-            } else if ( fieldValue instanceOf Boolean ){
-                retVal = checkConditionString( String.valueOf(fieldValue).toLowerCase() , ruleValue.toLowerCase() , operation );
+                retVal = NSP_ValidateOpportunityStage.checkConditionDate(
+                    Date.valueOf( fieldValue ) ,
+                    ruleValueDate ,
+                    operation
+                );
+            } else if (
+                ( fieldValue instanceOf Decimal )
+                || ( fieldValue instanceOf Double )
+                || ( fieldValue instanceOf Integer )
+                )
+            {
+                retVal = NSP_ValidateOpportunityStage.checkConditionDecimal(
+                    Decimal.valueOf( String.valueOf( fieldValue ) ) ,
+                    Decimal.valueOf( ruleValue ) ,
+                    operation
+                );
+            } else if ( fieldValue instanceOf Boolean ) {
+                retVal = NSP_ValidateOpportunityStage.checkConditionString(
+                    String.valueOf( fieldValue ).toLowerCase() ,
+                    ruleValue.toLowerCase() ,
+                    operation
+                );
             } else {
-                retVal = checkConditionString( fieldValue , ruleValue , operation );
+                retVal = NSP_ValidateOpportunityStage.checkConditionString(
+                    fieldValue ,
+                    ruleValue ,
+                    operation
+                );
             }
         } else {
-            retVal = checkConditionString( fieldValue , ruleValue , operation );
+            retVal = NSP_ValidateOpportunityStage.checkConditionString(
+                fieldValue ,
+                ruleValue ,
+                operation
+            );
         }
         return retVal;
     }
