@@ -234,14 +234,14 @@ public with sharing class NSP_ValidateOpportunityStage {
 
         for(Opportunity_Stage_Validation__mdt optyStageVal : optyStageVals){
             List<String> valPrimProducts = optyStageVal.Primary_Product__c.split(',');
-            if( optyStageVal.IsActive__c && valPrimProducts.CONTAINS(currentPrimProduct) && optyStageVal.Stage__c == opp.StageName ){
+            if( optyStageVal.IsActive__c && valPrimProducts.contains(currentPrimProduct) && optyStageVal.Stage__c == opp.StageName ){
                 currentOptyStageVals.add(optyStageVal);
             }
         }
         if( currentOptyStageVals.size() == 0 ){ // if not match for Product/Stage combo, see if there is a Default Product match for the Stage
             for(Opportunity_Stage_Validation__mdt optyStageVal : optyStageVals){
                 List<String> valPrimProducts = optyStageVal.Primary_Product__c.split(',');
-                if( optyStageVal.IsActive__c && valPrimProducts.CONTAINS(DEFAULT_PRODUCT) && optyStageVal.Stage__c == opp.StageName ){
+                if( optyStageVal.IsActive__c && valPrimProducts.contains(DEFAULT_PRODUCT) && optyStageVal.Stage__c == opp.StageName ){
                     currentOptyStageVals.add(optyStageVal);
                 }
             }
@@ -316,8 +316,8 @@ public with sharing class NSP_ValidateOpportunityStage {
                     //Modified: Primary Quote required only for Non WO opptys, hence moved Primary Quote validation to else if block
                     //Perform WO
                     // Added WS condition as part of DF-01869
-                    if ( proposeStageCriteraTypes.CONTAINS( opp.Type )
-                        && validHRProducts.CONTAINS( opp.NSP_PrimaryProduct__c )
+                    if ( proposeStageCriteraTypes.contains( opp.Type )
+                        && validHRProducts.contains( opp.NSP_PrimaryProduct__c )
                         )
                     {
                         String scannedTask='';
@@ -336,7 +336,7 @@ public with sharing class NSP_ValidateOpportunityStage {
                             }
                         }
                         //Show error
-                        if(!scannedTask.CONTAINS(HAS_WO) ){
+                        if(!scannedTask.contains(HAS_WO) ){
                             opp.addError(System.Label.NSP_AddWOBusinessProfile);
                         }
                         if(opp.NSP_BidNumber__c == '' || opp.NSP_BidNumber__c == null){
@@ -349,13 +349,13 @@ public with sharing class NSP_ValidateOpportunityStage {
                 // 205583/208335 - bypass QuoteCriteria is Fee Inclusive is checked
                 if(!opp.Fee_Inclusive__c && opp.StageName.EQUALS(NSP_SalesConstants.CLOSING_STAGE)){
                     if(opp.NSP_PrimaryProduct__c!=NSP_SalesConstants.WO && !opp.NSP_Bypass_Docusign_Signature__c && !opp.NSP_Order_Generated__c){
-                        if(!exitCriteriaProductException.CONTAINS(opp.NSP_PrimaryProduct__c)){
+                        if(!exitCriteriaProductException.contains(opp.NSP_PrimaryProduct__c)){
                             opp.addError(System.Label.NSP_Create_Signed_Delivery_Order);
                         } else if(opp.NSP_PrimaryProduct__c == NSP_SalesConstants.HR_CONSULTING_SERVICES && opp.NSP_Client_For_Life__c != NSP_SalesConstants.WO_WS){
                             opp.addError(System.Label.NSP_Create_Signed_Delivery_Order);
                         }
                     } else if (
-                        ( validHRProducts.CONTAINS( opp.NSP_PrimaryProduct__c ) || opp.NSP_Order_Generated__c )
+                        ( validHRProducts.contains( opp.NSP_PrimaryProduct__c ) || opp.NSP_Order_Generated__c )
                         && !opp.NSP_Closing_Appointment__c
                         )
                     {
@@ -378,8 +378,8 @@ public with sharing class NSP_ValidateOpportunityStage {
 
     private static void evaluateAnalysisStageCriteriaOld( Opportunity opp , List<Event> eventList ) {
         String scannedTask='';
-        if ( !validHRProducts.CONTAINS( opp.NSP_PrimaryProduct__c )
-              && ( !analysisStageCriteraTypes.CONTAINS( opp.Type )
+        if ( !validHRProducts.contains( opp.NSP_PrimaryProduct__c )
+              && ( !analysisStageCriteraTypes.contains( opp.Type )
                 || (
                         ( opp.NSP_PrimaryProduct__c != NSP_SalesConstants.WX )
                      && ( opp.NSP_PrimaryProduct__c != NSP_SalesConstants.WA )
@@ -403,10 +403,10 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
         
         //Show error
-        if( !scannedTask.CONTAINS(HAS_DISCOVERY) ){
+        if( !scannedTask.contains(HAS_DISCOVERY) ){
             opp.addError(System.Label.NSP_AddDiscoveryCalls);
         }
-        if( scannedTask.CONTAINS(HAS_OPEN_EVENT) ){
+        if( scannedTask.contains(HAS_OPEN_EVENT) ){
             opp.addError(System.Label.NSP_CloseDiscoveryCallEvents);
         }
        
@@ -420,7 +420,7 @@ public with sharing class NSP_ValidateOpportunityStage {
     public static void evaluateQuoteCriteria( Opportunity opp , Map<Id,SBQQ__Quote__c> quoteMap ) {
         try {
             // 205583/208335 - bypass QuoteCriteria is Fee Inclusive is checked
-            if ( opp.Fee_Inclusive__c || validHR360Products.CONTAINS( opp.NSP_PrimaryProduct__c ) ){
+            if ( opp.Fee_Inclusive__c || validHR360Products.contains( opp.NSP_PrimaryProduct__c ) ){
                 return;
             }
 
@@ -428,7 +428,7 @@ public with sharing class NSP_ValidateOpportunityStage {
             if ( quoteMap != null ) {
                 primaryQuote = quoteMap.get( opp.SBQQ__PrimaryQuote__c ); // prevent NullPointerExceptions...
             }
-            if ( exitCriteriaProductException.CONTAINS( opp.NSP_PrimaryProduct__c ) ){
+            if ( exitCriteriaProductException.contains( opp.NSP_PrimaryProduct__c ) ){
                 evaluateQuoteCriteriaProductException( opp , primaryQuote );
             } else if ( opp.SBQQ__PrimaryQuote__c != null && primaryQuote != null ){
                 evaluateQuoteExistingQuote( opp , primaryQuote );
@@ -501,27 +501,27 @@ public with sharing class NSP_ValidateOpportunityStage {
     }
  
     private static void evaluateClosedWonStageCriteria( Opportunity opp ) {
-        if ( NSP_ValidateOpportunityStage.permittedCWOppOwnerUserMap.CONTAINSKey( opp.OwnerId )
+        if ( NSP_ValidateOpportunityStage.permittedCWOppOwnerUserMap.containsKey( opp.OwnerId )
             && ( !hasAllowCWNCSUserPerm )
-            && ownerBasedCriteriaProducts.CONTAINS( opp.NSP_PrimaryProduct__c )
+            && ownerBasedCriteriaProducts.contains( opp.NSP_PrimaryProduct__c )
             )
         {
             opp.addError( System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON );
-        } else if ( nonOwnerBasedCriteriaProducts.CONTAINS( opp.NSP_PrimaryProduct__c )
+        } else if ( nonOwnerBasedCriteriaProducts.contains( opp.NSP_PrimaryProduct__c )
             && ( UserInfo.getUserId() != opp.OwnerId )
             && ( !hasAllowCWNCSUserPerm )
             )
         {
             opp.addError( System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON );
-        } else if ( ownerBasedCriteriaProducts.CONTAINS( opp.NSP_PrimaryProduct__c )
-            && !NSP_ValidateOpportunityStage.permittedCWOppOwnerUserMap.CONTAINSKey( opp.OwnerId )
+        } else if ( ownerBasedCriteriaProducts.contains( opp.NSP_PrimaryProduct__c )
+            && !NSP_ValidateOpportunityStage.permittedCWOppOwnerUserMap.containsKey( opp.OwnerId )
             && ( UserInfo.getUserId() != opp.OwnerId )
             && ( !hasAllowCWNCSUserPerm )
             )
         {
             opp.addError( System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON );
         } else if ( !hasAllowCWNCSUserPerm
-            && validHR360Products.CONTAINS( opp.NSP_PrimaryProduct__c )
+            && validHR360Products.contains( opp.NSP_PrimaryProduct__c )
             )
         {
             opp.addError( System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON );
@@ -529,27 +529,27 @@ public with sharing class NSP_ValidateOpportunityStage {
     }
 
     private static void evaluateClosedWonStageCriteriaOld( Opportunity opp ) {
-        if ( ownerBasedCriteriaProducts.CONTAINS(opp.NSP_PrimaryProduct__c)
+        if ( ownerBasedCriteriaProducts.contains(opp.NSP_PrimaryProduct__c)
             && !hasAllowCWNCSUserPerm
-            && NSP_ValidateOpportunityStage.permittedCWOppOwnerUserMap.CONTAINSKey( opp.OwnerId )
+            && NSP_ValidateOpportunityStage.permittedCWOppOwnerUserMap.containsKey( opp.OwnerId )
             )
         {
             opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON);
-        } else if ( nonOwnerBasedCriteriaProducts.CONTAINS(opp.NSP_PrimaryProduct__c)
+        } else if ( nonOwnerBasedCriteriaProducts.contains(opp.NSP_PrimaryProduct__c)
             && ( UserInfo.getUserId() != opp.OwnerId )
             && !hasAllowCWNCSUserPerm
             )
         {
             opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON);
-        } else if ( ownerBasedCriteriaProducts.CONTAINS(opp.NSP_PrimaryProduct__c)
+        } else if ( ownerBasedCriteriaProducts.contains(opp.NSP_PrimaryProduct__c)
             && !hasAllowCWNCSUserPerm
-            && !NSP_ValidateOpportunityStage.permittedCWOppOwnerUserMap.CONTAINSKey( opp.OwnerId )
+            && !NSP_ValidateOpportunityStage.permittedCWOppOwnerUserMap.containsKey( opp.OwnerId )
             && ( UserInfo.getUserId() != opp.OwnerId )
             )
         {
             opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON);
         } else if ( !hasAllowCWNCSUserPerm
-            && validHRProducts.CONTAINS( opp.NSP_PrimaryProduct__c )
+            && validHRProducts.contains( opp.NSP_PrimaryProduct__c )
             )
         {
             opp.AddError( System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON );
@@ -568,7 +568,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         List<String> salesOfficeList = new List<String>();
         if ( ( oppSalesOfficeMap != null )
             && !oppSalesOfficeMap.isEmpty()
-            && oppSalesOfficeMap.CONTAINSKey( opp.Id )
+            && oppSalesOfficeMap.containsKey( opp.Id )
             )
         {
             Opportunity check = oppSalesOfficeMap.get( opp.Id );
@@ -582,7 +582,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         
         //Added for 579280
         String opportunitySalesOffMemb = null;
-        if ( opportunityOwnerRoleMap.CONTAINSKey( opp.OwnerId ) ) {
+        if ( opportunityOwnerRoleMap.containsKey( opp.OwnerId ) ) {
             User opportunityOwner = opportunityOwnerRoleMap.get( opp.OwnerId );
             if ( opportunityOwner != null ) {
                 opportunitySalesOffMemb = opportunityOwner.NSP_Sales_Office_Membership__c;
@@ -620,7 +620,7 @@ public with sharing class NSP_ValidateOpportunityStage {
             canCloseLost++;
         } else if( opp.ownerid == UserInfo.getUserId() ){
             canCloseLost++;
-        } else if( teamMemberList.CONTAINS(UserInfo.getUserId()) ){
+        } else if( teamMemberList.contains(UserInfo.getUserId()) ){
             canCloseLost++;
         } else if( ( opp.NSP_Account_Segment__c == NSP_SalesConstants.MIDMARKET_SALES )
              && hasAllowCLMMPerm ){
@@ -638,27 +638,27 @@ public with sharing class NSP_ValidateOpportunityStage {
 
     private static Integer checkProductAllowClosedLost( Opportunity opp ) {
         Integer canCloseLost = 0;
-        if ( NSP_ValidateOpportunityStage.permittedBPCUserMap.CONTAINSKey( opp.OwnerId )
+        if ( NSP_ValidateOpportunityStage.permittedBPCUserMap.containsKey( opp.OwnerId )
             && hasAllowCLMMPerm
             )
         {
             canCloseLost++;
-        } else if ( NSP_ValidateOpportunityStage.permittedRETSCUserMap.CONTAINSKey( opp.OwnerId )
+        } else if ( NSP_ValidateOpportunityStage.permittedRETSCUserMap.containsKey( opp.OwnerId )
             && hasAllowCLRETPerm
             )
         {
             canCloseLost++;
-        } else if ( NSP_ValidateOpportunityStage.permittedInsSalesUserMap.CONTAINSKey( opp.OwnerId )
+        } else if ( NSP_ValidateOpportunityStage.permittedInsSalesUserMap.containsKey( opp.OwnerId )
             && hasAllowCLInsurancePerm
             )
         {
             canCloseLost++;
-        } else if ( NSP_ValidateOpportunityStage.permittedRecSalesUserMap.CONTAINSKey( opp.OwnerId )
+        } else if ( NSP_ValidateOpportunityStage.permittedRecSalesUserMap.containsKey( opp.OwnerId )
             && hasAllowCLRecruitingPerm
             )
         {
             canCloseLost++;
-        } else if ( NSP_ValidateOpportunityStage.permittedTechSalesUserMap.CONTAINSKey( opp.OwnerId )
+        } else if ( NSP_ValidateOpportunityStage.permittedTechSalesUserMap.containsKey( opp.OwnerId )
             && hasAllowCLTechnologyPerm
             )
         {
