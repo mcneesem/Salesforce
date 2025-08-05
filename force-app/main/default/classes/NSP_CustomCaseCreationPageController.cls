@@ -54,7 +54,6 @@ public with sharing class NSP_CustomCaseCreationPageController {
                         AND ( NSP_UserTitle__c INCLUDES ( :userTitle ) )
                         AND ( NSP_isActive__c = true )
                         AND ( NSP_Subcategory__c != :NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI )
-                        AND ( NSP_Category__c != :NSP_CustomCaseCreationPageController.SERVICE_OPERATIONS )
                         AND ( Id NOT IN :NSP_CustomCaseCreationPageController.restrictedFlsaMappingIds )
                     )
                     ORDER BY NSP_Category__c , NSP_Subcategory__c
@@ -71,7 +70,6 @@ public with sharing class NSP_CustomCaseCreationPageController {
                         ( NSP_RecordType__c = :caseRecType )
                         AND ( NSP_isActive__c = true )
                         AND ( NSP_Subcategory__c != :NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI )
-                        AND ( NSP_Category__c != :NSP_CustomCaseCreationPageController.SERVICE_OPERATIONS )
                         AND ( Id NOT IN :NSP_CustomCaseCreationPageController.restrictedFlsaMappingIds )
                     )
                     ORDER BY NSP_Category__c , NSP_Subcategory__c
@@ -94,9 +92,9 @@ public with sharing class NSP_CustomCaseCreationPageController {
                 ];
             }
             
-            List<NSP_Category_Sub_Category_Mapping__c> filteredList = getFilteredCategorySubCategoryRecords(lstCatMapping);
+            lstCatMapping = getFilteredCategorySubCategoryRecords(lstCatMapping);
 
-            return filteredList;
+            return lstCatMapping;
         } catch ( Exception e ) {
             throw new AuraHandledException( e.getMessage() );
         }
@@ -390,9 +388,9 @@ public with sharing class NSP_CustomCaseCreationPageController {
                     ORDER BY NSP_Category__c , NSP_Subcategory__c
                 ];
             }
-            List<NSP_Category_Sub_Category_Mapping__c> filteredList = getFilteredCategorySubCategoryRecords(lstCatMapping);
+            lstCatMapping = getFilteredCategorySubCategoryRecords(lstCatMapping);
             
-            return filteredList;
+            return lstCatMapping;
         } catch ( Exception e ) {
             throw new AuraHandledException( e.getMessage() );
         }
