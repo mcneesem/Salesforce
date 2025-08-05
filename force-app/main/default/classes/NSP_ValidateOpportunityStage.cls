@@ -67,7 +67,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
     }
 
-    public static void validateOpportunityStageNew( List<Opportunity> newList , List<Id> oppIdList , Map<Id,User> opportunityOwnerRoleMap ) {
+    private static void validateOpportunityStageNew( List<Opportunity> newList , List<Id> oppIdList , Map<Id,User> opportunityOwnerRoleMap ) {
         try{
             Map<ID, Opportunity> oppEventTaskOCRMap = new Map<ID, Opportunity>(
                                     [ SELECT AccountId , Id , 
@@ -185,7 +185,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
     }
 
-    public static Integer evaluateOneCriteriaGroup( Opportunity opp , String groupName , SObject relObject, Map<String, List<Opportunity_Stage_Validation__mdt>> groupedStageValMap ){
+    private static Integer evaluateOneCriteriaGroup( Opportunity opp , String groupName , SObject relObject, Map<String, List<Opportunity_Stage_Validation__mdt>> groupedStageValMap ){
         Integer passCheckCount = 0;
         String groupCheckType = '';
         for( Opportunity_Stage_Validation__mdt val : groupedStageValMap.get(groupName) ){
@@ -217,7 +217,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         return passCheckCount;
     }
 
-    public static String getGroupRelObjName( String groupName , Map<String, List<Opportunity_Stage_Validation__mdt>> groupedStageValMap ){
+    private static String getGroupRelObjName( String groupName , Map<String, List<Opportunity_Stage_Validation__mdt>> groupedStageValMap ){
         String groupRelObjName = OPPORTUNITY_OBJ;
         for( Opportunity_Stage_Validation__mdt groupOptyStageVal : groupedStageValMap.get(groupName) ){
             if( groupOptyStageVal.Object__c != OPPORTUNITY_OBJ){ // first object name other than Opportunity
@@ -228,7 +228,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         return groupRelObjName; // if no other object name found, entire group is based on Opportunity
     }
 
-    public static List<Opportunity_Stage_Validation__mdt> getCurrentOptyStageVals(Opportunity opp){
+    private static List<Opportunity_Stage_Validation__mdt> getCurrentOptyStageVals(Opportunity opp){
         List<Opportunity_Stage_Validation__mdt> currentOptyStageVals = new List<Opportunity_Stage_Validation__mdt>();
         String currentPrimProduct = ( String.isNotBlank(opp.NSP_PrimaryProduct__c) ) ? opp.NSP_PrimaryProduct__c : NSP_SalesConstants.WO; // treat empty opty Product as WO
 
@@ -249,7 +249,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         return currentOptyStageVals;
     }
 
-    public static Map<String, List<Opportunity_Stage_Validation__mdt>> getGroupedStageValMap(List<Opportunity_Stage_Validation__mdt> currentOptyStageVals){
+    private static Map<String, List<Opportunity_Stage_Validation__mdt>> getGroupedStageValMap(List<Opportunity_Stage_Validation__mdt> currentOptyStageVals){
         Map<String, List<Opportunity_Stage_Validation__mdt>> groupedStageValMap = new Map<String, List<Opportunity_Stage_Validation__mdt>>();
         Set<String> groupNames = new Set<String>();
         for(Opportunity_Stage_Validation__mdt currentOptyStageVal : currentOptyStageVals){
@@ -449,7 +449,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
     }
 
-    public static void evaluateQuoteExistingQuote( Opportunity opp , SBQQ__Quote__c primaryQuote ){
+    private static void evaluateQuoteExistingQuote( Opportunity opp , SBQQ__Quote__c primaryQuote ){
         try {
             if ( primaryQuote.SBQQ__Status__c != NSP_SalesConstants.APPROVAL_STATUS_APPROVED ){
                 opp.addError( System.Label.NSP_Approve_Primary_Quote );
@@ -470,7 +470,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
     }
 
-    public static void evaluateQuoteCriteriaProductException( Opportunity opp , SBQQ__Quote__c primaryQuote ){
+    private static void evaluateQuoteCriteriaProductException( Opportunity opp , SBQQ__Quote__c primaryQuote ){
         try {
             if ( ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.HR_CONSULTING_SERVICES )
                 && ( opp.NSP_Client_For_Life__c != NSP_SalesConstants.WO_WS ) 
@@ -498,7 +498,7 @@ public with sharing class NSP_ValidateOpportunityStage {
             );
         }
     }
- 
+
     private static void evaluateClosedWonStageCriteria( Opportunity opp ) {
         if ( NSP_ValidateOpportunityStage.permittedCWOppOwnerUserMap.containsKey( opp.OwnerId )
             && ( !hasAllowCWNCSUserPerm )
@@ -684,6 +684,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         return userMap;
     }
 
+    // NSP_ValidateOpportunityStageTest
     public static Boolean checkCondition( Object fieldValue , String ruleValue , String operation ) {
         Boolean retVal = false;
         if ( operation == Operator.IS_BLANK.name() ) {
@@ -742,7 +743,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         return retVal;
     }
 
-    public static Boolean checkConditionString( Object fieldValue , Object ruleValue , String operation ) {
+    private static Boolean checkConditionString( Object fieldValue , Object ruleValue , String operation ) {
         Boolean retVal = false;
         if ( operation == Operator.EQUALS.name() ) {
             retVal = ( fieldValue == ruleValue );
@@ -782,7 +783,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         return retVal;
     }
 
-    public static Boolean checkConditionDate( Date fieldValue , Date ruleValue , String operation ){
+    private static Boolean checkConditionDate( Date fieldValue , Date ruleValue , String operation ){
         Boolean retVal = false;
         if ( operation == Operator.EQUALS.name() ) {
             retVal = fieldValue == ruleValue;
@@ -796,7 +797,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         return retVal;
     }
 
-    public static Boolean checkConditionDecimal( Decimal fieldValue , Decimal ruleValue , String operation ){
+    private static Boolean checkConditionDecimal( Decimal fieldValue , Decimal ruleValue , String operation ){
         Boolean retVal = false;
         if ( operation == Operator.EQUALS.name() ) {
             retVal = fieldValue == ruleValue;
