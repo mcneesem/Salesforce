@@ -97,7 +97,7 @@ public class NSP_SalesConstants {
     public static final Integer MIDMARKET_NUMBEROFEMPS = 150;
     public static final Integer CORESALES_NUMBEROFEMPS = 50;
     public static final String CORE_SALES = 'Core';
-    public static final String MIDMARKET_SALES = 'Midmarket';
+    public static final String MIDMARKET_SALES = 'MidMarket';
     public static final String EMERGING_GROWTH = 'Emerging Growth';
 
     public static final String NCS_SALES_GROUP = 'NSP_NCS_Group';
