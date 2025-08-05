@@ -67,7 +67,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
     }
 
-    public static void validateOpportunityStageNew(List<Opportunity> newList , List<Id> oppIdList , Map<Id,User> opportunityOwnerRoleMap){
+    public static void validateOpportunityStageNew( List<Opportunity> newList , List<Id> oppIdList , Map<Id,User> opportunityOwnerRoleMap ) {
         try{
             Map<ID, Opportunity> oppEventTaskOCRMap = new Map<ID, Opportunity>(
                                     [ SELECT AccountId , Id , 
@@ -92,7 +92,7 @@ public with sharing class NSP_ValidateOpportunityStage {
                                     ]);
 
             for( Opportunity opp : newList ){
-                if( String.isBlank(opp.StageName) || (hasAllowClosedLostPermission && opp.StageName.EQUALS(NSP_SalesConstants.CLOSED_LOST)) ){
+                if( String.isBlank(opp.StageName) || (hasAllowClosedLostPermission && opp.StageName.equals(NSP_SalesConstants.CLOSED_LOST)) ){
                     continue;
                 }
 
@@ -119,19 +119,19 @@ public with sharing class NSP_ValidateOpportunityStage {
                 evaluateGroupedCriteria(opp, relObjectMap, groupedStageValMap);
 
                 //Proposal
-                if( opp.StageName.EQUALS(NSP_SalesConstants.PROPOSAL_STAGE) ){
+                if( opp.StageName.equals(NSP_SalesConstants.PROPOSAL_STAGE) ){
                     evaluateQuoteCriteria( opp , oppQuoteMap );
                 }
 
                 //Closed Won
-                if( opp.StageName.EQUALS(NSP_SalesConstants.CLOSED_WON) ){
+                if( opp.StageName.equals(NSP_SalesConstants.CLOSED_WON) ){
                     //first check if primary quote is created and approved on primary products it is applicable on then check user based criteria
                     evaluateQuoteCriteria(opp , oppQuoteMap);
                     evaluateClosedWonStageCriteria( opp );
                 }
 
                 //Closed Lost
-                if( opp.StageName.EQUALS(NSP_SalesConstants.CLOSED_LOST) ){
+                if( opp.StageName.equals(NSP_SalesConstants.CLOSED_LOST) ){
                     evaluateClosedLostStageCriteria( opp , opportunityOwnerRoleMap );
                 }
             }
@@ -286,14 +286,14 @@ public with sharing class NSP_ValidateOpportunityStage {
             if(opp.StageName != null){
                 
                 //  Added 275639
-                if(FeatureManagement.checkPermission('Allow_Closed_Lost_Opportunity') && opp.StageName.EQUALS(NSP_SalesConstants.CLOSED_LOST)){
+                if(FeatureManagement.checkPermission('Allow_Closed_Lost_Opportunity') && opp.StageName.equals(NSP_SalesConstants.CLOSED_LOST)){
                     continue;
                 }
                 
                 //Analysis
-                if ( opp.StageName.EQUALS(NSP_SalesConstants.ANALYSIS_STAGE)
-                    || opp.StageName.EQUALS(NSP_SalesConstants.PROPOSAL_STAGE)
-                    || opp.StageName.EQUALS(NSP_SalesConstants.CLOSING_STAGE)
+                if ( opp.StageName.equals(NSP_SalesConstants.ANALYSIS_STAGE)
+                    || opp.StageName.equals(NSP_SalesConstants.PROPOSAL_STAGE)
+                    || opp.StageName.equals(NSP_SalesConstants.CLOSING_STAGE)
                     )
                 {
                     //add Proposal
@@ -308,11 +308,11 @@ public with sharing class NSP_ValidateOpportunityStage {
                         opp.addError(System.Label.NSP_EnterOpportunityType);
                     }
                 }
-                if(opp.StageName.EQUALS(NSP_SalesConstants.ANALYSIS_STAGE)){//evaluate exit criteria to move to analysis stage
+                if(opp.StageName.equals(NSP_SalesConstants.ANALYSIS_STAGE)){//evaluate exit criteria to move to analysis stage
                     evaluateAnalysisStageCriteriaOld(opp,eventList);
                 }
                 /////Proposal
-                if(opp.StageName.EQUALS(NSP_SalesConstants.PROPOSAL_STAGE)){
+                if(opp.StageName.equals(NSP_SalesConstants.PROPOSAL_STAGE)){
                     //Modified: Primary Quote required only for Non WO opptys, hence moved Primary Quote validation to else if block
                     //Perform WO
                     // Added WS condition as part of DF-01869
@@ -347,7 +347,7 @@ public with sharing class NSP_ValidateOpportunityStage {
                 }
                 //CR-031 removed Executive summary check and have added BPS Products condition
                 // 205583/208335 - bypass QuoteCriteria is Fee Inclusive is checked
-                if(!opp.Fee_Inclusive__c && opp.StageName.EQUALS(NSP_SalesConstants.CLOSING_STAGE)){
+                if(!opp.Fee_Inclusive__c && opp.StageName.equals(NSP_SalesConstants.CLOSING_STAGE)){
                     if(opp.NSP_PrimaryProduct__c!=NSP_SalesConstants.WO && !opp.NSP_Bypass_Docusign_Signature__c && !opp.NSP_Order_Generated__c){
                         if(!exitCriteriaProductException.contains(opp.NSP_PrimaryProduct__c)){
                             opp.addError(System.Label.NSP_Create_Signed_Delivery_Order);
@@ -363,13 +363,13 @@ public with sharing class NSP_ValidateOpportunityStage {
                     }
                 }
                 //closed-won criteria CR-031
-                if(opp.StageName.EQUALS(NSP_SalesConstants.CLOSED_WON)){//evaluate criteria to move to closed won stage
+                if(opp.StageName.equals(NSP_SalesConstants.CLOSED_WON)){//evaluate criteria to move to closed won stage
                     //first check if primary quote is created and approved on primary products it is applicable on then check user based criteria
                     evaluateQuoteCriteria(opp,quoteMap);
                     evaluateClosedWonStageCriteriaOld(opp);
                 }
                 //closed-Lost criteria DF-1769
-                if(opp.StageName.EQUALS(NSP_SalesConstants.CLOSED_LOST)){//evaluate criteria to move to closed lost stage
+                if(opp.StageName.equals(NSP_SalesConstants.CLOSED_LOST)){//evaluate criteria to move to closed lost stage
                     evaluateClosedLostStageCriteria(opp, opportunityOwnerRoleMap);
                 }
             }
@@ -454,7 +454,7 @@ public with sharing class NSP_ValidateOpportunityStage {
             if ( primaryQuote.SBQQ__Status__c != NSP_SalesConstants.APPROVAL_STATUS_APPROVED ){
                 opp.addError( System.Label.NSP_Approve_Primary_Quote );
             } else if ( !test.isRunningTest()
-                        && opp.StageName.EQUALS( NSP_SalesConstants.CLOSED_WON )
+                        && opp.StageName.equals( NSP_SalesConstants.CLOSED_WON )
                         && ( ( opp.NSP_PrimaryProduct__c != primaryQuote.NSP_Opportunity_Primary_Product__c ) 
                             || ( opp.NSP_Client_For_Life__c != primaryQuote.NSP_Client_For_Life__c ) )
                         )
@@ -479,7 +479,7 @@ public with sharing class NSP_ValidateOpportunityStage {
                 if ( opp.SBQQ__PrimaryQuote__c != null && primaryQuote != null ) {
                     if ( primaryQuote.SBQQ__Status__c != NSP_SalesConstants.APPROVAL_STATUS_APPROVED ) {
                         opp.addError(System.Label.NSP_Approve_Primary_Quote);
-                    } else if ( opp.StageName.EQUALS( NSP_SalesConstants.CLOSED_WON )
+                    } else if ( opp.StageName.equals( NSP_SalesConstants.CLOSED_WON )
                                 && ( ( opp.NSP_PrimaryProduct__c != primaryQuote.NSP_Opportunity_Primary_Product__c )
                                   || ( opp.NSP_Client_For_Life__c != primaryQuote.NSP_Client_For_Life__c ) )
                               )
