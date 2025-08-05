@@ -1,16 +1,19 @@
-@isTest private class CreateSeparateProjectOrderItemTest {
+@isTest
+private class CreateSeparateProjectOrderItemTest {
 
     private static String accountDefaults = 'NSP_TestDataFactory.AccountDefaults';
     private static String accountName = 'Account Test1';
 
-    @testSetup private static void setupTestData() {
+    @testSetup
+    private static void setupTestData() {
         Order_Settings__c orderSetting = Order_Settings__c.getOrgDefaults();
         orderSetting.EffectiveDateStartOfMonth__c = true;
         orderSetting.Bypass_Rule_PreventStatusChange__c = true;
         upsert orderSetting;
     }
 
-    @isTest private static void testSeperateProject() {
+    @isTest
+    private static void testSeperateProject() {
         List<User> deploymentManagers = [
             SELECT Id
             FROM User
@@ -39,7 +42,7 @@
             
             Product2 objproduct = NSP_TestHelper.createSeparateBillingProduct('Test Product',rRule,tRule,bRule,'Monthly');
             Product2 objproduct1 = NSP_TestHelper.createSeparateBillingProduct('Test Product1',rRule,tRule,bRule,'Monthly');
-            
+            Product2 objproduct2 = NSP_TestHelper.createSeparateBillingProduct('Test Product2',rRule,tRule,bRule,'Monthly');
             
             //Creating Project Templates 
             List<pse__proj__c> projList = new List<pse__proj__c>();
@@ -65,6 +68,7 @@
             list<Product2> productlist = new list<Product2>();
             trProdNames.add('Test Product');
             trProdNames.add('Test Product1');
+            trProdNames.add('Test Product2');
    
             list<Product2> productlst = [Select Id, Name,ProductCode,NSP_Product_Type__c,SBQQ__SubscriptionPricing__c,Separate_Project__c ,Matching_Product_Code__c	 from Product2 WHERE Name IN:trProdNames LIMIT 4]; //Added WHERE Condition as part of code fix
 
@@ -78,20 +82,25 @@
             //product1.SBQQ__SubscriptionType__c = 'Evergreen';
             productlst[1].SBQQ__SubscriptionPricing__c = 'Fixed Price';
             productlist.add(productlst[1]);
+            productlst[2].ProductCode = 'HCMRETIntegration';
+            productlst[2].NSP_Product_Type__c = 'IWX Bundle';
+            productlst[2].SBQQ__SubscriptionPricing__c = 'Fixed Price';
+            productlist.add(productlst[2]);
             
             update productlist;
 
             Opportunity objOpprtunity1 = NSP_TestHelper.createOpenOpportunity(oAccount.Id,NSP_CPQConstants.OPPORTUNITY_TYPE_NEW_BUSINESS,true);
             Opportunity objOpprtunity2 = NSP_TestHelper.createOpenOpportunity(oAccount.Id,NSP_CPQConstants.OPPORTUNITY_TYPE_NEW_BUSINESS,true);
-            PriceBookEntry objPbe     = NSP_TestHelper.createPriceBookEntry(productlst[0].Id,200.0,true);
-            PriceBookEntry objPbe1     = NSP_TestHelper.createPriceBookEntry(productlst[1].Id,200.0,true);
+            PriceBookEntry objPbe = NSP_TestHelper.createPriceBookEntry(productlst[0].Id,200.0,true);
+            PriceBookEntry objPbe1 = NSP_TestHelper.createPriceBookEntry(productlst[1].Id,200.0,true);
+            PriceBookEntry objPbe2 = NSP_TestHelper.createPriceBookEntry(productlst[2].Id,200.0,true);
             
             Id stdPriceBookId = Test.getStandardPricebookId();
             SBQQ__Quote__c objQuote1   = NSP_TestHelper.createCPQQuote(oAccount.Id,objOpprtunity1.Id,true);
             SBQQ__Quote__c objQuote2   = NSP_TestHelper.createCPQQuote(oAccount.Id,objOpprtunity2.Id,true);
 
-            List<SBQQ__Quoteline__c> quoteLines1 = NSP_TestHelper.createCPQQuotelinesSeperateProject(objQuote1,productlist,new List<PriceBookEntry> {objPbe,objPbe1}, true);
-            List<SBQQ__Quoteline__c> quoteLines2 = NSP_TestHelper.createCPQQuotelinesSeperateProject(objQuote2,productlist,new List<PriceBookEntry> {objPbe,objPbe1}, true);
+            List<SBQQ__Quoteline__c> quoteLines1 = NSP_TestHelper.createCPQQuotelinesSeperateProject(objQuote1,productlist,new List<PriceBookEntry> {objPbe,objPbe1,objPbe2}, true);
+            List<SBQQ__Quoteline__c> quoteLines2 = NSP_TestHelper.createCPQQuotelinesSeperateProject(objQuote2,productlist,new List<PriceBookEntry> {objPbe,objPbe1,objPbe2}, true);
             
 
             // create order from quote separate project
@@ -139,8 +148,26 @@
             insert orderList;
             
             orderList.clear();
-            
-            list<OrderItem> orderItemList = new list<OrderItem>([select Id,SBQQ__BillingFrequency__c,NSP_Project__c,NSP_Project_Name_New_Sales__c,Separate_Project__c,blng__RevenueRecognitionRule__r.NSP_Rev_Rec_Model__c,Order.Type, Matching_Product_Code__c, SBQQ__QuoteLine__r.SBQQ__EffectiveQuantity__c, Product2.ProductCode, OrderId, Order.NSP_Project__c from OrderItem WHERE Order.SBQQ__Quote__c IN:quoteids]);
+            list<OrderItem> orderItemList = new list<OrderItem>([
+                SELECT
+                    Id ,
+                    SBQQ__BillingFrequency__c ,
+                    NSP_Project__c ,
+                    NSP_Project_Name_New_Sales__c ,
+                    Separate_Project__c ,
+                    blng__RevenueRecognitionRule__r.NSP_Rev_Rec_Model__c ,
+                    Order.Type ,
+                    Matching_Product_Code__c ,
+                    SBQQ__QuoteLine__r.SBQQ__EffectiveQuantity__c ,
+                    Product2.ProductCode ,
+                    OrderId ,
+                    Order.NSP_Project__c
+                FROM OrderItem
+                WHERE (
+                    ( Order.SBQQ__Quote__c IN :quoteids )
+                    AND ( Product2.Name != 'Test Product1' )
+                )
+            ]);
             integer nTwice=0;
             for ( OrderItem oi : orderItemList ) {
                  if(oi.Separate_Project__c == true) {
@@ -163,6 +190,7 @@
             orderList.add(orderList1[0]);
             orderList1[1].Status = NSP_CPQConstants.ORDER_REVIEWED;
             orderList.add(orderList1[1]);
+            orderList[1].Type = NSP_CPQConstants.ORDER_TYPE_AMENDMENT;
             update orderList; 
             list<string> strlst = new list<string>();
             for ( order ord:orderList ) {
