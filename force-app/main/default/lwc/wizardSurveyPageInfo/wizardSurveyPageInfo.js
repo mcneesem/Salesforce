@@ -44,7 +44,7 @@ export default class WizardSurveyPageInfo extends LightningElement {
     @track WSEEName;
     contactOptions;
     region;
-    isSubmitButton;
+    isSubmitButton = false;
     isOnloadCalled=false;
     isWoMiddleMarketAsset=false;
 
@@ -539,7 +539,9 @@ get arrayToTextArea(){
                 || !this.endDateRequired && this.NSP_End_Date__c == null)
             && this.arrayToTextArea !=  null
             && this.arrayToTextArea != '') {
-                this.isSubmitButton = this.refs.isSubmit.label == 'Submit'? true:false;
+                if(this.refs.isSubmit.label == 'Submit'){
+                    this.isSubmitButton = true;
+                }
                 this.template.querySelector('lightning-record-edit-form').submit();
           }
     }
