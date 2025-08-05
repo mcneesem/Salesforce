@@ -420,15 +420,18 @@ public with sharing class NSP_ValidateOpportunityStage {
     public static void evaluateQuoteCriteria( Opportunity opp , Map<Id,SBQQ__Quote__c> quoteMap ) {
         try {
             // 205583/208335 - bypass QuoteCriteria is Fee Inclusive is checked
-            if ( !opp.Fee_Inclusive__c && !validHR360Products.contains( opp.NSP_PrimaryProduct__c ) ){
+            if ( !opp.Fee_Inclusive__c
+                && !validHRProducts.contains( opp.NSP_PrimaryProduct__c )
+                )
+            {
                 SBQQ__Quote__c primaryQuote = null;
                 if ( quoteMap != null ) {
                     primaryQuote = quoteMap.get( opp.SBQQ__PrimaryQuote__c ); // prevent NullPointerExceptions...
                 }
                 if ( exitCriteriaProductException.contains( opp.NSP_PrimaryProduct__c ) ) {
-                    evaluateQuoteCriteriaProductException( opp , primaryQuote );
+                    NSP_ValidateOpportunityStage.evaluateQuoteCriteriaProductException( opp , primaryQuote );
                 } else if ( ( opp.SBQQ__PrimaryQuote__c != null ) && ( primaryQuote != null ) ) {
-                    evaluateQuoteExistingQuote( opp , primaryQuote );
+                    NSP_ValidateOpportunityStage.evaluateQuoteExistingQuote( opp , primaryQuote );
                 } else if ( ( opp.SBQQ__PrimaryQuote__c == null )
                     && ( ( opp.Type == NSP_SalesConstants.NEW_BUSINESS_OPPORTUNITY )
                         || ( ( opp.Type == NSP_SalesConstants.OPPORTUNITY_TYPE_EXISTING_PRODUCT )
