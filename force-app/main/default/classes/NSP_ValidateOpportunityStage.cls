@@ -378,38 +378,35 @@ public with sharing class NSP_ValidateOpportunityStage {
 
     private static void evaluateAnalysisStageCriteriaOld( Opportunity opp , List<Event> eventList ) {
         String scannedTask='';
-        if ( !validHRProducts.contains( opp.NSP_PrimaryProduct__c )
-              && ( !analysisStageCriteraTypes.contains( opp.Type )
-                || (
-                        ( opp.NSP_PrimaryProduct__c != NSP_SalesConstants.WX )
-                     && ( opp.NSP_PrimaryProduct__c != NSP_SalesConstants.WA )
-                   )
+        if ( validHRProducts.contains( opp.NSP_PrimaryProduct__c )
+            || ( analysisStageCriteraTypes.contains( opp.Type )
+                && ( ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WX )
+                    || ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WA )
+                    )
                 )
             )
         {
-            return;
-        }
-
-        for(Event event : eventList){////looking for discovery
-            if( event.NSP_Event_Subtype__c == NSP_SalesConstants.DISCOVERY_CALL_ACTIVITY
-                && event.NSP_Status__c !=NSP_SalesConstants.Cancelled )
-            {
-                scannedTask += HAS_DISCOVERY;
-                if(event.NSP_Status__c !=NSP_SalesConstants.DISCOVERY_CALL_COMPLETED)
-                {
-                    scannedTask += HAS_OPEN_EVENT;
+            if ( eventList != null ) {
+                for ( Event event : eventList ) { ////looking for discovery
+                    if ( event.NSP_Event_Subtype__c == NSP_SalesConstants.DISCOVERY_CALL_ACTIVITY
+                        && event.NSP_Status__c !=NSP_SalesConstants.Cancelled
+                        )
+                    {
+                        scannedTask += HAS_DISCOVERY;
+                        if ( event.NSP_Status__c != NSP_SalesConstants.DISCOVERY_CALL_COMPLETED ) {
+                            scannedTask += HAS_OPEN_EVENT;
+                        }
+                    }
+                }
+                //Show error
+                if ( !scannedTask.contains( HAS_DISCOVERY ) ) {
+                    opp.addError( System.Label.NSP_AddDiscoveryCalls );
+                }
+                if ( scannedTask.contains(HAS_OPEN_EVENT) ) {
+                    opp.addError( System.Label.NSP_CloseDiscoveryCallEvents );
                 }
             }
         }
-        
-        //Show error
-        if( !scannedTask.contains(HAS_DISCOVERY) ){
-            opp.addError(System.Label.NSP_AddDiscoveryCalls);
-        }
-        if( scannedTask.contains(HAS_OPEN_EVENT) ){
-            opp.addError(System.Label.NSP_CloseDiscoveryCallEvents);
-        }
-       
     }
 
     // Evaluate criteria related to quote
