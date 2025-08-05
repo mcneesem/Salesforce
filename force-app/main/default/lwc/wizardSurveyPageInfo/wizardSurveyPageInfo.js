@@ -2,6 +2,7 @@ import { LightningElement, wire, api, track } from 'lwc';
 import { getPicklistValues } from 'lightning/uiObjectInfoApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { updateRecord,createRecord } from 'lightning/uiRecordApi';
+import { getRelatedListRecords } from 'lightning/uiRelatedListApi';
 import SURVEY_FIELD from '@salesforce/schema/NSP_ReportRequest__c.NSP_Survey_Type__c';
 import CONTACT from '@salesforce/schema/NSP_ReportRequest__c.NSP_Contact__c';
 import ID_FIELD from '@salesforce/schema/NSP_ReportRequest__c.Id';
@@ -29,6 +30,7 @@ export default class WizardSurveyPageInfo extends LightningElement {
     disableContact =true;
     enableContact = true;
     NSP_BargainingUnitEmployeesComplete__c = '';
+    NSP_Begin_Date__c;
     NSP_Survey_Type__c;
     isOnloaded = true;
     reportName;
@@ -42,7 +44,9 @@ export default class WizardSurveyPageInfo extends LightningElement {
     @track WSEEName;
     contactOptions;
     region;
+    isSubmitButton;
     isOnloadCalled=false;
+    isWoMiddleMarketAsset=false;
 
     columns = [
         { label: 'Name', fieldName: 'name' },
@@ -57,6 +61,24 @@ export default class WizardSurveyPageInfo extends LightningElement {
         }
     ];
 
+    @wire(getRelatedListRecords, {
+        parentRecordId: '$clientId',
+        relatedListId: 'Assets', // API name of the related list
+        fields: ['Asset.RecordTypeId','Asset.RecordType.DeveloperName', 'Asset.NSP_Client_Segment_type__c'] // Fields to retrieve
+    })
+    wiredAssetss({ error, data }) {
+        if (data != null && data.records != null) {   
+            data.records.forEach(asset => {
+                if(asset.fields != null && asset.fields.RecordType != null && asset.fields.NSP_Client_Segment_type__c != null){
+                    const recordTypeName = asset.fields.RecordType.displayValue;
+                    const clientSegmentType = asset.fields.NSP_Client_Segment_type__c.value;
+                    if (recordTypeName === 'WO' && clientSegmentType === 'Middle Market') {                                           
+                        this.isWoMiddleMarketAsset=true;
+                    }             
+                }                
+            });            
+        } 
+    }
 
     updateReportRequest(accountID) {
      const fields = {};
@@ -250,8 +272,13 @@ export default class WizardSurveyPageInfo extends LightningElement {
     }
 
 
-    handleSuccess(event) {
-        if(this.allowNext){
+    handleSuccess(event) { 
+        let fieldsData = JSON.parse(JSON.stringify(event.detail.fields));
+            fieldsData = { ...fieldsData, Id : event.detail.id }; 
+            fieldsData = { ...fieldsData, isSubmit : true};
+        if( this.isSubmitButton ){
+            this.dispatchEvent(new CustomEvent('next', {detail: fieldsData}));
+        } else if(this.allowNext){
             let recordField = JSON.parse(JSON.stringify(event.detail.fields)) ;
             this.reReqId = event.detail.id;
             recordField.Id=event.detail.id;
@@ -341,11 +368,16 @@ export default class WizardSurveyPageInfo extends LightningElement {
             } else {
                 this.showUnion = false;
             }
+        } else if (event.currentTarget.name == 'NSP_Begin_Date__c') {
+            this.NSP_Begin_Date__c = event.currentTarget.value;
+        } else if (event.currentTarget.name == 'NSP_End_Date__c') {
+            this.NSP_End_Date__c = event.currentTarget.value;
         }
     }
 
 
     handleAccChange(event) {
+        this.isWoMiddleMarketAsset=false;
         this.NSP_Contact__c = '';
         if(event.target.value != null &&  event.target.value.length > 17){
             this.isOnloaded = false ;
@@ -493,6 +525,22 @@ get arrayToTextArea(){
           }else{
             this.cname = '';
             this.NSP_Contact__c=''; 
+          }
+    }
+
+    handleSubmitWoAsset() {
+        this.handleNext();
+        this.allowNext =false;
+        
+        if(this.NSP_Survey_Type__c != null
+            && this.NSP_Begin_Date__c != null
+            && this.NSP_BargainingUnitEmployeesComplete__c != ''
+            && (this.endDateRequired && this.NSP_End_Date__c != null 
+                || !this.endDateRequired && this.NSP_End_Date__c == null)
+            && this.arrayToTextArea !=  null
+            && this.arrayToTextArea != '') {
+                this.isSubmitButton = this.refs.isSubmit.label == 'Submit'? true:false;
+                this.template.querySelector('lightning-record-edit-form').submit();
           }
     }
 }

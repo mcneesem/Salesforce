@@ -1213,7 +1213,7 @@
                 <componentName>flexipage:richText</componentName>
                 <identifier>flexipage_richText</identifier>
                 <visibilityRule>
-                    <booleanFilter>NOT((1 AND 2 AND 3) OR(  4 AND (5 OR 6 OR 7)))</booleanFilter>
+                    <booleanFilter>NOT((1 AND 2 AND 3) OR(  4 AND (5 OR 6 OR 7))) AND 8</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_Survey_Type__c}</leftValue>
                         <operator>NE</operator>
@@ -1248,6 +1248,11 @@
                         <leftValue>{!Record.NSP_Survey_Type__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Climate Plus</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Segment__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Middle Market</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -1265,7 +1270,7 @@
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection4</identifier>
                 <visibilityRule>
-                    <booleanFilter>(1 AND 2 AND 3) OR(  4 AND (5 OR 6 OR 7))</booleanFilter>
+                    <booleanFilter>((1 AND 2 AND 3) OR(  4 AND (5 OR 6 OR 7))) AND 8</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_Survey_Type__c}</leftValue>
                         <operator>NE</operator>
@@ -1301,6 +1306,11 @@
                         <operator>EQUAL</operator>
                         <rightValue>Climate Plus</rightValue>
                     </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Segment__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Middle Market</rightValue>
+                    </criteria>
                 </visibilityRule>
             </componentInstance>
         </itemInstances>
@@ -1316,6 +1326,13 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection5</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Segment__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Middle Market</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -1330,6 +1347,13 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection6</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Segment__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Middle Market</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
