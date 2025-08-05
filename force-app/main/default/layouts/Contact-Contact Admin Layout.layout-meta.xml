@@ -582,18 +582,6 @@
             <sortOrder>10</sortOrder>
         </platformActionListItems>
     </platformActionList>
-    <relatedContent>
-        <relatedContentItems>
-            <layoutItem>
-                <component>wits:newsPanel</component>
-            </layoutItem>
-        </relatedContentItems>
-        <relatedContentItems>
-            <layoutItem>
-                <component>runtime_sales_social:socialPanel</component>
-            </layoutItem>
-        </relatedContentItems>
-    </relatedContent>
     <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>Case.NAME</fields>
@@ -621,7 +609,7 @@
     </relatedLists>
     <relatedLists>
         <fields>ACCOUNT.NAME</fields>
-        <fields>NSP_Status__c</fields>
+        <fields>Account.NSP_Status__c</fields>
         <fields>NSP_Service_Roles__c</fields>
         <fields>NSP_Support_Role__c</fields>
         <fields>Client_Communication_Contact__c</fields>
