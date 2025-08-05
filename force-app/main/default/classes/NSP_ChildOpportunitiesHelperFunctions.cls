@@ -3,6 +3,7 @@
 // record visibility to the desired child Opportunities.
 public without sharing class NSP_ChildOpportunitiesHelperFunctions {
     //  test w/ NSP_OpportunityTriggerHelperTest (91%)
+
     private static final Id lockedOpportunityRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Opportunity' , 'Opportunity_Locked' );
     public NSP_ChildOpportunitiesHelperFunctions() { }
 
