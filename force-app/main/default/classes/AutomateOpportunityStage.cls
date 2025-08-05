@@ -1,13 +1,11 @@
 // ********************************************************************************************************
-//  ClassName:      AutomateOpportunityStage
-//  Description :   Class for determining Opportunities that may be ready for automatic 
-//                  Stage progression. Looks at Opportunity_Stage_Progression__mdt custom metadata type to 
-//                  determine if an Opportunity is eligible for automatic Stage progression based on its
-//                  current Stage and Primary Product.
-// 
-//  Params:         autoStageOppIds:    Set of Ids of Opportunities with Stage criteria changes, making 
-//                                      them possible candidates for automatic Stage progression
-//                 
+// ClassName: AutomateOpportunityStage
+// Description: Class for determining Opportunities that may be ready for automatic
+//              Stage progression. Looks at Opportunity_Stage_Progression__mdt custom metadata type to
+//              determine if an Opportunity is eligible for automatic Stage progression based on its
+//              current Stage and Primary Product.
+// Params: autoStageOppIds: Set of Ids of Opportunities with Stage criteria changes, making
+//                          them possible candidates for automatic Stage progression
 // ********************************************************************************************************
 public class AutomateOpportunityStage {
     // test w/ AutomateOpportunityStageTest (92%)
@@ -62,7 +60,7 @@ public class AutomateOpportunityStage {
                             for ( Opportunity_Stage_Progression__mdt stageAuto : optyAutoStages ) {
                                 if ( ( opp.StageName == stageAuto.Stage__c )
                                     && ( opp.NSP_PrimaryProduct__c == stageAuto.Primary_Product__c )
-                                   )
+                                    )
                                 {
                                     opp.StageName = stageAuto.Next_Stage__c;
                                     stageAutoOpptyList.add( opp );
@@ -72,10 +70,10 @@ public class AutomateOpportunityStage {
                         }
                     }
                 }
-                if( !stageAutoOpptyList.isEmpty() ) {
+                if ( !stageAutoOpptyList.isEmpty() ) {
                     Database.update( stageAutoOpptyList );
                 }
-            } catch ( Exception e ){
+            } catch ( Exception e ) {
                 NSP_ErrorLogHandler.logException( AutomateOpportunityStage.class.getName() , 'automateOpportunityStage' , e );
             }
         }
