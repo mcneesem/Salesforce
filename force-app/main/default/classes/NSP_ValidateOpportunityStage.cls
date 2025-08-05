@@ -32,15 +32,6 @@ public with sharing class NSP_ValidateOpportunityStage {
     public static List<string> closeLostRoleinOpportunityTeam = System.Label.Close_Lost_Role_in_Opportunity_Team.split(',');
     private static List<Opportunity_Stage_Validation__mdt> optyStageVals = Opportunity_Stage_Validation__mdt.getAll().values();
     private static String validationObjects = 'Opportunity,Event,Task,OpportunityContactRole,NSP_Employee_Split__c,SBQQ__Quote__c,NSP_Checklist__c';
-    private static Boolean hasAllowClosedLostPermission = CustomPermissionController.checkUserPermission( 'Allow_Closed_Lost_Opportunity' , UserInfo.getUserId() );
-    private static Boolean hasCLSOOppOwnerPermission = CustomPermissionController.checkUserPermission( 'Opportunity_Closed_Lost_SO_Opp_Owner' , UserInfo.getUserId() );
-    private static Boolean hasCLSOOppPermission = CustomPermissionController.checkUserPermission( 'Opportunity_Closed_Lost_SO_Opp' , UserInfo.getUserId() );
-    private static Boolean hasAllowCLMMPerm = CustomPermissionController.checkUserPermission( 'Opportunity_Allow_Closed_Lost_MM' , UserInfo.getUserId() );
-    private static Boolean hasAllowCLRETPerm = CustomPermissionController.checkUserPermission( 'Opportunity_Allow_Closed_Lost_RET' , UserInfo.getUserId() );
-    private static Boolean hasAllowCLInsurancePerm = CustomPermissionController.checkUserPermission( 'Opportunity_Allow_Closed_Lost_Insurance' , UserInfo.getUserId() );
-    private static Boolean hasAllowCLRecruitingPerm = CustomPermissionController.checkUserPermission( 'Opportunity_Allow_Closed_Lost_Recruiting' , UserInfo.getUserId() );
-    private static Boolean hasAllowCLTechnologyPerm = CustomPermissionController.checkUserPermission( 'Opportunity_Allow_Closed_Lost_Technology' , UserInfo.getUserId() );
-    private static Boolean hasAllowCWNCSUserPerm = CustomPermissionController.checkUserPermission( 'Opportunity_Closed_Won_NCS_User' , UserInfo.getUserId() );
     private static final String DEFAULT_PRODUCT = 'Default';
     private static final String OPPORTUNITY_OBJ = 'Opportunity';
     private static final String SOLD_TO_PAID = 'Sold to Paid';
@@ -843,6 +834,104 @@ public with sharing class NSP_ValidateOpportunityStage {
         return retVal;
     }
 
+    //
+    //
+    //
+
+    private static Boolean hasAllowClosedLostPermission {
+        private get {
+            if ( hasAllowClosedLostPermission == null ) {
+                hasAllowClosedLostPermission = CustomPermissionController.checkUserPermission( 'Allow_Closed_Lost_Opportunity' , UserInfo.getUserId() );
+            }
+            return hasAllowClosedLostPermission;
+        }
+        private set;
+    }
+
+    private static Boolean hasCLSOOppOwnerPermission {
+        private get {
+            if ( hasCLSOOppOwnerPermission == null ) {
+                hasCLSOOppOwnerPermission = CustomPermissionController.checkUserPermission( 'Opportunity_Closed_Lost_SO_Opp_Owner' , UserInfo.getUserId() );
+            }
+            return hasCLSOOppOwnerPermission;
+        }
+        private set;
+    }
+
+    private static Boolean hasCLSOOppPermission {
+        private get {
+            if ( hasCLSOOppPermission == null ) {
+                hasCLSOOppPermission = CustomPermissionController.checkUserPermission( 'Opportunity_Closed_Lost_SO_Opp' , UserInfo.getUserId() );
+            }
+            return hasCLSOOppPermission;
+        }
+        private set;
+    }
+
+    private static Boolean hasAllowCLMMPerm {
+        private get {
+            if ( hasAllowCLMMPerm == null ) {
+                hasAllowCLMMPerm = CustomPermissionController.checkUserPermission( 'Opportunity_Allow_Closed_Lost_MM' , UserInfo.getUserId() );
+            }
+            return hasAllowCLMMPerm;
+        }
+        private set;
+    }
+
+    private static Boolean hasAllowCLRETPerm {
+        private get {
+            if ( hasAllowCLRETPerm == null ) {
+                hasAllowCLRETPerm = CustomPermissionController.checkUserPermission( 'Opportunity_Allow_Closed_Lost_RET' , UserInfo.getUserId() );
+            }
+            return hasAllowCLRETPerm;
+        }
+        private set;
+    }
+
+    private static Boolean hasAllowCLInsurancePerm {
+        private get {
+            if ( hasAllowCLInsurancePerm == null ) {
+                hasAllowCLInsurancePerm = CustomPermissionController.checkUserPermission( 'Opportunity_Allow_Closed_Lost_Insurance' , UserInfo.getUserId() );
+            }
+            return hasAllowCLInsurancePerm;
+        }
+        private set;
+    }
+
+    private static Boolean hasAllowCLRecruitingPerm {
+        private get {
+            if ( hasAllowCLRecruitingPerm == null ) {
+                hasAllowCLRecruitingPerm = CustomPermissionController.checkUserPermission( 'Opportunity_Allow_Closed_Lost_Recruiting' , UserInfo.getUserId() );
+            }
+            return hasAllowCLRecruitingPerm;
+        }
+        private set;
+    }
+
+    private static Boolean hasAllowCLTechnologyPerm {
+        private get {
+            if ( hasAllowCLTechnologyPerm == null ) {
+                hasAllowCLTechnologyPerm = CustomPermissionController.checkUserPermission( 'Opportunity_Allow_Closed_Lost_Technology' , UserInfo.getUserId() );
+            }
+            return hasAllowCLTechnologyPerm;
+        }
+        private set;
+    }
+
+    private static Boolean hasAllowCWNCSUserPerm {
+        private get {
+            if ( hasAllowCWNCSUserPerm == null ) {
+                hasAllowCWNCSUserPerm = CustomPermissionController.checkUserPermission( 'Opportunity_Closed_Won_NCS_User' , UserInfo.getUserId() );
+            }
+            return hasAllowCWNCSUserPerm;
+        }
+        private set;
+    }
+
+    //
+    //
+    //
+
     private static Map<Id,User> permittedRETSCUserMap {
         private get {
             if ( permittedRETSCUserMap == null ) {
@@ -902,6 +991,10 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
         private set;
     }
+
+    //
+    //
+    //
 
     private static Set<String> userGroupMembership {
         private get {
