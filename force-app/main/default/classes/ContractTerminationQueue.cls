@@ -1,31 +1,21 @@
 public class ContractTerminationQueue implements Queueable , Database.AllowsCallouts , Finalizer {
-    // test w/ ContractTerminationHandlerTest (87%)
+    // test w/ ContractTerminationHandlerTest (86%)
 
     private Map<Id,Date> contractToTerminationDates = null;
     private List<SBQQ__Quote__c> quotesToUpdate = new List<SBQQ__Quote__c>();
+    private Map<Id,String> contractToEmails = null;
+    private List<String> toUsers = new List<String>();
+    private Id contractIdToSendEmail = null;
 
-    public ContractTerminationQueue( Map<Id,Date> local ) {
+    public ContractTerminationQueue( Map<Id,Date> local , Map<Id,String> contractToEmails ) {
         this.contractToTerminationDates = local;
+        this.contractToEmails = contractToEmails;
     }
 
     public void execute( QueueableContext context ) {
         try {
-            ContractAmender amender = new ContractAmender();
-            if ( ( this.contractToTerminationDates != null )
-                && !this.contractToTerminationDates.isEmpty()
-                )
-            {
-                for ( Id contractId : contractToTerminationDates.keySet() ) {
-                    Date terminationDate = contractToTerminationDates.get( contractId );
-                    QuoteModel quoteModel = amender.load( contractId );
-                    if ( ( quoteModel != null ) && ( quoteModel.record != null ) ) {
-                        SBQQ__Quote__c quote = (SBQQ__Quote__c)quoteModel.record;
-                        quote.NSP_TerminationDate__c = terminationDate;
-                        quote.Run_Quote_Calc_for_Termination__c = true;
-                        this.quotesToUpdate.add( quote );
-                    }
-                }
-            }
+            // Start Termination process by making callout
+            this.processTermination();
             if ( !this.quotesToUpdate.isEmpty() ) {
                 System.attachFinalizer( this );
             }
@@ -37,15 +27,54 @@ public class ContractTerminationQueue implements Queueable , Database.AllowsCall
     public void execute( FinalizerContext context ) {
         try {
             if ( !this.quotesToUpdate.isEmpty() ) {
-                Database.SaveResult[] quoteResults = Database.update( this.quotesToUpdate , false );
+                List<Database.SaveResult> quoteResults = Database.update( this.quotesToUpdate , false );
                 NSP_ErrorLogHandler.logResults(
                     ContractTerminationQueue.class.getName() ,
                     'QuoteUpdate' ,
                     quoteResults
                 );
+                // Loop through results and send email to errors
+                for ( Database.SaveResult quoteResult : quoteResults ) {
+                    if ( !quoteResult.isSuccess() ) {
+                        ContractTerminationHandler.sendEmail(
+                            this.toUsers,
+                            'Updating Quote for Contract (Id=' + this.contractIdToSendEmail + ')'
+                        );
+                    }
+                }
             }
         } catch ( Exception e ) {
             ContractTerminationQueue.handleException( e , 'execute-Finalizer' );
+        }
+    }
+
+    private void processTermination(){
+        if ( ( this.contractToTerminationDates != null ) && !this.contractToTerminationDates.isEmpty() ){
+            ContractAmender amender = new ContractAmender();
+            for ( Id contractId : contractToTerminationDates.keySet() ) {
+                this.contractIdToSendEmail = contractId;
+                //add users to send email notification
+                this.addToUsers( contractId );
+                Date terminationDate = contractToTerminationDates.get( contractId );
+                QuoteModel quoteModel = amender.load( contractId );
+                if ( ( quoteModel != null ) && ( quoteModel.record != null ) ) {
+                    SBQQ__Quote__c quote = (SBQQ__Quote__c)quoteModel.record;
+                    quote.NSP_TerminationDate__c = terminationDate;
+                    quote.Run_Quote_Calc_for_Termination__c = true;
+                    this.quotesToUpdate.add( quote );
+                }
+            }
+        }
+    }
+
+    private void addToUsers( Id contractId ) {
+        if ( ( contractToEmails != null ) && !contractToEmails.isEmpty() ) {
+            this.toUsers.add( contractToEmails.get( contractId ) );
+        } else if ( ( ContractTerminationHandler.autoTerminationEmailAddresses != null )
+            && !ContractTerminationHandler.autoTerminationEmailAddresses.isEmpty()
+            )
+        {
+            this.toUsers.addAll( ContractTerminationHandler.autoTerminationEmailAddresses );
         }
     }
 
@@ -61,6 +90,7 @@ public class ContractTerminationQueue implements Queueable , Database.AllowsCall
             methodName ,
             e
         );
+        ContractTerminationHandler.sendEmail( null , ContractTerminationQueue.class.getName() + '.' + methodName );
     }
 
 }

@@ -62,6 +62,40 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Set_Fault_Element_Get_Orders</name>
+        <label>Set Fault Element: Get_Orders</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Orders</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Flow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_Termination_Contract</name>
+        <label>Set Fault Element: Get_Termination_Contract</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Termination_Contract</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Flow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_Fault_Element_Update_Contract</name>
         <label>Set Fault Element: Update_Contract</label>
         <locationX>0</locationX>
@@ -78,8 +112,8 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Update_Termination_Type</name>
-        <label>Update Termination Type</label>
+        <name>Update_Contract_Fields</name>
+        <label>Update Contract Fields</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
@@ -173,7 +207,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Update_Termination_Type</targetReference>
+                <targetReference>Update_Contract_Fields</targetReference>
             </connector>
             <label>Found Contracts</label>
         </rules>
@@ -231,6 +265,9 @@
         <connector>
             <targetReference>Get_Orders_Null_Check</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_Orders</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>SBQQ__Quote__c</field>
@@ -259,6 +296,9 @@
         <connector>
             <targetReference>Get_Contracts_Null_Check</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_Termination_Contract</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -311,6 +351,9 @@
         <label>Fault Flow</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <connector>
+            <targetReference>Send_Failure_Email</targetReference>
+        </connector>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
@@ -331,10 +374,42 @@
             </value>
         </inputAssignments>
     </subflows>
+    <subflows>
+        <name>Send_Failure_Email</name>
+        <label>Send Failure Email</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <flowName>Contract_Termination_Failure_Email_Notification</flowName>
+        <inputAssignments>
+            <name>failureReason</name>
+            <value>
+                <elementReference>varFailureReason</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <textTemplates>
+        <name>varFailureReason</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Contract Update for Contract (Id={!Get_Termination_Contract.Id})</text>
+    </textTemplates>
+    <variables>
+        <name>EmailNotify</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>NewTerminationDate</name>
         <dataType>Date</dataType>
         <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>RecipientAddress</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>

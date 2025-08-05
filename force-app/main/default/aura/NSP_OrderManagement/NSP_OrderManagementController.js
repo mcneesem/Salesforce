@@ -1,6 +1,7 @@
 ({
     doInit : function(component, event, helper) {
         helper.getContractRecord(component, event, helper);
+        helper.checkPermission(component, event, helper);
     },
     handleSelection : function(component, event, helper) {
         var changeValue = event.getParam("value");
@@ -11,10 +12,10 @@
         }
         else if(changeValue && changeValue == 'Supplemental Only'){
             component.set("v.displaystring",'Additional Services/Training');
-        } 
+        }
         else if(changeValue && changeValue == 'Termination'){
             component.set("v.displaystring",'Full termination of products');
-        } 
+        }
          component.set("v.displayhelp",true);
     },
    handleContractSelect : function(component, event, helper) {
@@ -22,16 +23,19 @@
 		//	component.set('v.spinner',true);
 			component.set("v.selectedContractId",component.get("v.selectedRow")[0].Id);/////////////
             component.set('v.section','Option');
- 
+
         } else{
           //display message to select an active contract
         }
-       
+
     },
-    
+
      handleTransactionTypeSelection : function(component, event, helper) {
         helper.handleTransactionTypeSelect(component, event, helper);
-         
+
+    },
+    closeMessageModal: function(component, event, helper) {
+        $A.get("e.force:closeQuickAction").fire();
     },
     handleNext : function(component, event, helper) {
         if(component.get("v.optionSelected")=='Renewal'){
@@ -47,17 +51,16 @@
                         var toastEvent = $A.get("e.force:showToast");
                         toastEvent.setParams({
                             "title": "Error!",
-                            "type" : 'error',                           
+                            "type" : 'error',
                             "message":''
                         });
                         toastEvent.fire();
-                        $A.get("e.force:closeQuickAction").fire();                    
+                        $A.get("e.force:closeQuickAction").fire();
                     }
                 }
             });
-            $A.enqueueAction(action); 
-        }
-        else{
+            $A.enqueueAction(action);
+        }else{
             component.set('v.section','MSAContract');
         }
     },
