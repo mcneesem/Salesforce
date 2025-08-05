@@ -103,15 +103,15 @@ public with sharing class NSP_CustomCaseCreationPageController {
     }
     
     private static List<NSP_Category_Sub_Category_Mapping__c> getFilteredCategorySubCategoryRecords(List<NSP_Category_Sub_Category_Mapping__c> lstCatMapping) {
-        final String CATEGORY_HR_EMPLOYEE_RELATIONS = 'HR Employee Relations';
-        final String SUBCATEGORY_SEPARATION_AGREEMENT = 'Separation Agreement Request';
+        final String categroyHrEmployeeRelations = 'HR Employee Relations';
+        final String subCategorySeparationAgreementRequest = 'Separation Agreement Request';
         
         Map<String, NSP_Category_Sub_Category_Mapping__c> filteredMap = new Map<String, NSP_Category_Sub_Category_Mapping__c>();
         
         for (NSP_Category_Sub_Category_Mapping__c mapping : lstCatMapping) {
             Boolean isServiceOps = NSP_CustomCaseCreationPageController.SERVICE_OPERATIONS.equalsIgnoreCase(mapping.NSP_Category__c);
-            Boolean isHRSeparationAgreement = CATEGORY_HR_EMPLOYEE_RELATIONS.equalsIgnoreCase(mapping.NSP_Category__c) &&
-                SUBCATEGORY_SEPARATION_AGREEMENT.equalsIgnoreCase(mapping.NSP_Subcategory__c);
+            Boolean isHRSeparationAgreement = categroyHrEmployeeRelations.equalsIgnoreCase(mapping.NSP_Category__c) &&
+                subCategorySeparationAgreementRequest.equalsIgnoreCase(mapping.NSP_Subcategory__c);
             
             if (!isServiceOps && !isHRSeparationAgreement) {
                 filteredMap.put(mapping.Id, mapping);
