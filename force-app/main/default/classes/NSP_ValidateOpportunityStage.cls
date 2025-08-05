@@ -614,25 +614,21 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
     }
 
-    private static Integer checkAllowClosedLost(Opportunity opp, List<ID> teamMemberList, List<String> salesOfficeMembership, List<String> salesOfficeList) {
-        Integer canCloseLost = checkProductAllowClosedLost(opp);
-        if( hasAllowClosedLostPermission ){
+    private static Integer checkAllowClosedLost( Opportunity opp , List<ID> teamMemberList , List<String> salesOfficeMembership , List<String> salesOfficeList ) {
+        Integer canCloseLost = checkProductAllowClosedLost( opp );
+        if ( hasAllowClosedLostPermission ) {
             canCloseLost++;
-        } else if( opp.ownerid == UserInfo.getUserId() ){
+        } else if ( opp.ownerid == UserInfo.getUserId() ) {
             canCloseLost++;
-        } else if( teamMemberList.contains(UserInfo.getUserId()) ){
+        } else if ( teamMemberList.contains( UserInfo.getUserId() ) ) {
             canCloseLost++;
-        } else if( ( opp.NSP_Account_Segment__c == NSP_SalesConstants.MIDMARKET_SALES )
-             && hasAllowCLMMPerm ){
+        } else if ( ( opp.NSP_Account_Segment__c == NSP_SalesConstants.MIDMARKET_SALES ) && hasAllowCLMMPerm ) {
             canCloseLost++;
-        } else if( ( getSalesOfficeGroup(UserInfo.getUserId(),salesOfficeMembership) )
-             && hasCLSOOppOwnerPermission ){
+        } else if ( getSalesOfficeGroup( UserInfo.getUserId() , salesOfficeMembership ) && hasCLSOOppOwnerPermission ) {
             canCloseLost++;
-        } else if( ( getSalesOfficeGroup(UserInfo.getUserId(),salesOfficeList) )
-             && hasCLSOOppPermission){
+        } else if ( getSalesOfficeGroup( UserInfo.getUserId() , salesOfficeList ) && hasCLSOOppPermission ) {
             canCloseLost++;
         }
-
         return canCloseLost;
     }
 
