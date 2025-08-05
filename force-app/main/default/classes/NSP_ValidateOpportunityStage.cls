@@ -420,26 +420,25 @@ public with sharing class NSP_ValidateOpportunityStage {
     public static void evaluateQuoteCriteria( Opportunity opp , Map<Id,SBQQ__Quote__c> quoteMap ) {
         try {
             // 205583/208335 - bypass QuoteCriteria is Fee Inclusive is checked
-            if ( opp.Fee_Inclusive__c || validHR360Products.contains( opp.NSP_PrimaryProduct__c ) ){
-                return;
-            }
-
-            SBQQ__Quote__c primaryQuote = null;
-            if ( quoteMap != null ) {
-                primaryQuote = quoteMap.get( opp.SBQQ__PrimaryQuote__c ); // prevent NullPointerExceptions...
-            }
-            if ( exitCriteriaProductException.contains( opp.NSP_PrimaryProduct__c ) ){
-                evaluateQuoteCriteriaProductException( opp , primaryQuote );
-            } else if ( opp.SBQQ__PrimaryQuote__c != null && primaryQuote != null ){
-                evaluateQuoteExistingQuote( opp , primaryQuote );
-            } else if ( ( opp.SBQQ__PrimaryQuote__c == null )
-                   && ( ( opp.Type == NSP_SalesConstants.NEW_BUSINESS_OPPORTUNITY )
+            if ( !opp.Fee_Inclusive__c && !validHR360Products.contains( opp.NSP_PrimaryProduct__c ) ){
+                SBQQ__Quote__c primaryQuote = null;
+                if ( quoteMap != null ) {
+                    primaryQuote = quoteMap.get( opp.SBQQ__PrimaryQuote__c ); // prevent NullPointerExceptions...
+                }
+                if ( exitCriteriaProductException.contains( opp.NSP_PrimaryProduct__c ) ) {
+                    evaluateQuoteCriteriaProductException( opp , primaryQuote );
+                } else if ( ( opp.SBQQ__PrimaryQuote__c != null ) && ( primaryQuote != null ) ) {
+                    evaluateQuoteExistingQuote( opp , primaryQuote );
+                } else if ( ( opp.SBQQ__PrimaryQuote__c == null )
+                    && ( ( opp.Type == NSP_SalesConstants.NEW_BUSINESS_OPPORTUNITY )
                         || ( ( opp.Type == NSP_SalesConstants.OPPORTUNITY_TYPE_EXISTING_PRODUCT )
-                          && ( opp.NSP_AddonType__c == NSP_SalesConstants.OPPORTUNITY_SUBTYPE_AMENDMENT ) )
-                      )
-                )
-            {
-                opp.addError(System.Label.NSP_AddPrimaryQuote);
+                            && ( opp.NSP_AddonType__c == NSP_SalesConstants.OPPORTUNITY_SUBTYPE_AMENDMENT )
+                            )
+                        )
+                    )
+                {
+                    opp.addError( System.Label.NSP_AddPrimaryQuote );
+                }
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
@@ -762,7 +761,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
         return retVal;
     }
-   
+
     private static Map<Id,User> permittedRETSCUserMap {
         private get {
             if ( permittedRETSCUserMap == null ) {
