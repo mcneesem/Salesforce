@@ -8,11 +8,16 @@
                 )
             {
                 let product = opportunityRecord.NSP_PrimaryProduct__c;
-                let segment = (
-                    product == "WX"
+                let segment = "";
+                if ( ( product == "WX" )
                     && opportunityRecord.NSP_Account_Segment__c
-                    && ( ( ( opportunityRecord.NSP_Account_Segment__c == "MidMarket" ) || ( opportunityRecord.NSP_Account_Segment__c == "Enterprise" ) ) ? "MidMarket" : "" )
-                    );
+                    && ( ( opportunityRecord.NSP_Account_Segment__c == "MidMarket" )
+                        || ( opportunityRecord.NSP_Account_Segment__c == "Enterprise" )
+                        )
+                    )
+                {
+                    segment = "MidMarket";
+                }
                 let action = component.get( "c.getMessage" );
                 action.setParams({
                     stageName : opportunityRecord.StageName ,
