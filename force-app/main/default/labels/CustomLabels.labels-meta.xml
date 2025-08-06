@@ -4090,7 +4090,7 @@ Meeting - Project Related - Fiduciary,Mutual Fund Corrections - Pricing, Manual 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>New Client Sales Email</shortDescription>
-        <value>tejas.patkar@insperity.com</value>
+        <value>newclientsales@insperity.com</value>
     </labels>
     <labels>
         <fullName>NSP_New_Hampshire_Message</fullName>
