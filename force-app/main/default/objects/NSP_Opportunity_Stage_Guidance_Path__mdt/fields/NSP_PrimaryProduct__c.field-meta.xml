@@ -68,12 +68,12 @@
             <value>
                 <fullName>WO</fullName>
                 <default>false</default>
-                <label>WO</label>
+                <label>HR360 Solution</label>
             </value>
             <value>
                 <fullName>WS</fullName>
                 <default>false</default>
-                <label>WS</label>
+                <label>HR360 Select Edition</label>
             </value>
             <value>
                 <fullName>WX</fullName>
