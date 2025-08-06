@@ -54,7 +54,6 @@ public with sharing class NSP_CustomCaseCreationPageController {
                         AND ( NSP_UserTitle__c INCLUDES ( :userTitle ) )
                         AND ( NSP_isActive__c = true )
                         AND ( NSP_Subcategory__c != :NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI )
-                        AND ( NSP_Category__c != :NSP_CustomCaseCreationPageController.SERVICE_OPERATIONS )
                         AND ( Id NOT IN :NSP_CustomCaseCreationPageController.restrictedFlsaMappingIds )
                     )
                     ORDER BY NSP_Category__c , NSP_Subcategory__c
@@ -71,7 +70,6 @@ public with sharing class NSP_CustomCaseCreationPageController {
                         ( NSP_RecordType__c = :caseRecType )
                         AND ( NSP_isActive__c = true )
                         AND ( NSP_Subcategory__c != :NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI )
-                        AND ( NSP_Category__c != :NSP_CustomCaseCreationPageController.SERVICE_OPERATIONS )
                         AND ( Id NOT IN :NSP_CustomCaseCreationPageController.restrictedFlsaMappingIds )
                     )
                     ORDER BY NSP_Category__c , NSP_Subcategory__c
@@ -93,10 +91,30 @@ public with sharing class NSP_CustomCaseCreationPageController {
                     ORDER BY NSP_Category__c , NSP_Subcategory__c
                 ];
             }
+            lstCatMapping = NSP_CustomCaseCreationPageController.getFilteredCategorySubCategoryRecords( lstCatMapping );
             return lstCatMapping;
         } catch ( Exception e ) {
             throw new AuraHandledException( e.getMessage() );
         }
+    }
+
+    private static List<NSP_Category_Sub_Category_Mapping__c> getFilteredCategorySubCategoryRecords( List<NSP_Category_Sub_Category_Mapping__c> lstCatMapping ) {
+        String categroyHrEmployeeRelations = 'HR Employee Relations';
+        String subCategorySeparationAgreementRequest = 'Separation Agreement Request';
+        Map<String,NSP_Category_Sub_Category_Mapping__c> filteredMap = new Map<String,NSP_Category_Sub_Category_Mapping__c>();
+        if ( ( lstCatMapping != null ) && !lstCatMapping.isEmpty() ) {
+            for ( NSP_Category_Sub_Category_Mapping__c mapping : lstCatMapping ) {
+                Boolean isServiceOps = NSP_CustomCaseCreationPageController.SERVICE_OPERATIONS.equalsIgnoreCase( mapping.NSP_Category__c );
+                Boolean isHRSeparationAgreement = (
+                    categroyHrEmployeeRelations.equalsIgnoreCase( mapping.NSP_Category__c )
+                    && subCategorySeparationAgreementRequest.equalsIgnoreCase( mapping.NSP_Subcategory__c )
+                );
+                if ( !isServiceOps && !isHRSeparationAgreement ) {
+                    filteredMap.put( mapping.Id , mapping );
+                }
+            }
+        }
+        return filteredMap.values();
     }
 
     private static Boolean hasPermissionFLSA {
@@ -367,6 +385,7 @@ public with sharing class NSP_CustomCaseCreationPageController {
                     ORDER BY NSP_Category__c , NSP_Subcategory__c
                 ];
             }
+            lstCatMapping = NSP_CustomCaseCreationPageController.getFilteredCategorySubCategoryRecords( lstCatMapping );
             return lstCatMapping;
         } catch ( Exception e ) {
             throw new AuraHandledException( e.getMessage() );
