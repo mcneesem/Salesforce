@@ -9,7 +9,10 @@
   $Profile.Name != &quot;Integration User&quot; ,
   OR(
     CreatedBy.Profile.Name = &quot;Integration User&quot; ,
-    ISPICKVAL( NSP_Source__c , &quot;AIMS&quot; )
+    OR( 
+        ISPICKVAL( NSP_Source__c , &quot;AIMS&quot; ),
+        ISPICKVAL( NSP_Source__c , &quot;Integration&quot; )
+       )
   )
 )</errorConditionFormula>
     <errorMessage>Address Created by Integration users can only be updated by Integration users.</errorMessage>
