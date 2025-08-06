@@ -99,6 +99,7 @@ public class NSP_SalesConstants {
     public static final String CORE_SALES = 'Core';
     public static final String MIDMARKET_SALES = 'MidMarket';
     public static final String EMERGING_GROWTH = 'Emerging Growth';
+    public static final String ENTERPRISE_SALES = 'Enterprise';
 
     public static final String NCS_SALES_GROUP = 'NSP_NCS_Group';
     public static final String NCS_SALES_TASK_SUBJECT = 'HSA Addendum Request';
