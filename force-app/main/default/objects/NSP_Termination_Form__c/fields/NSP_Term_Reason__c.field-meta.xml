@@ -97,6 +97,11 @@
                 <default>false</default>
                 <label>2500 Reinstatement (client request)</label>
             </value>
+            <value>
+                <fullName>2400 (NSP Request)</fullName>
+                <default>false</default>
+                <label>2400 (NSP Request)</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Insperity Requested Termination Codes</controllingFieldValue>
@@ -137,6 +142,10 @@
         <valueSettings>
             <controllingFieldValue>Insperity Requested Termination Codes</controllingFieldValue>
             <valueName>2500 Reinstatement (client request)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Insperity Requested Termination Codes</controllingFieldValue>
+            <valueName>2400 (NSP Request)</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Client Requested Termination Codes</controllingFieldValue>
