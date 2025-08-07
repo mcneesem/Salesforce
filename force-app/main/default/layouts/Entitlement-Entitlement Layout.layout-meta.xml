@@ -105,6 +105,7 @@
         <relatedList>RelatedMilestoneList</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>NewCase</excludeButtons>
         <fields>CASES.CASE_NUMBER</fields>
         <fields>NAME</fields>
         <fields>CASES.SUBJECT</fields>
