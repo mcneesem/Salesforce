@@ -1,14 +1,16 @@
 // ********************************************************************************************************
 // ClassName: AutomateOpportunityStage
-// Description: Class for determining and validating Opportunities that may be ready for automatic Stage
-//              progression. Returns List or Map of Opportunities that should move to next Stage.
-// Params: autoStageOppIds: Set of Ids of Opportunities with Stage criteria changes, making them possible
-//                          candidates for automatic Stage progression
+// Description: Class for determining Opportunities that may be ready for automatic
+//              Stage progression. Looks at Opportunity_Stage_Progression__mdt custom metadata type to
+//              determine if an Opportunity is eligible for automatic Stage progression based on its
+//              current Stage and Primary Product.
+// Params: autoStageOppIds: Set of Ids of Opportunities with Stage criteria changes, making
+//                          them possible candidates for automatic Stage progression
 // ********************************************************************************************************
 public class AutomateOpportunityStage {
     // test w/ AutomateOpportunityStageTest (92%)
 
-    public static void automateOpportunityStageAsync(List<Id> autoStageOppIds) {
+    public static void automateOpportunityStageAsync( List<Id> autoStageOppIds ) {
         if ( ( autoStageOppIds != null )
             && !autoStageOppIds.isEmpty()
             && ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() )
@@ -18,7 +20,7 @@ public class AutomateOpportunityStage {
         }
     }
 
-    @InvocableMethod(label='Automate Opportunity Stage' description='Automates Opportunity Stage progression' category='Opportunity')
+    @InvocableMethod( label='Automate Opportunity Stage' description='Automates Opportunity Stage progression' category='Opportunity' )
     public static void automateOpportunityStage( List<Id> autoStageOppIds ) {
         if ( ( autoStageOppIds != null ) && !autoStageOppIds.isEmpty() ) {
             try {
@@ -62,6 +64,7 @@ public class AutomateOpportunityStage {
                                 {
                                     opp.StageName = stageAuto.Next_Stage__c;
                                     stageAutoOpptyList.add( opp );
+                                    break;
                                 }
                             }
                         }
