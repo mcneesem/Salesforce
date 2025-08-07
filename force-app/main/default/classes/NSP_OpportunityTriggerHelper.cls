@@ -287,18 +287,21 @@ public with sharing class NSP_OpportunityTriggerHelper {
                 }
             }
 
-            if(opportunityNewMap.get(opportunityId).StageName != opportunityOldMap.get(opportunityId).StageName) {
-                if ( NSP_OpportunityTriggerHelper.Is_Enabled_WO_WS_Stage_Entry ) {
-                    String newStageName = opportunityNewMap.get(opportunityId).StageName;
-                    String oldStageName = opportunityOldMap.get(opportunityId).StageName;
-                    if ( !NSP_OpportunityTriggerHelper.hasAdminPermission 
-                        && ( opptyStageOrder.get( newStageName ) < opptyStageOrder.get( oldStageName ) )
+            if ( opportunityNewMap.get(opportunityId).StageName != opportunityOldMap.get(opportunityId).StageName ) {
+                String newStageName = opportunityNewMap.get(opportunityId).StageName;
+                String oldStageName = opportunityOldMap.get(opportunityId).StageName;
+                if ( NSP_OpportunityTriggerHelper.Is_Enabled_WO_WS_Stage_Entry
+                    && !NSP_OpportunityTriggerHelper.hasAdminPermission 
+                    && ( opptyStageOrder.get( newStageName ) < opptyStageOrder.get( oldStageName ) )
+                    && ( opportunityNewMap.get(opportunityId).NSP_PrimaryProduct__c == opportunityOldMap.get(opportunityId).NSP_PrimaryProduct__c )
+                    && ( ( opportunityNewMap.get(opportunityId).NSP_PrimaryProduct__c == NSP_SalesConstants.WO )
+                         || ( opportunityNewMap.get(opportunityId).NSP_PrimaryProduct__c == NSP_SalesConstants.WS )
                         )
-                    {
-                        opportunityNewMap.get(opportunityId).addError(Label.Opportunity_Backward_Stage);
-                    }
+                    )
+                {
+                    opportunityNewMap.get(opportunityId).addError( Label.Opportunity_Backward_Stage );
                 }
-                stageChangedOpportunityList.add(opportunityNewMap.get(opportunityId));
+                stageChangedOpportunityList.add( opportunityNewMap.get(opportunityId) );
             }
 
             if(opportunityNewMap.get(opportunityId).NSP_Signed_Delivery_Order__c && opportunityNewMap.get(opportunityId).NSP_Signed_Delivery_Order__c != opportunityOldMap.get(opportunityId).NSP_Signed_Delivery_Order__c){
@@ -555,14 +558,22 @@ public with sharing class NSP_OpportunityTriggerHelper {
         List<Id> stageAutoOpportunityIds
         )
     {
-        if ( Is_Enabled_WO_WS_Stage_Entry
-            // Bid_Status__c,NSP_Closing_Appointment__c,NSP_Number_of_Employees__c,NSP_PrimaryProduct__c,
-            // NSP_Forecast_Status__c,Type are triggers for Stage progression automation
+        // Any field update related to Stage Exit/Entry should trigger Stage progression automation attempt
+        if ( NSP_OpportunityTriggerHelper.Is_Enabled_WO_WS_Stage_Entry
             && ( newOpportunity.NSP_Bid_Status__c != oldOpportunity.NSP_Bid_Status__c
                 || newOpportunity.NSP_Closing_Appointment__c != oldOpportunity.NSP_Closing_Appointment__c
                 || newOpportunity.NSP_Number_of_Employees__c != oldOpportunity.NSP_Number_of_Employees__c
                 || newOpportunity.NSP_PrimaryProduct__c != oldOpportunity.NSP_PrimaryProduct__c
                 || newOpportunity.NSP_Forecast_Status__c != oldOpportunity.NSP_Forecast_Status__c
+                || newOpportunity.Fee_Inclusive__c != oldOpportunity.Fee_Inclusive__c
+                || newOpportunity.CloseDate != oldOpportunity.CloseDate
+                || newOpportunity.NSP_CountAsSale__c != oldOpportunity.NSP_CountAsSale__c
+                || newOpportunity.NSP_Booked_Date__c != oldOpportunity.NSP_Booked_Date__c
+                || newOpportunity.NSP_TotalAnnualPayroll__c != oldOpportunity.NSP_TotalAnnualPayroll__c
+                || newOpportunity.NSP_Bypass_Docusign_Signature__c != oldOpportunity.NSP_Bypass_Docusign_Signature__c
+                || newOpportunity.NSP_Order_Generated__c != oldOpportunity.NSP_Order_Generated__c
+                || newOpportunity.NSP_Client_For_Life__c != oldOpportunity.NSP_Client_For_Life__c
+                || newOpportunity.StageName != oldOpportunity.StageName
                 || newOpportunity.Type != oldOpportunity.Type
                 )
             )
