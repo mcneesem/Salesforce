@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Object__c</fullName>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Object</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Event</fullName>
+                <default>true</default>
+                <label>Event</label>
+            </value>
+            <value>
+                <fullName>NSP_Checklist__c</fullName>
+                <default>false</default>
+                <label>Checklist</label>
+            </value>
+            <value>
+                <fullName>NSP_Employee_Split__c</fullName>
+                <default>false</default>
+                <label>Opportunity Credit</label>
+            </value>
+            <value>
+                <fullName>Opportunity</fullName>
+                <default>false</default>
+                <label>Opportunity</label>
+            </value>
+            <value>
+                <fullName>OpportunityContactRole</fullName>
+                <default>false</default>
+                <label>Opportunity Contact Role</label>
+            </value>
+            <value>
+                <fullName>SBQQ__Quote__c</fullName>
+                <default>false</default>
+                <label>Quote</label>
+            </value>
+            <value>
+                <fullName>Task</fullName>
+                <default>false</default>
+                <label>Task</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
