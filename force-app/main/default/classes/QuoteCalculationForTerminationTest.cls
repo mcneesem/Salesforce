@@ -12,6 +12,13 @@ private class QuoteCalculationForTerminationTest {
         orderSetting.Bypass_Rule_PreventStatusChange__c = true;
         upsert orderSetting;
 
+        Contract_Termination_Settings__c ctSetting = Contract_Termination_Settings__c.getOrgDefaults();
+        ctSetting.AdminEmailAddresses__c = 'test@insperity.com';
+        ctSetting.AutoTerminationEmailAddresses__c = 'test123@insperity.com';
+        ctSetting.IsEnabledAutoTermination__c = true;
+        ctSetting.IsEnabledNotificationFlow__c = true;
+        upsert ctSetting;
+
          //Disable unnesessary triggers
         NSP_AccountTriggerHandler.TriggerDisabled = true;
         NSP_OrderItemTriggerHandler.TriggerDisabled = true;
@@ -67,6 +74,7 @@ private class QuoteCalculationForTerminationTest {
         Test.startTest();
         QuoteCalculationForTermination.runQuoteCalculationForTermination(quoteIdSet);
         QuoteCalculationForTermination.testHandleException( null , null );
+        QuoteCalculationForTermination.sendfailureEmail(null,'Test email');
         QuoteUpdateQueue.testHandleException( null , null );
         Test.stopTest();
 

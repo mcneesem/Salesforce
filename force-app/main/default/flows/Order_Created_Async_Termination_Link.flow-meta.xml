@@ -212,6 +212,8 @@
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Order</object>
+        <sortField>ActivatedDate</sortField>
+        <sortOrder>Desc</sortOrder>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
@@ -265,6 +267,9 @@
         <label>Fault Flow</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <connector>
+            <targetReference>Send_Failure_Email</targetReference>
+        </connector>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
@@ -285,6 +290,24 @@
             </value>
         </inputAssignments>
     </subflows>
+    <subflows>
+        <name>Send_Failure_Email</name>
+        <label>Send Failure Email</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <flowName>Contract_Termination_Failure_Email_Notification</flowName>
+        <inputAssignments>
+            <name>failureReason</name>
+            <value>
+                <elementReference>varFailureReason</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <textTemplates>
+        <name>varFailureReason</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Updating Termination Order Link for Contract (Id={!$Record.SBQQ__Quote__r.SBQQ__Opportunity2__r.SBQQ__AmendedContract__c})</text>
+    </textTemplates>
     <variables>
         <name>ContractID</name>
         <dataType>String</dataType>

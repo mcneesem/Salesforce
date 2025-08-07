@@ -1,5 +1,5 @@
-public class QuoteUpdateQueue implements Queueable , Finalizer {
-    // test w/ QuoteCalculationForTerminationTest (87%)
+public class QuoteUpdateQueue implements Queueable , System.Finalizer {
+    // test w/ QuoteCalculationForTerminationTest (88%)
 
     private static final String QUOTE_STATUS_APPROVED = 'Approved';
     private Id quoteId = null;
@@ -53,14 +53,24 @@ public class QuoteUpdateQueue implements Queueable , Finalizer {
     public void execute( System.FinalizerContext context ) {
         try {
             if ( !this.quotesToUpdate.isEmpty() ) {
-                Database.SaveResult[] quoteResults = Database.update( this.quotesToUpdate , false );
+                List<Database.SaveResult> quoteResults = Database.update( this.quotesToUpdate , false );
                 NSP_ErrorLogHandler.logResults(
                     QuoteUpdateQueue.class.getName() ,
                     'QuoteUpdate' ,
                     quoteResults
                 );
+                String recipientEmail = QuoteCalculationForTermination.getRequesterEmailAddress( this.quoteId );
+                //Check for results and iterate to find the errors
+                for ( Database.SaveResult quoteResult : quoteResults ) {
+                    if ( !quoteResult.isSuccess() ) {
+                        QuoteCalculationForTermination.sendfailureEmail(
+                            recipientEmail ,
+                            'Updating Quote Fields for Quote (Id=' + this.quoteId + ')'
+                        );
+                    }
+                }
             }
-        } catch ( Exception e ) {
+        } catch( Exception e ){
             QuoteUpdateQueue.handleException( e , 'execute-Finalizer' );
         }
     }
@@ -78,6 +88,7 @@ public class QuoteUpdateQueue implements Queueable , Finalizer {
             methodName ,
             e
         );
+        ContractTerminationHandler.sendEmail( null, QuoteUpdateQueue.class.getName() + '.' + methodName );
     }
 
 }

@@ -12,6 +12,13 @@ private class ContractTerminationHandlerTest {
         orderSetting.Bypass_Rule_PreventStatusChange__c = true;
         upsert orderSetting;
 
+        Contract_Termination_Settings__c ctSetting = Contract_Termination_Settings__c.getOrgDefaults();
+        ctSetting.AdminEmailAddresses__c = 'test@insperity.com';
+        ctSetting.AutoTerminationEmailAddresses__c = 'test123@insperity.com';
+        ctSetting.IsEnabledAutoTermination__c = true;
+        ctSetting.IsEnabledNotificationFlow__c = true;
+        upsert ctSetting;
+
          //Disable unnesessary triggers
         NSP_AccountTriggerHandler.TriggerDisabled = true;
         NSP_OrderItemTriggerHandler.TriggerDisabled = true;
@@ -118,6 +125,8 @@ private class ContractTerminationHandlerTest {
         // Call the method being tested
         Test.startTest();
         ContractTerminationHandler.runContractTerminationHandler(new List<ContractTerminationHandler.ContractTerminationRequest>{request});
+        ContractTerminationHandler.runContractTerminationHandler(testContract.Id,Date.today(),'test@insperity.com');
+        ContractTerminationHandler.constructAndSendEmail(null, 'Test email');
         ContractTerminationQueue.testHandleException( null , null );
         ContractTerminationHandler.testHandleException( null , null );
         Test.stopTest();

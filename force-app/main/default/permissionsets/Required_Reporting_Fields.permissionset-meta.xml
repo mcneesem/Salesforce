@@ -503,6 +503,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Contract.Auto_Termination_Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Contract.Non_WX_Termination_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
