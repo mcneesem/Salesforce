@@ -8,6 +8,7 @@ const SECTION_FIELDS = [
  'NSP_Account_Executive__c',
  'NSP_Payroll_Specialist__c',
  'NSP_Payroll_Supervisor__c',
+ 'NSP_HR_Quality_Support_Team_Member__c',
  'NSP_HR_Specialist__c',
  'NSP_Manager_HR_Services__c',
  'NSP_Assignment_Notes__c',

@@ -38,10 +38,15 @@ public class NSP_ProjectTeamTriggerHelper {
                     projTeam.addError(label.NSP_ProjectTeamTriggerValidationMsg);
                 }
             } 
-        } catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_ProjectTeamTriggerHelper', 'restrictDuplicateProjectTeamRecords', ex.getMessage());
-        } 
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ProjectTeamTriggerHelper.class.getName() ,
+                'restrictDuplicateProjectTeamRecords' ,
+                e
+            );
+        }
     }
+
     /***********************************************************************************************
     * MethodName: updateImplementationProfileRoles
     * Description : This Method will update Imp Profile Roles from the Project   
@@ -71,10 +76,37 @@ public class NSP_ProjectTeamTriggerHelper {
                                                                               AND RecordTypeId=:PEORecordTypeId AND Id IN :mapProjectIdMapRoleContactId.KeySet()]);
             
             // Searching for IMp Profile related to Primary Project Account 
-            List < Implementation_Profile__c > impProfileList = [Select Id,Account__c,NSP_Project__c,NSP_Project_Manager__c,NSP_Orientation_Rep__c,NSP_OS_Coordinator__c,NSP_OT_Coordinator__c,NSP_OT_Planner__c,NSP_Payroll_Specialist__c,
-                                                                 NSP_Transition_Specialist__c,NSP_Sr_Benefit_Rep__c,NSP_Payroll_Project_Manager__c,NSP_Sr_HR_Specialist__c,NSP_Account_Executive__c,NSP_Orientation_Coordinator__c,NSP_OT_Representative__c,
-                                                                 NSP_Onboarding_Specialist_Coordinator__c,NSP_Orientation_Planner__c,NSP_Sr_Onboarding_Benefit_Rep__c,NSP_HR_Specialist__c
-                                                                 FROM Implementation_Profile__c WHERE NSP_Project__c IN:implProjectMap.keySet() AND Account__c!=null Order By CreatedDate DESC LIMIT 1];
+            List<Implementation_Profile__c> impProfileList = [
+                SELECT
+                Id ,
+                Account__c ,
+                NSP_Project__c ,
+                NSP_Project_Manager__c ,
+                NSP_Orientation_Rep__c ,
+                NSP_OS_Coordinator__c ,
+                NSP_OT_Coordinator__c ,
+                NSP_OT_Planner__c ,
+                NSP_Payroll_Specialist__c ,
+                NSP_Transition_Specialist__c ,
+                NSP_Sr_Benefit_Rep__c ,
+                NSP_Payroll_Project_Manager__c ,
+                NSP_Sr_HR_Specialist__c ,
+                NSP_Account_Executive__c ,
+                NSP_Orientation_Coordinator__c ,
+                NSP_OT_Representative__c ,
+                NSP_Onboarding_Specialist_Coordinator__c ,
+                NSP_Orientation_Planner__c ,
+                NSP_Sr_Onboarding_Benefit_Rep__c ,
+                NSP_HR_Specialist__c ,
+                NSP_HR_Quality_Support_Team_Member__c
+                FROM Implementation_Profile__c
+                WHERE (
+                    ( NSP_Project__c IN :implProjectMap.keySet() )
+                    AND ( Account__c != null )
+                )
+                ORDER BY CreatedDate DESC
+                LIMIT 1
+            ];
             for(Implementation_Profile__c impPrf:impProfileList){
                 // creating map of Imp Profile Account Id and IMP Profile 
                 if (!mapAccountIdListImpProfile.containsKey(impPrf.Account__c)) {
@@ -94,11 +126,15 @@ public class NSP_ProjectTeamTriggerHelper {
             if(!updateImpProfileList.isEmpty()){
                 database.update(updateImpProfileList) ;
             } 
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_ProjectTeamTriggerHelper', 'updateImplementationProfileRoles', ex.getMessage());
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ProjectTeamTriggerHelper.class.getName() ,
+                'updateImplementationProfileRoles' ,
+                e
+            );
         }
-        
     }
+
     /***********************************************************************************************
     * MethodName: updateImpRoles
     * Description : Private method to assign roles to Imp Profile   
@@ -107,7 +143,7 @@ public class NSP_ProjectTeamTriggerHelper {
     * ********************************************************************************************/
     private static   Implementation_Profile__c   updateImpRoles(pse__Proj__c project, Map<String,Map<String,String>> mapProjectIdMapRoleContactId, Id impProfileId){
         
-       	Implementation_Profile__c impProfile = new Implementation_Profile__c();
+        Implementation_Profile__c impProfile = new Implementation_Profile__c();
         // updating Project Manager on Imp Profile
         if(mapProjectIdMapRoleContactId.get(project.Id).containsKey(NSP_ServiceConstants.ProjectManager)){
              impProfile.Id= impProfileId;
@@ -135,7 +171,7 @@ public class NSP_ProjectTeamTriggerHelper {
         }                
         // updating OT Planner on Imp Profile
         if(mapProjectIdMapRoleContactId.get(project.Id).containsKey(NSP_ServiceConstants.OTPlanner)){
-         	impProfile.Id= impProfileId;
+            impProfile.Id= impProfileId;
             impProfile.NSP_Orientation_Planner__c = mapProjectIdMapRoleContactId.get(project.Id).get(NSP_ServiceConstants.OTPlanner);
         }                
         // updating Payroll Specialist on Imp Profile
@@ -167,6 +203,11 @@ public class NSP_ProjectTeamTriggerHelper {
         if(mapProjectIdMapRoleContactId.get(project.Id).containsKey(NSP_ServiceConstants.AccountExecutive)){
              impProfile.Id= impProfileId;
             impProfile.NSP_Account_Executive__c = mapProjectIdMapRoleContactId.get(project.Id).get(NSP_ServiceConstants.AccountExecutive);
+        }
+        // updating HR Quality Support Team Member on Imp Profile
+        if ( mapProjectIdMapRoleContactId.get(project.Id).containsKey( 'HR Client Implementation Team Member' ) ) {
+            impProfile.Id= impProfileId;
+            impProfile.NSP_HR_Quality_Support_Team_Member__c = mapProjectIdMapRoleContactId.get(project.Id).get( 'HR Client Implementation Team Member' );
         }
         return impProfile;
     }
@@ -219,13 +260,15 @@ public class NSP_ProjectTeamTriggerHelper {
             if(!updateProjList.isEmpty()){
                 database.update(updateProjList, false);
             }
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_ProjectTeamTriggerHelper', 'restrictDuplicateProjectTeamRecords', ex.getMessage());
-        } 
-            
-        
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ProjectTeamTriggerHelper.class.getName() ,
+                'updateProjectOwner' ,
+                e
+            );
+        }
     }
-    
+
     /***********************************************************************************************
     * MethodName: updatePayrollSpecialistonProject
     * Description : This Method will update owner field on project when project manager role is assigned on project team object  
@@ -236,7 +279,7 @@ public class NSP_ProjectTeamTriggerHelper {
     public static void updatePayrollSpecialistonProject(Map <Id, NSP_Project_Team__c >newProjTeamMap, Map <Id, NSP_Project_Team__c >oldProjTeamMap){
         Map<Id,Id> mapOfPayrollSpecialist = new Map<Id,Id>();
         Id PEORecordTypeId  = Schema.SObjectType.pse__Proj__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PEOProject).getRecordTypeId();
-		Set<Id> projectIdSet = new Set<Id>();
+        Set<Id> projectIdSet = new Set<Id>();
         try{
             
             for(NSP_Project_Team__c projTeam:newProjTeamMap.values()){
@@ -274,13 +317,13 @@ public class NSP_ProjectTeamTriggerHelper {
             for(pse__Proj__c proj:implProjectList ){
                 Id projTeamId=mapofContacts.get(mapOfPayrollSpecialist.get(proj.id)).Id;
                 
-               	 if(proj.Project_Team_Payroll_Specialist__c!=projTeamId){
+                if(proj.Project_Team_Payroll_Specialist__c!=projTeamId){
                    proj.Project_Team_Payroll_Specialist__c= projTeamId;
                    updateProjList.add(proj); 
                 }
             }
             for(pse__Proj__c proj:projectList ){
-            	proj.Project_Team_Payroll_Specialist__c= null;
+                proj.Project_Team_Payroll_Specialist__c= null;
             }
             //update the project if list is not empty
             if(!updateProjList.isEmpty()){
@@ -289,10 +332,14 @@ public class NSP_ProjectTeamTriggerHelper {
             if(!projectList.isEmpty()){
                 database.update(projectList,false);
             }
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_ProjectTeamTriggerHelper', 'restrictDuplicateProjectTeamRecords', ex.getMessage());
-        } 
-            
-        
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ProjectTeamTriggerHelper.class.getName() ,
+                'updatePayrollSpecialistonProject' ,
+                e
+            );
+        }
     }
+
 }
+//
