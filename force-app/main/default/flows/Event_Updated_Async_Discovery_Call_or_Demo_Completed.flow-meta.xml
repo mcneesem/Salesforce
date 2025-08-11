@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>61.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Assign_Discovery_Call_Completed_Date</name>
         <label>Assign Discovery Call Completed Date</label>
@@ -232,6 +233,7 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
+        <description>Prevent DmlExceptions by ignoring &quot;Locked&quot; Opportunities (NSP_Lock_Opportunity__c).</description>
         <name>Get_Opportunity_Info</name>
         <label>Get Opportunity Info</label>
         <locationX>1271</locationX>
@@ -249,6 +251,13 @@
             <operator>EqualTo</operator>
             <value>
                 <elementReference>$Record.WhatId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Lock_Opportunity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
             </value>
         </filters>
         <object>Opportunity</object>
