@@ -11,17 +11,15 @@ public class NSP_QuoteTriggerHelper {
     // test w/ NSP_QuoteTriggerTest (82%)
     // test w/ NSP_QuoteTriggerHelper_Test (56%)
 
-    public static Boolean STOP_ACCOUNT_QUERY = false;
-    static final String CLASS_NAME = 'NSP_QuoteTriggerHelper';
-    static final String PRICING_MODEL_INCORRECT_ERR_MESSAGE = System.Label.NSP_Incorrect_Pricing_Model;
-    static final String WO_APP_PRICEBOOK_ERR_MESSAGE = System.Label.NSP_WO_Applicable_PriceBooks_Error;
-    static final String BYPASS_SIGNATURE_NOT_ALLOWED = System.Label.NSP_Bypass_Signature_Not_Allowed;
-    static final String SUPPLEMENTAL_TYPE_CHANGE_ERROR = System.Label.NSP_Cannot_Change_Supplemental_Error;
-    static final String AMENDMENT_TYPE_CHANGE_ERROR = System.Label.NSP_Cannot_Change_Amendment_Error;
-    static final String WX_WA_QUOTE_VALIDATION_ERROR = System.Label.NSP_WX_WA_Quote_Validation_Message;
-    static final String STRING_WO_WS = 'WO/WS';
-    static final String PRODUCT_CONTRACTOR_MANAGEMENT = 'Contractor Management';
-    static final String LASSO_PARTNERNAME = System.Label.NSP_Lasso_PartnerName;
+    private static Boolean STOP_ACCOUNT_QUERY = false;
+    private static final String PRICING_MODEL_INCORRECT_ERR_MESSAGE = System.Label.NSP_Incorrect_Pricing_Model;
+    private static final String WO_APP_PRICEBOOK_ERR_MESSAGE = System.Label.NSP_WO_Applicable_PriceBooks_Error;
+    private static final String BYPASS_SIGNATURE_NOT_ALLOWED = System.Label.NSP_Bypass_Signature_Not_Allowed;
+    private static final String SUPPLEMENTAL_TYPE_CHANGE_ERROR = System.Label.NSP_Cannot_Change_Supplemental_Error;
+    private static final String AMENDMENT_TYPE_CHANGE_ERROR = System.Label.NSP_Cannot_Change_Amendment_Error;
+    private static final String WX_WA_QUOTE_VALIDATION_ERROR = System.Label.NSP_WX_WA_Quote_Validation_Message;
+    private static final String STRING_WO_WS = 'WO/WS';
+    private static final String LASSO_PARTNERNAME = System.Label.NSP_Lasso_PartnerName;
 
     public void beforeInsertDirector( List<SBQQ__Quote__c> newList ) {
         List<SBQQ__Quote__c> primaryQuotes= new List<SBQQ__Quote__c>();
@@ -286,7 +284,10 @@ public class NSP_QuoteTriggerHelper {
                     newQuote.SBQQ__Partner__c = opportunityMap.get(newQuote.SBQQ__Opportunity2__c).NSP_Partner__c;
                 }
             }
-            if( newQuote.SBQQ__Type__c.equals( NSP_CPQConstants.QUOTE_TYPE_NEW ) && newQuote.NSP_Opportunity_Primary_Product__c == PRODUCT_CONTRACTOR_MANAGEMENT ){
+            if ( newQuote.SBQQ__Type__c.equals( NSP_CPQConstants.QUOTE_TYPE_NEW )
+                && ( newQuote.NSP_Opportunity_Primary_Product__c == 'Contractor Management' )
+                )
+            {
                 newQuote.NSP_Budgetary_Quote__c = true;
             }
         }
@@ -411,7 +412,7 @@ public class NSP_QuoteTriggerHelper {
                 );
             }
         } catch ( Exception e ) {
-            handleException( e, 'initializeDefaultFieldValues' );
+            NSP_QuoteTriggerHelper.handleException( e , 'initializeDefaultFieldValues' );
         }
         if ( !opportunityIds.isEmpty() ) {
             opportunityMap = new Map<Id,Opportunity>(
@@ -1050,7 +1051,7 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
             try{
                 database.update(opportunitiesToUpdate);
             } catch ( Exception e ) {
-                handleException( e, 'populateInsperitySigner' );
+                NSP_QuoteTriggerHelper.handleException( e , 'populateInsperitySigner' );
             }
         }
     }
@@ -1475,14 +1476,14 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
             try {
                 upsert enrollmentRecs;
             } catch ( Exception e ) {
-                handleException( e, 'createEnrollmentFee upsert enrollmentRecs' );
+                NSP_QuoteTriggerHelper.handleException( e , 'createEnrollmentFee:upsert' );
             }
         }
         if ( !optysToupdate.isEmpty() ) {
             try {
                 update optysToupdate;
             } catch ( Exception e ) {
-                handleException( e, 'createEnrollmentFee update optysToupdat' );
+                NSP_QuoteTriggerHelper.handleException( e , 'createEnrollmentFee:update' );
             }
         }
     }
@@ -1592,7 +1593,7 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
                 );
             }
         } catch ( Exception e ) {
-            handleException( e, 'syncQuoteAndOptyPriceBookIfNotSame' );
+            NSP_QuoteTriggerHelper.handleException( e , 'syncQuoteAndOptyPriceBookIfNotSame' );
         }
     }
 
@@ -1703,6 +1704,7 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
             NSP_QuoteTriggerHelper.handleException( e , methodName );
         }
     }
+
     private static void handleException( Exception e , String methodName ) {
         NSP_ErrorLogHandler.logException(
             NSP_QuoteTriggerHelper.class.getName() ,
