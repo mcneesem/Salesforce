@@ -12,69 +12,19 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Client is unresponsive to meeting request/phone calls</fullName>
+                <fullName>Account Team turnover</fullName>
                 <default>false</default>
-                <label>Client is unresponsive to meeting request/phone calls</label>
+                <label>Account Team turnover</label>
             </value>
             <value>
-                <fullName>Notable increase/decrease in engagement or communication</fullName>
+                <fullName>Acquired/acquiring/merged with another firm</fullName>
                 <default>false</default>
-                <label>Notable increase/decrease in engagement or communication</label>
+                <label>Acquired/acquiring/merged with another firm</label>
             </value>
             <value>
-                <fullName>Client indicates they are spending more time than expected on HR/Payroll support</fullName>
+                <fullName>Acquired by PE firm</fullName>
                 <default>false</default>
-                <label>Client indicates they are spending more time than expected on HR/Payroll support</label>
-            </value>
-            <value>
-                <fullName>Hiring HR/Payroll employee(s)</fullName>
-                <default>false</default>
-                <label>Hiring HR/Payroll employee(s)</label>
-            </value>
-            <value>
-                <fullName>Outside Consultants being used</fullName>
-                <default>false</default>
-                <label>Outside Consultants being used</label>
-            </value>
-            <value>
-                <fullName>Departmental realignments, change in business model or offering</fullName>
-                <default>false</default>
-                <label>Departmental realignments, change in business model or offering</label>
-            </value>
-            <value>
-                <fullName>Client indicates they are willing to be a reference for prospects</fullName>
-                <default>false</default>
-                <label>Client indicates they are willing to be a reference for prospects</label>
-            </value>
-            <value>
-                <fullName>Unable to have visibility into important data</fullName>
-                <default>false</default>
-                <label>Unable to have visibility into important data</label>
-            </value>
-            <value>
-                <fullName>Unable to pull data/reporting in format needed due to Insperity policy or regulations</fullName>
-                <default>false</default>
-                <label>Unable to pull data/reporting in format needed due to Insperity policy or regulations</label>
-            </value>
-            <value>
-                <fullName>Early Tenure Client</fullName>
-                <default>false</default>
-                <label>Early Tenure Client</label>
-            </value>
-            <value>
-                <fullName>Downturn or Upturn in economic environment</fullName>
-                <default>false</default>
-                <label>Downturn or Upturn in economic environment</label>
-            </value>
-            <value>
-                <fullName>Execution issue that impacts one or more employees</fullName>
-                <default>false</default>
-                <label>Execution issue that impacts one or more employees</label>
-            </value>
-            <value>
-                <fullName>Policy issue that impacts one or more employees</fullName>
-                <default>false</default>
-                <label>Policy issue that impacts one or more employees</label>
+                <label>Acquired by PE firm</label>
             </value>
             <value>
                 <fullName>Client escalates within Insperity due to unresolved concerns</fullName>
@@ -82,14 +32,49 @@
                 <label>Client escalates within Insperity due to unresolved concerns</label>
             </value>
             <value>
-                <fullName>Internal escalations within client</fullName>
+                <fullName>Client financial health decline</fullName>
                 <default>false</default>
-                <label>Internal escalations within client</label>
+                <label>Client financial health decline</label>
             </value>
             <value>
-                <fullName>Client indicates they have outgrown the PEO/WX/WA</fullName>
+                <fullName>Client indicates they are spending more time than expected on HR/Payroll support</fullName>
                 <default>false</default>
-                <label>Client indicates they have outgrown the PEO/WX/WA</label>
+                <label>Client indicates they are spending more time than expected on HR/Payroll support</label>
+            </value>
+            <value>
+                <fullName>Client indicates they are willing to be a reference for prospects</fullName>
+                <default>false</default>
+                <label>Client indicates they are willing to be a reference for prospects</label>
+            </value>
+            <value>
+                <fullName>Client indicates they have outgrown HR360/HRCore</fullName>
+                <default>false</default>
+                <label>Client indicates they have outgrown HR360/HRCore</label>
+            </value>
+            <value>
+                <fullName>Client is unresponsive to meeting request/phone calls</fullName>
+                <default>false</default>
+                <label>Client is unresponsive to meeting request/phone calls</label>
+            </value>
+            <value>
+                <fullName>Client notes Insperity errors (data entry)</fullName>
+                <default>false</default>
+                <label>Client notes Insperity errors (data entry)</label>
+            </value>
+            <value>
+                <fullName>Client operates outside the compliance guidance provided by Insperity</fullName>
+                <default>false</default>
+                <label>Client operates outside the compliance guidance provided by Insperity</label>
+            </value>
+            <value>
+                <fullName>Client raises Concerns about lack of seamless data transfer between Insperity systems</fullName>
+                <default>false</default>
+                <label>Client raises Concerns about lack of seamless data transfer between Insperity systems</label>
+            </value>
+            <value>
+                <fullName>Client views Insperity technology as generally lacking or lagging alternative solutions in the market</fullName>
+                <default>false</default>
+                <label>Client views Insperity technology as generally lacking or lagging alternative solutions in the market</label>
             </value>
             <value>
                 <fullName>Competitor or broker offers significant savings</fullName>
@@ -97,29 +82,29 @@
                 <label>Competitor or broker offers significant savings</label>
             </value>
             <value>
-                <fullName>Shopping a competitor for standard due diligence</fullName>
+                <fullName>Declining 20% or more in WSEE over 12 months or less</fullName>
                 <default>false</default>
-                <label>Shopping a competitor for standard due diligence</label>
+                <label>Declining 20% or more in WSEE over 12 months or less</label>
             </value>
             <value>
-                <fullName>Shopping a competitor with intent</fullName>
+                <fullName>Departmental realignments, change in business model or offering</fullName>
                 <default>false</default>
-                <label>Shopping a competitor with intent</label>
+                <label>Departmental realignments, change in business model or offering</label>
             </value>
             <value>
-                <fullName>Client financial health decline</fullName>
+                <fullName>Difficulty with Insperity processes and workflows</fullName>
                 <default>false</default>
-                <label>Client financial health decline</label>
+                <label>Difficulty with Insperity processes and workflows</label>
             </value>
             <value>
-                <fullName>Extensive Salary Reduction</fullName>
+                <fullName>Direct cost renewal increases (medical benefits, WC)</fullName>
                 <default>false</default>
-                <label>Extensive Salary Reduction</label>
+                <label>Direct cost renewal increases (medical benefits, WC)</label>
             </value>
             <value>
-                <fullName>Potential bankruptcy, dissolution or other critical financial concerns</fullName>
+                <fullName>Dissatisfied with ancillary solutions</fullName>
                 <default>false</default>
-                <label>Potential bankruptcy, dissolution or other critical financial concerns</label>
+                <label>Dissatisfied with ancillary solutions</label>
             </value>
             <value>
                 <fullName>Dissatisfied with benefits</fullName>
@@ -137,6 +122,11 @@
                 <label>Dissatisfied with HR service model (not as expected at purchase)</label>
             </value>
             <value>
+                <fullName>Dissatisfied with Payroll service model (not as expected at purchase)</fullName>
+                <default>false</default>
+                <label>Dissatisfied with Payroll service model (not as expected at purchase)</label>
+            </value>
+            <value>
                 <fullName>Dissatisfied with policy</fullName>
                 <default>false</default>
                 <label>Dissatisfied with policy</label>
@@ -147,14 +137,34 @@
                 <label>Dissatisfied with service engagement</label>
             </value>
             <value>
-                <fullName>US based company with EEs in other countries</fullName>
+                <fullName>Downturn or Upturn in economic environment</fullName>
                 <default>false</default>
-                <label>US based company with EEs in other countries</label>
+                <label>Downturn or Upturn in economic environment</label>
             </value>
             <value>
-                <fullName>Partial or whole ownership by International parent company</fullName>
+                <fullName>Early Tenure Client</fullName>
                 <default>false</default>
-                <label>Partial or whole ownership by International parent company</label>
+                <label>Early Tenure Client</label>
+            </value>
+            <value>
+                <fullName>Execution issue that impacts one or more employees</fullName>
+                <default>false</default>
+                <label>Execution issue that impacts one or more employees</label>
+            </value>
+            <value>
+                <fullName>Exploration of other Insperity models</fullName>
+                <default>false</default>
+                <label>Exploration of other Insperity models</label>
+            </value>
+            <value>
+                <fullName>Extensive Salary Reduction</fullName>
+                <default>false</default>
+                <label>Extensive Salary Reduction</label>
+            </value>
+            <value>
+                <fullName>Former Insperity employee influence</fullName>
+                <default>false</default>
+                <label>Former Insperity employee influence</label>
             </value>
             <value>
                 <fullName>Frustration with invoices or pricing transparency</fullName>
@@ -162,9 +172,24 @@
                 <label>Frustration with invoices or pricing transparency</label>
             </value>
             <value>
-                <fullName>Voices concern that they are paying more than expected or agreed</fullName>
+                <fullName>Growing 20% or more in WSEE over 12 months or less</fullName>
                 <default>false</default>
-                <label>Voices concern that they are paying more than expected or agreed</label>
+                <label>Growing 20% or more in WSEE over 12 months or less</label>
+            </value>
+            <value>
+                <fullName>Hiring HR/Payroll employee(s)</fullName>
+                <default>false</default>
+                <label>Hiring HR/Payroll employee(s)</label>
+            </value>
+            <value>
+                <fullName>Internal/External integrations unmet</fullName>
+                <default>false</default>
+                <label>Internal/External integrations unmet</label>
+            </value>
+            <value>
+                <fullName>Internal escalations within client</fullName>
+                <default>false</default>
+                <label>Internal escalations within client</label>
             </value>
             <value>
                 <fullName>Key stakeholder changes</fullName>
@@ -172,49 +197,49 @@
                 <label>Key stakeholder changes</label>
             </value>
             <value>
-                <fullName>Acquired by PE firm</fullName>
+                <fullName>Lack of autonomy or limited access due to PEO relationship</fullName>
                 <default>false</default>
-                <label>Acquired by PE firm</label>
+                <label>Lack of autonomy or limited access due to PEO relationship</label>
             </value>
             <value>
-                <fullName>Acquired/acquiring/merged with another firm</fullName>
+                <fullName>Notable increase/decrease in engagement or communication</fullName>
                 <default>false</default>
-                <label>Acquired/acquiring/merged with another firm</label>
+                <label>Notable increase/decrease in engagement or communication</label>
             </value>
             <value>
-                <fullName>Difficulty with Insperity processes and workflows</fullName>
+                <fullName>Outside Consultants being used</fullName>
                 <default>false</default>
-                <label>Difficulty with Insperity processes and workflows</label>
+                <label>Outside Consultants being used</label>
             </value>
             <value>
-                <fullName>Direct cost renewal increases (medical benefits, WC)</fullName>
+                <fullName>Partial or whole ownership by International parent company</fullName>
                 <default>false</default>
-                <label>Direct cost renewal increases (medical benefits, WC)</label>
+                <label>Partial or whole ownership by International parent company</label>
             </value>
             <value>
-                <fullName>Unexpected increase in service fees</fullName>
+                <fullName>Policy issue that impacts one or more employees</fullName>
                 <default>false</default>
-                <label>Unexpected increase in service fees</label>
+                <label>Policy issue that impacts one or more employees</label>
             </value>
             <value>
-                <fullName>Declining 20% or more in WSEE over 12 months or less</fullName>
+                <fullName>Potential bankruptcy, dissolution or other critical financial concerns</fullName>
                 <default>false</default>
-                <label>Declining 20% or more in WSEE over 12 months or less</label>
+                <label>Potential bankruptcy, dissolution or other critical financial concerns</label>
             </value>
             <value>
-                <fullName>Growing 20% or more in WSEE over 12 months or less</fullName>
+                <fullName>Reporting complexity/needs unmet/missing data</fullName>
                 <default>false</default>
-                <label>Growing 20% or more in WSEE over 12 months or less</label>
+                <label>Reporting complexity/needs unmet/missing data</label>
             </value>
             <value>
-                <fullName>Client operates outside the compliance guidance provided by Insperity</fullName>
+                <fullName>Shopping a competitor for standard due diligence</fullName>
                 <default>false</default>
-                <label>Client operates outside the compliance guidance provided by Insperity</label>
+                <label>Shopping a competitor for standard due diligence</label>
             </value>
             <value>
-                <fullName>Account Team turnover</fullName>
+                <fullName>Shopping a competitor with intent</fullName>
                 <default>false</default>
-                <label>Account Team turnover</label>
+                <label>Shopping a competitor with intent</label>
             </value>
             <value>
                 <fullName>Transitioned despite objections/reluctance</fullName>
@@ -227,28 +252,143 @@
                 <label>Transitioned to new segment/service team/platform</label>
             </value>
             <value>
-                <fullName>Client notes Insperity errors (data entry)</fullName>
+                <fullName>Unable to have visibility into important data</fullName>
                 <default>false</default>
-                <label>Client notes Insperity errors (data entry)</label>
+                <label>Unable to have visibility into important data</label>
             </value>
             <value>
-                <fullName>Client raises Concerns about lack of seamless data transfer between Insperity systems</fullName>
+                <fullName>Unable to pull data/reporting in format needed due to Insperity policy or regulations</fullName>
                 <default>false</default>
-                <label>Client raises Concerns about lack of seamless data transfer between Insperity systems</label>
+                <label>Unable to pull data/reporting in format needed due to Insperity policy or regulations</label>
             </value>
             <value>
-                <fullName>Client views Insperity technology as generally lacking or lagging alternative solutions in the market</fullName>
+                <fullName>Unable to support specific industry needs</fullName>
                 <default>false</default>
-                <label>Client views Insperity technology as generally lacking or lagging alternative solutions in the market</label>
+                <label>Unable to support specific industry needs</label>
+            </value>
+            <value>
+                <fullName>Unexpected increase in service fees</fullName>
+                <default>false</default>
+                <label>Unexpected increase in service fees</label>
+            </value>
+            <value>
+                <fullName>US based company with EEs in other countries</fullName>
+                <default>false</default>
+                <label>US based company with EEs in other countries</label>
+            </value>
+            <value>
+                <fullName>Voices concern that they are paying more than expected or agreed</fullName>
+                <default>false</default>
+                <label>Voices concern that they are paying more than expected or agreed</label>
             </value>
         </valueSetDefinition>
         <valueSettings>
-            <controllingFieldValue>Rapid Growth or Decline</controllingFieldValue>
-            <valueName>Declining 20% or more in WSEE over 12 months or less</valueName>
+            <controllingFieldValue>Financial Risk</controllingFieldValue>
+            <valueName>Client financial health decline</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Rapid Growth or Decline</controllingFieldValue>
-            <valueName>Growing 20% or more in WSEE over 12 months or less</valueName>
+            <controllingFieldValue>Financial Risk</controllingFieldValue>
+            <valueName>Extensive Salary Reduction</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Financial Risk</controllingFieldValue>
+            <valueName>Potential bankruptcy, dissolution or other critical financial concerns</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Service Continuity</controllingFieldValue>
+            <valueName>Account Team turnover</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Service Continuity</controllingFieldValue>
+            <valueName>Transitioned despite objections/reluctance</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Service Continuity</controllingFieldValue>
+            <valueName>Transitioned to new segment/service team/platform</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>General Dissatisfaction</controllingFieldValue>
+            <valueName>Dissatisfied with ancillary solutions</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>General Dissatisfaction</controllingFieldValue>
+            <valueName>Dissatisfied with benefits</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>General Dissatisfaction</controllingFieldValue>
+            <valueName>Dissatisfied with deliverable</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>General Dissatisfaction</controllingFieldValue>
+            <valueName>Dissatisfied with HR service model (not as expected at purchase)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>General Dissatisfaction</controllingFieldValue>
+            <valueName>Dissatisfied with Payroll service model (not as expected at purchase)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>General Dissatisfaction</controllingFieldValue>
+            <valueName>Dissatisfied with policy</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>General Dissatisfaction</controllingFieldValue>
+            <valueName>Dissatisfied with service engagement</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>General Dissatisfaction</controllingFieldValue>
+            <valueName>Unable to support specific industry needs</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Technology &amp; Seamless Data Transfer</controllingFieldValue>
+            <valueName>Client notes Insperity errors (data entry)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Technology &amp; Seamless Data Transfer</controllingFieldValue>
+            <valueName>Client raises Concerns about lack of seamless data transfer between Insperity systems</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Technology &amp; Seamless Data Transfer</controllingFieldValue>
+            <valueName>Client views Insperity technology as generally lacking or lagging alternative solutions in the market</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Technology &amp; Seamless Data Transfer</controllingFieldValue>
+            <valueName>Internal/External integrations unmet</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>International Employees</controllingFieldValue>
+            <valueName>US based company with EEs in other countries</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>International Ownership</controllingFieldValue>
+            <valueName>Partial or whole ownership by International parent company</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoicing</controllingFieldValue>
+            <valueName>Frustration with invoices or pricing transparency</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoicing</controllingFieldValue>
+            <valueName>Voices concern that they are paying more than expected or agreed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Key Client Contact Changes</controllingFieldValue>
+            <valueName>Key stakeholder changes</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>M&amp;A Activity</controllingFieldValue>
+            <valueName>Acquired/acquiring/merged with another firm</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>M&amp;A Activity</controllingFieldValue>
+            <valueName>Acquired by PE firm</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Navigation &amp; Workflow Challenges</controllingFieldValue>
+            <valueName>Difficulty with Insperity processes and workflows</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Navigation &amp; Workflow Challenges</controllingFieldValue>
+            <valueName>Lack of autonomy or limited access due to PEO relationship</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Price Increase</controllingFieldValue>
@@ -259,6 +399,42 @@
             <valueName>Unexpected increase in service fees</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Administrative Relief/ Staffing Up</controllingFieldValue>
+            <valueName>Client indicates they are spending more time than expected on HR/Payroll support</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Administrative Relief/ Staffing Up</controllingFieldValue>
+            <valueName>Hiring HR/Payroll employee(s)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Administrative Relief/ Staffing Up</controllingFieldValue>
+            <valueName>Outside Consultants being used</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Business Restructure</controllingFieldValue>
+            <valueName>Departmental realignments, change in business model or offering</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Client Reference</controllingFieldValue>
+            <valueName>Client indicates they are willing to be a reference for prospects</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Communication &amp; Engagement</controllingFieldValue>
+            <valueName>Client is unresponsive to meeting request/phone calls</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Communication &amp; Engagement</controllingFieldValue>
+            <valueName>Former Insperity employee influence</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Communication &amp; Engagement</controllingFieldValue>
+            <valueName>Notable increase/decrease in engagement or communication</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Data &amp; Reporting Availability</controllingFieldValue>
+            <valueName>Reporting complexity/needs unmet/missing data</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Data &amp; Reporting Availability</controllingFieldValue>
             <valueName>Unable to have visibility into important data</valueName>
         </valueSettings>
@@ -267,8 +443,12 @@
             <valueName>Unable to pull data/reporting in format needed due to Insperity policy or regulations</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Risk Mitigation</controllingFieldValue>
-            <valueName>Client operates outside the compliance guidance provided by Insperity</valueName>
+            <controllingFieldValue>Early Tenure</controllingFieldValue>
+            <valueName>Early Tenure Client</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Economic Shifts</controllingFieldValue>
+            <valueName>Downturn or Upturn in economic environment</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Employee Impact</controllingFieldValue>
@@ -287,120 +467,24 @@
             <valueName>Internal escalations within client</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>General Dissatisfaction</controllingFieldValue>
-            <valueName>Dissatisfied with benefits</valueName>
+            <controllingFieldValue>Rapid Growth or Decline</controllingFieldValue>
+            <valueName>Declining 20% or more in WSEE over 12 months or less</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>General Dissatisfaction</controllingFieldValue>
-            <valueName>Dissatisfied with deliverable</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>General Dissatisfaction</controllingFieldValue>
-            <valueName>Dissatisfied with HR service model (not as expected at purchase)</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>General Dissatisfaction</controllingFieldValue>
-            <valueName>Dissatisfied with policy</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>General Dissatisfaction</controllingFieldValue>
-            <valueName>Dissatisfied with service engagement</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Navigation &amp; Workflow Challenges</controllingFieldValue>
-            <valueName>Difficulty with Insperity processes and workflows</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Technology &amp; Seamless Data Transfer</controllingFieldValue>
-            <valueName>Client notes Insperity errors (data entry)</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Technology &amp; Seamless Data Transfer</controllingFieldValue>
-            <valueName>Client raises Concerns about lack of seamless data transfer between Insperity systems</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Technology &amp; Seamless Data Transfer</controllingFieldValue>
-            <valueName>Client views Insperity technology as generally lacking or lagging alternative solutions in the market</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Administrative Relief/ Staffing Up</controllingFieldValue>
-            <valueName>Client indicates they are spending more time than expected on HR/Payroll support</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Administrative Relief/ Staffing Up</controllingFieldValue>
-            <valueName>Hiring HR/Payroll employee(s)</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Administrative Relief/ Staffing Up</controllingFieldValue>
-            <valueName>Outside Consultants being used</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Client Reference</controllingFieldValue>
-            <valueName>Client indicates they are willing to be a reference for prospects</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Communication &amp; Engagement</controllingFieldValue>
-            <valueName>Client is unresponsive to meeting request/phone calls</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Communication &amp; Engagement</controllingFieldValue>
-            <valueName>Notable increase/decrease in engagement or communication</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Early Tenure</controllingFieldValue>
-            <valueName>Early Tenure Client</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Service Continuity</controllingFieldValue>
-            <valueName>Account Team turnover</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Service Continuity</controllingFieldValue>
-            <valueName>Transitioned despite objections/reluctance</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Service Continuity</controllingFieldValue>
-            <valueName>Transitioned to new segment/service team/platform</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Business Restructure</controllingFieldValue>
-            <valueName>Departmental realignments, change in business model or offering</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Economic Shifts</controllingFieldValue>
-            <valueName>Downturn or Upturn in economic environment</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Financial Risk</controllingFieldValue>
-            <valueName>Client financial health decline</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Financial Risk</controllingFieldValue>
-            <valueName>Extensive Salary Reduction</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Financial Risk</controllingFieldValue>
-            <valueName>Potential bankruptcy, dissolution or other critical financial concerns</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>International Employees</controllingFieldValue>
-            <valueName>US based company with EEs in other countries</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>International Ownership</controllingFieldValue>
-            <valueName>Partial or whole ownership by International parent company</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Key Client Contact Changes</controllingFieldValue>
-            <valueName>Key stakeholder changes</valueName>
+            <controllingFieldValue>Rapid Growth or Decline</controllingFieldValue>
+            <valueName>Growing 20% or more in WSEE over 12 months or less</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Evaluating Alternative Solutions</controllingFieldValue>
-            <valueName>Client indicates they have outgrown the PEO/WX/WA</valueName>
+            <valueName>Client indicates they have outgrown HR360/FHRCore</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Evaluating Alternative Solutions</controllingFieldValue>
             <valueName>Competitor or broker offers significant savings</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Evaluating Alternative Solutions</controllingFieldValue>
+            <valueName>Exploration of other Insperity models</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Evaluating Alternative Solutions</controllingFieldValue>
@@ -411,20 +495,8 @@
             <valueName>Shopping a competitor with intent</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>M&amp;A Activity</controllingFieldValue>
-            <valueName>Acquired by PE firm</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>M&amp;A Activity</controllingFieldValue>
-            <valueName>Acquired/acquiring/merged with another firm</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Invoicing</controllingFieldValue>
-            <valueName>Frustration with invoices or pricing transparency</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Invoicing</controllingFieldValue>
-            <valueName>Voices concern that they are paying more than expected or agreed</valueName>
+            <controllingFieldValue>Risk Mitigation</controllingFieldValue>
+            <valueName>Client operates outside the compliance guidance provided by Insperity</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>
