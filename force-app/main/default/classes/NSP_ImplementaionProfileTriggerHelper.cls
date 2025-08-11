@@ -1,10 +1,5 @@
-/**
-* @description  :  Helper class for Implementation Profile  Trigger.
-* @date 07/25/2022
-* Author : Nischay Jindal
-* Name : NSP_ImplementaionProfileTriggerHelper
-*/
 public class NSP_ImplementaionProfileTriggerHelper {
+    // test w/ NSP_ProjectTeamTriggerHelperTest (??%)
 
     /***********************************************************************************************
     * MethodName: updateProjectTeamRoles
@@ -58,37 +53,45 @@ public class NSP_ImplementaionProfileTriggerHelper {
                 //update project team 
                 update updateProjectTeamList;
             }
-        } catch (Exception ex) {
-            //exception 
-            NSP_ErrorLogHandler.logSaveException('NSP_ProjectTriggerHelper', 'createProjectTeamRoles', ex.getMessage());
-        } 
-        
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ImplementaionProfileTriggerHelper.class.getName() ,
+                'updateProjectTeamRoles' ,
+                e
+            );
+        }
     }
-    /***********************************************************************************************
-    * MethodName: impProfileRoleChange
-    * Description : This Method will detect the role change on Imp Profile 
-    * Params:       Implementation_Profile__c imPfl, Map <Id, Implementation_Profile__c >oldImpPrfMap
-    * Author :      Nischay Jindal
-    * Return : Boolean value
-    * ********************************************************************************************/
-    
-    private static Boolean impProfileRoleChange(Implementation_Profile__c imPfl, Map <Id, Implementation_Profile__c >oldImpPrfMap){
+
+    // detect any role changes on Implementation_Profile__c...
+    private static Boolean impProfileRoleChange( Implementation_Profile__c imPfl , Map<Id,Implementation_Profile__c> oldImpPrfMap ) {
         //initial value is false
         Boolean isRoleUpdate = false;
-        if (imPfl.NSP_Project_Manager__c!=oldImpPrfMap.get(imPfl.Id).NSP_Project_Manager__c|| imPfl.NSP_OT_Representative__c!=oldImpPrfMap.get(imPfl.Id).NSP_OT_Representative__c ||
-            imPfl.NSP_Orientation_Rep__c!=oldImpPrfMap.get(imPfl.Id).NSP_Orientation_Rep__c||
-            imPfl.NSP_Onboarding_Specialist_Coordinator__c!=oldImpPrfMap.get(imPfl.Id).NSP_Onboarding_Specialist_Coordinator__c||
-            imPfl.NSP_Orientation_Coordinator__c!=oldImpPrfMap.get(imPfl.Id).NSP_Orientation_Coordinator__c|| imPfl.NSP_Sr_Onboarding_Benefit_Rep__c!=oldImpPrfMap.get(imPfl.Id).NSP_Sr_Onboarding_Benefit_Rep__c||
-            imPfl.NSP_Orientation_Planner__c!=oldImpPrfMap.get(imPfl.Id).NSP_Orientation_Planner__c||imPfl.NSP_Payroll_Specialist__c!=oldImpPrfMap.get(imPfl.Id).NSP_Payroll_Specialist__c||
-            imPfl.NSP_Transition_Specialist__c!=oldImpPrfMap.get(imPfl.Id).NSP_Transition_Specialist__c||imPfl.NSP_Sr_Benefit_Rep__c!=oldImpPrfMap.get(imPfl.Id).NSP_Sr_Benefit_Rep__c||
-            imPfl.NSP_Payroll_Project_Manager__c!=oldImpPrfMap.get(imPfl.Id).NSP_Payroll_Project_Manager__c||imPfl.NSP_HR_Specialist__c!=oldImpPrfMap.get(imPfl.Id).NSP_HR_Specialist__c||
-            imPfl.NSP_Account_Executive__c!=oldImpPrfMap.get(imPfl.Id).NSP_Account_Executive__c || 
-           imPfl.NSP_HR_Quality_Support_Team_Member__c != oldImpPrfMap.get(imPfl.Id).NSP_HR_Quality_Support_Team_Member__c){
-                isRoleUpdate= true;
+        if ( imPfl != null ) {
+            Implementation_Profile__c oldImpl = oldImpPrfMap.get( imPfl.Id );
+            if ( ( oldImpl != null )
+                && ( imPfl.NSP_Project_Manager__c != oldImpl.NSP_Project_Manager__c
+                    || imPfl.NSP_OT_Representative__c != oldImpl.NSP_OT_Representative__c
+                    || imPfl.NSP_Orientation_Rep__c != oldImpl.NSP_Orientation_Rep__c
+                    || imPfl.NSP_Onboarding_Specialist_Coordinator__c != oldImpl.NSP_Onboarding_Specialist_Coordinator__c
+                    || imPfl.NSP_Orientation_Coordinator__c != oldImpl.NSP_Orientation_Coordinator__c
+                    || imPfl.NSP_Sr_Onboarding_Benefit_Rep__c != oldImpl.NSP_Sr_Onboarding_Benefit_Rep__c
+                    || imPfl.NSP_Orientation_Planner__c != oldImpl.NSP_Orientation_Planner__c
+                    || imPfl.NSP_Payroll_Specialist__c != oldImpl.NSP_Payroll_Specialist__c
+                    || imPfl.NSP_Transition_Specialist__c != oldImpl.NSP_Transition_Specialist__c
+                    || imPfl.NSP_Sr_Benefit_Rep__c != oldImpl.NSP_Sr_Benefit_Rep__c
+                    || imPfl.NSP_Payroll_Project_Manager__c != oldImpl.NSP_Payroll_Project_Manager__c
+                    || imPfl.NSP_HR_Specialist__c != oldImpl.NSP_HR_Specialist__c
+                    || imPfl.NSP_Account_Executive__c != oldImpl.NSP_Account_Executive__c
+                    || imPfl.NSP_HR_Quality_Support_Team_Member__c != oldImpl.NSP_HR_Quality_Support_Team_Member__c
+                    )
+                )
+            {
+                isRoleUpdate = true;
             }
-        //return a boolean value
+        }
         return isRoleUpdate;
-    } 
+    }
+
     /***********************************************************************************************
     * MethodName: getProjectRoleMap
     * Description : This Method will create map of Project Id along with Role and Conatct Id 
@@ -136,8 +139,9 @@ public class NSP_ImplementaionProfileTriggerHelper {
         if(imPfl.NSP_HR_Quality_Support_Team_Member__c!=oldImpPrfMap.get(imPfl.Id).NSP_HR_Quality_Support_Team_Member__c) {
             mapProjectIdMapRoleContactId.get(imPfl.NSP_Project__c).put('HR Client Implementation Team Member',imPfl.NSP_HR_Quality_Support_Team_Member__c);
         }
-
         //return map of project and contact role Id
         return mapProjectIdMapRoleContactId;
-    }  
+    }
+
 }
+//
