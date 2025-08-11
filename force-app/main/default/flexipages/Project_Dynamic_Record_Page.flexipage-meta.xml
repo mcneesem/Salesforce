@@ -779,7 +779,7 @@
                 <fieldItem>Record.Lost_Detail__c</fieldItem>
                 <identifier>RecordLost_Detail_cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
+                    <booleanFilter>(1 OR 2 OR 3 OR 4)  AND 5</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -799,6 +799,11 @@
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.pse__Project_Status__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Close/Lost</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -3609,10 +3614,7 @@
                             <value>MassChangeOwner</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>pse__Proj__c.NSP_Time_Entry</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>New</value>
+                            <value>CustomButton.pse__Proj__c.pse__Create_Project_From_Template</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
