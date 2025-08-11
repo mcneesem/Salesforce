@@ -333,6 +333,9 @@
         <fields>NAME</fields>
         <relatedList>NSP_SObject_History_Tracking__c.NSP_Asset__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
+    </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

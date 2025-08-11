@@ -593,6 +593,9 @@
         <fields>Comments__c</fields>
         <relatedList>NSP_Modules_Implemented__c.NSP_Asset__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
+    </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <relatedObjects>ContactId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
