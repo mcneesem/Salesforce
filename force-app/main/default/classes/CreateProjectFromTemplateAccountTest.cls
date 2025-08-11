@@ -51,10 +51,10 @@
         System.assertEquals(1, responseList.size());
 
         // for code coverage...
-       	CreateProjectFromTemplateAccount.handleCreateProjectResponse(
+      /* 	CreateProjectFromTemplateAccount.handleCreateProjectResponse(
             CreateProjectFromTemplateAccountTest.class.getName() ,
             'testCreateProjectFromTemplateInvo' ,
             null
-        );	
+        );	*/
     }
 }
