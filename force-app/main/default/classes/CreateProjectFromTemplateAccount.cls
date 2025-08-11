@@ -1,18 +1,15 @@
 public with sharing class  CreateProjectFromTemplateAccount {
 
-    // test w/ CreateProjectFromTemplateAccountTest (77%)
+    // test w/ CreateProjectFromTemplateAccountTest (85%)
     @InvocableMethod(
-        label='Create Project From Template Account'
+        label='Create Project From Template And Account'
         description='Leverage Financial Force Service API to create a Project from a Project Template'
         category='Create Project'
     )
     public static List<Response> createProject(List<Request> requestList) {
         List<Response> responseList = new List<Response>();
-
-        if (requestList == null || requestList.isEmpty()) {
-            return responseList;
-        }
-
+        
+    if (requestList != null && !requestList.isEmpty()) {      
         // Collect all Account and Template IDs
         List<Id> accountIds = new List<Id>();
         List<Id> templateIds = new List<Id>();
@@ -31,46 +28,50 @@ public with sharing class  CreateProjectFromTemplateAccount {
         Map<Id, pse__proj__c> templateMap = new Map<Id, pse__proj__c>(
             [SELECT Id, Template_Name__c,RecordTypeId FROM pse__proj__c WHERE pse__Is_Template__c = true AND Id IN :templateIds]
         );
-
-        // Process each request
+        
+        // Process each request            
         for (Request req : requestList) {
-            Response res = new Response();
+            responseList.add(processProjectRequest(req, accountMap, templateMap));
+        }
+    }
 
-            if (req.oaccountId == null || req.oprojectTemplateId == null) {
-                res.isSuccess = false;
-                res.errorMessages = new List<String>{'Missing required input fields: Account Id or Project Template Id'};
-                responseList.add(res);
-                continue;
-            }
-
+        return responseList;
+    }
+    
+    private static Response processProjectRequest(Request req, Map<Id, Account> accountMap, Map<Id, pse__proj__c> templateMap) {
+        Response res = new Response();
+    
+        // Validate input parameters
+        if (req.oaccountId == null || req.oprojectTemplateId == null) {
+            res.isSuccess = false;
+            res.errorMessages = new List<String>{'Missing required input fields: Account Id or Project Template Id'};
+        } else {
+            // Validate records exist
             Account acc = accountMap.get(req.oaccountId);
             pse__proj__c template = templateMap.get(req.oprojectTemplateId);
-
+    
             if (acc == null || template == null) {
                 res.isSuccess = false;
                 res.errorMessages = new List<String>{'Account or Project Template not found for provided IDs'};
-                responseList.add(res);
-                continue;
-            }
-
-            try {
-                Id projectId = createProjectFromTemplate(acc, template);
-                if (projectId != null) {
-                    res.projectId = projectId;
-                    res.isSuccess = true;
-                } else {
+            } else {
+                // Create project
+                try {
+                    Id projectId = createProjectFromTemplate(acc, template);
+                    if (projectId != null) {
+                        res.projectId = projectId;
+                        res.isSuccess = true;
+                    } else {
+                        res.isSuccess = false;
+                        res.errorMessages = new List<String>{'Project creation failed with no ID returned.'};
+                    }
+                } catch (Exception e) {
                     res.isSuccess = false;
-                    res.errorMessages = new List<String>{'Project creation failed with no ID returned.'};
+                    res.errorMessages = new List<String>{'Exception: ' + e.getMessage()};
                 }
-            } catch (Exception e) {
-                res.isSuccess = false;
-                res.errorMessages = new List<String>{'Exception: ' + e.getMessage()};
             }
-
-            responseList.add(res);
         }
-
-        return responseList;
+    
+        return res;
     }
 
     public class Request {
@@ -122,24 +123,10 @@ public with sharing class  CreateProjectFromTemplateAccount {
                 new List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest>{ projRequest }
             );
 
-        return handleCreateProjectResponse('CreateProjectFromTemplateAccount', 'createProjectFromTemplate', projResponse);
+        return CreateProjectFromTemplateAction.handleCreateProjectResponse(
+            CreateProjectFromTemplateAccount.class.getName() ,
+            'createProjectFromTemplate' ,
+            projResponse
+        );
     }
-
-    public static Id handleCreateProjectResponse(String className, String methodName, List<pse.CreateProjectFromTemplateService.CreateProjectResponse> responses) {
-        if (responses == null || responses.isEmpty()) {
-            return null;
-        }
-
-        pse.CreateProjectFromTemplateService.CreateProjectResponse response = responses[0];
-        if (response.isSuccess()) {
-            return response.NewProjectId;
-        } else if (response.Errors != null && !response.Errors.isEmpty()) {
-            for (pse.CreateProjectFromTemplateService.CreateProjectError error : response.Errors) {
-                NSP_ErrorLogHandler.logInfo(className, methodName, error.Message);
-            }
-        }
-
-        return null;
-    }
-
 }

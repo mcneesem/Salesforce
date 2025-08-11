@@ -146,6 +146,10 @@
                 <stringValue>Update_Parent_Project</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Set_Fault_Element_Valid_Response</name>
@@ -163,6 +167,13 @@
             <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
+    <constants>
+        <name>ProjectTemplate</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>WX/WA New Tax IMPL</stringValue>
+        </value>
+    </constants>
     <decisions>
         <name>Account_Exists</name>
         <label>Account Exists?</label>
@@ -198,6 +209,13 @@
         <rules>
             <name>Success</name>
             <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CreateProjectFromTemplateAccount</leftValueReference>
+                <operator>WasVisited</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
             <conditions>
                 <leftValueReference>CreateProjectFromTemplateAccount.isSuccess</leftValueReference>
                 <operator>EqualTo</operator>
@@ -279,8 +297,9 @@
         </rules>
     </decisions>
     <environments>Default</environments>
-    <interviewLabel>Create Project From Template Account Action {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Create Project From Template Account Action</label>
+    <interviewLabel>Project Task - Update - Async - Create Project From Template And Account
+        {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Project Task - Update - Async - Create Project From Template And Account</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -379,7 +398,7 @@
             <field>TemplateName__c</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>WX/WA New Tax IMPL</stringValue>
+                <elementReference>ProjectTemplate</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -427,7 +446,7 @@
             <field>TemplateName__c</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>WX/WA New Tax IMPL</stringValue>
+                <elementReference>ProjectTemplate</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -518,7 +537,7 @@
         <inputAssignments>
             <name>triggeringFlow</name>
             <value>
-                <stringValue>Create_Project_From_Template_Account_Action</stringValue>
+                <stringValue>Project_Task_Update_Async_Create_Project_From_Template_And_Account</stringValue>
             </value>
         </inputAssignments>
     </subflows>
