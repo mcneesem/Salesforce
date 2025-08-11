@@ -86,6 +86,29 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>HRCore_Region__c</picklist>
+        <values>
+            <fullName>Business Team</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Central</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>East</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Middle Market</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>West</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_Account_Status__c</picklist>
         <values>
             <fullName>Active</fullName>
