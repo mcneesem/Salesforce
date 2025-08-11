@@ -59,7 +59,7 @@ public with sharing class NSP_ValidateOpportunityStage {
 
     private static void validateOpportunityStageNew( List<Opportunity> newList , List<Id> oppIdList , Map<Id,User> opportunityOwnerRoleMap ) {
         try {
-            Map<Id,Opportunity> oppEventTaskOCRMap = new Map<Id,Opportunity>(
+            Map<Id,Opportunity> oppRelatedObjectMap = new Map<Id,Opportunity>(
                 [
                     SELECT
                         Id ,
@@ -120,27 +120,27 @@ public with sharing class NSP_ValidateOpportunityStage {
                     continue;
                 }
 
-                Opportunity oppFromMap = oppEventTaskOCRMap.get( opp.Id );
+                Opportunity oppFromMap = oppRelatedObjectMap.get( opp.Id );
                 List<Task> taskList = oppFromMap?.Tasks;
                 List<Event> eventList=oppFromMap?.Events;
                 List<OpportunityContactRole> ocrList = oppFromMap?.OpportunityContactRoles;
                 List<NSP_Employee_Split__c> oppCreditList = oppFromMap?.Employee_Splits__r;
                 List<NSP_Checklist__c> stpList = oppFromMap?.Checklists__r;
 
-                Map<String,List<SObject>> relObjectMap = new Map<String,List<SObject>>();
-                relObjectMap.put('Opportunity' , new List<SObject>{opp});
-                relObjectMap.put('Event' , eventList);
-                relObjectMap.put('Task' , taskList);
-                relObjectMap.put('OpportunityContactRole' , ocrList);
-                relObjectMap.put('NSP_Employee_Split__c' , oppCreditList);
-                relObjectMap.put('NSP_Checklist__c' , stpList);
-                relObjectMap.put('SBQQ__Quote__c' , new List<SBQQ__Quote__c>{oppQuoteMap.get(opp.Id)});
+                Map<String,List<SObject>> valObjectMap = new Map<String,List<SObject>>();
+                valObjectMap.put('Opportunity' , new List<SObject>{ opp });
+                valObjectMap.put('Event' , eventList);
+                valObjectMap.put('Task' , taskList);
+                valObjectMap.put('OpportunityContactRole' , ocrList);
+                valObjectMap.put('NSP_Employee_Split__c' , oppCreditList);
+                valObjectMap.put('NSP_Checklist__c' , stpList);
+                valObjectMap.put('SBQQ__Quote__c' , new List<SBQQ__Quote__c>{ oppQuoteMap.get(opp.Id) });
 
                 List<Opportunity_Stage_Validation__mdt> currentOptyStageVals = NSP_ValidateOpportunityStage.getCurrentOptyStageVals( opp );
                 Map<String,List<Opportunity_Stage_Validation__mdt>> groupedStageValMap = NSP_ValidateOpportunityStage.getGroupedStageValMap( currentOptyStageVals );
 
-                NSP_ValidateOpportunityStage.evaluateSingleCriteria( opp , relObjectMap , currentOptyStageVals );
-                NSP_ValidateOpportunityStage.evaluateGroupedCriteria( opp , relObjectMap , groupedStageValMap );
+                NSP_ValidateOpportunityStage.evaluateSingleCriteria( opp , valObjectMap , currentOptyStageVals );
+                NSP_ValidateOpportunityStage.evaluateGroupedCriteria( opp , valObjectMap , groupedStageValMap );
                 //Proposal
                 if ( opp.StageName.equals( NSP_SalesConstants.PROPOSAL_STAGE ) ) {
                     evaluateQuoteCriteria( opp , oppQuoteMap );
@@ -165,12 +165,12 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
     }
 
-    private static void evaluateSingleCriteria(Opportunity opp, Map<String,List<SObject>> relObjectMap, List<Opportunity_Stage_Validation__mdt> currentOptyStageVals){
+    private static void evaluateSingleCriteria(Opportunity opp, Map<String,List<SObject>> valObjectMap, List<Opportunity_Stage_Validation__mdt> currentOptyStageVals){
         for(Opportunity_Stage_Validation__mdt val : currentOptyStageVals){
             Integer passCheckCount = 0;
             if( String.isBlank(val.Group__c) ){
-                for( SObject relObject : relObjectMap.get(val.Object__c) ){
-                    if( checkCondition(relObject.get(val.Field__c) , val.Value__c , val.Operation__c) ){
+                for( SObject valObject : valObjectMap.get(val.Object__c) ){
+                    if( checkCondition(valObject.get(val.Field__c) , val.Value__c , val.Operation__c) ){
                         passCheckCount++;
                     }
                 }
@@ -181,7 +181,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
     }
 
-    private static void evaluateGroupedCriteria(Opportunity opp, Map<String,List<SObject>> relObjectMap, Map<String, List<Opportunity_Stage_Validation__mdt>> groupedStageValMap){
+    private static void evaluateGroupedCriteria(Opportunity opp, Map<String,List<SObject>> valObjectMap, Map<String, List<Opportunity_Stage_Validation__mdt>> groupedStageValMap){
         for( String groupName : groupedStageValMap.keySet() ){
             Boolean passCheck = false;
             Boolean passCheckDNE = true;
@@ -189,8 +189,8 @@ public with sharing class NSP_ValidateOpportunityStage {
 
             Integer i = 0;
             do {
-                SObject relObject = ( relObjectMap.get(groupRelObjName).size() == 0 ) ? null : relObjectMap.get(groupRelObjName)[i];
-                Integer passCheckCount = evaluateOneCriteriaGroup( opp, groupName , relObject , groupedStageValMap );
+                SObject valObject = ( valObjectMap.get(groupRelObjName).size() == 0 ) ? null : valObjectMap.get(groupRelObjName)[i];
+                Integer passCheckCount = evaluateOneCriteriaGroup( opp, groupName , valObject , groupedStageValMap );
                 if( passCheckCount >= groupedStageValMap.get(groupName).size() ){
                     passCheck = true;
                 }
@@ -198,7 +198,7 @@ public with sharing class NSP_ValidateOpportunityStage {
                     passCheckDNE = false;
                 }
                 i++;
-            } while ( i < relObjectMap.get(groupRelObjName).size() );
+            } while ( i < valObjectMap.get(groupRelObjName).size() );
 
             if( !passCheck || !passCheckDNE ){
                 opp.addError(groupedStageValMap.get(groupName)[0].Error_Message__c);
@@ -206,7 +206,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
     }
 
-    private static Integer evaluateOneCriteriaGroup( Opportunity opp , String groupName , SObject relObject, Map<String, List<Opportunity_Stage_Validation__mdt>> groupedStageValMap ){
+    private static Integer evaluateOneCriteriaGroup( Opportunity opp , String groupName , SObject valObject, Map<String, List<Opportunity_Stage_Validation__mdt>> groupedStageValMap ){
         Integer passCheckCount = 0;
         String groupCheckType = '';
         for( Opportunity_Stage_Validation__mdt val : groupedStageValMap.get(groupName) ){
@@ -216,8 +216,8 @@ public with sharing class NSP_ValidateOpportunityStage {
             } else if( val.Object__c == OPPORTUNITY_OBJ ){
                 valFieldValue = opp.get(val.Field__c);
             } else {
-                if( relObject != null ){
-                    valFieldValue = relObject.get(val.Field__c);
+                if( valObject != null ){
+                    valFieldValue = valObject.get(val.Field__c);
                 }
             }
             if( checkCondition(valFieldValue , val.Value__c , val.Operation__c) )
