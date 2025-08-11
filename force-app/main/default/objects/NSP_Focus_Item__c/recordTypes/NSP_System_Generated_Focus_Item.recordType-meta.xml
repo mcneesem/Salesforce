@@ -153,7 +153,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Client indicates they have outgrown the PEO%2FWX%2FWA</fullName>
+            <fullName>Client indicates they have outgrown HR360%2FHRCore</fullName>
             <default>false</default>
         </values>
         <values>
@@ -201,6 +201,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Dissatisfied with Payroll service model %28not as expected at purchase%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dissatisfied with ancillary solutions</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Dissatisfied with benefits</fullName>
             <default>false</default>
         </values>
@@ -229,7 +237,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Exploration of other Insperity models</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Extensive Salary Reduction</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Former Insperity employee influence</fullName>
             <default>false</default>
         </values>
         <values>
@@ -249,7 +265,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Internal%2FExternal integrations unmet</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Key stakeholder changes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lack of autonomy or limited access due to PEO relationship</fullName>
             <default>false</default>
         </values>
         <values>
@@ -270,6 +294,10 @@
         </values>
         <values>
             <fullName>Potential bankruptcy%2C dissolution or other critical financial concerns</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reporting complexity%2Fneeds unmet%2Fmissing data</fullName>
             <default>false</default>
         </values>
         <values>
@@ -298,6 +326,10 @@
         </values>
         <values>
             <fullName>Unable to pull data%2Freporting in format needed due to Insperity policy or regulations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unable to support specific industry needs</fullName>
             <default>false</default>
         </values>
         <values>
