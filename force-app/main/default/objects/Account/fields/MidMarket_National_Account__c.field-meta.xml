@@ -198,6 +198,11 @@
                 <label>Trane U.S. Inc.</label>
             </value>
             <value>
+                <fullName>Veterinary Growth Partners</fullName>
+                <default>false</default>
+                <label>Veterinary Growth Partners</label>
+            </value>
+            <value>
                 <fullName>Veterinary Study Group</fullName>
                 <default>false</default>
                 <label>Veterinary Study Group</label>
