@@ -1289,6 +1289,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>HR Client Implementation Team Member</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Insperity</fullName>
             <default>false</default>
         </values>
