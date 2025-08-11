@@ -918,6 +918,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_Sub_Client_Contact__c.Source__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Sub_Client_Contact__c.Workday_Employee_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
