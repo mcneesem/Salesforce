@@ -36,6 +36,8 @@
     <permissionSets>Project_Template_Editor</permissionSets>
     <permissionSets>Resource_Absence_record_type_access</permissionSets>
     <permissionSets>Sales_Enablement</permissionSets>
+    <permissionSets>Termination_Admin_Access</permissionSets>
+    <permissionSets>Termination_Form_Visibility</permissionSets>
     <permissionSets>User_Management</permissionSets>
     <permissionSets>force__PipelineInspectionIncluded</permissionSets>
     <status>Updated</status>
