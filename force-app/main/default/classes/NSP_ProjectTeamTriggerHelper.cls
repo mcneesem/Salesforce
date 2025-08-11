@@ -73,7 +73,7 @@ public class NSP_ProjectTeamTriggerHelper {
             // Searching for IMp Profile related to Primary Project Account 
             List < Implementation_Profile__c > impProfileList = [Select Id,Account__c,NSP_Project__c,NSP_Project_Manager__c,NSP_Orientation_Rep__c,NSP_OS_Coordinator__c,NSP_OT_Coordinator__c,NSP_OT_Planner__c,NSP_Payroll_Specialist__c,
                                                                  NSP_Transition_Specialist__c,NSP_Sr_Benefit_Rep__c,NSP_Payroll_Project_Manager__c,NSP_Sr_HR_Specialist__c,NSP_Account_Executive__c,NSP_Orientation_Coordinator__c,NSP_OT_Representative__c,
-                                                                 NSP_Onboarding_Specialist_Coordinator__c,NSP_Orientation_Planner__c,NSP_Sr_Onboarding_Benefit_Rep__c,NSP_HR_Specialist__c
+                                                                 NSP_Onboarding_Specialist_Coordinator__c,NSP_Orientation_Planner__c,NSP_Sr_Onboarding_Benefit_Rep__c,NSP_HR_Specialist__c, NSP_HR_Quality_Support_Team_Member__c 
                                                                  FROM Implementation_Profile__c WHERE NSP_Project__c IN:implProjectMap.keySet() AND Account__c!=null Order By CreatedDate DESC LIMIT 1];
             for(Implementation_Profile__c impPrf:impProfileList){
                 // creating map of Imp Profile Account Id and IMP Profile 
@@ -168,6 +168,13 @@ public class NSP_ProjectTeamTriggerHelper {
              impProfile.Id= impProfileId;
             impProfile.NSP_Account_Executive__c = mapProjectIdMapRoleContactId.get(project.Id).get(NSP_ServiceConstants.AccountExecutive);
         }
+        
+        // updating HR Quality Support Team Member on Imp Profile
+            if(mapProjectIdMapRoleContactId.get(project.Id).containsKey('HR Client Implementation Team Member')){
+                impProfile.Id= impProfileId;
+                impProfile.NSP_HR_Quality_Support_Team_Member__c = mapProjectIdMapRoleContactId.get(project.Id).get('HR Client Implementation Team Member');
+            }
+
         return impProfile;
     }
 

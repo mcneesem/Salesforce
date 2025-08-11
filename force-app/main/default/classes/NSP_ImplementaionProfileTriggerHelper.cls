@@ -27,7 +27,7 @@ public class NSP_ImplementaionProfileTriggerHelper {
                     } 
                 }
             }
-            
+
             Map<Id, pse__Proj__c> implProjectMap = new Map<Id, pse__Proj__c>([Select Id ,pse__Project_Type__c ,TemplateName__c,RecordTypeId ,pse__Account__c
                                                                             From pse__Proj__c WHERE  pse__Project_Type__c=:NSP_ServiceConstants.ImplementationProjectType AND 
                                                                             (TemplateName__c = :label.Middle_Market_Implementation_Project OR TemplateName__c = :label.FSOImplementationProject) 
@@ -82,7 +82,8 @@ public class NSP_ImplementaionProfileTriggerHelper {
             imPfl.NSP_Orientation_Planner__c!=oldImpPrfMap.get(imPfl.Id).NSP_Orientation_Planner__c||imPfl.NSP_Payroll_Specialist__c!=oldImpPrfMap.get(imPfl.Id).NSP_Payroll_Specialist__c||
             imPfl.NSP_Transition_Specialist__c!=oldImpPrfMap.get(imPfl.Id).NSP_Transition_Specialist__c||imPfl.NSP_Sr_Benefit_Rep__c!=oldImpPrfMap.get(imPfl.Id).NSP_Sr_Benefit_Rep__c||
             imPfl.NSP_Payroll_Project_Manager__c!=oldImpPrfMap.get(imPfl.Id).NSP_Payroll_Project_Manager__c||imPfl.NSP_HR_Specialist__c!=oldImpPrfMap.get(imPfl.Id).NSP_HR_Specialist__c||
-            imPfl.NSP_Account_Executive__c!=oldImpPrfMap.get(imPfl.Id).NSP_Account_Executive__c){
+            imPfl.NSP_Account_Executive__c!=oldImpPrfMap.get(imPfl.Id).NSP_Account_Executive__c || 
+           imPfl.NSP_HR_Quality_Support_Team_Member__c != oldImpPrfMap.get(imPfl.Id).NSP_HR_Quality_Support_Team_Member__c){
                 isRoleUpdate= true;
             }
         //return a boolean value
@@ -132,6 +133,10 @@ public class NSP_ImplementaionProfileTriggerHelper {
         if(imPfl.NSP_Account_Executive__c!=oldImpPrfMap.get(imPfl.Id).NSP_Account_Executive__c){
             mapProjectIdMapRoleContactId.get(imPfl.NSP_Project__c).put(NSP_ServiceConstants.AccountExecutive,imPfl.NSP_Account_Executive__c);
         }
+        if(imPfl.NSP_HR_Quality_Support_Team_Member__c!=oldImpPrfMap.get(imPfl.Id).NSP_HR_Quality_Support_Team_Member__c) {
+            mapProjectIdMapRoleContactId.get(imPfl.NSP_Project__c).put('HR Client Implementation Team Member',imPfl.NSP_HR_Quality_Support_Team_Member__c);
+        }
+
         //return map of project and contact role Id
         return mapProjectIdMapRoleContactId;
     }  
