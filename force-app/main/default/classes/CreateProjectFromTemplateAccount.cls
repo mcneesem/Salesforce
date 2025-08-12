@@ -103,7 +103,7 @@ public with sharing class CreateProjectFromTemplateAccount {
                     }
                 } catch ( Exception e ) {
                     res.isSuccess = false;
-                    res.errorMessage 'Exception: ' + e.getMessage();
+                    res.errorMessage = 'Exception: ' + e.getMessage();
                 }
             }
         }
