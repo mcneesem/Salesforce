@@ -267,6 +267,7 @@
         </quickActionListItems>
     </quickActionList>
     <relatedLists>
+        <excludeButtons>NewCase</excludeButtons>
         <fields>ACCOUNT.NAME</fields>
         <fields>CASES.SUBJECT</fields>
         <fields>NSP_Category__c</fields>
