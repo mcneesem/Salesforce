@@ -421,6 +421,7 @@
         <expression>DATETIMEVALUE(TEXT(TODAY()) &amp; &quot; &quot; &amp; {!$Setup.TerminationFormBatchSettings__c.BatchRunTime__c})</expression>
     </formulas>
     <interviewLabel>Termination Forms Manual Emails Screen Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Termination Forms Manual Emails Screen Flow</label>
     <loops>
         <name>Check_Accountteam_Emails</name>
