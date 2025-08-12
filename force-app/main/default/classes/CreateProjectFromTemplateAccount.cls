@@ -93,11 +93,10 @@ public with sharing class  CreateProjectFromTemplateAccount {
         public List<String> errorMessages;
     }
 
-    public static Id createProjectFromTemplate(Account oaccount, pse__proj__c oprojectTemplate) {
-        if (oaccount == null || oprojectTemplate == null) {
-            return null;
-        }
+    private static Id createProjectFromTemplate(Account oaccount, pse__proj__c oprojectTemplate) {
+    Id resultId = null;
 
+    if (oaccount != null && oprojectTemplate != null) {
         pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest projRequest =
             new pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest(
                 oaccount.Id, oprojectTemplate.Id, System.today()
@@ -105,10 +104,10 @@ public with sharing class  CreateProjectFromTemplateAccount {
 
         projRequest.ProjectName = oprojectTemplate.Template_Name__c;
         projRequest.IsActive = true;
-        
+
         // Field mappers
         pse.SObjectCloneMapper.Field recordtypeMapper = new pse.SObjectCloneMapper.Field(Schema.pse__Proj__c.recordtypeId);
-        recordtypeMapper.DefaultValue = oprojectTemplate.recordtypeId;   
+        recordtypeMapper.DefaultValue = oprojectTemplate.recordtypeId;
 
         Set<pse.SObjectCloneMapper.Field> setOfFields = new Set<pse.SObjectCloneMapper.Field>{
             recordtypeMapper,
@@ -123,10 +122,13 @@ public with sharing class  CreateProjectFromTemplateAccount {
                 new List<pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest>{ projRequest }
             );
 
-        return CreateProjectFromTemplateAction.handleCreateProjectResponse(
-            CreateProjectFromTemplateAccount.class.getName() ,
-            'createProjectFromTemplate' ,
+        resultId = CreateProjectFromTemplateAction.handleCreateProjectResponse(
+            CreateProjectFromTemplateAccount.class.getName(),
+            'createProjectFromTemplate',
             projResponse
         );
     }
+
+    return resultId;
+ }
 }

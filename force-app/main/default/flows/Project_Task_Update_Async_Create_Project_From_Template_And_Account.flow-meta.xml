@@ -266,8 +266,7 @@
         </rules>
     </decisions>
     <decisions>
-        <description>Create New &quot;WX/WA New Tax IMPL&quot; Project if Template Exists and
-            &quot;WX/WA New Tax IMPL&quot; Project is already not exists.</description>
+        <description>Create New &quot;WX/WA New Tax IMPL&quot; Project if  Template Exists and &quot;WX/WA New Tax IMPL&quot; Project is already not exists.</description>
         <name>Validate_to_Create_New_Project</name>
         <label>Validate to Create New Project?</label>
         <locationX>0</locationX>
@@ -297,8 +296,7 @@
         </rules>
     </decisions>
     <environments>Default</environments>
-    <interviewLabel>Project Task - Update - Async - Create Project From Template And Account
-        {!$Flow.CurrentDateTime}</interviewLabel>
+    <interviewLabel>Project Task - Update - Async - Create Project From Template And Account {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Project Task - Update - Async - Create Project From Template And Account</label>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -529,15 +527,15 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>faultMessage</name>
+            <name>faultFlow</name>
             <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
+                <stringValue>Project_Task_Update_Async_Create_Project_From_Template_And_Account</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>triggeringFlow</name>
+            <name>faultMessage</name>
             <value>
-                <stringValue>Project_Task_Update_Async_Create_Project_From_Template_And_Account</stringValue>
+                <elementReference>$Flow.FaultMessage</elementReference>
             </value>
         </inputAssignments>
     </subflows>
