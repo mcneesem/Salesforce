@@ -1,6 +1,8 @@
-@isTest private class CreateProjectFromTemplateAccountTest {
-   
-@testSetup private static void testDataSetup(){
+@isTest
+private class CreateProjectFromTemplateAccountTest {
+
+    @testSetup
+    private static void testDataSetup() {
         //Create Project Template 
         pse__proj__c oProj = (pse__proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
         oProj.Name = NSP_ServiceConstants.PROJECT_TEMPLATE_NAME;
@@ -27,11 +29,16 @@
     // MethodName    : testCreateProjectFromTemplate
     // Description   : This Method will test creation of project from template using FinancialForce API
     //
-    @isTest private static void testCreateProjectFromTemplateInvo() {
+    @isTest
+    private static void testCreateProjectFromTemplateInvo() {
         List<Account> accList = [SELECT ID, Name from Account WHERE Name = 'Test Account'];
         Account acc = accList[0];
 
-        List<pse__proj__c> projTemplateList = [SELECT Id,Name, Template_Name__c, pse__Start_Date__c, pse__End_Date__c, NSP_Exclusively_Assign_Owner__c, recordtypeId from pse__Proj__c WHERE pse__Is_Template__c = True];
+        List<pse__proj__c> projTemplateList = [
+            SELECT Id,Name, Template_Name__c, pse__Start_Date__c, pse__End_Date__c, NSP_Exclusively_Assign_Owner__c, recordtypeId
+            FROM pse__Proj__c
+            WHERE pse__Is_Template__c = true
+        ];
         pse__proj__c proj = projTemplateList[0];
 
         CreateProjectFromTemplateAccount.Request req;
@@ -51,4 +58,6 @@
         System.assertEquals(1, responseList.size());
 
     }
+
 }
+//
