@@ -1113,47 +1113,62 @@ public with sharing class NSP_ProjectTriggerHelper {
         }
     }
 
-    /***********************************************************************************************
-    * MethodName: createProjectTeamRoles
-    * Description : This Method will create Project Team records for MM and FSO projects
-    * Params:       List< pse__Proj__c> projectList
-    * Author :      Nischay
-    * ********************************************************************************************/
-    private static void createProjectTeamRoles(Set<Id> mapMMProjectListMMROles, Set<Id> mapFSOProjectListFSOROles){
+    //
+    // MethodName: createProjectTeamRoles
+    // Description: This Method will create Project Team records for MM and FSO projects
+    // Params: List< pse__Proj__c> projectList
+    // Author: Nischay
+    //
+    private static void createProjectTeamRoles( Set<Id> mapMMProjectListMMROles , Set<Id> mapFSOProjectListFSOROles ) {
         List<NSP_Project_Team__c> projectTeamList = new List<NSP_Project_Team__c>();
-        try{
-            Set<String> fsoProjectTeamRolesList = new Set<String>{NSP_ServiceConstants.ProjectManager,NSP_ServiceConstants.OrientationRep,NSP_ServiceConstants.OSCoordinator,NSP_ServiceConstants.OTCoordinator,NSP_ServiceConstants.OTPlanner,NSP_ServiceConstants.PayrollSpecialist,'HR Client Implementation Team Member'};       
-            Set<String> mmProjectTeamRolesList = new Set<String>{NSP_ServiceConstants.ProjectManager,NSP_ServiceConstants.TransitionSpecialist,NSP_ServiceConstants.SrBenefitRep,NSP_ServiceConstants.PayrollProjectManager,NSP_ServiceConstants.PayrollSpecialist,NSP_ServiceConstants.SrHrSpecialist,NSP_ServiceConstants.AccountExecutive,'HR Client Implementation Team Member'};
-
-            Id mmProjectTeamRecordTypeId = SObjectType.NSP_Project_Team__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.MMProjectTeamRecordType).getRecordTypeId();
-            Id fsoProjectTeamRecordTypeId = SObjectType.NSP_Project_Team__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.FSOProjectTeamRecordType).getRecordTypeId();
-
+        try {
+            Set<String> fsoProjectTeamRolesList = new Set<String>{
+                NSP_ServiceConstants.ProjectManager ,
+                NSP_ServiceConstants.OrientationRep ,
+                NSP_ServiceConstants.OSCoordinator ,
+                NSP_ServiceConstants.OTCoordinator ,
+                NSP_ServiceConstants.OTPlanner ,
+                NSP_ServiceConstants.PayrollSpecialist ,
+                'HR Client Implementation Team Member'
+            };
+            Set<String> mmProjectTeamRolesList = new Set<String>{
+                NSP_ServiceConstants.ProjectManager ,
+                NSP_ServiceConstants.TransitionSpecialist ,
+                NSP_ServiceConstants.SrBenefitRep ,
+                NSP_ServiceConstants.PayrollProjectManager ,
+                NSP_ServiceConstants.PayrollSpecialist ,
+                NSP_ServiceConstants.SrHrSpecialist ,
+                NSP_ServiceConstants.AccountExecutive ,
+                'HR Client Implementation Team Member'
+            };
+            Id mmProjectTeamRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'NSP_Project_Team__c' , 'NSP_Middle_Market_Project_Team' );
+            Id fsoProjectTeamRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'NSP_Project_Team__c' , 'NSP_FSO_Project_Team' );
             // creating a list of MM Project Team records
-            if(!mapMMProjectListMMROles.isEmpty()){
-                for(Id projectId:mapMMProjectListMMROles){
-                    for(String mmPrjRole:mmProjectTeamRolesList){
+            if ( !mapMMProjectListMMROles.isEmpty() ) {
+                for( Id projectId : mapMMProjectListMMROles ) {
+                    for ( String mmPrjRole : mmProjectTeamRolesList ) {
                         NSP_Project_Team__c mmPrjTeam = new NSP_Project_Team__c();
                         mmPrjTeam.RecordTypeId = mmProjectTeamRecordTypeId;
                         mmPrjTeam.NSP_Project__c = projectId;
                         mmPrjTeam.NSP_Role__c = mmPrjRole;
-                        projectTeamList.add(mmPrjTeam);
+                        projectTeamList.add( mmPrjTeam );
                     }
                 }
             }
             // creating a list of FSO Project Team records
-            if(!mapFSOProjectListFSOROles.isEmpty()){
-                for(Id projectId:mapFSOProjectListFSOROles){
-                    for(String fsoPrjRole:fsoProjectTeamRolesList){
+            if ( !mapFSOProjectListFSOROles.isEmpty() ) {
+                for ( Id projectId : mapFSOProjectListFSOROles ) {
+                    for ( String fsoPrjRole : fsoProjectTeamRolesList ) {
                         NSP_Project_Team__c fsoPrjTeam = new NSP_Project_Team__c();
                         fsoPrjTeam.RecordTypeId = fsoProjectTeamRecordTypeId;
                         fsoPrjTeam.NSP_Project__c = projectId;
                         fsoPrjTeam.NSP_Role__c = fsoPrjRole;
-                        projectTeamList.add(fsoPrjTeam);
+                        projectTeamList.add( fsoPrjTeam );
                     }
                 }
             }
             // Inserting a list of  Project Team records
-            if(!projectTeamList.isEmpty()){
+            if ( !projectTeamList.isEmpty() ) {
                 insert projectTeamList;
             }
         } catch ( Exception e ) {
