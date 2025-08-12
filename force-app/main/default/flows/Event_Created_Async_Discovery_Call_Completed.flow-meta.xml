@@ -72,10 +72,10 @@
             <name>HCM_Not_Allowed</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>$UserRole.DeveloperName</leftValueReference>
+                <leftValueReference>$Permission.Opportunity_WX_Product_Only</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>HCM_Sales_Consultant</stringValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
