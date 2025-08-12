@@ -41,15 +41,15 @@
         </filters>
         <filters>
             <field>NSP_Project__c</field>
-            <operator>IsNull</operator>
+            <operator>NotEqualTo</operator>
             <value>
-                <booleanValue>false</booleanValue>
+                <stringValue></stringValue>
             </value>
         </filters>
         <inputAssignments>
             <field>blng__NextBillingDate__c</field>
             <value>
-                <elementReference>$Setup.Separate_Project_Settings__c.Custom_Next_Billing_Date__c</elementReference>
+                <elementReference>$Setup.Separate_Project_Settings__c.Future_Next_Billing_Date__c</elementReference>
             </value>
         </inputAssignments>
         <inputReference>$Record.OrderItems</inputReference>
