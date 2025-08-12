@@ -1122,8 +1122,8 @@ public with sharing class NSP_ProjectTriggerHelper {
     private static void createProjectTeamRoles(Set<Id> mapMMProjectListMMROles, Set<Id> mapFSOProjectListFSOROles){
         List<NSP_Project_Team__c> projectTeamList = new List<NSP_Project_Team__c>();
         try{
-            Set<String> fsoProjectTeamRolesList = new Set<String>{NSP_ServiceConstants.ProjectManager,NSP_ServiceConstants.OrientationRep,NSP_ServiceConstants.OSCoordinator,NSP_ServiceConstants.OTCoordinator,NSP_ServiceConstants.OTPlanner,NSP_ServiceConstants.PayrollSpecialist};
-            Set<String> mmProjectTeamRolesList = new Set<String>{NSP_ServiceConstants.ProjectManager,NSP_ServiceConstants.TransitionSpecialist,NSP_ServiceConstants.SrBenefitRep,NSP_ServiceConstants.PayrollProjectManager,NSP_ServiceConstants.PayrollSpecialist,NSP_ServiceConstants.SrHrSpecialist,NSP_ServiceConstants.AccountExecutive};
+            Set<String> fsoProjectTeamRolesList = new Set<String>{NSP_ServiceConstants.ProjectManager,NSP_ServiceConstants.OrientationRep,NSP_ServiceConstants.OSCoordinator,NSP_ServiceConstants.OTCoordinator,NSP_ServiceConstants.OTPlanner,NSP_ServiceConstants.PayrollSpecialist,'HR Client Implementation Team Member'};       
+            Set<String> mmProjectTeamRolesList = new Set<String>{NSP_ServiceConstants.ProjectManager,NSP_ServiceConstants.TransitionSpecialist,NSP_ServiceConstants.SrBenefitRep,NSP_ServiceConstants.PayrollProjectManager,NSP_ServiceConstants.PayrollSpecialist,NSP_ServiceConstants.SrHrSpecialist,NSP_ServiceConstants.AccountExecutive,'HR Client Implementation Team Member'};
 
             Id mmProjectTeamRecordTypeId = SObjectType.NSP_Project_Team__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.MMProjectTeamRecordType).getRecordTypeId();
             Id fsoProjectTeamRecordTypeId = SObjectType.NSP_Project_Team__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.FSOProjectTeamRecordType).getRecordTypeId();
