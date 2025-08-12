@@ -220,6 +220,7 @@ private class NSP_ValidateOpportunityStageTest {
         Test.startTest();
         Opportunity objOpprtunity = NSP_TestHelper.createOpenOpportunity(acnt.Id,'New Product',true);
         objOpprtunity.NSP_BidNumber__c='unique12345';
+        objOpprtunity.NSP_PrimaryProduct__c='HR Consulting Services';
         update objOpprtunity;
         blng__BillingRule__c objBillingRule = NSP_TestHelper.createBillingRule();
         blng__RevenueRecognitionRule__c objRevRecRule =  NSP_TestHelper.createRevrecRule('1');
@@ -407,6 +408,13 @@ private class NSP_ValidateOpportunityStageTest {
         oppty.StageName='Analysis';
         try{
             update oppty; 
+        }catch(Exception ex){
+            ex.getStackTraceString();
+        }
+
+        oppty.StageName = 'Proposal';
+        try{
+            update oppty;
         }catch(Exception ex){
             ex.getStackTraceString();
         }
@@ -1088,5 +1096,15 @@ private class NSP_ValidateOpportunityStageTest {
         System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition(true, 'true', 'EQUALS'));
         System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition(false, 'true', 'DOES_NOT_EQUAL'));
         test.stopTest();
+    }
+    
+    @isTest
+    private static void test_evaluateQuoteExistingQuote() {
+        Opportunity opp = [SELECT Id FROM Opportunity WHERE StageName != NULL AND SBQQ__PrimaryQuote__c != null LIMIT 1][0];
+        SBQQ__Quote__c oppQuote = [SELECT Id FROM SBQQ__Quote__c WHERE SBQQ__Opportunity2__c = :opp.Id LIMIT 1][0];
+
+        Test.startTest();
+        NSP_ValidateOpportunityStage.evaluateQuoteExistingQuote( opp , oppQuote );
+        Test.stopTest();
     }
 }
