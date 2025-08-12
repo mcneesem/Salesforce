@@ -41,9 +41,9 @@
         </filters>
         <filters>
             <field>NSP_Project__c</field>
-            <operator>NotEqualTo</operator>
+            <operator>IsNull</operator>
             <value>
-                <stringValue></stringValue>
+                <booleanValue>false</booleanValue>
             </value>
         </filters>
         <inputAssignments>
