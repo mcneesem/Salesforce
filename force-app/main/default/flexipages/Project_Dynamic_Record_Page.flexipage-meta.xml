@@ -779,7 +779,12 @@
                 <fieldItem>Record.Lost_Detail__c</fieldItem>
                 <identifier>RecordLost_Detail_cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>(1 OR 2 OR 3 OR 4)  AND 5</booleanFilter>
+                    <booleanFilter>( 1 AND ( 2 OR 3 OR 4 OR 5 ) )</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.pse__Project_Status__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Close/Lost</rightValue>
+                    </criteria>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -799,11 +804,6 @@
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>ITA Impl</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.pse__Project_Status__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Close/Lost</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
