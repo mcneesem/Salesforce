@@ -99,7 +99,7 @@ public with sharing class CreateProjectFromTemplateAccount {
                         res.isSuccess = true;
                     } else {
                         res.isSuccess = false;
-                        res.errorMessage 'Project creation failed with no ID returned.';
+                        res.errorMessage = 'Project creation failed with no ID returned.';
                     }
                 } catch ( Exception e ) {
                     res.isSuccess = false;
