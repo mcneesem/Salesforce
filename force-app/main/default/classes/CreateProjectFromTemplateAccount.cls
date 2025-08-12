@@ -53,42 +53,6 @@ public with sharing class CreateProjectFromTemplateAccount {
         return responseList;
     }
 
-    private static Response processProjectRequest( Request req , Map<Id,Account> accountMap , Map<Id,pse__Proj__c> templateMap ) {
-        Response res = new Response();
-    
-        // Validate input parameters
-        if (req.oaccountId == null || req.oprojectTemplateId == null) {
-            res.isSuccess = false;
-            res.errorMessages = new List<String>{'Missing required input fields: Account Id or Project Template Id'};
-        } else {
-            // Validate records exist
-            Account acc = accountMap.get(req.oaccountId);
-            pse__proj__c template = templateMap.get(req.oprojectTemplateId);
-    
-            if (acc == null || template == null) {
-                res.isSuccess = false;
-                res.errorMessages = new List<String>{'Account or Project Template not found for provided IDs'};
-            } else {
-                // Create project
-                try {
-                    Id projectId = createProjectFromTemplate(acc, template);
-                    if (projectId != null) {
-                        res.projectId = projectId;
-                        res.isSuccess = true;
-                    } else {
-                        res.isSuccess = false;
-                        res.errorMessages = new List<String>{'Project creation failed with no ID returned.'};
-                    }
-                } catch (Exception e) {
-                    res.isSuccess = false;
-                    res.errorMessages = new List<String>{'Exception: ' + e.getMessage()};
-                }
-            }
-        }
-    
-        return res;
-    }
-
     public class Request {
         @InvocableVariable(label='Account Id' description='Id of the Account on which the Project is created' required=true)
         public Id oaccountId;
@@ -101,8 +65,49 @@ public with sharing class CreateProjectFromTemplateAccount {
         public Id projectId;
         @InvocableVariable(label='Success' description='Indicates if the project was created successfully')
         public Boolean isSuccess;
-        @InvocableVariable(label='Error Messages' description='List of error messages if any occurred')
-        public List<String> errorMessages;
+        @InvocableVariable(label='Error Message' description='Error message if any occurred')
+        public String errorMessage;
+    }
+
+    //
+    //
+    //
+
+    private static Response processProjectRequest( Request req , Map<Id,Account> accountMap , Map<Id,pse__Proj__c> templateMap ) {
+        Response res = new Response();
+        // Validate input parameters
+        if ( ( req == null )
+            || ( req.oaccountId == null )
+            || ( req.oprojectTemplateId == null )
+            )
+        {
+            res.isSuccess = false;
+            res.errorMessage = 'Missing required inputs: Account Id or Project Template Id.';
+        } else {
+            // Validate records exist
+            Account acc = accountMap.get( req.oaccountId );
+            pse__proj__c template = templateMap.get( req.oprojectTemplateId );
+            if ( ( acc == null ) || ( template == null ) ) {
+                res.isSuccess = false;
+                res.errorMessage = 'Account or Project Template not found for the provided inputs.';
+            } else {
+                // Create project
+                try {
+                    Id projectId = CreateProjectFromTemplateAccount.createProjectFromTemplate( acc , template );
+                    if ( projectId != null ) {
+                        res.projectId = projectId;
+                        res.isSuccess = true;
+                    } else {
+                        res.isSuccess = false;
+                        res.errorMessage 'Project creation failed with no ID returned.';
+                    }
+                } catch ( Exception e ) {
+                    res.isSuccess = false;
+                    res.errorMessage 'Exception: ' + e.getMessage();
+                }
+            }
+        }
+        return res;
     }
 
     private static Id createProjectFromTemplate( Account oaccount , pse__proj__c oprojectTemplate ) {
