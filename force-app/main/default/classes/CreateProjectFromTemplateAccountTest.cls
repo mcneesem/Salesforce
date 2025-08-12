@@ -50,11 +50,5 @@
         responseList = CreateProjectFromTemplateAccount.createProject(new List<CreateProjectFromTemplateAccount.Request>{req});
         System.assertEquals(1, responseList.size());
 
-        // for code coverage...
-      /* 	CreateProjectFromTemplateAccount.handleCreateProjectResponse(
-            CreateProjectFromTemplateAccountTest.class.getName() ,
-            'testCreateProjectFromTemplateInvo' ,
-            null
-        );	*/
     }
 }
