@@ -80,15 +80,15 @@
         <field>Asset.ExternalIdentifier</field>
         <readable>false</readable>
     </fieldPermissions>
+        <fieldPermissions>
+        <editable>true</editable>
+		<field>Asset.HRCore_Region__c</field>
+		<readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Asset.HasLifecycleManagement</field>
         <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-		<field>Asset.HRCore_Region__c</field>
-		<readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
