@@ -18,25 +18,25 @@ public class NSP_ProjectTasksTriggerHelper {
     private static final String LEVIESTASK = 'Employee Levies Provided';
     private static final String LINE_BREAK = '<br/><br/>';
 
-    /**
-    * Iterates throught the list of new pse__Project_Task__c and passes the required attributes to other methods.
-    * @param projectTaskNewMap Map of New project.
-    * @param projecttaskOldMap Map of Old project.
-    * @return void
-    *
-    */
-    public void updateProjectTaskFields(List<pse__Project_Task__c> projectTaskList){
-        Map<Id, List<pse__Project_Task__c>> projectTaskMap = new Map<Id, List<pse__Project_Task__c>>();
-        Map<Id, pse__Proj__c> parentProjectMap  = new  Map<Id, pse__Proj__c>();
-        Map<Id, Id> mapOfparentTaskIdAndMilestoneId = new Map<Id, Id>();
+    //
+    // Iterates throught the list of new pse__Project_Task__c and passes the required attributes to other methods.
+    // @param projectTaskNewMap Map of New project.
+    // @param projecttaskOldMap Map of Old project.
+    // @return void
+    //
+    public void updateProjectTaskFields( List<pse__Project_Task__c> projectTaskList ) {
+        Map<Id,List<pse__Project_Task__c>> projectTaskMap = new Map<Id,List<pse__Project_Task__c>>();
+        Map<Id,pse__Proj__c> parentProjectMap  = new Map<Id,pse__Proj__c>();
+        Map<Id,Id> mapOfparentTaskIdAndMilestoneId = new Map<Id,Id>();
         Set<Id> setOfParentProjectTask = new Set<Id>();
         List<String> projectForCancallation = new List<String>();
-        if ( NSP_ProjectTasksTriggerHelper.settings != null ) {
-            if ( String.isNotBlank( NSP_ProjectTasksTriggerHelper.settings.CancellationProjects1__c ) ) {
-                projectForCancallation = NSP_ProjectTasksTriggerHelper.settings.CancellationProjects1__c.split( ',' );
-                if ( String.isNotBlank( NSP_ProjectTasksTriggerHelper.settings.CancellationProjects2__c ) ) {
-                    projectForCancallation.addAll( NSP_ProjectTasksTriggerHelper.settings.CancellationProjects2__c.split( ',' ) );
-                }
+        if ( ( NSP_ProjectTasksTriggerHelper.settings != null )
+            && String.isNotBlank( NSP_ProjectTasksTriggerHelper.settings.CancellationProjects1__c )
+            )
+        {
+            projectForCancallation = NSP_ProjectTasksTriggerHelper.settings.CancellationProjects1__c.split( ',' );
+            if ( String.isNotBlank( NSP_ProjectTasksTriggerHelper.settings.CancellationProjects2__c ) ) {
+                projectForCancallation.addAll( NSP_ProjectTasksTriggerHelper.settings.CancellationProjects2__c.split( ',' ) );
             }
         }
         for(pse__Project_Task__c projectTask : projectTaskList){
