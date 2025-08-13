@@ -39,7 +39,7 @@
                 <behavior>Edit</behavior>
                 <field>NSP_Complexity_Level__c</field>
             </layoutItems>
-                    </layoutColumns>
+        </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -52,18 +52,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Due_Date__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Docusign_Form_To_Send__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Exemption_Type__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Verification_Report_Attached__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
