@@ -82,8 +82,8 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-		<field>Asset.HRCore_Region__c</field>
-		<readable>true</readable>
+        <field>Asset.HRCore_Region__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
