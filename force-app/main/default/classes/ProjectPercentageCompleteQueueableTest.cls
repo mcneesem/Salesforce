@@ -1,12 +1,23 @@
 @isTest
 private class ProjectPercentageCompleteQueueableTest {
 
+    @testSetup
+    public static void setup() {
+        ProjectTaskTriggerSettings__c settings = ProjectTaskTriggerSettings__c.getOrgDefaults();
+        settings.IsEnabled__c = true;
+        settings.IsEnabledQueueablePercentage__c = true;
+        settings.IsEnabledFuturePercentage__c = false;
+        upsert settings;
+    }
+
     @isTest
     private static void testProjectPercentageComplete() {
         pse__Proj__c projectRecord = new pse__Proj__c(
             Name='testProject'
         );
         insert projectRecord;
+        //
+        Test.startTest();
         //
         pse__Project_Task__c projectTaskRecord01 = new pse__Project_Task__c(
             Name='testProjectTask' ,
@@ -21,8 +32,6 @@ private class ProjectPercentageCompleteQueueableTest {
         );
         insert projectTaskRecord02;
         //
-        Test.startTest();
-        ProjectPercentageCompleteQueueable.enqueueJob( new Set<Id>{ projectRecord.Id } );
         Test.stopTest();
         //
         List<pse__Proj__c> records = [ SELECT Id , NSP_Project_Complete__c FROM pse__Proj__c WHERE ( Id = :projectRecord.Id ) LIMIT 1 ];
