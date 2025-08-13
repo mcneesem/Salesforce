@@ -4,8 +4,8 @@
     <assignments>
         <name>Assign_varFaultElement_Create_Files_Links_on_Case</name>
         <label>Assign varFaultElement Create_Files_Links_on_Case</label>
-        <locationX>842</locationX>
-        <locationY>1740</locationY>
+        <locationX>314</locationX>
+        <locationY>1956</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -71,7 +71,7 @@
     <assignments>
         <name>FSO_YTD</name>
         <label>FSO YTD</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>924</locationY>
         <assignmentItems>
             <assignToReference>DueDate</assignToReference>
@@ -87,7 +87,7 @@
     <assignments>
         <name>MM_YTD</name>
         <label>MM YTD</label>
-        <locationX>50</locationX>
+        <locationX>314</locationX>
         <locationY>924</locationY>
         <assignmentItems>
             <assignToReference>DueDate</assignToReference>
@@ -104,7 +104,7 @@
         <name>New_File_Link</name>
         <label>New File Link</label>
         <locationX>402</locationX>
-        <locationY>1440</locationY>
+        <locationY>1548</locationY>
         <assignmentItems>
             <assignToReference>SingleLink.ContentDocumentId</assignToReference>
             <operator>Assign</operator>
@@ -145,10 +145,54 @@
         </connector>
     </assignments>
     <decisions>
+        <name>Case_record_null_check</name>
+        <label>Case record null check</label>
+        <locationX>578</locationX>
+        <locationY>1332</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Case_record_not_null</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>caseRecord</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Loop_through_files</targetReference>
+            </connector>
+            <label>Case record not null</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>File_Link_null_check</name>
+        <label>File Link null check</label>
+        <locationX>314</locationX>
+        <locationY>1740</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>File_not_null</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>NewLinks</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Files_Links_on_Case</targetReference>
+            </connector>
+            <label>File not null</label>
+        </rules>
+    </decisions>
+    <decisions>
         <description>Add in the outcomes the fields that differ between MM and FSO</description>
         <name>MM_or_FSO_YTD_Case</name>
         <label>MM or FSO YTD Case</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>816</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -185,15 +229,15 @@
     <decisions>
         <name>Null_Check</name>
         <label>Null Check</label>
-        <locationX>1568</locationX>
+        <locationX>1601</locationX>
         <locationY>492</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Not_null</name>
-            <conditionLogic>( 1 AND 2 ) OR 3</conditionLogic>
+            <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>$Record.pse__Project__r.pse__Account__c</leftValueReference>
-                <operator>IsBlank</operator>
+                <leftValueReference>$Record.pse__Project__c</leftValueReference>
+                <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -206,7 +250,7 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Get_Queue.Id</leftValueReference>
+                <leftValueReference>$Record.pse__Project__r.pse__Account__c</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -221,12 +265,12 @@
     <decisions>
         <name>Null_checks_YTD</name>
         <label>Null checks YTD</label>
-        <locationX>842</locationX>
+        <locationX>974</locationX>
         <locationY>708</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Not_null_YTD</name>
-            <conditionLogic>or</conditionLogic>
+            <conditionLogic>( 1 OR 2 ) AND 3</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Implementation_Profile.NSP_Insperity_1st_pay_date__c</leftValueReference>
                 <operator>IsNull</operator>
@@ -241,6 +285,13 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Get_Queue.Id</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>MM_or_FSO_YTD_Case</targetReference>
             </connector>
@@ -250,7 +301,7 @@
     <decisions>
         <name>Project_Task_Name</name>
         <label>Project Task Name</label>
-        <locationX>1238</locationX>
+        <locationX>1304</locationX>
         <locationY>600</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -283,14 +334,14 @@
         <name>Loop_through_files</name>
         <label>Loop through files</label>
         <locationX>314</locationX>
-        <locationY>1332</locationY>
+        <locationY>1440</locationY>
         <collectionReference>Get_Content_Document</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>New_File_Link</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Create_Files_Links_on_Case</targetReference>
+            <targetReference>File_Link_null_check</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -315,8 +366,8 @@
     <recordCreates>
         <name>Create_Files_Links_on_Case</name>
         <label>Create Files Links on Case</label>
-        <locationX>314</locationX>
-        <locationY>1632</locationY>
+        <locationX>50</locationX>
+        <locationY>1848</locationY>
         <faultConnector>
             <targetReference>Assign_varFaultElement_Create_Files_Links_on_Case</targetReference>
         </faultConnector>
@@ -325,11 +376,11 @@
     <recordLookups>
         <name>Get_Content_Document</name>
         <label>Get Content Document</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>1224</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Loop_through_files</targetReference>
+            <targetReference>Case_record_null_check</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Assign_varFaultElement_Get_Content_Document</targetReference>
@@ -351,7 +402,7 @@
     <recordLookups>
         <name>Get_Implementation_Profile</name>
         <label>Get Implementation Profile</label>
-        <locationX>1568</locationX>
+        <locationX>1601</locationX>
         <locationY>276</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -378,7 +429,7 @@
     <recordLookups>
         <name>Get_Queue</name>
         <label>Get Queue</label>
-        <locationX>1568</locationX>
+        <locationX>1601</locationX>
         <locationY>384</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -408,7 +459,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>551</locationX>
+        <locationX>567</locationX>
         <locationY>0</locationY>
         <filterLogic>1 AND 2 AND 3 AND (4 OR 5) AND 6</filterLogic>
         <filters>
@@ -467,8 +518,8 @@
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
-        <locationX>842</locationX>
-        <locationY>1848</locationY>
+        <locationX>314</locationX>
+        <locationY>2064</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
@@ -492,7 +543,7 @@
     <subflows>
         <name>Prior_Wages_Case</name>
         <label>Prior Wages Case</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>1116</locationY>
         <connector>
             <targetReference>Get_Content_Document</targetReference>
