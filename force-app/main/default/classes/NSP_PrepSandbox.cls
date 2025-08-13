@@ -335,16 +335,22 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                     refreshValMap.put('NSP_FTA_Base_URL', 'https://stageportalapps.insperity.com/financialcomparison/financialanalysis/');
                     refreshValMap.put('NSP_Docusign_Account_Id', '48945');
                     refreshValMap.put('NSP_Docusign_Base_URL', DOCUSIGN_BASE_URL);
+                    refreshValMap.put('NSP_Contact_Center_Email_Addresses', 'test.contact_center_UAT@insperity.com');
+                    refreshValMap.put('NSP_Health_Welfare_Section_125', 'test.section125_UAT@insperity.com');
                 }
                 when 'test' {
                     refreshValMap.put('NSP_FTA_Base_URL', 'https://testportalapps.insperity.com/financialcomparison/financialanalysis/');
                     refreshValMap.put('NSP_Docusign_Account_Id', '65500');
                     refreshValMap.put('NSP_Docusign_Base_URL', DOCUSIGN_BASE_URL);
+                    refreshValMap.put('NSP_Contact_Center_Email_Addresses', 'test.contact_center@insperity.com');
+                    refreshValMap.put('NSP_Health_Welfare_Section_125', 'test.section125@insperity.com');
                 }
                 when 'merge' {
                     refreshValMap.put('NSP_FTA_Base_URL', 'https://devportalapps.insperity.com/financialcomparison/financialanalysis/');
                     refreshValMap.put('NSP_Docusign_Account_Id', '122677');
                     refreshValMap.put('NSP_Docusign_Base_URL', DOCUSIGN_BASE_URL);
+                    refreshValMap.put('NSP_Contact_Center_Email_Addresses', 'test.contact_center.merge@insperity.com');
+                    refreshValMap.put('NSP_Health_Welfare_Section_125', 'test.section125.merge@insperity.com');
                 }
                 when else {
                     refreshValMap.put('NSP_FTA_Base_URL', 'https://devportalapps.insperity.com/financialcomparison/financialanalysis/');
@@ -389,7 +395,9 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             List<List<MetadataService.Metadata>> allMetadataList = new List<List<MetadataService.Metadata>>();
             allMetadataList.add(new List<MetadataService.Metadata>());
             MetadataService.CustomLabel cL;
+            String sandbox = System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName().toLowerCase();
             String[] cLNames = getEmailCLabelNames();
+            String[] preserveNames = new String[]{'NSP_Contact_Center_Email_Addresses' , 'NSP_Health_Welfare_Section_125'};
 
             for(integer i=0; i < cLNames.size() ; i++){
                 cL = new MetadataService.CustomLabel();
@@ -398,19 +406,21 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                 } else {
                     cL.value = 'test@insperity.com';
                 }
-                if((cL.value != null && cL.value.indexOf('@') != -1 && cL.value.indexOf(STRING_INVALID) == -1)) {
-                    MetadataService.CustomLabel cLUpd = new MetadataService.CustomLabel();
-                    cLUpd.fullName = cL.fullName;
-                    cLUpd.value = invalidateEmailString(cL.value);
-                    cLUpd.shortDescription = cL.shortDescription;
-                    cLUpd.language = cL.language;
-                    cLUpd.protected_x = cL.protected_x;
+                if( cL.value != null && cL.value.indexOf('@') != -1 && cL.value.indexOf(STRING_INVALID) == -1 ) {
+                    if( sandbox.indexOf('dev') != -1 || !preserveNames.contains( cLNames[i] )) {
+                        MetadataService.CustomLabel cLUpd = new MetadataService.CustomLabel();
+                        cLUpd.fullName = cL.fullName;
+                        cLUpd.value = invalidateEmailString(cL.value);
+                        cLUpd.shortDescription = cL.shortDescription;
+                        cLUpd.language = cL.language;
+                        cLUpd.protected_x = cL.protected_x;
 
-                    if (allMetadataList[batch].size() >= 10) {
-                        batch++;
-                        allMetadataList.add(new List<MetadataService.Metadata>()); // create a new batch when we fill one up
+                        if (allMetadataList[batch].size() >= 10) {
+                            batch++;
+                            allMetadataList.add(new List<MetadataService.Metadata>()); // create a new batch when we fill one up
+                        }
+                        allMetadataList[batch].add(cLUpd);
                     }
-                    allMetadataList[batch].add(cLUpd);
                 }
             }
 
