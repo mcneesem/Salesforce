@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>64.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <environments>Default</environments>
+    <interviewLabel>Activity - Cancel - Related to Opportunity Closed Lost {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Activity - Cancel - Related to Opportunity Closed Lost</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Subflow_Activity_Cancel_Related_to_Opportunity_Closed_Lost</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>StageName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Closed Lost</stringValue>
+            </value>
+        </filters>
+        <object>Opportunity</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Draft</status>
+    <subflows>
+        <name>Subflow_Activity_Cancel_Related_to_Opportunity_Closed_Lost</name>
+        <label>Subflow - Activity - Cancel Related to Opportunity Closed Lost</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <flowName>Subflow_Activity_Cancel_Related_to_Opportunity_Closed_Lost</flowName>
+        <inputAssignments>
+            <name>faultflowName</name>
+            <value>
+                <stringValue>Activity - Cancel - Related to Opportunity Closed Lost</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>varOpportunityId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <variables>
+        <name>FaultFlowName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>&apos;Opportunity - Updated - Async - Closed Lost Forecast Update&apos;</stringValue>
+        </value>
+    </variables>
+</Flow>
