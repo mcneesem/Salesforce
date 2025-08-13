@@ -92,6 +92,7 @@
     &apos;118&apos; , &apos;JLL&apos; ,
     &apos;119&apos; , &apos;MSO&apos; ,
     &apos;120&apos; , &apos;The Anderson Group&apos; ,
+    &apos;121&apos; , &apos;Academy of General Dentistry&apos; ,
     TEXT( pse__Account__r.WO_Asset__r.NSP_National_Account_Group__c )
   )
 )</formula>
