@@ -399,28 +399,27 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             String[] cLNames = getEmailCLabelNames();
             String[] preserveNames = new String[]{'NSP_Contact_Center_Email_Addresses' , 'NSP_Health_Welfare_Section_125'};
 
-            for(integer i=0; i < cLNames.size() ; i++){
+            for( integer i=0; i < cLNames.size() ; i++ ) {
                 cL = new MetadataService.CustomLabel();
                 if ( !Test.isRunningTest() ) {
                     cL = (MetadataService.CustomLabel) service.readMetadata('CustomLabel', new String[] { cLNames[i] }).getRecords()[0];
                 } else {
                     cL.value = 'test@insperity.com';
                 }
-                if( cL.value != null && cL.value.indexOf('@') != -1 && cL.value.indexOf(STRING_INVALID) == -1 ) {
-                    if( sandbox.indexOf('dev') != -1 || !preserveNames.contains( cLNames[i] )) {
-                        MetadataService.CustomLabel cLUpd = new MetadataService.CustomLabel();
-                        cLUpd.fullName = cL.fullName;
-                        cLUpd.value = invalidateEmailString(cL.value);
-                        cLUpd.shortDescription = cL.shortDescription;
-                        cLUpd.language = cL.language;
-                        cLUpd.protected_x = cL.protected_x;
+                if( cL?.value.indexOf('@') != -1 && cL?.value.indexOf(STRING_INVALID) == -1 
+                        && ( sandbox.indexOf('dev') != -1 || !preserveNames.contains( cLNames[i] ) ) ) {
+                    MetadataService.CustomLabel cLUpd = new MetadataService.CustomLabel();
+                    cLUpd.fullName = cL.fullName;
+                    cLUpd.value = invalidateEmailString(cL.value);
+                    cLUpd.shortDescription = cL.shortDescription;
+                    cLUpd.language = cL.language;
+                    cLUpd.protected_x = cL.protected_x;
 
-                        if (allMetadataList[batch].size() >= 10) {
-                            batch++;
-                            allMetadataList.add(new List<MetadataService.Metadata>()); // create a new batch when we fill one up
-                        }
-                        allMetadataList[batch].add(cLUpd);
+                    if (allMetadataList[batch].size() >= 10) {
+                        batch++;
+                        allMetadataList.add(new List<MetadataService.Metadata>()); // create a new batch when we fill one up
                     }
+                    allMetadataList[batch].add(cLUpd);
                 }
             }
 
