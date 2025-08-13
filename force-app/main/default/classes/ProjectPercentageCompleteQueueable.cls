@@ -108,7 +108,12 @@ public with sharing class ProjectPercentageCompleteQueueable implements Queueabl
 
     private pse__Proj__c calculateProjectPercentageComplete( Id projectId , Decimal current , Decimal count , Decimal total ) {
         pse__Proj__c record = null;
-        if ( ( count != null ) && ( total != null ) && ( total > 0 ) ) {
+        if ( ( projectId != null )
+            && ( count != null )
+            && ( total != null )
+            && ( total > 0 )
+            )
+        {
             Decimal newPercentComplete = ( count / total );
             if ( ( current == null )
                 || ( current.round() != newPercentComplete.round() )
