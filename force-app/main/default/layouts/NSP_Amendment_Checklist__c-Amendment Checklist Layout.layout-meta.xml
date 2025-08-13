@@ -197,7 +197,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Employee Match/Comp Level</label>
+        <label>Employer Match</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
