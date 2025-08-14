@@ -1059,8 +1059,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Intro_Demo_Date__c</fieldItem>
-                <identifier>RecordIntro_Demo_Date_cField</identifier>
+                <fieldItem>Record.Demo_Date__c</fieldItem>
+                <identifier>RecordDemo_Date_cField</identifier>
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
