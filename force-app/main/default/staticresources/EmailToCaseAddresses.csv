@@ -27,10 +27,10 @@ TES Banking,tesbanking.merge@insperity.com,tesbanking.test@insperity.com,tesbank
 TES HR Support Center,test.hrsupportcenter.merge@insperity.com,test.hrsupportcenter@insperity.com,test.hrsupportcenter_uat@insperity.com
 Talent Connect,test.itcinfo.merge@insperity.com,test.itcinfo.test@insperity.com,test.itcinfo.stage@insperity.com
 Time and Attendance,test.time.support.merge@insperity.com,test.time.support@insperity.com,test.time.support_UAT@insperity.com
-WX Business Team,wxbusinessteam.merge@insperity.com,wxbusinessteam.test@insperity.com,wxbusinessteam.stage@insperity.com
+WX Business Team,HRCore.businessteam.Merge@insperity.com,HRCore.businessteam.Test@insperity.com,HRCore.businessteam.Stage@insperity.com
 WX COS Team,merge.wxcosteam@insperity.com,test.wxcosteam@insperity.com,stage.wxcosteam@insperity.com
 WX HR Services,HRCore.HRServices.Merge@insperity.co,HRCore.HRServices.Test@insperity.com,HRCore.HRServices.Stage@insperity.com
 WX Payroll Support,test.hcmpayrollsupport.merge@insperity.com,test.hcmpayrollsupport@insperity.com,test.hcmpayrollsupport_uat@insperity.com
 WX Tax,HRCore.tax.Merge@insperity.com,HRCore.tax.Test@insperity.com,HRCore.tax.Stage@insperity.com
 XML Utility,test.payrollxmlsupport.merge@insperity.com,test.payrollxmlsupport@insperity.com,test.payrollxmlsupport_uat@insperity.com
-isolved Time,test.watime.merge@insperity.com,test.watime@insperity.com,test.watime.stage@insperity.com
+isolved Time,HRCore.time.Merge@insperity.com,HRCore.time.Test@insperity.com,HRCore.time.Stage@insperity.com
