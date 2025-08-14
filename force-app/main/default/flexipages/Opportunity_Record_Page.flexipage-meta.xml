@@ -1827,6 +1827,26 @@
                 <identifier>RecordStageNameField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Leadership_Attendance__c</fieldItem>
+                <identifier>RecordLeadership_Attendance_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.DC_Debrief__c</fieldItem>
+                <identifier>RecordDC_Debrief_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-b40b725e-a04c-4645-95f9-c27bde917c43</name>
         <type>Facet</type>
     </flexiPageRegions>
