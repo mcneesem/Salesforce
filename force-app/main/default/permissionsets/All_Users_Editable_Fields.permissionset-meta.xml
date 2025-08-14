@@ -52,6 +52,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.Vendor_System__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>NSP_Accrual_Profile__c.Cloned_from_AP_Template__c</field>
         <readable>true</readable>
     </fieldPermissions>

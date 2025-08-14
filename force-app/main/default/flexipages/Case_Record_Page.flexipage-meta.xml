@@ -823,6 +823,23 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Vendor_System__c</fieldItem>
+                <identifier>RecordVendor_System_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Integration Team</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-05ee4b2b-16c3-4aab-bf2e-ff80e272f144</name>
         <type>Facet</type>
     </flexiPageRegions>
