@@ -561,7 +561,6 @@ public with sharing class NSP_OpportunityTriggerHelper {
         // Any field update related to Stage Exit/Entry should trigger Stage progression automation attempt
         if ( NSP_OpportunityTriggerHelper.Is_Enabled_WO_WS_Stage_Entry
             && ( newOpportunity.NSP_Bid_Status__c != oldOpportunity.NSP_Bid_Status__c
-                || newOpportunity.NSP_Closing_Appointment__c != oldOpportunity.NSP_Closing_Appointment__c
                 || newOpportunity.NSP_Number_of_Employees__c != oldOpportunity.NSP_Number_of_Employees__c
                 || newOpportunity.NSP_PrimaryProduct__c != oldOpportunity.NSP_PrimaryProduct__c
                 || newOpportunity.NSP_Forecast_Status__c != oldOpportunity.NSP_Forecast_Status__c
@@ -575,7 +574,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
                 || newOpportunity.NSP_Client_For_Life__c != oldOpportunity.NSP_Client_For_Life__c
                 || newOpportunity.StageName != oldOpportunity.StageName
                 || newOpportunity.Type != oldOpportunity.Type
-                )
+               )
             )
         {
             stageAutoOpportunityIds.add(newOpportunity.Id);
