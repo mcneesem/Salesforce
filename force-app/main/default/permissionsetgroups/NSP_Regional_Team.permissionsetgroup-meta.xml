@@ -13,7 +13,6 @@
     <permissionSets>Checklist_Read_Create</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
     <permissionSets>Core_Sales</permissionSets>
-    <permissionSets>Detailed_Data_Access</permissionSets>
     <permissionSets>Enrollment_Fee_Edit</permissionSets>
     <permissionSets>List_View_Enhanced_Access</permissionSets>
     <permissionSets>NSP_Billing_View_All</permissionSets>
@@ -23,6 +22,7 @@
     <permissionSets>NSP_Template_Field_permission</permissionSets>
     <permissionSets>Opportunity_Closed_Lost_SO_Opp</permissionSets>
     <permissionSets>Opportunity_Closed_Lost_SO_Opp_Owner</permissionSets>
+    <permissionSets>Opportunity_Edit_Leadership_Attendance_and_DC_Debrief</permissionSets>
     <permissionSets>Opportunity_NCS_Email_Core_MidMarket</permissionSets>
     <permissionSets>Opportunity_Team_Group_Check</permissionSets>
     <permissionSets>Report_export_and_print_access</permissionSets>
