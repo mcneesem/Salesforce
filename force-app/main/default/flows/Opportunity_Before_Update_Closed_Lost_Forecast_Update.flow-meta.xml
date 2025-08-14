@@ -24,8 +24,8 @@
         </assignmentItems>
     </assignments>
     <environments>Default</environments>
-    <interviewLabel>Opportunity - Before - Updated - Async - Closed Lost Forecast Update {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Opportunity - Before - Updated - Async - Closed Lost Forecast Update</label>
+    <interviewLabel>Opportunity - Before - Update - Closed Lost Forecast Update {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Opportunity - Before - Update - Closed Lost Forecast Update</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
