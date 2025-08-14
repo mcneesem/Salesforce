@@ -1,12 +1,116 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Discovery_Call_Follow_Up_Email</name>
+        <label>Discovery Call Follow-Up Email</label>
+        <locationX>50</locationX>
+        <locationY>1572</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <connector>
+            <targetReference>Check_HCM_Rules_and_HR360_Primary_Product</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailAddresses</name>
+        </inputParameters>
+        <inputParameters>
+            <name>emailAddressesArray</name>
+            <value>
+                <elementReference>EmailRecepients</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderType</name>
+            <value>
+                <stringValue>OrgWideEmailAddress</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderAddress</name>
+            <value>
+                <stringValue>no-reply@insperity.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>composeEmailContent</name>
+            <value>
+                <stringValue>True</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <elementReference>EmailSubject</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>EmailContents</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
+        <versionString>1.0.1</versionString>
+    </actionCalls>
+    <actionCalls>
+        <name>Discovery_Call_Follow_Up_Notification</name>
+        <label>Discovery Call Follow-Up Notification</label>
+        <locationX>50</locationX>
+        <locationY>1356</locationY>
+        <actionName>customNotificationAction</actionName>
+        <actionType>customNotificationAction</actionType>
+        <connector>
+            <targetReference>AssignEmailRecepients</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>customNotifTypeId</name>
+            <value>
+                <elementReference>Get_Discovery_Call_Notification.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recipientIds</name>
+            <value>
+                <elementReference>RecepientIds</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>title</name>
+            <value>
+                <stringValue>Discovery Call Follow-Up</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>body</name>
+            <value>
+                <elementReference>ContentNotification</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>targetId</name>
+            <value>
+                <elementReference>varOpportunity.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>customNotificationAction</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
     <apiVersion>61.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Assign_Discovery_Call_Completed_Date</name>
         <label>Assign Discovery Call Completed Date</label>
-        <locationX>182</locationX>
-        <locationY>708</locationY>
+        <locationX>138</locationX>
+        <locationY>1956</locationY>
         <assignmentItems>
             <assignToReference>varOpportunity.Discovery_Call_Completed_Date__c</assignToReference>
             <operator>Assign</operator>
@@ -28,7 +132,7 @@
     <assignments>
         <name>Assign_Has_Demo_Activity</name>
         <label>Assign Has Demo Activity</label>
-        <locationX>974</locationX>
+        <locationX>2250</locationX>
         <locationY>708</locationY>
         <assignmentItems>
             <assignToReference>varOpportunity.NSP_Has_Demo_Activity__c</assignToReference>
@@ -42,9 +146,76 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_Opportunity_Close_Date</name>
+        <label>Assign Opportunity Close Date</label>
+        <locationX>666</locationX>
+        <locationY>1956</locationY>
+        <assignmentItems>
+            <assignToReference>varOpportunity.CloseDate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Event_Completed_Date_Plus_60</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Opportunity_CloseDate</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement</name>
+        <label>Assign varFaultElement - Get Opty Owner in BPA Public Group</label>
+        <locationX>1458</locationX>
+        <locationY>816</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Opty_Owner_in_BPA_Public_Group</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_Discovery_Call_Notification</name>
+        <label>Assign varFaultElement - Get Discovery Call Notification</label>
+        <locationX>314</locationX>
+        <locationY>1248</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Discovery_Call_Notification</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_District_Manager</name>
+        <label>Assign varFaultElement - Get District Manager</label>
+        <locationX>754</locationX>
+        <locationY>1032</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_District_Manager</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_varFaultElement_Get_Opty_Info</name>
         <label>Assign varFaultElement - Get Opty Info</label>
-        <locationX>2030</locationX>
+        <locationX>3306</locationX>
         <locationY>384</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -54,14 +225,31 @@
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Update_Opty_CloseDate</name>
+        <label>Assign varFaultElement - Update Opty - CloseDate</label>
+        <locationX>930</locationX>
+        <locationY>2172</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Opportunity_CloseDate</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
             <targetReference>Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Assign_varFaultElement_Update_Opty_Discovery_Call_Completed_Date</name>
         <label>Assign varFaultElement - Update Opty - Discovery Call Completed Date</label>
-        <locationX>446</locationX>
-        <locationY>924</locationY>
+        <locationX>402</locationX>
+        <locationY>2172</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -77,7 +265,7 @@
     <assignments>
         <name>Assign_varFaultElement_Update_Opty_Has_Demo_Activity</name>
         <label>Assign varFaultElement - Update Opty - Has Demo Activity</label>
-        <locationX>1238</locationX>
+        <locationX>2514</locationX>
         <locationY>924</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -91,15 +279,61 @@
             <targetReference>Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
-    <decisions>
-        <description>Prevent DmlExceptions: HCM Sales Consultants can modify only WX Opportunities.</description>
-        <name>Check_HCM_Rules</name>
-        <label>Check HCM Rules</label>
+    <assignments>
+        <name>AssignEmailRecepients</name>
+        <label>AssignEmailRecepients</label>
         <locationX>50</locationX>
-        <locationY>600</locationY>
-        <defaultConnector>
-            <targetReference>Assign_Discovery_Call_Completed_Date</targetReference>
-        </defaultConnector>
+        <locationY>1464</locationY>
+        <assignmentItems>
+            <assignToReference>EmailRecepients</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Get_District_Manager.Email</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Discovery_Call_Follow_Up_Email</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignRecepientIds</name>
+        <label>AssignRecepientIds</label>
+        <locationX>50</locationX>
+        <locationY>1248</locationY>
+        <assignmentItems>
+            <assignToReference>RecepientIds</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Get_District_Manager.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Discovery_Call_Follow_Up_Notification</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>varFaultElement_Get_Public_Group</name>
+        <label>varFaultElement - Get Public Group</label>
+        <locationX>1722</locationX>
+        <locationY>708</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Public_Group</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <description>Prevent DmlExceptions: HCM Sales Consultants can modify only WX Opportunities. Check HR360 Primary Product</description>
+        <name>Check_HCM_Rules_and_HR360_Primary_Product</name>
+        <label>Check HCM Rules and HR360 Primary Product</label>
+        <locationX>666</locationX>
+        <locationY>1848</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>HCM_Not_Allowed</name>
@@ -118,13 +352,38 @@
                     <stringValue>WX</stringValue>
                 </rightValue>
             </conditions>
+            <connector>
+                <targetReference>Assign_Discovery_Call_Completed_Date</targetReference>
+            </connector>
             <label>HCM Not Allowed</label>
+        </rules>
+        <rules>
+            <name>HR360_Primary_Product_Selected</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>varOpportunity.NSP_PrimaryProduct__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>WO</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>varOpportunity.NSP_PrimaryProduct__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>WS</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Opportunity_Close_Date</targetReference>
+            </connector>
+            <label>HR360 Primary Product Selected</label>
         </rules>
     </decisions>
     <decisions>
         <name>Discovery_Call_or_Demo</name>
         <label>Discovery Call or Demo?</label>
-        <locationX>776</locationX>
+        <locationX>1722</locationX>
         <locationY>492</locationY>
         <defaultConnectorLabel>N/A</defaultConnectorLabel>
         <rules>
@@ -138,7 +397,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Check_HCM_Rules</targetReference>
+                <targetReference>Get_Public_Group</targetReference>
             </connector>
             <label>Discovery Call Event</label>
         </rules>
@@ -168,7 +427,7 @@
     <decisions>
         <name>Does_Demo_Activity_need_to_be_updated_on_Opty</name>
         <label>Does Demo Activity need to be updated on Opty?</label>
-        <locationX>842</locationX>
+        <locationX>2118</locationX>
         <locationY>600</locationY>
         <defaultConnector>
             <targetReference>Assign_Has_Demo_Activity</targetReference>
@@ -188,9 +447,59 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Exist_District_Manager</name>
+        <label>Exist District Manager?</label>
+        <locationX>314</locationX>
+        <locationY>1032</locationY>
+        <defaultConnector>
+            <targetReference>Check_HCM_Rules_and_HR360_Primary_Product</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_District_Manager_Available</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_District_Manager.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Discovery_Call_Notification</targetReference>
+            </connector>
+            <label>Is District Manager Available?</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Exist_in</name>
+        <label>Exist BPA Public Group?</label>
+        <locationX>666</locationX>
+        <locationY>816</locationY>
+        <defaultConnector>
+            <targetReference>Check_HCM_Rules_and_HR360_Primary_Product</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Exist_In_BPA_Public_Group</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Opty_Owner_in_BPA_Public_Group.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_District_Manager</targetReference>
+            </connector>
+            <label>Exist In BPA Public Group?</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Related_Opportunity_Found</name>
         <label>Related Opportunity Found?</label>
-        <locationX>1271</locationX>
+        <locationX>2382</locationX>
         <locationY>384</locationY>
         <defaultConnectorLabel>Opty NOT found</defaultConnectorLabel>
         <rules>
@@ -209,8 +518,30 @@
             <label>Related Opty Found</label>
         </rules>
     </decisions>
-    <description>Updated to remove hardcoded HCM Sales Consultant role.</description>
+    <description>Updated to remove hardcoded HCM Sales Consultant role and Update Oppty CloseDate based on HR360 Primary Product</description>
     <environments>Default</environments>
+    <formulas>
+        <name>ContentNotification</name>
+        <dataType>String</dataType>
+        <expression>&quot;The Discovery Call for &quot; &amp;{!varOpportunity.Name}&amp;&quot; has been marked as complete. Please confirm sales leadership&apos;s attendance and debrief status with the seller on the opportunity.&quot;</expression>
+    </formulas>
+    <formulas>
+        <name>EmailContents</name>
+        <dataType>String</dataType>
+        <expression>&quot;The Discovery Call for &lt;a href=&apos;&quot; &amp; LEFT({!$Api.Partner_Server_URL_260}, FIND(&quot;/services&quot;, {!$Api.Partner_Server_URL_260}) - 1) &amp; &quot;/lightning/r/Opportunity/&quot; &amp; {!varOpportunity.Id} &amp; &quot;/view&apos;&gt;&quot; &amp; {!varOpportunity.Name} &amp; &quot;&lt;/a&gt; has been marked as complete. Please confirm sales leadership&apos;s attendance and debrief status with the seller on the opportunity.&quot;</expression>
+    </formulas>
+    <formulas>
+        <description>Construct a Dynamic Email Subject that includes the Opportunity Name.</description>
+        <name>EmailSubject</name>
+        <dataType>String</dataType>
+        <expression>&quot;Action Required: Discovery Call Follow-up - &quot; &amp; {!varOpportunity.Name}</expression>
+    </formulas>
+    <formulas>
+        <description>This captures Event Completed Date on an Event + 60 days</description>
+        <name>Event_Completed_Date_Plus_60</name>
+        <dataType>Date</dataType>
+        <expression>{!$Record.NSP_Completed_Date__c} + 60</expression>
+    </formulas>
     <interviewLabel>Event - Updated - Async - Discovery Call or Demo Completed {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Event - Updated - Async - Discovery Call or Demo Completed</label>
     <processMetadataValues>
@@ -233,10 +564,67 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
-        <description>Prevent DmlExceptions by ignoring &quot;Locked&quot; Opportunities (NSP_Lock_Opportunity__c).</description>
+        <name>Get_Discovery_Call_Notification</name>
+        <label>Get Discovery Call Notification</label>
+        <locationX>50</locationX>
+        <locationY>1140</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>AssignRecepientIds</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_Discovery_Call_Notification</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Event_Create_Update_Discovery_Call</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>CustomNotificationType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Get the district manager detail, trigger the Email and, bell notifications.</description>
+        <name>Get_District_Manager</name>
+        <label>Get District Manager</label>
+        <locationX>314</locationX>
+        <locationY>924</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Exist_District_Manager</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_District_Manager</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varOpportunity.District_Manager_Id__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>IsActive</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>User</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Email</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Opportunity_Info</name>
         <label>Get Opportunity Info</label>
-        <locationX>1271</locationX>
+        <locationX>2382</locationX>
         <locationY>276</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -253,25 +641,96 @@
                 <elementReference>$Record.WhatId</elementReference>
             </value>
         </filters>
-        <filters>
-            <field>NSP_Lock_Opportunity__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </filters>
         <object>Opportunity</object>
         <outputReference>varOpportunity</outputReference>
         <queriedFields>Id</queriedFields>
         <queriedFields>Discovery_Call_Completed_Date__c</queriedFields>
         <queriedFields>NSP_PrimaryProduct__c</queriedFields>
         <queriedFields>NSP_Has_Demo_Activity__c</queriedFields>
+        <queriedFields>CloseDate</queriedFields>
+        <queriedFields>OwnerId</queriedFields>
+        <queriedFields>District_Manager_Id__c</queriedFields>
+        <queriedFields>Name</queriedFields>
     </recordLookups>
+    <recordLookups>
+        <name>Get_Opty_Owner_in_BPA_Public_Group</name>
+        <label>Get Opty Owner in BPA Public Group</label>
+        <locationX>666</locationX>
+        <locationY>708</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Exist_in</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>GroupId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Public_Group.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>UserOrGroupId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varOpportunity.OwnerId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>GroupMember</object>
+        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Public_Group</name>
+        <label>Get Public Group</label>
+        <locationX>666</locationX>
+        <locationY>600</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Opty_Owner_in_BPA_Public_Group</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>varFaultElement_Get_Public_Group</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Business_Performance_Advisor</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Business Performance Advisor</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Group</object>
+        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_Opportunity_CloseDate</name>
+        <label>Update Opportunity - CloseDate</label>
+        <locationX>666</locationX>
+        <locationY>2064</locationY>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Update_Opty_CloseDate</targetReference>
+        </faultConnector>
+        <inputReference>varOpportunity</inputReference>
+    </recordUpdates>
     <recordUpdates>
         <name>Update_Opportunity_Discovery_Call_Completed_Date</name>
         <label>Update Opportunity - Discovery Call Completed Date</label>
-        <locationX>182</locationX>
-        <locationY>816</locationY>
+        <locationX>138</locationX>
+        <locationY>2064</locationY>
         <faultConnector>
             <targetReference>Assign_varFaultElement_Update_Opty_Discovery_Call_Completed_Date</targetReference>
         </faultConnector>
@@ -280,7 +739,7 @@
     <recordUpdates>
         <name>Update_Opportunity_Has_Demo_Activity</name>
         <label>Update Opportunity - Has Demo Activity</label>
-        <locationX>974</locationX>
+        <locationX>2250</locationX>
         <locationY>816</locationY>
         <faultConnector>
             <targetReference>Assign_varFaultElement_Update_Opty_Has_Demo_Activity</targetReference>
@@ -288,7 +747,7 @@
         <inputReference>varOpportunity</inputReference>
     </recordUpdates>
     <start>
-        <locationX>336</locationX>
+        <locationX>958</locationX>
         <locationY>0</locationY>
         <filterLogic>(1 OR 2) AND 3 AND 4 AND 5 AND 6 AND 7</filterLogic>
         <filters>
@@ -347,12 +806,12 @@
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
-        <locationX>2030</locationX>
-        <locationY>492</locationY>
+        <locationX>930</locationX>
+        <locationY>2280</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
@@ -373,6 +832,21 @@
             </value>
         </inputAssignments>
     </subflows>
+    <variables>
+        <name>EmailRecepients</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Collect disrict manager id</description>
+        <name>RecepientIds</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>varFaultElement</name>
         <dataType>String</dataType>
