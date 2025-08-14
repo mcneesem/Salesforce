@@ -37,11 +37,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.Intro_Demo_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Case.Location_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
