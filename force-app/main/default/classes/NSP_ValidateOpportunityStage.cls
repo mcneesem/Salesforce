@@ -89,7 +89,7 @@ public with sharing class NSP_ValidateOpportunityStage {
                             FROM Employee_Splits__r
                         ) ,
                         (
-                            SELECT Id , Status__c
+                            SELECT Id , Status__c , Checklist_Type__c
                             FROM Checklists__r
                         )
                     FROM Opportunity
@@ -184,7 +184,7 @@ public with sharing class NSP_ValidateOpportunityStage {
 
             Integer i = 0;
             do {
-                SObject valObject = valObjectMap?.get(groupRelObjName)[i];
+                SObject valObject = ( valObjectMap.get(groupRelObjName).size() == 0 ) ? null : valObjectMap.get(groupRelObjName)[i];
                 Integer passCheckCount = evaluateOneCriteriaGroup( opp, groupName , valObject , groupedStageValMap );
                 if( passCheckCount >= groupedStageValMap.get(groupName).size() ){
                     passCheck = true;
