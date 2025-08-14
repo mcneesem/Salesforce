@@ -39,7 +39,6 @@
                 <behavior>Edit</behavior>
                 <field>NSP_Complexity_Level__c</field>
             </layoutItems>
-            <layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
