@@ -3,23 +3,32 @@
     <fullName>NSP_ValidateTerminationDate</fullName>
     <active>true</active>
     <errorConditionFormula>AND(
-  ( NSP_Has_Evergreen_Products__c &gt; 0 ) ,
-  ( DAY( NSP_TerminationDate__c ) != IF(
-      ( MONTH( NSP_TerminationDate__c ) = 12 ) ,
-      31 ,
-      DAY(
-        DATE(
-          YEAR( NSP_TerminationDate__c ) ,
-          ( MONTH( NSP_TerminationDate__c ) + 1 ) ,
-          1
-        )
-        - 1
-      )
-    )
-  ) ,
-  ISPICKVAL( SBQQ__Type__c , &apos;Amendment&apos; ) ,
-  ( NSP_TransactionType__c == &apos;Termination&apos; ) ,
-  ISCHANGED( NSP_TerminationDate__c )
+    (NSP_Has_Evergreen_Products__c &gt; 0),
+    ISPICKVAL(SBQQ__Type__c, &apos;Amendment&apos;),
+    (NSP_TransactionType__c == &apos;Termination&apos;),
+    ISCHANGED(NSP_TerminationDate__c),
+    OR(
+        /* Rule for all users - must be last day of month */
+        (DAY(NSP_TerminationDate__c) != IF(
+            (MONTH(NSP_TerminationDate__c) = 12),
+            31,
+            DAY(
+                DATE(
+                    YEAR(NSP_TerminationDate__c),
+                    (MONTH(NSP_TerminationDate__c) + 1),
+                    1
+                ) - 1
+            )
+        )),
+        AND(
+            NOT($Permission.Bypass_Termination_Date_Validation),
+            NSP_TerminationDate__c &lt; DATE(
+                YEAR(TODAY()) + IF(MONTH(TODAY()) = 1, -1, 0),
+                IF(MONTH(TODAY()) = 1, 12, MONTH(TODAY()) - 1),
+                DAY(DATE(YEAR(TODAY()), MONTH(TODAY()), 1) - 1)
+            )
+         )
+     )
 )</errorConditionFormula>
-    <errorMessage>Termination Date must be last day of the month</errorMessage>
+    <errorMessage>Termination Date must be the last day of the month. You may select either the end of last month or a future month-end date.</errorMessage>
 </ValidationRule>

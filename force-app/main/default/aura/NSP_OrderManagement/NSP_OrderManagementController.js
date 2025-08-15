@@ -2,6 +2,7 @@
     doInit : function(component, event, helper) {
         helper.getContractRecord(component, event, helper);
         helper.checkPermission(component, event, helper);
+        helper.bypassTerminationDateValidation(component, event, helper);
     },
     handleSelection : function(component, event, helper) {
         var changeValue = event.getParam("value");
