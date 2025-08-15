@@ -104,7 +104,7 @@ public with sharing class NSP_TerminationFormTriggerHelper {
                         Id , NSP_Account__c , NSP_Sub_Client__c , NSP_Renewal_Date__c ,
                         NSP_Original_Contract_Date__c , NSP_Account_Status_Date__c ,
                         NSP_Asset__r.NSP_Account_Status_Date__c
-                    FROM NSP_Sub_Client__c 
+                    FROM NSP_Sub_Client__c
                     WHERE (
                         NSP_Account__c IN: sAccountIds
                         AND NSP_Asset__c IN: terminatedAssetsList
@@ -114,9 +114,9 @@ public with sharing class NSP_TerminationFormTriggerHelper {
             List<NSP_Sub_Client__c> lSubClients = new List<NSP_Sub_Client__c>(
                 [
                     SELECT
-                        Id , NSP_Account__c , NSP_Sub_Client__c , NSP_Renewal_Date__c ,
+                        Id , NSP_Account__c , NSP_Sub_Client__c ,Is_Primary_Contract__c,NSP_Renewal_Date__c ,
                         NSP_Original_Contract_Date__c
-                    FROM NSP_Sub_Client__c 
+                    FROM NSP_Sub_Client__c
                     WHERE (
                         NSP_Account__c IN: sAccountIds
                         AND NSP_Asset__c IN: assetsList
@@ -180,7 +180,7 @@ public with sharing class NSP_TerminationFormTriggerHelper {
             Map<ID,NSP_Sub_Client__c> nonTermSubClientsMap = new Map<ID,NSP_Sub_Client__c>();
             for(NSP_Sub_Client__c oClientRenewel : lSubClients){
                 if ( String.isNotBlank( oClientRenewel.NSP_Sub_Client__c )
-                    && oClientRenewel.NSP_Sub_Client__c.endsWith( '00' )
+                    && oClientRenewel.Is_Primary_Contract__c
                     )
                 {
                     nonTermSubClientsMap.put(oClientRenewel.NSP_Account__c, oClientRenewel);
@@ -195,7 +195,7 @@ public with sharing class NSP_TerminationFormTriggerHelper {
             Map<ID,NSP_Sub_Client__c> termSubClientsMap = new Map<ID,NSP_Sub_Client__c>();
             for(NSP_Sub_Client__c oClientRenewel : lTerminatedSubClients){
                 if ( String.isNotBlank( oClientRenewel.NSP_Sub_Client__c )
-                    && oClientRenewel.NSP_Sub_Client__c.endsWith( '00' )
+                    && oClientRenewel.Is_Primary_Contract__c
                     )
                 {
                     termSubClientsMap.put(oClientRenewel.NSP_Account__c, oClientRenewel);
@@ -251,7 +251,7 @@ public with sharing class NSP_TerminationFormTriggerHelper {
     }
 
     private void updateTermFormFields(
-        List<NSP_Termination_Form__c> termformList , 
+        List<NSP_Termination_Form__c> termformList ,
         Map<Id,pse__Project_Task__c> projectTasks ,
         Map<Id,String> accountToSubClientNumbers ,
         Map<Id,String> clientSegmentAsset ,
@@ -383,7 +383,7 @@ public with sharing class NSP_TerminationFormTriggerHelper {
                 if(String.isBlank(terminationForm.NSP_Client_Owner__c) && terminationForm.NSP_Client_Owner__c != oldMap.get(terminationForm.id).NSP_Client_Owner__c){
                     terminationForm.Client_Owner_Phone__c = '';
                     terminationForm.Client_Owner_Email__c = '';
-                } 
+                }
             }
         }
         if(!setOfClientOwnerId.isEmpty()){
@@ -444,14 +444,14 @@ public with sharing class NSP_TerminationFormTriggerHelper {
                     checkLookupChange(mTFSharingToDelete,terminationForm.Id,terminationForm.OwnerId,oOldTermination.NSP_Approver__c);
                 }
             }
-            
+
             if(mTFSharingToDelete.get(terminationForm.Id).size() == 0){
                 mTFSharingToDelete.remove(terminationForm.Id);
             }
             if(mTFToUsers.get(terminationForm.Id).size() == 0){
                 mTFToUsers.remove(terminationForm.Id);
             }
-    
+
             if ( ( terminationForm.NSP_Status__c != null )
                 && ( terminationForm.NSP_Status__c != oldMap.get(terminationForm.Id).NSP_Status__c )
                 && (
@@ -468,7 +468,7 @@ public with sharing class NSP_TerminationFormTriggerHelper {
                 terminationFormBellNotificationSet.add( terminationForm.Id );
             }
             if ( terminationForm.NSP_Status__c != null
-                && terminationForm.NSP_Status__c != oldMap.get(terminationForm.Id).NSP_Status__c 
+                && terminationForm.NSP_Status__c != oldMap.get(terminationForm.Id).NSP_Status__c
                 && terminationForm.RecordTypeId == payrollRecordTypeId
                 && terminationForm.NSP_Status__c == TERM_TEAM_APPROVED
                 )
@@ -485,7 +485,7 @@ public with sharing class NSP_TerminationFormTriggerHelper {
                 )
             );
         }
-        
+
         if(mTFSharingToDelete.keySet().size() > 0){
             deleteTerminationFormSharing(mTFSharingToDelete);
         }
@@ -497,7 +497,7 @@ public with sharing class NSP_TerminationFormTriggerHelper {
         if ( !setOfProjectTaskId.isEmpty() ) {
             NSP_TerminationFormTriggerHelper.updateProjectTaskStatus( setOfProjectTaskId );
         }
-        
+
         if(terminationFormBellNotificationSet.size() > 0){
             sendBellNotificationToSpecialist(terminationFormBellNotificationSet);
         }
@@ -525,9 +525,9 @@ public with sharing class NSP_TerminationFormTriggerHelper {
         }
         Map<NSP_Termination_Form__c,Set<String>> termFormToSpecialistIdsMap = new Map<NSP_Termination_Form__c,Set<String>>();
         for ( NSP_Termination_Form__c term : terminationFormBellNotificationList ) {
-            
+
             termFormToSpecialistIdsMap = getTermFormToSpecialistIdsMap(term);
-            
+
         }
         if ( !termFormToSpecialistIdsMap.isEmpty() ) {
             sendCustomBellNotification(termFormToSpecialistIdsMap);
@@ -561,22 +561,22 @@ public with sharing class NSP_TerminationFormTriggerHelper {
                 }
             }
         }
-    } 
+    }
     private static Map<NSP_Termination_Form__c, Set<String>> getTermFormToSpecialistIdsMap(NSP_Termination_Form__c term) {
         Map<NSP_Termination_Form__c, Set<String>> termFormToSpecialistIdsMap = new Map<NSP_Termination_Form__c, Set<String>>();
         Set<String> specialistIds = new Set<String>();
-        
+
         if (term == null) {
             return termFormToSpecialistIdsMap;
         }
-        
+
         Boolean isPayroll = term.RecordTypeId == payrollRecordTypeId;
         Boolean isCredit = term.RecordTypeId == creditRecordTypeId;
         Boolean isReinstate = term.RecordTypeId == reinstateRecordTypeId;
         Boolean isTermDenied = term.NSP_Status__c == TERM_TEAM_DENIED;
         Boolean isTermApproved = term.NSP_Status__c == TERM_TEAM_APPROVED;
         Boolean isSupervisorDenied = term.NSP_Status__c == SUPERVISOR_DENIED;
-        
+
         if (isPayroll) {
             handlePayrollCases(specialistIds, term, isTermApproved, isTermDenied, isSupervisorDenied);
         } else if (isCredit) {
@@ -584,13 +584,13 @@ public with sharing class NSP_TerminationFormTriggerHelper {
         } else if (isReinstate) {
             handleReinstateCases(specialistIds, term, isTermApproved, isTermDenied);
         }
-        
+
         if (!specialistIds.isEmpty()) {
             termFormToSpecialistIdsMap.put(term, specialistIds);
         }
         return termFormToSpecialistIdsMap;
     }
-    
+
     private static void handlePayrollCases(Set<String> specialistIds, NSP_Termination_Form__c term, Boolean isTermApproved, Boolean isTermDenied, Boolean isSupervisorDenied) {
         if (isSupervisorDenied) {
             addIfActive(specialistIds, term.NSP_Payroll_Specialist__r, term.NSP_Payroll_Specialist__c);
@@ -604,7 +604,7 @@ public with sharing class NSP_TerminationFormTriggerHelper {
             addIfACtive(specialistIds, term.NSP_Approver__r, term.NSP_Approver__c);
         }
     }
-    
+
     private static void handleCreditCases(Set<String> specialistIds, NSP_Termination_Form__c term, Boolean isTermApproved, Boolean isTermDenied) {
         if (isTermDenied) {
             addIfActive(specialistIds, term.Credit_Specialist__r != null ? term.Credit_Specialist__r.pse__Salesforce_User__r : null, term.Credit_Specialist__r != null ? term.Credit_Specialist__r.pse__Salesforce_User__c : null);
@@ -613,7 +613,7 @@ public with sharing class NSP_TerminationFormTriggerHelper {
             addIfActive(specialistIds, term.CreatedBy, term.CreatedById);
         }
     }
-    
+
     private static void handleReinstateCases(Set<String> specialistIds, NSP_Termination_Form__c term, Boolean isTermApproved, Boolean isTermDenied) {
         if (isTermDenied) {
             addIfOwnerActive(specialistIds, term.OwnerId);
@@ -624,13 +624,13 @@ public with sharing class NSP_TerminationFormTriggerHelper {
             addIfACtive(specialistIds, term.NSP_Approver__r, term.NSP_Approver__c);
         }
     }
-    
+
     private static void addIfActive(Set<String> specialistIds, User user, String userId) {
         if (user != null && userId != null && user.IsActive) {
             specialistIds.add(userId);
         }
     }
-    
+
     private static void addIfOwnerActive(Set<String> specialistIds, String ownerId) {
         if (ownerId != null) {
             specialistIds.add(ownerId);
@@ -756,19 +756,19 @@ public with sharing class NSP_TerminationFormTriggerHelper {
     /* Description : This method will fetch value of User Lookups from Account Team
         Date       : 13/10/2021 */
 
-    public static void updateUserLookups(set<Id> setOfProjectTaskId, List<NSP_Termination_Form__c> terminationFormList){      
+    public static void updateUserLookups(set<Id> setOfProjectTaskId, List<NSP_Termination_Form__c> terminationFormList){
         Map<String,Id> mapOfAccountAndAccountTeam = new Map<String,Id>();
         String termObj = 'NSP_Termination_Form__c';
-        
+
         //populate project-account and project_task-project maps
         mapProjectTasksToAccounts(setOfProjectTaskId);
-        
+
         //proceed if map is populated
         if(mapOfProjectAndAccount != null){
-            
+
             //process the account teams using mapped accounts
             processAccountTeams(new Set<Id>(mapOfProjectAndAccount.values()));
-            
+
             Id payrollRecordTypeId = NSP_GenericRecordType.getRecordTypeId(
                 termObj ,
                 NSP_ServiceConstants.NSP_Payroll_Specialist_Form
@@ -781,7 +781,7 @@ public with sharing class NSP_TerminationFormTriggerHelper {
                 termObj ,
                 NSP_Client_Reinstatement
             );
-            
+
             if ( ( terminationFormList != null ) && !terminationFormList.isEmpty() ) {
                 for ( NSP_Termination_Form__c termForm : terminationFormList ) {
                     if ( ( termForm.RecordTypeId == payrollRecordTypeId )
@@ -800,10 +800,10 @@ public with sharing class NSP_TerminationFormTriggerHelper {
             }
         }
     }
-    
+
     //method used for populating the project-account and project_task-project maps (called by method - updateUserLookups)
-    public static void mapProjectTasksToAccounts( Set<Id> setOfProjectTaskId) 
-    { 
+    public static void mapProjectTasksToAccounts( Set<Id> setOfProjectTaskId)
+    {
         if(!setOfProjectTaskId.isEmpty()){
             for(pse__Project_Task__c projectTask : [SELECT pse__Project__c FROM pse__Project_Task__c WHERE ID IN : setOfProjectTaskId]){
                 if(!mapOfProjectTaskAndProject.containsKey(projectTask.id)){
@@ -848,9 +848,9 @@ public with sharing class NSP_TerminationFormTriggerHelper {
                 //populate each account team into map
                populateRoleMaps(accountTeamPayroll);
             }
-        }  
+        }
     }
-    
+
     //method for populating Role Maps using Account Team (called by method - processAccountTeams)
     public static void populateRoleMaps(NSP_Account_Team__c accountTeamPayroll){
         if( accountTeamPayroll != null ){
@@ -860,7 +860,7 @@ public with sharing class NSP_TerminationFormTriggerHelper {
                     accountTeamPayroll.NSP_User__c
                 );
             }
-            if ( 
+            if (
                 (!accountTeamPayroll.NSP_Primary__c )
                 &&( !nonPrimaryRolesMap.containsKey( accountTeamPayroll.NSP_Account__c ) )
                )
@@ -872,7 +872,7 @@ public with sharing class NSP_TerminationFormTriggerHelper {
             }
         }
     }
-    
+
     //method for processing the Term forms before insert (called by method - updateUserLookups)
     public static void processTermForms(List<NSP_Termination_Form__c> terminationFormList, Map<String,Id> mapOfAccountAndAccountTeam){
         for ( NSP_Termination_Form__c termForm : terminationFormList ) {
@@ -885,10 +885,10 @@ public with sharing class NSP_TerminationFormTriggerHelper {
                 if( mapOfProjectTaskAndProject.containsKey(termForm.NSP_Project_Task__c) ){
                     mappedProjectId = mapOfProjectTaskAndProject.get( termForm.NSP_Project_Task__c );
                 }
-                
+
                 if( mappedProjectId != null ){
                     Id mappedAccountId = mapOfProjectAndAccount.get( mappedProjectId );
-                
+
                     if(mappedAccountId != null){
                         //populate fields on term form
                         populateTermFormFields(termForm, mapOfAccountAndAccountTeam, mappedAccountId);
@@ -897,7 +897,7 @@ public with sharing class NSP_TerminationFormTriggerHelper {
             }
         }
     }
-    
+
     //method used to populate fields on term form (called by method - processTermForms)
     public static void populateTermFormFields(NSP_Termination_Form__c termForm, Map<String,Id> mapOfAccountAndAccountTeam, Id mappedAccountId){
         Map<String,String> termFormFieldMapping = new Map<String,String>{

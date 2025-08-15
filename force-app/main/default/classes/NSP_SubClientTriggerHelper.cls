@@ -217,6 +217,7 @@ public class NSP_SubClientTriggerHelper {
     * Description :  This method will clear the asset termination information section
     * Params:   List<NSP_Sub_Client__c> NewList   Map<Id, NSP_Sub_Client__c> oldMapSubClient  
     * Author: Bindushree R
+    * Modified : 8.15.2025/AZD-433904
     * ********************************************************************************************/
     
     public void updateAssetTerminationForm(List<NSP_Sub_Client__c> NewList, Map<Id, NSP_Sub_Client__c> oldMapSubClient){
@@ -225,7 +226,7 @@ public class NSP_SubClientTriggerHelper {
         List<Asset> updatedAssetList = new List<Asset>();
         try{
             for(NSP_Sub_Client__c sc :NewList ){
-                if(sc.NSP_Sub_Client__c!=null && sc.NSP_Sub_Client__c.endsWith('00') && sc.NSP_Renewal_Date__c!=null &&
+                if(sc.NSP_Sub_Client__c!=null && sc.Is_Primary_Contract__c && sc.NSP_Renewal_Date__c!=null &&
                    sc.NSP_Renewal_Date__c!=oldMapSubClient.get(sc.Id).NSP_Renewal_Date__c && sc.NSP_Account__c!=null){
                        mapOfSubAccount.put(sc.NSP_Account__c,sc);
                        
