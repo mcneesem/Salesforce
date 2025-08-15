@@ -12,12 +12,12 @@ public with sharing class NSP_ValidateOpportunityStage {
     //                  records are grouped together. Grouped criteria are evaluated as follows:
     //                      1. When all records in a group are for same Object name (e.g., Event), at least one related record
     //                         (of specified Object) matching all the criteria in the group must be found or validation fails.
-    //                      2. If group contains a Does Not Exist condition, validation fails if any related record matching 
+    //                      2. If group contains a Does Not Exist condition, validation fails if any related record matching
     //                         all the other group criteria is found. If the metadata records in the group are for Opportunity
     //                         object, validation fails if the Opportunity being validated matches all the other criteria
     //                         in the group.
-    //                      3. When the records in a group are for Opportunity object and some related object, at least one 
-    //                         related object record matching all the related object criteria in the group must be 
+    //                      3. When the records in a group are for Opportunity object and some related object, at least one
+    //                         related object record matching all the related object criteria in the group must be
     //                         found but only if the Opportunity condition in the group is met. If the Opportunity condition
     //                         is not met, related object criteria in the group is not required and the validation passes.
     // ***************************************************************************************************************************
@@ -48,7 +48,7 @@ public with sharing class NSP_ValidateOpportunityStage {
             oppIdList.add(opp.Id);
             oppOwnerIdList.add(opp.OwnerId);
         }
-        Map<Id,User> opportunityOwnerRoleMap = getUserRole( oppOwnerIdList ); 
+        Map<Id,User> opportunityOwnerRoleMap = getUserRole( oppOwnerIdList );
 
         if( !OpportunityStageSettings__c.getInstance(UserInfo.getUserId()).Is_Enabled_WO_WS_Stage_Entry__c ){ // Kill switch added on 6/10/2024
             validateOpportunityStageOld(newList , oppIdList , opportunityOwnerRoleMap);
@@ -160,7 +160,12 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
     }
 
-    private static void evaluateSingleCriteria(Opportunity opp, Map<String,List<SObject>> valObjectMap, List<Opportunity_Stage_Validation__mdt> currentOptyStageVals){
+    private static void evaluateSingleCriteria(
+        Opportunity opp ,
+        Map<String,List<SObject>> valObjectMap ,
+        List<Opportunity_Stage_Validation__mdt> currentOptyStageVals
+        )
+    {
         for(Opportunity_Stage_Validation__mdt val : currentOptyStageVals){
             Integer passCheckCount = 0;
             if( String.isBlank(val.Group__c) ){
@@ -176,7 +181,12 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
     }
 
-    private static void evaluateGroupedCriteria(Opportunity opp, Map<String,List<SObject>> valObjectMap, Map<String, List<Opportunity_Stage_Validation__mdt>> groupedStageValMap){
+    private static void evaluateGroupedCriteria(
+        Opportunity opp ,
+        Map<String,List<SObject>> valObjectMap ,
+        Map<String,List<Opportunity_Stage_Validation__mdt>> groupedStageValMap
+        )
+    {
         for( String groupName : groupedStageValMap.keySet() ){
             Boolean passCheck = false;
             Boolean passCheckDNE = true;
@@ -201,7 +211,13 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
     }
 
-    private static Integer evaluateOneCriteriaGroup( Opportunity opp , String groupName , SObject valObject, Map<String, List<Opportunity_Stage_Validation__mdt>> groupedStageValMap ){
+    private static Integer evaluateOneCriteriaGroup(
+        Opportunity opp ,
+        String groupName ,
+        SObject valObject ,
+        Map<String,List<Opportunity_Stage_Validation__mdt>> groupedStageValMap
+        )
+    {
         Integer passCheckCount = 0;
         String groupCheckType = '';
         for( Opportunity_Stage_Validation__mdt val : groupedStageValMap.get(groupName) ){
@@ -290,15 +306,15 @@ public with sharing class NSP_ValidateOpportunityStage {
                                                                              (SELECT Id,Status, NSP_Task_Subtype__c FROM Tasks WHERE NSP_Task_Subtype__c != NULL),
                                                                              (SELECT Id, NSP_Event_Subtype__c,NSP_Status__c FROM Events WHERE NSP_Event_Subtype__c != NULL)
                                                                              FROM Opportunity Where Id IN :oppIdList]);
-        
+
         Map<Id,SBQQ__Quote__c> quoteMap = new Map<Id,SBQQ__Quote__c>([SELECT id, SBQQ__Status__c,NSP_Opportunity_Primary_Product__c ,NSP_Client_For_Life__c  FROM SBQQ__Quote__c WHERE SBQQ__Opportunity2__c IN :oppIdList AND SBQQ__Primary__c = TRUE]);
-        
+
         for(Opportunity opp:newList){
             Opportunity oppFromMap=oppMapwithEventTask.get(opp.Id);
             List<Task> taskList=oppFromMap?.Tasks;
             List<Event> eventList=oppFromMap?.Events;
             List<Quote> quotes=oppFromMap?.Quotes;
-            
+
             if(opp.StageName != null){
                 //  Added 275639
                 if ( NSP_ValidateOpportunityStage.hasAllowClosedLostPermission
@@ -307,7 +323,7 @@ public with sharing class NSP_ValidateOpportunityStage {
                 {
                     continue;
                 }
-                
+
                 //Analysis
                 if ( opp.StageName.equals(NSP_SalesConstants.ANALYSIS_STAGE)
                     || opp.StageName.equals(NSP_SalesConstants.PROPOSAL_STAGE)
@@ -471,7 +487,7 @@ public with sharing class NSP_ValidateOpportunityStage {
                 opp.addError( System.Label.NSP_Approve_Primary_Quote );
             } else if ( !test.isRunningTest()
                 && opp.StageName.equals( NSP_SalesConstants.CLOSED_WON )
-                && ( ( opp.NSP_PrimaryProduct__c != primaryQuote?.NSP_Opportunity_Primary_Product__c ) 
+                && ( ( opp.NSP_PrimaryProduct__c != primaryQuote?.NSP_Opportunity_Primary_Product__c )
                     || ( opp.NSP_Client_For_Life__c != primaryQuote?.NSP_Client_For_Life__c ) )
                 )
             {
@@ -489,7 +505,7 @@ public with sharing class NSP_ValidateOpportunityStage {
     private static void evaluateQuoteCriteriaProductException( Opportunity opp , SBQQ__Quote__c primaryQuote ){
         try {
             if ( ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.HR_CONSULTING_SERVICES )
-                && ( opp.NSP_Client_For_Life__c != NSP_SalesConstants.WO_WS ) 
+                && ( opp.NSP_Client_For_Life__c != NSP_SalesConstants.WO_WS )
                 && !test.isRunningTest() )
             {
                 if ( opp.SBQQ__PrimaryQuote__c != null && primaryQuote != null ) {
@@ -594,7 +610,7 @@ public with sharing class NSP_ValidateOpportunityStage {
                 salesOfficeList.add( check.NSP_Sales_Office__c );
             }
         }
-        
+
         //Added for 579280
         String opportunitySalesOffMemb = null;
         if ( opportunityOwnerRoleMap.containsKey( opp.OwnerId ) ) {
@@ -622,7 +638,7 @@ public with sharing class NSP_ValidateOpportunityStage {
                 teamMemberList.add(oppTeamMember.UserId);
             }
         }
-        
+
         Integer canCloseLost = checkAllowClosedLost(opp, teamMemberList, salesOfficeMembership, salesOfficeList);
         if(canCloseLost == 0){
             opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDLOST);
@@ -934,7 +950,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
         private set;
     }
-    
+
     private static Map<Id,User> permittedInsSalesUserMap {
         private get {
             if ( permittedInsSalesUserMap == null ) {
@@ -944,7 +960,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
         private set;
     }
-    
+
     private static Map<Id,User> permittedRecSalesUserMap {
         private get {
             if ( permittedRecSalesUserMap == null ) {
@@ -954,7 +970,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
         private set;
     }
-    
+
     private static Map<Id,User> permittedTechSalesUserMap {
         private get {
             if ( permittedTechSalesUserMap == null ) {
@@ -964,7 +980,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
         private set;
     }
-    
+
     private static Map<Id,User> permittedBPCUserMap {
         private get {
             if ( permittedBPCUserMap == null ) {
@@ -996,15 +1012,19 @@ public with sharing class NSP_ValidateOpportunityStage {
                 for ( GroupMember userGroupMember : [
                             SELECT Id , Group.Name , UserOrGroupId
                             FROM GroupMember
-                            WHERE ( ( UserOrGroupId = :UserInfo.getUserId() )
+                            WHERE (
+                                ( Group.Type = 'Regular' )
+                                AND (
+                                    ( UserOrGroupId = :UserInfo.getUserId() )
                                     OR ( UserOrGroupId = :UserInfo.getUserRoleId() )
                                     OR ( UserOrGroup.ManagerId = :UserInfo.getUserId() )
                                     OR ( UserOrGroup.Manager.UserRoleId = :UserInfo.getUserRoleId() )
                                     OR ( UserOrGroup.Manager.ManagerId = :UserInfo.getUserId() )
                                     OR ( UserOrGroup.Manager.Manager.UserRoleId = :UserInfo.getUserRoleId() )
-                                    OR ( UserOrGroup.Manager.Manager.ManagerId = :UserInfo.getUserId() ) 
-                                    OR ( UserOrGroup.Manager.Manager.Manager.UserRoleId = :UserInfo.getUserRoleId() ))
-                                AND ( Group.Type = 'Regular' )
+                                    OR ( UserOrGroup.Manager.Manager.ManagerId = :UserInfo.getUserId() )
+                                    OR ( UserOrGroup.Manager.Manager.Manager.UserRoleId = :UserInfo.getUserRoleId() )
+                                )
+                            )
                         ]
                     )
                 {
@@ -1020,8 +1040,8 @@ public with sharing class NSP_ValidateOpportunityStage {
         private get {
             if ( integUserProfileId == null ) {
                 List<NSP_Profile_Detail__mdt> profileDetailList = [
-                    SELECT Profile_ID__c , Profile_Name__c 
-                    FROM NSP_Profile_Detail__mdt 
+                    SELECT Profile_ID__c , Profile_Name__c
+                    FROM NSP_Profile_Detail__mdt
                     WHERE ( Profile_Name__c = :System.label.NSP_Integration_User_Profile_Name )
                     LIMIT 1
                 ];
