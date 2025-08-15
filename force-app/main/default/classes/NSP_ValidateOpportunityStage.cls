@@ -994,7 +994,15 @@ public with sharing class NSP_ValidateOpportunityStage {
                 for ( GroupMember userGroupMember : [
                             SELECT Id , Group.Name , UserOrGroupId
                             FROM GroupMember
-                            WHERE ( UserOrGroupId = :UserInfo.getUserId() )
+                            WHERE ( ( UserOrGroupId = :UserInfo.getUserId() )
+                                    OR ( UserOrGroupId = :UserInfo.getUserRoleId() )
+                                    OR ( UserOrGroup.ManagerId = :UserInfo.getUserId() )
+                                    OR ( UserOrGroup.Manager.UserRoleId = :UserInfo.getUserRoleId() )
+                                    OR ( UserOrGroup.Manager.ManagerId = :UserInfo.getUserId() )
+                                    OR ( UserOrGroup.Manager.Manager.UserRoleId = :UserInfo.getUserRoleId() )
+                                    OR ( UserOrGroup.Manager.Manager.ManagerId = :UserInfo.getUserId() ) 
+                                    OR ( UserOrGroup.Manager.Manager.Manager.UserRoleId = :UserInfo.getUserRoleId() ))
+                                AND ( Group.Type = 'Regular' )
                         ]
                     )
                 {
