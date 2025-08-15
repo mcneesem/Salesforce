@@ -24,8 +24,8 @@
         </assignmentItems>
     </assignments>
     <environments>Default</environments>
-    <interviewLabel>Opportunity - Before - Update - Closed Lost Forecast Update {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Opportunity - Before - Update - Closed Lost Forecast Update</label>
+    <interviewLabel>Opportunity - Before_Update - Closed Lost Forecast {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Opportunity - Before_Update - Closed Lost Forecast</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -51,7 +51,6 @@
         <connector>
             <targetReference>Set_Forecast_Fields</targetReference>
         </connector>
-        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
         <filterLogic>and</filterLogic>
         <filters>
             <field>StageName</field>
@@ -60,19 +59,16 @@
                 <stringValue>Closed Lost</stringValue>
             </value>
         </filters>
+        <filters>
+            <field>StageName</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
         <object>Opportunity</object>
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
     <status>Draft</status>
-    <variables>
-        <name>FaultFlowName</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <stringValue>&apos;Opportunity - Updated - Async - Closed Lost Forecast Update&apos;</stringValue>
-        </value>
-    </variables>
 </Flow>
