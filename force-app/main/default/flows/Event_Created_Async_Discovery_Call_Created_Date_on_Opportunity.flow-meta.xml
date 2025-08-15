@@ -11,7 +11,7 @@
             <assignToReference>varOpportunity.Discovery_Call_Created_Date__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Event_Created_Date</elementReference>
+                <elementReference>$Record.CreatedDate</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -79,7 +79,7 @@
     </decisions>
     <decisions>
         <name>Related_Opportunity_Found</name>
-        <label>Related Opportunity Found ?</label>
+        <label>Related Opportunity Found?</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnectorLabel>Opty Not Found</defaultConnectorLabel>
@@ -88,7 +88,7 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>varOpportunity</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -99,15 +99,10 @@
             <label>Related Opty Found</label>
         </rules>
     </decisions>
-    <description>Discovery Call Created Date stored in the Oppty &apos;Discovery Call Created Date&apos; field</description>
+    <description>When a Discovery Call Event is created, if the RelatedTo = Opty and that Opty has a blank &quot;Discovery Call Created Date&quot; then it gets populated with the event&apos;s created date.</description>
     <environments>Default</environments>
-    <formulas>
-        <name>Event_Created_Date</name>
-        <dataType>Date</dataType>
-        <expression>DATEVALUE({!$Record.CreatedDate})</expression>
-    </formulas>
-    <interviewLabel>Event - Created/Updated - Async - DC Created Date {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Event - Async - DC Created Date</label>
+    <interviewLabel>Event - Created - Async - Discovery Call Created Date on Opportunity {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Event - Created - Async - Discovery Call Created Date on Opportunity</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -232,7 +227,7 @@
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Event_Created_Updated_Async_DC_Created_Date</stringValue>
+                <stringValue>Event_Created_Async_Discovery_Call_Created_Date_on_Opportunity</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
