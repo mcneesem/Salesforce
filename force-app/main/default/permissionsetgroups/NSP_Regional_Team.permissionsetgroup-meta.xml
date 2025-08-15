@@ -13,6 +13,7 @@
     <permissionSets>Checklist_Read_Create</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
     <permissionSets>Core_Sales</permissionSets>
+    <permissionSets>Detailed_Data_Access</permissionSets>
     <permissionSets>Enrollment_Fee_Edit</permissionSets>
     <permissionSets>List_View_Enhanced_Access</permissionSets>
     <permissionSets>NSP_Billing_View_All</permissionSets>
