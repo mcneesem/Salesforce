@@ -44,6 +44,9 @@
         <assignmentItems>
             <assignToReference>$Record.NSP_Client_For_Life__c</assignToReference>
             <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
         </assignmentItems>
     </assignments>
     <decisions>
