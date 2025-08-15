@@ -16,7 +16,7 @@
             </value>
         </assignmentItems>
     </assignments>
-    <description>Upon movement to the Stage &quot;Proposal&quot; the &quot;Forecast&quot; field is automatically set to &quot;Yes&quot;</description>
+    <description>When Opportunity Stage is changed to Proposal, set Opportunity.NSP_Forecast__c to &quot;Yes&quot;</description>
     <environments>Default</environments>
     <interviewLabel>Opportunity - Before Update - Set Proposal Forecast {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Opportunity - Before Update - Set Proposal Forecast</label>
