@@ -250,7 +250,7 @@
         <name>Project_Path</name>
         <label>Project Path</label>
         <locationX>842</locationX>
-        <locationY>1658</locationY>   
+        <locationY>1658</locationY>
         <assignmentItems>
             <assignToReference>ContextProjectId</assignToReference>
             <operator>Assign</operator>
