@@ -40,6 +40,21 @@
                 <default>false</default>
                 <label>Closed Lost</label>
             </value>
+            <value>
+                <fullName>Booking</fullName>
+                <default>false</default>
+                <label>Booking</label>
+            </value>
+            <value>
+                <fullName>Data Collection</fullName>
+                <default>false</default>
+                <label>Data Collection</label>
+            </value>
+            <value>
+                <fullName>Prospecting</fullName>
+                <default>false</default>
+                <label>Prospecting</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

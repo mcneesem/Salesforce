@@ -5,6 +5,11 @@
     <name>Opportunity requires assignment to New Client Sales Specialist</name>
     <style>none</style>
     <subject>Opportunity requires assignment to New Client Sales Specialist</subject>
+    <textOnly>Please note that {!Opportunity.Name} with product {!Opportunity.NSP_PrimaryProduct__c} has moved from Proposal to Closing and requires that a New Client Sales Specialists be assigned. Please click on the link below to add the appropriate person to the opportunity team. {!Opportunity.Name}
+
+Primary Product: {!Opportunity.NSP_PrimaryProduct__c}
+MidMarket National Account: {!Opportunity.MidMarket_National_Account__c}
+Created by Title: {!Opportunity.OwnerTitle}</textOnly>
     <type>custom</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

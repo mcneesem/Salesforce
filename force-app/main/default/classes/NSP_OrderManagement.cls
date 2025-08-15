@@ -1,17 +1,3 @@
-/**************************************************************************************************   
-Apex Controller Name :  NSP_OrderManagement
-Version              :  1.0                                                                          
-Created Date         :  AUG 2,2021                                                       
-Function             :  This class is called from 'NSP_OrderManagement' component for Order Management functionality .
-Story                :                                                                            
-Modification Log     :  June 6,2024 - Added new method checkAmendmentConditionsApex(282854)                                                                            
-*--------------------------------------------------------------------------------------------------  
-* Developer                   Date                   Description                                    
-* -------------------------------------------------------------------------------------------------  
-
-* Utpal Utkalit            AUG 2,2021               First Iteration
-* Vaibhav Jetli            June 6,2024              checkAmendmentConditionsApex(282854)
-***************************************************************************************************/
 public class NSP_OrderManagement {
     // test w/ NSP_OrderManagementTest (86%)
 
@@ -59,11 +45,15 @@ public class NSP_OrderManagement {
     }
 
     @AuraEnabled
-    public static User getCurrentUserInfo(){
+    public static User getCurrentUserInfo() {
         try{
-            return [SELECT Id,Name,	Profile.Name FROM User WHERE Id =: Userinfo.getUserId()];
-        }catch (Exception ex) {
-            throw new AuraHandledException(ex.getMessage());
+            return [
+                SELECT Id , Name , Profile.Name
+                FROM User
+                WHERE ( Id = :Userinfo.getUserId() )
+            ];
+        } catch ( Exception e ) {
+            throw new AuraHandledException( e.getMessage() );
         }
     }
 
@@ -75,6 +65,7 @@ public class NSP_OrderManagement {
             Contract contract= new Contract (Id = contractId);
             contract.NSP_TransactionType__c=transactionType;
             contract.SBQQ__PreserveBundleStructureUponRenewals__c = true;
+            contract.Auto_Termination_Email__c = UserInfo.getUserEmail();
             //DML on Contract
             update contract;
             isContractUpdated = true;
@@ -142,6 +133,20 @@ public class NSP_OrderManagement {
             }
         }
         return noError;
+    }
+
+    @AuraEnabled
+    public static void runContractAutoTermination( Id contractId , Date terminationDate ) {
+        ContractTerminationHandler.runContractTerminationHandler(
+            contractId ,
+            terminationDate ,
+            UserInfo.getUserEmail()
+        );
+    }
+
+    @AuraEnabled
+    public static Boolean hasTerminationPermission() {
+        return ContractTerminationHandler.isEnabledAutoTermination;
     }
 
 }

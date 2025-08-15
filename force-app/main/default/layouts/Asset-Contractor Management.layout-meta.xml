@@ -216,9 +216,16 @@
     </platformActionList>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>NSP_Company_Code__c</fields>
+        <fields>NSP_Run_Date__c</fields>
+        <fields>NSP_Activity_From__c</fields>
+        <fields>NSP_Activity_To__c</fields>
+        <fields>NSP_Total_User_Count__c</fields>
+        <fields>NSP_Total_1099__c</fields>
         <relatedList>NSP_Participation_SaaS_Activity__c.NSP_Asset__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>NewCase</excludeButtons>
         <fields>CASES.CASE_NUMBER</fields>
         <fields>ACCOUNT.NAME</fields>
         <fields>CASES.SUBJECT</fields>

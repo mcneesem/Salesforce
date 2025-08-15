@@ -196,12 +196,12 @@
         <object>Contact</object>
     </recordUpdates>
     <start>
-        <locationX>56</locationX>
+        <locationX>188</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Update_Address_on_Parent_Contact</targetReference>
         </connector>
-        <filterLogic>1 AND 9 AND (2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8)</filterLogic>
+        <filterLogic>1 AND (9 OR 10) AND (2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8)</filterLogic>
         <filters>
             <field>NSP_Contact__c</field>
             <operator>IsNull</operator>
@@ -265,9 +265,16 @@
                 <stringValue>AIMS</stringValue>
             </value>
         </filters>
+        <filters>
+            <field>NSP_Source__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Integration</stringValue>
+            </value>
+        </filters>
         <object>NSP_Address__c</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
 </Flow>

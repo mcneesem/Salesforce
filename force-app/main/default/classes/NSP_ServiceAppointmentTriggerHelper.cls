@@ -20,17 +20,18 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
     // Author : Abhishek Kumar
     //
     public static void beforeUpdateDirector( Map<Id,ServiceAppointment> newMap , Map<Id,ServiceAppointment> oldMap ) {
-        List<ServiceAppointment> checkStatusChangeSaList =  new List<ServiceAppointment>();
-        Set<Id> saIdToDeletEvent = new Set<Id>();
         try {
-            for(ServiceAppointment serApp : newMap.values() ){
+            List<ServiceAppointment> checkStatusChangeSaList = new List<ServiceAppointment>();
+            Set<Id> saIdToDeletEvent = new Set<Id>();
+            for ( ServiceAppointment serApp : newMap.values() ) {
                 // added as a part of STY-01091
                 // update the flag when the first time status is set to dispatched 
-                if(serApp.Status!=null 
-                   && oldMap.get(serApp.Id).Status != NSP_ServiceConstants.dispatchStatus 
-                   && serApp.Status == NSP_ServiceConstants.dispatchStatus 
-                   && !oldMap.get(serApp.Id).NSP_IsDispatched__c){
-                       
+                if ( ( serApp.Status != null )
+                    && ( serApp.Status == NSP_ServiceConstants.dispatchStatus )
+                    && ( oldMap.get( serApp.Id ).Status != NSP_ServiceConstants.dispatchStatus )
+                    && !oldMap.get( serApp.Id ).NSP_IsDispatched__c
+                    )
+                {
                     checkStatusChangeSaList.add( serApp );
                 }
                 if ( ( serApp.Status != oldMap.get( serApp.Id ).Status )
@@ -43,29 +44,36 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
                     saIdToDeletEvent.add( serApp.Id );
                 }
                 //added as a part of STY - 04135
-
                 //schedule start is edited AND duration is edited
-                if(serApp.Duration != null ){
-                    if( serApp.SchedStartTime != null && (serApp.Duration != oldMap.get(serApp.Id).Duration || serApp.SchedStartTime != oldMap.get(serApp.Id).SchedStartTime)){
-                        serApp.SchedEndTime = serApp.SchedStartTime.addMinutes(integer.valueof(serApp.Duration));
+                if ( serApp.Duration != null ) {
+                    if ( ( serApp.SchedStartTime != null )
+                        && ( ( serApp.Duration != oldMap.get( serApp.Id ).Duration )
+                            || ( serApp.SchedStartTime != oldMap.get( serApp.Id ).SchedStartTime )
+                            )
+                        )
+                    {
+                        serApp.SchedEndTime = serApp.SchedStartTime.addMinutes(
+                            Integer.valueof( serApp.Duration )
+                        );
                     }
-    
                     //schedule end is edited AND Duration and scheduled end are updated
-                    if( serApp.SchedEndTime != null && (serApp.Duration != oldMap.get(serApp.Id).Duration || serApp.SchedEndTime != oldMap.get(serApp.Id).SchedEndTime)){
-                        serApp.SchedStartTime = serApp.SchedEndTime.addMinutes(-integer.valueof(serApp.Duration));
+                    if ( ( serApp.SchedEndTime != null )
+                        && ( ( serApp.Duration != oldMap.get( serApp.Id ).Duration )
+                            || ( serApp.SchedEndTime != oldMap.get( serApp.Id ).SchedEndTime )
+                            )
+                        )
+                    {
+                        serApp.SchedStartTime = serApp.SchedEndTime.addMinutes(
+                            ( -1 * Integer.valueof( serApp.Duration ) )
+                        );
                     }
-
                 }
-
             }
-            //call checkStatusChange
-            if(!checkStatusChangeSaList.isEmpty()){
+            if ( !checkStatusChangeSaList.isEmpty() ) {
                 checkStatusChange( checkStatusChangeSaList );
             }
-
-            //call deleteCancelledEvent
-            if(!saIdToDeletEvent.isEmpty()){
-                deleteCancelledEvent( saIdToDeletEvent );
+            if ( !saIdToDeletEvent.isEmpty() ) {
+                EventDeletion.deleteCancelledEvent( saIdToDeletEvent );
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
@@ -733,42 +741,6 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
         }
     }
 
-    //
-    // MethodName: deleteCancelledEvent
-    // Description : delete evevt of cancelled SA
-    // Params: Set<Id> saIdToDeletEvent
-    //
-    public static void deleteCancelledEvent( Set<Id> saIdToDeletEvent ) {
-        if ( ( saIdToDeletEvent != null ) && !saIdToDeletEvent.isEmpty() ) {
-            List<Event> eventRecListDelete = new List<Event>();
-            for ( Event eachEvent : [
-                        SELECT Id , WhatId
-                        FROM Event
-                        WHERE ( WhatId IN :saIdToDeletEvent )
-                    ]
-                )
-            {
-                eachEvent.WhatId = null;
-                eventRecListDelete.add( eachEvent );
-            }
-            if( !eventRecListDelete.isEmpty() ) {
-                List<Database.SaveResult> results =  Database.update( eventRecListDelete , false );
-                NSP_ErrorLogHandler.logResults(
-                    NSP_ServiceAppointmentTriggerHelper.class.getName() , 
-                    'deleteCancelledEvent:update' ,
-                    results
-                );
-                List<Database.DeleteResult> results1 = Database.delete( eventRecListDelete ,false); 
-                NSP_ErrorLogHandler.logResults(
-                    NSP_ServiceAppointmentTriggerHelper.class.getName() , 
-                    'deleteCancelledEvent:delete' ,
-                    results1
-                );
-            }
-        }
-    }
-
-    //
     // MethodName: createNewEventRec
     // Description : return new related Event record
     // Params: ServiceAppointment relatedSa

@@ -3,5 +3,6 @@
     <description>Group of Permission Sets to be granted to Team Digital Adoption Users.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Team Digital Adoption</label>
+    <permissionSets>Monitor_Login_History</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

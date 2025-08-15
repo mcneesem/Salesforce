@@ -4,6 +4,7 @@
     <externalId>false</externalId>
     <label>Employees reside in these service areas?</label>
     <required>false</required>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>MultiselectPicklist</type>
     <valueSet>
@@ -24,6 +25,31 @@
                 <fullName>Hawaii *Hawaii Plan options only</fullName>
                 <default>false</default>
                 <label>Hawaii *Hawaii Plan options only</label>
+            </value>
+            <value>
+                <fullName>Colorado *HMO and UHC National Plans</fullName>
+                <default>false</default>
+                <label>Colorado *HMO and UHC National Plans</label>
+            </value>
+            <value>
+                <fullName>New Hampshire *HMO and UHC National Plans</fullName>
+                <default>false</default>
+                <label>New Hampshire *HMO and UHC National Plans</label>
+            </value>
+            <value>
+                <fullName>Rhode Island *HMO and UHC National Plans</fullName>
+                <default>false</default>
+                <label>Rhode Island *HMO and UHC National Plans</label>
+            </value>
+            <value>
+                <fullName>NW (Oregon &amp; SW Washington) *HMO and UHC National Plans</fullName>
+                <default>false</default>
+                <label>NW (Oregon &amp; SW Washington) *HMO and UHC National Plans</label>
+            </value>
+            <value>
+                <fullName>Washington *HMO and UHC National Plans</fullName>
+                <default>false</default>
+                <label>Washington *HMO and UHC National Plans</label>
             </value>
             <value>
                 <fullName>NA</fullName>

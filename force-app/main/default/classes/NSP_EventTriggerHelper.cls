@@ -4,7 +4,9 @@ public with sharing class NSP_EventTriggerHelper {
     // test w/ LeadLastActivityDateHelperTest (35%)
 
     private static final String DISCOVERY_CALL = 'Discovery Call';
+    private static final String CLOSING_APPT = 'Closing Appointment';
     private static final String WO_PROPOSAL = 'WO Proposal';
+    private static final String WS_PROPOSAL = 'WS Proposal';
     private static final String EMPTY_STRING = '';
     private static final String WORD_SEPARATOR =  ' : ';
     private static Id coreSalesEventRecordType = NSP_GenericRecordType.getRecordTypeId( 'Event' , 'Core_Sales_Event_RT' );
@@ -310,10 +312,11 @@ public with sharing class NSP_EventTriggerHelper {
                     && event.WhatId != NULL
                     && event.NSP_Event_Subtype__c != NULL
                     && ( event.WhatId.getSObjectType() == Opportunity.getSObjectType() )
-                    && (
-                        event.NSP_Event_Subtype__c.equalsIgnoreCase( NSP_EventTriggerHelper.DISCOVERY_CALL )
-                        || event.NSP_Event_Subtype__c.equalsIgnoreCase( NSP_EventTriggerHelper.WO_PROPOSAL )
-                        )
+                    && ( event.NSP_Event_Subtype__c.equalsIgnoreCase( NSP_EventTriggerHelper.DISCOVERY_CALL )
+                         || event.NSP_Event_Subtype__c.equalsIgnoreCase( NSP_EventTriggerHelper.WO_PROPOSAL )
+                         || event.NSP_Event_Subtype__c.equalsIgnoreCase( NSP_EventTriggerHelper.WS_PROPOSAL )
+                         || event.NSP_Event_Subtype__c.equalsIgnoreCase( NSP_EventTriggerHelper.CLOSING_APPT )
+                       )
                     )
                 {
                     updateOpportunityIds.add( event.WhatId );
