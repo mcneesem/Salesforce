@@ -8,6 +8,7 @@ public with sharing class NSP_TaskTriggerHelper {
     public static Id peoTaskRecordType = NSP_GenericRecordType.getRecordTypeId( 'Task' , 'PEO_Service_Task' );
     private static Boolean Is_Enabled_WO_WS_Stage_Entry = OpportunityStageSettings__c.getInstance(UserInfo.getUserId()).Is_Enabled_WO_WS_Stage_Entry__c;
     private static final String EXPENSE_MANAGEMENT = 'Expense_Management';
+    private static final String EMPLOYMENT_SCREENING = 'NSP_Employment_Screening';
 
     /**
     * Iterates throught the list of new tasks/ activity and passes the required attributes to other methods.
@@ -350,11 +351,21 @@ public void updateActivitySales(List<Task> newList,Map<Id,Task> OldTaskMap){
             NSP_ServiceConstants.RETIREMENT_SERVICES ,
             NSP_ServiceConstants.CONTINGENT_WORKFORCE ,
             NSP_ServiceConstants.CONTRACTOR_MANAGEMENT ,
-            NSP_ServiceConstants.HRCORE_ONBOARDING_AMENDMENT,
-            'NSP_Employment_Screening'
+            NSP_ServiceConstants.HRCORE_ONBOARDING_AMENDMENT ,
+            NSP_TaskTriggerHelper.EMPLOYMENT_SCREENING
         };
         Map<String,String> mapQueueDeveloperNameQueueId = new Map<String,String>();
-        for(Group ogroup : [SELECT Id, DeveloperName FROM GROUP WHERE DeveloperName IN: lstReferralQueues AND Type = 'Queue' WITH SECURITY_ENFORCED]){
+        for ( Group ogroup : [
+                    SELECT Id , DeveloperName
+                    FROM GROUP
+                    WHERE (
+                        ( DeveloperName IN :lstReferralQueues )
+                        AND ( Type = 'Queue' )
+                    )
+                    WITH SECURITY_ENFORCED
+                ]
+            )
+        {
             mapQueueDeveloperNameQueueId.put(ogroup.DeveloperName,ogroup.Id);
         }
         return mapQueueDeveloperNameQueueId;
@@ -381,9 +392,8 @@ public void updateActivitySales(List<Task> newList,Map<Id,Task> OldTaskMap){
                 NSP_ServiceConstants.TIME_AND_ATTENDANCE => NSP_ServiceConstants.SERVICE_REFERRAL ,
                 NSP_ServiceConstants.PI_CONTINGENT_WORKFORCE => NSP_ServiceConstants.CONTINGENT_WORKFORCE ,
                 NSP_ServiceConstants.PI_CONTRACTOR_MANAGEMENT => NSP_ServiceConstants.CONTRACTOR_MANAGEMENT ,
-                NSP_ServiceConstants.PI_HRCORE_ONBOARDING_AMENDMENT => NSP_ServiceConstants.HRCORE_ONBOARDING_AMENDMENT,
-                NSP_ServiceConstants.EMPLOYMENT_SCREENING => 'NSP_Employment_Screening'
-
+                NSP_ServiceConstants.PI_HRCORE_ONBOARDING_AMENDMENT => NSP_ServiceConstants.HRCORE_ONBOARDING_AMENDMENT ,
+                NSP_ServiceConstants.EMPLOYMENT_SCREENING => NSP_TaskTriggerHelper.EMPLOYMENT_SCREENING
             };
         }
     }
