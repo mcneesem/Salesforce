@@ -237,13 +237,6 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.pse__Project__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.pse__Project__r.Id</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -270,7 +263,14 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Not_null_YTD</name>
-            <conditionLogic>( 1 OR 2 ) AND 3</conditionLogic>
+            <conditionLogic>1 AND (2 OR 3) AND 4 AND 5</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Implementation_Profile</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <conditions>
                 <leftValueReference>Get_Implementation_Profile.NSP_Insperity_1st_pay_date__c</leftValueReference>
                 <operator>IsNull</operator>
@@ -281,6 +281,13 @@
             <conditions>
                 <leftValueReference>Get_Implementation_Profile.First_Pay_Date__c</leftValueReference>
                 <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Queue</leftValueReference>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -594,7 +601,7 @@
         <inputAssignments>
             <name>Project</name>
             <value>
-                <elementReference>$Record.pse__Project__r.Id</elementReference>
+                <elementReference>$Record.pse__Project__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
