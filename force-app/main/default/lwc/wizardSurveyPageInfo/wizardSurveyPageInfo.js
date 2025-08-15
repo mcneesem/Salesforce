@@ -67,9 +67,9 @@ export default class WizardSurveyPageInfo extends LightningElement {
         fields: ['Asset.RecordTypeId','Asset.RecordType.DeveloperName', 'Asset.NSP_Client_Segment_type__c'] // Fields to retrieve
     })
     wiredAssetss({ error, data }) {
-        if (data != null && data.records != null) {   
+        if ( data?.records ) { 
             data.records.forEach(asset => {
-                if(asset.fields != null && asset.fields.RecordType != null && asset.fields.NSP_Client_Segment_type__c != null){
+                if ( asset?.fields?.RecordType != null && asset?.fields?.NSP_Client_Segment_type__c != null ) {
                     const recordTypeName = asset.fields.RecordType.displayValue;
                     const clientSegmentType = asset.fields.NSP_Client_Segment_type__c.value;
                     if (recordTypeName === 'WO' && clientSegmentType === 'Middle Market') {                                           

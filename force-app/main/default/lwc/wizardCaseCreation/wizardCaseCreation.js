@@ -58,7 +58,7 @@ wiredContact({ error, data }) {
 
 separationQueueName ='HR Separation Agreement Team';
 getQueueIdbyName( queueName ) {
-    if(this.reReqObj != null && this.reReqObj.isSubmit){
+    if ( this.reReqObj?.isSubmit ) {
         queueName = 'Consulting & Development';
     }
     getQueueID({ queueLabel : queueName })
@@ -234,7 +234,7 @@ async createCaseRecord(inputData){
 }
 
 categorySubcategoryMM(fields){
-    if(this.reReqObj != null && this.reReqObj.isSubmit){
+    if ( this.reReqObj?.isSubmit ) {
         fields.NSP_SubCategory__c = 'Intake';
         fields.NSP_Category__c = 'Strategic Consulting Services';
     }
