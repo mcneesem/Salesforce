@@ -10,6 +10,9 @@
         <connector>
             <targetReference>Check_HCM_Rules_and_HR360_Primary_Product</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Discovery_Call_Follow_Up_Email</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>emailAddresses</name>
@@ -70,6 +73,9 @@
         <connector>
             <targetReference>AssignEmailRecepients</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Discovery_Call_Follow_Up_Notification</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>customNotifTypeId</name>
@@ -109,8 +115,8 @@
     <assignments>
         <name>Assign_Discovery_Call_Completed_Date</name>
         <label>Assign Discovery Call Completed Date</label>
-        <locationX>138</locationX>
-        <locationY>1956</locationY>
+        <locationX>534</locationX>
+        <locationY>2154</locationY>
         <assignmentItems>
             <assignToReference>varOpportunity.Discovery_Call_Completed_Date__c</assignToReference>
             <operator>Assign</operator>
@@ -132,7 +138,7 @@
     <assignments>
         <name>Assign_Has_Demo_Activity</name>
         <label>Assign Has Demo Activity</label>
-        <locationX>2250</locationX>
+        <locationX>2646</locationX>
         <locationY>708</locationY>
         <assignmentItems>
             <assignToReference>varOpportunity.NSP_Has_Demo_Activity__c</assignToReference>
@@ -148,8 +154,8 @@
     <assignments>
         <name>Assign_Opportunity_Close_Date</name>
         <label>Assign Opportunity Close Date</label>
-        <locationX>666</locationX>
-        <locationY>1956</locationY>
+        <locationX>1062</locationX>
+        <locationY>2154</locationY>
         <assignmentItems>
             <assignToReference>varOpportunity.CloseDate</assignToReference>
             <operator>Assign</operator>
@@ -164,7 +170,7 @@
     <assignments>
         <name>Assign_varFaultElement</name>
         <label>Assign varFaultElement - Get Opty Owner in BPA Public Group</label>
-        <locationX>1458</locationX>
+        <locationX>1854</locationX>
         <locationY>816</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -179,9 +185,43 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_varFaultElement_Discovery_Call_Follow_Up_Email</name>
+        <label>Assign varFaultElement - Discovery Call Follow-Up Email</label>
+        <locationX>314</locationX>
+        <locationY>1680</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Discovery_Call_Follow_Up_Email</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Discovery_Call_Follow_Up_Notification</name>
+        <label>Assign varFaultElement - Discovery Call Follow-Up Notification</label>
+        <locationX>578</locationX>
+        <locationY>1464</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Discovery_Call_Follow_Up_Notification</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_varFaultElement_Get_Discovery_Call_Notification</name>
         <label>Assign varFaultElement - Get Discovery Call Notification</label>
-        <locationX>314</locationX>
+        <locationX>842</locationX>
         <locationY>1248</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -198,7 +238,7 @@
     <assignments>
         <name>Assign_varFaultElement_Get_District_Manager</name>
         <label>Assign varFaultElement - Get District Manager</label>
-        <locationX>754</locationX>
+        <locationX>1282</locationX>
         <locationY>1032</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -215,7 +255,7 @@
     <assignments>
         <name>Assign_varFaultElement_Get_Opty_Info</name>
         <label>Assign varFaultElement - Get Opty Info</label>
-        <locationX>3306</locationX>
+        <locationX>3702</locationX>
         <locationY>384</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -232,8 +272,8 @@
     <assignments>
         <name>Assign_varFaultElement_Update_Opty_CloseDate</name>
         <label>Assign varFaultElement - Update Opty - CloseDate</label>
-        <locationX>930</locationX>
-        <locationY>2172</locationY>
+        <locationX>1326</locationX>
+        <locationY>2370</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -248,8 +288,8 @@
     <assignments>
         <name>Assign_varFaultElement_Update_Opty_Discovery_Call_Completed_Date</name>
         <label>Assign varFaultElement - Update Opty - Discovery Call Completed Date</label>
-        <locationX>402</locationX>
-        <locationY>2172</locationY>
+        <locationX>798</locationX>
+        <locationY>2370</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -265,7 +305,7 @@
     <assignments>
         <name>Assign_varFaultElement_Update_Opty_Has_Demo_Activity</name>
         <label>Assign varFaultElement - Update Opty - Has Demo Activity</label>
-        <locationX>2514</locationX>
+        <locationX>2910</locationX>
         <locationY>924</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -314,7 +354,7 @@
     <assignments>
         <name>varFaultElement_Get_Public_Group</name>
         <label>varFaultElement - Get Public Group</label>
-        <locationX>1722</locationX>
+        <locationX>2118</locationX>
         <locationY>708</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -332,8 +372,8 @@
         <description>Prevent DmlExceptions: HCM Sales Consultants can modify only WX Opportunities. Check HR360 Primary Product</description>
         <name>Check_HCM_Rules_and_HR360_Primary_Product</name>
         <label>Check HCM Rules and HR360 Primary Product</label>
-        <locationX>666</locationX>
-        <locationY>1848</locationY>
+        <locationX>1062</locationX>
+        <locationY>2046</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>HCM_Not_Allowed</name>
@@ -383,7 +423,7 @@
     <decisions>
         <name>Discovery_Call_or_Demo</name>
         <label>Discovery Call or Demo?</label>
-        <locationX>1722</locationX>
+        <locationX>2118</locationX>
         <locationY>492</locationY>
         <defaultConnectorLabel>N/A</defaultConnectorLabel>
         <rules>
@@ -427,7 +467,7 @@
     <decisions>
         <name>Does_Demo_Activity_need_to_be_updated_on_Opty</name>
         <label>Does Demo Activity need to be updated on Opty?</label>
-        <locationX>2118</locationX>
+        <locationX>2514</locationX>
         <locationY>600</locationY>
         <defaultConnector>
             <targetReference>Assign_Has_Demo_Activity</targetReference>
@@ -449,7 +489,7 @@
     <decisions>
         <name>Exist_District_Manager</name>
         <label>Exist District Manager?</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>1032</locationY>
         <defaultConnector>
             <targetReference>Check_HCM_Rules_and_HR360_Primary_Product</targetReference>
@@ -474,7 +514,7 @@
     <decisions>
         <name>Exist_in</name>
         <label>Exist BPA Public Group?</label>
-        <locationX>666</locationX>
+        <locationX>1062</locationX>
         <locationY>816</locationY>
         <defaultConnector>
             <targetReference>Check_HCM_Rules_and_HR360_Primary_Product</targetReference>
@@ -485,7 +525,7 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Opty_Owner_in_BPA_Public_Group.Id</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -499,7 +539,7 @@
     <decisions>
         <name>Related_Opportunity_Found</name>
         <label>Related Opportunity Found?</label>
-        <locationX>2382</locationX>
+        <locationX>2778</locationX>
         <locationY>384</locationY>
         <defaultConnectorLabel>Opty NOT found</defaultConnectorLabel>
         <rules>
@@ -507,7 +547,7 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>varOpportunity</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -518,7 +558,7 @@
             <label>Related Opty Found</label>
         </rules>
     </decisions>
-    <description>Updated to remove hardcoded HCM Sales Consultant role and Update Oppty CloseDate based on HR360 Primary Product</description>
+    <description>Updated to send email and notifications to DM. Updated to remove hardcoded HCM Sales Consultant role and Update Oppty CloseDate based on HR360 Primary Product</description>
     <environments>Default</environments>
     <formulas>
         <name>ContentNotification</name>
@@ -591,7 +631,7 @@
         <description>Get the district manager detail, trigger the Email and, bell notifications.</description>
         <name>Get_District_Manager</name>
         <label>Get District Manager</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>924</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -624,7 +664,7 @@
     <recordLookups>
         <name>Get_Opportunity_Info</name>
         <label>Get Opportunity Info</label>
-        <locationX>2382</locationX>
+        <locationX>2778</locationX>
         <locationY>276</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -655,7 +695,7 @@
     <recordLookups>
         <name>Get_Opty_Owner_in_BPA_Public_Group</name>
         <label>Get Opty Owner in BPA Public Group</label>
-        <locationX>666</locationX>
+        <locationX>1062</locationX>
         <locationY>708</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -687,7 +727,7 @@
     <recordLookups>
         <name>Get_Public_Group</name>
         <label>Get Public Group</label>
-        <locationX>666</locationX>
+        <locationX>1062</locationX>
         <locationY>600</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -719,8 +759,8 @@
     <recordUpdates>
         <name>Update_Opportunity_CloseDate</name>
         <label>Update Opportunity - CloseDate</label>
-        <locationX>666</locationX>
-        <locationY>2064</locationY>
+        <locationX>1062</locationX>
+        <locationY>2262</locationY>
         <faultConnector>
             <targetReference>Assign_varFaultElement_Update_Opty_CloseDate</targetReference>
         </faultConnector>
@@ -729,8 +769,8 @@
     <recordUpdates>
         <name>Update_Opportunity_Discovery_Call_Completed_Date</name>
         <label>Update Opportunity - Discovery Call Completed Date</label>
-        <locationX>138</locationX>
-        <locationY>2064</locationY>
+        <locationX>534</locationX>
+        <locationY>2262</locationY>
         <faultConnector>
             <targetReference>Assign_varFaultElement_Update_Opty_Discovery_Call_Completed_Date</targetReference>
         </faultConnector>
@@ -739,7 +779,7 @@
     <recordUpdates>
         <name>Update_Opportunity_Has_Demo_Activity</name>
         <label>Update Opportunity - Has Demo Activity</label>
-        <locationX>2250</locationX>
+        <locationX>2646</locationX>
         <locationY>816</locationY>
         <faultConnector>
             <targetReference>Assign_varFaultElement_Update_Opty_Has_Demo_Activity</targetReference>
@@ -747,7 +787,7 @@
         <inputReference>varOpportunity</inputReference>
     </recordUpdates>
     <start>
-        <locationX>958</locationX>
+        <locationX>1156</locationX>
         <locationY>0</locationY>
         <filterLogic>(1 OR 2) AND 3 AND 4 AND 5 AND 6 AND 7</filterLogic>
         <filters>
@@ -810,8 +850,8 @@
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
-        <locationX>930</locationX>
-        <locationY>2280</locationY>
+        <locationX>1326</locationX>
+        <locationY>2478</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
