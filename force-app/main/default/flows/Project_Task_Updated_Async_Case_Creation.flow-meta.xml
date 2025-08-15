@@ -555,7 +555,7 @@
         <connector>
             <targetReference>Get_Content_Document</targetReference>
         </connector>
-        <flowName>Case_Create_Generic_Case_Creation</flowName>
+        <flowName>Project_Case_Creation</flowName>
         <inputAssignments>
             <name>Account</name>
             <value>
