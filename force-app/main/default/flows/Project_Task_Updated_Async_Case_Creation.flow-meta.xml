@@ -336,7 +336,7 @@
         <expression>DATEVALUE(NOW())</expression>
     </formulas>
     <interviewLabel>Project Task - Updated - Async - Case Creation {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Project Task - After Save - Case creation</label>
+    <label>Project Task - Updated - Async - Case Creation</label>
     <loops>
         <name>Loop_through_files</name>
         <label>Loop through files</label>
