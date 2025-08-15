@@ -501,6 +501,13 @@
     <notificationTypeSettings>
         <notificationChannels>
             <desktopEnabled>true</desktopEnabled>
+            <mobileEnabled>true</mobileEnabled>
+        </notificationChannels>
+        <notificationType>Event_Create_Update_Discovery_Call_Notification</notificationType>
+    </notificationTypeSettings>
+    <notificationTypeSettings>
+        <notificationChannels>
+            <desktopEnabled>true</desktopEnabled>
             <mobileEnabled>false</mobileEnabled>
         </notificationChannels>
         <notificationType>Generic_Bell_Notification</notificationType>
