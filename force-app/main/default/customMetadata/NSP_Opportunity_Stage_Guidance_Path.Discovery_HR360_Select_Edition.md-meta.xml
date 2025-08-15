@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Discovery HR360 Select Edition</label>
+    <protected>false</protected>
+    <values>
+        <field>NSP_Account_Segment__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>NSP_Is_Active__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>NSP_Message__c</field>
+        <value xsi:type="xsd:string">•	Research, develop prospect questions and strategize with DM prior to DC
+•	Meet with key decision maker and learn decision making process
+•	Identify 2-3 key drivers of the business
+•	Determine fit
+•	Introduce Insperity workforce solutions
+•	Make an initial product recommendation
+•	Confirm interest, communicate next steps; set next appointment
+•	Debrief the call with DM</value>
+    </values>
+    <values>
+        <field>NSP_PrimaryProduct__c</field>
+        <value xsi:type="xsd:string">WS</value>
+    </values>
+    <values>
+        <field>NSP_StageName__c</field>
+        <value xsi:type="xsd:string">Discovery</value>
+    </values>
+</CustomMetadata>

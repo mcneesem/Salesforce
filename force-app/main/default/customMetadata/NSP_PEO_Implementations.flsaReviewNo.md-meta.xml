@@ -11,7 +11,7 @@ Email Address : payrollqualitysupport@insperity.com</value>
     </values>
     <values>
         <field>NSP_Email_Address__c</field>
-        <value xsi:type="xsd:string">payrollqualitysupport@insperity.com.invalid</value>
+        <value xsi:type="xsd:string">payrollqualitysupport@insperity.com</value>
     </values>
     <values>
         <field>NSP_Name__c</field>

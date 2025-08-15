@@ -21,7 +21,11 @@ public class LoadFullAccessPermSetsQueueableTest {
     @isTest
     static void testLoadFullAccessPermSets2() {
         Test.startTest();
-        List<String> objectApiNames = new List<String>{'Account', 'EntityDefinition'};
+        OrgSettings__c setting = new OrgSettings__c();
+        setting.ExternalIdObjects1__c = 'blng__GLRule__c,blng__GLAccount__c';
+        setting.IsSandbox__c = false;
+        insert setting;
+        List<String> objectApiNames = new List<String>{'Account', 'EntityDefinition','blng__GLRule__c','blng__GLAccount__c'};
         LoadFullAccessPermSets.runLoadFullAccessPermSets(null, null, objectApiNames, null);
         LoadFullAccessPermSets.runLoadFullAccessPermSets('FA_Test_Read_Permission_Set', 'FA_Test_Edit_Permission_Set', objectApiNames, null);
         Test.stopTest();
@@ -43,8 +47,8 @@ public class LoadFullAccessPermSetsQueueableTest {
         }
 
         Test.startTest();
-        System.enqueueJob(new LoadFullAccessPermSetsQueueable(objectApiNames, readPermSetId, editPermSetId, depRetry));
-        System.enqueueJob(new LoadFullAccessPermSetsQueueable(objectApiNames, readPermSetId, editPermSetId, depRetry));
+        System.enqueueJob(new LoadFullAccessPermSetsQueueable(objectApiNames, readPermSetId, editPermSetId, depRetry, null, null));
+        System.enqueueJob(new LoadFullAccessPermSetsQueueable(objectApiNames, readPermSetId, editPermSetId, depRetry, null, null));
         Test.stopTest();
 
         List<ObjectPermissions> op = [SELECT Id, ParentId FROM ObjectPermissions WHERE ParentId IN :psMap.keySet() ];
@@ -54,9 +58,17 @@ public class LoadFullAccessPermSetsQueueableTest {
         System.assertNotEquals(null, fp);
     }
 
-    @isTest private static void testLoadFullAccessPermSetsQueueableLogging() {
+    @isTest
+    private static void testLoadFullAccessPermSetsQueueableLogging() {
         Test.startTest();
         LoadFullAccessPermSetsQueueable.createErrorLogFuture( null , null , null );
+        Test.stopTest();
+    }
+
+    @isTest
+    private static void testloadExternalIds() {
+        Test.startTest();
+        LoadFullAccessPermSetsQueueable.loadExternalIds( 'blng__GLAccount__c' );
         Test.stopTest();
     }
 

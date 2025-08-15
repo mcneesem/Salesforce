@@ -51,6 +51,13 @@
                         </valueListItems>
                         <valueListItems>
                             <value>Asset.New_Task_Aura</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.New_Task_Aura}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -800,7 +807,7 @@
         <name>activityTabContent</name>
         <type>Facet</type>
     </flexiPageRegions>
-        <flexiPageRegions>
+    <flexiPageRegions>
         <itemInstances>
             <componentInstance>
                 <componentName>forceChatter:recordFeedContainer</componentName>
@@ -829,7 +836,7 @@
                 <identifier>flexipage_tab3</identifier>
             </componentInstance>
         </itemInstances>
-                <itemInstances>
+        <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>

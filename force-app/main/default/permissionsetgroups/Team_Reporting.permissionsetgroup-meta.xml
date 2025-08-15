@@ -3,5 +3,6 @@
     <description>Covers permissions related to reporting, CRM Analytics, etc</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Team Reporting</label>
+    <permissionSets>Monitor_Login_History</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

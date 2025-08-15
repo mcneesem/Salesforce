@@ -1,5 +1,5 @@
 public class LoadFullAccessPermSetsQueueable implements Queueable {
-    // test w/ LoadFullAccessPermSetsQueueableTest (78%)
+    // test w/ LoadFullAccessPermSetsQueueableTest (76%)
 
     // **************************************************************************************************
     //  Author:         Matthew McNeese
@@ -13,20 +13,36 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
     // ***************************************************************************************************
 
     private List<String> objectApiNames = new List<String>();
+    private List<String> filterNamespaces = new List<String>();
+    private List<String> extIdObjList = new List<String>();
     private Id readPermSetId;
     private Id editPermSetId;
     Map<String, Integer> depRetry = new Map<String, Integer>();
 
-    public LoadFullAccessPermSetsQueueable(List<String> objectApiNames, Id readPermSetId, Id editPermSetId, Map<String, Integer> depRetry) {
+    public LoadFullAccessPermSetsQueueable(List<String> objectApiNames, Id readPermSetId, Id editPermSetId, Map<String, Integer> depRetry, List<String> filterNamespaces, List<String> extIdObjList){
         this.objectApiNames = objectApiNames;
         this.readPermSetId = readPermSetId;
         this.editPermSetId = editPermSetId;
         this.depRetry = depRetry;
+        this.filterNamespaces = filterNamespaces;
+        this.extIdObjList = extIdObjList;
     }
 
     public void execute(QueueableContext context) {
 
         String currObjName = objectApiNames.remove(0); // remove top item from objectApiNames in each link in chain
+        
+        if (filterNamespaces == null) {
+            filterNamespaces = new List<String>();
+        }
+        if (extIdObjList == null) {
+            extIdObjList = new List<String>();
+        }
+
+        if( filterNamespaces.isEmpty() && extIdObjList.contains(currObjName) ){
+            createErrorLog( 'execute' , currObjName , 'Loading ExternalIds' );
+            loadExternalIds(currObjName);
+        }
 
         createErrorLog( 'execute' , currObjName , 'Loading ObjectPermissions' );
         loadObjectPermissions(readPermSetId, false, objectApiNames, currObjName, depRetry, true); // upsert read Object Permissions for first object in list
@@ -39,7 +55,7 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
         if (!String.isBlank(readPermSetId) || !String.isBlank(editPermSetId)) {
             if (QueueableSettings__c.getOrgDefaults().EnableLoadPermSetChain__c) {
                 if ( objectApiNames.size() > 0 ) { // chain new job for next object
-                    System.enqueueJob(new LoadFullAccessPermSetsQueueable(objectApiNames, readPermSetId, editPermSetId, depRetry));
+                    System.enqueueJob(new LoadFullAccessPermSetsQueueable(objectApiNames, readPermSetId, editPermSetId, depRetry, filterNamespaces, extIdObjList));
                     createErrorLog( 'execute' , null , 'objectCount remaining=' + objectApiNames.size() );
                 } else {
                     sendCompletionEmail();
@@ -166,6 +182,26 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
         }
     }
 
+    // ************************************** External Ids ***************************************
+    //  Description :   Upserts FieldPermssions for all fields of specified object name into
+    //                  specified Perm Set.
+    // *******************************************************************************************
+    public static void loadExternalIds( String currObjName ) {
+        if (!String.isBlank(currObjName)) {
+            String dynamicQuery = 'SELECT Id, NSP_External_Id__c FROM ' + String.escapeSingleQuotes(currObjName) + ' WHERE NSP_External_Id__c = null';
+            List<SObject> updObjList = Database.query(dynamicQuery);
+            for ( SObject updObj : updObjList ) {
+                updObj.put('NSP_External_Id__c', updObj.Id);
+            }
+            Database.SaveResult[] updObjResultList = Database.update(updObjList, false);
+            for (Database.SaveResult updObjResult : updObjResultList) { // retrieve errors for failed record upserts
+                if (!updObjResult.isSuccess()) {
+                    createErrorLog( 'loadExternalIds' , currObjName , 'ExternalId errors occurred' );
+                }
+            }
+        }
+    }
+
     // ************************ Chain Completion Email ************************
     public static void sendCompletionEmail(){
         Messaging.SingleEmailMessage oEmail = new Messaging.SingleEmailMessage();
@@ -205,5 +241,4 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
             );
         }
     }
-
 }

@@ -2277,6 +2277,13 @@
         <value>Please update Customer Signer and you can generate delivery order documents only for approved quotes</value>
     </labels>
     <labels>
+        <fullName>NSP_CustomerStakeholderQuote</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NSP_CustomerStakeholderQuote</shortDescription>
+        <value>Please enter Customer Stakeholder</value>
+    </labels>
+    <labels>
         <fullName>NSP_CustomerSuccessTeam_And_BPSAdministrator_Role</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3945,7 +3952,7 @@ Meeting - Project Related - Fiduciary,Mutual Fund Corrections - Pricing, Manual 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Message Template for multiple types of Pay</shortDescription>
-        <value>If employees are working in CA and paid Piece Rate, California Labor Law requires: 
+        <value>If employees are working in CA and paid Piece Rate, California Labor Law requires:
         Employees must be separately compensated for rest and recovery breaks and &quot;other&quot; non-productive time.
         Wage statements must state total hours of compensable rest &amp; recovery periods &amp; gross wages paid during the period.</value>
     </labels>
@@ -4083,7 +4090,7 @@ Meeting - Project Related - Fiduciary,Mutual Fund Corrections - Pricing, Manual 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>New Client Sales Email</shortDescription>
-        <value>tejas.patkar@insperity.com</value>
+        <value>newclientsales@insperity.com</value>
     </labels>
     <labels>
         <fullName>NSP_New_Hampshire_Message</fullName>

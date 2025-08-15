@@ -1148,6 +1148,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Integration</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Salesforce</fullName>
             <default>true</default>
         </values>

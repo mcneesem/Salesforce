@@ -128,6 +128,7 @@
                 <field>NSP_OPRT_Evergreen__c</field>
             </layoutItems>
         </layoutColumns>
+        <layoutColumns/>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
@@ -358,6 +359,7 @@
         </platformActionListItems>
     </platformActionList>
     <relatedLists>
+        <excludeButtons>NewCase</excludeButtons>
         <fields>CASES.CASE_NUMBER</fields>
         <fields>ACCOUNT.NAME</fields>
         <fields>CASES.SUBJECT</fields>
