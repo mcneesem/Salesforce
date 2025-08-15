@@ -133,14 +133,14 @@
             <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Related_Tasks</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsEmpty</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>Get_Related_Events</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsEmpty</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -162,7 +162,7 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Related_Events</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsEmpty</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -171,6 +171,50 @@
                 <targetReference>Loop_Event_to_Cancel</targetReference>
             </connector>
             <label>Event</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_if_eventToUpdate_has_records</name>
+        <label>Check if eventToUpdate has records</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Not_Empty</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>EventToUpdate</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Cancelled_Events</targetReference>
+            </connector>
+            <label>Not Empty</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_if_taskToUpdate_has_records</name>
+        <label>Check if taskToUpdate has records</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Task_Not_Empty</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>TasksToUpdate</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Cancelled_Task</targetReference>
+            </connector>
+            <label>Task Not Empty</label>
         </rules>
     </decisions>
     <decisions>
@@ -183,8 +227,8 @@
             <name>Opportunity_Present</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>varOpportunityId</leftValueReference>
-                <operator>NotEqualTo</operator>
+                <leftValueReference>opportunityId</leftValueReference>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -209,7 +253,7 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Related_Tasks</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsEmpty</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -221,8 +265,8 @@
         </rules>
     </decisions>
     <environments>Default</environments>
-    <interviewLabel>Subflow - Activity - Cancel Related to Opportunity Closed Lost {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Subflow - Activity - Cancel Related to Opportunity Closed Lost</label>
+    <interviewLabel>Opportunity - Cancel Related Activities {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Opportunity - Cancel Related Activities</label>
     <loops>
         <name>Loop_Event_to_Cancel</name>
         <label>Loop - Event to Cancel</label>
@@ -234,7 +278,7 @@
             <targetReference>Assignment_Cancel_Current_Event</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Update_Cancelled_Events</targetReference>
+            <targetReference>Check_if_eventToUpdate_has_records</targetReference>
         </noMoreValuesConnector>
     </loops>
     <loops>
@@ -248,7 +292,7 @@
             <targetReference>Assignment_Cancel_Current_Task</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Update_Cancelled_Task</targetReference>
+            <targetReference>Check_if_taskToUpdate_has_records</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -287,7 +331,7 @@
             <field>WhatId</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>varOpportunityId</elementReference>
+                <elementReference>opportunityId</elementReference>
             </value>
         </filters>
         <filters>
@@ -322,7 +366,7 @@
             <field>WhatId</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>varOpportunityId</elementReference>
+                <elementReference>opportunityId</elementReference>
             </value>
         </filters>
         <filters>
@@ -387,7 +431,7 @@
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Subflow - Activity - Cancel Related to Opportunity Closed Lost</stringValue>
+                <stringValue>Opportunity_Cancel_Related_Activities</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -406,7 +450,7 @@
         <objectType>Event</objectType>
     </variables>
     <variables>
-        <name>faultflowName</name>
+        <name>opportunityId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
@@ -425,13 +469,6 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varOpportunityId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
 </Flow>
