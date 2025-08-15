@@ -109,12 +109,27 @@ public with sharing class NSP_CustomCaseCreationPageController {
                     categroyHrEmployeeRelations.equalsIgnoreCase( mapping.NSP_Category__c )
                     && subCategorySeparationAgreementRequest.equalsIgnoreCase( mapping.NSP_Subcategory__c )
                 );
-                if ( !isServiceOps && !isHRSeparationAgreement ) {
+                if ( isServiceOps && NSP_CustomCaseCreationPageController.hasPermissionUseCaseCategoryServiceOperations ) {
+                    filteredMap.put( mapping.Id , mapping );
+                } else if ( !isServiceOps && !isHRSeparationAgreement ) {
                     filteredMap.put( mapping.Id , mapping );
                 }
             }
         }
         return filteredMap.values();
+    }
+
+    private static Boolean hasPermissionUseCaseCategoryServiceOperations {
+        private get {
+            if ( hasPermissionUseCaseCategoryServiceOperations == null ) {
+                hasPermissionUseCaseCategoryServiceOperations = CustomPermissionController.checkUserPermission(
+                    'Use_Case_Category_Service_Operations' ,
+                    UserInfo.getUserId()
+                );
+            }
+            return hasPermissionUseCaseCategoryServiceOperations;
+        }
+        private set;
     }
 
     private static Boolean hasPermissionFLSA {
