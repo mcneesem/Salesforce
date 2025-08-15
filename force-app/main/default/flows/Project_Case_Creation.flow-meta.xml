@@ -271,8 +271,8 @@
     </decisions>
     <description>Sub flow used to create Cases when a Project Task gets completed.</description>
     <environments>Default</environments>
-    <interviewLabel>Case - Create - Generic Case Creation {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Case - Create - Generic Case Creation</label>
+    <interviewLabel>Project - Case Creation {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Project - Case Creation</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -325,7 +325,7 @@
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Case_Create_Generic_Case_Creation</stringValue>
+                <stringValue>Project_Case_Creation</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
