@@ -3,28 +3,14 @@
     <apiVersion>64.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <decisions>
-        <name>Check_if_Owner_Changed</name>
-        <label>Check if  Owner Changed</label>
+        <name>Check_Record_tyoe</name>
+        <label>Check  Record tyoe</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Owner_Updated</name>
+            <name>Not_NSP_Partner_Client</name>
             <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record__Prior.Id</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.OwnerId</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <elementReference>$Record__Prior.OwnerId</elementReference>
-                </rightValue>
-            </conditions>
             <conditions>
                 <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
                 <operator>NotEqualTo</operator>
@@ -35,7 +21,7 @@
             <connector>
                 <targetReference>Opportunity_Creation_From_Account_Insert_Update</targetReference>
             </connector>
-            <label>Owner Updated</label>
+            <label>Not NSP_Partner_Client</label>
         </rules>
     </decisions>
     <environments>Default</environments>
@@ -63,11 +49,22 @@
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <connector>
-            <targetReference>Check_if_Owner_Changed</targetReference>
-        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>OwnerId</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
         <object>Account</object>
         <recordTriggerType>Update</recordTriggerType>
+        <scheduledPaths>
+            <connector>
+                <targetReference>Check_Record_tyoe</targetReference>
+            </connector>
+            <pathType>AsyncAfterCommit</pathType>
+        </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Draft</status>
@@ -84,17 +81,10 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>FaultFlowName</name>
-            <value>
-                <stringValue>Account - After - Update - Async - Create Opportunity</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <name>OwnerId</name>
             <value>
                 <elementReference>$Record.OwnerId</elementReference>
             </value>
         </inputAssignments>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
 </Flow>

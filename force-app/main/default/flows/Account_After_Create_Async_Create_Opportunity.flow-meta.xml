@@ -49,11 +49,14 @@
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <connector>
-            <targetReference>Check_record_type</targetReference>
-        </connector>
         <object>Account</object>
         <recordTriggerType>Create</recordTriggerType>
+        <scheduledPaths>
+            <connector>
+                <targetReference>Check_record_type</targetReference>
+            </connector>
+            <pathType>AsyncAfterCommit</pathType>
+        </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Draft</status>
@@ -70,34 +73,10 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>FaultFlowName</name>
-            <value>
-                <stringValue>Account - After - Create- Async - Create Opportunity</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <name>OwnerId</name>
             <value>
                 <elementReference>$Record.OwnerId</elementReference>
             </value>
         </inputAssignments>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
-    <variables>
-        <name>FaultElement</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>FaultFlow</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <stringValue>&quot;Account_After_Create_Async&quot;</stringValue>
-        </value>
-    </variables>
 </Flow>
