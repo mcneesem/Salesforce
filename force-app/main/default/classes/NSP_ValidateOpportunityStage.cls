@@ -112,7 +112,7 @@ public with sharing class NSP_ValidateOpportunityStage {
             );
             for ( Opportunity opp : newList ) {
                 if ( String.isBlank( opp.StageName )
-                    || ( hasAllowClosedLostPermission
+                    || ( NSP_ValidateOpportunityStage.hasAllowClosedLostPermission
                         && opp.StageName.equals( NSP_SalesConstants.CLOSED_LOST )
                         )
                     )
@@ -300,9 +300,11 @@ public with sharing class NSP_ValidateOpportunityStage {
             List<Quote> quotes=oppFromMap?.Quotes;
             
             if(opp.StageName != null){
-                
                 //  Added 275639
-                if(FeatureManagement.checkPermission('Allow_Closed_Lost_Opportunity') && opp.StageName.equals(NSP_SalesConstants.CLOSED_LOST)){
+                if ( NSP_ValidateOpportunityStage.hasAllowClosedLostPermission
+                    && opp.StageName.equals( NSP_SalesConstants.CLOSED_LOST )
+                    )
+                {
                     continue;
                 }
                 
@@ -629,7 +631,7 @@ public with sharing class NSP_ValidateOpportunityStage {
 
     private static Integer checkAllowClosedLost( Opportunity opp , List<ID> teamMemberList , List<String> salesOfficeMembership , List<String> salesOfficeList ) {
         Integer canCloseLost = checkProductAllowClosedLost( opp );
-        if ( hasAllowClosedLostPermission ) {
+        if ( NSP_ValidateOpportunityStage.hasAllowClosedLostPermission ) {
             canCloseLost++;
         } else if ( opp.ownerid == UserInfo.getUserId() ) {
             canCloseLost++;
