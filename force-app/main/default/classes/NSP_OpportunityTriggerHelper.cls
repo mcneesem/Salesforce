@@ -205,6 +205,9 @@ public with sharing class NSP_OpportunityTriggerHelper {
 */
     
     public void beforeUpdateDirector(Map<Id, Opportunity> opportunityNewMap,Map<Id, Opportunity> opportunityOldMap){
+        
+        List<Opportunity> checkAutoOptyList = new List<Opportunity>();
+
         //Creating collection of account and opportunity
         Set<String> accountIdSet =  new Set<String>();
         Set<String> MODaccountIdSet =  new Set<String>();
@@ -232,10 +235,11 @@ public with sharing class NSP_OpportunityTriggerHelper {
         List<Opportunity> calculateFrees =  new List<Opportunity>();
 
         //Iterating over the new opportunity map
-        for(Id opportunityId : opportunityNewMap.keySet()){
-            
+        for( Id opportunityId : opportunityNewMap.keySet() ) {            
             Opportunity newOpportunity =  opportunityNewMap.get(opportunityId);
             Opportunity oldOpportunity =  opportunityOldMap.get(opportunityId);
+
+            checkAutoOptyList = NSP_OpportunityTriggerHelper.optyStageAutomationCheck( newOpportunity , oldOpportunity , checkAutoOptyList );
             
             //  AZD-258129
             if ( NSP_hotfix_Switch__c.getInstance( UserInfo.getUserId() ).Is_Edit_Closed_Won_Allowed__c
@@ -377,10 +381,19 @@ public with sharing class NSP_OpportunityTriggerHelper {
         // opportunity list is empty or not
         oppHelperFuncObj.stampWoWxEmailOnOpprtunity(opportunityWoWxList);
         
-        //Validate opportunity stage progression
-        NSP_ValidateOpportunityStage.validateOpportunityStage(stageChangedOpportunityList);
+        // Validate Opportunities with updated Stage field
+        NSP_ValidateOpportunityStage.validateOpportunityStage( stageChangedOpportunityList );
         
-        moveOpportunityToClosingStage(opportunitiesToClosingStageList);            
+        // Check for Opportunities that should advance to next Stage
+        // by validating using a clone of the opty to avoid interfering with pending DML
+        NSP_ValidateOpportunityStage.validateOpportunityStage( checkAutoOptyList );
+        for ( Opportunity cloneOpp : checkAutoOptyList ) {
+            if( !cloneOpp.hasErrors() ) {
+                opportunityNewMap.get(cloneOpp.Id).StageName = cloneOpp.StageName;
+            }
+        }
+        
+        moveOpportunityToClosingStage(opportunitiesToClosingStageList);
         changeOpportunityRecordType(lockOpportunitiesList);
         NSP_ChildOpportunitiesHelperFunctions childOpptyHlprObj = new NSP_ChildOpportunitiesHelperFunctions();
         childOpptyHlprObj.updateChildOpportunityOnProductChange(primaryProductChanged);
@@ -426,7 +439,6 @@ public with sharing class NSP_OpportunityTriggerHelper {
         Set<String> backoutOptySet = new Set<String>();
         List<Opportunity> closedWonOpptyList = new List<Opportunity>();
         List<Integration_Opportunity_Event__e> opportunityEventList = New List<Integration_Opportunity_Event__e>();
-        List<Id> stageAutoOpportunityIds = new List<Id>();
         List<Opportunity> updateResyncFlagOpportunityList = new List<Opportunity>();
         List<Opportunity> closedOpptyList = new List<Opportunity>();
         List<String> productCodeList = new List<String>{'Employment Screening','Expense Management','Insurance Services'};
@@ -446,12 +458,11 @@ public with sharing class NSP_OpportunityTriggerHelper {
         
         //Iterating over the opportunity new map
         for(Id opportunityId : opportunityNewMap.keySet()){
-            
+
             Opportunity newOpportunity = opportunityNewMap.get(opportunityId);
             Opportunity oldOpportunity = opportunityOldMap.get(opportunityId);
 
             accountIdSet.add( newOpportunity.AccountId );
-            stageAutoOpportunityIds = optyStageAutomationCheck( newOpportunity , oldOpportunity , stageAutoOpportunityIds );
             partnerAccountOpportunityMap = optyPartnerCheck( newOpportunity , oldOpportunity , partnerAccountOpportunityMap );
             closedOpportunityIdList = optyClosedLostCheck( newOpportunity , closedOpportunityIdList );
             reopenedOpportunityIdList = optyReopenCheck( newOpportunity , oldOpportunity , reopenedOpportunityIdList );
@@ -493,10 +504,12 @@ public with sharing class NSP_OpportunityTriggerHelper {
         if ( !reopenedOpportunityIdList.isEmpty() ) {
             NSP_ChildOpportunitiesHelperFunctions.updateChildOpportunityOnReopen( reopenedOpportunityIdList );
         }
+
         // Moving to NSP_UpdateRelatedAccounts class as part of DF-01058
         NSP_UpdateRelatedAccounts.updateRelatedAccounts( accountIdSet );
         recordTypeSet = optyGetRecTypeList( closedOpptyList , recordTypeSet );
         optyCreateAssets( closedWonOpptyList , closedOpptyList , accountIdSet , recordTypeSet );
+
         //Calling Quote to Order method for generating order from Opportunity via a Quote update @utpal Utkalit
         // Moving to NSP_UpdateRelatedAccounts class as part of DF-01058
         NSP_UpdateRelatedAccounts.updateRelatedAccounts(accountIdSet); 
@@ -511,14 +524,13 @@ public with sharing class NSP_OpportunityTriggerHelper {
         if ( backoutOptySet.size() > 0 ) {
             NSP_AssetUpdate.assetBackoutUpdate( backoutOptySet , NSP_SalesConstants.BACKOUT_STATUS );
         }
-        AutomateOpportunityStage.automateOpportunityStageAsync( stageAutoOpportunityIds );
     }
 
     private Set<String> optyBackoutCheck( Opportunity newOpportunity , Opportunity oldOpportunity , Set<String> backoutOptySet ) {
         //Update the asset status to backout when opportunity backout flag is checked
         if ( newOpportunity.NSP_Back_Out__c != oldOpportunity.NSP_Back_Out__c
-            && newOpportunity.NSP_Back_Out__c == true
-            )
+             && newOpportunity.NSP_Back_Out__c == true
+           )
         {
             backoutOptySet.add( newOpportunity.Id );
         }
@@ -552,10 +564,11 @@ public with sharing class NSP_OpportunityTriggerHelper {
         return updateResyncFlagOpportunityList;
     }
 
-    private List<Id> optyStageAutomationCheck(
+    // Returns list of Opportunity records advanced to next Stage based on custom metadata settings
+    private List<Opportunity> optyStageAutomationCheck(
         Opportunity newOpportunity ,
         Opportunity oldOpportunity ,
-        List<Id> stageAutoOpportunityIds
+        List<Opportunity> checkAutoOptyList
         )
     {
         // Any field update related to Stage Exit/Entry should trigger Stage progression automation attempt
@@ -574,12 +587,14 @@ public with sharing class NSP_OpportunityTriggerHelper {
                 || newOpportunity.NSP_Client_For_Life__c != oldOpportunity.NSP_Client_For_Life__c
                 || newOpportunity.StageName != oldOpportunity.StageName
                 || newOpportunity.Type != oldOpportunity.Type
-                )
+               )
             )
         {
-            stageAutoOpportunityIds.add(newOpportunity.Id);
+            // Use clone of the opty to avoid interfering with pending DML when passed to Validation class
+            Opportunity cloneOpp = newOpportunity.clone(true, false, true, false);
+            checkAutoOptyList = AutomateOpportunityStage.getStageAutoOptyList( checkAutoOptyList , cloneOpp );
         }
-        return stageAutoOpportunityIds;
+        return checkAutoOptyList;
     }
 
     private void optyCreateAssets(List<Opportunity> closedWonOpptyList, List<Opportunity> closedOpptyList, Set<String> accountIdSet, Set<String> recordTypeSet){

@@ -24,54 +24,40 @@ public class AutomateOpportunityStage {
     public static void automateOpportunityStage( List<Id> autoStageOppIds ) {
         if ( ( autoStageOppIds != null ) && !autoStageOppIds.isEmpty() ) {
             try {
-                List<Opportunity> stageAutoOpptyList = new List<Opportunity>(); // oppty records eligible for automatic Stage progression
-                List<Opportunity_Stage_Progression__mdt> optyAutoStages = [
-                    SELECT Primary_Product__c , Stage__c , Next_Stage__c
-                    FROM Opportunity_Stage_Progression__mdt
-                    WHERE ( Is_Automated__c = true )
-                ];
-                if ( ( optyAutoStages != null ) && !optyAutoStages.isEmpty() ) {
-                    for ( Opportunity opp : [
-                                SELECT
-                                    Id ,
-                                    NSP_Ready_for_Integration_Sync__c ,
-                                    OwnerId ,
-                                    StageName ,
-                                    NSP_PrimaryProduct__c ,
-                                    NSP_Number_of_Employees__c ,
-                                    Type ,
-                                    NSP_Bid_Status__c ,
-                                    Fee_Inclusive__c ,
-                                    NSP_Order_Generated__c ,
-                                    NSP_Bypass_Docusign_Signature__c ,
-                                    NSP_Closing_Appointment__c ,
-                                    NSP_Client_For_Life__c ,
-                                    NSP_Forecast_Status__c ,
-                                    NSP_TotalAnnualPayroll__c ,
-                                    NSP_Booked_Date__c ,
-                                    NSP_CountAsSale__c ,
-                                    CloseDate
-                                FROM Opportunity
-                                WHERE ( Id IN :autoStageOppIds )
-                            ]
-                        )
-                    {
-                        if ( opp.StageName != null ) {
-                            for ( Opportunity_Stage_Progression__mdt stageAuto : optyAutoStages ) {
-                                if ( ( opp.StageName == stageAuto.Stage__c )
-                                    && ( opp.NSP_PrimaryProduct__c == stageAuto.Primary_Product__c )
-                                    )
-                                {
-                                    opp.StageName = stageAuto.Next_Stage__c;
-                                    stageAutoOpptyList.add( opp );
-                                    break;
-                                }
-                            }
-                        }
-                    }
+                List<Opportunity> stageAutoOptyList = new List<Opportunity>(); // opty candidates for automatic Stage progression
+                for ( Opportunity opp : [
+                            SELECT
+                                Id ,
+                                NSP_Ready_for_Integration_Sync__c ,
+                                OwnerId ,
+                                StageName ,
+                                NSP_PrimaryProduct__c ,
+                                NSP_Number_of_Employees__c ,
+                                Type ,
+                                NSP_Bid_Status__c ,
+                                Fee_Inclusive__c ,
+                                NSP_Order_Generated__c ,
+                                NSP_Bypass_Docusign_Signature__c ,
+                                NSP_Closing_Appointment__c ,
+                                NSP_Client_For_Life__c ,
+                                NSP_Forecast_Status__c ,
+                                NSP_TotalAnnualPayroll__c ,
+                                NSP_Booked_Date__c ,
+                                NSP_CountAsSale__c ,
+                                CloseDate
+                            FROM Opportunity
+                            WHERE (
+                                ( Id IN :autoStageOppIds )
+                                AND ( StageName != null )
+                            )
+                        ]
+                    )
+                {
+                    getStageAutoOptyList( stageAutoOptyList , opp );
                 }
-                if ( !stageAutoOpptyList.isEmpty() ) {
-                    Database.update( stageAutoOpptyList );
+
+                if ( !stageAutoOptyList.isEmpty() ) {
+                    Database.update( stageAutoOptyList );
                 }
             } catch ( Exception e ) {
                 NSP_ErrorLogHandler.logException( AutomateOpportunityStage.class.getName() , 'automateOpportunityStage' , e );
@@ -79,5 +65,25 @@ public class AutomateOpportunityStage {
         }
     }
 
+    // Returns list of Opportunity records advanced to next Stage based on custom metadata settings
+    public static List<Opportunity> getStageAutoOptyList (
+        List<Opportunity> stageAutoOptyList ,
+        Opportunity opp
+        )
+    {
+        List<Opportunity_Stage_Progression__mdt> optyAutoStages = Opportunity_Stage_Progression__mdt.getAll().values();
+        for ( Opportunity_Stage_Progression__mdt stageAuto : optyAutoStages ) {
+            if ( ( opp.StageName == stageAuto.Stage__c )
+                 && ( opp.NSP_PrimaryProduct__c == stageAuto.Primary_Product__c )
+                 && ( stageAuto.Is_Automated__c )
+               )
+            {
+                opp.StageName = stageAuto.Next_Stage__c;
+                stageAutoOptyList.add( opp );
+                break;
+            }
+        }
+        return stageAutoOptyList;
+    }
 }
 //
