@@ -34,6 +34,10 @@
                         onprev={handlePrev}></c-wizard-survey-page-questions>
                 </template>
                 <template if:true={step4}>
+                    <c-wizard-survey-considerations re-req-id={reReqId}  onnext={handleNext}
+                        onprev={handlePrev}></c-wizard-survey-considerations>
+                </template>
+                <template if:true={step5}>
                     <c-wizard-survey-additional-info re-req-id={reReqId}  onnext={handleNext}
                         onprev={handlePrev}></c-wizard-survey-additional-info>
                 </template>

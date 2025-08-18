@@ -29,6 +29,13 @@
         <value>Please add Discovery Calls before moving to Discovery stage</value>
     </labels>
     <labels>
+        <fullName>Additional_language_options</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Additional language options</shortDescription>
+        <value>Are additional language options required?</value>
+    </labels>
+    <labels>
         <fullName>AddWOProposal_Proposal</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -603,6 +610,13 @@
         <protected>false</protected>
         <shortDescription>Is there a need for Integra</shortDescription>
         <value>Is there a need for Integra?</value>
+    </labels>
+    <labels>
+        <fullName>Is_this_survey_anonymous_or_confidential</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Is this survey anonymous or confidential</shortDescription>
+        <value>Is this survey anonymous or confidential?</value>
     </labels>
     <labels>
         <fullName>MM_AND_BPC_USERROLE</fullName>
@@ -6319,6 +6333,13 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <protected>false</protected>
         <shortDescription>Needed payroll entry allocation</shortDescription>
         <value>Needed payroll entry allocation (select all that apply):</value>
+    </labels>
+    <labels>
+        <fullName>Non_Insperity_paid_WSEEs</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Non-Insperity paid WSEEs</shortDescription>
+        <value>Will this survey be sent to any non-Insperity paid WSEEs?</value>
     </labels>
     <labels>
         <fullName>NotifyITAEmail</fullName>

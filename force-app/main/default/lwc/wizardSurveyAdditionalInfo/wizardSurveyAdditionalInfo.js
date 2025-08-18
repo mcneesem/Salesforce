@@ -14,7 +14,7 @@ export default class wizardSurveyAdditionalInfo extends LightningElement {
     NSP_AnyRevisionsDeletionsToStdQuestions__c;
     filesize =0;
     fileCounts =0;
-    pageNumber = 4;
+    pageNumber = 5;
     isPrevClick =false;
     fileHyperLink = this.customLabel.SurveyRevisionRequestForm;
     customLabelObj= Object.create({});
