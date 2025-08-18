@@ -1843,8 +1843,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.DC_Debrief__c</fieldItem>
-                <identifier>RecordDC_Debrief_cField</identifier>
+                <fieldItem>Record.Discovery_Call_Debrief__c</fieldItem>
+                <identifier>RecordDiscovery_Call_Debrief_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-b40b725e-a04c-4645-95f9-c27bde917c43</name>
