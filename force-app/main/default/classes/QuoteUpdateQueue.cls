@@ -35,7 +35,6 @@ public class QuoteUpdateQueue implements Queueable , System.Finalizer {
                 {
                     quote.Ready_for_Approval__c = true;
                     quote.ApprovalStatus__c = QuoteUpdateQueue.QUOTE_STATUS_APPROVED;
-                    quote.SBQQ__Status__c = QuoteUpdateQueue.QUOTE_STATUS_APPROVED;
                     quote.SubmittedUser__c = UserInfo.getUserId();
                     quote.SubmittedDate__c = System.now().date();
                     quote.Auto_Termination__c = true;
