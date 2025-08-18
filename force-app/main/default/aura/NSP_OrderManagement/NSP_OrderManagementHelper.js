@@ -44,20 +44,13 @@
     },
     isLastDayOfMonth: function(date,component) {
         let bypassValidation = component.get("v.bypassTerminationDateValidation");
-        if (!(date instanceof Date) || isNaN(date)) {
-            console.warn('Invalid date passed to isLastDayOfMonth:', date);
-            return false;
-        }
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         const nextMonth = new Date(date.getFullYear(), date.getMonth() + 1, 1);
         const lastDayOfMonth = new Date(nextMonth - 1);
         const isLastDay = date.getDate() === lastDayOfMonth.getDate();
         const previousMonthLastDay = new Date(today.getFullYear(), today.getMonth(), 0);
-        if(bypassValidation){
-            return isLastDay;
-        }
-        return isLastDay && (date >= previousMonthLastDay);
+        return ( bypassValidation || (isLastDay && date >= previousMonthLastDay) );
     },
     getCurrentUserInfo : function(component, event, helper) {
         var action=component.get('c.getCurrentUserInfo');
