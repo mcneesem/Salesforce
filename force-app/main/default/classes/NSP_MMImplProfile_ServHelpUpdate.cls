@@ -30,16 +30,11 @@ public class NSP_MMImplProfile_ServHelpUpdate {
     private static final String IP_AUTOMATION_IDENTIFIER = 'NSP_Implementation_Profile_Automation__c';
 
     private static final String PAYROLL_REGISTER_MM='NSP_Payroll_Register';
-    private static final String SECTION_QUESTIONNAIRE_MM = 'NSP_Section_125_Questionaire';
     private static final String FEIN_DOCUMENT_COLLECTED_MM = 'NSP_FEIN_documentation';
     private static final String GENERAL_LIABILITY_MM = 'NSP_Received_Certificate';
-    private static final String PTO_MM='NSP_Tracking_PTO';
     private static final String EEO_FILING_MM = 'NSP_Union_EEs';
     private static final String SEASONAL_EE_MM = 'NSP_Seasonal_EEs';
     private static final String EEO_ON_LEAVE_MM = 'NSP_Leave_of_Absence';
-    private static final String LOA_TYPES_MM = 'NSP_LOA_Types';
-    private static final String LOA_GREATER_THAN_MM = 'NSP_LOA_Type_Greater';
-    private static final String SALARY_CONT_MM = 'NSP_LOA_Salary_Continuation';
     private static final String POST_TAX_MM = 'NSP_Post_tax_deductions';
     private static final String TIMESTAR_MM = 'NSP_TimeStar';
     private static final String TIMESTAR_TA_MM = 'NSP_TimeStar_T_A';
@@ -677,7 +672,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
         }
         return eachProjectTask;
     }
-    
+
     //General Liability & Auto - automation
     private void createProjectTaskForReceivedCertificate(
         String automation ,
@@ -1025,7 +1020,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
             }
         }
     }
-    
+
     //Time and Attendance - automation
     private void createProjectTaskForTimeStar(
         String automation ,
@@ -2309,7 +2304,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
         }
     }
 
-   private void checkforFEINDocument(Implementation_Profile__c newRec, Implementation_Profile__c existingRec){
+    private void checkforFEINDocument(Implementation_Profile__c newRec, Implementation_Profile__c existingRec){
         if ( automationsToExecute.contains(FEIN_DOCUMENT_COLLECTED_MM)
             && newRec != null
             && newRec.RecordTypeId == ipMMRecordTypeId
@@ -2341,7 +2336,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
         }
     }
 
-   private void checkforSeasonalEE(Implementation_Profile__c newRec, Implementation_Profile__c existingRec){
+    private void checkforSeasonalEE(Implementation_Profile__c newRec, Implementation_Profile__c existingRec){
         if ( automationsToExecute.contains(SEASONAL_EE_MM)
             && newRec != null
             && newRec.RecordTypeId == ipMMRecordTypeId
