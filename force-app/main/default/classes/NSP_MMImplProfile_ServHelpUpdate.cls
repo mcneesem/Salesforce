@@ -1,5 +1,5 @@
 public class NSP_MMImplProfile_ServHelpUpdate {
-    // test w/ NSP_MMImplProfile_UpdateTest (92%)
+    // test w/ NSP_MMImplProfile_UpdateTest (94%)
 
     private  Boolean isRerun =false;
     private Map<Id,Implementation_Profile__c> newIPs = null;
@@ -130,7 +130,6 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                 SPECIFIC_LEAVE_MM ,
                 POST_TAX_MM ,
                 TIMESTAR_MM ,
-                TIMESTAR_TA_EMP_MM ,
                 GARNISHMENT_MM ,
                 PRE_TAX_MM ,
                 PRE_TAX_DEDUCT_MM ,
@@ -1061,12 +1060,10 @@ public class NSP_MMImplProfile_ServHelpUpdate {
             NSP_ProjectTask_Automation__mdt pta1 =  NSP_ProjectTask_Automation__mdt.getInstance(TIMESTAR_TA_MM);
             NSP_ProjectTask_Automation__mdt pta3 =  NSP_ProjectTask_Automation__mdt.getInstance(TIMESTAR_TA_ADMIN_MM);
             NSP_ProjectTask_Automation__mdt pta4 =  NSP_ProjectTask_Automation__mdt.getInstance(TIMESTAR_TA_SUP_MM);
-            NSP_ProjectTask_Automation__mdt pta5 =  NSP_ProjectTask_Automation__mdt.getInstance(TIMESTAR_TA_EMP_MM);
             NSP_ProjectTask_Automation__mdt pta7 =  NSP_ProjectTask_Automation__mdt.getInstance(TIMESTAR_TA_SYSTEM_MM);
             NSP_ProjectTask_Automation__mdt pta8 =  NSP_ProjectTask_Automation__mdt.getInstance(TIMESTAR_TA_PAYROLL_EXPERT_MM);
             subTask(proj,pta3,ipRecId,ipwithValue,workCalendarId,userId);
             subTask(proj,pta4,ipRecId,ipwithValue,workCalendarId,userId);
-            subTask(proj,pta5,ipRecId,ipwithValue,workCalendarId,userId);
             subTask(proj,pta7,ipRecId,ipwithValue,workCalendarId,userId);
             userId = '';
             if ( ( ipwithValue != null )
@@ -2425,7 +2422,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
      }
 
     private void checkforTimeStar(Implementation_Profile__c newRec, Implementation_Profile__c existingRec){
-        if( ( automationsToExecute.contains(TIMESTAR_MM) || automationsToExecute.contains(TIMESTAR_TA_EMP_MM) )
+        if( ( automationsToExecute.contains(TIMESTAR_MM))
             && newRec != null
             && newRec.RecordTypeId == ipMMRecordTypeId
             && newRec.Client_utilizing_Insperity_s_TimeStar__c ==NSP_ServiceConstants.YES
@@ -2436,7 +2433,6 @@ public class NSP_MMImplProfile_ServHelpUpdate {
             )
         {
             updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, TIMESTAR_MM);
-            updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, TIMESTAR_TA_EMP_MM);
         }
     }
 
