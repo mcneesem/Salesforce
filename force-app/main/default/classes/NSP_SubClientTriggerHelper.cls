@@ -172,7 +172,7 @@ public class NSP_SubClientTriggerHelper {
                               NSP_Anticipated_Date_Of_Termination__c,NSP_Reason_for_Term__c,NSP_Pending_Termination__c FROM Asset WHERE AccountId IN:mapOfSubAccount.keyset()  ]){
 
                     if (mapOfSubAccount.get(asset.AccountId).NSP_Renewal_Date__c >= asset.NSP_Anticipated_Date_Of_Termination__c) {
-            				updateAssetFields(asset);
+            				asset = updateAssetFields(asset);
            					updatedAssetList.add(asset);
        				}
                 }
@@ -186,7 +186,7 @@ public class NSP_SubClientTriggerHelper {
 
     }
 
-    private void updateAssetFields(Asset asset) {
+    private Asset updateAssetFields(Asset asset) {
         if (asset.NSP_Verbal_Term_recd__c) {
             asset.NSP_Verbal_Term_recd__c =false;
             asset.NSP_Verbal_Term_Date__c=null;
@@ -204,6 +204,7 @@ public class NSP_SubClientTriggerHelper {
             asset.NSP_Pending_Termination__c=false;
         }
 
+        return asset;
 	}
 
 }
