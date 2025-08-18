@@ -38,16 +38,9 @@ public class NSP_MMImplProfile_ServHelpUpdate {
     private static final String POST_TAX_MM = 'NSP_Post_tax_deductions';
     private static final String TIMESTAR_MM = 'NSP_TimeStar';
     private static final String TIMESTAR_TA_MM = 'NSP_TimeStar_T_A';
-    private static final String TIMESTAR_TA_SYS_MM = 'NSP_TimeStar_T_A_System';
     private static final String TIMESTAR_TA_ADMIN_MM = 'NSP_TimeStar_T_A_Administrator';
     private static final String TIMESTAR_TA_SUP_MM = 'NSP_TimeStar_T_A_Supervisor';
     private static final String TIMESTAR_TA_EMP_MM = 'NSP_TimeStar_Employee_Plan';
-    private static final String TIMESTAR_TA_CONFIG_MM = 'NSP_Timestar_T_A_Configuration';
-    private static final String TIMESTAR_TA_EMP_SUB1_MM  = 'NSP_Timestar_Emp_Plan_Sub1';
-    private static final String TIMESTAR_TA_EMP_SUB2_MM  = 'NSP_Timestar_Emp_Plan_Sub2';
-    private static final String TIMESTAR_TA_EMP_SUB3_MM  = 'NSP_Timestar_Emp_Plan_Sub3';
-    private static final String TIMESTAR_TA_EMP_SUB4_MM  = 'NSP_Timestar_Emp_Plan_Sub4';
-    private static final String TIMESTAR_TA_PARALLEL = 'NSP_TimeStar_TA_Parallel';
     private static final String TIMESTAR_TA_SYSTEM_MM = 'NSP_TimeStar_TA_System_Live';
     private static final String TIMESTAR_TA_PAYROLL_EXPERT_MM = 'NSP_TimeStar_TA_Payroll_Expert';
     private static final String GARNISHMENT_MM = 'NSP_EE_garnishments';
@@ -61,20 +54,12 @@ public class NSP_MMImplProfile_ServHelpUpdate {
     private static final String WAITING_MM = 'NSP_EE_Waiting';
     private static final String POST_DEDUCTION_MM='NSP_Post_tax';
     private static final String RETIRE_PLANORK_MM='NSP_Retirement_Plan_ORK_401K';
-    private static final String RETIRE_PLAN_ORK_CLIENT_MM='NSP_Retirement_Plan_ORK_Client';
-    private static final String RETIRE_PLAN_ORK_401K_MM='NSP_Retirement_Plan_ORK_Payroll';
-    private static final String RETIRE_PLAN_401K_DEF_MM='NSP_Retirement_Plan_401k_Deferrals';
     private static final String RETIRE_PLAN_401K_EMP_MM='NSP_Retirement_Plan_401k_Employee';
     private static final String RETIRE_PLAN_401K_DEF_UP_MM='NSP_Retirement_Plan_401k_uploaded';
     private static final String RETIRE_PLAN_401K_LOAN_MM='NSP_Retirement_Plan_401k_Emp_Upload';
-    private static final String RETIRE_PLAN_401K_YTD_MM='NSP_Retirement_Plan_401k_YTD';
     private static final String RETIRE_PLAN_401K_YTD_UP_MM='NSP_Retirement_Plan_401k_YTD_uploaded';
     private static final String NSP401K_MM = 'NSP_X401k_Meeting';
-    private static final String NSP401K_CLIENT_MM = 'NSP_X401k_Client_Plan';
-    private static final String NSP401K_ELECTION_MM = 'NSP_X401k_Election_Agreement';
-    private static final String NSP401K_CLIENT_MATCH_MM = 'NSP_X401k_Client_Match';
     private static final String NSP401K_PLAN_MM = 'NSP_X401k_Plan_Setup';
-    private static final String NSP401K_COLLECT_MM = 'NSP_X401k_Collect_YTD';
     private static final String NSP401K_EMP_TRAIN_MM = 'NSP_X401K_Employee_training';
     private static final String SUBSTANCE_ABUSE_MM = 'NSP_Substance_Abuse';
     private static final String STANDARD_MM = 'NSP_Standard_Offer_Letter';
@@ -121,7 +106,6 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                 EEO_FILING_MM ,
                 SEASONAL_EE_MM ,
                 EEO_ON_LEAVE_MM ,
-                LOA_TYPES_MM ,
                 SPECIFIC_LEAVE_MM ,
                 POST_TAX_MM ,
                 TIMESTAR_MM ,
@@ -840,59 +824,6 @@ public class NSP_MMImplProfile_ServHelpUpdate {
             );
             if(eachProjecttask != null){
                 projectTaskToInsertList.add(eachProjecttask);
-            }
-        }
-    }
-
-    //LOA Types - automation
-    private void createProjectTaskForLOATypes(
-        String automation,
-        pse__Proj__c proj ,
-        NSP_ProjectTask_Automation__mdt pta ,
-        Id ipRecId ,
-        Implementation_Profile__c ipwithValue ,
-        Id workCalendarId
-        )
-    {
-        if(automation ==LOA_TYPES_MM){
-            String milestoneKey = createMilestoneForProjectTask(proj, pta);
-            pse__Project_Task__c eachProjecttask = createProjectTaskfromIP(proj,  pta.NSP_Category__c, ipRecId,milestoneKey);
-            NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(automation);
-            Implementation_Profile__c ipRec = newIPs.get(ipRecId);
-            genericProjectTask(proj,eachProjecttask, pta, workCalendarId);
-            for(pse__Project_Task__c pt: proj.pse__Project_Tasks__r){
-                if(pt.Name==NSP_ServiceConstants.EMP_ON_LOA){
-                    eachProjecttask.pse__Parent_Task__c=pt.Id;
-                    if(ipwithValue.NSP_Project_Manager__c!=null && ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c!=null){
-                        eachProjecttask.OwnerId=ipwithValue.NSP_Project_Manager__r.pse__Salesforce_User__c;
-                    }
-                    if(ipwithValue.Select_the_applicable_LOA_types__c.contains(NSP_ServiceConstants.MILITARY_LEAVE) &&
-                       ipwithValue.Select_the_applicable_LOA_types__c.contains(NSP_ServiceConstants.FMLA_STATUS) ){
-                           eachProjecttask.Name+=NSP_ServiceConstants.MILITARY_LEAVE+';'+NSP_ServiceConstants.FMLA_STATUS;
-                       }else if(ipwithValue.Select_the_applicable_LOA_types__c.contains(NSP_ServiceConstants.MILITARY_LEAVE) &&
-                                ipwithValue.Select_the_applicable_LOA_types__c.contains(NSP_ServiceConstants.WORKER)  ){
-                                    eachProjecttask.Name+=NSP_ServiceConstants.MILITARY_LEAVE+';'+NSP_ServiceConstants.WORKER;
-                                }else if(ipwithValue.Select_the_applicable_LOA_types__c.contains(NSP_ServiceConstants.WORKER) &&
-                                         ipwithValue.Select_the_applicable_LOA_types__c.contains(NSP_ServiceConstants.FMLA_STATUS)){
-                                             eachProjecttask.Name+=NSP_ServiceConstants.WORKER+';'+NSP_ServiceConstants.FMLA_STATUS;
-                                         }else if(ipwithValue.Select_the_applicable_LOA_types__c.contains(NSP_ServiceConstants.WORKER)){
-                                             eachProjecttask.Name+=NSP_ServiceConstants.WORKER;
-                                         }
-                    else if(ipwithValue.Select_the_applicable_LOA_types__c.contains(NSP_ServiceConstants.MILITARY_LEAVE)){
-                        eachProjecttask.Name+=NSP_ServiceConstants.MILITARY_LEAVE;
-                    }
-                    else if(ipwithValue.Select_the_applicable_LOA_types__c.contains(NSP_ServiceConstants.FMLA_STATUS)){
-                        eachProjecttask.Name+=NSP_ServiceConstants.FMLA_STATUS;
-                    }
-                    subTaskAutomationList.add(
-                            createIPAutomation(
-                                ipRec,
-                                ipa.NSP_Automation_Name__c,
-                                ipa.NSP_Method_Name__c,ipa.NSP_Section__c
-                            )
-                        );
-                    subTaskList.add(eachProjecttask);
-                }
             }
         }
     }
@@ -2378,25 +2309,6 @@ public class NSP_MMImplProfile_ServHelpUpdate {
             )
         {
             updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, EEO_ON_LEAVE_MM);
-        }
-    }
-
-    private void checkforLOATypes(Implementation_Profile__c newRec, Implementation_Profile__c existingRec){
-        if ( automationsToExecute.contains(LOA_TYPES_MM)
-            && newRec != null
-            && newRec.RecordTypeId == ipMMRecordTypeId
-            && newRec.Select_the_applicable_LOA_types__c != null
-            && ( newRec.Select_the_applicable_LOA_types__c.contains(NSP_ServiceConstants.MILITARY_LEAVE)
-                || newRec.Select_the_applicable_LOA_types__c.contains(NSP_ServiceConstants.FMLA_STATUS)
-                || newRec.Select_the_applicable_LOA_types__c.contains(NSP_ServiceConstants.WORKER)
-                )
-            && ( existingRec == null
-                || newRec.NSP_Form_Completed__c
-                || newRec.Select_the_applicable_LOA_types__c != existingRec.Select_the_applicable_LOA_types__c
-                )
-            )
-        {
-            updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, LOA_TYPES_MM);
         }
     }
 
