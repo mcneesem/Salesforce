@@ -3,8 +3,8 @@
     <apiVersion>64.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <environments>Default</environments>
-    <interviewLabel>Account - After  - Create-  Async - Create Opportunity {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Account - After  - Create-  Async - Create Opportunity</label>
+    <interviewLabel>Account - Updated -  Async - Create Opportunity {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Account - Updated -  Async - Create Opportunity</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -29,6 +29,13 @@
         <locationY>0</locationY>
         <filterLogic>and</filterLogic>
         <filters>
+            <field>OwnerId</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
             <field>RecordTypeId</field>
             <operator>NotEqualTo</operator>
             <value>
@@ -36,7 +43,7 @@
             </value>
         </filters>
         <object>Account</object>
-        <recordTriggerType>Create</recordTriggerType>
+        <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <connector>
                 <targetReference>Opportunity_Creation_From_Account_Insert_Update</targetReference>

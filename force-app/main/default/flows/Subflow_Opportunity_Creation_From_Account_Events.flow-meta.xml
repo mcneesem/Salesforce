@@ -30,6 +30,10 @@
                 <stringValue>Get_Account_Name</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Assign_varFaultElement_Get_ACR_COI</name>
@@ -225,6 +229,31 @@
             <label>Yes Proceed</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Public_Groups_found</name>
+        <label>Public Groups found?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Is_Owner_in_Allowed_Group</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No - Public Group not found</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Public_Group_found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Public_Groups_for_Owner</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Loop_Through_Owner_Groups</targetReference>
+            </connector>
+            <label>Yes - Public Group found</label>
+        </rules>
+    </decisions>
     <environments>Default</environments>
     <formulas>
         <name>CloseDatePlus120</name>
@@ -399,7 +428,7 @@
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Loop_Through_Owner_Groups</targetReference>
+            <targetReference>Public_Groups_found</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Assign_varFaultElement_Get_Public_Groups_for_Owner</targetReference>
@@ -409,7 +438,7 @@
             <field>UserOrGroupId</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>OwnerId</elementReference>
+                <elementReference>Get_Account_Name.OwnerId</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
@@ -424,7 +453,7 @@
             <targetReference>Get_Account_Name</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
@@ -480,13 +509,6 @@
         <value>
             <booleanValue>false</booleanValue>
         </value>
-    </variables>
-    <variables>
-        <name>OwnerId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>varFaultElement</name>
