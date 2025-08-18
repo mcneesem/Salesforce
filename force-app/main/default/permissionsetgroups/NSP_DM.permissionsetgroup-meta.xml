@@ -30,7 +30,7 @@
     <permissionSets>Opportunity_Closed_Lost_Fields_Edit_Access</permissionSets>
     <permissionSets>Opportunity_Closed_Lost_SO_Opp</permissionSets>
     <permissionSets>Opportunity_Closed_Lost_SO_Opp_Owner</permissionSets>
-    <permissionSets>Opportunity_Edit_Leadership_Attendance_and_DC_Debrief</permissionSets>
+    <permissionSets>Opportunity_Edit_Leadership_Attendance_and_Discovery_Call_Debrief</permissionSets>
     <permissionSets>Opportunity_NCS_Email_Core_MidMarket</permissionSets>
     <permissionSets>Opportunity_Outgoing_Approve_and_Reject</permissionSets>
     <permissionSets>Opportunity_Outgoing_Create_and_Edit</permissionSets>
