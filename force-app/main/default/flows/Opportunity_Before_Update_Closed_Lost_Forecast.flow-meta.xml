@@ -17,15 +17,21 @@
         <assignmentItems>
             <assignToReference>$Record.NSP_Forecast_Status__c</assignToReference>
             <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>$Record.NSP_ForecastPercent__c</assignToReference>
             <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
         </assignmentItems>
     </assignments>
     <environments>Default</environments>
-    <interviewLabel>Opportunity - Before_Update - Closed Lost Forecast {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Opportunity - Before_Update - Closed Lost Forecast</label>
+    <interviewLabel>Opportunity - Before Update - Closed Lost Forecast {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Opportunity - Before Update - Closed Lost Forecast</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
