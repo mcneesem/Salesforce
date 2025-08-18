@@ -40,7 +40,6 @@ public class NSP_MMImplProfile_ServHelpUpdate {
     private static final String TIMESTAR_TA_MM = 'NSP_TimeStar_T_A';
     private static final String TIMESTAR_TA_ADMIN_MM = 'NSP_TimeStar_T_A_Administrator';
     private static final String TIMESTAR_TA_SUP_MM = 'NSP_TimeStar_T_A_Supervisor';
-    private static final String TIMESTAR_TA_EMP_MM = 'NSP_TimeStar_Employee_Plan';
     private static final String TIMESTAR_TA_SYSTEM_MM = 'NSP_TimeStar_TA_System_Live';
     private static final String TIMESTAR_TA_PAYROLL_EXPERT_MM = 'NSP_TimeStar_TA_Payroll_Expert';
     private static final String GARNISHMENT_MM = 'NSP_EE_garnishments';
@@ -213,7 +212,6 @@ public class NSP_MMImplProfile_ServHelpUpdate {
             checkforSeasonalEE(ipRec, existingRec);
             checkforUnionEE(ipRec, existingRec);
             checkforEEOnLeave(ipRec, existingRec);
-            checkforLOATypes(ipRec, existingRec);
             checkForStateSpecificLeave(ipRec, existingRec);
             checkforPostTaxDeductions(ipRec, existingRec);
             checkforTimeStar(ipRec, existingRec);
@@ -498,7 +496,6 @@ public class NSP_MMImplProfile_ServHelpUpdate {
             createProjectTaskForUnionEE(automation,proj,pta,ipRecId,ipwithValue,workCalendarId);
             createProjectTaskForSeasonalEE(automation,proj,pta,ipRecId,ipwithValue,workCalendarId);
             createProjectTaskForEELeave(automation,proj,pta,ipRecId,ipwithValue,workCalendarId);
-            createProjectTaskForLOATypes(automation,proj,pta,ipRecId,ipwithValue,workCalendarId);
             createProjectTaskForDataVerification(automation,proj,pta,ipRecId,ipwithValue,workCalendarId);
             createProjectTaskForExpenseAllowance(automation,proj,pta,ipRecId,ipwithValue,workCalendarId);
             createProjectTaskForPostTax(automation,proj,pta,ipRecId,ipwithValue,workCalendarId);
@@ -2329,7 +2326,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
      }
 
     private void checkforTimeStar(Implementation_Profile__c newRec, Implementation_Profile__c existingRec){
-        if( ( automationsToExecute.contains(TIMESTAR_MM))
+        if( ( automationsToExecute.contains(TIMESTAR_MM) )
             && newRec != null
             && newRec.RecordTypeId == ipMMRecordTypeId
             && newRec.Client_utilizing_Insperity_s_TimeStar__c ==NSP_ServiceConstants.YES
