@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Verification_Report_Attached__c</fullName>
+    <defaultValue>false</defaultValue>
+    <inlineHelpText>Attach a PDF copy of the Verification Report to the case and check this box once complete. Box must be checked to reassign the case to Payroll Shared Services.</inlineHelpText>
+    <label>Verification Report Attached</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>
