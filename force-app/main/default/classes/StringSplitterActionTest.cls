@@ -1,7 +1,8 @@
 @isTest
 private class StringSplitterActionTest {
-   @isTest
-   private static void testSplitString() {
+
+    @isTest
+    private static void testSplitString() {
         // Test data setup
         StringSplitterAction.FlowInput input1 = new StringSplitterAction.FlowInput();
         input1.inputString = 'apple,banana,cherry';
@@ -31,4 +32,6 @@ private class StringSplitterActionTest {
         System.assertEquals('cat', outputs[1].resultList[1]);
         System.assertEquals('mouse', outputs[1].resultList[2]);
     }
+
 }
+//
