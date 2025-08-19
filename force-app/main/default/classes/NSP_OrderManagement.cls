@@ -147,7 +147,7 @@ public class NSP_OrderManagement {
 
     @AuraEnabled
     public static Boolean bypassTerminationDateValidation() {
-        return FeatureManagement.checkPermission(
+        return CustomPermissionController.checkUserPermission(
             'Bypass_Quote_Termination_Date_Not_Before_Last_Month_End' ,
             UserInfo.getUserId()
         );
