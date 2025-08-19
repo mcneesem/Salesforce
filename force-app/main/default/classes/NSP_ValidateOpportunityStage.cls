@@ -187,7 +187,9 @@ public with sharing class NSP_ValidateOpportunityStage {
         Map<String,List<Opportunity_Stage_Validation__mdt>> groupedStageValMap
         )
     {
-        for( String groupName : groupedStageValMap.keySet() ){
+        List<String> groupOrder = new List<String>(groupedStageValMap.keySet());
+        groupOrder.sort();
+        for( String groupName : groupOrder ){
             Boolean passCheck = false;
             Boolean passCheckDNE = true;
             String groupRelObjName = getGroupRelObjName( groupName , groupedStageValMap );
@@ -205,7 +207,8 @@ public with sharing class NSP_ValidateOpportunityStage {
                 i++;
             } while ( i < valObjectMap.get(groupRelObjName).size() );
 
-            if( !passCheck || !passCheckDNE ){
+            if( !opp.hasErrors()
+                && ( !passCheck || !passCheckDNE ) ) {
                 opp.addError(groupedStageValMap.get(groupName)[0].Error_Message__c);
             }
         }
@@ -227,9 +230,7 @@ public with sharing class NSP_ValidateOpportunityStage {
             } else if( val.Object__c == OPPORTUNITY_OBJ ){
                 valFieldValue = opp.get(val.Field__c);
             } else {
-                if( valObject != null ){
-                    valFieldValue = valObject.get(val.Field__c);
-                }
+                valFieldValue = valObject?.get(val.Field__c);
             }
             if( checkCondition(valFieldValue , val.Value__c , val.Operation__c) )
             {
