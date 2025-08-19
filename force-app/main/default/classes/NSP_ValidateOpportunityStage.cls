@@ -189,7 +189,7 @@ public with sharing class NSP_ValidateOpportunityStage {
     {
         List<String> groupOrder = new List<String>(groupedStageValMap.keySet());
         groupOrder.sort();
-        for( String groupName : groupOrder ){
+        for( String groupName : groupOrder ) {
             Boolean passCheck = false;
             Boolean passCheckDNE = true;
             String groupRelObjName = getGroupRelObjName( groupName , groupedStageValMap );
@@ -198,19 +198,29 @@ public with sharing class NSP_ValidateOpportunityStage {
             do {
                 SObject valObject = ( valObjectMap.get(groupRelObjName).size() == 0 ) ? null : valObjectMap.get(groupRelObjName)[i];
                 Integer passCheckCount = evaluateOneCriteriaGroup( opp, groupName , valObject , groupedStageValMap );
-                if( passCheckCount >= groupedStageValMap.get(groupName).size() ){
+                if( passCheckCount >= groupedStageValMap.get(groupName).size() ) {
                     passCheck = true;
                 }
-                if( passCheckCount == 99 ){ // when any record violates DOES NOT EXIST case
+                if( passCheckCount == 99 ) { // when any record violates DOES NOT EXIST case
                     passCheckDNE = false;
                 }
                 i++;
             } while ( i < valObjectMap.get(groupRelObjName).size() );
 
-            if( !opp.hasErrors()
-                && ( !passCheck || !passCheckDNE ) ) {
-                opp.addError(groupedStageValMap.get(groupName)[0].Error_Message__c);
-            }
+            addGroupError( opp , passCheck , passCheckDNE , groupedStageValMap.get( groupName )[0].Error_Message__c );
+        }
+    }
+
+    private static void addGroupError(
+        Opportunity opp ,
+        Boolean passCheck ,
+        Boolean passCheckDNE ,
+        String errMsg
+        )
+    {
+        if( !opp.hasErrors()
+            && ( !passCheck || !passCheckDNE ) ) {
+            opp.addError( errMsg );
         }
     }
 
