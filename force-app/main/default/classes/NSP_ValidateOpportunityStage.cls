@@ -39,6 +39,7 @@ public with sharing class NSP_ValidateOpportunityStage {
     public static final String HAS_WO_TASK = ' has WO Task ';
     public static final String HAS_WO_EVENT = ' has WO Event ';
     public static final String HAS_WO = 'has WO';
+    private static final Integer ERROR_DOES_NOT_EXIST = 99; // unified error code value...
 
     public static void validateOpportunityStage(List<Opportunity> newList){
         List<Id> oppIdList = new List<Id>();
@@ -201,13 +202,18 @@ public with sharing class NSP_ValidateOpportunityStage {
                 if( passCheckCount >= groupedStageValMap.get(groupName).size() ) {
                     passCheck = true;
                 }
-                if( passCheckCount == 99 ) { // when any record violates DOES NOT EXIST case
+                if( passCheckCount == NSP_ValidateOpportunityStage.ERROR_DOES_NOT_EXIST ) { // when any record violates DOES NOT EXIST case
                     passCheckDNE = false;
                 }
                 i++;
             } while ( i < valObjectMap.get(groupRelObjName).size() );
 
-            addGroupError( opp , passCheck , passCheckDNE , groupedStageValMap.get( groupName )[0].Error_Message__c );
+            NSP_ValidateOpportunityStage.addGroupError(
+                opp ,
+                passCheck ,
+                passCheckDNE ,
+                groupedStageValMap.get( groupName )[0].Error_Message__c
+            );
         }
     }
 
@@ -218,8 +224,10 @@ public with sharing class NSP_ValidateOpportunityStage {
         String errMsg
         )
     {
-        if( !opp.hasErrors()
-            && ( !passCheck || !passCheckDNE ) ) {
+        if ( !opp.hasErrors()
+            && ( !passCheck || !passCheckDNE )
+            )
+        {
             opp.addError( errMsg );
         }
     }
@@ -251,7 +259,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         // handle DOES_NOT_EXIST case
         if( groupCheckType == Operator.DOES_NOT_EXIST.name() ){
             if( passCheckCount >= (groupedStageValMap.get(groupName).size() - 1) ){
-                passCheckCount = 99; // if record exists that should not, return 99 to trip error message
+                passCheckCount = NSP_ValidateOpportunityStage.ERROR_DOES_NOT_EXIST; // if record exists that should not, trip error message
             } else {
                 passCheckCount = groupedStageValMap.get(groupName).size(); // if not all criteria met, make sure error message is skipped
             }
