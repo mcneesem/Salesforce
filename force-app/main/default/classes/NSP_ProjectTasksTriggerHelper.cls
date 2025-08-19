@@ -1,6 +1,6 @@
 public class NSP_ProjectTasksTriggerHelper {
     // test w/ NSP_ProjectTasksTriggerHelperTest, NSP_Implprofile_ServiceHelperUpdate_Test (78%)
-    // test w/ NSP_ProjectTasksTriggerHelperTest (72%)
+    // test w/ NSP_ProjectTasksTriggerHelperTest (73%)
     // test w/ NSP_Implprofile_ServiceHelperUpdate_Test (34%)
 
     private static final String HUNDRED_PERCENT =  '100%';
@@ -18,26 +18,25 @@ public class NSP_ProjectTasksTriggerHelper {
     private static final String LEVIESTASK = 'Employee Levies Provided';
     private static final String LINE_BREAK = '<br/><br/>';
 
-    /**
-    * Iterates throught the list of new pse__Project_Task__c and passes the required attributes to other methods.
-    * @param projectTaskNewMap Map of New project.
-    * @param projecttaskOldMap Map of Old project.
-    * @return void
-    *
-    */
-    public void updateProjectTaskFields(List<pse__Project_Task__c> projectTaskList){
-        Map<Id, List<pse__Project_Task__c>> projectTaskMap = new Map<Id, List<pse__Project_Task__c>>();
-        Map<Id, pse__Proj__c> parentProjectMap  = new  Map<Id, pse__Proj__c>();
-        Map<Id, Id> mapOfparentTaskIdAndMilestoneId = new Map<Id, Id>();
+    //
+    // Iterates throught the list of new pse__Project_Task__c and passes the required attributes to other methods.
+    // @param projectTaskNewMap Map of New project.
+    // @param projecttaskOldMap Map of Old project.
+    // @return void
+    //
+    public void updateProjectTaskFields( List<pse__Project_Task__c> projectTaskList ) {
+        Map<Id,List<pse__Project_Task__c>> projectTaskMap = new Map<Id,List<pse__Project_Task__c>>();
+        Map<Id,pse__Proj__c> parentProjectMap  = new Map<Id,pse__Proj__c>();
+        Map<Id,Id> mapOfparentTaskIdAndMilestoneId = new Map<Id,Id>();
         Set<Id> setOfParentProjectTask = new Set<Id>();
         List<String> projectForCancallation = new List<String>();
-        ProjectTaskTriggerSettings__c settings = ProjectTaskTriggerSettings__c.getInstance( UserInfo.getUserId() );
-        if( settings != null ){
-            if ( String.isNotBlank( settings.CancellationProjects1__c ) ) {
-                projectForCancallation = settings.CancellationProjects1__c.split( ',' );
-                if ( String.isNotBlank( settings.CancellationProjects2__c ) ) {
-                    projectForCancallation.addAll( settings.CancellationProjects2__c.split( ',' ) );
-                }
+        if ( ( NSP_ProjectTasksTriggerHelper.settings != null )
+            && String.isNotBlank( NSP_ProjectTasksTriggerHelper.settings.CancellationProjects1__c )
+            )
+        {
+            projectForCancallation = NSP_ProjectTasksTriggerHelper.settings.CancellationProjects1__c.split( ',' );
+            if ( String.isNotBlank( NSP_ProjectTasksTriggerHelper.settings.CancellationProjects2__c ) ) {
+                projectForCancallation.addAll( NSP_ProjectTasksTriggerHelper.settings.CancellationProjects2__c.split( ',' ) );
             }
         }
         for(pse__Project_Task__c projectTask : projectTaskList){
@@ -1109,16 +1108,20 @@ public class NSP_ProjectTasksTriggerHelper {
     // STY-00717
     //
     private static void updateProjectPercentageComplete( Set<Id> projectIds ) {
-        if ( ProjectTaskTriggerSettings__c.getInstance( UserInfo.getUserId() ).IsEnabledQueueablePercentage__c
+        if ( NSP_ProjectTasksTriggerHelper.isEnabledQueueablePercentage
             && ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() )
             )
         {
             ProjectPercentageCompleteQueueable.enqueueJob( projectIds );
-        } else {
+        } else if ( NSP_ProjectTasksTriggerHelper.isEnabledFuturePercentage
+            && ( Limits.getFutureCalls() < Limits.getLimitFutureCalls() )
+            )
+        {
             NSP_ProjectTasksTriggerHelper.updateProjectPercentageCompleteFuture( projectIds );
         }
     }
 
+    // DEPRECATED ~ see ProjectPercentageCompleteQueueable
     @future
     private static void updateProjectPercentageCompleteFuture( Set<Id> projectIds ) {
         try {
@@ -1368,7 +1371,7 @@ public class NSP_ProjectTasksTriggerHelper {
         if(!projectTaskIdSet.isEmpty()){
             NSP_ProjectTaskTriggerEmailNotification.emailNotifyforFEIN(projectTaskIdSet,mapofProjecttasks);
         }
-        if (ProjectTaskTriggerSettings__c.getInstance(UserInfo.getUserId()).IsUpdateDocusignAsset__c && accountIdList.size() > 0){
+        if ( NSP_ProjectTasksTriggerHelper.isUpdateDocusignAsset && accountIdList.size() > 0){
             updateDocusignAsset(accountIdList);
         }
         if(!fundingprojectTaskIdSet.isEmpty()){
@@ -2150,7 +2153,7 @@ public class NSP_ProjectTasksTriggerHelper {
     // Story : STY-02213
     //
     public static void sendEmailToProjectResource( Set<Id> projectTaskIdSet ) {
-        if ( ProjectTaskTriggerSettings__c.getInstance( UserInfo.getUserId() ).IsEnabledFutureNotifications__c
+        if ( NSP_ProjectTasksTriggerHelper.isEnabledFutureNotifications
             && ( Limits.getFutureCalls() < Limits.getLimitFutureCalls() )
             )
         {
@@ -2496,7 +2499,7 @@ public class NSP_ProjectTasksTriggerHelper {
         Map<Id,List<Id>> projTaskWithResourceLst = new Map<Id,List<Id>>();
         List<pse__Project_Task_Assignment__c> newPTAList = new List<pse__Project_Task_Assignment__c> () ;
         try {
-            if ( ProjectTaskTriggerSettings__c.getInstance( UserInfo.getUserId() ).IsEnabledCreatePtaIfOwnerChanged__c ) {
+            if ( NSP_ProjectTasksTriggerHelper.isEnabledCreatePtaIfOwnerChanged ) {
                 String projTaskQuery = new NSP_QueryBuilder('pse__Project_Task__c', new List<String>{'Id', 'OwnerId', 'pse__Number_of_Assignments__c','pse__Summary__c'})
                     .addFilter('Id', new List<Id>(projectTaskIds) , NSP_QueryBuilder.Operator.INCLUDES)
                     .addFilter('pse__Project__r.NSP_Auto_Resource_Project__c', true , NSP_QueryBuilder.Operator.EQUALS, false)
@@ -2597,5 +2600,90 @@ public class NSP_ProjectTasksTriggerHelper {
             );
         }
     }
+
+    //
+    // Custom Settings
+    //
+
+    private static ProjectTaskTriggerSettings__c settings {
+        private get {
+            if ( settings == null ) {
+                settings = ProjectTaskTriggerSettings__c.getInstance( UserInfo.getUserId() );
+            }
+            return settings;
+        }
+        private set;
+    }
+
+    private static Boolean isEnabledCreatePtaIfOwnerChanged {
+        private get {
+            if ( isEnabledCreatePtaIfOwnerChanged == null ) {
+                Boolean local = False;
+                if ( settings != null ) {
+                    local = settings.IsEnabledCreatePtaIfOwnerChanged__c;
+                }
+                isEnabledCreatePtaIfOwnerChanged = local;
+            }
+            return isEnabledCreatePtaIfOwnerChanged;
+        }
+        private set;
+    }
+
+    private static Boolean isEnabledFutureNotifications {
+        private get {
+            if ( isEnabledFutureNotifications == null ) {
+                Boolean local = False;
+                if ( settings != null ) {
+                    local = settings.IsEnabledFutureNotifications__c;
+                }
+                isEnabledFutureNotifications = local;
+            }
+            return isEnabledFutureNotifications;
+        }
+        private set;
+    }
+
+    private static Boolean isEnabledFuturePercentage {
+        private get {
+            if ( isEnabledFuturePercentage == null ) {
+                Boolean local = False;
+                if ( settings != null ) {
+                    local = settings.IsEnabledFuturePercentage__c;
+                }
+                isEnabledFuturePercentage = local;
+            }
+            return isEnabledFuturePercentage;
+        }
+        private set;
+    }
+
+    private static Boolean isEnabledQueueablePercentage {
+        private get {
+            if ( isEnabledQueueablePercentage == null ) {
+                Boolean local = False;
+                if ( settings != null ) {
+                    local = settings.IsEnabledQueueablePercentage__c;
+                }
+                isEnabledQueueablePercentage = local;
+            }
+            return isEnabledQueueablePercentage;
+        }
+        private set;
+    }
+
+    private static Boolean isUpdateDocusignAsset {
+        private get {
+            if ( isUpdateDocusignAsset == null ) {
+                Boolean local = False;
+                if ( settings != null ) {
+                    local = settings.IsUpdateDocusignAsset__c;
+                }
+                isUpdateDocusignAsset = local;
+            }
+            return isUpdateDocusignAsset;
+        }
+        private set;
+    }
+
 }
 //
