@@ -1016,6 +1016,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Veterinary Growth Partners</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Veterinary Study Group</fullName>
             <default>false</default>
         </values>
