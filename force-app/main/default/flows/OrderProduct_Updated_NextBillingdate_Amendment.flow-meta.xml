@@ -10,7 +10,7 @@
             <assignToReference>$Record.blng__NextBillingDate__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <dateValue>2099-01-01</dateValue>
+                <elementReference>$Setup.Separate_Project_Settings__c.Future_Next_Billing_Date__c</elementReference>
             </value>
         </assignmentItems>
     </assignments>
@@ -42,6 +42,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Amendment</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_Project__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
