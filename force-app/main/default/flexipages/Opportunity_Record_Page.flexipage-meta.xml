@@ -5480,16 +5480,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Discovery_Call_Created_Date__c</fieldItem>
-                <identifier>RecordDiscovery_Call_Created_Date_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.Discovery_Call_Completed_Date__c</fieldItem>
                 <identifier>RecordDiscovery_Call_Completed_Date_cField</identifier>
             </fieldInstance>
