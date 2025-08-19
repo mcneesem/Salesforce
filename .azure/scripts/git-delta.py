@@ -54,6 +54,11 @@ def getFilePathWithoutExtension( filepath ):
     return filepathWithoutExtension
 
 # Copy File Paths
+# ~ needs to handle some files differently...
+# ~ InsperitySalesForceGitDelta@2 produces some metadata files "reduced" to only the modified elements...
+#   ~ *.labels-meta.xml
+#   ~ *.sharingRules-meta.xml
+#   ~ *.workflow-meta.xml
 def copyFilePaths( filepaths , output , verbose=False ):
     if verbose:
         print( "git-delta.py: copyFilePaths" )
