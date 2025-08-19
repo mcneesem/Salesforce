@@ -43,6 +43,10 @@
                 <behavior>Edit</behavior>
                 <field>NSP_Netsuite_Hardware_Item__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>HRCore_Region__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
