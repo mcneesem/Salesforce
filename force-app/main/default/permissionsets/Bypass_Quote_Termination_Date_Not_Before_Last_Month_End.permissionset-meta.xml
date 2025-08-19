@@ -2,8 +2,8 @@
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customPermissions>
         <enabled>true</enabled>
-        <name>Bypass_Termination_Date_Validation</name>
+        <name>Bypass_Quote_Termination_Date_Not_Before_Last_Month_End</name>
     </customPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Bypass Termination Date Validation</label>
+    <label>Bypass Quote Termination Date Not Before Last Month End</label>
 </PermissionSet>
