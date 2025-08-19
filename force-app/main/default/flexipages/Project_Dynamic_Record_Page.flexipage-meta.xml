@@ -3609,10 +3609,7 @@
                             <value>MassChangeOwner</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>pse__Proj__c.NSP_Time_Entry</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>New</value>
+                            <value>CustomButton.pse__Proj__c.pse__Create_Project_From_Template</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
