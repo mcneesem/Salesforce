@@ -536,10 +536,10 @@ public class NSP_OrderTriggerHelper {
                 }
             }
             if(projCompletedIdSet != null && projCompletedIdSet.size() > 0){
-                activateOrderProduct(newList,projCompletedIdSet);
+                OrderTriggerActivateOrderProduct.activateOrderProduct(newList,projCompletedIdSet);
             }
             if(projectLiveBeforeReviewIds !=null && projectLiveBeforeReviewIds.size()>0){
-                activateOrderProduct(newList,projectLiveBeforeReviewIds);
+                OrderTriggerActivateOrderProduct.activateOrderProduct(newList,projectLiveBeforeReviewIds);
             }
             if(projGoLiveIdSet != null && projGoLiveIdSet.size() > 0){
                 updateSubStartDate(projGoLiveIdSet);
