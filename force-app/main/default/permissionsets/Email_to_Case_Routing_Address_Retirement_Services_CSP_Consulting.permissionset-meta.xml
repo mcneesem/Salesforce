@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Grants the Email-to-Case Routing: Retirement Services - CSP Consulting</description>
+    <description>Grants the Email-to-Case Routing: Retirement Services - CSP Consulting</description>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Email-to-Case Routing Address Retirement Services - CSP Consulting</label>
+    <label>Email-to-Case Routing Address: Retirement Services - CSP Consulting</label>
 </PermissionSet>
