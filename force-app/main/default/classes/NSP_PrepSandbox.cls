@@ -162,22 +162,19 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             List<NSP_PEO_Implementations__mdt> cMdPEOImps = [Select Id, Label, DeveloperName, NSP_Email_Address__c FROM NSP_PEO_Implementations__mdt WHERE Id!=null AND NSP_Email_Address__c!=null];
             List<NSP_Retirement_Services__mdt> cMdRetSvcs = [Select Id, Label, DeveloperName, NSP_Email_Address__c FROM NSP_Retirement_Services__mdt WHERE Id!=null AND NSP_Email_Address__c!=null];
 
-            doDS_mdt(sandboxName, allMetadataList, cMdDocuSigners);
-            doDSREST_mdt(sandboxName, allMetadataList, cMdDocuSignREST);
-            doPEO_mdt(sandboxName, allMetadataList, cMdPEOImps);
-            doRET_mdt(sandboxName, allMetadataList, cMdRetSvcs);
+            doDS_mdt( sandboxName , allMetadataList , cMdDocuSigners );
+            doDSREST_mdt( sandboxName , allMetadataList , cMdDocuSignREST );
+            doPEO_mdt( sandboxName , allMetadataList , cMdPEOImps );
+            doRET_mdt( sandboxName , allMetadataList , cMdRetSvcs );
 
-            if (allMetadataList.size() > 0 && !Test.isRunningTest()) {
-                for (Integer i = 0; i < allMetadataList.size(); i ++) {
-                    service.updateMetadata(allMetadataList[i]);
-                }
-            }
-        } catch(Exception e) {
+            runUpdateMetadata( allMetadataList );
+
+        } catch( Exception e ) {
             NSP_PrepSandbox.handleException( e , 'doCMetadata' );
         }
     }
 
-    public static MetadataService.CustomMetadata buildCustomMetadataRow( String fullName, String name, String field, String value ) {
+    public static MetadataService.CustomMetadata buildCustomMetadataRow( String fullName , String name , String field , String value ) {
         MetadataService.CustomMetadata cMdUpd = new MetadataService.CustomMetadata();
         cMdUpd.fullName = fullName;
         cMdUpd.label = name;
@@ -287,14 +284,11 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                 mTmplId.put(oProjTmpl.TemplateName__c, oProjTmpl.Id);
             }
 
-            doTmpls_mdt(sandboxName, mTmplId, allMetadataList, cMdTmpls);
-            doTmplKeys_mdt(sandboxName, mTmplId, allMetadataList, cMdTmplKeys);
+            doTmpls_mdt( sandboxName , mTmplId , allMetadataList , cMdTmpls );
+            doTmplKeys_mdt( sandboxName , mTmplId , allMetadataList , cMdTmplKeys );
 
-            if (allMetadataList.size() > 0 && !Test.isRunningTest()) {
-                for (Integer i = 0; i < allMetadataList.size(); i ++) {
-                    service.updateMetadata(allMetadataList[i]);
-                }
-            }
+            runUpdateMetadata( allMetadataList );
+
         } catch(Exception e) {
             NSP_PrepSandbox.handleException( e , 'doCMetadataSvc' );
         }
@@ -335,16 +329,22 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                     refreshValMap.put('NSP_FTA_Base_URL', 'https://stageportalapps.insperity.com/financialcomparison/financialanalysis/');
                     refreshValMap.put('NSP_Docusign_Account_Id', '48945');
                     refreshValMap.put('NSP_Docusign_Base_URL', DOCUSIGN_BASE_URL);
+                    refreshValMap.put('NSP_Contact_Center_Email_Addresses', 'test.contact_center_UAT@insperity.com');
+                    refreshValMap.put('NSP_Health_Welfare_Section_125', 'test.section125_UAT@insperity.com');
                 }
                 when 'test' {
                     refreshValMap.put('NSP_FTA_Base_URL', 'https://testportalapps.insperity.com/financialcomparison/financialanalysis/');
                     refreshValMap.put('NSP_Docusign_Account_Id', '65500');
                     refreshValMap.put('NSP_Docusign_Base_URL', DOCUSIGN_BASE_URL);
+                    refreshValMap.put('NSP_Contact_Center_Email_Addresses', 'test.contact_center@insperity.com');
+                    refreshValMap.put('NSP_Health_Welfare_Section_125', 'test.section125@insperity.com');
                 }
                 when 'merge' {
                     refreshValMap.put('NSP_FTA_Base_URL', 'https://devportalapps.insperity.com/financialcomparison/financialanalysis/');
                     refreshValMap.put('NSP_Docusign_Account_Id', '122677');
                     refreshValMap.put('NSP_Docusign_Base_URL', DOCUSIGN_BASE_URL);
+                    refreshValMap.put('NSP_Contact_Center_Email_Addresses', 'test.contact_center.merge@insperity.com');
+                    refreshValMap.put('NSP_Health_Welfare_Section_125', 'test.section125.merge@insperity.com');
                 }
                 when else {
                     refreshValMap.put('NSP_FTA_Base_URL', 'https://devportalapps.insperity.com/financialcomparison/financialanalysis/');
@@ -389,16 +389,19 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             List<List<MetadataService.Metadata>> allMetadataList = new List<List<MetadataService.Metadata>>();
             allMetadataList.add(new List<MetadataService.Metadata>());
             MetadataService.CustomLabel cL;
+            String sandbox = System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName().toLowerCase();
             String[] cLNames = getEmailCLabelNames();
+            String[] preserveNames = new String[]{'NSP_Contact_Center_Email_Addresses' , 'NSP_Health_Welfare_Section_125'};
 
-            for(integer i=0; i < cLNames.size() ; i++){
+            for( integer i=0; i < cLNames.size() ; i++ ) {
                 cL = new MetadataService.CustomLabel();
                 if ( !Test.isRunningTest() ) {
                     cL = (MetadataService.CustomLabel) service.readMetadata('CustomLabel', new String[] { cLNames[i] }).getRecords()[0];
                 } else {
                     cL.value = 'test@insperity.com';
                 }
-                if((cL.value != null && cL.value.indexOf('@') != -1 && cL.value.indexOf(STRING_INVALID) == -1)) {
+                if( cL?.value.indexOf('@') != -1 && cL?.value.indexOf(STRING_INVALID) == -1 
+                        && ( sandbox.indexOf('dev') != -1 || !preserveNames.contains( cLNames[i] ) ) ) {
                     MetadataService.CustomLabel cLUpd = new MetadataService.CustomLabel();
                     cLUpd.fullName = cL.fullName;
                     cLUpd.value = invalidateEmailString(cL.value);
@@ -414,13 +417,19 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                 }
             }
 
-            if (allMetadataList[0].size() > 0 && !Test.isRunningTest()) {
-                for (Integer i = 0; i < allMetadataList.size(); i ++) {
-                    service.updateMetadata(allMetadataList[i]);
-                }
-            }
+            runUpdateMetadata( allMetadataList );
+
         } catch(Exception e) {
             NSP_PrepSandbox.handleException( e , 'doEmailCLabels' );
+        }
+    }
+
+    public static void runUpdateMetadata( List<List<MetadataService.Metadata>> allMetadataList ) {
+        MetadataService.MetadataPort service = createService();
+        if ( allMetadataList.size() > 0 && allMetadataList[0].size() > 0 && !Test.isRunningTest() ) {
+            for (Integer i = 0; i < allMetadataList.size(); i ++) {
+                service.updateMetadata(allMetadataList[i]);
+            }
         }
     }
 
@@ -459,11 +468,11 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             AlertResult results = new AlertResult();
             RecordAlert[] records = new RecordAlert[]{};
 
-            if(!Test.isRunningTest()){
+            if( !Test.isRunningTest() ) {
                 response = new Http().send(request);
                 results = (AlertResult)JSON.deserialize(response.getBody(), AlertResult.class);
                 records = results.records;
-            }else{
+            } else {
                 RecordAlert rec = new RecordAlert();
                 Attributes att = new Attributes();
                 WorkflowEmail wfe = new WorkflowEmail();
@@ -485,14 +494,11 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                 records.add(rec);
             }
 
-            getWFAlertData(request, records, wfaNames);
-            setWFAlertData(wfaNames, allMetadataList);
+            getWFAlertData( request , records , wfaNames );
+            setWFAlertData( wfaNames , allMetadataList );
 
-            if (allMetadataList.size() > 0 && !Test.isRunningTest()) {
-                for (Integer i = 0; i < allMetadataList.size(); i ++) {
-                    service.updateMetadata(allMetadataList[i]);
-                }
-            }
+            runUpdateMetadata( allMetadataList );
+
         } catch(Exception e) {
             NSP_PrepSandbox.handleException( e , 'doEmailAlerts' );
         }
@@ -706,7 +712,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     public static void doImageDocs() {
         MetadataService.MetadataPort service = createService();
         try {
-            List<MetadataService.Metadata> allMetadataList = new List<MetadataService.Metadata>();
+            List<MetadataService.Metadata> metadataList = new List<MetadataService.Metadata>();
             // map of static resource names to document names
             Map<String, String> resourceMap = new Map<String, String>();
             resourceMap.put('Insperity_Copyright_Logo', 'Insperity_Copy_write_logo');
@@ -725,11 +731,11 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                 doc.content = EncodingUtil.base64Encode(sr.Body);
                 doc.public_x = true;
                 doc.internalUseOnly = false;
-                allMetadataList.add(doc);
+                metadataList.add(doc);
             }
 
-            if (allMetadataList.size() > 0 && !Test.isRunningTest()) {
-                service.createMetadata(allMetadataList);
+            if ( metadataList.size() > 0 && !Test.isRunningTest() ) {
+                service.createMetadata(metadataList);
             }
         } catch(Exception e) {
             NSP_PrepSandbox.handleException( e , 'doImageDocs' );
@@ -737,7 +743,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     }
 
     public static String replaceUnderscoresWithSpaces(String input) {
-        if (input != null) {
+        if ( input != null ) {
             return input.replace('_', ' ');
         }
         return null;
