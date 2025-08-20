@@ -66,6 +66,11 @@
                 <default>false</default>
                 <label>Transition Specialist</label>
             </value>
+            <value>
+                <fullName>HR Client Implementation Team Member</fullName>
+                <default>false</default>
+                <label>HR Client Implementation Team Member</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
