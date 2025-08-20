@@ -7,88 +7,98 @@
             onsuccess={handleSuccess}
             onerror={handleError}
             onload={handleOnload}>
-            <div style="display:none"> 
-                <lightning-input-field 
-                    class="slds-hidden" 
-                    data-fname="LastSavedPageNumber" 
-                    field-name="NSP_LastSavedPageNumber__c" 
-                    value={pageNumber} >
-                </lightning-input-field> 
-            </div>
-            <div class='slds-p-vertical_medium'>
-                <div class="slds-form-element_horizontal">
-                    <label 
-                        class="slds-form-element__label" 
-                        for="Are_additional_language_options_required__c">
-                        {label.additionalLanguage}
-                    </label>
-                    <lightning-input-field 
-                        field-name="Are_additional_language_options_required__c" 
-                        variant="label-hidden"
-                        onchange={additionalLanguage}> 
-                    </lightning-input-field>
-                </div>
-            </div>
-            <template lwc:if={visibility.Are_additional_language_options_required__c}> 
-                <lightning-input-field 
-                    field-name="Please_enter_the_language_s__c" 
-                    required> 
-                </lightning-input-field>
-            </template>
-            <div class='slds-p-vertical_medium'>
-                <div class="slds-form-element_horizontal">
-                    <label 
-                        class="slds-form-element__label" 
-                        for="Is_this_survey_anonymous_or_confidential__c">
-                        {label.anonymousConfidential}
-                            <a 
-                                href=https://nexus.insperity.com/groups/38605/posts/3329270-employee-surveys-new-confidential-surveys
-                                target="_blank"  
-                                rel="noopener noreferrer" >Get information
-                            </a>
-                    </label>
-                    <lightning-input-field 
-                        field-name="Is_this_survey_anonymous_or_confidential__c" 
-                        variant="label-hidden"> 
-                    </lightning-input-field>
-                </div>
-            </div>
-            <div class='slds-p-vertical_medium'>
-                <div class="slds-form-element_horizontal">
-                    <label 
-                        class="slds-form-element__label" 
-                        for="Sent_to_any_non_Insperity_paid_WSEEs__c">
-                        {label.paidWsees}
-                    </label>
-                    <lightning-input-field 
-                        field-name="Sent_to_any_non_Insperity_paid_WSEEs__c" 
-                        onchange={paidWsees}
-                        variant="label-hidden"> 
-                    </lightning-input-field>
-                </div>
-            </div>
-            <template lwc:if={visibility.Sent_to_any_non_Insperity_paid_WSEEs__c}>   
-                <lightning-input-field 
-                    field-name="How_many_non_Insperity_paid_WSEEs__c" 
-                    required> 
-                </lightning-input-field>
-            </template>
+            <lightning-layout>
+                <lightning-layout-item size="8">
+                    <div style="display:none">
+                        <lightning-input-field
+                            class="slds-hidden"
+                            data-fname="LastSavedPageNumber"
+                            field-name="NSP_LastSavedPageNumber__c"
+                            value={pageNumber}>
+                        </lightning-input-field>
+                    </div>
+                    <div class='slds-p-vertical_medium'>
+                        <div class="slds-form-element_horizontal">
+                            <label
+                                class="slds-form-element__label"
+                                for="Are_additional_language_options_required__c">
+                                <span class="slds-required" >*</span>
+                                {label.additionalLanguage}
+                            </label>
+                            <lightning-input-field
+                                field-name="Are_additional_language_options_required__c"
+                                variant="label-hidden"
+                                onchange={additionalLanguage}
+                                required>
+                            </lightning-input-field>
+                        </div>
+                    </div>
+                    <template lwc:if={visibility.Are_additional_language_options_required__c}>
+                        <lightning-input-field
+                            field-name="Please_enter_the_language_s__c"
+                            required>
+                        </lightning-input-field>
+                    </template>
+                    <div class='slds-p-vertical_medium'>
+                        <div class="slds-form-element_horizontal">
+                            <label
+                                class="slds-form-element__label"
+                                for="Is_this_survey_anonymous_or_confidential__c">
+                                <span class="slds-required" >*</span>
+                                {label.anonymousConfidential}
+                                    <a
+                                        href=https://nexus.insperity.com/groups/38605/posts/3329270-employee-surveys-new-confidential-surveys
+                                        target="_blank"
+                                        rel="noopener noreferrer" >Get information
+                                    </a>
+                            </label>
+                            <lightning-input-field
+                                field-name="Is_this_survey_anonymous_or_confidential__c"
+                                variant="label-hidden"
+                                required>
+                            </lightning-input-field>
+                        </div>
+                    </div>
+                    <div class='slds-p-vertical_medium'>
+                        <div class="slds-form-element_horizontal">
+                            <label
+                                class="slds-form-element__label"
+                                for="Sent_to_any_non_Insperity_paid_WSEEs__c">
+                                <span class="slds-required" >*</span>
+                                {label.paidWsees}
+                            </label>
+                            <lightning-input-field
+                                field-name="Sent_to_any_non_Insperity_paid_WSEEs__c"
+                                onchange={paidWsees}
+                                variant="label-hidden"
+                                required>
+                            </lightning-input-field>
+                        </div>
+                    </div>
+                    <template lwc:if={visibility.Sent_to_any_non_Insperity_paid_WSEEs__c}>
+                        <lightning-input-field
+                            field-name="How_many_non_Insperity_paid_WSEEs__c"
+                            required>
+                        </lightning-input-field>
+                    </template>
+                </lightning-layout-item>
+            </lightning-layout>
             <div class="slds-m-top_medium slds-align_absolute-center slds-p-around_medium">
-                <lightning-button 
-                    variant="brand" 
-                    label="Previous" 
-                    class="slds-m-top_small slds-m-left_small" 
+                <lightning-button
+                    variant="brand"
+                    label="Previous"
+                    class="slds-m-top_small slds-m-left_small"
                     onclick={handlePrev}>
                 </lightning-button>
-               <lightning-button 
-                    class="slds-m-top_small slds-m-left_small" 
-                    onclick={handleSave} 
+               <lightning-button
+                    class="slds-m-top_small slds-m-left_small"
+                    onclick={handleSave}
                     label="Save and Exit" >
                </lightning-button>
-                <lightning-button 
-                    class="slds-m-top_small slds-m-left_small"  
-                    type="submit" 
-                    variant="brand" 
+                <lightning-button
+                    class="slds-m-top_small slds-m-left_small"
+                    type="submit"
+                    variant="brand"
                     label="Next">
                 </lightning-button>
             </div>
