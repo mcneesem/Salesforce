@@ -52,22 +52,37 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>US_Contact__c.Work_Phone__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>US_Mail_Address__c.USAddress__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>NSP_Account_Group__c.Account__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Address__c.Field_For_Search__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_ReportRequest__c.Are_additional_language_options_required__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_ReportRequest__c.How_many_non_Insperity_paid_WSEEs__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_ReportRequest__c.Is_this_survey_anonymous_or_confidential__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_ReportRequest__c.Please_enter_the_language_s__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_ReportRequest__c.Sent_to_any_non_Insperity_paid_WSEEs__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -173,6 +188,26 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Termination_Form__c.Total_Number_of_Files__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>US_Contact__c.Job_Title__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>US_Contact__c.Work_Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>US_Contact__c.Work_Phone__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>US_Mail_Address__c.USAddress__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
