@@ -2,6 +2,7 @@
     doInit : function(component, event, helper) {
         helper.getContractRecord(component, event, helper);
         helper.checkPermission(component, event, helper);
+        helper.bypassTerminationDateValidation(component, event, helper);
     },
     handleSelection : function(component, event, helper) {
         var changeValue = event.getParam("value");
@@ -18,19 +19,14 @@
         }
          component.set("v.displayhelp",true);
     },
-   handleContractSelect : function(component, event, helper) {
-		if(component.get("v.selectedRow").length>0){
-		//	component.set('v.spinner',true);
-			component.set("v.selectedContractId",component.get("v.selectedRow")[0].Id);/////////////
+    handleContractSelect : function(component, event, helper) {
+        if(component.get("v.selectedRow").length>0){
+            component.set("v.selectedContractId",component.get("v.selectedRow")[0].Id);
             component.set('v.section','Option');
-
-        } else{
-          //display message to select an active contract
         }
-
     },
 
-     handleTransactionTypeSelection : function(component, event, helper) {
+    handleTransactionTypeSelection : function(component, event, helper) {
         helper.handleTransactionTypeSelect(component, event, helper);
 
     },

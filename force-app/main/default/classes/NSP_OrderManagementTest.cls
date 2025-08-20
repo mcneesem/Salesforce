@@ -150,8 +150,11 @@ private class NSP_OrderManagementTest {
         Test.startTest();
         NSP_OrderManagement.runContractAutoTermination(con.id,System.today());
         Boolean checkpermission = NSP_OrderManagement.hasTerminationPermission();
+        Boolean hasCustomPermission = NSP_orderManagement.bypassTerminationDateValidation();
+        NSP_orderManagement.testHandleException(null,null);
         Test.stopTest();
         System.assertNotequals(null,checkpermission);
+        System.assertNotequals(null,hasCustomPermission);
     }
 
 }
