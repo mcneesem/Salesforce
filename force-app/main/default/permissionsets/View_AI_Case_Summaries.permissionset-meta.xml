@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>View_AI_Case_Summaries</name>
+    </customPermissions>
+    <description>Grants the Custom Permission to view Einstein Case Summaries.</description>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Case_Summary</flow>
+    </flowAccesses>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>View AI Case Summaries</label>
+</PermissionSet>
