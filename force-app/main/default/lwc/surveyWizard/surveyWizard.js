@@ -68,7 +68,7 @@ export default class SurveyWizard extends LightningElement {
                 this.reReqId = event.detail;
              }
                 if( this.reReqId !=null || this.currentStep == -1 ){
-                    if (this.currentIndex + 1 == this.steps.length) {
+                    if (this.repReqObj.isSubmit || this.currentIndex + 1 == this.steps.length) {
                         this.showProgress = false;
                     } else {
                         this.currentIndex++;
