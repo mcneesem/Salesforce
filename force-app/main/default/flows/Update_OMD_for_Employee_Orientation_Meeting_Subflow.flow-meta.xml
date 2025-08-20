@@ -532,6 +532,14 @@
                     <name>request_header2</name>
                     <fieldText>&lt;p&gt;{!Request_Header}&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
+                    <styleProperties>
+                        <verticalAlignment>
+                            <stringValue>top</stringValue>
+                        </verticalAlignment>
+                        <width>
+                            <stringValue>12</stringValue>
+                        </width>
+                    </styleProperties>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -543,16 +551,40 @@
             </fields>
             <isRequired>false</isRequired>
             <regionContainerType>SectionWithoutHeader</regionContainerType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <fields>
             <name>eom_block_1</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 16px;&quot;&gt;Employee Orientation Meeting #{!Loop_Until_No_of_OT_Meeting.Meeting_Request_Number__c}:&lt;/strong&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;em style=&quot;color: rgb(240, 5, 5); font-size: 14px;&quot;&gt;Note: All times below are displayed in Central Time Zone&lt;/em&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 16px;&quot;&gt;Employee Orientation Meeting #{!Loop_Until_No_of_OT_Meeting.Meeting_Request_Number__c}:&lt;/strong&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;em style=&quot;color: rgb(240, 5, 5); font-size: 14px;&quot;&gt;Note: All times below are displayed in Central Time Zone&lt;/em&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(240, 5, 5);&quot;&gt;For New Client Employee Orientation Meetings only: Please choose a projected date and time below. Orientation Meeting timing and scheduling will be discussed with the client during the Client Transition Meeting. You will receive a confirmation chatter email/notification once the OT Meeting has been scheduled.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <fields>
             <name>disable_edit_message</name>
             <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-family: Verdana, sans-serif; background-color: rgb(255, 255, 255); color: rgb(244, 3, 3); font-size: 14.6667px;&quot;&gt;Select the new meeting date. If&lt;/span&gt;&lt;span style=&quot;font-family: Aptos, sans-serif; background-color: rgb(255, 255, 255); color: rgb(244, 3, 3); font-size: 14.6667px;&quot;&gt;&amp;nbsp;the requested date or time is not available, please contact&amp;nbsp;&lt;/span&gt;&lt;a href=&quot;mailto:Orientation_Request@insperity.com&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-family: Aptos, sans-serif; background-color: rgb(255, 255, 255); color: rgb(244, 3, 3); font-size: 14.6667px;&quot;&gt;Orientation_Request@insperity.com&lt;/a&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
@@ -623,6 +655,14 @@
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <fields>
             <name>eecount</name>
@@ -638,6 +678,14 @@
             </isDisabled>
             <isRequired>true</isRequired>
             <scale>0</scale>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <fields>
             <name>ossname</name>
@@ -652,6 +700,14 @@
                 <elementReference>f_disable_edit</elementReference>
             </isDisabled>
             <isRequired>true</isRequired>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <fields>
             <name>ossphone</name>
@@ -678,6 +734,14 @@
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <fields>
             <name>ossemail</name>
@@ -710,6 +774,14 @@
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <fields>
             <name>Preferred_Meeting_Time_within_Selected_Time_Block_1</name>
@@ -725,6 +797,14 @@
                 <elementReference>f_disable_edit</elementReference>
             </isDisabled>
             <isRequired>true</isRequired>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
             <validationRule>
                 <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(255, 0, 0);&quot;&gt;Text should not exceed 100 characters&lt;/span&gt;&lt;/p&gt;</errorMessage>
                 <formulaExpression>LEN({!Preferred_Meeting_Time_within_Selected_Time_Block_1}) &lt;= 100</formulaExpression>
@@ -744,6 +824,14 @@
             </isDisabled>
             <isRequired>true</isRequired>
             <scale>0</scale>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <fields>
             <name>Meeting_Type</name>
@@ -759,6 +847,14 @@
                 <elementReference>f_disable_edit</elementReference>
             </isDisabled>
             <isRequired>false</isRequired>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
@@ -784,6 +880,14 @@
                 <elementReference>f_disable_edit</elementReference>
             </isDisabled>
             <isRequired>true</isRequired>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <fields>
             <name>Language_s_Needed_EOM1</name>
@@ -799,6 +903,14 @@
                 <elementReference>f_disable_edit</elementReference>
             </isDisabled>
             <isRequired>false</isRequired>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
             <validationRule>
                 <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(255, 0, 0);&quot;&gt;Text should not exceed 100 characters&lt;/span&gt;&lt;/p&gt;</errorMessage>
                 <formulaExpression>LEN({!Language_s_Needed_EOM1}) &lt;= 100</formulaExpression>
@@ -826,6 +938,14 @@
                 <elementReference>f_disable_edit</elementReference>
             </isDisabled>
             <isRequired>false</isRequired>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
@@ -842,6 +962,14 @@
             <name>Error_Message_Error_Processing_Request</name>
             <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 14px; color: rgb(18, 17, 17);&quot;&gt;There is an error submitting the  Request. Please contact System Admin for more information.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
