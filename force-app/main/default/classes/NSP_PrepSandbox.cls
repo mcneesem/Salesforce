@@ -154,7 +154,6 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
 
     public static void doCMetadata(String sandboxName) {
         try{
-            MetadataService.MetadataPort service = createService();
             List<List<MetadataService.Metadata>> allMetadataList = new List<List<MetadataService.Metadata>>();
             allMetadataList.add(new List<MetadataService.Metadata>());
             List<NSP_DocuSign_Signers__mdt> cMdDocuSigners = [Select Id, Label, DeveloperName, NSP_Signer_Username__c FROM NSP_DocuSign_Signers__mdt WHERE Id!=null AND NSP_Signer_Username__c!=null];
@@ -273,7 +272,6 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
 
     public static void doCMetadataSvc(String sandboxName) {
         try {
-            MetadataService.MetadataPort service = createService();
             List<List<MetadataService.Metadata>> allMetadataList = new List<List<MetadataService.Metadata>>();
             allMetadataList.add(new List<MetadataService.Metadata>());
             List<NSP_ProjectTemplateMapping__mdt> cMdTmpls = [Select Id, Label, DeveloperName, Key__c, Template_ID__c, Template_Name__c FROM NSP_ProjectTemplateMapping__mdt WHERE Id!=Null];
@@ -456,7 +454,6 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             String sessionId = UserInfo.getSessionId();
             List<String[]> wfaNames = new List<String[]>();
             wfaNames.add(new String[]{});
-            MetadataService.MetadataPort service = createService();
             List<List<MetadataService.Metadata>> allMetadataList = new List<List<MetadataService.Metadata>>();
 
             //  Get the list of alerts Ids where CCemails is not empty
