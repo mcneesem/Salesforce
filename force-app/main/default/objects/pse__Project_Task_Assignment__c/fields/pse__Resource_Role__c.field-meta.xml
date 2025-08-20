@@ -185,6 +185,11 @@
                 <default>false</default>
                 <label>Software Analyst</label>
             </value>
+            <value>
+                <fullName>HRCore Acct. Mgmt</fullName>
+                <default>false</default>
+                <label>HRCore Acct. Mgmt</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
