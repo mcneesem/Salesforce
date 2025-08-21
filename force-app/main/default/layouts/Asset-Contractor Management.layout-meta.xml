@@ -28,6 +28,10 @@
                 <behavior>Edit</behavior>
                 <field>NSP_Actual_of_Employee_at_Signature__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>SaaS_ID__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
