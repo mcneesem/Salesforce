@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
     <sharingOwnerRules>
+        <fullName>Oppty_Credits_Edit_Access_to_MM_Closing_Team</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Oppty Credits - Edit Access to MM Closing Team</label>
+        <sharedTo>
+            <group>MidMarket_Closing_Team</group>
+        </sharedTo>
+        <sharedFrom>
+            <allInternalUsers></allInternalUsers>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Oppty_Credits_Edit_Access_to_SSS_Group</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Oppty Credits - Edit Access to SSS Group</label>
+        <sharedTo>
+            <group>MidMarket_Closing_Team</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>Sales_Support_Specialist_Reporting</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
         <fullName>Oppty_Credits_Edit_access_to_BPA_Group</fullName>
         <accessLevel>Edit</accessLevel>
         <label>Oppty Credits - Edit access to BPA Group</label>
@@ -9,6 +31,17 @@
         </sharedTo>
         <sharedFrom>
             <allInternalUsers></allInternalUsers>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Oppty_Credits_Edit_access_to_DA_Group</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Oppty Credits - Edit access to DA Group</label>
+        <sharedTo>
+            <group>MidMarket_Closing_Team</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>District_Administrator</group>
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
