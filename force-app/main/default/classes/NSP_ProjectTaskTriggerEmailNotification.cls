@@ -792,7 +792,7 @@ public class NSP_ProjectTaskTriggerEmailNotification {
         mailBody += user.Title+'<br/>';
         mailBody += user.Email;
         
-        NSP_ProjectTasksTriggerHelper.sendEmail(listOfTOAddresses, subjectString, mailBody);
+        NSP_ProjectTasksTriggerHelper.sendEmail( listOfTOAddresses, subjectString, mailBody, projectTaskId );
     } 
     
     private static void getEmailTemplates(){
