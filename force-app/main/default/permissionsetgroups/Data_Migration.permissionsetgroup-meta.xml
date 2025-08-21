@@ -7,6 +7,7 @@
     <permissionSets>Account_Team_Management</permissionSets>
     <permissionSets>Bypass_Lead_Email_Alerts</permissionSets>
     <permissionSets>Bypass_Opportunity_Email_Alerts</permissionSets>
+    <permissionSets>Bypass_Order_Validation_to_Change_Status</permissionSets>
     <permissionSets>Bypass_Task_Email_Alerts</permissionSets>
     <permissionSets>Client_goal_project_task_junction_access</permissionSets>
     <permissionSets>Data_Migration_Permission_Set</permissionSets>

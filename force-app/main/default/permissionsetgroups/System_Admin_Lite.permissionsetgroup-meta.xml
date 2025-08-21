@@ -12,6 +12,7 @@
     <permissionSets>Allow_Delete_Leads</permissionSets>
     <permissionSets>Bundle_Template_Flag_fields_Permission</permissionSets>
     <permissionSets>Bypass_Benefit_Termination_Date_Rule</permissionSets>
+    <permissionSets>Bypass_Order_Validation_to_Change_Status</permissionSets>
     <permissionSets>Bypass_Read_Only_Case_Owner</permissionSets>
     <permissionSets>Bypass_Required_Compensation_Services_Closure</permissionSets>
     <permissionSets>Bypass_Restrict_Compensation_Services_Closure</permissionSets>
