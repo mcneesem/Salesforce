@@ -2,7 +2,11 @@ import { LightningElement, api, wire } from 'lwc';
 import SurveyRevisionRequestForm from '@salesforce/label/c.NSP_SurveyRevisionRequestFormPageNexus';
 import SurveyInterviewForm from '@salesforce/label/c.Survey_Interview_Form';
 export default class SurveyWizard extends LightningElement {
-    steps = [{ label: "Survey Information", value: "1" }, { label: "Survey Filters", value: "2" }, { label: "Custom Questions", value: "3" }, { label: "Additional Information", value: "4" }];
+    steps = [{ label: "Survey Information", value: "1" }, 
+        { label: "Survey Filters", value: "2" }, 
+        { label: "Custom Questions", value: "3" }, 
+        { label: "Survey Considerations", value: "4" }, 
+        { label: "Additional Information", value: "5" }];
     @api currentStep;
     currentIndex = -1;
     showProgress = true;
@@ -31,6 +35,9 @@ export default class SurveyWizard extends LightningElement {
 
     get step4() {
         return this.currentStep == this.steps[3].value;
+    }
+    get step5() {
+        return this.currentStep == this.steps[4].value;
     }
     connectedCallback() {
 
