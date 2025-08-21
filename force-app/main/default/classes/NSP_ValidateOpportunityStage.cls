@@ -39,6 +39,7 @@ public with sharing class NSP_ValidateOpportunityStage {
     public static final String HAS_WO_TASK = ' has WO Task ';
     public static final String HAS_WO_EVENT = ' has WO Event ';
     public static final String HAS_WO = 'has WO';
+    private static final Integer ERROR_DOES_NOT_EXIST = 99; // unified error code value...
 
     public static void validateOpportunityStage(List<Opportunity> newList){
         List<Id> oppIdList = new List<Id>();
@@ -187,7 +188,9 @@ public with sharing class NSP_ValidateOpportunityStage {
         Map<String,List<Opportunity_Stage_Validation__mdt>> groupedStageValMap
         )
     {
-        for( String groupName : groupedStageValMap.keySet() ){
+        List<String> groupOrder = new List<String>(groupedStageValMap.keySet());
+        groupOrder.sort();
+        for( String groupName : groupOrder ) {
             Boolean passCheck = false;
             Boolean passCheckDNE = true;
             String groupRelObjName = getGroupRelObjName( groupName , groupedStageValMap );
@@ -196,18 +199,36 @@ public with sharing class NSP_ValidateOpportunityStage {
             do {
                 SObject valObject = ( valObjectMap.get(groupRelObjName).size() == 0 ) ? null : valObjectMap.get(groupRelObjName)[i];
                 Integer passCheckCount = evaluateOneCriteriaGroup( opp, groupName , valObject , groupedStageValMap );
-                if( passCheckCount >= groupedStageValMap.get(groupName).size() ){
+                if( passCheckCount >= groupedStageValMap.get(groupName).size() ) {
                     passCheck = true;
                 }
-                if( passCheckCount == 99 ){ // when any record violates DOES NOT EXIST case
+                if( passCheckCount == NSP_ValidateOpportunityStage.ERROR_DOES_NOT_EXIST ) { // when any record violates DOES NOT EXIST case
                     passCheckDNE = false;
                 }
                 i++;
             } while ( i < valObjectMap.get(groupRelObjName).size() );
 
-            if( !passCheck || !passCheckDNE ){
-                opp.addError(groupedStageValMap.get(groupName)[0].Error_Message__c);
-            }
+            NSP_ValidateOpportunityStage.addGroupError(
+                opp ,
+                passCheck ,
+                passCheckDNE ,
+                groupedStageValMap.get( groupName )[0].Error_Message__c
+            );
+        }
+    }
+
+    private static void addGroupError(
+        Opportunity opp ,
+        Boolean passCheck ,
+        Boolean passCheckDNE ,
+        String errMsg
+        )
+    {
+        if ( !opp.hasErrors()
+            && ( !passCheck || !passCheckDNE )
+            )
+        {
+            opp.addError( errMsg );
         }
     }
 
@@ -227,9 +248,7 @@ public with sharing class NSP_ValidateOpportunityStage {
             } else if( val.Object__c == OPPORTUNITY_OBJ ){
                 valFieldValue = opp.get(val.Field__c);
             } else {
-                if( valObject != null ){
-                    valFieldValue = valObject.get(val.Field__c);
-                }
+                valFieldValue = valObject?.get(val.Field__c);
             }
             if( checkCondition(valFieldValue , val.Value__c , val.Operation__c) )
             {
@@ -240,7 +259,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         // handle DOES_NOT_EXIST case
         if( groupCheckType == Operator.DOES_NOT_EXIST.name() ){
             if( passCheckCount >= (groupedStageValMap.get(groupName).size() - 1) ){
-                passCheckCount = 99; // if record exists that should not, return 99 to trip error message
+                passCheckCount = NSP_ValidateOpportunityStage.ERROR_DOES_NOT_EXIST; // if record exists that should not, trip error message
             } else {
                 passCheckCount = groupedStageValMap.get(groupName).size(); // if not all criteria met, make sure error message is skipped
             }
