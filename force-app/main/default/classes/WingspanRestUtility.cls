@@ -109,10 +109,11 @@ public without sharing class WingspanRestUtility {
     
     public static void linkAdminToCHUB(String createdUserId, Id recordId){
         LinkUserToHubWrapper linkWrap = new LinkUserToHubWrapper();
-        linkWrap.parentUserId = WingspanRestUtility.userId;
+        if ( !String.isBlank( WingspanRestUtility.userId )){
+            linkWrap.parentUserId = WingspanRestUtility.userId;
+        }
         InheritanceStrategyWrapper inheritanceWrap = new InheritanceStrategyWrapper();
         inheritanceWrap.organizationAccountConfig = 'Parent';
-        inheritanceWrap.wingspanAccount = 'Parent';
         linkWrap.inheritanceStrategy = inheritanceWrap;
         
         String body = JSON.Serialize(linkWrap);
@@ -131,13 +132,7 @@ public without sharing class WingspanRestUtility {
               };
               
               //send API request        
-        	  HttpResponse resp = sendRequest(method,endpoint,body,headers, recordId);
-              
-              //call PATCH request if status OK
-              if( resp.getStatusCode() == 200 ){
-                  method = 'PATCH';
-                  sendRequest(method,endpoint,body,headers, recordId);
-              }
+        	  sendRequest(method,endpoint,body,headers, recordId);
           }
     }
     
@@ -226,9 +221,6 @@ public without sharing class WingspanRestUtility {
                 logMethod += '-createClientAdmin';
             }else if( requestBody.contains('parentUserId') && requestMethod == 'POST' ){
                 logDescription = 'POST request for associating Admin in wingspan server';
-                logMethod += '-linkAdminToCHUB';
-            }else if( requestBody.contains('parentUserId') && requestMethod == 'PATCH' ){
-                logDescription = 'PATCH request for associating Admin in wingspan server';
                 logMethod += '-linkAdminToCHUB';
             }
             log.Method__c = logMethod;
@@ -372,7 +364,6 @@ public without sharing class WingspanRestUtility {
     
     private class InheritanceStrategyWrapper{
         public String organizationAccountConfig = '';
-        public String wingspanAccount = '';
     }
     
     // attributes controlled by Custom Settings...
