@@ -14,7 +14,7 @@
         <value>True</value>
     </summaryFilterItems>
     <summaryForeignKey>NSP_Sub_Client__c.NSP_Account__c</summaryForeignKey>
-    <summaryOperation>sum</summaryOperation>
+    <summaryOperation>max</summaryOperation>
     <trackHistory>false</trackHistory>
     <type>Summary</type>
 </CustomField>
