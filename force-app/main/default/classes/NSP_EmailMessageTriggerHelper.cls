@@ -135,14 +135,18 @@ public with sharing class NSP_EmailMessageTriggerHelper {
             //
             List<String> bpsCaseTier1Categories = new List<String>();
             List<String> bpsCaseTier2Categories = new List<String>();
+            List<String> bpsCaseTier3Categories = new List<String>();
             Integer tier1Days= 14;
             Integer tier2Days = 30;
+            Integer tier3Days = 90;
             Case_Settings__c caseSetting = Case_Settings__c.getInstance(UserInfo.getUserId());
             if(caseSetting != null) {
                 bpsCaseTier1Categories = String.isNotBlank(caseSetting.BPS_Case_Tier_1_Categories__c) ? caseSetting.BPS_Case_Tier_1_Categories__c.split(','): new List<String>();
                 bpsCaseTier2Categories = String.isNotBlank(caseSetting.BPS_Case_Tier_2_Categories__c) ? caseSetting.BPS_Case_Tier_2_Categories__c.split(','): new List<String>();
+                bpsCaseTier3Categories = String.isNotBlank(caseSetting.BPS_Case_Tier_3_Categories__c) ? caseSetting.BPS_Case_Tier_3_Categories__c.split(','): new List<String>();                
                 tier1Days = caseSetting.BPS_Case_Tier_1_Reopen_Days__c != null ? caseSetting.BPS_Case_Tier_1_Reopen_Days__c.intValue() : 14;
                 tier2Days = caseSetting.BPS_Case_Tier_2_Reopen_Days__c != null ? caseSetting.BPS_Case_Tier_2_Reopen_Days__c.intValue() : 30;
+                tier3Days = caseSetting.BPS_Case_Tier_3_Reopen_Days__c != null ? caseSetting.BPS_Case_Tier_3_Reopen_Days__c.intValue() : 90;
             }
             //
             List<Case> casesToUpdate = new List<Case>();
@@ -172,6 +176,7 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                                 Integer daysBetween = (currentCase.ClosedDate.date()).daysBetween( eMessage.MessageDate.date() );
                                 if ( ( bpsCaseTier1Categories.contains( currentCase.NSP_Category__c ) && ( daysBetween <= tier1Days ) )
                                     || ( bpsCaseTier2Categories.contains( currentCase.NSP_Category__c ) && ( daysBetween <= tier2Days ) )
+                                    || ( bpsCaseTier3Categories.contains( currentCase.NSP_Category__c ) && ( daysBetween <= tier3Days ) )
                                     )
                                 {
                                     currentCase.Status = REOPENED;
@@ -196,6 +201,7 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                                 } else if (
                                     ( bpsCaseTier1Categories.contains( currentCase.NSP_Category__c ) && ( daysBetween > tier1Days ) )
                                     || ( bpsCaseTier2Categories.contains( currentCase.NSP_Category__c ) && ( daysBetween > tier2Days ) )
+                                    || ( bpsCaseTier3Categories.contains( currentCase.NSP_Category__c ) && ( daysBetween > tier3Days ) )
                                     )
                                 {
                                     currentCase.NSP_Response_After_Close__c = true;
