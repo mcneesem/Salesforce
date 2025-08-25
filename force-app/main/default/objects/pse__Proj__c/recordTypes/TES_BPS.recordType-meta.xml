@@ -386,6 +386,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>HRCore Client Engagement Y1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HRCore Client Engagement Y2%2B</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Handbook</fullName>
             <default>false</default>
         </values>

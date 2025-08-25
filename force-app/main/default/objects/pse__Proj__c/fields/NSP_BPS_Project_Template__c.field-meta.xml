@@ -47,6 +47,16 @@
                 <label>Handbook</label>
             </value>
             <value>
+                <fullName>HRCore Client Engagement Y1</fullName>
+                <default>false</default>
+                <label>HRCore Client Engagement Y1</label>
+            </value>
+            <value>
+                <fullName>HRCore Client Engagement Y2+</fullName>
+                <default>false</default>
+                <label>HRCore Client Engagement Y2+</label>
+            </value>
+            <value>
                 <fullName>HR Process Mapping</fullName>
                 <default>false</default>
                 <label>HR Process Mapping</label>
