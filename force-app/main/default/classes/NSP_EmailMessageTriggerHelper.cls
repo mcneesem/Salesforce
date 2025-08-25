@@ -306,19 +306,31 @@ public with sharing class NSP_EmailMessageTriggerHelper {
         }
         if ( String.isNotBlank( queueName ) && ( mapOfQueueNameToQueueId != null ) ) {
             if ( currentOwnerId != null ) {
-                if ( Id.valueOf( currentOwnerId ).getSObjectType() == User.getSObjectType() ) {
-                    if ( ( mapOfUserIdToUserRecord != null )
-                        && mapOfUserIdToUserRecord.containsKey( currentOwnerId )
-                        )
-                    {
-                        User userRecord = mapOfUserIdToUserRecord.get( currentOwnerId );
-                        if ( ( userRecord != null ) && !userRecord.IsActive) {
-                            response = mapOfQueueNameToQueueId.get( queueName );
-                        }
-                    }
+                if ( ( Id.valueOf( currentOwnerId ).getSObjectType() == User.getSObjectType() )
+                    && !NSP_EmailMessageTriggerHelper.isUserActive( currentOwnerId , mapOfUserIdToUserRecord )
+                    )
+                {
+                    // change the owner to a queue when the current owner is not active...
+                    response = mapOfQueueNameToQueueId.get( queueName );
                 }
             } else {
                 response = mapOfQueueNameToQueueId.get( queueName );
+            }
+        }
+        return response;
+    }
+
+    // helper method to reduce sonar cognitive complexity...
+    private static Boolean isUserActive( Id userId , Map<Id,User> mapOfUserIdToUserRecord ) {
+        Boolean response = false;
+        if ( ( userId != null )
+            && ( mapOfUserIdToUserRecord != null )
+            && mapOfUserIdToUserRecord.containsKey( userId )
+            )
+        {
+            User userRecord = mapOfUserIdToUserRecord.get( userId );
+            if ( userRecord != null ) {
+                response = userRecord.IsActive;
             }
         }
         return response;
