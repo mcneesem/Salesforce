@@ -270,9 +270,9 @@ public with sharing class NSP_EmailMessageTriggerHelper {
         Boolean response = false;
         if ( String.isNotBlank( caseCategory ) && ( daysBetween != null ) ) {
             response = (
-                ( NSP_EmailMessageTriggerHelper.bpsCaseTier1Categories.contains( currentCase.NSP_Category__c ) && ( daysBetween <= NSP_EmailMessageTriggerHelper.tier1Days ) )
-                || ( NSP_EmailMessageTriggerHelper.bpsCaseTier2Categories.contains( currentCase.NSP_Category__c ) && ( daysBetween <= NSP_EmailMessageTriggerHelper.tier2Days ) )
-                || ( NSP_EmailMessageTriggerHelper.bpsCaseTier3Categories.contains( currentCase.NSP_Category__c ) && ( daysBetween <= NSP_EmailMessageTriggerHelper.tier3Days ) )
+                ( NSP_EmailMessageTriggerHelper.bpsCaseTier1Categories.contains( caseCategory ) && ( daysBetween <= NSP_EmailMessageTriggerHelper.tier1Days ) )
+                || ( NSP_EmailMessageTriggerHelper.bpsCaseTier2Categories.contains( caseCategory ) && ( daysBetween <= NSP_EmailMessageTriggerHelper.tier2Days ) )
+                || ( NSP_EmailMessageTriggerHelper.bpsCaseTier3Categories.contains( caseCategory ) && ( daysBetween <= NSP_EmailMessageTriggerHelper.tier3Days ) )
             );
         }
         return response;
@@ -283,9 +283,9 @@ public with sharing class NSP_EmailMessageTriggerHelper {
         Boolean response = false;
         if ( String.isNotBlank( caseCategory ) && ( daysBetween != null ) ) {
             response = (
-                ( NSP_EmailMessageTriggerHelper.bpsCaseTier1Categories.contains( currentCase.NSP_Category__c ) && ( daysBetween > NSP_EmailMessageTriggerHelper.tier1Days ) )
-                || ( NSP_EmailMessageTriggerHelper.bpsCaseTier2Categories.contains( currentCase.NSP_Category__c ) && ( daysBetween > NSP_EmailMessageTriggerHelper.tier2Days ) )
-                || ( NSP_EmailMessageTriggerHelper.bpsCaseTier3Categories.contains( currentCase.NSP_Category__c ) && ( daysBetween > NSP_EmailMessageTriggerHelper.tier3Days ) )
+                ( NSP_EmailMessageTriggerHelper.bpsCaseTier1Categories.contains( caseCategory ) && ( daysBetween > NSP_EmailMessageTriggerHelper.tier1Days ) )
+                || ( NSP_EmailMessageTriggerHelper.bpsCaseTier2Categories.contains( caseCategory ) && ( daysBetween > NSP_EmailMessageTriggerHelper.tier2Days ) )
+                || ( NSP_EmailMessageTriggerHelper.bpsCaseTier3Categories.contains( caseCategory ) && ( daysBetween > NSP_EmailMessageTriggerHelper.tier3Days ) )
             );
         }
         return response;
