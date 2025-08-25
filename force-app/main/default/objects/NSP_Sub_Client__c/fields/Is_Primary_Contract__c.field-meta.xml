@@ -3,11 +3,14 @@
     <fullName>Is_Primary_Contract__c</fullName>
     <description>AZD-433904</description>
     <formula>IF(
-    Primary_Contract__c ,Primary_Contract__c ,
-    IF(
-       (ISPICKVAL(Source__c, &quot;AIMS&quot;) ) ,( RIGHT( NSP_Sub_Client__c , 2 ) == &apos;00&apos; ) ,false
-      )
-  )</formula>
+  Primary_Contract__c ,
+  Primary_Contract__c ,
+  IF(
+    ISPICKVAL( Source__c , &quot;AIMS&quot; ) ,
+    ( RIGHT( NSP_Sub_Client__c , 2 ) == &apos;00&apos; ) ,
+    false
+  )
+)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Is Primary Contract</label>
     <trackHistory>false</trackHistory>
