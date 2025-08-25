@@ -1,10 +1,3 @@
-/**
-* @description  :  Controller class for all Account Profile related methods
-* @date 10/28/2022
-* Author : Nishkarsh Manav
-* Name : NSP_AccountProfileController
-* Updated Date : 8/18/2025
-*/
 public with sharing class NSP_AccountProfileController {
     // test w/ NSP_AccountProfileControllerTest (89%)
 
@@ -12,11 +5,6 @@ public with sharing class NSP_AccountProfileController {
     @TestVisible
     private static Map<String,Schema.SObjectField> ACC_FIELDS = Schema.SObjectType.Account.fields.getMap();
 
-    /**
-     * @description - Returns all the relevant data of given account.
-     * @param {String} - accId - Id of the account
-     * @return Map<String, Map<String,String>> - Map wih field API name as key and all details in value.
-     */
     private static final String TYPE = 'type';
     private static final String CHECKBOX = 'checkbox';
     private static final String TRUE_VALUE = 'TRUE';
@@ -301,13 +289,22 @@ public with sharing class NSP_AccountProfileController {
         }
     }
 
-    private static  NSP_Sub_Client__c getSubClientByAssetId(String assetId){
-        List<NSP_Sub_Client__c> subclients = [SELECT NSP_Margin__c, NSP_Part_Time_Margin__c,
-            NSP_Reserve__c,NSP_Part_Time_Reserve__c, NSP_Benefit_Package_Name__c,
-            NSP_Client_Wait_Period__c FROM NSP_Sub_Client__c
-            WHERE NSP_Asset__c =: assetId AND Is_Primary_Contract__c = true];
-
-            return subclients.isEmpty() ? null : subclients[0];
+    private static  NSP_Sub_Client__c getSubClientByAssetId( String assetId ) {
+        List<NSP_Sub_Client__c> subclients = [
+            SELECT
+                NSP_Margin__c ,
+                NSP_Part_Time_Margin__c ,
+                NSP_Reserve__c ,
+                NSP_Part_Time_Reserve__c ,
+                NSP_Benefit_Package_Name__c ,
+                NSP_Client_Wait_Period__c
+            FROM NSP_Sub_Client__c
+            WHERE (
+                ( NSP_Asset__c = :assetId )
+                AND ( Is_Primary_Contract__c = true )
+            )
+        ];
+        return subclients.isEmpty() ? null : subclients[0];
     }
 
     private static String getAccGroupMemberNames(String accId){
