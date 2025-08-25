@@ -588,7 +588,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Renewal_Probability_Account_Group__c</fieldItem>
-                <identifier>RecordRenewal_Probability_Account_Group_cField</identifier>
+                <identifier>RecordRenewal_Probability_Account_Group__cField</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.Name}</leftValue>
