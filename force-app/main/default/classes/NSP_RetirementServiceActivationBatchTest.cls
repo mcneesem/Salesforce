@@ -3,7 +3,6 @@ private class NSP_RetirementServiceActivationBatchTest {
     @TestSetup
     private static void setupTestData() {
         Order_Settings__c settings = Order_Settings__c.getOrgDefaults();
-        settings.Bypass_Rule_PreventStatusChange__c = true;
         upsert settings;
         NSP_InvoiceTriggerHandler.TriggerDisabled = true;
         NSP_AssetTriggerHandler.TriggerDisabled = true;
