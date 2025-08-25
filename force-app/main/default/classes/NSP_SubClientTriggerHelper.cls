@@ -19,25 +19,25 @@ public class NSP_SubClientTriggerHelper {
         }
     }
 
-     Public Void updatePaperlessBatchDateBeforeInsertOrUpdate(List<NSP_Sub_Client__c> newList , Map<Id, NSP_Sub_Client__c> OldMap){
+    public Void updatePaperlessBatchDateBeforeInsertOrUpdate( List<NSP_Sub_Client__c> newList , Map<Id,NSP_Sub_Client__c> oldMap ) {
          Set<Id> AssetIds = New Set<Id>();
          for(NSP_Sub_Client__c Sc : newList){
-             If(Sc.NSP_Asset__c != null){
+             if(Sc.NSP_Asset__c != null){
                  AssetIds.Add(Sc.NSP_Asset__c);
              }
          }
          Map<Id , Asset> AssetMap = New Map<Id , Asset>();
-         For(Asset Ast : [Select Id, NSP_Account_Status__c FROM Asset WHERE Id =: AssetIds]){
+         for(Asset Ast : [Select Id, NSP_Account_Status__c FROM Asset WHERE Id =: AssetIds]){
               AssetMap.Put(Ast.Id , Ast);
        }
 
-        For(NSP_Sub_Client__c SubClientObj : newList){
+        for(NSP_Sub_Client__c SubClientObj : newList){
 
-            If((SubClientObj.NSP_Account_Status__c != null && OldMap == null && AssetMap.containsKey(SubClientObj.NSP_Asset__c) &&
+            if((SubClientObj.NSP_Account_Status__c != null && oldMap == null && AssetMap.containsKey(SubClientObj.NSP_Asset__c) &&
                AssetMap.get(SubClientObj.NSP_Asset__c).NSP_Account_Status__c == 'Active') ||
-                (OldMap != null && OldMap.containskey(SubClientObj.Id) && AssetMap.containsKey(SubClientObj.NSP_Asset__c) &&
+                (oldMap != null && oldMap.containskey(SubClientObj.Id) && AssetMap.containsKey(SubClientObj.NSP_Asset__c) &&
                AssetMap.get(SubClientObj.NSP_Asset__c).NSP_Account_Status__c == 'Active' &&
-                SubClientObj.NSP_Account_Status__c != OldMap.get(SubClientObj.Id).NSP_Account_Status__c)){
+                SubClientObj.NSP_Account_Status__c != oldMap.get(SubClientObj.Id).NSP_Account_Status__c)){
                 SubClientObj.NSP_Paperless_Batch_Date__c = System.Today();
             }
         }
