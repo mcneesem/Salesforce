@@ -7,6 +7,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>pse__Project_Task__c.Renewal_Probability_Account_Group__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>pse__Project_Task__c.Task_Order__c</field>
         <readable>true</readable>
