@@ -185,6 +185,7 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                                         currentCase.OwnerId ,
                                         eMessage ,
                                         mapOfEmailAddressToQueueName ,
+                                        mapOfQueueNameToQueueId ,
                                         mapOfUserIdToUserRecord
                                     );
                                     casesToUpdate.add( currentCase );
@@ -294,7 +295,8 @@ public with sharing class NSP_EmailMessageTriggerHelper {
         Id currentOwnerId ,
         EmailMessage eMessage ,
         Map<String,String> mapOfEmailAddressToQueueName ,
-        Map<String,String> mapOfQueueNameToQueueId
+        Map<String,String> mapOfQueueNameToQueueId ,
+        Map<Id,User> mapOfUserIdToUserRecord
         )
     {
         Id response = currentOwnerId;
@@ -305,9 +307,14 @@ public with sharing class NSP_EmailMessageTriggerHelper {
         if ( String.isNotBlank( queueName ) && ( mapOfQueueNameToQueueId != null ) ) {
             if ( currentOwnerId != null ) {
                 if ( Id.valueOf( currentOwnerId ).getSObjectType() == User.getSObjectType() ) {
-                    User userRecord = mapOfUserIdToUserRecord.get( currentOwnerId );
-                    if ( ( userRecord != null ) && !userRecord.IsActive) {
-                        response = mapOfQueueNameToQueueId.get( queueName );
+                    if ( ( mapOfUserIdToUserRecord != null )
+                        && mapOfUserIdToUserRecord.containsKey( currentOwnerId )
+                        )
+                    {
+                        User userRecord = mapOfUserIdToUserRecord.get( currentOwnerId );
+                        if ( ( userRecord != null ) && !userRecord.IsActive) {
+                            response = mapOfQueueNameToQueueId.get( queueName );
+                        }
                     }
                 }
             } else {
