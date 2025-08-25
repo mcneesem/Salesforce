@@ -181,22 +181,12 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                                 {
                                     currentCase.Status = REOPENED;
                                     currentCase.NSP_Case_Reopened_EmaiToCase__c = true;
-                                    String queueName = '';
-                                    if ( mapOfEmailAddressToQueueName != null ) {
-                                        queueName = mapOfEmailAddressToQueueName.get( eMessage.ToAddress );
-                                    }
-                                    if ( String.isNotBlank( queueName ) && ( mapOfQueueNameToQueueId != null ) ) {
-                                        if ( currentCase.OwnerId != null ) {
-                                            if ( Id.valueOf(currentCase.OwnerId).getSObjectType() == User.getSObjectType() ) {
-                                                User user = mapOfUserIdToUserRecord.get( currentCase.OwnerId );
-                                                if ( ( user != null ) && !user.IsActive) {
-                                                    currentCase.OwnerId = mapOfQueueNameToQueueId.get( queueName );
-                                                }
-                                            }
-                                        } else {
-                                            currentCase.OwnerId = mapOfQueueNameToQueueId.get( queueName );
-                                        }
-                                    }
+                                    currentCase.OwnerId = NSP_EmailMessageTriggerHelper.getQueueOwnerId(
+                                        currentCase.OwnerId ,
+                                        eMessage ,
+                                        mapOfEmailAddressToQueueName ,
+                                        mapOfUserIdToUserRecord
+                                    );
                                     casesToUpdate.add( currentCase );
                                 } else if (
                                     ( bpsCaseTier1Categories.contains( currentCase.NSP_Category__c ) && ( daysBetween > tier1Days ) )
@@ -255,7 +245,12 @@ public with sharing class NSP_EmailMessageTriggerHelper {
             }
             if ( !casesToUpdate.isEmpty() ) {
                 try {
-                    Database.update(casesToUpdate, false);
+                    List<Database.SaveResult> results = Database.update( casesToUpdate , false );
+                    NSP_ErrorLogHandler.logResults(
+                        NSP_EmailMessageTriggerHelper.class.getName() ,
+                        'reOpenOrMarkResponseAfterCloseTrue:update' ,
+                        results
+                    );
                 } catch ( Exception e ) {
                     NSP_ErrorLogHandler.logException(
                         NSP_EmailMessageTriggerHelper.class.getName() ,
@@ -292,6 +287,34 @@ public with sharing class NSP_EmailMessageTriggerHelper {
             isPresent = True;
         }
         return isPresent;
+    }
+
+    // helper method to reduce sonar cognitive complexity...
+    private static Id getQueueOwnerId(
+        Id currentOwnerId ,
+        EmailMessage eMessage ,
+        Map<String,String> mapOfEmailAddressToQueueName ,
+        Map<String,String> mapOfQueueNameToQueueId
+        )
+    {
+        Id response = currentOwnerId;
+        String queueName = '';
+        if ( ( eMessage != null ) && ( mapOfEmailAddressToQueueName != null ) ) {
+            queueName = mapOfEmailAddressToQueueName.get( eMessage.ToAddress );
+        }
+        if ( String.isNotBlank( queueName ) && ( mapOfQueueNameToQueueId != null ) ) {
+            if ( currentOwnerId != null ) {
+                if ( Id.valueOf( currentOwnerId ).getSObjectType() == User.getSObjectType() ) {
+                    User userRecord = mapOfUserIdToUserRecord.get( currentOwnerId );
+                    if ( ( userRecord != null ) && !userRecord.IsActive) {
+                        response = mapOfQueueNameToQueueId.get( queueName );
+                    }
+                }
+            } else {
+                response = mapOfQueueNameToQueueId.get( queueName );
+            }
+        }
+        return response;
     }
 
     //
