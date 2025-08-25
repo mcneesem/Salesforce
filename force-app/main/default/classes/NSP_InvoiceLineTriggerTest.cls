@@ -14,7 +14,6 @@ Description    :        This is the test class Invoice Line Trigger
     @testSetup private static void setupTestData() {
         Order_Settings__c orderSetting = Order_Settings__c.getOrgDefaults();
         orderSetting.EffectiveDateStartOfMonth__c = true;
-        orderSetting.Bypass_Rule_PreventStatusChange__c = true;
         upsert orderSetting;
         
         //Disable unnesessary triggers

@@ -5,7 +5,6 @@
     <columns>SETUP_TYPE</columns>
     <columns>EffectiveDateStartOfMonth__c</columns>
     <columns>Open_Order_Report_ID__c</columns>
-    <columns>Bypass_Rule_PreventStatusChange__c</columns>
     <filterScope>Everything</filterScope>
     <label>All Order Settings</label>
 </ListView>

@@ -11,7 +11,6 @@ private class NSP_OrderItemFreePeriodCalculatorTest{
     private static void testSetup(){
         
         Order_Settings__c sett = new Order_Settings__c();
-        sett.Bypass_Rule_PreventStatusChange__c = true;
         sett.EffectiveDateStartOfMonth__c = true;
         insert sett;
         
