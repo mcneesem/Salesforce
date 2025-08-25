@@ -2,7 +2,7 @@
  * Represents the Sub Client trigger helper which handles all the logic.
  * Created by : Hemali Patel
  * Created Date : 6/11/2021
- * Updated Date : 8/18/2025
+ * Updated Date : 8/25/2025
 */
 
 public class NSP_SubClientTriggerHelper {
@@ -167,44 +167,49 @@ public class NSP_SubClientTriggerHelper {
             }
             //clear asset termination form section values
             if(!mapOfSubAccount.isEmpty()){
-                for(Asset asset: [SELECT AccountId,NSP_Renewal_Date__c,NSP_Client__c, NSP_Verbal_Term_recd__c,NSP_Verbal_Term_Date__c,NSP_Verbal_Term_Updatedby__c,
+                for(Asset assetRec: [SELECT AccountId,NSP_Renewal_Date__c,NSP_Client__c, NSP_Verbal_Term_recd__c,NSP_Verbal_Term_Date__c,NSP_Verbal_Term_Updatedby__c,
                               NSP_Written_Term_recd__c,NSP_Written_Term_Date__c,NSP_Written_Termination_Updated_By__c,
                               NSP_Anticipated_Date_Of_Termination__c,NSP_Reason_for_Term__c,NSP_Pending_Termination__c FROM Asset WHERE AccountId IN:mapOfSubAccount.keyset()  ]){
 
-                    if (mapOfSubAccount.get(asset.AccountId).NSP_Renewal_Date__c >= asset.NSP_Anticipated_Date_Of_Termination__c) {
-            				asset = updateAssetFields(asset);
-           					updatedAssetList.add(asset);
+                    if (mapOfSubAccount.get(assetRec.AccountId).NSP_Renewal_Date__c >= assetRec.NSP_Anticipated_Date_Of_Termination__c) {
+            				assetRec = updateAssetFields(assetRec);
+           					updatedAssetList.add(assetRec);
        				}
                 }
             }
             if(!updatedAssetList.isEmpty()){
-                database.update(updatedAssetList);
-           }
-      } catch (Exception ex) {
-                NSP_ErrorLogHandler.logSaveException('NSP_SubClientTriggerHelper', 'updateAssetTerminationForm', ex.getMessage());
+                List<Database.SaveResult> results = Database.update(updatedAssetList ,false);
+                    NSP_ErrorLogHandler.logResults(
+                        NSP_SubClientTriggerHelper.class.getName() ,
+                        'updateAssetTerminationForm:update' ,
+                        results
+                    );
+           	}
+      } catch (Exception e) {
+        NSP_ErrorLogHandler.logException(NSP_SubClientTriggerHelper.class.getName() ,'updateAssetTerminationForm' ,e);
       }
 
     }
 
-    private Asset updateAssetFields(Asset asset) {
-        if (asset.NSP_Verbal_Term_recd__c) {
-            asset.NSP_Verbal_Term_recd__c =false;
-            asset.NSP_Verbal_Term_Date__c=null;
-            asset.NSP_Verbal_Term_Updatedby__c=Label.NSP_Deployment_Manager;
-            asset.NSP_Anticipated_Date_Of_Termination__c=null;
-            asset.NSP_Reason_for_Term__c=null;
-            asset.NSP_Pending_Termination__c=false;
+    private Asset updateAssetFields(Asset assetRec) {
+        if (assetRec.NSP_Verbal_Term_recd__c) {
+            assetRec.NSP_Verbal_Term_recd__c =false;
+            assetRec.NSP_Verbal_Term_Date__c=null;
+            assetRec.NSP_Verbal_Term_Updatedby__c=Label.NSP_Deployment_Manager;
+            assetRec.NSP_Anticipated_Date_Of_Termination__c=null;
+            assetRec.NSP_Reason_for_Term__c=null;
+            assetRec.NSP_Pending_Termination__c=false;
         }
-        if (asset.NSP_Written_Term_recd__c) {
-            asset.NSP_Written_Term_recd__c =false;
-            asset.NSP_Written_Term_Date__c=null;
-            asset.NSP_Written_Termination_Updated_By__c=Label.NSP_Deployment_Manager;
-            asset.NSP_Anticipated_Date_Of_Termination__c=null;
-            asset.NSP_Reason_for_Term__c=null;
-            asset.NSP_Pending_Termination__c=false;
+        if (assetRec.NSP_Written_Term_recd__c) {
+            assetRec.NSP_Written_Term_recd__c =false;
+            assetRec.NSP_Written_Term_Date__c=null;
+            assetRec.NSP_Written_Termination_Updated_By__c=Label.NSP_Deployment_Manager;
+            assetRec.NSP_Anticipated_Date_Of_Termination__c=null;
+            assetRec.NSP_Reason_for_Term__c=null;
+            assetRec.NSP_Pending_Termination__c=false;
         }
 
-        return asset;
+        return assetRec;
 	}
 
 }
