@@ -948,6 +948,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_Sub_Client__c.Is_Primary_Contract__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Sub_Client__c.Middleware_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
