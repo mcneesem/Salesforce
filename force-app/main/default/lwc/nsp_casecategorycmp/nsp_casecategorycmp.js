@@ -7,8 +7,9 @@ import DETAIL_FIELD from '@salesforce/schema/Case.NSP_Detail__c';
 import VERSION_FIELD from '@salesforce/schema/Case.NSP_Version__c';
 import RECORD_TYPE_ID_FIELD from '@salesforce/schema/Case.RecordTypeId';
 import ID_FIELD from '@salesforce/schema/Case.Id';
+import Toast from 'lightning/toast';
 
-export default class NSP_CaseCategoryCmp extends LightningElement {
+export default class NSP_caseCategoryCmp extends LightningElement {
     // HARD CODED
     label = {
         header : "Case Category/Subcategory/Detail",
@@ -69,8 +70,9 @@ export default class NSP_CaseCategoryCmp extends LightningElement {
     cancel() {
         this.view = true;
         this.oCase = { ...this.originalCase };
-        this.showCaseDetail = this.oCase.NSP_Detail__c ? true : false;
-        this.showCaseVersion = this.oCase.NSP_Version__c ? true : false;
+        this.showCaseDetail = Boolean(this.oCase.NSP_Detail__c);
+        this.showCaseVersion = Boolean(this.oCase.NSP_Version__c);
+
         
     }
 
@@ -114,13 +116,10 @@ export default class NSP_CaseCategoryCmp extends LightningElement {
     }
     
     handleError(error) {
-        this.isLoading = false;
-        let message = errorMessage;
-        
-        if (error.body && error.body.message) {
-            message = error.body.message;
-        }
-        
-        console.error('Error:', error);
+        Toast.show({
+            message: error,
+            mode: 'sticky',
+            variant: 'error'
+        }, this);
     }
 }
