@@ -138,6 +138,13 @@
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varOpportunityToUpdate.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varOpportunity.Id</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Check_for_HR360_Primary_Product</targetReference>
         </connector>
@@ -176,6 +183,13 @@
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varOpportunityToUpdate.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varOpportunity.Id</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -246,6 +260,7 @@
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
@@ -279,7 +294,6 @@
             </value>
         </assignmentItems>
         <connector>
-            <isGoTo>true</isGoTo>
             <targetReference>Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
@@ -584,7 +598,7 @@
             <field>DeveloperName</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Event_Create_Update_Discovery_Call</stringValue>
+                <stringValue>Event_Create_Update_Discovery_Call_Notification</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -608,7 +622,7 @@
             <field>GroupId</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>00GPb00000CfwnV</stringValue>
+                <stringValue>00GPb00000CfwnVMAR</stringValue>
             </value>
         </filters>
         <filters>
@@ -714,8 +728,8 @@
     </subflows>
     <textTemplates>
         <name>customNotificationBody</name>
-        <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;p&gt;The Discovery Call for {!varOpportunity.Name} has been marked as complete. Please confirm sales leadership&apos;s attendance and debrief status with the seller on the opportunity.&lt;/p&gt;</text>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>The Discovery Call for {!varOpportunity.Name} has been marked as complete. Please confirm sales leadership&apos;s attendance and debrief status with the seller on the opportunity.</text>
     </textTemplates>
     <textTemplates>
         <name>emailBodyTemplate</name>
