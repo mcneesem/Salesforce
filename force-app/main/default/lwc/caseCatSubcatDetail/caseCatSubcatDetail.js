@@ -1,4 +1,4 @@
-import { LightningElement, api, wire } from 'lwc';
+import { LightningElement , api , wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import autoPopulateAsset from '@salesforce/apex/NSP_CustomCaseCreationPageController.autoPopulateAsset';
 import getRelatedCategory from '@salesforce/apex/NSP_CustomCaseCreationPageController.getRelatedCategory';
@@ -55,6 +55,8 @@ export default class CaseCatSubcatDetail extends LightningElement {
     isConnectedWithShowAllCategory = false;
     isConnectedWithShowAllSubCategory = false;
 
+     @api variant;
+
     verifyCompensationQueue(){
         isUserInQueue()
         .then(result => {
@@ -76,12 +78,13 @@ export default class CaseCatSubcatDetail extends LightningElement {
                 } 
                 if(element.NSP_UserTitle__c == 'BPS User'){
                     this.isBPSUser = true;
-                }else{
+                } else {
                     this.isBPSUser = false;
                 }
-                this.verifyCompensationQueue();
-                this.getCatDependenciesMap();
             });
+            // Call getCatDependenciesMap here after data is processed
+            this.verifyCompensationQueue();
+            this.getCatDependenciesMap();
         }
     }
 
@@ -170,6 +173,24 @@ export default class CaseCatSubcatDetail extends LightningElement {
             );
         });
     
+    }
+
+    dispatchSelectionUpdate() {
+        this.dispatchEvent(
+            new CustomEvent(
+                'selectionchange' ,
+                {
+                    detail: {
+                        category: this.selectedCategory ,
+                        subCategory: this.selectedSubCategory ,
+                        detail: this.selectedDetail ,
+                        version: this.selectedVersion,
+                        detailOptions: this.detailOptions,
+                        versionOptions: this.versionOptions
+                    }
+                }
+            )
+        );
     }
 
     handleChange(event) {
@@ -452,21 +473,47 @@ export default class CaseCatSubcatDetail extends LightningElement {
                 this.getFiteredSubCatValues();
             }
             const localKey = this.selectedCategory + '-' + this.selectedSubCategory;
-            if(this.selectedDetail!==undefined && this.selectedDetail!==null){
-                this.showDetail = true;
+            if((this.selectedDetail!==undefined && this.selectedDetail!==null) || (this.variant === 'sidebar' && (this.selectedDetail === null || this.selectedDetail === undefined))){
                 if(this.categoryWrapper.mCatSubToDetails!==undefined){
                     this.detailOptions = this.createOptions(
                     this.categoryWrapper.mCatSubToDetails[localKey]
                     );
+
+                    this.showDetail = this.detailOptions.length > 0;
                 }
             }
-            if(this.selectedVersion!==undefined && this.selectedVersion!==null){
-                this.showVersion = true;
+            if((this.selectedVersion!==undefined && this.selectedVersion!==null) || (this.variant === 'sidebar' && (this.selectedVersion === null || this.selectedVersion === undefined))){
                 this.versionOptions = this.createOptions(
                     this.categoryWrapper.mCatSubDetailToVersions[localKey + '-' + this.selectedDetail]
                 );
+
+                this.showVersion = this.versionOptions.length > 0;
             }
             this.handleDisplayConfidentialCheckBox();
         }
+
+        if (this.variant === 'sidebar') {
+            console.log(`calling from Rendered call back`);
+            
+            this.dispatchSelectionUpdate();
+        }
     }
+
+    get showTitle() {
+        return ( this.variant !== "sidebar" );
+    }
+
+    get smallDeviceSize() {
+        return "12";
+    }
+
+    get mediumDeviceSize() {
+        return ( ( this.variant === "sidebar" ) ? this.smallDeviceSize : "6" );
+    }
+
+    get largeDeviceSize() {
+       return this.mediumDeviceSize;
+    }
+
 }
+//
