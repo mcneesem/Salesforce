@@ -242,6 +242,7 @@
     <description>This screen flow perform API call to Wingspan App for Customer Stakeholder Validation only</description>
     <environments>Default</environments>
     <interviewLabel>Validate Customer Stakeholder {!$Flow.CurrentDateTime}</interviewLabel>
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Validate Customer Stakeholder</label>
     <processMetadataValues>
         <name>BuilderType</name>

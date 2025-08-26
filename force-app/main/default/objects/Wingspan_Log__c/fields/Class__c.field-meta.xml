@@ -3,9 +3,12 @@
     <fullName>Class__c</fullName>
     <description>Name of Apex class.</description>
     <encryptionScheme>None</encryptionScheme>
+    <externalId>false</externalId>
     <inlineHelpText>Name of Apex class.</inlineHelpText>
     <label>Class</label>
+    <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>TextArea</type>
+    <type>Text</type>
+    <unique>false</unique>
 </CustomField>

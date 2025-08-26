@@ -3,9 +3,12 @@
     <fullName>Response_Status__c</fullName>
     <description>HTTP response status</description>
     <encryptionScheme>None</encryptionScheme>
+    <externalId>false</externalId>
     <inlineHelpText>HTTP response status</inlineHelpText>
     <label>Response Status</label>
+    <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>TextArea</type>
+    <type>Text</type>
+    <unique>false</unique>
 </CustomField>

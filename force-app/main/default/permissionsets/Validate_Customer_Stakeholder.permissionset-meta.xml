@@ -51,6 +51,10 @@
         <field>Opportunity.NSP_Number_of_Employees__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Validate_Customer_Stakeholder</flow>
+    </flowAccesses>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Validate Customer Stakeholder</label>
 </PermissionSet>
