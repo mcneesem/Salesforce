@@ -50,9 +50,9 @@ export default class NSP_casecategorycmp extends LightningElement {
                 NSP_Detail__c: data.fields.NSP_Detail__c.value,
                 NSP_Version__c: data.fields.NSP_Version__c.value
             };
-
-            this.showCaseDetail = this.oCase.NSP_Detail__c ? true : false;
-            this.showCaseVersion = this.oCase.NSP_Version__c ? true : false;
+            
+            this.showCaseDetail = Boolean(this.oCase.NSP_Detail__c);
+            this.showCaseVersion = Boolean(this.oCase.NSP_Version__c);
 
             this.originalCase = { ...this.oCase };
             this.isLoading = false;
