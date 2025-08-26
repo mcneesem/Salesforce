@@ -7,7 +7,7 @@ private class WingspanRestUtilityHelperTest {
         orderSetting.EffectiveDateStartOfMonth__c = true;
         orderSetting.Bypass_Rule_PreventStatusChange__c = true;
         upsert orderSetting;
-        
+
         Wingspan_Settings__c wSett = new Wingspan_Settings__c();
         wSett.BaseUrl__c = 'https://stagingapi.wingspan.app';
         wSett.IsEnabled__c = true;
@@ -15,12 +15,12 @@ private class WingspanRestUtilityHelperTest {
         wSett.UserId__c = 'uza55khX3ydV0JEO7BouF';
         wSett.Name = 'Staging Record';
         insert wSett;
-        
+
         NSP_ContactTriggerHandler.TriggerDisabled = true;
         blng__BillingRule__c objBillingRule = NSP_TestHelper.createBillingRule();
         blng__RevenueRecognitionRule__c objRevRecRule =  NSP_TestHelper.createRevrecRule('1');
         blng__TaxRule__c objTaxRule = NSP_TestHelper.createRevTaxRule();
-        
+
         Account objaccount = NSP_TestHelper.createAccount(true);
         Contact cc = NSP_TestHelper.createContact(objaccount.id, true);
 
@@ -32,7 +32,7 @@ private class WingspanRestUtilityHelperTest {
         objproduct.SBQQ__BillingType__c = 'Arrears';
         objproduct.SBQQ__BillingFrequency__c = 'Monthly';
         insert objproduct;
-        
+
         Opportunity objOpprtunity = NSP_TestHelper.createOpenOpportunity(objaccount.Id,'New Business',true);
         PriceBookEntry objPbe     = NSP_TestHelper.createPriceBookEntry(objproduct.Id,200.0,true);
         SBQQ__Quote__c objQuote   = NSP_TestHelper.createCPQQuote(objaccount.Id,objOpprtunity.Id,true);
@@ -43,29 +43,28 @@ private class WingspanRestUtilityHelperTest {
         update objQuote;
         objOpprtunity.StageName = 'Closed Won';
         update objOpprtunity;
-        
+
         OrderItem ordItem = [SELECT id FROM OrderItem LIMIT 1];
-        
+
         NSP_AssetTriggerHandler.TriggerDisabled = true;
         Asset asset = new Asset();
         asset.NSP_Client__c = 'asset3';
         asset.opportunity__c = objOpprtunity.Id;
         asset.name = 'asset3';
         asset.AccountId = objaccount.id;
-        asset.ContactId = cc.id; 
-        
+        asset.ContactId = cc.id;
+
         insert asset;
-        
+
         asset.NSP_OrderProduct__c = ordItem.id;
         update asset;
-        
     }
-    
+
     @isTest
     private static void wingspanApiDirectorTest(){
         Asset asset = [SELECT id, NSP_OrderProduct__c FROM Asset LIMIT 1];
         Contact cc = [SELECT id FROM Contact LIMIT 1];
-		WingspanRestUtilityHelper.Input input = new WingspanRestUtilityHelper.Input();
+        WingspanRestUtilityHelper.Input input = new WingspanRestUtilityHelper.Input();
         input.contactId = cc.id;
         input.recordId = asset.id;
         input.validateContact = true;
@@ -75,4 +74,6 @@ private class WingspanRestUtilityHelperTest {
         List<WingspanRestUtilityHelper.Output> outputList = WingspanRestUtilityHelper.wingspanApiDirector(new List<WingspanRestUtilityHelper.Input>{input});
         test.stopTest();
     }
+
 }
+//
