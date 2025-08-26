@@ -4,7 +4,7 @@
     <active>true</active>
     <description>This validation ensures the order is change to Reviewed by Order Management team only after &quot;Rev Rec Rules Reviewed&quot; flag is checked.</description>
     <errorConditionFormula>AND(
-  NOT($Permission.Bypass_Order_Prevent_Status_Change) ,
+  NOT( $Permission.Bypass_Order_Prevent_Status_Change ) ,
   NOT( NSP_Rev_Rec_Rules_Reviewed__c ) ,
   ISCHANGED( Status ) ,
   OR(
