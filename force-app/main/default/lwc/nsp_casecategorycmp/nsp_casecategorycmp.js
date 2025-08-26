@@ -9,7 +9,7 @@ import RECORD_TYPE_ID_FIELD from '@salesforce/schema/Case.RecordTypeId';
 import ID_FIELD from '@salesforce/schema/Case.Id';
 import Toast from 'lightning/toast';
 
-export default class nsp_casecategorycmp extends LightningElement {
+export default class NspCaseCategoryCmp  extends LightningElement {
     // HARD CODED
     label = {
         header : "Case Category/Subcategory/Detail",
