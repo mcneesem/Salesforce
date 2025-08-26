@@ -433,11 +433,12 @@ public with sharing class NSP_ReportRequestWizardController {
             recordTypeIdSet.add(NSP_GenericRecordType.getRecordTypeId('NSP_ReportRequest__c','NSP_SeparationRequest'));
             recordTypeIdSet.add(NSP_GenericRecordType.getRecordTypeId('NSP_ReportRequest__c','NSP_SurveyRequest'));
             
-            NSP_ReportRequest__c request    =   [SELECT ID FROM NSP_ReportRequest__c WHERE ID = : reportRequestID AND RecordTypeId = :recordTypeIdSet LIMIT 1];
+            List<NSP_ReportRequest__c> requests    =   [SELECT ID FROM NSP_ReportRequest__c WHERE ID = : reportRequestID AND RecordTypeId = :recordTypeIdSet LIMIT 1];
             
             // Query results to check for the Report Reqeust with Seperarion Agreement Record Type
-            if(request <> null)
+            if(!requests?.isEmpty())
             {
+                NSP_ReportRequest__c request = requests[0];
                 List<ContentDocumentLink> lstConDocs = new List<ContentDocumentLink>();
             
                 // Getting the content document links related to Report Request record for content document ID
