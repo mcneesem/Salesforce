@@ -5,7 +5,21 @@
             <desktopEnabled>true</desktopEnabled>
             <mobileEnabled>false</mobileEnabled>
         </notificationChannels>
+        <notificationType>actionablelist_async_save</notificationType>
+    </notificationTypeSettings>
+    <notificationTypeSettings>
+        <notificationChannels>
+            <desktopEnabled>true</desktopEnabled>
+            <mobileEnabled>false</mobileEnabled>
+        </notificationChannels>
         <notificationType>activity_team_member</notificationType>
+    </notificationTypeSettings>
+    <notificationTypeSettings>
+        <notificationChannels>
+            <desktopEnabled>false</desktopEnabled>
+            <mobileEnabled>false</mobileEnabled>
+        </notificationChannels>
+        <notificationType>amount_updated</notificationType>
     </notificationTypeSettings>
     <notificationTypeSettings>
         <appSettings>
@@ -32,6 +46,20 @@
             <mobileEnabled>false</mobileEnabled>
         </notificationChannels>
         <notificationType>ase_inbox_conflict_resolution</notificationType>
+    </notificationTypeSettings>
+    <notificationTypeSettings>
+        <notificationChannels>
+            <desktopEnabled>true</desktopEnabled>
+            <mobileEnabled>false</mobileEnabled>
+        </notificationChannels>
+        <notificationType>bulk_action_plan_save</notificationType>
+    </notificationTypeSettings>
+    <notificationTypeSettings>
+        <notificationChannels>
+            <desktopEnabled>true</desktopEnabled>
+            <mobileEnabled>false</mobileEnabled>
+        </notificationChannels>
+        <notificationType>cdp_data_share_notif_type</notificationType>
     </notificationTypeSettings>
     <notificationTypeSettings>
         <appSettings>
@@ -92,10 +120,66 @@
     </notificationTypeSettings>
     <notificationTypeSettings>
         <notificationChannels>
+            <desktopEnabled>false</desktopEnabled>
+            <mobileEnabled>false</mobileEnabled>
+        </notificationChannels>
+        <notificationType>close_date_reminder</notificationType>
+    </notificationTypeSettings>
+    <notificationTypeSettings>
+        <notificationChannels>
+            <desktopEnabled>false</desktopEnabled>
+            <mobileEnabled>false</mobileEnabled>
+        </notificationChannels>
+        <notificationType>close_date_updated</notificationType>
+    </notificationTypeSettings>
+    <notificationTypeSettings>
+        <notificationChannels>
+            <desktopEnabled>true</desktopEnabled>
+            <mobileEnabled>false</mobileEnabled>
+        </notificationChannels>
+        <notificationType>consumption_alert</notificationType>
+    </notificationTypeSettings>
+    <notificationTypeSettings>
+        <notificationChannels>
+            <desktopEnabled>true</desktopEnabled>
+            <mobileEnabled>false</mobileEnabled>
+        </notificationChannels>
+        <notificationType>conversation_mining_notify</notificationType>
+    </notificationTypeSettings>
+    <notificationTypeSettings>
+        <notificationChannels>
+            <desktopEnabled>true</desktopEnabled>
+            <mobileEnabled>false</mobileEnabled>
+        </notificationChannels>
+        <notificationType>credit_memo_generation</notificationType>
+    </notificationTypeSettings>
+    <notificationTypeSettings>
+        <notificationChannels>
+            <desktopEnabled>false</desktopEnabled>
+            <mobileEnabled>false</mobileEnabled>
+        </notificationChannels>
+        <notificationType>deal_won</notificationType>
+    </notificationTypeSettings>
+    <notificationTypeSettings>
+        <notificationChannels>
+            <desktopEnabled>false</desktopEnabled>
+            <mobileEnabled>false</mobileEnabled>
+        </notificationChannels>
+        <notificationType>deals_to_watch</notificationType>
+    </notificationTypeSettings>
+    <notificationTypeSettings>
+        <notificationChannels>
             <desktopEnabled>true</desktopEnabled>
             <mobileEnabled>true</mobileEnabled>
         </notificationChannels>
         <notificationType>direct_message</notificationType>
+    </notificationTypeSettings>
+    <notificationTypeSettings>
+        <notificationChannels>
+            <desktopEnabled>true</desktopEnabled>
+            <mobileEnabled>false</mobileEnabled>
+        </notificationChannels>
+        <notificationType>eacforfsc_async_notify</notificationType>
     </notificationTypeSettings>
     <notificationTypeSettings>
         <notificationChannels>
@@ -182,6 +266,27 @@
             <desktopEnabled>true</desktopEnabled>
             <mobileEnabled>false</mobileEnabled>
         </notificationChannels>
+        <notificationType>health_insights_notify</notificationType>
+    </notificationTypeSettings>
+    <notificationTypeSettings>
+        <notificationChannels>
+            <desktopEnabled>false</desktopEnabled>
+            <mobileEnabled>false</mobileEnabled>
+        </notificationChannels>
+        <notificationType>high_priority_case</notificationType>
+    </notificationTypeSettings>
+    <notificationTypeSettings>
+        <notificationChannels>
+            <desktopEnabled>true</desktopEnabled>
+            <mobileEnabled>false</mobileEnabled>
+        </notificationChannels>
+        <notificationType>invoice_generation</notificationType>
+    </notificationTypeSettings>
+    <notificationTypeSettings>
+        <notificationChannels>
+            <desktopEnabled>true</desktopEnabled>
+            <mobileEnabled>false</mobileEnabled>
+        </notificationChannels>
         <notificationType>mailapp_alert</notificationType>
     </notificationTypeSettings>
     <notificationTypeSettings>
@@ -190,6 +295,20 @@
             <mobileEnabled>false</mobileEnabled>
         </notificationChannels>
         <notificationType>missed_call</notificationType>
+    </notificationTypeSettings>
+    <notificationTypeSettings>
+        <notificationChannels>
+            <desktopEnabled>false</desktopEnabled>
+            <mobileEnabled>false</mobileEnabled>
+        </notificationChannels>
+        <notificationType>new_child_opportunity</notificationType>
+    </notificationTypeSettings>
+    <notificationTypeSettings>
+        <notificationChannels>
+            <desktopEnabled>false</desktopEnabled>
+            <mobileEnabled>false</mobileEnabled>
+        </notificationChannels>
+        <notificationType>next_step_reminder</notificationType>
     </notificationTypeSettings>
     <notificationTypeSettings>
         <notificationChannels>
@@ -218,6 +337,13 @@
         <notificationType>personal_analytic</notificationType>
     </notificationTypeSettings>
     <notificationTypeSettings>
+        <notificationChannels>
+            <desktopEnabled>true</desktopEnabled>
+            <mobileEnabled>false</mobileEnabled>
+        </notificationChannels>
+        <notificationType>personal_org_creation</notificationType>
+    </notificationTypeSettings>
+    <notificationTypeSettings>
         <appSettings>
             <connectedAppName>sf_chttr_apps__Chatter_for_Android</connectedAppName>
             <enabled>true</enabled>
@@ -239,6 +365,13 @@
     <notificationTypeSettings>
         <notificationChannels>
             <desktopEnabled>true</desktopEnabled>
+            <mobileEnabled>true</mobileEnabled>
+        </notificationChannels>
+        <notificationType>quote_to_order</notificationType>
+    </notificationTypeSettings>
+    <notificationTypeSettings>
+        <notificationChannels>
+            <desktopEnabled>true</desktopEnabled>
             <mobileEnabled>false</mobileEnabled>
         </notificationChannels>
         <notificationType>record_collection_share</notificationType>
@@ -256,6 +389,20 @@
             <mobileEnabled>false</mobileEnabled>
         </notificationChannels>
         <notificationType>siq_connect_exchange</notificationType>
+    </notificationTypeSettings>
+    <notificationTypeSettings>
+        <notificationChannels>
+            <desktopEnabled>false</desktopEnabled>
+            <mobileEnabled>false</mobileEnabled>
+        </notificationChannels>
+        <notificationType>stage_reminder</notificationType>
+    </notificationTypeSettings>
+    <notificationTypeSettings>
+        <notificationChannels>
+            <desktopEnabled>false</desktopEnabled>
+            <mobileEnabled>false</mobileEnabled>
+        </notificationChannels>
+        <notificationType>stage_updated</notificationType>
     </notificationTypeSettings>
     <notificationTypeSettings>
         <appSettings>
@@ -349,7 +496,36 @@
             <desktopEnabled>true</desktopEnabled>
             <mobileEnabled>false</mobileEnabled>
         </notificationChannels>
+        <notificationType>ya_contract_renewal_notify</notificationType>
+    </notificationTypeSettings>
+    <notificationTypeSettings>
+        <notificationChannels>
+            <desktopEnabled>true</desktopEnabled>
+            <mobileEnabled>true</mobileEnabled>
+        </notificationChannels>
+        <notificationType>Event_Create_Update_Discovery_Call_Notification</notificationType>
+    </notificationTypeSettings>
+    <notificationTypeSettings>
+        <notificationChannels>
+            <desktopEnabled>true</desktopEnabled>
+            <mobileEnabled>false</mobileEnabled>
+        </notificationChannels>
         <notificationType>Generic_Bell_Notification</notificationType>
+    </notificationTypeSettings>
+    <notificationTypeSettings>
+        <appSettings>
+            <connectedAppName>sf_chttr_apps__Chatter_for_Android</connectedAppName>
+            <enabled>false</enabled>
+        </appSettings>
+        <appSettings>
+            <connectedAppName>sf_chttr_apps__Chatter_for_iOS</connectedAppName>
+            <enabled>false</enabled>
+        </appSettings>
+        <notificationChannels>
+            <desktopEnabled>true</desktopEnabled>
+            <mobileEnabled>true</mobileEnabled>
+        </notificationChannels>
+        <notificationType>NSP_Bell_Notification_Termination_Form</notificationType>
     </notificationTypeSettings>
     <notificationTypeSettings>
         <appSettings>
@@ -380,6 +556,73 @@
             <mobileEnabled>true</mobileEnabled>
         </notificationChannels>
         <notificationType>NSP_Notify_Opportunity_Owner_of_record_Assignment</notificationType>
+    </notificationTypeSettings>
+    <notificationTypeSettings>
+        <notificationChannels>
+            <desktopEnabled>true</desktopEnabled>
+            <mobileEnabled>false</mobileEnabled>
+        </notificationChannels>
+        <notificationType>datamask__Config_Delete_Complete</notificationType>
+    </notificationTypeSettings>
+    <notificationTypeSettings>
+        <appSettings>
+            <connectedAppName>sf_chttr_apps__Chatter_for_Android</connectedAppName>
+            <enabled>false</enabled>
+        </appSettings>
+        <appSettings>
+            <connectedAppName>sf_chttr_apps__Chatter_for_iOS</connectedAppName>
+            <enabled>false</enabled>
+        </appSettings>
+        <notificationChannels>
+            <desktopEnabled>true</desktopEnabled>
+            <mobileEnabled>true</mobileEnabled>
+        </notificationChannels>
+        <notificationType>fferpcore__fferpcoreDefaultNotification</notificationType>
+    </notificationTypeSettings>
+    <notificationTypeSettings>
+        <appSettings>
+            <connectedAppName>sf_chttr_apps__Chatter_for_Android</connectedAppName>
+            <enabled>false</enabled>
+        </appSettings>
+        <appSettings>
+            <connectedAppName>sf_chttr_apps__Chatter_for_iOS</connectedAppName>
+            <enabled>false</enabled>
+        </appSettings>
+        <notificationChannels>
+            <desktopEnabled>true</desktopEnabled>
+            <mobileEnabled>true</mobileEnabled>
+        </notificationChannels>
+        <notificationType>pse__Auto_Assign_Status_Notification</notificationType>
+    </notificationTypeSettings>
+    <notificationTypeSettings>
+        <appSettings>
+            <connectedAppName>sf_chttr_apps__Chatter_for_Android</connectedAppName>
+            <enabled>false</enabled>
+        </appSettings>
+        <appSettings>
+            <connectedAppName>sf_chttr_apps__Chatter_for_iOS</connectedAppName>
+            <enabled>false</enabled>
+        </appSettings>
+        <notificationChannels>
+            <desktopEnabled>true</desktopEnabled>
+            <mobileEnabled>true</mobileEnabled>
+        </notificationChannels>
+        <notificationType>pse__Combine_Events_Billing_Batch_Job_Status_Notification</notificationType>
+    </notificationTypeSettings>
+    <notificationTypeSettings>
+        <appSettings>
+            <connectedAppName>sf_chttr_apps__Chatter_for_Android</connectedAppName>
+            <enabled>false</enabled>
+        </appSettings>
+        <appSettings>
+            <connectedAppName>sf_chttr_apps__Chatter_for_iOS</connectedAppName>
+            <enabled>false</enabled>
+        </appSettings>
+        <notificationChannels>
+            <desktopEnabled>true</desktopEnabled>
+            <mobileEnabled>true</mobileEnabled>
+        </notificationChannels>
+        <notificationType>pse__Delete_Skill_Certification_Rating_Job_Status_Notification</notificationType>
     </notificationTypeSettings>
     <notificationTypeSettings>
         <appSettings>
@@ -455,5 +698,65 @@
             <mobileEnabled>true</mobileEnabled>
         </notificationChannels>
         <notificationType>pse__Revert_Billing_Batch_Job_Status_Notification</notificationType>
+    </notificationTypeSettings>
+    <notificationTypeSettings>
+        <appSettings>
+            <connectedAppName>sf_chttr_apps__Chatter_for_Android</connectedAppName>
+            <enabled>false</enabled>
+        </appSettings>
+        <appSettings>
+            <connectedAppName>sf_chttr_apps__Chatter_for_iOS</connectedAppName>
+            <enabled>false</enabled>
+        </appSettings>
+        <notificationChannels>
+            <desktopEnabled>true</desktopEnabled>
+            <mobileEnabled>true</mobileEnabled>
+        </notificationChannels>
+        <notificationType>pse__SObject_Cloner_Request_Status_Notification</notificationType>
+    </notificationTypeSettings>
+    <notificationTypeSettings>
+        <appSettings>
+            <connectedAppName>sf_chttr_apps__Chatter_for_Android</connectedAppName>
+            <enabled>false</enabled>
+        </appSettings>
+        <appSettings>
+            <connectedAppName>sf_chttr_apps__Chatter_for_iOS</connectedAppName>
+            <enabled>false</enabled>
+        </appSettings>
+        <notificationChannels>
+            <desktopEnabled>true</desktopEnabled>
+            <mobileEnabled>true</mobileEnabled>
+        </notificationChannels>
+        <notificationType>pse__Timecard_Async_Submit_For_Approval_Notification</notificationType>
+    </notificationTypeSettings>
+    <notificationTypeSettings>
+        <appSettings>
+            <connectedAppName>sf_chttr_apps__Chatter_for_Android</connectedAppName>
+            <enabled>false</enabled>
+        </appSettings>
+        <appSettings>
+            <connectedAppName>sf_chttr_apps__Chatter_for_iOS</connectedAppName>
+            <enabled>false</enabled>
+        </appSettings>
+        <notificationChannels>
+            <desktopEnabled>true</desktopEnabled>
+            <mobileEnabled>true</mobileEnabled>
+        </notificationChannels>
+        <notificationType>pse__Timer_Session_Sync_Notification</notificationType>
+    </notificationTypeSettings>
+    <notificationTypeSettings>
+        <appSettings>
+            <connectedAppName>sf_chttr_apps__Chatter_for_Android</connectedAppName>
+            <enabled>false</enabled>
+        </appSettings>
+        <appSettings>
+            <connectedAppName>sf_chttr_apps__Chatter_for_iOS</connectedAppName>
+            <enabled>false</enabled>
+        </appSettings>
+        <notificationChannels>
+            <desktopEnabled>true</desktopEnabled>
+            <mobileEnabled>true</mobileEnabled>
+        </notificationChannels>
+        <notificationType>pse__Utilization_Status_Notification</notificationType>
     </notificationTypeSettings>
 </NotificationTypeConfig>
