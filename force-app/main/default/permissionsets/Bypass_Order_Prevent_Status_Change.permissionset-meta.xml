@@ -2,8 +2,8 @@
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customPermissions>
         <enabled>true</enabled>
-        <name>Bypass_Order_Validation_to_Change_Status</name>
+        <name>Bypass_Order_Prevent_Status_Change</name>
     </customPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Bypass Order Validation to Change Status</label>
+    <label>Bypass Order Prevent Status Change</label>
 </PermissionSet>
