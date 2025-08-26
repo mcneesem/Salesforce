@@ -1,4 +1,4 @@
-public without sharing class WingspanRestUtility {
+public with sharing class WingspanRestUtility {
     // test w/ WingspanRestUtilityHelperTest (95%)
 
     private static final String className = WingspanRestUtility.class.getName();
@@ -116,7 +116,7 @@ public without sharing class WingspanRestUtility {
         inheritanceWrap.organizationAccountConfig = 'Parent';
         linkWrap.inheritanceStrategy = inheritanceWrap;
         
-        String body = JSON.Serialize(linkWrap);
+        String body = JSON.Serialize( linkWrap );
         String method = 'POST';
         
         if( ( activeSetting != null ) 
@@ -238,7 +238,7 @@ public without sharing class WingspanRestUtility {
             //object name and record id
             if( !String.isBlank(recordId) ){
                 log.Object__c = String.valueOf(recordId.getSObjectType());
-                log.Record_ID__c = recordId;
+                log.Record_Id__c = recordId;
             }
             
             //response headers
@@ -300,26 +300,26 @@ public without sharing class WingspanRestUtility {
     
     //wrapper class
     private class CreateUserWrapper{
-        public String email = '';
-        public ProfileWrapper profile;
-        public Settings settings;
-        public Labels labels;
+        private String email = '';
+        private ProfileWrapper profile;
+        private Settings settings;
+        private Labels labels;
     }
     
     private class ProfileWrapper{
-        public String firstName = '';
-        public String lastName = '';
+        private String firstName = '';
+        private String lastName = '';
     }
     
     private class Settings{
-        public String userAccountType = '';
+        private String userAccountType = '';
     }
     
     private class Labels{
-        public String insperityAccountId = '';
-        public String saasId = '';
-        public String employeesEstimate = '';
-        public String accountName = '';
+        private String insperityAccountId = '';
+        private String saasId = '';
+        private String employeesEstimate = '';
+        private String accountName = '';
     }
     
     //method to create labels for JSON
@@ -332,7 +332,7 @@ public without sharing class WingspanRestUtility {
               //fetch record fields
               asset = [SELECT 
                        AccountId,
-                       SaaS_ID__c,
+                       Asset_Number__c,
                        Opportunity__r.NSP_Number_of_Employees__c,
                        NSP_AccountName__c
                        FROM Asset
@@ -344,8 +344,8 @@ public without sharing class WingspanRestUtility {
             if( !String.isBlank( asset.AccountId ) ){
                 labelsWrap.insperityAccountId = asset.AccountId;    
             }
-            if( !String.isBlank( asset.SaaS_ID__c ) ){
-                labelsWrap.saasId = asset.SaaS_ID__c;
+            if( !String.isBlank( asset.Asset_Number__c ) ){
+                labelsWrap.saasId = asset.Asset_Number__c;
             }
             if( asset.Opportunity__r.NSP_Number_of_Employees__c != null ){
                 labelsWrap.employeesEstimate = String.valueOf( asset.Opportunity__r.NSP_Number_of_Employees__c );
@@ -358,12 +358,12 @@ public without sharing class WingspanRestUtility {
     }
     
     private class LinkUserToHubWrapper{
-        public String parentUserId = '';
-        public InheritanceStrategyWrapper inheritanceStrategy;
+        private String parentUserId = '';
+        private InheritanceStrategyWrapper inheritanceStrategy;
     }
     
     private class InheritanceStrategyWrapper{
-        public String organizationAccountConfig = '';
+        private String organizationAccountConfig = '';
     }
     
     // attributes controlled by Custom Settings...
@@ -372,11 +372,11 @@ public without sharing class WingspanRestUtility {
         private get{
             if( activeSetting == null ){
                 activeSetting = [SELECT
-                                 Base_URL__c,
-                                 Private_Key__c,
-                                 User_ID__c
+                                 BaseUrl__c,
+                                 PrivateKey__c,
+                                 UserId__c
                                  FROM Wingspan_Settings__c 
-                                 WHERE IsActive__c = true 
+                                 WHERE IsEnabled__c = true 
                                  LIMIT 1];
             }
             return activeSetting;
@@ -387,7 +387,7 @@ public without sharing class WingspanRestUtility {
     private static String baseURL { 
         private get{
             if( ( baseURL == null ) && ( WingspanRestUtility.activeSetting != null ) ){
-                baseURL = WingspanRestUtility.activeSetting.Base_URL__c;
+                baseURL = WingspanRestUtility.activeSetting.BaseUrl__c;
             }
             return baseURL;
         } private set; 
@@ -396,7 +396,7 @@ public without sharing class WingspanRestUtility {
     private static String privateKey { 
         private get{
             if( ( privateKey == null ) && ( WingspanRestUtility.activeSetting != null ) ){
-                privateKey = WingspanRestUtility.activeSetting.Private_Key__c;
+                privateKey = WingspanRestUtility.activeSetting.PrivateKey__c;
             }
             return privateKey;
         } 
@@ -406,7 +406,7 @@ public without sharing class WingspanRestUtility {
     private static String userId { 
         private get{
             if( ( userId == null ) && ( WingspanRestUtility.activeSetting != null ) ){
-                userId = WingspanRestUtility.activeSetting.User_ID__c;
+                userId = WingspanRestUtility.activeSetting.UserId__c;
             }
             return userId;
         }

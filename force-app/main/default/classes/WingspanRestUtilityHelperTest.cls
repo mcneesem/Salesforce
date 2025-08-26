@@ -1,5 +1,5 @@
 @isTest
-public class WingspanRestUtilityHelperTest {
+private class WingspanRestUtilityHelperTest {
 
     @testSetup
     private static void createTestData() {
@@ -9,10 +9,10 @@ public class WingspanRestUtilityHelperTest {
         upsert orderSetting;
         
         Wingspan_Settings__c wSett = new Wingspan_Settings__c();
-        wSett.Base_URL__c = 'https://stagingapi.wingspan.app';
-        wSett.IsActive__c = true;
-        wSett.Private_Key__c = 'dummykey';
-        wSett.User_ID__c = 'uza55khX3ydV0JEO7BouF';
+        wSett.BaseUrl__c = 'https://stagingapi.wingspan.app';
+        wSett.IsEnabled__c = true;
+        wSett.PrivateKey__c = 'dummykey';
+        wSett.UserId__c = 'uza55khX3ydV0JEO7BouF';
         wSett.Name = 'Staging Record';
         insert wSett;
         

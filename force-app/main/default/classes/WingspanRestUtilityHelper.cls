@@ -1,10 +1,8 @@
-public class WingspanRestUtilityHelper {
+public with sharing class WingspanRestUtilityHelper {
     // test w/ WingspanRestUtilityHelperTest (96%)
     public class Output {
         @InvocableVariable(label = 'User Found?')
         public Boolean userFound;
-        @InvocableVariable(label = 'Created Admin User ID')
-        public String createdUserId;
     }
     
     public class Input {
@@ -47,7 +45,7 @@ public class WingspanRestUtilityHelper {
         //initiate empty output
         Output result = new Output();
         result.userFound = true;
-        result.createdUserId = '';
+        String createdUserId = '';
         
         if( ( input.contactId !=null ) 
            && ( input.validateContact != null )
@@ -59,10 +57,10 @@ public class WingspanRestUtilityHelper {
               result.userfound = WingspanRestUtility.getUserByEmail( input.contactId, input.recordId );
               if( ( input.createContact == True ) && ( !result.userfound ) ){
                   //create contact in Wingspan Server
-                  result.createdUserId = WingspanRestUtility.createClientAdmin( input.contactId, input.recordId );
-                  if( !String.isBlank( result.createdUserId ) ){
+                  createdUserId = WingspanRestUtility.createClientAdmin( input.contactId, input.recordId );
+                  if( !String.isBlank( createdUserId ) ){
                       //Associate Admin in Wingspan Server
-                      WingspanRestUtility.linkAdminToCHUB( result.createdUserId, input.recordId );
+                      WingspanRestUtility.linkAdminToCHUB( createdUserId, input.recordId );
                   }
               }
           }
