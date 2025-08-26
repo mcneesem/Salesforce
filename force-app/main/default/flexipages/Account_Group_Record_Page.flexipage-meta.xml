@@ -869,8 +869,8 @@
                 <componentName>flexipage:tabset</componentName>
                 <identifier>flexipage_tabset5</identifier>
                 <visibilityRule>
-                        <booleanFilter>1 OR 2</booleanFilter>
-                        <criteria>
+                    <booleanFilter>1 OR 2</booleanFilter>
+                    <criteria>
                         <leftValue>{!Record.NSP_Type__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Account Health</rightValue>
