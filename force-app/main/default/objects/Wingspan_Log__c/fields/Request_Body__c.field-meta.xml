@@ -6,6 +6,7 @@
     <inlineHelpText>JSON Request Body.</inlineHelpText>
     <label>Request Body</label>
     <length>32768</length>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>LongTextArea</type>
     <visibleLines>3</visibleLines>
