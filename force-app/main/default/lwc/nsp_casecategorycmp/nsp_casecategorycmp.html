@@ -1,7 +1,3 @@
-<!--
-@description       : LWC Component to handle the category/sub-category mapping selection edit on case records.
-@Created On        : November 8th 2021
--->
 <template>
     <div class="container">
         <div class="slds-grid slds-page-header slds-p-around_small">
@@ -13,29 +9,29 @@
                     </h2>
                 </div>
                 <div class="slds-no-flex">
-                    <template if:true={view}>
+                    <template lwc:if={view}>
                         <lightning-button label={label.editCase} onclick={editCase}></lightning-button>
                     </template>
                 </div>
             </header>
         </div>
         <div class="slds-p-around_medium slds-is-relative">
-            <template if:true={isLoading}>
+            <template lwc:if={isLoading}>
                 <lightning-spinner></lightning-spinner>
             </template>
-            <template if:true={view}>
+            <template lwc:if={view}>
                 <lightning-record-view-form record-id={recordId} object-api-name={objectApiName} density="compact">
                     <lightning-output-field field-name="NSP_Category__c" value={oCase.NSP_Category__c}></lightning-output-field>
                     <lightning-output-field field-name="NSP_SubCategory__c" value={oCase.NSP_SubCategory__c}></lightning-output-field>
-                    <template if:true={showCaseDetail}>
+                    <template lwc:if={showCaseDetail}>
                         <lightning-output-field field-name="NSP_Detail__c" value={oCase.NSP_Detail__c}></lightning-output-field>
                     </template>
-                    <template if:true={showCaseVersion}>
+                    <template lwc:if={showCaseVersion}>
                         <lightning-output-field field-name="NSP_Version__c" value={oCase.NSP_Version__c}></lightning-output-field>
                     </template>
                 </lightning-record-view-form>
             </template>
-            <template if:false={view}>
+            <template lwc:else>
                 <c-case-cat-subcat-detail
                     record-id={recordId}
                     rec-type-id={oCase.RecordTypeId}
