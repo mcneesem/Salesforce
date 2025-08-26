@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Grant Tab Visibility, View All Object Permissions, and Read Field Permissions for Wingspan Log (WingspanLog__c).</description>
+    <description>Grant Tab Visibility, View All Object Permissions, and Read Field Permissions for Wingspan Logs (WingspanLog__c).</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Wingspan_Log__c.Class__c</field>
