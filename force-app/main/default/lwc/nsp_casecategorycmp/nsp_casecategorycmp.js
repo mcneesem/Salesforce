@@ -28,7 +28,6 @@ export default class Nsp_casecategorycmp extends LightningElement {
     @api objectApiName = 'Case';
     
     isLoading = false;
-    view = true; // Start in view mode
     @track oCase = {}; // Case data
     originalCase = {} // store original case data
 
@@ -62,20 +61,23 @@ export default class Nsp_casecategorycmp extends LightningElement {
         }
     }
 
+    isEditing = false; // Start in view mode
+
+    get view() {
+        return !this.isEditing;
+    }
+
     // Event handlers
     editCase() {
-        this.view = false;
+        this.isEditing = true;
     }
 
     cancel() {
-        this.view = true;
+        this.isEditing = false;
         this.oCase = { ...this.originalCase };
         this.showCaseDetail = Boolean(this.oCase.NSP_Detail__c);
         this.showCaseVersion = Boolean(this.oCase.NSP_Version__c);
-
-        
     }
-
 
     handleSelectionChange(event) {
         const { category, subCategory, detail, version, detailOptions, versionOptions } = event.detail;
@@ -107,7 +109,7 @@ export default class Nsp_casecategorycmp extends LightningElement {
         const recordInput = { fields };
         updateRecord(recordInput)
             .then(() => {
-                this.view = true;
+                this.isEditing = false;
                 this.isLoading = false;
             })
             .catch(error => {
