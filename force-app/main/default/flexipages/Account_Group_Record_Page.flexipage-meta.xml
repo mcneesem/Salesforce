@@ -35,26 +35,6 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Competitor__c</fieldItem>
-                <identifier>RecordCompetitor__cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Other_Competitor__c</fieldItem>
-                <identifier>RecordOther_Competitor__cField</identifier>
-            </fieldInstance>
-        </itemInstances>
         <name>Facet-a1d92ebb-73ad-4894-9fd5-f1776419ecf6</name>
         <type>Facet</type>
     </flexiPageRegions>
