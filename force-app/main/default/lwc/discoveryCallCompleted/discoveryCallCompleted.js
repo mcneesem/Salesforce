@@ -1,50 +1,57 @@
-import { LightningElement, wire, api, track } from 'lwc';
-import { getRecord } from 'lightning/uiRecordApi';
+import { LightningElement, api, track } from 'lwc';
+import { subscribe, onError } from 'lightning/empApi';
 import { NavigationMixin } from 'lightning/navigation';
 
-const FIELDS = ['Opportunity.Type'];
-
 export default class EventFlowLauncher extends NavigationMixin(LightningElement) {
-    @api recordId; // Event record Id
-    @track previousType = null;
-    @track isModalOpen = false; // Track modal state
-    
-    @wire(getRecord, { recordId: '$recordId', fields: FIELDS })
-    wiredEvent({ error, data }) {
-        if (data) {
-            const type = data.fields.Type.value;
+    @api recordId;
+    @track previousStatus = null;
+    @track whatId;
+    @track isModalOpen = false;
+    inputVariables = [];
+    flowName = 'Event_Screen_Discovery_Call_Completed';
+    channelName = '/event/DiscoveryCallCompletedEvent__e';
 
-        console.log('MATT    this.previousType :', this.previousType);
-        console.log('MATT    type :', type);
+    connectedCallback() {
+        this.handleSubscribe();
+    }
 
-            if (this.previousType && this.previousType !== type) {
-                console.log('MATT    this.recordId :' + this.recordId);
-                inputVariables = [
-                    { name: 'opportunityRecordId', type: 'String', value: this.recordId }
-                ];
-                this.openModal(); // Open modal when type changes
+    handleSubscribe() {
+        const callback = (response) => {
+            const eventId = response.data.payload.Id__c;
+            this.whatId = response.data.payload.WhatId__c;
+            this.updateInputVariables();
+
+            if ( this.recordId == eventId || this.recordId == this.whatId ) {
+                this.openModal();
             }
-            this.previousType = type;
-        } else if (error) {
-            console.error('Error fetching record:', error);
-        }
+        };
+
+        subscribe(this.channelName, -1, callback).then(response => {
+            console.log('Subscribed to channel:', response.channel);
+        });
+
+        onError(error => {
+            console.error('Error in EMP API: ', error);
+        });
+    }
+
+    updateInputVariables() {
+        this.inputVariables = [
+            { name: 'recordId', type: 'String', value: this.whatId }
+        ];
     }
 
     openModal() {
-        this.isModalOpen = true; // Set modal to open
-        console.log('MATT    this.isModalOpen :', this.isModalOpen);
+        this.isModalOpen = true;
     }
 
     closeModal() {
-        this.isModalOpen = false; // Set modal to close
-        console.log('MATT    this.isModalOpen :', this.isModalOpen);
+        this.isModalOpen = false;
     }
 
     handleStatusChange(event) {
-        // Handle flow status changes if needed
-        console.log('MATT    event.detail.status :', event.detail.status);
         if (event.detail.status === 'FINISHED') {
-            this.closeModal(); // Close modal when flow is finished
+            this.closeModal();
         }
     }
 }

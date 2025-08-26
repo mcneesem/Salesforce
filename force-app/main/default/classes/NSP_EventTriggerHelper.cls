@@ -64,6 +64,7 @@ public with sharing class NSP_EventTriggerHelper {
     // @param eventOldMap Map of Old Event.
     // @return void
     public void afterUpdateDirector( Map<Id,Event> eventNewMap , Map<Id,Event> eventOldMap ) {
+        List < DiscoveryCallCompletedEvent__e > dcCompletedEventList = New List < DiscoveryCallCompletedEvent__e > ();
         Map<Id,Event> rescheduledEventsMap = new Map<Id,Event>();
         Set<String> subjectSet = new Set<String>();  
         Id eventRecordType = Schema.SObjectType.Event.getRecordTypeInfosByDeveloperName().get('Core_Sales_Event_RT')?.getRecordTypeId();
@@ -88,6 +89,19 @@ public with sharing class NSP_EventTriggerHelper {
                         rescheduledEventsMap.put(newEventRecord.Id, newEventRecord);
                         subjectSet.add(newEventRecord.Subject);  
                     }
+
+                    if ( ( String.isNotBlank(newEventRecord.WhatId) )
+                        && ( newEventRecord.NSP_Event_Subtype__c != NULL )
+                        && ( newEventRecord.WhatId.getSObjectType() == Opportunity.getSObjectType() )
+                        && ( newEventRecord.NSP_Event_Subtype__c.equalsIgnoreCase( NSP_EventTriggerHelper.DISCOVERY_CALL ) )
+                        && ( oldEventRecord != null && oldEventRecord.NSP_Status__c != newEventRecord.NSP_Status__c )
+                        && ( newEventRecord.NSP_Status__c == NSP_SalesConstants.DISCOVERY_CALL_COMPLETED ) )
+                    {
+                        DiscoveryCallCompletedEvent__e dcCompletedEvent = new DiscoveryCallCompletedEvent__e();
+                        dcCompletedEvent.Id__c = newEventRecord.Id;
+                        dcCompletedEvent.WhatId__c = newEventRecord.WhatId;
+                        dcCompletedEventList.add( dcCompletedEvent );
+                    }
                 }
             }
         }
@@ -97,6 +111,10 @@ public with sharing class NSP_EventTriggerHelper {
         }
         if (rescheduledEventsMap.size() > 0){
             updateResourceAbsenceDate(rescheduledEventsMap);
+        }
+        if( !dcCompletedEventList.isEmpty() ) {
+            List<Database.SaveResult> results = EventBus.publish(dcCompletedEventList);
+            NSP_ErrorLogHandler.logSaveResult('NSP_EventTriggerHelper', 'afterUpdateDirector', results);
         }
         updateOpportunitiesWithDiscoverCalls(eventNewMap.values());
         updateActivityDate(eventNewMap.values(),eventOldMap);

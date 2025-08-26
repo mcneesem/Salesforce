@@ -3,18 +3,14 @@
         <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
             <div class="slds-modal__container">
                 <div class="slds-modal__header">
-                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
-                            title="Close"
-                            onclick={closeModal}>
-                        <lightning-icon icon-name="utility:close" alternative-text="close" size="small"></lightning-icon>
-                        <span class="slds-assistive-text">Close</span>
-                    </button>
-                    <h2 class="slds-text-heading_medium">Are you at all serious about this Opty???</h2>
+                    <h2 class="slds-text-heading_medium">Discovery Call Completed</h2>
                 </div>
                 <div class="slds-modal__content slds-p-around_medium">
-                    <lightning-flow flow-api-name="Event_Screen_Discovery_Call_Completed"
-                                    input-variables={inputVariables}
-                                    onstatuschange={handleStatusChange}></lightning-flow>
+                    <lightning-flow
+                        flow-api-name={flowName}
+                        flow-input-variables={inputVariables}
+                        onstatuschange={handleStatusChange}>
+                    </lightning-flow>
                 </div>
             </div>
         </section>
