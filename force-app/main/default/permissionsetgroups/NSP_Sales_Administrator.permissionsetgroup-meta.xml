@@ -7,7 +7,7 @@
     <permissionSets>Account_Create</permissionSets>
     <permissionSets>Assets_Edit</permissionSets>
     <permissionSets>Basic_Report_Builder</permissionSets>
-    <permissionSets>Bypass_Order_Validation_to_Change_Status</permissionSets>
+    <permissionSets>Bypass_Order_Prevent_Status_Change</permissionSets>
     <permissionSets>Bypass_Task_Event_Cancelled_Status</permissionSets>
     <permissionSets>Checklist_Create_All_Types</permissionSets>
     <permissionSets>Checklist_Create_Booking</permissionSets>
