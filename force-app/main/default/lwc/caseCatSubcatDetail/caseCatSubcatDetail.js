@@ -55,8 +55,6 @@ export default class CaseCatSubcatDetail extends LightningElement {
     isConnectedWithShowAllCategory = false;
     isConnectedWithShowAllSubCategory = false;
 
-     @api variant;
-
     verifyCompensationQueue(){
         isUserInQueue()
         .then(result => {
@@ -184,8 +182,8 @@ export default class CaseCatSubcatDetail extends LightningElement {
                         category: this.selectedCategory ,
                         subCategory: this.selectedSubCategory ,
                         detail: this.selectedDetail ,
-                        version: this.selectedVersion,
-                        detailOptions: this.detailOptions,
+                        version: this.selectedVersion ,
+                        detailOptions: this.detailOptions ,
                         versionOptions: this.versionOptions
                     }
                 }
@@ -213,14 +211,12 @@ export default class CaseCatSubcatDetail extends LightningElement {
         } else if (fieldName === 'Type') {
             this.selectedType = event.detail.value;
         }
-
         if (this.disableButton) {
             this.disableButton = false;
         }
-
         this.handleDisplayConfidentialCheckBox();
         this.dispatchChangeFields();
-    }   
+    }
 
     handleCategoryChange(value) {
         this.selectedCategory = value;
@@ -472,9 +468,7 @@ export default class CaseCatSubcatDetail extends LightningElement {
             this.handleVersionRendering();
             this.handleDisplayConfidentialCheckBox();
         }
-
         if (this.variant === 'sidebar') {
-            console.log(`calling from Rendered call back`);
             this.dispatchSelectionUpdate();
         }
     }
@@ -512,6 +506,8 @@ export default class CaseCatSubcatDetail extends LightningElement {
             this.showVersion = this.versionOptions.length > 0;
         }
     }
+
+    @api variant;
 
     get showTitle() {
         return ( this.variant !== "sidebar" );
