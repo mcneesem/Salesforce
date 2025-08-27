@@ -99,6 +99,7 @@ public with sharing class NSP_EventTriggerHelper {
                     {
                         DiscoveryCallCompletedEvent__e dcCompletedEvent = new DiscoveryCallCompletedEvent__e();
                         dcCompletedEvent.Id__c = newEventRecord.Id;
+                        dcCompletedEvent.UserId__c = UserInfo.getUserId();
                         dcCompletedEvent.WhatId__c = newEventRecord.WhatId;
                         dcCompletedEventList.add( dcCompletedEvent );
                     }

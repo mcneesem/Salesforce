@@ -1,6 +1,7 @@
 import { LightningElement, api, track } from 'lwc';
 import { subscribe, onError } from 'lightning/empApi';
 import { NavigationMixin } from 'lightning/navigation';
+import Id from '@salesforce/user/Id'; // Import the user ID
 
 export default class EventFlowLauncher extends NavigationMixin(LightningElement) {
     @api recordId;
@@ -10,6 +11,7 @@ export default class EventFlowLauncher extends NavigationMixin(LightningElement)
     inputVariables = [];
     flowName = 'Event_Screen_Discovery_Call_Completed';
     channelName = '/event/DiscoveryCallCompletedEvent__e';
+    currentUserId = Id;
 
     connectedCallback() {
         this.handleSubscribe();
@@ -18,10 +20,15 @@ export default class EventFlowLauncher extends NavigationMixin(LightningElement)
     handleSubscribe() {
         const callback = (response) => {
             const eventId = response.data.payload.Id__c;
+            const updateUserId = response.data.payload.UserId__c;
             this.whatId = response.data.payload.WhatId__c;
             this.updateInputVariables();
 
-            if ( this.recordId == eventId || this.recordId == this.whatId ) {
+            if ( ( this.currentUserId == updateUserId )
+                 && ( this.recordId == eventId
+                   || this.recordId == this.whatId )
+               )
+            {
                 this.openModal();
             }
         };
