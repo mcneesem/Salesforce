@@ -153,12 +153,6 @@
     </decisions>
     <description>Send Email when params are present.</description>
     <environments>Default</environments>
-    <formulas>
-        <description>If recordId is present, then log emails in the activity timeline.</description>
-        <name>LogEmail</name>
-        <dataType>Boolean</dataType>
-        <expression>IF(!ISBLANK({!recordId}), true, false)</expression>
-    </formulas>
     <interviewLabel>Send Email {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Send Email</label>
     <processMetadataValues>
