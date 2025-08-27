@@ -1,5 +1,5 @@
 public with sharing class WingspanCreateUserAction {
-    // test w/ WingspanRestUtilityHelperTest (79%)
+    // test w/ WingspanCreateUserActionTest (79%)
     public class Output {
         @InvocableVariable(label = 'User Found?')
         public Boolean isUserFound;
