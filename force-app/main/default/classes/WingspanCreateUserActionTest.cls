@@ -1,5 +1,5 @@
 @isTest
-private class WingspanRestUtilityHelperTest {
+private class WingspanCreateUserActionTest {
 
     @testSetup
     private static void createTestData() {
