@@ -23,7 +23,6 @@
     <permissionSets>Project_Access</permissionSets>
     <permissionSets>Project_Task_Access</permissionSets>
     <permissionSets>Task_Record_Type_Task</permissionSets>
-    <permissionSets>Termination_Revision_Field_Access</permissionSets>
     <permissionSets>Termination_form_field_access</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
