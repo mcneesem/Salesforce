@@ -10,7 +10,6 @@ public with sharing class NSP_EventTriggerHelper {
     private static final String EMPTY_STRING = '';
     private static final String WORD_SEPARATOR =  ' : ';
     private static Id coreSalesEventRecordType = NSP_GenericRecordType.getRecordTypeId( 'Event' , 'Core_Sales_Event_RT' );
-    private static Boolean Is_Enabled_WO_WS_Stage_Entry = OpportunityStageSettings__c.getInstance( UserInfo.getUserId() ).Is_Enabled_WO_WS_Stage_Entry__c;
 
     // Iterates throught the list of new Event and passes the required attributes to other methods.
     // @param newList List of New Event.  
@@ -113,7 +112,7 @@ public with sharing class NSP_EventTriggerHelper {
         if (rescheduledEventsMap.size() > 0){
             updateResourceAbsenceDate(rescheduledEventsMap);
         }
-        if( !dcCompletedEventList.isEmpty() ) {
+        if( NSP_EventTriggerHelper.is_Enabled_DCCompletedScreen && !dcCompletedEventList.isEmpty() ) {
             List<Database.SaveResult> results = EventBus.publish(dcCompletedEventList);
             NSP_ErrorLogHandler.logSaveResult('NSP_EventTriggerHelper', 'afterUpdateDirector', results);
         }
@@ -325,7 +324,7 @@ public with sharing class NSP_EventTriggerHelper {
 
     public void checkOpportunityStageCriteria( List<Event> newList ) {
         List<Id> updateOpportunityIds = new List<Id>();
-        if ( NSP_EventTriggerHelper.Is_Enabled_WO_WS_Stage_Entry ) {
+        if ( NSP_EventTriggerHelper.is_Enabled_WO_WS_Stage_Entry ) {
             for ( Event event : newList ) {
                 if ( event != NULL
                     && event.WhatId != NULL
@@ -484,6 +483,26 @@ public with sharing class NSP_EventTriggerHelper {
             methodName ,
             e
         );
+    }
+
+    private static Boolean is_Enabled_WO_WS_Stage_Entry {
+        private get {
+            if ( is_Enabled_WO_WS_Stage_Entry == null ) {
+                is_Enabled_WO_WS_Stage_Entry = OpportunityStageSettings__c.getInstance( UserInfo.getUserId() ).Is_Enabled_WO_WS_Stage_Entry__c;
+            }
+            return is_Enabled_WO_WS_Stage_Entry;
+        }
+        private set;
+    }
+
+    private static Boolean is_Enabled_DCCompletedScreen {
+        private get {
+            if ( is_Enabled_DCCompletedScreen == null ) {
+                is_Enabled_DCCompletedScreen = OpportunityStageSettings__c.getInstance( UserInfo.getUserId() ).Is_Enabled_DiscoveryCallCompletedScreen__c;
+            }
+            return is_Enabled_DCCompletedScreen;
+        }
+        private set;
     }
 
 }
