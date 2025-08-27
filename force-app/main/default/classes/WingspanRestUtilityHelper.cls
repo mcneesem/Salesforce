@@ -1,4 +1,4 @@
-public with sharing class WingspanRestUtilityHelper {
+public with sharing class WingspanCreateUserAction {
     // test w/ WingspanRestUtilityHelperTest (79%)
     public class Output {
         @InvocableVariable(label = 'User Found?')
@@ -14,7 +14,7 @@ public with sharing class WingspanRestUtilityHelper {
         public Id recordId;
     }
     
-    @InvocableMethod(label = 'Check Contact in Wingspan')
+    @InvocableMethod(label = 'Create Wingspan User')
     public static List<Output> wingspanApiDirector(List<Input> inputs){
         Output result = new Output();
         
