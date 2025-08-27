@@ -353,18 +353,22 @@ public with sharing class WingspanRestUtility {
                        LIMIT 1];
           }
         //assign fields
-        if( !assets.isEmpty() && assets[0] != null ){
-            if( !String.isBlank( assets[0].AccountId ) ){
-                labelsWrap.insperityAccountId = assets[0].AccountId;    
+        Asset record = null;
+        if ( !assets.isEmpty() ) {
+            record = assets[0];
+        }
+        if ( record  != null ) {
+            if ( String.isNotBlank( record.AccountId ) ) {
+                labelsWrap.insperityAccountId = record.AccountId;    
             }
-            if( !String.isBlank( assets[0].Asset_Number__c ) ){
-                labelsWrap.saasId = assets[0].Asset_Number__c;
+            if ( String.isNotBlank( assets[0].Asset_Number__c ) ) {
+                labelsWrap.saasId = record.Asset_Number__c;
             }
-            if( assets[0].Opportunity__r.NSP_Number_of_Employees__c != null ){
-                labelsWrap.employeesEstimate = String.valueOf( assets[0].Opportunity__r.NSP_Number_of_Employees__c );
+            if ( record.Opportunity__r.NSP_Number_of_Employees__c != null ) {
+                labelsWrap.employeesEstimate = String.valueOf( record.Opportunity__r.NSP_Number_of_Employees__c );
             }
-            if( !String.isBlank( assets[0].NSP_AccountName__c )){
-                labelsWrap.accountName = assets[0].NSP_AccountName__c;   
+            if ( String.isNotBlank( record.NSP_AccountName__c ) ) {
+                labelsWrap.accountName = record.NSP_AccountName__c;   
             }
         }
         return labelsWrap;
@@ -385,7 +389,7 @@ public with sharing class WingspanRestUtility {
         private get{
             if ( activeSetting == null ) {
                 List<Wingspan_Settings__c> all = [
-                    SELECT Id , Name , IsEnabled__c , BaseUrl__c , PrivateKey__c , UserId__c
+                    SELECT Id , Name , IsEnabled__c , BaseUrl__c , PrivateKey__c , UserId__c , Timeout__c
                     FROM Wingspan_Settings__c
                     WHERE ( IsEnabled__c = true )
                     LIMIT 1
@@ -436,7 +440,11 @@ public with sharing class WingspanRestUtility {
     
     private static String userId { 
         private get{
-            if( ( userId == null ) && ( WingspanRestUtility.activeSetting != null ) ){
+            if ( ( userId == null )
+                && ( WingspanRestUtility.activeSetting != null )
+                && String.isNotBlank( WingspanRestUtility.activeSetting.UserId__c )
+                )
+            {
                 userId = WingspanRestUtility.activeSetting.UserId__c;
             }
             return userId;
@@ -445,9 +453,24 @@ public with sharing class WingspanRestUtility {
     }
     
     private static Integer timeout {
-        private get{
-            if( timeout == null ){
-                timeout = 120000;
+        private get {
+            if ( timeout == null ) {
+                Integer local = 120000;
+                if ( ( WingspanRestUtility.activeSetting != null )
+                    && ( WingspanRestUtility.activeSetting.Timeout__c != null )
+                   )
+                {
+                    local = WingspanRestUtility.activeSetting.Timeout__c.intValue();
+                }
+                // timeout must be greater than zero...
+                if ( local < 1 ) {
+                    local = 1;
+                }
+                // timeout must be less than or equal to 120000...
+                if ( local > 120000 ) {
+                    local = 120000;
+                }
+                timeout = local;
             }
             return timeout;
         }
