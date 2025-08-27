@@ -62,7 +62,7 @@
         <inputParameters>
             <name>logEmailOnSend</name>
             <value>
-                <elementReference>LogEmail</elementReference>
+                <elementReference>logEmail</elementReference>
             </value>
         </inputParameters>
         <nameSegment>emailSimple</nameSegment>
@@ -238,6 +238,16 @@
         <isOutput>false</isOutput>
         <value>
             <stringValue></stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>logEmail</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
         </value>
     </variables>
     <variables>
