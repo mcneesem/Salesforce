@@ -1630,7 +1630,7 @@ public class NSP_ProjectTasksTriggerHelper {
         subjectString = prefix + accName + ' has been approved for termination';
         mailBody = prefix + NSP_ProjectTasksTriggerHelper.buildAnchorElement( customUrl , accName );
         mailBody = NSP_ProjectTasksTriggerHelper.addTermDetails ( mailBody , termForm , assetList );
-        sendEmail( listOfToAddresses , subjectString , mailBody );
+        NSP_ProjectTasksTriggerHelper.sendEmail( listOfToAddresses , subjectString , mailBody , null );
     }
 
     private static String addTermDetails( String mailBody , NSP_Termination_Form__c termForm , List<Asset> assetList ) {
@@ -1665,13 +1665,15 @@ public class NSP_ProjectTasksTriggerHelper {
         return mailBody;
     }
 
-    public static void sendEmail( List<String> listOfToAddresses , String subject , String body ) {
+    public static void sendEmail( List<String> listOfToAddresses , String subject , String body , String recordId ) {
         try {
             Map<String,Object> inputs = new Map<String,Object>();
             if ( ( listOfToAddresses != null ) && !listOfToAddresses.isEmpty() ) {
                 inputs.put( 'toEmailAddresses' , listOfToAddresses );
                 inputs.put( 'emailSubject' , subject );
                 inputs.put( 'emailBody' , body );
+                inputs.put( 'recordId' , recordId );
+                inputs.put( 'logEmail' , true );
                 Flow.Interview.Send_Email sendEmailFlow = new Flow.Interview.Send_Email( inputs );
                 sendEmailFlow.start();
             }
