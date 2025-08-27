@@ -38,6 +38,5 @@
     <permissionSets>Sales_Enablement</permissionSets>
     <permissionSets>Task_Record_Type_Time_Entry_DO_NOT_USE</permissionSets>
     <permissionSets>force__PipelineInspectionIncluded</permissionSets>
-    <permissionSets>Termination_Revision_Field_Access</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
