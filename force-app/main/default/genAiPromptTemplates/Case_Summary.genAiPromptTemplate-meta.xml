@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPromptTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <activeVersionIdentifier>CGBxz5ewIAWCqSbsqoPH28tm/Ps0cs5HeVP7/3nXHAA=_2</activeVersionIdentifier>
+    <developerName>Case_Summary</developerName>
+    <masterLabel>Case Summary</masterLabel>
+    <relatedEntity>Case</relatedEntity>
+    <templateVersions>
+        <content>You are a leader that is asked to summarize Case information including related Files. 
+Succinctly summarize the Case.
+Do not reference {!$Input:Case.NSP_Rating__c}
+Call out next steps if identified.
+
+ ---
+Include the {!$Input:Case.CaseNumber}, {!$Input:Case.Status}, {!$Input:Case.CreatedDate} in the first sentence of the summary. 
+Other fields to be used in the summary: {!$RecordSnapshot:Case.Snapshot}, {!$Input:Case.Description}, {!$Input:Case.Case_Summary__c}
+If {!$RelatedList:Case.Notes1__r.Records} has records, include the notes in the summary.
+If there are {!$RelatedList:Case.Cases.Records} then list them by Case Number in the summary.
+If a Case has any Files attached to it, display the Files by name.
+Display the {!$Input:Case.ClosedDate} ONLY if it is populated. If the Closed Date is blank, do not reference it.
+
+
+
+
+</content>
+        <inputs>
+            <apiName>objectToSummarize</apiName>
+            <definition>SOBJECT://Case</definition>
+            <referenceName>Input:Case</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultBedrockAnthropicClaude3Haiku</primaryModel>
+        <status>Published</status>
+        <templateDataProviders>
+            <definition>invocable://getRelatedList</definition>
+            <parameters>
+                <definition>primitive://String</definition>
+                <isRequired>true</isRequired>
+                <parameterName>parentRecordId</parameterName>
+                <valueExpression>{!$Input:Case.Id}</valueExpression>
+            </parameters>
+            <parameters>
+                <definition>primitive://String</definition>
+                <isRequired>true</isRequired>
+                <parameterName>relatedListName</parameterName>
+                <valueExpression>Notes1__r</valueExpression>
+            </parameters>
+            <referenceName>RelatedList:Case.Notes1__r.Records</referenceName>
+        </templateDataProviders>
+        <templateDataProviders>
+            <definition>invocable://getRelatedList</definition>
+            <parameters>
+                <definition>primitive://String</definition>
+                <isRequired>true</isRequired>
+                <parameterName>parentRecordId</parameterName>
+                <valueExpression>{!$Input:Case.Id}</valueExpression>
+            </parameters>
+            <parameters>
+                <definition>primitive://String</definition>
+                <isRequired>true</isRequired>
+                <parameterName>relatedListName</parameterName>
+                <valueExpression>Cases</valueExpression>
+            </parameters>
+            <referenceName>RelatedList:Case.Cases.Records</referenceName>
+        </templateDataProviders>
+        <templateDataProviders>
+            <definition>invocable://getDataForGrounding</definition>
+            <parameters>
+                <definition>primitive://String</definition>
+                <isRequired>true</isRequired>
+                <parameterName>recordId</parameterName>
+                <valueExpression>{!$Input:Case.Id}</valueExpression>
+            </parameters>
+            <referenceName>RecordSnapshot:Case</referenceName>
+        </templateDataProviders>
+        <versionIdentifier>CGBxz5ewIAWCqSbsqoPH28tm/Ps0cs5HeVP7/3nXHAA=_2</versionIdentifier>
+    </templateVersions>
+    <type>einstein_gpt__recordSummary</type>
+    <visibility>Global</visibility>
+</GenAiPromptTemplate>

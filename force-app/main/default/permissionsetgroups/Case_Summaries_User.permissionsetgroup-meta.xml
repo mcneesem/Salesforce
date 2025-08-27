@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Group of Permission Sets required to access Case Summaries.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Case Summaries User</label>
+    <permissionSets>View_AI_Case_Summaries</permissionSets>
+    <permissionSets>force__EinsteinGPTPromptTemplateUser</permissionSets>
+    <permissionSets>force__EinsteinGPTWorkSummaries</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

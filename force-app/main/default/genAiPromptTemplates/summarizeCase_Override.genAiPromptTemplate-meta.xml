@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPromptTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <activeVersionIdentifier>j00Gv7rWBQjkqj4LWf+gT17/WJjgcr0X5a4eNhhyaMQ=_13</activeVersionIdentifier>
+    <description>Creates a rich-text summary based on the Case object.</description>
+    <developerName>summarizeCase_Override</developerName>
+    <masterLabel>Summarize Case</masterLabel>
+    <overrideSource>einstein_gpt__summarizeCase</overrideSource>
+    <relatedEntity>Case</relatedEntity>
+    <templateVersions>
+        <content>You are a team leader, your job is to provide an executive summary of the case to your leaders. Your task is to summarize case information, including files. The case below is between service agents and an end user. 
+
+Succinctly summarize the case. Do not include PII in the summary.
+Include the {!$Input:Case.CaseNumber} {!$Input:Case.CreatedDate} in the first sentence of the summary. 
+Do not reference {!$Input:Case.NSP_Rating__c}
+
+Print all the previous case owners from {!$RelatedList:Case.Histories.Records}
+
+Display the {!$Input:Case.ClosedDate} ONLY if it is populated. If the Closed Date is blank, do not reference it
+
+Display all the notes of the case in the summary
+
+If there are {!$RelatedList:Case.Cases.Records} , then print them by Case number in the summary
+
+If a case has any files attached to it, display the file name in bullet points with the title &quot;&quot;Attachments: &quot;&quot;
+{!$RecordSnapshot:Case.Snapshot}
+ ---
+Summarize data from the following case: {!$Flow:case_summaries__GetCaseSummaryInfo.Prompt}
+</content>
+        <inputs>
+            <apiName>caseToSummarize</apiName>
+            <definition>SOBJECT://Case</definition>
+            <referenceName>Input:Case</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultOpenAIGPT4Turbo</primaryModel>
+        <status>Published</status>
+        <templateDataProviders>
+            <definition>flow://case_summaries__GetCaseSummaryInfo</definition>
+            <parameters>
+                <definition>SOBJECT://Case</definition>
+                <isRequired>true</isRequired>
+                <parameterName>caseToSummarize</parameterName>
+                <valueExpression>{!$Input:Case}</valueExpression>
+            </parameters>
+            <referenceName>Flow:case_summaries__GetCaseSummaryInfo</referenceName>
+        </templateDataProviders>
+        <templateDataProviders>
+            <definition>invocable://getRelatedList</definition>
+            <parameters>
+                <definition>primitive://String</definition>
+                <isRequired>true</isRequired>
+                <parameterName>parentRecordId</parameterName>
+                <valueExpression>{!$Input:Case.Id}</valueExpression>
+            </parameters>
+            <parameters>
+                <definition>primitive://String</definition>
+                <isRequired>true</isRequired>
+                <parameterName>relatedListName</parameterName>
+                <valueExpression>Histories</valueExpression>
+            </parameters>
+            <referenceName>RelatedList:Case.Histories.Records</referenceName>
+        </templateDataProviders>
+        <templateDataProviders>
+            <definition>invocable://getRelatedList</definition>
+            <parameters>
+                <definition>primitive://String</definition>
+                <isRequired>true</isRequired>
+                <parameterName>parentRecordId</parameterName>
+                <valueExpression>{!$Input:Case.Id}</valueExpression>
+            </parameters>
+            <parameters>
+                <definition>primitive://String</definition>
+                <isRequired>true</isRequired>
+                <parameterName>relatedListName</parameterName>
+                <valueExpression>Cases</valueExpression>
+            </parameters>
+            <referenceName>RelatedList:Case.Cases.Records</referenceName>
+        </templateDataProviders>
+        <templateDataProviders>
+            <definition>invocable://getDataForGrounding</definition>
+            <parameters>
+                <definition>primitive://String</definition>
+                <isRequired>true</isRequired>
+                <parameterName>recordId</parameterName>
+                <valueExpression>{!$Input:Case.Id}</valueExpression>
+            </parameters>
+            <referenceName>RecordSnapshot:Case</referenceName>
+        </templateDataProviders>
+        <versionIdentifier>j00Gv7rWBQjkqj4LWf+gT17/WJjgcr0X5a4eNhhyaMQ=_13</versionIdentifier>
+    </templateVersions>
+    <type>einstein_gpt__caseSummary</type>
+    <visibility>Global</visibility>
+</GenAiPromptTemplate>
