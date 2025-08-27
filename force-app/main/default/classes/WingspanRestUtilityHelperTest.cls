@@ -67,8 +67,7 @@ private class WingspanRestUtilityHelperTest {
         WingspanRestUtilityHelper.Input input = new WingspanRestUtilityHelper.Input();
         input.contactId = cc.id;
         input.recordId = asset.id;
-        input.validateContact = true;
-        input.createContact = true;
+        input.isCheckOnly = false;
         test.setMock(HttpCalloutMock.class, new WingspanMockHttpResponseGenerator());
         test.startTest();
         List<WingspanRestUtilityHelper.Output> outputList = WingspanRestUtilityHelper.wingspanApiDirector(new List<WingspanRestUtilityHelper.Input>{input});

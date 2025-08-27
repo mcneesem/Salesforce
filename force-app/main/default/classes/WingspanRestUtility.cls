@@ -1,38 +1,32 @@
 public with sharing class WingspanRestUtility {
     // test w/ WingspanRestUtilityHelperTest (95%)
-
-    private static final String className = WingspanRestUtility.class.getName();
     private static List<Wingspan_Log__c> pendingLogs = new List<Wingspan_Log__c>();
-    private static final String appJson = 'application/json';
-    private static final String bearer = 'Bearer ';
+    private static String currentHeaders = '';
     
     //construct GET Request to validate contact in wingspan Server
-    public static Boolean getUserByEmail(Id contactId, Id recordId){
+    public static Boolean getUserByEmail(Id contactId, Id recordId, Boolean isCheckOnly){
         Contact con = getContact(contactId);
         Boolean userFound = true;
         String method = 'GET';
 
-        if( ( activeSetting != null ) 
-           && ( !String.isBlank( WingspanRestUtility.baseUrl ) ) 
-           && ( !String.isBlank( WingspanRestUtility.privateKey ) ) 
-           && ( con != null ) 
+        if( ( con != null ) 
            && ( !String.isBlank( con.Email ) )
            && ( !String.isBlank( recordId ) )
           ){
             //create endpoint URL
-            String endpoint = WingspanRestUtility.baseUrl + '/users/user/email/' + con.Email;
-            //create header
-            Map<String,String> headers = new Map<String,String>{
-                'Authorization' => bearer + WingspanRestUtility.privateKey
-            };
+            String path = '/users/user/email/' + con.Email;
 			
             //send API request        
-            HttpResponse resp = sendRequest(method,endpoint,'',headers, recordId);
+            HttpResponse resp = sendRequest(method,path,'', recordId);
             
             if( resp.getStatus() == 'Not Found' && resp.getStatusCode() == 404){
                 //user not found -> can create new
                 userFound = false;
             }
+        }
+        //insert only get api log
+        if( isCheckOnly ){
+            insertLogs();
         }
         return userFound;
     }
@@ -44,30 +38,19 @@ public with sharing class WingspanRestUtility {
         String method = 'POST';
         
         //construct request
-        if( ( activeSetting != null ) 
-           && ( !String.isBlank( WingspanRestUtility.baseUrl ) ) 
-           && ( !String.isBlank( WingspanRestUtility.privateKey ) ) 
-           && ( !String.isBlank( recordId ) )
-          ){
-              //create endpoint URL
-              String endpoint = WingspanRestUtility.baseUrl + '/users/organization/user';
-              
-              //create header for Admin Creation POST request
-              Map<String,String> headers = new Map<String,String>{
-                  'Authorization' => bearer + WingspanRestUtility.privateKey, 
-                  'Accept' => appJson,
-                  'Content-Type' => appJson
-              };
-              
-              //call API
-              HttpResponse resp = sendRequest(method,endpoint,body,headers, recordId);
-              
-              if( resp.getStatusCode() == 200 ){
-                  //construct success
-                  Map<String,Object> structuredResponse = ( Map<String,Object> )JSON.deserializeUntyped( resp.getBody() );
-                  createdUserId = ( String )structuredResponse.get( 'userId' );
-              }
-		}
+        if( !String.isBlank( recordId ) ){
+            //create endpoint URL
+            String path = '/users/organization/user';
+            
+            //call API
+            HttpResponse resp = sendRequest(method,path,body, recordId);
+            
+            if( resp.getStatusCode() == 200 ){
+                //construct success
+                Map<String,Object> structuredResponse = ( Map<String,Object> )JSON.deserializeUntyped( resp.getBody() );
+                createdUserId = ( String )structuredResponse.get( 'userId' );
+            }
+        }
         return createdUserId;
     }
     
@@ -119,28 +102,24 @@ public with sharing class WingspanRestUtility {
         String body = JSON.Serialize( linkWrap );
         String method = 'POST';
         
-        if( ( activeSetting != null ) 
-           && ( !String.isBlank( WingspanRestUtility.baseUrl ) ) 
-           && ( !String.isBlank( WingspanRestUtility.privateKey ) ) 
-           && ( !String.isBlank( recordId ) )
-          ){
-              String endpoint = baseUrl + '/users/organization/user/'+ createdUserId + '/associate';
-              Map<String,String> headers = new Map<String,String>{
-                  'Authorization' => bearer + WingspanRestUtility.privateKey, 
-                  'Accept' => appJson,
-                  'Content-Type' => appJson
-              };
-              
-              //send API request        
-        	  sendRequest(method,endpoint,body,headers, recordId);
-          }
+        if( !String.isBlank( recordId ) ){
+            String path = '/users/organization/user/'+ createdUserId + '/associate';
+            
+            //send API request        
+            sendRequest(method,path,body, recordId);
+        }
+        //insert all api logs
+        insertLogs();
     }
     
     //method to fetch Contact record
     private static Contact getContact(Id contactId){
         Contact cc = null;
         if( contactId != null){
-            cc = [SELECT id, Email, FirstName, LastName FROM Contact WHERE Id = :contactId];
+            List<Contact> ccList = [SELECT id, Email, FirstName, LastName FROM Contact WHERE Id = :contactId];
+            if( !ccList.isEmpty() ){
+                cc = ccList[0];
+            }
         }
         return cc;
     }
@@ -148,9 +127,8 @@ public with sharing class WingspanRestUtility {
     //method to send http requests
     private static HttpResponse sendRequest(
         String method, 
-        String endpoint, 
-        String body, 
-        Map<String,String> headers,
+        String path, 
+        String body,        
         Id recordId
     ){
         String logDescription = '';
@@ -163,22 +141,28 @@ public with sharing class WingspanRestUtility {
                 req.setBody(body);
             }
             
-            if(!String.isBlank(endpoint)){
-                req.setEndpoint(endpoint);
-                url = endpoint;
+            if ( !String.isBlank( path ) ) {
+                url = WingspanRestUtility.baseUrl + path;
+                req.setEndpoint( url );
             }
             
             if( !String.isBlank(method) ){
                 req.setMethod(method);
             }
             
+            Map<String,String> headers = new Map<String,String>{'Authorization' => 'Bearer ' + WingspanRestUtility.privateKey};
+            if (  !String.isBlank(method) && method == 'POST' ) {
+				headers.put( 'Accept' , 'application/json' );
+				headers.put( 'Content-Type' , 'application/json' );
+            }
             if( headers != null ){
+                currentHeaders = JSON.serialize( headers );
                 for(String key: headers.keyset()){
                     req.setHeader(key,headers.get(key));
                 }
             }
             
-            req.setTimeout(120000);
+            req.setTimeout( WingspanRestUtility.timeout );
             
             res = http.send(req);
             logDescription = 'No Error during callout.';
@@ -206,7 +190,10 @@ public with sharing class WingspanRestUtility {
         String logMethod = 'sendRequest';
         
         Wingspan_Log__c log = new Wingspan_Log__c();
-        log.Class__c = className;
+        log.Class__c = SchemaController.safeText(
+            WingspanRestUtility.class.getName() ,
+            sObjectType.Wingspan_Log__c.Fields.Class__c
+        );
         
         if ( req != null && response != null ){
             String requestBody = req.getBody();
@@ -223,30 +210,70 @@ public with sharing class WingspanRestUtility {
                 logDescription = 'POST request for associating Admin in wingspan server';
                 logMethod += '-linkAdminToCHUB';
             }
-            log.Method__c = logMethod;
-            log.Description__c = logDescription + '--' + description;
+            log.Method__c = SchemaController.safeText(
+                logMethod ,
+                sObjectType.Wingspan_Log__c.Fields.Method__c
+            );
+            
+            log.Description__c = SchemaController.safeText(
+                logDescription + '--' + description ,
+                sObjectType.Wingspan_Log__c.Fields.Description__c
+            );
+            
+            //request headers
+            log.Request_Headers__c = SchemaController.safeText(
+            	currentHeaders ,
+                sObjectType.Wingspan_Log__c.Fields.Request_Headers__c
+            );
             
             //request and response body
-            log.Request_Body__c = requestBody;
-            log.Response_Body__c = response.getBody();
+            log.Request_Body__c = SchemaController.safeText(
+                req.getBody() ,
+                sObjectType.Wingspan_Log__c.Fields.Request_Body__c
+            );
+            
+            log.Response_Body__c = SchemaController.safeText(
+                response.getBody() ,
+                sObjectType.Wingspan_Log__c.Fields.Response_Body__c
+            );
             
             //populate endpoint url
             if( !String.isBlank( req.getEndpoint() ) ){
-                log.Endpoint_URL__c = req.getEndpoint();    
+                log.Endpoint_URL__c = SchemaController.safeText(
+                    req.getEndpoint() ,
+                    sObjectType.Wingspan_Log__c.Fields.Endpoint_URL__c
+                );
             }
             
             //object name and record id
             if( !String.isBlank(recordId) ){
-                log.Object__c = String.valueOf(recordId.getSObjectType());
-                log.Record_Id__c = recordId;
+                log.Object__c = SchemaController.safeText(
+                    String.valueOf( recordId.getSObjectType() ) ,
+                    sObjectType.Wingspan_Log__c.Fields.Object__c
+                );
+                
+                log.Record_Id__c = SchemaController.safeText(
+                    recordId ,
+                    sObjectType.Wingspan_Log__c.Fields.Record_Id__c
+                );
             }
             
             //response headers
-            log.Response_Headers__c = getResponseHeaders( response );
+            log.Response_Headers__c = SchemaController.safeText(
+                WingspanRestUtility.getResponseHeaders( response ) ,
+                sObjectType.Wingspan_Log__c.Fields.Response_Headers__c
+            );
             
             //response status and code
-            log.Response_Status__c = getResponseStatus( response );
-            log.Response_Code__c = response.getStatusCode();
+            log.Response_Status__c = SchemaController.safeText(
+                response.getStatus() ,
+                sObjectType.Wingspan_Log__c.Fields.Response_Status__c
+            );
+            
+            log.Response_Code__c = SchemaController.safeInteger(
+                response.getStatusCode() ,
+                sObjectType.Wingspan_Log__c.Fields.Response_Code__c
+            );
         }
         
         pendingLogs.add(log);
@@ -265,22 +292,8 @@ public with sharing class WingspanRestUtility {
          return JSON.serialize( responseHeaders );
     }
     
-    //method to get response Status
-    private static String getResponseStatus( HttpResponse response ){
-        String status = '';
-        if( response != null ){
-            String responseStatus = response.getStatus();
-            if( responseStatus.length() > 255 ){
-                status = responseStatus.subString( 0, 255 );
-            }else{
-                status = responseStatus;
-            }
-        }
-        return status;
-    }
-    
     //DML called after all HTTP requests
-    public static void insertLogs(){
+    private static void insertLogs(){
         if( !pendingLogs.isEmpty() ){
             try{
             	insert pendingLogs;    
@@ -325,12 +338,12 @@ public with sharing class WingspanRestUtility {
     //method to create labels for JSON
     private static Labels createLabels( Id recordId ){
         Labels labelsWrap = new Labels();
-        Asset asset = null;
+        List<Asset> assets = null;
         if( ( !String.isBlank( recordId ) ) 
            && ( String.valueOf(recordId.getSObjectType()) == 'Asset' ) 
           ){
               //fetch record fields
-              asset = [SELECT 
+              assets = [SELECT 
                        AccountId,
                        Asset_Number__c,
                        Opportunity__r.NSP_Number_of_Employees__c,
@@ -340,18 +353,18 @@ public with sharing class WingspanRestUtility {
                        LIMIT 1];
           }
         //assign fields
-        if( asset != null ){
-            if( !String.isBlank( asset.AccountId ) ){
-                labelsWrap.insperityAccountId = asset.AccountId;    
+        if( !assets.isEmpty() && assets[0] != null ){
+            if( !String.isBlank( assets[0].AccountId ) ){
+                labelsWrap.insperityAccountId = assets[0].AccountId;    
             }
-            if( !String.isBlank( asset.Asset_Number__c ) ){
-                labelsWrap.saasId = asset.Asset_Number__c;
+            if( !String.isBlank( assets[0].Asset_Number__c ) ){
+                labelsWrap.saasId = assets[0].Asset_Number__c;
             }
-            if( asset.Opportunity__r.NSP_Number_of_Employees__c != null ){
-                labelsWrap.employeesEstimate = String.valueOf( asset.Opportunity__r.NSP_Number_of_Employees__c );
+            if( assets[0].Opportunity__r.NSP_Number_of_Employees__c != null ){
+                labelsWrap.employeesEstimate = String.valueOf( assets[0].Opportunity__r.NSP_Number_of_Employees__c );
             }
-            if( !String.isBlank( asset.NSP_AccountName__c )){
-                labelsWrap.accountName = asset.NSP_AccountName__c;   
+            if( !String.isBlank( assets[0].NSP_AccountName__c )){
+                labelsWrap.accountName = assets[0].NSP_AccountName__c;   
             }
         }
         return labelsWrap;
@@ -370,24 +383,35 @@ public with sharing class WingspanRestUtility {
 	
     private static Wingspan_Settings__c activeSetting { 
         private get{
-            if( activeSetting == null ){
-                activeSetting = [SELECT
-                                 BaseUrl__c,
-                                 PrivateKey__c,
-                                 UserId__c
-                                 FROM Wingspan_Settings__c 
-                                 WHERE IsEnabled__c = true 
-                                 LIMIT 1];
+            if ( activeSetting == null ) {
+                List<Wingspan_Settings__c> all = [
+                    SELECT Id , Name , IsEnabled__c , BaseUrl__c , PrivateKey__c , UserId__c
+                    FROM Wingspan_Settings__c
+                    WHERE ( IsEnabled__c = true )
+                    LIMIT 1
+                ];
+                Wingspan_Settings__c local = null;
+                if ( ( all != null ) && !all.isEmpty() ) {
+                    local = all[0];
+                }
+                activeSetting = local;
             }
             return activeSetting;
         } 
         private set;
     }
     
-    private static String baseURL { 
+    private static String baseUrl { 
         private get{
-            if( ( baseURL == null ) && ( WingspanRestUtility.activeSetting != null ) ){
-                baseURL = WingspanRestUtility.activeSetting.BaseUrl__c;
+            if ( baseURL == null ) {
+                String local = 'XXX_BASE_URL_XXX';
+                if ( ( WingspanRestUtility.activeSetting != null )
+                    && String.isNotBlank( WingspanRestUtility.activeSetting.BaseUrl__c )
+                   )
+                {
+                    local = WingspanRestUtility.activeSetting.BaseUrl__c;
+                }
+                baseURL = local;
             }
             return baseURL;
         } private set; 
@@ -395,8 +419,15 @@ public with sharing class WingspanRestUtility {
     
     private static String privateKey { 
         private get{
-            if( ( privateKey == null ) && ( WingspanRestUtility.activeSetting != null ) ){
-                privateKey = WingspanRestUtility.activeSetting.PrivateKey__c;
+            if ( privateKey == null ) {
+                String local = 'XXX_PRIVATE_KEY_XXX';
+                if ( ( WingspanRestUtility.activeSetting != null )
+                    && String.isNotBlank( WingspanRestUtility.activeSetting.PrivateKey__c )
+                   )
+                {
+                    local = WingspanRestUtility.activeSetting.PrivateKey__c;
+                }
+                privateKey = local;
             }
             return privateKey;
         } 
@@ -411,5 +442,15 @@ public with sharing class WingspanRestUtility {
             return userId;
         }
         private set; 
+    }
+    
+    private static Integer timeout {
+        private get{
+            if( timeout == null ){
+                timeout = 120000;
+            }
+            return timeout;
+        }
+        private set;
     }
 }

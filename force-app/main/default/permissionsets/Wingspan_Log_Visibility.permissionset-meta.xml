@@ -38,6 +38,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Wingspan_Log__c.Request_Headers__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Wingspan_Log__c.Response_Body__c</field>
         <readable>true</readable>
     </fieldPermissions>

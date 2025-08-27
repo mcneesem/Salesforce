@@ -18,21 +18,15 @@
             </value>
         </inputParameters>
         <inputParameters>
-            <name>createContact</name>
+            <name>isCheckOnly</name>
             <value>
-                <booleanValue>true</booleanValue>
+                <booleanValue>false</booleanValue>
             </value>
         </inputParameters>
         <inputParameters>
             <name>recordId</name>
             <value>
                 <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>validateContact</name>
-            <value>
-                <booleanValue>true</booleanValue>
             </value>
         </inputParameters>
         <nameSegment>WingspanRestUtilityHelper</nameSegment>

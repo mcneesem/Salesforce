@@ -22,21 +22,15 @@
             </value>
         </inputParameters>
         <inputParameters>
-            <name>createContact</name>
+            <name>isCheckOnly</name>
             <value>
-                <booleanValue>false</booleanValue>
+                <booleanValue>true</booleanValue>
             </value>
         </inputParameters>
         <inputParameters>
             <name>recordId</name>
             <value>
                 <elementReference>recordId</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>validateContact</name>
-            <value>
-                <booleanValue>true</booleanValue>
             </value>
         </inputParameters>
         <nameSegment>WingspanRestUtilityHelper</nameSegment>
@@ -227,7 +221,7 @@
             <name>User_Not_Found</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Validate_Stakeholder_Through_API.userFound</leftValueReference>
+                <leftValueReference>Validate_Stakeholder_Through_API.isUserFound</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>

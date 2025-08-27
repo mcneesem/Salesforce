@@ -1,17 +1,15 @@
 public with sharing class WingspanRestUtilityHelper {
-    // test w/ WingspanRestUtilityHelperTest (96%)
+    // test w/ WingspanRestUtilityHelperTest (79%)
     public class Output {
         @InvocableVariable(label = 'User Found?')
-        public Boolean userFound;
+        public Boolean isUserFound;
     }
     
     public class Input {
         @InvocableVariable(label = 'Stake Holder Contact')
         public Id contactId;
-        @InvocableVariable(label = 'Validate Contact?')
-        public Boolean validateContact;
-        @InvocableVariable(label = 'Create Contact in Wingspan?')
-        public Boolean createContact;
+        @InvocableVariable(label = 'Check Only?')
+        public Boolean isCheckOnly;
         @InvocableVariable(label = 'Record ID')
         public Id recordId;
     }
@@ -32,9 +30,6 @@ public with sharing class WingspanRestUtilityHelper {
                 'wingspanApiDirector' ,
                 e
             );
-        }finally{
-            //insert logs after all API calls are made
-            WingspanRestUtility.insertLogs();
         }
         
         return new List<Output>{result};
@@ -44,18 +39,15 @@ public with sharing class WingspanRestUtilityHelper {
     private static Output handleApiCalls( Input input ){
         //initiate empty output
         Output result = new Output();
-        result.userFound = true;
+        result.isUserFound = true;
         String createdUserId = '';
         
         if( ( input.contactId !=null ) 
-           && ( input.validateContact != null )
-           && ( input.createContact != null )
-           && ( input.recordId != null ) 
-           && ( input.validateContact == True )
+           && ( input.recordId != null )
           ){
               //validate contact in Wingspan Server
-              result.userfound = WingspanRestUtility.getUserByEmail( input.contactId, input.recordId );
-              if( ( input.createContact == True ) && ( !result.userfound ) ){
+              result.isUserFound = WingspanRestUtility.getUserByEmail( input.contactId, input.recordId, input.isCheckOnly );
+              if( ( !input.isCheckOnly ) && ( !result.isUserFound ) ){
                   //create contact in Wingspan Server
                   createdUserId = WingspanRestUtility.createClientAdmin( input.contactId, input.recordId );
                   if( !String.isBlank( createdUserId ) ){
