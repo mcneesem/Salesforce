@@ -1673,6 +1673,7 @@ public class NSP_ProjectTasksTriggerHelper {
                 inputs.put( 'emailSubject' , subject );
                 inputs.put( 'emailBody' , body );
                 inputs.put( 'recordId' , recordId );
+                inputs.put( 'logEmail' , true );
                 Flow.Interview.Send_Email sendEmailFlow = new Flow.Interview.Send_Email( inputs );
                 sendEmailFlow.start();
             }
