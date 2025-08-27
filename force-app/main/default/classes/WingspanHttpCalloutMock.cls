@@ -1,5 +1,5 @@
 @isTest
-public class WingspanMockHttpResponseGenerator implements HttpCalloutMock {
+public class WingspanHttpCalloutMock implements HttpCalloutMock {
 
     public HttpResponse respond(HttpRequest req){
         HttpResponse res = new HttpResponse();
