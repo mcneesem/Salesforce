@@ -68,7 +68,7 @@ private class WingspanCreateUserActionTest {
         input.contactId = cc.id;
         input.recordId = asset.id;
         input.isCheckOnly = false;
-        test.setMock(HttpCalloutMock.class, new WingspanMockHttpResponseGenerator());
+        test.setMock(HttpCalloutMock.class, new WingspanHttpCalloutMock());
         test.startTest();
         List<WingspanRestUtilityHelper.Output> outputList = WingspanRestUtilityHelper.wingspanApiDirector(new List<WingspanRestUtilityHelper.Input>{input});
         test.stopTest();
