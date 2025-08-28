@@ -94,6 +94,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>HRScale_Client_Roles__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>NSP_KIP_Perspective_of_Relationship__c</field>
             </layoutItems>
             <layoutItems>

@@ -123,6 +123,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>AccountContactRelation.HRScale_Client_Roles__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>AccountContactRelation.Per_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
