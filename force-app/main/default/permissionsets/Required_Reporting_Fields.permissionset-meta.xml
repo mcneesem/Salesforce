@@ -1548,6 +1548,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>pse__Proj__c.Project_Cancelled_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>pse__Proj__c.Project_Implementer__c</field>
         <readable>true</readable>
     </fieldPermissions>
