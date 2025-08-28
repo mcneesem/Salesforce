@@ -6,7 +6,7 @@
         <label>Validate Stakeholder Through API</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <actionName>WingspanRestUtilityHelper</actionName>
+        <actionName>WingspanCreateUserAction</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Check_User_Found</targetReference>
@@ -33,7 +33,7 @@
                 <elementReference>recordId</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>WingspanRestUtilityHelper</nameSegment>
+        <nameSegment>WingspanCreateUserAction</nameSegment>
         <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
