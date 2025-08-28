@@ -817,15 +817,15 @@ private class NSP_AccountTriggerHelperTest {
             update contact;
             
             event.OwnerId = users[1].Id;
-            update event;
             
             task.OwnerId = users[1].Id;
-            update task;
             
             acct.OwnerId = users[1].Id;
             //  Reset all the run counts otherwise the method 'beforeUpdate' won't be triggered
             NSP_AccountTriggerHandler.resetAllHasRun();
             update acct;
+            update event;
+            update task;
             
             Test.stopTest();
             
