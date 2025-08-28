@@ -1,10 +1,11 @@
 public with sharing class WingspanCreateUserAction {
     // test w/ WingspanCreateUserActionTest (79%)
+
     public class Output {
         @InvocableVariable(label = 'User Found?')
         public Boolean isUserFound;
     }
-    
+
     public class Input {
         @InvocableVariable(label = 'Stake Holder Contact')
         public Id contactId;
@@ -13,7 +14,7 @@ public with sharing class WingspanCreateUserAction {
         @InvocableVariable(label = 'Record ID')
         public Id recordId;
     }
-    
+
     @InvocableMethod(label = 'Create Wingspan User')
     public static List<Output> wingspanApiDirector(List<Input> inputs){
         Output result = new Output();
@@ -26,15 +27,15 @@ public with sharing class WingspanCreateUserAction {
             }
         }catch (exception e){
             NSP_ErrorLogHandler.logException(
-                WingspanRestUtilityHelper.class.getName() ,
+                WingspanCreateUserAction.class.getName() ,
                 'wingspanApiDirector' ,
                 e
             );
         }
         
         return new List<Output>{result};
-	}
-    
+    }
+
     //method to direct API calls
     private static Output handleApiCalls( Input input ){
         //initiate empty output
@@ -58,4 +59,5 @@ public with sharing class WingspanCreateUserAction {
           }
         return result;
     }
+
 }
