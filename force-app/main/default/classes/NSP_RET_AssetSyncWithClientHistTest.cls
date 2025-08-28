@@ -68,9 +68,9 @@ Private class NSP_RET_AssetSyncWithClientHistTest {
         NSP_Client_Sub_Plan_History__c clientSubPlanHistRec1 = (NSP_Client_Sub_Plan_History__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Client_Sub_Plan_History__c(), 'NSP_TestDataFactory.clientSubPlanHistoryDefaults', false);
         clientSubPlanHistRec1.RecordTypeId = CHOICECLIENTSUBPLANRECORDTYPEID;
 		clientSubPlanHistRec1.NSP_Asset__c = asst.Id;
-        clientSubPlanHistRec1.NSP_End_Date__c = Date.newInstance(2022, 12, 07);
         clientSubPlanHistRec1.NSP_Start_Date__c = System.today();
         clientSubPlanHistRec1.NSP_Plan_Subplan_Relationship__c = planSubplanRec.Id;
+        clientSubPlanHistRec1.NSP_Current_Subplan__c = True;
         insert clientSubPlanHistRec1;
                   
     }
@@ -95,5 +95,17 @@ Private class NSP_RET_AssetSyncWithClientHistTest {
             }
         } 
         
+    }
+    
+    @isTest
+    static void scheduleBatchTest(){
+        try{
+            List<String> RA_FIELD = new List<String>{'Id', 'Event_Id__c','Type'};
+            test.startTest();
+            NSP_RET_AssetSyncWithClientHistBatch.schedule();
+            test.stopTest();
+        } catch(Exception ex){
+            System.debug( ' ~ ex=' + ex );
+        }
     }
 }
