@@ -1,8 +1,9 @@
 public with sharing class WingspanRestUtility {
-    // test w/ WingspanRestUtilityHelperTest (95%)
+    // test w/ WingspanCreateUserActionTest (95%)
+
     private static List<Wingspan_Log__c> pendingLogs = new List<Wingspan_Log__c>();
     private static String currentHeaders = '';
-    
+
     //construct GET Request to validate contact in wingspan Server
     public static Boolean getUserByEmail(Id contactId, Id recordId, Boolean isCheckOnly){
         Contact con = getContact(contactId);
@@ -15,10 +16,8 @@ public with sharing class WingspanRestUtility {
           ){
             //create endpoint URL
             String path = '/users/user/email/' + con.Email;
-			
-            //send API request        
+            //send API request
             HttpResponse resp = sendRequest(method,path,'', recordId);
-            
             if( resp.getStatus() == 'Not Found' && resp.getStatusCode() == 404){
                 //user not found -> can create new
                 userFound = false;
@@ -150,10 +149,12 @@ public with sharing class WingspanRestUtility {
                 req.setMethod(method);
             }
             
-            Map<String,String> headers = new Map<String,String>{'Authorization' => 'Bearer ' + WingspanRestUtility.privateKey};
+            Map<String,String> headers = new Map<String,String>{
+                'Authorization' => 'Bearer ' + WingspanRestUtility.privateKey
+            };
             if (  !String.isBlank(method) && method == 'POST' ) {
-				headers.put( 'Accept' , 'application/json' );
-				headers.put( 'Content-Type' , 'application/json' );
+                headers.put( 'Accept' , 'application/json' );
+                headers.put( 'Content-Type' , 'application/json' );
             }
             if( headers != null ){
                 currentHeaders = JSON.serialize( headers );
@@ -222,7 +223,7 @@ public with sharing class WingspanRestUtility {
             
             //request headers
             log.Request_Headers__c = SchemaController.safeText(
-            	currentHeaders ,
+                currentHeaders ,
                 sObjectType.Wingspan_Log__c.Fields.Request_Headers__c
             );
             
@@ -296,7 +297,7 @@ public with sharing class WingspanRestUtility {
     private static void insertLogs(){
         if( !pendingLogs.isEmpty() ){
             try{
-            	insert pendingLogs;    
+                insert pendingLogs;
             }catch (exception e){
                 NSP_ErrorLogHandler.logException(
                     WingspanRestUtility.class.getName() ,
@@ -382,9 +383,9 @@ public with sharing class WingspanRestUtility {
     private class InheritanceStrategyWrapper{
         private String organizationAccountConfig = '';
     }
-    
+
     // attributes controlled by Custom Settings...
-	
+
     private static Wingspan_Settings__c activeSetting { 
         private get{
             if ( activeSetting == null ) {
