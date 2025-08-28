@@ -5,7 +5,7 @@ import Id from '@salesforce/user/Id'; // Import the user ID
 
 export default class EventFlowLauncher extends NavigationMixin(LightningElement) {
     @api recordId;
-    @track previousStatus = null;
+    @track eventId;
     @track whatId;
     @track isModalOpen = false;
     inputVariables = [];
@@ -19,13 +19,13 @@ export default class EventFlowLauncher extends NavigationMixin(LightningElement)
 
     handleSubscribe() {
         const callback = (response) => {
-            const eventId = response.data.payload.Id__c;
             const updateUserId = response.data.payload.UserId__c;
+            this.eventId = response.data.payload.Id__c;
             this.whatId = response.data.payload.WhatId__c;
             this.updateInputVariables();
 
             if ( ( this.currentUserId == updateUserId )
-                 && ( this.recordId == eventId
+                 && ( this.recordId == this.eventId
                    || this.recordId == this.whatId )
                )
             {
@@ -54,7 +54,22 @@ export default class EventFlowLauncher extends NavigationMixin(LightningElement)
 
     closeModal() {
         this.isModalOpen = false;
+        if ( this.recordId != this.whatId ) // go to Opty record page if not already there
+        {
+            this.navigateToOpportunity();
+        }
     }
+    
+    navigateToOpportunity() {
+    this[NavigationMixin.Navigate]({
+        type: 'standard__recordPage',
+        attributes: {
+            recordId: this.whatId,
+            objectApiName: 'Opportunity', // Specify the object API name
+            actionName: 'view'
+        }
+    });
+}
 
     handleStatusChange(event) {
         if (event.detail.status === 'FINISHED') {
