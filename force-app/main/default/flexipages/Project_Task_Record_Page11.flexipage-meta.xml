@@ -608,16 +608,6 @@
                 <identifier>Recordpse_Assigned_Resources_cField</identifier>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Account_Group__c</fieldItem>
-                <identifier>RecordAccount_Group__cField</identifier>
-            </fieldInstance>
-        </itemInstances>
         <name>Facet-4a932f6a-7ea9-43be-908a-0a2a45ee16a3</name>
         <type>Facet</type>
     </flexiPageRegions>
