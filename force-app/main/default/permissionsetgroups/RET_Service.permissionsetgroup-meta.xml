@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Group of Permission Sets to be granted to Retirement Service Users.
-(AZD-448418)</description>
+    <description>Group of Permission Sets to be granted to RET Service Users.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>RET Service</label>
     <permissionSets>RET_Service_Apex_Access</permissionSets>
@@ -13,5 +12,5 @@
     <permissionSets>RET_Service_Record_Type_Assignments</permissionSets>
     <permissionSets>RET_Service_System_Permissions</permissionSets>
     <permissionSets>RET_Service_Visualforce_Page_Access</permissionSets>
-    <status>Updating</status>
+    <status>Updated</status>
 </PermissionSetGroup>
