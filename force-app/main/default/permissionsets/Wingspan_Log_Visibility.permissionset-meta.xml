@@ -13,7 +13,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Wingspan_Log__c.Endpoint_URL__c</field>
+        <field>Wingspan_Log__c.Endpoint__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

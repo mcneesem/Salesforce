@@ -53,7 +53,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Endpoint_URL__c</field>
+                <field>Endpoint__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>

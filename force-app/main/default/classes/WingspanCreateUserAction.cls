@@ -47,13 +47,13 @@ public with sharing class WingspanCreateUserAction {
            && ( input.recordId != null )
           ){
               //validate contact in Wingspan Server
-              result.isUserFound = WingspanRestUtility.getUserByEmail( input.contactId, input.recordId, input.isCheckOnly );
+              result.isUserFound = WingspanRestService.getUserByEmail( input.contactId, input.recordId, input.isCheckOnly );
               if( ( !input.isCheckOnly ) && ( !result.isUserFound ) ){
                   //create contact in Wingspan Server
-                  createdUserId = WingspanRestUtility.createClientAdmin( input.contactId, input.recordId );
+                  createdUserId = WingspanRestService.createClientAdmin( input.contactId, input.recordId );
                   if( !String.isBlank( createdUserId ) ){
                       //Associate Admin in Wingspan Server
-                      WingspanRestUtility.linkAdminToCHUB( createdUserId, input.recordId );
+                      WingspanRestService.linkAdminToCHUB( createdUserId, input.recordId );
                   }
               }
           }
