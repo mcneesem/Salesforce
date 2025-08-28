@@ -4,135 +4,135 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>RET Service Record Type Assignments</label>
     <recordTypeVisibilities>
-    <recordType>Task.PEO_Service_Task</recordType>
-    <visible>true</visible>
-</recordTypeVisibilities>
-<recordTypeVisibilities>
-    <recordType>Task.NSP_Time_Entry_DO_NOT_USE</recordType>
-    <visible>true</visible>
-</recordTypeVisibilities>
-<recordTypeVisibilities>
-    <recordType>NSP_Project_Team__c.NSP_FSO_Project_Team</recordType>
-    <visible>true</visible>
-</recordTypeVisibilities>
-<recordTypeVisibilities>
-    <recordType>NSP_Project_Team__c.NSP_Middle_Market_Project_Team</recordType>
-    <visible>true</visible>
-</recordTypeVisibilities>
-<recordTypeVisibilities>
-    <recordType>NSP_Client_Sub_Plan_History__c.Choice</recordType>
-    <visible>true</visible>
-</recordTypeVisibilities>
-<recordTypeVisibilities>
-    <recordType>Lead.Service_Referral_Lead</recordType>
-    <visible>true</visible>
-</recordTypeVisibilities>
-<recordTypeVisibilities>
-    <recordType>NSP_Plan_SubPlan__c.Choice</recordType>
-    <visible>true</visible>
-</recordTypeVisibilities>
-<recordTypeVisibilities>
-    <recordType>NSP_Contribution__c.Choice</recordType>
-    <visible>true</visible>
-</recordTypeVisibilities>
-<recordTypeVisibilities>
-    <recordType>NSP_Eligibility__c.Choice</recordType>
-    <visible>true</visible>
-</recordTypeVisibilities>
-<recordTypeVisibilities>
-    <recordType>ContentVersion.Content_Version</recordType>
-    <visible>true</visible>
-</recordTypeVisibilities>
-<recordTypeVisibilities>
-    <recordType>NSP_Plan__c.Choice</recordType>
-    <visible>true</visible>
-</recordTypeVisibilities>
-<recordTypeVisibilities>
-    <recordType>NSP_Sub_Plan_Change_History__c.Choice</recordType>
-    <visible>true</visible>
-</recordTypeVisibilities>
-<recordTypeVisibilities>
-    <recordType>Asset.RET_Choice</recordType>
-    <visible>true</visible>
-</recordTypeVisibilities>
-<recordTypeVisibilities>
-    <recordType>Case.PEO</recordType>
-    <visible>true</visible>
-</recordTypeVisibilities>
-<recordTypeVisibilities>
-    <recordType>Case.NSP_RET_Time_Tracking</recordType>
-    <visible>true</visible>
-</recordTypeVisibilities>
-<recordTypeVisibilities>
-    <recordType>Contact.New_Contact_Record_Type</recordType>
-    <visible>true</visible>
-</recordTypeVisibilities>
-<recordTypeVisibilities>
-    <recordType>Event.Core_Sales_Event_RT</recordType>
-    <visible>true</visible>
-</recordTypeVisibilities>
-<recordTypeVisibilities>
-    <recordType>NSP_Account_Group__c.Manually_Created</recordType>
-    <visible>true</visible>
-</recordTypeVisibilities>
-<recordTypeVisibilities>
-    <recordType>NSP_PTO_Smartform__c.NSP_AIMS</recordType>
-    <visible>true</visible>
-</recordTypeVisibilities>
-<recordTypeVisibilities>
-    <recordType>NSP_PTO_Smartform__c.NSP_ITA</recordType>
-    <visible>true</visible>
-</recordTypeVisibilities>
-<recordTypeVisibilities>
-    <recordType>NSP_ReportRequest__c.NSP_DevelopmentReport</recordType>
-    <visible>true</visible>
-</recordTypeVisibilities>
-<recordTypeVisibilities>
-    <recordType>NSP_Survey__c.CSAT</recordType>
-    <visible>true</visible>
-</recordTypeVisibilities>
-<recordTypeVisibilities>
-    <recordType>NSP_Survey__c.Transition_Progress</recordType>
-    <visible>true</visible>
-</recordTypeVisibilities>
-<recordTypeVisibilities>
-    <recordType>NSP_Survey__c.VOC</recordType>
-    <visible>true</visible>
-</recordTypeVisibilities>
-<recordTypeVisibilities>
-    <recordType>NSP_Termination_Form__c.NSP_Credit_Specialist_Form</recordType>
-    <visible>true</visible>
-</recordTypeVisibilities>
-<recordTypeVisibilities>
-    <recordType>NSP_Termination_Form__c.NSP_Payroll_Specialist_Form</recordType>
-    <visible>true</visible>
-</recordTypeVisibilities>
-<recordTypeVisibilities>
-    <recordType>Task.RET_Task_RT</recordType>
-    <visible>true</visible>
-</recordTypeVisibilities>
-<recordTypeVisibilities>
-    <recordType>pse__Milestone__c.BPS_Milestone</recordType>
-    <visible>true</visible>
-</recordTypeVisibilities>
-<recordTypeVisibilities>
-    <recordType>pse__Proj__c.PEO_Project</recordType>
-    <visible>true</visible>
-</recordTypeVisibilities>
-<recordTypeVisibilities>
-    <recordType>pse__Proj__c.RET_Deconversion_2020_Form</recordType>
-    <visible>true</visible>
-</recordTypeVisibilities>
-<recordTypeVisibilities>
-    <recordType>pse__Proj__c.TES_BPS</recordType>
-    <visible>true</visible>
-</recordTypeVisibilities>
-<recordTypeVisibilities>
-    <recordType>pse__Project_Task__c.RET_Project_Task</recordType>
-    <visible>true</visible>
-</recordTypeVisibilities>
-<recordTypeVisibilities>
-    <recordType>NSP_Focus_Item__c.NSP_Service_User_Focus_item</recordType>
-    <visible>true</visible>
-</recordTypeVisibilities>
+        <recordType>Task.PEO_Service_Task</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>Task.NSP_Time_Entry_DO_NOT_USE</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>NSP_Project_Team__c.NSP_FSO_Project_Team</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>NSP_Project_Team__c.NSP_Middle_Market_Project_Team</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>NSP_Client_Sub_Plan_History__c.Choice</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>Lead.Service_Referral_Lead</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>NSP_Plan_SubPlan__c.Choice</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>NSP_Contribution__c.Choice</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>NSP_Eligibility__c.Choice</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>ContentVersion.Content_Version</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>NSP_Plan__c.Choice</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>NSP_Sub_Plan_Change_History__c.Choice</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>Asset.RET_Choice</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>Case.PEO</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>Case.NSP_RET_Time_Tracking</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>Contact.New_Contact_Record_Type</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>Event.Core_Sales_Event_RT</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>NSP_Account_Group__c.Manually_Created</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>NSP_PTO_Smartform__c.NSP_AIMS</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>NSP_PTO_Smartform__c.NSP_ITA</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>NSP_ReportRequest__c.NSP_DevelopmentReport</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>NSP_Survey__c.CSAT</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>NSP_Survey__c.Transition_Progress</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>NSP_Survey__c.VOC</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>NSP_Termination_Form__c.NSP_Credit_Specialist_Form</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>NSP_Termination_Form__c.NSP_Payroll_Specialist_Form</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>Task.RET_Task_RT</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>pse__Milestone__c.BPS_Milestone</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>pse__Proj__c.PEO_Project</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>pse__Proj__c.RET_Deconversion_2020_Form</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>pse__Proj__c.TES_BPS</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>pse__Project_Task__c.RET_Project_Task</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>NSP_Focus_Item__c.NSP_Service_User_Focus_item</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
 </PermissionSet>
