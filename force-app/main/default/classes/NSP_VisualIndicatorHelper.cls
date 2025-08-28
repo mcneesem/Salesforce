@@ -29,7 +29,7 @@ public without sharing class NSP_VisualIndicatorHelper {
     private static List<Account> getAccounts( String accId ) {
         Id vocSurveyRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'NSP_Survey__c' , 'VOC' );
         List<Account> accounts = new List<Account>();
-        if (accId != null && !String.isBlank(accId)) { 
+        if (accId != null && !String.isBlank(accId)) {
             accounts = [
                 SELECT
                     Id ,
@@ -98,11 +98,11 @@ public without sharing class NSP_VisualIndicatorHelper {
     }
 
     private static List<NSP_Survey__c> extractSurveys( List<Account> accList ) {
-        List<NSP_Survey__c> surveyList = new List<NSP_Survey__c>();  
+        List<NSP_Survey__c> surveyList = new List<NSP_Survey__c>();
         if (accList != null) {
             for (Account acc : accList) {
                 if (acc.Surveys__r != null && !acc.Surveys__r.isEmpty()) {
-                    surveyList.addAll(acc.Surveys__r);  
+                    surveyList.addAll(acc.Surveys__r);
                 }
             }
         }
@@ -241,6 +241,7 @@ public without sharing class NSP_VisualIndicatorHelper {
                 SELECT Id
                 FROM EmailMessage
                 WHERE ParentId = :caseId AND Incoming = TRUE
+                AND   EmailRoutingAddressId != null
                 LIMIT 1
             ];
             // Return true if there are any incoming email messages related to the case
@@ -252,7 +253,7 @@ public without sharing class NSP_VisualIndicatorHelper {
     }
 
     //
-    // returns the account details wrapper for 
+    // returns the account details wrapper for
     // @param
     // @return void
     //
