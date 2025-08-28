@@ -12,5 +12,6 @@
     <permissionSets>BPS_Service_Record_Type_Assignments</permissionSets>
     <permissionSets>BPS_Service_System_Permissions</permissionSets>
     <permissionSets>BPS_Service_Visualforce_Page_Access</permissionSets>
+    <permissionSets>Checklist_View_All</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
