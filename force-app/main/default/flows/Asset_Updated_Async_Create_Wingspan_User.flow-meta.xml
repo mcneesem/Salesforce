@@ -80,8 +80,8 @@
     </decisions>
     <description>Flow that creates Wingspan admin record through integration.</description>
     <environments>Default</environments>
-    <interviewLabel>Asset - After Update - Async - Validate And Create User In Wingspan {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Asset - After Update - Async - Validate And Create User In Wingspan</label>
+    <interviewLabel>Asset - Updated - Async - Create Wingspan User {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Asset - Updated - Async - Create Wingspan User</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -159,7 +159,7 @@
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Asset_After_Create_Async_Validate_And_Create_User_In_Wingspan</stringValue>
+                <stringValue>Asset_Updated_Async_Create_Wingspan_User</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
