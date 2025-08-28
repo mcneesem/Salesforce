@@ -61,17 +61,17 @@ private class WingspanCreateUserActionTest {
     }
 
     @isTest
-    private static void wingspanApiDirectorTest(){
+    private static void wingspanApiDirectorTest() {
         Asset asset = [SELECT id, NSP_OrderProduct__c FROM Asset LIMIT 1];
         Contact cc = [SELECT id FROM Contact LIMIT 1];
-        WingspanRestUtilityHelper.Input input = new WingspanRestUtilityHelper.Input();
+        WingspanCreateUserAction.Input input = new WingspanCreateUserAction.Input();
         input.contactId = cc.id;
         input.recordId = asset.id;
         input.isCheckOnly = false;
-        test.setMock(HttpCalloutMock.class, new WingspanHttpCalloutMock());
-        test.startTest();
-        List<WingspanRestUtilityHelper.Output> outputList = WingspanRestUtilityHelper.wingspanApiDirector(new List<WingspanRestUtilityHelper.Input>{input});
-        test.stopTest();
+        Test.setMock(HttpCalloutMock.class, new WingspanHttpCalloutMock());
+        Test.startTest();
+        List<WingspanCreateUserAction.Output> outputList = WingspanCreateUserAction.wingspanApiDirector(new List<WingspanCreateUserAction.Input>{input});
+        Test.stopTest();
     }
 
 }
