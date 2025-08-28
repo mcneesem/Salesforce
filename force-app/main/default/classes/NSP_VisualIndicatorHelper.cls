@@ -1,3 +1,4 @@
+// intentionally `without sharing` to ensure nsp_visualIndicator LWC displays accurate indicators for all records...
 public without sharing class NSP_VisualIndicatorHelper {
     // test w/ NSP_VisualIndicatorHelper_Test (97%)
 
@@ -10,7 +11,7 @@ public without sharing class NSP_VisualIndicatorHelper {
     public static List<VisualIndicatorWrapper> gethisAccount( String accId ) {
         try {
             List<VisualIndicatorWrapper> resultList = new List<VisualIndicatorWrapper>();
-            if (accId != null && !String.isBlank(accId)) {
+            if ( ( accId != null ) && String.isNotBlank( accId ) ) {
                 List<Account> accList = getAccounts( accId );
                 if (accList != null && !accList.isEmpty()) {
                     List<NSP_Service_Exception__c> expList = extractServiceExceptions(accList);
@@ -29,7 +30,7 @@ public without sharing class NSP_VisualIndicatorHelper {
     private static List<Account> getAccounts( String accId ) {
         Id vocSurveyRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'NSP_Survey__c' , 'VOC' );
         List<Account> accounts = new List<Account>();
-        if (accId != null && !String.isBlank(accId)) {
+        if ( ( accId != null ) && String.isNotBlank( accId ) ) {
             accounts = [
                 SELECT
                     Id ,
@@ -228,24 +229,27 @@ public without sharing class NSP_VisualIndicatorHelper {
     // @return Boolean
     //
     @AuraEnabled(cacheable=true)
-    public static Boolean isCaseFromEmail(String caseId) {
+    public static Boolean isCaseFromEmail( String caseId ) {
         Boolean emailToCaseConfirmed = false;
         // Check if the caseId is a Case record Id
         if ( String.isNotBlank( caseId )
             && ( caseId InstanceOf Id )
-            && Id.valueOf( caseId ).getSObjectType() == Case.getSObjectType()
+            && ( Id.valueOf( caseId ).getSObjectType() == Case.getSObjectType() )
             )
         {
             // Query for EmailMessage records related to the Case
             List<EmailMessage> emailMessages = [
                 SELECT Id
                 FROM EmailMessage
-                WHERE ParentId = :caseId AND Incoming = TRUE
-                AND   EmailRoutingAddressId != null
+                WHERE (
+                    ( ParentId = :caseId )
+                    AND ( Incoming = true )
+                    AND ( EmailRoutingAddressId != null )
+                )
                 LIMIT 1
             ];
             // Return true if there are any incoming email messages related to the case
-            if(!emailMessages.isEmpty()){
+            if ( !emailMessages.isEmpty() ) {
                 emailToCaseConfirmed = true;
             }
         }
