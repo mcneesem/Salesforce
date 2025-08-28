@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Created as part of 250908 to give access for new fields</description>
-    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Accrual_Profile__c.CustomOwnerId__c</field>
