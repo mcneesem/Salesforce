@@ -6,21 +6,18 @@
 * Story : STY-03794 - RET Automation Retirement Services Asset Status Field Updates
 * Version : V1
 **************************************************************************************************************************/
-public without sharing class NSP_RET_AssetSyncWithClientHistBatch implements Schedulable,Database.Batchable<SObject>{
-    
-    private static final String STATUS_ACTIVE = 'Active';
-	private static final String STATUS_BACKOUT = 'Backout';
-    private static final String OBJECT_ASSET = 'Asset';
+public class NSP_RET_AssetSyncWithClientHistBatch implements Schedulable,Database.Batchable<SObject>{
     
     //start method to query all RET Asset records (RET choice/ RET WO) with status as Onboarding
     public Database.QueryLocator start(Database.BatchableContext bc){        
         // Get RET choice and RET WO asset record type IDs 
-        Id RETCHOICEASSETRECORDTYPE = NSP_GenericRecordType.getRecordTypeId(OBJECT_ASSET, 'RET_Choice');
-        Id RETWOASSETRECORDTYPE = NSP_GenericRecordType.getRecordTypeId(OBJECT_ASSET, 'RET_WO');
+        Id RETCHOICEASSETRECORDTYPE = NSP_GenericRecordType.getRecordTypeId('Asset', 'RET_Choice');
+        Id RETWOASSETRECORDTYPE = NSP_GenericRecordType.getRecordTypeId('Asset', 'RET_WO');
         // Query to get RET Asset records with status as onboarding
-        return Database.getQueryLocator ([SELECT ID, Opportunity__c, AccountId FROM Asset
-                                WHERE (RecordTypeId =: RETCHOICEASSETRECORDTYPE OR RecordTypeId =: RETWOASSETRECORDTYPE )
-                                AND Status IN ( 'Onboarding','Terminated') ]);
+        String query = 'Select ID, Opportunity__c, AccountId FROM Asset ';
+        query+= 'WHERE (RecordTypeId =: RETCHOICEASSETRECORDTYPE OR RecordTypeId =: RETWOASSETRECORDTYPE ) ' ;        
+        query+= 'AND Status = ' +'\''+ NSP_ServiceConstants.ASSET_ONBOARDING_STATUS  +'\''+ '';        
+        return Database.getQueryLocator(query);
     }
     
     //Execute method to populate plan subplan values from asset to project records
@@ -70,7 +67,11 @@ public without sharing class NSP_RET_AssetSyncWithClientHistBatch implements Sch
             //Update the Asset record List - DML Update
             if(!assetListToUpdate.isEmpty()){
                 List<Database.SaveResult> results = Database.update( assetListToUpdate , false );
-                NSP_ErrorLogHandler.logResults(NSP_RET_AssetSyncWithClientHistBatch.class.getName() , 'Execute' , results);
+                NSP_ErrorLogHandler.logResults(
+                    NSP_RET_AssetSyncWithClientHistBatch.class.getName() ,
+                    'execute' ,
+                    results
+                );
             }                                              
         }catch(Exception ex){
             NSP_ErrorLogHandler.logSaveException(NSP_RET_AssetSyncWithClientHistBatch.class.getName(), 'Execute', ex.getMessage());
@@ -99,7 +100,7 @@ public without sharing class NSP_RET_AssetSyncWithClientHistBatch implements Sch
                     termdate = opptyToProjDateMap.get(opptyID);
                 }
                 if(opptyToProjDateMap.containsKey(opptyID)){         
-                    backoutAssetList.add(setAssetFields(assetID, STATUS_BACKOUT ,termdate)); 
+                    backoutAssetList.add(setAssetFields(assetID, 'Backout',termdate)); 
                 }                                            
             }
         }
@@ -123,7 +124,7 @@ public without sharing class NSP_RET_AssetSyncWithClientHistBatch implements Sch
                                                                  && ( subplanHist.NSP_End_Date__c == null || subplanHist.NSP_End_Date__c > today )
                                                                      && subplanHist.NSP_Current_Subplan__c 
                                                                 ){                                                                        
-                                                                    activeAssetList.add(setAssetFields(subplanHist.NSP_Asset__c, STATUS_ACTIVE , null));                                                                         
+                                                                    activeAssetList.add(setAssetFields(subplanHist.NSP_Asset__c, NSP_ServiceConstants.ASSET_ACTIVE_STATUS, null));                                                                         
                                                                 }
                                                               
                                                               // Check if start date is before today and future end date and Account has Active WO Asset 
@@ -131,7 +132,7 @@ public without sharing class NSP_RET_AssetSyncWithClientHistBatch implements Sch
                                                                    && subplanHist.NSP_Current_Subplan__c 
                                                                    && accountsWithActiveWO != null 
                                                                    && accountsWithActiveWO.contains(subplanHist.NSP_Asset__r.AccountId))){
-                                                                       activeAssetList.add(setAssetFields(subplanHist.NSP_Asset__c, STATUS_ACTIVE , null));  
+                                                                       activeAssetList.add(setAssetFields(subplanHist.NSP_Asset__c, NSP_ServiceConstants.ASSET_ACTIVE_STATUS, null));  
                                                                    }
                                                           }
                                                       }
@@ -139,13 +140,13 @@ public without sharing class NSP_RET_AssetSyncWithClientHistBatch implements Sch
                                                   }
     
     //Method to Check if Account has Active WO Asset
-    private static Set<Id> getAccountsWithActiveWO( Set<Id> accountIDs ){
+    private static Set<Id> getaccountsWithActiveWO( Set<Id> accountIDs ){
         Set<Id> accountsWithActiveWO = new Set<Id>();
-        Id WOASSETRECORDTYPE = NSP_GenericRecordType.getRecordTypeId(OBJECT_ASSET, 'WO');
+        Id WOASSETRECORDTYPE = NSP_GenericRecordType.getRecordTypeId('Asset', 'WO');
         if(accountIDs != null){
             for(Asset ast : [SELECT ID, AccountId FROM Asset WHERE AccountId IN : accountIDs AND
                              RecordTypeId = : WOASSETRECORDTYPE AND
-                             Status = :STATUS_ACTIVE]){
+                             Status = 'Active']){
                                  if(ast != null && ast.AccountId != null){
                                      accountsWithActiveWO.add(ast.AccountId);
                                  }
@@ -175,7 +176,7 @@ public without sharing class NSP_RET_AssetSyncWithClientHistBatch implements Sch
         if(assetIDS != null){
             for(NSP_Client_Sub_Plan_History__c subplanHist : [Select ID, NSP_Asset__c, NSP_Start_Date__c, Createddate, NSP_End_Date__c,
                                                               NSP_Current_Subplan__c, NSP_Asset__r.AccountId FROM NSP_Client_Sub_Plan_History__c WHERE 
-                                                              NSP_Asset__c in : assetIDS AND NSP_Current_Subplan__c = TRUE Order By Createddate DESC]){
+                                                              NSP_Asset__c in : assetIDS Order By Createddate DESC]){
                                                                   //Consider only the latest if there are more than one NSP_Client_Sub_Plan_History__c
                                                                   if (subplanHist != null && subplanHist.NSP_Asset__c != null && !assetToSubplanHistMap.containsKey(subplanHist.NSP_Asset__c)){
                                                                       assetToSubplanHistMap.put(subplanHist.NSP_Asset__c,subplanHist);
@@ -190,24 +191,9 @@ public without sharing class NSP_RET_AssetSyncWithClientHistBatch implements Sch
         Asset assetUpdate = new Asset();
         assetUpdate.ID = assetID;
         assetUpdate.Status = assetStatus;
-        if(assetStatus == STATUS_ACTIVE && assetUpdate.NSP_Termination_Date__c != null){
-            assetUpdate.NSP_Termination_Date__c = null;
-        }
-        else if(terminationDate != null ){
+        if( terminationDate != null ){
             assetUpdate.NSP_Termination_Date__c = terminationDate;
         }
         return assetUpdate;
-    }
-    
-    public static void schedule() {
-        String suffix = '';
-        if ( Test.isRunningTest() ) {
-            suffix = ' ~ TEST';
-        }
-        System.schedule(
-            'NSP_RET_AssetSyncWithClientHistBatch ~ Update Asset ~ everyday at 12 AM' + suffix ,
-            '0 0 0 * * ?', // this is for Every Day at 12:00 AM...
-            new NSP_RET_AssetSyncWithClientHistBatch()
-        );
     }
 }
