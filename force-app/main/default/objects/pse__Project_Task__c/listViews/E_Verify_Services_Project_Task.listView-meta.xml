@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>E_Verify_Services_Project_Task</fullName>
+    <filterScope>Queue</filterScope>
+    <label>E-Verify Services</label>
+    <queue>E_Verify_Services</queue>
+    <sharedTo>
+        <allInternalUsers></allInternalUsers>
+    </sharedTo>
+</ListView>
