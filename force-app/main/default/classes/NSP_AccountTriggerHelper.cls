@@ -788,14 +788,12 @@ public class NSP_AccountTriggerHelper {
             // AZD-219422
             // When the Acccount owner is updated using the native SalesForce feature "Change Account Owner",
             // no triggers are fired, so we need to update the Sales Office on the related records (contacts, events, tasks)
-            if(Limits.getFutureCalls() < Limits.getLimitFutureCalls()){
-                updateRelatedContactsAsync(JSON.serialize(accountSalesOffice), JSON.serialize(newAccountOwner));
-                updateRelatedActivitiesAsync(JSON.serialize(accountSalesOffice), JSON.serialize(newAccountOwner));
-            }
+            updateRelateContacts(accountSalesOffice, oldAccountOwner);
+            updateRelatedActivities(accountSalesOffice, oldAccountOwner, newAccountOwner);
         }
     }
     
-    /* Description: This method updates the sales office on related activities
+    /* Description: This method creates the list of contacts to be updated
     * 
     * @param: accountSalesOffice
     * @param: accountOwner
@@ -808,17 +806,127 @@ public class NSP_AccountTriggerHelper {
     * 
     * 
     */
-    @future
-    private static void updateRelatedActivitiesAsync(String strAccountSalesOffice, String strAccountOwner) {
-        try{
+    private static void updateRelateContacts(Map<Id, Map<String, String>> accountSalesOffice, Map<Id, Id> accountOwner) {
 
-            Map<Id, Map<String, String>> accountSalesOffice = (Map<Id, Map<String, String>>)JSON.deserialize(strAccountSalesOffice, Map<Id, Map<String, String>>.class);
-            Map<Id, Id> accountOwner = (Map<Id, Id>)JSON.deserialize(strAccountOwner, Map<Id, Id>.class);
+            Map<Id, Map<String, String>> contactSalesOffice = new Map<Id, Map<String, String>>();
+            for(Contact contact : [SELECT Id , AccountId, OwnerId, NSP_Sales_Office__c, NSP_Sales_Division__c, NSP_Sales_Region__c FROM Contact 
+            WHERE AccountId IN : accountSalesOffice.keySet()]){
+                if(accountOwner.containsKey(contact.AccountId) && contact.OwnerId == accountOwner.get(contact.AccountId) ){
+                    contactSalesOffice.put(contact.Id, accountSalesOffice.get(contact.AccountId));
+                }
+            }
+
+            if(contactSalesOffice.size() > 0 && Limits.getFutureCalls() < Limits.getLimitFutureCalls()){
+                updateRelatedContactsAsync(JSON.serialize(contactSalesOffice));   
+            }
+
+    }
+
+    /* Description: This method async updates the sales office on related contacts
+    * 
+    * @param: strContactSalesOffice
+    * @return: void
+    * Modification History:
+    * -------------------------------------------------------------------------------------
+    *  Date              | Description
+    * -------------------------------------------------------------------------------------
+    *  08/25/2025          created this new method added for AZD-219422
+    * 
+    * 
+    */
+    @future
+    private static void updateRelatedContactsAsync(String strContactSalesOffice) {
+        
+        try{
+            
+            Map<Id, Map<String, String>> contactSalesOffice = (Map<Id, Map<String, String>>)JSON.deserialize(strContactSalesOffice, Map<Id, Map<String, String>>.class);
+            List<Contact> updateContacts = new List<Contact>();
+            for(Contact contact : [SELECT Id , AccountId, OwnerId, NSP_Sales_Office__c, NSP_Sales_Division__c, NSP_Sales_Region__c FROM Contact 
+            WHERE Id IN : contactSalesOffice.keySet()]){
+                if(contactSalesOffice.containsKey(contact.Id)){
+                    Map<String, String> salesOffice = contactSalesOffice.get(contact.Id);
+                    contact.NSP_Sales_Office__c = salesOffice.get('office');   
+                    contact.NSP_Sales_Division__c = salesOffice.get('division');
+                    contact.NSP_Sales_Region__c = salesOffice.get('region');
+                    updateContacts.add(contact);
+                }
+            }
+            if(updateContacts.size() > 0){
+                update updateContacts;
+            }
+        }
+        catch(Exception e){
+            NSP_AccountTriggerHelper.handleException( e , 'updateRelatedContactsAsync' );
+        }
+        
+    }
+
+    /* Description: This method created the list of related activities to be updated
+    * 
+    * @param: accountSalesOffice
+    * @param: oldAccountOwner
+    * @param: newAccountOwner
+    * @return: void
+    * Modification History:
+    * -------------------------------------------------------------------------------------
+    *  Date              | Description
+    * -------------------------------------------------------------------------------------
+    *  08/25/2025          created this new method added for AZD-219422
+    * 
+    * 
+    */
+    private static void updateRelatedActivities(Map<Id, Map<String, String>> accountSalesOffice, Map<Id, Id> oldAccountOwner, Map<Id, Id> newAccountOwner) {
+
+            Map<Id, Map<String, String>> eventSalesOffice = new Map<Id, Map<String, String>>();
+            Map<Id, Map<String, String>> taskSalesOffice = new Map<Id, Map<String, String>>();
+
+            for(Event event : [SELECT Id, AccountId, OwnerId, NSP_Sales_Office__c, NSP_Sales_Division__c, NSP_Sales_Region__c FROM Event 
+            WHERE AccountId IN : accountSalesOffice.keySet() AND OwnerId IN : oldAccountOwner.values()]){
+                if(oldAccountOwner.containsKey(event.AccountId) && event.OwnerId == oldAccountOwner.get(event.AccountId)){
+                    eventSalesOffice.put(event.Id, accountSalesOffice.get(event.AccountId));
+                }
+            }
+
+            for(Task task : [SELECT Id, AccountId, OwnerId, NSP_Sales_Office__c, NSP_Sales_Division__c, NSP_Sales_Region__c FROM Task 
+            WHERE AccountId IN : accountSalesOffice.keySet() AND OwnerId IN : oldAccountOwner.values()]){
+                if(oldAccountOwner.containsKey(task.AccountId) && task.OwnerId == oldAccountOwner.get(task.AccountId)){
+                    taskSalesOffice.put(task.Id, accountSalesOffice.get(task.AccountId));
+                }
+            }
+
+            if( (eventSalesOffice.size() > 0 || taskSalesOffice.size() > 0) && Limits.getFutureCalls() < Limits.getLimitFutureCalls() ){
+                updateRelatedActivitiesAsync(JSON.serialize(eventSalesOffice), JSON.serialize(taskSalesOffice), JSON.serialize(newAccountOwner));
+            }
+    }
+
+    /* Description: This method async updates the sales office on related activities
+    * 
+    * @param: strEventSalesOffice
+    * @param: strTaskSalesOffice
+    * @param: strNewAccountOwner
+    * @return: void
+    * Modification History:
+    * -------------------------------------------------------------------------------------
+    *  Date              | Description
+    * -------------------------------------------------------------------------------------
+    *  08/25/2025          created this new method added for AZD-219422
+    * 
+    * 
+    */
+    @future
+    private static void updateRelatedActivitiesAsync(String strEventSalesOffice, String strTaskSalesOffice,  String strNewAccountOwner) {
+    
+        try {
+
+            Map<Id, Map<String, String>> eventSalesOffice = (Map<Id, Map<String, String>>)JSON.deserialize(strEventSalesOffice, Map<Id, Map<String, String>>.class);
+            Map<Id, Map<String, String>> taskSalesOffice = (Map<Id, Map<String, String>>)JSON.deserialize(strTaskSalesOffice, Map<Id, Map<String, String>>.class);
+            Map<Id, Id> newAccountOwner = (Map<Id, Id>)JSON.deserialize(strNewAccountOwner, Map<Id, Id>.class);
             List<Event> updateEvents = new List<Event>();
             for(Event event : [SELECT Id, AccountId, OwnerId, NSP_Sales_Office__c, NSP_Sales_Division__c, NSP_Sales_Region__c FROM Event 
-            WHERE AccountId IN : accountSalesOffice.keySet() AND OwnerId IN : accountOwner.values()]){
-                if(accountOwner.containsKey(event.AccountId) && event.OwnerId == accountOwner.get(event.AccountId)){
-                    Map<String, String> salesOffice = accountSalesOffice.get(event.AccountId);
+            WHERE Id IN : eventSalesOffice.keySet()]){
+                //  Verify if event owner has been updated
+                if(newAccountOwner.containsKey(event.AccountId) && event.OwnerId == newAccountOwner.get(event.AccountId)){
+                    Map<String, String> salesOffice = eventSalesOffice.get(event.Id);
                     event.NSP_Sales_Office__c = salesOffice.get('office');   
                     event.NSP_Sales_Division__c = salesOffice.get('division');
                     event.NSP_Sales_Region__c = salesOffice.get('region');
@@ -831,9 +939,10 @@ public class NSP_AccountTriggerHelper {
 
             List<Task> updateTasks = new List<Task>();
             for(Task task : [SELECT Id, AccountId, OwnerId, NSP_Sales_Office__c, NSP_Sales_Division__c, NSP_Sales_Region__c FROM Task 
-            WHERE AccountId IN : accountSalesOffice.keySet() AND OwnerId IN : accountOwner.values()]){
-                if(accountOwner.containsKey(task.AccountId) && task.OwnerId == accountOwner.get(task.AccountId)){
-                    Map<String, String> salesOffice = accountSalesOffice.get(task.AccountId);
+            WHERE Id IN : taskSalesOffice.keySet()]){
+                //  Verify if task owner has been updated
+                if(newAccountOwner.containsKey(task.AccountId) && task.OwnerId == newAccountOwner.get(task.AccountId)){
+                    Map<String, String> salesOffice = taskSalesOffice.get(task.Id);
                     task.NSP_Sales_Office__c = salesOffice.get('office');   
                     task.NSP_Sales_Division__c = salesOffice.get('division');
                     task.NSP_Sales_Region__c = salesOffice.get('region');
@@ -843,54 +952,12 @@ public class NSP_AccountTriggerHelper {
             if(updateTasks.size() > 0){
                 update updateTasks;
             }
-        }
-        catch(Exception e){
-            NSP_AccountTriggerHelper.handleException( e , 'updateRelatedActivitiesAsync');
+
+        } catch (Exception e)  {
+         NSP_AccountTriggerHelper.handleException( e , 'updateRelatedActivitiesAsync');   
         }
     }
 
-    /* Description: This method updates the sales office on related contacts
-    * 
-    * @param: accountSalesOffice
-    * @param: accountOwner
-    * @return: void
-    * Modification History:
-    * -------------------------------------------------------------------------------------
-    *  Date              | Description
-    * -------------------------------------------------------------------------------------
-    *  08/25/2025          created this new method added for AZD-219422
-    * 
-    * 
-    */
-    @future
-    private static void updateRelatedContactsAsync(String strAccountSalesOffice, String strAccountOwner) {
-        
-        try{
-            
-            Map<Id, Map<String, String>> accountSalesOffice = (Map<Id, Map<String, String>>)JSON.deserialize(strAccountSalesOffice, Map<Id, Map<String, String>>.class);
-            Map<Id, Id> accountOwner = (Map<Id, Id>)JSON.deserialize(strAccountOwner, Map<Id, Id>.class);
-            List<Contact> updateContacts = new List<Contact>();
-            for(Contact contact : [SELECT Id , AccountId, OwnerId, NSP_Sales_Office__c, NSP_Sales_Division__c, NSP_Sales_Region__c FROM Contact 
-            WHERE AccountId IN : accountSalesOffice.keySet()]){
-                if(accountOwner.containsKey(contact.AccountId) && contact.OwnerId == accountOwner.get(contact.AccountId) ){
-                    Map<String, String> salesOffice = accountSalesOffice.get(contact.AccountId);
-                    contact.NSP_Sales_Office__c = salesOffice.get('office');   
-                    contact.NSP_Sales_Division__c = salesOffice.get('division');
-                    contact.NSP_Sales_Region__c = salesOffice.get('region');
-                    updateContacts.add(contact);
-                }
-            }
-            if(updateContacts.size() > 0){
-                update updateContacts;
-            }
-            
-        }
-        catch(Exception e){
-            NSP_AccountTriggerHelper.handleException( e , 'updateRelatedContactsAsync' );
-        }
-        
-    }
-  
      /* Description: This method updates the Opportunity Sales Office when
      *  Account is reassigned
      * 
