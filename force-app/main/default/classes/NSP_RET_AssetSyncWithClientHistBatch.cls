@@ -6,18 +6,21 @@
 * Story : STY-03794 - RET Automation Retirement Services Asset Status Field Updates
 * Version : V1
 **************************************************************************************************************************/
-public class NSP_RET_AssetSyncWithClientHistBatch implements Schedulable,Database.Batchable<SObject>{
+public without sharing class NSP_RET_AssetSyncWithClientHistBatch implements Schedulable,Database.Batchable<SObject>{
+    
+    private static final String STATUS_ACTIVE = 'Active';
+	private static final String STATUS_BACKOUT = 'Backout';
+    private static final String OBJECT_ASSET = 'Asset';
     
     //start method to query all RET Asset records (RET choice/ RET WO) with status as Onboarding
     public Database.QueryLocator start(Database.BatchableContext bc){        
         // Get RET choice and RET WO asset record type IDs 
-        Id RETCHOICEASSETRECORDTYPE = NSP_GenericRecordType.getRecordTypeId('Asset', 'RET_Choice');
-        Id RETWOASSETRECORDTYPE = NSP_GenericRecordType.getRecordTypeId('Asset', 'RET_WO');
+        Id RET_CHOICE = NSP_GenericRecordType.getRecordTypeId(OBJECT_ASSET, 'RET_Choice');
+        Id RET_WO_ASSET = NSP_GenericRecordType.getRecordTypeId(OBJECT_ASSET, 'RET_WO');
         // Query to get RET Asset records with status as onboarding
-        String query = 'Select ID, Opportunity__c, AccountId FROM Asset ';
-        query+= 'WHERE (RecordTypeId =: RETCHOICEASSETRECORDTYPE OR RecordTypeId =: RETWOASSETRECORDTYPE ) ' ;        
-        query+= 'AND Status = ' +'\''+ NSP_ServiceConstants.ASSET_ONBOARDING_STATUS  +'\''+ '';        
-        return Database.getQueryLocator(query);
+        return Database.getQueryLocator ([SELECT ID, Opportunity__c, AccountId FROM Asset
+                                WHERE (RecordTypeId =: RET_CHOICE OR RecordTypeId =: RET_WO_ASSET )
+                                AND Status IN ( 'Onboarding','Terminated') ]);
     }
     
     //Execute method to populate plan subplan values from asset to project records
@@ -65,17 +68,18 @@ public class NSP_RET_AssetSyncWithClientHistBatch implements Schedulable,Databas
             assetListToUpdate.addAll( getActiveAssetList( assetList , assetListToUpdate, assetToSubplanHistMap , accountsWithActiveWO ));
             
             //Update the Asset record List - DML Update
-            if(!assetListToUpdate.isEmpty()){
-                List<Database.SaveResult> results = Database.update( assetListToUpdate , false );
-                NSP_ErrorLogHandler.logResults(
-                    NSP_RET_AssetSyncWithClientHistBatch.class.getName() ,
-                    'execute' ,
-                    results
-                );
-            }                                              
+            updateAsset(assetListToUpdate);
+            
         }catch(Exception ex){
             NSP_ErrorLogHandler.logSaveException(NSP_RET_AssetSyncWithClientHistBatch.class.getName(), 'Execute', ex.getMessage());
         }        
+    }
+    
+    private void updateAsset(List<Asset> assetListToUpdate){
+        if(assetListToUpdate != null && !assetListToUpdate.isEmpty()){
+                List<Database.SaveResult> results = Database.update( assetListToUpdate , false );
+                NSP_ErrorLogHandler.logResults(NSP_RET_AssetSyncWithClientHistBatch.class.getName() , 'updateAsset' , results);
+            }  
     }
     
     //finish method
@@ -100,7 +104,7 @@ public class NSP_RET_AssetSyncWithClientHistBatch implements Schedulable,Databas
                     termdate = opptyToProjDateMap.get(opptyID);
                 }
                 if(opptyToProjDateMap.containsKey(opptyID)){         
-                    backoutAssetList.add(setAssetFields(assetID, 'Backout',termdate)); 
+                    backoutAssetList.add(setAssetFields(assetID, STATUS_BACKOUT ,termdate)); 
                 }                                            
             }
         }
@@ -111,7 +115,6 @@ public class NSP_RET_AssetSyncWithClientHistBatch implements Schedulable,Databas
     private static List<Asset> getActiveAssetList( List<Asset> assetList , List<Asset> backoutAssetList, 
                                                   Map<Id,NSP_Client_Sub_Plan_History__c> assetToSubplanHistMap ,
                                                   Set<Id> accountsWithActiveWO ){
-                                                      Date today = Date.today();
                                                       List<Asset> activeAssetList = new List<Asset>();
                                                       if(assetList != null && assetToSubplanHistMap != null){
                                                           for(Asset eachAsset : assetList){
@@ -119,34 +122,43 @@ public class NSP_RET_AssetSyncWithClientHistBatch implements Schedulable,Databas
                                                               if(eachAsset != null && eachAsset.Id != null && assetToSubplanHistMap.containsKey(eachAsset.Id) && !backoutAssetList.contains(eachAsset)){
                                                                   subplanHist = assetToSubplanHistMap.get(eachAsset.Id);
                                                               }
-                                                              // Check if start date is today or before today and enddate is null or future and update Asset status to 'Active'
-                                                              if( subplanHist != null && subplanHist.NSP_Start_Date__c <= today
-                                                                 && ( subplanHist.NSP_End_Date__c == null || subplanHist.NSP_End_Date__c > today )
-                                                                     && subplanHist.NSP_Current_Subplan__c 
-                                                                ){                                                                        
-                                                                    activeAssetList.add(setAssetFields(subplanHist.NSP_Asset__c, NSP_ServiceConstants.ASSET_ACTIVE_STATUS, null));                                                                         
-                                                                }
-                                                              
-                                                              // Check if start date is before today and future end date and Account has Active WO Asset 
-                                                              if( subplanHist != null && ( subplanHist.NSP_Start_Date__c < today && subplanHist.NSP_End_Date__c > today 
-                                                                   && subplanHist.NSP_Current_Subplan__c 
-                                                                   && accountsWithActiveWO != null 
-                                                                   && accountsWithActiveWO.contains(subplanHist.NSP_Asset__r.AccountId))){
-                                                                       activeAssetList.add(setAssetFields(subplanHist.NSP_Asset__c, NSP_ServiceConstants.ASSET_ACTIVE_STATUS, null));  
-                                                                   }
+                                                              activeAssetList = getActiveAssetFromSubPlan( subplanHist, accountsWithActiveWO );
                                                           }
                                                       }
                                                       return activeAssetList;
                                                   }
     
+    private static List<Asset> getActiveAssetFromSubPlan(NSP_Client_Sub_Plan_History__c subplanHist, Set<Id> accountsWithActiveWO){
+        List<Asset> activeAssetList = new List<Asset>();
+        Date today = Date.today();
+        if(subplanHist != null){
+            // Check if start date is today or before today and enddate is null or future and update Asset status to 'Active'
+            if(subplanHist.NSP_Start_Date__c <= today
+               && ( subplanHist.NSP_End_Date__c == null || subplanHist.NSP_End_Date__c > today )
+               && subplanHist.NSP_Current_Subplan__c 
+              ){                                                                        
+                  activeAssetList.add(setAssetFields(subplanHist.NSP_Asset__c, STATUS_ACTIVE , null));                                                                         
+              }
+            
+            // Check if start date is before today and future end date and Account has Active WO Asset 
+            if(subplanHist.NSP_Start_Date__c < today && subplanHist.NSP_End_Date__c > today 
+               && subplanHist.NSP_Current_Subplan__c 
+               && accountsWithActiveWO != null 
+               && accountsWithActiveWO.contains(subplanHist.NSP_Asset__r.AccountId)){
+                   activeAssetList.add(setAssetFields(subplanHist.NSP_Asset__c, STATUS_ACTIVE , null));  
+               }
+        }
+        return activeAssetList;
+    }
+    
     //Method to Check if Account has Active WO Asset
-    private static Set<Id> getaccountsWithActiveWO( Set<Id> accountIDs ){
+    private static Set<Id> getAccountsWithActiveWO( Set<Id> accountIDs ){
         Set<Id> accountsWithActiveWO = new Set<Id>();
-        Id WOASSETRECORDTYPE = NSP_GenericRecordType.getRecordTypeId('Asset', 'WO');
+        Id WO_ASSET = NSP_GenericRecordType.getRecordTypeId(OBJECT_ASSET, 'WO');
         if(accountIDs != null){
             for(Asset ast : [SELECT ID, AccountId FROM Asset WHERE AccountId IN : accountIDs AND
-                             RecordTypeId = : WOASSETRECORDTYPE AND
-                             Status = 'Active']){
+                             RecordTypeId = : WO_ASSET AND
+                             Status = :STATUS_ACTIVE]){
                                  if(ast != null && ast.AccountId != null){
                                      accountsWithActiveWO.add(ast.AccountId);
                                  }
@@ -176,7 +188,7 @@ public class NSP_RET_AssetSyncWithClientHistBatch implements Schedulable,Databas
         if(assetIDS != null){
             for(NSP_Client_Sub_Plan_History__c subplanHist : [Select ID, NSP_Asset__c, NSP_Start_Date__c, Createddate, NSP_End_Date__c,
                                                               NSP_Current_Subplan__c, NSP_Asset__r.AccountId FROM NSP_Client_Sub_Plan_History__c WHERE 
-                                                              NSP_Asset__c in : assetIDS Order By Createddate DESC]){
+                                                              NSP_Asset__c in : assetIDS AND NSP_Current_Subplan__c = TRUE Order By Createddate DESC]){
                                                                   //Consider only the latest if there are more than one NSP_Client_Sub_Plan_History__c
                                                                   if (subplanHist != null && subplanHist.NSP_Asset__c != null && !assetToSubplanHistMap.containsKey(subplanHist.NSP_Asset__c)){
                                                                       assetToSubplanHistMap.put(subplanHist.NSP_Asset__c,subplanHist);
@@ -191,9 +203,24 @@ public class NSP_RET_AssetSyncWithClientHistBatch implements Schedulable,Databas
         Asset assetUpdate = new Asset();
         assetUpdate.ID = assetID;
         assetUpdate.Status = assetStatus;
-        if( terminationDate != null ){
+        if(assetStatus == STATUS_ACTIVE && assetUpdate.NSP_Termination_Date__c != null){
+            assetUpdate.NSP_Termination_Date__c = null;
+        }
+        else if(terminationDate != null ){
             assetUpdate.NSP_Termination_Date__c = terminationDate;
         }
         return assetUpdate;
+    }
+    
+    public static void schedule() {
+        String suffix = '';
+        if ( Test.isRunningTest() ) {
+            suffix = ' ~ TEST';
+        }
+        System.schedule(
+            'NSP_RET_AssetSyncWithClientHistBatch ~ Update Asset ~ everyday at 12 AM' + suffix ,
+            '0 0 0 * * ?', // this is for Every Day at 12:00 AM...
+            new NSP_RET_AssetSyncWithClientHistBatch()
+        );
     }
 }
