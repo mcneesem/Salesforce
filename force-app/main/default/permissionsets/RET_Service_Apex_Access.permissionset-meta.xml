@@ -11509,14 +11509,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>pse__RF_IForecastInstrumentation</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>pse__RF_IForecastInstrumentationFactory</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>pse__RF_IForecastResult</apexClass>
         <enabled>true</enabled>
     </classAccesses>
