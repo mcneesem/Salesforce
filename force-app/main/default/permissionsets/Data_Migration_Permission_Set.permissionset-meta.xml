@@ -11651,11 +11651,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>NSP_Accrual_Profile__c.Accrual_Profile_ID_18__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Address__c.NSP_AIMS_Account_Address_Type__c</field>
         <readable>true</readable>
