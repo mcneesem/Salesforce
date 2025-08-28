@@ -696,27 +696,16 @@ public class NSP_AccountTriggerHelper {
         return response;
     }
 
-    /* Description: This method sets sales office details from user 
-     * 
-     * @param: accountList
-     * @return: void
-     * Modification History:
-     * -------------------------------------------------------------------------------------
-     *  Date              | Description
-     * -------------------------------------------------------------------------------------
-     *  08/05/2022          created this new method added for STY-03154
-     * 
-     * 
-     */
-
-    public void setSalesOfficeDetails(List<Account> newList,Map<Id, Account> accountOldMap){
-        set < Id > ownerIdSet = new set < Id > ();
-        set < Id > accountIdSet = new set < Id > ();
-        set < String > salesOfficeSet = new set < String > ();
+    //
+    // Description: This method sets sales office details from user 
+    // @param: accountList
+    // @return: void
+    //
+    public void setSalesOfficeDetails( List<Account> newList , Map<Id,Account> accountOldMap ) {
+        Set<Id> ownerIdSet = new Set<Id>();
+        Set<Id> accountIdSet = new Set<Id>();
+        Set<String> salesOfficeSet = new Set<String>();
         Map<Id,String> newSalesOffice = new Map<Id,String>();
-        Map<Id,Id> oldAccountOwner = new Map<Id,Id>();
-        Map<Id, Map<String, String>> accountSalesOffice = new Map<Id, Map<String, String>>();
-        Map<Id,Id> newAccountOwner = new Map<Id,Id>();
 
         for(Account newAccount: newList){
             Account oldAccount = accountOldMap != null ? accountOldMap.get(newAccount.Id) : null;
@@ -734,9 +723,12 @@ public class NSP_AccountTriggerHelper {
             }
         }
 
+        Map<Id,Id> oldAccountOwner = new Map<Id,Id>();
+        Map<Id,Map<String,String>> accountSalesOffice = new Map<Id, Map<String,String>>();
+        Map<Id,Id> newAccountOwner = new Map<Id,Id>();
         if(ownerIdSet.Size() > 0){
             Map<Id,User> userIdMap = new Map<Id,User>([SELECT Id,NSP_SalesDivision__c,NSP_Sales_Office__c,NSP_SalesRegion__c FROM user WHERE Id In :ownerIdSet AND NSP_Sales_Office__c != null ]);
-            set < Id > accountWithActiveAssetSet = new set < Id > ();
+            Set<Id> accountWithActiveAssetSet = new Set<Id>();
             for(Asset eachAsset : [SELECT id,AccountId from Asset WHERE (status = 'Active' OR NSP_Account_Status__c = 'Active') AND AccountId In : accountIdSet ]){
                 accountWithActiveAssetSet.add(eachAsset.AccountId);
             }
@@ -749,12 +741,18 @@ public class NSP_AccountTriggerHelper {
                     newAccount.NSP_Sales_Division__c = eachUser.NSP_SalesDivision__c; // sales division
                     newAccount.NSP_Sales_Office__c = eachUser.NSP_Sales_Office__c; // sales office
                     //  301313 - Opportunity Sales Office not Update on Reassign Account
-                    if(Trigger.isUpdate){
-                        newSalesOffice.put(newAccount.Id, newAccount.NSP_Sales_Office__c);
-                        oldAccountOwner.put(newAccount.Id, oldAccount.OwnerId);
-                        accountSalesOffice.put(newAccount.Id, new Map<String, String> {'office' => newAccount.NSP_Sales_Office__c, 
-                        'division' => newAccount.NSP_Sales_Division__c, 'region' => newAccount.NSP_SalesRegion__c});
-                        newAccountOwner.put(newAccount.Id, newAccount.OwnerId);
+                    if ( Trigger.isUpdate ) {
+                        newSalesOffice.put( newAccount.Id , newAccount.NSP_Sales_Office__c );
+                        oldAccountOwner.put( newAccount.Id , oldAccount.OwnerId );
+                        accountSalesOffice.put(
+                            newAccount.Id ,
+                            new Map<String,String> {
+                                'office' => newAccount.NSP_Sales_Office__c ,
+                                'division' => newAccount.NSP_Sales_Division__c ,
+                                'region' => newAccount.NSP_SalesRegion__c
+                            }
+                        );
+                        newAccountOwner.put( newAccount.Id , newAccount.OwnerId );
                     }
                 }
             }
@@ -782,220 +780,285 @@ public class NSP_AccountTriggerHelper {
                 }            
             }
         }
-
-        if(newSalesOffice.size() > 0){
-            updateRelatedOpportunity(newSalesOffice, oldAccountOwner);
+        if ( !newSalesOffice.isEmpty() ) {
+            NSP_AccountTriggerHelper.updateRelatedOpportunity( newSalesOffice , oldAccountOwner );
             // AZD-219422
-            // When the Acccount owner is updated using the native SalesForce feature "Change Account Owner",
+            // When the Acccount owner is updated using the native Salesforce feature "Change Account Owner",
             // no triggers are fired, so we need to update the Sales Office on the related records (contacts, events, tasks)
-            updateRelateContacts(accountSalesOffice, oldAccountOwner);
-            updateRelatedActivities(accountSalesOffice, oldAccountOwner, newAccountOwner);
-        }
-    }
-    
-    /* Description: This method creates the list of contacts to be updated
-    * 
-    * @param: accountSalesOffice
-    * @param: accountOwner
-    * @return: void
-    * Modification History:
-    * -------------------------------------------------------------------------------------
-    *  Date              | Description
-    * -------------------------------------------------------------------------------------
-    *  08/25/2025          created this new method added for AZD-219422
-    * 
-    * 
-    */
-    private static void updateRelateContacts(Map<Id, Map<String, String>> accountSalesOffice, Map<Id, Id> accountOwner) {
-
-            Map<Id, Map<String, String>> contactSalesOffice = new Map<Id, Map<String, String>>();
-            for(Contact contact : [SELECT Id , AccountId, OwnerId, NSP_Sales_Office__c, NSP_Sales_Division__c, NSP_Sales_Region__c FROM Contact 
-            WHERE AccountId IN : accountSalesOffice.keySet()]){
-                if(accountOwner.containsKey(contact.AccountId) && contact.OwnerId == accountOwner.get(contact.AccountId) ){
-                    contactSalesOffice.put(contact.Id, accountSalesOffice.get(contact.AccountId));
-                }
-            }
-
-            if(contactSalesOffice.size() > 0 && Limits.getFutureCalls() < Limits.getLimitFutureCalls()){
-                updateRelatedContactsAsync(JSON.serialize(contactSalesOffice));   
-            }
-
-    }
-
-    /* Description: This method async updates the sales office on related contacts
-    * 
-    * @param: strContactSalesOffice
-    * @return: void
-    * Modification History:
-    * -------------------------------------------------------------------------------------
-    *  Date              | Description
-    * -------------------------------------------------------------------------------------
-    *  08/25/2025          created this new method added for AZD-219422
-    * 
-    * 
-    */
-    @future
-    private static void updateRelatedContactsAsync(String strContactSalesOffice) {
-        
-        try{
-            
-            Map<Id, Map<String, String>> contactSalesOffice = (Map<Id, Map<String, String>>)JSON.deserialize(strContactSalesOffice, Map<Id, Map<String, String>>.class);
-            List<Contact> updateContacts = new List<Contact>();
-            for(Contact contact : [SELECT Id , AccountId, OwnerId, NSP_Sales_Office__c, NSP_Sales_Division__c, NSP_Sales_Region__c FROM Contact 
-            WHERE Id IN : contactSalesOffice.keySet()]){
-                if(contactSalesOffice.containsKey(contact.Id)){
-                    Map<String, String> salesOffice = contactSalesOffice.get(contact.Id);
-                    contact.NSP_Sales_Office__c = salesOffice.get('office');   
-                    contact.NSP_Sales_Division__c = salesOffice.get('division');
-                    contact.NSP_Sales_Region__c = salesOffice.get('region');
-                    updateContacts.add(contact);
-                }
-            }
-            if(updateContacts.size() > 0){
-                update updateContacts;
-            }
-        }
-        catch(Exception e){
-            NSP_AccountTriggerHelper.handleException( e , 'updateRelatedContactsAsync' );
-        }
-        
-    }
-
-    /* Description: This method created the list of related activities to be updated
-    * 
-    * @param: accountSalesOffice
-    * @param: oldAccountOwner
-    * @param: newAccountOwner
-    * @return: void
-    * Modification History:
-    * -------------------------------------------------------------------------------------
-    *  Date              | Description
-    * -------------------------------------------------------------------------------------
-    *  08/25/2025          created this new method added for AZD-219422
-    * 
-    * 
-    */
-    private static void updateRelatedActivities(Map<Id, Map<String, String>> accountSalesOffice, Map<Id, Id> oldAccountOwner, Map<Id, Id> newAccountOwner) {
-
-            Map<Id, Map<String, String>> eventSalesOffice = new Map<Id, Map<String, String>>();
-            Map<Id, Map<String, String>> taskSalesOffice = new Map<Id, Map<String, String>>();
-
-            for(Event event : [SELECT Id, AccountId, OwnerId, NSP_Sales_Office__c, NSP_Sales_Division__c, NSP_Sales_Region__c FROM Event 
-            WHERE AccountId IN : accountSalesOffice.keySet() AND OwnerId IN : oldAccountOwner.values()]){
-                if(oldAccountOwner.containsKey(event.AccountId) && event.OwnerId == oldAccountOwner.get(event.AccountId)){
-                    eventSalesOffice.put(event.Id, accountSalesOffice.get(event.AccountId));
-                }
-            }
-
-            for(Task task : [SELECT Id, AccountId, OwnerId, NSP_Sales_Office__c, NSP_Sales_Division__c, NSP_Sales_Region__c FROM Task 
-            WHERE AccountId IN : accountSalesOffice.keySet() AND OwnerId IN : oldAccountOwner.values()]){
-                if(oldAccountOwner.containsKey(task.AccountId) && task.OwnerId == oldAccountOwner.get(task.AccountId)){
-                    taskSalesOffice.put(task.Id, accountSalesOffice.get(task.AccountId));
-                }
-            }
-
-            if( (eventSalesOffice.size() > 0 || taskSalesOffice.size() > 0) && Limits.getFutureCalls() < Limits.getLimitFutureCalls() ){
-                updateRelatedActivitiesAsync(JSON.serialize(eventSalesOffice), JSON.serialize(taskSalesOffice), JSON.serialize(newAccountOwner));
-            }
-    }
-
-    /* Description: This method async updates the sales office on related activities
-    * 
-    * @param: strEventSalesOffice
-    * @param: strTaskSalesOffice
-    * @param: strNewAccountOwner
-    * @return: void
-    * Modification History:
-    * -------------------------------------------------------------------------------------
-    *  Date              | Description
-    * -------------------------------------------------------------------------------------
-    *  08/25/2025          created this new method added for AZD-219422
-    * 
-    * 
-    */
-    @future
-    private static void updateRelatedActivitiesAsync(String strEventSalesOffice, String strTaskSalesOffice,  String strNewAccountOwner) {
-    
-        try {
-
-            Map<Id, Map<String, String>> eventSalesOffice = (Map<Id, Map<String, String>>)JSON.deserialize(strEventSalesOffice, Map<Id, Map<String, String>>.class);
-            Map<Id, Map<String, String>> taskSalesOffice = (Map<Id, Map<String, String>>)JSON.deserialize(strTaskSalesOffice, Map<Id, Map<String, String>>.class);
-            Map<Id, Id> newAccountOwner = (Map<Id, Id>)JSON.deserialize(strNewAccountOwner, Map<Id, Id>.class);
-            List<Event> updateEvents = new List<Event>();
-            for(Event event : [SELECT Id, AccountId, OwnerId, NSP_Sales_Office__c, NSP_Sales_Division__c, NSP_Sales_Region__c FROM Event 
-            WHERE Id IN : eventSalesOffice.keySet()]){
-                //  Verify if event owner has been updated
-                if(newAccountOwner.containsKey(event.AccountId) && event.OwnerId == newAccountOwner.get(event.AccountId)){
-                    Map<String, String> salesOffice = eventSalesOffice.get(event.Id);
-                    event.NSP_Sales_Office__c = salesOffice.get('office');   
-                    event.NSP_Sales_Division__c = salesOffice.get('division');
-                    event.NSP_Sales_Region__c = salesOffice.get('region');
-                    updateEvents.add(event);
-                }
-            }
-            if(updateEvents.size() > 0){
-                update updateEvents;
-            }
-
-            List<Task> updateTasks = new List<Task>();
-            for(Task task : [SELECT Id, AccountId, OwnerId, NSP_Sales_Office__c, NSP_Sales_Division__c, NSP_Sales_Region__c FROM Task 
-            WHERE Id IN : taskSalesOffice.keySet()]){
-                //  Verify if task owner has been updated
-                if(newAccountOwner.containsKey(task.AccountId) && task.OwnerId == newAccountOwner.get(task.AccountId)){
-                    Map<String, String> salesOffice = taskSalesOffice.get(task.Id);
-                    task.NSP_Sales_Office__c = salesOffice.get('office');   
-                    task.NSP_Sales_Division__c = salesOffice.get('division');
-                    task.NSP_Sales_Region__c = salesOffice.get('region');
-                    updateTasks.add(task);
-                }
-            }
-            if(updateTasks.size() > 0){
-                update updateTasks;
-            }
-
-        } catch (Exception e)  {
-         NSP_AccountTriggerHelper.handleException( e , 'updateRelatedActivitiesAsync');   
+            NSP_AccountTriggerHelper.updateRelateContacts( accountSalesOffice , oldAccountOwner );
+            NSP_AccountTriggerHelper.updateRelatedActivities( accountSalesOffice , oldAccountOwner , newAccountOwner );
         }
     }
 
-     /* Description: This method updates the Opportunity Sales Office when
-     *  Account is reassigned
-     * 
-     * @param: accountSalesOffice
-     * @return: void
-     * Modification History:
-     * -------------------------------------------------------------------------------------
-     *  Date              | Description
-     * -------------------------------------------------------------------------------------
-     *  09/10/2024          ADO-301313 - Opportunity Sales Office not Update on Reassign Account
-     */
-    private static void updateRelatedOpportunity( Map<Id,String> newSalesOffice , Map<Id,Id> oldAccountUserId ) {
-        try {
-            Map<Id, String> oppsChangeOffice = new Map<Id, String>(); 
-            List<Opportunity> opps = [
-                SELECT Id , OwnerId , AccountId , NSP_Sales_Office__c
-                FROM Opportunity
-                WHERE (
-                    StageName != 'Closed Lost'
-                    AND  StageName != 'Closed Won'
-                    AND StageName != 'Closing'
-                    AND AccountId IN :newSalesOffice.keySet()
-                )
-            ];
-    
-            for(Opportunity opp : opps){
-                //  If Opportunity owner is the same as Account owner then update the Sales Office
-                if(opp.OwnerId == oldAccountUserId.get(opp.AccountId)){
-                    oppsChangeOffice.put(opp.Id, newSalesOffice.get(opp.AccountId));
-                }
-            }
-    
-            //  Update Sales Office, adding extra condition checking the limits
-            if ( !oppsChangeOffice.isEmpty()
-                && Limits.getFutureCalls() < Limits.getLimitFutureCalls()
+    //
+    // Description: This method creates the list of contacts to be updated
+    // @param: accountSalesOffice
+    // @param: accountOwner
+    // @return: void
+    //
+    private static void updateRelateContacts( Map<Id,Map<String,String>> accountSalesOffice , Map<Id,Id> accountOwner ) {
+        Map<Id,Map<String,String>> contactSalesOffice = new Map<Id,Map<String,String>>();
+        if ( ( accountSalesOffice != null )
+            && !accountSalesOffice.isEmpty()
+            && ( accountOwner != null )
+            && !accountOwner.isEmpty()
+            )
+        {
+            for ( Contact contact : [
+                        SELECT Id , AccountId , OwnerId , NSP_Sales_Office__c , NSP_Sales_Division__c , NSP_Sales_Region__c
+                        FROM Contact
+                        WHERE ( AccountId IN :accountSalesOffice.keySet() )
+                    ]
                 )
             {
-                updateRelatedOpportunityAsync(JSON.serialize(oppsChangeOffice));
+                if ( accountOwner.containsKey( contact.AccountId )
+                    && contact.OwnerId == accountOwner.get( contact.AccountId )
+                    )
+                {
+                    contactSalesOffice.put(
+                        contact.Id ,
+                        accountSalesOffice.get( contact.AccountId )
+                    );
+                }
+            }
+        }
+        if ( !contactSalesOffice.isEmpty()
+            && ( Limits.getFutureCalls() < Limits.getLimitFutureCalls() )
+            )
+        {
+            NSP_AccountTriggerHelper.updateRelatedContactsAsync( JSON.serialize( contactSalesOffice ) );
+        }
+    }
+
+    //
+    // Description: This method async updates the sales office on related contacts
+    // @param: strContactSalesOffice
+    // @return: void
+    //
+    @future
+    private static void updateRelatedContactsAsync( String strContactSalesOffice ) {
+        try {
+            Map<Id,Map<String,String>> contactSalesOffice = (Map<Id,Map<String,String>>)JSON.deserialize(
+                strContactSalesOffice ,
+                Map<Id,Map<String,String>>.class
+            );
+            List<Contact> updateContacts = new List<Contact>();
+            if ( ( contactSalesOffice != null ) && !contactSalesOffice.isEmpty() ) {
+                for ( Contact contact : [
+                            SELECT Id , AccountId , OwnerId , NSP_Sales_Office__c , NSP_Sales_Division__c , NSP_Sales_Region__c
+                            FROM Contact
+                            WHERE ( Id IN :contactSalesOffice.keySet() )
+                        ]
+                    )
+                {
+                    if ( contactSalesOffice.containsKey( contact.Id ) ) {
+                        Map<String,String> salesOffice = contactSalesOffice.get( contact.Id );
+                        contact.NSP_Sales_Office__c = salesOffice.get( 'office' );
+                        contact.NSP_Sales_Division__c = salesOffice.get( 'division' );
+                        contact.NSP_Sales_Region__c = salesOffice.get( 'region' );
+                        updateContacts.add( contact );
+                    }
+                }
+            }
+            if ( !updateContacts.isEmpty() ) {
+                update updateContacts;
+            }
+        } catch( Exception e ) {
+            NSP_AccountTriggerHelper.handleException( e , 'updateRelatedContactsAsync' );
+        }
+    }
+
+    //
+    // Description: This method created the list of related activities to be updated
+    // @param: accountSalesOffice
+    // @param: oldAccountOwner
+    // @param: newAccountOwner
+    // @return: void
+    //
+    private static void updateRelatedActivities(
+        Map<Id,Map<String,String>> accountSalesOffice ,
+        Map<Id,Id> oldAccountOwner ,
+        Map<Id,Id> newAccountOwner
+        )
+    {
+        Map<Id,Map<String,String>> eventSalesOffice = new Map<Id,Map<String,String>>();
+        Map<Id,Map<String,String>> taskSalesOffice = new Map<Id,Map<String,String>>();
+        if ( ( accountSalesOffice != null )
+            && !accountSalesOffice.isEmpty()
+            && ( oldAccountOwner != null )
+            && !oldAccountOwner.isEmpty()
+            )
+        {
+            for ( Event event : [
+                        SELECT Id , AccountId , OwnerId , NSP_Sales_Office__c , NSP_Sales_Division__c , NSP_Sales_Region__c
+                        FROM Event
+                        WHERE (
+                            ( AccountId IN :accountSalesOffice.keySet() )
+                            AND ( OwnerId IN :oldAccountOwner.values() )
+                        )
+                    ]
+                )
+            {
+                if ( oldAccountOwner.containsKey( event.AccountId )
+                    && event.OwnerId == oldAccountOwner.get( event.AccountId )
+                    )
+                {
+                    eventSalesOffice.put(
+                        event.Id ,
+                        accountSalesOffice.get( event.AccountId )
+                    );
+                }
+            }
+            for ( Task task : [
+                        SELECT Id , AccountId , OwnerId , NSP_Sales_Office__c , NSP_Sales_Division__c , NSP_Sales_Region__c
+                        FROM Task
+                        WHERE (
+                            ( AccountId IN :accountSalesOffice.keySet() )
+                            AND ( OwnerId IN :oldAccountOwner.values() )
+                        )
+                    ]
+                )
+            {
+                if ( oldAccountOwner.containsKey( task.AccountId )
+                    && task.OwnerId == oldAccountOwner.get( task.AccountId )
+                    )
+                {
+                    taskSalesOffice.put(
+                        task.Id ,
+                        accountSalesOffice.get( task.AccountId )
+                    );
+                }
+            }
+        }
+        if ( ( !eventSalesOffice.isEmpty() || !taskSalesOffice.isEmpty() )
+            && Limits.getFutureCalls() < Limits.getLimitFutureCalls()
+            )
+        {
+            NSP_AccountTriggerHelper.updateRelatedActivitiesAsync(
+                JSON.serialize( eventSalesOffice ) ,
+                JSON.serialize( taskSalesOffice ) ,
+                JSON.serialize( newAccountOwner )
+            );
+        }
+    }
+
+    //
+    // Description: This method async updates the sales office on related activities
+    // @param: strEventSalesOffice
+    // @param: strTaskSalesOffice
+    // @param: strNewAccountOwner
+    // @return: void
+    //
+    @future
+    private static void updateRelatedActivitiesAsync( String strEventSalesOffice , String strTaskSalesOffice ,  String strNewAccountOwner ) {
+        try {
+            Map<Id,Map<String,String>> eventSalesOffice = (Map<Id,Map<String,String>>)JSON.deserialize(
+                strEventSalesOffice ,
+                Map<Id,Map<String,String>>.class
+            );
+            Map<Id,Map<String,String>> taskSalesOffice = (Map<Id,Map<String,String>>)JSON.deserialize(
+                strTaskSalesOffice ,
+                Map<Id,Map<String,String>>.class
+            );
+            Map<Id,Id> newAccountOwner = (Map<Id,Id>)JSON.deserialize(
+                strNewAccountOwner ,
+                Map<Id,Id>.class
+            );
+            List<Event> updateEvents = new List<Event>();
+            if ( ( newAccountOwner != null )
+                && ( eventSalesOffice != null )
+                && !eventSalesOffice.isEmpty()
+                )
+            {
+                for ( Event event : [
+                            SELECT Id , AccountId , OwnerId , NSP_Sales_Office__c , NSP_Sales_Division__c , NSP_Sales_Region__c
+                            FROM Event
+                            WHERE ( Id IN :eventSalesOffice.keySet() )
+                        ]
+                    )
+                {
+                    //  Verify if event owner has been updated
+                    if ( newAccountOwner.containsKey( event.AccountId )
+                        && event.OwnerId == newAccountOwner.get( event.AccountId )
+                        )
+                    {
+                        Map<String,String> salesOffice = eventSalesOffice.get( event.Id );
+                        event.NSP_Sales_Office__c = salesOffice.get( 'office' );
+                        event.NSP_Sales_Division__c = salesOffice.get( 'division' );
+                        event.NSP_Sales_Region__c = salesOffice.get( 'region' );
+                        updateEvents.add( event );
+                    }
+                }
+            }
+            if ( !updateEvents.isEmpty() ) {
+                update updateEvents;
+            }
+            List<Task> updateTasks = new List<Task>();
+            if ( ( newAccountOwner != null )
+                && ( taskSalesOffice != null )
+                && !taskSalesOffice.isEmpty()
+                )
+            {
+                for ( Task task : [
+                        SELECT Id , AccountId , OwnerId , NSP_Sales_Office__c , NSP_Sales_Division__c , NSP_Sales_Region__c
+                        FROM Task
+                        WHERE ( Id IN :taskSalesOffice.keySet() )
+                        ]
+                    )
+                {
+                    //  Verify if task owner has been updated
+                    if ( newAccountOwner.containsKey( task.AccountId )
+                        && task.OwnerId == newAccountOwner.get( task.AccountId )
+                        )
+                    {
+                        Map<String,String> salesOffice = taskSalesOffice.get( task.Id );
+                        task.NSP_Sales_Office__c = salesOffice.get( 'office' );
+                        task.NSP_Sales_Division__c = salesOffice.get( 'division' );
+                        task.NSP_Sales_Region__c = salesOffice.get( 'region' );
+                        updateTasks.add( task );
+                    }
+                }
+            }
+            if ( !updateTasks.isEmpty() ) {
+                update updateTasks;
+            }
+        } catch ( Exception e ) {
+            NSP_AccountTriggerHelper.handleException( e , 'updateRelatedActivitiesAsync' );
+        }
+    }
+
+    //
+    // Description: This method updates the Opportunity Sales Office when Account is reassigned
+    // @param: accountSalesOffice
+    // @return: void
+    //
+    private static void updateRelatedOpportunity( Map<Id,String> newSalesOffice , Map<Id,Id> oldAccountUserId ) {
+        try {
+            Map<Id,String> oppsChangeOffice = new Map<Id,String>();
+            if ( ( newSalesOffice != null ) && !newSalesOffice.isEmpty() ) {
+                List<Opportunity> opps = [
+                    SELECT Id , OwnerId , AccountId , NSP_Sales_Office__c
+                    FROM Opportunity
+                    WHERE (
+                        ( StageName != 'Closed Lost' )
+                        AND ( StageName != 'Closed Won' )
+                        AND ( StageName != 'Closing' )
+                        AND ( AccountId IN :newSalesOffice.keySet() )
+                    )
+                ];
+                for ( Opportunity opp : opps ) {
+                    //  If Opportunity owner is the same as Account owner then update the Sales Office
+                    if ( opp.OwnerId == oldAccountUserId.get( opp.AccountId ) ) {
+                        oppsChangeOffice.put( opp.Id , newSalesOffice.get( opp.AccountId ) );
+                    }
+                }
+            }
+            //  Update Sales Office, adding extra condition checking the limits
+            if ( !oppsChangeOffice.isEmpty()
+                && ( Limits.getFutureCalls() < Limits.getLimitFutureCalls() )
+                )
+            {
+                NSP_AccountTriggerHelper.updateRelatedOpportunityAsync( JSON.serialize( oppsChangeOffice ) );
             }
         } catch ( Exception e ) {
             NSP_AccountTriggerHelper.handleException( e , 'updateRelatedOpportunity' );
@@ -1003,25 +1066,22 @@ public class NSP_AccountTriggerHelper {
     }
 
     @future
-    private static void updateRelatedOpportunityAsync(String soppsChangeOffice){
+    private static void updateRelatedOpportunityAsync( String soppsChangeOffice ) {
         try {
             List<Opportunity> oppsToUpdate = new List<Opportunity>();
             Map<Id,String> oppsChangeOffice = (Map<Id,String>)JSON.deserialize(
                 soppsChangeOffice ,
                 Map<Id,String>.class
             );
-
             List<Opportunity> opps = [
                 SELECT Id , NSP_Sales_Office__c
                 FROM Opportunity
-                WHERE Id IN :oppsChangeOffice.keySet()
+                WHERE ( Id IN :oppsChangeOffice.keySet() )
             ];
-
-            for(Opportunity opp : opps){
-                opp.NSP_Sales_Office__c = oppsChangeOffice.get(opp.Id);
-                oppsToUpdate.add(opp);
+            for ( Opportunity opp : opps ) {
+                opp.NSP_Sales_Office__c = oppsChangeOffice.get( opp.Id );
+                oppsToUpdate.add( opp );
             }
-
             if ( !oppsToUpdate.isEmpty() ) {
                 update oppsToUpdate;
             }
