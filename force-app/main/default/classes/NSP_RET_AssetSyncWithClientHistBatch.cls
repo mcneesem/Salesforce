@@ -15,11 +15,11 @@ public without sharing class NSP_RET_AssetSyncWithClientHistBatch implements Sch
     //start method to query all RET Asset records (RET choice/ RET WO) with status as Onboarding
     public Database.QueryLocator start(Database.BatchableContext bc){        
         // Get RET choice and RET WO asset record type IDs 
-        Id RET_CHOICE = NSP_GenericRecordType.getRecordTypeId(OBJECT_ASSET, 'RET_Choice');
-        Id RET_WO_ASSET = NSP_GenericRecordType.getRecordTypeId(OBJECT_ASSET, 'RET_WO');
+        Id RET_Choice = NSP_GenericRecordType.getRecordTypeId(OBJECT_ASSET, 'RET_Choice');
+        Id RET_WO_Asset = NSP_GenericRecordType.getRecordTypeId(OBJECT_ASSET, 'RET_WO');
         // Query to get RET Asset records with status as onboarding
         return Database.getQueryLocator ([SELECT ID, Opportunity__c, AccountId FROM Asset
-                                WHERE (RecordTypeId =: RET_CHOICE OR RecordTypeId =: RET_WO_ASSET )
+                                WHERE (RecordTypeId =: RET_Choice OR RecordTypeId =: RET_WO_Asset )
                                 AND Status IN ( 'Onboarding','Terminated') ]);
     }
     
@@ -154,10 +154,10 @@ public without sharing class NSP_RET_AssetSyncWithClientHistBatch implements Sch
     //Method to Check if Account has Active WO Asset
     private static Set<Id> getAccountsWithActiveWO( Set<Id> accountIDs ){
         Set<Id> accountsWithActiveWO = new Set<Id>();
-        Id WO_ASSET = NSP_GenericRecordType.getRecordTypeId(OBJECT_ASSET, 'WO');
+        Id WO_Asset = NSP_GenericRecordType.getRecordTypeId(OBJECT_ASSET, 'WO');
         if(accountIDs != null){
             for(Asset ast : [SELECT ID, AccountId FROM Asset WHERE AccountId IN : accountIDs AND
-                             RecordTypeId = : WO_ASSET AND
+                             RecordTypeId = : WO_Asset AND
                              Status = :STATUS_ACTIVE]){
                                  if(ast != null && ast.AccountId != null){
                                      accountsWithActiveWO.add(ast.AccountId);
