@@ -5,7 +5,7 @@
         <label>Validate And Create Contact</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <actionName>WingspanRestUtilityHelper</actionName>
+        <actionName>WingspanCreateUserAction</actionName>
         <actionType>apex</actionType>
         <faultConnector>
             <targetReference>Fault_Handler</targetReference>
@@ -29,7 +29,7 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>WingspanRestUtilityHelper</nameSegment>
+        <nameSegment>WingspanCreateUserAction</nameSegment>
         <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
