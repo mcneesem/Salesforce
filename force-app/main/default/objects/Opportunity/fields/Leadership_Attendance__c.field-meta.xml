@@ -25,6 +25,11 @@
                 <default>false</default>
                 <label>RVP</label>
             </value>
+            <value>
+                <fullName>Not Attended</fullName>
+                <default>false</default>
+                <label>Not Attended</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
