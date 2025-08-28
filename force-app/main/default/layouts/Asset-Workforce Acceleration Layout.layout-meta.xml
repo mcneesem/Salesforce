@@ -139,6 +139,10 @@
                 <behavior>Edit</behavior>
                 <field>NSP_WX_WA_Modules_Implemented__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>HRRC_Access__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
