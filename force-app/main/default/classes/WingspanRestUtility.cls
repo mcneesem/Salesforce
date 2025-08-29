@@ -1,11 +1,18 @@
 public with sharing class WingspanRestUtility {
-    // test w/ WingspanCreateUserActionTest (93%)
+    // test w/ WingspanCreateUserActionTest (96%)
 
-    private static List<Wingspan_Log__c> pendingLogs = new List<Wingspan_Log__c>();
-    private static String currentHeaders = '';
+    public Wingspan_Log__c log {
+        public get {
+            if ( log == null ) {
+                log = new Wingspan_Log__c();
+            }
+            return log;
+        }
+        private set;
+    }
     
     //method to send http requests
-    public static HttpResponse sendRequest(
+    public HttpResponse sendRequest(
         String method, 
         String path, 
         String body,        
@@ -13,7 +20,7 @@ public with sharing class WingspanRestUtility {
     ){
         String logDescription = '';
         String url = '';
-        currentHeaders = '';
+        String currentHeaders = '';
         HttpResponse res = new HttpResponse();
         Http http = new Http();
         HttpRequest req = new HttpRequest();
@@ -55,7 +62,7 @@ public with sharing class WingspanRestUtility {
             logDescription = e.getMessage();
         }finally{
             //log results
-            insertLogToList(logDescription,req,res,recordId);
+            this.buildLog( logDescription , currentHeaders , req , res , recordId );
         }
         return res;
     }
@@ -63,16 +70,17 @@ public with sharing class WingspanRestUtility {
     //log insertion methods...
     
     //method for creating Log Record
-    private static void insertLogToList(
-        String description,
-        HttpRequest req,
-        HttpResponse response,
-        Id recordId) 
+    private void buildLog(
+        String description ,
+        String requestHeaders ,
+        HttpRequest req ,
+        HttpResponse response ,
+        Id recordId
+    ) 
     {
         String logDescription = '';
         String logMethod = 'sendRequest';
         
-        Wingspan_Log__c log = new Wingspan_Log__c();
         log.Class__c = SchemaController.safeText(
             WingspanRestUtility.class.getName() ,
             sObjectType.Wingspan_Log__c.Fields.Class__c
@@ -105,7 +113,7 @@ public with sharing class WingspanRestUtility {
             
             //request headers
             log.Request_Headers__c = SchemaController.safeText(
-                currentHeaders ,
+                requestHeaders.replace( WingspanRestUtility.privateKey , 'XXX_PRIVATE_KEY_XXX' ) ,
                 sObjectType.Wingspan_Log__c.Fields.Request_Headers__c
             );
             
@@ -143,7 +151,7 @@ public with sharing class WingspanRestUtility {
             
             //response headers
             log.Response_Headers__c = SchemaController.safeText(
-                WingspanRestUtility.getResponseHeaders( response ) ,
+                this.getResponseHeaders( response ), 
                 sObjectType.Wingspan_Log__c.Fields.Response_Headers__c
             );
             
@@ -158,12 +166,10 @@ public with sharing class WingspanRestUtility {
                 sObjectType.Wingspan_Log__c.Fields.Response_Code__c
             );
         }
-        
-        pendingLogs.add(log);
     }
     
     //method to get headers from response
-    private static String getResponseHeaders( HttpResponse response ){
+    private String getResponseHeaders( HttpResponse response ){
         Map<String,String> responseHeaders = new Map<String,String>();
         if( !response.getHeaderKeys().isEmpty() ){
             for( String key: response.getHeaderKeys() ){
@@ -173,23 +179,6 @@ public with sharing class WingspanRestUtility {
             }
         }
          return JSON.serialize( responseHeaders );
-    }
-    
-    //DML called after all HTTP requests
-    public static void insertLogs(){
-        if( !pendingLogs.isEmpty() ){
-            try{
-                insert pendingLogs;
-            }catch (exception e){
-                NSP_ErrorLogHandler.logException(
-                    WingspanRestUtility.class.getName() ,
-                    'insertLogs' ,
-                    e
-                );
-            }finally{
-                pendingLogs.clear();
-            }
-        }
     }
     
     // attributes controlled by Custom Settings...
@@ -258,7 +247,7 @@ public with sharing class WingspanRestUtility {
             }
             return userId;
         }
-        public set; 
+        private set; 
     }
     
     private static Integer timeout {

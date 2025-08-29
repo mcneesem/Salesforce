@@ -1,5 +1,5 @@
 public with sharing class WingspanCreateUserAction {
-    // test w/ WingspanCreateUserActionTest (79%)
+    // test w/ WingspanCreateUserActionTest (100%)
 
     public class Output {
         @InvocableVariable(label = 'User Found?')
@@ -43,20 +43,8 @@ public with sharing class WingspanCreateUserAction {
         result.isUserFound = true;
         String createdUserId = '';
         
-        if( ( input.contactId !=null ) 
-           && ( input.recordId != null )
-          ){
-              //validate contact in Wingspan Server
-              result.isUserFound = WingspanRestService.getUserByEmail( input.contactId, input.recordId, input.isCheckOnly );
-              if( ( !input.isCheckOnly ) && ( !result.isUserFound ) ){
-                  //create contact in Wingspan Server
-                  createdUserId = WingspanRestService.createClientAdmin( input.contactId, input.recordId );
-                  if( !String.isBlank( createdUserId ) ){
-                      //Associate Admin in Wingspan Server
-                      WingspanRestService.linkAdminToCHUB( createdUserId, input.recordId );
-                  }
-              }
-          }
+        result.isUserFound = WingspanRestService.createClientAdmin( input.contactId, input.recordId, input.isCheckOnly );
+        
         return result;
     }
 

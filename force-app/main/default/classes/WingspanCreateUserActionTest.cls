@@ -73,6 +73,20 @@ private class WingspanCreateUserActionTest {
         List<WingspanCreateUserAction.Output> outputList = WingspanCreateUserAction.wingspanApiDirector(new List<WingspanCreateUserAction.Input>{input});
         Test.stopTest();
     }
+    
+       @isTest
+    private static void wingspanApiDirectorNegativeTest() {
+        Asset asset = [SELECT id, NSP_OrderProduct__c FROM Asset LIMIT 1];
+        Contact cc = [SELECT id FROM Contact LIMIT 1];
+        WingspanCreateUserAction.Input input = new WingspanCreateUserAction.Input();
+        input.contactId = cc.id;
+        input.recordId = asset.id;
+        input.isCheckOnly = null;
+        Test.setMock(HttpCalloutMock.class, new WingspanHttpCalloutMock());
+        Test.startTest();
+        List<WingspanCreateUserAction.Output> outputList = WingspanCreateUserAction.wingspanApiDirector(new List<WingspanCreateUserAction.Input>{input});
+        Test.stopTest();
+    }
 
 }
 //

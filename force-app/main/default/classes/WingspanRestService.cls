@@ -1,6 +1,26 @@
-public with sharing class WingspanRestService {
-    // test w/ WingspanCreateUserActionTest (96%)
-
+public class WingspanRestService {
+    // test w/ WingspanCreateUserActionTest (93%)
+    
+    public static Boolean createClientAdmin( Id contactId, Id recordId , Boolean isCheckOnly ){
+        Boolean result = true;
+        String createdUserId = '';
+        if( ( contactId !=null ) 
+           && ( recordId != null )
+          ){
+              //validate contact in Wingspan Server
+              result = WingspanRestService.getUserByEmail( contactId, recordId, isCheckOnly );
+              if( ( !isCheckOnly ) && ( !result ) ){
+                  //create contact in Wingspan Server
+                  createdUserId = WingspanRestService.createClientAdmin( contactId, recordId );
+                  if( !String.isBlank( createdUserId ) ){
+                      //Associate Admin in Wingspan Server
+                      WingspanRestService.linkAdminToCHUB( createdUserId, recordId );
+                  }
+              }
+          }
+        return result;
+    }
+    
     //construct GET Request to validate contact in wingspan Server
     public static Boolean getUserByEmail(Id contactId, Id recordId, Boolean isCheckOnly){
         Contact con = getContact(contactId);
@@ -14,7 +34,9 @@ public with sharing class WingspanRestService {
               //create endpoint URL
               String path = '/users/user/email/' + con.Email;
               //send API request
-              HttpResponse resp = WingspanRestUtility.sendRequest(method,path,'', recordId);
+              WingspanRestUtility agent = new WingspanRestUtility();
+              HttpResponse resp = agent.sendRequest( method , path , '' , recordId );
+              WingspanRestService.logs.add( agent.log );
               if( resp.getStatus() == 'Not Found' && resp.getStatusCode() == 404){
                   //user not found -> can create new
                   userFound = false;
@@ -22,7 +44,7 @@ public with sharing class WingspanRestService {
           }
         //insert only get api log
         if( isCheckOnly ){
-            WingspanRestUtility.insertLogs();
+            WingspanRestService.insertLogs();
         }
         return userFound;
     }
@@ -39,7 +61,9 @@ public with sharing class WingspanRestService {
             String path = '/users/organization/user';
             
             //call API
-            HttpResponse resp = WingspanRestUtility.sendRequest(method,path,body, recordId);
+            WingspanRestUtility agent = new WingspanRestUtility();
+            HttpResponse resp = agent.sendRequest( method , path , body , recordId );
+            WingspanRestService.logs.add( agent.log );
             
             if( resp.getStatusCode() == 200 ){
                 //construct success
@@ -65,11 +89,27 @@ public with sharing class WingspanRestService {
         if( !String.isBlank( recordId ) ){
             String path = '/users/organization/user/'+ createdUserId + '/associate';
             
-            //send API request        
-            WingspanRestUtility.sendRequest(method,path,body, recordId);
+            //send API request
+            WingspanRestUtility agent = new WingspanRestUtility();
+            HttpResponse resp = agent.sendRequest( method , path , body , recordId );
+            WingspanRestService.logs.add( agent.log );
         }
         //insert all api logs
-        WingspanRestUtility.insertLogs();
+        WingspanRestService.insertLogs();
+    }
+    
+    private static void insertLogs() {
+        if ( !WingspanRestService.logs.isEmpty() ) {
+            try {
+                insert WingspanRestService.logs;
+            } catch ( Exception e ) {
+                NSP_ErrorLogHandler.logException(
+                    WingspanRestUtility.class.getName() ,
+                    'insertLogs' ,
+                    e
+                );
+            }
+        }
     }
     
     private static CreateUserWrapper getUserWrapper(Id contactId, Id recordId){
@@ -101,7 +141,7 @@ public with sharing class WingspanRestService {
         userWrap.labels = createLabels( recordId );
         
         //create settings wrapper
-        Settings settWrap = new Settings();
+        SettingsWrapper settWrap = new SettingsWrapper();
         settWrap.userAccountType = 'enterprise';
         userWrap.settings = settWrap;
         
@@ -121,8 +161,8 @@ public with sharing class WingspanRestService {
     }
     
     //method to create labels for JSON
-    private static Labels createLabels( Id recordId ){
-        Labels labelsWrap = new Labels();
+    private static LabelsWrapper createLabels( Id recordId ){
+        LabelsWrapper labelsWrap = new LabelsWrapper();
         List<Asset> assets = null;
         if( ( !String.isBlank( recordId ) ) 
            && ( String.valueOf(recordId.getSObjectType()) == 'Asset' ) 
@@ -165,8 +205,8 @@ public with sharing class WingspanRestService {
     private class CreateUserWrapper{
         private String email = '';
         private ProfileWrapper profile;
-        private Settings settings;
-        private Labels labels;
+        private SettingsWrapper settings;
+        private LabelsWrapper labels;
     }
     
     private class ProfileWrapper{
@@ -174,11 +214,11 @@ public with sharing class WingspanRestService {
         private String lastName = '';
     }
     
-    private class Settings{
+    private class SettingsWrapper{
         private String userAccountType = '';
     }
     
-    private class Labels{
+    private class LabelsWrapper{
         private String insperityAccountId = '';
         private String saasId = '';
         private String employeesEstimate = '';
@@ -192,6 +232,17 @@ public with sharing class WingspanRestService {
     
     private class InheritanceStrategyWrapper{
         private String organizationAccountConfig = '';
+    }
+    
+    //property for keeping logs
+    private static List<Wingspan_Log__c> logs {
+        private get {
+            if ( logs == null ) {
+                logs = new List<Wingspan_Log__c>();
+            }
+            return logs;
+        }
+        private set;
     }
     
 }
