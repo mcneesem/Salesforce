@@ -41,13 +41,8 @@ public with sharing class NSP_RET_AssetSyncWithClientHistBatch implements ISelfS
                     for(Asset asst: assetList){
                         if(asst != null){
                             assetIDS.add(asst.ID);
-                            if(asst.Opportunity__c!=null){
-                                mapAssetOpptyID.put(asst.ID,asst.Opportunity__c);
-                                
-                            }
-                            if(asst.AccountId != null){
-                                mapAssetAccountIds.put( asst.Id , asst.AccountId );
-                            }
+                            mapAssetOpptyID = getMapAssetOpptyID(asst);
+                            mapAssetAccountIds = getMapAssetAccountIds(asst); 
                         }
                     }
                 }
@@ -73,6 +68,21 @@ public with sharing class NSP_RET_AssetSyncWithClientHistBatch implements ISelfS
         }catch(Exception ex){
             NSP_ErrorLogHandler.logException(NSP_RET_AssetSyncWithClientHistBatch.class.getName(), 'Execute', ex);
         }        
+    }
+    private static Map<Id,Id> getMapAssetAccountIds (Asset asst){
+        Map<Id,Id> mapAssetAccountIds = new Map<Id,Id>();
+        if(asst != null && asst.AccountId != null){
+            mapAssetAccountIds.put( asst.Id , asst.AccountId );
+        }
+        return mapAssetAccountIds;
+    }
+    
+    private static Map<Id,Id> getMapAssetOpptyID (Asset asst){
+        Map<ID,ID> mapAssetOpptyID = new Map<ID,ID>();  
+        if(asst != null && asst.Opportunity__c!=null){
+            mapAssetOpptyID.put(asst.ID,asst.Opportunity__c);
+        }
+        return mapAssetOpptyID;
     }
     
     private static Boolean isEnabled() {
