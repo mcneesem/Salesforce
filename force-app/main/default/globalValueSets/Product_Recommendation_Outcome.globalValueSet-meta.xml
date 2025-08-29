@@ -10,11 +10,6 @@
         <default>false</default>
         <label>HRCore Later</label>
     </customValue>
-    <customValue>
-        <fullName>HRScale Later</fullName>
-        <default>false</default>
-        <label>HRScale Later</label>
-    </customValue>
     <masterLabel>Product Recommendation Outcome</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>
