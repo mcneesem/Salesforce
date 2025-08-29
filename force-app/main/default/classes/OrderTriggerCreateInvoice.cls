@@ -1,4 +1,4 @@
-public without sharing class OrderTriggerCreateInvoice {
+public class OrderTriggerCreateInvoice {
     // test w/ OrderTriggerCreateInvoiceTest (??%)
 
     public static void createInvoice( List<Order> newList , Map<Id,Order> orderOldMap ) {
@@ -72,14 +72,14 @@ public without sharing class OrderTriggerCreateInvoice {
             }
             if(orderIdPT != null && orderIdPT.size()>0){
                 //Call to setOrderProductType future method which sets order product type on order used in setting invoice batch.
-                NSP_OrderTriggerHelper.setOrderProductType(orderIdPT);
+                NSP_OrderTriggerHelper.setOrderProductType( orderIdPT );
             }
             if(orderIds.size() > 0){
-                NSP_OrderTriggerHelper.updateOrderStartDate(orderIds);
+                NSP_OrderTriggerHelper.updateOrderStartDate( orderIds );
             }
             if(orderIdSet!=null && orderIdSet.size() > 0) {
                 //calling method to check and stamp dunning email checkbox on contact acr record
-                NSP_OrderTriggerHelper.stampDunningEmailonContact (billToContactIds,accountIds,uniqueAcrIds);
+                NSP_OrderTriggerHelper.stampDunningEmailonContact( billToContactIds , accountIds , uniqueAcrIds );
                 //end of method call
                 List<OrderItem> orderProductList = [
                     SELECT
@@ -141,7 +141,7 @@ public without sharing class OrderTriggerCreateInvoice {
                             }
                         }
                     }
-                    if ( paymentMethodMap.containskey( orderItemObj.blng__BillingAccount__c)
+                    if ( paymentMethodMap.containskey( orderItemObj.blng__BillingAccount__c )
                         && ( paymentMethodMap.get( orderItemObj.blng__BillingAccount__c ) != null )
                         && ( orderItemObj.NSP_Preferred_Payment_Method__c == paymentMethodMap.get( orderItemObj.blng__BillingAccount__c ).Payment_Method_Type__c )
                         )
@@ -184,7 +184,7 @@ public without sharing class OrderTriggerCreateInvoice {
                 OrderTriggerActivateOrderProduct.activateOrderProduct(newList,projectLiveBeforeReviewIds);
             }
             if(projGoLiveIdSet != null && projGoLiveIdSet.size() > 0){
-                NSP_OrderTriggerHelper.updateSubStartDate(projGoLiveIdSet);
+                NSP_OrderTriggerHelper.updateSubStartDate( projGoLiveIdSet );
             }
         }
     }
