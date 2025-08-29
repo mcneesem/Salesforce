@@ -22,7 +22,7 @@ public with sharing class WingspanRestService {
     }
     
     //construct GET Request to validate contact in wingspan Server
-    public static Boolean getUserByEmail(Id contactId, Id recordId, Boolean isCheckOnly){
+    private static Boolean getUserByEmail(Id contactId, Id recordId, Boolean isCheckOnly){
         Contact con = getContact(contactId);
         Boolean userFound = true;
         String method = 'GET';
@@ -50,7 +50,7 @@ public with sharing class WingspanRestService {
     }
     
     //method to create contact as Admin in wingspan server
-    public static String createClientAdmin(Id contactId, Id recordId){
+    private static String createClientAdmin(Id contactId, Id recordId){
         String createdUserId ='';
         String body = JSON.Serialize( getUserWrapper( contactId, recordId ) );
         String method = 'POST';
@@ -74,7 +74,7 @@ public with sharing class WingspanRestService {
         return createdUserId;
     }
     
-    public static void linkAdminToCHUB(String createdUserId, Id recordId){
+    private static void linkAdminToCHUB(String createdUserId, Id recordId){
         LinkUserToHubWrapper linkWrap = new LinkUserToHubWrapper();
         if ( !String.isBlank( WingspanRestUtility.userId )){
             linkWrap.parentUserId = WingspanRestUtility.userId;
