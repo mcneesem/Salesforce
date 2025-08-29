@@ -54,10 +54,7 @@ export default class EventFlowLauncher extends NavigationMixin(LightningElement)
 
     closeModal() {
         this.isModalOpen = false;
-        if ( this.recordId != this.whatId ) // go to Opty record page if not already there
-        {
-            this.navigateToOpportunity();
-        }
+        this.navigateToOpportunity();
     }
     
     navigateToOpportunity() {
