@@ -1,6 +1,7 @@
 public without sharing class OrderTriggerCreateInvoice {
-    
-        public static void createInvoice( List<Order> newList , Map<Id,Order> orderOldMap ) {
+    // test w/ OrderTriggerCreateInvoiceTest (??%)
+
+    public static void createInvoice( List<Order> newList , Map<Id,Order> orderOldMap ) {
         Set<Id> orderIdSet = new Set<Id>();
         Set<Id> projCompletedIdSet = new Set<Id>();
         Set<Id> accountIdSet = new Set<Id>();
@@ -188,5 +189,5 @@ public without sharing class OrderTriggerCreateInvoice {
         }
     }
 
-
 }
+//
