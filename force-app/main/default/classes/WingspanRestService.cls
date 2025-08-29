@@ -1,4 +1,4 @@
-public class WingspanRestService {
+public with sharing class WingspanRestService {
     // test w/ WingspanCreateUserActionTest (93%)
     
     public static Boolean createClientAdmin( Id contactId, Id recordId , Boolean isCheckOnly ){
@@ -91,7 +91,7 @@ public class WingspanRestService {
             
             //send API request
             WingspanRestUtility agent = new WingspanRestUtility();
-            HttpResponse resp = agent.sendRequest( method , path , body , recordId );
+            agent.sendRequest( method , path , body , recordId );
             WingspanRestService.logs.add( agent.log );
         }
         //insert all api logs

@@ -41,7 +41,6 @@ public with sharing class WingspanCreateUserAction {
         //initiate empty output
         Output result = new Output();
         result.isUserFound = true;
-        String createdUserId = '';
         
         result.isUserFound = WingspanRestService.createClientAdmin( input.contactId, input.recordId, input.isCheckOnly );
         
