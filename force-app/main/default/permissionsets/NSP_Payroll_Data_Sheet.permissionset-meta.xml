@@ -121,7 +121,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>NSP_Payroll__c.NSP_Ancillary__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -216,7 +216,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>NSP_Payroll__c.NSP_Client_Sponsored_Plans__c</field>
         <readable>true</readable>
     </fieldPermissions>

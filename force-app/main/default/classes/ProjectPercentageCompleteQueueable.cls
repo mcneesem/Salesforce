@@ -1,5 +1,5 @@
 public with sharing class ProjectPercentageCompleteQueueable implements Queueable {
-    // test w/ ProjectPercentageCompleteQueueableTest (86%)
+    // test w/ ProjectPercentageCompleteQueueableTest (88%)
 
     //
     // public entry points...
@@ -62,17 +62,29 @@ public with sharing class ProjectPercentageCompleteQueueable implements Queueabl
                     )
                     GROUP BY pse__Project__c
                 ];
+                // select the current record for percent complete comparions...
+                List<pse__Proj__c> currentRecords = [
+                    SELECT Id , NSP_Project_Complete__c
+                    FROM pse__Proj__c
+                    WHERE ( Id = :projectId )
+                ];
+                Decimal currentPercentComplete = null;
+                if ( ( currentRecords != null ) && !currentRecords.isEmpty() ) {
+                    currentPercentComplete = currentRecords[0].NSP_Project_Complete__c;
+                }
+                // calculate new percent complete values...
                 pse__Proj__c record = null;
                 for ( AggregateResult ar : groupedResults ) {
                     if ( ( ar.get( 'pse__Project__c' ) != null )
                         && ( projectId == (Id)ar.get( 'pse__Project__c' ) )
                         )
                     {
-                        Decimal count = (Decimal)ar.get( 'expr0' );
-                        Decimal countOfRecords = (Decimal)ar.get( 'expr1' );
-                        record = new pse__Proj__c(
-                            Id=projectId ,
-                            NSP_Project_Complete__c = ( count / countOfRecords )
+                        // only update the project when the current percent is blank, or when the new percent is significantly changed...
+                        record = this.calculateProjectPercentageComplete(
+                            projectId ,
+                            currentPercentComplete ,
+                            (Decimal)ar.get( 'expr0' ) ,
+                            (Decimal)ar.get( 'expr1' )
                         );
                     }
                 }
@@ -92,6 +104,28 @@ public with sharing class ProjectPercentageCompleteQueueable implements Queueabl
                 e
             );
         }
+    }
+
+    private pse__Proj__c calculateProjectPercentageComplete( Id projectId , Decimal current , Decimal count , Decimal total ) {
+        pse__Proj__c record = null;
+        if ( ( projectId != null )
+            && ( count != null )
+            && ( total != null )
+            && ( total > 0 )
+            )
+        {
+            Decimal newPercentComplete = ( count / total );
+            if ( ( current == null )
+                || ( current.round() != newPercentComplete.round() )
+                )
+            {
+                record = new pse__Proj__c(
+                    Id=projectId ,
+                    NSP_Project_Complete__c=newPercentComplete
+                );
+            }
+        }
+        return record;
     }
 
 }

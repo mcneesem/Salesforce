@@ -32,17 +32,25 @@
         });
         $A.enqueueAction(action);
     },
-    isLastDayOfMonth: function(date) {
-        if (!(date instanceof Date) || isNaN(date)) {
-            console.warn('Invalid date passed to isLastDayOfMonth:', date);
-            return false;
-        }
+    bypassTerminationDateValidation:function(component, event, helper){
+        let action = component.get("c.bypassTerminationDateValidation");
+        action.setCallback(this, function(response) {
+            let state = response.getState();
+            if (state === "SUCCESS") {
+                component.set("v.bypassTerminationDateValidation", response.getReturnValue());
+            }
+        });
+        $A.enqueueAction(action);
+    },
+    isLastDayOfMonth: function(date,component) {
+        let bypassValidation = component.get("v.bypassTerminationDateValidation");
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         const nextMonth = new Date(date.getFullYear(), date.getMonth() + 1, 1);
         const lastDayOfMonth = new Date(nextMonth - 1);
         const isLastDay = date.getDate() === lastDayOfMonth.getDate();
-        return isLastDay;
+        const previousMonthLastDay = new Date(today.getFullYear(), today.getMonth(), 0);
+        return ( bypassValidation || (isLastDay && date >= previousMonthLastDay) );
     },
     getCurrentUserInfo : function(component, event, helper) {
         var action=component.get('c.getCurrentUserInfo');
@@ -71,7 +79,7 @@
             if (terminationDate) {
                 let parts = terminationDate.split('-');
                 let parsedDate = new Date(parts[0], parts[1] - 1, parts[2]);
-                if (helper.isLastDayOfMonth(parsedDate)) {
+                if (helper.isLastDayOfMonth(parsedDate,component)) {
                     terminationAction.setParams({
                         "contractId": selectedContractId,
                         "terminationDate": parsedDate
@@ -99,7 +107,7 @@
                     });
                     $A.enqueueAction(terminationAction);
                 } else {
-                    message = 'Termination date must be at the end of the month.';
+                    message = 'Termination Date must be the last day of the month. You may select either the end of last month or a future month-end date.';
                     toastEvent.setParams({
                         "title": "ERROR",
                         "type": 'ERROR',

@@ -58,6 +58,9 @@ wiredContact({ error, data }) {
 
 separationQueueName ='HR Separation Agreement Team';
 getQueueIdbyName( queueName ) {
+    if ( this.reReqObj?.isSubmit ) {
+        queueName = 'Consulting & Development';
+    }
     getQueueID({ queueLabel : queueName })
         .then((result) => {
             let recordInput = this.defultRecordInputCreation(result);
@@ -193,7 +196,7 @@ async createCaseRecord(inputData){
     fields.AccountId = this.reReqObj.NSP_ClientName__c.value;
     fields.AssetId = this.woasset != '' ? this.woasset : '';
     // recordInput.fields.OwnerId= this.reportDevelopmentQueueID;
-
+    this.categorySubcategoryMM(fields);
     createRecord(inputData)
         .then(result => {
             relatedFiles({ reportRequestID : this.reReqObj.Id, caseID : result.id }).then(result =>{
@@ -228,6 +231,13 @@ async createCaseRecord(inputData){
     this.hideSpinner();
  }
 
+}
+
+categorySubcategoryMM(fields){
+    if ( this.reReqObj?.isSubmit ) {
+        fields.NSP_SubCategory__c = 'Intake';
+        fields.NSP_Category__c = 'Strategic Consulting Services';
+    }
 }
 
 updateReportRequest(result) {

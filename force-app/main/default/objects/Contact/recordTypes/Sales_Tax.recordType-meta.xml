@@ -1221,6 +1221,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>HRCore Acct%2E Mgmt</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Insperity</fullName>
             <default>false</default>
         </values>

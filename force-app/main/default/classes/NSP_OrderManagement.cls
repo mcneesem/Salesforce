@@ -1,5 +1,5 @@
 public class NSP_OrderManagement {
-    // test w/ NSP_OrderManagementTest (86%)
+    // test w/ NSP_OrderManagementTest (89%)
 
     @AuraEnabled
     public static List<Contract> getContractRecord(Id recordId){
@@ -124,11 +124,7 @@ public class NSP_OrderManagement {
                     }
                 }
             } catch ( Exception e ) {
-                NSP_ErrorLogHandler.logException(
-                    NSP_ImplementationHelper.class.getName() ,
-                    'checkAmendmentConditionsApex' ,
-                    e
-                );
+                NSP_OrderManagement.handleException( e , 'checkAmendmentConditionsApex' );
                 throw new AuraHandledException( e.getMessage() );
             }
         }
@@ -147,6 +143,28 @@ public class NSP_OrderManagement {
     @AuraEnabled
     public static Boolean hasTerminationPermission() {
         return ContractTerminationHandler.isEnabledAutoTermination;
+    }
+
+    @AuraEnabled
+    public static Boolean bypassTerminationDateValidation() {
+        return CustomPermissionController.checkUserPermission(
+            'Bypass_Quote_Termination_Date_Not_Before_Last_Month_End' ,
+            UserInfo.getUserId()
+        );
+    }
+
+    public static void testHandleException( Exception e , String methodName ) {
+        if ( Test.isRunningTest() ) {
+            NSP_OrderManagement.handleException( e , methodName );
+        }
+    }
+
+    private static void handleException( Exception e , String methodName ) {
+        NSP_ErrorLogHandler.logException(
+            NSP_OrderManagement.class.getName() ,
+            methodName ,
+            e
+        );
     }
 
 }

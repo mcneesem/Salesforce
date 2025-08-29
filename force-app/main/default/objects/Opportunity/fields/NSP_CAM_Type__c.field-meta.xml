@@ -12,69 +12,9 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Affil E</fullName>
+                <fullName>FEIN Change</fullName>
                 <default>false</default>
-                <label>Affil E</label>
-            </value>
-            <value>
-                <fullName>Affil N</fullName>
-                <default>false</default>
-                <label>Affil N</label>
-            </value>
-            <value>
-                <fullName>Control E</fullName>
-                <default>false</default>
-                <label>Control E</label>
-            </value>
-            <value>
-                <fullName>Control N</fullName>
-                <default>false</default>
-                <label>Control N</label>
-            </value>
-            <value>
-                <fullName>Exception</fullName>
-                <default>false</default>
-                <label>Exception</label>
-            </value>
-            <value>
-                <fullName>Fein</fullName>
-                <default>false</default>
-                <label>Fein</label>
-            </value>
-            <value>
-                <fullName>New Acct E</fullName>
-                <default>false</default>
-                <label>New Acct E</label>
-            </value>
-            <value>
-                <fullName>New Acct N</fullName>
-                <default>false</default>
-                <label>New Acct N</label>
-            </value>
-            <value>
-                <fullName>Own/Fein</fullName>
-                <default>false</default>
-                <label>Own/Fein</label>
-            </value>
-            <value>
-                <fullName>Own/Fein (With New Ees)</fullName>
-                <default>false</default>
-                <label>Own/Fein (With New Ees)</label>
-            </value>
-            <value>
-                <fullName>Shared E</fullName>
-                <default>false</default>
-                <label>Shared E</label>
-            </value>
-            <value>
-                <fullName>Shared N</fullName>
-                <default>false</default>
-                <label>Shared N</label>
-            </value>
-            <value>
-                <fullName>Existing Employees</fullName>
-                <default>false</default>
-                <label>Existing Employees</label>
+                <label>FEIN Change</label>
             </value>
             <value>
                 <fullName>New Employees</fullName>
@@ -82,70 +22,25 @@
                 <label>New Employees</label>
             </value>
             <value>
-                <fullName>FEIN Change</fullName>
+                <fullName>Existing Employees</fullName>
                 <default>false</default>
-                <label>FEIN Change</label>
+                <label>Existing Employees</label>
             </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>CAM</controllingFieldValue>
-            <valueName>Affil E</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>CAM</controllingFieldValue>
-            <valueName>Affil N</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>CAM</controllingFieldValue>
-            <valueName>Control E</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>CAM</controllingFieldValue>
-            <valueName>Control N</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>CAM</controllingFieldValue>
-            <valueName>Exception</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>CAM</controllingFieldValue>
-            <valueName>Fein</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>CAM</controllingFieldValue>
-            <valueName>New Acct E</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>CAM</controllingFieldValue>
-            <valueName>New Acct N</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>CAM</controllingFieldValue>
-            <valueName>Own/Fein</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>CAM</controllingFieldValue>
-            <valueName>Own/Fein (With New Ees)</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>CAM</controllingFieldValue>
-            <valueName>Shared E</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>CAM</controllingFieldValue>
-            <valueName>Shared N</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>WX_WA CAM</controllingFieldValue>
-            <valueName>Existing Employees</valueName>
+            <valueName>FEIN Change</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>CAM</controllingFieldValue>
             <controllingFieldValue>WX_WA CAM</controllingFieldValue>
             <valueName>New Employees</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>CAM</controllingFieldValue>
             <controllingFieldValue>WX_WA CAM</controllingFieldValue>
-            <valueName>FEIN Change</valueName>
+            <valueName>Existing Employees</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

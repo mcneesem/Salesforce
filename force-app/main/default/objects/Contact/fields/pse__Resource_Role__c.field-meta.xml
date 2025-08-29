@@ -170,6 +170,16 @@
                 <default>false</default>
                 <label>Trainer</label>
             </value>
+            <value>
+                <fullName>HR Client Implementation Team Member</fullName>
+                <default>false</default>
+                <label>HR Client Implementation Team Member</label>
+            </value>
+            <value>
+                <fullName>HRCore Acct. Mgmt</fullName>
+                <default>false</default>
+                <label>HRCore Acct. Mgmt</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

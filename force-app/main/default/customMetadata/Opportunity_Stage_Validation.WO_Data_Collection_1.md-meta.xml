@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Error_Message__c</field>
-        <value xsi:type="xsd:string">Please update Method field and close Discovery Calls before moving to Data Collection stage</value>
+        <value xsi:type="xsd:string">Please complete Discovery Call before moving to Data Collection stage</value>
     </values>
     <values>
         <field>Field__c</field>

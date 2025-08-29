@@ -15037,6 +15037,21 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_ReportRequest__c.Are_additional_language_options_required__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_ReportRequest__c.How_many_non_Insperity_paid_WSEEs__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_ReportRequest__c.Is_this_survey_anonymous_or_confidential__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>NSP_ReportRequest__c.NSP_Action__c</field>
         <readable>true</readable>
@@ -15559,6 +15574,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_ReportRequest__c.NSP_columsToBeTotaled__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_ReportRequest__c.Please_enter_the_language_s__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_ReportRequest__c.Sent_to_any_non_Insperity_paid_WSEEs__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -23527,6 +23552,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>pse__Proj__c.Client_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>pse__Proj__c.Comments__c</field>
         <readable>true</readable>
@@ -23744,6 +23774,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Proj__c.NSP_Owner__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>pse__Proj__c.NSP_Plan__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

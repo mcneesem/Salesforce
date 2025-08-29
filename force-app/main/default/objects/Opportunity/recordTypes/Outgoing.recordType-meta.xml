@@ -378,26 +378,6 @@
     <picklistValues>
         <picklist>NSP_CAM_Type__c</picklist>
         <values>
-            <fullName>Affil E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Affil N</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Control E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Control N</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Exception</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Existing Employees</fullName>
             <default>false</default>
         </values>
@@ -406,35 +386,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Fein</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>New Acct E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>New Acct N</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>New Employees</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Own%2FFein</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Own%2FFein %28With New Ees%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Shared E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Shared N</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1093,6 +1045,10 @@
         </values>
         <values>
             <fullName>Trane U%2ES%2E Inc%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Veterinary Growth Partners</fullName>
             <default>false</default>
         </values>
         <values>

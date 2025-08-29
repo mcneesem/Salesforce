@@ -1074,6 +1074,74 @@
     <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Are_additional_language_options_required__c</fieldItem>
+                <identifier>RecordAre_additional_language_options_required_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Please_enter_the_language_s__c</fieldItem>
+                <identifier>RecordPlease_enter_the_language_s_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Is_this_survey_anonymous_or_confidential__c</fieldItem>
+                <identifier>RecordIs_this_survey_anonymous_or_confidential_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Sent_to_any_non_Insperity_paid_WSEEs__c</fieldItem>
+                <identifier>RecordSent_to_any_non_Insperity_paid_WSEEs_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.How_many_non_Insperity_paid_WSEEs__c</fieldItem>
+                <identifier>RecordHow_many_non_Insperity_paid_WSEEs_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-07f0f3cf-cdb4-4b3f-855b-e8c7b2e60178</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-07f0f3cf-cdb4-4b3f-855b-e8c7b2e60178</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column9</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-18ae5916-7383-49b1-a1ea-d728601a0af4</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
                 <fieldItem>Record.NSP_AdditionalInformation__c</fieldItem>
                 <identifier>RecordNSP_AdditionalInformation__cField</identifier>
             </fieldInstance>
@@ -1213,7 +1281,7 @@
                 <componentName>flexipage:richText</componentName>
                 <identifier>flexipage_richText</identifier>
                 <visibilityRule>
-                    <booleanFilter>NOT((1 AND 2 AND 3) OR(  4 AND (5 OR 6 OR 7)))</booleanFilter>
+                    <booleanFilter>NOT((1 AND 2 AND 3) OR(  4 AND (5 OR 6 OR 7))) AND 8</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_Survey_Type__c}</leftValue>
                         <operator>NE</operator>
@@ -1248,6 +1316,11 @@
                         <leftValue>{!Record.NSP_Survey_Type__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Climate Plus</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Segment__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Middle Market</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -1265,7 +1338,7 @@
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection4</identifier>
                 <visibilityRule>
-                    <booleanFilter>(1 AND 2 AND 3) OR(  4 AND (5 OR 6 OR 7))</booleanFilter>
+                    <booleanFilter>((1 AND 2 AND 3) OR(  4 AND (5 OR 6 OR 7))) AND 8</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_Survey_Type__c}</leftValue>
                         <operator>NE</operator>
@@ -1301,6 +1374,11 @@
                         <operator>EQUAL</operator>
                         <rightValue>Climate Plus</rightValue>
                     </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Segment__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Middle Market</rightValue>
+                    </criteria>
                 </visibilityRule>
             </componentInstance>
         </itemInstances>
@@ -1316,6 +1394,38 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection5</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Segment__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Middle Market</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
+                    <value>Facet-18ae5916-7383-49b1-a1ea-d728601a0af4</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Survey Considerations</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection8</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Segment__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Middle Market</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -1330,6 +1440,13 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection6</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Segment__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Middle Market</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>

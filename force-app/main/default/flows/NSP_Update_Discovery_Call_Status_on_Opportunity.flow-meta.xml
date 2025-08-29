@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>53.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Set_Fault_Element_Select_Related_Opportunity</name>
         <label>Set Fault Element: Select_Related_Opportunity</label>
@@ -48,10 +49,10 @@
             <name>HCM_Not_Allowed</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>$UserRole.DeveloperName</leftValueReference>
+                <leftValueReference>$Permission.Opportunity_WX_Product_Only</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>HCM_Sales_Consultant</stringValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>

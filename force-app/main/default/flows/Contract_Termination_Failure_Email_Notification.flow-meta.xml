@@ -51,6 +51,60 @@
         <offset>0</offset>
         <versionString>1.0.1</versionString>
     </actionCalls>
+    <actionCalls>
+        <name>Split_String_Admin_Email</name>
+        <label>Split String Admin Email</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>StringSplitterAction</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Assign_Email_Address</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>inputSeparator</name>
+            <value>
+                <stringValue>\r\n</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>inputString</name>
+            <value>
+                <elementReference>$Setup.Contract_Termination_Settings__c.AdminEmailAddresses__c</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>StringSplitterAction</nameSegment>
+        <offset>0</offset>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Split_String_AutoTermination_Email</name>
+        <label>Split String AutoTermination Email</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>StringSplitterAction</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Assign_AutoTermination_Email</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>inputSeparator</name>
+            <value>
+                <stringValue>\r\n</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>inputString</name>
+            <value>
+                <elementReference>$Setup.Contract_Termination_Settings__c.AutoTerminationEmailAddresses__c</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>StringSplitterAction</nameSegment>
+        <offset>0</offset>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
     <apiVersion>64.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
@@ -62,7 +116,7 @@
             <assignToReference>RecipientAddresses</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>$Setup.Contract_Termination_Settings__c.AutoTerminationEmailAddresses__c</elementReference>
+                <elementReference>Split_String_AutoTermination_Email.resultList</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -78,7 +132,7 @@
             <assignToReference>RecipientAddresses</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>$Setup.Contract_Termination_Settings__c.AdminEmailAddresses__c</elementReference>
+                <elementReference>Split_String_Admin_Email.resultList</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -301,7 +355,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assign_AutoTermination_Email</targetReference>
+                <targetReference>Split_String_AutoTermination_Email</targetReference>
             </connector>
             <label>Email Exists</label>
         </rules>
@@ -348,7 +402,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assign_Email_Address</targetReference>
+                <targetReference>Split_String_Admin_Email</targetReference>
             </connector>
             <label>Email Address Exist</label>
         </rules>

@@ -73,6 +73,10 @@
                 <behavior>Edit</behavior>
                 <field>NSP_Rating__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Project__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -330,7 +334,7 @@
             <actionName>NewContact</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>7</sortOrder>
-        </platformActionListItems> 
+        </platformActionListItems>
         <platformActionListItems>
             <actionName>NewOpportunity</actionName>
             <actionType>QuickAction</actionType>
@@ -441,7 +445,7 @@
         </quickActionListItems>
         <quickActionListItems>
             <quickActionName>FeedItem.QuestionPost</quickActionName>
-        </quickActionListItems> 
+        </quickActionListItems>
         <quickActionListItems>
             <quickActionName>New_PEO_Task</quickActionName>
         </quickActionListItems>

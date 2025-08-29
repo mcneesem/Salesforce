@@ -68,7 +68,6 @@ public class NSP_Implementationprofile_ServiceHelper {
     private static final String IRR_FN ='NSP_IRR';
     private static final String CLIENT_SUMMARY_FN ='NSP_ClientSummary';
     private static final String PAYROLL_SPECIALIST_SUMMARY_FN ='NSP_PayrollSpecialistSummary';
-    private static final String PRIOR_WAGES_FN ='NSP_Prior_Wages';
     private static final String EE_COMMISSION_FN ='NSP_EE_Commission';
     private static final String NSP_Existing_Retirement_Plan_Move_FSO='NSP_Existing_Retirement_Plan_Move_FSO';
     private static final String CAFETERIAL_PLAN_FN ='NSP_Cafeterai_Plan_Questionnaire';
@@ -122,7 +121,6 @@ public class NSP_Implementationprofile_ServiceHelper {
         IRR_FN ,
         CLIENT_SUMMARY_FN ,
         PAYROLL_SPECIALIST_SUMMARY_FN ,
-        PRIOR_WAGES_FN ,
         EE_COMMISSION_FN ,
         CAFETERIAL_PLAN_FN ,
         TECH_PACKET_FN ,
@@ -181,7 +179,6 @@ public class NSP_Implementationprofile_ServiceHelper {
             EEO_INFO_FN ,
             NEW_401_FN ,
             SRP_NOTIFY_FN ,
-            PRIOR_WAGES_FN ,
             EE_COMMISSION_FN ,
             CAFETERIAL_PLAN_FN ,
             FEDERAL_COMPLIANCE_POSTERS ,
@@ -381,9 +378,6 @@ public class NSP_Implementationprofile_ServiceHelper {
         if(ipRecordsByAutomation.containsKey(PAYROLL_SPECIALIST_SUMMARY_FN)){
             emailNotifyforPayrollSpecialistSummary();
         }
-        if(ipRecordsByAutomation.containsKey(PRIOR_WAGES_FN)){
-            emailNotifyForPriorWage();
-        }
         
         if(ipRecordsByAutomation.containsKey(EE_COMMISSION_FN)){
             emailNotifyForEECommission();
@@ -575,9 +569,6 @@ public class NSP_Implementationprofile_ServiceHelper {
             }
             if(automationsToExecute.contains(PAYROLL_SPECIALIST_SUMMARY_FN)){
                 checkforPayrollSpecialistSummary(ipRec, existingRec);
-            }
-            if(automationsToExecute.contains(PRIOR_WAGES_FN)){
-                checkForPriorWage(ipRec, existingRec);
             }
             if(automationsToExecute.contains(EE_COMMISSION_FN)){
                 checkForEECommission(ipRec, existingRec);
@@ -1595,63 +1586,6 @@ public class NSP_Implementationprofile_ServiceHelper {
     
     //Email notification for IP Automation STY-02164
     
-    /**
-     Automathion Section: Payroll
-     Automation Name: Prior Wages 
-     Automation icon: envelope
-    */
-    private void checkForPriorWage(Implementation_Profile__c newIp, Implementation_Profile__c existingRec){
-        if(newIp.RecordTypeId == ipFSORecordTypeId  && 
-             newIp.NSP_PC_Client_Name__c!=null && newIp.NSP_PC_Client_Email__c!=null){
-           List<Implementation_Pay_Period__c> ipPayPeriodList =  additionalIpPayPeriods(newIp.Id);
-               if(!ipPayPeriodList.isEmpty()){
-                   for(Implementation_Pay_Period__c ipp:ipPayPeriodList ){
-                       if(ipp.Does_the_client_have_prior_wages__c== NSP_ServiceConstants.NO){
-                           updateEligibleRecordsMap(ipRecordsByAutomation, newIp.Id, PRIOR_WAGES_FN);
-                           break;
-                       }
-                       else if(ipp.Does_the_client_have_prior_wages__c== NSP_ServiceConstants.YES && newIp.Client_s_previous_payroll_provider__c!=NULL){
-                           updateEligibleRecordsMap(ipRecordsByAutomation, newIp.Id, PRIOR_WAGES_FN);
-                           break;
-                       }
-                   }
-               }
-         }
-    }
-
-    private  void emailNotifyForPriorWage(){
-        List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
-        NSP_PEO_Implementations__mdt pf = NSP_PEO_Implementations__mdt.getInstance(PRIOR_WAGES_FN);
-        NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(PRIOR_WAGES_FN);
-        for(Id ipRecId : ipRecordsByAutomation.get(PRIOR_WAGES_FN)){
-            Implementation_Profile__c ipRec = newIPs.get(ipRecId);
-            if((isRerun || ipRec.NSP_Form_Completed__c) && !isSaveForm ){ 
-                if(!isRerun && !ipAutomationdata?.get(IP_AUTOMATION_IDENTIFIER).contains(ipRec.Id+'_'+PRIOR_WAGES_FN+'_'+NSP_ServiceConstants.FSOProfile)){
-                    lstEmailMessages.add(NSP_IP_MM_EmailAutomationsController.getMailObject(ipRec,new List<String>{pf.NSP_Email_Address__c},null,null,mapOfEmailTempaltes.get(PRIOR_WAGES_FN).Id,isrerun));
-                    ipAutomationRecords.add(ipAutomationHelper.createIPAutomation(ipRec, ipa.NSP_Automation_Name__c, ipa.NSP_Method_Name__c,ipa.NSP_Section__c));
-                }
-                else if(isRerun){
-                    lstEmailMessages.add(NSP_IP_MM_EmailAutomationsController.getMailObject(ipRec,new List<String>{pf.NSP_Email_Address__c},null,null,mapOfEmailTempaltes.get(PRIOR_WAGES_FN).Id,isrerun));  
-                    impRecordId = ipRec.Id;
-                    impAutomationName = ipa.NSP_Automation_Name__c;
-                    impMethodName = ipa.NSP_Method_Name__c;
-                    impAutomationSection = ipa.NSP_Section__c;
-                    if(ipRec.RecordTypeId==ipFSORecordTypeId){
-                        impAutomationRecordType=NSP_ServiceConstants.FSOProfile;
-                    }
-                    if(ipRec.RecordTypeId==ipMMRecordTypeId){
-                        impAutomationRecordType=NSP_ServiceConstants.MIDDLEMARKET;
-                    }
-                }
-            }
-            
-        }
-        recToInsert.addAll(ipAutomationRecords);
-               
-        if(impRecordId!=null && impAutomationName !=null){
-        NSP_Implprofile_ServiceHelperUpdate.automationRecordUpdate(impRecordId,impAutomationName,impMethodName,impAutomationRecordType,impAutomationSection );
-        }
-    }
 
     /**
      Automathion Section: General

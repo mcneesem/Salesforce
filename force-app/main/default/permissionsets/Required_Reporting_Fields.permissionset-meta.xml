@@ -178,6 +178,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Asset.HRCore_Region__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Asset.Medical_Benefits_Renewal_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -918,6 +923,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_Sub_Client_Contact__c.Source__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Sub_Client_Contact__c.Workday_Employee_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1098,6 +1108,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Opportunity.NSP_IPMRecommendation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Opportunity.NSP_Opportunity_ID_18__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1119,6 +1134,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.NSP_Sales_Region__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.NSP_Time_Entry_Recommendation__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

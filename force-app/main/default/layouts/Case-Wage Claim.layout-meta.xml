@@ -73,6 +73,10 @@
                 <behavior>Edit</behavior>
                 <field>NSP_Rating__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Project__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

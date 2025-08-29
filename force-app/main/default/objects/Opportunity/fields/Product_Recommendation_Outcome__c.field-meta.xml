@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Product_Recommendation_Outcome__c</fullName>
+    <description>Selection in this field sets the Primary Product field when changed if the recommended outcome is HR360 Now or HRCore Now</description>
+    <label>Product Recommendation Outcome</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>Product_Recommendation_Outcome</valueSetName>
+    </valueSet>
+</CustomField>

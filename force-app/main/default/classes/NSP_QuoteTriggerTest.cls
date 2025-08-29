@@ -419,4 +419,41 @@ public class NSP_QuoteTriggerTest {
         Test.stopTest();
     }
     
+    @isTest
+    private static void contractorManagementBudgetaryQuoteTest(){
+        Account acc1 = [SELECT Id, Name FROM Account WHERE Name != null LIMIT 1];
+        Product2 product1 = [SELECT  Id, Name FROM Product2 WHERE NAME != Null LIMIT 1];
+        Opportunity opp1 = NSP_TestHelper.createOpenOpportunity(acc1.Id,NSP_QuoteTriggerTest.NEW_PRODUCT,false);
+        opp1.NSP_Client_For_Life__c = 'Stand Alone';
+        opp1.NSP_PrimaryProduct__c = 'Contractor Management';
+        //Inserting Opportunity
+        insert opp1;
+        NSP_TestHelper.createPriceBookEntry(product1.Id,200.0,true);
+        PriceBook2 recpb = NSP_TestHelper.createPriceBook2('Standalone Pricebook');
+        insert recpb;
+        NSP_Enrollment_Fee_Payment__c enrollmentFee= new NSP_Enrollment_Fee_Payment__c();
+        enrollmentFee.NSP_Opportunity__c=opp1.Id;
+        insert enrollmentFee;
+        Test.startTest();
+        SBQQ__Quote__c quote1 = NSP_TestHelper.createCPQQuote(acc1.Id,opp1.Id,false);
+        quote1.NSP_Opportunity_Primary_Product__c = 'Contractor Management';
+        quote1.NSP_Client_For_Life__c = 'Stand Alone';
+        quote1.SBQQ__PriceBook__c = recpb.id;
+        quote1.SBQQ__PricebookId__c = recpb.id;
+        quote1.SBQQ__Primary__c = true;
+        quote1.SBQQ__Type__c=NSP_QuoteTriggerTest.NEW_PRODUCT;
+        //Inserting Quote
+        insert quote1;
+        Test.stopTest();
+        List<SBQQ__Quote__c> quoteResults = [Select Id,NSP_Budgetary_Quote__c FROM SBQQ__Quote__c WHERE Id=:quote1.Id];
+        System.assertEquals(true,quoteResults[0].NSP_Budgetary_Quote__c);   
+    }
+    
+    @isTest
+    private static void exceptionTest(){
+        Test.startTest();
+        NSP_QuoteTriggerHelper.testHandleException( null , null );
+        Test.stopTest();
+    }
+    
 }
