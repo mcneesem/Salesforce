@@ -760,5 +760,83 @@ private class NSP_AccountTriggerHelperTest {
         }
     }
 
+    @isTest
+    private static void testUpdateSalesOfficeOnRelatedRecords() {
+        
+        //  We need two users in different sales offices
+        List<AggregateResult> aggregatedUsers  = [
+            SELECT NSP_Sales_Office__c, Id 
+            FROM User
+            WHERE Profile.Name = 'Sales Manager' AND IsActive = true AND NSP_Sales_Office__c != null  
+            GROUP BY NSP_Sales_Office__c, id 
+            LIMIT 2
+        ];
+        
+        List<User> users = new List<User>();
+        
+        for(AggregateResult ar : aggregatedUsers){
+            users.add(new User(Id = (Id)ar.get('Id'), NSP_Sales_Office__c = (String)ar.get('NSP_Sales_Office__c')));
+        }
+        
+        if( !users.isEmpty() && users.size() == 2 ){
+            
+            Test.startTest();
+            
+            Account acct = new Account();
+            acct.name = 'Test Office';
+            acct.OwnerId = users[0].Id;
+            insert acct;
+            
+            Contact contact = new Contact();
+            contact.AccountId = acct.Id;
+            contact.LastName = 'Test Contact';
+            contact.OwnerId = users[0].Id;
+            insert contact;
+            
+            Event event = new Event();
+            event.Subject = 'Test Event';
+            event.WhatId = acct.Id;
+            event.DurationInMinutes = 60;
+            event.ActivityDateTime = DateTime.now();
+            event.NSP_Sales_Office__c = users[0].NSP_Sales_Office__c;
+            event.NSP_Event_Subtype__c = 'Discovery Call';
+            event.OwnerId = users[0].Id;
+            insert event;
+            
+            Task task = new Task();
+            task.Subject = 'Test Task';
+            task.WhatId = acct.Id;
+            task.Status = 'Not Started';
+            task.Priority = 'Normal';
+            task.NSP_Sales_Office__c = users[0].NSP_Sales_Office__c;
+            task.OwnerId = users[0].Id;
+            insert task;
+            
+            //  Change owner on Account, Contact, Event and Task
+            contact.OwnerId = users[1].Id;
+            update contact;
+            
+            event.OwnerId = users[1].Id;
+            
+            task.OwnerId = users[1].Id;
+            
+            acct.OwnerId = users[1].Id;
+            //  Reset all the run counts otherwise the method 'beforeUpdate' won't be triggered
+            NSP_AccountTriggerHandler.resetAllHasRun();
+            update acct;
+            update event;
+            update task;
+            
+            Test.stopTest();
+            
+            Contact contact2 = [SELECT id, NSP_Sales_Office__c FROM Contact WHERE Id =: contact.Id LIMIT 1];
+            Event event2 = [SELECT id, NSP_Sales_Office__c FROM Event WHERE Id =: event.Id LIMIT 1];
+            Task task2 = [SELECT id, NSP_Sales_Office__c FROM Task WHERE Id =: task.Id LIMIT 1];
+            
+            System.Assert.areEqual(users[1].NSP_Sales_Office__c, contact2.NSP_Sales_Office__c);
+            System.Assert.areEqual(users[1].NSP_Sales_Office__c, event2.NSP_Sales_Office__c);
+            System.Assert.areEqual(users[1].NSP_Sales_Office__c, task2.NSP_Sales_Office__c);
+        }
+    }
 }
 //
