@@ -1,5 +1,5 @@
 @IsTest
-public class OrderTriggerCreateInvoiceTest {
+private class OrderTriggerCreateInvoiceTest {
     @TestSetup
     private static void setupTestData() 
     {
@@ -207,41 +207,10 @@ public class OrderTriggerCreateInvoiceTest {
         Test.startTest();
         objQuote.SBQQ__Ordered__c = true;
         Update objQuote;
-        // Create a test Order
-       /* Order testOrder = new Order(AccountId = objaccount.Id,
-                                   SBQQ__Quote__c = objQuote.Id,
-                                   EffectiveDate = System.today(), 
-                                   Status = 'Draft', 
-                                   Pricebook2Id =stdPriceBookId );
-        testOrder.blng__BillingAccount__c = objaccount.Id;
-        insert testOrder;
-
-        // Create a test OrderItem
-		blng__BillingRule__c billingRule = NSP_TestHelper.createBillingRule();
-    
-        OrderItem testOrderItem = new OrderItem();
-        testOrderItem.OrderId = testOrder.Id;
-        testOrderItem.PricebookEntryId = testPricebookEntry.Id;
-        testOrderItem.Quantity = 1;
-        testOrderItem.UnitPrice = 100;
-        testOrderItem.SBQQ__Status__c = 'Draft';
-        testOrderItem.SBQQ__BillingFrequency__c =  NSP_CPQConstants.BLNGFREQ_ANNUAL;
-        //testOrderItem.SBQQ__QuoteLine__c = objQuoteLine[0].Id;
-        System.debug('BL before OP Insert:'+brObj);
-        System.debug('billingRule before OP Insert:'+billingRule);	
-        testOrderItem.blng__BillingRule__c = brObj.Id;
-        testOrderItem.blng__BillingTreatment__c=blngTreatmentRecord.Id;
-        testOrderItem.blng__RevenueRecognitionRule__c = rrObj.Id;
-        testOrderItem.blng__BillingGLRule__c = taxGLRule.Id;
-        testOrderItem.blng__TaxRule__c = taxRuleObj.Id;
-        testOrderItem.NSP_Preferred_Payment_Method__c = 'ACH';
-        //testOrderItem.SBQQ__ChargeType__c = NSP_CPQConstants.PRODUCT_CHARGETYPE_RECURRING;
-        insert testOrderItem;
-        Test.stopTest();*/
     }
     
-        @IsTest
-    static void testCreateInvoice()
+    @IsTest
+    private static void testCreateInvoice()
     {
          // Retrieve the test Order
         Order testOrder = [SELECT Id, Project_Status__c,Status, Type, NSP_Project_Go_Live_Date__c, NSP_Transaction_Type__c, NSP_Usage_Products_Count__c FROM Order LIMIT 1];
@@ -264,8 +233,8 @@ public class OrderTriggerCreateInvoiceTest {
 
     }
     
-            @IsTest
-    static void testCreateInvoice2()
+    @IsTest
+    private static void testCreateInvoice2()
     {
          // Retrieve the test Order
         Order testOrder = [SELECT Id, Project_Status__c,Status, Type,NSP_Change_Order_Process_Quote__c, NSP_Project_Go_Live_Date__c, NSP_Transaction_Type__c, NSP_Usage_Products_Count__c FROM Order LIMIT 1];
@@ -286,19 +255,16 @@ public class OrderTriggerCreateInvoiceTest {
 
     }
     
-            @IsTest
-    static void testCreateInvoice3()
+    @IsTest
+    private static void testCreateInvoice3()
     {
         
-        
-        
+
          // Retrieve the test Order
         Order testOrder = [SELECT Id, Project_Status__c,Status, Type, NSP_Project_Go_Live_Date__c, NSP_Transaction_Type__c, NSP_Usage_Products_Count__c FROM Order LIMIT 1];
         
         OrderItem testOrderItem = [SELECT Id, OrderId, SBQQ__Status__c,NSP_Preferred_Payment_Method__c, Order.Project_Status__c, Order.Type, Order.NSP_Project_Go_Live_Date__c, NSP_Order_Activation_Trigger__c, NSP_Order_Activation_Trigger_Amend__c, Product2.NSP_Partial_Period_Free_Treatment__c, SBQQ__BillingFrequency__c, Order.EffectiveDate, NSP_OrderProductStartDate__c, SBQQ__SubscriptionType__c, NSP_AnniversaryBlngApplicable__c, SBQQ__QuoteLine__r.NSP_ActionType__c, SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c, NSP_Project_Completion_Date__c, Order.NSP_Usage_Products_Count__c, ServiceDate, SBQQ__RequiredBy__c, EndDate FROM OrderItem where Product2.ProductCode = 'IWXSU'  LIMIT 1];
-        
-        
-        
+
         testOrder.Status = NSP_CPQConstants.ORDER_REVIEWED;
         testOrder.NSP_Rev_Rec_Rules_Reviewed__c =true;
         testOrder.NSP_Project_Name__c = 'TestProj';
@@ -314,11 +280,9 @@ public class OrderTriggerCreateInvoiceTest {
     }
     
     
-     @IsTest
-    static void testCreateInvoice4()
+    @IsTest
+    private static void testCreateInvoice4()
     {
-        
-        
         Opportunity oppObj = [select Id,AccountId from Opportunity where NSP_TransactionType__c = 'Amendment/Supplemental' LIMIT 1 ];   
 
         SBQQ__Quote__c objQuote = NSP_TestHelper.createCPQQuote(oppObj.AccountId, oppObj.Id, false);
@@ -333,9 +297,7 @@ public class OrderTriggerCreateInvoiceTest {
         Order testOrder = [SELECT Id, Project_Status__c,Status, Type, NSP_Project_Go_Live_Date__c, NSP_Transaction_Type__c, NSP_Usage_Products_Count__c FROM Order LIMIT 1];
         
         OrderItem testOrderItem = [SELECT Id, OrderId, SBQQ__Status__c,NSP_Preferred_Payment_Method__c, Order.Project_Status__c, Order.Type, Order.NSP_Project_Go_Live_Date__c, NSP_Order_Activation_Trigger__c, NSP_Order_Activation_Trigger_Amend__c, Product2.NSP_Partial_Period_Free_Treatment__c, SBQQ__BillingFrequency__c, Order.EffectiveDate, NSP_OrderProductStartDate__c, SBQQ__SubscriptionType__c, NSP_AnniversaryBlngApplicable__c, SBQQ__QuoteLine__r.NSP_ActionType__c, SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c, NSP_Project_Completion_Date__c, Order.NSP_Usage_Products_Count__c, ServiceDate, SBQQ__RequiredBy__c, EndDate FROM OrderItem where Product2.ProductCode = 'IWXSU'  LIMIT 1];
-        
-        
-        
+
         testOrder.Status = NSP_CPQConstants.ORDER_REVIEWED;
         testOrder.NSP_Rev_Rec_Rules_Reviewed__c =true;
         testOrder.NSP_Project_Name__c = 'TestProj';
@@ -353,11 +315,10 @@ public class OrderTriggerCreateInvoiceTest {
         test.stoptest();
     }
     
-         @IsTest
-    static void testCreateInvoice5()
+    @IsTest
+    private static void testCreateInvoice5()
     {
-        
-        
+
         Opportunity oppObj = [select Id,AccountId from Opportunity where NSP_TransactionType__c = 'Termination' LIMIT 1 ];   
 
         SBQQ__Quote__c objQuote = NSP_TestHelper.createCPQQuote(oppObj.AccountId, oppObj.Id, false);
@@ -372,8 +333,6 @@ public class OrderTriggerCreateInvoiceTest {
         Order testOrder = [SELECT Id, Project_Status__c,Status, Type, NSP_Project_Go_Live_Date__c, NSP_Transaction_Type__c, NSP_Usage_Products_Count__c FROM Order LIMIT 1];
         
         OrderItem testOrderItem = [SELECT Id, OrderId, SBQQ__Status__c,NSP_Preferred_Payment_Method__c, Order.Project_Status__c, Order.Type, Order.NSP_Project_Go_Live_Date__c, NSP_Order_Activation_Trigger__c, NSP_Order_Activation_Trigger_Amend__c, Product2.NSP_Partial_Period_Free_Treatment__c, SBQQ__BillingFrequency__c, Order.EffectiveDate, NSP_OrderProductStartDate__c, SBQQ__SubscriptionType__c, NSP_AnniversaryBlngApplicable__c, SBQQ__QuoteLine__r.NSP_ActionType__c, SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c, NSP_Project_Completion_Date__c, Order.NSP_Usage_Products_Count__c, ServiceDate, SBQQ__RequiredBy__c, EndDate FROM OrderItem where Product2.ProductCode = 'IWXSU'  LIMIT 1];
-        
-        
         
         testOrder.Status = NSP_CPQConstants.ORDER_REVIEWED;
         testOrder.NSP_Rev_Rec_Rules_Reviewed__c =true;

@@ -1,4 +1,4 @@
-public class OrderTriggerCreateInvoice {
+public without sharing class OrderTriggerCreateInvoice {
     
         public static void createInvoice( List<Order> newList , Map<Id,Order> orderOldMap ) {
         Set<Id> orderIdSet = new Set<Id>();
@@ -170,8 +170,8 @@ public class OrderTriggerCreateInvoice {
                     NSP_AssetUpdate.createAssetProject(orderIdSet);
                 } catch ( Exception e ) {
                     NSP_ErrorLogHandler.logException(
-                        NSP_OrderTriggerHelper.class.getName() ,
-                        'createInvoice inner' ,
+                        OrderTriggerCreateInvoice.class.getName() ,
+                        'createInvoice' ,
                         e
                     );
                 }
