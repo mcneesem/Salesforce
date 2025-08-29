@@ -3,9 +3,8 @@
     <fullName>NSP_TC_Custom_Report_Included__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Internal field to check if product is present in quote.</description>
-    <externalId>false</externalId>
     <label>Custom Report Included</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

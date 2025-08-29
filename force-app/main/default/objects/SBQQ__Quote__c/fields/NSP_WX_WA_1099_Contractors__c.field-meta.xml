@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_WX_WA_1099_Contractors__c</fullName>
     <description>Max value of Active 1099 Contractors</description>
-    <externalId>false</externalId>
     <label>WX/WA 1099 Contractors</label>
     <summarizedField>SBQQ__QuoteLine__c.NSP_Active_1099_Contractors__c</summarizedField>
     <summaryForeignKey>SBQQ__QuoteLine__c.SBQQ__Quote__c</summaryForeignKey>

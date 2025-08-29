@@ -3,9 +3,8 @@
     <fullName>NSP_Multiple_Companies__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Field Indicate if multiple companies is applicable for quote</description>
-    <externalId>false</externalId>
     <label>Multiple Companies</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

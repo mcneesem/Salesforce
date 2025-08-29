@@ -3,9 +3,8 @@
     <fullName>NSP_Multiple_Templates__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Used to check if quote has multiple templates for Docusign.</description>
-    <externalId>false</externalId>
     <label>Multiple Templates?</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

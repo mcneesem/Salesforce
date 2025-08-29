@@ -3,9 +3,8 @@
     <fullName>NSP_Has_WOSS_product__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Indicates if WOSS product is added to the quote</description>
-    <externalId>false</externalId>
     <label>Has WOSS product</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>
