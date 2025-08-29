@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Account_Group__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
-    <description>Change for pse__Project_Task__c.Associated_RSAP__c to include the words DEPRECATED by ADO-450071</description>
     <label>Account Group</label>
     <referenceTo>NSP_Account_Group__c</referenceTo>
     <relationshipLabel>Project Tasks</relationshipLabel>

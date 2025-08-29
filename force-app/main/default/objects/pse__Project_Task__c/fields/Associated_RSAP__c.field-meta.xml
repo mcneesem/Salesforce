@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Associated_RSAP__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
+    <description>DEPRECATED by ADO-450071</description>
     <label>Associated RSAP</label>
     <referenceTo>NSP_Relationship_Strategy_Action_Plan__c</referenceTo>
     <relationshipLabel>Project Tasks</relationshipLabel>
