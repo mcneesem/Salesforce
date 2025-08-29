@@ -119,26 +119,29 @@ public with sharing class WingspanRestService {
         //initialize user wrapper
         CreateUserWrapper userWrap = new CreateUserWrapper();
         
+        //create profile wrapper
+        ProfileWrapper profileWrap = new ProfileWrapper();
+        
         if( con != null ){
             //get email
             if( !String.isBlank(con.Email) ){
                 userWrap.email = con.Email;    
             }
-            
-            //create profile wrapper
-            ProfileWrapper profileWrap = new ProfileWrapper();
             if( !String.isBlank(con.FirstName) ){
                 profileWrap.firstName = con.FirstName;    
             }
-            
             if( !String.isBlank(con.FirstName) ){
                 profileWrap.lastName = con.LastName;
             }
-            userWrap.profile = profileWrap;
         }
         
         //create labels wrapper
-        userWrap.labels = createLabels( recordId );
+        LabelsWrapper createdLabels = createLabels( recordId );
+        userWrap.labels = createdLabels;
+        
+        //complete profile wrap
+        profileWrap.preferredName = createdLabels.accountName;
+        userWrap.profile = profileWrap;
         
         //create settings wrapper
         SettingsWrapper settWrap = new SettingsWrapper();
@@ -186,7 +189,7 @@ public with sharing class WingspanRestService {
             if ( String.isNotBlank( record.AccountId ) ) {
                 labelsWrap.insperityAccountId = record.AccountId;    
             }
-            if ( String.isNotBlank( assets[0].Asset_Number__c ) ) {
+            if ( String.isNotBlank( record.Asset_Number__c ) ) {
                 labelsWrap.saasId = record.Asset_Number__c;
             }
             if ( record.Opportunity__r.NSP_Number_of_Employees__c != null ) {
@@ -212,6 +215,7 @@ public with sharing class WingspanRestService {
     private class ProfileWrapper{
         private String firstName = '';
         private String lastName = '';
+        private String preferredName = '';
     }
     
     private class SettingsWrapper{
