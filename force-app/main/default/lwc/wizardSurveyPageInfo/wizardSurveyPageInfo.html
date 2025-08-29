@@ -70,8 +70,8 @@
                         onrowaction={handleRowAction} hide-checkbox-column>
                     </lightning-datatable>
                         <div  class="slds-var-p-bottom_large" style={showErroMsg}>
-                                <div class="slds-text-color_error"> 
-                                  Please add a contact to Who at client will have access to the online results report dashboard ? field.
+                                <div class="slds-text-color_error slds-m-bottom_large"> 
+                                  Please add a Contact. This field is required.
                                  </div>
                         <div style='display:none'> 
                             <lightning-input-field  id="contactSelect" class="NSP_WhoAtclientCccessToOnlineResul__c" field-name="NSP_WhoAtclientCccessToOnlineResul__c" 
@@ -87,7 +87,7 @@
                 <lightning-layout-item size="6">
                     <div class="slds-m-vertical_large">
                     <template if:true={surveyTypeValues.data}>
-                        <div class="slds-var-m-around_medium">
+                        <div class="slds-var-m-around_medium slds-p-top_large">
                             <lightning-radio-group name="NSP_Survey_Type__c" label="Survey Type"
                                 options={surveyTypeValues.data.values} value={NSP_Survey_Type__c} onchange={handleChange}
                                 required type="radio">
@@ -102,11 +102,11 @@
                                 </lightning-input-field>
                             </div>
 
-                            <lightning-input-field  class ='slds-m-vertical_large' field-name="NSP_Begin_Date__c" required>
+                            <lightning-input-field name = "NSP_Begin_Date__c" class ='slds-m-vertical_large' field-name="NSP_Begin_Date__c" required onchange={handleChange}>
                             </lightning-input-field>
 
                             <div style={showEndDate}>
-                                <lightning-input-field class="slds-m-vertical_large NSP_End_Date__c" field-name="NSP_End_Date__c" required={endDateRequired} value={NSP_End_Date__c}>
+                                <lightning-input-field name = "NSP_End_Date__c" class="slds-m-vertical_large NSP_End_Date__c" field-name="NSP_End_Date__c" required={endDateRequired} onchange={handleChange} value={NSP_End_Date__c}>
                                 </lightning-input-field>
                             </div>
 
@@ -145,9 +145,15 @@
 
             <div class="slds-m-top_medium slds-align_absolute-center slds-p-around_medium">
                <lightning-button class="slds-m-top_small slds-m-left_small" onclick={handleSave} label="Save and Exit" ></lightning-button>
+               <!--conditional rendering for the save and exit button -->
+                <template lwc:if={isWoMiddleMarketAsset}>
+                    <lightning-button class="slds-m-top_small slds-m-left_small"  lwc:ref="isSubmit" type="submit" variant="brand" label="Submit" onclick={handleSubmitWoAsset} ></lightning-button>
 
-                <lightning-button class="slds-m-top_small slds-m-left_small"  type="submit" variant="brand" label="Next" onclick={handleNext}>
-                </lightning-button>
+                </template>
+                <template lwc:else>
+                    <lightning-button class="slds-m-top_small slds-m-left_small"  type="submit" variant="brand" label="Next" onclick={handleNext}>
+                    </lightning-button>
+                </template>        
             </div>
         </lightning-record-edit-form>
     </div>

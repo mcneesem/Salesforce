@@ -75,16 +75,15 @@ public class NSP_AssetServiceTriggerHelper {
         }
     }
 
-    /**
-* Iterates throught the list of new Assets and passes the required attributes to other methods.
-* Method Name: beforeInsertDirector
-* @param newList List of New Assets.
-* @return void
-*
-*/
-    public void beforeInsertDirector(List<Asset> assets){
+    //
+    // Iterates throught the list of new Assets and passes the required attributes to other methods.
+    // Method Name: beforeInsertDirector
+    // @param newList List of New Assets.
+    // @return void
+    //
+    public void beforeInsertDirector( List<Asset> assets ) {
         List<Asset> notEditableRETFieldsAssetList = new List<Asset>();
-        Boolean hasRETCustomPermission = FeatureManagement.checkPermission('NSP_RET_Asset_Create_Edit');
+        Boolean hasRETCustomPermission = NSP_AssetServiceTriggerHelper.hasNspRetAssetCreateEdit;
         //<STY-02841>   start
         Set<ID> accountID = new Set<ID>();
         List<Asset> assetLstToUpdate = new List<Asset>();
@@ -748,18 +747,37 @@ public class NSP_AssetServiceTriggerHelper {
         }
     }
 
-    /**
-* Iterates throught the list of new Assets and passes the required attributes to other methods.
-*Method Name:beforeUpdateDirector
-* @param newList List of New Assets.
-* @return void
-*
-*/
-    public void beforeUpdateDirector(Map<Id, Asset> newMap, Map<Id, Asset> oldMap){
+    private static Boolean hasNspBpsCreateAssetAccess {
+        private get {
+            if ( hasNspBpsCreateAssetAccess == null ) {
+                hasNspBpsCreateAssetAccess = CustomPermissionController.checkUserPermission( 'NSP_BPS_Create_Assets_Access' , UserInfo.getUserId() );
+            }
+            return hasNspBpsCreateAssetAccess;
+        }
+        private set;
+    }
+
+    private static Boolean hasNspRetAssetCreateEdit {
+        private get {
+            if ( hasNspRetAssetCreateEdit == null ) {
+                hasNspRetAssetCreateEdit = CustomPermissionController.checkUserPermission( 'NSP_RET_Asset_Create_Edit' , UserInfo.getUserId() );
+            }
+            return hasNspRetAssetCreateEdit;
+        }
+        private set;
+    }
+
+    //
+    // Iterates throught the list of new Assets and passes the required attributes to other methods.
+    // Method Name:beforeUpdateDirector
+    // @param newList List of New Assets.
+    // @return void
+    //
+    public void beforeUpdateDirector( Map<Id,Asset> newMap , Map<Id,Asset> oldMap ) {
         List<Asset> notEditableBPSFieldsAssetList = new List<Asset>();
         List<Asset> notEditableRETFieldsAssetList = new List<Asset>();
-        Boolean hasBPSCustomPermission = FeatureManagement.checkPermission('NSP_BPS_Create_Assets_Access');
-        Boolean hasRETCustomPermission = FeatureManagement.checkPermission('NSP_RET_Asset_Create_Edit');
+        Boolean hasBPSCustomPermission = NSP_AssetServiceTriggerHelper.hasNspBpsCreateAssetAccess;
+        Boolean hasRETCustomPermission = NSP_AssetServiceTriggerHelper.hasNspRetAssetCreateEdit;
         for(Asset asset : newMap.values()){
             // Check whether Exception checkbox is being checked or Exception reason is being populated.
             Asset oldAsset = oldMap.get(asset.Id);

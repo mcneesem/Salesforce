@@ -2185,6 +2185,31 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         }
     }
 
+    private Id getParentTask( pse__Proj__c proj ) {
+        String parentTaskId = null;
+        pse__Proj__c local = null;
+        if ( ( proj != null )
+            && ( proj.Id != null )
+            && data.containsKey(PROJECT_IDENTIFIER)
+            && ( data.get(PROJECT_IDENTIFIER) != null )
+            )
+        {
+            Map<Id,sObject> dbRec=data.get(PROJECT_IDENTIFIER);
+            if ( dbRec.containsKey( proj.Id ) && ( dbRec.get( proj.Id ) != null ) ) {
+                local = (pse__Proj__c)dbRec.get( proj.Id );
+            }
+        }
+        if ( ( local != null ) && ( local.pse__Project_Tasks__r != null ) ) {
+            for ( pse__Project_Task__c projTask:local.pse__Project_Tasks__r ) {
+                if ( projTask.Name == 'Review and Address FLSA Compliance Issues with Client' ) {
+                    parentTaskId = projTask.Id;
+                    break;
+                }
+            }
+        }
+        return parentTaskId;
+    }
+
     //
     // MethodName: checkInternalDiscovery
     // Description : This Method check Insperity effective date for Payroll/Worker’s Comp/EPLI, Insperity benefits effective date or the Package is updated
@@ -2713,6 +2738,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             {
                 eachProjecttask.pse__Start_Date_Time__c = DateTime.now();
                 eachProjecttask.pse__End_Date_Time__c = now.addDays(30);
+                eachProjecttask.pse__Parent_Task__c = this.getParentTask(proj);
                 projectTaskToInsertList.add(eachProjecttask);
                 ipAutomationRecords.add(
                     createIPAutomation(

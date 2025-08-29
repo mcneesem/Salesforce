@@ -407,6 +407,16 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
+                            <value>pse__Proj__c.New_Case</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Case_Creation_Screen_Flow}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
                             <value>pse__Proj__c.NSP_Delete</value>
                             <visibilityRule>
                                 <criteria>
@@ -746,6 +756,44 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Lost_Detail__c</fieldItem>
+                <identifier>RecordLost_Detail_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND (2 OR 3 OR 4 OR 5)</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.pse__Project_Status__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Close/Lost</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>TalentConnect</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>BPS Generic</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.pse__Start_Date__c</fieldItem>
                 <identifier>Recordpse_Start_Date_cField</identifier>
             </fieldInstance>
@@ -768,39 +816,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Project_Complete__c</fieldItem>
                 <identifier>RecordNSP_Project_Complete_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Lost_Detail__c</fieldItem>
-                <identifier>RecordLost_Detail_cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>RET</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>TalentConnect</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>BPS Generic</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>ITA Impl</rightValue>
-                    </criteria>
-                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -3442,11 +3457,6 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>actionNames</name>
-                    <valueList>
-                        <valueListItems>
-                            <value>NewCase</value>
-                        </valueListItems>
-                    </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>adminFilters</name>
@@ -3609,10 +3619,7 @@
                             <value>MassChangeOwner</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>pse__Proj__c.NSP_Time_Entry</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>New</value>
+                            <value>CustomButton.pse__Proj__c.pse__Create_Project_From_Template</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>

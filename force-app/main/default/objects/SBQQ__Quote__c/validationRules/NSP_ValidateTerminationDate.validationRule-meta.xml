@@ -2,8 +2,13 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_ValidateTerminationDate</fullName>
     <active>true</active>
+    <description>Rule for all users - must be last day of month</description>
     <errorConditionFormula>AND(
+  NOT( $Permission.Bypass_Quote_Termination_Date_Month_End ) ,
   ( NSP_Has_Evergreen_Products__c &gt; 0 ) ,
+  ISPICKVAL( SBQQ__Type__c , &apos;Amendment&apos; ) ,
+  ( NSP_TransactionType__c == &apos;Termination&apos; ) ,
+  ISCHANGED( NSP_TerminationDate__c ) ,
   ( DAY( NSP_TerminationDate__c ) != IF(
       ( MONTH( NSP_TerminationDate__c ) = 12 ) ,
       31 ,
@@ -16,10 +21,7 @@
         - 1
       )
     )
-  ) ,
-  ISPICKVAL( SBQQ__Type__c , &apos;Amendment&apos; ) ,
-  ( NSP_TransactionType__c == &apos;Termination&apos; ) ,
-  ISCHANGED( NSP_TerminationDate__c )
+  )
 )</errorConditionFormula>
-    <errorMessage>Termination Date must be last day of the month</errorMessage>
+    <errorMessage>Termination Date must be the last day of the month.</errorMessage>
 </ValidationRule>

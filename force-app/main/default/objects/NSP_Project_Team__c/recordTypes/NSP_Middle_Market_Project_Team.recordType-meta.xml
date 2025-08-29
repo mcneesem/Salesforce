@@ -7,6 +7,10 @@
     <picklistValues>
         <picklist>NSP_Role__c</picklist>
         <values>
+            <fullName>HR Client Implementation Team Member</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>MidMarket Account Exec</fullName>
             <default>false</default>
         </values>

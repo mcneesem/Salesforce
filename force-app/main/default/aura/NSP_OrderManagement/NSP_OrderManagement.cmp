@@ -33,6 +33,7 @@ Function             :  This component is called from the 'Manage Order' button
     <aura:attribute name ="displayhelp" type='boolean' default="false" />
     <aura:attribute name="terminationDate" type="Date" default="false" />
     <aura:attribute name="hasTerminationPermission" type="Boolean" default="false"/>
+    <aura:attribute name="bypassTerminationDateValidation" type="Boolean" default="false"/>
     <aura:attribute name="showMessageModal" type="Boolean" default="false"/>
     <aura:if isTrue="{!v.spinner }">
             <lightning:spinner alternativeText="Loading" />

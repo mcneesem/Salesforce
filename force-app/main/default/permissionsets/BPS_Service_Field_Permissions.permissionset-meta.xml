@@ -25132,6 +25132,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>pse__Proj__c.Client_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>pse__Proj__c.Comments__c</field>
         <readable>true</readable>
@@ -25319,6 +25324,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Proj__c.NSP_Owner__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>pse__Proj__c.NSP_Plan__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -25519,6 +25529,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Proj__c.Template_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>pse__Proj__c.Templates_Used__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -8,11 +8,11 @@
     </values>
     <values>
         <field>Field__c</field>
-        <value xsi:type="xsd:string">CloseDate</value>
+        <value xsi:type="xsd:string">NSP_Status__c</value>
     </values>
     <values>
         <field>Group__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">B2</value>
     </values>
     <values>
         <field>IsActive__c</field>
@@ -20,11 +20,11 @@
     </values>
     <values>
         <field>Object__c</field>
-        <value xsi:type="xsd:string">Opportunity</value>
+        <value xsi:type="xsd:string">Event</value>
     </values>
     <values>
         <field>Operation__c</field>
-        <value xsi:type="xsd:string">GREATER_THAN_OR_EQUALS</value>
+        <value xsi:type="xsd:string">EQUALS</value>
     </values>
     <values>
         <field>Primary_Product__c</field>
@@ -36,6 +36,6 @@
     </values>
     <values>
         <field>Value__c</field>
-        <value xsi:type="xsd:string">TODAY</value>
+        <value xsi:type="xsd:string">Completed</value>
     </values>
 </CustomMetadata>

@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Error_Message__c</field>
-        <value xsi:type="xsd:string">Please ensure Sold to Paid Checklist is completed before moving to Booking stage</value>
+        <value xsi:type="xsd:string">Please ensure Checklist is completed before moving to Booking stage</value>
     </values>
     <values>
         <field>Field__c</field>
@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>Group__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">B1</value>
     </values>
     <values>
         <field>IsActive__c</field>

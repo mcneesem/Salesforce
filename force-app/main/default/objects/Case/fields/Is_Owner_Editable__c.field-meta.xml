@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Is_Owner_Editable__c</fullName>
-    <externalId>false</externalId>
     <formula>OR(
-  ( NSP_Category__c != &quot;Compensation Services&quot; ) ,
+  /* Handle Unsupported Categories */
+  AND(
+    ( NSP_Category__c != &quot;Compensation Services&quot; ) ,
+    ( NSP_Category__c != &quot;Payroll Shared Services&quot; )
+  ) ,
+  /* Category: Compensation Services */
   AND(
     ( NSP_Category__c = &quot;Compensation Services&quot; ) ,
     ( NSP_SubCategory__c = &quot;Salary Survey&quot; ) ,
@@ -14,6 +18,30 @@
     ( NSP_Category__c = &quot;Compensation Services&quot; ) ,
     ( NSP_SubCategory__c != &quot;Salary Survey&quot; ) ,
     ( ISPICKVAL( Required_Documentation_Attached__c , &quot;Yes&quot; ) )
+  ) ,
+  /* Category: Payroll Shared Services */
+  AND(
+    ( NSP_Category__c = &quot;Payroll Shared Services&quot; ) ,
+    ( NSP_SubCategory__c != &quot;Docusign&quot; )
+  ) ,
+  AND(
+    ( NSP_Category__c = &quot;Payroll Shared Services&quot; ) ,
+    ( NSP_SubCategory__c = &quot;Docusign&quot; ) ,
+    NOT( ISBLANK( TEXT( Docusign_Form_To_Send__c ) ) ) ,
+    NOT( ISPICKVAL( Docusign_Form_To_Send__c , &quot;FLSA Test for Exemption - CA&quot; ) ) ,
+    NOT( ISPICKVAL( Docusign_Form_To_Send__c , &quot;Verification Report&quot; ) )
+  ) ,
+  AND(
+    ( NSP_Category__c = &quot;Payroll Shared Services&quot; ) ,
+    ( NSP_SubCategory__c = &quot;Docusign&quot; ) ,
+    ISPICKVAL( Docusign_Form_To_Send__c , &quot;FLSA Test for Exemption - CA&quot; ) ,
+    NOT( ISBLANK( TEXT( Exemption_Type__c ) ) )
+  ) ,
+  AND(
+    ( NSP_Category__c = &quot;Payroll Shared Services&quot; ) ,
+    ( NSP_SubCategory__c = &quot;Docusign&quot; ) ,
+    ISPICKVAL( Docusign_Form_To_Send__c , &quot;Verification Report&quot; ) ,
+    Verification_Report_Attached__c
   )
 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>

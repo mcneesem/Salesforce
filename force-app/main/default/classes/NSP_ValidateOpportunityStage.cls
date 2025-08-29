@@ -12,12 +12,12 @@ public with sharing class NSP_ValidateOpportunityStage {
     //                  records are grouped together. Grouped criteria are evaluated as follows:
     //                      1. When all records in a group are for same Object name (e.g., Event), at least one related record
     //                         (of specified Object) matching all the criteria in the group must be found or validation fails.
-    //                      2. If group contains a Does Not Exist condition, validation fails if any related record matching 
+    //                      2. If group contains a Does Not Exist condition, validation fails if any related record matching
     //                         all the other group criteria is found. If the metadata records in the group are for Opportunity
     //                         object, validation fails if the Opportunity being validated matches all the other criteria
     //                         in the group.
-    //                      3. When the records in a group are for Opportunity object and some related object, at least one 
-    //                         related object record matching all the related object criteria in the group must be 
+    //                      3. When the records in a group are for Opportunity object and some related object, at least one
+    //                         related object record matching all the related object criteria in the group must be
     //                         found but only if the Opportunity condition in the group is met. If the Opportunity condition
     //                         is not met, related object criteria in the group is not required and the validation passes.
     // ***************************************************************************************************************************
@@ -34,12 +34,12 @@ public with sharing class NSP_ValidateOpportunityStage {
     private static String validationObjects = 'Opportunity,Event,Task,OpportunityContactRole,NSP_Employee_Split__c,SBQQ__Quote__c,NSP_Checklist__c';
     private static final String DEFAULT_PRODUCT = 'Default';
     private static final String OPPORTUNITY_OBJ = 'Opportunity';
-    private static final String SOLD_TO_PAID = 'Sold to Paid';
     public static final String HAS_DISCOVERY = ' has Discovery ';
     public static final String HAS_OPEN_EVENT = ' has Open Event ';
     public static final String HAS_WO_TASK = ' has WO Task ';
     public static final String HAS_WO_EVENT = ' has WO Event ';
     public static final String HAS_WO = 'has WO';
+    private static final Integer ERROR_DOES_NOT_EXIST = 99; // unified error code value...
 
     public static void validateOpportunityStage(List<Opportunity> newList){
         List<Id> oppIdList = new List<Id>();
@@ -49,7 +49,7 @@ public with sharing class NSP_ValidateOpportunityStage {
             oppIdList.add(opp.Id);
             oppOwnerIdList.add(opp.OwnerId);
         }
-        Map<Id,User> opportunityOwnerRoleMap = getUserRole( oppOwnerIdList ); 
+        Map<Id,User> opportunityOwnerRoleMap = getUserRole( oppOwnerIdList );
 
         if( !OpportunityStageSettings__c.getInstance(UserInfo.getUserId()).Is_Enabled_WO_WS_Stage_Entry__c ){ // Kill switch added on 6/10/2024
             validateOpportunityStageOld(newList , oppIdList , opportunityOwnerRoleMap);
@@ -60,7 +60,7 @@ public with sharing class NSP_ValidateOpportunityStage {
 
     private static void validateOpportunityStageNew( List<Opportunity> newList , List<Id> oppIdList , Map<Id,User> opportunityOwnerRoleMap ) {
         try {
-            Map<Id,Opportunity> oppEventTaskOCRMap = new Map<Id,Opportunity>(
+            Map<Id,Opportunity> oppRelatedObjectMap = new Map<Id,Opportunity>(
                 [
                     SELECT
                         Id ,
@@ -90,9 +90,8 @@ public with sharing class NSP_ValidateOpportunityStage {
                             FROM Employee_Splits__r
                         ) ,
                         (
-                            SELECT Id , Status__c
+                            SELECT Id , Status__c , Checklist_Type__c
                             FROM Checklists__r
-                            WHERE ( Checklist_Type__c = :SOLD_TO_PAID )
                         )
                     FROM Opportunity
                     WHERE ( Id IN :oppIdList )
@@ -114,7 +113,7 @@ public with sharing class NSP_ValidateOpportunityStage {
             );
             for ( Opportunity opp : newList ) {
                 if ( String.isBlank( opp.StageName )
-                    || ( hasAllowClosedLostPermission
+                    || ( NSP_ValidateOpportunityStage.hasAllowClosedLostPermission
                         && opp.StageName.equals( NSP_SalesConstants.CLOSED_LOST )
                         )
                     )
@@ -122,27 +121,22 @@ public with sharing class NSP_ValidateOpportunityStage {
                     continue;
                 }
 
-                Opportunity oppFromMap = oppEventTaskOCRMap.get( opp.Id );
-                List<Task> taskList = oppFromMap?.Tasks;
-                List<Event> eventList=oppFromMap?.Events;
-                List<OpportunityContactRole> ocrList = oppFromMap?.OpportunityContactRoles;
-                List<NSP_Employee_Split__c> oppCreditList = oppFromMap?.Employee_Splits__r;
-                List<NSP_Checklist__c> stpList = oppFromMap?.Checklists__r;
+                Opportunity oppFromMap = oppRelatedObjectMap.get( opp.Id );
 
-                Map<String,List<SObject>> relObjectMap = new Map<String,List<SObject>>();
-                relObjectMap.put('Opportunity' , new List<SObject>{opp});
-                relObjectMap.put('Event' , eventList);
-                relObjectMap.put('Task' , taskList);
-                relObjectMap.put('OpportunityContactRole' , ocrList);
-                relObjectMap.put('NSP_Employee_Split__c' , oppCreditList);
-                relObjectMap.put('NSP_Checklist__c' , stpList);
-                relObjectMap.put('SBQQ__Quote__c' , new List<SBQQ__Quote__c>{oppQuoteMap.get(opp.Id)});
+                Map<String,List<SObject>> valObjectMap = new Map<String,List<SObject>>();
+                valObjectMap.put('Opportunity' , new List<SObject>{ opp });
+                valObjectMap.put('Event' , oppFromMap?.Events);
+                valObjectMap.put('Task' , oppFromMap?.Tasks);
+                valObjectMap.put('OpportunityContactRole' , oppFromMap?.OpportunityContactRoles);
+                valObjectMap.put('NSP_Employee_Split__c' , oppFromMap?.Employee_Splits__r);
+                valObjectMap.put('NSP_Checklist__c' , oppFromMap?.Checklists__r);
+                valObjectMap.put('SBQQ__Quote__c' , new List<SBQQ__Quote__c>{ oppQuoteMap.get(opp.SBQQ__PrimaryQuote__c) });
 
                 List<Opportunity_Stage_Validation__mdt> currentOptyStageVals = NSP_ValidateOpportunityStage.getCurrentOptyStageVals( opp );
                 Map<String,List<Opportunity_Stage_Validation__mdt>> groupedStageValMap = NSP_ValidateOpportunityStage.getGroupedStageValMap( currentOptyStageVals );
 
-                NSP_ValidateOpportunityStage.evaluateSingleCriteria( opp , relObjectMap , currentOptyStageVals );
-                NSP_ValidateOpportunityStage.evaluateGroupedCriteria( opp , relObjectMap , groupedStageValMap );
+                NSP_ValidateOpportunityStage.evaluateSingleCriteria( opp , valObjectMap , currentOptyStageVals );
+                NSP_ValidateOpportunityStage.evaluateGroupedCriteria( opp , valObjectMap , groupedStageValMap );
                 //Proposal
                 if ( opp.StageName.equals( NSP_SalesConstants.PROPOSAL_STAGE ) ) {
                     evaluateQuoteCriteria( opp , oppQuoteMap );
@@ -167,12 +161,17 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
     }
 
-    private static void evaluateSingleCriteria(Opportunity opp, Map<String,List<SObject>> relObjectMap, List<Opportunity_Stage_Validation__mdt> currentOptyStageVals){
+    private static void evaluateSingleCriteria(
+        Opportunity opp ,
+        Map<String,List<SObject>> valObjectMap ,
+        List<Opportunity_Stage_Validation__mdt> currentOptyStageVals
+        )
+    {
         for(Opportunity_Stage_Validation__mdt val : currentOptyStageVals){
             Integer passCheckCount = 0;
             if( String.isBlank(val.Group__c) ){
-                for( SObject relObject : relObjectMap.get(val.Object__c) ){
-                    if( checkCondition(relObject.get(val.Field__c) , val.Value__c , val.Operation__c) ){
+                for( SObject valObject : valObjectMap.get(val.Object__c) ){
+                    if( checkCondition(valObject.get(val.Field__c) , val.Value__c , val.Operation__c) ){
                         passCheckCount++;
                     }
                 }
@@ -183,32 +182,63 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
     }
 
-    private static void evaluateGroupedCriteria(Opportunity opp, Map<String,List<SObject>> relObjectMap, Map<String, List<Opportunity_Stage_Validation__mdt>> groupedStageValMap){
-        for( String groupName : groupedStageValMap.keySet() ){
+    private static void evaluateGroupedCriteria(
+        Opportunity opp ,
+        Map<String,List<SObject>> valObjectMap ,
+        Map<String,List<Opportunity_Stage_Validation__mdt>> groupedStageValMap
+        )
+    {
+        List<String> groupOrder = new List<String>(groupedStageValMap.keySet());
+        groupOrder.sort();
+        for( String groupName : groupOrder ) {
             Boolean passCheck = false;
             Boolean passCheckDNE = true;
             String groupRelObjName = getGroupRelObjName( groupName , groupedStageValMap );
 
             Integer i = 0;
             do {
-                SObject relObject = ( relObjectMap.get(groupRelObjName).size() == 0 ) ? null : relObjectMap.get(groupRelObjName)[i];
-                Integer passCheckCount = evaluateOneCriteriaGroup( opp, groupName , relObject , groupedStageValMap );
-                if( passCheckCount >= groupedStageValMap.get(groupName).size() ){
+                SObject valObject = ( valObjectMap.get(groupRelObjName).size() == 0 ) ? null : valObjectMap.get(groupRelObjName)[i];
+                Integer passCheckCount = evaluateOneCriteriaGroup( opp, groupName , valObject , groupedStageValMap );
+                if( passCheckCount >= groupedStageValMap.get(groupName).size() ) {
                     passCheck = true;
                 }
-                if( passCheckCount == 99 ){ // when any record violates DOES NOT EXIST case
+                if( passCheckCount == NSP_ValidateOpportunityStage.ERROR_DOES_NOT_EXIST ) { // when any record violates DOES NOT EXIST case
                     passCheckDNE = false;
                 }
                 i++;
-            } while ( i < relObjectMap.get(groupRelObjName).size() );
+            } while ( i < valObjectMap.get(groupRelObjName).size() );
 
-            if( !passCheck || !passCheckDNE ){
-                opp.addError(groupedStageValMap.get(groupName)[0].Error_Message__c);
-            }
+            NSP_ValidateOpportunityStage.addGroupError(
+                opp ,
+                passCheck ,
+                passCheckDNE ,
+                groupedStageValMap.get( groupName )[0].Error_Message__c
+            );
         }
     }
 
-    private static Integer evaluateOneCriteriaGroup( Opportunity opp , String groupName , SObject relObject, Map<String, List<Opportunity_Stage_Validation__mdt>> groupedStageValMap ){
+    private static void addGroupError(
+        Opportunity opp ,
+        Boolean passCheck ,
+        Boolean passCheckDNE ,
+        String errMsg
+        )
+    {
+        if ( !opp.hasErrors()
+            && ( !passCheck || !passCheckDNE )
+            )
+        {
+            opp.addError( errMsg );
+        }
+    }
+
+    private static Integer evaluateOneCriteriaGroup(
+        Opportunity opp ,
+        String groupName ,
+        SObject valObject ,
+        Map<String,List<Opportunity_Stage_Validation__mdt>> groupedStageValMap
+        )
+    {
         Integer passCheckCount = 0;
         String groupCheckType = '';
         for( Opportunity_Stage_Validation__mdt val : groupedStageValMap.get(groupName) ){
@@ -218,9 +248,7 @@ public with sharing class NSP_ValidateOpportunityStage {
             } else if( val.Object__c == OPPORTUNITY_OBJ ){
                 valFieldValue = opp.get(val.Field__c);
             } else {
-                if( relObject != null ){
-                    valFieldValue = relObject.get(val.Field__c);
-                }
+                valFieldValue = valObject?.get(val.Field__c);
             }
             if( checkCondition(valFieldValue , val.Value__c , val.Operation__c) )
             {
@@ -231,7 +259,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         // handle DOES_NOT_EXIST case
         if( groupCheckType == Operator.DOES_NOT_EXIST.name() ){
             if( passCheckCount >= (groupedStageValMap.get(groupName).size() - 1) ){
-                passCheckCount = 99; // if record exists that should not, return 99 to trip error message
+                passCheckCount = NSP_ValidateOpportunityStage.ERROR_DOES_NOT_EXIST; // if record exists that should not, trip error message
             } else {
                 passCheckCount = groupedStageValMap.get(groupName).size(); // if not all criteria met, make sure error message is skipped
             }
@@ -297,22 +325,24 @@ public with sharing class NSP_ValidateOpportunityStage {
                                                                              (SELECT Id,Status, NSP_Task_Subtype__c FROM Tasks WHERE NSP_Task_Subtype__c != NULL),
                                                                              (SELECT Id, NSP_Event_Subtype__c,NSP_Status__c FROM Events WHERE NSP_Event_Subtype__c != NULL)
                                                                              FROM Opportunity Where Id IN :oppIdList]);
-        
+
         Map<Id,SBQQ__Quote__c> quoteMap = new Map<Id,SBQQ__Quote__c>([SELECT id, SBQQ__Status__c,NSP_Opportunity_Primary_Product__c ,NSP_Client_For_Life__c  FROM SBQQ__Quote__c WHERE SBQQ__Opportunity2__c IN :oppIdList AND SBQQ__Primary__c = TRUE]);
-        
+
         for(Opportunity opp:newList){
             Opportunity oppFromMap=oppMapwithEventTask.get(opp.Id);
             List<Task> taskList=oppFromMap?.Tasks;
             List<Event> eventList=oppFromMap?.Events;
             List<Quote> quotes=oppFromMap?.Quotes;
-            
+
             if(opp.StageName != null){
-                
                 //  Added 275639
-                if(FeatureManagement.checkPermission('Allow_Closed_Lost_Opportunity') && opp.StageName.equals(NSP_SalesConstants.CLOSED_LOST)){
+                if ( NSP_ValidateOpportunityStage.hasAllowClosedLostPermission
+                    && opp.StageName.equals( NSP_SalesConstants.CLOSED_LOST )
+                    )
+                {
                     continue;
                 }
-                
+
                 //Analysis
                 if ( opp.StageName.equals(NSP_SalesConstants.ANALYSIS_STAGE)
                     || opp.StageName.equals(NSP_SalesConstants.PROPOSAL_STAGE)
@@ -444,10 +474,7 @@ public with sharing class NSP_ValidateOpportunityStage {
                 && !validHRProducts.contains( opp.NSP_PrimaryProduct__c )
                 )
             {
-                SBQQ__Quote__c primaryQuote = null;
-                if ( quoteMap != null ) {
-                    primaryQuote = quoteMap.get( opp.SBQQ__PrimaryQuote__c ); // prevent NullPointerExceptions...
-                }
+                SBQQ__Quote__c primaryQuote = quoteMap?.get( opp.SBQQ__PrimaryQuote__c ); // prevent NullPointerExceptions...
                 if ( exitCriteriaProductException.contains( opp.NSP_PrimaryProduct__c ) ) {
                     NSP_ValidateOpportunityStage.evaluateQuoteCriteriaProductException( opp , primaryQuote );
                 } else if ( ( opp.SBQQ__PrimaryQuote__c != null ) && ( primaryQuote != null ) ) {
@@ -472,14 +499,15 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
     }
 
+    @TestVisible
     private static void evaluateQuoteExistingQuote( Opportunity opp , SBQQ__Quote__c primaryQuote ){
         try {
-            if ( primaryQuote.SBQQ__Status__c != NSP_SalesConstants.APPROVAL_STATUS_APPROVED ){
+            if ( primaryQuote?.SBQQ__Status__c != NSP_SalesConstants.APPROVAL_STATUS_APPROVED ){
                 opp.addError( System.Label.NSP_Approve_Primary_Quote );
             } else if ( !test.isRunningTest()
                 && opp.StageName.equals( NSP_SalesConstants.CLOSED_WON )
-                && ( ( opp.NSP_PrimaryProduct__c != primaryQuote.NSP_Opportunity_Primary_Product__c ) 
-                    || ( opp.NSP_Client_For_Life__c != primaryQuote.NSP_Client_For_Life__c ) )
+                && ( ( opp.NSP_PrimaryProduct__c != primaryQuote?.NSP_Opportunity_Primary_Product__c )
+                    || ( opp.NSP_Client_For_Life__c != primaryQuote?.NSP_Client_For_Life__c ) )
                 )
             {
                 opp.addError( System.label.NSP_Sync_Primary_Quote_With_Opportunity );
@@ -496,7 +524,7 @@ public with sharing class NSP_ValidateOpportunityStage {
     private static void evaluateQuoteCriteriaProductException( Opportunity opp , SBQQ__Quote__c primaryQuote ){
         try {
             if ( ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.HR_CONSULTING_SERVICES )
-                && ( opp.NSP_Client_For_Life__c != NSP_SalesConstants.WO_WS ) 
+                && ( opp.NSP_Client_For_Life__c != NSP_SalesConstants.WO_WS )
                 && !test.isRunningTest() )
             {
                 if ( opp.SBQQ__PrimaryQuote__c != null && primaryQuote != null ) {
@@ -601,7 +629,7 @@ public with sharing class NSP_ValidateOpportunityStage {
                 salesOfficeList.add( check.NSP_Sales_Office__c );
             }
         }
-        
+
         //Added for 579280
         String opportunitySalesOffMemb = null;
         if ( opportunityOwnerRoleMap.containsKey( opp.OwnerId ) ) {
@@ -629,7 +657,7 @@ public with sharing class NSP_ValidateOpportunityStage {
                 teamMemberList.add(oppTeamMember.UserId);
             }
         }
-        
+
         Integer canCloseLost = checkAllowClosedLost(opp, teamMemberList, salesOfficeMembership, salesOfficeList);
         if(canCloseLost == 0){
             opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDLOST);
@@ -638,7 +666,7 @@ public with sharing class NSP_ValidateOpportunityStage {
 
     private static Integer checkAllowClosedLost( Opportunity opp , List<ID> teamMemberList , List<String> salesOfficeMembership , List<String> salesOfficeList ) {
         Integer canCloseLost = checkProductAllowClosedLost( opp );
-        if ( hasAllowClosedLostPermission ) {
+        if ( NSP_ValidateOpportunityStage.hasAllowClosedLostPermission ) {
             canCloseLost++;
         } else if ( opp.ownerid == UserInfo.getUserId() ) {
             canCloseLost++;
@@ -941,7 +969,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
         private set;
     }
-    
+
     private static Map<Id,User> permittedInsSalesUserMap {
         private get {
             if ( permittedInsSalesUserMap == null ) {
@@ -951,7 +979,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
         private set;
     }
-    
+
     private static Map<Id,User> permittedRecSalesUserMap {
         private get {
             if ( permittedRecSalesUserMap == null ) {
@@ -961,7 +989,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
         private set;
     }
-    
+
     private static Map<Id,User> permittedTechSalesUserMap {
         private get {
             if ( permittedTechSalesUserMap == null ) {
@@ -971,7 +999,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
         private set;
     }
-    
+
     private static Map<Id,User> permittedBPCUserMap {
         private get {
             if ( permittedBPCUserMap == null ) {
@@ -1003,7 +1031,19 @@ public with sharing class NSP_ValidateOpportunityStage {
                 for ( GroupMember userGroupMember : [
                             SELECT Id , Group.Name , UserOrGroupId
                             FROM GroupMember
-                            WHERE ( UserOrGroupId = :UserInfo.getUserId() )
+                            WHERE (
+                                ( Group.Type = 'Regular' )
+                                AND (
+                                    ( UserOrGroupId = :UserInfo.getUserId() )
+                                    OR ( UserOrGroupId = :UserInfo.getUserRoleId() )
+                                    OR ( UserOrGroup.ManagerId = :UserInfo.getUserId() )
+                                    OR ( UserOrGroup.Manager.UserRoleId = :UserInfo.getUserRoleId() )
+                                    OR ( UserOrGroup.Manager.ManagerId = :UserInfo.getUserId() )
+                                    OR ( UserOrGroup.Manager.Manager.UserRoleId = :UserInfo.getUserRoleId() )
+                                    OR ( UserOrGroup.Manager.Manager.ManagerId = :UserInfo.getUserId() )
+                                    OR ( UserOrGroup.Manager.Manager.Manager.UserRoleId = :UserInfo.getUserRoleId() )
+                                )
+                            )
                         ]
                     )
                 {
@@ -1019,8 +1059,8 @@ public with sharing class NSP_ValidateOpportunityStage {
         private get {
             if ( integUserProfileId == null ) {
                 List<NSP_Profile_Detail__mdt> profileDetailList = [
-                    SELECT Profile_ID__c , Profile_Name__c 
-                    FROM NSP_Profile_Detail__mdt 
+                    SELECT Profile_ID__c , Profile_Name__c
+                    FROM NSP_Profile_Detail__mdt
                     WHERE ( Profile_Name__c = :System.label.NSP_Integration_User_Profile_Name )
                     LIMIT 1
                 ];
