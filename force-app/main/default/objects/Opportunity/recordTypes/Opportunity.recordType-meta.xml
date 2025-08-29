@@ -20,7 +20,7 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Discovery_Call_Debrief__c</picklist>
+        <picklist>Discovery_Call_Debriefed__c</picklist>
         <values>
             <fullName>No</fullName>
             <default>false</default>
@@ -4717,6 +4717,14 @@
         </values>
         <values>
             <fullName>HRCore Later</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HRScale Later</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not a Good Fit</fullName>
             <default>false</default>
         </values>
     </picklistValues>
