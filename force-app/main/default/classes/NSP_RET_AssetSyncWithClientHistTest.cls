@@ -34,6 +34,12 @@ Private class NSP_RET_AssetSyncWithClientHistTest {
         //insert opportunity
         insert newOpp;
         
+        //insert custom setting
+        RETAssetSyncWithClientHistorySettings__c retSetting = new RETAssetSyncWithClientHistorySettings__c();
+        retSetting.BatchSize__c = '1';
+        retSetting.IsEnabled__c = True;
+        insert retSetting;
+        
          //create Plan Record
         Id choicePlanRT = NSP_GenericRecordType.getRecordTypeId('NSP_Plan__c', NSP_ServiceConstants.CHOICE_RT_NAME);         
         NSP_Plan__c planRec = (NSP_Plan__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Plan__c(), 'NSP_TestDataFactory.PlanDefaults', false);
