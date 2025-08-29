@@ -3,9 +3,8 @@
     <fullName>NSP_Is_Pricing_Model_Invalid__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Indicates if pricing model is valid/invalid</description>
-    <externalId>false</externalId>
     <label>Is Pricing Model Invalid</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

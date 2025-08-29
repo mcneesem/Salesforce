@@ -3,7 +3,6 @@
     <fullName>NSP_Authorized_Purchaser_1__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <description>Lookup to Contact</description>
-    <externalId>false</externalId>
     <label>Authorized Purchaser 1</label>
     <lookupFilter>
         <active>true</active>
@@ -24,7 +23,7 @@
     <relationshipLabel>IQuotes (Authorized Purchaser 1)</relationshipLabel>
     <relationshipName>IQuotes</relationshipName>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
 </CustomField>

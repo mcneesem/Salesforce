@@ -3,10 +3,9 @@
     <fullName>NSP_Talent_Connect_Notes__c</fullName>
     <description>Talent Connect - Special Notes</description>
     <encryptionScheme>None</encryptionScheme>
-    <externalId>false</externalId>
     <label>Talent Connect Notes</label>
     <length>32768</length>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>LongTextArea</type>
     <visibleLines>3</visibleLines>

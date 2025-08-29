@@ -3,10 +3,9 @@
     <fullName>NSP_RPO_Start_Date__c</fullName>
     <description>Used for Configuration Attribute in recruiting bundle.</description>
     <encryptionScheme>None</encryptionScheme>
-    <externalId>false</externalId>
     <label>RPO Start Date</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Date</type>
 </CustomField>

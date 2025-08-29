@@ -4,11 +4,10 @@
     <deprecated>false</deprecated>
     <description>The date and time this quote was last calculated.</description>
     <encryptionScheme>None</encryptionScheme>
-    <externalId>false</externalId>
     <inlineHelpText>The date and time this quote was last calculated.</inlineHelpText>
     <label>Last Calculated On</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>DateTime</type>
 </CustomField>

@@ -3,9 +3,8 @@
     <fullName>NSP_Sync_Account_Standard_Address__c</fullName>
     <defaultValue>false</defaultValue>
     <description>check to copy standard address from account to quote billing and shipping address</description>
-    <externalId>false</externalId>
     <label>Sync Account Standard Address</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>
