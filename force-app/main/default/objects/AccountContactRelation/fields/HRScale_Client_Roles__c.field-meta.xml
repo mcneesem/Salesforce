@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HRScale_Client_Roles__c</fullName>
+    <inlineHelpText>Information is integrated. Updates to roles must be done in Workday.</inlineHelpText>
+    <label>HRScale Client Roles</label>
+    <required>false</required>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>HRScale Absence Partner</fullName>
+                <default>false</default>
+                <label>HRScale Absence Partner</label>
+            </value>
+            <value>
+                <fullName>HRScale Compensation Partner</fullName>
+                <default>false</default>
+                <label>HRScale Compensation Partner</label>
+            </value>
+            <value>
+                <fullName>HRScale Security Partner</fullName>
+                <default>false</default>
+                <label>HRScale Security Partner</label>
+            </value>
+            <value>
+                <fullName>HRScale Timekeeper</fullName>
+                <default>false</default>
+                <label>HRScale Timekeeper</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>
