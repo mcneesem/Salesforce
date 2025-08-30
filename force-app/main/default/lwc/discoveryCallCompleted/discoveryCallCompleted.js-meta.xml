@@ -3,8 +3,14 @@
     <apiVersion>64.0</apiVersion>
     <isExposed>true</isExposed>
     <targets>
-        <target>lightning__AppPage</target>
         <target>lightning__RecordPage</target>
-        <target>lightning__UtilityBar</target>
     </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <objects>
+                <object>Event</object>
+                <object>Opportunity</object>
+            </objects>
+        </targetConfig>
+    </targetConfigs>
 </LightningComponentBundle>

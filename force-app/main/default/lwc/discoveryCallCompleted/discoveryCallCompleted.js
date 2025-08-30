@@ -1,20 +1,23 @@
-import { LightningElement, api, track } from 'lwc';
+import { LightningElement, api } from 'lwc';
 import { subscribe, onError } from 'lightning/empApi';
 import { NavigationMixin } from 'lightning/navigation';
 import Id from '@salesforce/user/Id'; // Import the user ID
 
 export default class EventFlowLauncher extends NavigationMixin(LightningElement) {
     @api recordId;
-    @track eventId;
-    @track whatId;
-    @track isModalOpen = false;
+    eventId;
+    whatId;
+    isModalOpen = false;
     inputVariables = [];
     flowName = 'Event_Screen_Discovery_Call_Completed';
     channelName = '/event/DiscoveryCallCompletedEvent__e';
     currentUserId = Id;
+    isSubscribed = false;
 
     connectedCallback() {
-        this.handleSubscribe();
+        if( !this.isSubscribed ) {
+            this.handleSubscribe();
+        }
     }
 
     handleSubscribe() {
@@ -34,6 +37,7 @@ export default class EventFlowLauncher extends NavigationMixin(LightningElement)
         };
 
         subscribe(this.channelName, -1, callback).then(response => {
+            this.isSubscribed = true;
             console.log('Subscribed to channel:', response.channel);
         });
 

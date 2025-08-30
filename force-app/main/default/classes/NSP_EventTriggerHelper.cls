@@ -114,7 +114,11 @@ public with sharing class NSP_EventTriggerHelper {
         }
         if( NSP_EventTriggerHelper.is_Enabled_DCCompletedScreen && !dcCompletedEventList.isEmpty() ) {
             List<Database.SaveResult> results = EventBus.publish(dcCompletedEventList);
-            NSP_ErrorLogHandler.logSaveResult('NSP_EventTriggerHelper', 'afterUpdateDirector', results);
+            NSP_ErrorLogHandler.logResults(
+                NSP_EventTriggerHelper.class.getName() ,
+                'afterUpdateDirector' ,
+                results
+            );
         }
         updateOpportunitiesWithDiscoverCalls(eventNewMap.values());
         updateActivityDate(eventNewMap.values(),eventOldMap);

@@ -7,8 +7,7 @@
 ,ISPICKVAL( NSP_Event_Subtype__c, &quot;Discovery Call&quot; )
 ,ISCHANGED(  NSP_Status__c )
 ,ISPICKVAL( NSP_Status__c, &quot;Completed&quot; )
-,BEGINS(  WhatId ,&apos;006&apos;)
-,NOT( $Setup.NSP_Trigger_Switch__c.EventValidations__c ) )</errorConditionFormula>
+,BEGINS(  WhatId ,&apos;006&apos;) )</errorConditionFormula>
     <errorDisplayField>NSP_Method__c</errorDisplayField>
     <errorMessage>Please choose a value for Method when completing a Discovery Call</errorMessage>
 </ValidationRule>
