@@ -65,43 +65,14 @@ public with sharing class NSP_EventTriggerHelper {
     public void afterUpdateDirector( Map<Id,Event> eventNewMap , Map<Id,Event> eventOldMap ) {
         List < DiscoveryCallCompletedEvent__e > dcCompletedEventList = New List < DiscoveryCallCompletedEvent__e > ();
         Map<Id,Event> rescheduledEventsMap = new Map<Id,Event>();
-        Set<String> subjectSet = new Set<String>();  
-        Id eventRecordType = Schema.SObjectType.Event.getRecordTypeInfosByDeveloperName().get('Core_Sales_Event_RT')?.getRecordTypeId();
+        Set<String> subjectSet = new Set<String>();
         if(eventNewMap != null){
             for (Event newEventRecord : eventNewMap.Values()){
                 if ( ( eventOldMap != null ) && eventOldMap.containsKey( newEventRecord.Id ) ) {
                     Event oldEventRecord = eventOldMap.get(newEventRecord.Id);
-                    if (newEventRecord.RecordTypeId == eventRecordType
-                        && newEventRecord.WhatId != null && newEventRecord.FSL__Event_Type__c == 'Resource Absence'
-                        && oldEventRecord != null && (oldEventRecord.StartDateTime != newEventRecord.StartDateTime || oldEventRecord.EndDateTime != newEventRecord.EndDateTime)
-                        )
-                    {
-                        rescheduledEventsMap.put(newEventRecord.Id, newEventRecord);
-                    }
-                    if ( ( newEventRecord.IsRecurrence2 == TRUE || newEventRecord.IsRecurrence == TRUE )
-                        && newEventRecord.RecordTypeId == eventRecordType
-                        && newEventRecord.WhatId == NULL && newEventRecord.Type == NULL
-                        && ( oldEventRecord != null )
-                        && ( oldEventRecord.StartDateTime != newEventRecord.StartDateTime || oldEventRecord.EndDateTime != newEventRecord.EndDateTime )
-                        )
-                    {
-                        rescheduledEventsMap.put(newEventRecord.Id, newEventRecord);
-                        subjectSet.add(newEventRecord.Subject);  
-                    }
-
-                    if ( ( String.isNotBlank(newEventRecord.WhatId) )
-                        && ( newEventRecord.NSP_Event_Subtype__c != NULL )
-                        && ( newEventRecord.WhatId.getSObjectType() == Opportunity.getSObjectType() )
-                        && ( newEventRecord.NSP_Event_Subtype__c.equalsIgnoreCase( NSP_EventTriggerHelper.DISCOVERY_CALL ) )
-                        && ( oldEventRecord != null && oldEventRecord.NSP_Status__c != newEventRecord.NSP_Status__c )
-                        && ( newEventRecord.NSP_Status__c == NSP_SalesConstants.DISCOVERY_CALL_COMPLETED ) )
-                    {
-                        DiscoveryCallCompletedEvent__e dcCompletedEvent = new DiscoveryCallCompletedEvent__e();
-                        dcCompletedEvent.Id__c = newEventRecord.Id;
-                        dcCompletedEvent.UserId__c = UserInfo.getUserId();
-                        dcCompletedEvent.WhatId__c = newEventRecord.WhatId;
-                        dcCompletedEventList.add( dcCompletedEvent );
-                    }
+                    rescheduledEventsMap = processRescheduledEventsMap(newEventRecord, oldEventRecord, rescheduledEventsMap);
+                    subjectSet = processSubjectSet(newEventRecord, oldEventRecord, subjectSet);
+                    dcCompletedEventList = processDCCompleted(newEventRecord, oldEventRecord, dcCompletedEventList);
                 }
             }
         }
@@ -123,6 +94,52 @@ public with sharing class NSP_EventTriggerHelper {
         updateOpportunitiesWithDiscoverCalls(eventNewMap.values());
         updateActivityDate(eventNewMap.values(),eventOldMap);
         checkOpportunityStageCriteria(eventNewMap.values());
+    }
+
+    private Set<String> processSubjectSet( Event newEventRecord , Event oldEventRecord , Set<String> subjectSet ) {
+        if ( ( newEventRecord.RecordTypeId == NSP_EventTriggerHelper.eventRecordType )
+            && ( oldEventRecord != null )
+            && ( oldEventRecord.StartDateTime != newEventRecord.StartDateTime || oldEventRecord.EndDateTime != newEventRecord.EndDateTime )
+            && ( newEventRecord.WhatId == null && newEventRecord.Type == null )
+            && ( newEventRecord.IsRecurrence2 == true || newEventRecord.IsRecurrence == true )
+            )
+        {
+            subjectSet.add(newEventRecord.Subject);
+        }
+        return subjectSet;
+    }
+
+    private Map<Id,Event> processRescheduledEventsMap( Event newEventRecord , Event oldEventRecord , Map<Id,Event> rescheduledEventsMap ) {
+        if ( ( newEventRecord.RecordTypeId == NSP_EventTriggerHelper.eventRecordType )
+            && ( oldEventRecord != null )
+            && ( oldEventRecord.StartDateTime != newEventRecord.StartDateTime || oldEventRecord.EndDateTime != newEventRecord.EndDateTime )
+            && ( ( newEventRecord.WhatId != null && newEventRecord.FSL__Event_Type__c == 'Resource Absence' ) 
+                  || ( ( newEventRecord.WhatId == null && newEventRecord.Type == null )
+                       && ( newEventRecord.IsRecurrence2 == true || newEventRecord.IsRecurrence == true )
+                     )
+               )
+            )
+        {
+            rescheduledEventsMap.put(newEventRecord.Id, newEventRecord);
+        }
+        return rescheduledEventsMap;
+    }
+
+    private List<DiscoveryCallCompletedEvent__e> processDCCompleted( Event newEventRecord , Event oldEventRecord , List<DiscoveryCallCompletedEvent__e> dcCompletedEventList ) {
+        if ( ( String.isNotBlank(newEventRecord.WhatId) )
+            && ( newEventRecord.NSP_Event_Subtype__c != NULL )
+            && ( newEventRecord.WhatId.getSObjectType() == Opportunity.getSObjectType() )
+            && ( newEventRecord.NSP_Event_Subtype__c.equalsIgnoreCase( NSP_EventTriggerHelper.DISCOVERY_CALL ) )
+            && ( oldEventRecord != null && oldEventRecord.NSP_Status__c != newEventRecord.NSP_Status__c )
+            && ( newEventRecord.NSP_Status__c == NSP_SalesConstants.DISCOVERY_CALL_COMPLETED ) )
+        {
+            DiscoveryCallCompletedEvent__e dcCompletedEvent = new DiscoveryCallCompletedEvent__e();
+            dcCompletedEvent.Id__c = newEventRecord.Id;
+            dcCompletedEvent.UserId__c = UserInfo.getUserId();
+            dcCompletedEvent.WhatId__c = newEventRecord.WhatId;
+            dcCompletedEventList.add( dcCompletedEvent );
+        }
+        return dcCompletedEventList;
     }
 
     //
@@ -505,6 +522,16 @@ public with sharing class NSP_EventTriggerHelper {
                 is_Enabled_DCCompletedScreen = OpportunityStageSettings__c.getInstance( UserInfo.getUserId() ).Is_Enabled_DiscoveryCallCompletedScreen__c;
             }
             return is_Enabled_DCCompletedScreen;
+        }
+        private set;
+    }
+
+    private static Id eventRecordType {
+        private get {
+            if ( eventRecordType == null ) {
+                eventRecordType = Schema.SObjectType.Event.getRecordTypeInfosByDeveloperName().get('Core_Sales_Event_RT')?.getRecordTypeId();
+            }
+            return eventRecordType;
         }
         private set;
     }
