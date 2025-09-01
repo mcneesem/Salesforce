@@ -71,6 +71,7 @@ private class WingspanCreateUserActionTest {
         Test.setMock(HttpCalloutMock.class, new WingspanHttpCalloutMock());
         Test.startTest();
         List<WingspanCreateUserAction.Output> outputList = WingspanCreateUserAction.createWingspanUser(new List<WingspanCreateUserAction.Input>{input});
+        WingspanCreateUserAction.testHandleException( null , null );
         WingspanRestService.testHandleException( null , null );
         Test.stopTest();
     }
