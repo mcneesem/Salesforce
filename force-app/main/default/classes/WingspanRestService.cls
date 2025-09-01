@@ -1,6 +1,7 @@
 public with sharing class WingspanRestService {
-    // test w/ WingspanCreateUserActionTest (93%)
+    // test w/ WingspanCreateUserActionTest (94%)
     
+    //method to direct API calls
     public static Boolean createClientAdmin( Id contactId, Id recordId , Boolean isCheckOnly ){
         Boolean result = true;
         String createdUserId = '';
@@ -18,6 +19,7 @@ public with sharing class WingspanRestService {
                   }
               }
           }
+        WingspanRestService.insertLogs();
         return result;
     }
     
@@ -42,10 +44,6 @@ public with sharing class WingspanRestService {
                   userFound = false;
               }
           }
-        //insert only get api log
-        if( isCheckOnly ){
-            WingspanRestService.insertLogs();
-        }
         return userFound;
     }
     
@@ -74,6 +72,7 @@ public with sharing class WingspanRestService {
         return createdUserId;
     }
     
+    //method to associate Admin record in wingspan server
     private static void linkAdminToCHUB(String createdUserId, Id recordId){
         LinkUserToHubWrapper linkWrap = new LinkUserToHubWrapper();
         if ( !String.isBlank( WingspanRestUtility.userId )){
@@ -94,14 +93,18 @@ public with sharing class WingspanRestService {
             agent.sendRequest( method , path , body , recordId );
             WingspanRestService.logs.add( agent.log );
         }
-        //insert all api logs
-        WingspanRestService.insertLogs();
     }
     
+    //method to insert Wingspan Logs
     private static void insertLogs() {
         if ( !WingspanRestService.logs.isEmpty() ) {
             try {
-                insert WingspanRestService.logs;
+                List<Database.SaveResult> results = Database.insert( WingspanRestService.logs , false );
+                NSP_ErrorLogHandler.logResults(
+                    WingspanRestService.class.getName() ,
+                    'insertLogs' ,
+                    results
+                );
             } catch ( Exception e ) {
                 NSP_ErrorLogHandler.logException(
                     WingspanRestUtility.class.getName() ,
@@ -112,6 +115,7 @@ public with sharing class WingspanRestService {
         }
     }
     
+    //Create User Wrapper
     private static CreateUserWrapper getUserWrapper(Id contactId, Id recordId){
         //fetch contact details
         Contact con = getContact( contactId );
