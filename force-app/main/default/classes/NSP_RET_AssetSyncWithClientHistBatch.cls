@@ -7,6 +7,7 @@
 * Version : V1
 **************************************************************************************************************************/
 public with sharing class NSP_RET_AssetSyncWithClientHistBatch implements ISelfSchedulable, Schedulable, Database.Batchable<SObject>{
+    // test w/ NSP_RET_AssetSyncWithClientHistTest (85%)
     
     private static final String STATUS_ACTIVE = 'Active';
 	private static final String STATUS_BACKOUT = 'Backout';
@@ -26,7 +27,7 @@ public with sharing class NSP_RET_AssetSyncWithClientHistBatch implements ISelfS
     //Execute method to populate plan subplan values from asset to project records
     public void execute(Database.BatchableContext bc, List<Asset> assetList){
         try{
-            if (isEnabled()) {
+            if (NSP_RET_AssetSyncWithClientHistBatch.isEnabled) {
                 //Variable declarations
                 Set<ID> assetIDS = new Set<ID>();
                 List<Asset> assetListToUpdate = new List<Asset>();
@@ -85,14 +86,54 @@ public with sharing class NSP_RET_AssetSyncWithClientHistBatch implements ISelfS
         return mapAssetOpptyID;
     }
     
-    private static Boolean isEnabled() {
-        RETAssetSyncWithClientHistorySettings__c retSetting = RETAssetSyncWithClientHistorySettings__c.getInstance();
-        return (retSetting != null && retSetting.IsEnabled__c);
+    private static RETAssetSyncWithClientHistorySettings__c settings {
+        private get {
+            if ( settings == null ) {
+                settings = RETAssetSyncWithClientHistorySettings__c.getInstance( UserInfo.getUserId() );
+            }
+            return settings;
+        }
+        private set;
     }
     
-    private static Integer getBatchSize() {
-        RETAssetSyncWithClientHistorySettings__c retSetting = RETAssetSyncWithClientHistorySettings__c.getInstance();
-        return (retSetting != null && retSetting.BatchSize__c != null) ? Integer.valueOf(retSetting.BatchSize__c) : 200;
+    private static Boolean isEnabled {
+        private get {
+            if ( isEnabled == null ) {
+                Boolean local = false;
+                if ( NSP_RET_AssetSyncWithClientHistBatch.settings != null 
+                    && NSP_RET_AssetSyncWithClientHistBatch.settings.IsEnabled__c != null) {
+                        local = NSP_RET_AssetSyncWithClientHistBatch.settings.IsEnabled__c;
+                    }
+                isEnabled = local;
+            }
+            return isEnabled;
+        }
+        private set;
+    }
+    
+    private static Integer batchSize {
+        private get {
+            if ( batchSize == null ) {
+                Integer local = 200;
+                if ( ( NSP_RET_AssetSyncWithClientHistBatch.settings != null )
+                    && ( NSP_RET_AssetSyncWithClientHistBatch.settings.BatchSize__c != null )
+                   )
+                {
+                    local = NSP_RET_AssetSyncWithClientHistBatch.settings.BatchSize__c.intValue();
+                }
+                // batch size must be greater than zero...
+                if ( local < 1 ) {
+                    local = 1;
+                }
+                // batch size must be less than or equal to 2000...
+                if ( local > 2000 ) {
+                    local = 2000;
+                }
+                batchSize = local;
+            }
+            return batchSize;
+        }
+        private set;
     }
     
     private void updateAsset(List<Asset> assetListToUpdate){
@@ -110,7 +151,7 @@ public with sharing class NSP_RET_AssetSyncWithClientHistBatch implements ISelfS
     // Schedulable execute method to fire the batch class
     public void execute(SchedulableContext scon){
         //To fire the Batchclass
-        Database.executeBatch( new NSP_RET_AssetSyncWithClientHistBatch(), getBatchSize() );
+        Database.executeBatch( new NSP_RET_AssetSyncWithClientHistBatch(), NSP_RET_AssetSyncWithClientHistBatch.batchSize );
     }
     
     // Method to get BackoutAssetList 
