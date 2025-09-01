@@ -9,7 +9,7 @@ public with sharing class WingspanRestService {
            && ( recordId != null )
           ){
               //validate contact in Wingspan Server
-              result = WingspanRestService.getUserByEmail( contactId, recordId, isCheckOnly );
+              result = WingspanRestService.getUserByEmail( contactId , recordId );
               if( ( !isCheckOnly ) && ( !result ) ){
                   //create contact in Wingspan Server
                   createdUserId = WingspanRestService.createClientAdmin( contactId, recordId );
@@ -24,7 +24,7 @@ public with sharing class WingspanRestService {
     }
     
     //construct GET Request to validate contact in wingspan Server
-    private static Boolean getUserByEmail(Id contactId, Id recordId, Boolean isCheckOnly){
+    private static Boolean getUserByEmail( Id contactId , Id recordId ) {
         Contact con = getContact(contactId);
         Boolean userFound = true;
         String method = 'GET';
