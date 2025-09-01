@@ -4,7 +4,7 @@
     <description>Sets the timeout for REST API calls.</description>
     <externalId>false</externalId>
     <label>Timeout</label>
-    <precision>18</precision>
+    <precision>6</precision>
     <required>false</required>
     <scale>0</scale>
     <trackTrending>false</trackTrending>

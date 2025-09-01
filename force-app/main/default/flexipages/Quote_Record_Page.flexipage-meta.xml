@@ -29,14 +29,14 @@
                             <visibilityRule>
                                 <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
-                                    <leftValue>{!Record.EditLinesFieldSetName__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Contractor_Management_Field_Set</rightValue>
-                                </criteria>
-                                <criteria>
                                     <leftValue>{!$Permission.CustomPermission.Validate_Customer_Stakeholder}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.EditLinesFieldSetName__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Contractor_Management_Field_Set</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
