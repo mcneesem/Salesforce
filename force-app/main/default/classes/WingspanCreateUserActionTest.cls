@@ -61,7 +61,7 @@ private class WingspanCreateUserActionTest {
     }
 
     @isTest
-    private static void wingspanApiDirectorTest() {
+    private static void createWingspanUserTest() {
         Asset asset = [SELECT id, NSP_OrderProduct__c FROM Asset LIMIT 1];
         Contact cc = [SELECT id FROM Contact LIMIT 1];
         WingspanCreateUserAction.Input input = new WingspanCreateUserAction.Input();
@@ -70,12 +70,13 @@ private class WingspanCreateUserActionTest {
         input.isCheckOnly = false;
         Test.setMock(HttpCalloutMock.class, new WingspanHttpCalloutMock());
         Test.startTest();
-        List<WingspanCreateUserAction.Output> outputList = WingspanCreateUserAction.wingspanApiDirector(new List<WingspanCreateUserAction.Input>{input});
+        List<WingspanCreateUserAction.Output> outputList = WingspanCreateUserAction.createWingspanUser(new List<WingspanCreateUserAction.Input>{input});
+        WingspanRestService.testHandleException( null , null );
         Test.stopTest();
     }
-    
-       @isTest
-    private static void wingspanApiDirectorNegativeTest() {
+
+    @isTest
+    private static void createWingspanUserNegativeTest() {
         Asset asset = [SELECT id, NSP_OrderProduct__c FROM Asset LIMIT 1];
         Contact cc = [SELECT id FROM Contact LIMIT 1];
         WingspanCreateUserAction.Input input = new WingspanCreateUserAction.Input();
@@ -84,7 +85,7 @@ private class WingspanCreateUserActionTest {
         input.isCheckOnly = null;
         Test.setMock(HttpCalloutMock.class, new WingspanHttpCalloutMock());
         Test.startTest();
-        List<WingspanCreateUserAction.Output> outputList = WingspanCreateUserAction.wingspanApiDirector(new List<WingspanCreateUserAction.Input>{input});
+        List<WingspanCreateUserAction.Output> outputList = WingspanCreateUserAction.createWingspanUser(new List<WingspanCreateUserAction.Input>{input});
         Test.stopTest();
     }
 
