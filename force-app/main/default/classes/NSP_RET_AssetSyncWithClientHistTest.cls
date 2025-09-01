@@ -36,7 +36,7 @@ Private class NSP_RET_AssetSyncWithClientHistTest {
         
         //insert custom setting
         RETAssetSyncWithClientHistorySettings__c retSetting = new RETAssetSyncWithClientHistorySettings__c();
-        retSetting.BatchSize__c = '1';
+        retSetting.BatchSize__c = 1;
         retSetting.IsEnabled__c = True;
         insert retSetting;
         
