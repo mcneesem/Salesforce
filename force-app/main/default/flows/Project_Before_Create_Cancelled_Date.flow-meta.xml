@@ -16,8 +16,8 @@
         </assignmentItems>
     </assignments>
     <environments>Default</environments>
-    <interviewLabel>Project - Before Create/ Update - Update Proj Cancelled Date {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Project - Before Create/ Update - Update Proj Cancelled Date</label>
+    <interviewLabel>Project - Before Create - Cancelled Date {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Project - Before Create - Cancelled Date</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
