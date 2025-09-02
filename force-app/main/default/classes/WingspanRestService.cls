@@ -29,7 +29,7 @@ public with sharing class WingspanRestService {
         Boolean isUserFound = true;
         Contact con = WingspanRestService.selectContact( contactId );
         if ( ( con != null ) && ( String.isNotBlank( con.Email ) ) ) {
-            WingspanRestUtility agent = new WingspanRestUtility();
+            WingspanRestAgent agent = new WingspanRestAgent();
             HttpResponse resp = agent.sendRequest(
                 'GET' ,
                 '/users/user/email/' + con.Email ,
@@ -53,7 +53,7 @@ public with sharing class WingspanRestService {
         String createdUserId = null;
         //construct request
         if ( ( contactId != null ) && ( recordId != null ) ) {
-            WingspanRestUtility agent = new WingspanRestUtility();
+            WingspanRestAgent agent = new WingspanRestAgent();
             HttpResponse resp = agent.sendRequest(
                 'POST' ,
                 '/users/organization/user' ,
@@ -77,7 +77,7 @@ public with sharing class WingspanRestService {
     //method to associate Admin record in wingspan server
     private static void postLinkAdmin( String createdUserId , Id recordId ) {
         if ( String.isNotBlank( createdUserId ) ) {
-            WingspanRestUtility agent = new WingspanRestUtility();
+            WingspanRestAgent agent = new WingspanRestAgent();
             agent.sendRequest(
                 'POST' ,
                 '/users/organization/user/' + createdUserId + '/associate' ,
@@ -172,8 +172,8 @@ public with sharing class WingspanRestService {
 
     private static LinkUserToHubWrapper buildLinkUserToHubWrapper() {
         LinkUserToHubWrapper linkWrap = new LinkUserToHubWrapper();
-        if ( String.isNotBlank( WingspanRestUtility.userId ) ) {
-            linkWrap.parentUserId = WingspanRestUtility.userId;
+        if ( String.isNotBlank( WingspanRestAgent.userId ) ) {
+            linkWrap.parentUserId = WingspanRestAgent.userId;
         }
         InheritanceStrategyWrapper inheritanceWrap = new InheritanceStrategyWrapper();
         inheritanceWrap.organizationAccountConfig = 'Parent';

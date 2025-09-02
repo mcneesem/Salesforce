@@ -1,4 +1,4 @@
-public with sharing class WingspanRestUtility {
+public with sharing class WingspanRestAgent {
     // test w/ WingspanCreateUserActionTest (96%)
 
     //method to send http requests
@@ -20,14 +20,14 @@ public with sharing class WingspanRestUtility {
                 req.setBody( body );
             }
             if ( String.isNotBlank( path ) ) {
-                url = WingspanRestUtility.baseUrl + path;
+                url = WingspanRestAgent.baseUrl + path;
                 req.setEndpoint( url );
             }
             if ( String.isNotBlank( method ) ) {
                 req.setMethod( method );
             }
             Map<String,String> headers = new Map<String,String>{
-                'Authorization' => 'Bearer ' + WingspanRestUtility.privateKey
+                'Authorization' => 'Bearer ' + WingspanRestAgent.privateKey
             };
             if ( method == 'POST' ) {
                 headers.put( 'Accept' , 'application/json' );
@@ -39,7 +39,7 @@ public with sharing class WingspanRestUtility {
                     req.setHeader( key , headers.get( key ) );
                 }
             }
-            req.setTimeout( WingspanRestUtility.timeout );
+            req.setTimeout( WingspanRestAgent.timeout );
             res = http.send( req );
             logDescription = 'No Error during callout.';
         } catch( Exception e ) {
@@ -62,7 +62,7 @@ public with sharing class WingspanRestUtility {
         )
     {
         log.Class__c = SchemaController.safeText(
-            WingspanRestUtility.class.getName() ,
+            WingspanRestAgent.class.getName() ,
             sObjectType.Wingspan_Log__c.Fields.Class__c
         );
         //record id and sobjectype
@@ -79,7 +79,7 @@ public with sharing class WingspanRestUtility {
         //request headers
         if ( String.isNotBlank( requestHeaders) ) {
             log.Request_Headers__c = SchemaController.safeText(
-                requestHeaders.replace( WingspanRestUtility.privateKey , 'XXX_PRIVATE_KEY_REMOVED_XXX' ) ,
+                requestHeaders.replace( WingspanRestAgent.privateKey , 'XXX_PRIVATE_KEY_REMOVED_XXX' ) ,
                 sObjectType.Wingspan_Log__c.Fields.Request_Headers__c
             );
         }
@@ -194,11 +194,11 @@ public with sharing class WingspanRestUtility {
         private get{
             if ( baseURL == null ) {
                 String local = 'XXX_BASE_URL_XXX';
-                if ( ( WingspanRestUtility.settings != null )
-                    && String.isNotBlank( WingspanRestUtility.settings.BaseUrl__c )
+                if ( ( WingspanRestAgent.settings != null )
+                    && String.isNotBlank( WingspanRestAgent.settings.BaseUrl__c )
                    )
                 {
-                    local = WingspanRestUtility.settings.BaseUrl__c;
+                    local = WingspanRestAgent.settings.BaseUrl__c;
                 }
                 baseURL = local;
             }
@@ -210,11 +210,11 @@ public with sharing class WingspanRestUtility {
         private get{
             if ( privateKey == null ) {
                 String local = 'XXX_PRIVATE_KEY_XXX';
-                if ( ( WingspanRestUtility.settings != null )
-                    && String.isNotBlank( WingspanRestUtility.settings.PrivateKey__c )
+                if ( ( WingspanRestAgent.settings != null )
+                    && String.isNotBlank( WingspanRestAgent.settings.PrivateKey__c )
                    )
                 {
-                    local = WingspanRestUtility.settings.PrivateKey__c;
+                    local = WingspanRestAgent.settings.PrivateKey__c;
                 }
                 privateKey = local;
             }
@@ -226,11 +226,11 @@ public with sharing class WingspanRestUtility {
     public static String userId {
         public get {
             if ( ( userId == null )
-                && ( WingspanRestUtility.settings != null )
-                && String.isNotBlank( WingspanRestUtility.settings.UserId__c )
+                && ( WingspanRestAgent.settings != null )
+                && String.isNotBlank( WingspanRestAgent.settings.UserId__c )
                 )
             {
-                userId = WingspanRestUtility.settings.UserId__c;
+                userId = WingspanRestAgent.settings.UserId__c;
             }
             return userId;
         }
@@ -241,11 +241,11 @@ public with sharing class WingspanRestUtility {
         private get {
             if ( timeout == null ) {
                 Integer local = 120000;
-                if ( ( WingspanRestUtility.settings != null )
-                    && ( WingspanRestUtility.settings.Timeout__c != null )
+                if ( ( WingspanRestAgent.settings != null )
+                    && ( WingspanRestAgent.settings.Timeout__c != null )
                    )
                 {
-                    local = WingspanRestUtility.settings.Timeout__c.intValue();
+                    local = WingspanRestAgent.settings.Timeout__c.intValue();
                 }
                 // timeout must be greater than zero...
                 if ( local < 1 ) {
