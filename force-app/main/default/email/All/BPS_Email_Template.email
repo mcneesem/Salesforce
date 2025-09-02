@@ -4,12 +4,18 @@
             <body>
                 <p>
                     {!relatedTo.Owner.Name} has submitted quote {!relatedTo.Quote__r.Name} for your review.<br/>
-                    Please respond to this email with the word <b><apex:outputText style="color: #009600;" value="Approve"/></b> or <b><apex:outputText style="color: #FF0000;" value="Reject"/></b> in the first line.<br/> 
-                    Add any comments you may have on the second line.<br/>  
+                    Please respond to this email with the word <b><apex:outputText style="color: #009600;" value="Approve"/></b> or <b><apex:outputText style="color: #FF0000;" value="Reject"/></b> in the first line.<br/>
+                    Add any comments you may have on the second line.<br/>
                 </p>
                 <b>Opportunity Owner:</b>&nbsp;{!relatedTo.Quote__r.SBQQ__Opportunity2__r.Owner.Name}<br/>
                 <b>Sales Office:</b>&nbsp; &nbsp;<apex:outputField value="{!relatedTo.Quote__r.SBQQ__Opportunity2__r.NSP_Sales_Office__c}"/><br/>
                 <b>SE:</b>&nbsp;&nbsp;<apex:outputField value=" {!relatedTo.Quote__r.Owner.Name}"/> <br/>
+                <apex:outputPanel rendered="{!NOT(ISBLANK(relatedTo.sbaa__Rule__r.Primary_Approver__c))}">
+                    <b>Primary Approver:</b> {!relatedTo.sbaa__Rule__r.Primary_Approver__r.Name}<br/>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!NOT(ISBLANK(relatedTo.sbaa__Rule__r.Backup_Approver__c))}">
+                    <b>Backup Approver:</b> {!relatedTo.sbaa__Rule__r.Backup_Approver__r.Name}<br/>
+                </apex:outputPanel>
                 <p>
                     <b>Requestor's Comment:</b> <br/>
                     <apex:outputField value=" {!relatedTo.Quote__r.NSP_Submitter_Comment__c}" />
