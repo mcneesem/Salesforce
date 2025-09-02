@@ -3,9 +3,8 @@
     <fullName>NSP_IsScholarshipEligiblePartner__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Indicates if partner is eligible for scholarship discount</description>
-    <externalId>false</externalId>
     <label>IsScholarshipEligiblePartner</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

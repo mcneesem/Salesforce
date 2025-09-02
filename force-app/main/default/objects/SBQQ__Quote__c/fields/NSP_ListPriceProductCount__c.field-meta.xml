@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_ListPriceProductCount__c</fullName>
     <description>This field gives the count of List priced product and used in deciding whether the product is eligible to clone or not during amendment</description>
-    <externalId>false</externalId>
     <label>List Price Product Count</label>
     <summaryFilterItems>
         <field>SBQQ__QuoteLine__c.NSP_Lock_On_QLI__c</field>

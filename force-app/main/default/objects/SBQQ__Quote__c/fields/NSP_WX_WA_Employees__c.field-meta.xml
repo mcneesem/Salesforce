@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_WX_WA_Employees__c</fullName>
     <description>Max value of Active W2 Employees</description>
-    <externalId>false</externalId>
     <label>WX/WA Employees</label>
     <summarizedField>SBQQ__QuoteLine__c.NSP_Active_W2_Employees__c</summarizedField>
     <summaryForeignKey>SBQQ__QuoteLine__c.SBQQ__Quote__c</summaryForeignKey>

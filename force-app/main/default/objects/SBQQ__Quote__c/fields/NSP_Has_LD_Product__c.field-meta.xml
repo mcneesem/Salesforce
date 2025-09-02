@@ -3,9 +3,8 @@
     <fullName>NSP_Has_LD_Product__c</fullName>
     <defaultValue>false</defaultValue>
     <description>This field indicate that quote has LD product</description>
-    <externalId>false</externalId>
     <label>Has LD Product</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

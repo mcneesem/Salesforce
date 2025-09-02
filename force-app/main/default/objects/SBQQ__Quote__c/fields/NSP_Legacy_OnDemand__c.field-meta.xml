@@ -3,9 +3,8 @@
     <fullName>NSP_Legacy_OnDemand__c</fullName>
     <defaultValue>false</defaultValue>
     <description>true when quote has On Demand Legacy Product</description>
-    <externalId>false</externalId>
     <label>Legacy OnDemand</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

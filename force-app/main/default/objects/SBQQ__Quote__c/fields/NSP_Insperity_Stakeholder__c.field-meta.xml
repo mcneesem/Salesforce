@@ -3,12 +3,11 @@
     <fullName>NSP_Insperity_Stakeholder__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <description>User who is an Insperity Stakeholder</description>
-    <externalId>false</externalId>
     <label>Insperity Stakeholder</label>
     <referenceTo>User</referenceTo>
     <relationshipName>QuotesStakeHolder</relationshipName>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
 </CustomField>

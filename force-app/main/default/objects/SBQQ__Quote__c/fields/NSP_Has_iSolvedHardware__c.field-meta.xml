@@ -3,9 +3,8 @@
     <fullName>NSP_Has_iSolvedHardware__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Indicates if iSolvedHardware is added to the quote</description>
-    <externalId>false</externalId>
     <label>Has iSolvedHardware</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

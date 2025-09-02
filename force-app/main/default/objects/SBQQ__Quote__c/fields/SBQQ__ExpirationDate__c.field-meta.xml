@@ -5,7 +5,6 @@
     <deprecated>false</deprecated>
     <description>Date after which the Quote is no longer valid</description>
     <encryptionScheme>None</encryptionScheme>
-    <externalId>false</externalId>
     <inlineHelpText>Date after which the Quote is no longer valid</inlineHelpText>
     <label>Expires On</label>
     <required>false</required>

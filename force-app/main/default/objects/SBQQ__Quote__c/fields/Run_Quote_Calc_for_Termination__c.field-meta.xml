@@ -3,7 +3,7 @@
     <fullName>Run_Quote_Calc_for_Termination__c</fullName>
     <defaultValue>false</defaultValue>
     <label>Run Quote Calc for Termination</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

@@ -3,9 +3,8 @@
     <fullName>NSP_Has_BPS_WO__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Indicates if BPS WO is added to the product</description>
-    <externalId>false</externalId>
     <label>Has BPS WO</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

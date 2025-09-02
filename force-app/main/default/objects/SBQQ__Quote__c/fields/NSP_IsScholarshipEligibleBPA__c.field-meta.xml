@@ -3,9 +3,8 @@
     <fullName>NSP_IsScholarshipEligibleBPA__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Indicates if BPA is eligible to apply scholarship pricing</description>
-    <externalId>false</externalId>
     <label>IsScholarshipEligibleBPA</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

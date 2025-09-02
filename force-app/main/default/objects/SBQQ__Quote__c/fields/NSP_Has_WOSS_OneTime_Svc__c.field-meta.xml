@@ -3,9 +3,8 @@
     <fullName>NSP_Has_WOSS_OneTime_Svc__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Indicates if WOSS OneTime products are added to the quote</description>
-    <externalId>false</externalId>
     <label>Has WOSS OneTime Svc</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

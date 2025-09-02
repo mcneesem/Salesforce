@@ -3,9 +3,8 @@
     <fullName>NSP_Has_Renewal_Additional_Users__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Conditional Checkbox to verify the presence of Renewal Additional Users</description>
-    <externalId>false</externalId>
     <label>Has Renewal Additional Users</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>
