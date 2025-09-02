@@ -10,6 +10,8 @@
     <permissionSets>Manage_Posted_Invoices</permissionSets>
     <permissionSets>Price_Rule_Logger</permissionSets>
     <permissionSets>Use_Invoice_Post_Batch</permissionSets>
+    <permissionSets>Validate_Customer_Stakeholder</permissionSets>
+    <permissionSets>Wingspan_Log_Visibility</permissionSets>
     <permissionSets>dfsle__CLM_Administrator</permissionSets>
     <permissionSets>dfsle__DocuSign_Administrator</permissionSets>
     <status>Updated</status>
