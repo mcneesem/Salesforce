@@ -83,7 +83,9 @@ public with sharing class NSP_EventTriggerHelper {
         if (rescheduledEventsMap.size() > 0){
             updateResourceAbsenceDate(rescheduledEventsMap);
         }
-        if( NSP_EventTriggerHelper.is_Enabled_DCCompletedScreen && !dcCompletedEventList.isEmpty() ) {
+        if( NSP_EventTriggerHelper.is_Enabled_DCCompletedScreen
+            && ( dcCompletedEventList != null )
+            && !dcCompletedEventList.isEmpty() ) {
             List<Database.SaveResult> results = EventBus.publish(dcCompletedEventList);
             NSP_ErrorLogHandler.logResults(
                 NSP_EventTriggerHelper.class.getName() ,
@@ -97,7 +99,9 @@ public with sharing class NSP_EventTriggerHelper {
     }
 
     private Set<String> processSubjectSet( Event newEventRecord , Event oldEventRecord , Set<String> subjectSet ) {
-        if ( ( newEventRecord.RecordTypeId == NSP_EventTriggerHelper.eventRecordType )
+        if ( ( subjectSet != null )
+            && ( newEventRecord != null )
+            && ( newEventRecord.RecordTypeId == NSP_EventTriggerHelper.eventRecordType )
             && ( oldEventRecord != null )
             && ( oldEventRecord.StartDateTime != newEventRecord.StartDateTime || oldEventRecord.EndDateTime != newEventRecord.EndDateTime )
             && ( newEventRecord.WhatId == null && newEventRecord.Type == null )
@@ -110,7 +114,9 @@ public with sharing class NSP_EventTriggerHelper {
     }
 
     private Map<Id,Event> processRescheduledEventsMap( Event newEventRecord , Event oldEventRecord , Map<Id,Event> rescheduledEventsMap ) {
-        if ( ( newEventRecord.RecordTypeId == NSP_EventTriggerHelper.eventRecordType )
+        if ( ( rescheduledEventsMap != null )
+            && ( newEventRecord != null )
+            && ( newEventRecord.RecordTypeId == NSP_EventTriggerHelper.eventRecordType )
             && ( oldEventRecord != null )
             && ( oldEventRecord.StartDateTime != newEventRecord.StartDateTime || oldEventRecord.EndDateTime != newEventRecord.EndDateTime )
             && ( ( newEventRecord.WhatId != null && newEventRecord.FSL__Event_Type__c == 'Resource Absence' ) 
@@ -126,7 +132,9 @@ public with sharing class NSP_EventTriggerHelper {
     }
 
     private List<DiscoveryCallCompletedEvent__e> processDCCompleted( Event newEventRecord , Event oldEventRecord , List<DiscoveryCallCompletedEvent__e> dcCompletedEventList ) {
-        if ( ( String.isNotBlank(newEventRecord.WhatId) )
+        if ( ( dcCompletedEventList != null )
+            && ( newEventRecord != null )
+            && ( String.isNotBlank(newEventRecord.WhatId) )
             && ( newEventRecord.NSP_Event_Subtype__c != NULL )
             && ( newEventRecord.WhatId.getSObjectType() == Opportunity.getSObjectType() )
             && ( newEventRecord.NSP_Event_Subtype__c.equalsIgnoreCase( NSP_EventTriggerHelper.DISCOVERY_CALL ) )
@@ -529,7 +537,7 @@ public with sharing class NSP_EventTriggerHelper {
     private static Id eventRecordType {
         private get {
             if ( eventRecordType == null ) {
-                eventRecordType = Schema.SObjectType.Event.getRecordTypeInfosByDeveloperName().get('Core_Sales_Event_RT')?.getRecordTypeId();
+                eventRecordType = NSP_GenericRecordType.getRecordTypeId( 'Event' , 'Core_Sales_Event_RT' );
             }
             return eventRecordType;
         }
