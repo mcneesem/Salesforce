@@ -63,39 +63,53 @@ public with sharing class NSP_EventTriggerHelper {
     // @param eventOldMap Map of Old Event.
     // @return void
     public void afterUpdateDirector( Map<Id,Event> eventNewMap , Map<Id,Event> eventOldMap ) {
-        List < DiscoveryCallCompletedEvent__e > dcCompletedEventList = New List < DiscoveryCallCompletedEvent__e > ();
+        List<DiscoveryCallCompletedEvent__e> dcCompletedEventList = new List<DiscoveryCallCompletedEvent__e>();
         Map<Id,Event> rescheduledEventsMap = new Map<Id,Event>();
         Set<String> subjectSet = new Set<String>();
-        if(eventNewMap != null){
-            for (Event newEventRecord : eventNewMap.Values()){
+        if ( eventNewMap != null ) {
+            for ( Event newEventRecord : eventNewMap.values() ) {
                 if ( ( eventOldMap != null ) && eventOldMap.containsKey( newEventRecord.Id ) ) {
                     Event oldEventRecord = eventOldMap.get(newEventRecord.Id);
-                    rescheduledEventsMap = processRescheduledEventsMap(newEventRecord, oldEventRecord, rescheduledEventsMap);
-                    subjectSet = processSubjectSet(newEventRecord, oldEventRecord, subjectSet);
-                    dcCompletedEventList = processDCCompleted(newEventRecord, oldEventRecord, dcCompletedEventList);
+                    rescheduledEventsMap = this.processRescheduledEventsMap(
+                        newEventRecord ,
+                        oldEventRecord ,
+                        rescheduledEventsMap
+                    );
+                    subjectSet = this.processSubjectSet(
+                        newEventRecord ,
+                        oldEventRecord ,
+                        subjectSet
+                    );
+                    dcCompletedEventList = this.processDCCompleted(
+                        newEventRecord ,
+                        oldEventRecord ,
+                        dcCompletedEventList
+                    );
                 }
             }
         }
-        Map<Id, Event> attendeesEventMap = getAttendeesEvent(subjectSet,rescheduledEventsMap);
-        if (!attendeesEventMap.isEmpty()){
-            rescheduledEventsMap.putAll(attendeesEventMap);
+        Map<Id,Event> attendeesEventMap = this.getAttendeesEvent( subjectSet , rescheduledEventsMap );
+        if ( !attendeesEventMap.isEmpty() ) {
+            rescheduledEventsMap.putAll( attendeesEventMap );
         }
-        if (rescheduledEventsMap.size() > 0){
-            updateResourceAbsenceDate(rescheduledEventsMap);
+        if ( !rescheduledEventsMap.isEmpty() ) {
+            this.updateResourceAbsenceDate( rescheduledEventsMap );
         }
-        if( NSP_EventTriggerHelper.is_Enabled_DCCompletedScreen
+        if ( NSP_EventTriggerHelper.is_Enabled_DCCompletedScreen
             && ( dcCompletedEventList != null )
-            && !dcCompletedEventList.isEmpty() ) {
-            List<Database.SaveResult> results = EventBus.publish(dcCompletedEventList);
+            && !dcCompletedEventList.isEmpty()
+            )
+        {
+            List<Database.SaveResult> results = EventBus.publish( dcCompletedEventList );
             NSP_ErrorLogHandler.logResults(
                 NSP_EventTriggerHelper.class.getName() ,
                 'afterUpdateDirector' ,
                 results
             );
         }
-        updateOpportunitiesWithDiscoverCalls(eventNewMap.values());
-        updateActivityDate(eventNewMap.values(),eventOldMap);
-        checkOpportunityStageCriteria(eventNewMap.values());
+        this.updateOpportunitiesWithDiscoverCalls( eventNewMap.values() );
+        this.updateActivityDate( eventNewMap.values() , eventOldMap );
+        this.checkOpportunityStageCriteria( eventNewMap.values() );
     }
 
     private Set<String> processSubjectSet( Event newEventRecord , Event oldEventRecord , Set<String> subjectSet ) {
@@ -120,10 +134,10 @@ public with sharing class NSP_EventTriggerHelper {
             && ( oldEventRecord != null )
             && ( oldEventRecord.StartDateTime != newEventRecord.StartDateTime || oldEventRecord.EndDateTime != newEventRecord.EndDateTime )
             && ( ( newEventRecord.WhatId != null && newEventRecord.FSL__Event_Type__c == 'Resource Absence' ) 
-                  || ( ( newEventRecord.WhatId == null && newEventRecord.Type == null )
-                       && ( newEventRecord.IsRecurrence2 == true || newEventRecord.IsRecurrence == true )
-                     )
-               )
+                || ( ( newEventRecord.WhatId == null && newEventRecord.Type == null )
+                    && ( newEventRecord.IsRecurrence2 == true || newEventRecord.IsRecurrence == true )
+                    )
+                )
             )
         {
             rescheduledEventsMap.put(newEventRecord.Id, newEventRecord);
@@ -134,12 +148,13 @@ public with sharing class NSP_EventTriggerHelper {
     private List<DiscoveryCallCompletedEvent__e> processDCCompleted( Event newEventRecord , Event oldEventRecord , List<DiscoveryCallCompletedEvent__e> dcCompletedEventList ) {
         if ( ( dcCompletedEventList != null )
             && ( newEventRecord != null )
-            && ( String.isNotBlank(newEventRecord.WhatId) )
+            && String.isNotBlank( newEventRecord.WhatId )
             && ( newEventRecord.NSP_Event_Subtype__c != NULL )
             && ( newEventRecord.WhatId.getSObjectType() == Opportunity.getSObjectType() )
-            && ( newEventRecord.NSP_Event_Subtype__c.equalsIgnoreCase( NSP_EventTriggerHelper.DISCOVERY_CALL ) )
+            && newEventRecord.NSP_Event_Subtype__c.equalsIgnoreCase( NSP_EventTriggerHelper.DISCOVERY_CALL )
             && ( oldEventRecord != null && oldEventRecord.NSP_Status__c != newEventRecord.NSP_Status__c )
-            && ( newEventRecord.NSP_Status__c == NSP_SalesConstants.DISCOVERY_CALL_COMPLETED ) )
+            && ( newEventRecord.NSP_Status__c == NSP_SalesConstants.DISCOVERY_CALL_COMPLETED )
+            )
         {
             DiscoveryCallCompletedEvent__e dcCompletedEvent = new DiscoveryCallCompletedEvent__e();
             dcCompletedEvent.Id__c = newEventRecord.Id;
