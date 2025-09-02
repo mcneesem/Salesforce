@@ -59,6 +59,10 @@
                 <field>NSP_Status__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NSP_Method__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>NSP_Completed_Date__c</field>
             </layoutItems>

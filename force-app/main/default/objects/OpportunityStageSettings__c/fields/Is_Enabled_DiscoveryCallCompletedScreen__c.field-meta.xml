@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_Enabled_DiscoveryCallCompletedScreen__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>on/off switch for Screen Flow popup on setting Discovery Call Event to Completed</description>
+    <label>Is Enabled DiscoveryCallCompletedScreen</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>
