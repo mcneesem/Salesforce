@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Request_Headers__c</fullName>
+    <description>Headers for API request.</description>
+    <encryptionScheme>None</encryptionScheme>
+    <inlineHelpText>Headers for API request.</inlineHelpText>
+    <label>Request Headers</label>
+    <length>1000</length>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>
