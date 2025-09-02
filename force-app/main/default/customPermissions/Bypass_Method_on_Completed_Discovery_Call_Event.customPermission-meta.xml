@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>validation rule bypass</description>
+    <isLicensed>false</isLicensed>
+    <label>Bypass Method on Completed Discovery Call Event</label>
+</CustomPermission>
