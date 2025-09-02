@@ -917,7 +917,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
     
     private Id getProjectTaskId(pse__Proj__c proj, String projectTaskName){
         String projectTaskId = '';
-        if ( ( proj != null ) && ( proj.pse__Project_Tasks__r != null ) && !String.isBlank(projectTaskName)) {
+        if ( ( proj != null ) && ( proj.pse__Project_Tasks__r != null ) && String.isNotBlank(projectTaskName)) {
             for ( pse__Project_Task__c projTask:proj.pse__Project_Tasks__r ) {
                 if ( projTask.Name == projectTaskName ) {
                     projectTaskId = projTask.Id;
@@ -2544,6 +2544,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                     if (listOfTOAddresses != null
                         && !listOfTOAddresses.isEmpty()
                         && String.isNotBlank( mailBody )
+                        && String.isNotBlank( projectTaskId )
                         )
                     {
                         NSP_ProjectTasksTriggerHelper.sendEmail(listOfTOAddresses,subjectString,mailBody,projectTaskId);
