@@ -3,7 +3,8 @@
     <fullName>Select_Method_when_Disc_Call_Completed</fullName>
     <active>true</active>
     <description>Method value is required when SubType is Discovery Call and Status is Completed</description>
-    <errorConditionFormula>AND( ISBLANK(TEXT( NSP_Method__c ))
+    <errorConditionFormula>AND( NOT( $Permission.Bypass_Method_on_Completed_Discovery_Call_Event )
+,ISBLANK(TEXT( NSP_Method__c ))
 ,ISPICKVAL( NSP_Event_Subtype__c, &quot;Discovery Call&quot; )
 ,ISCHANGED(  NSP_Status__c )
 ,ISPICKVAL( NSP_Status__c, &quot;Completed&quot; )
