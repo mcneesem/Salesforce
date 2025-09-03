@@ -3,9 +3,8 @@
     <fullName>NSP_Estimate__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Indicates if the quote is an estimate</description>
-    <externalId>false</externalId>
     <label>Estimate</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

@@ -3,10 +3,9 @@
     <fullName>NSP_Customer_Ship_To_Street_2__c</fullName>
     <description>Shipping address street address line 2</description>
     <encryptionScheme>None</encryptionScheme>
-    <externalId>false</externalId>
     <label>Ship To Street 2</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>TextArea</type>
 </CustomField>

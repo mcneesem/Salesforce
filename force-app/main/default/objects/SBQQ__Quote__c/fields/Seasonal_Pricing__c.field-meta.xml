@@ -3,11 +3,10 @@
     <fullName>Seasonal_Pricing__c</fullName>
     <defaultValue>&quot;Not Applicable&quot;</defaultValue>
     <description>Select the type of Seasonal Pricing to apply on the Quote.</description>
-    <externalId>false</externalId>
     <inlineHelpText>Select the type of Seasonal Pricing to apply on the Quote.</inlineHelpText>
     <label>Seasonal Pricing</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>

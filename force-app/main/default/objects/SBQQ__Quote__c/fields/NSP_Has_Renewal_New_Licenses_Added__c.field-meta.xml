@@ -3,9 +3,8 @@
     <fullName>NSP_Has_Renewal_New_Licenses_Added__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Conditional Checkbox to verify the presence of Renewal New Licenses Added</description>
-    <externalId>false</externalId>
     <label>Has Renewal New Licenses Added</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

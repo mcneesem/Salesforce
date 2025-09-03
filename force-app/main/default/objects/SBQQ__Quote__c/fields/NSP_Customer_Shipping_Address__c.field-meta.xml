@@ -3,7 +3,6 @@
     <fullName>NSP_Customer_Shipping_Address__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <description>Customer shipping address</description>
-    <externalId>false</externalId>
     <label>Shipping Address</label>
     <lookupFilter>
         <active>true</active>
@@ -34,7 +33,7 @@
     <relationshipLabel>IQuotes (Shipping Address)</relationshipLabel>
     <relationshipName>IQuotesCustomerShipping</relationshipName>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
 </CustomField>

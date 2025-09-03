@@ -3,9 +3,8 @@
     <fullName>NSP_Has_LASSO_product__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Indicates if LASSO is added to quote or not</description>
-    <externalId>false</externalId>
     <label>Has LASSO product</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

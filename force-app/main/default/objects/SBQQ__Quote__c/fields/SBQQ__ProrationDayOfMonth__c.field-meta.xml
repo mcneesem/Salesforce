@@ -3,11 +3,10 @@
     <fullName>SBQQ__ProrationDayOfMonth__c</fullName>
     <deprecated>false</deprecated>
     <description>When an order is created from this quote, the value in this field is copied to the order’s Billing Day of Month field.</description>
-    <externalId>false</externalId>
     <inlineHelpText>When an order is created from this quote, the value in this field is copied to the order’s Billing Day of Month field.</inlineHelpText>
     <label>Proration Day Of Month</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>

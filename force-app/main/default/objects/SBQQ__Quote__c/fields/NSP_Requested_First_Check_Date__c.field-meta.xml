@@ -3,10 +3,9 @@
     <fullName>NSP_Requested_First_Check_Date__c</fullName>
     <description>Captures First Check Date</description>
     <encryptionScheme>None</encryptionScheme>
-    <externalId>false</externalId>
     <label>Requested First Check Date</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Date</type>
 </CustomField>

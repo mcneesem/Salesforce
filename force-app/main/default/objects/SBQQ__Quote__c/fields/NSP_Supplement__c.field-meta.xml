@@ -3,9 +3,8 @@
     <fullName>NSP_Supplement__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Indicates if Supplement product is selected</description>
-    <externalId>false</externalId>
     <label>Supplement</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

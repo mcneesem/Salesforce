@@ -3,9 +3,8 @@
     <fullName>NSP_Terminate_All__c</fullName>
     <defaultValue>false</defaultValue>
     <description>When checked, updates the quantity of all the quote lines to 0</description>
-    <externalId>false</externalId>
     <label>Terminate All</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

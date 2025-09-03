@@ -3,9 +3,8 @@
     <fullName>NSP_TC_Branded_Portal_Included__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Internal field to check if product is included in quote.</description>
-    <externalId>false</externalId>
     <label>Branded Portal Included</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>
