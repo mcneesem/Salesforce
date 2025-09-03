@@ -3,7 +3,7 @@
     <fullName>Bypass_Rule_PreventStatusChange__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Bypass Rule PreventStatusChange</label>
+    <label>Bypass PreventStatusChange (DEPRECATED)</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>
