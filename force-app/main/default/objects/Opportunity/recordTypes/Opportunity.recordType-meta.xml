@@ -20,6 +20,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Discovery_Call_Debriefed__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>ForecastCategoryName</picklist>
         <values>
             <fullName>Best Case</fullName>
@@ -116,6 +127,25 @@
         </values>
         <values>
             <fullName>Website</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Leadership_Attendance__c</picklist>
+        <values>
+            <fullName>DM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Attended</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RVP</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -4676,6 +4706,25 @@
         <picklist>Product_Purchased__c</picklist>
         <values>
             <fullName>HCM</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Product_Recommendation_Outcome__c</picklist>
+        <values>
+            <fullName>HR360 Later</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HRCore Later</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HRScale Later</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not a Good Fit</fullName>
             <default>false</default>
         </values>
     </picklistValues>
