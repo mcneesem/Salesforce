@@ -1,4 +1,4 @@
-import { LightningElement, api, wire } from 'lwc';
+import { LightningElement , api , wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import autoPopulateAsset from '@salesforce/apex/NSP_CustomCaseCreationPageController.autoPopulateAsset';
 import getRelatedCategory from '@salesforce/apex/NSP_CustomCaseCreationPageController.getRelatedCategory';
@@ -76,12 +76,13 @@ export default class CaseCatSubcatDetail extends LightningElement {
                 } 
                 if(element.NSP_UserTitle__c == 'BPS User'){
                     this.isBPSUser = true;
-                }else{
+                } else {
                     this.isBPSUser = false;
                 }
-                this.verifyCompensationQueue();
-                this.getCatDependenciesMap();
             });
+            // Call getCatDependenciesMap here after data is processed
+            this.verifyCompensationQueue();
+            this.getCatDependenciesMap();
         }
     }
 
@@ -172,6 +173,24 @@ export default class CaseCatSubcatDetail extends LightningElement {
     
     }
 
+    dispatchSelectionUpdate() {
+        this.dispatchEvent(
+            new CustomEvent(
+                'selectionchange' ,
+                {
+                    detail: {
+                        category: this.selectedCategory ,
+                        subCategory: this.selectedSubCategory ,
+                        detail: this.selectedDetail ,
+                        version: this.selectedVersion ,
+                        detailOptions: this.detailOptions ,
+                        versionOptions: this.versionOptions
+                    }
+                }
+            )
+        );
+    }
+
     handleChange(event) {
         const { name, fieldName, value } = event.currentTarget;
         if (name) {
@@ -192,14 +211,12 @@ export default class CaseCatSubcatDetail extends LightningElement {
         } else if (fieldName === 'Type') {
             this.selectedType = event.detail.value;
         }
-
         if (this.disableButton) {
             this.disableButton = false;
         }
-
         this.handleDisplayConfidentialCheckBox();
         this.dispatchChangeFields();
-    }   
+    }
 
     handleCategoryChange(value) {
         this.selectedCategory = value;
@@ -443,30 +460,70 @@ export default class CaseCatSubcatDetail extends LightningElement {
         this.dispatchEvent(confidentailevent);
     }
     
-    renderedCallback(){
-        if(this.categoryWrapper.mCatToSubCatogories!==undefined && this.categoryWrapper.mCatSubToDetails!==undefined  && this.selectedCategory!==undefined && this.selectedSubCategory!==undefined && !this.renderCallOnce){
+    renderedCallback() {
+        if (this.shouldRenderCallback()) {
             this.renderCallOnce = true;
-            if ( !this.isConnectedWithShowAllSubCategory ) {
-                this.handleSubCategoryFiltered();
-            } else {
-                this.getFiteredSubCatValues();
-            }
-            const localKey = this.selectedCategory + '-' + this.selectedSubCategory;
-            if(this.selectedDetail!==undefined && this.selectedDetail!==null){
-                this.showDetail = true;
-                if(this.categoryWrapper.mCatSubToDetails!==undefined){
-                    this.detailOptions = this.createOptions(
-                    this.categoryWrapper.mCatSubToDetails[localKey]
-                    );
-                }
-            }
-            if(this.selectedVersion!==undefined && this.selectedVersion!==null){
-                this.showVersion = true;
-                this.versionOptions = this.createOptions(
-                    this.categoryWrapper.mCatSubDetailToVersions[localKey + '-' + this.selectedDetail]
-                );
-            }
+            this.handleSubCategoryRendering();
+            this.handleDetailRendering();
+            this.handleVersionRendering();
             this.handleDisplayConfidentialCheckBox();
         }
+        if (this.variant === 'sidebar') {
+            this.dispatchSelectionUpdate();
+        }
     }
+
+    shouldRenderCallback() {
+        return (
+            this.categoryWrapper.mCatToSubCatogories !== undefined &&
+            this.categoryWrapper.mCatSubToDetails !== undefined &&
+            this.selectedCategory !== undefined &&
+            this.selectedSubCategory !== undefined &&
+            !this.renderCallOnce
+        );
+    }
+
+    handleSubCategoryRendering() {
+        if (!this.isConnectedWithShowAllSubCategory) {
+            this.handleSubCategoryFiltered();
+        } else {
+            this.getFiteredSubCatValues();
+        }
+    }
+
+    handleDetailRendering() {
+        const localKey = `${this.selectedCategory}-${this.selectedSubCategory}`;
+        if (this.selectedDetail !== undefined || (this.variant === 'sidebar' && this.selectedDetail === null)) {
+            this.detailOptions = this.createOptions(this.categoryWrapper.mCatSubToDetails[localKey]);
+            this.showDetail = this.detailOptions.length > 0;
+        }
+    }
+
+    handleVersionRendering() {
+        const localKey = `${this.selectedCategory}-${this.selectedSubCategory}`;
+        if (this.selectedVersion !== undefined || (this.variant === 'sidebar' && this.selectedVersion === null)) {
+            this.versionOptions = this.createOptions(this.categoryWrapper.mCatSubDetailToVersions[`${localKey}-${this.selectedDetail}`]);
+            this.showVersion = this.versionOptions.length > 0;
+        }
+    }
+
+    @api variant;
+
+    get showTitle() {
+        return ( this.variant !== "sidebar" );
+    }
+
+    get smallDeviceSize() {
+        return "12";
+    }
+
+    get mediumDeviceSize() {
+        return ( ( this.variant === "sidebar" ) ? this.smallDeviceSize : "6" );
+    }
+
+    get largeDeviceSize() {
+       return this.mediumDeviceSize;
+    }
+
 }
+//
