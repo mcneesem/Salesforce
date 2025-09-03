@@ -1,9 +1,3 @@
-/**
-* @description  :  Controller class for all Account Profile related methods
-* @date 10/28/2022
-* Author : Nishkarsh Manav
-* Name : NSP_AccountProfileController
-*/
 public with sharing class NSP_AccountProfileController {
     // test w/ NSP_AccountProfileControllerTest (89%)
 
@@ -11,11 +5,6 @@ public with sharing class NSP_AccountProfileController {
     @TestVisible
     private static Map<String,Schema.SObjectField> ACC_FIELDS = Schema.SObjectType.Account.fields.getMap();
 
-    /**
-     * @description - Returns all the relevant data of given account.
-     * @param {String} - accId - Id of the account
-     * @return Map<String, Map<String,String>> - Map wih field API name as key and all details in value.
-     */
     private static final String TYPE = 'type';
     private static final String CHECKBOX = 'checkbox';
     private static final String TRUE_VALUE = 'TRUE';
@@ -114,7 +103,7 @@ public with sharing class NSP_AccountProfileController {
             throw NSP_Utilities.getAuraException( e );
         }
     }
-    
+
     private static void populateAccountFields(String accId, Map<String, Map<String,String>> fieldValues){
         Account acc = getAccountById(accId);
         fieldValues.put('Website', getLabelValueMap('Client Website', acc.Website));
@@ -133,7 +122,7 @@ public with sharing class NSP_AccountProfileController {
         }
         fieldValues.put('NSP_Client_AIMS__c', getLabelValueMapByField('NSP_Client_AIMS__c', assetObj.NSP_Client__c));
         fieldValues.put('NSP_Handbook_Status__c', getLabelValueMapByField('NSP_Handbook_Status__c', assetObj.NSP_Handbook_Status__c));
-        
+
         //Make the fields read only if the AIMS status is other than 'Terminated'
         if(assetObj.NSP_Account_Status__c != 'Terminated'){
             //Show Union employee field as checkbox on UI
@@ -160,7 +149,7 @@ public with sharing class NSP_AccountProfileController {
             // Show IES e Verify Client field as checkbox on UI
             Map<String,String> eVerifyMap = getLabelValueMap('Does the client use IES E-Verify?',assetObj.NSP_IES_e_Verify_Client__c);
             eVerifyMap.put(TYPE, CHECKBOX);
-            valueChekbox = assetObj.NSP_IES_e_Verify_Client__c ? TRUE_VALUE : FALSE_VALUE; 
+            valueChekbox = assetObj.NSP_IES_e_Verify_Client__c ? TRUE_VALUE : FALSE_VALUE;
             eVerifyMap.put(IS_CHECKED,valueChekbox);
             fieldValues.put('NSP_IES_e_Verify_Client__c', eVerifyMap);
         }
@@ -189,10 +178,10 @@ public with sharing class NSP_AccountProfileController {
     }
 
     private static Asset getActiveWoAssetByAccId(String accId){
-        List<String> assetFields = new List<String>{ 
+        List<String> assetFields = new List<String>{
             'Id', 'NSP_Account_Status__c',
-            'NSP_Business_Type__c', 'NSP_NAICS_Code__c', 
-            'NSP_SIC_Code__c', 'NSP_Union_Employees__c', 
+            'NSP_Business_Type__c', 'NSP_NAICS_Code__c',
+            'NSP_SIC_Code__c', 'NSP_Union_Employees__c',
             'NSP_Government_Contractor__c',
             'NSP_States_of_Operations__c',
             'NSP_IES_e_Verify_Client__c',
@@ -300,15 +289,24 @@ public with sharing class NSP_AccountProfileController {
         }
     }
 
-    private static  NSP_Sub_Client__c getSubClientByAssetId(String assetId){
-        List<NSP_Sub_Client__c> subclients = [SELECT NSP_Margin__c, NSP_Part_Time_Margin__c,
-            NSP_Reserve__c,NSP_Part_Time_Reserve__c, NSP_Benefit_Package_Name__c,
-            NSP_Client_Wait_Period__c FROM NSP_Sub_Client__c
-            WHERE NSP_Asset__c =: assetId AND NSP_Sub_Client__c LIKE '%00'];
-
-            return subclients.isEmpty() ? null : subclients[0];
+    private static  NSP_Sub_Client__c getSubClientByAssetId( String assetId ) {
+        List<NSP_Sub_Client__c> subclients = [
+            SELECT
+                NSP_Margin__c ,
+                NSP_Part_Time_Margin__c ,
+                NSP_Reserve__c ,
+                NSP_Part_Time_Reserve__c ,
+                NSP_Benefit_Package_Name__c ,
+                NSP_Client_Wait_Period__c
+            FROM NSP_Sub_Client__c
+            WHERE (
+                ( NSP_Asset__c = :assetId )
+                AND ( Is_Primary_Contract__c = true )
+            )
+        ];
+        return subclients.isEmpty() ? null : subclients[0];
     }
-    
+
     private static String getAccGroupMemberNames(String accId){
         Set<Id> uniqueAccGroups = new Set<Id>();
         for (NSP_Account_Group_Member__c member : [SELECT NSP_Group__c FROM NSP_Account_Group_Member__c WHERE NSP_Member_Account__c = :accId AND NSP_Type__c = 'Common Ownership']) {
@@ -326,7 +324,7 @@ public with sharing class NSP_AccountProfileController {
             groupMemberNames.put(member.NSP_Group__r.Name, members);
         }
 
-        String groupNameWithMembers = ''; 
+        String groupNameWithMembers = '';
         for (String groupName : groupMemberNames.keySet()){
             String memberNames =  String.join(groupMemberNames.get(groupName), ', ');
 
@@ -390,7 +388,7 @@ public with sharing class NSP_AccountProfileController {
 
     private static void populateEligibilityFields(String assetId, Map<String, Map<String,String>> fieldValues){
         NSP_Eligibility__c eligibility = getEligibilityRecord(assetId);
-        
+
         if(eligibility != null) {
             String urlEligibilty = URL.getSalesforceBaseUrl().toExternalForm()+ '/'+eligibility.Id;
             String labelName= eligibility.Name;

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Total_PEPM__c</fullName>
-    <externalId>false</externalId>
     <label>Total PEPM</label>
     <summarizedField>NSP_Sub_Client__c.PEPM__c</summarizedField>
     <summaryFilterItems>
@@ -10,12 +9,12 @@
         <value>Active</value>
     </summaryFilterItems>
     <summaryFilterItems>
-        <field>NSP_Sub_Client__c.Is_AIMS_Sub_Client_Ends_With_00__c</field>
+        <field>NSP_Sub_Client__c.Is_Primary_Contract__c</field>
         <operation>equals</operation>
         <value>True</value>
     </summaryFilterItems>
     <summaryForeignKey>NSP_Sub_Client__c.NSP_Account__c</summaryForeignKey>
-    <summaryOperation>sum</summaryOperation>
+    <summaryOperation>max</summaryOperation>
     <trackHistory>false</trackHistory>
     <type>Summary</type>
 </CustomField>
