@@ -563,6 +563,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Event.NSP_Method__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>GL_Transaction__c.Account_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1249,6 +1254,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.Product_Offering__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Product_Recommendation_Outcome__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
