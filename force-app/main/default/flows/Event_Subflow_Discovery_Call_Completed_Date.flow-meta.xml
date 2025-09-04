@@ -55,7 +55,7 @@
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
-            <targetReference>Check_HCM_Rules_and_HR360_Primary_Product</targetReference>
+            <targetReference>Should_Opportunity_Discovery_Call_Completed_Date_be_updated</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Assign_varFaultElement_Discovery_Call_Follow_Up_Email</targetReference>
@@ -112,6 +112,57 @@
     </actionCalls>
     <apiVersion>64.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_Close_Lost_info_to_varOpportunityToUpdate</name>
+        <label>Assign Close Lost info to varOpportunityToUpdate</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varOpportunityToUpdate.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varOpportunity.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varOpportunityToUpdate.StageName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varOpportunity.StageName</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varOpportunityToUpdate.NSP_Lost_Reason__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varOpportunity.NSP_Lost_Reason__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varOpportunityToUpdate.NSP_ReasonLostNotes__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varOpportunity.NSP_ReasonLostNotes__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varOpportunityToUpdate.Product_Recommendation_Outcome__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varOpportunity.Product_Recommendation_Outcome__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>updateOpportunity</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Opty_Owner_in_BPA_Public_Group</targetReference>
+        </connector>
+    </assignments>
     <assignments>
         <name>Assign_Discovery_Call_Completed_Date</name>
         <label>Assign Discovery Call Completed Date</label>
@@ -330,33 +381,46 @@
         </rules>
     </decisions>
     <decisions>
-        <description>Prevent DmlExceptions: HCM Sales Consultants can modify only WX Opportunities. Check HR360 Primary Product</description>
-        <name>Check_HCM_Rules_and_HR360_Primary_Product</name>
-        <label>Check HCM Rules and HR360 Primary Product</label>
+        <name>Check_varOpportunity_for_info_related_to_Close_Lost</name>
+        <label>Check varOpportunity for info related to Close Lost</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Should_Opportunity_Discovery_Call_Completed_Date_be_updated</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Not HCM User or HCM on WX Opty</defaultConnectorLabel>
+        <defaultConnectorLabel>Missing Close Lost info</defaultConnectorLabel>
         <rules>
-            <name>HCM_Not_Allowed</name>
+            <name>varOpportunity_has_all_Close_Lost_info</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>$Permission.Opportunity_WX_Product_Only</leftValueReference>
-                <operator>EqualTo</operator>
+                <leftValueReference>varOpportunity.StageName</leftValueReference>
+                <operator>WasSet</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>varOpportunity.NSP_PrimaryProduct__c</leftValueReference>
-                <operator>NotEqualTo</operator>
+                <leftValueReference>varOpportunity.NSP_Lost_Reason__c</leftValueReference>
+                <operator>WasSet</operator>
                 <rightValue>
-                    <stringValue>WX</stringValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
-            <label>HCM Not Allowed</label>
+            <conditions>
+                <leftValueReference>varOpportunity.NSP_ReasonLostNotes__c</leftValueReference>
+                <operator>WasSet</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>varOpportunity.Product_Recommendation_Outcome__c</leftValueReference>
+                <operator>WasSet</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Close_Lost_info_to_varOpportunityToUpdate</targetReference>
+            </connector>
+            <label>varOpportunity has all Close Lost info</label>
         </rules>
     </decisions>
     <decisions>
@@ -446,9 +510,34 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_Opty_Owner_in_BPA_Public_Group</targetReference>
+                <targetReference>Is_closeLostOptyBoolean_set_to_TRUE</targetReference>
             </connector>
             <label>Yes - varOpportunity has relevant info</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_closeLostOptyBoolean_set_to_TRUE</name>
+        <label>Is closeLostOptyBoolean set to TRUE?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Get_Opty_Owner_in_BPA_Public_Group</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not a Close Lost Opty</defaultConnectorLabel>
+        <rules>
+            <name>closeLostOptyBoolean_equals_TRUE</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>closeLostOptyBoolean</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_varOpportunity_for_info_related_to_Close_Lost</targetReference>
+            </connector>
+            <label>closeLostOptyBoolean equals TRUE</label>
         </rules>
     </decisions>
     <decisions>
@@ -457,7 +546,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Check_HCM_Rules_and_HR360_Primary_Product</targetReference>
+            <targetReference>Should_Opportunity_Discovery_Call_Completed_Date_be_updated</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Owner is not in BPA Group</defaultConnectorLabel>
         <rules>
@@ -529,7 +618,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Check_HCM_Rules_and_HR360_Primary_Product</targetReference>
+            <targetReference>Should_Opportunity_Discovery_Call_Completed_Date_be_updated</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>DM not found</defaultConnectorLabel>
         <rules>
@@ -548,7 +637,7 @@
             <label>Yes - DM was found</label>
         </rules>
     </decisions>
-    <description>Sends notifications to the Opty Owner&apos;s DM (if applicable) and updates the related Opportunity if needed.</description>
+    <description>Handles close-lost info from &quot;Event Screen Discovery Call Completed&quot; flow. Removed HCM decision node at the bottom, should update opty regardless of user and product. Sends notifications to the Opty Owner&apos;s DM (if applicable) and updates the related Opportunity if needed.</description>
     <environments>Default</environments>
     <formulas>
         <name>eventCompletedDatePlus60Formula</name>
@@ -741,6 +830,16 @@
         <isViewedAsPlainText>false</isViewedAsPlainText>
         <text>&lt;p&gt;Action Required: Discovery Call Follow-up -&amp;nbsp;{!varOpportunity.Name}&lt;/p&gt;</text>
     </textTemplates>
+    <variables>
+        <name>closeLostOptyBoolean</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
     <variables>
         <name>collectionRecipientIds</name>
         <dataType>String</dataType>
