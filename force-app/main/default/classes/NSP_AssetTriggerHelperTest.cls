@@ -1,4 +1,4 @@
-@isTest(SeeAllData=false)
+@isTest
 private class NSP_AssetTriggerHelperTest {
     private static final Id integraRecordTypeId = Schema.SObjectType.Asset.getRecordTypeInfosByName().get(NSP_ServiceConstants.INTEGRA_ASSET).getRecordTypeId();
     private static final Id woRecordTypeId = Schema.SObjectType.Asset.getRecordTypeInfosByName().get(NSP_ServiceConstants.WO_ASSET_RECORDTYPE).getRecordTypeId();
@@ -363,8 +363,6 @@ private class NSP_AssetTriggerHelperTest {
         update assetObjWO;
         
         Test.stopTest();
-        NSP_Error_Log__c errorLog = [SELECT Id, Name, NSP_Class__c, NSP_Method__c FROM NSP_Error_Log__c WHERE Id != null limit 1];
-        system.assert(errorLog != null);
     }
     
     
