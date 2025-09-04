@@ -914,6 +914,19 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         }
         
     }
+    
+    private Id getProjectTaskId(pse__Proj__c proj, String projectTaskName){
+        String projectTaskId = '';
+        if ( ( proj != null ) && ( proj.pse__Project_Tasks__r != null ) && String.isNotBlank(projectTaskName)) {
+            for ( pse__Project_Task__c projTask:proj.pse__Project_Tasks__r ) {
+                if ( projTask.Name == projectTaskName ) {
+                    projectTaskId = projTask.Id;
+                    break;
+                }
+            }
+        }
+        return projectTaskId;
+    }
 
 //Health Care FSA - Task
     private void createTaskForHealthCareFSA(
@@ -2506,6 +2519,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         if (automation == ONSITE_DISCOVERY_FN && newIPs != null ) {
             String subjectString = null;
             String mailBody = '' ;
+            String projectTaskId = '';
             Implementation_Profile__c ipRec = newIPs.get(ipRecId);
             NSP_PEO_Implementations__mdt pf = NSP_PEO_Implementations__mdt.getInstance(ONSITE_DISCOVERY_FN);
             NSP_PEO_Implementations__mdt pf1 = NSP_PEO_Implementations__mdt.getInstance(NSP_ServiceConstants.CLIENTACCOUNTMANAGEMENT);
@@ -2521,6 +2535,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                     && completedTasks.contains(NSP_ServiceConstants.ONSITEDISCOVERY)
                     )
                 {
+                    projectTaskId = getProjectTaskId(proj, NSP_ServiceConstants.ONSITEDISCOVERY);
                     Implementation_Profile__c ipwithValue = (Implementation_Profile__c) data.get(IMPL_PROFILE_IDENTIFIER).get(ipRecId);
                     List<String> listOfTOAddresses = prepareEmailAddresses(pf, pf1, proj);
                     subjectString = proj.pse__Account__r.Name+' : Key Information updated';
@@ -2529,9 +2544,10 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                     if (listOfTOAddresses != null
                         && !listOfTOAddresses.isEmpty()
                         && String.isNotBlank( mailBody )
+                        && String.isNotBlank( projectTaskId )
                         )
                     {
-                        NSP_ProjectTaskTriggerEmailNotification.sendMail(subjectString,mailBody,listOfTOAddresses,null,null);
+                        NSP_ProjectTasksTriggerHelper.sendEmail(listOfTOAddresses,subjectString,mailBody,projectTaskId);
                     }
                 }
             }

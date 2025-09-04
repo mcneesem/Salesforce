@@ -53,8 +53,20 @@
                 <elementReference>useLineBreaks</elementReference>
             </value>
         </inputParameters>
+        <inputParameters>
+            <name>relatedRecordId</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>logEmailOnSend</name>
+            <value>
+                <elementReference>logEmail</elementReference>
+            </value>
+        </inputParameters>
         <nameSegment>emailSimple</nameSegment>
-        <versionSegment>1</versionSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>60.0</apiVersion>
     <assignments>
@@ -85,14 +97,14 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>emailBody</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>emailSubject</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -105,17 +117,10 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>emailSubject</leftValueReference>
-                <operator>NotEqualTo</operator>
+                <leftValueReference>toEmailAddresses</leftValueReference>
+                <operator>IsEmpty</operator>
                 <rightValue>
-                    <stringValue></stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>emailBody</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue></stringValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -221,6 +226,27 @@
     <variables>
         <description>Subject of the mail.</description>
         <name>emailSubject</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>logEmail</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <description>For logging the email in the Activity timeline</description>
+        <name>recordId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
