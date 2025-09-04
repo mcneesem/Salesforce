@@ -223,6 +223,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Asset.RecordTypeName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Asset.Renewal_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1629,6 +1634,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Project_Task__c.WO_Asset__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>sbaa__ApprovalRule__c.Backup_Approver__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>sbaa__ApprovalRule__c.Primary_Approver__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
