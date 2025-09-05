@@ -11798,7 +11798,7 @@
   {
     "id": "01p4x00000NS3mWAAT",
     "name": "NSP_QuoteTriggerHelper",
-    "totalLines": 945,
+    "totalLines": 943,
     "lines": {
       "14": 1,
       "16": 1,
@@ -12742,11 +12742,9 @@
       "1701": 1,
       "1704": 1,
       "1705": 1,
-      "1708": 1,
-      "1711": 1,
-      "1712": 1
+      "1708": 1
     },
-    "totalCovered": 813,
+    "totalCovered": 811,
     "coveredPercent": 86
   },
   {
