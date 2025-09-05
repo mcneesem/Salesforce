@@ -1411,6 +1411,7 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
                 && (
                     newQuote.NSP_Opportunity_Primary_Product__c == 'WX'
                     || newQuote.NSP_Opportunity_Primary_Product__c == 'WA'
+                    || newQuote.NSP_Opportunity_Primary_Product__c == 'Contractor Management'
                 )
                 && (
                     (
