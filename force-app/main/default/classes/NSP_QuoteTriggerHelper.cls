@@ -1406,34 +1406,26 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
         Map<Id,NSP_Enrollment_Fee_Payment__c> existingEnrollments =getExistingEnrollments(quoteNewMap);
         for(SBQQ__Quote__c newQuote : quoteNewMap.values()) {
             SBQQ__Quote__c oldQuote =quoteOldMap.get(newQuote.Id);
-            if ( newQuote.SBQQ__Opportunity2__c != null
-                && newQuote.SBQQ__Type__c == 'New Product'
-                && (
-                    newQuote.NSP_Opportunity_Primary_Product__c == 'WX'
-                    || newQuote.NSP_Opportunity_Primary_Product__c == 'WA'
-                    || newQuote.NSP_Opportunity_Primary_Product__c == 'Contractor Management'
-                )
-                && (
-                    (
-                        newQuote.SBQQ__Primary__c == true
-                        && newQuote.SBQQ__Status__c != oldQuote.SBQQ__Status__c
-                        && newQuote.SBQQ__Status__c == NSP_CPQConstants.QUOTE_APPROVAL_STATUS_APPROVED
+            if ( ( newQuote.SBQQ__Opportunity2__c != null )
+                && ( newQuote.SBQQ__Type__c == 'New Product' )
+                && ( ( newQuote.NSP_Opportunity_Primary_Product__c == 'WX' )
+                    || ( newQuote.NSP_Opportunity_Primary_Product__c == 'WA' )
+                    || ( newQuote.NSP_Opportunity_Primary_Product__c == 'Contractor Management' )
                     )
-                    || (
-                        newQuote.SBQQ__Primary__c != oldQuote.SBQQ__Primary__c
-                        && newQuote.SBQQ__Primary__c == true
-                        && newQuote.SBQQ__Status__c == NSP_CPQConstants.QUOTE_APPROVAL_STATUS_APPROVED
+                && ( newQuote.SBQQ__Primary__c == true )
+                && ( newQuote.SBQQ__Status__c == NSP_CPQConstants.QUOTE_APPROVAL_STATUS_APPROVED )
+                && ( ( newQuote.SBQQ__Status__c != oldQuote.SBQQ__Status__c )
+                    || ( newQuote.SBQQ__Primary__c != oldQuote.SBQQ__Primary__c )
                     )
-                )
                 )
             {
                 NSP_Enrollment_Fee_Payment__c enrollmentFee = new NSP_Enrollment_Fee_Payment__c();
-                If(existingEnrollments.containskey(newQuote.SBQQ__Opportunity2__c)){
+                if ( existingEnrollments.containskey(newQuote.SBQQ__Opportunity2__c) ) {
                     enrollmentFee.Id=existingEnrollments.get(newQuote.SBQQ__Opportunity2__c).Id;
                     enrollmentFee.NSP_Opportunity__c=newQuote.SBQQ__Opportunity2__c;
                     enrollmentFee.NSP_WX_WA_Enrollment_Fee__c=newQuote.NSP_WX_WA_Enrollment_Fee__c;
                     enrollmentFee.NSP_Docupay_Upfront_fee__c=newQuote.NSP_Docupay_Upfront_fee__c;
-                } else{
+                } else {
                     enrollmentFee.NSP_Opportunity__c=newQuote.SBQQ__Opportunity2__c;
                     enrollmentFee.NSP_WX_WA_Enrollment_Fee__c=newQuote.NSP_WX_WA_Enrollment_Fee__c;
                     enrollmentFee.NSP_Docupay_Upfront_fee__c=newQuote.NSP_Docupay_Upfront_fee__c;
