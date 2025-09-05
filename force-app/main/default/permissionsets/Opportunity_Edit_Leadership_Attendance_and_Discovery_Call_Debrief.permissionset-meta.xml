@@ -2,7 +2,7 @@
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <fieldPermissions>
         <editable>true</editable>
-        <field>Opportunity.Discovery_Call_Debrief__c</field>
+        <field>Opportunity.Discovery_Call_Debriefed__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
