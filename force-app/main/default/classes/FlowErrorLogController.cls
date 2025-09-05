@@ -3,6 +3,7 @@ public with sharing class FlowErrorLogController {
     private static final String CLASS_NAME = ' ~ FlowErrorLogController';
     private static final String ERROR_OCCURED_DURING_FLOW = 'An error occurred with your ';
     private static final String ERROR_ELEMENT = 'Error element ';
+    private static final String FLOW_DETAILS = '<span style="font-weight:bold;">Flow Details</span><br>';
 
     public static void insertFlowErrorLogs( List<InboundEmailLog__c> inboundEmailLogs ) {
         String METHOD_NAME = 'insertFlowErrorLogs';
@@ -68,8 +69,10 @@ public with sharing class FlowErrorLogController {
         {
             // flow error detetion...
             if ( emailLog.Subject__c.contains( ERROR_OCCURED_DURING_FLOW )
-                && emailLog.HtmlBody__c.contains( ERROR_ELEMENT )
-               )
+                && ( emailLog.HtmlBody__c.contains( ERROR_ELEMENT )
+                    || emailLog.HtmlBody__c.contains( FLOW_DETAILS )
+                    )
+                )
             {
                 String flowErrorBody = emailLog.HtmlBody__c;
                 if ( String.isNotBlank( flowErrorBody ) ) {

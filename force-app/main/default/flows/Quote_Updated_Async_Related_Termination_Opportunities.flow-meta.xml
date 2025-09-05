@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>64.0</apiVersion>
-    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Set_Fault_Element_Update_Opp_To_Closed_Won</name>
         <label>Set Fault Element : Update_Opp_To_Closed_Won</label>
@@ -77,6 +76,7 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordUpdates>
+        <description>Prevent DmlExceptions: FIELD_CUSTOM_VALIDATION_EXCEPTION: Once an Opportunity is Closed Won it cannot be modified. Please contact Sales Operations team.  ( (StageName Does Not Equal Closed Won) AND (NSP_Lock_Opportunity__c Equals False) )</description>
         <name>Update_Opp_To_Closed_Won</name>
         <label>Update Opp To Closed Won</label>
         <locationX>0</locationX>
@@ -90,6 +90,13 @@
             <operator>NotEqualTo</operator>
             <value>
                 <stringValue>Closed Won</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Lock_Opportunity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
             </value>
         </filters>
         <inputAssignments>
