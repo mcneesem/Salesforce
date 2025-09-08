@@ -66,6 +66,16 @@
                 <default>false</default>
                 <label>Add On</label>
             </value>
+            <value>
+                <fullName>Customer Enablement</fullName>
+                <default>false</default>
+                <label>Customer Enablement</label>
+            </value>
+            <value>
+                <fullName>Tax IMPL</fullName>
+                <default>false</default>
+                <label>Tax IMPL</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
