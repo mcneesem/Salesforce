@@ -11,7 +11,7 @@
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Create_Opportunity</elementReference>
+                <stringValue>Create_Opportunity</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -44,7 +44,7 @@
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_ACR_COI</elementReference>
+                <stringValue>Get_ACR_COI</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -325,6 +325,12 @@
             <field>Name</field>
             <value>
                 <elementReference>Get_Account_Name.Name</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>Get_Account_Name.OwnerId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
