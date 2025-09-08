@@ -62,6 +62,11 @@
                 <label>Client Owner FLSA Exemption Form</label>
             </value>
             <value>
+                <fullName>Company Property/Equipment Acknowledgement</fullName>
+                <default>false</default>
+                <label>Company Property/Equipment Acknowledgement</label>
+            </value>
+            <value>
                 <fullName>Day Rate Acknowledgment</fullName>
                 <default>false</default>
                 <label>Day Rate Acknowledgment</label>
@@ -122,6 +127,11 @@
                 <label>Final Knowledge Check (IUO)</label>
             </value>
             <value>
+                <fullName>Final Wage Acknowledgement (CA)</fullName>
+                <default>false</default>
+                <label>Final Wage Acknowledgement (CA)</label>
+            </value>
+            <value>
                 <fullName>FLSA Test for Exemption (including IL)</fullName>
                 <default>false</default>
                 <label>FLSA Test for Exemption (including IL)</label>
@@ -132,6 +142,16 @@
                 <label>FLSA Test for Exemption - CA</label>
             </value>
             <value>
+                <fullName>Fluctuating Workweek Acknowledgement</fullName>
+                <default>false</default>
+                <label>Fluctuating Workweek Acknowledgement</label>
+            </value>
+            <value>
+                <fullName>Fluctuating Workweek Client Acknowledgement</fullName>
+                <default>false</default>
+                <label>Fluctuating Workweek Client Acknowledgement</label>
+            </value>
+            <value>
                 <fullName>IRS Form W-2 Duplicate Request (EN)</fullName>
                 <default>false</default>
                 <label>IRS Form W-2 Duplicate Request (EN)</label>
@@ -140,6 +160,11 @@
                 <fullName>IRS Form W-2 Duplicate Request (ES)</fullName>
                 <default>false</default>
                 <label>IRS Form W-2 Duplicate Request (ES)</label>
+            </value>
+            <value>
+                <fullName>Student Worker Declaration</fullName>
+                <default>false</default>
+                <label>Student Worker Declaration</label>
             </value>
             <value>
                 <fullName>Time Off Request (Insperity branded)</fullName>
