@@ -31,5 +31,6 @@
     <permissionSets>Required_Reporting_Objects</permissionSets>
     <permissionSets>Traction_Complete_Fields_Edit_Access</permissionSets>
     <permissionSets>Update_Onboarding_Meetings</permissionSets>
+    <permissionSets>Use_Case_Category_Service_Operations</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
