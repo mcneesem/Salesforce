@@ -1,5 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <actionCalls>
+        <name>Check_Opportunity_Stage</name>
+        <label>Check Opportunity Stage - Closed Lost</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>CheckOpportunityStage</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Can_User_move_to_Closed_Lost</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Check_Opportunity_Stage</targetReference>
+        </faultConnector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>oppRecord</name>
+            <value>
+                <elementReference>varOpportunity</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>stageName</name>
+            <value>
+                <stringValue>Closed Lost</stringValue>
+            </value>
+        </inputParameters>
+        <nameSegment>CheckOpportunityStage</nameSegment>
+        <offset>0</offset>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
     <apiVersion>64.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
@@ -35,8 +65,65 @@
                 <elementReference>Product_Recommendation_Outcome</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>closeLostOptyBoolean</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
         <connector>
-            <targetReference>Event_Subflow_Discovery_Call_Completed_Date</targetReference>
+            <targetReference>Event_Subflow_Discovery_Call_Updates_on_Opportunity</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Check_Opportunity_Stage</name>
+        <label>Assign varFaultElement - Check_Opportunity_Stage</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Check_Opportunity_Stage</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_Opportunity_Info</name>
+        <label>Assign varFaultElement - Get Opportunity Info</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Opportunity_Info</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_User_Record_Access</name>
+        <label>Assign varFaultElement - Get User Record Access</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_User_Record_Access</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
     <choices>
@@ -62,10 +149,38 @@
         </value>
     </customProperties>
     <decisions>
+        <name>Can_User_move_to_Closed_Lost</name>
+        <label>Can User move to Closed Lost?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>User_does_not_have_Closed_Lost_perms_on_Opty_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_they_can</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Check_Opportunity_Stage.checkStage</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Move_Opty_to_Close_Lost_Screen</targetReference>
+            </connector>
+            <label>Yes they can</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_that_Opportunity_Id_was_passed_in</name>
         <label>Check that Opportunity Id was passed in</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>RecordId_Missing_Info_Screen</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Missing Opty Id</defaultConnectorLabel>
         <rules>
             <name>Yes_Opty_Id_is_populated</name>
@@ -88,6 +203,74 @@
                 <targetReference>Get_Opportunity_Info</targetReference>
             </connector>
             <label>Yes - Opty Id is populated</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_that_Opportunity_was_found_and_user_has_Edit_access</name>
+        <label>Check that Opportunity was found and user has Edit access</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Opportunity_Not_Found_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Opty not found or already closed</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Opty_found_and_user_can_edit</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varOpportunity</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>editableRecordId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>editableRecordId</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>What_is_the_next_step</targetReference>
+            </connector>
+            <label>Yes - Opty found and user can edit</label>
+        </rules>
+        <rules>
+            <name>Opportunity_found_but_user_cannot_edit</name>
+            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+            <conditions>
+                <leftValueReference>varOpportunity</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>editableRecordId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>editableRecordId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>User_does_not_have_Edit_perms_on_Opty_Screen</targetReference>
+            </connector>
+            <label>Opportunity found, but user cannot edit</label>
         </rules>
     </decisions>
     <decisions>
@@ -122,34 +305,12 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Move_Opty_to_Close_Lost_Screen</targetReference>
+                <targetReference>Check_Opportunity_Stage</targetReference>
             </connector>
             <label>Move Opty to Close Lost</label>
         </rules>
     </decisions>
-    <decisions>
-        <name>Was_the_Opportunity_found</name>
-        <label>Was the Opportunity found?</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnectorLabel>Opty not found or already closed</defaultConnectorLabel>
-        <rules>
-            <name>Yes_Opty_found</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>varOpportunity</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>What_is_the_next_step</targetReference>
-            </connector>
-            <label>Yes - Opty found</label>
-        </rules>
-    </decisions>
-    <description>Sends update to subflow. Added Product Recommendation on Close Lost</description>
+    <description>Switched over to newly renamed subflow to avoid confusion. Also handles all Discovery Call Created scenarios. Replaced District Manager Id with DM User. Sends to subflow regardless of Close Lost. Also checks that running user has edit access. Sends update to subflow. Added Product Recommendation on Close Lost</description>
     <dynamicChoiceSets>
         <name>optyCloseLost_Picklist</name>
         <dataType>Picklist</dataType>
@@ -168,6 +329,7 @@
     </dynamicChoiceSets>
     <environments>Default</environments>
     <interviewLabel>Event - Screen - Discovery Call Completed {!$Flow.CurrentDateTime}</interviewLabel>
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Event - Screen - Discovery Call Completed</label>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -195,10 +357,10 @@
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Was_the_Opportunity_found</targetReference>
+            <targetReference>Get_User_Record_Access</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Fault_Handler_Subflow</targetReference>
+            <targetReference>Assign_varFaultElement_Get_Opportunity_Info</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -233,8 +395,51 @@
         <queriedFields>Discovery_Call_Completed_Date__c</queriedFields>
         <queriedFields>OwnerId</queriedFields>
         <queriedFields>CloseDate</queriedFields>
-        <queriedFields>District_Manager_Id__c</queriedFields>
+        <queriedFields>NSP_DM_User__c</queriedFields>
+        <queriedFields>NSP_Last_Updated__c</queriedFields>
     </recordLookups>
+    <recordLookups>
+        <description>Ensure current User has &apos;Edit&apos; record access to prevent DmlExceptions.</description>
+        <name>Get_User_Record_Access</name>
+        <label>Get User Record Access</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_that_Opportunity_was_found_and_user_has_Edit_access</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_User_Record_Access</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RecordId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>UserId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$User.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>HasEditAccess</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>UserRecordAccess</object>
+        <outputAssignments>
+            <assignToReference>editableRecordId</assignToReference>
+            <field>RecordId</field>
+        </outputAssignments>
+    </recordLookups>
+    <runInMode>DefaultMode</runInMode>
     <screens>
         <name>Move_Opty_to_Close_Lost_Screen</name>
         <label>Move Opty to Close Lost Screen</label>
@@ -254,14 +459,6 @@
             <fieldType>DropdownBox</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
-            <styleProperties>
-                <verticalAlignment>
-                    <stringValue>top</stringValue>
-                </verticalAlignment>
-                <width>
-                    <stringValue>12</stringValue>
-                </width>
-            </styleProperties>
         </fields>
         <fields>
             <name>Reason_Lost_Notes</name>
@@ -269,14 +466,6 @@
             <fieldType>LargeTextArea</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>false</isRequired>
-            <styleProperties>
-                <verticalAlignment>
-                    <stringValue>top</stringValue>
-                </verticalAlignment>
-                <width>
-                    <stringValue>12</stringValue>
-                </width>
-            </styleProperties>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
@@ -296,15 +485,41 @@
             <fieldType>DropdownBox</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>false</isRequired>
-            <styleProperties>
-                <verticalAlignment>
-                    <stringValue>top</stringValue>
-                </verticalAlignment>
-                <width>
-                    <stringValue>12</stringValue>
-                </width>
-            </styleProperties>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Opportunity_Not_Found_Screen</name>
+        <label>Opportunity Not Found Screen</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Opty_not_found_Display_Text</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;The Opportunity record was not found, or is not open, so it cannot be updated.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <nextOrFinishButtonLabel>Finish</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>RecordId_Missing_Info_Screen</name>
+        <label>RecordId Missing Info Screen</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Message</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;Related Opportunity information is missing. Please ensure that the Discovery Call has the relevant Opportunity record populated in the &quot;Related To&quot; field.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <nextOrFinishButtonLabel>Finish</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
@@ -316,18 +531,50 @@
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Event_Subflow_Discovery_Call_Updates_on_Opportunity</targetReference>
+        </connector>
         <fields>
             <name>Reminder_DisplayText</name>
             <fieldText>&lt;p&gt;&lt;span style=&quot;color: black;&quot;&gt;Remember to update the following fields on this opportunity:&lt;/span&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot;color: black;&quot;&gt;Primary Product&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;color: black;&quot;&gt;Number of Employees&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;color: black;&quot;&gt;﻿Opportunity Credits&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Click &quot;Finish&quot; and you&apos;ll be redirected to the Opportunity record to make any other updates as needed.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-            <styleProperties>
-                <verticalAlignment>
-                    <stringValue>top</stringValue>
-                </verticalAlignment>
-                <width>
-                    <stringValue>12</stringValue>
-                </width>
-            </styleProperties>
+        </fields>
+        <nextOrFinishButtonLabel>Finish</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>User_does_not_have_Closed_Lost_perms_on_Opty_Screen</name>
+        <label>User does not have Closed Lost perms on Opty Screen</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Event_Subflow_Discovery_Call_Updates_on_Opportunity</targetReference>
+        </connector>
+        <fields>
+            <name>You_cannot_Closed_Lost_the_Opty_Display_Text</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;You do not have access to move opportunity to Closed Lost.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <nextOrFinishButtonLabel>Finish</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>User_does_not_have_Edit_perms_on_Opty_Screen</name>
+        <label>User does not have Edit perms on Opty Screen</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>You_cannot_edit_the_Opty_Display_Text</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;You do not have edit access on the Opportunity.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
         </fields>
         <nextOrFinishButtonLabel>Finish</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
@@ -348,14 +595,6 @@
             <name>HeaderDisplayText_NextStepScreen</name>
             <fieldText>&lt;p&gt;Discovery Call Completed for {!varOpportunity.NSP_Account_Name__c}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-            <styleProperties>
-                <verticalAlignment>
-                    <stringValue>top</stringValue>
-                </verticalAlignment>
-                <width>
-                    <stringValue>12</stringValue>
-                </width>
-            </styleProperties>
         </fields>
         <fields>
             <name>Are_you_moving_forward_with_this_opportunity</name>
@@ -366,14 +605,6 @@
             <fieldType>RadioButtons</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
-            <styleProperties>
-                <verticalAlignment>
-                    <stringValue>top</stringValue>
-                </verticalAlignment>
-                <width>
-                    <stringValue>12</stringValue>
-                </width>
-            </styleProperties>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
@@ -387,15 +618,15 @@
     </start>
     <status>Draft</status>
     <subflows>
-        <name>Event_Subflow_Discovery_Call_Completed_Date</name>
-        <label>Event - Subflow - Discovery Call Completed Date</label>
+        <name>Event_Subflow_Discovery_Call_Updates_on_Opportunity</name>
+        <label>Event - Subflow - Discovery Call Updates on Opportunity</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <flowName>Event_Subflow_Discovery_Call_Completed_Date</flowName>
+        <flowName>Event_Subflow_Discovery_Call_Updates_on_Opportunity</flowName>
         <inputAssignments>
             <name>closeLostOptyBoolean</name>
             <value>
-                <booleanValue>true</booleanValue>
+                <elementReference>closeLostOptyBoolean</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -414,7 +645,7 @@
         <inputAssignments>
             <name>faultElement</name>
             <value>
-                <stringValue>Get_Opportunity_Info</stringValue>
+                <elementReference>varFaultElement</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -431,10 +662,37 @@
         </inputAssignments>
     </subflows>
     <variables>
+        <name>closeLostOptyBoolean</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>editableRecordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
+    <variables>
         <name>recordId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
