@@ -12,6 +12,7 @@ Modification Log     :
 */
 
 public class NSP_ProjtaskTriggerServiceHelperUpdate {
+    // test w/ NSP_ProjtaskTriggerSrvcHelpUpdateTest (76%)
     /**
         * Iterates throught the list of new pse__Project_Task__c and passes the required attributes to other methods.
         * @param projectTaskList List of New project.

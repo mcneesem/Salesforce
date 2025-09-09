@@ -10,6 +10,13 @@ private class NSP_ProjtaskTriggerSrvcHelpUpdateTest {
     static void setUpData(){
         List<pse__Proj__c> prjList = new List<pse__Proj__c>();
         List<pse__Project_Task__c> prjtaskList = new List<pse__Project_Task__c>();
+        
+         ProjectTaskTriggerSettings__c userSetting = new ProjectTaskTriggerSettings__c(
+            SetupOwnerId = UserInfo.getUserId(), // current user
+            IsupdateSubtaskStatus__c = true
+        );
+        insert userSetting;
+        
         pse__Proj__c oProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
         oProject.pse__Project_Type__c = 'Implementation';
         oProject.RecordTypeId = PEORecordTypeId;
