@@ -115,7 +115,7 @@
         <actionName>StringSplitterAction</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Get_Account_Team</targetReference>
+            <targetReference>Check_SplitRoles_action</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -142,7 +142,7 @@
         <actionName>StringSplitterAction</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>CC_Recipient_Address_Collection</targetReference>
+            <targetReference>Check_Split_CCAddress_action</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -476,6 +476,92 @@
                 <targetReference>Account_Team_Email</targetReference>
             </connector>
             <label>ValidRoles</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Split_CCAddress_action</name>
+        <label>Check Split CCAddress action</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>CCAddress_Action_has_valid_value</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>SplitCustomSettingsEmailCCaddress</leftValueReference>
+                <operator>WasVisited</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>SplitCustomSettingsEmailCCaddress</leftValueReference>
+                <operator>HasError</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>SplitCustomSettingsEmailCCaddress.resultList</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>SplitCustomSettingsEmailCCaddress.resultList</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>CC_Recipient_Address_Collection</targetReference>
+            </connector>
+            <label>CCAddress Action has valid value</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_SplitRoles_action</name>
+        <label>Check SplitRoles action</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Valid_AccTeam_Roles</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Split_Roles_on_custom_settings_for_role</leftValueReference>
+                <operator>WasVisited</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Split_Roles_on_custom_settings_for_role</leftValueReference>
+                <operator>HasError</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Split_Roles_on_custom_settings_for_role.resultList</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Split_Roles_on_custom_settings_for_role.resultList</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Account_Team</targetReference>
+            </connector>
+            <label>Valid AccTeam Roles</label>
         </rules>
     </decisions>
     <environments>Default</environments>

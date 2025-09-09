@@ -13,35 +13,35 @@
 public with sharing class NSP_TerminationFormTemplateController {
     // test w/ NSP_TerminationFormTempController_Test (98%)
 
-    public List<wrapTermination> wrapTerminationList { get; set; }
-    public List<wrapTermination> wrapReinstatementList { get; set; }
+    public List<WrapTermination> wrapTerminationList { get; set; }
+    public List<WrapTermination> wrapReinstatementList { get; set; }
 
     public NSP_TerminationFormTemplateController() {
         wrapTerminationList = initializeWrapTerminationList( getTermFormList() );
         wrapReinstatementList = initializeWrapReinstatementList( getReinstatementList() );
     }
 
-    private List<wrapTermination> initializeWrapTerminationList( List<NSP_Termination_Form__c> terminationFormList ) {
+    private List<WrapTermination> initializeWrapTerminationList( List<NSP_Termination_Form__c> terminationFormList ) {
         return initializeWrapList(
             terminationFormList ,
             wrapTerminationList
         );
     }
 
-    private List<wrapTermination> initializeWrapReinstatementList( List<NSP_Termination_Form__c> terminationFormList ) {
+    private List<WrapTermination> initializeWrapReinstatementList( List<NSP_Termination_Form__c> terminationFormList ) {
         return initializeWrapList(
             terminationFormList ,
             wrapReinstatementList
         );
     }
 
-    private List<wrapTermination> initializeWrapList( List<NSP_Termination_Form__c> terminationFormList , List<wrapTermination> wrapList ) {
+    private List<WrapTermination> initializeWrapList( List<NSP_Termination_Form__c> terminationFormList , List<WrapTermination> wrapList ) {
         if ( ( wrapList == null )
             && ( terminationFormList != null )
             && !terminationFormList.isEmpty()
             )
         {
-            wrapList = new List<wrapTermination>();
+            wrapList = new List<WrapTermination>();
             Map<Id,NSP_Termination_Form__c> accountWithTerminationMap = getMapAccountsToTerminations( terminationFormList );
             Map<Id,List<NSP_Account_Team__c>> accountWithAccountTeammemberMap = getAccountWithAccountTeammemberMap( accountWithTerminationMap );
             if ( !accountWithTerminationMap.isEmpty()
@@ -54,7 +54,7 @@ public with sharing class NSP_TerminationFormTemplateController {
                         accountWithAccountTeammemberMap ,
                         accountId
                     );
-                    wrapList.add( new wrapTermination( termination , roleMap ) );
+                    wrapList.add( new WrapTermination( termination , roleMap ) );
                 }
             }
         }
@@ -234,86 +234,5 @@ public with sharing class NSP_TerminationFormTemplateController {
         return new NSP_EmailImageController().getHRLogoLogoUrl();
     }
 
-    // This is our wrapper/container class. A container class is a class, a data structure, or an abstract data type whose instances are collections of other objects. In this example a wrapper class contains both the standard salesforce object Account and a Boolean value
-    public class wrapTermination {
-        public String clinetName { get; set; }
-        public String clinetNumber { get; set; }
-        public Decimal eeNumber { get; set; }
-        public String psName { get; set; }
-        public String clName { get; set; }
-        public Date csaTerm { get; set; }
-        public Date beneterm { get; set; }
-        public String reason { get; set; }
-        public String saName { get; set; }
-        public String clientnumber { get; set; }
-        public String clientname { get; set; }
-        public String revision { get; set; }
-        public Date previousTermDate { get; set; }
-        public String subTermReason { get; set; }
-        public Date previousBeneTerm { get; set; }
-        public String previousTermReason { get; set; }
-        public Date clienTermDate { get; set; }
-        public String previousReason { get; set; }
-        public String previousSubtermReason { get; set; }
-        public Date previousClientTermdate { get; set; }
-
-        //This is the contructor method. When we create a new wrapAccount object we pass a Account that is set to the acc property. We also set the selected value to false
-        public wrapTermination( NSP_Termination_Form__c termination , Map<String,String> roleMapDetails ) {
-            clinetName = termination.NSP_Project_Task__r.pse__Project__r.pse__Account__r.Name;
-            clinetNumber = termination.NSP_Client_Sub_Account_Numbers__c;
-            eeNumber = termination.NSP_Number_of_Active_Employees__c;
-            if ( ( termination.NSP_Term_Reason__c =='1900 Merger with Insperity Client' )
-                || ( termination.NSP_Term_Reason__c =='2700 Change in FEIN' )
-                )
-            {
-                eeNumber = termination.NSP_How_many_employees_were_moved__c;
-            }
-            if (roleMapDetails != null) {
-                psName = getRoleName(roleMapDetails, NSP_ServiceConstants.PAYROLL_SPECIALIST);
-                clName = getJoinedRoleNames(
-                    roleMapDetails ,
-                    new List<String>{
-                        NSP_ServiceConstants.CLIENT_LIAISION ,
-                        NSP_ServiceConstants.BUS_TEAM_HRSP_CL ,
-                        NSP_ServiceConstants.MID_MARKET_ACC_EX
-                    }
-                );
-                saName = getJoinedRoleNames(
-                    roleMapDetails ,
-                    new List<String>{
-                        NSP_ServiceConstants.BUSINESS_PERFORMANCE_ADVISOR ,
-                        NSP_ServiceConstants.BUSINESS_PERFORMANCE_CONSULTANT
-                    }
-                );
-            }
-            csaTerm = termination.NSP_Last_Date_Wages_Paid_Through__c;
-            beneterm = termination.NSP_Benefit_Termination_Date__c;
-            reason = termination.NSP_Term_Reason__c;
-            clientnumber = termination.NSP_New_Client_Number__c;
-            clientname = termination.NSP_New_Client_Name__c;
-            revision = termination.NSP_Revision__c;
-            previousTermDate = termination.Previous_term_date__c;
-            subTermReason = termination.NSP_SubTerm_reason__c;
-            previousBeneTerm = termination.Previous_Bene_Date__c;
-            clientermdate = termination.NSP_Client_Term_Date__c;
-            previousReason = termination.Previous_Term_Reason__c;
-            previousSubtermReason = termination.Previous_Sub_Term_Reason__c;
-            previousClientTermdate = termination.Previous_Client_Term_Date__c;
-        }
-
-        private String getRoleName( Map<String,String> roleMap , String roleKey ) {
-            return roleMap.containsKey(roleKey) ? roleMap.get(roleKey) : '';
-        }
-
-        private String getJoinedRoleNames( Map<String,String> roleMap , List<String> roleKeys ) {
-            List<String> names = new List<String>();
-            for ( String key : roleKeys ) {
-                if ( roleMap.containsKey( key ) ) {
-                    names.add( roleMap.get( key ) );
-                }
-            }
-            return names.isEmpty() ? '' : String.join( names , ', ' );
-        }
-    }
 
 }
