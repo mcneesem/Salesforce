@@ -40,7 +40,7 @@ public with sharing class CheckOpportunityStage {
     }
 
     public class CheckStageRequest {
-        @InvocableVariable(label='Opportunity' description='Opportunity record' required=true)
+        @InvocableVariable(label='Opportunity Id' description='Opportunity record' required=true)
         public Id oppRecordId;
         @InvocableVariable(label='Stage' description='Stage Name' required=true)
         public String stageName;
