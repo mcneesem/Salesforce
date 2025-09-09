@@ -333,7 +333,7 @@
                 <leftValueReference>$Record.Name</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Secure 2.0 – Prior YTD Wage Collection</stringValue>
+                    <stringValue>Secure 2.0 - Prior YTD Wage Collection</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -353,7 +353,7 @@
             <connector>
                 <targetReference>Prior_Wage_Data_Prior_Year_SS_Wages</targetReference>
             </connector>
-            <label>Secure 2.0 – Prior YTD Wage Collection</label>
+            <label>Secure 2.0 - Prior YTD Wage Collection</label>
         </rules>
     </decisions>
     <description>Creates Cases when a Project Task gets Completed.</description>
@@ -544,7 +544,7 @@
             <field>Name</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Secure 2.0 – Prior YTD Wage Collection</stringValue>
+                <stringValue>Secure 2.0 - Prior YTD Wage Collection</stringValue>
             </value>
         </filters>
         <object>pse__Project_Task__c</object>
@@ -585,7 +585,7 @@
     </subflows>
     <subflows>
         <name>Prior_Wage_Data_Prior_Year_SS_Wages</name>
-        <label>Prior Wage Data – Prior Year SS Wages</label>
+        <label>Prior Wage Data - Prior Year SS Wages</label>
         <locationX>1106</locationX>
         <locationY>708</locationY>
         <connector>
@@ -637,7 +637,7 @@
         <inputAssignments>
             <name>Subject</name>
             <value>
-                <stringValue>Prior Wage Data – Prior Year SS Wages</stringValue>
+                <stringValue>Prior Wage Data - Prior Year SS Wages</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
