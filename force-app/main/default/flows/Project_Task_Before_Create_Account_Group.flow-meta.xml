@@ -45,6 +45,28 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_Custom_Permission</name>
+        <label>Check Custom Permission</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>User_has_Termination_Revision_Custom_Permission</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Permission.Termination_Revision</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Project_Account</targetReference>
+            </connector>
+            <label>User has Termination Revision Custom Permission</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_Project_Account</name>
         <label>Check Project Account</label>
         <locationX>0</locationX>
@@ -120,7 +142,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Check_Project_Account</targetReference>
+            <targetReference>Check_Custom_Permission</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>

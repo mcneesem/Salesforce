@@ -590,10 +590,16 @@
                 <fieldItem>Record.Account_Group__c</fieldItem>
                 <identifier>RecordAccount_Group_cField</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Name}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Update Renewal Probability/Plan of Action/Term Info</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Termination_Revision}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
