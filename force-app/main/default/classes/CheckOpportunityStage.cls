@@ -12,8 +12,10 @@ public with sharing class CheckOpportunityStage {
             opty.StageName = inputs[0].stageName;
             checkStageOptyList.add( opty );
             NSP_ValidateOpportunityStage.validateOpportunityStage( checkStageOptyList );
-            if( !checkStageOptyList[0].hasErrors() ) {
-                output.checkStage = true;
+            for ( Opportunity opp : checkStageOptyList ) {
+                if( !opp.hasErrors() ) {
+                    output.checkStage = true;
+                }
             }
             outputs.add( output );
         }
