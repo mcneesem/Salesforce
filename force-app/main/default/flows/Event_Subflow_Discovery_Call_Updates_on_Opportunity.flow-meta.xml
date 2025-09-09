@@ -154,6 +154,36 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_Discovery_Call_Created_Date</name>
+        <label>Assign Discovery Call Created Date</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varOpportunityToUpdate.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varOpportunity.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varOpportunityToUpdate.Discovery_Call_Created_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>updateOpportunity</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_the_Opportunity</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_DM_User_Id_to_collectionRecipientIds</name>
         <label>Assign DM User Id to collectionRecipientIds</label>
         <locationX>0</locationX>
@@ -226,7 +256,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_the_Opportunity</targetReference>
+            <targetReference>Should_Discovery_Call_Created_Date_be_updated</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -306,7 +336,7 @@
         </defaultConnector>
         <defaultConnectorLabel>Not an HR360 Product</defaultConnectorLabel>
         <rules>
-            <name>HR360_Primary_Product_Selected</name>
+            <name>HR360_Primary_Product_Selected_or_Primary_Product_is_blank</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>varOpportunity.NSP_PrimaryProduct__c</leftValueReference>
@@ -322,10 +352,14 @@
                     <stringValue>WS</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>varOpportunity.NSP_PrimaryProduct__c</leftValueReference>
+                <operator>EqualTo</operator>
+            </conditions>
             <connector>
                 <targetReference>Assign_Opportunity_Close_Date</targetReference>
             </connector>
-            <label>HR360 Primary Product Selected</label>
+            <label>HR360 Primary Product Selected or Primary Product is blank</label>
         </rules>
     </decisions>
     <decisions>
@@ -464,6 +498,13 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>varOpportunity.Discovery_Call_Created_Date__c</leftValueReference>
+                <operator>WasSet</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Is_closeLostOptyBoolean_set_to_TRUE</targetReference>
             </connector>
@@ -521,6 +562,38 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Should_Discovery_Call_Created_Date_be_updated</name>
+        <label>Should Discovery Call Created Date be updated?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Update_the_Opportunity</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Do not update Discovery Call Created Date</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Update_Discovery_Call_Created_Date</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varOpportunity.Discovery_Call_Created_Date__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Flow.CurrentDate</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>isDiscoveryCallCreated</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Discovery_Call_Created_Date</targetReference>
+            </connector>
+            <label>Yes - Update Discovery Call Created Date</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Should_Opportunity_Discovery_Call_Completed_Date_be_updated</name>
         <label>Should Opportunity Discovery Call Completed Date be updated?</label>
         <locationX>0</locationX>
@@ -551,7 +624,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Update_the_Opportunity</targetReference>
+            <targetReference>Should_Discovery_Call_Created_Date_be_updated</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Do not update Last Updated</defaultConnectorLabel>
         <rules>
@@ -617,6 +690,7 @@
             <label>Yes - DM was found</label>
         </rules>
     </decisions>
+    <description>Runs through logic when Discovery Call is completed to make updates on related Opportunity as needed.</description>
     <environments>Default</environments>
     <formulas>
         <name>eventCompletedDatePlus60Formula</name>
@@ -825,6 +899,16 @@
         <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>isDiscoveryCallCreated</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <name>updateOpportunity</name>

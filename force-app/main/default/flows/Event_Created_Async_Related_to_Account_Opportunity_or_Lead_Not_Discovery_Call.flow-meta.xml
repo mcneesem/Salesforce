@@ -28,6 +28,13 @@
                 <elementReference>$Record.WhatId</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varEvent.NSP_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.NSP_Status__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Event_Subflow_Update_Related_to_Account_Opportunity_or_Lead</targetReference>
         </connector>
@@ -54,7 +61,7 @@
             <label>Is Bypassed</label>
         </rules>
     </decisions>
-    <description>When an Event that is not a Discovery Call is related to Opportunity or Account and/or Lead, make updates to the related records as needed.</description>
+    <description>Added Status to varEvent. When an Event that is not a Discovery Call is related to Opportunity or Account and/or Lead, make updates to the related records as needed.</description>
     <environments>Default</environments>
     <interviewLabel>Event - Created - Async - Related to Account Opportunity or Lead - Not Discovery Call {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Event - Created - Async - Related to Account Opportunity or Lead - Not Discovery Call</label>
