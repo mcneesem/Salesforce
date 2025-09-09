@@ -29,10 +29,13 @@ public with sharing class CheckOpportunityStage {
                 FROM Opportunity
                 WHERE Id = :optyId
             ];
-            checkStageOptyList[0].StageName = inputs[0].stageName;
-            NSP_ValidateOpportunityStage.validateOpportunityStage( checkStageOptyList );
-            if( !checkStageOptyList[0].hasErrors() ) {
-                output.checkStage = true;
+
+            if(!checkStageOptyList.isEmpty()) {
+                checkStageOptyList[0].StageName = inputs[0].stageName;
+                NSP_ValidateOpportunityStage.validateOpportunityStage( checkStageOptyList );
+                if( !checkStageOptyList[0].hasErrors() ) {
+                    output.checkStage = true;
+                }
             }
             outputs.add( output );
         }
