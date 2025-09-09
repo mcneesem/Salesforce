@@ -98,6 +98,10 @@
                 <stringValue>Get_Parent_Task_Record</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Set_Fault_Element_Parent_Task_Update_Status</name>
@@ -116,7 +120,7 @@
         </connector>
     </assignments>
     <assignments>
-        <description>When all child task status = Canceled then Set Parent = Canceled</description>
+        <description>When all child task status = Canceled  then Set Parent = Canceled</description>
         <name>Set_Parent_Task_Status_Canceled</name>
         <label>Set Parent Task Status = Canceled</label>
         <locationX>0</locationX>
@@ -133,8 +137,8 @@
         </connector>
     </assignments>
     <assignments>
-        <description>When all child task status = Complete then Set Parent = Complete
-            When Mix of of child task status = Complete and Canceled then Set Parent = Complete</description>
+        <description>When all child task status = Complete  then Set Parent = Complete
+When Mix of of child task status = Complete and Canceled then Set Parent = Complete</description>
         <name>Set_Parent_Task_Status_Complete</name>
         <label>Set Parent Task Status = Complete</label>
         <locationX>0</locationX>
@@ -151,7 +155,7 @@
         </connector>
     </assignments>
     <assignments>
-        <description>When one of child task status = Complete then Set Parent = In Progress</description>
+        <description>When one of child task status = Complete  then Set Parent = In Progress</description>
         <name>Set_Parent_Task_Status_In_Progress</name>
         <label>Set Parent Task Status = In Progress</label>
         <locationX>0</locationX>
@@ -343,10 +347,10 @@
         </rules>
     </decisions>
     <decisions>
-        <description>1) When one of child task status = Complete then Set Parent = In Progress
-            2) When Mix of of child task status = Complete and Canceled then Set Parent = Complete
-            3) When all child task status = Complete then Set Parent = Complete
-            4) When all child task status = Canceled then Set Parent = Canceled</description>
+        <description>1) When one of child task status = Complete  then Set Parent = In Progress
+2) When Mix of of child task status = Complete and Canceled then Set Parent = Complete
+3) When all child task status = Complete  then Set Parent = Complete
+4) When all child task status = Canceled  then Set Parent = Canceled</description>
         <name>Status_Completed_or_Canceled</name>
         <label>Status = Completed or Canceled</label>
         <locationX>0</locationX>
@@ -437,13 +441,9 @@
     </decisions>
     <description>AZD-447254 : Update Parent Task Status when Child Task is Updated
 
-        1) When one of child task status = Complete then Set Parent = In Progress , 2) When Mix of
-        of child task status = Complete and Canceled then Set Parent = Complete ,3) When all child
-        task status = Complete then Set Parent = Complete 4) When all child task status = Canceled
-        then Set Parent = Canceled</description>
+1) When one of child task status = Complete  then Set Parent = In Progress , 2) When Mix of of child task status = Complete and Canceled then Set Parent = Complete ,3) When all child task status = Complete  then Set Parent = Complete 4) When all child task status = Canceled  then Set Parent = Canceled</description>
     <environments>Default</environments>
-    <interviewLabel>Project Task - Updated - Async - Update Parent Task Status
-        {!$Flow.CurrentDateTime}</interviewLabel>
+    <interviewLabel>Project Task - Updated - Async - Update Parent Task Status {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Project Task - Updated - Async - Update Parent Task Status</label>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -582,15 +582,15 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>faultMessage</name>
+            <name>faultFlow</name>
             <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
+                <stringValue>Project_Task_Updated_Async_Update_Parent_Task_Status</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>triggeringFlow</name>
+            <name>faultMessage</name>
             <value>
-                <stringValue>Project_Task_Updated_Async_Update_Parent_Task_Status</stringValue>
+                <elementReference>$Flow.FaultMessage</elementReference>
             </value>
         </inputAssignments>
     </subflows>

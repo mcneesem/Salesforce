@@ -14,6 +14,10 @@
                 <stringValue>Get_Parent_Task_Record</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Set_Fault_Element_Parent_Task_Update_Status</name>
@@ -79,8 +83,7 @@
     </decisions>
     <description>AZD-447254 : Update Parent Task Status when Child Task is Created</description>
     <environments>Default</environments>
-    <interviewLabel>Project Task - Created - Async - Update Parent Task Status
-        {!$Flow.CurrentDateTime}</interviewLabel>
+    <interviewLabel>Project Task - Created - Async - Update Parent Task Status {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Project Task - Created - Async - Update Parent Task Status</label>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -215,15 +218,15 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>faultMessage</name>
+            <name>faultFlow</name>
             <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
+                <stringValue>Project_Task_Created_Async_Update_Parent_Task_Status</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>triggeringFlow</name>
+            <name>faultMessage</name>
             <value>
-                <stringValue>Project_Task_Created_Async_Update_Parent_Task_Status</stringValue>
+                <elementReference>$Flow.FaultMessage</elementReference>
             </value>
         </inputAssignments>
     </subflows>
