@@ -1,9 +1,10 @@
 public class ContractTerminationHandler {
     // test w/ ContractTerminationHandlerTest (95%)
-   private static Id contractId;
 
-   @InvocableMethod(label='runContractTerminationHandler' description='Method to trigger call for contract termination')
-   public static void runContractTerminationHandler( List<ContractTerminationRequest> requests ) {
+    private static Id contractId;
+
+    @InvocableMethod(label='runContractTerminationHandler' description='Method to trigger call for contract termination')
+    public static void runContractTerminationHandler( List<ContractTerminationRequest> requests ) {
         Map<Id,Date> contractToTerminationDates = new Map<Id,Date>();
         if ( ( requests != null ) && !requests.isEmpty() ) {
             for ( ContractTerminationRequest request : requests ) {
@@ -11,7 +12,7 @@ public class ContractTerminationHandler {
             }
         }
         ContractTerminationHandler.handleTermination( contractToTerminationDates , null , 'runContractTerminationHandler:InvocableMethod' );
-   }
+    }
 
     public class ContractTerminationRequest {
         @InvocableVariable(label='Contract ID' required=true)
