@@ -206,74 +206,6 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Check_that_Opportunity_was_found_and_user_has_Edit_access</name>
-        <label>Check that Opportunity was found and user has Edit access</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Opportunity_Not_Found_Screen</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Opty not found or already closed</defaultConnectorLabel>
-        <rules>
-            <name>Yes_Opty_found_and_user_can_edit</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>varOpportunity</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>editableRecordId</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>editableRecordId</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue></stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>What_is_the_next_step</targetReference>
-            </connector>
-            <label>Yes - Opty found and user can edit</label>
-        </rules>
-        <rules>
-            <name>Opportunity_found_but_user_cannot_edit</name>
-            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
-            <conditions>
-                <leftValueReference>varOpportunity</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>editableRecordId</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>editableRecordId</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue></stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>User_does_not_have_Edit_perms_on_Opty_Screen</targetReference>
-            </connector>
-            <label>Opportunity found, but user cannot edit</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Continue_working_or_Close_Opty</name>
         <label>Continue working or Close Opty?</label>
         <locationX>0</locationX>
@@ -308,6 +240,71 @@
                 <targetReference>Check_Opportunity_Stage</targetReference>
             </connector>
             <label>Move Opty to Close Lost</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Decision_5</name>
+        <label>Was an open Opportunity found?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Opportunity_Not_Found_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Opportunity not found or closed</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Open_Opportunity_was_found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varOpportunity</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_User_Record_Access</targetReference>
+            </connector>
+            <label>Yes - Open Opportunity was found</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Does_user_have_Edit_access_on_Opty</name>
+        <label>Does user have Edit access on Opty?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Opportunity_Not_Found_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>User access undetermined</defaultConnectorLabel>
+        <rules>
+            <name>Yes_user_has_Edit_access</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>editableRecordId</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>What_is_the_next_step</targetReference>
+            </connector>
+            <label>Yes - user has Edit access</label>
+        </rules>
+        <rules>
+            <name>User_does_not_have_Edit_access</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>editableRecordId</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>User_does_not_have_Edit_perms_on_Opty_Screen</targetReference>
+            </connector>
+            <label>User does not have Edit access</label>
         </rules>
     </decisions>
     <description>Switched over to newly renamed subflow to avoid confusion. Also handles all Discovery Call Created scenarios. Replaced District Manager Id with DM User. Sends to subflow regardless of Close Lost. Also checks that running user has edit access. Sends update to subflow. Added Product Recommendation on Close Lost</description>
@@ -357,7 +354,7 @@
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_User_Record_Access</targetReference>
+            <targetReference>Decision_5</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Assign_varFaultElement_Get_Opportunity_Info</targetReference>
@@ -406,7 +403,7 @@
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Check_that_Opportunity_was_found_and_user_has_Edit_access</targetReference>
+            <targetReference>Does_user_have_Edit_access_on_Opty</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Assign_varFaultElement_Get_User_Record_Access</targetReference>
@@ -459,6 +456,14 @@
             <fieldType>DropdownBox</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <fields>
             <name>Reason_Lost_Notes</name>
@@ -466,6 +471,14 @@
             <fieldType>LargeTextArea</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>false</isRequired>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
@@ -485,6 +498,14 @@
             <fieldType>DropdownBox</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>false</isRequired>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
@@ -499,8 +520,16 @@
         <allowPause>false</allowPause>
         <fields>
             <name>Opty_not_found_Display_Text</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;The Opportunity record was not found, or is not open, so it cannot be updated.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;The Opportunity record was not found, or is not open, or you do not have the proper permissions to update it.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <nextOrFinishButtonLabel>Finish</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
@@ -518,6 +547,14 @@
             <name>Message</name>
             <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;Related Opportunity information is missing. Please ensure that the Discovery Call has the relevant Opportunity record populated in the &quot;Related To&quot; field.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <nextOrFinishButtonLabel>Finish</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
@@ -538,6 +575,14 @@
             <name>Reminder_DisplayText</name>
             <fieldText>&lt;p&gt;&lt;span style=&quot;color: black;&quot;&gt;Remember to update the following fields on this opportunity:&lt;/span&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot;color: black;&quot;&gt;Primary Product&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;color: black;&quot;&gt;Number of Employees&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;color: black;&quot;&gt;﻿Opportunity Credits&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Click &quot;Finish&quot; and you&apos;ll be redirected to the Opportunity record to make any other updates as needed.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <nextOrFinishButtonLabel>Finish</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
@@ -558,6 +603,14 @@
             <name>You_cannot_Closed_Lost_the_Opty_Display_Text</name>
             <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;You do not have access to move opportunity to Closed Lost.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <nextOrFinishButtonLabel>Finish</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
@@ -575,6 +628,14 @@
             <name>You_cannot_edit_the_Opty_Display_Text</name>
             <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;You do not have edit access on the Opportunity.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <nextOrFinishButtonLabel>Finish</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
@@ -595,6 +656,14 @@
             <name>HeaderDisplayText_NextStepScreen</name>
             <fieldText>&lt;p&gt;Discovery Call Completed for {!varOpportunity.NSP_Account_Name__c}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <fields>
             <name>Are_you_moving_forward_with_this_opportunity</name>
@@ -605,6 +674,14 @@
             <fieldType>RadioButtons</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
