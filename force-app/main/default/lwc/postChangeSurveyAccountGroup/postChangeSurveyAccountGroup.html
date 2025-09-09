@@ -1,0 +1,22 @@
+<template>
+<!-- Popup Modal -->
+  <template lwc:if={showFirstModal}>
+    <dialog open tabindex="-1" class="slds-modal slds-fade-in-open">
+      <div class="slds-modal__container">
+        <header class="slds-modal__header">
+          <h2 class="slds-text-heading_medium">
+                        Have you documented your At Risk Reasons?
+          </h2>
+        </header>
+        <div class="slds-modal__content slds-p-around_medium">
+          <p>Please confirm before proceeding.</p>
+        </div>
+        <footer class="slds-modal__footer">
+          <lightning-button label="Yes" variant="brand" onclick={handleYes}></lightning-button>
+          <lightning-button label="No" variant="destructive" onclick={handleNo} class="slds-m-left_small"></lightning-button>
+        </footer>
+      </div>
+    </dialog>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+  </template>
+</template>
