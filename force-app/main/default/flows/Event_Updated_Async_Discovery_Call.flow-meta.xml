@@ -391,6 +391,25 @@
         </defaultConnector>
         <defaultConnectorLabel>Event Status is not &apos;Completed&apos;</defaultConnectorLabel>
         <rules>
+            <name>Is_Event_Screen_Discovery_Call_Completed_ON</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NSP_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Completed</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Setup.OpportunityStageSettings__c.Is_Enabled_DiscoveryCallCompletedScreen__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Is Event - Screen - Discovery Call Completed ON?</label>
+        </rules>
+        <rules>
             <name>Yes_Discovery_Call_Completed</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
@@ -398,6 +417,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Completed</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Setup.OpportunityStageSettings__c.Is_Enabled_DiscoveryCallCompletedScreen__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -619,6 +645,7 @@
             <label>Related to Account</label>
         </rules>
     </decisions>
+    <description>Updated with Screen flow bypass if DC Completed and OpportunityStageSettings.Is Enabled DiscoveryCallCompletedScreen = TRUE</description>
     <environments>Default</environments>
     <interviewLabel>Event - Updated - Async - Discovery Call {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Event - Updated - Async - Discovery Call</label>
