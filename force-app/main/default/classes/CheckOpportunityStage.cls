@@ -30,7 +30,7 @@ public with sharing class CheckOpportunityStage {
                 WHERE Id = :optyId
             ];
 
-            if(!checkStageOptyList.isEmpty()) {
+            if( !checkStageOptyList.isEmpty() ) {
                 checkStageOptyList[0].StageName = inputs[0].stageName;
                 NSP_ValidateOpportunityStage.validateOpportunityStage( checkStageOptyList );
                 if( !checkStageOptyList[0].hasErrors() ) {
