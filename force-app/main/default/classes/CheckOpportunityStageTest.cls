@@ -2,20 +2,18 @@
 public class CheckOpportunityStageTest {
     @isTest
     static void testCheckOpportunityStage() {
-        Account acnt=NSP_TestHelper.createAccount(true);
         // Create a test opportunity
-        Opportunity opp = NSP_TestHelper.createOpenOpportunity(acnt.Id,'New Product',false);
-        opp.StageName = 'Prospecting';
-        opp.NSP_Number_of_Employees__c=12;
-        opp.NSP_BidNumber__c='123';
-        opp.NSP_PrimaryProduct__c = 'WS';
-        opp.NSP_Partner__c=acnt.Id;
-        insert opp;
+        Opportunity testOpportunity = new Opportunity(
+            Name = 'Test Opportunity',
+            StageName = 'Prospecting',
+            CloseDate = Date.today().addDays(30)
+        );
+        insert testOpportunity;
 
         // Create a CheckStageRequest input
         CheckOpportunityStage.CheckStageRequest request = new CheckOpportunityStage.CheckStageRequest();
-        request.oppRecord = opp;
-        request.stageName = 'Closed Lost';
+        request.oppRecord = testOpportunity;
+        request.stageName = 'Closed Won';
 
         // Prepare the input list
         List<CheckOpportunityStage.CheckStageRequest> requests = new List<CheckOpportunityStage.CheckStageRequest>();
@@ -23,9 +21,6 @@ public class CheckOpportunityStageTest {
 
         // Call the method under test
         Test.startTest();
-        OpportunityStageSettings__c setting = new OpportunityStageSettings__c();
-        setting.Is_Enabled_WO_WS_Stage_Entry__c = true;
-        insert setting;
         List<CheckOpportunityStage.CheckStageResponse> responses = CheckOpportunityStage.checkOpportunityStage(requests);
         Test.stopTest();
 
