@@ -80,7 +80,7 @@ public class ContractTerminationQueue implements Queueable , Database.AllowsCall
 
     public static void testHandleException( Exception e , String methodName ) {
         if ( Test.isRunningTest() ) {
-            ContractTerminationQueue handler = new ContractTerminationQueue( null, null );
+            ContractTerminationQueue handler = new ContractTerminationQueue( null , null );
             handler.handleException( e , methodName );
         }
     }
