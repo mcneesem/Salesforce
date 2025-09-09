@@ -103,7 +103,7 @@
             <label>Opportunity</label>
         </rules>
     </decisions>
-    <description>Populates the Activity custom Account and/or Opportunity field if Account or Opportunity is in the RelatedTo field.</description>
+    <description>Updated to narrow Get Opportunity to just when AccountId is populated. Populates the Activity custom Account and/or Opportunity field if Account or Opportunity is in the RelatedTo field.</description>
     <environments>Default</environments>
     <interviewLabel>Event - Before Save Related to Account or Opportunity {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Event - Before Save - Related to Account or Opportunity</label>
@@ -141,6 +141,20 @@
             <operator>EqualTo</operator>
             <value>
                 <elementReference>$Record.WhatId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>AccountId</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>AccountId</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue></stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
