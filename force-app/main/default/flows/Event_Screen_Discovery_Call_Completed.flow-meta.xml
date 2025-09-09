@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <actionCalls>
-        <name>Check_Opportunity_Closed_Lost</name>
-        <label>Check Opportunity Closed Lost</label>
+        <name>Check_Opportunity_Stage</name>
+        <label>Check Opportunity Stage - Closed Lost</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <actionName>CheckOpportunityClosedLost</actionName>
+        <actionName>CheckOpportunityStage</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Can_User_move_to_Closed_Lost</targetReference>
@@ -20,7 +20,13 @@
                 <elementReference>recordId</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>CheckOpportunityClosedLost</nameSegment>
+        <inputParameters>
+            <name>stageName</name>
+            <value>
+                <stringValue>Closed Lost</stringValue>
+            </value>
+        </inputParameters>
+        <nameSegment>CheckOpportunityStage</nameSegment>
         <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
@@ -79,7 +85,7 @@
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Check_Opportunity_Closed_Lost</stringValue>
+                <stringValue>Check_Opportunity_Stage</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -155,7 +161,7 @@
             <name>Yes_they_can</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Check_Opportunity_Closed_Lost.checkStage</leftValueReference>
+                <leftValueReference>Check_Opportunity_Stage.checkStage</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -231,7 +237,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Check_Opportunity_Closed_Lost</targetReference>
+                <targetReference>Check_Opportunity_Stage</targetReference>
             </connector>
             <label>Move Opty to Close Lost</label>
         </rules>
