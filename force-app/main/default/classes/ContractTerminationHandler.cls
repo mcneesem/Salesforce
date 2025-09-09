@@ -20,12 +20,12 @@ public class ContractTerminationHandler {
         public Date terminationDate;
     }
 
-    public static void runContractTerminationHandler( Id contractId , Date terminationDate , String emailAddress ) {
+    public static void runContractTerminationHandler( Id localContractId , Date terminationDate , String emailAddress ) {
         Map<Id,Date> contractToTerminationDates = new Map<Id,Date>();
         Map<Id,String> contractToEmails = new Map<Id,String>();
-        if ( ( contractId != null ) && ( terminationDate != null ) ) {
-            contractToTerminationDates.put( contractId , terminationDate );
-            contractToEmails.put( contractId , emailAddress );
+        if ( ( localContractId != null ) && ( terminationDate != null ) ) {
+            contractToTerminationDates.put( localContractId , terminationDate );
+            contractToEmails.put( localContractId , emailAddress );
         }
         ContractTerminationHandler.handleTermination( contractToTerminationDates , contractToEmails , 'runContractTerminationHandler' );
     }
@@ -39,14 +39,14 @@ public class ContractTerminationHandler {
         String userEmailAddress = null;
         try {
             if ( ( contractToTerminationDates != null ) && !contractToTerminationDates.isEmpty() ) {
-                contractId = new List<Id>( contractToTerminationDates.keySet() )[0];
+                ContractTerminationHandler.contractId = new List<Id>( contractToTerminationDates.keySet() )[0];
                 if ( contractToEmails != null ) {
-                    userEmailAddress = contractToEmails.get( contractId );
+                    userEmailAddress = contractToEmails.get( ContractTerminationHandler.contractId );
                 }
                 if ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
                     System.enqueueJob( new ContractTerminationQueue( contractToTerminationDates , contractToEmails ) );
                 } else {
-                    ContractTerminationHandler.constructAndSendEmail( userEmailAddress , 'Enqueue Job for Contract (Id=' + contractId + ')' );
+                    ContractTerminationHandler.constructAndSendEmail( userEmailAddress , 'Enqueue Job for Contract (Id=' + ContractTerminationHandler.contractId + ')' );
                 }
             }
         } catch ( Exception e ) {
@@ -67,7 +67,7 @@ public class ContractTerminationHandler {
             methodName ,
             e
         );
-        ContractTerminationHandler.sendEmail( null , methodName + ' (Contract.Id=' + contractId + ')' );
+        ContractTerminationHandler.sendEmail( null , methodName + ' (Contract.Id=' + ContractTerminationHandler.contractId + ')' );
     }
 
     public static void constructAndSendEmail( String userEmailAddress , String failureMsg ) {
