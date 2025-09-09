@@ -1,7 +1,7 @@
 @isTest
-public class CheckOpportunityClosedLostTest {
+public class CheckOpportunityStageTest {
     @isTest
-    static void testCheckOpportunityClosedLost() {
+    static void testCheckOpportunityStage() {
         Account acnt=NSP_TestHelper.createAccount(true);
         // Create a test opportunity
         Opportunity opp = NSP_TestHelper.createOpenOpportunity(acnt.Id,'New Product',false);
@@ -13,11 +13,12 @@ public class CheckOpportunityClosedLostTest {
         insert opp;
 
         // Create a CheckStageRequest input
-        CheckOpportunityClosedLost.CheckStageRequest request = new CheckOpportunityClosedLost.CheckStageRequest();
+        CheckOpportunityStage.CheckStageRequest request = new CheckOpportunityStage.CheckStageRequest();
         request.oppRecordId = opp.Id;
+        request.stageName = 'Closed Lost';
 
         // Prepare the input list
-        List<CheckOpportunityClosedLost.CheckStageRequest> requests = new List<CheckOpportunityClosedLost.CheckStageRequest>();
+        List<CheckOpportunityStage.CheckStageRequest> requests = new List<CheckOpportunityStage.CheckStageRequest>();
         requests.add(request);
 
         // Call the method under test
@@ -25,7 +26,7 @@ public class CheckOpportunityClosedLostTest {
         OpportunityStageSettings__c setting = new OpportunityStageSettings__c();
         setting.Is_Enabled_WO_WS_Stage_Entry__c = true;
         insert setting;
-        List<CheckOpportunityClosedLost.CheckStageResponse> responses = CheckOpportunityClosedLost.checkOpportunityClosedLost(requests);
+        List<CheckOpportunityStage.CheckStageResponse> responses = CheckOpportunityStage.checkOpportunityStage(requests);
         Test.stopTest();
 
         // Verify the response
