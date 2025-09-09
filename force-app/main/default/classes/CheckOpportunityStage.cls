@@ -4,18 +4,35 @@ public with sharing class CheckOpportunityStage {
     @InvocableMethod( label='Check Opportunity Stage' description='Checks if User can move Opportunity to specific Stage' category='Opportunity' )
     public static List<CheckStageResponse> checkOpportunityStage( List<CheckStageRequest> inputs ) {
         List<CheckStageResponse> outputs = new List<CheckStageResponse>();
-        List<Opportunity> checkStageOptyList = new List<Opportunity>();
         if( ( inputs != null ) && !inputs.isEmpty() ){
             CheckStageResponse output = new CheckStageResponse();
             output.checkStage = false;
-            Opportunity opty = inputs[0].oppRecord;
-            opty.StageName = inputs[0].stageName;
-            checkStageOptyList.add( opty );
+            Id optyId = inputs[0].oppRecordId;
+            List<Opportunity> checkStageOptyList = [
+                SELECT
+                    Id,
+                    OwnerId,
+                    NSP_Bid_Status__c,
+                    NSP_Number_of_Employees__c,
+                    NSP_PrimaryProduct__c,
+                    NSP_Forecast_Status__c,
+                    Fee_Inclusive__c,
+                    CloseDate,
+                    NSP_CountAsSale__c,
+                    NSP_Booked_Date__c,
+                    NSP_TotalAnnualPayroll__c,
+                    NSP_Bypass_Docusign_Signature__c,
+                    NSP_Order_Generated__c,
+                    NSP_Client_For_Life__c,
+                    StageName,
+                    Type
+                FROM Opportunity
+                WHERE Id = :optyId
+            ];
+            checkStageOptyList[0].StageName = inputs[0].stageName;
             NSP_ValidateOpportunityStage.validateOpportunityStage( checkStageOptyList );
-            for ( Opportunity opp : checkStageOptyList ) {
-                if( !opp.hasErrors() ) {
-                    output.checkStage = true;
-                }
+            if( !checkStageOptyList[0].hasErrors() ) {
+                output.checkStage = true;
             }
             outputs.add( output );
         }
@@ -24,7 +41,7 @@ public with sharing class CheckOpportunityStage {
 
     public class CheckStageRequest {
         @InvocableVariable(label='Opportunity' description='Opportunity record' required=true)
-        public Opportunity oppRecord;
+        public Id oppRecordId;
         @InvocableVariable(label='Stage' description='Stage Name' required=true)
         public String stageName;
     }
