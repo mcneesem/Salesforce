@@ -20,7 +20,7 @@ public class ContractTerminationQueue implements Queueable , Database.AllowsCall
                 System.attachFinalizer( this );
             }
         } catch ( Exception e ) {
-            ContractTerminationQueue.handleException( e , 'execute-Queueable' );
+            this.handleException( e , 'execute-Queueable' );
         }
     }
 
@@ -44,7 +44,7 @@ public class ContractTerminationQueue implements Queueable , Database.AllowsCall
                 }
             }
         } catch ( Exception e ) {
-            ContractTerminationQueue.handleException( e , 'execute-Finalizer' );
+            this.handleException( e , 'execute-Finalizer' );
         }
     }
 
@@ -80,17 +80,18 @@ public class ContractTerminationQueue implements Queueable , Database.AllowsCall
 
     public static void testHandleException( Exception e , String methodName ) {
         if ( Test.isRunningTest() ) {
-            ContractTerminationQueue.handleException( e , methodName );
+            ContractTerminationQueue handler = new ContractTerminationQueue( null , null );
+            handler.handleException( e , methodName );
         }
     }
 
-    private static void handleException( Exception e , String methodName ) {
+    private void handleException( Exception e , String methodName ) {
         NSP_ErrorLogHandler.logException(
             ContractTerminationQueue.class.getName() ,
             methodName ,
             e
         );
-        ContractTerminationHandler.sendEmail( null , ContractTerminationQueue.class.getName() + '.' + methodName );
+        ContractTerminationHandler.sendEmail( null , ContractTerminationQueue.class.getName() + '.' + methodName + ' (Contract.Id=' + this.contractIdToSendEmail + ')' );
     }
 
 }
