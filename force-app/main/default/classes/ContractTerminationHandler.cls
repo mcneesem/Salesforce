@@ -1,5 +1,6 @@
 public class ContractTerminationHandler {
     // test w/ ContractTerminationHandlerTest (95%)
+   private static Id contractId;
 
    @InvocableMethod(label='runContractTerminationHandler' description='Method to trigger call for contract termination')
    public static void runContractTerminationHandler( List<ContractTerminationRequest> requests ) {
@@ -35,7 +36,6 @@ public class ContractTerminationHandler {
         String methodName
         )
     {
-        Id contractId = null;
         String userEmailAddress = null;
         try {
             if ( ( contractToTerminationDates != null ) && !contractToTerminationDates.isEmpty() ) {
@@ -67,7 +67,7 @@ public class ContractTerminationHandler {
             methodName ,
             e
         );
-        ContractTerminationHandler.sendEmail( null , methodName );
+        ContractTerminationHandler.sendEmail( null , methodName + ' (Contract.Id=' + contractId + ')' );
     }
 
     public static void constructAndSendEmail( String userEmailAddress , String failureMsg ) {
