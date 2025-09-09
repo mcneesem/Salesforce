@@ -88,7 +88,7 @@ public class QuoteUpdateQueue implements Queueable , System.Finalizer {
             methodName ,
             e
         );
-        ContractTerminationHandler.sendEmail( null, QuoteUpdateQueue.class.getName() + '.' + methodName + ' (Quote.Id=' + this.quoteId + ')' );
+        ContractTerminationHandler.sendEmail( null , QuoteUpdateQueue.class.getName() + '.' + methodName + ' (Quote.Id=' + this.quoteId + ')' );
     }
 
 }
