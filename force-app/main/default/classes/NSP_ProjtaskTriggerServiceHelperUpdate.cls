@@ -250,8 +250,9 @@ public class NSP_ProjtaskTriggerServiceHelperUpdate {
         //AZD-447254 : Used CS: IsupdateSubtaskStatus__c to disable this logic in apex . New logic is Implemented in Flow.
         public static void updateSubtaskStatus(Map<Id,pse__Project_Task__c> newMapProjecttasks, Map<Id,pse__Project_Task__c> oldMapProjecttasks ){
 
-        Boolean isUpdateSubtaskStatus = ProjectTaskTriggerSettings__c.getInstance(UserInfo.getUserId() ).IsupdateSubtaskStatus__c;
-        if(isUpdateSubtaskStatus) {
+        Boolean IsEnabledApexUpdateSubtaskStatus = ProjectTaskTriggerSettings__c.getInstance(UserInfo.getUserId() ).IsEnabledApexUpdateSubtaskStatus__c;
+
+        if(IsEnabledApexUpdateSubtaskStatus) {
             //as part of STY-02170
             Set<Id> parentTaskIDs=new Set<Id>();
             //iterating new map project tasks
@@ -260,9 +261,6 @@ public class NSP_ProjtaskTriggerServiceHelperUpdate {
                  if(pt.pse__Parent_Task__c!=null){
                         parentTaskIDs.add(pt.pse__Parent_Task__c);
                     }
-                /*if(pt.Name==NSP_ServiceConstants.TESTPAYROLL || pt.Name==NSP_ServiceConstants.FIRSTPAYROLL){
-                   parentTaskIDs.add(pt.Id);
-                } */
             }
             //checking parent task Ids is empty or not
             if(!parentTaskIDs.isEmpty()){

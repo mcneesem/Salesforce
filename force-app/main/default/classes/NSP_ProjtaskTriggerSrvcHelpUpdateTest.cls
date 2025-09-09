@@ -2,20 +2,20 @@
 private class NSP_ProjtaskTriggerSrvcHelpUpdateTest {
     private static Id ipMMRecordTypeId = SObjectType.Implementation_Profile__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.MMProfile).getRecordTypeId();
     private static Id fsoRecordTypeId =  Schema.SObjectType.Implementation_Profile__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.FSOProfile).getRecordTypeId();
-    public final static Id PEORecordTypeId  = Schema.SObjectType.pse__Proj__c.getRecordTypeInfosByName().get('PEO Project').getRecordTypeId();
-    public final static String PEOProjectTaskRecordTypeId = Schema.SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE).getRecordTypeId();
+    private final static Id PEORecordTypeId  = Schema.SObjectType.pse__Proj__c.getRecordTypeInfosByName().get('PEO Project').getRecordTypeId();
+    private final static String PEOProjectTaskRecordTypeId = Schema.SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE).getRecordTypeId();
     private static final String PROJECT_TASK_DEFAULTS = 'nsp_testdatafactory.projecttaskdefaults';
 
     @testSetup
-    static void setUpData(){
+    private static void setUpData(){
         List<pse__Proj__c> prjList = new List<pse__Proj__c>();
         List<pse__Project_Task__c> prjtaskList = new List<pse__Project_Task__c>();
         
-         ProjectTaskTriggerSettings__c userSetting = new ProjectTaskTriggerSettings__c(
-            SetupOwnerId = UserInfo.getUserId(), // current user
-            IsupdateSubtaskStatus__c = true
-        );
-        insert userSetting;
+        ProjectTaskTriggerSettings__c settings = ProjectTaskTriggerSettings__c.getOrgDefaults();
+		settings.IsEnabledApexUpdateSubtaskStatus__c = true;
+		upsert settings;
+
+
         
         pse__Proj__c oProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
         oProject.pse__Project_Type__c = 'Implementation';
@@ -163,7 +163,7 @@ private class NSP_ProjtaskTriggerSrvcHelpUpdateTest {
     }
 
     @isTest
-    static void afterUpdateProjectTaskTest(){
+    private static void afterUpdateProjectTaskTest(){
         List<pse__Project_Task__c> updateProjList = new List<pse__Project_Task__c>();
         List<pse__Project_Task__c> getPrjTasksList = [SELECT Id, pse__Status__c 
                                                       FROM pse__Project_Task__c 
@@ -180,7 +180,7 @@ private class NSP_ProjtaskTriggerSrvcHelpUpdateTest {
     }
 
     @isTest
-    static void afterUpdateTaskTest(){
+    private static void afterUpdateTaskTest(){
         List<pse__Project_Task__c> updateProjList = new List<pse__Project_Task__c>();
         List<pse__Project_Task__c> getPrjTasksList = [SELECT Id, pse__Status__c 
                                                       FROM pse__Project_Task__c 
