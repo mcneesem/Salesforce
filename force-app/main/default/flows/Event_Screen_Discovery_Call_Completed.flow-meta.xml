@@ -15,9 +15,9 @@
         </faultConnector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
-            <name>oppRecord</name>
+            <name>oppRecordId</name>
             <value>
-                <elementReference>varOpportunity</elementReference>
+                <elementReference>recordId</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
