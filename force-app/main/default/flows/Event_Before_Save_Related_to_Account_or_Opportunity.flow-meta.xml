@@ -103,9 +103,10 @@
             <label>Opportunity</label>
         </rules>
     </decisions>
+    <description>Populates the Activity custom Account and/or Opportunity field if Account or Opportunity is in the RelatedTo field.</description>
     <environments>Default</environments>
-    <interviewLabel>Event - Before Save Related to Account and Opportunity - On Update {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Event - Before Save Related to Account and Opportunity - On Update</label>
+    <interviewLabel>Event - Before Save Related to Account or Opportunity {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Event - Before Save - Related to Account or Opportunity</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -175,7 +176,7 @@
             </value>
         </filters>
         <object>Event</object>
-        <recordTriggerType>Update</recordTriggerType>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
     <status>Draft</status>
