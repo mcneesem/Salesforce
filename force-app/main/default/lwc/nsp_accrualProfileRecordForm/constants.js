@@ -9,6 +9,8 @@ const ERROR_TOAST_CONFIG = {
 };
 
 const RL_FIELDS = [
+  'Is_this_a_new_client_implementation__c',
+  'X2nd_Pay_Date__c',
   'NSP_Contact_email__c',
   'NSP_Does_this_plan_replace_other_plans__c',
   'NSP_If_hired_midway_through_pay_period__c',

@@ -1,6 +1,14 @@
 import { YES } from './constants';
 
 const DYNAMIC_FIELDS = {
+   Is_this_a_new_client_implementation__c: [
+    {
+      expValue: [YES],
+      dependentFields: [
+        'X2nd_Pay_Date__c',
+      ],
+    },
+  ],
   Is_Client_MM_or_MM_Enterprise__c:[
     {
       expValue: [
