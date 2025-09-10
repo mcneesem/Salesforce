@@ -1,7 +1,8 @@
 @isTest
-public class CheckOpportunityClosedLostTest {
+private class CheckOpportunityClosedLostTest {
+
     @isTest
-    static void testCheckOpportunityClosedLost() {
+    private static void testCheckOpportunityClosedLost() {
         Account acnt=NSP_TestHelper.createAccount(true);
         // Create a test opportunity
         Opportunity opp = NSP_TestHelper.createOpenOpportunity(acnt.Id,'New Product',false);
@@ -33,4 +34,6 @@ public class CheckOpportunityClosedLostTest {
         System.assertEquals(1, responses.size(), 'There should be one response');
         System.assertEquals(true, responses[0].checkStage, 'The stage check should return true');
     }
+
 }
+//
