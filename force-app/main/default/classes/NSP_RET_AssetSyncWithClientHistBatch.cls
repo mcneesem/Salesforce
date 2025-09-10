@@ -219,7 +219,7 @@ public with sharing class NSP_RET_AssetSyncWithClientHistBatch implements ISelfS
             Boolean recentSubplanHisCondition = ( subplanHist.NSP_Start_Date__c == todaysDate  && (subplanHist.NSP_End_Date__c == null || subplanHist.NSP_End_Date__c > todaysDate)) ||
                 ( subplanHist.NSP_Start_Date__c < todaysDate && subplanHist.NSP_End_Date__c == null );
             // Check if start date is today or before today and enddate is null or future and update Asset status to 'Active'
-            if (current && ( recentSubplanHisCondition || activeAssetCondition ) )
+            if (current && ( recentSubplanHisCondition || (hasActiveWO && activeAssetCondition ) ) )
             {
                 activeAssetList.add(
                     NSP_RET_AssetSyncWithClientHistBatch.setAssetFields(
