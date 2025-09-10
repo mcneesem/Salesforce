@@ -54,7 +54,7 @@
             <name>User_has_Termination_Revision_Custom_Permission</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>$Permission.Termination_Revision</leftValueReference>
+                <leftValueReference>$Permission.Termination_Revision_Access</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
