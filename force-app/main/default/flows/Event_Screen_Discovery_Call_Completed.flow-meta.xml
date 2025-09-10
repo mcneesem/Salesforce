@@ -301,7 +301,7 @@
             <label>User does not have Edit access</label>
         </rules>
     </decisions>
-    <description>Switched over to newly renamed subflow to avoid confusion. Also handles all Discovery Call Created scenarios. Replaced District Manager Id with DM User. Sends to subflow regardless of Close Lost. Also checks that running user has edit access. Sends update to subflow. Added Product Recommendation on Close Lost</description>
+    <description>Added Fault Message screen after Fault Handler. Switched over to newly renamed subflow to avoid confusion. Also handles all Discovery Call Created scenarios. Replaced District Manager Id with DM User. Sends to subflow regardless of Close Lost. Also checks that running user has edit access. Sends update to subflow. Added Product Recommendation on Close Lost</description>
     <dynamicChoiceSets>
         <name>optyCloseLost_Picklist</name>
         <dataType>Picklist</dataType>
@@ -432,6 +432,30 @@
         </outputAssignments>
     </recordLookups>
     <runInMode>DefaultMode</runInMode>
+    <screens>
+        <name>Fault_Message_Screen</name>
+        <label>Fault Message Screen</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>FaultMessage_DisplayText</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <screens>
         <name>Move_Opty_to_Close_Lost_Screen</name>
         <label>Move Opty to Close Lost Screen</label>
@@ -713,6 +737,9 @@
         <label>Fault Handler Subflow</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <connector>
+            <targetReference>Fault_Message_Screen</targetReference>
+        </connector>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
