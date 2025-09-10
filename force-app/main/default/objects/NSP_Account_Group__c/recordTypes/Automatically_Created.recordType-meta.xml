@@ -4,6 +4,21 @@
     <active>true</active>
     <label>Automatically Created</label>
     <picklistValues>
+        <picklist>Eligible_To_Return_To_Insperity_At_Time__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>None</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_Account_Health__c</picklist>
         <values>
             <fullName>Favorable</fullName>
@@ -114,6 +129,721 @@
         <values>
             <fullName>WX Account Group</fullName>
             <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Primary_Term_Reason__c</picklist>
+        <values>
+            <fullName>Aquistion%2FMerger</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Benefits</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Specific Challenges</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cost Concerns</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dissatisfaction with Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Government Contracts</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HR360 Model no longer a fit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>I-9 Issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>International Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Key Decision Maker Changes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payroll Service Issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales Issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Technology Issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Time and Attendance Issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Workers%E2%80%99 Compensation Issues</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Secondary_Sub_Term_Reason__c</picklist>
+        <values>
+            <fullName>Acquiring company with another PEO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Adds administrative burden</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BPA%2FBPC relationship</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BPS Solutions do not meet needs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Believes have outgrown HR360 model</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Benefits classing issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Benefits don%27t justify expense</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Business sold to overseas company</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Carrier Negotiations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client moving to Certified B Corporation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client non-compliance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Credit challenges%2Fmove to wire</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Customer service unsatisfactory</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Data integration-lack of consistent technology%2Fplatform</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Delayed or no response from support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Desires more control%2Fflexibility%2Fless rigidity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Downsizing from lost government contracts</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EPLI deductible too high</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Equity pay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Everything moving in house%2Funder one umbrella</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Excessive departmental handoffs%2Finternal contacts</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Expectation vs delivery gap</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Experienced silos across internal teams</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Financial challenges unrelated to NSP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Financial default</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Forced change-Board of Directors%2FPE firm%2FInvestors</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fringe benefits%2Fprocessing reimbursements</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Functionality does not meet needs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gaps in reporting capabilities for government-contracted employees</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>High Renewals%2FMedical increases</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Integration gaps across systems</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Internal restructuring</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>International needs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>International ownership requires change</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>International workforce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Invoice transparency</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Job Costing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LOA services unsatisfactory</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lack of state-of-the-art platforms</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Limited %28or lack of%29 integration options for international platforms</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Limited flexibility with benefit options</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Moving HR services in house</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NSP PEO compliance requirements-Retaining undocumented workers</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Need for extended administratrive support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Need for regular in-person presence</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New KDM-Lacks understanding of PEO%2Fvalue in HR360</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New KDM-cost cutting without regard to service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New KDM-moving HR functions in house</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No flexibility for concessions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not permitted to use independent WC policy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Offerings not competitive</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PEO expectations outside of NSP offerings</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pre%2Fpost-tax requirement issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prefer carrier outside UHC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Premier portal outdated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reliance on government contracts</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reporting complex%2Fneeds unmet</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service team turnover</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Significant cost savings-competitor%2FHR360%2FHRCore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team%2Fservice model not a fit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Time tracking needs not met</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transitioning to HRCore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Turnaround time too long</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>UHC claim issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unsatisfactory customer service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VISA Sponsorship Process</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Value not aligned to business needs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Value not realized%2Fnot supported as expected</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WC Coding issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WC coverage unavailable from both NSP and client</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Workday challenges</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Secondary_Term_Reason__c</picklist>
+        <values>
+            <fullName>Aquistion%2FMerger</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Benefits</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Specific Challenges</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cost Concerns</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dissatisfaction with Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Government Contracts</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HR360 Model no longer a fit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>I-9 Issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>International Support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Key Decision Maker Changes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payroll Service Issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales Issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Technology Issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Time and Attendance Issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Workers%E2%80%99 Compensation Issues</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Sub_Term_Reason__c</picklist>
+        <values>
+            <fullName>Acquiring company with another PEO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Adds administrative burden</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BPA%2FBPC relationship</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BPS Solutions do not meet needs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Believes have outgrown HR360 model</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Benefits classing issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Benefits don%27t justify expense</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Business sold to overseas company</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Carrier Negotiations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client moving to Certified B Corporation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client non-compliance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Credit challenges%2Fmove to wire</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Customer service unsatisfactory</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Data integration-lack of consistent technology%2Fplatform</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Delayed or no response from support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Desires more control%2Fflexibility%2Fless rigidity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Downsizing from lost government contracts</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EPLI deductible too high</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Equity pay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Everything moving in house%2Funder one umbrella</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Excessive departmental handoffs%2Finternal contacts</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Expectation vs delivery gap</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Experienced silos across internal teams</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Financial challenges unrelated to NSP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Financial default</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Forced change-Board of Directors%2FPE firm%2FInvestors</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fringe benefits%2Fprocessing reimbursements</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Functionality does not meet needs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gaps in reporting capabilities for government-contracted employees</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>High Renewals%2FMedical increases</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Integration gaps across systems</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Internal restructuring</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>International needs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>International ownership requires change</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>International workforce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Invoice transparency</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Job Costing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LOA services unsatisfactory</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lack of state-of-the-art platforms</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Limited %28or lack of%29 integration options for international platforms</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Limited flexibility with benefit options</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Moving HR services in house</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NSP PEO compliance requirements-Retaining undocumented workers</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Need for extended administratrive support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Need for regular in-person presence</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New KDM-Lacks understanding of PEO%2Fvalue in HR360</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New KDM-cost cutting without regard to service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New KDM-moving HR functions in house</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No flexibility for concessions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not permitted to use independent WC policy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Offerings not competitive</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PEO expectations outside of NSP offerings</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pre%2Fpost-tax requirement issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prefer carrier outside UHC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Premier portal outdated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reliance on government contracts</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reporting complex%2Fneeds unmet</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service team turnover</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Significant cost savings-competitor%2FHR360%2FHRCore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Team%2Fservice model not a fit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Time tracking needs not met</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transitioning to HRCore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Turnaround time too long</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>UHC claim issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unsatisfactory customer service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VISA Sponsorship Process</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Value not aligned to business needs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Value not realized%2Fnot supported as expected</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WC Coding issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WC coverage unavailable from both NSP and client</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Workday challenges</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Termination_Anticipated__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>None</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>true</default>
         </values>
     </picklistValues>
 </RecordType>
