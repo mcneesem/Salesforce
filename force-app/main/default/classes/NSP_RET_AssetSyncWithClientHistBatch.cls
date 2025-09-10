@@ -211,27 +211,15 @@ public with sharing class NSP_RET_AssetSyncWithClientHistBatch implements ISelfS
         List<Asset> activeAssetList = new List<Asset>();
         Date todaysDate = Date.today();
         if ( subplanHist != null ) {
+            Boolean current = subplanHist.NSP_Current_Subplan__c;
+            Boolean hasActiveWO  = (accountsWithActiveWO != null) &&
+                accountsWithActiveWO.contains(subplanHist.NSP_Asset__r.AccountId);
+            Boolean activeAssetCondition = (subplanHist.NSP_Start_Date__c <= todaysDate) &&
+                ( subplanHist.NSP_End_Date__c == null || subplanHist.NSP_End_Date__c > todaysDate );
+            Boolean recentSubplanHisCondition = ( subplanHist.NSP_Start_Date__c == todaysDate  && (subplanHist.NSP_End_Date__c == null || subplanHist.NSP_End_Date__c > todaysDate)) ||
+                ( subplanHist.NSP_Start_Date__c < todaysDate && subplanHist.NSP_End_Date__c == null );
             // Check if start date is today or before today and enddate is null or future and update Asset status to 'Active'
-            if ( ( subplanHist.NSP_Start_Date__c <= todaysDate )
-                && ( ( subplanHist.NSP_End_Date__c == null ) || ( subplanHist.NSP_End_Date__c > todaysDate ) )
-                && subplanHist.NSP_Current_Subplan__c
-                )
-            {
-                activeAssetList.add(
-                    NSP_RET_AssetSyncWithClientHistBatch.setAssetFields(
-                        subplanHist.NSP_Asset__c ,
-                        NSP_RET_AssetSyncWithClientHistBatch.STATUS_ACTIVE ,
-                        null
-                    )
-                );
-            }
-            // Check if start date is before today and future end date and Account has Active WO Asset
-            else if ( ( subplanHist.NSP_Start_Date__c < todaysDate )
-                && ( subplanHist.NSP_End_Date__c > todaysDate )
-                && subplanHist.NSP_Current_Subplan__c
-                && ( accountsWithActiveWO != null )
-                && accountsWithActiveWO.contains( subplanHist.NSP_Asset__r.AccountId )
-                )
+            if (current && ( recentSubplanHisCondition || activeAssetCondition ) )
             {
                 activeAssetList.add(
                     NSP_RET_AssetSyncWithClientHistBatch.setAssetFields(
