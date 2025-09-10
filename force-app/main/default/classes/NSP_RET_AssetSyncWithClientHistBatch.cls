@@ -74,8 +74,12 @@ public with sharing class NSP_RET_AssetSyncWithClientHistBatch implements ISelfS
                     for ( Asset asst: assetList ) {
                         if ( asst != null ) {
                             assetIDS.add( asst.Id );
-                            mapAssetOpptyID.putAll( NSP_RET_AssetSyncWithClientHistBatch.getMapAssetOpptyId( asst ) );
-                            mapAssetAccountIds.putAll( NSP_RET_AssetSyncWithClientHistBatch.getMapAssetAccountIds( asst ) );
+                            mapAssetOpptyID.putAll(
+                                NSP_RET_AssetSyncWithClientHistBatch.getMapAssetOpptyId( asst )
+                            );
+                            mapAssetAccountIds.putAll(
+                                NSP_RET_AssetSyncWithClientHistBatch.getMapAssetAccountIds( asst )
+                            );
                         }
                     }
                 }
@@ -198,10 +202,12 @@ public with sharing class NSP_RET_AssetSyncWithClientHistBatch implements ISelfS
                 {
                     subplanHist = assetToSubplanHistMap.get( eachAsset.Id );
                 }
-                activeAssetList.addAll( NSP_RET_AssetSyncWithClientHistBatch.getActiveAssetFromSubPlan(
-                    subplanHist ,
-                    accountsWithActiveWO
-                ) );
+                activeAssetList.addAll(
+                    NSP_RET_AssetSyncWithClientHistBatch.getActiveAssetFromSubPlan(
+                        subplanHist ,
+                        accountsWithActiveWO
+                    )
+                );
             }
         }
         return activeAssetList;
@@ -210,16 +216,34 @@ public with sharing class NSP_RET_AssetSyncWithClientHistBatch implements ISelfS
     private static List<Asset> getActiveAssetFromSubPlan( NSP_Client_Sub_Plan_History__c subplanHist , Set<Id> accountsWithActiveWO ) {
         List<Asset> activeAssetList = new List<Asset>();
         Date todaysDate = Date.today();
-        if ( subplanHist != null ) {
-            Boolean current = subplanHist.NSP_Current_Subplan__c;
-            Boolean hasActiveWO  = (accountsWithActiveWO != null) &&
-                accountsWithActiveWO.contains(subplanHist.NSP_Asset__r.AccountId);
-            Boolean activeAssetCondition = (subplanHist.NSP_Start_Date__c <= todaysDate) &&
-                ( subplanHist.NSP_End_Date__c == null || subplanHist.NSP_End_Date__c > todaysDate );
-            Boolean recentSubplanHisCondition = ( subplanHist.NSP_Start_Date__c == todaysDate  && (subplanHist.NSP_End_Date__c == null || subplanHist.NSP_End_Date__c > todaysDate)) ||
-                ( subplanHist.NSP_Start_Date__c < todaysDate && subplanHist.NSP_End_Date__c == null );
+        if ( ( subplanHist != null ) && ( subplanHist.NSP_Start_Date__c != null ) ) {
+            Boolean isCurrentSubplan = subplanHist.NSP_Current_Subplan__c;
+            Boolean hasEndDateGreaterThanToday  = (
+                ( subplanHist.NSP_End_Date__c == null )
+                || ( subplanHist.NSP_End_Date__c > todaysDate )
+            );
+            Boolean hasActiveWO  = (
+                ( accountsWithActiveWO != null )
+                && accountsWithActiveWO.contains( subplanHist.NSP_Asset__r.AccountId )
+            );
+            Boolean activeAssetCondition = (
+                ( subplanHist.NSP_Start_Date__c <= todaysDate )
+                && hasEndDateGreaterThanToday
+            );
+            Boolean recentSubplanHisCondition = (
+                ( ( subplanHist.NSP_Start_Date__c == todaysDate )
+                    && hasEndDateGreaterThanToday
+                    )
+                || ( ( subplanHist.NSP_Start_Date__c < todaysDate )
+                    && ( subplanHist.NSP_End_Date__c == null )
+                    )
+            );
             // Check if start date is today or before today and enddate is null or future and update Asset status to 'Active'
-            if (current && ( recentSubplanHisCondition || (hasActiveWO && activeAssetCondition ) ) )
+            if ( isCurrentSubplan
+                && ( recentSubplanHisCondition
+                    || ( hasActiveWO && activeAssetCondition )
+                    )
+                )
             {
                 activeAssetList.add(
                     NSP_RET_AssetSyncWithClientHistBatch.setAssetFields(
