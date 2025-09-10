@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>NSP_Milestone__c</field>
-        <value xsi:type="xsd:string">Timestar</value>
+        <value xsi:type="xsd:string">Setup &amp; Configuration</value>
     </values>
     <values>
         <field>NSP_Sub_Category__c</field>
@@ -20,11 +20,11 @@
     </values>
     <values>
         <field>Order__c</field>
-        <value xsi:type="xsd:double">70.0</value>
+        <value xsi:type="xsd:double">57.0</value>
     </values>
     <values>
         <field>Task_Order__c</field>
-        <value xsi:type="xsd:double">70.0</value>
+        <value xsi:type="xsd:double">57.0</value>
     </values>
     <values>
         <field>Visible_to_Client__c</field>
