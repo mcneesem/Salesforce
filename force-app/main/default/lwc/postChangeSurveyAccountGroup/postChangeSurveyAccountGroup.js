@@ -5,7 +5,7 @@ import NSP_RENEWAL_PROBABILITY from '@salesforce/schema/NSP_Account_Group__c.NSP
  
 export default class PostChangeSurveyAccountGroup extends NavigationMixin(LightningElement) {
     @api recordId;
-    @track showFirstModal = false;
+    showFirstModal = false;
     lastValue;
     // Wire the field NSP_Renewal_Probability__c
     @wire(getRecord, { recordId: '$recordId', fields: [NSP_RENEWAL_PROBABILITY] })
