@@ -801,9 +801,6 @@
                         <valueListItems>
                             <value>Area_of_Focus__c</value>
                         </valueListItems>
-                        <valueListItems>
-                            <value>Owner__c</value>
-                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
