@@ -27,6 +27,11 @@
                 <label>2025 Credit Promotion</label>
             </value>
             <value>
+                <fullName>2025 Inc 5000 Promotion</fullName>
+                <default>false</default>
+                <label>2025 Inc 5000 Promotion</label>
+            </value>
+            <value>
                 <fullName>2025 WX Free Months</fullName>
                 <default>false</default>
                 <label>2025 WX Free Months</label>
