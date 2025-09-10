@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Primary_Termination_Reason_validation</fullName>
+    <fullName>Primary_Termination_Reason</fullName>
     <active>true</active>
     <errorConditionFormula>AND(
         Account__r.WO_Asset__r.NSP_Written_Term_recd__c = TRUE,
@@ -8,7 +8,7 @@
             ISBLANK(TEXT(Primary_Term_Reason__c)),
             ISBLANK(TEXT(Sub_Term_Reason__c))
         ),
-        NOT($Permission.Bypass_Primary_TermReason_Validation)
+        NOT($Permission.Bypass_Termination_Reason_Rules)
     )</errorConditionFormula>
     <errorMessage>You must complete both the Primary Term Reason and Sub Term Reason(s) when an Asset linked to an Account in the Renewal Probability Account Group has &apos;Written Termination Notice Received&apos; selected.</errorMessage>
 </ValidationRule>
