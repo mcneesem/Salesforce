@@ -29,7 +29,7 @@
     <permissionSets>Request_Employee_Orientation_Meeting_Detail</permissionSets>
     <permissionSets>Required_Reporting_Fields</permissionSets>
     <permissionSets>Required_Reporting_Objects</permissionSets>
-    <permissionSets>Termination_Revision_Field_Access</permissionSets>
+    <permissionSets>Termination_Revision_Access</permissionSets>
     <permissionSets>Traction_Complete_Fields_Edit_Access</permissionSets>
     <permissionSets>Update_Onboarding_Meetings</permissionSets>
     <status>Updated</status>
