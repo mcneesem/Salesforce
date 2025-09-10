@@ -74,8 +74,8 @@ public with sharing class NSP_RET_AssetSyncWithClientHistBatch implements ISelfS
                     for ( Asset asst: assetList ) {
                         if ( asst != null ) {
                             assetIDS.add( asst.Id );
-                            mapAssetOpptyID = NSP_RET_AssetSyncWithClientHistBatch.getMapAssetOpptyId( asst );
-                            mapAssetAccountIds = NSP_RET_AssetSyncWithClientHistBatch.getMapAssetAccountIds( asst );
+                            mapAssetOpptyID.putAll( NSP_RET_AssetSyncWithClientHistBatch.getMapAssetOpptyId( asst ) );
+                            mapAssetAccountIds.putAll( NSP_RET_AssetSyncWithClientHistBatch.getMapAssetAccountIds( asst ) );
                         }
                     }
                 }
@@ -198,10 +198,10 @@ public with sharing class NSP_RET_AssetSyncWithClientHistBatch implements ISelfS
                 {
                     subplanHist = assetToSubplanHistMap.get( eachAsset.Id );
                 }
-                activeAssetList = NSP_RET_AssetSyncWithClientHistBatch.getActiveAssetFromSubPlan(
+                activeAssetList.addAll( NSP_RET_AssetSyncWithClientHistBatch.getActiveAssetFromSubPlan(
                     subplanHist ,
                     accountsWithActiveWO
-                );
+                ) );
             }
         }
         return activeAssetList;
@@ -226,7 +226,7 @@ public with sharing class NSP_RET_AssetSyncWithClientHistBatch implements ISelfS
                 );
             }
             // Check if start date is before today and future end date and Account has Active WO Asset
-            if ( ( subplanHist.NSP_Start_Date__c < todaysDate )
+            else if ( ( subplanHist.NSP_Start_Date__c < todaysDate )
                 && ( subplanHist.NSP_End_Date__c > todaysDate )
                 && subplanHist.NSP_Current_Subplan__c
                 && ( accountsWithActiveWO != null )
