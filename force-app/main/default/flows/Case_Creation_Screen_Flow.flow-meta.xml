@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Case_Redirect</name>
         <label>Case Redirect</label>
-        <locationX>226</locationX>
-        <locationY>3098</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <actionName>c:NSP_NavigateToRecord</actionName>
         <actionType>component</actionType>
         <faultConnector>
@@ -24,8 +24,8 @@
     <actionCalls>
         <name>Get_Accessible_Record_Types</name>
         <label>Get Accessible Record Types</label>
-        <locationX>974</locationX>
-        <locationY>842</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <actionName>RecordTypeSelectorAction</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -48,13 +48,13 @@
             <name>accessibleRecordTypes</name>
         </outputParameters>
     </actionCalls>
-    <apiVersion>62.0</apiVersion>
+    <apiVersion>64.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Account_Path</name>
         <label>Account Path</label>
-        <locationX>50</locationX>
-        <locationY>1766</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>contextAccountId</assignToReference>
             <operator>Assign</operator>
@@ -69,8 +69,8 @@
     <assignments>
         <name>Assign_Fault_Element_Case_Redirect</name>
         <label>Assign Fault Element : Case_Redirect</label>
-        <locationX>490</locationX>
-        <locationY>3206</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -86,8 +86,8 @@
     <assignments>
         <name>Assign_Fault_Element_Create_Case</name>
         <label>Assign Fault Element : Create_Case</label>
-        <locationX>1194</locationX>
-        <locationY>2990</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -102,8 +102,8 @@
     <assignments>
         <name>Assign_Fault_Element_Get_Accessible_Record_Types</name>
         <label>Assign Fault Element : Get_Accessible_Record_Types</label>
-        <locationX>1986</locationX>
-        <locationY>950</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -119,8 +119,8 @@
     <assignments>
         <name>Assign_Fault_Element_Get_Parent_Case</name>
         <label>Assign Fault Element : Get_Parent_Case</label>
-        <locationX>842</locationX>
-        <locationY>350</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -136,8 +136,8 @@
     <assignments>
         <name>Assign_Fault_Element_Get_Project</name>
         <label>Assign Fault Element : Get_Project</label>
-        <locationX>1546</locationX>
-        <locationY>350</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -153,8 +153,8 @@
     <assignments>
         <name>Assign_Selected_Record_Type</name>
         <label>Assign Selected Record Type</label>
-        <locationX>646</locationX>
-        <locationY>1382</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>selectedRecordTypeId</assignToReference>
             <operator>Assign</operator>
@@ -169,8 +169,8 @@
     <assignments>
         <name>ConfidentialNoAssignment</name>
         <label>ConfidentialNoAssignment</label>
-        <locationX>424</locationX>
-        <locationY>2498</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>selectedConfidential</assignToReference>
             <operator>Assign</operator>
@@ -185,8 +185,8 @@
     <assignments>
         <name>ConfidentialYesAssignment</name>
         <label>ConfidentialYesAssignment</label>
-        <locationX>160</locationX>
-        <locationY>2498</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>selectedConfidential</assignToReference>
             <operator>Assign</operator>
@@ -201,8 +201,8 @@
     <assignments>
         <name>Contact_Path</name>
         <label>Contact Path</label>
-        <locationX>314</locationX>
-        <locationY>1766</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>contextContactId</assignToReference>
             <operator>Assign</operator>
@@ -217,8 +217,8 @@
     <assignments>
         <name>Count_Accessible_Record_Types</name>
         <label>Count Accessible Record Types</label>
-        <locationX>490</locationX>
-        <locationY>1058</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>countAccessibleRecordTypes</assignToReference>
             <operator>AssignCount</operator>
@@ -233,9 +233,9 @@
     <assignments>
         <name>Populate_Case_Fields</name>
         <label>Populate Case Fields</label>
-        <locationX>490</locationX>
-        <locationY>2774</locationY>
-        <assignmentItems>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+         <assignmentItems>
             <assignToReference>caseRecord.RecordTypeId</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -312,8 +312,8 @@
     <assignments>
         <name>Populate_Case_Fields_Parent_Case_Id</name>
         <label>Populate Case Fields: Parent Case Id</label>
-        <locationX>402</locationX>
-        <locationY>458</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>caseRecord.ParentId</assignToReference>
             <operator>Assign</operator>
@@ -328,8 +328,8 @@
     <assignments>
         <name>Populate_Case_Fields_Project</name>
         <label>Populate Case Fields: Project</label>
-        <locationX>1106</locationX>
-        <locationY>458</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>caseRecord.Project__c</assignToReference>
             <operator>Assign</operator>
@@ -344,8 +344,8 @@
     <assignments>
         <name>Store_Parent_Case_Attributes</name>
         <label>Store Parent Case Attributes</label>
-        <locationX>402</locationX>
-        <locationY>566</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>selectedCategory</assignToReference>
             <operator>Assign</operator>
@@ -381,8 +381,8 @@
     <assignments>
         <name>Store_Project_Account_Id</name>
         <label>Store Project Account Id</label>
-        <locationX>1106</locationX>
-        <locationY>566</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>contextAccountId</assignToReference>
             <operator>Assign</operator>
@@ -501,8 +501,8 @@
     <decisions>
         <name>Check_Accessible_Record_Types</name>
         <label>Check Accessible Record Types</label>
-        <locationX>974</locationX>
-        <locationY>950</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnector>
             <targetReference>Screen_No_Accessible_Record_Types</targetReference>
         </defaultConnector>
@@ -526,8 +526,8 @@
     <decisions>
         <name>Check_Case_Creation</name>
         <label>Check Case Creation</label>
-        <locationX>490</locationX>
-        <locationY>2990</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnector>
             <targetReference>CaseCreationFailureError</targetReference>
         </defaultConnector>
@@ -543,7 +543,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Case_Redirect</targetReference>
+                <targetReference>Is_Reload_Enabled</targetReference>
             </connector>
             <label>Case Created</label>
         </rules>
@@ -551,8 +551,8 @@
     <decisions>
         <name>Check_Count_Accessible_Record_Types</name>
         <label>Check Count Accessible Record Types</label>
-        <locationX>490</locationX>
-        <locationY>1166</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnector>
             <targetReference>Record_Type_Selection</targetReference>
         </defaultConnector>
@@ -592,8 +592,8 @@
     <decisions>
         <name>Check_Record_Id</name>
         <label>Check Record Id</label>
-        <locationX>974</locationX>
-        <locationY>134</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnector>
             <targetReference>Get_Accessible_Record_Types</targetReference>
         </defaultConnector>
@@ -648,8 +648,8 @@
         <description>Evaluate the sourceRecordId is Account or Contact or Case</description>
         <name>Check_sObjectType</name>
         <label>Check sObjectType</label>
-        <locationX>490</locationX>
-        <locationY>1658</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnector>
             <targetReference>UnidentifiedSObjectType</targetReference>
         </defaultConnector>
@@ -718,8 +718,8 @@
     <decisions>
         <name>Confidential_Decision</name>
         <label>Confidential Decision</label>
-        <locationX>292</locationX>
-        <locationY>2390</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnector>
             <targetReference>ConfidentialNoAssignment</targetReference>
         </defaultConnector>
@@ -741,10 +741,33 @@
         </rules>
     </decisions>
     <decisions>
+        <description>AZD-44548: Refer Custom Settings to skip navigation for CCTR to avoid ending calls.</description>
+        <name>Is_Reload_Enabled</name>
+        <label>Is Reload Enabled?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Case_Redirect</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Reload_Enabled</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.CustomCaseCreationSettings__c.IsReloadEnabled__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Yes : Reload Enabled</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>ShowConfidentialDecision</name>
         <label>ShowConfidentialDecision</label>
-        <locationX>490</locationX>
-        <locationY>2174</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnector>
             <targetReference>Populate_Case_Fields</targetReference>
         </defaultConnector>
@@ -776,8 +799,8 @@
         <description>Verify Case Exists</description>
         <name>Verify_Case_Exists</name>
         <label>Verify Case Exists</label>
-        <locationX>534</locationX>
-        <locationY>350</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnector>
             <targetReference>Get_Accessible_Record_Types</targetReference>
         </defaultConnector>
@@ -801,8 +824,8 @@
     <decisions>
         <name>Verify_Project_Exists</name>
         <label>Verify Project Exists</label>
-        <locationX>1238</locationX>
-        <locationY>350</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnector>
             <targetReference>Get_Accessible_Record_Types</targetReference>
         </defaultConnector>
@@ -823,6 +846,7 @@
             <label>Project Exists</label>
         </rules>
     </decisions>
+    <description>AZD-445484 - Skip Navigation for CCTR to avoid ending Voice calls.</description>
     <environments>Default</environments>
     <interviewLabel>Case Creation Screen Flow {!$Flow.CurrentDateTime}</interviewLabel>
     <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
@@ -830,8 +854,8 @@
     <loops>
         <name>Iterate_Accessible_Record_Types</name>
         <label>Iterate Accessible Record Types</label>
-        <locationX>558</locationX>
-        <locationY>1274</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <collectionReference>accessibleRecordTypes</collectionReference>
         <iterationOrder>Desc</iterationOrder>
         <nextValueConnector>
@@ -863,8 +887,8 @@
     <recordCreates>
         <name>Create_Case</name>
         <label>Create Case</label>
-        <locationX>490</locationX>
-        <locationY>2882</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>Check_Case_Creation</targetReference>
         </connector>
@@ -876,8 +900,8 @@
     <recordLookups>
         <name>Get_Parent_Case</name>
         <label>Get Parent Case</label>
-        <locationX>534</locationX>
-        <locationY>242</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Verify_Case_Exists</targetReference>
@@ -900,8 +924,8 @@
     <recordLookups>
         <name>Get_Project</name>
         <label>Get Project</label>
-        <locationX>1238</locationX>
-        <locationY>242</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Verify_Project_Exists</targetReference>
@@ -925,8 +949,8 @@
     <screens>
         <name>Blank_Record_Id</name>
         <label>Blank Record Id</label>
-        <locationX>138</locationX>
-        <locationY>242</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -949,8 +973,8 @@
     <screens>
         <name>CaseCreationFailureError</name>
         <label>Case Creation Failure</label>
-        <locationX>754</locationX>
-        <locationY>3098</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -973,8 +997,8 @@
     <screens>
         <name>Category_Sub_Category</name>
         <label>Category Sub Category</label>
-        <locationX>490</locationX>
-        <locationY>2066</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1230,8 +1254,8 @@
     <screens>
         <name>Confidential_Confirmation</name>
         <label>Confidential Confirmation</label>
-        <locationX>292</locationX>
-        <locationY>2282</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1310,8 +1334,8 @@
     <screens>
         <name>Error_Display</name>
         <label>Error Display</label>
-        <locationX>1194</locationX>
-        <locationY>3206</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <allowBack>true</allowBack>
         <allowFinish>false</allowFinish>
         <allowPause>false</allowPause>
@@ -1334,8 +1358,8 @@
     <screens>
         <name>Record_Type_Selection</name>
         <label>Record Type Selection</label>
-        <locationX>774</locationX>
-        <locationY>1274</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1380,8 +1404,8 @@
     <screens>
         <name>Screen_No_Accessible_Record_Types</name>
         <label>No Accessible Record Types</label>
-        <locationX>1458</locationX>
-        <locationY>1058</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <allowBack>true</allowBack>
         <allowFinish>false</allowFinish>
         <allowPause>false</allowPause>
@@ -1404,8 +1428,8 @@
     <screens>
         <name>UnidentifiedSObjectType</name>
         <label>Unidentified SObjectType</label>
-        <locationX>930</locationX>
-        <locationY>1766</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1426,7 +1450,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>848</locationX>
+        <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Check_Record_Id</targetReference>
@@ -1436,8 +1460,8 @@
     <subflows>
         <name>Create_Case_Fault_Handler</name>
         <label>Create Case Fault Handler</label>
-        <locationX>1194</locationX>
-        <locationY>3098</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>Error_Display</targetReference>
         </connector>
