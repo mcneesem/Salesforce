@@ -65,7 +65,7 @@
         <editable>false</editable>
         <field>Account.NSP_Last_Updated__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.NSP_Margin__c</field>
