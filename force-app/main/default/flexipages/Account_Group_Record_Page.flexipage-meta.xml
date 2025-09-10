@@ -1164,7 +1164,7 @@
                         <rightValue>Renewal Probability</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!$Permission.CustomPermission.Termination_Revision}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.Termination_Revision_Access}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>
@@ -1177,7 +1177,7 @@
                 <identifier>c_postChangeSurveyAccountGroup</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$Permission.CustomPermission.Termination_Revision}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.Termination_Revision_Access}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>
