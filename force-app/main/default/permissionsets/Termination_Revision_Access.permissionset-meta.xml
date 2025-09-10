@@ -5,5 +5,5 @@
         <name>Termination_Revision</name>
     </customPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Termination Revision Field Access</label>
+    <label>Termination Revision Access</label>
 </PermissionSet>
