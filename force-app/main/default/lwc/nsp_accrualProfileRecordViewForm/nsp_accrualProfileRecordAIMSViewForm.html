@@ -102,6 +102,22 @@
             class="slds-form-element__legend"
             >
           </lightning-input-field>
+
+          <lightning-input-field disabled
+            value={fieldValue.Is_this_a_new_client_implementation__c}
+            field-name="Is_this_a_new_client_implementation__c"
+            data-name="Is_this_a_new_client_implementation__c"
+            class="slds-form-element__legend">
+          </lightning-input-field>
+
+          <lightning-input-field disabled
+            lwc:if={visibility.X2nd_Pay_Date__c}
+            value={fieldValue.X2nd_Pay_Date__c}
+            field-name="X2nd_Pay_Date__c"
+            data-name="X2nd_Pay_Date__c"
+           class="slds-form-element__legend">
+          </lightning-input-field>
+
         </div>
       </div>
     </lightning-accordion-section>

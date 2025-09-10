@@ -840,7 +840,7 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Policy_Detail</name>
-            <conditionLogic>((1 AND 2 ) OR( 3 AND ( 4 OR (5 AND 6)))) AND ( 8 OR( 7 AND 9 AND 10)) AND ( 12  OR (11 AND 13)) AND (14 OR(15 AND 16 AND 17))</conditionLogic>
+            <conditionLogic>((1 AND 2 ) OR( 3 AND ( 4 OR (5 AND 6)))) AND ( 8 OR( 7 AND 9 AND 10)) AND ( 12  OR (11 AND 13)) AND (14 OR(15 AND 16 AND 17)) AND ( ( 18 AND 19 ) OR 20 )</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.NSP_Does_this_plan_replace_other_plans__c</leftValueReference>
                 <operator>NotEqualTo</operator>
@@ -958,6 +958,27 @@
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Is_this_a_new_client_implementation__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Yes</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.X2nd_Pay_Date__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Is_this_a_new_client_implementation__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>No</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1246,12 +1267,4 @@ NOT(ISBLANK({!$Record.NSP_Employee_Status_check_all_that_apply__c})),
         <triggerType>RecordBeforeSave</triggerType>
     </start>
     <status>Draft</status>
-    <variables>
-        <name>FilesCount</name>
-        <dataType>Number</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <scale>0</scale>
-    </variables>
 </Flow>
