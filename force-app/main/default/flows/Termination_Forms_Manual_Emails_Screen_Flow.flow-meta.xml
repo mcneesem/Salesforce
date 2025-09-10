@@ -204,14 +204,23 @@
             <assignToReference>CCRecipientAddressCollection</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>AccountTeamrolesfrombatch</elementReference>
+                <elementReference>SplitCustomSettingsEmailCCaddress.resultList</elementReference>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>Check_if_AccTeamRoleBatch</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>CC_Recipient_Address_Collection_Update</name>
+        <label>CC Recipient Address Collection Update</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>CCRecipientAddressCollection</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>SplitCustomSettingsEmailCCaddress.resultList</elementReference>
+                <elementReference>AccountTeamrolesfrombatch</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -358,6 +367,35 @@
                 <targetReference>Check_if_TermForm_is_approved</targetReference>
             </connector>
             <label>GetExistingRecords is not blank</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_if_AccTeamRoleBatch</name>
+        <label>Check if AccTeamRoleBatch</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>AccountTeamrolesfrombatch_has_value</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>AccountTeamrolesfrombatch</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>AccountTeamrolesfrombatch</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>CC_Recipient_Address_Collection_Update</targetReference>
+            </connector>
+            <label>AccountTeamrolesfrombatch has value</label>
         </rules>
     </decisions>
     <decisions>
@@ -510,20 +548,6 @@
             </conditions>
             <conditions>
                 <leftValueReference>SplitCustomSettingsEmailCCaddress.resultList</leftValueReference>
-                <operator>IsEmpty</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>AccountTeamrolesfrombatch</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>AccountTeamrolesfrombatch</leftValueReference>
                 <operator>IsEmpty</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
