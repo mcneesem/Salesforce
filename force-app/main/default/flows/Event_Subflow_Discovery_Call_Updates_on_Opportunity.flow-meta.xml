@@ -485,7 +485,7 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>varOpportunity.NSP_DM_User__c</leftValueReference>
+                <leftValueReference>varOpportunity.District_Manager_Id__c</leftValueReference>
                 <operator>WasSet</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -690,7 +690,7 @@
             <label>Yes - DM was found</label>
         </rules>
     </decisions>
-    <description>Runs through logic when Discovery Call is completed to make updates on related Opportunity as needed.</description>
+    <description>Flipped back to use District Manager Id field (for now). Runs through logic when Discovery Call is completed to make updates on related Opportunity as needed.</description>
     <environments>Default</environments>
     <formulas>
         <name>eventCompletedDatePlus60Formula</name>
@@ -772,7 +772,7 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>varOpportunity.NSP_DM_User__c</elementReference>
+                <elementReference>varOpportunity.District_Manager_Id__c</elementReference>
             </value>
         </filters>
         <filters>
