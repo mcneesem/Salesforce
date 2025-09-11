@@ -2,7 +2,7 @@
 *Apex Class Name      :  NSP_SubClientContactTriggerHelper
 *Function             :  This class is used as helper class for NSP_SubClientContactTrigger
 *Story                :                                                                      
-*Modification Log     :                                                                              
+*Modification Log     : 09/11/2025 - AZD-443324 : Added Custom Settings to eliminate automation for individual contacts                                                                             
 ************************************************************************************************/
 public with sharing class NSP_SubClientContactTriggerHelper {
     // test w/ NSP_SubClientContactTriggerHelperTest (81%)
@@ -122,6 +122,12 @@ public with sharing class NSP_SubClientContactTriggerHelper {
             List<NSP_Payroll__c> pdsToBeUpdated = new List<NSP_Payroll__c>();
             Map<Id, String> conIdEmpStatusMap = new Map<Id, String>();
             Map<Id, Date> conIdStatusDate = new Map<Id, Date>();
+            
+            Boolean isEnableHRContact = Payroll_Data_Sheet_Settings__c.getInstance(UserInfo.getUserId()).IsEnableHRContact__c;
+			Boolean isEnablePrimaryPayrollContact = Payroll_Data_Sheet_Settings__c.getInstance(UserInfo.getUserId()).IsEnablePrimaryPayrollContact__c;
+			Boolean isEnableOnsiteSupervisor = Payroll_Data_Sheet_Settings__c.getInstance(UserInfo.getUserId()).IsEnableOnsiteSupervisor__c;
+			Boolean isEnableBackUpPayrollContact = Payroll_Data_Sheet_Settings__c.getInstance(UserInfo.getUserId()).IsEnableBackUpPayrollContact__c;
+            
             // get existing Sub Client Contact
             for(NSP_Sub_Client_Contact__c newSubClientCon : newMap.values()){
                 if ( newSubClientCon.NSP_Contact__c != null
@@ -161,16 +167,16 @@ public with sharing class NSP_SubClientContactTriggerHelper {
                 // get all related subclient contacts from Map
                 List<NSP_Sub_Client_Contact__c>  subCliConList = subClientConBySubClientIds.get(pds.NSP_Sub_Client_Name__c) ;
                 for(NSP_Sub_Client_Contact__c subClientCon : subCliConList ){
-                    if(subClientCon.NSP_On_Site_Supervisor__c == true){
+                    if(!isEnableOnsiteSupervisor && subClientCon.NSP_On_Site_Supervisor__c == true){
                         pds.NSP_On_site_Supervisor__c = subClientCon.NSP_Contact__c;
                         pds.NSP_OSS_SCC__c = subClientCon.Id;
                     }
-                    if(subClientCon.NSP_Payroll_Contact__c == true){
+                    if(!isEnablePrimaryPayrollContact && subClientCon.NSP_Payroll_Contact__c == true){
                         pds.NSP_Primary_Payroll_Contact__c = subClientCon.NSP_Contact__c;
                         pds.NSP_Payroll_SCC__c = subClientCon.Id;
                     }
                     // if HR Contact doesn't exist
-                    if(subClientCon.NSP_HR_Contact__c == true){
+                    if(!isEnableHRContact && subClientCon.NSP_HR_Contact__c == true){
                         pds.NSP_HR_Contact__c = subClientCon.NSP_Contact__c;
                         pds.NSP_HR_Contact_SCC__c = subClientCon.Id;
                     }
