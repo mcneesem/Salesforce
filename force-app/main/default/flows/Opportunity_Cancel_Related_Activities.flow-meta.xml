@@ -337,6 +337,9 @@
         <filters>
             <field>NSP_Status__c</field>
             <operator>EqualTo</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
         </filters>
         <filters>
             <field>NSP_Status__c</field>
@@ -354,7 +357,10 @@
         </filters>
         <filters>
             <field>FSL__Event_Type__c</field>
-            <operator>IsNull</operator>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
         </filters>
         <filters>
             <field>RecordTypeId</field>
@@ -404,6 +410,9 @@
         <filters>
             <field>Status</field>
             <operator>EqualTo</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
         </filters>
         <filters>
             <field>RecordTypeId</field>
