@@ -374,6 +374,9 @@
         <label>Check if AccTeamRoleBatch</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Send_Term_form_Email</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>AccountTeamrolesfrombatch_has_value</name>
@@ -521,6 +524,9 @@
         <label>Check Split CCAddress action</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Check_if_AccTeamRoleBatch</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>CCAddress_Action_has_valid_value</name>
