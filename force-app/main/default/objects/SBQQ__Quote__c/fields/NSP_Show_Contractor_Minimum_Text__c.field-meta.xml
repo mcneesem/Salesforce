@@ -3,9 +3,8 @@
     <fullName>NSP_Show_Contractor_Minimum_Text__c</fullName>
     <defaultValue>false</defaultValue>
     <description>This field provides the condition whether the &apos;minimum&apos; text should appear under the Contractor section of the DO</description>
-    <externalId>false</externalId>
     <label>Show Contractor Minimum Text</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

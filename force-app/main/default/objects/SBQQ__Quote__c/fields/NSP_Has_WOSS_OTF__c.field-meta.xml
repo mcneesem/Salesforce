@@ -3,9 +3,8 @@
     <fullName>NSP_Has_WOSS_OTF__c</fullName>
     <defaultValue>false</defaultValue>
     <description>This field is used in The WOSS Template OneTime Fees Product Clause Conditionality Check</description>
-    <externalId>false</externalId>
     <label>Has WOSS OTF</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Select_Method_when_Disc_Call_Completed</fullName>
+    <active>true</active>
+    <description>Method value is required when SubType is Discovery Call and Status is Completed</description>
+    <errorConditionFormula>AND(
+  NOT( $Permission.Bypass_Method_on_Completed_Discovery_Call_Event ) ,
+  BEGINS( WhatId , &apos;006&apos; ) ,
+  ISCHANGED( NSP_Status__c ) ,
+  ISPICKVAL( NSP_Status__c , &quot;Completed&quot; ) ,
+  ISPICKVAL( NSP_Event_Subtype__c , &quot;Discovery Call&quot; ) ,
+  ISBLANK( TEXT( NSP_Method__c ) )
+)</errorConditionFormula>
+    <errorDisplayField>NSP_Method__c</errorDisplayField>
+    <errorMessage>Please choose a value for Method when completing a Discovery Call</errorMessage>
+</ValidationRule>

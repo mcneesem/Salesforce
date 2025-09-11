@@ -3,9 +3,8 @@
     <fullName>NSP_Has_WX_product__c</fullName>
     <defaultValue>false</defaultValue>
     <description>This field indicate that it has wx product</description>
-    <externalId>false</externalId>
     <label>Has WX product</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

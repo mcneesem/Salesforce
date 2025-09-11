@@ -133,18 +133,6 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                 }
             }
             //
-            List<String> bpsCaseTier1Categories = new List<String>();
-            List<String> bpsCaseTier2Categories = new List<String>();
-            Integer tier1Days= 14;
-            Integer tier2Days = 30;
-            Case_Settings__c caseSetting = Case_Settings__c.getInstance(UserInfo.getUserId());
-            if(caseSetting != null) {
-                bpsCaseTier1Categories = String.isNotBlank(caseSetting.BPS_Case_Tier_1_Categories__c) ? caseSetting.BPS_Case_Tier_1_Categories__c.split(','): new List<String>();
-                bpsCaseTier2Categories = String.isNotBlank(caseSetting.BPS_Case_Tier_2_Categories__c) ? caseSetting.BPS_Case_Tier_2_Categories__c.split(','): new List<String>();
-                tier1Days = caseSetting.BPS_Case_Tier_1_Reopen_Days__c != null ? caseSetting.BPS_Case_Tier_1_Reopen_Days__c.intValue() : 14;
-                tier2Days = caseSetting.BPS_Case_Tier_2_Reopen_Days__c != null ? caseSetting.BPS_Case_Tier_2_Reopen_Days__c.intValue() : 30;
-            }
-            //
             List<Case> casesToUpdate = new List<Case>();
             Map<Case,EmailMessage> caseToEmailMessageMap = new Map<Case,EmailMessage>();
             Map<String,String> mapOfEmailAddressToQueueName = new Map<String,String>();
@@ -170,34 +158,18 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                                 )
                             {
                                 Integer daysBetween = (currentCase.ClosedDate.date()).daysBetween( eMessage.MessageDate.date() );
-                                if ( ( bpsCaseTier1Categories.contains( currentCase.NSP_Category__c ) && ( daysBetween <= tier1Days ) )
-                                    || ( bpsCaseTier2Categories.contains( currentCase.NSP_Category__c ) && ( daysBetween <= tier2Days ) )
-                                    )
-                                {
+                                if ( NSP_EmailMessageTriggerHelper.isLessThanEqualToCategoryTierDays( currentCase.NSP_Category__c , daysBetween ) ) {
                                     currentCase.Status = REOPENED;
                                     currentCase.NSP_Case_Reopened_EmaiToCase__c = true;
-                                    String queueName = '';
-                                    if ( mapOfEmailAddressToQueueName != null ) {
-                                        queueName = mapOfEmailAddressToQueueName.get( eMessage.ToAddress );
-                                    }
-                                    if ( String.isNotBlank( queueName ) && ( mapOfQueueNameToQueueId != null ) ) {
-                                        if ( currentCase.OwnerId != null ) {
-                                            if ( Id.valueOf(currentCase.OwnerId).getSObjectType() == User.getSObjectType() ) {
-                                                User user = mapOfUserIdToUserRecord.get( currentCase.OwnerId );
-                                                if ( ( user != null ) && !user.IsActive) {
-                                                    currentCase.OwnerId = mapOfQueueNameToQueueId.get( queueName );
-                                                }
-                                            }
-                                        } else {
-                                            currentCase.OwnerId = mapOfQueueNameToQueueId.get( queueName );
-                                        }
-                                    }
+                                    currentCase.OwnerId = NSP_EmailMessageTriggerHelper.getQueueOwnerId(
+                                        currentCase.OwnerId ,
+                                        eMessage ,
+                                        mapOfEmailAddressToQueueName ,
+                                        mapOfQueueNameToQueueId ,
+                                        mapOfUserIdToUserRecord
+                                    );
                                     casesToUpdate.add( currentCase );
-                                } else if (
-                                    ( bpsCaseTier1Categories.contains( currentCase.NSP_Category__c ) && ( daysBetween > tier1Days ) )
-                                    || ( bpsCaseTier2Categories.contains( currentCase.NSP_Category__c ) && ( daysBetween > tier2Days ) )
-                                    )
-                                {
+                                } else if ( NSP_EmailMessageTriggerHelper.isGreaterThanCategoryTierDays( currentCase.NSP_Category__c , daysBetween ) ) {
                                     currentCase.NSP_Response_After_Close__c = true;
                                     casesToUpdate.add( currentCase );
                                     caseToEmailMessageMap.put( currentCase , eMessage );
@@ -249,7 +221,12 @@ public with sharing class NSP_EmailMessageTriggerHelper {
             }
             if ( !casesToUpdate.isEmpty() ) {
                 try {
-                    Database.update(casesToUpdate, false);
+                    List<Database.SaveResult> results = Database.update( casesToUpdate , false );
+                    NSP_ErrorLogHandler.logResults(
+                        NSP_EmailMessageTriggerHelper.class.getName() ,
+                        'reOpenOrMarkResponseAfterCloseTrue:update' ,
+                        results
+                    );
                 } catch ( Exception e ) {
                     NSP_ErrorLogHandler.logException(
                         NSP_EmailMessageTriggerHelper.class.getName() ,
@@ -286,6 +263,78 @@ public with sharing class NSP_EmailMessageTriggerHelper {
             isPresent = True;
         }
         return isPresent;
+    }
+
+    // helper method to reduce sonar cognitive complexity...
+    private static Boolean isLessThanEqualToCategoryTierDays( String caseCategory , Integer daysBetween ) {
+        Boolean response = false;
+        if ( String.isNotBlank( caseCategory ) && ( daysBetween != null ) ) {
+            response = (
+                ( NSP_EmailMessageTriggerHelper.bpsCaseTier1Categories.contains( caseCategory ) && ( daysBetween <= NSP_EmailMessageTriggerHelper.tier1Days ) )
+                || ( NSP_EmailMessageTriggerHelper.bpsCaseTier2Categories.contains( caseCategory ) && ( daysBetween <= NSP_EmailMessageTriggerHelper.tier2Days ) )
+                || ( NSP_EmailMessageTriggerHelper.bpsCaseTier3Categories.contains( caseCategory ) && ( daysBetween <= NSP_EmailMessageTriggerHelper.tier3Days ) )
+            );
+        }
+        return response;
+    }
+
+    // helper method to reduce sonar cognitive complexity...
+    private static Boolean isGreaterThanCategoryTierDays( String caseCategory , Integer daysBetween ) {
+        Boolean response = false;
+        if ( String.isNotBlank( caseCategory ) && ( daysBetween != null ) ) {
+            response = (
+                ( NSP_EmailMessageTriggerHelper.bpsCaseTier1Categories.contains( caseCategory ) && ( daysBetween > NSP_EmailMessageTriggerHelper.tier1Days ) )
+                || ( NSP_EmailMessageTriggerHelper.bpsCaseTier2Categories.contains( caseCategory ) && ( daysBetween > NSP_EmailMessageTriggerHelper.tier2Days ) )
+                || ( NSP_EmailMessageTriggerHelper.bpsCaseTier3Categories.contains( caseCategory ) && ( daysBetween > NSP_EmailMessageTriggerHelper.tier3Days ) )
+            );
+        }
+        return response;
+    }
+
+    // helper method to reduce sonar cognitive complexity...
+    private static Id getQueueOwnerId(
+        Id currentOwnerId ,
+        EmailMessage eMessage ,
+        Map<String,String> mapOfEmailAddressToQueueName ,
+        Map<String,String> mapOfQueueNameToQueueId ,
+        Map<Id,User> mapOfUserIdToUserRecord
+        )
+    {
+        Id response = currentOwnerId;
+        String queueName = '';
+        if ( ( eMessage != null ) && ( mapOfEmailAddressToQueueName != null ) ) {
+            queueName = mapOfEmailAddressToQueueName.get( eMessage.ToAddress );
+        }
+        if ( String.isNotBlank( queueName ) && ( mapOfQueueNameToQueueId != null ) ) {
+            if ( currentOwnerId != null ) {
+                if ( ( Id.valueOf( currentOwnerId ).getSObjectType() == User.getSObjectType() )
+                    && !NSP_EmailMessageTriggerHelper.isUserActive( currentOwnerId , mapOfUserIdToUserRecord )
+                    )
+                {
+                    // change the owner to a queue when the current owner is not active...
+                    response = mapOfQueueNameToQueueId.get( queueName );
+                }
+            } else {
+                response = mapOfQueueNameToQueueId.get( queueName );
+            }
+        }
+        return response;
+    }
+
+    // helper method to reduce sonar cognitive complexity...
+    private static Boolean isUserActive( Id userId , Map<Id,User> mapOfUserIdToUserRecord ) {
+        Boolean response = false;
+        if ( ( userId != null )
+            && ( mapOfUserIdToUserRecord != null )
+            && mapOfUserIdToUserRecord.containsKey( userId )
+            )
+        {
+            User userRecord = mapOfUserIdToUserRecord.get( userId );
+            if ( userRecord != null ) {
+                response = userRecord.IsActive;
+            }
+        }
+        return response;
     }
 
     //
@@ -919,6 +968,122 @@ public with sharing class NSP_EmailMessageTriggerHelper {
             }
         }
         return mapOfQueueNameToQueueId;
+    }
+
+    //
+    //
+    //
+
+    private static Case_Settings__c caseSettings {
+        private get {
+            if ( caseSettings == null ) {
+                caseSettings = Case_Settings__c.getInstance( UserInfo.getUserId() );
+            }
+            return caseSettings;
+        }
+        private set;
+    }
+
+    private static List<String> bpsCaseTier1Categories {
+        get {
+            if ( bpsCaseTier1Categories == null ) {
+                List<String> local = new List<String>();
+                if ( ( NSP_EmailMessageTriggerHelper.caseSettings != null )
+                    && String.isNotBlank( NSP_EmailMessageTriggerHelper.caseSettings.BPS_Case_Tier_1_Categories__c )
+                    )
+                {
+                    local = NSP_EmailMessageTriggerHelper.caseSettings.BPS_Case_Tier_1_Categories__c.split( ',' );
+                }
+                bpsCaseTier1Categories = local;
+            }
+            return bpsCaseTier1Categories;
+        }
+        private set;
+    }
+
+    private static List<String> bpsCaseTier2Categories {
+        get {
+            if ( bpsCaseTier2Categories == null ) {
+                List<String> local = new List<String>();
+                if ( ( NSP_EmailMessageTriggerHelper.caseSettings != null )
+                    && String.isNotBlank( NSP_EmailMessageTriggerHelper.caseSettings.BPS_Case_Tier_2_Categories__c )
+                    )
+                {
+                    local = NSP_EmailMessageTriggerHelper.caseSettings.BPS_Case_Tier_2_Categories__c.split( ',' );
+                }
+                bpsCaseTier2Categories = local;
+            }
+            return bpsCaseTier2Categories;
+        }
+        private set;
+    }
+
+    private static List<String> bpsCaseTier3Categories {
+        get {
+            if ( bpsCaseTier3Categories == null ) {
+                List<String> local = new List<String>();
+                if ( ( NSP_EmailMessageTriggerHelper.caseSettings != null )
+                    && String.isNotBlank( NSP_EmailMessageTriggerHelper.caseSettings.BPS_Case_Tier_3_Categories__c )
+                    )
+                {
+                    local = NSP_EmailMessageTriggerHelper.caseSettings.BPS_Case_Tier_3_Categories__c.split( ',' );
+                }
+                bpsCaseTier3Categories = local;
+            }
+            return bpsCaseTier3Categories;
+        }
+        private set;
+    }
+
+    private static Integer tier1Days {
+        get {
+            if ( tier1Days == null ) {
+                Integer local = 14;
+                if ( ( NSP_EmailMessageTriggerHelper.caseSettings != null )
+                    && ( NSP_EmailMessageTriggerHelper.caseSettings.BPS_Case_Tier_1_Reopen_Days__c != null )
+                    )
+                {
+                    local = NSP_EmailMessageTriggerHelper.caseSettings.BPS_Case_Tier_1_Reopen_Days__c.intValue();
+                }
+                tier1Days = local;
+            }
+            return tier1Days;
+        }
+        private set;
+    }
+
+    private static Integer tier2Days {
+        get {
+            if ( tier2Days == null ) {
+                Integer local = 30;
+                if ( ( NSP_EmailMessageTriggerHelper.caseSettings != null )
+                    && ( NSP_EmailMessageTriggerHelper.caseSettings.BPS_Case_Tier_2_Reopen_Days__c != null )
+                    )
+                {
+                    local = NSP_EmailMessageTriggerHelper.caseSettings.BPS_Case_Tier_2_Reopen_Days__c.intValue();
+                }
+                tier2Days = local;
+            }
+            return tier2Days;
+        }
+        private set;
+    }
+
+    private static Integer tier3Days {
+        get {
+            if ( tier3Days == null ) {
+                Integer local = 90;
+                if ( ( NSP_EmailMessageTriggerHelper.caseSettings != null )
+                    && ( NSP_EmailMessageTriggerHelper.caseSettings.BPS_Case_Tier_3_Reopen_Days__c != null )
+                    )
+                {
+                    local = NSP_EmailMessageTriggerHelper.caseSettings.BPS_Case_Tier_3_Reopen_Days__c.intValue();
+                }
+                tier3Days = local;
+            }
+            return tier3Days;
+        }
+        private set;
     }
 
 }

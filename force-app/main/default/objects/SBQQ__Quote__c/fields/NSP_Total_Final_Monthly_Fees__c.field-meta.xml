@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Total_Final_Monthly_Fees__c</fullName>
     <description>Calculates the Total Final Monthly Fees</description>
-    <externalId>false</externalId>
     <label>Total Final Monthly Fees</label>
     <summarizedField>SBQQ__QuoteLine__c.NSP_Total_Final_Monthly_Fees__c</summarizedField>
     <summaryFilterItems>

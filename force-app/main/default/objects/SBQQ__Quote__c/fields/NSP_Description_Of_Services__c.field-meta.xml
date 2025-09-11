@@ -3,10 +3,9 @@
     <fullName>NSP_Description_Of_Services__c</fullName>
     <description>Description of Service is captured for Supplemental orders</description>
     <encryptionScheme>None</encryptionScheme>
-    <externalId>false</externalId>
     <label>Description Of Services</label>
     <length>32768</length>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>LongTextArea</type>
     <visibleLines>3</visibleLines>

@@ -7,7 +7,7 @@
     <label>Previous RecordType Id</label>
     <length>18</length>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Text</type>
     <unique>false</unique>

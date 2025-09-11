@@ -3,12 +3,11 @@
     <fullName>NSP_At_Hire_Payment__c</fullName>
     <defaultValue>0.7</defaultValue>
     <description>Payment at Hire, used when Recruiting services are added to the quote. Default value is 50%</description>
-    <externalId>false</externalId>
     <label>At Hire Payment</label>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Percent</type>
 </CustomField>

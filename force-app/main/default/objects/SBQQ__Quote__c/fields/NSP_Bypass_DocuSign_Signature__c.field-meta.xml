@@ -3,9 +3,8 @@
     <fullName>NSP_Bypass_DocuSign_Signature__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Checkbox for users to bypass docusign signature process</description>
-    <externalId>false</externalId>
     <label>Bypass DocuSign Signature</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

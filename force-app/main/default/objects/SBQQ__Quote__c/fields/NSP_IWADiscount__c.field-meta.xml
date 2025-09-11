@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_IWADiscount__c</fullName>
     <description>Derives the total discount given on IWA Bundle</description>
-    <externalId>false</externalId>
     <label>IWADiscount</label>
     <summarizedField>SBQQ__QuoteLine__c.SBQQ__Discount__c</summarizedField>
     <summaryFilterItems>

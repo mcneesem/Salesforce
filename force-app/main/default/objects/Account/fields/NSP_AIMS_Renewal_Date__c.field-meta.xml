@@ -2,11 +2,10 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_AIMS_Renewal_Date__c</fullName>
     <description>This field is used for Integration.</description>
-    <externalId>false</externalId>
     <label>AIMS Renewal Date</label>
     <summarizedField>NSP_Sub_Client__c.NSP_Renewal_Date__c</summarizedField>
     <summaryFilterItems>
-        <field>NSP_Sub_Client__c.Is_AIMS_Sub_Client_Ends_With_00__c</field>
+        <field>NSP_Sub_Client__c.Is_Primary_Contract__c</field>
         <operation>equals</operation>
         <value>True</value>
     </summaryFilterItems>

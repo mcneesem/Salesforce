@@ -3,7 +3,6 @@
     <fullName>NSP_Invoice_To_Email__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <description>Indicates the Invoice Email Contact</description>
-    <externalId>false</externalId>
     <label>Invoice To Email</label>
     <lookupFilter>
         <active>true</active>

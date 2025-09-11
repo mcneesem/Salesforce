@@ -774,27 +774,39 @@ public class NSP_ProjectTaskTriggerEmailNotification {
 
         
     }
-   /***********************************************************************************************
-    * MethodName: sendOnsiteDiscoveryMail
-    * Description : This Method prepare email template 
-    * Author :      Bindushree R
-    * ********************************************************************************************/
-    public static void sendOnsiteDiscoveryMail(String projectId, String aimsClientName, String aimsClient, User user,  List<String> listOfToAddresses, String projectTaskId){
+
+    //
+    // MethodName : sendOnsiteDiscoveryMail
+    // Description : This Method prepare email template 
+    // Author : Bindushree R
+    //
+    public static void sendOnsiteDiscoveryMail(
+        String projectId ,
+        String aimsClientName ,
+        String aimsClient ,
+        User who ,
+        List<String> listOfToAddresses ,
+        String projectTaskId
+        )
+    {
         //email template for Client Transition
-        //
-        String subjectString = 'Discovery Meeting for  '+aimsClientName+' is complete';
-        String mailBody ='The Discovery meeting for  '  ;
-        mailBody+=  aimsClientName;
-        mailBody+=' is complete. '+'<br/>';
-        mailBody += 'Please refer to the Implementation Profile for information regarding your Client. '+'<br/><br/><br/>';
-        mailBody += 'Regards,'+'<br/>';
-        mailBody += user.Name+'<br/>';
-        mailBody += user.Title+'<br/>';
-        mailBody += user.Email;
-        
-        NSP_ProjectTasksTriggerHelper.sendEmail(listOfTOAddresses, subjectString, mailBody);
+        String subjectString = 'Discovery Meeting for ' + aimsClientName + ' is complete';
+        String mailBody ='The Discovery meeting for ';
+        mailBody += aimsClientName;
+        mailBody += ' is complete.<br/>';
+        mailBody += 'Please refer to the Implementation Profile for information regarding your Client.<br/><br/><br/>';
+        mailBody += 'Regards,<br/>';
+        mailBody += who.Name + '<br/>';
+        mailBody += who.Title + '<br/>';
+        mailBody += who.Email;
+        NSP_ProjectTasksTriggerHelper.sendEmail(
+            listOfTOAddresses ,
+            subjectString ,
+            mailBody ,
+            projectTaskId
+        );
     } 
-    
+
     private static void getEmailTemplates(){
         for(EmailTemplate iEmailTemplate : [SELECT Id, BrandTemplateId, Subject, HTMLValue, Body, DeveloperName FROM EmailTemplate WHERE DeveloperName IN: EMAIL_TEMPLATES]){
             mapOfEmailTempaltes.put(iEmailTemplate.DeveloperName,iEmailTemplate);

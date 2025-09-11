@@ -3,9 +3,8 @@
     <fullName>NSP_Terminating_WO_WS__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Field Indicate Termination of WO/WS product</description>
-    <externalId>false</externalId>
     <label>Terminating WO/WS</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

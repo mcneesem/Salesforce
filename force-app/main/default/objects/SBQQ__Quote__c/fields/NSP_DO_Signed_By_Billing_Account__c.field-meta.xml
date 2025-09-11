@@ -3,9 +3,8 @@
     <fullName>NSP_DO_Signed_By_Billing_Account__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Indicates if DO is signed by Billing Account&apos;s Contact</description>
-    <externalId>false</externalId>
     <label>DO Signed By Billing Account</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

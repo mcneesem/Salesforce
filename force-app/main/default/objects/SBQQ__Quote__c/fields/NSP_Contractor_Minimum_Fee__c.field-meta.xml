@@ -3,9 +3,8 @@
     <fullName>NSP_Contractor_Minimum_Fee__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Check whether the Contractor product has minimum fee implementation or not.</description>
-    <externalId>false</externalId>
     <label>Contractor Minimum Fee</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>
