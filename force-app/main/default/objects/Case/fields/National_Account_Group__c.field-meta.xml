@@ -98,6 +98,7 @@
     &apos;124&apos; , &apos;EA Wellness MSO&apos; ,
     &apos;125&apos; , &apos;Coltala Holdings&apos; ,
     &apos;126&apos; , &apos;Oakey Dokey&apos; ,
+    &apos;127&apos; , &apos;Autumn Lane Advisors&apos; ,
     TEXT( Account.WO_Asset__r.NSP_National_Account_Group__c )
   )
 )</formula>
