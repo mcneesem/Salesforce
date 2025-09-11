@@ -809,7 +809,7 @@
             <label>Yes - Opportunity found for open Discovery Call</label>
         </rules>
     </decisions>
-    <description>Updated to also handle Discovery Call feeder flows</description>
+    <description>Updated to use District Manager Id field instead of DM User (for now). Updated to also handle Discovery Call feeder flows</description>
     <environments>Default</environments>
     <interviewLabel>Event - Created - Async - Related to Account Opportunity or Lead {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Event - Subflow - Update Related to Account Opportunity or Lead</label>
@@ -969,7 +969,7 @@
         <queriedFields>Discovery_Call_Completed_Date__c</queriedFields>
         <queriedFields>NSP_PrimaryProduct__c</queriedFields>
         <queriedFields>CloseDate</queriedFields>
-        <queriedFields>NSP_DM_User__c</queriedFields>
+        <queriedFields>District_Manager_Id__c</queriedFields>
         <queriedFields>NSP_Last_Updated__c</queriedFields>
         <queriedFields>Discovery_Call_Created_Date__c</queriedFields>
     </recordLookups>
