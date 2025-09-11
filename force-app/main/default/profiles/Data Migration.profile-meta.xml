@@ -31969,12 +31969,12 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>pse__Project_Task__c.NSP_Client_Liaison_Email__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>pse__Project_Task__c.NSP_Client_Liaison_Name__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -32009,12 +32009,12 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>pse__Project_Task__c.NSP_HR_Specialist_Email__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>pse__Project_Task__c.NSP_HR_Specialist_Name__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
