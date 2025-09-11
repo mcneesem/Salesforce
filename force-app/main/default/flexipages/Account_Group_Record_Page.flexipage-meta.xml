@@ -1091,11 +1091,6 @@
                         <operator>EQUAL</operator>
                         <rightValue>Yes</rightValue>
                     </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Competitor__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Other</rightValue>
-                    </criteria>
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
