@@ -66,6 +66,10 @@
         <allowDelegate>false</allowDelegate>
         <approvalActions>
             <action>
+                <name>Approval_Datetime_Update</name>
+                <type>FieldUpdate</type>
+            </action>
+            <action>
                 <name>Mark_Form_Status_Term_Team_Approved</name>
                 <type>FieldUpdate</type>
             </action>
