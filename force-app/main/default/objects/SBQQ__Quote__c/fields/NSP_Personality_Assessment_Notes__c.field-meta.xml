@@ -3,10 +3,9 @@
     <fullName>NSP_Personality_Assessment_Notes__c</fullName>
     <description>Personality Assessment Notes special notes</description>
     <encryptionScheme>None</encryptionScheme>
-    <externalId>false</externalId>
     <label>Personality Assessment Notes</label>
     <length>32768</length>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>LongTextArea</type>
     <visibleLines>3</visibleLines>

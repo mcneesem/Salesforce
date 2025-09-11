@@ -3,9 +3,8 @@
     <fullName>NSP_Term_A__c</fullName>
     <defaultValue>false</defaultValue>
     <description>This will be used to make the Term A section of Generated Order dynamic.</description>
-    <externalId>false</externalId>
     <label>Term A</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

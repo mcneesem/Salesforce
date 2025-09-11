@@ -417,52 +417,56 @@ public with sharing class NSP_ReportRequestWizardController {
 
     }
 
-    /**
-    * @MethodName: createCaseDocuments
-    * @Description: This method will create documents for case based on wizard output
-    * @param :  String caseID, string NSP_ReprotRequest__c.ID
-    * @createdDate : 10/02/2023
-    * @return: N/A                     
-    */
-    
+    //
+    // @MethodName: createCaseDocuments
+    // @Description: This method will create documents for case based on wizard output
+    // @param: String caseID, string NSP_ReprotRequest__c.ID
+    // @return: N/A
+    //
     @AuraEnabled
-    public static void createCaseDocuments(Id reportRequestID, Id caseID)
-    {
+    public static void createCaseDocuments( Id reportRequestID , Id caseID ) {
         try {
-            Set<Id> recordTypeIdSet         =   new Set<Id>();
-            recordTypeIdSet.add(NSP_GenericRecordType.getRecordTypeId('NSP_ReportRequest__c','NSP_SeparationRequest'));
-            recordTypeIdSet.add(NSP_GenericRecordType.getRecordTypeId('NSP_ReportRequest__c','NSP_SurveyRequest'));
-            
-            NSP_ReportRequest__c request    =   [SELECT ID FROM NSP_ReportRequest__c WHERE ID = : reportRequestID AND RecordTypeId = :recordTypeIdSet LIMIT 1];
-            
+            Set<Id> recordTypeIdSet = new Set<Id>();
+            recordTypeIdSet.add( NSP_GenericRecordType.getRecordTypeId( 'NSP_ReportRequest__c' , 'NSP_SeparationRequest' ) );
+            recordTypeIdSet.add( NSP_GenericRecordType.getRecordTypeId( 'NSP_ReportRequest__c' , 'NSP_SurveyRequest' ) );
+            List<NSP_ReportRequest__c> requests = [
+                SELECT Id
+                FROM NSP_ReportRequest__c
+                WHERE (
+                    Id = :reportRequestID
+                    AND RecordTypeId = :recordTypeIdSet
+                )
+                LIMIT 1
+            ];
             // Query results to check for the Report Reqeust with Seperarion Agreement Record Type
-            if(request <> null)
-            {
+            if ( !requests?.isEmpty() ) {
+                NSP_ReportRequest__c request = requests[0];
                 List<ContentDocumentLink> lstConDocs = new List<ContentDocumentLink>();
-            
                 // Getting the content document links related to Report Request record for content document ID
-                for(ContentDocumentLink cntLink : [Select Id, ContentDocumentId, ShareType, Visibility 
-                                                   From ContentDocumentLink 
-                                                   WHERE LinkedEntityId =:request.ID]) 
+                for ( ContentDocumentLink cntLink : [
+                            SELECT Id , ContentDocumentId , ShareType , Visibility 
+                            FROM ContentDocumentLink
+                            WHERE LinkedEntityId = :request.ID
+                        ]
+                    )
                 {
-                    lstConDocs.add(new ContentDocumentLink(
-                        LinkedEntityId      = caseID,
-                        ContentDocumentId   = cntLink.ContentDocumentId,
-                        ShareType           = 'I',
-                        Visibility          = 'InternalUsers'
-                    ));
+                    lstConDocs.add(
+                        new ContentDocumentLink(
+                            LinkedEntityId=caseID ,
+                            ContentDocumentId=cntLink.ContentDocumentId ,
+                            ShareType='I' ,
+                            Visibility='InternalUsers'
+                        )
+                    );
                 }
-                
-                if(lstConDocs?.size() > 0)
-                {
-                    Database.insert(lstConDocs, false);
+                if ( lstConDocs?.size() > 0 ) {
+                    Database.insert( lstConDocs , false );
                 }
             }
-            
-        }
-        catch (Exception e) 
-        {
-            throw new AuraHandledException(e.getMessage());
+        } catch ( Exception e ) {
+            throw new AuraHandledException( e.getMessage() );
         }
     }
+
 }
+//

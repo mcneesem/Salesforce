@@ -3,10 +3,9 @@
     <fullName>NSP_Bill_To_Street__c</fullName>
     <description>Captures Bill to street</description>
     <encryptionScheme>None</encryptionScheme>
-    <externalId>false</externalId>
     <label>Bill To Street</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>TextArea</type>
 </CustomField>

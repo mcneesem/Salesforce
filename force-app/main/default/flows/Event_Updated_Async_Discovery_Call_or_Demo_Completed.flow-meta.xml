@@ -3,32 +3,9 @@
     <apiVersion>61.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
-        <name>Assign_Discovery_Call_Completed_Date</name>
-        <label>Assign Discovery Call Completed Date</label>
-        <locationX>182</locationX>
-        <locationY>708</locationY>
-        <assignmentItems>
-            <assignToReference>varOpportunity.Discovery_Call_Completed_Date__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$Flow.CurrentDate</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varOpportunity.Discovery_Completed__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Update_Opportunity_Discovery_Call_Completed_Date</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Assign_Has_Demo_Activity</name>
         <label>Assign Has Demo Activity</label>
-        <locationX>974</locationX>
+        <locationX>578</locationX>
         <locationY>708</locationY>
         <assignmentItems>
             <assignToReference>varOpportunity.NSP_Has_Demo_Activity__c</assignToReference>
@@ -44,7 +21,7 @@
     <assignments>
         <name>Assign_varFaultElement_Get_Opty_Info</name>
         <label>Assign varFaultElement - Get Opty Info</label>
-        <locationX>2030</locationX>
+        <locationX>1634</locationX>
         <locationY>384</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -58,26 +35,9 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_varFaultElement_Update_Opty_Discovery_Call_Completed_Date</name>
-        <label>Assign varFaultElement - Update Opty - Discovery Call Completed Date</label>
-        <locationX>446</locationX>
-        <locationY>924</locationY>
-        <assignmentItems>
-            <assignToReference>varFaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Update_Opportunity_Discovery_Call_Completed_Date</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Assign_varFaultElement_Update_Opty_Has_Demo_Activity</name>
         <label>Assign varFaultElement - Update Opty - Has Demo Activity</label>
-        <locationX>1238</locationX>
+        <locationX>842</locationX>
         <locationY>924</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -92,39 +52,9 @@
         </connector>
     </assignments>
     <decisions>
-        <description>Prevent DmlExceptions: HCM Sales Consultants can modify only WX Opportunities.</description>
-        <name>Check_HCM_Rules</name>
-        <label>Check HCM Rules</label>
-        <locationX>50</locationX>
-        <locationY>600</locationY>
-        <defaultConnector>
-            <targetReference>Assign_Discovery_Call_Completed_Date</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>HCM_Not_Allowed</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Permission.Opportunity_WX_Product_Only</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>varOpportunity.NSP_PrimaryProduct__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>WX</stringValue>
-                </rightValue>
-            </conditions>
-            <label>HCM Not Allowed</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Discovery_Call_or_Demo</name>
         <label>Discovery Call or Demo?</label>
-        <locationX>776</locationX>
+        <locationX>578</locationX>
         <locationY>492</locationY>
         <defaultConnectorLabel>N/A</defaultConnectorLabel>
         <rules>
@@ -138,7 +68,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Check_HCM_Rules</targetReference>
+                <targetReference>Event_Subflow_Discovery_Call_Completed_Date</targetReference>
             </connector>
             <label>Discovery Call Event</label>
         </rules>
@@ -168,7 +98,7 @@
     <decisions>
         <name>Does_Demo_Activity_need_to_be_updated_on_Opty</name>
         <label>Does Demo Activity need to be updated on Opty?</label>
-        <locationX>842</locationX>
+        <locationX>446</locationX>
         <locationY>600</locationY>
         <defaultConnector>
             <targetReference>Assign_Has_Demo_Activity</targetReference>
@@ -190,7 +120,7 @@
     <decisions>
         <name>Related_Opportunity_Found</name>
         <label>Related Opportunity Found?</label>
-        <locationX>1271</locationX>
+        <locationX>974</locationX>
         <locationY>384</locationY>
         <defaultConnectorLabel>Opty NOT found</defaultConnectorLabel>
         <rules>
@@ -209,7 +139,7 @@
             <label>Related Opty Found</label>
         </rules>
     </decisions>
-    <description>Updated to remove hardcoded HCM Sales Consultant role.</description>
+    <description>Updated to move Discovery Call actions to subflow. Updated to remove hardcoded HCM Sales Consultant role and Update Oppty CloseDate based on HR360 Primary Product</description>
     <environments>Default</environments>
     <interviewLabel>Event - Updated - Async - Discovery Call or Demo Completed {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Event - Updated - Async - Discovery Call or Demo Completed</label>
@@ -233,10 +163,9 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
-        <description>Prevent DmlExceptions by ignoring &quot;Locked&quot; Opportunities (NSP_Lock_Opportunity__c).</description>
         <name>Get_Opportunity_Info</name>
         <label>Get Opportunity Info</label>
-        <locationX>1271</locationX>
+        <locationX>974</locationX>
         <locationY>276</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -253,34 +182,21 @@
                 <elementReference>$Record.WhatId</elementReference>
             </value>
         </filters>
-        <filters>
-            <field>NSP_Lock_Opportunity__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </filters>
         <object>Opportunity</object>
         <outputReference>varOpportunity</outputReference>
         <queriedFields>Id</queriedFields>
         <queriedFields>Discovery_Call_Completed_Date__c</queriedFields>
         <queriedFields>NSP_PrimaryProduct__c</queriedFields>
         <queriedFields>NSP_Has_Demo_Activity__c</queriedFields>
+        <queriedFields>CloseDate</queriedFields>
+        <queriedFields>OwnerId</queriedFields>
+        <queriedFields>District_Manager_Id__c</queriedFields>
+        <queriedFields>Name</queriedFields>
     </recordLookups>
-    <recordUpdates>
-        <name>Update_Opportunity_Discovery_Call_Completed_Date</name>
-        <label>Update Opportunity - Discovery Call Completed Date</label>
-        <locationX>182</locationX>
-        <locationY>816</locationY>
-        <faultConnector>
-            <targetReference>Assign_varFaultElement_Update_Opty_Discovery_Call_Completed_Date</targetReference>
-        </faultConnector>
-        <inputReference>varOpportunity</inputReference>
-    </recordUpdates>
     <recordUpdates>
         <name>Update_Opportunity_Has_Demo_Activity</name>
         <label>Update Opportunity - Has Demo Activity</label>
-        <locationX>974</locationX>
+        <locationX>578</locationX>
         <locationY>816</locationY>
         <faultConnector>
             <targetReference>Assign_varFaultElement_Update_Opty_Has_Demo_Activity</targetReference>
@@ -288,7 +204,7 @@
         <inputReference>varOpportunity</inputReference>
     </recordUpdates>
     <start>
-        <locationX>336</locationX>
+        <locationX>254</locationX>
         <locationY>0</locationY>
         <filterLogic>(1 OR 2) AND 3 AND 4 AND 5 AND 6 AND 7</filterLogic>
         <filters>
@@ -349,9 +265,22 @@
     </start>
     <status>Draft</status>
     <subflows>
+        <name>Event_Subflow_Discovery_Call_Completed_Date</name>
+        <label>Event - Subflow - Discovery Call Completed Date</label>
+        <locationX>50</locationX>
+        <locationY>600</locationY>
+        <flowName>Event_Subflow_Discovery_Call_Completed_Date</flowName>
+        <inputAssignments>
+            <name>varOpportunity</name>
+            <value>
+                <elementReference>varOpportunity</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
-        <locationX>2030</locationX>
+        <locationX>1634</locationX>
         <locationY>492</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>

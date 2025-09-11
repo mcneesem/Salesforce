@@ -31,7 +31,8 @@ private class NSP_AccountGroupFocusItemsBatch_Test {
 
     @isTest
     private static void testMethodForSchedule() {
-        String cronExp = '0 0 0 3 9 ? ' + System.now().year();
+        DateTime runtime = System.now().addDays( 1 );
+        String cronExp = '0 0 0 ' + runtime.day() + ' ' + runtime.month() + ' ? ' + runtime.year();
         Test.startTest();
         String jobId = System.schedule('NSP_AccountGroupFocusItemsBatchTest',
                                        cronExp,

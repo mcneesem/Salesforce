@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>PEPM__c</fullName>
-    <externalId>false</externalId>
-    <formula>IF( Is_AIMS_Sub_Client_Ends_With_00__c , ( NSP_Margin__c  +  NSP_Reserve__c ) , 0)</formula>
+    <formula>IF( Is_Primary_Contract__c , ( NSP_Margin__c  +  NSP_Reserve__c ) , 0 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>PEPM</label>
     <precision>18</precision>

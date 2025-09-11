@@ -3,7 +3,6 @@
     <fullName>NSP_Customer_Stakeholder__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <description>Customer Stakeholder of the account</description>
-    <externalId>false</externalId>
     <label>Customer Stakeholder</label>
     <lookupFilter>
         <active>true</active>
@@ -24,7 +23,7 @@
     <relationshipLabel>Quotes (Customer Stakeholder)</relationshipLabel>
     <relationshipName>Quotes</relationshipName>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
 </CustomField>

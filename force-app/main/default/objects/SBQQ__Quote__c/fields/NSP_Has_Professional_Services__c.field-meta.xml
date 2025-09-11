@@ -3,9 +3,8 @@
     <fullName>NSP_Has_Professional_Services__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Indicates if the quote has BPS Professional Services are added</description>
-    <externalId>false</externalId>
     <label>Has Professional Services</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

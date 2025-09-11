@@ -10,7 +10,6 @@ public with sharing class NSP_EventTriggerHelper {
     private static final String EMPTY_STRING = '';
     private static final String WORD_SEPARATOR =  ' : ';
     private static Id coreSalesEventRecordType = NSP_GenericRecordType.getRecordTypeId( 'Event' , 'Core_Sales_Event_RT' );
-    private static Boolean Is_Enabled_WO_WS_Stage_Entry = OpportunityStageSettings__c.getInstance( UserInfo.getUserId() ).Is_Enabled_WO_WS_Stage_Entry__c;
 
     // Iterates throught the list of new Event and passes the required attributes to other methods.
     // @param newList List of New Event.  
@@ -64,43 +63,106 @@ public with sharing class NSP_EventTriggerHelper {
     // @param eventOldMap Map of Old Event.
     // @return void
     public void afterUpdateDirector( Map<Id,Event> eventNewMap , Map<Id,Event> eventOldMap ) {
+        List<DiscoveryCallCompletedEvent__e> dcCompletedEventList = new List<DiscoveryCallCompletedEvent__e>();
         Map<Id,Event> rescheduledEventsMap = new Map<Id,Event>();
-        Set<String> subjectSet = new Set<String>();  
-        Id eventRecordType = Schema.SObjectType.Event.getRecordTypeInfosByDeveloperName().get('Core_Sales_Event_RT')?.getRecordTypeId();
-        if(eventNewMap != null){
-            for (Event newEventRecord : eventNewMap.Values()){
+        Set<String> subjectSet = new Set<String>();
+        if ( eventNewMap != null ) {
+            for ( Event newEventRecord : eventNewMap.values() ) {
                 if ( ( eventOldMap != null ) && eventOldMap.containsKey( newEventRecord.Id ) ) {
                     Event oldEventRecord = eventOldMap.get(newEventRecord.Id);
-                    if (newEventRecord.RecordTypeId == eventRecordType
-                        && newEventRecord.WhatId != null && newEventRecord.FSL__Event_Type__c == 'Resource Absence'
-                        && oldEventRecord != null && (oldEventRecord.StartDateTime != newEventRecord.StartDateTime || oldEventRecord.EndDateTime != newEventRecord.EndDateTime)
-                        )
-                    {
-                        rescheduledEventsMap.put(newEventRecord.Id, newEventRecord);
-                    }
-                    if ( ( newEventRecord.IsRecurrence2 == TRUE || newEventRecord.IsRecurrence == TRUE )
-                        && newEventRecord.RecordTypeId == eventRecordType
-                        && newEventRecord.WhatId == NULL && newEventRecord.Type == NULL
-                        && ( oldEventRecord != null )
-                        && ( oldEventRecord.StartDateTime != newEventRecord.StartDateTime || oldEventRecord.EndDateTime != newEventRecord.EndDateTime )
-                        )
-                    {
-                        rescheduledEventsMap.put(newEventRecord.Id, newEventRecord);
-                        subjectSet.add(newEventRecord.Subject);  
-                    }
+                    rescheduledEventsMap = this.processRescheduledEventsMap(
+                        newEventRecord ,
+                        oldEventRecord ,
+                        rescheduledEventsMap
+                    );
+                    subjectSet = this.processSubjectSet(
+                        newEventRecord ,
+                        oldEventRecord ,
+                        subjectSet
+                    );
+                    dcCompletedEventList = this.processDCCompleted(
+                        newEventRecord ,
+                        oldEventRecord ,
+                        dcCompletedEventList
+                    );
                 }
             }
         }
-        Map<Id, Event> attendeesEventMap = getAttendeesEvent(subjectSet,rescheduledEventsMap);
-        if (!attendeesEventMap.isEmpty()){
-            rescheduledEventsMap.putAll(attendeesEventMap);
+        Map<Id,Event> attendeesEventMap = this.getAttendeesEvent( subjectSet , rescheduledEventsMap );
+        if ( !attendeesEventMap.isEmpty() ) {
+            rescheduledEventsMap.putAll( attendeesEventMap );
         }
-        if (rescheduledEventsMap.size() > 0){
-            updateResourceAbsenceDate(rescheduledEventsMap);
+        if ( !rescheduledEventsMap.isEmpty() ) {
+            this.updateResourceAbsenceDate( rescheduledEventsMap );
         }
-        updateOpportunitiesWithDiscoverCalls(eventNewMap.values());
-        updateActivityDate(eventNewMap.values(),eventOldMap);
-        checkOpportunityStageCriteria(eventNewMap.values());
+        if ( NSP_EventTriggerHelper.is_Enabled_DCCompletedScreen
+            && ( dcCompletedEventList != null )
+            && !dcCompletedEventList.isEmpty()
+            )
+        {
+            List<Database.SaveResult> results = EventBus.publish( dcCompletedEventList );
+            NSP_ErrorLogHandler.logResults(
+                NSP_EventTriggerHelper.class.getName() ,
+                'afterUpdateDirector' ,
+                results
+            );
+        }
+        this.updateOpportunitiesWithDiscoverCalls( eventNewMap.values() );
+        this.updateActivityDate( eventNewMap.values() , eventOldMap );
+        this.checkOpportunityStageCriteria( eventNewMap.values() );
+    }
+
+    private Set<String> processSubjectSet( Event newEventRecord , Event oldEventRecord , Set<String> subjectSet ) {
+        if ( ( subjectSet != null )
+            && ( newEventRecord != null )
+            && ( newEventRecord.RecordTypeId == NSP_EventTriggerHelper.eventRecordType )
+            && ( oldEventRecord != null )
+            && ( oldEventRecord.StartDateTime != newEventRecord.StartDateTime || oldEventRecord.EndDateTime != newEventRecord.EndDateTime )
+            && ( newEventRecord.WhatId == null && newEventRecord.Type == null )
+            && ( newEventRecord.IsRecurrence2 == true || newEventRecord.IsRecurrence == true )
+            )
+        {
+            subjectSet.add(newEventRecord.Subject);
+        }
+        return subjectSet;
+    }
+
+    private Map<Id,Event> processRescheduledEventsMap( Event newEventRecord , Event oldEventRecord , Map<Id,Event> rescheduledEventsMap ) {
+        if ( ( rescheduledEventsMap != null )
+            && ( newEventRecord != null )
+            && ( newEventRecord.RecordTypeId == NSP_EventTriggerHelper.eventRecordType )
+            && ( oldEventRecord != null )
+            && ( oldEventRecord.StartDateTime != newEventRecord.StartDateTime || oldEventRecord.EndDateTime != newEventRecord.EndDateTime )
+            && ( ( newEventRecord.WhatId != null && newEventRecord.FSL__Event_Type__c == 'Resource Absence' ) 
+                || ( ( newEventRecord.WhatId == null && newEventRecord.Type == null )
+                    && ( newEventRecord.IsRecurrence2 == true || newEventRecord.IsRecurrence == true )
+                    )
+                )
+            )
+        {
+            rescheduledEventsMap.put(newEventRecord.Id, newEventRecord);
+        }
+        return rescheduledEventsMap;
+    }
+
+    private List<DiscoveryCallCompletedEvent__e> processDCCompleted( Event newEventRecord , Event oldEventRecord , List<DiscoveryCallCompletedEvent__e> dcCompletedEventList ) {
+        if ( ( dcCompletedEventList != null )
+            && ( newEventRecord != null )
+            && String.isNotBlank( newEventRecord.WhatId )
+            && ( newEventRecord.NSP_Event_Subtype__c != NULL )
+            && ( newEventRecord.WhatId.getSObjectType() == Opportunity.getSObjectType() )
+            && newEventRecord.NSP_Event_Subtype__c.equalsIgnoreCase( NSP_EventTriggerHelper.DISCOVERY_CALL )
+            && ( oldEventRecord != null && oldEventRecord.NSP_Status__c != newEventRecord.NSP_Status__c )
+            && ( newEventRecord.NSP_Status__c == NSP_SalesConstants.DISCOVERY_CALL_COMPLETED )
+            )
+        {
+            DiscoveryCallCompletedEvent__e dcCompletedEvent = new DiscoveryCallCompletedEvent__e();
+            dcCompletedEvent.Id__c = newEventRecord.Id;
+            dcCompletedEvent.UserId__c = UserInfo.getUserId();
+            dcCompletedEvent.WhatId__c = newEventRecord.WhatId;
+            dcCompletedEventList.add( dcCompletedEvent );
+        }
+        return dcCompletedEventList;
     }
 
     //
@@ -306,7 +368,7 @@ public with sharing class NSP_EventTriggerHelper {
 
     public void checkOpportunityStageCriteria( List<Event> newList ) {
         List<Id> updateOpportunityIds = new List<Id>();
-        if ( NSP_EventTriggerHelper.Is_Enabled_WO_WS_Stage_Entry ) {
+        if ( NSP_EventTriggerHelper.is_Enabled_WO_WS_Stage_Entry ) {
             for ( Event event : newList ) {
                 if ( event != NULL
                     && event.WhatId != NULL
@@ -465,6 +527,36 @@ public with sharing class NSP_EventTriggerHelper {
             methodName ,
             e
         );
+    }
+
+    private static Boolean is_Enabled_WO_WS_Stage_Entry {
+        private get {
+            if ( is_Enabled_WO_WS_Stage_Entry == null ) {
+                is_Enabled_WO_WS_Stage_Entry = OpportunityStageSettings__c.getInstance( UserInfo.getUserId() ).Is_Enabled_WO_WS_Stage_Entry__c;
+            }
+            return is_Enabled_WO_WS_Stage_Entry;
+        }
+        private set;
+    }
+
+    private static Boolean is_Enabled_DCCompletedScreen {
+        private get {
+            if ( is_Enabled_DCCompletedScreen == null ) {
+                is_Enabled_DCCompletedScreen = OpportunityStageSettings__c.getInstance( UserInfo.getUserId() ).Is_Enabled_DiscoveryCallCompletedScreen__c;
+            }
+            return is_Enabled_DCCompletedScreen;
+        }
+        private set;
+    }
+
+    private static Id eventRecordType {
+        private get {
+            if ( eventRecordType == null ) {
+                eventRecordType = NSP_GenericRecordType.getRecordTypeId( 'Event' , 'Core_Sales_Event_RT' );
+            }
+            return eventRecordType;
+        }
+        private set;
     }
 
 }

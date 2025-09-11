@@ -50,13 +50,11 @@ public with sharing class NSP_NotificatonIESAlertsBatch_Test {
         Test.stopTest();
         
     }
-    
-    /**
-     * @description  Static Test Method to Call the Scheduler Class
-     */
+
     @isTest
-    static void testNotificatonIESAlertsBatchScheduler() {  
-        String cronExp = '0 0 0 3 9 ? ' + System.now().year();
+    static void testNotificatonIESAlertsBatchScheduler() {
+        DateTime runtime = System.now().addDays( 1 );
+        String cronExp = '0 0 0 ' + runtime.day() + ' ' + runtime.month() + ' ? ' + runtime.year();
         Test.startTest();
         String jobId = System.schedule('NSP_NotificatonIESAlertsBatchSchedule',
                                        cronExp, 

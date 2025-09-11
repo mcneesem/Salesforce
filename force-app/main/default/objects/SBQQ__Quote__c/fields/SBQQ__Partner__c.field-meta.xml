@@ -4,14 +4,13 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <deprecated>false</deprecated>
     <description>Primary partner on this deal (if any). Defaulted to partner marked as primary in Partners related list on the opportunity.</description>
-    <externalId>false</externalId>
     <inlineHelpText>Primary partner on this deal (if any). This field defaults to the partner marked as primary in the Partners related list on the opportunity.</inlineHelpText>
     <label>Partner</label>
     <referenceTo>Account</referenceTo>
     <relationshipLabel>Partner Quotes</relationshipLabel>
     <relationshipName>PartnerQuotes</relationshipName>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
 </CustomField>

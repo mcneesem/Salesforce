@@ -3,10 +3,9 @@
     <fullName>NSP_OnDemand_Notes__c</fullName>
     <description>OnDemand Notes Special NOtes</description>
     <encryptionScheme>None</encryptionScheme>
-    <externalId>false</externalId>
     <label>OnDemand Notes</label>
     <length>32768</length>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>LongTextArea</type>
     <visibleLines>3</visibleLines>

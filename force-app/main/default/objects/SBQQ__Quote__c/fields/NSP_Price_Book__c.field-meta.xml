@@ -3,13 +3,12 @@
     <fullName>NSP_Price_Book__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <description>Custom Price Book Lookup used in Quote</description>
-    <externalId>false</externalId>
     <label>Price Book</label>
     <referenceTo>Pricebook2</referenceTo>
     <relationshipLabel>Quotes (Price Book)</relationshipLabel>
     <relationshipName>Quotes</relationshipName>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
 </CustomField>

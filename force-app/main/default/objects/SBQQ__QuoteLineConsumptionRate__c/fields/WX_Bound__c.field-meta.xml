@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>WX_Bound__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(
+  ( SBQQ__ProcessingOrder__c = 14 ) ,
+  &quot;2,001+&quot; ,
+  IF(
+    OR(
+      ( SBQQ__ProcessingOrder__c = 2 ) ,
+      ( SBQQ__ProcessingOrder__c = 3 ) ,
+      ( SBQQ__ProcessingOrder__c = 4 ) ,
+      ( SBQQ__ProcessingOrder__c = 5 ) ,
+      ( SBQQ__ProcessingOrder__c = 6 ) ,
+      ( SBQQ__ProcessingOrder__c = 7 ) ,
+      ( SBQQ__ProcessingOrder__c = 8 ) ,
+      ( SBQQ__ProcessingOrder__c = 9 ) ,
+      ( SBQQ__ProcessingOrder__c = 10 ) ,
+      ( SBQQ__ProcessingOrder__c = 11 ) ,
+      ( SBQQ__ProcessingOrder__c = 12 ) ,
+      ( SBQQ__ProcessingOrder__c = 13 )
+    ) ,
+    ( TEXT( SBQQ__LowerBound__c + 1 ) &amp; &quot; - &quot; &amp; TEXT( SBQQ__UpperBound__c ) ) ,
+    ( TEXT( SBQQ__LowerBound__c ) &amp; &quot; - &quot; &amp; TEXT( SBQQ__UpperBound__c ) )
+  )
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>WX Bound</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

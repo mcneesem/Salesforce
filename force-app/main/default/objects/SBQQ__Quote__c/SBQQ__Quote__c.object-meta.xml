@@ -161,11 +161,11 @@
     <nameField>
         <displayFormat>Q-{00000}</displayFormat>
         <label>Quote Number</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Quotes</pluralLabel>
-    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypeTrackHistory>true</recordTypeTrackHistory>
     <searchLayouts>
         <customTabListAdditionalFields>SBQQ__NetAmount__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>SBQQ__Status__c</customTabListAdditionalFields>

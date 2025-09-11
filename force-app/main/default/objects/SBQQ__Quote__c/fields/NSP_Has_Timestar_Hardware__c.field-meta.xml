@@ -3,9 +3,8 @@
     <fullName>NSP_Has_Timestar_Hardware__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Indicates if Timestar Hardware is added to the quote</description>
-    <externalId>false</externalId>
     <label>Has Timestar Hardware</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

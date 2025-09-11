@@ -3,9 +3,8 @@
     <fullName>NSP_Override_Calculated_Quantity__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Used for overriding system calculation on QLE quote header.</description>
-    <externalId>false</externalId>
     <label>Override Calculated Quantity</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

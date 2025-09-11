@@ -3,9 +3,8 @@
     <fullName>NSP_SupplementBPS__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Indicates if BPS Supplement products are added</description>
-    <externalId>false</externalId>
     <label>SupplementBPS</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

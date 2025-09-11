@@ -1,12 +1,24 @@
 <template>
-    <lightning-layout>
-        <lightning-layout-item flexibility="auto" padding="horizontal-medium">
-            <div class="custom-box">Select Category, Subcategory and Detail</div>
-        </lightning-layout-item>
-    </lightning-layout>
-    <lightning-layout>
-        <template lwc:if={cqaChildCase}>
-            <lightning-layout-item size="6" class="slds-p-around_small">
+    <template lwc:if={showTitle}>
+        <lightning-layout>
+            <lightning-layout-item
+                size="12"
+                flexibility="auto"
+                padding="horizontal-medium"
+                >
+                <div class="custom-box">Select Category, Subcategory and Detail</div>
+            </lightning-layout-item>
+        </lightning-layout>
+    </template>
+    <template lwc:if={cqaChildCase}>
+        <lightning-layout multiple-rows>
+            <lightning-layout-item
+                size="12"
+                small-device-size="12"
+                medium-device-size="6"
+                large-device-size="6"
+                class="slds-p-around_small"
+                >
                 <lightning-input-field
                     field-name="NSP_Category__c"
                     value={selectedCategory}
@@ -14,7 +26,13 @@
                     >
                 </lightning-input-field>
             </lightning-layout-item>
-            <lightning-layout-item size="6" class="slds-p-around_small">
+            <lightning-layout-item
+                size="12"
+                small-device-size="12"
+                medium-device-size="6"
+                large-device-size="6"
+                class="slds-p-around_small"
+                >
                 <lightning-input-field
                     field-name="NSP_SubCategory__c"
                     value={selectedSubCategory}
@@ -22,161 +40,191 @@
                     >
                 </lightning-input-field>
             </lightning-layout-item>
-        </template>
-        <template lwc:else>
-            <lightning-layout-item size="6">
-                <div class="slds-m-top_medium slds-p-around_medium">
-                    <template if:false={showAllCategory}>
-                        <div class="slds-p-around_medium slds-form_horizontal">
-                            <lightning-combobox
-                                data-fname="category"
-                                name="Category"
-                                label="Category"
-                                value={selectedCategory}
-                                placeholder="Select a Category"
-                                options={categoryArray}
-                                onchange={handleChange}
-                                required
+        </lightning-layout>
+    </template>
+    <template lwc:else>
+        <lightning-layout multiple-rows>
+            <!-- Category Section -->
+            <lightning-layout-item
+                size={smallDeviceSize}
+                small-device-size={smallDeviceSize}
+                medium-device-size={mediumDeviceSize}
+                large-device-size={largeDeviceSize}
+                class="slds-p-around_small"
+                >
+                <template if:false={showAllCategory}>
+                    <div class="slds-form_horizontal">
+                        <lightning-combobox
+                            data-fname="category"
+                            name="Category"
+                            label="Category"
+                            value={selectedCategory}
+                            placeholder="Select a Category"
+                            options={categoryArray}
+                            onchange={handleChange}
+                            required
+                            >
+                        </lightning-combobox>
+                        <template if:false={isBPSUser}>
+                            <lightning-button
+                                variant="brand"
+                                label="View All"
+                                class="slds-m-top_small"
+                                onclick={handleCategoryViewAll}
                                 >
-                            </lightning-combobox>
-                            <template if:false={isBPSUser}>
-                                <lightning-button
-                                    variant="brand"
-                                    label="View All"
-                                    class="slds-m-top_small"
-                                    onclick={handleCategoryViewAll}
-                                    >
-                                </lightning-button>
-                            </template>
-                        </div>
-                    </template>
-                    <template if:true={showAllCategory}>
-                        <div class="slds-p-around_medium slds-form_horizontal">
-                            <lightning-combobox
-                                data-fname="category"
-                                name="Category"
-                                label="Category"
-                                placeholder="Select a Category"
-                                value={selectedCategory}
-                                onchange={handleChange1}
-                                options={categoryOptions}
-                                required
+                            </lightning-button>
+                        </template>
+                    </div>
+                </template>
+                <template if:true={showAllCategory}>
+                    <div class="slds-form_horizontal">
+                        <lightning-combobox
+                            data-fname="category"
+                            name="Category"
+                            label="Category"
+                            placeholder="Select a Category"
+                            value={selectedCategory}
+                            onchange={handleChange1}
+                            options={categoryOptions}
+                            required
+                            >
+                        </lightning-combobox>
+                        <template if:false={isBPSUser}>
+                            <lightning-button
+                                variant="brand"
+                                label="View Filtered"
+                                class="slds-m-top_small"
+                                onclick={handleCategoryFilteredView}
                                 >
-                            </lightning-combobox>
-                            <template if:false={isBPSUser}>
-                                <lightning-button
-                                    variant="brand"
-                                    label="View Filtered"
-                                    class="slds-m-top_small"
-                                    onclick={handleCategoryFilteredView}
-                                    >
-                                </lightning-button>
-                            </template>
-                        </div>
-                    </template>
-                    <template if:true={showDetail}>
-                        <div class="slds-p-around_medium slds-form_horizontal">
-                            <lightning-combobox
-                                data-fname="detail"
-                                name="Detail"
-                                label="Detail"
-                                value={selectedDetail}
-                                placeholder="Select a Detail"
-                                options={detailOptions}
-                                onchange={handleChange}
-                                >
-                            </lightning-combobox>
-                        </div>
-                    </template>
-                    <template if:true={showAllDetail}>
-                        <div class="slds-p-around_medium slds-form_horizontal">
-                            <lightning-combobox
-                                data-fname="detail"
-                                name="Detail"
-                                label="Detail"
-                                value={selectedDetail}
-                                placeholder="Select a Detail"
-                                options={detailOptions}
-                                onchange={handleChange1}
-                                >
-                            </lightning-combobox>
-                        </div>
-                    </template>
-                </div>
+                            </lightning-button>
+                        </template>
+                    </div>
+                </template>
             </lightning-layout-item>
-            <lightning-layout-item size="6">
-                <div class="slds-m-top_medium slds-p-around_medium">
-                    <template if:false={showAllSubCategory}>
-                        <div class="slds-p-around_medium slds-form_horizontal">
-                            <lightning-combobox
-                                name="Sub Category"
-                                label="Sub Category"
-                                value={selectedSubCategory}
-                                placeholder="Select a Sub Category"
-                                options={subCategoryOptions}
-                                onchange={handleChange}
-                                required="true"
+            <!-- Sub Category Section -->
+            <lightning-layout-item
+                size={smallDeviceSize}
+                small-device-size={smallDeviceSize}
+                medium-device-size={mediumDeviceSize}
+                large-device-size={largeDeviceSize}
+                class="slds-p-around_small"
+                >
+                <template if:false={showAllSubCategory}>
+                    <div class="slds-form_horizontal">
+                        <lightning-combobox
+                            name="Sub Category"
+                            label="Sub Category"
+                            value={selectedSubCategory}
+                            placeholder="Select a Sub Category"
+                            options={subCategoryOptions}
+                            onchange={handleChange}
+                            required
+                            >
+                        </lightning-combobox>
+                        <template if:true={showAllSubCategoryButton}>
+                            <lightning-button
+                                variant="brand"
+                                label="View All"
+                                class="slds-m-top_small"
+                                onclick={handleSubCategoryViewAll}
                                 >
-                            </lightning-combobox>
-                            <template if:true={showAllSubCategoryButton}>
-                                <lightning-button
-                                    variant="brand"
-                                    label="View All"
-                                    class="slds-m-top_small"
-                                    onclick={handleSubCategoryViewAll}
-                                    >
-                                </lightning-button>
-                            </template>
-                        </div>
-                    </template>
-                    <template if:true={showAllSubCategory}>
-                        <div class="slds-p-around_medium slds-form_horizontal">
-                            <lightning-combobox
-                                name="Sub Category"
-                                label="Sub Category"
-                                value={selectedSubCategory}
-                                placeholder="Select a Sub Category"
-                                options={subCategoryOptions}
-                                onchange={handleChange1}
-                                required="true"
+                            </lightning-button>
+                        </template>
+                    </div>
+                </template>
+                <template if:true={showAllSubCategory}>
+                    <div class="slds-form_horizontal">
+                        <lightning-combobox
+                            name="Sub Category"
+                            label="Sub Category"
+                            value={selectedSubCategory}
+                            placeholder="Select a Sub Category"
+                            options={subCategoryOptions}
+                            onchange={handleChange1}
+                            required
+                            >
+                        </lightning-combobox>
+                        <template if:true={showFilterSubCategoryButton}>
+                            <lightning-button
+                                variant="brand"
+                                label="View Filtered"
+                                class="slds-m-top_small"
+                                onclick={handleSubCategoryFiltered}
                                 >
-                            </lightning-combobox>
-                            <template if:true={showFilterSubCategoryButton}>
-                                <lightning-button
-                                    variant="brand"
-                                    label="View Filtered"
-                                    class="slds-m-top_small"
-                                    onclick={handleSubCategoryFiltered}
-                                    >
-                                </lightning-button>
-                            </template>
-                            <template if:false={showFilterSubCategoryButton}>
-                                <lightning-button
-                                    variant="brand"
-                                    class="slds-m-top_small"
-                                    label="Hidden"
-                                    style="visibility: hidden;"
-                                    >
-                                </lightning-button>
-                            </template>
-                        </div>
-                    </template>
-                    <template if:true={showVersion}>
-                        <div class="slds-p-around_medium slds-form_horizontal">
-                            <lightning-combobox
-                                data-fname="version"
-                                name="Version"
-                                label="Version"
-                                value={selectedVersion}
-                                placeholder="Select a Version"
-                                options={versionOptions}
-                                onchange={handleChange}
+                            </lightning-button>
+                        </template>
+                        <template if:false={showFilterSubCategoryButton}>
+                            <lightning-button
+                                variant="brand"
+                                class="slds-m-top_small"
+                                label="Hidden"
+                                style="visibility: hidden;"
                                 >
-                            </lightning-combobox>
-                        </div>
-                    </template>
-                </div>
+                            </lightning-button>
+                        </template>
+                    </div>
+                </template>
             </lightning-layout-item>
-        </template>
-    </lightning-layout>
+            <!-- Detail Section -->
+            <lightning-layout-item
+                size={smallDeviceSize}
+                small-device-size={smallDeviceSize}
+                medium-device-size={mediumDeviceSize}
+                large-device-size={largeDeviceSize}
+                class="slds-p-around_small"
+                >
+                <template if:true={showDetail}>
+                    <div class="slds-form_horizontal">
+                        <lightning-combobox
+                            data-fname="detail"
+                            name="Detail"
+                            label="Detail"
+                            value={selectedDetail}
+                            placeholder="Select a Detail"
+                            options={detailOptions}
+                            onchange={handleChange}
+                            >
+                        </lightning-combobox>
+                    </div>
+                </template>
+                <template if:true={showAllDetail}>
+                    <div class="slds-form_horizontal">
+                        <lightning-combobox
+                            data-fname="detail"
+                            name="Detail"
+                            label="Detail"
+                            value={selectedDetail}
+                            placeholder="Select a Detail"
+                            options={detailOptions}
+                            onchange={handleChange1}
+                            >
+                        </lightning-combobox>
+                    </div>
+                </template>
+            </lightning-layout-item>
+            <!-- Version Section -->
+            <lightning-layout-item
+                size={smallDeviceSize}
+                small-device-size={smallDeviceSize}
+                medium-device-size={mediumDeviceSize}
+                large-device-size={largeDeviceSize}
+                class="slds-p-around_small"
+                >
+                <template if:true={showVersion}>
+                    <div class="slds-form_horizontal">
+                        <lightning-combobox
+                            data-fname="version"
+                            name="Version"
+                            label="Version"
+                            value={selectedVersion}
+                            placeholder="Select a Version"
+                            options={versionOptions}
+                            onchange={handleChange}
+                            >
+                        </lightning-combobox>
+                    </div>
+                </template>
+            </lightning-layout-item>
+        </lightning-layout>
+    </template>
 </template>
