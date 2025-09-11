@@ -301,7 +301,7 @@
             <label>User does not have Edit access</label>
         </rules>
     </decisions>
-    <description>Added Fault Message screen after Fault Handler. Switched over to newly renamed subflow to avoid confusion. Also handles all Discovery Call Created scenarios. Replaced District Manager Id with DM User. Sends to subflow regardless of Close Lost. Also checks that running user has edit access. Sends update to subflow. Added Product Recommendation on Close Lost</description>
+    <description>Flipped back to District Manager Id (for now). Added Fault Message screen after Fault Handler. Switched over to newly renamed subflow to avoid confusion. Also handles all Discovery Call Created scenarios. Replaced District Manager Id with DM User. Sends to subflow regardless of Close Lost. Also checks that running user has edit access. Sends update to subflow. Added Product Recommendation on Close Lost</description>
     <dynamicChoiceSets>
         <name>optyCloseLost_Picklist</name>
         <dataType>Picklist</dataType>
@@ -386,7 +386,7 @@
         <queriedFields>Discovery_Call_Completed_Date__c</queriedFields>
         <queriedFields>OwnerId</queriedFields>
         <queriedFields>CloseDate</queriedFields>
-        <queriedFields>NSP_DM_User__c</queriedFields>
+        <queriedFields>District_Manager_Id__c</queriedFields>
         <queriedFields>NSP_Last_Updated__c</queriedFields>
         <queriedFields>Discovery_Call_Created_Date__c</queriedFields>
     </recordLookups>
