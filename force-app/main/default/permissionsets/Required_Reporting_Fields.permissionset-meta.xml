@@ -958,6 +958,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_Sub_Client_Contact__c.Benefits_Original_Hire_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Sub_Client_Contact__c.Middleware_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -969,6 +974,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Sub_Client_Contact__c.Source__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Sub_Client_Contact__c.Term_Reason__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
