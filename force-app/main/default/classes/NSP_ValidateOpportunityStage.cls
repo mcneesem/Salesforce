@@ -24,6 +24,7 @@ public with sharing class NSP_ValidateOpportunityStage {
 
     public static Set<String> validHRProducts = new Set<String>{NSP_SalesConstants.WO, NSP_SalesConstants.WS, NSP_SalesConstants.HRScale};
     private static Set<String> validHR360Products = new Set<String>{NSP_SalesConstants.WO, NSP_SalesConstants.WS, NSP_SalesConstants.HRScale};
+    private static Boolean checkOnly = false;
     public static List<string> analysisStageCriteraTypes = System.Label.NSP_AnalysisStageCriteria.split(',');
     public static List<string> proposeStageCriteraTypes = System.Label.NSP_ProposeStageCriteria.split(',');
     public static List<string> exitCriteriaProductException = System.Label.NSP_ExitCriteriaProductException.split(',');
@@ -33,6 +34,7 @@ public with sharing class NSP_ValidateOpportunityStage {
     private static List<Opportunity_Stage_Validation__mdt> optyStageVals = Opportunity_Stage_Validation__mdt.getAll().values();
     private static String validationObjects = 'Opportunity,Event,Task,OpportunityContactRole,NSP_Employee_Split__c,SBQQ__Quote__c,NSP_Checklist__c';
     private static final String DEFAULT_PRODUCT = 'Default';
+    private static final String FAILED = 'Failed Stage Validation';
     private static final String OPPORTUNITY_OBJ = 'Opportunity';
     public static final String HAS_DISCOVERY = ' has Discovery ';
     public static final String HAS_OPEN_EVENT = ' has Open Event ';
@@ -41,7 +43,12 @@ public with sharing class NSP_ValidateOpportunityStage {
     public static final String HAS_WO = 'has WO';
     private static final Integer ERROR_DOES_NOT_EXIST = 99; // unified error code value...
 
-    public static void validateOpportunityStage(List<Opportunity> newList){
+    public static void validateOpportunityStage( List<Opportunity> newList ) {
+        NSP_ValidateOpportunityStage.validateOpportunityStage( newList , false );
+    }
+
+    public static void validateOpportunityStage( List<Opportunity> newList , Boolean checkOnlyLocal ) {
+        NSP_ValidateOpportunityStage.checkOnly = checkOnlyLocal;
         List<Id> oppIdList = new List<Id>();
         List<Id> oppOwnerIdList= new List<Id>();
         oppOwnerIdList.add(UserInfo.getUserId());
@@ -52,9 +59,9 @@ public with sharing class NSP_ValidateOpportunityStage {
         Map<Id,User> opportunityOwnerRoleMap = getUserRole( oppOwnerIdList );
 
         if( !OpportunityStageSettings__c.getInstance(UserInfo.getUserId()).Is_Enabled_WO_WS_Stage_Entry__c ){ // Kill switch added on 6/10/2024
-            validateOpportunityStageOld(newList , oppIdList , opportunityOwnerRoleMap);
+            validateOpportunityStageOld( newList , oppIdList , opportunityOwnerRoleMap );
         } else {
-            validateOpportunityStageNew(newList , oppIdList , opportunityOwnerRoleMap);
+            validateOpportunityStageNew( newList , oppIdList , opportunityOwnerRoleMap );
         }
     }
 
@@ -169,14 +176,18 @@ public with sharing class NSP_ValidateOpportunityStage {
     {
         for(Opportunity_Stage_Validation__mdt val : currentOptyStageVals){
             Integer passCheckCount = 0;
-            if( String.isBlank(val.Group__c) ){
+            if( String.isBlank(val.Group__c) ) {
                 for( SObject valObject : valObjectMap.get(val.Object__c) ){
-                    if( checkCondition(valObject.get(val.Field__c) , val.Value__c , val.Operation__c) ){
+                    if( checkCondition(valObject.get(val.Field__c) , val.Value__c , val.Operation__c) ) {
                         passCheckCount++;
                     }
                 }
-                if( passCheckCount < 1 ){
-                    opp.addError(val.Error_Message__c);
+                if( passCheckCount < 1 ) {
+                    if( checkOnly ) {
+                        opp.NextStep = FAILED;
+                    } else {
+                        opp.addError(val.Error_Message__c);
+                    }
                 }
             }
         }
@@ -228,7 +239,11 @@ public with sharing class NSP_ValidateOpportunityStage {
             && ( !passCheck || !passCheckDNE )
             )
         {
-            opp.addError( errMsg );
+            if( checkOnly ) {
+                opp.NextStep = FAILED;
+            } else {
+                opp.addError( errMsg );
+            }
         }
     }
 
@@ -487,7 +502,11 @@ public with sharing class NSP_ValidateOpportunityStage {
                         )
                     )
                 {
-                    opp.addError( System.Label.NSP_AddPrimaryQuote );
+                    if( checkOnly ) {
+                        opp.NextStep = FAILED;
+                    } else {
+                        opp.addError( System.label.NSP_AddPrimaryQuote );
+                    }
                 }
             }
         } catch ( Exception e ) {
@@ -510,7 +529,11 @@ public with sharing class NSP_ValidateOpportunityStage {
                     || ( opp.NSP_Client_For_Life__c != primaryQuote?.NSP_Client_For_Life__c ) )
                 )
             {
-                opp.addError( System.label.NSP_Sync_Primary_Quote_With_Opportunity );
+                if( checkOnly ) {
+                    opp.NextStep = FAILED;
+                } else {
+                    opp.addError( System.label.NSP_Sync_Primary_Quote_With_Opportunity );
+                }
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
@@ -535,10 +558,18 @@ public with sharing class NSP_ValidateOpportunityStage {
                             || ( opp.NSP_Client_For_Life__c != primaryQuote.NSP_Client_For_Life__c ) )
                         )
                     {
-                        opp.addError(System.label.NSP_Sync_Primary_Quote_With_Opportunity);
+                        if( checkOnly ) {
+                            opp.NextStep = FAILED;
+                        } else {
+                            opp.addError( System.label.NSP_Sync_Primary_Quote_With_Opportunity );
+                        }
                     }
                 } else {
-                    opp.addError( System.Label.NSP_AddPrimaryQuote );
+                    if( checkOnly ) {
+                        opp.NextStep = FAILED;
+                    } else {
+                        opp.addError( System.label.NSP_AddPrimaryQuote );
+                    }
                 }
             }
         } catch ( Exception e ) {
@@ -551,30 +582,42 @@ public with sharing class NSP_ValidateOpportunityStage {
     }
 
     private static void evaluateClosedWonStageCriteria( Opportunity opp ) {
+        Integer canClosedWon = 0;
         if ( NSP_ValidateOpportunityStage.permittedCWOppOwnerUserMap.containsKey( opp.OwnerId )
             && ( !hasAllowCWNCSUserPerm )
             && ownerBasedCriteriaProducts.contains( opp.NSP_PrimaryProduct__c )
             )
         {
-            opp.addError( System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON );
-        } else if ( nonOwnerBasedCriteriaProducts.contains( opp.NSP_PrimaryProduct__c )
+            canClosedWon++;
+        }
+        else if ( nonOwnerBasedCriteriaProducts.contains( opp.NSP_PrimaryProduct__c )
             && ( UserInfo.getUserId() != opp.OwnerId )
             && ( !hasAllowCWNCSUserPerm )
             )
         {
-            opp.addError( System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON );
-        } else if ( ownerBasedCriteriaProducts.contains( opp.NSP_PrimaryProduct__c )
+            canClosedWon++;
+        }
+        else if ( ownerBasedCriteriaProducts.contains( opp.NSP_PrimaryProduct__c )
             && !NSP_ValidateOpportunityStage.permittedCWOppOwnerUserMap.containsKey( opp.OwnerId )
             && ( UserInfo.getUserId() != opp.OwnerId )
             && ( !hasAllowCWNCSUserPerm )
             )
         {
-            opp.addError( System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON );
-        } else if ( !hasAllowCWNCSUserPerm
+            canClosedWon++;
+        }
+        else if ( !hasAllowCWNCSUserPerm
             && validHR360Products.contains( opp.NSP_PrimaryProduct__c )
             )
         {
-            opp.addError( System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON );
+            canClosedWon++;
+        }
+
+        if( canClosedWon > 0 ) {
+            if( checkOnly ) {
+                opp.NextStep = FAILED;
+            } else {
+                opp.addError( System.label.NSP_CANNOT_MOVE_TO_CLOSEDWON );
+            }
         }
     }
 
@@ -609,7 +652,11 @@ public with sharing class NSP_ValidateOpportunityStage {
     public static void evaluateClosedLostStageCriteria( Opportunity opp, Map<Id,User> opportunityOwnerRoleMap ) {
         Boolean canCloseLostOpty = checkClosedLostStageCriteria( opp , opportunityOwnerRoleMap );
         if ( !canCloseLostOpty ) {
-            opp.addError( System.Label.NSP_CANNOT_MOVE_TO_CLOSEDLOST );
+            if( checkOnly ) {
+                opp.NextStep = FAILED;
+            } else {
+                opp.addError( System.label.NSP_CANNOT_MOVE_TO_CLOSEDLOST );
+            }
         }
     }
 

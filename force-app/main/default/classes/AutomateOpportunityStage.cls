@@ -10,6 +10,8 @@
 public class AutomateOpportunityStage {
     // test w/ AutomateOpportunityStageTest (92%)
 
+    private static final String FAILED = 'Failed Stage Validation';
+
     public static void automateOpportunityStageAsync( List<Id> autoStageOppIds ) {
         if ( ( autoStageOppIds != null )
             && !autoStageOppIds.isEmpty()
@@ -24,60 +26,82 @@ public class AutomateOpportunityStage {
     public static void automateOpportunityStage( List<Id> autoStageOppIds ) {
         if ( ( autoStageOppIds != null ) && !autoStageOppIds.isEmpty() ) {
             try {
-                List<Opportunity> stageAutoOpptyList = new List<Opportunity>(); // oppty records eligible for automatic Stage progression
-                List<Opportunity_Stage_Progression__mdt> optyAutoStages = [
-                    SELECT Primary_Product__c , Stage__c , Next_Stage__c
-                    FROM Opportunity_Stage_Progression__mdt
-                    WHERE ( Is_Automated__c = true )
-                ];
-                if ( ( optyAutoStages != null ) && !optyAutoStages.isEmpty() ) {
-                    for ( Opportunity opp : [
-                                SELECT
-                                    Id ,
-                                    NSP_Ready_for_Integration_Sync__c ,
-                                    OwnerId ,
-                                    StageName ,
-                                    NSP_PrimaryProduct__c ,
-                                    NSP_Number_of_Employees__c ,
-                                    Type ,
-                                    NSP_Bid_Status__c ,
-                                    Fee_Inclusive__c ,
-                                    NSP_Order_Generated__c ,
-                                    NSP_Bypass_Docusign_Signature__c ,
-                                    NSP_Closing_Appointment__c ,
-                                    NSP_Client_For_Life__c ,
-                                    NSP_Forecast_Status__c ,
-                                    NSP_TotalAnnualPayroll__c ,
-                                    NSP_Booked_Date__c ,
-                                    NSP_CountAsSale__c ,
-                                    CloseDate
-                                FROM Opportunity
-                                WHERE ( Id IN :autoStageOppIds )
-                            ]
-                        )
-                    {
-                        if ( opp.StageName != null ) {
-                            for ( Opportunity_Stage_Progression__mdt stageAuto : optyAutoStages ) {
-                                if ( ( opp.StageName == stageAuto.Stage__c )
-                                    && ( opp.NSP_PrimaryProduct__c == stageAuto.Primary_Product__c )
-                                    )
-                                {
-                                    opp.StageName = stageAuto.Next_Stage__c;
-                                    stageAutoOpptyList.add( opp );
-                                    break;
-                                }
-                            }
+                List<Opportunity> stageAutoOptyList = new List<Opportunity>();
+                List<Opportunity> updateOptyList = new List<Opportunity>();
+                for ( Opportunity opp : [
+                            SELECT
+                                Id ,
+                                CloseDate ,
+                                NextStep ,
+                                NSP_Bid_Status__c ,
+                                NSP_Booked_Date__c ,
+                                NSP_Bypass_Docusign_Signature__c ,
+                                NSP_Client_For_Life__c ,
+                                NSP_Closing_Appointment__c ,
+                                NSP_CountAsSale__c ,
+                                NSP_Forecast_Status__c ,
+                                Fee_Inclusive__c ,
+                                NSP_Number_of_Employees__c ,
+                                NSP_Order_Generated__c ,
+                                NSP_PrimaryProduct__c ,
+                                NSP_Ready_for_Integration_Sync__c ,
+                                NSP_TotalAnnualPayroll__c ,
+                                OwnerId ,
+                                StageName ,
+                                Type
+                            FROM Opportunity
+                            WHERE (
+                                ( Id IN :autoStageOppIds )
+                                AND ( StageName != null )
+                            )
+                        ]
+                    )
+                {
+                    stageAutoOptyList = getStageAutoOptyList( stageAutoOptyList , opp );
+                }
+
+                // Validate which Opportunity Stage progressions are valid
+                if ( !stageAutoOptyList.isEmpty() ) {
+                    NSP_ValidateOpportunityStage.validateOpportunityStage( stageAutoOptyList , true );
+
+                    // Prepare the valid ones for update
+                    for ( Opportunity checkedOpp : stageAutoOptyList ) {
+                        if( checkedOpp.NextStep != FAILED ) {
+                            updateOptyList.add( checkedOpp );
                         }
                     }
                 }
-                if ( !stageAutoOpptyList.isEmpty() ) {
-                    Database.update( stageAutoOpptyList );
+
+                // Update Opportunity Stages
+                if ( !updateOptyList.isEmpty() ) {
+                    Database.update( stageAutoOptyList );
                 }
+
             } catch ( Exception e ) {
                 NSP_ErrorLogHandler.logException( AutomateOpportunityStage.class.getName() , 'automateOpportunityStage' , e );
             }
         }
     }
 
+    // Returns list of Opportunity records advanced to next Stage based on custom metadata settings
+    public static List<Opportunity> getStageAutoOptyList (
+        List<Opportunity> stageAutoOptyList ,
+        Opportunity opp
+        )
+    {
+        List<Opportunity_Stage_Progression__mdt> optyAutoStages = Opportunity_Stage_Progression__mdt.getAll().values();
+        for ( Opportunity_Stage_Progression__mdt stageAuto : optyAutoStages ) {
+            if ( ( opp.StageName == stageAuto.Stage__c )
+                 && ( opp.NSP_PrimaryProduct__c == stageAuto.Primary_Product__c )
+                 && ( stageAuto.Is_Automated__c )
+               )
+            {
+                opp.StageName = stageAuto.Next_Stage__c;
+                stageAutoOptyList.add( opp );
+                break;
+            }
+        }
+        return stageAutoOptyList;
+    }
 }
 //
