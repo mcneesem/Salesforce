@@ -1094,6 +1094,33 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Competitor__c</fieldItem>
+                <identifier>RecordCompetitor_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>required</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Other_Competitor__c</fieldItem>
+                <identifier>RecordOther_Competitor_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Competitor__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Other</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-e46c375a-a215-4979-baa7-605fa18a728b</name>
         <type>Facet</type>
     </flexiPageRegions>
