@@ -1131,7 +1131,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
         set<Id> ownerIdSet = new set<Id>(); // owner id set
         set<string> officeSet = new set<string>(); // sales office set
         set<Id> recordToProcess = new set<Id>();  // record to be process set
-        set<string> opportunityStageSet = new set<string>{'Discovery','Analysis','Proposal','Closing'};
+        set<string> opportunityStageSet = new set<string>{'Prospecting','Discovery','Data Collection','Analysis','Proposal','Closing','Booking'};
         for(Opportunity newOpportunity: newList){
             Opportunity oldOpportunity = opportunityOldMap != null ? opportunityOldMap.get(newOpportunity.Id):null;
             if((Trigger.isInsert || newOpportunity.OwnerId != oldOpportunity.OwnerId) 
@@ -1144,9 +1144,8 @@ public with sharing class NSP_OpportunityTriggerHelper {
                 recordToProcess.add(newOpportunity.Id);
                 officeSet.add(newOpportunity.NSP_Sales_Office__c);
             }
-            
         }
-        
+
         if(ownerIdSet.Size() > 0){
             // values assigned from users
             Map<Id,User> userIdMap = new Map<Id,User>([SELECT Id,NSP_SalesDivision__c,NSP_Sales_Office__c,NSP_SalesRegion__c from user WHERE Id In :ownerIdSet AND NSP_Sales_Office__c != null ]);
@@ -1169,8 +1168,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
                                                             WHERE NSP_Sales_Office__c In : officeSet AND isActive__c = true]){
                 salesOfficeToMappingMap.put(eachMapping.NSP_Sales_Office__c,eachMapping);
             }
-            
-            
+
             for(Opportunity newOpportunity: newList){
                 if(Trigger.isUpdate && recordToProcess.contains(newOpportunity.Id) && salesOfficeToMappingMap.containsKey(newOpportunity.NSP_Sales_Office__c)){
                     NSP_Sales_Office_Mapping__c officeMapping = salesOfficeToMappingMap.get(newOpportunity.NSP_Sales_Office__c);

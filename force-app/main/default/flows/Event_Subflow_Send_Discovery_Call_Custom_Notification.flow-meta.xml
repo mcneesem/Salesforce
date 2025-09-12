@@ -227,8 +227,8 @@
     </subflows>
     <textTemplates>
         <name>customNotificationBody</name>
-        <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;p&gt;The Discovery Call for {!opportunityName} has been marked as complete. Please confirm sales leadership attendance and debrief status with the seller on the opportunity.&lt;/p&gt;</text>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>The Discovery Call for {!opportunityName} has been marked as complete. Please confirm sales leadership attendance and debrief status with the seller on the opportunity.</text>
     </textTemplates>
     <variables>
         <name>collectionRecipientIds</name>
