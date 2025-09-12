@@ -880,8 +880,8 @@
     </textTemplates>
     <textTemplates>
         <name>emailSubjectTemplate</name>
-        <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;p&gt;Action Required: Discovery Call Follow-up -&amp;nbsp;{!varOpportunity.Name}&lt;/p&gt;</text>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Action Required: Discovery Call Follow-up - {!varOpportunity.Name}</text>
     </textTemplates>
     <variables>
         <name>closeLostOptyBoolean</name>
