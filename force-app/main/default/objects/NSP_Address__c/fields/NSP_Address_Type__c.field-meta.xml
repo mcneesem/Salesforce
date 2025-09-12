@@ -57,26 +57,32 @@
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>AIMS</controllingFieldValue>
+            <controllingFieldValue>Integration</controllingFieldValue>
             <valueName>Bill To</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>AIMS</controllingFieldValue>
+            <controllingFieldValue>Integration</controllingFieldValue>
             <valueName>Ship To</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>AIMS</controllingFieldValue>
+            <controllingFieldValue>Integration</controllingFieldValue>
             <valueName>Delivery</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>AIMS</controllingFieldValue>
+            <controllingFieldValue>Integration</controllingFieldValue>
             <valueName>U.S. Mail</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>AIMS</controllingFieldValue>
+            <controllingFieldValue>Integration</controllingFieldValue>
             <valueName>Worksite</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>AIMS</controllingFieldValue>
+            <controllingFieldValue>Integration</controllingFieldValue>
             <valueName>Reporting</valueName>
         </valueSettings>
     </valueSet>
