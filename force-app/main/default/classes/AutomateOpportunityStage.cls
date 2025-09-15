@@ -47,6 +47,7 @@ public class AutomateOpportunityStage {
                                 NSP_Ready_for_Integration_Sync__c ,
                                 NSP_TotalAnnualPayroll__c ,
                                 OwnerId ,
+                                SBQQ__PrimaryQuote__c ,
                                 StageName ,
                                 Type
                             FROM Opportunity
