@@ -607,7 +607,14 @@ public with sharing class NSP_ValidateOpportunityStage {
     }
 
     public static void evaluateClosedLostStageCriteria( Opportunity opp, Map<Id,User> opportunityOwnerRoleMap ) {
-        //Added for 579279
+        Boolean canCloseLostOpty = checkClosedLostStageCriteria( opp , opportunityOwnerRoleMap );
+        if ( !canCloseLostOpty ) {
+            opp.addError( System.Label.NSP_CANNOT_MOVE_TO_CLOSEDLOST );
+        }
+    }
+
+    public static Boolean checkClosedLostStageCriteria( Opportunity opp , Map<Id,User> opportunityOwnerRoleMap ) {
+        Boolean canCloseLostOpty = true;
         Map<Id,Opportunity> oppSalesOfficeMap = new Map<Id,Opportunity>(
             [
                 SELECT Id , ToLabel( NSP_Sales_Office__c )
@@ -658,10 +665,16 @@ public with sharing class NSP_ValidateOpportunityStage {
             }
         }
 
-        Integer canCloseLost = checkAllowClosedLost(opp, teamMemberList, salesOfficeMembership, salesOfficeList);
-        if(canCloseLost == 0){
-            opp.AddError(System.Label.NSP_CANNOT_MOVE_TO_CLOSEDLOST);
+        Integer canCloseLost = checkAllowClosedLost(
+            opp ,
+            teamMemberList ,
+            salesOfficeMembership ,
+            salesOfficeList
+        );
+        if ( canCloseLost == 0 ) {
+            canCloseLostOpty = false;
         }
+        return canCloseLostOpty;
     }
 
     private static Integer checkAllowClosedLost( Opportunity opp , List<ID> teamMemberList , List<String> salesOfficeMembership , List<String> salesOfficeList ) {
