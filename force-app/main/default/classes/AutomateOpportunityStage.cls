@@ -32,6 +32,7 @@ public class AutomateOpportunityStage {
                             SELECT
                                 Id ,
                                 CloseDate ,
+                                Fee_Inclusive__c ,
                                 NextStep ,
                                 NSP_Bid_Status__c ,
                                 NSP_Booked_Date__c ,
@@ -40,7 +41,6 @@ public class AutomateOpportunityStage {
                                 NSP_Closing_Appointment__c ,
                                 NSP_CountAsSale__c ,
                                 NSP_Forecast_Status__c ,
-                                Fee_Inclusive__c ,
                                 NSP_Number_of_Employees__c ,
                                 NSP_Order_Generated__c ,
                                 NSP_PrimaryProduct__c ,
