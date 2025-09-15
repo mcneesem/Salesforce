@@ -42,6 +42,13 @@
                 <stringValue>0124x000000yRuwAAE</stringValue>
             </value>
         </filters>
+        <filters>
+            <field>OwnerId</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>0054x000008PgqNAAS</stringValue>
+            </value>
+        </filters>
         <object>Account</object>
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
