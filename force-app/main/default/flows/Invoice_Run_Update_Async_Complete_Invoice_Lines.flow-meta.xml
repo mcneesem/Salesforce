@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Process_Invoice_Lines</name>
+        <label>Process Invoice Lines</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>UpdateInvoiceLinesController</actionName>
+        <actionType>apex</actionType>
+        <faultConnector>
+            <targetReference>Handle_Faults</targetReference>
+        </faultConnector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>invoiceRunIds</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>UpdateInvoiceLinesController</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
     <apiVersion>64.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <description>This flow marks the completed status on invoice lines after Invoice Run is completed</description>
@@ -25,23 +45,6 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordUpdates>
-        <description>Update all Related Invoice Lines</description>
-        <name>Update_Invoice_Lines</name>
-        <label>Update Invoice Lines</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <faultConnector>
-            <targetReference>Handle_Faults</targetReference>
-        </faultConnector>
-        <inputAssignments>
-            <field>Invoice_Run_Completed__c</field>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </inputAssignments>
-        <inputReference>$Record.blng__InvoiceRunInvoiceLines__r</inputReference>
-    </recordUpdates>
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
@@ -64,7 +67,7 @@
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Update_Invoice_Lines</targetReference>
+                <targetReference>Process_Invoice_Lines</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
@@ -80,7 +83,7 @@
         <inputAssignments>
             <name>faultElement</name>
             <value>
-                <stringValue>Update_Invoice_Lines</stringValue>
+                <stringValue>Process_Invoice_Lines</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
