@@ -32,6 +32,7 @@ public with sharing class WingspanRestAgent {
             if ( method == 'POST' ) {
                 headers.put( 'Accept' , 'application/json' );
                 headers.put( 'Content-Type' , 'application/json' );
+                headers.put( 'X-WINGSPAN-USER' , WingspanRestAgent.xWingspanUserId );
             }
             if ( headers != null ) {
                 currentHeaders = JSON.serialize( headers );
@@ -174,7 +175,15 @@ public with sharing class WingspanRestAgent {
         private get{
             if ( settings == null ) {
                 List<Wingspan_Settings__c> all = [
-                    SELECT Id , Name , IsEnabled__c , BaseUrl__c , PrivateKey__c , UserId__c , Timeout__c
+                    SELECT
+                        Id ,
+                        Name ,
+                        IsEnabled__c ,
+                        BaseUrl__c ,
+                        ParentUserId__c ,
+                        PrivateKey__c ,
+                        Timeout__c ,
+                        XWingspanUserId__c
                     FROM Wingspan_Settings__c
                     WHERE ( IsEnabled__c = true )
                     LIMIT 1
@@ -223,16 +232,30 @@ public with sharing class WingspanRestAgent {
         private set;
     }
 
-    public static String userId {
-        public get {
-            if ( ( userId == null )
+    private static String xWingspanUserId {
+        private get {
+            if ( ( xWingspanUserId == null )
                 && ( WingspanRestAgent.settings != null )
-                && String.isNotBlank( WingspanRestAgent.settings.UserId__c )
+                && String.isNotBlank( WingspanRestAgent.settings.XWingspanUserId__c )
                 )
             {
-                userId = WingspanRestAgent.settings.UserId__c;
+                xWingspanUserId = WingspanRestAgent.settings.XWingspanUserId__c;
             }
-            return userId;
+            return xWingspanUserId;
+        }
+        private set;
+    }
+
+    public static String parentUserId {
+        public get {
+            if ( ( parentUserId == null )
+                && ( WingspanRestAgent.settings != null )
+                && String.isNotBlank( WingspanRestAgent.settings.ParentUserId__c )
+               )
+            {
+                parentUserId = WingspanRestAgent.settings.ParentUserId__c;
+            }
+            return parentUserId;
         }
         private set;
     }

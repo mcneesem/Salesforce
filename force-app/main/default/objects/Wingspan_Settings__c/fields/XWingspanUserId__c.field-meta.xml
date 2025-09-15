@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>UserId__c</fullName>
-    <description>To store the User ID</description>
+    <fullName>XWingspanUserId__c</fullName>
+    <description>The ID used in headers for all POST requests of Wingspan Integration.</description>
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
-    <inlineHelpText>Store the User ID</inlineHelpText>
-    <label>User ID</label>
+    <inlineHelpText>The ID used in headers for all POST requests of Wingspan Integration.</inlineHelpText>
+    <label>XWingspanUserId</label>
     <length>50</length>
     <required>false</required>
     <trackTrending>false</trackTrending>

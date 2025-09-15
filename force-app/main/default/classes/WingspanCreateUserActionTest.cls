@@ -11,9 +11,10 @@ private class WingspanCreateUserActionTest {
         Wingspan_Settings__c wSett = new Wingspan_Settings__c();
         wSett.BaseUrl__c = 'https://stagingapi.wingspan.app';
         wSett.IsEnabled__c = true;
-        wSett.PrivateKey__c = 'dummykey';
-        wSett.UserId__c = 'uza55khX3ydV0JEO7BouF';
-        wSett.Name = 'Staging Record';
+        wSett.PrivateKey__c = 'testPrivateKey';
+        wSett.XWingspanUserId__c = 'testXWingspanUserId';
+        wSett.ParentUserId__c = 'testParentUserId';
+        wSett.Name = 'TESTING';
         insert wSett;
 
         NSP_ContactTriggerHandler.TriggerDisabled = true;

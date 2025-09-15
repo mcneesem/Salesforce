@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ParentUserId__c</fullName>
+    <description>The ID sent as part of JSON request body for linking admin record in Wingspan Server. Note, this is treated as Child ID in Wingspan.</description>
+    <encryptionScheme>None</encryptionScheme>
+    <externalId>false</externalId>
+    <inlineHelpText>The ID sent as part of JSON request body for linking admin record in Wingspan Server. Note, this is treated as Child ID in Wingspan.</inlineHelpText>
+    <label>ParentUserId</label>
+    <length>50</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
