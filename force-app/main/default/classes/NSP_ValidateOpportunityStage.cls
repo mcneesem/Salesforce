@@ -177,9 +177,11 @@ public with sharing class NSP_ValidateOpportunityStage {
         for(Opportunity_Stage_Validation__mdt val : currentOptyStageVals){
             Integer passCheckCount = 0;
             if( String.isBlank(val.Group__c) ) {
-                for( SObject valObject : valObjectMap.get(val.Object__c) ){
-                    if( checkCondition(valObject.get(val.Field__c) , val.Value__c , val.Operation__c) ) {
-                        passCheckCount++;
+                if( valObjectMap.get(val.Object__c) != null ) {
+                    for( SObject valObject : valObjectMap.get(val.Object__c) ){
+                        if( checkCondition(valObject.get(val.Field__c) , val.Value__c , val.Operation__c) ) {
+                            passCheckCount++;
+                        }
                     }
                 }
                 if( passCheckCount < 1 ) {
@@ -205,11 +207,11 @@ public with sharing class NSP_ValidateOpportunityStage {
             Boolean passCheck = false;
             Boolean passCheckDNE = true;
             String groupRelObjName = getGroupRelObjName( groupName , groupedStageValMap );
-
+            List<SObject> valObjectList = valObjectMap.get(groupRelObjName);
             Integer i = 0;
             do {
-                SObject valObject = ( valObjectMap.get(groupRelObjName).size() == 0 ) ? null : valObjectMap.get(groupRelObjName)[i];
-                Integer passCheckCount = evaluateOneCriteriaGroup( opp, groupName , valObject , groupedStageValMap );
+                SObject valObject = ( ( valObjectList != null ) && ( !valObjectList.isEmpty() ) ) ? valObjectMap.get(groupRelObjName)[i] : null;
+                Integer passCheckCount = evaluateOneCriteriaGroup( opp, groupName , valObject , groupedStageValMap ); // must run even if valObject is null
                 if( passCheckCount >= groupedStageValMap.get(groupName).size() ) {
                     passCheck = true;
                 }
