@@ -9,7 +9,7 @@
 //
 // intentionally `without sharing` to ensure VF approval Email template custom controller display all records to be sent to approver's hierarchy. Approvals run in system context.
 public without sharing class NSP_DisplayQliController {
-    // test w/ NSP_DisplayQliControllerTest (??%)
+    // test w/ NSP_DisplayQliControllerTest (93%)
 
     public String quoteId;
     public String quoteIdstr{get;set;}
@@ -24,6 +24,7 @@ public without sharing class NSP_DisplayQliController {
     public String twoDecimal = '.00';
     public String appendDecimal = '0.00';
     public decimal formatString = 0.00;
+    public Boolean regularQuoteType{get;set;}
     
     
     public NSP_DisplayQliController(){
@@ -35,6 +36,7 @@ public without sharing class NSP_DisplayQliController {
         recruitingServiceList = true;
         approverCommentsList = true;
         recruitingQuote = False;
+        regularQuoteType =true;
     }
 
     //method for checking if the quote is for recruiting services product
@@ -42,7 +44,7 @@ public without sharing class NSP_DisplayQliController {
         Boolean isRecruiting = False;
         if ( String.isNotBlank( quoteId ) ) {
             List<SBQQ__Quote__c> quotes = [
-                SELECT Id , SBQQ__Opportunity2__r.NSP_PrimaryProduct__c
+                SELECT Id , SBQQ__Opportunity2__r.NSP_PrimaryProduct__c,SBQQ__Type__c
                 FROM SBQQ__Quote__c
                 WHERE ( Id = :quoteId )
                 LIMIT 1
@@ -58,6 +60,10 @@ public without sharing class NSP_DisplayQliController {
                 )
             {
                 isRecruiting = True;
+            }
+            if( quote.SBQQ__Type__c == 'Amendment')
+            {
+                regularQuoteType = false;
             }
         }
         return isRecruiting;
@@ -217,6 +223,7 @@ public without sharing class NSP_DisplayQliController {
                     WHERE (
                         SBQQ__Quote__c = :quoteIdstr
                         AND SBQQ__Product__r.NSP_Show_On_Approval_Email__c = true
+                        AND ( NSP_Quoted_Quantity__c > 0 )
                     )
                     ORDER BY NSP_Sort_Order_QLI__c
                 ]
@@ -277,6 +284,7 @@ public without sharing class NSP_DisplayQliController {
                     WHERE (
                         SBQQ__Quote__c = :quoteIdstr
                         AND SBQQ__Product__r.NSP_Include_In_PEPM__c = true
+                        AND ( NSP_Quoted_Quantity__c > 0 )
                     )
                     ORDER BY NSP_Sort_Order_QLI__c
                 ]
@@ -322,6 +330,7 @@ public without sharing class NSP_DisplayQliController {
                     WHERE (
                         SBQQ__Quote__c = :quoteIdstr
                         AND SBQQ__Product__r.NSP_Show_On_Recruitment_Template__c = true
+                        AND ( NSP_Quoted_Quantity__c > 0 )
                     )
                     ORDER BY NSP_Sort_Order_QLI__c
                 ]
