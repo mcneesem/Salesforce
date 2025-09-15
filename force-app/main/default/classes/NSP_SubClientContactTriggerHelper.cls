@@ -123,10 +123,6 @@ public with sharing class NSP_SubClientContactTriggerHelper {
             Map<Id, String> conIdEmpStatusMap = new Map<Id, String>();
             Map<Id, Date> conIdStatusDate = new Map<Id, Date>();
             
-            Boolean isEnableHRContact = Payroll_Data_Sheet_Settings__c.getInstance(UserInfo.getUserId()).IsEnableHRContact__c;
-			Boolean isEnablePrimaryPayrollContact = Payroll_Data_Sheet_Settings__c.getInstance(UserInfo.getUserId()).IsEnablePrimaryPayrollContact__c;
-			Boolean isEnableOnsiteSupervisor = Payroll_Data_Sheet_Settings__c.getInstance(UserInfo.getUserId()).IsEnableOnsiteSupervisor__c;
-			Boolean isEnableBackUpPayrollContact = Payroll_Data_Sheet_Settings__c.getInstance(UserInfo.getUserId()).IsEnableBackUpPayrollContact__c;
             
             // get existing Sub Client Contact
             for(NSP_Sub_Client_Contact__c newSubClientCon : newMap.values()){
@@ -167,16 +163,16 @@ public with sharing class NSP_SubClientContactTriggerHelper {
                 // get all related subclient contacts from Map
                 List<NSP_Sub_Client_Contact__c>  subCliConList = subClientConBySubClientIds.get(pds.NSP_Sub_Client_Name__c) ;
                 for(NSP_Sub_Client_Contact__c subClientCon : subCliConList ){
-                    if(!isEnableOnsiteSupervisor && subClientCon.NSP_On_Site_Supervisor__c == true){
+                    if(!NSP_PayrollTriggerHelper.isEnableOnsiteSupervisor && subClientCon.NSP_On_Site_Supervisor__c == true){
                         pds.NSP_On_site_Supervisor__c = subClientCon.NSP_Contact__c;
                         pds.NSP_OSS_SCC__c = subClientCon.Id;
                     }
-                    if(!isEnablePrimaryPayrollContact && subClientCon.NSP_Payroll_Contact__c == true){
+                    if(!NSP_PayrollTriggerHelper.isEnablePrimaryPayrollContact && subClientCon.NSP_Payroll_Contact__c == true){
                         pds.NSP_Primary_Payroll_Contact__c = subClientCon.NSP_Contact__c;
                         pds.NSP_Payroll_SCC__c = subClientCon.Id;
                     }
                     // if HR Contact doesn't exist
-                    if(!isEnableHRContact && subClientCon.NSP_HR_Contact__c == true){
+                    if(!NSP_PayrollTriggerHelper.isEnableHRContact && subClientCon.NSP_HR_Contact__c == true){
                         pds.NSP_HR_Contact__c = subClientCon.NSP_Contact__c;
                         pds.NSP_HR_Contact_SCC__c = subClientCon.Id;
                     }
