@@ -4,7 +4,6 @@ private class NSP_DocuSignInvoiceDocumentBatchTest {
     @TestSetup
     private static void createTestData() {
         Order_Settings__c orderSetting = Order_Settings__c.getOrgDefaults();
-        orderSetting.Bypass_Rule_PreventStatusChange__c = true;
         upsert orderSetting;
 
         DocusignInvoiceDocumentBatchSettings__c settings = DocusignInvoiceDocumentBatchSettings__c.getOrgDefaults();

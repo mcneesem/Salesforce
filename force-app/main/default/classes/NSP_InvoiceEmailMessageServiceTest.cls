@@ -22,7 +22,6 @@ public with sharing class NSP_InvoiceEmailMessageServiceTest {
     public static void createTestData(){
 
         Order_Settings__c orderSetting = Order_Settings__c.getOrgDefaults();
-        orderSetting.Bypass_Rule_PreventStatusChange__c = true;
         upsert orderSetting;
 
         //Test Data Setup
