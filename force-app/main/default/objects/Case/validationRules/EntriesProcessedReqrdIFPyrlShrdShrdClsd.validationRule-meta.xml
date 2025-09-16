@@ -5,7 +5,7 @@
     <description>Entries Process is required when Case Category = Payroll Shared Services and the Case Status = Closed</description>
     <errorConditionFormula>AND
 (
-NOT($Permission.Bypass_Validation_Rule_EntriesProcessedReqrdIFPyrlShrdShrdClsd),
+NOT($Permission.Bypass_Require_Entries_Processed),
 (NSP_Category__c = &apos;Payroll Shared Services&apos;),
 ISPICKVAL( Status , &apos;Closed&apos;),
 ISNULL( Entries_Processed__c),
