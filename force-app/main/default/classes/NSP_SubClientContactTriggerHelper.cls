@@ -1,9 +1,3 @@
-/***********************************************************************************************
-*Apex Class Name      :  NSP_SubClientContactTriggerHelper
-*Function             :  This class is used as helper class for NSP_SubClientContactTrigger
-*Story                :                                                                      
-*Modification Log     : 09/11/2025 - AZD-443324 : Added Custom Settings to eliminate automation for individual contacts                                                                             
-************************************************************************************************/
 public with sharing class NSP_SubClientContactTriggerHelper {
     // test w/ NSP_SubClientContactTriggerHelperTest (81%)
 
@@ -104,7 +98,7 @@ public with sharing class NSP_SubClientContactTriggerHelper {
                 )
             {
                 SubClientContactObj.NSP_Paperless_Batch_Date__c = System.Today();
-            }        
+            }
         }
     }
 
@@ -122,8 +116,8 @@ public with sharing class NSP_SubClientContactTriggerHelper {
             List<NSP_Payroll__c> pdsToBeUpdated = new List<NSP_Payroll__c>();
             Map<Id, String> conIdEmpStatusMap = new Map<Id, String>();
             Map<Id, Date> conIdStatusDate = new Map<Id, Date>();
-            
-            
+
+
             // get existing Sub Client Contact
             for(NSP_Sub_Client_Contact__c newSubClientCon : newMap.values()){
                 if ( newSubClientCon.NSP_Contact__c != null
@@ -148,7 +142,7 @@ public with sharing class NSP_SubClientContactTriggerHelper {
                     conIdStatusDate.put(newSubClientCon.NSP_Contact__c, newSubClientCon.NSP_Status_Date__c);
                 }
             }
-        
+
             // Update Payroll field logic based on respective confirmation checkbox
             for(NSP_Payroll__c pds : [
                         SELECT
@@ -163,16 +157,25 @@ public with sharing class NSP_SubClientContactTriggerHelper {
                 // get all related subclient contacts from Map
                 List<NSP_Sub_Client_Contact__c>  subCliConList = subClientConBySubClientIds.get(pds.NSP_Sub_Client_Name__c) ;
                 for(NSP_Sub_Client_Contact__c subClientCon : subCliConList ){
-                    if(!NSP_PayrollTriggerHelper.isEnableOnsiteSupervisor && subClientCon.NSP_On_Site_Supervisor__c == true){
+                    if ( !NSP_PayrollTriggerHelper.isEnabledOnsiteSupervisor
+                        && subClientCon.NSP_On_Site_Supervisor__c == true
+                        )
+                    {
                         pds.NSP_On_site_Supervisor__c = subClientCon.NSP_Contact__c;
                         pds.NSP_OSS_SCC__c = subClientCon.Id;
                     }
-                    if(!NSP_PayrollTriggerHelper.isEnablePrimaryPayrollContact && subClientCon.NSP_Payroll_Contact__c == true){
+                    if ( !NSP_PayrollTriggerHelper.isEnabledPrimaryPayrollContact
+                        && subClientCon.NSP_Payroll_Contact__c == true
+                        )
+                    {
                         pds.NSP_Primary_Payroll_Contact__c = subClientCon.NSP_Contact__c;
                         pds.NSP_Payroll_SCC__c = subClientCon.Id;
                     }
                     // if HR Contact doesn't exist
-                    if(!NSP_PayrollTriggerHelper.isEnableHRContact && subClientCon.NSP_HR_Contact__c == true){
+                    if ( !NSP_PayrollTriggerHelper.isEnabledHRContact
+                        && subClientCon.NSP_HR_Contact__c == true
+                        )
+                    {
                         pds.NSP_HR_Contact__c = subClientCon.NSP_Contact__c;
                         pds.NSP_HR_Contact_SCC__c = subClientCon.Id;
                     }
@@ -197,16 +200,16 @@ public with sharing class NSP_SubClientContactTriggerHelper {
         }
     }
 
-    /**********************************************************************************************
-    MethodName: updateRelatedWizardEmployeeStatus 
-    Description : This method describes about the updation of Employee status and Status date on wizard output
-    Params:       Map<Id, String> conIdEmpStatusMap, Map<Id, Date> conIdStatusDate
-    Story:        STY-02069
-    ********************************************************************************************/
+    //
+    // MethodName: updateRelatedWizardEmployeeStatus
+    // Description : This method describes about the updation of Employee status and Status date on wizard output
+    // Params: Map<Id, String> conIdEmpStatusMap, Map<Id, Date> conIdStatusDate
+    // Story: STY-02069
+    //
     public static void updateRelatedWizardEmployeeStatus( Map<Id, String> conIdEmpStatusMap, Map<Id, Date> conIdStatusDate){
         List<NSP_ReportRequest__c> repReqListToUpdate = new List<NSP_ReportRequest__c>();
         try{
-            for(NSP_ReportRequest__c repReq : [SELECT Id, NSP_WSEE__c, NSP_Employee_Status__c, NSP_Termination_Date__c 
+            for(NSP_ReportRequest__c repReq : [SELECT Id, NSP_WSEE__c, NSP_Employee_Status__c, NSP_Termination_Date__c
                                             FROM NSP_ReportRequest__c WHERE NSP_WSEE__c IN: conIdStatusDate.keySet()]){
                                                 repReq.NSP_Employee_Status__c = conIdEmpStatusMap.get(repReq.NSP_WSEE__c);
                                                 repReq.NSP_Termination_Date__c = conIdEmpStatusMap.get(repReq.NSP_WSEE__c) == NSP_ServiceConstants.TERMINATED_STATUS ?
@@ -223,7 +226,7 @@ public with sharing class NSP_SubClientContactTriggerHelper {
             }
         } catch ( Exception e ) {
             NSP_SubClientContactTriggerHelper.handleException( e , 'updateRelatedWizardEmployeeStatus' );
-        }  
+        }
     }
 
     private static void handleException( Exception e , String methodName ) {
