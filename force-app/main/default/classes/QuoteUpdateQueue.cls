@@ -45,7 +45,7 @@ public class QuoteUpdateQueue implements Queueable , System.Finalizer {
                 System.attachFinalizer( this );
             }
         } catch ( Exception e ) {
-            QuoteUpdateQueue.handleException( e , 'execute-Queueable' );
+            this.handleException( e , 'execute-Queueable' );
         }
     }
 
@@ -70,24 +70,25 @@ public class QuoteUpdateQueue implements Queueable , System.Finalizer {
                 }
             }
         } catch( Exception e ){
-            QuoteUpdateQueue.handleException( e , 'execute-Finalizer' );
+            this.handleException( e , 'execute-Finalizer' );
         }
     }
 
     // for test code coverage only...
     public static void testHandleException( Exception e , String methodName ) {
         if ( Test.isRunningTest() ) {
-            QuoteUpdateQueue.handleException( e , methodName );
+            QuoteUpdateQueue handler = new QuoteUpdateQueue( null );
+            handler.handleException( e , methodName );
         }
     }
 
-    private static void handleException( Exception e , String methodName ) {
+    private void handleException( Exception e , String methodName ) {
         NSP_ErrorLogHandler.logException(
             QuoteUpdateQueue.class.getName() ,
             methodName ,
             e
         );
-        ContractTerminationHandler.sendEmail( null, QuoteUpdateQueue.class.getName() + '.' + methodName );
+        ContractTerminationHandler.sendEmail( null , QuoteUpdateQueue.class.getName() + '.' + methodName + ' (Quote.Id=' + this.quoteId + ')' );
     }
 
 }
