@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>IsEnableOnsiteSupervisor__c</fullName>
+    <fullName>IsEnabledOnsiteSupervisor__c</fullName>
     <defaultValue>false</defaultValue>
     <description>AZD-443324 : Added to eliminate automation for individual contacts</description>
-    <label>IsEnableOnsiteSupervisor</label>
+    <label>IsEnabledOnsiteSupervisor</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>
