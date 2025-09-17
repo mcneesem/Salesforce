@@ -172,8 +172,8 @@ public with sharing class WingspanRestService {
 
     private static LinkUserToHubWrapper buildLinkUserToHubWrapper() {
         LinkUserToHubWrapper linkWrap = new LinkUserToHubWrapper();
-        if ( String.isNotBlank( WingspanRestAgent.userId ) ) {
-            linkWrap.parentUserId = WingspanRestAgent.userId;
+        if ( String.isNotBlank( WingspanRestAgent.parentUserId ) ) {
+            linkWrap.parentUserId = WingspanRestAgent.parentUserId;
         }
         InheritanceStrategyWrapper inheritanceWrap = new InheritanceStrategyWrapper();
         inheritanceWrap.organizationAccountConfig = 'Parent';
