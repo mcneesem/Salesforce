@@ -172,11 +172,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Customer Enablement</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Flex</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>High Complexity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax IMPL</fullName>
             <default>false</default>
         </values>
     </picklistValues>
