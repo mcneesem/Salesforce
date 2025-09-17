@@ -69,7 +69,8 @@
     private static void reOpenCaseForBPSTest() {  
         test.startTest();
         Case_Settings__c settings = Case_Settings__c.getOrgDefaults();
-        settings.BPS_Case_Tier_1_Categories__c = 'Integra';
+        settings.BPS_Case_Tier_1_Categories_1__c = 'Integra';
+        settings.BPS_Case_Tier_1_Categories_2__c = 'Test1';
         settings.BPS_Case_Tier_2_Categories__c = 'Test';
         settings.BPS_Case_Tier_1_Reopen_Days__c = 14;
         settings.BPS_Case_Tier_2_Reopen_Days__c = 30;
@@ -108,7 +109,8 @@
         test.startTest();
         
         Case_Settings__c settings = Case_Settings__c.getOrgDefaults();
-        settings.BPS_Case_Tier_1_Categories__c = 'Integra';
+        settings.BPS_Case_Tier_1_Categories_1__c = 'Integra';
+        settings.BPS_Case_Tier_1_Categories_2__c = 'Test1';
         settings.BPS_Case_Tier_2_Categories__c = 'Test';
         settings.BPS_Case_Tier_1_Reopen_Days__c = -1;
         settings.BPS_Case_Tier_2_Reopen_Days__c = -1;
@@ -142,7 +144,8 @@
         test.startTest();
         
         Case_Settings__c settings = Case_Settings__c.getOrgDefaults();
-        settings.BPS_Case_Tier_1_Categories__c = 'Integra';
+        settings.BPS_Case_Tier_1_Categories_1__c = 'Integra';
+        settings.BPS_Case_Tier_1_Categories_2__c = 'Test1';
         settings.BPS_Case_Tier_2_Categories__c = 'Test';
         settings.BPS_Case_Tier_1_Reopen_Days__c = -1;
         settings.BPS_Case_Tier_2_Reopen_Days__c = -1;
