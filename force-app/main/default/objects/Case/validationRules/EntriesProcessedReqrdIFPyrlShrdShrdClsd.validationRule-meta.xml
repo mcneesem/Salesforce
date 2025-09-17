@@ -3,12 +3,12 @@
     <fullName>EntriesProcessedReqrdIFPyrlShrdShrdClsd</fullName>
     <active>true</active>
     <description>Entries Process is required when Case Category = Payroll Shared Services and the Case Status = Closed</description>
-    <errorConditionFormula>AND
-(
-(NSP_Category__c = &apos;Payroll Shared Services&apos;),
-ISPICKVAL( Status , &apos;Closed&apos;),
-ISNULL( Entries_Processed__c),
-(RecordType.DeveloperName = &apos;PEO&apos;)
+    <errorConditionFormula>AND(
+  NOT( $Permission.Bypass_Require_Entries_Processed ) ,
+  ( RecordType.DeveloperName = &apos;PEO&apos; ) ,
+  ( NSP_Category__c = &apos;Payroll Shared Services&apos; ) ,
+  ISPICKVAL( Status , &apos;Closed&apos; ) ,
+  ISNULL( Entries_Processed__c )
 )</errorConditionFormula>
     <errorDisplayField>Entries_Processed__c</errorDisplayField>
     <errorMessage>You must enter the number of entries processed to close the case.</errorMessage>
