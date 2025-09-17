@@ -10,7 +10,7 @@
         <faultConnector>
             <targetReference>Handle_Faults</targetReference>
         </faultConnector>
-        <flowTransactionModel>Automatic</flowTransactionModel>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>invoiceRunIds</name>
             <value>
