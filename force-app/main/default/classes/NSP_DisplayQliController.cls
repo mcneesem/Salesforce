@@ -13,7 +13,6 @@ public without sharing class NSP_DisplayQliController {
 
     public String quoteId;
     public String quoteIdstr{get;set;}
-    
     public list<QuotLinewrap> nonRecurringQLi{get;set;}
     public list<QuotLinewrap> nonRecurringTotalQLi{get;set;}
     public Boolean quoteList{get;set;}
@@ -25,18 +24,16 @@ public without sharing class NSP_DisplayQliController {
     public String appendDecimal = '0.00';
     public decimal formatString = 0.00;
     public Boolean regularQuoteType{get;set;}
-    
-    
+
     public NSP_DisplayQliController(){
-        
         nonRecurringQLi = new list<QuotLinewrap>();
         nonRecurringTotalQLi = new list<QuotLinewrap>();
         quoteList = true;
         pepmList = true;
         recruitingServiceList = true;
         approverCommentsList = true;
-        recruitingQuote = False;
-        regularQuoteType =true;
+        recruitingQuote = false;
+        regularQuoteType = true;
     }
 
     //method for checking if the quote is for recruiting services product
@@ -44,7 +41,10 @@ public without sharing class NSP_DisplayQliController {
         Boolean isRecruiting = False;
         if ( String.isNotBlank( quoteId ) ) {
             List<SBQQ__Quote__c> quotes = [
-                SELECT Id , SBQQ__Opportunity2__r.NSP_PrimaryProduct__c,SBQQ__Type__c
+                SELECT
+                    Id ,
+                    SBQQ__Opportunity2__r.NSP_PrimaryProduct__c ,
+                    SBQQ__Type__c
                 FROM SBQQ__Quote__c
                 WHERE ( Id = :quoteId )
                 LIMIT 1
@@ -61,8 +61,7 @@ public without sharing class NSP_DisplayQliController {
             {
                 isRecruiting = True;
             }
-            if( quote.SBQQ__Type__c == 'Amendment')
-            {
+            if ( quote.SBQQ__Type__c == 'Amendment' ) {
                 regularQuoteType = false;
             }
         }
@@ -221,8 +220,8 @@ public without sharing class NSP_DisplayQliController {
                         NSP_Minimum_Fee_Discount__c
                     FROM SBQQ__QuoteLine__c
                     WHERE (
-                        SBQQ__Quote__c = :quoteIdstr
-                        AND SBQQ__Product__r.NSP_Show_On_Approval_Email__c = true
+                        ( SBQQ__Quote__c = :quoteIdstr )
+                        AND ( SBQQ__Product__r.NSP_Show_On_Approval_Email__c = true )
                         AND ( NSP_Quoted_Quantity__c > 0 )
                     )
                     ORDER BY NSP_Sort_Order_QLI__c
@@ -282,8 +281,8 @@ public without sharing class NSP_DisplayQliController {
                         Upfront_Fee_Payment_Percentage__c
                     FROM SBQQ__QuoteLine__c
                     WHERE (
-                        SBQQ__Quote__c = :quoteIdstr
-                        AND SBQQ__Product__r.NSP_Include_In_PEPM__c = true
+                        ( SBQQ__Quote__c = :quoteIdstr )
+                        AND ( SBQQ__Product__r.NSP_Include_In_PEPM__c = true )
                         AND ( NSP_Quoted_Quantity__c > 0 )
                     )
                     ORDER BY NSP_Sort_Order_QLI__c
@@ -328,8 +327,8 @@ public without sharing class NSP_DisplayQliController {
                         Salary_Bracket_Percentage__c , Upfront_Fee_Payment_Percentage__c
                     FROM SBQQ__QuoteLine__c
                     WHERE (
-                        SBQQ__Quote__c = :quoteIdstr
-                        AND SBQQ__Product__r.NSP_Show_On_Recruitment_Template__c = true
+                        ( SBQQ__Quote__c = :quoteIdstr )
+                        AND ( SBQQ__Product__r.NSP_Show_On_Recruitment_Template__c = true )
                         AND ( NSP_Quoted_Quantity__c > 0 )
                     )
                     ORDER BY NSP_Sort_Order_QLI__c
