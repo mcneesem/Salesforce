@@ -35,7 +35,6 @@ public class NSP_MMImplProfile_ServHelpUpdate {
     private static final String EEO_FILING_MM = 'NSP_Union_EEs';
     private static final String SEASONAL_EE_MM = 'NSP_Seasonal_EEs';
     private static final String EEO_ON_LEAVE_MM = 'NSP_Leave_of_Absence';
-    private static final String POST_TAX_MM = 'NSP_Post_tax_deductions';
     private static final String TIMESTAR_MM = 'NSP_TimeStar';
     private static final String TIMESTAR_TA_MM = 'NSP_TimeStar_T_A';
     private static final String TIMESTAR_TA_ADMIN_MM = 'NSP_TimeStar_T_A_Administrator';
@@ -60,7 +59,6 @@ public class NSP_MMImplProfile_ServHelpUpdate {
     private static final String NSP401K_MM = 'NSP_X401k_Meeting';
     private static final String NSP401K_PLAN_MM = 'NSP_X401k_Plan_Setup';
     private static final String NSP401K_EMP_TRAIN_MM = 'NSP_X401K_Employee_training';
-    private static final String SUBSTANCE_ABUSE_MM = 'NSP_Substance_Abuse';
     private static final String STANDARD_MM = 'NSP_Standard_Offer_Letter';
     private static final String BACKGROUND_MM = 'NSP_Background_Check';
     private static final String DRUG_SCREENING_MM = 'NSP_Drug_Screening';
@@ -106,7 +104,6 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                 SEASONAL_EE_MM ,
                 EEO_ON_LEAVE_MM ,
                 SPECIFIC_LEAVE_MM ,
-                POST_TAX_MM ,
                 TIMESTAR_MM ,
                 GARNISHMENT_MM ,
                 PRE_TAX_MM ,
@@ -130,7 +127,6 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                 HANDBOOK_DEVELOPMENT_MM ,
                 JOBDESCRIPTION_MM ,
                 SEVERANCEAGREEMENT_MM ,
-                SUBSTANCE_ABUSE_MM ,
                 STANDARD_MM ,
                 BACKGROUND_MM ,
                 DRUG_SCREENING_MM ,
@@ -239,7 +235,6 @@ public class NSP_MMImplProfile_ServHelpUpdate {
             checkForHandbookDevelopment(ipRec, existingRec);
             checkForJobDescription(ipRec, existingRec);
             checkForSeveranceAgreement(ipRec, existingRec);
-            checkforSubstanceAbuse(ipRec, existingRec);
             checkforStandardOffer(ipRec, existingRec);
             checkforBackground(ipRec, existingRec);
             checkforDrugScreening(ipRec, existingRec);
@@ -498,7 +493,6 @@ public class NSP_MMImplProfile_ServHelpUpdate {
             createProjectTaskForEELeave(automation,proj,pta,ipRecId,ipwithValue,workCalendarId);
             createProjectTaskForDataVerification(automation,proj,pta,ipRecId,ipwithValue,workCalendarId);
             createProjectTaskForExpenseAllowance(automation,proj,pta,ipRecId,ipwithValue,workCalendarId);
-            createProjectTaskForPostTax(automation,proj,pta,ipRecId,ipwithValue,workCalendarId);
             createProjectTaskForGarnishment(automation,proj,pta,ipRecId,ipwithValue,workCalendarId);
             createProjectTaskForTimeStar(automation,proj,pta,ipRecId,ipwithValue,workCalendarId);
             createProjecttaskforPayrollRegister(automation,proj,pta,ipRecId,ipwithValue,workCalendarId);
@@ -527,7 +521,6 @@ public class NSP_MMImplProfile_ServHelpUpdate {
             createProjectTaskForHRJobDescription(automation,proj,pta,ipRecId,ipwithValue,workCalendarId);
             createProjectTaskForHRSeverance(automation,proj,pta,ipRecId,ipwithValue,workCalendarId);
             createProjectTaskForStandardOffer(automation,proj,pta,ipRecId,ipwithValue,workCalendarId);
-            createProjectTaskForSubstanceAbuse(automation,proj,pta,ipRecId,ipwithValue,workCalendarId);
             createProjectTaskForBackgroundCheck(automation,proj,pta,ipRecId,ipwithValue,workCalendarId);
             createProjectTaskForDrugScreening(automation,proj,pta,ipRecId,ipwithValue,workCalendarId);
             createProjectTaskForEmploymentScreening(automation,proj,pta,ipRecId,ipwithValue,workCalendarId);
@@ -879,33 +872,6 @@ public class NSP_MMImplProfile_ServHelpUpdate {
         )
     {
         if(automation ==ALLOWNCE_EXPENSE_MM){
-            pse__Project_Task__c eachProjecttask = payrollProjectManagerOwner(proj,pta,ipRecId,ipwithValue,workCalendarId);
-            NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(automation);
-            Implementation_Profile__c ipRec = newIPs.get(ipRecId);
-            ipAutomationRecords.add(
-                createIPAutomation(
-                    ipRec,
-                    ipa.NSP_Automation_Name__c,
-                    ipa.NSP_Method_Name__c,ipa.NSP_Section__c
-                )
-            );
-            if(eachProjecttask != null){
-                projectTaskToInsertList.add(eachProjecttask);
-            }
-        }
-    }
-
-    //Post-tax deductions - automation
-    private void createProjectTaskForPostTax(
-        String automation ,
-        pse__Proj__c proj ,
-        NSP_ProjectTask_Automation__mdt pta ,
-        Id ipRecId ,
-        Implementation_Profile__c ipwithValue ,
-        Id workCalendarId
-        )
-    {
-        if(automation ==POST_TAX_MM){
             pse__Project_Task__c eachProjecttask = payrollProjectManagerOwner(proj,pta,ipRecId,ipwithValue,workCalendarId);
             NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(automation);
             Implementation_Profile__c ipRec = newIPs.get(ipRecId);
@@ -1891,33 +1857,6 @@ public class NSP_MMImplProfile_ServHelpUpdate {
         }
     }
 
-    //Substance Abuse policy needed - automation
-    private void createProjectTaskForSubstanceAbuse(
-        String automation ,
-        pse__Proj__c proj ,
-        NSP_ProjectTask_Automation__mdt pta ,
-        Id ipRecId ,
-        Implementation_Profile__c ipwithValue ,
-        Id workCalendarId
-        )
-    {
-        if(automation ==SUBSTANCE_ABUSE_MM){
-            pse__Project_Task__c eachProjecttask = hrSpecialistOwner(proj,pta,ipRecId,ipwithValue,workCalendarId);
-            NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(automation);
-            Implementation_Profile__c ipRec = newIPs.get(ipRecId);
-            ipAutomationRecords.add(
-                createIPAutomation(
-                    ipRec,
-                    ipa.NSP_Automation_Name__c,
-                    ipa.NSP_Method_Name__c,ipa.NSP_Section__c
-                )
-            );
-            if(eachProjecttask != null){
-                projectTaskToInsertList.add(eachProjecttask);
-            }
-        }
-    }
-
     //Background Checks - automation
     private void createProjectTaskForBackgroundCheck(
         String automation ,
@@ -2310,7 +2249,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
     }
 
     private void checkforPostTaxDeductions(Implementation_Profile__c newRec, Implementation_Profile__c existingRec){
-        if ( ( automationsToExecute.contains(POST_DEDUCTION_MM) || automationsToExecute.contains(POST_TAX_MM) )
+        if ( automationsToExecute.contains(POST_DEDUCTION_MM)
             && newRec != null
             && newRec.RecordTypeId == ipMMRecordTypeId
             && newRec.Client_has_any_post_tax_deductions__c==NSP_ServiceConstants.YES
@@ -2320,7 +2259,6 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                 )
             )
         {
-            updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, POST_TAX_MM);
             updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, POST_DEDUCTION_MM);
         }
      }
@@ -2507,22 +2445,6 @@ public class NSP_MMImplProfile_ServHelpUpdate {
             )
         {
             updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, NSP401K_MM);
-        }
-    }
-
-    private void checkforSubstanceAbuse(Implementation_Profile__c newRec, Implementation_Profile__c existingRec){
-        if ( automationsToExecute.contains(SUBSTANCE_ABUSE_MM)
-            && newRec != null
-            && newRec.RecordTypeId == ipMMRecordTypeId
-            && newRec.Client_has_any_of_the_following__c != null
-            && newRec.Client_has_any_of_the_following__c.contains(NSP_ServiceConstants.SUBSTANCE)
-            && ( existingRec == null
-                || newRec.NSP_Form_Completed__c
-                || newRec.Client_has_any_of_the_following__c != existingRec.Client_has_any_of_the_following__c
-                )
-            )
-        {
-            updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, SUBSTANCE_ABUSE_MM);
         }
     }
 
