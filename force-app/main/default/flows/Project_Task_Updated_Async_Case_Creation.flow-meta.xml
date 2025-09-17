@@ -326,6 +326,35 @@
             </connector>
             <label>YTD Gross Wage Report Provided</label>
         </rules>
+        <rules>
+            <name>Secure_2_0_Prior_YTD_Wage_Collection</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Secure 2.0 - Prior YTD Wage Collection</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Queue</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Queue.Id</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Prior_Wage_Data_Prior_Year_SS_Wages</targetReference>
+            </connector>
+            <label>Secure 2.0 - Prior YTD Wage Collection</label>
+        </rules>
     </decisions>
     <description>Creates Cases when a Project Task gets Completed.</description>
     <environments>Default</environments>
@@ -468,7 +497,7 @@
     <start>
         <locationX>567</locationX>
         <locationY>0</locationY>
-        <filterLogic>1 AND 2 AND 3 AND (4 OR 5) AND 6</filterLogic>
+        <filterLogic>1 AND 2 AND 3 AND (4 OR 5) AND (6 OR 7)</filterLogic>
         <filters>
             <field>Name</field>
             <operator>IsNull</operator>
@@ -511,6 +540,13 @@
                 <stringValue>YTD Gross Wage Report Provided</stringValue>
             </value>
         </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Secure 2.0 - Prior YTD Wage Collection</stringValue>
+            </value>
+        </filters>
         <object>pse__Project_Task__c</object>
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
@@ -546,6 +582,74 @@
                 <elementReference>$Flow.FaultMessage</elementReference>
             </value>
         </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Prior_Wage_Data_Prior_Year_SS_Wages</name>
+        <label>Prior Wage Data - Prior Year SS Wages</label>
+        <locationX>1106</locationX>
+        <locationY>708</locationY>
+        <connector>
+            <targetReference>Get_Content_Document</targetReference>
+        </connector>
+        <flowName>Project_Case_Creation</flowName>
+        <inputAssignments>
+            <name>Account</name>
+            <value>
+                <elementReference>$Record.pse__Project__r.pse__Account__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>CaseOrigin</name>
+            <value>
+                <stringValue>Onboarding Automation</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Category</name>
+            <value>
+                <stringValue>Prior Wage Compliance</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Owner</name>
+            <value>
+                <elementReference>Get_Queue.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Project</name>
+            <value>
+                <elementReference>$Record.pse__Project__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Status</name>
+            <value>
+                <stringValue>Open</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>SubCategory</name>
+            <value>
+                <stringValue>Prior Year SS Wages</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Subject</name>
+            <value>
+                <stringValue>Prior Wage Data - Prior Year SS Wages</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Substatus</name>
+            <value>
+                <stringValue>Assigned</stringValue>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>caseRecord</assignToReference>
+            <name>CaseRecord</name>
+        </outputAssignments>
     </subflows>
     <subflows>
         <name>Prior_Wages_Case</name>
