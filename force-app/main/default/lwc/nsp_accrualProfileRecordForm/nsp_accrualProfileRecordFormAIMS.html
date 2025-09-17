@@ -113,6 +113,22 @@
                   data-name="NSP_Is_this_a_Middle_Market_client__c"
                   onchange={handleValueChange}>
                 </lightning-input-field>
+
+                <lightning-input-field
+                  value={fieldValue.Is_this_a_new_client_implementation__c}
+                  field-name="Is_this_a_new_client_implementation__c"
+                  data-name="Is_this_a_new_client_implementation__c"
+                  onchange={handleValueChange}>
+                </lightning-input-field>
+
+                 <lightning-input-field 
+                  lwc:if={visibility.X2nd_Pay_Date__c}
+                  value={fieldValue.X2nd_Pay_Date__c}
+                  field-name="X2nd_Pay_Date__c"
+                  data-name="X2nd_Pay_Date__c"
+                  onchange={handleValueChange}>
+                </lightning-input-field>
+
               </div>
             </div>
           </lightning-accordion-section>
