@@ -180,9 +180,9 @@ public with sharing class NSP_ValidateOpportunityStage {
 
         public Decimal get(String key) {
             Decimal retVal = 0;
-            if (key == 'EmpSplit_TotalNumEEs') {
+            if( key == 'EmpSplit_TotalNumEEs' ){
                 retVal = this.EmpSplit_TotalNumEEs;
-            } else if (key == 'EmpSplit_TotalPercentSplit') {
+            } else if( key == 'EmpSplit_TotalPercentSplit'){
                 retVal = this.EmpSplit_TotalPercentSplit;
             }
             return retVal;
@@ -190,8 +190,8 @@ public with sharing class NSP_ValidateOpportunityStage {
 
         private Decimal calculatePercentSplit(List<NSP_Employee_Split__c> empSplits) {
             Decimal totalPercentSplit = 0;
-            if ( ( empSplits != null ) && !empSplits.isEmpty() ) {
-                    for (NSP_Employee_Split__c empSplit : empSplits) {
+            if( ( empSplits != null ) && !empSplits.isEmpty() ){
+                    for( NSP_Employee_Split__c empSplit : empSplits ){
                     totalPercentSplit += empSplit.NSP_Percent_Split__c != null ? empSplit.NSP_Percent_Split__c : 0;
                 }
             }
@@ -200,8 +200,8 @@ public with sharing class NSP_ValidateOpportunityStage {
 
         private Decimal calculateEmployeeCount(List<NSP_Employee_Split__c> empSplits) {
             Decimal totalEmployees = 0;
-            if ( ( empSplits != null ) && !empSplits.isEmpty() ) {
-                for (NSP_Employee_Split__c empSplit : empSplits) {
+            if( ( empSplits != null ) && !empSplits.isEmpty() ){
+                for( NSP_Employee_Split__c empSplit : empSplits ){
                     totalEmployees += empSplit.NSP_Number_of_Employees__c != null ? empSplit.NSP_Number_of_Employees__c : 0;
                 }
             }
@@ -247,7 +247,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         )
     {
         String valValue = val.Value__c;
-        if( val.Value__c.indexOf( 'Field Value: ' ) > -1 ) {
+        if( valValue.indexOf( 'Field Value: ' ) > -1 ){
             valValue = opp.get( val.Value__c.substringAfter( 'Field Value: ' ) ).toString();
         }
 
