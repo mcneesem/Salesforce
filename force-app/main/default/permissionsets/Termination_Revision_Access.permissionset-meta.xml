@@ -5,6 +5,16 @@
         <name>Termination_Revision_Access</name>
     </customPermissions>
     <description>Grants the ability to use all elements for the Termination Revision feature</description>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Account_Group__c.Competitor__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Account_Group__c.Other_Competitor__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Termination Revision Access</label>
 </PermissionSet>
