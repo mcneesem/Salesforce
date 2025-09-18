@@ -170,7 +170,6 @@ public with sharing class NSP_ValidateOpportunityStage {
     }
 
     public class ValObjectAggregates {
-        private ValObjectAggregates valObjectAgs;
         public Decimal EmpSplit_TotalNumEEs { get; set; }
         public Decimal EmpSplit_TotalPercentSplit { get; set; }
 
@@ -180,7 +179,13 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
 
         public Decimal get(String key) {
-            return valObjectAgs.get(key);
+            Decimal retVal = 0;
+            if (key == 'EmpSplit_TotalNumEEs') {
+                retVal = this.EmpSplit_TotalNumEEs;
+            } else if (key == 'EmpSplit_TotalPercentSplit') {
+                retVal = this.EmpSplit_TotalPercentSplit;
+            }
+            return retVal;
         }
 
         private Decimal calculatePercentSplit(List<NSP_Employee_Split__c> empSplits) {
@@ -243,8 +248,9 @@ public with sharing class NSP_ValidateOpportunityStage {
     {
         String valValue = val.Value__c;
         if( val.Value__c.indexOf( 'Field Value: ' ) > -1 ) {
-            valValue = (String) opp.get( val.Value__c.substringAfter( 'Field Value: ' ) );
+            valValue = opp.get( val.Value__c.substringAfter( 'Field Value: ' ) ).toString();
         }
+
         if( checkCondition( valObjectAgs.get(val.Field__c) , valValue , val.Operation__c ) ){
             passCheckCount++;
         }
@@ -253,7 +259,7 @@ public with sharing class NSP_ValidateOpportunityStage {
 
     private static void evaluateGroupedCriteria(
         Opportunity opp ,
-        Map<String,List<SObject>> valObjectMap ,        
+        Map<String,List<SObject>> valObjectMap ,
         ValObjectAggregates valObjectAgs ,
         Map<String,List<Opportunity_Stage_Validation__mdt>> groupedStageValMap
         )
@@ -268,7 +274,7 @@ public with sharing class NSP_ValidateOpportunityStage {
             Integer i = 0;
             do {
                 SObject valObject = ( ( valObjectList != null ) && ( !valObjectList.isEmpty() ) ) ? valObjectMap.get(groupRelObjName)[i] : null;
-                Integer passCheckCount = evaluateOneCriteriaGroup( opp, groupName , valObject , groupedStageValMap ); // must run even if valObject is null
+                Integer passCheckCount = evaluateOneCriteriaGroup( opp, groupName , valObject , valObjectAgs , groupedStageValMap ); // must run even if valObject is null
                 if( passCheckCount >= groupedStageValMap.get(groupName).size() ) {
                     passCheck = true;
                 }
@@ -310,6 +316,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         Opportunity opp ,
         String groupName ,
         SObject valObject ,
+        ValObjectAggregates valObjectAgs ,
         Map<String,List<Opportunity_Stage_Validation__mdt>> groupedStageValMap
         )
     {
@@ -324,8 +331,10 @@ public with sharing class NSP_ValidateOpportunityStage {
             } else {
                 valFieldValue = valObject?.get(val.Field__c);
             }
-            if( checkCondition(valFieldValue , val.Value__c , val.Operation__c) )
-            {
+
+            if( val.Object__c.indexOf( 'Aggregates' ) > -1 ) {
+                passCheckCount = evaluateAggregateCriteria( opp , passCheckCount , valObjectAgs , val);
+            } else if( checkCondition(valFieldValue , val.Value__c , val.Operation__c) ){
                 passCheckCount++;
             }
         }
