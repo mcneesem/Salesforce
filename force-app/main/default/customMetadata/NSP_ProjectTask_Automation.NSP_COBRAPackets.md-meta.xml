@@ -20,11 +20,11 @@
     </values>
     <values>
         <field>Order__c</field>
-        <value xsi:type="xsd:double">3.0</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Task_Order__c</field>
-        <value xsi:type="xsd:double">92.0</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Visible_to_Client__c</field>
