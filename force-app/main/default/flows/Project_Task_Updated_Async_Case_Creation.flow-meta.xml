@@ -717,13 +717,13 @@
         <inputAssignments>
             <name>SubCategory</name>
             <value>
-                <stringValue>Prior Wage Report</stringValue>
+                <stringValue>Current YTD Wages</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>Subject</name>
             <value>
-                <stringValue>Prior Wages</stringValue>
+                <stringValue>Prior Wage Data - Current YTD Wages</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
