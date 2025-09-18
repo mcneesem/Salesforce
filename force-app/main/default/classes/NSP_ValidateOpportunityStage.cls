@@ -93,7 +93,7 @@ public with sharing class NSP_ValidateOpportunityStage {
                             FROM OpportunityContactRoles
                         ) ,
                         (
-                            SELECT Id
+                            SELECT Id , NSP_Percent_Split__c , NSP_Number_of_Employees__c
                             FROM Employee_Splits__r
                         ) ,
                         (
@@ -122,13 +122,14 @@ public with sharing class NSP_ValidateOpportunityStage {
                 if ( String.isBlank( opp.StageName )
                     || ( NSP_ValidateOpportunityStage.hasAllowClosedLostPermission
                         && opp.StageName.equals( NSP_SalesConstants.CLOSED_LOST )
-                        )
+                       )
                     )
                 {
                     continue;
                 }
 
                 Opportunity oppFromMap = oppRelatedObjectMap.get( opp.Id );
+                OpportunityCreditSums optyCreditSums = new OpportunityCreditSums(oppFromMap?.Employee_Splits__r);
 
                 Map<String,List<SObject>> valObjectMap = new Map<String,List<SObject>>();
                 valObjectMap.put('Opportunity' , new List<SObject>{ opp });
@@ -137,6 +138,7 @@ public with sharing class NSP_ValidateOpportunityStage {
                 valObjectMap.put('OpportunityContactRole' , oppFromMap?.OpportunityContactRoles);
                 valObjectMap.put('NSP_Employee_Split__c' , oppFromMap?.Employee_Splits__r);
                 valObjectMap.put('NSP_Checklist__c' , oppFromMap?.Checklists__r);
+                // valObjectMap.put('Opportunity Credit Sums' , new List<SObject>{ optyCreditSums });
                 valObjectMap.put('SBQQ__Quote__c' , new List<SBQQ__Quote__c>{ oppQuoteMap.get(opp.SBQQ__PrimaryQuote__c) });
 
                 List<Opportunity_Stage_Validation__mdt> currentOptyStageVals = NSP_ValidateOpportunityStage.getCurrentOptyStageVals( opp );
@@ -165,6 +167,37 @@ public with sharing class NSP_ValidateOpportunityStage {
                 'validateOpportunityStageNew' ,
                 e
             );
+        }
+    }
+
+
+    public class OpportunityCreditSums {
+        public Decimal TotalNumEEs { get; set; } // Summary of NSP_Number_of_Employees__c
+        public Decimal TotalPercentSplit { get; set; } // Summary of NSP_Percent_Split__c
+
+        public OpportunityCreditSums(List<NSP_Employee_Split__c> employeeSplits) {
+            this.TotalNumEEs = calculateEmployeeCount(employeeSplits);
+            this.TotalPercentSplit = calculatePercentSplit(employeeSplits);
+        }
+
+        private Decimal calculatePercentSplit(List<NSP_Employee_Split__c> employeeSplits) {
+            Decimal totalPercentSplit = 0;
+            if ( ( employeeSplits != null ) && !employeeSplits.isEmpty() ) {
+                    for (NSP_Employee_Split__c empSplit : employeeSplits) {
+                    totalPercentSplit += empSplit.NSP_Percent_Split__c != null ? empSplit.NSP_Percent_Split__c : 0;
+                }
+            }
+            return totalPercentSplit;
+        }
+
+        private Decimal calculateEmployeeCount(List<NSP_Employee_Split__c> employeeSplits) {
+            Decimal totalEmployees = 0;
+            if ( ( employeeSplits != null ) && !employeeSplits.isEmpty() ) {
+                for (NSP_Employee_Split__c empSplit : employeeSplits) {
+                    totalEmployees += empSplit.NSP_Number_of_Employees__c != null ? empSplit.NSP_Number_of_Employees__c : 0;
+                }
+            }
+            return totalEmployees;
         }
     }
 
