@@ -129,7 +129,6 @@ public with sharing class NSP_ValidateOpportunityStage {
                 }
 
                 Opportunity oppFromMap = oppRelatedObjectMap.get( opp.Id );
-                OpportunityCreditSums optyCreditSums = new OpportunityCreditSums(oppFromMap?.Employee_Splits__r);
 
                 Map<String,List<SObject>> valObjectMap = new Map<String,List<SObject>>();
                 valObjectMap.put('Opportunity' , new List<SObject>{ opp });
@@ -138,14 +137,14 @@ public with sharing class NSP_ValidateOpportunityStage {
                 valObjectMap.put('OpportunityContactRole' , oppFromMap?.OpportunityContactRoles);
                 valObjectMap.put('NSP_Employee_Split__c' , oppFromMap?.Employee_Splits__r);
                 valObjectMap.put('NSP_Checklist__c' , oppFromMap?.Checklists__r);
-                // valObjectMap.put('Opportunity Credit Sums' , new List<SObject>{ optyCreditSums });
                 valObjectMap.put('SBQQ__Quote__c' , new List<SBQQ__Quote__c>{ oppQuoteMap.get(opp.SBQQ__PrimaryQuote__c) });
+                ValObjectAggregates valObjectAgs = new ValObjectAggregates(oppFromMap?.Employee_Splits__r);
 
                 List<Opportunity_Stage_Validation__mdt> currentOptyStageVals = NSP_ValidateOpportunityStage.getCurrentOptyStageVals( opp );
                 Map<String,List<Opportunity_Stage_Validation__mdt>> groupedStageValMap = NSP_ValidateOpportunityStage.getGroupedStageValMap( currentOptyStageVals );
 
-                NSP_ValidateOpportunityStage.evaluateSingleCriteria( opp , valObjectMap , currentOptyStageVals );
-                NSP_ValidateOpportunityStage.evaluateGroupedCriteria( opp , valObjectMap , groupedStageValMap );
+                NSP_ValidateOpportunityStage.evaluateSingleCriteria( opp , valObjectMap , valObjectAgs , currentOptyStageVals );
+                NSP_ValidateOpportunityStage.evaluateGroupedCriteria( opp , valObjectMap , valObjectAgs , groupedStageValMap );
                 //Proposal
                 if ( opp.StageName.equals( NSP_SalesConstants.PROPOSAL_STAGE ) ) {
                     evaluateQuoteCriteria( opp , oppQuoteMap );
@@ -170,30 +169,34 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
     }
 
+    public class ValObjectAggregates {
+        private ValObjectAggregates valObjectAgs;
+        public Decimal EmpSplit_TotalNumEEs { get; set; }
+        public Decimal EmpSplit_TotalPercentSplit { get; set; }
 
-    public class OpportunityCreditSums {
-        public Decimal TotalNumEEs { get; set; } // Summary of NSP_Number_of_Employees__c
-        public Decimal TotalPercentSplit { get; set; } // Summary of NSP_Percent_Split__c
-
-        public OpportunityCreditSums(List<NSP_Employee_Split__c> employeeSplits) {
-            this.TotalNumEEs = calculateEmployeeCount(employeeSplits);
-            this.TotalPercentSplit = calculatePercentSplit(employeeSplits);
+        public ValObjectAggregates(List<NSP_Employee_Split__c> empSplits) {
+            this.EmpSplit_TotalNumEEs = calculateEmployeeCount(empSplits);
+            this.EmpSplit_TotalPercentSplit = calculatePercentSplit(empSplits);
         }
 
-        private Decimal calculatePercentSplit(List<NSP_Employee_Split__c> employeeSplits) {
+        public Decimal get(String key) {
+            return valObjectAgs.get(key);
+        }
+
+        private Decimal calculatePercentSplit(List<NSP_Employee_Split__c> empSplits) {
             Decimal totalPercentSplit = 0;
-            if ( ( employeeSplits != null ) && !employeeSplits.isEmpty() ) {
-                    for (NSP_Employee_Split__c empSplit : employeeSplits) {
+            if ( ( empSplits != null ) && !empSplits.isEmpty() ) {
+                    for (NSP_Employee_Split__c empSplit : empSplits) {
                     totalPercentSplit += empSplit.NSP_Percent_Split__c != null ? empSplit.NSP_Percent_Split__c : 0;
                 }
             }
             return totalPercentSplit;
         }
 
-        private Decimal calculateEmployeeCount(List<NSP_Employee_Split__c> employeeSplits) {
+        private Decimal calculateEmployeeCount(List<NSP_Employee_Split__c> empSplits) {
             Decimal totalEmployees = 0;
-            if ( ( employeeSplits != null ) && !employeeSplits.isEmpty() ) {
-                for (NSP_Employee_Split__c empSplit : employeeSplits) {
+            if ( ( empSplits != null ) && !empSplits.isEmpty() ) {
+                for (NSP_Employee_Split__c empSplit : empSplits) {
                     totalEmployees += empSplit.NSP_Number_of_Employees__c != null ? empSplit.NSP_Number_of_Employees__c : 0;
                 }
             }
@@ -204,13 +207,16 @@ public with sharing class NSP_ValidateOpportunityStage {
     private static void evaluateSingleCriteria(
         Opportunity opp ,
         Map<String,List<SObject>> valObjectMap ,
+        ValObjectAggregates valObjectAgs ,
         List<Opportunity_Stage_Validation__mdt> currentOptyStageVals
         )
     {
         for(Opportunity_Stage_Validation__mdt val : currentOptyStageVals){
             Integer passCheckCount = 0;
             if( String.isBlank(val.Group__c) ) {
-                if( valObjectMap.get(val.Object__c) != null ) {
+                if( val.Object__c.indexOf( 'Aggregates' ) > -1 ) {
+                    passCheckCount = evaluateAggregateCriteria( opp , passCheckCount , valObjectAgs , val);
+                } else if( valObjectMap.get(val.Object__c) != null ) {
                     for( SObject valObject : valObjectMap.get(val.Object__c) ){
                         if( checkCondition(valObject.get(val.Field__c) , val.Value__c , val.Operation__c) ) {
                             passCheckCount++;
@@ -228,9 +234,27 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
     }
 
+    private static Integer evaluateAggregateCriteria(
+        Opportunity opp ,
+        Integer passCheckCount ,
+        ValObjectAggregates valObjectAgs ,
+        Opportunity_Stage_Validation__mdt val
+        )
+    {
+        String valValue = val.Value__c;
+        if( val.Value__c.indexOf( 'Field Value: ' ) > -1 ) {
+            valValue = (String) opp.get( val.Value__c.substringAfter( 'Field Value: ' ) );
+        }
+        if( checkCondition( valObjectAgs.get(val.Field__c) , valValue , val.Operation__c ) ){
+            passCheckCount++;
+        }
+        return passCheckCount;
+    }
+
     private static void evaluateGroupedCriteria(
         Opportunity opp ,
-        Map<String,List<SObject>> valObjectMap ,
+        Map<String,List<SObject>> valObjectMap ,        
+        ValObjectAggregates valObjectAgs ,
         Map<String,List<Opportunity_Stage_Validation__mdt>> groupedStageValMap
         )
     {
@@ -320,10 +344,12 @@ public with sharing class NSP_ValidateOpportunityStage {
 
     private static String getGroupRelObjName( String groupName , Map<String, List<Opportunity_Stage_Validation__mdt>> groupedStageValMap ){
         String groupRelObjName = OPPORTUNITY_OBJ;
-        for( Opportunity_Stage_Validation__mdt groupOptyStageVal : groupedStageValMap.get(groupName) ){
-            if( groupOptyStageVal.Object__c != OPPORTUNITY_OBJ){ // first object name other than Opportunity
-                groupRelObjName = groupOptyStageVal.Object__c;
-                break;
+        if( groupedStageValMap != null ){
+            for( Opportunity_Stage_Validation__mdt groupOptyStageVal : groupedStageValMap.get(groupName) ){
+                if( groupOptyStageVal.Object__c != OPPORTUNITY_OBJ){ // first object name other than Opportunity
+                    groupRelObjName = groupOptyStageVal.Object__c;
+                    break;
+                }
             }
         }
         return groupRelObjName; // if no other object name found, entire group is based on Opportunity
@@ -350,22 +376,24 @@ public with sharing class NSP_ValidateOpportunityStage {
         return currentOptyStageVals;
     }
 
-    private static Map<String, List<Opportunity_Stage_Validation__mdt>> getGroupedStageValMap(List<Opportunity_Stage_Validation__mdt> currentOptyStageVals){
+    private static Map<String, List<Opportunity_Stage_Validation__mdt>> getGroupedStageValMap( List<Opportunity_Stage_Validation__mdt> currentOptyStageVals ) {
         Map<String, List<Opportunity_Stage_Validation__mdt>> groupedStageValMap = new Map<String, List<Opportunity_Stage_Validation__mdt>>();
         Set<String> groupNames = new Set<String>();
-        for(Opportunity_Stage_Validation__mdt currentOptyStageVal : currentOptyStageVals){
-            if( String.isNotBlank(currentOptyStageVal.Group__c) ){
-                groupNames.add(currentOptyStageVal.Group__c);
-            }
-        }
-        for(String groupName : groupNames){
-            List<Opportunity_Stage_Validation__mdt> groupedStageVals = new List<Opportunity_Stage_Validation__mdt>();
+        if( currentOptyStageVals != null ) {
             for(Opportunity_Stage_Validation__mdt currentOptyStageVal : currentOptyStageVals){
-                if( groupName == currentOptyStageVal.Group__c ){
-                    groupedStageVals.add(currentOptyStageVal);
+                if( String.isNotBlank(currentOptyStageVal.Group__c) ){
+                    groupNames.add(currentOptyStageVal.Group__c);
                 }
             }
-            groupedStageValMap.put(groupName, groupedStageVals);
+            for(String groupName : groupNames){
+                List<Opportunity_Stage_Validation__mdt> groupedStageVals = new List<Opportunity_Stage_Validation__mdt>();
+                for(Opportunity_Stage_Validation__mdt currentOptyStageVal : currentOptyStageVals){
+                    if( groupName == currentOptyStageVal.Group__c ){
+                        groupedStageVals.add(currentOptyStageVal);
+                    }
+                }
+                groupedStageValMap.put(groupName, groupedStageVals);
+            }
         }
         return groupedStageValMap;
     }
