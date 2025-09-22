@@ -44,7 +44,7 @@ private class NSP_ValidateOpportunityStageTest {
         insert stpCheckList;
 
         Opportunity opp1=NSP_TestHelper.createOpenOpportunity(acnt.Id,'New Business',false);
-        opp1.StageName = 'Proposal';
+        opp1.StageName = 'Prospecting';
         opp1.NSP_PrimaryProduct__c = 'WX';
         opp1.NSP_Partner__c=acnt.Id;
         try{            

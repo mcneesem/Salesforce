@@ -16,9 +16,9 @@ public with sharing class NSP_ValidateOpportunityStage {
     //                         all the other group criteria is found. If the metadata records in the group are for Opportunity
     //                         object, validation fails if the Opportunity being validated matches all the other criteria
     //                         in the group.
-    //                      3. When the records in a group are for Opportunity object and some related object, at least one
-    //                         related object record matching all the related object criteria in the group must be
-    //                         found but only if the Opportunity condition in the group is met. If the Opportunity condition
+    //                      3. When the records in a group are for a mix of Opportunity object and some related object, at least
+    //                         one related object record matching all the related object criteria in the group must be
+    //                         found only if the Opportunity condition in the group is met. If the Opportunity condition
     //                         is not met, related object criteria in the group is not required and the validation passes.
     // ***************************************************************************************************************************
 
@@ -321,11 +321,12 @@ public with sharing class NSP_ValidateOpportunityStage {
         )
     {
         Integer passCheckCount = 0;
-        String groupCheckType = '';
+        Boolean groupCheckDNE = false; // if group is a DOES NOT EXIST case
+        Boolean groupCheckMixed = false; // if group is a mixed object case
         for( Opportunity_Stage_Validation__mdt val : groupedStageValMap.get(groupName) ){
             Object valFieldValue = null;
             if( val.Operation__c == Operator.DOES_NOT_EXIST.name() ){
-                groupCheckType = Operator.DOES_NOT_EXIST.name();
+                groupCheckDNE = true;
             } else if( val.Object__c == OPPORTUNITY_OBJ ){
                 valFieldValue = opp.get(val.Field__c);
             } else {
@@ -336,16 +337,20 @@ public with sharing class NSP_ValidateOpportunityStage {
                 passCheckCount = evaluateAggregateCriteria( opp , passCheckCount , valObjectAgs , val);
             } else if( checkCondition(valFieldValue , val.Value__c , val.Operation__c) ){
                 passCheckCount++;
+            } else if( val.Object__c == OPPORTUNITY_OBJ ){
+                groupCheckMixed = true;
             }
         }
 
-        // handle DOES_NOT_EXIST case
-        if( groupCheckType == Operator.DOES_NOT_EXIST.name() ){
+        // handle special cases
+        if( groupCheckDNE ){
             if( passCheckCount >= (groupedStageValMap.get(groupName).size() - 1) ){
                 passCheckCount = NSP_ValidateOpportunityStage.ERROR_DOES_NOT_EXIST; // if record exists that should not, trip error message
             } else {
                 passCheckCount = groupedStageValMap.get(groupName).size(); // if not all criteria met, make sure error message is skipped
             }
+        } else if( groupCheckMixed ){
+            passCheckCount = groupedStageValMap.get(groupName).size(); // if Object condition of mixed case doesn't pass, whole group passes
         }
 
         return passCheckCount;
