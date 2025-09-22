@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>IsActive__c</field>
-        <value xsi:type="xsd:boolean">true</value>
+        <value xsi:type="xsd:boolean">false</value>
     </values>
     <values>
         <field>Object__c</field>
@@ -36,6 +36,6 @@
     </values>
     <values>
         <field>Value__c</field>
-        <value xsi:type="xsd:string">Cancelled</value>
+        <value xsi:type="xsd:string">Completed</value>
     </values>
 </CustomMetadata>
