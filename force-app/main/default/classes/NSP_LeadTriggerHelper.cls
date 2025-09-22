@@ -358,20 +358,51 @@ public with sharing class NSP_LeadTriggerHelper {
             && this.isEnabledRestrictLeadOwnerChange()
             )
         {
-            // collect the previous record OwnerId (User.Id) values...
-            Set<Id> ownerIdset = this.collectOwnerIdset( leadNewMap , leadOldMap );
-            // collect previous Lead Owner's salesoffice details...
-            Set<String> salesOfficeSet = this.selectSalesOfficeSet( ownerIdset );
-            // restrict Lead edit access/change owner if current User not part of the previous Lead Owner's salesoffice group...
-            List<GroupMember> groupMemberList = this.selectGroupMemberList( salesOfficeSet );
-            if ( ( groupMemberList == null ) || groupMemberList.isEmpty() ) {
+            if(CustomPermissionController.checkUserPermission('Bypass_Lead_Sales_Office_Validation', UserInfo.getUserId()) && 
+            UserInfo.getUserRoleId() != null){
+                
+                //  Get all Leads owners
+                Set<Id> ownersIdset = collectAllOwnersIdset(leadNewMap, leadOldMap);
+                // Get Leads owners Roles   
+                Map<Id, User> usersRoles = new Map<Id, User>([SELECT id, UserRoleId FROM User WHERE Id IN :ownersIdset]);
+                //  Get Users Roles hierarchy (three levels deep)
+                Map<Id, UserRole> UserRoleMap = new Map<Id, UserRole>([SELECT Id, ParentRoleId FROM UserRole WHERE (
+                ( ParentRoleId = :UserInfo.getUserRoleId() ) OR ( ParentRole.ParentRoleId = :UserInfo.getUserRoleId() )
+                OR ( ParentRole.ParentRole.ParentRoleId = :UserInfo.getUserRoleId() ))]);
+
                 for ( Id leadId : leadNewMap.keySet() ) {
-                    Lead newRecord = this.getMappedLeadSafe( leadNewMap , leadId );
+
                     Lead oldRecord = this.getMappedLeadSafe( leadOldMap , leadId );
-                    if ( this.isRestrictedLeadOwnerChange( newRecord , oldRecord ) ) {
-                        // for any restricted change to the Lead...
-                        // ~ throw DmlException FIELD_CUSTOM_VALIDATION_EXCEPTION
-                        leadNewMap.get( leadId ).Id.addError( System.Label.NSP_LeadTriggerError );
+                    Lead newRecord = this.getMappedLeadSafe( leadNewMap , leadId );
+                    
+                    Id oldRoleId = null;
+                    if(oldRecord.OwnerId != null) oldRoleId = usersRoles.get(oldRecord.OwnerId).UserRoleId;
+
+                    Id newRoleId = null;
+                    if(newRecord.OwnerId != null) newRoleId = usersRoles.get(newRecord.OwnerId).UserRoleId;
+
+                    //  Both users should belong to the upper Role hierarchy
+                    if(!UserRoleMap.containsKey(oldRoleId) || !UserRoleMap.containsKey(newRoleId)){
+                       leadNewMap.get( leadId ).Id.addError( System.Label.NSP_LeadTriggerError );
+                    }
+                }
+            }
+            else{
+                // collect the previous record OwnerId (User.Id) values...
+                Set<Id> ownerIdset = this.collectOwnerIdset( leadNewMap , leadOldMap );
+                // collect previous Lead Owner's salesoffice details...
+                Set<String> salesOfficeSet = this.selectSalesOfficeSet( ownerIdset );
+                // restrict Lead edit access/change owner if current User not part of the previous Lead Owner's salesoffice group...
+                List<GroupMember> groupMemberList = this.selectGroupMemberList( salesOfficeSet );
+                if ( ( groupMemberList == null ) || groupMemberList.isEmpty() ) {
+                    for ( Id leadId : leadNewMap.keySet() ) {
+                        Lead newRecord = this.getMappedLeadSafe( leadNewMap , leadId );
+                        Lead oldRecord = this.getMappedLeadSafe( leadOldMap , leadId );
+                        if ( this.isRestrictedLeadOwnerChange( newRecord , oldRecord ) ) {
+                            // for any restricted change to the Lead...
+                            // ~ throw DmlException FIELD_CUSTOM_VALIDATION_EXCEPTION
+                            leadNewMap.get( leadId ).Id.addError( System.Label.NSP_LeadTriggerError );
+                        }
                     }
                 }
             }
@@ -420,6 +451,24 @@ public with sharing class NSP_LeadTriggerHelper {
         // only enforce restriction if User is NOT allowed to bypass...
         // ~ having "correct" Profile OR "correct" Role allows the bypass...
         return ( !isAllowedProfile && !isAllowedRole );
+    }
+
+    // collect all record OwnerId (new and old)
+    private Set<Id> collectAllOwnersIdset( Map<Id,Lead> newLeadMap , Map<Id,Lead> oldLeadMap ) {
+        Set<Id> ownersIdset = new Set<Id>();
+        for ( Id leadId : newLeadMap.keySet() ) {
+            Lead newRecord = this.getMappedLeadSafe( newLeadMap , leadId );
+            Lead oldRecord = this.getMappedLeadSafe( oldLeadMap , leadId );
+
+            if(newRecord.OwnerId != null && !ownersIdset.contains(newRecord.OwnerId)){
+                ownersIdset.add(newRecord.OwnerId);
+            }
+
+            if(oldRecord.OwnerId != null && !ownersIdset.contains(oldRecord.OwnerId)){
+                ownersIdset.add(oldRecord.OwnerId);
+            }
+        }
+        return ownersIdset;
     }
 
     // collect the previous record OwnerId (User.Id) values...
