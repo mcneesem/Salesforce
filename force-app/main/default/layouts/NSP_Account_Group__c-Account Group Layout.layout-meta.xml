@@ -100,22 +100,6 @@
         <relatedList>NSP_Account_Group_Member__c.NSP_Group__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <excludeButtons>MassChangeOwner</excludeButtons>
-        <excludeButtons>New</excludeButtons>
-        <fields>NAME</fields>
-        <fields>Asset_Status__c</fields>
-        <fields>iSolved__c</fields>
-        <fields>AIMS_Client__c</fields>
-        <fields>Reason_for_Termination__c</fields>
-        <fields>Written_Term_Date__c</fields>
-        <fields>Verbal_Term_Date__c</fields>
-        <fields>Anticipated_Date_of_Term__c</fields>
-        <fields>Termination_Date__c</fields>
-        <relatedList>Asset_Termination__c.Account_Group__c</relatedList>
-        <sortField>Asset_Status__c</sortField>
-        <sortOrder>Asc</sortOrder>
-    </relatedLists>
-    <relatedLists>
         <fields>TASK.SUBJECT</fields>
         <fields>TASK.WHO_NAME</fields>
         <fields>ACTIVITY.TASK</fields>
