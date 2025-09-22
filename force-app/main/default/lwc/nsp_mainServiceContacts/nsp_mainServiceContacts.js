@@ -98,12 +98,11 @@ export default class Nsp_mainServiceContacts extends NavigationMixin(LightningEl
     })
     serviceRolePicklist;
 
-      // added
-  @wire(getPicklistValues, {
-    recordTypeId: "012000000000000AAA",
-    fieldApiName: HRSCALECLIENTROLE_FIELD,
-  })
-  hrScaleClientRolePicklist;
+    @wire(getPicklistValues, {
+        recordTypeId: "012000000000000AAA",
+        fieldApiName: HRSCALECLIENTROLE_FIELD
+    })
+    hrScaleClientRolePicklist;
 
     //get currentPage reference and values when navigating to full view and rerender
     @wire(CurrentPageReference)
@@ -144,7 +143,7 @@ export default class Nsp_mainServiceContacts extends NavigationMixin(LightningEl
         });
     }
 
-     get hrScaleClientRolePicklistValues() {
+    get hrScaleClientRolePicklistValues() {
         return this.hrScaleClientRolePicklist?.data?.values.map((row) => {
             return { label: row.label, value: row.value };
         });
@@ -363,9 +362,9 @@ export default class Nsp_mainServiceContacts extends NavigationMixin(LightningEl
         }
 
         if (this.hrScaleClientRoles && this.hrScaleClientRoles.length > 0) {
-          this.hrScaleClientRoles.map((value, i) => {
-            allFilters.push(value);
-          });
+            this.hrScaleClientRoles.map((value, i) => {
+                allFilters.push(value);
+            });
         }
 
         if (this.selectedSubClientOptions && this.selectedSubClientOptions.length > 0) {
@@ -382,15 +381,18 @@ export default class Nsp_mainServiceContacts extends NavigationMixin(LightningEl
         let supportRoles = '(\'' + this.supportRoles?.join('\',\'') + '\')';
         let hrScaleClientRoles = '(\'' + this.hrScaleClientRoles?.join('\',\'') + '\')';
 
-        if (this.isClientCommunicationContactACRfilter)
+        if (this.isClientCommunicationContactACRfilter) {
             aCRFilter.push(Client_Communication_Contact_FIELD.fieldApiName + ' = true')
-        if (this.serviceRoles && this.serviceRoles?.length)
+        }
+        if (this.serviceRoles && this.serviceRoles?.length) {
             aCRFilter.push(SERVICEROLE_FIELD.fieldApiName + ' INCLUDES ' + serviceRoles)
-        if (this.supportRoles && this.supportRoles?.length)
+        }
+        if (this.supportRoles && this.supportRoles?.length) {
             aCRFilter.push(SUPPORTROLE_FIELD.fieldApiName + ' INCLUDES ' + supportRoles)
-        if (this.hrScaleClientRoles && this.hrScaleClientRoles?.length)
-          aCRFilter.push(
-            HRSCALECLIENTROLE_FIELD.fieldApiName + " INCLUDES " + hrScaleClientRoles);
+        }
+        if (this.hrScaleClientRoles && this.hrScaleClientRoles?.length) {
+            aCRFilter.push(HRSCALECLIENTROLE_FIELD.fieldApiName + " INCLUDES " + hrScaleClientRoles);
+        }
 
         //SubClient filters
         let subCFilter = []
