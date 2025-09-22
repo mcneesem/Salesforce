@@ -737,4 +737,43 @@ private class NSP_LeadTriggerHelperTest {
  
          Test.stopTest();
     }
+
+    @IsTest 
+    private static void testBypassSalesOfficeValidation() {
+
+        //PermissionSet psBypassSalesOffice = [SELECT Id FROM PermissionSet WHERE Name = 'Bypass_Lead_Sales_Office_Validation' LIMIT 1];
+        
+        Test.startTest();
+        User supervisor = [SELECT id FROM User WHERE UserRole.DeveloperName = 'Sales_Development_Leader' LIMIT 1];
+
+        List<User> users = [SELECT id FROM User WHERE UserRole.DeveloperName = 'Sales_Development_Rep' LIMIT 2];
+         
+        /*insert new PermissionSetAssignment(
+            AssigneeId = UserInfo.getUserId(), 
+            PermissionSetId = supervisorUser.Id
+        );*/
+        System.runAs(supervisor) {
+            if(users.size() == 2){
+            
+            Lead lead = new Lead();
+            lead.firstname='Name 123';
+            lead.lastname='Test 123';
+            lead.Company = 'Test Company';
+            lead.Email = 'testlead1000@email.com';
+            lead.NSP_Sales_Office__c = '1403';
+            lead.OwnerId = users[0].id;
+            insert lead;
+            
+            lead.OwnerId = users[1].id;
+            update lead;
+
+            System.assertEquals(users[1].id, lead.OwnerId);
+           }
+
+                    
+        }
+
+        Test.stopTest();
+ 
+    }
 }
