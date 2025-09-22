@@ -7,8 +7,8 @@ public without sharing class NSP_ContactRollupController {
 
     /**
      * @description: Contact - Roll up visibility of all Contact roles at the Account Page from AccountContactRelation and SubClientContacts
-     * @param recordId of Account.  
-     * @return resultWrapper             
+     * @param recordId of Account.
+     * @return resultWrapper
      */
     @AuraEnabled(cacheable = true)
     public static List < ResultWrapper > getContactRollUpRecords(String recordId, Integer offSetCount, Boolean fullView, List < String > allFilters, String subClientFilter, String acrFilter) {
@@ -30,7 +30,7 @@ public without sharing class NSP_ContactRollupController {
                     if (Pattern.matches(regex, result.allRoles)) {
                         filteredResultSet.add(result);
                     }
-                }               
+                }
             } else {
                 for (ResultWrapper result: resultsMap.values()) {
                     filteredResultSet.add(result);
@@ -46,7 +46,7 @@ public without sharing class NSP_ContactRollupController {
      * @description : get account based record AccountContactRelation records
      * @param  recordId of Account,
      * @param  Map<Id,ResultWrapper> contact and allACR's and SubClientContacts
-     * @return string           
+     * @return string
      */
     public static Map < Id, ResultWrapper > getSubClientContacts(string recordId, Map < Id, ResultWrapper > resultsMap,
         Integer offSetCount, Integer offSetLimit, String subClientFilter) {
@@ -99,7 +99,7 @@ public without sharing class NSP_ContactRollupController {
                     Client_Communication_Contact__c , NSP_Service_Roles__c , NSP_Support_Role__c ,
                     Contact.NSP_Preferred_First_Name__c , NSP_Job_Title__c ,
                     NSP_Employee_Status__c , NSP_Work_Phone__c, NSP_Work_email__c
-                FROM AccountContactRelation 
+                FROM AccountContactRelation
                 WHERE (
                     ( AccountId = :recordId )
                     AND ( ContactId = :contactIdSet )
@@ -162,24 +162,24 @@ public without sharing class NSP_ContactRollupController {
      * @description : get account based record AccountContactRelation records
      * @param  recordId of Account,
      * @param  Map<Id,ResultWrapper> contact and allACR's and SubClientContacts
-     * @return string           
+     * @return string
+     * Added
      */
     public static Map < Id, ResultWrapper > getACR(string recordId, Map < Id, ResultWrapper > resultsMap, Integer offSetCount, Integer offSetLimit, String acrFilter) {
 
         String query = 'SELECT AccountId, Account.Name, ContactId, Contact.FirstName, Contact.LastName, Contact.Name, ' +
-            'Client_Communication_Contact__c, NSP_Service_Roles__c, NSP_Support_Role__c, Contact.NSP_Preferred_First_Name__c, NSP_Job_Title__c, '+
+            'Client_Communication_Contact__c, NSP_Service_Roles__c, NSP_Support_Role__c,HRScale_Client_Roles__c, Contact.NSP_Preferred_First_Name__c, NSP_Job_Title__c, '+
             'NSP_Employee_Status__c, NSP_Work_Phone__c, NSP_Work_email__c '+
             'FROM AccountContactRelation ' +
             'WHERE AccountId =:recordId AND ';
 
         if (String.isBlank(acrFilter)) {
-            query += '(NSP_Service_Roles__c != NULL OR NSP_Support_Role__c != NULL OR Client_Communication_Contact__c = TRUE) ';
+            query += '(NSP_Service_Roles__c != NULL OR NSP_Support_Role__c != NULL OR HRScale_Client_Roles__c != NULL OR Client_Communication_Contact__c = TRUE) ';
         } else {
             query += '(' + acrFilter + ')';
         }
 
         query += ' WITH SECURITY_ENFORCED ORDER BY Contact.Name ASC LIMIT :offSetLimit OFFSET :offSetCount';
-        
         return getACRRecords(Database.query(query),resultsMap);
     }
 
@@ -187,6 +187,10 @@ public without sharing class NSP_ContactRollupController {
         for (AccountContactRelation accConRelation: lstACRRecords) {
             if (!resultsMap.containsKey(accConRelation.ContactId)) {
                 List < string > lstRoles = new List < string > ();
+
+                if (string.isNotBlank(accConRelation.HRScale_Client_Roles__c)) {
+                    lstRoles.add(accConRelation.HRScale_Client_Roles__c?.replace(';', '; '));
+                }
                 if (string.isNotBlank(accConRelation.NSP_Service_Roles__c)) {
                     lstRoles.add(accConRelation.NSP_Service_Roles__c?.replace(';', '; '));
                 }
@@ -204,7 +208,7 @@ public without sharing class NSP_ContactRollupController {
                     string.join(lstRoles, '; '),
                     accConRelation.NSP_Job_Title__c,
                     accConRelation.NSP_Employee_Status__c,
-                    accConRelation.NSP_Work_Phone__c, 
+                    accConRelation.NSP_Work_Phone__c,
                     accConRelation.NSP_Work_email__c
                 ));
             }
@@ -216,7 +220,7 @@ public without sharing class NSP_ContactRollupController {
     /**
      * @description : all the roles will be concatenated to one string
      * @param  NSP_Sub_Client_Contact__c, string
-     * @return string           
+     * @return string
      */
     public static string getUpdatedRoles(String allRoles, NSP_Sub_Client_Contact__c subClientCont) {
         List < string > lstRoles = new List < string > ();
@@ -255,8 +259,8 @@ public without sharing class NSP_ContactRollupController {
 
     /**
      * @description : get fieldLabel from ApiName
-     * @param apiName of NSP_Sub_Client_Contact__c. 
-     * @return fieldLabel             
+     * @param apiName of NSP_Sub_Client_Contact__c.
+     * @return fieldLabel
      */
     public static string getfieldLabel(string fieldApiName, string obj) {
         Map<String, Schema.SObjectField> sObjFields = sObjDetails.get(obj);
@@ -273,8 +277,8 @@ public without sharing class NSP_ContactRollupController {
         @AuraEnabled public string employeeStatus{get; set;}
         @AuraEnabled public string workPhone{get; set;}
         @AuraEnabled public string workEmail{get; set;}
-        
-        public ResultWrapper(Account account, Contact contact, string contactName, List < NSP_Sub_Client__c > subClients, 
+
+        public ResultWrapper(Account account, Contact contact, string contactName, List < NSP_Sub_Client__c > subClients,
                              String allRoles, string jobTitle, string employeeStatus, string workPhone, string workEmail) {
             this.account = account;
             this.contact = contact;
@@ -290,7 +294,7 @@ public without sharing class NSP_ContactRollupController {
 
 
     public static Map<String, Map<String,Schema.SObjectField>> sObjDetails {
-        get { 
+        get {
             if(sObjDetails == null){
                 sObjDetails = new Map<String, Map<String,Schema.SObjectField>>();
                 String[] types = new String[]{'AccountContactRelation','NSP_Sub_Client_Contact__c'};

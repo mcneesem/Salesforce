@@ -7,6 +7,7 @@ import { CurrentPageReference } from 'lightning/navigation';
 import ACR_OBJECT from '@salesforce/schema/AccountContactRelation';
 import SUPPORTROLE_FIELD from '@salesforce/schema/AccountContactRelation.NSP_Support_Role__c';
 import SERVICEROLE_FIELD from '@salesforce/schema/AccountContactRelation.NSP_Service_Roles__c';
+import HRSCALECLIENTROLE_FIELD from '@salesforce/schema/AccountContactRelation.HRScale_Client_Roles__c'; // Added
 import Client_Communication_Contact_FIELD from '@salesforce/schema/AccountContactRelation.Client_Communication_Contact__c';
 
 import SITESUP_FIELD from '@salesforce/schema/NSP_Sub_Client_Contact__c.NSP_On_Site_Supervisor__c';
@@ -34,10 +35,10 @@ const COLUMNS = [
     {
         label: 'Preferred Name',
         type: 'customPreferredName',
-        wrapText: true, 
+        wrapText: true,
         typeAttributes: {
             contact: { fieldName: 'contact' },
-            
+
         },
     },
     { label: 'Job Title', type: 'text', fieldName: 'jobTitle', wrapText: false, },
@@ -76,6 +77,7 @@ export default class Nsp_mainServiceContacts extends NavigationMixin(LightningEl
     value = [];
     serviceRoles = [];
     supportRoles = [];
+    hrScaleClientRoles = [];
     allFilters = [];
     isLoading = true;
     selectedSubClientOptions = [];
@@ -96,6 +98,13 @@ export default class Nsp_mainServiceContacts extends NavigationMixin(LightningEl
     })
     serviceRolePicklist;
 
+      // added
+  @wire(getPicklistValues, {
+    recordTypeId: "012000000000000AAA",
+    fieldApiName: HRSCALECLIENTROLE_FIELD,
+  })
+  hrScaleClientRolePicklist;
+
     //get currentPage reference and values when navigating to full view and rerender
     @wire(CurrentPageReference)
     getStateParameters(currentPageReference) {
@@ -113,6 +122,7 @@ export default class Nsp_mainServiceContacts extends NavigationMixin(LightningEl
                 this.value = [];
                 this.serviceRoles = [];
                 this.supportRoles = [];
+                this.hrScaleClientRoles = [];
                 this.template.querySelectorAll('c-multi-select')?.forEach(element => {
                     element?.removeFilters();
                 });
@@ -134,6 +144,12 @@ export default class Nsp_mainServiceContacts extends NavigationMixin(LightningEl
         });
     }
 
+     get hrScaleClientRolePicklistValues() {
+        return this.hrScaleClientRolePicklist?.data?.values.map((row) => {
+            return { label: row.label, value: row.value };
+        });
+    }
+
     //Handle selected values form Combobox for Support and service role
     handleSelect(event) {
         let fieldApiName = event.detail?.fieldApiName;
@@ -144,6 +160,9 @@ export default class Nsp_mainServiceContacts extends NavigationMixin(LightningEl
         } else if (fieldApiName === 'NSP_Service_Roles__c') {
             this.serviceRoles = values ? values.map(row => row.value) : null;
             this.selectedACROptions = values ? values.map(row => row.label) : null;
+        } else if (fieldApiName === 'HRScale_Client_Roles__c') {
+            this.hrScaleClientRoles = values ? values.map((row) => row.value) : null;
+            this.selectedACROptions = values ? values.map((row) => row.label) : null;
         }
     }
 
@@ -282,6 +301,7 @@ export default class Nsp_mainServiceContacts extends NavigationMixin(LightningEl
         this.value = [];
         this.serviceRoles = [];
         this.supportRoles = [];
+        this.hrScaleClientRoles = [];
         this.selectedSubClientOptions = [];
         this.template.querySelectorAll('c-nsp_multi-select')?.forEach(element => {
             element?.removeFilters();
@@ -342,6 +362,12 @@ export default class Nsp_mainServiceContacts extends NavigationMixin(LightningEl
             });
         }
 
+        if (this.hrScaleClientRoles && this.hrScaleClientRoles.length > 0) {
+          this.hrScaleClientRoles.map((value, i) => {
+            allFilters.push(value);
+          });
+        }
+
         if (this.selectedSubClientOptions && this.selectedSubClientOptions.length > 0) {
             this.selectedSubClientOptions.map((value, i) => {
                 allFilters.push(value);
@@ -354,12 +380,17 @@ export default class Nsp_mainServiceContacts extends NavigationMixin(LightningEl
         let aCRFilter = [];
         let serviceRoles = '(\'' + this.serviceRoles?.join('\',\'') + '\')';
         let supportRoles = '(\'' + this.supportRoles?.join('\',\'') + '\')';
+        let hrScaleClientRoles = '(\'' + this.hrScaleClientRoles?.join('\',\'') + '\')';
+
         if (this.isClientCommunicationContactACRfilter)
             aCRFilter.push(Client_Communication_Contact_FIELD.fieldApiName + ' = true')
         if (this.serviceRoles && this.serviceRoles?.length)
             aCRFilter.push(SERVICEROLE_FIELD.fieldApiName + ' INCLUDES ' + serviceRoles)
         if (this.supportRoles && this.supportRoles?.length)
             aCRFilter.push(SUPPORTROLE_FIELD.fieldApiName + ' INCLUDES ' + supportRoles)
+        if (this.hrScaleClientRoles && this.hrScaleClientRoles?.length)
+          aCRFilter.push(
+            HRSCALECLIENTROLE_FIELD.fieldApiName + " INCLUDES " + hrScaleClientRoles);
 
         //SubClient filters
         let subCFilter = []
