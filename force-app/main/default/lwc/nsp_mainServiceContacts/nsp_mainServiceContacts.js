@@ -381,17 +381,17 @@ export default class Nsp_mainServiceContacts extends NavigationMixin(LightningEl
         let supportRoles = '(\'' + this.supportRoles?.join('\',\'') + '\')';
         let hrScaleClientRoles = '(\'' + this.hrScaleClientRoles?.join('\',\'') + '\')';
 
-        if (this.isClientCommunicationContactACRfilter) {
-            aCRFilter.push(Client_Communication_Contact_FIELD.fieldApiName + ' = true')
+        if ( this.isClientCommunicationContactACRfilter ) {
+            aCRFilter.push( Client_Communication_Contact_FIELD.fieldApiName + ' = true' )
         }
-        if (this.serviceRoles && this.serviceRoles?.length) {
-            aCRFilter.push(SERVICEROLE_FIELD.fieldApiName + ' INCLUDES ' + serviceRoles)
+        if ( this.serviceRoles?.length ) {
+            aCRFilter.push( SERVICEROLE_FIELD.fieldApiName + ' INCLUDES ' + serviceRoles )
         }
-        if (this.supportRoles && this.supportRoles?.length) {
-            aCRFilter.push(SUPPORTROLE_FIELD.fieldApiName + ' INCLUDES ' + supportRoles)
+        if ( this.supportRoles?.length ) {
+            aCRFilter.push( SUPPORTROLE_FIELD.fieldApiName + ' INCLUDES ' + supportRoles )
         }
-        if (this.hrScaleClientRoles && this.hrScaleClientRoles?.length) {
-            aCRFilter.push(HRSCALECLIENTROLE_FIELD.fieldApiName + " INCLUDES " + hrScaleClientRoles);
+        if ( this.hrScaleClientRoles?.length ) {
+            aCRFilter.push( HRSCALECLIENTROLE_FIELD.fieldApiName + " INCLUDES " + hrScaleClientRoles );
         }
 
         //SubClient filters
