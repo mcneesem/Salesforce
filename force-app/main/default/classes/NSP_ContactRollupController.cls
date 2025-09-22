@@ -171,12 +171,13 @@ public without sharing class NSP_ContactRollupController {
         )
     {
         String query = 'SELECT '
-            + 'AccountId, Account.Name, ContactId, Contact.FirstName, Contact.LastName, Contact.Name, '
-            + 'Client_Communication_Contact__c, NSP_Service_Roles__c, NSP_Support_Role__c, '
-            + 'HRScale_Client_Roles__c, Contact.NSP_Preferred_First_Name__c, NSP_Job_Title__c, '
-            + 'NSP_Employee_Status__c, NSP_Work_Phone__c, NSP_Work_email__c '
+            + 'AccountId , Account.Name , '
+            + 'ContactId , Contact.FirstName , Contact.LastName , Contact.Name , '
+            + 'Client_Communication_Contact__c , NSP_Service_Roles__c , NSP_Support_Role__c , '
+            + 'HRScale_Client_Roles__c , Contact.NSP_Preferred_First_Name__c , NSP_Job_Title__c , '
+            + 'NSP_Employee_Status__c , NSP_Work_Phone__c , NSP_Work_email__c '
             + 'FROM AccountContactRelation '
-            + 'WHERE AccountId =:recordId AND '
+            + 'WHERE ( AccountId = :recordId ) AND '
             ;
         if ( String.isBlank( acrFilter ) ) {
             query += '(NSP_Service_Roles__c != NULL OR NSP_Support_Role__c != NULL OR HRScale_Client_Roles__c != NULL OR Client_Communication_Contact__c = TRUE) ';
