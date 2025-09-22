@@ -350,25 +350,25 @@ export default class Nsp_mainServiceContacts extends NavigationMixin(LightningEl
         }
 
         if (this.serviceRoles && this.serviceRoles.length > 0) {
-            this.serviceRoles.map((value, i) => {
+            this.serviceRoles.forEach((value) => {
                 allFilters.push(value);
             });
         }
 
         if (this.supportRoles && this.supportRoles.length > 0) {
-            this.supportRoles.map((value, i) => {
+            this.supportRoles.forEach((value) => {
                 allFilters.push(value);
             });
         }
 
         if (this.hrScaleClientRoles && this.hrScaleClientRoles.length > 0) {
-            this.hrScaleClientRoles.map((value, i) => {
+            this.hrScaleClientRoles.forEach((value) => {
                 allFilters.push(value);
             });
         }
 
         if (this.selectedSubClientOptions && this.selectedSubClientOptions.length > 0) {
-            this.selectedSubClientOptions.map((value, i) => {
+            this.selectedSubClientOptions.forEach((value) => {
                 allFilters.push(value);
             });
         }
