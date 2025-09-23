@@ -926,10 +926,21 @@
                 <componentName>flexipage:tabset</componentName>
                 <identifier>flexipage_tabset5</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 OR (2 AND 3)</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_Type__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Account Health</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Renewal Probability</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Termination_Revision_Access}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>false</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
