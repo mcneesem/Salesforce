@@ -35,7 +35,7 @@
                         </label>
                         <template if:true ={isOnloadCalled}>
                             <c-nsp_case-custom-look-up
-                                    s-object-api-name="Contact"
+                                                                        s-object-api-name="Contact"
                                     icon-name = "standard:contact"
                                     parent-id ={clientAccId}
                                     default-record-id = {NSP_Contact__c}
@@ -45,13 +45,36 @@
                                     </c-nsp_case-custom-look-up>
                                 </template>
                             <div style="display:none">
-                           <lightning-input-field  data-fname="NSP_Contact__c"  id="NSP_Contact__c" field-name="NSP_Contact__c"  value={NSP_Contact__c}
-                           onchange={handleContact} disabled={disableContact} dirty
-                           ></lightning-input-field>
-                           </div>
+                                <lightning-input-field  data-fname="NSP_Contact__c"  
+                                                    id="NSP_Contact__c" 
+                                                    lwc:ref="NSP_Contact__c"
+                                                    field-name="NSP_Contact__c"  
+                                                    value={NSP_Contact__c}
+                                                    onchange={handleContact} 
+                                                    disabled={disableContact} 
+                                                    dirty>
+                                </lightning-input-field>
+                            </div>
                       </div>
                       </div>
                     </lightning-layout-item>
+
+                <lightning-layout-item size="4">
+                    <div class="slds-var-m-around_medium ">
+                        <lightning-input name="cemail"
+                                         required 
+                                         data-fname="emailAddress" 
+                                         lwc:ref="emailAddress" 
+                                         class='emailAddress' 
+                                         type="email" 
+                                         label="Email address" 
+                                         value={cemail} 
+                                         pattern="[A-Za-z0-9._\-]+@[a-z0-9.\-]+\.[a-zA-Z]{2,6}" 
+                                         message-when-pattern-mismatch="Please enter a valid email" 
+                                         disabled={desableEmail} >
+                        </lightning-input>
+                    </div>
+                </lightning-layout-item>
 
                 <lightning-layout-item size="4">
                     <div class="slds-m-top_medium slds-align_absolute-center slds-p-around_medium">
@@ -65,7 +88,7 @@
         </template>
 <!-- Remove contact -->
             <lightning-layout>
-                <lightning-layout-item size="7">
+                <lightning-layout-item size="12">
                     <lightning-datatable key-field="Id" data={mergeObjectList} columns={columns}
                         onrowaction={handleRowAction} hide-checkbox-column>
                     </lightning-datatable>
@@ -151,8 +174,8 @@
 
                 </template>
                 <template lwc:else>
-                    <lightning-button class="slds-m-top_small slds-m-left_small"  type="submit" variant="brand" label="Next" onclick={handleNext}>
-                    </lightning-button>
+                <lightning-button class="slds-m-top_small slds-m-left_small"  type="submit" variant="brand" label="Next" onclick={handleNext}>
+                </lightning-button>
                 </template>        
             </div>
         </lightning-record-edit-form>

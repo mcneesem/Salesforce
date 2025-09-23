@@ -1,4 +1,5 @@
 import { LightningElement, wire, api, track } from 'lwc';
+import LightningAlert from 'lightning/alert';
 import { getPicklistValues } from 'lightning/uiObjectInfoApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { updateRecord,createRecord } from 'lightning/uiRecordApi';
@@ -26,6 +27,7 @@ export default class WizardSurveyPageInfo extends LightningElement {
     currentConactId;
     nameField;
     showButton = false;
+    cemail;
     NSP_End_Date__c;
     disableContact =true;
     enableContact = true;
@@ -50,6 +52,8 @@ export default class WizardSurveyPageInfo extends LightningElement {
 
     columns = [
         { label: 'Name', fieldName: 'name' },
+        { label: 'Email', fieldName: 'NSP_Work_email__c' },
+
         {
             type: 'button-icon',
             typeAttributes:
@@ -60,6 +64,14 @@ export default class WizardSurveyPageInfo extends LightningElement {
             }
         }
     ];
+
+    get desableEmail(){
+        let flag = true;
+        if( !(this.disableContact) && this.cname != '' ){
+            flag = false 
+        }
+        return flag;
+    }
 
     @wire(getRelatedListRecords, {
         parentRecordId: '$clientId',
@@ -308,7 +320,7 @@ export default class WizardSurveyPageInfo extends LightningElement {
 
     handleRowAction(event) {
         if (event.detail.action.name === 'delete') {
-            this.mergeObjectList = this.mergeObjectList.filter( 
+            this.mergeObjectList = this.mergeObjectList.filter(row => row.NSP_Work_email__c !== event.detail.row.NSP_Work_email__c && 
             (row => row.name !== event.detail.row.name));
         }
     }
@@ -319,34 +331,31 @@ export default class WizardSurveyPageInfo extends LightningElement {
   }
 
     handleAddContact(event) {
-        if(this.template.querySelector('lightning-input-field[data-fname="NSP_Contact__c"]') != null && this.template.querySelector('lightning-input-field[data-fname="NSP_Contact__c"]').value !=null ){
-            let contactID =this.template.querySelector('lightning-input-field[data-fname="NSP_Contact__c"]').value ;
-            if(contactID != null &&  contactID.length > 17){
-                this.currentConactId = contactID;
-                const conObj = this.accContacts.find(row => row.ContactId === this.currentConactId);
-                this.cname = conObj.Contact.Name; 
-              }else{
-                this.cname = '';
-              }
+        if(this.refs.NSP_Contact__c?.value == null || this.refs.NSP_Contact__c?.value.length <= 17){
+            this.handleAlert('Please enter valid Contact','error','!Error');
+        }else if(this.refs.emailAddress?.value ==null || !this.refs.emailAddress.checkValidity() ){
+            this.handleAlert('Please enter valid Email','error','!Error');
+        }else{
+            
+            var tempContact = new Object();
+            this.currentConactId = this.refs.NSP_Contact__c?.value;
+            tempContact.name = this.accContacts.find(row => row.ContactId === this.currentConactId)?.Contact?.Name;
+            tempContact.NSP_Work_email__c = this.refs.emailAddress.value;
+            this.mergeObjectList = [...this.mergeObjectList, tempContact]; 
+            this.NSP_Contact__c = '';
+            this.cemail = '';
+            this.cname = '';
         }
-        if(this.cname != null) {
-        /*
-        var obj = this.mergeObjectList.filter(row => row.email === emailAddress);
-        if (obj.length == 0) {*/
-          var tempContact = new Object();
-          tempContact.name = this.cname;
-          tempContact.Id = this.currentConactId;
-          this.mergeObjectList = [...this.mergeObjectList, tempContact]; 
-          this.NSP_Contact__c = '';
-          this.cname = '';
-          this.template.querySelector('lightning-input-field[data-fname="NSP_Contact__c"]').value = '';
-        /*}else{
-            alert('This email address already exit');
-        }*/
-      } else{
-            alert('Please enter valid Contact');
-      }
-        // this.accContacts = this.accContacts.filter(row => row.Id !== this.currentConactId);
+    }
+
+    handleAlert(message,theme,label) {
+        if (message != null && theme != null && label != null) {
+            LightningAlert.open({
+                message: message,
+                theme: theme,
+                label: label
+            });
+        }
     }
 
     handleChange(event) {
@@ -383,6 +392,7 @@ export default class WizardSurveyPageInfo extends LightningElement {
             this.isOnloaded = false ;
             this.isOnloadCalled=true;
             this.cname = '';
+            this.cemail = null;
             this.enableContact =false;
             this.clientId = event.target.value;
             // this.template.querySelector('lightning-record-edit-form.NSP_ClientName__c').submit(formObj);
@@ -447,7 +457,7 @@ export default class WizardSurveyPageInfo extends LightningElement {
                 let obj = {};
                 if(values != null && values != "" && values != " " && values[0] != null && values[1] != null ){
                     obj['name'] = values[0].trim();
-                    obj['Id'] = values[1].trim().replace(',', '');
+                    obj['NSP_Work_email__c'] = values[1].trim().replace(',', '');
                 }
                 if( Object.keys(obj).length != 0){
                 loadObjectList.push(obj);
@@ -522,8 +532,10 @@ get arrayToTextArea(){
             this.currentConactId =this.NSP_Contact__c;
             const conObj = this.accContacts.find(row => row.ContactId === this.currentConactId);
             this.cname = conObj.Contact.name;
+            this.cemail = conObj.NSP_Work_Email__c;
           }else{
             this.cname = '';
+            this.cemail = null;
             this.NSP_Contact__c=''; 
           }
     }
