@@ -215,10 +215,21 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
 
         // retrieve org-specific values from DocuSign_Settings__c
         Map<String, DocuSign_Settings__c> docusignSettingsMap = DocuSign_Settings__c.getAll();
-        String keyVal = 'DEV';
+        String keyVal = '';
+
+        if (String.isEmpty(sandboxName)) {
+            return;
+        }
+
+        if (sandboxName.startsWith('dev')) {
+            keyVal = 'DEV';
+        } else {
+            keyVal = sandboxName.toUpperCase();
+        }
+
         for (String key : docusignSettingsMap.keySet()) {
-            if (key.toUpperCase().startsWith(sandboxName.toUpperCase().left(3))) {
-                keyVal = key; // use the key that matches the sandbox name
+            if (key.startsWith(keyVal)) {
+                keyVal = key;
                 break;
             }
         }
@@ -229,6 +240,15 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         resourceMap.put('NSP_Docusign_Callback_Username', docusignSettings.Docusign_Callback_Username__c);
         resourceMap.put('RequestAuthDomain', docusignSettings.BaseUrl__c);
         resourceMap.put('RequestAuthEndpoint', 'https://' + docusignSettings.BaseUrl__c + '/oauth/token');
+        resourceMap.put('NSP_Invoice_Workflow_Name', 'Invoice AutoGen');
+        resourceMap.put('RequestAuthBody', 'grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer&assertion=');
+        resourceMap.put('RequestAuthContentType','application/x-www-form-urlencoded');
+        resourceMap.put('RequestIntegratorKey',docusignSettings.IntegrationKey__c);
+        resourceMap.put('RequestPrivateKey',docusignSettings.PrivateKey1__c + docusignSettings.PrivateKey2__c + docusignSettings.PrivateKey3__c +
+                         docusignSettings.PrivateKey4__c + docusignSettings.PrivateKey5__c + docusignSettings.PrivateKey6__c + docusignSettings.PrivateKey7__c);
+        resourceMap.put('RequestScope','signature spring_read spring_write');
+
+
 
         for (DocuSignRESTSettings__mdt cMdRecord : cMdDocuSignREST) {
             String name = cMdRecord.DeveloperName;
@@ -398,7 +418,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                 } else {
                     cL.value = 'test@insperity.com';
                 }
-                if( cL?.value.indexOf('@') != -1 && cL?.value.indexOf(STRING_INVALID) == -1 
+                if( cL?.value.indexOf('@') != -1 && cL?.value.indexOf(STRING_INVALID) == -1
                         && ( sandbox.indexOf('dev') != -1 || !preserveNames.contains( cLNames[i] ) ) ) {
                     MetadataService.CustomLabel cLUpd = new MetadataService.CustomLabel();
                     cLUpd.fullName = cL.fullName;
@@ -639,6 +659,15 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         } catch(Exception e) {
             NSP_PrepSandbox.handleException( e , 'doCSettings:UserTriggerSettings__c' );
         }
+
+        try {
+            Contract_Termination_Settings__c cS7 = Contract_Termination_Settings__c.getOrgDefaults();
+            cS7.AutoTerminationEmailAddresses__c = null;
+            upsert cS7;
+        } catch(Exception e) {
+            NSP_PrepSandbox.handleException( e , 'doCSettings:Contract_Termination_Settings__c' );
+        }
+
     }
 
     public static void doE2CAddresses(String sandboxName) {
