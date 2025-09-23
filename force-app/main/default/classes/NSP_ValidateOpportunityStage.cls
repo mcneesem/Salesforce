@@ -337,13 +337,13 @@ public with sharing class NSP_ValidateOpportunityStage {
                 passCheckCount = evaluateAggregateCriteria( opp , passCheckCount , valObjectAgs , val);
             } else if( checkCondition(valFieldValue , val.Value__c , val.Operation__c) ){
                 passCheckCount++;
-            } else if( val.Object__c == OPPORTUNITY_OBJ ){
+            } else if( val.Object__c == OPPORTUNITY_OBJ ){ // checkCondition failed and Group looks at Opportunity, could be mixed group
                 groupCheckMixed = true;
             }
         }
 
         // handle special cases
-        if( groupCheckDNE ){
+        if( groupCheckDNE ){ // check DNE case first
             if( passCheckCount >= (groupedStageValMap.get(groupName).size() - 1) ){
                 passCheckCount = NSP_ValidateOpportunityStage.ERROR_DOES_NOT_EXIST; // if record exists that should not, trip error message
             } else {
