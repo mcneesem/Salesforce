@@ -63,6 +63,11 @@
                 <label>RET - Bundled Plus #3</label>
             </value>
             <value>
+                <fullName>RET - Bundled Plus #4</fullName>
+                <default>false</default>
+                <label>RET - Bundled Plus #4</label>
+            </value>            
+            <value>
                 <fullName>RET - Choice Fee Schedule #4</fullName>
                 <default>false</default>
                 <label>RET - Choice Fee Schedule #4</label>
