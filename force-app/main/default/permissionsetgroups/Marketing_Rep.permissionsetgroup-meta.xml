@@ -4,5 +4,6 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>Marketing Rep</label>
     <permissionSets>Account_Baseline_Fields_for_Sales_Owners_Edit_Access</permissionSets>
+    <permissionSets>Bypass_Lead_Sales_Office_Validation</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
