@@ -82,6 +82,11 @@
         <field>Opportunity.NSP_MidMarketNationalAccount__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.NSP_Re_book__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>BPS Sales Admin and Mgr, Specific Perms</label>
     <objectPermissions>
@@ -91,6 +96,7 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>NSP_Employee_Split__c</object>
+        <viewAllFields>false</viewAllFields>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
 </PermissionSet>
