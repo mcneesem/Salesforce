@@ -199,33 +199,37 @@ public with sharing class Nps_CloneServicePlanProjectController {
         return implInstance.getProjectId(projResponse);
      }
 
-     /*
-     Helper method for createProjectFromTemplate method that sets the fields on the newly created project
-     */
-     private static pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest generateProjectCreationRequest(Id templateId, pse__Proj__c projField){
+    // Helper method for createProjectFromTemplate method that sets the fields on the newly created project
+    private static pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest generateProjectCreationRequest( Id templateId , pse__Proj__c projField ) {
         //creating a project request
         pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest projectrequest;
-        projectrequest = new pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest(projField.pse__Account__c, templateId, projField.pse__Start_Date__c);
-
+        projectrequest = new pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest(
+            projField.pse__Account__c ,
+            templateId ,
+            projField.pse__Start_Date__c
+        );
         //Setting the fields on project
         projectrequest.ProjectName = projField.Name;
         projectrequest.ProjectOwnerId = Userinfo.getUserId();
         projectrequest.IsActive = projField.pse__Is_Active__c;
-        pse.SObjectCloneMapper.Field mapperFieldRT = new pse.SObjectCloneMapper.Field(Schema.pse__Proj__c.RecordTypeId);
-        pse.SObjectCloneMapper.Field mapperFieldEndDate = new pse.SObjectCloneMapper.Field(Schema.pse__Proj__c.pse__End_Date__c);
+        pse.SObjectCloneMapper.Field mapperFieldRT = new pse.SObjectCloneMapper.Field( Schema.pse__Proj__c.RecordTypeId );
+        pse.SObjectCloneMapper.Field mapperFieldEndDate = new pse.SObjectCloneMapper.Field( Schema.pse__Proj__c.pse__End_Date__c );
         mapperFieldEndDate.DefaultValue = projField.pse__End_Date__c;
-        pse.SObjectCloneMapper.Field mapperFieldStatus = new pse.SObjectCloneMapper.Field(Schema.pse__Proj__c.pse__Project_Status__c);
+        pse.SObjectCloneMapper.Field mapperFieldStatus = new pse.SObjectCloneMapper.Field( Schema.pse__Proj__c.pse__Project_Status__c );
         mapperFieldStatus.DefaultValue = projField.pse__Project_Status__c;
+        pse.SObjectCloneMapper.Field mapperFieldBillable = new pse.SObjectCloneMapper.Field( Schema.pse__Proj__c.pse__Is_Billable__c );
+        mapperFieldBillable.DefaultValue = false;
         Set<pse.SObjectCloneMapper.Field> setMapperFields = new Set<pse.SObjectCloneMapper.Field>{
             mapperFieldEndDate ,
             mapperFieldStatus ,
             mapperFieldRT ,
+            mapperFieldBillable ,
             NSP_CreateProjFromFlow.getDefaultRegionMapperField()
         };
-        pse.SObjectCloneMapper mapp = new pse.SObjectCloneMapper(pse__Proj__c.SObjectType, setMapperFields);
-        projectrequest.Mappers = new List<pse.SObjectCloneMapper> { mapp };
+        pse.SObjectCloneMapper mapp = new pse.SObjectCloneMapper( pse__Proj__c.SObjectType , setMapperFields );
+        projectrequest.Mappers = new List<pse.SObjectCloneMapper>{ mapp };
         return projectrequest;
-     }
+    }
 
      /**
       * This is a generic method to perform CUD DML operations.
