@@ -366,7 +366,7 @@ public with sharing class NSP_LeadTriggerHelper {
                 // Get Leads owners Roles   
                 Map<Id, User> usersRoles = new Map<Id, User>([SELECT id, UserRoleId FROM User WHERE Id IN :ownersIdset]);
                 //  Get Users Roles hierarchy (three levels deep)
-                Map<Id, UserRole> UserRoleMap = new Map<Id, UserRole>([SELECT Id, ParentRoleId FROM UserRole WHERE (
+                Map<Id, UserRole> userRoleMap = new Map<Id, UserRole>([SELECT Id, ParentRoleId FROM UserRole WHERE (
                 ( ParentRoleId = :UserInfo.getUserRoleId() ) OR ( ParentRole.ParentRoleId = :UserInfo.getUserRoleId() )
                 OR ( ParentRole.ParentRole.ParentRoleId = :UserInfo.getUserRoleId() ))]);
 
@@ -374,15 +374,10 @@ public with sharing class NSP_LeadTriggerHelper {
 
                     Lead oldRecord = this.getMappedLeadSafe( leadOldMap , leadId );
                     Lead newRecord = this.getMappedLeadSafe( leadNewMap , leadId );
-                    
-                    Id oldRoleId = null;
-                    if(oldRecord.OwnerId != null) oldRoleId = usersRoles.get(oldRecord.OwnerId).UserRoleId;
-
-                    Id newRoleId = null;
-                    if(newRecord.OwnerId != null) newRoleId = usersRoles.get(newRecord.OwnerId).UserRoleId;
 
                     //  Both users should belong to the upper Role hierarchy
-                    if(!UserRoleMap.containsKey(oldRoleId) || !UserRoleMap.containsKey(newRoleId)){
+                    if( ( oldRecord.OwnerId != null && !userRoleMap.containsKey(usersRoles.get(oldRecord.OwnerId).UserRoleId) ) || 
+                    ( newRecord.OwnerId != null && !userRoleMap.containsKey(usersRoles.get(newRecord.OwnerId).UserRoleId))){
                        leadNewMap.get( leadId ).Id.addError( System.Label.NSP_LeadTriggerError );
                     }
                 }
