@@ -118,9 +118,9 @@ public class NSP_DocuSignRESTUtility {
         //Call CLM API if a non-empty access token is returned
         if (!String.isEmpty(NSP_DocuSignRESTUtility.accessToken)) {
             List<DocuSign_Log__c> logList = new List<DocuSign_Log__c>();
-            DocuSign_Log__c logEntry;
 
             for (String singleInvId : sfInvIds) {
+                DocuSign_Log__c logEntry = new DocuSign_Log__c();
                 try {
                     //instantiate an Http instance
                     Http httpProtocol = new Http();
@@ -149,7 +149,6 @@ public class NSP_DocuSignRESTUtility {
                     String workflowName = DocuSignRESTSettings__mdt.getInstance('NSP_Invoice_Workflow_Name').Value__c;
                     String reqBody = '{"name":"' + workflowName + '","params": "<root><SFInvId>' + singleInvId + '</SFInvId></root>"}';
                     request.setBody(reqBody);
-                    logEntry = new DocuSign_Log__c();
 
                     // Make the request and capture the response
                     HttpResponse response = httpProtocol.send(request);
@@ -196,21 +195,23 @@ public class NSP_DocuSignRESTUtility {
 
         // Capture Request details
         logEntry.Request_Headers__c = SchemaController.safeText(
-            JSON.serialize(requestHeaders),
+            requestHeaders,
             sObjectType.DocuSign_Log__c.Fields.Request_Headers__c
         );
         logEntry.Record_Id__c = SchemaController.safeText(
             recordId,
             sObjectType.DocuSign_Log__c.Fields.Record_Id__c
         );
-        logEntry.Endpoint__c = SchemaController.safeText(
-            request.getEndpoint(),
-            sObjectType.DocuSign_Log__c.Fields.Endpoint__c
-        );
-        logEntry.Request_Body__c = SchemaController.safeText(
-            request.getBody(),
-            sObjectType.DocuSign_Log__c.Fields.Request_Body__c
-        );
+        if(request != null){
+            logEntry.Endpoint__c = SchemaController.safeText(
+                request.getEndpoint(),
+                sObjectType.DocuSign_Log__c.Fields.Endpoint__c
+            );
+            logEntry.Request_Body__c = SchemaController.safeText(
+                request.getBody(),
+                sObjectType.DocuSign_Log__c.Fields.Request_Body__c
+            );
+        }
 
         // Capture Response details
         if(response != null){
