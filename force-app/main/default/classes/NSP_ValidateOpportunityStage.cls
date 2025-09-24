@@ -33,6 +33,7 @@ public with sharing class NSP_ValidateOpportunityStage {
     public static List<string> closeLostRoleinOpportunityTeam = System.Label.Close_Lost_Role_in_Opportunity_Team.split(',');
     private static List<Opportunity_Stage_Validation__mdt> optyStageVals = Opportunity_Stage_Validation__mdt.getAll().values();
     private static String validationObjects = 'Opportunity,Event,Task,OpportunityContactRole,NSP_Employee_Split__c,SBQQ__Quote__c,NSP_Checklist__c';
+    private static final String AGGREGATES = 'Aggretates';
     private static final String DEFAULT_PRODUCT = 'Default';
     private static final String FAILED = 'Failed Stage Validation';
     private static final String OPPORTUNITY_OBJ = 'Opportunity';
@@ -219,7 +220,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         for(Opportunity_Stage_Validation__mdt val : currentOptyStageVals){
             Integer passCheckCount = 0;
             if( String.isBlank(val.Group__c) ) {
-                if( val.Object__c.indexOf( 'Aggregates' ) > -1 ) {
+                if( val.Object__c.indexOf( AGGREGATES ) > -1 ) {
                     passCheckCount = evaluateAggregateCriteria( opp , passCheckCount , valObjectAgs , val);
                 } else if( valObjectMap.get(val.Object__c) != null ) {
                     for( SObject valObject : valObjectMap.get(val.Object__c) ){
@@ -333,7 +334,7 @@ public with sharing class NSP_ValidateOpportunityStage {
                 valFieldValue = valObject?.get(val.Field__c);
             }
 
-            if( val.Object__c.indexOf( 'Aggregates' ) > -1 ) {
+            if( val.Object__c.indexOf( AGGREGATES ) > -1 ) {
                 passCheckCount = evaluateAggregateCriteria( opp , passCheckCount , valObjectAgs , val);
             } else if( checkCondition(valFieldValue , val.Value__c , val.Operation__c) ){
                 passCheckCount++;
