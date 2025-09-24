@@ -218,10 +218,10 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         String keyVal = '';
 
         if (String.isEmpty(sandboxName)) {
-            return;
+            keyVal = 'DEV';
         }
 
-        if (sandboxName.startsWith('dev')) {
+        if (sandboxName.toUpperCase().startsWith( 'DEV' )) {
             keyVal = 'DEV';
         } else {
             keyVal = sandboxName.toUpperCase();
