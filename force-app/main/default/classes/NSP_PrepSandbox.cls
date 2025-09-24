@@ -216,12 +216,10 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         // retrieve org-specific values from DocuSign_Settings__c
         Map<String, DocuSign_Settings__c> docusignSettingsMap = DocuSign_Settings__c.getAll();
         String keyVal = '';
-
-        if (String.isEmpty(sandboxName)) {
-            keyVal = 'DEV';
-        }
-
-        if (sandboxName.toUpperCase().startsWith( 'DEV' )) {
+        if ( String.isEmpty( sandboxName )
+            || sandboxName.toUpperCase().startsWith( 'DEV' )
+            )
+        {
             keyVal = 'DEV';
         } else {
             keyVal = sandboxName.toUpperCase();
@@ -244,8 +242,16 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         resourceMap.put('RequestAuthBody', 'grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer&assertion=');
         resourceMap.put('RequestAuthContentType','application/x-www-form-urlencoded');
         resourceMap.put('RequestIntegratorKey',docusignSettings.IntegrationKey__c);
-        resourceMap.put('RequestPrivateKey',docusignSettings.PrivateKey1__c + docusignSettings.PrivateKey2__c + docusignSettings.PrivateKey3__c +
-                         docusignSettings.PrivateKey4__c + docusignSettings.PrivateKey5__c + docusignSettings.PrivateKey6__c + docusignSettings.PrivateKey7__c);
+        resourceMap.put(
+            'RequestPrivateKey' ,
+            docusignSettings.PrivateKey1__c
+                + docusignSettings.PrivateKey2__c
+                + docusignSettings.PrivateKey3__c
+                + docusignSettings.PrivateKey4__c
+                + docusignSettings.PrivateKey5__c
+                + docusignSettings.PrivateKey6__c
+                + docusignSettings.PrivateKey7__c
+        );
         resourceMap.put('RequestScope','signature spring_read spring_write');
 
 
