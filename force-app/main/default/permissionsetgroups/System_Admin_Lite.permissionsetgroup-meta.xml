@@ -21,6 +21,7 @@
     <permissionSets>Case_Compensation_Access</permissionSets>
     <permissionSets>Client_goal_project_task_junction_access</permissionSets>
     <permissionSets>Docusign_Account_Management_Report</permissionSets>
+    <permissionSets>Docusign_Log_Visibility</permissionSets>
     <permissionSets>Edit_Integrated_Fields</permissionSets>
     <permissionSets>Field_Access_to_System_Admin_Lite</permissionSets>
     <permissionSets>Finance_Logger</permissionSets>
