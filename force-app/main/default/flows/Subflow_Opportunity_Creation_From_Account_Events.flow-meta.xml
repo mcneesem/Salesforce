@@ -164,12 +164,35 @@
         </rules>
     </decisions>
     <decisions>
+        <description>Prevent DmlExceptions: FIELD_CUSTOM_VALIDATION_EXCEPTION: Please select Product of Interest.</description>
+        <name>Check_WX_Only</name>
+        <label>Check WX Only</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Create_Opportunity</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>WX_Only</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Permission.Opportunity_WX_Product_Only</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>WX Only</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>If_Open_Opportunity_Exists</name>
         <label>If Open Opportunity Exists</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Create_Opportunity</targetReference>
+            <targetReference>Check_WX_Only</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
