@@ -376,8 +376,9 @@ public with sharing class NSP_LeadTriggerHelper {
                     Lead newRecord = this.getMappedLeadSafe( leadNewMap , leadId );
 
                     //  Both users should belong to the upper Role hierarchy
-                    if( ( oldRecord.OwnerId != null && !userRoleMap.containsKey(usersRoles.get(oldRecord.OwnerId).UserRoleId) ) || 
-                    ( newRecord.OwnerId != null && !userRoleMap.containsKey(usersRoles.get(newRecord.OwnerId).UserRoleId))){
+                    boolean allowOldUser = (oldRecord.OwnerId != null && userRoleMap.containsKey(usersRoles.get(oldRecord.OwnerId).UserRoleId));
+                    boolean allowNewUser = (newRecord.OwnerId != null && userRoleMap.containsKey(usersRoles.get(newRecord.OwnerId).UserRoleId));
+                    if( !allowOldUser || !allowNewUser){
                        leadNewMap.get( leadId ).Id.addError( System.Label.NSP_LeadTriggerError );
                     }
                 }
