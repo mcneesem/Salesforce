@@ -545,8 +545,16 @@ private class NSP_ValidateOpportunityStageTest {
         Opportunity oppty = oppList[0];
 
         if(oppty!=null){
+            // Create NSP_Employee_Split__c records
+            NSP_Employee_Split__c splitRecord1 = new NSP_Employee_Split__c( NSP_Opportunity__c = oppty.Id, NSP_Number_of_Employees__c = 25, NSP_Percent_Split__c = 50 );
+            NSP_Employee_Split__c splitRecord2 = new NSP_Employee_Split__c( NSP_Opportunity__c = oppty.Id, NSP_Number_of_Employees__c = 25, NSP_Percent_Split__c = 50 );
+
+            // Insert NSP_Employee_Split__c records
+            insert new List<NSP_Employee_Split__c>{ splitRecord1, splitRecord2 };
+
             oppty.StageName='Data Collection';
             oppty.NSP_PrimaryProduct__c = '';
+            oppty.NSP_Number_of_Employees__c = 50;
             try{
                 update oppty;
             }catch(Exception ex){
@@ -1097,7 +1105,7 @@ private class NSP_ValidateOpportunityStageTest {
         System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition(false, 'true', 'DOES_NOT_EQUAL'));
         test.stopTest();
     }
-    
+
     @isTest
     private static void test_evaluateQuoteExistingQuote() {
         Opportunity opp = [SELECT Id FROM Opportunity WHERE StageName != NULL AND SBQQ__PrimaryQuote__c != null LIMIT 1][0];
