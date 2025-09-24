@@ -65,12 +65,8 @@ export default class WizardSurveyPageInfo extends LightningElement {
         }
     ];
 
-    get desableEmail(){
-        let flag = true;
-        if( !(this.disableContact) && this.cname != '' ){
-            flag = false 
-        }
-        return flag;
+    get disableEmail(){
+        return !( !this.disableContact && ( this.cname != '' ) );
     }
 
     @wire(getRelatedListRecords, {
@@ -317,24 +313,27 @@ export default class WizardSurveyPageInfo extends LightningElement {
         this.template.querySelector('lightning-record-edit-form').submit(fields);
          */
     }
-
+    
+    //handle the deletion of rows
     handleRowAction(event) {
         if (event.detail.action.name === 'delete') {
-            this.mergeObjectList = this.mergeObjectList.filter(row => row.NSP_Work_email__c !== event.detail.row.NSP_Work_email__c && 
-            (row => row.name !== event.detail.row.name));
+            this.mergeObjectList = this.mergeObjectList.filter(
+                (row => row.NSP_Work_email__c !== event.detail.row.NSP_Work_email__c ) //remove matching emails
+                && (row => row.name !== event.detail.row.name) //remove matching names
+            );
         }
-    }
-
+    } 
+    
     handleContact(event) {
         // this.currentConactId = event.detail.value;
      
-  }
+   }
 
     handleAddContact(event) {
         if(this.refs.NSP_Contact__c?.value == null || this.refs.NSP_Contact__c?.value.length <= 17){
-            this.handleAlert('Please enter valid Contact','error','!Error');
+            this.handleAlert('Please enter valid Contact');
         }else if(this.refs.emailAddress?.value ==null || !this.refs.emailAddress.checkValidity() ){
-            this.handleAlert('Please enter valid Email','error','!Error');
+            this.handleAlert('Please enter valid Email');
         }else{
             
             var tempContact = new Object();
@@ -348,12 +347,12 @@ export default class WizardSurveyPageInfo extends LightningElement {
         }
     }
 
-    handleAlert(message,theme,label) {
-        if (message != null && theme != null && label != null) {
+    handleAlert( message ) {
+        if ( message != null ) {
             LightningAlert.open({
                 message: message,
-                theme: theme,
-                label: label
+                theme: 'error',
+                label: 'Error'
             });
         }
     }
