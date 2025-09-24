@@ -2583,13 +2583,6 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection2</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Source__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Workday</rightValue>
-                    </criteria>
-                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -2608,13 +2601,6 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection3</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Source__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Workday</rightValue>
-                    </criteria>
-                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -2633,13 +2619,6 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection4</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Source__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Workday</rightValue>
-                    </criteria>
-                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
