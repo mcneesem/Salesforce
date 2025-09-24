@@ -315,11 +315,11 @@ export default class WizardSurveyPageInfo extends LightningElement {
     }
     
     //handle the deletion of rows
-    handleRowAction(event) {
-        if (event.detail.action.name === 'delete') {
-            this.mergeObjectList = this.mergeObjectList.filter(
-                (row => row.NSP_Work_email__c !== event.detail.row.NSP_Work_email__c ) //remove matching emails
-                && (row => row.name !== event.detail.row.name) //remove matching names
+    handleRowAction( event ) {
+        if ( event.detail.action.name === 'delete' ) {
+            this.mergeObjectList = this.mergeObjectList.filter( row =>
+                row.NSP_Work_email__c !== event.detail.row.NSP_Work_email__c //Keep rows where the email does NOT match the selected row's email
+                && row.name !== event.detail.row.name  //AND the name does NOT match the selected row's name
             );
         }
     } 
