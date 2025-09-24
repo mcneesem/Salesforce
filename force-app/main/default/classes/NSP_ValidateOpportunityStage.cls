@@ -16,14 +16,15 @@ public with sharing class NSP_ValidateOpportunityStage {
     //                         all the other group criteria is found. If the metadata records in the group are for Opportunity
     //                         object, validation fails if the Opportunity being validated matches all the other criteria
     //                         in the group.
-    //                      3. When the records in a group are for Opportunity object and some related object, at least one
-    //                         related object record matching all the related object criteria in the group must be
-    //                         found but only if the Opportunity condition in the group is met. If the Opportunity condition
+    //                      3. When the records in a group are for a mix of Opportunity object and some related object, at least
+    //                         one related object record matching all the related object criteria in the group must be
+    //                         found only if the Opportunity condition in the group is met. If the Opportunity condition
     //                         is not met, related object criteria in the group is not required and the validation passes.
     // ***************************************************************************************************************************
 
     public static Set<String> validHRProducts = new Set<String>{NSP_SalesConstants.WO, NSP_SalesConstants.WS, NSP_SalesConstants.HRScale};
     private static Set<String> validHR360Products = new Set<String>{NSP_SalesConstants.WO, NSP_SalesConstants.WS, NSP_SalesConstants.HRScale};
+    private static Boolean checkOnly = false;
     public static List<string> analysisStageCriteraTypes = System.Label.NSP_AnalysisStageCriteria.split(',');
     public static List<string> proposeStageCriteraTypes = System.Label.NSP_ProposeStageCriteria.split(',');
     public static List<string> exitCriteriaProductException = System.Label.NSP_ExitCriteriaProductException.split(',');
@@ -32,7 +33,9 @@ public with sharing class NSP_ValidateOpportunityStage {
     public static List<string> closeLostRoleinOpportunityTeam = System.Label.Close_Lost_Role_in_Opportunity_Team.split(',');
     private static List<Opportunity_Stage_Validation__mdt> optyStageVals = Opportunity_Stage_Validation__mdt.getAll().values();
     private static String validationObjects = 'Opportunity,Event,Task,OpportunityContactRole,NSP_Employee_Split__c,SBQQ__Quote__c,NSP_Checklist__c';
+    private static final String AGGREGATES = 'Aggretates';
     private static final String DEFAULT_PRODUCT = 'Default';
+    private static final String FAILED = 'Failed Stage Validation';
     private static final String OPPORTUNITY_OBJ = 'Opportunity';
     public static final String HAS_DISCOVERY = ' has Discovery ';
     public static final String HAS_OPEN_EVENT = ' has Open Event ';
@@ -41,7 +44,12 @@ public with sharing class NSP_ValidateOpportunityStage {
     public static final String HAS_WO = 'has WO';
     private static final Integer ERROR_DOES_NOT_EXIST = 99; // unified error code value...
 
-    public static void validateOpportunityStage(List<Opportunity> newList){
+    public static void validateOpportunityStage( List<Opportunity> newList ) {
+        NSP_ValidateOpportunityStage.validateOpportunityStage( newList , false );
+    }
+
+    public static void validateOpportunityStage( List<Opportunity> newList , Boolean checkOnlyLocal ) {
+        NSP_ValidateOpportunityStage.checkOnly = checkOnlyLocal;
         List<Id> oppIdList = new List<Id>();
         List<Id> oppOwnerIdList= new List<Id>();
         oppOwnerIdList.add(UserInfo.getUserId());
@@ -52,9 +60,9 @@ public with sharing class NSP_ValidateOpportunityStage {
         Map<Id,User> opportunityOwnerRoleMap = getUserRole( oppOwnerIdList );
 
         if( !OpportunityStageSettings__c.getInstance(UserInfo.getUserId()).Is_Enabled_WO_WS_Stage_Entry__c ){ // Kill switch added on 6/10/2024
-            validateOpportunityStageOld(newList , oppIdList , opportunityOwnerRoleMap);
+            validateOpportunityStageOld( newList , oppIdList , opportunityOwnerRoleMap );
         } else {
-            validateOpportunityStageNew(newList , oppIdList , opportunityOwnerRoleMap);
+            validateOpportunityStageNew( newList , oppIdList , opportunityOwnerRoleMap );
         }
     }
 
@@ -86,7 +94,7 @@ public with sharing class NSP_ValidateOpportunityStage {
                             FROM OpportunityContactRoles
                         ) ,
                         (
-                            SELECT Id
+                            SELECT Id , NSP_Percent_Split__c , NSP_Number_of_Employees__c
                             FROM Employee_Splits__r
                         ) ,
                         (
@@ -115,7 +123,7 @@ public with sharing class NSP_ValidateOpportunityStage {
                 if ( String.isBlank( opp.StageName )
                     || ( NSP_ValidateOpportunityStage.hasAllowClosedLostPermission
                         && opp.StageName.equals( NSP_SalesConstants.CLOSED_LOST )
-                        )
+                       )
                     )
                 {
                     continue;
@@ -131,12 +139,13 @@ public with sharing class NSP_ValidateOpportunityStage {
                 valObjectMap.put('NSP_Employee_Split__c' , oppFromMap?.Employee_Splits__r);
                 valObjectMap.put('NSP_Checklist__c' , oppFromMap?.Checklists__r);
                 valObjectMap.put('SBQQ__Quote__c' , new List<SBQQ__Quote__c>{ oppQuoteMap.get(opp.SBQQ__PrimaryQuote__c) });
+                ValObjectAggregates valObjectAgs = new ValObjectAggregates(oppFromMap?.Employee_Splits__r);
 
                 List<Opportunity_Stage_Validation__mdt> currentOptyStageVals = NSP_ValidateOpportunityStage.getCurrentOptyStageVals( opp );
                 Map<String,List<Opportunity_Stage_Validation__mdt>> groupedStageValMap = NSP_ValidateOpportunityStage.getGroupedStageValMap( currentOptyStageVals );
 
-                NSP_ValidateOpportunityStage.evaluateSingleCriteria( opp , valObjectMap , currentOptyStageVals );
-                NSP_ValidateOpportunityStage.evaluateGroupedCriteria( opp , valObjectMap , groupedStageValMap );
+                NSP_ValidateOpportunityStage.evaluateSingleCriteria( opp , valObjectMap , valObjectAgs , currentOptyStageVals );
+                NSP_ValidateOpportunityStage.evaluateGroupedCriteria( opp , valObjectMap , valObjectAgs , groupedStageValMap );
                 //Proposal
                 if ( opp.StageName.equals( NSP_SalesConstants.PROPOSAL_STAGE ) ) {
                     evaluateQuoteCriteria( opp , oppQuoteMap );
@@ -161,30 +170,98 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
     }
 
+    public class ValObjectAggregates {
+        public Decimal EmpSplit_TotalNumEEs { get; set; }
+        public Decimal EmpSplit_TotalPercentSplit { get; set; }
+
+        public ValObjectAggregates(List<NSP_Employee_Split__c> empSplits) {
+            this.EmpSplit_TotalNumEEs = calculateEmployeeCount(empSplits);
+            this.EmpSplit_TotalPercentSplit = calculatePercentSplit(empSplits);
+        }
+
+        public Decimal get(String key) {
+            Decimal retVal = 0;
+            if( key == 'EmpSplit_TotalNumEEs' ){
+                retVal = this.EmpSplit_TotalNumEEs;
+            } else if( key == 'EmpSplit_TotalPercentSplit'){
+                retVal = this.EmpSplit_TotalPercentSplit;
+            }
+            return retVal;
+        }
+
+        private Decimal calculatePercentSplit(List<NSP_Employee_Split__c> empSplits) {
+            Decimal totalPercentSplit = 0;
+            if( ( empSplits != null ) && !empSplits.isEmpty() ){
+                    for( NSP_Employee_Split__c empSplit : empSplits ){
+                    totalPercentSplit += empSplit.NSP_Percent_Split__c != null ? empSplit.NSP_Percent_Split__c : 0;
+                }
+            }
+            return totalPercentSplit;
+        }
+
+        private Decimal calculateEmployeeCount(List<NSP_Employee_Split__c> empSplits) {
+            Decimal totalEmployees = 0;
+            if( ( empSplits != null ) && !empSplits.isEmpty() ){
+                for( NSP_Employee_Split__c empSplit : empSplits ){
+                    totalEmployees += empSplit.NSP_Number_of_Employees__c != null ? empSplit.NSP_Number_of_Employees__c : 0;
+                }
+            }
+            return totalEmployees;
+        }
+    }
+
     private static void evaluateSingleCriteria(
         Opportunity opp ,
         Map<String,List<SObject>> valObjectMap ,
+        ValObjectAggregates valObjectAgs ,
         List<Opportunity_Stage_Validation__mdt> currentOptyStageVals
         )
     {
         for(Opportunity_Stage_Validation__mdt val : currentOptyStageVals){
             Integer passCheckCount = 0;
-            if( String.isBlank(val.Group__c) ){
-                for( SObject valObject : valObjectMap.get(val.Object__c) ){
-                    if( checkCondition(valObject.get(val.Field__c) , val.Value__c , val.Operation__c) ){
-                        passCheckCount++;
+            if( String.isBlank(val.Group__c) ) {
+                if( val.Object__c.indexOf( AGGREGATES ) > -1 ) {
+                    passCheckCount = evaluateAggregateCriteria( opp , passCheckCount , valObjectAgs , val);
+                } else if( valObjectMap.get(val.Object__c) != null ) {
+                    for( SObject valObject : valObjectMap.get(val.Object__c) ){
+                        if( checkCondition(valObject.get(val.Field__c) , val.Value__c , val.Operation__c) ) {
+                            passCheckCount++;
+                        }
                     }
                 }
-                if( passCheckCount < 1 ){
-                    opp.addError(val.Error_Message__c);
+                if( passCheckCount < 1 ) {
+                    if( checkOnly ) {
+                        opp.NextStep = FAILED;
+                    } else {
+                        opp.addError(val.Error_Message__c);
+                    }
                 }
             }
         }
     }
 
+    private static Integer evaluateAggregateCriteria(
+        Opportunity opp ,
+        Integer passCheckCount ,
+        ValObjectAggregates valObjectAgs ,
+        Opportunity_Stage_Validation__mdt val
+        )
+    {
+        String valValue = val.Value__c;
+        if( valValue.indexOf( 'Field Value: ' ) > -1 ){
+            valValue = opp.get( val.Value__c.substringAfter( 'Field Value: ' ) ).toString();
+        }
+
+        if( checkCondition( valObjectAgs.get(val.Field__c) , valValue , val.Operation__c ) ){
+            passCheckCount++;
+        }
+        return passCheckCount;
+    }
+
     private static void evaluateGroupedCriteria(
         Opportunity opp ,
         Map<String,List<SObject>> valObjectMap ,
+        ValObjectAggregates valObjectAgs ,
         Map<String,List<Opportunity_Stage_Validation__mdt>> groupedStageValMap
         )
     {
@@ -194,11 +271,11 @@ public with sharing class NSP_ValidateOpportunityStage {
             Boolean passCheck = false;
             Boolean passCheckDNE = true;
             String groupRelObjName = getGroupRelObjName( groupName , groupedStageValMap );
-
+            List<SObject> valObjectList = valObjectMap.get(groupRelObjName);
             Integer i = 0;
             do {
-                SObject valObject = ( valObjectMap.get(groupRelObjName).size() == 0 ) ? null : valObjectMap.get(groupRelObjName)[i];
-                Integer passCheckCount = evaluateOneCriteriaGroup( opp, groupName , valObject , groupedStageValMap );
+                SObject valObject = ( ( valObjectList != null ) && ( !valObjectList.isEmpty() ) ) ? valObjectMap.get(groupRelObjName)[i] : null;
+                Integer passCheckCount = evaluateOneCriteriaGroup( opp, groupName , valObject , valObjectAgs , groupedStageValMap ); // must run even if valObject is null
                 if( passCheckCount >= groupedStageValMap.get(groupName).size() ) {
                     passCheck = true;
                 }
@@ -228,7 +305,11 @@ public with sharing class NSP_ValidateOpportunityStage {
             && ( !passCheck || !passCheckDNE )
             )
         {
-            opp.addError( errMsg );
+            if( checkOnly ) {
+                opp.NextStep = FAILED;
+            } else {
+                opp.addError( errMsg );
+            }
         }
     }
 
@@ -236,33 +317,41 @@ public with sharing class NSP_ValidateOpportunityStage {
         Opportunity opp ,
         String groupName ,
         SObject valObject ,
+        ValObjectAggregates valObjectAgs ,
         Map<String,List<Opportunity_Stage_Validation__mdt>> groupedStageValMap
         )
     {
         Integer passCheckCount = 0;
-        String groupCheckType = '';
+        Boolean groupCheckDNE = false; // if group is a DOES NOT EXIST case
+        Boolean groupCheckMixed = false; // if group is a mixed object case
         for( Opportunity_Stage_Validation__mdt val : groupedStageValMap.get(groupName) ){
             Object valFieldValue = null;
             if( val.Operation__c == Operator.DOES_NOT_EXIST.name() ){
-                groupCheckType = Operator.DOES_NOT_EXIST.name();
+                groupCheckDNE = true;
             } else if( val.Object__c == OPPORTUNITY_OBJ ){
                 valFieldValue = opp.get(val.Field__c);
             } else {
                 valFieldValue = valObject?.get(val.Field__c);
             }
-            if( checkCondition(valFieldValue , val.Value__c , val.Operation__c) )
-            {
+
+            if( val.Object__c.indexOf( AGGREGATES ) > -1 ) {
+                passCheckCount = evaluateAggregateCriteria( opp , passCheckCount , valObjectAgs , val);
+            } else if( checkCondition(valFieldValue , val.Value__c , val.Operation__c) ){
                 passCheckCount++;
+            } else if( val.Object__c == OPPORTUNITY_OBJ ){ // checkCondition failed and Group looks at Opportunity, could be mixed group
+                groupCheckMixed = true;
             }
         }
 
-        // handle DOES_NOT_EXIST case
-        if( groupCheckType == Operator.DOES_NOT_EXIST.name() ){
+        // handle special cases
+        if( groupCheckDNE ){ // check DNE case first
             if( passCheckCount >= (groupedStageValMap.get(groupName).size() - 1) ){
                 passCheckCount = NSP_ValidateOpportunityStage.ERROR_DOES_NOT_EXIST; // if record exists that should not, trip error message
             } else {
                 passCheckCount = groupedStageValMap.get(groupName).size(); // if not all criteria met, make sure error message is skipped
             }
+        } else if( groupCheckMixed ){
+            passCheckCount = groupedStageValMap.get(groupName).size(); // if Object condition of mixed case doesn't pass, whole group passes
         }
 
         return passCheckCount;
@@ -270,10 +359,12 @@ public with sharing class NSP_ValidateOpportunityStage {
 
     private static String getGroupRelObjName( String groupName , Map<String, List<Opportunity_Stage_Validation__mdt>> groupedStageValMap ){
         String groupRelObjName = OPPORTUNITY_OBJ;
-        for( Opportunity_Stage_Validation__mdt groupOptyStageVal : groupedStageValMap.get(groupName) ){
-            if( groupOptyStageVal.Object__c != OPPORTUNITY_OBJ){ // first object name other than Opportunity
-                groupRelObjName = groupOptyStageVal.Object__c;
-                break;
+        if( groupedStageValMap != null ){
+            for( Opportunity_Stage_Validation__mdt groupOptyStageVal : groupedStageValMap.get(groupName) ){
+                if( groupOptyStageVal.Object__c != OPPORTUNITY_OBJ){ // first object name other than Opportunity
+                    groupRelObjName = groupOptyStageVal.Object__c;
+                    break;
+                }
             }
         }
         return groupRelObjName; // if no other object name found, entire group is based on Opportunity
@@ -300,22 +391,24 @@ public with sharing class NSP_ValidateOpportunityStage {
         return currentOptyStageVals;
     }
 
-    private static Map<String, List<Opportunity_Stage_Validation__mdt>> getGroupedStageValMap(List<Opportunity_Stage_Validation__mdt> currentOptyStageVals){
+    private static Map<String, List<Opportunity_Stage_Validation__mdt>> getGroupedStageValMap( List<Opportunity_Stage_Validation__mdt> currentOptyStageVals ) {
         Map<String, List<Opportunity_Stage_Validation__mdt>> groupedStageValMap = new Map<String, List<Opportunity_Stage_Validation__mdt>>();
         Set<String> groupNames = new Set<String>();
-        for(Opportunity_Stage_Validation__mdt currentOptyStageVal : currentOptyStageVals){
-            if( String.isNotBlank(currentOptyStageVal.Group__c) ){
-                groupNames.add(currentOptyStageVal.Group__c);
-            }
-        }
-        for(String groupName : groupNames){
-            List<Opportunity_Stage_Validation__mdt> groupedStageVals = new List<Opportunity_Stage_Validation__mdt>();
+        if( currentOptyStageVals != null ) {
             for(Opportunity_Stage_Validation__mdt currentOptyStageVal : currentOptyStageVals){
-                if( groupName == currentOptyStageVal.Group__c ){
-                    groupedStageVals.add(currentOptyStageVal);
+                if( String.isNotBlank(currentOptyStageVal.Group__c) ){
+                    groupNames.add(currentOptyStageVal.Group__c);
                 }
             }
-            groupedStageValMap.put(groupName, groupedStageVals);
+            for(String groupName : groupNames){
+                List<Opportunity_Stage_Validation__mdt> groupedStageVals = new List<Opportunity_Stage_Validation__mdt>();
+                for(Opportunity_Stage_Validation__mdt currentOptyStageVal : currentOptyStageVals){
+                    if( groupName == currentOptyStageVal.Group__c ){
+                        groupedStageVals.add(currentOptyStageVal);
+                    }
+                }
+                groupedStageValMap.put(groupName, groupedStageVals);
+            }
         }
         return groupedStageValMap;
     }
@@ -487,7 +580,11 @@ public with sharing class NSP_ValidateOpportunityStage {
                         )
                     )
                 {
-                    opp.addError( System.Label.NSP_AddPrimaryQuote );
+                    if( checkOnly ) {
+                        opp.NextStep = FAILED;
+                    } else {
+                        opp.addError( System.label.NSP_AddPrimaryQuote );
+                    }
                 }
             }
         } catch ( Exception e ) {
@@ -510,7 +607,11 @@ public with sharing class NSP_ValidateOpportunityStage {
                     || ( opp.NSP_Client_For_Life__c != primaryQuote?.NSP_Client_For_Life__c ) )
                 )
             {
-                opp.addError( System.label.NSP_Sync_Primary_Quote_With_Opportunity );
+                if( checkOnly ) {
+                    opp.NextStep = FAILED;
+                } else {
+                    opp.addError( System.label.NSP_Sync_Primary_Quote_With_Opportunity );
+                }
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
@@ -535,10 +636,18 @@ public with sharing class NSP_ValidateOpportunityStage {
                             || ( opp.NSP_Client_For_Life__c != primaryQuote.NSP_Client_For_Life__c ) )
                         )
                     {
-                        opp.addError(System.label.NSP_Sync_Primary_Quote_With_Opportunity);
+                        if( checkOnly ) {
+                            opp.NextStep = FAILED;
+                        } else {
+                            opp.addError( System.label.NSP_Sync_Primary_Quote_With_Opportunity );
+                        }
                     }
                 } else {
-                    opp.addError( System.Label.NSP_AddPrimaryQuote );
+                    if( checkOnly ) {
+                        opp.NextStep = FAILED;
+                    } else {
+                        opp.addError( System.label.NSP_AddPrimaryQuote );
+                    }
                 }
             }
         } catch ( Exception e ) {
@@ -551,30 +660,42 @@ public with sharing class NSP_ValidateOpportunityStage {
     }
 
     private static void evaluateClosedWonStageCriteria( Opportunity opp ) {
+        Integer canClosedWon = 0;
         if ( NSP_ValidateOpportunityStage.permittedCWOppOwnerUserMap.containsKey( opp.OwnerId )
             && ( !hasAllowCWNCSUserPerm )
             && ownerBasedCriteriaProducts.contains( opp.NSP_PrimaryProduct__c )
             )
         {
-            opp.addError( System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON );
-        } else if ( nonOwnerBasedCriteriaProducts.contains( opp.NSP_PrimaryProduct__c )
+            canClosedWon++;
+        }
+        else if ( nonOwnerBasedCriteriaProducts.contains( opp.NSP_PrimaryProduct__c )
             && ( UserInfo.getUserId() != opp.OwnerId )
             && ( !hasAllowCWNCSUserPerm )
             )
         {
-            opp.addError( System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON );
-        } else if ( ownerBasedCriteriaProducts.contains( opp.NSP_PrimaryProduct__c )
+            canClosedWon++;
+        }
+        else if ( ownerBasedCriteriaProducts.contains( opp.NSP_PrimaryProduct__c )
             && !NSP_ValidateOpportunityStage.permittedCWOppOwnerUserMap.containsKey( opp.OwnerId )
             && ( UserInfo.getUserId() != opp.OwnerId )
             && ( !hasAllowCWNCSUserPerm )
             )
         {
-            opp.addError( System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON );
-        } else if ( !hasAllowCWNCSUserPerm
+            canClosedWon++;
+        }
+        else if ( !hasAllowCWNCSUserPerm
             && validHR360Products.contains( opp.NSP_PrimaryProduct__c )
             )
         {
-            opp.addError( System.Label.NSP_CANNOT_MOVE_TO_CLOSEDWON );
+            canClosedWon++;
+        }
+
+        if( canClosedWon > 0 ) {
+            if( checkOnly ) {
+                opp.NextStep = FAILED;
+            } else {
+                opp.addError( System.label.NSP_CANNOT_MOVE_TO_CLOSEDWON );
+            }
         }
     }
 
@@ -609,7 +730,11 @@ public with sharing class NSP_ValidateOpportunityStage {
     public static void evaluateClosedLostStageCriteria( Opportunity opp, Map<Id,User> opportunityOwnerRoleMap ) {
         Boolean canCloseLostOpty = checkClosedLostStageCriteria( opp , opportunityOwnerRoleMap );
         if ( !canCloseLostOpty ) {
-            opp.addError( System.Label.NSP_CANNOT_MOVE_TO_CLOSEDLOST );
+            if( checkOnly ) {
+                opp.NextStep = FAILED;
+            } else {
+                opp.addError( System.label.NSP_CANNOT_MOVE_TO_CLOSEDLOST );
+            }
         }
     }
 
