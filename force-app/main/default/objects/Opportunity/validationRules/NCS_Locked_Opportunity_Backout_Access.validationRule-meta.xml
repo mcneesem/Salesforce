@@ -17,30 +17,16 @@
   )),
   AND(
     OR(
-      OR(
-        OR(
-          OR(
-            OR(
-              OR(
-                ISCHANGED( NSP_Forecast__c ) ,
-                ISCHANGED( NSP_Back_Out__c )
-              ),
-              ISCHANGED( NSP_Back_Out_By__c )
-            ),
-            ISCHANGED( NSP_BackOutDate__c )
-          ),
-          ISCHANGED( NSP_BackOutReason__c )
-        ),
-        ISCHANGED( NSP_BackOutRequestor__c )
-      ),
-      ISCHANGED( NSP_Booked_Date__c )
+        ISCHANGED( NSP_Forecast__c ) ,
+        ISCHANGED( NSP_Back_Out__c ) ,
+        ISCHANGED( NSP_Back_Out_By__c ) ,
+        ISCHANGED( NSP_BackOutDate__c ) ,
+        ISCHANGED( NSP_BackOutReason__c ) ,
+        ISCHANGED( NSP_BackOutRequestor__c ) ,
+        ISCHANGED( NSP_Booked_Date__c )
     ),
     AND(
-      AND(
-        ( $Profile.Name != &apos;Sales Operations&apos; ) ,
-        ( $Profile.Name == &apos;Sales Admin&apos; )
-      ),
-      CONTAINS( $Profile.Name , &apos;System Admin&apos; )
+     $Permission.Locked_Opportunity_Backout_Access
     )
   ),
   ISPICKVAL(StageName, &apos;Closed Won&apos;)
