@@ -385,18 +385,6 @@ export default class WizardSurveyPageInfo extends LightningElement {
         }
     }
     
-    /** 
-    reArrangeOrder(arrayObject){
-        let index = 0
-        let newArrayObj = [];
-        newArrayObj = arrayObject.map( item => {
-        return { ...item}
-        })
-
-        return newArrayObj;
-    }
- */
-    
     get arrayToTextArea(){
      let tempStr = '';
         for (let i in this.mergeObjectList) {
