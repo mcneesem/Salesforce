@@ -67,7 +67,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <inputAssignments>
-            <field>Owner__c</field>
+            <field>Item_Owner__c</field>
             <value>
                 <elementReference>$Record.CreatedById</elementReference>
             </value>
@@ -82,7 +82,7 @@
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>Owner__c</field>
+            <field>Item_Owner__c</field>
             <operator>IsNull</operator>
             <value>
                 <booleanValue>true</booleanValue>
