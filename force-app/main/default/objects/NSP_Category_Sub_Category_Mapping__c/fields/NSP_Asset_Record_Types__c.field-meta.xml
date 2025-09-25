@@ -86,6 +86,11 @@
                 <default>false</default>
                 <label>XML</label>
             </value>
+            <value>
+                <fullName>Contractor Management</fullName>
+                <default>false</default>
+                <label>Contractor Management</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

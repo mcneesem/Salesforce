@@ -83,7 +83,7 @@
                         </td>
                     </tr>
                 </apex:repeat>
-                <apex:repeat var="qli" value="{!LastLine}">
+                <apex:repeat var="qli" value="{!LastLine}" rendered="{!regularQuoteType}">
                     <tr style="height: 30px;text-align: center;font-weight: bold; border-top: 1px solid black;border-bottom: 1px solid black;">
                         <td style="height: 30px; padding: 2px;font-size: 11px;white-space: nowrap;"><span style="white-space: nowrap;">${!qli.formattedUnitPrice}</span></td>
                         <td style="height: 30px; padding: 2px;font-size: 11px;white-space: nowrap;"><span style="white-space: nowrap;">${!qli.formattedDiscPrice}</span></td>

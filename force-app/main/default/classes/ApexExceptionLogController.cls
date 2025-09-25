@@ -314,7 +314,7 @@ public with sharing class ApexExceptionLogController {
             }
         }
         System.debug( DEBUG_PREFIX + ' ~ pageName=' + pageName );
-        return pageName;        
+        return pageName;
     }
 
     private static SplitUserOrganizationResponse splitUserOrganization( String input ) {

@@ -11493,16 +11493,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>pse__Project_Task__c.NSP_Client_Liaison_Email__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>pse__Project_Task__c.NSP_Client_Liaison_Name__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>pse__Project_Task__c.NSP_Implementation_Profile_Account__c</field>
         <readable>true</readable>
     </fieldPermissions>

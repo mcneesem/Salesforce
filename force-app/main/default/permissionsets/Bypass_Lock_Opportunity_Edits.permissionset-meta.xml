@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Bypass_Lock_Opportunity_Edits</name>
+    </customPermissions>
+    <description>Grants the Custom Permission to Bypass Lock Opportunity Edits (NSP_Lock_Opportunity_for_Edits).</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Bypass Lock Opportunity Edits</label>
+</PermissionSet>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>HSA</label>
+    <label>NSP_HSA</label>
     <protected>false</protected>
     <values>
         <field>NSP_Category__c</field>
@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>NSP_Milestone__c</field>
-        <value xsi:type="xsd:string">Benefits</value>
+        <value xsi:type="xsd:string">Benefits &amp; Retirement Plan Setup</value>
     </values>
     <values>
         <field>NSP_Sub_Category__c</field>
@@ -20,11 +20,11 @@
     </values>
     <values>
         <field>Order__c</field>
-        <value xsi:type="xsd:double">133.0</value>
+        <value xsi:type="xsd:double">86.0</value>
     </values>
     <values>
         <field>Task_Order__c</field>
-        <value xsi:type="xsd:double">133.0</value>
+        <value xsi:type="xsd:double">86.0</value>
     </values>
     <values>
         <field>Visible_to_Client__c</field>

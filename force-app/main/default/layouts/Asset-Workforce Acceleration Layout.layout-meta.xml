@@ -141,6 +141,22 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>First_Date_in_HCM_Activity__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Employees_First_Pay__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Date_Reported_Termed__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Employees_Term__c</field>
+            </layoutItems>
+             <layoutItems>
+                <behavior>Edit</behavior>
                 <field>HRRC_Access__c</field>
             </layoutItems>
         </layoutColumns>

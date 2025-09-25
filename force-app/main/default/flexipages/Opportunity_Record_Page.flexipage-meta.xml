@@ -1635,6 +1635,26 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Leadership_Attendance__c</fieldItem>
+                <identifier>RecordLeadership_Attendance_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Discovery_Call_Debriefed__c</fieldItem>
+                <identifier>RecordDiscovery_Call_Debriefed_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Partner__c</fieldItem>
                 <identifier>RecordNSP_Partner_cField3</identifier>
             </fieldInstance>
@@ -1844,7 +1864,7 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Discovery_Call_Debriefed__c</fieldItem>
-                <identifier>RecordDiscovery_Call_Debriefed__cField</identifier>
+                <identifier>RecordDiscovery_Call_Debriefed_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-b40b725e-a04c-4645-95f9-c27bde917c43</name>
@@ -4803,6 +4823,16 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Product_Recommendation_Outcome__c</fieldItem>
+                <identifier>RecordProduct_Recommendation_Outcome_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-4f2745ba-7ede-4fa5-b412-cc46f8f55ac9</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -5512,16 +5542,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Discovery_Completed__c</fieldItem>
                 <identifier>RecordDiscovery_Completed_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Discovery_Call_Created_Date__c</fieldItem>
-                <identifier>RecordDiscovery_Call_Created_Date_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>

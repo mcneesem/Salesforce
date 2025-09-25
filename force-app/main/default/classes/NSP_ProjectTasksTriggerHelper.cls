@@ -399,8 +399,8 @@ public class NSP_ProjectTasksTriggerHelper {
                 eachProjecttask.NSP_Sub_Category__c=pta1.NSP_Sub_Category__c;
                 eachProjecttask.Name=pta1.NSP_Task_Name__c;
                 eachProjecttask.pse__Hierarchy_Depth__c =1;
-                eachProjecttask.pse__Order__c=137;
-                eachProjecttask.Task_Order__c=137;
+                eachProjecttask.pse__Order__c=1;
+                eachProjecttask.Task_Order__c=90;
                 if(String.isNotBlank(System.label.COBRA_Guidelines)){
                     eachProjecttask.pse__Long_Description__c = System.label.COBRA_Guidelines;
                 }
@@ -410,8 +410,8 @@ public class NSP_ProjectTasksTriggerHelper {
                 eachProjecttask1.NSP_Sub_Category__c=pta2.NSP_Sub_Category__c;
                 eachProjecttask1.Name=pta2.NSP_Task_Name__c;
                 eachProjecttask1.pse__Hierarchy_Depth__c =2;
-                eachProjecttask1.pse__Order__c=138;
-                eachProjecttask1.Task_Order__c=138;
+                eachProjecttask1.pse__Order__c=2;
+                eachProjecttask1.Task_Order__c=91;
                 if(String.isNotBlank(System.label.COBRA_Team)){
                     eachProjecttask1.pse__Long_Description__c = System.label.COBRA_Team;
                 }
@@ -421,8 +421,8 @@ public class NSP_ProjectTasksTriggerHelper {
                 eachProjecttask2.NSP_Sub_Category__c=pta3.NSP_Sub_Category__c;
                 eachProjecttask2.Name=pta3.NSP_Task_Name__c;
                 eachProjecttask2.pse__Hierarchy_Depth__c =3;
-                eachProjecttask2.pse__Order__c=139;
-                eachProjecttask2.Task_Order__c=139;
+                eachProjecttask2.pse__Order__c=3;
+                eachProjecttask2.Task_Order__c=92;
                 if(String.isNotBlank(System.label.COBRA_Packet)){
                     eachProjecttask2.pse__Long_Description__c = System.label.COBRA_Packet;
                 }

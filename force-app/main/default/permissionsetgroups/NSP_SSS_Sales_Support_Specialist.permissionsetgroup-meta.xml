@@ -28,6 +28,7 @@
     <permissionSets>NSP_Order_ViewAll</permissionSets>
     <permissionSets>NSP_Template_Field_permission</permissionSets>
     <permissionSets>Opportunity_Closed_Lost_Fields_Edit_Access</permissionSets>
+    <permissionSets>Opportunity_Discovery_Call_Completed_Access</permissionSets>
     <permissionSets>Opportunity_Outgoing_Create_and_Edit</permissionSets>
     <permissionSets>Opportunity_Splits_Elevated_Create_Read_Edit</permissionSets>
     <permissionSets>Opportunity_Team_Group_Check</permissionSets>
