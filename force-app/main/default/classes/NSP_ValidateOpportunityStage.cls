@@ -562,6 +562,23 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
     }
 
+    private static String checkEventsOld( String scannedTask , List<Event> eventList ) {
+        if ( eventList != null ){
+            for ( Event event : eventList ){
+                if ( event.NSP_Event_Subtype__c == NSP_SalesConstants.DISCOVERY_CALL_ACTIVITY
+                    && event.NSP_Status__c !=NSP_SalesConstants.Cancelled
+                    )
+                {
+                    scannedTask += HAS_DISCOVERY;
+                    if ( event.NSP_Status__c != NSP_SalesConstants.DISCOVERY_CALL_COMPLETED ) {
+                        scannedTask += HAS_OPEN_EVENT;
+                    }
+                }
+            }
+        }
+        return scannedTask;
+    }
+
     private static void evaluateAnalysisStageCriteriaOld( Opportunity opp , List<Event> eventList ) {
         String scannedTask='';
         if ( ( eventList != null )
@@ -574,18 +591,8 @@ public with sharing class NSP_ValidateOpportunityStage {
                )
             )
         {
-            for ( Event event : eventList ) { ////looking for discovery
-                if ( event.NSP_Event_Subtype__c == NSP_SalesConstants.DISCOVERY_CALL_ACTIVITY
-                    && event.NSP_Status__c !=NSP_SalesConstants.Cancelled
-                    )
-                {
-                    scannedTask += HAS_DISCOVERY;
-                    if ( event.NSP_Status__c != NSP_SalesConstants.DISCOVERY_CALL_COMPLETED ) {
-                        scannedTask += HAS_OPEN_EVENT;
-                    }
-                }
-            }
-            //Show error
+            scannedTask = checkEventsOld( scannedTask , eventList );
+
             if ( !scannedTask.contains( HAS_DISCOVERY ) ) {
                 opp.addError( System.Label.NSP_AddDiscoveryCalls );
             }
