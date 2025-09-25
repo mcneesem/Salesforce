@@ -8,7 +8,7 @@
 //                          them possible candidates for automatic Stage progression
 // ********************************************************************************************************
 public with sharing class AutomateOpportunityStage {
-    // test w/ AutomateOpportunityStageTest (92%)
+    // test w/ AutomateOpportunityStageTest (94%)
 
     private static final String FAILED = 'Failed Stage Validation';
 
@@ -64,17 +64,7 @@ public with sharing class AutomateOpportunityStage {
                     stageAutoOptyList = getStageAutoOptyList( stageAutoOptyList , opp );
                 }
 
-                // Validate which Opportunity Stage progressions are valid
-                if ( !stageAutoOptyList.isEmpty() ) {
-                    NSP_ValidateOpportunityStage.validateOpportunityStage( stageAutoOptyList , true );
-
-                    // Prepare the valid ones for update
-                    for ( Opportunity checkedOpp : stageAutoOptyList ) {
-                        if( checkedOpp.NextStep != FAILED ) {
-                            updateOptyList.add( checkedOpp );
-                        }
-                    }
-                }
+                updateOptyList = getUpdateOptyList( stageAutoOptyList );
 
                 // Update Opportunity Stages
                 if ( !updateOptyList.isEmpty() ) {
@@ -94,18 +84,39 @@ public with sharing class AutomateOpportunityStage {
         )
     {
         List<Opportunity_Stage_Progression__mdt> optyAutoStages = Opportunity_Stage_Progression__mdt.getAll().values();
-        for ( Opportunity_Stage_Progression__mdt stageAuto : optyAutoStages ) {
-            if ( ( opp.StageName == stageAuto.Stage__c )
-                 && ( opp.NSP_PrimaryProduct__c == stageAuto.Primary_Product__c )
-                 && ( stageAuto.Is_Automated__c )
-               )
-            {
-                opp.StageName = stageAuto.Next_Stage__c;
-                stageAutoOptyList.add( opp );
-                break;
+        if( ( optyAutoStages != null ) && !optyAutoStages.isEmpty() ) {
+            for ( Opportunity_Stage_Progression__mdt stageAuto : optyAutoStages ) {
+                if ( ( opp.StageName == stageAuto.Stage__c )
+                    && ( opp.NSP_PrimaryProduct__c == stageAuto.Primary_Product__c )
+                    && ( stageAuto.Is_Automated__c )
+                   )
+                {
+                    opp.StageName = stageAuto.Next_Stage__c;
+                    stageAutoOptyList.add( opp );
+                    break;
+                }
             }
         }
         return stageAutoOptyList;
+    }
+
+    // Validate which Opportunity Stage progressions are valid
+    public static List<Opportunity> getUpdateOptyList (
+        List<Opportunity> stageAutoOptyList
+        )
+    {
+        List<Opportunity> updateOptyList = new List<Opportunity>();
+        if( ( stageAutoOptyList != null ) && !stageAutoOptyList.isEmpty() ) {
+            NSP_ValidateOpportunityStage.validateOpportunityStage( stageAutoOptyList , true );
+
+            // Prepare the valid ones for update
+            for ( Opportunity checkedOpp : stageAutoOptyList ) {
+                if( checkedOpp.NextStep != FAILED ) {
+                    updateOptyList.add( checkedOpp );
+                }
+            }
+        }
+        return updateOptyList;
     }
 }
 //
