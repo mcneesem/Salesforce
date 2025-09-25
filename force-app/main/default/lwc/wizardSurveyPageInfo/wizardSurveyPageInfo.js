@@ -146,22 +146,6 @@ export default class WizardSurveyPageInfo extends LightningElement {
     })
     surveyTypeValues;
 
-    /**
-    @wire(retrieveContactRecords, { accountId: '$clientId' })
-    wireConRecord({ error, data }) {
-        if (data) {
-            this.accContacts = data;
-            this.savedAccContacts = data;
-            this.errorMsg = undefined;
-            //console.log('cons ' + JSON.stringify(this.accContacts)); 
-        } else {
-            this.errorMsg = error;
-            this.accContacts = undefined;
-            //console.log('error' + this.errorMsg);
-        }
-    }
- */
-
     getContactRecord( parentId ) {
         retrieveContactRecords({ accountId : parentId })
             .then((result) => {
@@ -209,9 +193,6 @@ export default class WizardSurveyPageInfo extends LightningElement {
         this.reportName ='Survey Request' + today.substring(today.indexOf(',')+2, today.indexOf(':')-2) ;
         if(this.recordObj != null && this.recordObj.RecordTypeId !=null){
             this.recordTypeId = this.recordObj.RecordTypeId;
-            if (this.recordTypeId  === undefined){
-            //     this.recordTypeId = this.recordObj.recordTypeId;
-            }
         }
     }
 
@@ -299,25 +280,12 @@ export default class WizardSurveyPageInfo extends LightningElement {
 
     }
 
-    handleOnSubmit(event) {
-               
-        /**
-         * event.preventDefault();
-        //add fields & do validation
-        let fields = event.detail.fields;
-        if (this.NSP_Survey_Type__c != null) {
-            fields.NSP_Survey_Type__c = this.NSP_Survey_Type__c;
-        }
-        fields.NSP_LastSavedPageNumber__c = this.pageNumber;
-        console.log('fields ' + JSON.stringify(fields));
-        this.template.querySelector('lightning-record-edit-form').submit(fields);
-         */
-    }
+    handleOnSubmit(event) {}
     
     //handle the deletion of rows
-    handleRowAction( event ) {
-        if ( event.detail.action.name === 'delete' ) {
-            this.mergeObjectList = this.mergeObjectList.filter( row =>
+    handleRowAction(event) {
+        if (event.detail.action.name === 'delete') {
+            this.mergeObjectList = this.mergeObjectList.filter(row =>
                 row.NSP_Work_email__c !== event.detail.row.NSP_Work_email__c //Keep rows where the email does NOT match the selected row's email
                 && row.name !== event.detail.row.name  //AND the name does NOT match the selected row's name
             );
@@ -465,52 +433,6 @@ export default class WizardSurveyPageInfo extends LightningElement {
 
         return loadObjectList;
     }
-
-
-    /***
-     
-get arrayToTextArea(){
-     let tempStr = '';
-        for (let i in this.mergeObjectList) {
-            for (let key in this.mergeObjectList[i]) {
-                if (tempStr == '' ||  tempStr.endsWith('\r\n')) {
-                    tempStr = tempStr + key + ": " + this.mergeObjectList[i][key];
-                } else {
-                    tempStr = tempStr + ',' + key + ": " + this.mergeObjectList[i][key];
-                }
-
-            }
-            tempStr = tempStr + '\r\n';
-        }
-        return tempStr;
-        
-     }
-
-    textAreaToArray( textArea ){
-        let loadObjectList = [];
-        let splitStrArray = textArea.split('\r\n');
-        splitStrArray.forEach( key_val =>{
-                this.attrs = key_val;
-                let values = this.attrs.split(",");
-                let obj = {};
-                if(values != null && values != "" && values != " ")
-                for(let i=0; i<values.length; i++) {
-                    let keyValue = values[i].split(":");
-                    obj[keyValue[0].trim()] = keyValue[1].trim();
-                }
-                console.log(obj);
-                if( Object.keys(obj).length != 0){
-                loadObjectList.push(obj);
-                }
-            console.log(key_val );
-        })
-
-        return loadObjectList;
-    }
-
-
-     */
-
     handleNext(){
         if(this.arrayToTextArea ==  null || this.arrayToTextArea == ''){
             this.showErroMsg ="display=''";
