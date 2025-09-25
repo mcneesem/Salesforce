@@ -1239,8 +1239,8 @@
                     <name>relatedListFieldAliases</name>
                     <valueList>
                         <valueListItems>
-                            <value>Asset__c</value>
-                        </valueListItems>
+                            <value>Asset.NAME</value>
+                        </valueList>
                         <valueListItems>
                             <value>Asset_Status__c</value>
                         </valueListItems>
