@@ -10,10 +10,11 @@ public with sharing class CheckOpportunityStage {
         if( ( inputs != null ) && !inputs.isEmpty() ) {
             for ( CheckStageRequest input : inputs ) {
                 CheckStageResponse output = new CheckStageResponse();
+                List<Opportunity> opps = new List<Opportunity>();
                 output.checkStage = false;
                 Id optyId = input.oppRecordId;
                 if( optyId != null ) {
-                    List<Opportunity> opps = [
+                    opps = [
                         SELECT
                             Id ,
                             CloseDate ,
@@ -42,13 +43,13 @@ public with sharing class CheckOpportunityStage {
                         WHERE ( Id = :optyId )
                         LIMIT 1
                     ];
-                    if ( ( opps != null ) && !opps.isEmpty() ) {
-                        opps[0].StageName = input.stageName;
-                        NSP_ValidateOpportunityStage.validateOpportunityStage( opps , true );
+                }
+                if ( ( opps != null ) && !opps.isEmpty() ) {
+                    opps[0].StageName = input.stageName;
+                    NSP_ValidateOpportunityStage.validateOpportunityStage( opps , true );
 
-                        if( opps[0].NextStep != FAILED ) {
-                            output.checkStage = true;
-                        }
+                    if( opps[0].NextStep != FAILED ) {
+                        output.checkStage = true;
                     }
                 }
                 outputs.add( output );
