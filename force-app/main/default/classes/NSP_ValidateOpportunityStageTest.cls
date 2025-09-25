@@ -57,6 +57,7 @@ private class NSP_ValidateOpportunityStageTest {
         opp2.StageName = 'Prospecting';
         opp2.NSP_BidNumber__c='unique123';
         opp2.NSP_PrimaryProduct__c = 'WO';
+        opp2.NSP_Number_of_Employees__c = 50;
         try{            
             insert opp2;
         }catch(Exception ex){
@@ -553,14 +554,6 @@ private class NSP_ValidateOpportunityStageTest {
             insert new List<NSP_Employee_Split__c>{ splitRecord1, splitRecord2 };
 
             oppty.StageName='Data Collection';
-            oppty.NSP_PrimaryProduct__c = '';
-            oppty.NSP_Number_of_Employees__c = 50;
-            try{
-                update oppty;
-            }catch(Exception ex){
-                ex.getStackTraceString();
-            }
-            oppty.NSP_PrimaryProduct__c = 'WO';
             try{
                 update oppty;
             }catch(Exception ex){
