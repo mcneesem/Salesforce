@@ -7,15 +7,12 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>$Record.Owner__c</assignToReference>
+            <assignToReference>$Record.Item_Owner__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>$Record.CreatedById</elementReference>
+                <elementReference>$User.Id</elementReference>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>Update_Owner</targetReference>
-        </connector>
     </assignments>
     <decisions>
         <name>Check_Custom_Permission</name>
@@ -61,19 +58,6 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordUpdates>
-        <name>Update_Owner</name>
-        <label>Update Owner</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <inputAssignments>
-            <field>Item_Owner__c</field>
-            <value>
-                <elementReference>$Record.CreatedById</elementReference>
-            </value>
-        </inputAssignments>
-        <inputReference>$Record</inputReference>
-    </recordUpdates>
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
@@ -90,7 +74,7 @@
         </filters>
         <object>NSP_Focus_Item__c</object>
         <recordTriggerType>Create</recordTriggerType>
-        <triggerType>RecordAfterSave</triggerType>
+        <triggerType>RecordBeforeSave</triggerType>
     </start>
     <status>Draft</status>
 </Flow>
