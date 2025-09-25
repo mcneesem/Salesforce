@@ -4,15 +4,15 @@
     <protected>false</protected>
     <values>
         <field>Error_Message__c</field>
-        <value xsi:type="xsd:string">Please enter Number of Employees</value>
+        <value xsi:type="xsd:string">Please enter Total Annual Payroll</value>
     </values>
     <values>
         <field>Field__c</field>
-        <value xsi:type="xsd:string">Type</value>
+        <value xsi:type="xsd:string">NSP_TotalAnnualPayroll__c</value>
     </values>
     <values>
         <field>Group__c</field>
-        <value xsi:type="xsd:string">CW2</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>IsActive__c</field>
@@ -24,7 +24,7 @@
     </values>
     <values>
         <field>Operation__c</field>
-        <value xsi:type="xsd:string">EQUALS</value>
+        <value xsi:type="xsd:string">IS_NOT_BLANK</value>
     </values>
     <values>
         <field>Primary_Product__c</field>
@@ -36,6 +36,6 @@
     </values>
     <values>
         <field>Value__c</field>
-        <value xsi:type="xsd:string">New Product</value>
+        <value xsi:nil="true"/>
     </values>
 </CustomMetadata>
