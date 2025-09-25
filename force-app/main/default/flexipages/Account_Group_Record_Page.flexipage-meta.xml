@@ -802,7 +802,7 @@
                             <value>Plan_of_Action__c</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Owner__c</value>
+                            <value>Item_Owner__c</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
