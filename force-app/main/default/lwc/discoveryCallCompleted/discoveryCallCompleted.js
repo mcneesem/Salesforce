@@ -3,7 +3,7 @@ import { subscribe, onError } from 'lightning/empApi';
 import { NavigationMixin } from 'lightning/navigation';
 import Id from '@salesforce/user/Id'; // Import the user ID
 
-export default class EventFlowLauncher extends NavigationMixin(LightningElement) {
+export default class DiscoveryCallCompleted extends NavigationMixin(LightningElement) {
     @api recordId;
     eventId;
     whatId;

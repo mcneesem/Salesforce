@@ -215,6 +215,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Company Property%2FEquipment Acknowledgement</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Day Rate Acknowledgment</fullName>
             <default>false</default>
         </values>
@@ -271,11 +275,27 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Final Wage Acknowledgement %28CA%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fluctuating Workweek Acknowledgement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fluctuating Workweek Client Acknowledgement</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>IRS Form W-2 Duplicate Request %28EN%29</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>IRS Form W-2 Duplicate Request %28ES%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Student Worker Declaration</fullName>
             <default>false</default>
         </values>
         <values>

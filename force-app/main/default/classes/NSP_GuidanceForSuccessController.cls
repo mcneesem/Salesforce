@@ -1,6 +1,6 @@
 // intentionally `without sharing` to ensure that aura/NSP_OpportunityGuidanceForSuccess has access to all NSP_Opportunity_Stage_Guidance_Path__mdt records.
 public without sharing class  NSP_GuidanceForSuccessController {
-    // test w/ NSP_GuidanceForSuccessControllerTest (86%)
+    // test w/ NSP_GuidanceForSuccessControllerTest (90%)
 
     //
     // Description: This method queries the guidance for success from the custom metadata NSP_Opportunity_Stage_Guidance_Path__mdt
@@ -25,6 +25,18 @@ public without sharing class  NSP_GuidanceForSuccessController {
                             NSP_StageName__c = :stageName
                             AND NSP_PrimaryProduct__c = :primaryProduct
                             AND NSP_Account_Segment__c = :accountSegment
+                            AND NSP_Is_Active__c = true
+                        )
+                    ];
+                }
+                //  If not found then get default guidance text based on stage
+                if ( guidanceMessages.isEmpty() ) {
+                    guidanceMessages = [
+                        SELECT NSP_Message__c
+                        FROM NSP_Opportunity_Stage_Guidance_Path__mdt
+                        WHERE (
+                            NSP_StageName__c = :stageName
+                            AND NSP_PrimaryProduct__c = null
                             AND NSP_Is_Active__c = true
                         )
                     ];

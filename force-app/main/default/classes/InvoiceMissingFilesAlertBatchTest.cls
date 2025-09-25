@@ -7,7 +7,6 @@ private class InvoiceMissingFilesAlertBatchTest {
     private static void setupTestData() {
         Order_Settings__c orderSetting = Order_Settings__c.getOrgDefaults();
         orderSetting.EffectiveDateStartOfMonth__c = true;
-        orderSetting.Bypass_Rule_PreventStatusChange__c = true;
         upsert orderSetting;
 
         InvoiceMissingFilesBatchSettings__c invSettings = InvoiceMissingFilesBatchSettings__c.getOrgDefaults();

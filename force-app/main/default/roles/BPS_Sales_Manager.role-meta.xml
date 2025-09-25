@@ -5,5 +5,5 @@
     <mayForecastManagerShare>false</mayForecastManagerShare>
     <name>BPS Sales Manager</name>
     <opportunityAccessLevel>Edit</opportunityAccessLevel>
-    <parentRole>BPS_Administrator</parentRole>
+    <parentRole>Sales_Leader</parentRole>
 </Role>

@@ -37,6 +37,16 @@
         <template>Services_Emails/Termination_Form_Rejected</template>
     </alerts>
     <fieldUpdates>
+        <fullName>Approval_Datetime_Update</fullName>
+        <field>Approval_DateTime__c</field>
+        <formula>NOW()</formula>
+        <name>Approval Datetime Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Mark_Form_Status_PR_Supervisor_Approved</fullName>
         <field>NSP_Status__c</field>
         <literalValue>PR Supervisor Approved</literalValue>

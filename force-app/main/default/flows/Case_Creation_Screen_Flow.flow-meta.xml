@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Case_Redirect</name>
         <label>Case Redirect</label>
-        <locationX>534</locationX>
-        <locationY>2774</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <actionName>c:NSP_NavigateToRecord</actionName>
         <actionType>component</actionType>
         <faultConnector>
@@ -14,7 +14,7 @@
         <inputParameters>
             <name>recordId</name>
             <value>
-                <elementReference>caseRecordId</elementReference>
+                <elementReference>caseRecord.Id</elementReference>
             </value>
         </inputParameters>
         <nameSegment>c:NSP_NavigateToRecord</nameSegment>
@@ -24,8 +24,8 @@
     <actionCalls>
         <name>Get_Accessible_Record_Types</name>
         <label>Get Accessible Record Types</label>
-        <locationX>1172</locationX>
-        <locationY>734</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <actionName>RecordTypeSelectorAction</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -48,15 +48,15 @@
             <name>accessibleRecordTypes</name>
         </outputParameters>
     </actionCalls>
-    <apiVersion>62.0</apiVersion>
+    <apiVersion>64.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Account_Path</name>
         <label>Account Path</label>
-        <locationX>50</locationX>
-        <locationY>1658</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>ContextAccountId</assignToReference>
+            <assignToReference>contextAccountId</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>recordId</elementReference>
@@ -69,8 +69,8 @@
     <assignments>
         <name>Assign_Fault_Element_Case_Redirect</name>
         <label>Assign Fault Element : Case_Redirect</label>
-        <locationX>1282</locationX>
-        <locationY>2882</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -86,8 +86,8 @@
     <assignments>
         <name>Assign_Fault_Element_Create_Case</name>
         <label>Assign Fault Element : Create_Case</label>
-        <locationX>1546</locationX>
-        <locationY>2774</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -102,8 +102,8 @@
     <assignments>
         <name>Assign_Fault_Element_Get_Accessible_Record_Types</name>
         <label>Assign Fault Element : Get_Accessible_Record_Types</label>
-        <locationX>2184</locationX>
-        <locationY>842</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -119,8 +119,8 @@
     <assignments>
         <name>Assign_Fault_Element_Get_Parent_Case</name>
         <label>Assign Fault Element : Get_Parent_Case</label>
-        <locationX>1040</locationX>
-        <locationY>350</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -136,8 +136,8 @@
     <assignments>
         <name>Assign_Fault_Element_Get_Project</name>
         <label>Assign Fault Element : Get_Project</label>
-        <locationX>1744</locationX>
-        <locationY>350</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -153,8 +153,8 @@
     <assignments>
         <name>Assign_Selected_Record_Type</name>
         <label>Assign Selected Record Type</label>
-        <locationX>690</locationX>
-        <locationY>1274</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>selectedRecordTypeId</assignToReference>
             <operator>Assign</operator>
@@ -169,8 +169,8 @@
     <assignments>
         <name>ConfidentialNoAssignment</name>
         <label>ConfidentialNoAssignment</label>
-        <locationX>468</locationX>
-        <locationY>2390</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>selectedConfidential</assignToReference>
             <operator>Assign</operator>
@@ -179,14 +179,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Create_Case</targetReference>
+            <targetReference>Populate_Case_Fields</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>ConfidentialYesAssignment</name>
         <label>ConfidentialYesAssignment</label>
-        <locationX>204</locationX>
-        <locationY>2390</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>selectedConfidential</assignToReference>
             <operator>Assign</operator>
@@ -195,16 +195,16 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Create_Case</targetReference>
+            <targetReference>Populate_Case_Fields</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Contact_Path</name>
         <label>Contact Path</label>
-        <locationX>314</locationX>
-        <locationY>1658</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>ContextContactId</assignToReference>
+            <assignToReference>contextContactId</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>recordId</elementReference>
@@ -217,8 +217,8 @@
     <assignments>
         <name>Count_Accessible_Record_Types</name>
         <label>Count Accessible Record Types</label>
-        <locationX>534</locationX>
-        <locationY>950</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>countAccessibleRecordTypes</assignToReference>
             <operator>AssignCount</operator>
@@ -231,42 +231,121 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Project_Path</name>
-        <label>Project Path</label>
-        <locationX>754</locationX>
-        <locationY>1658</locationY>
+        <name>Populate_Case_Fields</name>
+        <label>Populate Case Fields</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+         <assignmentItems>
+            <assignToReference>caseRecord.RecordTypeId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>selectedRecordTypeId</elementReference>
+            </value>
+        </assignmentItems>
         <assignmentItems>
-            <assignToReference>ContextProjectId</assignToReference>
+            <assignToReference>caseRecord.NSP_Category__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>selectedCategory</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>caseRecord.NSP_SubCategory__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>selectedSubCategory</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>caseRecord.NSP_Detail__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>selectedDetail</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>caseRecord.NSP_Version__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>selectedVersion</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>caseRecord.AccountId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>selectedAccountId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>caseRecord.ContactId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>selectedContactId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>caseRecord.Origin</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Case_Origin</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>caseRecord.Subject</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Subject</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>caseRecord.NSP_Confidential__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>selectedConfidential</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Case</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Populate_Case_Fields_Parent_Case_Id</name>
+        <label>Populate Case Fields: Parent Case Id</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>caseRecord.ParentId</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>recordId</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Category_Sub_Category</targetReference>
+            <targetReference>Store_Parent_Case_Attributes</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>Store_Account_Id</name>
-        <label>Store Account Id</label>
-        <locationX>1304</locationX>
-        <locationY>458</locationY>
+        <name>Populate_Case_Fields_Project</name>
+        <label>Populate Case Fields: Project</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>ContextAccountId</assignToReference>
+            <assignToReference>caseRecord.Project__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Project.pse__Account__c</elementReference>
+                <elementReference>recordId</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Get_Accessible_Record_Types</targetReference>
+            <targetReference>Store_Project_Account_Id</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>Store_Parent_Value</name>
-        <label>Store Parent Value</label>
-        <locationX>600</locationX>
-        <locationY>458</locationY>
+        <name>Store_Parent_Case_Attributes</name>
+        <label>Store Parent Case Attributes</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>selectedCategory</assignToReference>
             <operator>Assign</operator>
@@ -282,7 +361,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ContextAccountId</assignToReference>
+            <assignToReference>contextAccountId</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Get_Parent_Case.AccountId</elementReference>
@@ -295,11 +374,20 @@
                 <elementReference>Get_Parent_Case.NSP_Detail__c</elementReference>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>Get_Accessible_Record_Types</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Store_Project_Account_Id</name>
+        <label>Store Project Account Id</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>parentCaseId</assignToReference>
+            <assignToReference>contextAccountId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Parent_Case.Id</elementReference>
+                <elementReference>Get_Project.pse__Account__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -413,8 +501,8 @@
     <decisions>
         <name>Check_Accessible_Record_Types</name>
         <label>Check Accessible Record Types</label>
-        <locationX>1172</locationX>
-        <locationY>842</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnector>
             <targetReference>Screen_No_Accessible_Record_Types</targetReference>
         </defaultConnector>
@@ -436,10 +524,35 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_Case_Creation</name>
+        <label>Check Case Creation</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>CaseCreationFailureError</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Case_Created</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>caseRecord</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Is_Reload_Enabled</targetReference>
+            </connector>
+            <label>Case Created</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_Count_Accessible_Record_Types</name>
         <label>Check Count Accessible Record Types</label>
-        <locationX>534</locationX>
-        <locationY>1058</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnector>
             <targetReference>Record_Type_Selection</targetReference>
         </defaultConnector>
@@ -479,8 +592,8 @@
     <decisions>
         <name>Check_Record_Id</name>
         <label>Check Record Id</label>
-        <locationX>1172</locationX>
-        <locationY>134</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnector>
             <targetReference>Get_Accessible_Record_Types</targetReference>
         </defaultConnector>
@@ -533,12 +646,12 @@
     </decisions>
     <decisions>
         <description>Evaluate the sourceRecordId is Account or Contact or Case</description>
-        <name>Check_Record_Type</name>
-        <label>Check Record Type</label>
-        <locationX>534</locationX>
-        <locationY>1550</locationY>
+        <name>Check_sObjectType</name>
+        <label>Check sObjectType</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>AccountContactError</targetReference>
+            <targetReference>UnidentifiedSObjectType</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -597,7 +710,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Project_Path</targetReference>
+                <targetReference>Category_Sub_Category</targetReference>
             </connector>
             <label>From Project</label>
         </rules>
@@ -605,8 +718,8 @@
     <decisions>
         <name>Confidential_Decision</name>
         <label>Confidential Decision</label>
-        <locationX>336</locationX>
-        <locationY>2282</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnector>
             <targetReference>ConfidentialNoAssignment</targetReference>
         </defaultConnector>
@@ -628,12 +741,35 @@
         </rules>
     </decisions>
     <decisions>
+        <description>AZD-44548: Refer Custom Settings to skip navigation for CCTR to avoid ending calls.</description>
+        <name>Is_Reload_Enabled</name>
+        <label>Is Reload Enabled?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Case_Redirect</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Reload_Enabled</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.CustomCaseCreationSettings__c.IsReloadEnabled__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Yes : Reload Enabled</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>ShowConfidentialDecision</name>
         <label>ShowConfidentialDecision</label>
-        <locationX>534</locationX>
-        <locationY>2066</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Create_Case</targetReference>
+            <targetReference>Populate_Case_Fields</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -663,8 +799,8 @@
         <description>Verify Case Exists</description>
         <name>Verify_Case_Exists</name>
         <label>Verify Case Exists</label>
-        <locationX>732</locationX>
-        <locationY>350</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnector>
             <targetReference>Get_Accessible_Record_Types</targetReference>
         </defaultConnector>
@@ -680,7 +816,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Store_Parent_Value</targetReference>
+                <targetReference>Populate_Case_Fields_Parent_Case_Id</targetReference>
             </connector>
             <label>Case Exists</label>
         </rules>
@@ -688,8 +824,8 @@
     <decisions>
         <name>Verify_Project_Exists</name>
         <label>Verify Project Exists</label>
-        <locationX>1436</locationX>
-        <locationY>350</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnector>
             <targetReference>Get_Accessible_Record_Types</targetReference>
         </defaultConnector>
@@ -705,11 +841,12 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Store_Account_Id</targetReference>
+                <targetReference>Populate_Case_Fields_Project</targetReference>
             </connector>
             <label>Project Exists</label>
         </rules>
     </decisions>
+    <description>AZD-445484 - Skip Navigation for CCTR to avoid ending Voice calls.</description>
     <environments>Default</environments>
     <interviewLabel>Case Creation Screen Flow {!$Flow.CurrentDateTime}</interviewLabel>
     <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
@@ -717,15 +854,15 @@
     <loops>
         <name>Iterate_Accessible_Record_Types</name>
         <label>Iterate Accessible Record Types</label>
-        <locationX>602</locationX>
-        <locationY>1166</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <collectionReference>accessibleRecordTypes</collectionReference>
         <iterationOrder>Desc</iterationOrder>
         <nextValueConnector>
             <targetReference>Assign_Selected_Record_Type</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Check_Record_Type</targetReference>
+            <targetReference>Check_sObjectType</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -750,94 +887,21 @@
     <recordCreates>
         <name>Create_Case</name>
         <label>Create Case</label>
-        <locationX>534</locationX>
-        <locationY>2666</locationY>
-        <assignRecordIdToReference>caseRecordId</assignRecordIdToReference>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <connector>
-            <targetReference>Case_Redirect</targetReference>
+            <targetReference>Check_Case_Creation</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Assign_Fault_Element_Create_Case</targetReference>
         </faultConnector>
-        <inputAssignments>
-            <field>AccountId</field>
-            <value>
-                <elementReference>selectedAccountId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>ContactId</field>
-            <value>
-                <elementReference>selectedContactId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Category__c</field>
-            <value>
-                <elementReference>selectedCategory</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Confidential__c</field>
-            <value>
-                <elementReference>selectedConfidential</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Detail__c</field>
-            <value>
-                <elementReference>selectedDetail</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_SubCategory__c</field>
-            <value>
-                <elementReference>selectedSubCategory</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Version__c</field>
-            <value>
-                <elementReference>selectedVersion</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Origin</field>
-            <value>
-                <elementReference>Case_Origin</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>ParentId</field>
-            <value>
-                <elementReference>parentCaseId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Project__c</field>
-            <value>
-                <elementReference>ContextProjectId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>RecordTypeId</field>
-            <value>
-                <elementReference>selectedRecordTypeId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Subject</field>
-            <value>
-                <elementReference>Subject</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Case</object>
+        <inputReference>caseRecord</inputReference>
     </recordCreates>
     <recordLookups>
         <name>Get_Parent_Case</name>
         <label>Get Parent Case</label>
-        <locationX>732</locationX>
-        <locationY>242</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Verify_Case_Exists</targetReference>
@@ -860,8 +924,8 @@
     <recordLookups>
         <name>Get_Project</name>
         <label>Get Project</label>
-        <locationX>1436</locationX>
-        <locationY>242</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Verify_Project_Exists</targetReference>
@@ -883,34 +947,10 @@
     </recordLookups>
     <runInMode>DefaultMode</runInMode>
     <screens>
-        <name>AccountContactError</name>
-        <label>AccountContactError</label>
-        <locationX>1018</locationX>
-        <locationY>1658</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <fields>
-            <name>AccountContactErrorDisplay</name>
-            <fieldText>&lt;p&gt;AccountId or ContactId or CaseId is expected.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <styleProperties>
-                <verticalAlignment>
-                    <stringValue>top</stringValue>
-                </verticalAlignment>
-                <width>
-                    <stringValue>12</stringValue>
-                </width>
-            </styleProperties>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
         <name>Blank_Record_Id</name>
         <label>Blank Record Id</label>
-        <locationX>336</locationX>
-        <locationY>242</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -931,10 +971,34 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <name>CaseCreationFailureError</name>
+        <label>Case Creation Failure</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>CaseCreationErrorDisplay</name>
+            <fieldText>&lt;p&gt;Case was not created successfully.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Category_Sub_Category</name>
         <label>Category Sub Category</label>
-        <locationX>534</locationX>
-        <locationY>1958</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -993,7 +1057,7 @@
                     <elementReference>selectedVersion</elementReference>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
                 <assignToReference>selectedCategory</assignToReference>
@@ -1049,13 +1113,13 @@
                     <inputParameters>
                         <name>contextAccountId</name>
                         <value>
-                            <elementReference>ContextAccountId</elementReference>
+                            <elementReference>contextAccountId</elementReference>
                         </value>
                     </inputParameters>
                     <inputParameters>
                         <name>contextContactId</name>
                         <value>
-                            <elementReference>ContextContactId</elementReference>
+                            <elementReference>contextContactId</elementReference>
                         </value>
                     </inputParameters>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -1069,11 +1133,11 @@
                         <name>selectedContactId</name>
                     </outputParameters>
                     <outputParameters>
-                        <assignToReference>ContextAccountId</assignToReference>
+                        <assignToReference>contextAccountId</assignToReference>
                         <name>contextAccountId</name>
                     </outputParameters>
                     <outputParameters>
-                        <assignToReference>ContextContactId</assignToReference>
+                        <assignToReference>contextContactId</assignToReference>
                         <name>contextContactId</name>
                     </outputParameters>
                     <styleProperties>
@@ -1190,8 +1254,8 @@
     <screens>
         <name>Confidential_Confirmation</name>
         <label>Confidential Confirmation</label>
-        <locationX>336</locationX>
-        <locationY>2174</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1270,8 +1334,8 @@
     <screens>
         <name>Error_Display</name>
         <label>Error Display</label>
-        <locationX>1546</locationX>
-        <locationY>2990</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <allowBack>true</allowBack>
         <allowFinish>false</allowFinish>
         <allowPause>false</allowPause>
@@ -1294,13 +1358,13 @@
     <screens>
         <name>Record_Type_Selection</name>
         <label>Record Type Selection</label>
-        <locationX>818</locationX>
-        <locationY>1166</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Check_Record_Type</targetReference>
+            <targetReference>Check_sObjectType</targetReference>
         </connector>
         <fields>
             <name>recordTypeSection</name>
@@ -1318,7 +1382,7 @@
                     <elementReference>objectApiName</elementReference>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
                 <assignToReference>selectedRecordTypeId</assignToReference>
@@ -1340,8 +1404,8 @@
     <screens>
         <name>Screen_No_Accessible_Record_Types</name>
         <label>No Accessible Record Types</label>
-        <locationX>1810</locationX>
-        <locationY>950</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <allowBack>true</allowBack>
         <allowFinish>false</allowFinish>
         <allowPause>false</allowPause>
@@ -1361,8 +1425,32 @@
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
+    <screens>
+        <name>UnidentifiedSObjectType</name>
+        <label>Unidentified SObjectType</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>AccountContactErrorDisplay</name>
+            <fieldText>&lt;p&gt;Unable to identify SObjectType.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
     <start>
-        <locationX>1046</locationX>
+        <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Check_Record_Id</targetReference>
@@ -1372,8 +1460,8 @@
     <subflows>
         <name>Create_Case_Fault_Handler</name>
         <label>Create Case Fault Handler</label>
-        <locationX>1546</locationX>
-        <locationY>2882</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>Error_Display</targetReference>
         </connector>
@@ -1406,24 +1494,15 @@
         <objectType>RecordType</objectType>
     </variables>
     <variables>
-        <name>caseRecordId</name>
-        <dataType>String</dataType>
+        <name>caseRecord</name>
+        <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+        <objectType>Case</objectType>
     </variables>
     <variables>
-        <name>ContextAccountId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <stringValue></stringValue>
-        </value>
-    </variables>
-    <variables>
-        <name>ContextContactId</name>
+        <name>contextAccountId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
@@ -1433,7 +1512,7 @@
         </value>
     </variables>
     <variables>
-        <name>ContextProjectId</name>
+        <name>contextContactId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
@@ -1471,13 +1550,6 @@
         </value>
     </variables>
     <variables>
-        <name>parentCaseId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
         <name>recordId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -1488,7 +1560,7 @@
         <name>selectedAccountId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
-        <isInput>true</isInput>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
@@ -1512,7 +1584,7 @@
         <name>selectedContactId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
-        <isInput>true</isInput>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>

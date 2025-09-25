@@ -83,6 +83,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Benefits_Original_Hire_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>NSP_Paid_Non_Paid__c</field>
             </layoutItems>
             <layoutItems>
@@ -92,6 +96,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Employee_Status__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Term_Reason__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

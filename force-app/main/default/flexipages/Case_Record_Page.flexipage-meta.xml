@@ -281,6 +281,30 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.AssetId</fieldItem>
                 <identifier>RecordAssetIdField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>WX/WA</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.AssetId</fieldItem>
+                <identifier>RecordAssetIdField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>WX/WA</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -532,7 +556,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>readonly</value>
+                    <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.ParentId</fieldItem>
                 <identifier>RecordParentIdField</identifier>
@@ -619,19 +643,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.CaseNumber</fieldItem>
                 <identifier>RecordCaseNumberField2</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Category__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Retirement Svc-Education</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>RET Education</rightValue>
-                    </criteria>
-                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -697,7 +708,7 @@
                 <fieldItem>Record.Reason</fieldItem>
                 <identifier>RecordReasonField</identifier>
                 <visibilityRule>
-                    <booleanFilter>NOT( 1 AND 2 )</booleanFilter>
+                    <booleanFilter>NOT( 1 AND 2 ) AND 3</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_Category__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -707,6 +718,11 @@
                         <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>RET Education</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>WX/WA</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -749,26 +765,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Rating__c</fieldItem>
                 <identifier>RecordNSP_Rating_cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Category__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Retirement Svc-Education</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>RET Education</rightValue>
-                    </criteria>
-                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Project__c</fieldItem>
                 <identifier>RecordProject_cField</identifier>
@@ -783,7 +786,7 @@
                 <fieldItem>Record.Entries_Processed__c</fieldItem>
                 <identifier>RecordEntries_Processed_cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>NOT( 1 AND 2 )</booleanFilter>
+                    <booleanFilter>NOT (1 AND 2) AND 3</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_Category__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -793,6 +796,11 @@
                         <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>RET Education</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>WX/WA</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -806,7 +814,7 @@
                 <fieldItem>Record.NSP_Case_Quick_Rate_Number__c</fieldItem>
                 <identifier>RecordNSP_Case_Quick_Rate_Number_cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>NOT( 1 AND 2 )</booleanFilter>
+                    <booleanFilter>NOT (1 AND 2) AND 3</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_Category__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -816,6 +824,11 @@
                         <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>RET Education</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>WX/WA</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -854,6 +867,23 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Root_Cause__c</fieldItem>
+                <identifier>RecordNSP_Root_Cause_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>WX/WA</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-0396ab73-0a0f-4c2c-b49d-0681afea2429</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -879,6 +909,68 @@
             </componentInstance>
         </itemInstances>
         <name>Facet-fba27db2-a27f-481e-a1ff-7c5bbd5a12c3</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.iSolved_ID__c</fieldItem>
+                <identifier>RecordiSolved_ID_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Product_Segment__c</fieldItem>
+                <identifier>RecordProduct_Segment_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-4a612ea9-9d69-4cb6-8c7b-d1e22305d904</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Product_Referencable__c</fieldItem>
+                <identifier>RecordProduct_Referencable_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-066c3dfc-46b3-4b39-9fb9-faa04a2ac074</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-4a612ea9-9d69-4cb6-8c7b-d1e22305d904</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column16</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-066c3dfc-46b3-4b39-9fb9-faa04a2ac074</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column17</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-c75365da-1746-4548-a044-ca30f2ae7f06</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -1068,19 +1160,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_RET_Subplan__c</fieldItem>
                 <identifier>RecordNSP_RET_Subplan_cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Category__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Retirement Svc-Education</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>RET Education</rightValue>
-                    </criteria>
-                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1091,19 +1170,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_RET_Subplan_Form__c</fieldItem>
                 <identifier>RecordNSP_RET_Subplan_Form_cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Category__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Retirement Svc-Education</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>RET Education</rightValue>
-                    </criteria>
-                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1114,19 +1180,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Intro_Date__c</fieldItem>
                 <identifier>RecordIntro_Date_cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Category__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Retirement Svc-Education</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>RET Education</rightValue>
-                    </criteria>
-                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1137,19 +1190,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Demo_Date__c</fieldItem>
                 <identifier>RecordDemo_Date_cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Category__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Retirement Svc-Education</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>RET Education</rightValue>
-                    </criteria>
-                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1160,19 +1200,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Date_of_Education__c</fieldItem>
                 <identifier>RecordDate_of_Education_cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Category__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Retirement Svc-Education</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>RET Education</rightValue>
-                    </criteria>
-                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-aaa333e3-2306-4da9-867a-86f8d8acb10a</name>
@@ -1187,19 +1214,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_RET_Education__c</fieldItem>
                 <identifier>RecordNSP_RET_Education_cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Category__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Retirement Svc-Education</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>RET Education</rightValue>
-                    </criteria>
-                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1210,19 +1224,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Education_Sessions__c</fieldItem>
                 <identifier>RecordEducation_Sessions_cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Category__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Retirement Svc-Education</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>RET Education</rightValue>
-                    </criteria>
-                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1233,19 +1234,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Attendees__c</fieldItem>
                 <identifier>RecordAttendees_cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Category__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Retirement Svc-Education</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>RET Education</rightValue>
-                    </criteria>
-                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1256,19 +1244,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_RET_Education_Comments__c</fieldItem>
                 <identifier>RecordNSP_RET_Education_Comments_cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Category__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Retirement Svc-Education</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>RET Education</rightValue>
-                    </criteria>
-                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-b91020f8-1bfd-4def-95bf-0c8d998f7d11</name>
@@ -1365,6 +1340,98 @@
             </componentInstance>
         </itemInstances>
         <name>Facet-d48c84c6-d854-4423-88fb-75d942acaff0</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Tax_State__c</fieldItem>
+                <identifier>RecordTax_State_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.SUI_Type__c</fieldItem>
+                <identifier>RecordSUI_Type_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.SUI_Confirmation__c</fieldItem>
+                <identifier>RecordSUI_Confirmation_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-85a3d7e1-46ee-4551-a19e-de04d0334061</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Email_Cadence_Start_Date__c</fieldItem>
+                <identifier>RecordEmail_Cadence_Start_Date_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Email_Cadence_Sent__c</fieldItem>
+                <identifier>RecordEmail_Cadence_Sent_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Escalation_Notice__c</fieldItem>
+                <identifier>RecordEscalation_Notice_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-c741a49a-575c-4456-8a7d-66f72b732340</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-85a3d7e1-46ee-4551-a19e-de04d0334061</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column18</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-c741a49a-575c-4456-8a7d-66f72b732340</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column19</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-fde708e6-0efc-4ec5-9fbc-e1ae16e3b19c</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -1551,29 +1618,6 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.CaseNumber</fieldItem>
-                <identifier>RecordCaseNumberField</identifier>
-                <visibilityRule>
-                    <booleanFilter>NOT( 1 AND 2 )</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Category__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Retirement Svc-Education</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>RET Education</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Assigned_Queue__c</fieldItem>
@@ -1588,6 +1632,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Created_by_Division__c</fieldItem>
                 <identifier>RecordNSP_Created_by_Division_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>WX/WA</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1618,6 +1669,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_SR__c</fieldItem>
                 <identifier>RecordNSP_SR_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>WX/WA</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1685,6 +1743,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_CorporateEmployeeEE__c</fieldItem>
                 <identifier>RecordNSP_CorporateEmployeeEE_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>WX/WA</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1696,7 +1761,7 @@
                 <fieldItem>Record.NSP_NiceCx_Case__c</fieldItem>
                 <identifier>RecordNSP_NiceCx_Case_cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>NOT( 1 AND 2 )</booleanFilter>
+                    <booleanFilter>NOT (1 AND 2) AND 3</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_Category__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -1706,6 +1771,11 @@
                         <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>RET Education</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>WX/WA</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1739,7 +1809,7 @@
                 <fieldItem>Record.NSP_First_Assigned_Queue__c</fieldItem>
                 <identifier>RecordNSP_First_Assigned_Queue_cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>NOT( 1 AND 2 )</booleanFilter>
+                    <booleanFilter>NOT (1 AND 2) AND 3</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_Category__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -1749,6 +1819,11 @@
                         <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>RET Education</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>WX/WA</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1762,7 +1837,7 @@
                 <fieldItem>Record.NSP_NiceCx_Contact_ID__c</fieldItem>
                 <identifier>RecordNSP_NiceCx_Contact_ID_cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>NOT( 1 AND 2 )</booleanFilter>
+                    <booleanFilter>NOT (1 AND 2) AND 3</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_Category__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -1772,6 +1847,11 @@
                         <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>RET Education</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>WX/WA</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1785,7 +1865,7 @@
                 <fieldItem>Record.NSP_NiceCX_ContactID_Leg__c</fieldItem>
                 <identifier>RecordNSP_NiceCX_ContactID_Leg_cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>NOT( 1 AND 2 )</booleanFilter>
+                    <booleanFilter>NOT (1 AND 2) AND 3</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_Category__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -1795,6 +1875,11 @@
                         <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>RET Education</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>WX/WA</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -2071,6 +2156,31 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>columns</name>
+                    <value>Facet-c75365da-1746-4548-a044-ca30f2ae7f06</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>HRCore Information</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection9</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>WX/WA</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
                     <value>Facet-9ec311ef-db6b-4329-a346-83d9b08c573d</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -2170,6 +2280,31 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection2</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
+                    <value>Facet-fde708e6-0efc-4ec5-9fbc-e1ae16e3b19c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>SUI</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection10</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>FIN-Unemployment Tax Items</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -2296,8 +2431,16 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Case.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>EmailMessages</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>relatedListComponentOverride</name>
-                    <value>ADVGRID</value>
+                    <value>NONE</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>rowsToDisplay</name>
@@ -2307,8 +2450,381 @@
                     <name>showActionBar</name>
                     <value>true</value>
                 </componentInstanceProperties>
-                <componentName>force:relatedListContainer</componentName>
-                <identifier>force_relatedListContainer</identifier>
+                <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer2</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Case.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>CaseComments</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListComponentOverride</name>
+                    <value>NONE</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>rowsToDisplay</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer13</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>WX/WA</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>actionNames</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>NewCase</value>
+                        </valueListItems>
+                    </valueList>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>adminFilters</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>maxRecordsToDisplay</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Case.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>Cases</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListDisplayType</name>
+                    <value>ADVGRID</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListFieldAliases</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>CASES.CASE_NUMBER</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CASES.SUBJECT</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>NSP_Category__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>NSP_SubCategory__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CASES.PRIORITY</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CASES.CREATED_DATE</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CASES.STATUS</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>OWNER_NAME</value>
+                        </valueListItems>
+                    </valueList>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListLabel</name>
+                    <value>Related Cases</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>sortFieldAlias</name>
+                    <value>__DEFAULT__</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>sortFieldOrder</name>
+                    <value>Default</value>
+                </componentInstanceProperties>
+                <componentName>lst:dynamicRelatedList</componentName>
+                <identifier>lst_dynamicRelatedList</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Case.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>VoiceCalls__r</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListComponentOverride</name>
+                    <value>NONE</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>rowsToDisplay</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer7</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Case.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>ActivityHistories</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListComponentOverride</name>
+                    <value>NONE</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>rowsToDisplay</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer9</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Case.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>AttachedContentDocuments</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListComponentOverride</name>
+                    <value>NONE</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>rowsToDisplay</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer10</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>actionNames</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>New</value>
+                        </valueListItems>
+                    </valueList>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>adminFilters</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>maxRecordsToDisplay</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Case.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>Case_Contact_Roles__r</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListDisplayType</name>
+                    <value>ADVGRID</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListFieldAliases</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>Contact_Name__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>NSP_Work_Email__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>NSP_Work_Phone__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>NSP_Per_Id__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>NSP_IsPrimary__c</value>
+                        </valueListItems>
+                    </valueList>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListLabel</name>
+                    <value>Case Contacts</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>sortFieldAlias</name>
+                    <value>__DEFAULT__</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>sortFieldOrder</name>
+                    <value>Default</value>
+                </componentInstanceProperties>
+                <componentName>lst:dynamicRelatedList</componentName>
+                <identifier>lst_dynamicRelatedList4</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>actionNames</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>New</value>
+                        </valueListItems>
+                    </valueList>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>adminFilters</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>maxRecordsToDisplay</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Case.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>Projects__r</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListDisplayType</name>
+                    <value>ADVGRID</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListFieldAliases</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>NAME</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>pse__Status_Visual__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Go_Live_Date__c</value>
+                        </valueListItems>
+                    </valueList>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListLabel</name>
+                    <value>Projects</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>sortFieldAlias</name>
+                    <value>__DEFAULT__</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>sortFieldOrder</name>
+                    <value>Default</value>
+                </componentInstanceProperties>
+                <componentName>lst:dynamicRelatedList</componentName>
+                <identifier>lst_dynamicRelatedList2</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Case.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>RelatedMergedRecords</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListComponentOverride</name>
+                    <value>NONE</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>rowsToDisplay</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer11</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Case.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>Histories</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListComponentOverride</name>
+                    <value>NONE</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>rowsToDisplay</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer12</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-949f43d3-87bb-473a-907a-ec141206b98e</name>
@@ -2428,6 +2944,10 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Tabs</value>
+                </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>tabs</name>
                     <value>sidebartabs</value>
@@ -2554,6 +3074,10 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Tabs</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>tabs</name>
                     <value>tabs</value>
                 </componentInstanceProperties>
@@ -2608,6 +3132,21 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>actionNames</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>MassChangeOwner</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>New</value>
+                        </valueListItems>
+                    </valueList>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>maxRecordsToDisplay</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>parentFieldApiName</name>
                     <value>Case.Id</value>
                 </componentInstanceProperties>
@@ -2616,19 +3155,47 @@
                     <value>Notes1__r</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>relatedListComponentOverride</name>
-                    <value>NONE</value>
+                    <name>relatedListDisplayType</name>
+                    <value>ADVGRID</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>rowsToDisplay</name>
-                    <value>10</value>
+                    <name>relatedListFieldAliases</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>NAME</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Note_Type__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Note__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CREATEDBY_USER</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CREATED_DATE</value>
+                        </valueListItems>
+                    </valueList>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListLabel</name>
+                    <value>Notes</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>showActionBar</name>
                     <value>true</value>
                 </componentInstanceProperties>
-                <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer7</identifier>
+                <componentInstanceProperties>
+                    <name>sortFieldAlias</name>
+                    <value>__DEFAULT__</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>sortFieldOrder</name>
+                    <value>Default</value>
+                </componentInstanceProperties>
+                <componentName>lst:dynamicRelatedList</componentName>
+                <identifier>lst_dynamicRelatedList7</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>

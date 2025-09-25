@@ -988,11 +988,13 @@ public with sharing class NSP_EmailMessageTriggerHelper {
         get {
             if ( bpsCaseTier1Categories == null ) {
                 List<String> local = new List<String>();
-                if ( ( NSP_EmailMessageTriggerHelper.caseSettings != null )
-                    && String.isNotBlank( NSP_EmailMessageTriggerHelper.caseSettings.BPS_Case_Tier_1_Categories__c )
-                    )
-                {
-                    local = NSP_EmailMessageTriggerHelper.caseSettings.BPS_Case_Tier_1_Categories__c.split( ',' );
+                if ( NSP_EmailMessageTriggerHelper.caseSettings != null ) {
+                    if ( String.isNotBlank( NSP_EmailMessageTriggerHelper.caseSettings.BPS_Case_Tier_1_Categories_1__c ) ) {
+                        local.addAll( NSP_EmailMessageTriggerHelper.caseSettings.BPS_Case_Tier_1_Categories_1__c.split( ',' ) );
+                    }
+                    if ( String.isNotBlank( NSP_EmailMessageTriggerHelper.caseSettings.BPS_Case_Tier_1_Categories_2__c ) ) {
+                        local.addAll( NSP_EmailMessageTriggerHelper.caseSettings.BPS_Case_Tier_1_Categories_2__c.split( ',' ) );
+                    }
                 }
                 bpsCaseTier1Categories = local;
             }

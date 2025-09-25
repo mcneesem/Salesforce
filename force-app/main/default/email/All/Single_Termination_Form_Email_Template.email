@@ -1,0 +1,5 @@
+<messaging:emailTemplate subject="Client Termination Activity - {!TODAY()}"  recipientType="Contact"  relatedToType="NSP_Termination_Form__c">
+    <messaging:htmlEmailBody >
+        <c:Single_TermForm_Email_Template_Component recordId="{!relatedTo.id}"/>
+    </messaging:htmlEmailBody>
+</messaging:emailTemplate>

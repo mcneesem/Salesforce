@@ -12,6 +12,7 @@
     <permissionSets>Allow_Delete_Leads</permissionSets>
     <permissionSets>Bundle_Template_Flag_fields_Permission</permissionSets>
     <permissionSets>Bypass_Benefit_Termination_Date_Rule</permissionSets>
+    <permissionSets>Bypass_Lock_Opportunity_Edits</permissionSets>
     <permissionSets>Bypass_Order_Prevent_Status_Change</permissionSets>
     <permissionSets>Bypass_Read_Only_Case_Owner</permissionSets>
     <permissionSets>Bypass_Required_Compensation_Services_Closure</permissionSets>
@@ -38,6 +39,8 @@
     <permissionSets>Resource_Absence_record_type_access</permissionSets>
     <permissionSets>Sales_Enablement</permissionSets>
     <permissionSets>Task_Record_Type_Time_Entry_DO_NOT_USE</permissionSets>
+    <permissionSets>Termination_Admin_Access</permissionSets>
+    <permissionSets>Termination_Form_Visibility</permissionSets>
     <permissionSets>Wingspan_Log_Visibility</permissionSets>
     <permissionSets>force__PipelineInspectionIncluded</permissionSets>
     <status>Updated</status>
