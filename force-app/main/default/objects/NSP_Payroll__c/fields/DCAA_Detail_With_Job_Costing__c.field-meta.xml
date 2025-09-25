@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>DCAA_Detail_With_Job_Costing__c</fullName>
     <defaultValue>false</defaultValue>
+    <description>Legacy field from AIMS used for payroll reporting.</description>
     <label>DCAA Detail With Job Costing</label>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
