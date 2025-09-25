@@ -3,12 +3,12 @@
     <actionCalls>
         <name>Send_Compensation_Service_Request_email</name>
         <label>Send Compensation Service Request email</label>
-        <locationX>314</locationX>
-        <locationY>674</locationY>
+        <locationX>50</locationX>
+        <locationY>782</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
-            <targetReference>Email_Sent_Message</targetReference>
+            <targetReference>Assign_Sent_Email_to_True</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Assign_varFaultElement_Send_Compensation_Service_Request</targetReference>
@@ -58,8 +58,8 @@
     <assignments>
         <name>Assign_Contact_Name_to_Variable</name>
         <label>Assign Contact Name to Variable</label>
-        <locationX>314</locationX>
-        <locationY>566</locationY>
+        <locationX>50</locationX>
+        <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>contactName</assignToReference>
             <operator>Assign</operator>
@@ -75,7 +75,7 @@
         <name>Assign_Sent_Email_to_True</name>
         <label>Assign Sent Email to True</label>
         <locationX>50</locationX>
-        <locationY>998</locationY>
+        <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>varCasetoUpdate.Sent_Email__c</assignToReference>
             <operator>Assign</operator>
@@ -130,8 +130,8 @@
     <assignments>
         <name>Assign_varFaultElement_Send_Compensation_Service_Request</name>
         <label>Assign varFaultElement - Send Compensation Service Request</label>
-        <locationX>842</locationX>
-        <locationY>782</locationY>
+        <locationX>578</locationX>
+        <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -148,7 +148,7 @@
         <name>Assign_varFaultElement_Update_Case_Field_Sent_Email</name>
         <label>Assign varFaultElement - Update Case Field Sent Email</label>
         <locationX>314</locationX>
-        <locationY>1214</locationY>
+        <locationY>1106</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -164,8 +164,11 @@
     <decisions>
         <name>Is_Sent_Email_populated</name>
         <label>Is Sent Email populated?</label>
-        <locationX>314</locationX>
-        <locationY>890</locationY>
+        <locationX>776</locationX>
+        <locationY>458</locationY>
+        <defaultConnector>
+            <targetReference>Email_Already_Sent_Error</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>No Case update needed</defaultConnectorLabel>
         <rules>
             <name>Sent_email_is_false</name>
@@ -178,7 +181,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assign_Sent_Email_to_True</targetReference>
+                <targetReference>Was_ACR_found</targetReference>
             </connector>
             <label>Sent email is false</label>
         </rules>
@@ -186,8 +189,11 @@
     <decisions>
         <name>Was_ACR_found</name>
         <label>Was ACR found?</label>
-        <locationX>710</locationX>
-        <locationY>458</locationY>
+        <locationX>446</locationX>
+        <locationY>566</locationY>
+        <defaultConnector>
+            <targetReference>No_ACR_found_Error</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>ACR_found</name>
@@ -209,8 +215,11 @@
         <description>Confirms that a Case Account is listed</description>
         <name>Was_Case_found</name>
         <label>Was Case found?</label>
-        <locationX>1172</locationX>
+        <locationX>1205</locationX>
         <locationY>242</locationY>
+        <defaultConnector>
+            <targetReference>No_Case_found_Error</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Case_found</name>
@@ -255,11 +264,11 @@
     <recordLookups>
         <name>Get_ACR_Record</name>
         <label>Get ACR Record</label>
-        <locationX>710</locationX>
+        <locationX>776</locationX>
         <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Was_ACR_found</targetReference>
+            <targetReference>Is_Sent_Email_populated</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Assign_varFaultElement_Get_ACR_Record</targetReference>
@@ -303,7 +312,7 @@
         <description>Gets and stores data from Compensation Services Case</description>
         <name>Get_Compensation_Services_Cases</name>
         <label>Get Compensation Services Cases</label>
-        <locationX>1172</locationX>
+        <locationX>1205</locationX>
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -368,23 +377,47 @@
         <name>Update_Case_Field_Sent_Email</name>
         <label>Update Case Field Sent Email</label>
         <locationX>50</locationX>
-        <locationY>1106</locationY>
+        <locationY>998</locationY>
+        <connector>
+            <targetReference>Email_Sent_Message</targetReference>
+        </connector>
         <faultConnector>
             <targetReference>Assign_varFaultElement_Update_Case_Field_Sent_Email</targetReference>
         </faultConnector>
         <inputReference>varCasetoUpdate</inputReference>
     </recordUpdates>
     <screens>
-        <name>Email_Sent_Message</name>
-        <label>Email Sent Message</label>
-        <locationX>314</locationX>
-        <locationY>782</locationY>
+        <name>Email_Already_Sent_Error</name>
+        <label>Email Already Sent Error</label>
+        <locationX>1106</locationX>
+        <locationY>566</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Is_Sent_Email_populated</targetReference>
-        </connector>
+        <fields>
+            <name>Email_Already_Sent</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 18px; color: rgb(253, 6, 6);&quot;&gt;Compensation Request Email has already been Sent (Id={!recordId}).&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Email_Sent_Message</name>
+        <label>Email Sent Message</label>
+        <locationX>50</locationX>
+        <locationY>1106</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
         <fields>
             <name>Email_Sent</name>
             <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;color: rgb(15, 176, 50); font-size: 18px;&quot;&gt;Email has been Sent&lt;/strong&gt;&lt;/p&gt;</fieldText>
@@ -401,8 +434,80 @@
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
+    <screens>
+        <name>Flow_Fault_Error</name>
+        <label>Flow Fault Error</label>
+        <locationX>1898</locationX>
+        <locationY>458</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Flow_Fault</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;color: rgb(237, 6, 6); font-size: 14px;&quot;&gt;{!$Flow.FaultMessage}&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>No_ACR_found_Error</name>
+        <label>No ACR found Error</label>
+        <locationX>842</locationX>
+        <locationY>674</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>No_ACR_Found</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(237, 6, 6);&quot;&gt;Account Contact Relationship not found (AccountId={!varCase.AccountId}, ContactId={!varCase.ContactId}).&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>No_Case_found_Error</name>
+        <label>No Case found Error</label>
+        <locationX>1634</locationX>
+        <locationY>350</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>No_Case_Found</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;color: rgb(237, 6, 6); font-size: 14px;&quot;&gt;Case not found (Id={!recordId}).&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
     <start>
-        <locationX>1046</locationX>
+        <locationX>1079</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Compensation_Services_Cases</targetReference>
@@ -414,6 +519,9 @@
         <label>Fault Handler</label>
         <locationX>1898</locationX>
         <locationY>350</locationY>
+        <connector>
+            <targetReference>Flow_Fault_Error</targetReference>
+        </connector>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
@@ -437,22 +545,7 @@
     <textTemplates>
         <name>emailbody</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;div style=&quot;max-width: 751px;&quot;&gt;
-&lt;p&gt;
-&lt;img src=&quot;https://insperity.my.salesforce.com/servlet/servlet.ImageServer?id=0154x000001Eo64&amp;amp;oid=00D7z00000Vg4dF&quot;&gt;&lt;/p&gt;
-&lt;br/&gt;
-&lt;table width=&quot;751&quot;&gt;&lt;tr&gt;&lt;td&gt;
-&lt;p&gt;Hello {!contactName},&lt;/p&gt;
-&lt;p&gt;We will be happy to assist you with your request. Please allow at least &lt;strong&gt;2-3 business days &lt;/strong&gt;to complete your survey request. If your request requires additional time to complete due to its size or if additional information is needed, one of our Specialists will reach out.&lt;/p&gt;
-&lt;p&gt;For compensation-related projects, one of our Consultants will be in touch and will communicate anticipated turnaround time.&lt;/p&gt;
-&lt;p&gt;If you have an urgent request or if you have any questions, please feel free to reach out to us.&lt;/p&gt;
-&lt;p&gt;We look forward to working with you.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Compensation Services&lt;/strong&gt;&lt;/p&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;br/&gt;
-&lt;p&gt;&lt;img src=&quot;https://insperity.my.salesforce.com/servlet/servlet.ImageServer?id=0154x000001Eo63&amp;amp;oid=00D7z00000Vg4dF&quot;&gt;
-&lt;/p&gt;
-&lt;/div&gt;</text>
+        <text>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;img src=&quot;https://insperity.my.salesforce.com/servlet/servlet.ImageServer?id=0154x000001Eo64&amp;oid=00D4x000003x74T&quot;&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;table class=&quot;ql-table-blob&quot; width=&quot;751&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;&lt;br&gt;&lt;p&gt;Hello {!contactName},&lt;/p&gt;&lt;br&gt;&lt;p&gt;We will be happy to assist you with your request. Please allow at least &lt;strong&gt;2-3 business days &lt;/strong&gt;to complete your survey request. If your request requires additional time to complete due to its size or if additional information is needed, one of our Specialists will reach out.&lt;/p&gt;&lt;br&gt;&lt;p&gt;For compensation-related projects, one of our Consultants will be in touch and will communicate anticipated turnaround time.&lt;/p&gt;&lt;br&gt;&lt;p&gt;If you have an urgent request or if you have any questions, please feel free to reach out to us.&lt;/p&gt;&lt;br&gt;&lt;p&gt;We look forward to working with you.&lt;/p&gt;&lt;br&gt;&lt;p&gt;&lt;strong&gt;Compensation Services&lt;/strong&gt;&lt;/p&gt;&lt;br&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;img src=&quot;https://insperity--devservx.sandbox.my.salesforce.com/servlet/servlet.ImageServer?id=0157z00000FCwIx&amp;oid=00D7z00000Vg4dF&quot;&gt;&lt;/p&gt;</text>
     </textTemplates>
     <textTemplates>
         <name>emailsubjecttexttemplate</name>
