@@ -7,7 +7,7 @@
 // Params: autoStageOppIds: Set of Ids of Opportunities with Stage criteria changes, making
 //                          them possible candidates for automatic Stage progression
 // ********************************************************************************************************
-public class AutomateOpportunityStage {
+public with sharing class AutomateOpportunityStage {
     // test w/ AutomateOpportunityStageTest (92%)
 
     private static final String FAILED = 'Failed Stage Validation';
@@ -23,8 +23,8 @@ public class AutomateOpportunityStage {
     }
 
     @InvocableMethod( label='Automate Opportunity Stage' description='Automates Opportunity Stage progression' category='Opportunity' )
-    public static void automateOpportunityStage( List<Id> autoStageOppIds ) {
-        if ( ( autoStageOppIds != null ) && !autoStageOppIds.isEmpty() ) {
+    public static void automateOpportunityStage( List<Id> autoStageOppIds ){
+        if ( ( autoStageOppIds != null ) && !autoStageOppIds.isEmpty() ){
             try {
                 List<Opportunity> stageAutoOptyList = new List<Opportunity>();
                 List<Opportunity> updateOptyList = new List<Opportunity>();
@@ -34,6 +34,9 @@ public class AutomateOpportunityStage {
                                 CloseDate ,
                                 Fee_Inclusive__c ,
                                 NextStep ,
+                                NSP_Account_Segment__c ,
+                                NSP_AddonType__c ,
+                                NSP_BidNumber__c ,
                                 NSP_Bid_Status__c ,
                                 NSP_Booked_Date__c ,
                                 NSP_Bypass_Docusign_Signature__c ,

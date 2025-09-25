@@ -33,7 +33,7 @@ public with sharing class NSP_ValidateOpportunityStage {
     public static List<string> closeLostRoleinOpportunityTeam = System.Label.Close_Lost_Role_in_Opportunity_Team.split(',');
     private static List<Opportunity_Stage_Validation__mdt> optyStageVals = Opportunity_Stage_Validation__mdt.getAll().values();
     private static String validationObjects = 'Opportunity,Event,Task,OpportunityContactRole,NSP_Employee_Split__c,SBQQ__Quote__c,NSP_Checklist__c';
-    private static final String AGGREGATES = 'Aggretates';
+    private static final String AGGREGATES = 'Aggregates';
     private static final String DEFAULT_PRODUCT = 'Default';
     private static final String FAILED = 'Failed Stage Validation';
     private static final String OPPORTUNITY_OBJ = 'Opportunity';
@@ -142,9 +142,10 @@ public with sharing class NSP_ValidateOpportunityStage {
                 ValObjectAggregates valObjectAgs = new ValObjectAggregates(oppFromMap?.Employee_Splits__r);
 
                 List<Opportunity_Stage_Validation__mdt> currentOptyStageVals = NSP_ValidateOpportunityStage.getCurrentOptyStageVals( opp );
+                List<Opportunity_Stage_Validation__mdt> singleOptyStageVals = NSP_ValidateOpportunityStage.getSingleStageVals( currentOptyStageVals );
                 Map<String,List<Opportunity_Stage_Validation__mdt>> groupedStageValMap = NSP_ValidateOpportunityStage.getGroupedStageValMap( currentOptyStageVals );
 
-                NSP_ValidateOpportunityStage.evaluateSingleCriteria( opp , valObjectMap , valObjectAgs , currentOptyStageVals );
+                NSP_ValidateOpportunityStage.evaluateSingleCriteria( opp , valObjectMap , valObjectAgs , singleOptyStageVals );
                 NSP_ValidateOpportunityStage.evaluateGroupedCriteria( opp , valObjectMap , valObjectAgs , groupedStageValMap );
                 //Proposal
                 if ( opp.StageName.equals( NSP_SalesConstants.PROPOSAL_STAGE ) ) {
@@ -214,33 +215,28 @@ public with sharing class NSP_ValidateOpportunityStage {
         Opportunity opp ,
         Map<String,List<SObject>> valObjectMap ,
         ValObjectAggregates valObjectAgs ,
-        List<Opportunity_Stage_Validation__mdt> currentOptyStageVals
+        List<Opportunity_Stage_Validation__mdt> singleOptyStageVals
         )
     {
-        for(Opportunity_Stage_Validation__mdt val : currentOptyStageVals){
-            Integer passCheckCount = 0;
-            if( String.isBlank(val.Group__c) ) {
+        if( singleOptyStageVals != null ) {
+            for( Opportunity_Stage_Validation__mdt val : singleOptyStageVals ){
+                Integer passCheckCount = 0;
                 if( val.Object__c.indexOf( AGGREGATES ) > -1 ) {
-                    passCheckCount = evaluateAggregateCriteria( opp , passCheckCount , valObjectAgs , val);
-                } else if( valObjectMap.get(val.Object__c) != null ) {
-                    for( SObject valObject : valObjectMap.get(val.Object__c) ){
-                        if( checkCondition(valObject.get(val.Field__c) , val.Value__c , val.Operation__c) ) {
-                            passCheckCount++;
-                        }
-                    }
+                    passCheckCount = evaluateAggregateVal( opp , passCheckCount , valObjectAgs , val );
+                } else {
+                    passCheckCount = evaluateSingleVal( passCheckCount , valObjectMap , val );
                 }
-                if( passCheckCount < 1 ) {
-                    if( checkOnly ) {
-                        opp.NextStep = FAILED;
-                    } else {
-                        opp.addError(val.Error_Message__c);
-                    }
-                }
+
+                NSP_ValidateOpportunityStage.addValError(
+                    opp ,
+                    passCheckCount ,
+                    val.Error_Message__c
+                );
             }
         }
     }
 
-    private static Integer evaluateAggregateCriteria(
+    private static Integer evaluateAggregateVal(
         Opportunity opp ,
         Integer passCheckCount ,
         ValObjectAggregates valObjectAgs ,
@@ -254,6 +250,22 @@ public with sharing class NSP_ValidateOpportunityStage {
 
         if( checkCondition( valObjectAgs.get(val.Field__c) , valValue , val.Operation__c ) ){
             passCheckCount++;
+        }
+        return passCheckCount;
+    }
+
+    private static Integer evaluateSingleVal(
+        Integer passCheckCount ,
+        Map<String,List<SObject>> valObjectMap ,
+        Opportunity_Stage_Validation__mdt val
+        )
+    {
+        if( valObjectMap.get(val.Object__c) != null ) {
+            for( SObject valObject : valObjectMap.get(val.Object__c) ){
+                if( checkCondition( valObject.get(val.Field__c) , val.Value__c , val.Operation__c ) ){
+                    passCheckCount++;
+                }
+            }
         }
         return passCheckCount;
     }
@@ -285,7 +297,7 @@ public with sharing class NSP_ValidateOpportunityStage {
                 i++;
             } while ( i < valObjectMap.get(groupRelObjName).size() );
 
-            NSP_ValidateOpportunityStage.addGroupError(
+            NSP_ValidateOpportunityStage.addValError(
                 opp ,
                 passCheck ,
                 passCheckDNE ,
@@ -294,7 +306,23 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
     }
 
-    private static void addGroupError(
+    private static void addValError(
+        Opportunity opp ,
+        Integer passCheckCount ,
+        String errMsg
+        )
+    {
+        if( passCheckCount < 1 ) {
+            NSP_ValidateOpportunityStage.addValError(
+                opp ,
+                false ,
+                true ,
+                errMsg
+            );
+        }
+    }
+
+    private static void addValError(
         Opportunity opp ,
         Boolean passCheck ,
         Boolean passCheckDNE ,
@@ -303,7 +331,7 @@ public with sharing class NSP_ValidateOpportunityStage {
     {
         if ( !opp.hasErrors()
             && ( !passCheck || !passCheckDNE )
-            )
+           )
         {
             if( checkOnly ) {
                 opp.NextStep = FAILED;
@@ -335,7 +363,7 @@ public with sharing class NSP_ValidateOpportunityStage {
             }
 
             if( val.Object__c.indexOf( AGGREGATES ) > -1 ) {
-                passCheckCount = evaluateAggregateCriteria( opp , passCheckCount , valObjectAgs , val);
+                passCheckCount = evaluateAggregateVal( opp , passCheckCount , valObjectAgs , val);
             } else if( checkCondition(valFieldValue , val.Value__c , val.Operation__c) ){
                 passCheckCount++;
             } else if( val.Object__c == OPPORTUNITY_OBJ ){ // checkCondition failed and Group looks at Opportunity, could be mixed group
@@ -389,6 +417,18 @@ public with sharing class NSP_ValidateOpportunityStage {
             }
         }
         return currentOptyStageVals;
+    }
+
+    private static List<Opportunity_Stage_Validation__mdt> getSingleStageVals( List<Opportunity_Stage_Validation__mdt> currentOptyStageVals ) {
+        List<Opportunity_Stage_Validation__mdt> singleOptyStageVals = new List<Opportunity_Stage_Validation__mdt>();
+        if( currentOptyStageVals != null ) {
+            for(Opportunity_Stage_Validation__mdt singleVal : currentOptyStageVals){
+                if( String.isBlank(singleVal.Group__c) ) {
+                    singleOptyStageVals.add(singleVal);
+                }
+            }
+        }
+        return singleOptyStageVals;
     }
 
     private static Map<String, List<Opportunity_Stage_Validation__mdt>> getGroupedStageValMap( List<Opportunity_Stage_Validation__mdt> currentOptyStageVals ) {
@@ -524,33 +564,33 @@ public with sharing class NSP_ValidateOpportunityStage {
 
     private static void evaluateAnalysisStageCriteriaOld( Opportunity opp , List<Event> eventList ) {
         String scannedTask='';
-        if ( validHRProducts.contains( opp.NSP_PrimaryProduct__c )
-            || ( analysisStageCriteraTypes.contains( opp.Type )
-                && ( ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WX )
-                    || ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WA )
-                    )
-                )
+        if ( ( eventList != null )
+            && ( validHRProducts.contains( opp.NSP_PrimaryProduct__c )
+                || ( analysisStageCriteraTypes.contains( opp.Type )
+                    && ( ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WX )
+                        || ( opp.NSP_PrimaryProduct__c == NSP_SalesConstants.WA )
+                       )
+                   )
+               )
             )
         {
-            if ( eventList != null ) {
-                for ( Event event : eventList ) { ////looking for discovery
-                    if ( event.NSP_Event_Subtype__c == NSP_SalesConstants.DISCOVERY_CALL_ACTIVITY
-                        && event.NSP_Status__c !=NSP_SalesConstants.Cancelled
-                        )
-                    {
-                        scannedTask += HAS_DISCOVERY;
-                        if ( event.NSP_Status__c != NSP_SalesConstants.DISCOVERY_CALL_COMPLETED ) {
-                            scannedTask += HAS_OPEN_EVENT;
-                        }
+            for ( Event event : eventList ) { ////looking for discovery
+                if ( event.NSP_Event_Subtype__c == NSP_SalesConstants.DISCOVERY_CALL_ACTIVITY
+                    && event.NSP_Status__c !=NSP_SalesConstants.Cancelled
+                    )
+                {
+                    scannedTask += HAS_DISCOVERY;
+                    if ( event.NSP_Status__c != NSP_SalesConstants.DISCOVERY_CALL_COMPLETED ) {
+                        scannedTask += HAS_OPEN_EVENT;
                     }
                 }
-                //Show error
-                if ( !scannedTask.contains( HAS_DISCOVERY ) ) {
-                    opp.addError( System.Label.NSP_AddDiscoveryCalls );
-                }
-                if ( scannedTask.contains(HAS_OPEN_EVENT) ) {
-                    opp.addError( System.Label.NSP_CloseDiscoveryCallEvents );
-                }
+            }
+            //Show error
+            if ( !scannedTask.contains( HAS_DISCOVERY ) ) {
+                opp.addError( System.Label.NSP_AddDiscoveryCalls );
+            }
+            if ( scannedTask.contains(HAS_OPEN_EVENT) ) {
+                opp.addError( System.Label.NSP_CloseDiscoveryCallEvents );
             }
         }
     }
@@ -580,11 +620,11 @@ public with sharing class NSP_ValidateOpportunityStage {
                         )
                     )
                 {
-                    if( checkOnly ) {
-                        opp.NextStep = FAILED;
-                    } else {
-                        opp.addError( System.label.NSP_AddPrimaryQuote );
-                    }
+                    NSP_ValidateOpportunityStage.addValError(
+                        opp ,
+                        0 ,
+                        System.label.NSP_AddPrimaryQuote
+                    );
                 }
             }
         } catch ( Exception e ) {
@@ -607,11 +647,11 @@ public with sharing class NSP_ValidateOpportunityStage {
                     || ( opp.NSP_Client_For_Life__c != primaryQuote?.NSP_Client_For_Life__c ) )
                 )
             {
-                if( checkOnly ) {
-                    opp.NextStep = FAILED;
-                } else {
-                    opp.addError( System.label.NSP_Sync_Primary_Quote_With_Opportunity );
-                }
+                NSP_ValidateOpportunityStage.addValError(
+                    opp ,
+                    0 ,
+                    System.label.NSP_Sync_Primary_Quote_With_Opportunity
+                );
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
@@ -636,18 +676,19 @@ public with sharing class NSP_ValidateOpportunityStage {
                             || ( opp.NSP_Client_For_Life__c != primaryQuote.NSP_Client_For_Life__c ) )
                         )
                     {
-                        if( checkOnly ) {
-                            opp.NextStep = FAILED;
-                        } else {
-                            opp.addError( System.label.NSP_Sync_Primary_Quote_With_Opportunity );
-                        }
+                        NSP_ValidateOpportunityStage.addValError(
+                            opp ,
+                            0 ,
+                            System.label.NSP_Sync_Primary_Quote_With_Opportunity
+                        );
                     }
                 } else {
-                    if( checkOnly ) {
-                        opp.NextStep = FAILED;
-                    } else {
-                        opp.addError( System.label.NSP_AddPrimaryQuote );
-                    }
+
+                    NSP_ValidateOpportunityStage.addValError(
+                        opp ,
+                        0 ,
+                        System.label.NSP_AddPrimaryQuote
+                    );
                 }
             }
         } catch ( Exception e ) {
@@ -691,11 +732,11 @@ public with sharing class NSP_ValidateOpportunityStage {
         }
 
         if( canClosedWon > 0 ) {
-            if( checkOnly ) {
-                opp.NextStep = FAILED;
-            } else {
-                opp.addError( System.label.NSP_CANNOT_MOVE_TO_CLOSEDWON );
-            }
+            NSP_ValidateOpportunityStage.addValError(
+                opp ,
+                0 ,
+                System.label.NSP_CANNOT_MOVE_TO_CLOSEDWON
+            );
         }
     }
 
@@ -730,11 +771,11 @@ public with sharing class NSP_ValidateOpportunityStage {
     public static void evaluateClosedLostStageCriteria( Opportunity opp, Map<Id,User> opportunityOwnerRoleMap ) {
         Boolean canCloseLostOpty = checkClosedLostStageCriteria( opp , opportunityOwnerRoleMap );
         if ( !canCloseLostOpty ) {
-            if( checkOnly ) {
-                opp.NextStep = FAILED;
-            } else {
-                opp.addError( System.label.NSP_CANNOT_MOVE_TO_CLOSEDLOST );
-            }
+            NSP_ValidateOpportunityStage.addValError(
+                opp ,
+                0 ,
+                System.label.NSP_CANNOT_MOVE_TO_CLOSEDLOST
+            );
         }
     }
 
