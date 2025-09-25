@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Allows to bypass the Opportunity validation rule NCS_Locked_Opportunity_Backout_Access</description>
     <isLicensed>false</isLicensed>
     <label>Locked Opportunity Backout Access</label>
 </CustomPermission>
