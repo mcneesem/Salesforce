@@ -3,8 +3,7 @@
     <fullName>NSP_Is_Partner_CS_Applicable__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Indicates if Partner Consumption Schedule is applicable</description>
-    <externalId>false</externalId>
     <label>Is Partner CS Applicable?</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>

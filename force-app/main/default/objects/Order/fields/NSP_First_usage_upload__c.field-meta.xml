@@ -3,8 +3,7 @@
     <fullName>NSP_First_usage_upload__c</fullName>
     <defaultValue>false</defaultValue>
     <description>If true, indicates that the first usage is uploaded.</description>
-    <externalId>false</externalId>
     <label>First usage upload</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>
