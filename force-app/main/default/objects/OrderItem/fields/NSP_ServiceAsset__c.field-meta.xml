@@ -3,12 +3,11 @@
     <fullName>NSP_ServiceAsset__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <description>Holds the service asset created on opportunity closure</description>
-    <externalId>false</externalId>
     <label>Service Asset</label>
     <referenceTo>Asset</referenceTo>
     <relationshipLabel>Order Products (Service Asset)</relationshipLabel>
     <relationshipName>Order_Products</relationshipName>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Lookup</type>
 </CustomField>

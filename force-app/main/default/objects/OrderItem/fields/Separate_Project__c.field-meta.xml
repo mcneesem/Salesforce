@@ -3,7 +3,6 @@
     <fullName>Separate_Project__c</fullName>
     <defaultValue>false</defaultValue>
     <description>twin field from product</description>
-    <externalId>false</externalId>
     <label>Separate Project</label>
     <trackHistory>true</trackHistory>
     <type>Checkbox</type>

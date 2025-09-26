@@ -4,13 +4,12 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <deprecated>false</deprecated>
     <description>References the order product that this order product revises.</description>
-    <externalId>false</externalId>
     <inlineHelpText>References the order product that this order product revises.</inlineHelpText>
     <label>Revised Order Product</label>
     <referenceTo>OrderItem</referenceTo>
     <relationshipLabel>Order Products (Revised Order Product)</relationshipLabel>
     <relationshipName>RevisingOrderProducts</relationshipName>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Lookup</type>
 </CustomField>

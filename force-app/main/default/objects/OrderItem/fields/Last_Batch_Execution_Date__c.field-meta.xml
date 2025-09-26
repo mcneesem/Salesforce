@@ -3,7 +3,6 @@
     <fullName>Last_Batch_Execution_Date__c</fullName>
     <description>The date when the record was processed by OrderItemPriceUpdateBatch.</description>
     <encryptionScheme>None</encryptionScheme>
-    <externalId>false</externalId>
     <inlineHelpText>The date when the record was processed by OrderItemPriceUpdateBatch.</inlineHelpText>
     <label>Last Batch Execution Date</label>
     <required>false</required>
