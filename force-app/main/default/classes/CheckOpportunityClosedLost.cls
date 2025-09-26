@@ -1,5 +1,5 @@
 public with sharing class CheckOpportunityClosedLost {
-    // test w/ CheckOpportunityStageTest (100%)
+    // test w/ CheckOpportunityClosedLostTest (100%)
 
     @InvocableMethod( label='Check Opportunity Closed Lost' description='Checks if User can move Opportunity to Closed Lost' category='Opportunity' )
     public static List<CheckStageResponse> checkOpportunityClosedLost( List<CheckStageRequest> inputs ) {
