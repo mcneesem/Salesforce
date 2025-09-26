@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Parent_Amend_Required_is_Red__c</fullName>
-    <externalId>false</externalId>
     <formula>AND(
  NOT( ISNULL( SBQQ__RequiredBy__c ) )
  , SBQQ__RequiredBy__r.Amend_Required_Text_Field__c = &apos;Red&apos;

@@ -3,9 +3,8 @@
     <fullName>NSP_IsClonedLine__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Cloned line when scholarship is applied</description>
-    <externalId>false</externalId>
     <label>IsClonedLine</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

@@ -3,9 +3,8 @@
     <fullName>NSP_Is_WX_Bundle__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Indicates if the product is WX</description>
-    <externalId>false</externalId>
     <label>Is WX Bundle</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>
