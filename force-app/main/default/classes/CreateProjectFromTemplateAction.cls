@@ -65,10 +65,12 @@ public with sharing class CreateProjectFromTemplateAction {
         
         pse.SObjectCloneMapper.Field recordtypeMapper1 = new pse.SObjectCloneMapper.Field(Schema.pse__Proj__c.NSP_Exclusively_Assign_Owner__c);
         recordtypeMapper1.DefaultValue = TRUE;
-            
+        pse.SObjectCloneMapper.Field mapperFieldBillable = new pse.SObjectCloneMapper.Field( Schema.pse__Proj__c.pse__Is_Billable__c );
+        mapperFieldBillable.DefaultValue = false;    
         Set<pse.SObjectCloneMapper.Field> setOfFields = new Set<pse.SObjectCloneMapper.Field>{
             recordtypeMapper ,
             recordtypeMapper1 ,
+            mapperFieldBillable ,
             NSP_CreateProjFromFlow.getDefaultRegionMapperField()
         };
 
