@@ -3,10 +3,9 @@
     <fullName>NSP_Description_To_Store_Internal__c</fullName>
     <description>Used to store the product description on QLE to facilitate a custom script logic</description>
     <encryptionScheme>None</encryptionScheme>
-    <externalId>false</externalId>
     <label>Description To Store (Internal)</label>
     <length>32768</length>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>LongTextArea</type>
     <visibleLines>3</visibleLines>

@@ -3,9 +3,8 @@
     <fullName>NSP_Show_On_Recruitment_Template__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Indicates if the SKU should be present on Recruiting Email template</description>
-    <externalId>false</externalId>
     <label>Show On Recruitment Template</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

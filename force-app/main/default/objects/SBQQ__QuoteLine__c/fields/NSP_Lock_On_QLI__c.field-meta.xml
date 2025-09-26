@@ -3,9 +3,8 @@
     <fullName>NSP_Lock_On_QLI__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Lock all fields on the quote line item</description>
-    <externalId>false</externalId>
     <label>Lock On QLI</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

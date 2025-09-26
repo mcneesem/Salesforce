@@ -3,9 +3,8 @@
     <fullName>NSP_Independent_Product_Internal__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Internal Field used in price rule for independent products outside bundles</description>
-    <externalId>false</externalId>
     <label>Independent Product Internal</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

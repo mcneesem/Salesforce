@@ -3,9 +3,8 @@
     <fullName>NSP_Threshold_Applicable__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Indicates if threshold is applicable</description>
-    <externalId>false</externalId>
     <label>Threshold Applicable</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

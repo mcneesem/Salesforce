@@ -3,10 +3,9 @@
     <fullName>NSP_Sales_Tax_Details__c</fullName>
     <description>Stores Sales Tax details at quote line for budgetary quote</description>
     <encryptionScheme>None</encryptionScheme>
-    <externalId>false</externalId>
     <label>Sales Tax Details</label>
     <length>32768</length>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>LongTextArea</type>
     <visibleLines>3</visibleLines>

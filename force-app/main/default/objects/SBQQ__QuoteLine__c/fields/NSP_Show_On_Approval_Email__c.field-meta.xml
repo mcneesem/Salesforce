@@ -3,9 +3,8 @@
     <fullName>NSP_Show_On_Approval_Email__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Hold the value true or false indicating product to include in approval email template</description>
-    <externalId>false</externalId>
     <label>Show On Approval Email</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>
