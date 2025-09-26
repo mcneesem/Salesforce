@@ -398,6 +398,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Case.Credit_Exception_Approved__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Case.Data_Lines__c</field>
         <readable>true</readable>
     </fieldPermissions>

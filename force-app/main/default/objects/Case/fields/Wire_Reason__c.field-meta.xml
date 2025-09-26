@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Wire_Reason__c</fullName>
+    <label>Wire Reason</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Additional/Bonus Payrolls Over Credit Limit</fullName>
+                <default>false</default>
+                <label>Additional/Bonus Payrolls Over Credit Limit</label>
+            </value>
+            <value>
+                <fullName>Credit Requested</fullName>
+                <default>false</default>
+                <label>Credit Requested</label>
+            </value>
+            <value>
+                <fullName>Final Client Payroll</fullName>
+                <default>false</default>
+                <label>Final Client Payroll</label>
+            </value>
+            <value>
+                <fullName>Client Requested</fullName>
+                <default>false</default>
+                <label>Client Requested</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
