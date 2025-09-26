@@ -1448,49 +1448,75 @@ public with sharing class NSP_OpportunityTriggerHelper {
     }
 
 
-    /*
-    *Description: This Method will aggregate Sales Tax from Opty Products to Opportunity based on some conditions
-    Created By: CPQ Team
-    Created Date:12/05/2022
-    */
-    public void calculateSetUpAndDocupayTax(Map<Id, Opportunity> opportunityNewMap,Map<Id, Opportunity> opportunityOldMap){
-        Set<Id>optyWithSalesTax= new Set<Id>();// store all the Opty Ids where Sales Tax is Stamped
-        Map<Id,Opportunity> optysToUpdate= new Map<Id,Opportunity>(); //Map, Key as Oppty Id and Value as Oppty
-        try{
-            for(Opportunity opty:opportunityNewMap.values()){
-                if(opty.AVA_SFCLOUD__Sales_Tax__c!=null && opty.AVA_SFCLOUD__Sales_Tax__c!=opportunityOldMap.get(opty.Id).AVA_SFCLOUD__Sales_Tax__c && opty.Type==NSP_SalesConstants.NEW_BUSINESS_OPPORTUNITY
-                   && (opty.NSP_PrimaryProduct__c==NSP_SalesConstants.WX||opty.NSP_PrimaryProduct__c==NSP_SalesConstants.WA||opty.NSP_PrimaryProduct__c==NSP_SalesConstants.CONTRACTOR_MANAGEMENT)){
-                       optyWithSalesTax.add(opty.Id);
+    //
+    // Description: This Method will aggregate Sales Tax from Opty Products to Opportunity based on some conditions
+    // Created By: CPQ Team
+    // Created Date:12/05/2022
+    //
+    public void calculateSetUpAndDocupayTax( Map<Id,Opportunity> opportunityNewMap , Map<Id,Opportunity> opportunityOldMap ) {
+        try {
+            Set<Id> optyWithSalesTax = new Set<Id>(); // store all the Opty Ids where Sales Tax is Stamped
+            for ( Opportunity opty:opportunityNewMap.values() ) {
+                if ( ( opty.AVA_SFCLOUD__Sales_Tax__c != null )
+                    && ( opty.AVA_SFCLOUD__Sales_Tax__c != opportunityOldMap.get(opty.Id).AVA_SFCLOUD__Sales_Tax__c )
+                    && ( opty.Type == NSP_SalesConstants.NEW_BUSINESS_OPPORTUNITY )
+                    && ( ( opty.NSP_PrimaryProduct__c == NSP_SalesConstants.WX )
+                        || ( opty.NSP_PrimaryProduct__c == NSP_SalesConstants.WA )
+                        || ( opty.NSP_PrimaryProduct__c == NSP_SalesConstants.CONTRACTOR_MANAGEMENT )
+                        )
+                    )
+                {
+                    optyWithSalesTax.add( opty.Id );
                 }
             }
-            if(optyWithSalesTax.size()>0){
-                List<OpportunityLineItem> optyLines=[SELECT Id,AVA_SFCLOUD__SalesTax_Line__c,ProductCode,Product2.NSP_Default_Invoice_Plan__c,Product2.SBQQ__BillingFrequency__c,OpportunityId FROM OpportunityLineItem WHERE OpportunityId IN:optyWithSalesTax];
-                for(OpportunityLineItem line:optyLines){
-                    if(line.ProductCode==NSP_CPQConstants.IWXSU ||line.ProductCode==NSP_CPQConstants.IWASU||line.ProductCode==NSP_CPQConstants.CSUF){
-                        if(!optysToUpdate.containsKey(line.OpportunityId)){
-                            Opportunity opty =new Opportunity(Id=line.OpportunityId,NSP_Enrollment_Fee_Tax__c=line.AVA_SFCLOUD__SalesTax_Line__c,NSP_Docupay_Upfront_fee_Tax__c=0);
-                            optysToUpdate.put(line.OpportunityId,opty);
-                        }
-                        else{
-                            Opportunity tempOpty=optysToUpdate.get(line.OpportunityId);
-                            tempOpty.NSP_Enrollment_Fee_Tax__c=line.AVA_SFCLOUD__SalesTax_Line__c;
-                            optysToUpdate.put(line.OpportunityId,tempOpty);
+            Map<Id,Opportunity> optysToUpdate = new Map<Id,Opportunity>(); //Map, Key as Oppty Id and Value as Oppty
+            if ( !optyWithSalesTax.isEmpty() ) {
+                List<OpportunityLineItem> optyLines = [
+                    SELECT Id,AVA_SFCLOUD__SalesTax_Line__c,ProductCode,Product2.NSP_Default_Invoice_Plan__c,Product2.SBQQ__BillingFrequency__c,OpportunityId
+                    FROM OpportunityLineItem
+                    WHERE ( OpportunityId IN :optyWithSalesTax )
+                ];
+                for ( OpportunityLineItem line:optyLines ) {
+                    if ( ( line.ProductCode == NSP_CPQConstants.IWXSU )
+                        || ( line.ProductCode == NSP_CPQConstants.IWASU )
+                        || ( line.ProductCode == NSP_CPQConstants.CSUF )
+                        )
+                    {
+                        if ( !optysToUpdate.containsKey( line.OpportunityId ) ) {
+                            Opportunity opty = new Opportunity(
+                                Id=line.OpportunityId ,
+                                NSP_Enrollment_Fee_Tax__c=line.AVA_SFCLOUD__SalesTax_Line__c ,
+                                NSP_Docupay_Upfront_fee_Tax__c=0
+                            );
+                            optysToUpdate.put( line.OpportunityId , opty );
+                        } else {
+                            Opportunity tempOpty = optysToUpdate.get( line.OpportunityId );
+                            tempOpty.NSP_Enrollment_Fee_Tax__c = line.AVA_SFCLOUD__SalesTax_Line__c;
+                            optysToUpdate.put( line.OpportunityId , tempOpty );
                         }
                     }
-                    if(line.Product2.SBQQ__BillingFrequency__c==NSP_CPQConstants.ANNUAL||(line.Product2.SBQQ__BillingFrequency__c==NSP_CPQConstants.INVOICE_PLAN && line.Product2.NSP_Default_Invoice_Plan__c==NSP_CPQConstants.INVOICE_UP_FRONT_PLAN)){
-                        if(!optysToUpdate.containsKey(line.OpportunityId)){
-                            Opportunity opty =new Opportunity(Id=line.OpportunityId,NSP_Enrollment_Fee_Tax__c=0,NSP_Docupay_Upfront_fee_Tax__c=line.AVA_SFCLOUD__SalesTax_Line__c);
-                            optysToUpdate.put(line.OpportunityId,opty);
-                        }
-                        else{
-                            Opportunity tempOpty=optysToUpdate.get(line.OpportunityId);
-                            tempOpty.NSP_Docupay_Upfront_fee_Tax__c=line.AVA_SFCLOUD__SalesTax_Line__c+optysToUpdate.get(line.OpportunityId).NSP_Docupay_Upfront_fee_Tax__c;
-                            optysToUpdate.put(line.OpportunityId,tempOpty);
+                    if ( ( line.Product2.SBQQ__BillingFrequency__c == NSP_CPQConstants.ANNUAL )
+                        || ( ( line.Product2.SBQQ__BillingFrequency__c == NSP_CPQConstants.INVOICE_PLAN )
+                            && ( line.Product2.NSP_Default_Invoice_Plan__c == NSP_CPQConstants.INVOICE_UP_FRONT_PLAN )
+                            )
+                        )
+                    {
+                        if ( !optysToUpdate.containsKey( line.OpportunityId ) ) {
+                            Opportunity opty = new Opportunity(
+                                Id=line.OpportunityId ,
+                                NSP_Enrollment_Fee_Tax__c=0 ,
+                                NSP_Docupay_Upfront_fee_Tax__c=line.AVA_SFCLOUD__SalesTax_Line__c
+                            );
+                            optysToUpdate.put( line.OpportunityId , opty );
+                        } else {
+                            Opportunity tempOpty = optysToUpdate.get( line.OpportunityId );
+                            tempOpty.NSP_Docupay_Upfront_fee_Tax__c = ( line.AVA_SFCLOUD__SalesTax_Line__c + optysToUpdate.get( line.OpportunityId ).NSP_Docupay_Upfront_fee_Tax__c );
+                            optysToUpdate.put( line.OpportunityId , tempOpty );
                         }
                     }
                 }
             }
-            if(optysToUpdate.values().size()>0){
+            if ( !optysToUpdate.isEmpty() ) {
                 update optysToUpdate.values();
             }
         } catch ( Exception e ) {
