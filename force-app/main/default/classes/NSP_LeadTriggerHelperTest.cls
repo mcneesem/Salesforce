@@ -7,7 +7,6 @@ private class NSP_LeadTriggerHelperTest {
 
     @TestSetup
     private static void testData() {
-
         Lead_Trigger_Settings__c settings1 = Lead_Trigger_Settings__c.getOrgDefaults();
         settings1.AllowStatusChangedToWorking__c = True;
         upsert settings1;
