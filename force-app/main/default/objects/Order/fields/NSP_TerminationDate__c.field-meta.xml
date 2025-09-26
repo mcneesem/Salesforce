@@ -3,9 +3,8 @@
     <fullName>NSP_TerminationDate__c</fullName>
     <description>Captures the contract termination date</description>
     <encryptionScheme>None</encryptionScheme>
-    <externalId>false</externalId>
     <label>Termination Date</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Date</type>
 </CustomField>

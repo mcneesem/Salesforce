@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Has_Renewable_Product__c</fullName>
     <description>Count &gt; 0 indicate that the order has renewable products</description>
-    <externalId>false</externalId>
     <label>Has Renewable Product</label>
     <summaryFilterItems>
         <field>OrderItem.SBQQ__SubscriptionType__c</field>

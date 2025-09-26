@@ -3,8 +3,7 @@
     <fullName>NSP_Project_Go_Live_Approved__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Indicated if Project Go Live is approved</description>
-    <externalId>false</externalId>
     <label>Project Go Live Approved</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>

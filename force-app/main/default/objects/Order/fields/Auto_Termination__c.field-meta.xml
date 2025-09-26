@@ -3,6 +3,6 @@
     <fullName>Auto_Termination__c</fullName>
     <defaultValue>false</defaultValue>
     <label>Auto Termination</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>

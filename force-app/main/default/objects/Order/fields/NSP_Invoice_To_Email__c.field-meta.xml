@@ -3,12 +3,11 @@
     <fullName>NSP_Invoice_To_Email__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <description>Indicates the invoice to email contact</description>
-    <externalId>false</externalId>
     <label>Bill To Contact</label>
     <referenceTo>Contact</referenceTo>
     <relationshipLabel>Orders</relationshipLabel>
     <relationshipName>InvoiceEmail</relationshipName>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Lookup</type>
 </CustomField>
