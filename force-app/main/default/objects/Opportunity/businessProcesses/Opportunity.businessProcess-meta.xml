@@ -7,6 +7,10 @@
         <default>false</default>
     </values>
     <values>
+        <fullName>Booking</fullName>
+        <default>false</default>
+    </values>
+    <values>
         <fullName>Closed Lost</fullName>
         <default>false</default>
     </values>
@@ -19,11 +23,19 @@
         <default>false</default>
     </values>
     <values>
+        <fullName>Data Collection</fullName>
+        <default>false</default>
+    </values>
+    <values>
         <fullName>Discovery</fullName>
         <default>false</default>
     </values>
     <values>
         <fullName>Proposal</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Prospecting</fullName>
         <default>false</default>
     </values>
 </BusinessProcess>
