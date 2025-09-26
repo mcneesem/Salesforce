@@ -3,9 +3,8 @@
     <fullName>Is_Renewal_Invoice__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Indicates if the invoice is for a renewal order</description>
-    <externalId>false</externalId>
     <label>Is Renewal Invoice (Internal)</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

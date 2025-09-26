@@ -3,9 +3,8 @@
     <fullName>NSP_InvBatch_Processed_Internal__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Indicates if this record was processed via Invoice Email Notification Batch at least once</description>
-    <externalId>false</externalId>
     <label>Inv Batch Processed (Internal)</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>
