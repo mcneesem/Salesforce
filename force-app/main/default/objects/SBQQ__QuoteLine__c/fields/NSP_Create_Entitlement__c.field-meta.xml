@@ -3,9 +3,8 @@
     <fullName>NSP_Create_Entitlement__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Indicates weather to Create a Support Entitlement for this product</description>
-    <externalId>false</externalId>
     <label>Create Entitlement?</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

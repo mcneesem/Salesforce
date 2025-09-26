@@ -3,9 +3,8 @@
     <fullName>NSP_Is_WA_Bundle__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Indicates if the product is WA</description>
-    <externalId>false</externalId>
     <label>Is WA Bundle</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

@@ -3,9 +3,8 @@
     <fullName>NSP_Lock_Discount__c</fullName>
     <defaultValue>false</defaultValue>
     <description>lock discount at QLI from product option</description>
-    <externalId>false</externalId>
     <label>Lock Discount</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

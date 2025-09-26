@@ -3,9 +3,8 @@
     <fullName>NSP_SerialId_Validation__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Internal: Flag to Identify and throw Serial Ids Validation</description>
-    <externalId>false</externalId>
     <label>SerialId Validation</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

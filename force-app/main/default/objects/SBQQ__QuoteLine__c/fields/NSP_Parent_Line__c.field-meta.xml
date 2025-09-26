@@ -3,13 +3,12 @@
     <fullName>NSP_Parent_Line__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <description>Captures the Parent Line on cloned line.</description>
-    <externalId>false</externalId>
     <label>Parent Line</label>
     <referenceTo>SBQQ__QuoteLine__c</referenceTo>
     <relationshipLabel>Quote Lines (Parent Line)</relationshipLabel>
     <relationshipName>Quote_Lines</relationshipName>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
 </CustomField>

@@ -3,9 +3,8 @@
     <fullName>NSP_Is_Setup_Product__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Field used to determine if quote line is a setup product.</description>
-    <externalId>false</externalId>
     <label>Is Setup Product?</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>
