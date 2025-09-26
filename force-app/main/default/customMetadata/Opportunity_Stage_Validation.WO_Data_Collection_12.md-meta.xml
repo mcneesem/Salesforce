@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Error_Message__c</field>
-        <value xsi:type="xsd:string">Sum for &quot;Number of Employees&quot; from all Opportunity Credits must equal &quot;Number of Employees&quot; on Opportunity. Number of Employees can not be blank or zero.</value>
+        <value xsi:type="xsd:string">Sum for &quot;Number of Employees&quot; for all Opportunity Credits must equal &quot;Number of Employees&quot; on Opportunity. Number of Employees can not be blank or zero, and all Opportunity Credits must be created.</value>
     </values>
     <values>
         <field>Field__c</field>

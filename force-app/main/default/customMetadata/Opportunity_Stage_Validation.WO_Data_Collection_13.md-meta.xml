@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Error_Message__c</field>
-        <value xsi:type="xsd:string">Opportunity Credits Commissions must sum to 100%.</value>
+        <value xsi:type="xsd:string">Opportunity Credits Commissions must sum to 100%, and all Opportunity Credits must be created.</value>
     </values>
     <values>
         <field>Field__c</field>
