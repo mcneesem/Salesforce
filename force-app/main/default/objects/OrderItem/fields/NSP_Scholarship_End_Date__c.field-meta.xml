@@ -3,9 +3,8 @@
     <fullName>NSP_Scholarship_End_Date__c</fullName>
     <description>Indicates the scholarship discount end date</description>
     <encryptionScheme>None</encryptionScheme>
-    <externalId>false</externalId>
     <label>Scholarship End Date</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Date</type>
 </CustomField>

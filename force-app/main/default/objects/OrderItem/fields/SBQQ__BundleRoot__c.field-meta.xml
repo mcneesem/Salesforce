@@ -4,13 +4,12 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <deprecated>false</deprecated>
     <description>The root bundle parent Order Product of components. This component will be deleted if its bundle root is deleted.</description>
-    <externalId>false</externalId>
     <inlineHelpText>An internally used field that points to the root of its bundle parent.</inlineHelpText>
     <label>Bundle Root</label>
     <referenceTo>OrderItem</referenceTo>
     <relationshipLabel>Order Products (Bundle Root)</relationshipLabel>
     <relationshipName>BundleChildren</relationshipName>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Lookup</type>
 </CustomField>
