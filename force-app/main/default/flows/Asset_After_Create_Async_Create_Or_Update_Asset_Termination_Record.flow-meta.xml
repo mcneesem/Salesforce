@@ -18,14 +18,14 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Asset_After_Save_Create_Or_Update_Asset_Termination_Record</targetReference>
+                <targetReference>Subflow_Asset_Populate_Asset_Termination</targetReference>
             </connector>
             <label>Has Termination Revision Access</label>
         </rules>
     </decisions>
     <environments>Default</environments>
-    <interviewLabel>Asset - After Create - Async - Create Or Update Asset Termination Record {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Asset - After Create - Async - Create Or Update Asset Termination Record</label>
+    <interviewLabel>Asset - Created - Async - Populate Asset Termination {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Asset - Created - Async - Populate Asset Termination</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -48,19 +48,19 @@
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <filterLogic>( 1 AND 2 ) AND ( 3 OR 4 OR 5 OR 6 ) AND ( 7 OR 8 )</filterLogic>
+        <filterLogic>( 1 OR 2 ) AND ( 3 OR 4 OR 5 OR 6 )</filterLogic>
         <filters>
-            <field>Status</field>
-            <operator>IsNull</operator>
+            <field>RecordTypeName__c</field>
+            <operator>EqualTo</operator>
             <value>
-                <booleanValue>false</booleanValue>
+                <stringValue>NSP_Asset_Product</stringValue>
             </value>
         </filters>
         <filters>
-            <field>Status</field>
-            <operator>NotEqualTo</operator>
+            <field>RecordTypeName__c</field>
+            <operator>EqualTo</operator>
             <value>
-                <stringValue></stringValue>
+                <stringValue>WO</stringValue>
             </value>
         </filters>
         <filters>
@@ -91,20 +91,6 @@
                 <stringValue>Onboarding</stringValue>
             </value>
         </filters>
-        <filters>
-            <field>RecordTypeName__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>NSP_Asset_Product</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>RecordTypeName__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>WO</stringValue>
-            </value>
-        </filters>
         <object>Asset</object>
         <recordTriggerType>Create</recordTriggerType>
         <scheduledPaths>
@@ -117,11 +103,11 @@
     </start>
     <status>Draft</status>
     <subflows>
-        <name>Asset_After_Save_Create_Or_Update_Asset_Termination_Record</name>
-        <label>Asset - After Save - Create Or Update Asset Termination Record</label>
+        <name>Subflow_Asset_Populate_Asset_Termination</name>
+        <label>Subflow - Asset - Populate Asset Termination</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <flowName>Asset_After_Save_Create_Or_Update_Asset_Termination_Record</flowName>
+        <flowName>Subflow_Asset_Populate_Asset_Termination</flowName>
         <inputAssignments>
             <name>TriggeringAsset_Var</name>
             <value>
