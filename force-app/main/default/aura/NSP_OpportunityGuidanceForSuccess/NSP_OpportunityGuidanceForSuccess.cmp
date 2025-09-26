@@ -9,6 +9,7 @@
                       targetFields="{!v.opportunityRecord}"
                       />
     <lightning:card>
+        <div class="guidance-title"><span>Guidance to Success</span></div>
         <div class="slds-m-left_x-small slds-text-longform">
             <aura:if isTrue="{!v.guidanceMessage}">
                 <span class="gfs-font-style preserve-spaces slds-text-body_regular"><i>{!v.guidanceMessage}</i></span>
