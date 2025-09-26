@@ -796,10 +796,13 @@
                             <value>NSP_End_Date__c</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>NSP_AIMS_Client__c</value>
+                            <value>Due_Date__c</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Area_of_Focus__c</value>
+                            <value>Plan_of_Action__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Item_Owner__c</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
