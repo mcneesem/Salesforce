@@ -391,8 +391,8 @@
         </rules>
     </decisions>
     <environments>Default</environments>
-    <interviewLabel>Asset - After Save - Create Or Update Asset Termination Information Record {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Asset - After Save - Create Or Update Asset Termination Record</label>
+    <interviewLabel>Subflow - Asset - Populate Asset Termination {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Subflow - Asset - Populate Asset Termination</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
