@@ -4,11 +4,11 @@
     <protected>false</protected>
     <values>
         <field>Error_Message__c</field>
-        <value xsi:type="xsd:string">Please select Primary Product before moving to Data Collection stage</value>
+        <value xsi:type="xsd:string">Please add Opportunity Credits before moving to Data Collection stage</value>
     </values>
     <values>
         <field>Field__c</field>
-        <value xsi:type="xsd:string">NSP_PrimaryProduct__c</value>
+        <value xsi:type="xsd:string">Id</value>
     </values>
     <values>
         <field>Group__c</field>
@@ -20,7 +20,7 @@
     </values>
     <values>
         <field>Object__c</field>
-        <value xsi:type="xsd:string">Opportunity</value>
+        <value xsi:type="xsd:string">NSP_Employee_Split__c</value>
     </values>
     <values>
         <field>Operation__c</field>
