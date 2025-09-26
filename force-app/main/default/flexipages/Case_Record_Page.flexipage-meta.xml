@@ -918,6 +918,105 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Wire_Scenario__c</fieldItem>
+                <identifier>RecordWire_Scenario_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Wire_Reason__c</fieldItem>
+                <identifier>RecordWire_reason_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Credit_Exception_Approved__c</fieldItem>
+                <identifier>RecordCredit_Exception_Approved_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Wire_Scenario__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Credit requires wire, Client requests debit</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-3b2139f6-995b-4b31-868f-336168a1a8a6</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Pay_Date__c</fieldItem>
+                <identifier>RecordPay_Date_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Payroll_Number__c</fieldItem>
+                <identifier>RecordPayroll_Number_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Ready_to_Process__c</fieldItem>
+                <identifier>RecordReady_to_Process_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-193a4eb0-6d56-49be-9c5d-79ca8dd3f036</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-3b2139f6-995b-4b31-868f-336168a1a8a6</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column20</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-193a4eb0-6d56-49be-9c5d-79ca8dd3f036</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column21</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-f91956e9-e947-4ab1-b618-6562314fa9ec</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.iSolved_ID__c</fieldItem>
                 <identifier>RecordiSolved_ID_cField</identifier>
             </fieldInstance>
@@ -2150,6 +2249,48 @@
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
                 <identifier>force_relatedListSingleContainer</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>caseAccountContactRelationships</componentName>
+                <identifier>c_caseAccountContactRelationships</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
+                    <value>Facet-f91956e9-e947-4ab1-b618-6562314fa9ec</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Payroll Wire/Purge Debit</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection11</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Payroll Services</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Wire</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Purge Debit</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
