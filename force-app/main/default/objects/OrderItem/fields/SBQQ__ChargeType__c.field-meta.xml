@@ -3,11 +3,10 @@
     <fullName>SBQQ__ChargeType__c</fullName>
     <deprecated>false</deprecated>
     <description>The type of the product charge.</description>
-    <externalId>false</externalId>
     <inlineHelpText>The type of the product charge.</inlineHelpText>
     <label>Charge Type</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>

@@ -2,10 +2,9 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Usage_Attribute__c</fullName>
     <description>This field is used to capture the usage attribute</description>
-    <externalId>false</externalId>
     <label>Usage Attribute</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>

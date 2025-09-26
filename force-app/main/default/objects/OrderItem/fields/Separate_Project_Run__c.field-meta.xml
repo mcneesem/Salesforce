@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Separate_Project_Run__c</fullName>
     <defaultValue>false</defaultValue>
-    <externalId>false</externalId>
     <label>Separate Project Run</label>
     <trackHistory>true</trackHistory>
     <type>Checkbox</type>

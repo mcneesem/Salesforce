@@ -3,12 +3,11 @@
     <fullName>NSP_Project__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <description>Project created for this order product</description>
-    <externalId>false</externalId>
     <label>Project</label>
     <referenceTo>pse__Proj__c</referenceTo>
     <relationshipLabel>Order Products</relationshipLabel>
     <relationshipName>Order_Products</relationshipName>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Lookup</type>
 </CustomField>

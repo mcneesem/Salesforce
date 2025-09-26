@@ -6,7 +6,7 @@
     <externalId>false</externalId>
     <label>Finance Group Email</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Email</type>
     <unique>false</unique>
 </CustomField>
