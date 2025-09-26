@@ -3,9 +3,8 @@
     <fullName>NSP_CLM_Document_Received__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Used to denote that CLM document is received from Docusign CLM</description>
-    <externalId>false</externalId>
     <label>CLM Document Received ?</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>
