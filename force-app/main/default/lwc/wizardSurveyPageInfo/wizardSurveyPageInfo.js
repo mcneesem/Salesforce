@@ -280,8 +280,6 @@ export default class WizardSurveyPageInfo extends LightningElement {
 
     }
 
-    handleOnSubmit(event) {}
-    
     //handle the deletion of rows
     handleRowAction(event) {
         if (event.detail.action.name === 'delete') {
@@ -427,7 +425,7 @@ export default class WizardSurveyPageInfo extends LightningElement {
         }
     }
 
-
+    
     handleSave(event) {
         this.isSaveClick=true;
         this.allowNext =false;
