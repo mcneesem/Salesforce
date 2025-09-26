@@ -418,7 +418,7 @@ public with sharing class NSP_LeadTriggerHelper {
         Set<String> salesOfficeSet = this.selectSalesOfficeSet( ownerIdset );
         // restrict Lead edit access/change owner if current User not part of the previous Lead Owner's salesoffice group...
         List<GroupMember> groupMemberList = this.selectGroupMemberList( salesOfficeSet );
-        if ( ( groupMemberList == null ) || groupMemberList.isEmpty() ) {
+        if ( leadNewMap != null && ( groupMemberList == null  || groupMemberList.isEmpty())) {
             for ( Id leadId : leadNewMap.keySet() ) {
                 Lead newRecord = this.getMappedLeadSafe( leadNewMap , leadId );
                 Lead oldRecord = this.getMappedLeadSafe( leadOldMap , leadId );

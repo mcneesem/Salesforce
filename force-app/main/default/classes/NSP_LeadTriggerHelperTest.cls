@@ -8,16 +8,6 @@ private class NSP_LeadTriggerHelperTest {
     @TestSetup
     private static void testData() {
 
-        PermissionSet psBypassLead = [SELECT Id FROM PermissionSet WHERE Name = 'Bypass_Lead_Sales_Office_Validation' LIMIT 1];
-        if(psBypassLead == null){
-            // Create a permission set
-            PermissionSet ps = new PermissionSet(
-                Name = 'Bypass_Lead_Sales_Office_Validation',
-                Label = 'Bypass Lead Sales Office_Validation'
-            );
-            insert ps;
-        }
-
         Lead_Trigger_Settings__c settings1 = Lead_Trigger_Settings__c.getOrgDefaults();
         settings1.AllowStatusChangedToWorking__c = True;
         upsert settings1;
@@ -753,25 +743,27 @@ private class NSP_LeadTriggerHelperTest {
     private static void testBypassSalesOfficeValidation() {
 
         Test.startTest();
-        User supervisor = [SELECT id FROM User WHERE UserRole.DeveloperName = 'Sales_Development_Leader' LIMIT 1];
+        List<User> supervisor = [SELECT id FROM User WHERE UserRole.DeveloperName = 'Sales_Development_Leader' LIMIT 1];
         List<User> users = [SELECT id FROM User WHERE UserRole.DeveloperName = 'Sales_Development_Rep' LIMIT 2];
 
-        if(supervisor != null && users.size() == 2) {
+        if(supervisor.size() == 1 && users.size() == 2) {
             
             //  Check if supervisor already has PS
-            List<PermissionSetAssignment> psSupervisor = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId = :supervisor.id AND 
+            List<PermissionSetAssignment> psSupervisor = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId = :supervisor[0].id AND 
             PermissionSet.Name = 'Bypass_Lead_Sales_Office_Validation'];
             if(psSupervisor.size() == 0){
                 //  Assign the required permission set
-                PermissionSet psBypassLeadOfficeValidation = [SELECT Id FROM PermissionSet WHERE Name = 'Bypass_Lead_Sales_Office_Validation' LIMIT 1];
-                PermissionSetAssignment psa = new PermissionSetAssignment(
-                    AssigneeId = supervisor.Id,
-                    PermissionSetId = psBypassLeadOfficeValidation.Id
-                );
-                insert psa;
+                List<PermissionSet> psBypassLeadOfficeValidation = [SELECT Id FROM PermissionSet WHERE Name = 'Bypass_Lead_Sales_Office_Validation' LIMIT 1];
+                if(psBypassLeadOfficeValidation.size() == 1){
+                    PermissionSetAssignment psa = new PermissionSetAssignment(
+                        AssigneeId = supervisor[0].Id,
+                        PermissionSetId = psBypassLeadOfficeValidation[0].Id
+                    );
+                    insert psa;
+                }
             }
 
-            System.runAs(supervisor) {
+            System.runAs(supervisor[0]) {
                 
                 Lead lead = new Lead();
                 lead.firstname='Name 123';
