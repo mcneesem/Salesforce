@@ -3,8 +3,7 @@
     <fullName>NSP_CreateProject__c</fullName>
     <defaultValue>false</defaultValue>
     <description>When this checkbox is checked, the project creation logic is executed.</description>
-    <externalId>false</externalId>
     <label>Create Project</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>

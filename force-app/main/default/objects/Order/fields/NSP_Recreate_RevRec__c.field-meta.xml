@@ -2,8 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Recreate_RevRec__c</fullName>
     <defaultValue>false</defaultValue>
-    <externalId>false</externalId>
     <label>Recreate RevRec</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>
