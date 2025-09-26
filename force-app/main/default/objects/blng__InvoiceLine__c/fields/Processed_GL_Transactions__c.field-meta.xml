@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Processed_GL_Transactions__c</fullName>
     <defaultValue>false</defaultValue>
-    <externalId>false</externalId>
     <label>Processed GL Transactions</label>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
