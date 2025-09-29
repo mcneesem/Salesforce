@@ -1,6 +1,5 @@
 public with sharing class CheckOpportunityStage {
     // test w/ CheckOpportunityStageTest (100%)
-    private static final String FAILED = 'Failed Stage Validation';
 
     @InvocableMethod( label='Check Opportunity Stage' description='Checks if User can move Opportunity to specific Stage' category='Opportunity' )
     public static List<CheckStageResponse> checkOpportunityStage( List<CheckStageRequest> inputs ) {
@@ -44,11 +43,11 @@ public with sharing class CheckOpportunityStage {
                         LIMIT 1
                     ];
                 }
-                if ( ( opps != null ) && !opps.isEmpty() ) {
-                    opps[0].StageName = input.stageName;
-                    NSP_ValidateOpportunityStage.validateOpportunityStage( opps , true );
-
-                    if( opps[0].NextStep != FAILED ) {
+                Opportunity record = opps[0];
+                if ( record != null ) {
+                    record.StageName = input.stageName;
+                    NSP_ValidateOpportunityStage.validateOpportunityStage( record , true );
+                    if ( record.NextStep != NSP_ValidateOpportunityStage.FAILED ) {
                         output.checkStage = true;
                     }
                 }

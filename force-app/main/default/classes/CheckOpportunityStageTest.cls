@@ -1,8 +1,8 @@
 @isTest
-public class CheckOpportunityStageTest {
+private class CheckOpportunityStageTest {
 
     @isTest
-    static void testCheckOpportunityStagePositive() {
+    private static void testCheckOpportunityStagePositive() {
         Account acnt=NSP_TestHelper.createAccount(true);
         // Create a test opportunity
 
@@ -31,7 +31,7 @@ public class CheckOpportunityStageTest {
     }
 
     @isTest
-    static void testCheckOpportunityStageNegative() {
+    private static void testCheckOpportunityStageNegative() {
         OpportunityStageSettings__c setting = new OpportunityStageSettings__c();
         setting.Is_Enabled_WO_WS_Stage_Entry__c = true;
         insert setting;
