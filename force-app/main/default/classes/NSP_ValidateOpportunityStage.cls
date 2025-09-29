@@ -299,12 +299,17 @@ public with sharing class NSP_ValidateOpportunityStage {
                 do {
                     SObject valObject = ( ( valObjectList != null ) && ( valObjectList.size() > i ) ) ? valObjectList[i] : null;
                     Integer passCheckCount = evaluateOneCriteriaGroup( opp, groupName , valObject , valObjectAgs , groupedStageValMap ); // must run even if valObject is null
-                    if( passCheckCount >= groupedStageValMap.get(groupName).size() ) {
-                        passCheck = true;
-                    }
-                    if( passCheckCount == NSP_ValidateOpportunityStage.ERROR_DOES_NOT_EXIST ) { // when any record violates DOES NOT EXIST case
-                        passCheckDNE = false;
-                    }
+                    passCheck = getPassCheck(
+                                    passCheckCount ,
+                                    groupedStageValMap ,
+                                    groupName
+                                );
+
+                    passCheckDNE = getPassCheck(
+                                    passCheckCount ,
+                                    groupedStageValMap ,
+                                    groupName
+                                );
                     i++;
                 } while ( i < valObjectList.size() );
             }
@@ -316,6 +321,23 @@ public with sharing class NSP_ValidateOpportunityStage {
                 groupedStageValMap.get( groupName )[0].Error_Message__c
             );
         }
+    }
+
+    private static Boolean getPassCheck(
+        Integer passCheckCount ,
+        Map<String,List<Opportunity_Stage_Validation__mdt>> groupedStageValMap ,
+        String groupName
+        )
+    {
+        Boolean passCheck = false;
+        if( passCheckCount >= groupedStageValMap.get(groupName).size() ) {
+            passCheck = true;
+        }
+        if( passCheckCount == NSP_ValidateOpportunityStage.ERROR_DOES_NOT_EXIST ) { // when any record violates DOES NOT EXIST case
+            passCheck = false;
+        }
+
+        return passCheck;
     }
 
     private static void addValError(
