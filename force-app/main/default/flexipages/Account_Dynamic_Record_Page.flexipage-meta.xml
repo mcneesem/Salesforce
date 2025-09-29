@@ -453,16 +453,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Investor_PBID__c</fieldItem>
-                <identifier>RecordInvestor_PBID__cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.ParentId</fieldItem>
                 <identifier>RecordParentIdField2</identifier>
             </fieldInstance>
@@ -1097,16 +1087,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Private_Capital_Firm__c</fieldItem>
                 <identifier>RecordPrivate_Capital_Firm_cField3</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Investor_PBID__c</fieldItem>
-                <identifier>RecordInvestor_PBID_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2591,16 +2571,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Private_Capital_Firm__c</fieldItem>
                 <identifier>RecordPrivate_Capital_Firm_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Investor_PBID__c</fieldItem>
-                <identifier>RecordInvestor_PBID_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
