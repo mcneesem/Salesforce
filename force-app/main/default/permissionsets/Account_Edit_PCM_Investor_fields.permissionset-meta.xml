@@ -7,5 +7,5 @@
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Account - Edit PCM Investor fields</label>
+    <label>Account - Edit PCM Investor Fields</label>
 </PermissionSet>
