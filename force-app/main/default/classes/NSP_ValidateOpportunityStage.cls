@@ -255,7 +255,7 @@ public with sharing class NSP_ValidateOpportunityStage {
             }
 
             if( ( valObjectAgs != null )
-               && NSP_ValidateOpportunityStagecheckCondition( valObjectAgs.get(val.Field__c) , valValue , val.Operation__c ) ) {
+               && NSP_ValidateOpportunityStage.checkCondition( valObjectAgs.get(val.Field__c) , valValue , val.Operation__c ) ) {
                 passCheckCount++;
             }
         }
@@ -272,7 +272,7 @@ public with sharing class NSP_ValidateOpportunityStage {
          && ( valObjectMap != null )
          && ( valObjectMap.get(val.Object__c) != null ) ) {
             for( SObject valObject : valObjectMap.get(val.Object__c) ){
-                if( NSP_ValidateOpportunityStagecheckCondition( valObject.get(val.Field__c) , val.Value__c , val.Operation__c ) ) {
+                if( NSP_ValidateOpportunityStage.checkCondition( valObject.get(val.Field__c) , val.Value__c , val.Operation__c ) ) {
                     passCheckCount++;
                 }
             }
