@@ -124,9 +124,6 @@ public class NSP_ProjectTasksTriggerHelper {
         List<string> peoTerminationTaskList = System.Label.PEO_Termination_Tasks.split(';');
         List<pse__Project_Task__c> garnishments = new List<pse__Project_Task__c>();
         List<pse__Project_Task__c> levies = new List<pse__Project_Task__c>();
-        List<pse__Project_Task__c> hsaOptumMM = new List<pse__Project_Task__c>();
-        List<pse__Project_Task__c> hsaOptumNoMM = new List<pse__Project_Task__c>();
-        String hsaOptum = NSP_MMImplProfile_ServHelpUpdate.hsaOptumChildren();
         String TERMINATIONANALYSIS = null;
         if ( peoTerminationTaskList != null
             && !peoTerminationTaskList.isEmpty()
@@ -147,12 +144,8 @@ public class NSP_ProjectTasksTriggerHelper {
                 if(pTask.Name == LEVIESTASK){
                     levies.add(pTask);
                 }
-                if(pTask.Name == NSP_ServiceConstants.HSA && String.isNotBlank(hsaOptum) && hsaOptum == HSA_OPTUM_MM){
-                    hsaOptumMM.add(pTask);
-                }
-                if(pTask.Name == NSP_ServiceConstants.HSA && String.isNotBlank(hsaOptum) && hsaOptum == HSA_OPTUM_NO_MM){
-                    hsaOptumNoMM.add(pTask);
-                }
+                //Create HSA Optum Bank Project Tasks
+                createHSASubtask(pTask);
                 //Checking for Project Task Account
                 if ( pTask.NSP_Account_Id__c != null
                     && pTask.Name == TERMINATIONANALYSIS
@@ -165,12 +158,6 @@ public class NSP_ProjectTasksTriggerHelper {
         if(cobraProjectTaskList.size() > 0){
             createCobraSubTasks(cobraProjectTaskList);
         }
-        if( hsaOptumMM != null && !hsaOptumMM.isEmpty() ){
-            createProjectTaskForHSAChildren(hsaOptumMM, HSA_OPTUM_MM);
-        }
-        if(hsaOptumNoMM != null && !hsaOptumNoMM.isEmpty()){
-            createProjectTaskForHSAChildren(hsaOptumNoMM, HSA_OPTUM_NO_MM);
-        }
         if (accountIdList.size() > 0){
             updateDocusignAsset(accountIdList);
         }
@@ -182,6 +169,26 @@ public class NSP_ProjectTasksTriggerHelper {
         }
     }
 
+    private void createHSASubtask(pse__Project_Task__c pTask){
+        List<pse__Project_Task__c> hsaOptumMM = new List<pse__Project_Task__c>();
+        List<pse__Project_Task__c> hsaOptumNoMM = new List<pse__Project_Task__c>();
+        String hsaOptum = NSP_MMImplProfile_ServHelpUpdate.hsaOptumChildren();
+        if( pTask != null && String.isNotBlank(hsaOptum) ) {
+            if(pTask.Name == NSP_ServiceConstants.HSA && hsaOptum == HSA_OPTUM_MM){
+                hsaOptumMM.add(pTask);
+            }
+            if(pTask.Name == NSP_ServiceConstants.HSA && hsaOptum == HSA_OPTUM_NO_MM){
+                hsaOptumNoMM.add(pTask);
+            }
+            
+            if( hsaOptumMM != null && !hsaOptumMM.isEmpty() ){
+                createProjectTaskForHSAChildren(hsaOptumMM, HSA_OPTUM_MM);
+            }
+            if(hsaOptumNoMM != null && !hsaOptumNoMM.isEmpty()){
+                createProjectTaskForHSAChildren(hsaOptumNoMM, HSA_OPTUM_NO_MM);
+            }
+        }
+    }
      /***********************************************************************************************
     * MethodName:  createSubtask
     * Description : Create sub tasks for garnishments and levies
