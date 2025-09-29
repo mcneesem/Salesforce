@@ -227,9 +227,9 @@ public with sharing class NSP_ValidateOpportunityStage {
                 Integer passCheckCount = 0;
                 if( String.isNotBlank( val.Object__c )
                    && ( val.Object__c.indexOf( AGGREGATES ) > -1 ) ){
-                    passCheckCount = evaluateAggregateVal( opp , passCheckCount , valObjectAgs , val );
+                    passCheckCount = NSP_ValidateOpportunityStage.evaluateAggregateVal( opp , passCheckCount , valObjectAgs , val );
                 } else {
-                    passCheckCount = evaluateSingleVal( passCheckCount , valObjectMap , val );
+                    passCheckCount = NSP_ValidateOpportunityStage.evaluateSingleVal( passCheckCount , valObjectMap , val );
                 }
 
                 NSP_ValidateOpportunityStage.addValError(
@@ -255,7 +255,7 @@ public with sharing class NSP_ValidateOpportunityStage {
             }
 
             if( ( valObjectAgs != null )
-               && checkCondition( valObjectAgs.get(val.Field__c) , valValue , val.Operation__c ) ) {
+               && NSP_ValidateOpportunityStagecheckCondition( valObjectAgs.get(val.Field__c) , valValue , val.Operation__c ) ) {
                 passCheckCount++;
             }
         }
@@ -272,7 +272,7 @@ public with sharing class NSP_ValidateOpportunityStage {
          && ( valObjectMap != null )
          && ( valObjectMap.get(val.Object__c) != null ) ) {
             for( SObject valObject : valObjectMap.get(val.Object__c) ){
-                if( checkCondition( valObject.get(val.Field__c) , val.Value__c , val.Operation__c ) ) {
+                if( NSP_ValidateOpportunityStagecheckCondition( valObject.get(val.Field__c) , val.Value__c , val.Operation__c ) ) {
                     passCheckCount++;
                 }
             }
@@ -298,28 +298,27 @@ public with sharing class NSP_ValidateOpportunityStage {
                 List<SObject> valObjectList = valObjectMap.get(groupRelObjName);
                 do {
                     SObject valObject = ( ( valObjectList != null ) && ( valObjectList.size() > i ) ) ? valObjectList[i] : null;
-                    Integer passCheckCount = evaluateOneCriteriaGroup( opp, groupName , valObject , valObjectAgs , groupedStageValMap ); // must run even if valObject is null
-                    passCheck = getPassCheck(
+                    Integer passCheckCount = NSP_ValidateOpportunityStage.evaluateOneCriteriaGroup( opp, groupName , valObject , valObjectAgs , groupedStageValMap ); // must run even if valObject is null
+                    passCheck = NSP_ValidateOpportunityStage.getPassCheck(
                                     passCheckCount ,
                                     groupedStageValMap ,
                                     groupName
                                 );
 
-                    passCheckDNE = getPassCheck(
+                    passCheckDNE = NSP_ValidateOpportunityStage.getPassCheck(
                                     passCheckCount ,
                                     groupedStageValMap ,
                                     groupName
                                 );
                     i++;
                 } while ( i < valObjectList.size() );
+                NSP_ValidateOpportunityStage.addValError(
+                    opp ,
+                    passCheck ,
+                    passCheckDNE ,
+                    groupedStageValMap.get( groupName )[0].Error_Message__c
+                );
             }
-
-            NSP_ValidateOpportunityStage.addValError(
-                opp ,
-                passCheck ,
-                passCheckDNE ,
-                groupedStageValMap.get( groupName )[0].Error_Message__c
-            );
         }
     }
 
@@ -330,7 +329,12 @@ public with sharing class NSP_ValidateOpportunityStage {
         )
     {
         Boolean passCheck = false;
-        if( passCheckCount >= groupedStageValMap.get(groupName).size() ) {
+        if ( ( groupedStageValMap != null )
+            && groupedStageValMap.containsKey( groupName )
+            && ( groupedStageValMap.get( groupName ) != null )
+            && ( passCheckCount >= groupedStageValMap.get( groupName ).size() )
+            )
+        {
             passCheck = true;
         }
         if( passCheckCount == NSP_ValidateOpportunityStage.ERROR_DOES_NOT_EXIST ) { // when any record violates DOES NOT EXIST case
@@ -398,36 +402,37 @@ public with sharing class NSP_ValidateOpportunityStage {
         Integer passCheckCount = 0;
         Boolean groupCheckDNE = false; // if group is a DOES NOT EXIST case
         Boolean groupCheckMixed = false; // if group is a mixed object case
-        for( Opportunity_Stage_Validation__mdt val : groupedStageValMap.get(groupName) ){
-            Object valFieldValue = null;
-            if( val.Operation__c == Operator.DOES_NOT_EXIST.name() ){
-                groupCheckDNE = true;
-            } else if( val.Object__c == OPPORTUNITY_OBJ ){
-                valFieldValue = opp.get(val.Field__c);
-            } else {
-                valFieldValue = valObject?.get(val.Field__c);
+        if ( ( groupedStageValMap != null ) && groupedStageValMap.containsKey( groupName ) ) {
+            for( Opportunity_Stage_Validation__mdt val : groupedStageValMap.get(groupName) ){
+                Object valFieldValue = null;
+                if( val.Operation__c == Operator.DOES_NOT_EXIST.name() ){
+                    groupCheckDNE = true;
+                } else if( val.Object__c == OPPORTUNITY_OBJ ){
+                    valFieldValue = opp.get(val.Field__c);
+                } else {
+                    valFieldValue = valObject?.get(val.Field__c);
+                }
+
+                if( String.isNotBlank( val.Object__c ) && ( val.Object__c.indexOf( AGGREGATES ) > -1 ) ) {
+                    passCheckCount = NSP_ValidateOpportunityStage.evaluateAggregateVal( opp , passCheckCount , valObjectAgs , val);
+                } else if( NSP_ValidateOpportunityStage.checkCondition(valFieldValue , val.Value__c , val.Operation__c) ){
+                    passCheckCount++;
+                } else if( val.Object__c == OPPORTUNITY_OBJ ){ // checkCondition failed and Group looks at Opportunity, could be mixed group
+                    groupCheckMixed = true;
+                }
             }
 
-            if( String.isNotBlank( val.Object__c ) && ( val.Object__c.indexOf( AGGREGATES ) > -1 ) ) {
-                passCheckCount = evaluateAggregateVal( opp , passCheckCount , valObjectAgs , val);
-            } else if( checkCondition(valFieldValue , val.Value__c , val.Operation__c) ){
-                passCheckCount++;
-            } else if( val.Object__c == OPPORTUNITY_OBJ ){ // checkCondition failed and Group looks at Opportunity, could be mixed group
-                groupCheckMixed = true;
+            // handle special cases
+            if( groupCheckDNE ){ // check DNE case first
+                if( passCheckCount >= (groupedStageValMap.get(groupName).size() - 1) ){
+                    passCheckCount = NSP_ValidateOpportunityStage.ERROR_DOES_NOT_EXIST; // if record exists that should not, trip error message
+                } else {
+                    passCheckCount = groupedStageValMap.get(groupName).size(); // if not all criteria met, make sure error message is skipped
+                }
+            } else if( groupCheckMixed ){
+                passCheckCount = groupedStageValMap.get(groupName).size(); // if Object condition of mixed case doesn't pass, whole group passes
             }
         }
-
-        // handle special cases
-        if( groupCheckDNE ){ // check DNE case first
-            if( passCheckCount >= (groupedStageValMap.get(groupName).size() - 1) ){
-                passCheckCount = NSP_ValidateOpportunityStage.ERROR_DOES_NOT_EXIST; // if record exists that should not, trip error message
-            } else {
-                passCheckCount = groupedStageValMap.get(groupName).size(); // if not all criteria met, make sure error message is skipped
-            }
-        } else if( groupCheckMixed ){
-            passCheckCount = groupedStageValMap.get(groupName).size(); // if Object condition of mixed case doesn't pass, whole group passes
-        }
-
         return passCheckCount;
     }
 
