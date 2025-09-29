@@ -35,7 +35,7 @@
                         </label>
                         <template if:true ={isOnloadCalled}>
                             <c-nsp_case-custom-look-up
-                                                                        s-object-api-name="Contact"
+                                    s-object-api-name="Contact"
                                     icon-name = "standard:contact"
                                     parent-id ={clientAccId}
                                     default-record-id = {NSP_Contact__c}
@@ -174,8 +174,8 @@
 
                 </template>
                 <template lwc:else>
-                <lightning-button class="slds-m-top_small slds-m-left_small"  type="submit" variant="brand" label="Next" onclick={handleNext}>
-                </lightning-button>
+                    <lightning-button class="slds-m-top_small slds-m-left_small"  type="submit" variant="brand" label="Next" onclick={handleNext}>
+                    </lightning-button>
                 </template>        
             </div>
         </lightning-record-edit-form>
