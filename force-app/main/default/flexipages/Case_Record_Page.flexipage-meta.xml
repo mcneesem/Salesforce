@@ -2253,12 +2253,6 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName>caseAccountContactRelationships</componentName>
-                <identifier>c_caseAccountContactRelationships</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-f91956e9-e947-4ab1-b618-6562314fa9ec</value>
