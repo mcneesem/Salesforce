@@ -4,7 +4,7 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>System Admin Lite</label>
     <permissionSets>Account_Assignment_Method_Edit_Access</permissionSets>
-    <permissionSets>Account_Edit_PCM_Investor_fields</permissionSets>
+    <permissionSets>Account_Edit_Investor_PBID</permissionSets>
     <permissionSets>Account_Profile_Access</permissionSets>
     <permissionSets>Account_Team_Management</permissionSets>
     <permissionSets>Accrual_Profile_access</permissionSets>

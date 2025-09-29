@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>This Perm Set grants edit access to PCM Investor fields</description>
+    <description>This Perm Set grants edit access to Investor PBID field</description>
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.Investor_PBID__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Account - Edit PCM Investor fields</label>
+    <label>Account - Edit Investor PBID</label>
 </PermissionSet>
