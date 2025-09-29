@@ -53,7 +53,6 @@ export default class WizardSurveyPageInfo extends LightningElement {
     columns = [
         { label: 'Name', fieldName: 'name' },
         { label: 'Email', fieldName: 'NSP_Work_email__c' },
-
         {
             type: 'button-icon',
             typeAttributes:
@@ -199,7 +198,7 @@ export default class WizardSurveyPageInfo extends LightningElement {
     handleOnLoad(event) {
         this.isOnloadCalled=true;
         this.clientAccId = this.template.querySelector('lightning-input-field[data-fname="clientName"]').value ;
-    if(this.isOnloaded && this.recordObj != null && this.recordObj.NSP_ClientName__c != null && 
+        if(this.isOnloaded && this.recordObj != null && this.recordObj.NSP_ClientName__c != null && 
             this.clientId == null && this.recordObj.NSP_ClientName__c.value != null){
             this.clientId = this.recordObj.NSP_ClientName__c.value ;
             this.getContactRecord(this.recordObj.NSP_ClientName__c.value );
@@ -207,59 +206,55 @@ export default class WizardSurveyPageInfo extends LightningElement {
             this.getSurveyRegion(this.clientId);
             this.enableContact =true;
             this.disableContact =false;
-     }
-    if(event.detail != null &&  event.detail.records != null){
-        if(this.isOnloaded){
-        this.fieldsData =Object.values(JSON.parse(JSON.stringify(event.detail.records)))[0].fields
-        this.recordTypeId =  Object.values(JSON.parse(JSON.stringify(event.detail.records)))[0].recordTypeId;
-        if(this.fieldsData != null &&  this.fieldsData != undefined && this.fieldsData !='' ){
-
-
-            if( this.fieldsData.NSP_Survey_Type__c != null && this.fieldsData.NSP_Survey_Type__c.value != null ){
-                this.NSP_Survey_Type__c = this.fieldsData.NSP_Survey_Type__c.value ;
-                if (this.NSP_Survey_Type__c === 'Exit' || this.NSP_Survey_Type__c === 'Onboarding - One-time' || this.NSP_Survey_Type__c === 'Onboarding - Week 2/Week 5') {
-                    this.showEndDate = "display:none;";
-                    this.endDateRequired= false;
-                    this.NSP_End_Date__c =null;
-                } else {
-                    this.showEndDate = "display:block;";
-                    this.endDateRequired= true;
-                }
-            }
-
-            if( this.fieldsData.NSP_BargainingUnitEmployeesComplete__c != null && this.fieldsData.NSP_BargainingUnitEmployeesComplete__c.value != null ){
-                this.NSP_BargainingUnitEmployeesComplete__c = this.fieldsData.NSP_BargainingUnitEmployeesComplete__c.value ;
-            }
-
-            if( this.fieldsData.NSP_WhoAtclientCccessToOnlineResul__c != null && this.fieldsData.NSP_WhoAtclientCccessToOnlineResul__c.value != null ){
-                this.mergeObjectList =  this.textAreaToArray(this.fieldsData.NSP_WhoAtclientCccessToOnlineResul__c.value);
-               // this.mergeObjectList = this.reArrangeOrder(this.mergeObjectList);
-                }
-
-                if( this.fieldsData.NSP_ClientName__c != null && this.fieldsData.NSP_ClientName__c.value != null ){
-                    this.getContactRecord(this.fieldsData.NSP_ClientName__c.value );
-                    this.enableContact =true;
-                    this.disableContact =false;
-                }
-          }
-           this.NSP_Contact__c = '';
-
-           if(this.fieldsData.NSP_BargainingUnitEmployeesComplete__c != null &&
-           this.fieldsData.NSP_WhoAtclientCccessToOnlineResul__c != null &&
-           this.fieldsData.NSP_ClientName__c != null && this.fieldsData.NSP_Survey_Type__c != null ){
-            this.isOnloaded =false;
-           }
-
-
         }
-    }
+        if(event.detail != null &&  event.detail.records != null){
+            if(this.isOnloaded){
+                this.fieldsData =Object.values(JSON.parse(JSON.stringify(event.detail.records)))[0].fields
+                this.recordTypeId =  Object.values(JSON.parse(JSON.stringify(event.detail.records)))[0].recordTypeId;
+                if(this.fieldsData != null &&  this.fieldsData != undefined && this.fieldsData !='' ){
+
+                    if( this.fieldsData.NSP_Survey_Type__c != null && this.fieldsData.NSP_Survey_Type__c.value != null ){
+                        this.NSP_Survey_Type__c = this.fieldsData.NSP_Survey_Type__c.value ;
+                        if (this.NSP_Survey_Type__c === 'Exit' || this.NSP_Survey_Type__c === 'Onboarding - One-time' || this.NSP_Survey_Type__c === 'Onboarding - Week 2/Week 5') {
+                            this.showEndDate = "display:none;";
+                            this.endDateRequired= false;
+                            this.NSP_End_Date__c =null;
+                        } else {
+                            this.showEndDate = "display:block;";
+                            this.endDateRequired= true;
+                        }
+                    }
+
+                    if( this.fieldsData.NSP_BargainingUnitEmployeesComplete__c != null && this.fieldsData.NSP_BargainingUnitEmployeesComplete__c.value != null ){
+                        this.NSP_BargainingUnitEmployeesComplete__c = this.fieldsData.NSP_BargainingUnitEmployeesComplete__c.value ;
+                    }
+
+                    if( this.fieldsData.NSP_WhoAtclientCccessToOnlineResul__c != null && this.fieldsData.NSP_WhoAtclientCccessToOnlineResul__c.value != null ){
+                        this.mergeObjectList =  this.textAreaToArray(this.fieldsData.NSP_WhoAtclientCccessToOnlineResul__c.value);
+                    // this.mergeObjectList = this.reArrangeOrder(this.mergeObjectList);
+                    }
+
+                    if( this.fieldsData.NSP_ClientName__c != null && this.fieldsData.NSP_ClientName__c.value != null ){
+                        this.getContactRecord(this.fieldsData.NSP_ClientName__c.value );
+                        this.enableContact =true;
+                        this.disableContact =false;
+                    }
+                }
+                this.NSP_Contact__c = '';
+
+                if(this.fieldsData.NSP_BargainingUnitEmployeesComplete__c != null &&
+                this.fieldsData.NSP_WhoAtclientCccessToOnlineResul__c != null &&
+                this.fieldsData.NSP_ClientName__c != null && this.fieldsData.NSP_Survey_Type__c != null ){
+                    this.isOnloaded =false;
+                }
+            }
+        }
     }
 
     handleAccSuccess(event) {
             this.reReqId = event.detail.id;
             this.enableContact= true
     }
-
 
     handleSuccess(event) { 
         let fieldsData = JSON.parse(JSON.stringify(event.detail.fields));
@@ -277,7 +272,6 @@ export default class WizardSurveyPageInfo extends LightningElement {
             const saveEvent = new CustomEvent('saveexit', { bubbles: true });
             this.dispatchEvent(saveEvent);
           }
-
     }
 
     //handle the deletion of rows
@@ -292,8 +286,7 @@ export default class WizardSurveyPageInfo extends LightningElement {
     
     handleContact(event) {
         // this.currentConactId = event.detail.value;
-     
-   }
+    }
 
     handleAddContact(event) {
         if(this.refs.NSP_Contact__c?.value == null || this.refs.NSP_Contact__c?.value.length <= 17){
@@ -301,7 +294,6 @@ export default class WizardSurveyPageInfo extends LightningElement {
         }else if(this.refs.emailAddress?.value ==null || !this.refs.emailAddress.checkValidity() ){
             this.handleAlert('Please enter valid Email');
         }else{
-            
             var tempContact = new Object();
             this.currentConactId = this.refs.NSP_Contact__c?.value;
             tempContact.name = this.accContacts.find(row => row.ContactId === this.currentConactId)?.Contact?.Name;
@@ -349,7 +341,6 @@ export default class WizardSurveyPageInfo extends LightningElement {
         }
     }
 
-
     handleAccChange(event) {
         this.isWoMiddleMarketAsset=false;
         this.NSP_Contact__c = '';
@@ -379,7 +370,6 @@ export default class WizardSurveyPageInfo extends LightningElement {
             if(this.mergeObjectList[i][i] != null && his.mergeObjectList[i][i] != undefined ){
                 this.mergeObjectList[i][i]=i+1
             }
-            
         }
     }
     
@@ -416,7 +406,6 @@ export default class WizardSurveyPageInfo extends LightningElement {
                 loadObjectList.push(obj);
                 }
         })
-
         return loadObjectList;
     }
     handleNext(){
