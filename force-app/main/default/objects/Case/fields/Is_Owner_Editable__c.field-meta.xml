@@ -44,12 +44,11 @@
     ISPICKVAL( Docusign_Form_To_Send__c , &quot;Verification Report&quot; ) ,
     Verification_Report_Attached__c
   ) ,
+  /* Category: Payroll Services */
   AND(
     ( NSP_Category__c = &quot;Payroll Services&quot; ) ,
-    OR(
-      ( NSP_SubCategory__c = &quot;Wire&quot; ) ,
-      ( NSP_SubCategory__c = &quot;Purge Debit&quot; )
-    ) ,
+    ( NSP_SubCategory__c != &quot;Wire&quot; ) ,
+    ( NSP_SubCategory__c != &quot;Purge Debit&quot; ),
      NOT( ISBLANK( TEXT( Wire_Scenario__c ) ) ) ,	
      NOT( ISBLANK( TEXT( Wire_Reason__c) ) ) ,	
      NOT( ISBLANK( TEXT( Ready_to_Process__c ) ) ) ,		
