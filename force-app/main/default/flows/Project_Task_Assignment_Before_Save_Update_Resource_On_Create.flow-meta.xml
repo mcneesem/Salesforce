@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>64.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_Resource</name>
+        <label>Assign : Resource</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.pse__Resource__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Assignment_Record.pse__Resource__c</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Assignment_Record_Exist</name>
+        <label>Assignment Record Exist?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Record_Exist</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Assignment_Record</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Resource</targetReference>
+            </connector>
+            <label>Yes : Record Exist</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Valid_Project</name>
+        <label>Valid Project?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Valid_Project</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.pse__Project_Task__r.pse__Project__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Assignment_Record</targetReference>
+            </connector>
+            <label>Yes : Valid Project</label>
+        </rules>
+    </decisions>
+    <description>AZD-459027 : Update Assignments When &quot;WX Benefits Renewal Project&quot; Project Task Assignment is Created by batch. 
+Refer batch - NSP_WXBenefitsRenewalProjectCreation</description>
+    <environments>Default</environments>
+    <interviewLabel>Project Task Assignment - Before Save - Update Resource - On Create {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Project Task Assignment - Before Save - Update Resource - On Create</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Assignment_Record</name>
+        <label>Get Assignment Record</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assignment_Record_Exist</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>pse__Project__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.pse__Project_Task__r.pse__Project__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>pse__Assignment__c</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>pse__Resource__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Valid_Project</targetReference>
+        </connector>
+        <filterFormula>AND( NOT(ISBLANK({!$Record.pse__Project_Task__r.pse__Project__c})) ,{!$Record.pse__Project_Task__r.Template_Name__c} = &apos;WX Benefits Renewal Project&apos; , ISBLANK({!$Record.pse__Resource__c}))</filterFormula>
+        <object>pse__Project_Task_Assignment__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Draft</status>
+    <variables>
+        <name>FaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>rc_Project_Task_Assignment</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>pse__Project_Task_Assignment__c</objectType>
+    </variables>
+</Flow>
