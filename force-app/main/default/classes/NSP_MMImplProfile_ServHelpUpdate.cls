@@ -6,11 +6,8 @@ public class NSP_MMImplProfile_ServHelpUpdate {
     private Map<Id,Implementation_Profile__c> oldIPs = null;
     private List<pse__Project_Task__c> projectTaskToInsertList = new List<pse__Project_Task__c>();
     private List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
-    private List<pse__Project_Task__c> subTaskList = new List<pse__Project_Task__c>();
-    private List<NSP_Implementation_Profile_Automation__c> subTaskAutomationList = new List<NSP_Implementation_Profile_Automation__c>();
     private Map<String,Set<Id>> ipRecordsByAutomation = new Map<String,Set<Id>>();
     private List<sObject> recToInsert = new List<sObject>();
-    private List<sObject> childRecToInsert = new List<sObject>();
     private List<Messaging.SingleEmailMessage> lstEmailMessages = new List<Messaging.SingleEmailMessage>();
     private Map<String,Map<Id,sObject>> data = new Map<String,Map<Id,sObject>>();
     private Map<String,List<String>> ipAutomationdata = new Map<String,List<String>>();
@@ -24,6 +21,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
     private List<String> listRegulatedStates = new List<String>();
     private Map<String, pse__Milestone__c> mileStonesToInsert = new Map<String, pse__Milestone__c>();
 
+    private static String childProjectTask = null;
     private static final String PROJECT_IDENTIFIER = 'pse__Proj__c';
     private static final String PROJECT_TASK_IDENTIFIER = 'pse__Project_Task__c';
     private static final String IMPL_PROFILE_IDENTIFIER = 'Implementation_Profile__c';
@@ -261,22 +259,8 @@ public class NSP_MMImplProfile_ServHelpUpdate {
             //check for existing Automation record and store the new Automation records
             recToInsert.addAll(getNewAutomationListToInsert(ipAutomationRecords));
         }
-        //Child Project Tasks
-        if(!subTaskList.isEmpty()){
-            //check for existing Project Tasks to avoid duplications
-            childRecToInsert.addAll(getNewTasksToInsert(subTaskList));
-        }
-        //Child Project Tasks
-        if(!subTaskAutomationList.isEmpty()){
-            //check for existing Automation record and store the new Automation records
-            childRecToInsert.addAll(getNewAutomationListToInsert(subTaskAutomationList));
-        }
         finish();
         getProjectDBRecords();
-        if(!childRecToInsert.isEmpty() && !System.isFuture() && !System.isBatch()){
-            String childRecordsList = Json.serialize(childRecToInsert);
-            insertChildRecords(childRecordsList);
-        }
     }
 
     private void finish() {
@@ -1171,6 +1155,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
             pse__Project_Task__c eachProjecttask = createProjectTaskfromIP(proj,  pta.NSP_Category__c, ipRecId,milestoneKey);
             NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(automation);
             Implementation_Profile__c ipRec = newIPs.get(ipRecId);
+            eachProjecttask.Implementation_Profile__c = ipRecId;
             genericProjectTask(proj,eachProjecttask, pta, workCalendarId);
             if(ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__c!=null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c!=null){
                 eachProjecttask.OwnerId=ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c;
@@ -1214,14 +1199,14 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                     if(ipWithValue != null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__c!=null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c!=null){
                         eachProjecttask.OwnerId=ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c;
                     }
-                    subTaskAutomationList.add(
+                    ipAutomationRecords.add(
                             createIPAutomation(
                                 ipRec,
                                 ipa.NSP_Automation_Name__c,
                                 ipa.NSP_Method_Name__c,ipa.NSP_Section__c
                             )
                         );
-                    subTaskList.add(eachProjecttask);
+                    projectTaskToInsertList.add(eachProjecttask);
                 }
             }
         }
@@ -1253,14 +1238,14 @@ public class NSP_MMImplProfile_ServHelpUpdate {
                     if(ipWithValue != null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__c!=null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c!=null){
                         eachProjecttask.OwnerId=ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c;
                     }
-                    subTaskAutomationList.add(
+                    ipAutomationRecords.add(
                             createIPAutomation(
                                 ipRec,
                                 ipa.NSP_Automation_Name__c,
                                 ipa.NSP_Method_Name__c,ipa.NSP_Section__c
                             )
                         );
-                    subTaskList.add(eachProjecttask);
+                    projectTaskToInsertList.add(eachProjecttask);
                 }
             }
         }
@@ -2340,6 +2325,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
             )
         {
             updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, HSA_OPTUM_MM);
+            childProjectTask = HSA_OPTUM_MM;
         }
     }
 
@@ -2355,7 +2341,14 @@ public class NSP_MMImplProfile_ServHelpUpdate {
             )
         {
             updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, HSA_OPTUM_NO_MM);
+            childProjectTask = HSA_OPTUM_NO_MM;
         }
+    }
+    
+    //Return value to create child tasks of "Client offers HSA" Automation
+    //in afterInsert Project Task trigger
+    public static String hsaOptumChildren(){
+        return childProjectTask;
     }
 
     private void checkforCOBRA(Implementation_Profile__c newRec, Implementation_Profile__c existingRec){
@@ -2856,18 +2849,6 @@ public class NSP_MMImplProfile_ServHelpUpdate {
         return false;
     }
 
-    @future
-    private static void insertChildRecords(String childRecordsList){
-        List<Sobject> insertChildRecordsList = (List<Sobject>) JSON.deserialize(childRecordsList, List<Sobject>.class);
-        if(!insertChildRecordsList.isEmpty()){
-            List<Database.SaveResult> insertChildResults = Database.Insert(insertChildRecordsList, false);
-            NSP_ErrorLogHandler.logResults(
-                NSP_MMImplProfile_ServHelpUpdate.class.getName() ,
-                'insertChildRecords' ,
-                insertChildResults
-            );
-        }
-    }
 
 }
 //
