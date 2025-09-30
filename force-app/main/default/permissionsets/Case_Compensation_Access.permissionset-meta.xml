@@ -79,6 +79,10 @@
         <enabled>true</enabled>
         <flow>Case_Send_Compensation_Service_Request_Email</flow>
     </flowAccesses>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Case_Send_Compensation_Service_Request_Email_to_ACR_Work_Email</flow>
+    </flowAccesses>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Case Compensation Access</label>
 </PermissionSet>
