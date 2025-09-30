@@ -165,6 +165,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Credit_Exception_Approved__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Docusign_Form_To_Send__c</picklist>
         <values>
             <fullName>Acknowledgement of Receipt of Wages</fullName>
@@ -4007,6 +4018,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Ready_to_Process__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Reason</picklist>
         <values>
             <fullName>Addressed Client Request</fullName>
@@ -4216,6 +4238,36 @@
         </values>
         <values>
             <fullName>TimeStar Termination</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Wire_Reason__c</picklist>
+        <values>
+            <fullName>Additional%2FBonus Payrolls Over Credit Limit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Requested</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Credit Requested</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Final Client Payroll</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Wire_Scenario__c</picklist>
+        <values>
+            <fullName>Credit requires wire%2C Client requests debit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Debit Client who needs to wire</fullName>
             <default>false</default>
         </values>
     </picklistValues>
