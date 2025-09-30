@@ -67,6 +67,26 @@
                 <default>false</default>
                 <label>SBQQ__TotalDiscountRate__c</label>
             </value>
+            <value>
+                <fullName>Action_Type_Null__c</fullName>
+                <default>false</default>
+                <label>Action_Type_Null__c</label>
+            </value>
+            <value>
+                <fullName>NSP_Action_Type__c</fullName>
+                <default>false</default>
+                <label>NSP_Action_Type__c</label>
+            </value>
+            <value>
+                <fullName>Product_and_Action_Type__c</fullName>
+                <default>false</default>
+                <label>Product_and_Action_Type__c</label>
+            </value>
+            <value>
+                <fullName>Discounted_Add__c</fullName>
+                <default>false</default>
+                <label>Discounted_Add__c</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
