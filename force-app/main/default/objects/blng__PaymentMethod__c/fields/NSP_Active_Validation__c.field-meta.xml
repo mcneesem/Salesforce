@@ -3,9 +3,8 @@
     <fullName>NSP_Active_Validation__c</fullName>
     <defaultValue>false</defaultValue>
     <description>True if an active payment method exists for the customer account</description>
-    <externalId>false</externalId>
     <label>Active Validation</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

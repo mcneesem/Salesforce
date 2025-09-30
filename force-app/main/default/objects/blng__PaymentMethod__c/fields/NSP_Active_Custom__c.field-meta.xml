@@ -3,9 +3,8 @@
     <fullName>NSP_Active_Custom__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Captures if the record is active/inactive</description>
-    <externalId>false</externalId>
     <label>ACH Active</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>
