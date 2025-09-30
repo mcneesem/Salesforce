@@ -312,16 +312,15 @@ public with sharing class NSP_ValidateOpportunityStage {
                         valObjectAgs ,
                         groupedStageValMap
                     );
-                    passCheck = NSP_ValidateOpportunityStage.getPassCheck(
-                        passCheckCount ,
-                        groupedStageValMap ,
-                        groupName
-                    );
-                    passCheckDNE = NSP_ValidateOpportunityStage.getPassCheck(
-                        passCheckCount ,
-                        groupedStageValMap ,
-                        groupName
-                    );
+
+                    if( passCheckCount >= groupedStageValMap.get(groupName).size() ) {
+                        passCheck = true;
+                    }
+
+                    if( passCheckCount == NSP_ValidateOpportunityStage.ERROR_DOES_NOT_EXIST ) { // when any record violates DOES NOT EXIST case
+                        passCheckDNE = false;
+                    }
+
                     i++;
                 } while ( i < valObjectList.size() );
                 NSP_ValidateOpportunityStage.addValError(
@@ -332,27 +331,6 @@ public with sharing class NSP_ValidateOpportunityStage {
                 );
             }
         }
-    }
-
-    private static Boolean getPassCheck(
-        Integer passCheckCount ,
-        Map<String,List<Opportunity_Stage_Validation__mdt>> groupedStageValMap ,
-        String groupName
-        )
-    {
-        Boolean passCheck = false;
-        if ( ( groupedStageValMap != null )
-            && groupedStageValMap.containsKey( groupName )
-            && ( groupedStageValMap.get( groupName ) != null )
-            && ( passCheckCount >= groupedStageValMap.get( groupName ).size() )
-            )
-        {
-            passCheck = true;
-        }
-        if ( passCheckCount == NSP_ValidateOpportunityStage.ERROR_DOES_NOT_EXIST ) { // when any record violates DOES NOT EXIST case
-            passCheck = false;
-        }
-        return passCheck;
     }
 
     private static void addValError(
