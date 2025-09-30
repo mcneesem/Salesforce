@@ -3,9 +3,8 @@
     <fullName>NSP_Project_Complete_Date__c</fullName>
     <description>Captures the project completion date</description>
     <encryptionScheme>None</encryptionScheme>
-    <externalId>false</externalId>
     <label>Project Complete Date</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Date</type>
 </CustomField>
