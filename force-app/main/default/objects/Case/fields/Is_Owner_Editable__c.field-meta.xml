@@ -48,13 +48,20 @@
   AND(
     ( NSP_Category__c = &quot;Payroll Services&quot; ) ,
     ( NSP_SubCategory__c != &quot;Wire&quot; ) ,
-    ( NSP_SubCategory__c != &quot;Purge Debit&quot; ),
-     NOT( ISBLANK( TEXT( Wire_Scenario__c ) ) ) ,	
-     NOT( ISBLANK( TEXT( Wire_Reason__c) ) ) ,	
-     NOT( ISBLANK( TEXT( Ready_to_Process__c ) ) ) ,		
-     NOT( ISBLANK( Pay_Date__c ) ),
-     NOT( ISBLANK( Payroll_Number__c ) ) 
-   )
+    ( NSP_SubCategory__c != &quot;Purge Debit&quot; )
+  ) ,
+  AND(
+    ( NSP_Category__c = &quot;Payroll Services&quot; ) ,
+    OR(
+      ( NSP_SubCategory__c = &quot;Wire&quot; ) ,
+      ( NSP_SubCategory__c = &quot;Purge Debit&quot; )
+    ) ,
+    NOT( ISBLANK( TEXT( Wire_Scenario__c ) ) ) ,
+    NOT( ISBLANK( TEXT( Wire_Reason__c) ) ) ,
+    NOT( ISBLANK( TEXT( Ready_to_Process__c ) ) ) ,
+    NOT( ISBLANK( Pay_Date__c ) ) ,
+    NOT( ISBLANK( Payroll_Number__c ) )
+  )
 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Is Owner Editable</label>
