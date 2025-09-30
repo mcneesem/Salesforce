@@ -737,4 +737,48 @@ private class NSP_LeadTriggerHelperTest {
  
          Test.stopTest();
     }
+
+    @IsTest 
+    private static void testBypassSalesOfficeValidation() {
+
+        Test.startTest();
+        List<User> supervisor = [SELECT id FROM User WHERE UserRole.DeveloperName = 'Sales_Development_Leader' LIMIT 1];
+        List<User> users = [SELECT id FROM User WHERE UserRole.DeveloperName = 'Sales_Development_Rep' LIMIT 2];
+
+        if(supervisor.size() == 1 && users.size() == 2) {
+            
+            //  Check if supervisor already has PS
+            List<PermissionSetAssignment> psSupervisor = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId = :supervisor[0].id AND 
+            PermissionSet.Name = 'Bypass_Lead_Sales_Office_Validation'];
+            if(psSupervisor.size() == 0){
+                //  Assign the required permission set
+                List<PermissionSet> psBypassLeadOfficeValidation = [SELECT Id FROM PermissionSet WHERE Name = 'Bypass_Lead_Sales_Office_Validation' LIMIT 1];
+                if(psBypassLeadOfficeValidation.size() == 1){
+                    PermissionSetAssignment psa = new PermissionSetAssignment(
+                        AssigneeId = supervisor[0].Id,
+                        PermissionSetId = psBypassLeadOfficeValidation[0].Id
+                    );
+                    insert psa;
+                }
+            }
+
+            System.runAs(supervisor[0]) {
+                
+                Lead lead = new Lead();
+                lead.firstname='Name 123';
+                lead.lastname='Test 123';
+                lead.Company = 'Test Company';
+                lead.Email = 'testlead1000@email.com';
+                lead.NSP_Sales_Office__c = '1403';
+                lead.OwnerId = users[0].id;
+                insert lead;
+            
+                lead.OwnerId = users[1].id;
+                update lead;
+                    
+                System.assertEquals(users[1].id, lead.OwnerId);
+            }
+        }
+        Test.stopTest();
+    }
 }
