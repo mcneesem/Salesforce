@@ -23,6 +23,7 @@
     <permissionSets>Config_Admin</permissionSets>
     <permissionSets>DNBConnect__DNB_Connect_Components_access</permissionSets>
     <permissionSets>DNB_Connect_Fields_Edit_Access</permissionSets>
+    <permissionSets>Docusign_Log_Visibility</permissionSets>
     <permissionSets>Edit_Integrated_Fields</permissionSets>
     <permissionSets>Field_Access_to_System_Admin_Lite</permissionSets>
     <permissionSets>Finance_Logger</permissionSets>
