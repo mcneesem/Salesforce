@@ -1,5 +1,5 @@
 public with sharing class NSP_ValidateOpportunityStage {
-    // test w/ NSP_ValidateOpportunityStageTest (84%)
+    // test w/ NSP_ValidateOpportunityStageTest (85%)
 
     // ***************************************************************************************************************************
     //  ClassName:      NSP_ValidateOpportunityStage
@@ -423,13 +423,33 @@ public with sharing class NSP_ValidateOpportunityStage {
             }
 
             // handle special cases
+            passCheckCount = evaluateSpecialCases(
+                passCheckCount ,
+                groupCheckDNE ,
+                groupCheckMixed ,
+                groupName ,
+                groupedStageValMap
+            );
+        }
+        return passCheckCount;
+    }
+
+    private static Integer evaluateSpecialCases(
+        Integer passCheckCount ,
+        Boolean groupCheckDNE ,
+        Boolean groupCheckMixed ,
+        String groupName ,
+        Map<String, List<Opportunity_Stage_Validation__mdt>> groupedStageValMap
+        )
+    {
+        if ( ( groupedStageValMap != null ) && groupedStageValMap.containsKey( groupName ) ) {
             if( groupCheckDNE ){ // check DNE case first
-                if( passCheckCount >= (groupedStageValMap.get(groupName).size() - 1) ){
+                if( passCheckCount >= (groupedStageValMap.get(groupName).size() - 1) ) {
                     passCheckCount = NSP_ValidateOpportunityStage.ERROR_DOES_NOT_EXIST; // if record exists that should not, trip error message
                 } else {
-                    passCheckCount = groupedStageValMap.get(groupName).size(); // if not all criteria met, make sure error message is skipped
+                    passCheckCount = groupedStageValMap.get(groupName).size(); // if not all DNE criteria met, make sure error message is skipped
                 }
-            } else if( groupCheckMixed ){
+            } else if( groupCheckMixed ) {
                 passCheckCount = groupedStageValMap.get(groupName).size(); // if Object condition of mixed case doesn't pass, whole group passes
             }
         }
