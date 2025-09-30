@@ -400,7 +400,8 @@ public with sharing class NSP_LeadTriggerHelper {
         ]);
         if ( ( leadNewMap != null )
             && ( usersRoles != null )
-            && !usersRoles.isEmpty() )
+            && !usersRoles.isEmpty()
+            )
         {
             for ( Id leadId : leadNewMap.keySet() ) {
                 Lead oldRecord = this.getMappedLeadSafe( leadOldMap , leadId );
