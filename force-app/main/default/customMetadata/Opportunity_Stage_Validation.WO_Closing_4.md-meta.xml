@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Error_Message__c</field>
-        <value xsi:type="xsd:string">Only If</value>
+        <value xsi:type="xsd:string">Please ensure Bid is Approved to move to Closing stage</value>
     </values>
     <values>
         <field>Field__c</field>

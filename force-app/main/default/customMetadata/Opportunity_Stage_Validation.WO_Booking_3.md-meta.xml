@@ -4,15 +4,15 @@
     <protected>false</protected>
     <values>
         <field>Error_Message__c</field>
-        <value xsi:type="xsd:string">Only If</value>
+        <value xsi:type="xsd:string">Please complete Closing Appointment Event before moving to Booking stage</value>
     </values>
     <values>
         <field>Field__c</field>
-        <value xsi:type="xsd:string">NSP_Account_Segment__c</value>
+        <value xsi:type="xsd:string">NSP_Event_Subtype__c</value>
     </values>
     <values>
         <field>Group__c</field>
-        <value xsi:type="xsd:string">B1</value>
+        <value xsi:type="xsd:string">B2</value>
     </values>
     <values>
         <field>IsActive__c</field>
@@ -20,11 +20,11 @@
     </values>
     <values>
         <field>Object__c</field>
-        <value xsi:type="xsd:string">Opportunity</value>
+        <value xsi:type="xsd:string">Event</value>
     </values>
     <values>
         <field>Operation__c</field>
-        <value xsi:type="xsd:string">IS_NOT_IN</value>
+        <value xsi:type="xsd:string">EQUALS</value>
     </values>
     <values>
         <field>Primary_Product__c</field>
@@ -36,6 +36,6 @@
     </values>
     <values>
         <field>Value__c</field>
-        <value xsi:type="xsd:string">MidMarket,Enterprise</value>
+        <value xsi:type="xsd:string">Closing Appointment</value>
     </values>
 </CustomMetadata>
