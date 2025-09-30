@@ -134,6 +134,7 @@ public class NSP_CPQConstants {
     public static final String ANNUAL = 'Annual';
     public static final String IWXSU = 'IWXSU';
     public static final String IWASU = 'IWASU';
+    public static final String CSUF = 'CSUF';
 
     //Exception handeling error messages
     public static final String EXCEP_VALID_RECORD_CHECK = 'checkValidRecordForProcess';
