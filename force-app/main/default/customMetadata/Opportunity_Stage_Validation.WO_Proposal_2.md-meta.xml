@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>WO WS Proposal 2</label>
+    <label>WO Proposal 2</label>
     <protected>false</protected>
     <values>
         <field>Error_Message__c</field>
-        <value xsi:type="xsd:string">Only If</value>
+        <value xsi:type="xsd:string">Please add HR360 Proposal Event before moving to Proposal stage</value>
     </values>
     <values>
         <field>Field__c</field>
-        <value xsi:type="xsd:string">Type</value>
+        <value xsi:type="xsd:string">NSP_Status__c</value>
     </values>
     <values>
         <field>Group__c</field>
@@ -20,11 +20,11 @@
     </values>
     <values>
         <field>Object__c</field>
-        <value xsi:type="xsd:string">Opportunity</value>
+        <value xsi:type="xsd:string">Event</value>
     </values>
     <values>
         <field>Operation__c</field>
-        <value xsi:type="xsd:string">IS_IN</value>
+        <value xsi:type="xsd:string">DOES_NOT_EQUAL</value>
     </values>
     <values>
         <field>Primary_Product__c</field>
@@ -36,6 +36,6 @@
     </values>
     <values>
         <field>Value__c</field>
-        <value xsi:type="xsd:string">New Product,Existing Product</value>
+        <value xsi:type="xsd:string">Cancelled</value>
     </values>
 </CustomMetadata>
