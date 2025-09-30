@@ -32,7 +32,7 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_Fault_Element_Create_Asset_Termination_Information_Rec</name>
+        <name>Assign_Fault_Element_Create_Asset_Termination_Rec</name>
         <label>Assign Fault Element</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
@@ -40,7 +40,7 @@
             <assignToReference>VarFaultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Create_Asset_Termination_Information_Rec</stringValue>
+                <stringValue>Create_Asset_Termination_Rec</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -48,7 +48,7 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_Fault_Element_Del_Asset_Term_Info_For_Term_Asset</name>
+        <name>Assign_Fault_Element_Delete_Terminated_OR_Backout_Asset_Termination_Rec</name>
         <label>Assign Fault Element</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
@@ -56,7 +56,7 @@
             <assignToReference>VarFaultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Del_Asset_Term_Info_For_Term_Asset</stringValue>
+                <stringValue>Delete_Terminated_OR_Backout_Asset_Termination_Rec</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -82,7 +82,7 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_Fault_Element_Get_Account_Group_From_Account_Group_Member</name>
+        <name>Assign_Fault_Element_Get_Account_Group_Member</name>
         <label>Assign Fault Element</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
@@ -90,7 +90,7 @@
             <assignToReference>VarFaultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Get_Account_Group_From_Account_Group_Member</stringValue>
+                <stringValue>Get_Account_Group_Member</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -99,7 +99,7 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_Fault_Element_Get_Asset_Termination_Information_Rec</name>
+        <name>Assign_Fault_Element_Get_Asset_Termination_Rec</name>
         <label>Assign Fault Element</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
@@ -107,7 +107,7 @@
             <assignToReference>VarFaultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Get_Asset_Termination_Information_Rec</stringValue>
+                <stringValue>Get_Asset_Termination_Rec</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -116,7 +116,7 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_Fault_Element_Get_Remaining_Asset_Termination_Info_To_Delete</name>
+        <name>Assign_Fault_Element_Get_Remaining_Asset_Termination_Recs_To_Delete</name>
         <label>Assign Fault Element</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
@@ -124,7 +124,7 @@
             <assignToReference>VarFaultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Get_Remaining_Asset_Termination_Info_To_Delete</stringValue>
+                <stringValue>Get_Remaining_Asset_Termination_Recs_To_Delete</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -421,7 +421,7 @@
             <targetReference>Check_Triggering_Asset_Status</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Assign_Fault_Element_Create_Asset_Termination_Information_Rec</targetReference>
+            <targetReference>Assign_Fault_Element_Create_Asset_Termination_Rec</targetReference>
         </faultConnector>
         <inputReference>AssetTerminationInfo_RecVar</inputReference>
     </recordCreates>
@@ -431,7 +431,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <faultConnector>
-            <targetReference>Assign_Fault_Element_Del_Asset_Term_Info_For_Term_Asset</targetReference>
+            <targetReference>Assign_Fault_Element_Delete_Terminated_OR_Backout_Asset_Termination_Rec</targetReference>
         </faultConnector>
         <inputReference>Get_Remaining_Asset_Termination_Recs_To_Delete</inputReference>
     </recordDeletes>
@@ -485,7 +485,7 @@
             <targetReference>Get_Account_Group_From_Account_Group_Member</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Assign_Fault_Element_Get_Account_Group_From_Account_Group_Member</targetReference>
+            <targetReference>Assign_Fault_Element_Get_Account_Group_Member</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -526,7 +526,7 @@
             <targetReference>Check_Asset_Termination_Rec</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Assign_Fault_Element_Get_Asset_Termination_Information_Rec</targetReference>
+            <targetReference>Assign_Fault_Element_Get_Asset_Termination_Rec</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -555,7 +555,7 @@
             <targetReference>Check_Get_Remaining_Asset_Termination_Recs</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Assign_Fault_Element_Get_Remaining_Asset_Termination_Info_To_Delete</targetReference>
+            <targetReference>Assign_Fault_Element_Get_Remaining_Asset_Termination_Recs_To_Delete</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -661,7 +661,7 @@
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Asset_After_Save_Create_Or_Update_Asset_Termination_Information_Record</stringValue>
+                <stringValue>Subflow_Asset_Populate_Asset_Termination</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
