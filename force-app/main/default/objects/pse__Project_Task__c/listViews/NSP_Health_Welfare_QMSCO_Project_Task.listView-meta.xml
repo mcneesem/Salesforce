@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NSP_Health_Welfare_QMSCO_Project_Task</fullName>
+    <columns>NAME</columns>
+    <filterScope>Queue</filterScope>
+    <label>Health &amp; Welfare QMCSO</label>
+    <queue>NSP_Health_Welfare_QMSCO</queue>
+    <sharedTo>
+        <allInternalUsers></allInternalUsers>
+    </sharedTo>
+</ListView>
