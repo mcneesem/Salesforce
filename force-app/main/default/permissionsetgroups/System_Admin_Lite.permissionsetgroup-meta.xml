@@ -26,7 +26,7 @@
     <permissionSets>Field_Access_to_System_Admin_Lite</permissionSets>
     <permissionSets>Finance_Logger</permissionSets>
     <permissionSets>Financial_Analysis_Tool_Access</permissionSets>
-    <permissionSets>Locked_Opportunity_Backout_Access</permissionSets>
+    <permissionSets>Bypass_Locked_Opportunity_Backout_Access</permissionSets>
     <permissionSets>Manage_Custom_Report_Types</permissionSets>
     <permissionSets>Marketing_Fields_Edit_Access</permissionSets>
     <permissionSets>NSP_FLSA_PermissionSet</permissionSets>
