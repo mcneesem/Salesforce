@@ -468,41 +468,39 @@ public class NSP_ProjectTasksTriggerHelper {
             );
         }
     }
-	
-    public void createProjectTaskForHSAChildren(List<pse__Project_Task__c> projectTaskList, String automation){
+
+    public void createProjectTaskForHSAChildren( List<pse__Project_Task__c> projectTaskList , String automation ) {
         Id ipId = null;
         Integer hierarchyDepth = null;
         String longDescription = null;
         NSP_ProjectTask_Automation__mdt pta = null;
-        if( String.isNotBlank(automation) ){
-            pta =  NSP_ProjectTask_Automation__mdt.getInstance(automation);
-            
-            if( automation == HSA_OPTUM_MM ){
+        if ( String.isNotBlank( automation ) ) {
+            pta =  NSP_ProjectTask_Automation__mdt.getInstance( automation );
+            if ( automation == HSA_OPTUM_MM ) {
                 hierarchyDepth = 1;
                 longDescription = System.label.HSA_With_Optum_Bank;
             }
-            if( automation == HSA_OPTUM_NO_MM ){
+            if ( automation == HSA_OPTUM_NO_MM ) {
                 hierarchyDepth = 2;
                 longDescription = System.label.HSA_With_No_Optum_Bank;
             }
         }
         List<pse__Project_Task__c> hsaProjectTaskList = new List<pse__Project_Task__c>();
-        try{
-            for(pse__Project_Task__c pt: projectTaskList){
-                if(pt.Name==NSP_ServiceConstants.HSA && pta != null){
-                    pse__Project_Task__c eachProjecttask = createProjectTaskfromParent(pt);
+        try {
+            for ( pse__Project_Task__c pt : projectTaskList ) {
+                if ( pt.Name==NSP_ServiceConstants.HSA && ( pta != null ) ) {
+                    pse__Project_Task__c eachProjecttask = createProjectTaskfromParent( pt );
                     ipId = pt.Implementation_Profile__c;
-                    eachProjecttask.NSP_Sub_Category__c=pta.NSP_Sub_Category__c;
-                    eachProjecttask.Name=pta.NSP_Task_Name__c;
+                    eachProjecttask.NSP_Sub_Category__c = pta.NSP_Sub_Category__c;
+                    eachProjecttask.Name = pta.NSP_Task_Name__c;
                     eachProjecttask.pse__Hierarchy_Depth__c = hierarchyDepth;
-                    eachProjecttask.pse__Order__c=pta.Order__c;
-                    eachProjecttask.Task_Order__c=pta.Task_Order__c;
+                    eachProjecttask.pse__Order__c= pta.Order__c;
+                    eachProjecttask.Task_Order__c= pta.Task_Order__c;
                     eachProjecttask.NSP_Visible_to_Client__c = pta.Visible_to_Client__c;
                     eachProjecttask.pse__Long_Description__c = longDescription;
-
-                    hsaProjectTaskList.add(eachProjecttask);
+                    hsaProjectTaskList.add( eachProjecttask );
                 }
-                if ( hsaProjectTaskList != null && !hsaProjectTaskList.isEmpty() ) {
+                if ( ( hsaProjectTaskList != null ) && !hsaProjectTaskList.isEmpty() ) {
                     List<Database.SaveResult> insertChildResults = Database.insert( hsaProjectTaskList , false );
                     NSP_ErrorLogHandler.logResults(
                         NSP_ProjectTasksTriggerHelper.class.getName() ,
@@ -512,38 +510,41 @@ public class NSP_ProjectTasksTriggerHelper {
                 }
             }
             //Insert Implementation Automation Record
-            insertHsaIpAutomations(ipId, automation);
-        }catch ( Exception e ) {
+            insertHsaIpAutomations( ipId , automation );
+        } catch ( Exception e ) {
             NSP_ProjectTasksTriggerHelper.handleException(
                 e ,
                 'createProjectTaskForHSAChildren'
             );
         }
     }
-    
-    private void insertHsaIpAutomations( Id ipId, String automation ){
+
+    private void insertHsaIpAutomations( Id ipId , String automation ) {
         List<NSP_Implementation_Profile_Automation__c> ipAutomationList = new List<NSP_Implementation_Profile_Automation__c>();
         List<Implementation_Profile__c> ipRec = new List<Implementation_Profile__c>();
         Implementation_Profile__c implementationProfile = null;
         NSP_Implementation_Automations__mdt ipa = null;
-        if( automation != null ) {
-            ipa = NSP_Implementation_Automations__mdt.getInstance(automation);
+        if ( automation != null ) {
+            ipa = NSP_Implementation_Automations__mdt.getInstance( automation );
         }
-        
-        if( ipId != null && ipa != null ){
-            ipRec = [SELECT Id, RecordTypeId 
-                     FROM Implementation_Profile__c 
-                     WHERE Id=: ipId
-                     LIMIT 1];
-            if(ipRec != null){
+        if ( ( ipId != null ) && ( ipa != null ) ) {
+            ipRec = [
+                SELECT Id, RecordTypeId 
+                FROM Implementation_Profile__c 
+                WHERE ( Id = :ipId )
+                LIMIT 1
+            ];
+            if ( ipRec != null ) {
                 implementationProfile = ipRec[0];
             }
             //Creating Implementation Profile record
-            NSP_Implementation_Profile_Automation__c ipAutomation = NSP_MMImplProfile_ServHelpUpdate.createIPAutomation(implementationProfile,ipa.NSP_Automation_Name__c,
-                                                                                                                        ipa.NSP_Method_Name__c,ipa.NSP_Section__c);
-            ipAutomationList.add(ipAutomation);
-            
-            if(ipAutomationList != null && !ipAutomationList.isEmpty()){
+            NSP_Implementation_Profile_Automation__c ipAutomation = NSP_MMImplProfile_ServHelpUpdate.createIPAutomation(
+                implementationProfile,ipa.NSP_Automation_Name__c ,
+                ipa.NSP_Method_Name__c ,
+                ipa.NSP_Section__c
+            );
+            ipAutomationList.add( ipAutomation );
+            if ( ( ipAutomationList != null ) && !ipAutomationList.isEmpty() ) {
                 List<Database.SaveResult> ipAutomationResults = Database.insert( ipAutomationList , false );
                 NSP_ErrorLogHandler.logResults(
                     NSP_ProjectTasksTriggerHelper.class.getName() ,
