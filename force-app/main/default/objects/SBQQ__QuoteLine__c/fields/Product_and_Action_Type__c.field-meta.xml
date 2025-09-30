@@ -3,12 +3,12 @@
     <fullName>Product_and_Action_Type__c</fullName>
     <externalId>false</externalId>
     <formula>IF(
-AND(
-ISPICKVAL(NSP_Product_Type__c, &quot;Applicant Tracking&quot;),
-NOT(ISBLANK(NSP_ActionType__c))
-),
-1,
-0
+  AND(
+    ISPICKVAL( NSP_Product_Type__c , &quot;Applicant Tracking&quot; ) ,
+    NOT( ISBLANK( NSP_ActionType__c ) )
+  ) ,
+  1 ,
+  0
 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Product and Action Type</label>
