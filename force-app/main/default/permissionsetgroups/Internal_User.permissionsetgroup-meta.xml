@@ -25,7 +25,6 @@
     <permissionSets>Named_Account_Group_Edit_Access</permissionSets>
     <permissionSets>New_Task_Aura</permissionSets>
     <permissionSets>Onboarding_Meeting_Request_Detail_Edit</permissionSets>
-    <permissionSets>Organization_Wide_Email_Address_SSNVS_Team</permissionSets>
     <permissionSets>Request_CTM_and_Employee_Orientation_Meeting_Detail</permissionSets>
     <permissionSets>Request_Employee_Orientation_Meeting_Detail</permissionSets>
     <permissionSets>Required_Reporting_Fields</permissionSets>
