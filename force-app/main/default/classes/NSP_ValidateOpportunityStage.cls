@@ -1,5 +1,5 @@
 public with sharing class NSP_ValidateOpportunityStage {
-    // test w/ NSP_ValidateOpportunityStageTest (85%)
+    // test w/ NSP_ValidateOpportunityStageTest (84%)
 
     // ***************************************************************************************************************************
     //  ClassName:      NSP_ValidateOpportunityStage
@@ -35,6 +35,7 @@ public with sharing class NSP_ValidateOpportunityStage {
     private static String validationObjects = 'Opportunity,Event,Task,OpportunityContactRole,NSP_Employee_Split__c,SBQQ__Quote__c,NSP_Checklist__c';
     private static final String AGGREGATES = 'Aggregates';
     private static final String DEFAULT_PRODUCT = 'Default';
+    private static final String ONLY_IF = 'Only If';
     private static final String OPPORTUNITY_OBJ = 'Opportunity';
     public static final String FAILED = 'Failed Stage Validation';
     public static final String HAS_DISCOVERY = ' has Discovery ';
@@ -410,7 +411,8 @@ public with sharing class NSP_ValidateOpportunityStage {
                     );
                 } else if ( NSP_ValidateOpportunityStage.checkCondition( valFieldValue , val.Value__c , val.Operation__c ) ){
                     passCheckCount++;
-                } else if ( val.Object__c == OPPORTUNITY_OBJ ) { // checkCondition failed and Group looks at Opportunity, could be mixed group
+                } else if ( ( val.Object__c == OPPORTUNITY_OBJ )
+                         && ( val.Error_Message__c == ONLY_IF ) ) { // checkCondition failed and Group looks at Opportunity, must be mixed group
                     groupCheckMixed = true;
                 }
             }
