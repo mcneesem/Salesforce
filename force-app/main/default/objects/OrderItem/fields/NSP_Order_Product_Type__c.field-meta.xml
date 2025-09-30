@@ -3,7 +3,7 @@
     <fullName>NSP_Order_Product_Type__c</fullName>
     <description>Indicates Product type of an order</description>
     <externalId>false</externalId>
-    <formula>SBQQ__QuoteLine__r.NSP_Order_Product_Type__c</formula>
+    <formula>if(ISBLANK(NSP_Product_Type__c),SBQQ__QuoteLine__r.NSP_Order_Product_Type__c,NSP_Product_Type__c)</formula>
     <label>Order Product Type</label>
     <required>false</required>
     <trackHistory>false</trackHistory>

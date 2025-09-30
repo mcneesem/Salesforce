@@ -4,13 +4,12 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <deprecated>false</deprecated>
     <description>The contract of the subscription that is created from this order product.</description>
-    <externalId>false</externalId>
     <inlineHelpText>The contract of the subscription that is created from this order product.</inlineHelpText>
     <label>Contract</label>
     <referenceTo>Contract</referenceTo>
     <relationshipLabel>Order Products</relationshipLabel>
     <relationshipName>OrderProducts</relationshipName>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Lookup</type>
 </CustomField>

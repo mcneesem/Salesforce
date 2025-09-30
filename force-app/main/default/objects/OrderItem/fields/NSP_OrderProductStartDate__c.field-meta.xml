@@ -2,10 +2,9 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_OrderProductStartDate__c</fullName>
     <description>Used to capture the order product start date for Monthly Billing Frequency products on amendment</description>
-    <externalId>false</externalId>
     <label>Order Product Start Date(Amendment)</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>

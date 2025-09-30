@@ -4,13 +4,12 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <deprecated>false</deprecated>
     <description>Subscription being upgraded by this quote line.</description>
-    <externalId>false</externalId>
     <inlineHelpText>Subscription being upgraded by this quote line. When the quote is contracted this subscription will have its Terminated Date field populated.</inlineHelpText>
     <label>Upgraded Subscription</label>
     <referenceTo>SBQQ__Subscription__c</referenceTo>
     <relationshipLabel>Upgraded Order Products</relationshipLabel>
     <relationshipName>OrderProducts</relationshipName>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Lookup</type>
 </CustomField>

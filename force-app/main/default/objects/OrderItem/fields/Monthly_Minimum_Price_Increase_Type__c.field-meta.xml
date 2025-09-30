@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Monthly_Minimum_Price_Increase_Type__c</fullName>
     <description>Determines whether the increase to the monthly minimum fee is a flat amount or percentage.</description>
-    <externalId>false</externalId>
     <inlineHelpText>Select the type of price increase</inlineHelpText>
     <label>Monthly Minimum Price Increase Type</label>
     <required>false</required>

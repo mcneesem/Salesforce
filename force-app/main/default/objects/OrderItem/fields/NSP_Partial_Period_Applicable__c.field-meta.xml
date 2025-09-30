@@ -3,8 +3,7 @@
     <fullName>NSP_Partial_Period_Applicable__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Indicates if partial period is applicable.</description>
-    <externalId>false</externalId>
     <label>Partial Period Applicable?</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>
