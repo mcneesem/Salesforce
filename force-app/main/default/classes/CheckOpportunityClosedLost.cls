@@ -4,12 +4,11 @@ public with sharing class CheckOpportunityClosedLost {
     @InvocableMethod( label='Check Opportunity Closed Lost' description='Checks if User can move Opportunity to Closed Lost' category='Opportunity' )
     public static List<CheckStageResponse> checkOpportunityClosedLost( List<CheckStageRequest> inputs ) {
         List<CheckStageResponse> outputs = new List<CheckStageResponse>();
-        if( ( inputs != null ) && !inputs.isEmpty() ) {
+        if ( ( inputs != null ) && !inputs.isEmpty() ) {
             for ( CheckStageRequest input : inputs ) {
                 CheckStageResponse output = new CheckStageResponse();
                 output.checkStage = false;
-                Id optyId = input.oppRecordId;
-                if( optyId != null ) {
+                if ( input.oppRecordId != null ) {
                     List<Opportunity> opps = [
                         SELECT
                             Id ,
@@ -36,7 +35,7 @@ public with sharing class CheckOpportunityClosedLost {
                             StageName ,
                             Type
                         FROM Opportunity
-                        WHERE ( Id = :optyId )
+                        WHERE ( Id = :input.oppRecordId )
                         LIMIT 1
                     ];
                     if ( ( opps != null ) && !opps.isEmpty() ) {
