@@ -3,13 +3,12 @@
     <fullName>NSP_Primary_Account__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <description>Indicates the Primary Account on Invoice</description>
-    <externalId>false</externalId>
     <label>Primary Account</label>
     <referenceTo>Account</referenceTo>
     <relationshipLabel>Invoices (Primary Account)</relationshipLabel>
     <relationshipName>Invoices</relationshipName>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
 </CustomField>
