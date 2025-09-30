@@ -348,6 +348,10 @@
     <picklistValues>
         <picklist>NSP_Pricing_Model__c</picklist>
         <values>
+            <fullName>RET - Bundled Plus %234</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>WA</fullName>
             <default>false</default>
         </values>
