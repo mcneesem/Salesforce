@@ -59,11 +59,11 @@
             <label>Yes : Valid Project</label>
         </rules>
     </decisions>
-    <description>AZD-459027 : Update Assignments When &quot;WX Benefits Renewal Project&quot; Project Task Assignment is Created by batch. 
+    <description>AZD-459027 : Update Resource When &quot;WX Benefits Renewal Project&quot; Project Task Assignment is Created by batch. 
 Refer batch - NSP_WXBenefitsRenewalProjectCreation</description>
     <environments>Default</environments>
-    <interviewLabel>Project Task Assignment - Before Save - Update Resource - On Create {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Project Task Assignment - Before Save - Update Resource - On Create</label>
+    <interviewLabel>Project Task Assignment - Before Create - Update Resource {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Project Task Assignment - Before Create - Update Resource</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -118,13 +118,6 @@ Refer batch - NSP_WXBenefitsRenewalProjectCreation</description>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
     <status>Draft</status>
-    <variables>
-        <name>FaultElement</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
     <variables>
         <name>rc_Project_Task_Assignment</name>
         <dataType>SObject</dataType>

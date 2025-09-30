@@ -76,8 +76,8 @@
     <description>AZD-459027 : Update Assignments When &quot;WX Benefits Renewal Project&quot; Project Resource is Created by batch. 
 Refer batch - NSP_WXBenefitsRenewalProjectCreation</description>
     <environments>Default</environments>
-    <interviewLabel>Project Resource Request - Before Save - Update Assignment - On Create {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Resource Request - Before Save - Update Assignment - On Create</label>
+    <interviewLabel>Resource Request - Before Create - Update Assignment {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Resource Request - Before Create - Update Assignment</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
