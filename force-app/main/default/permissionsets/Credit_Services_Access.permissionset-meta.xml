@@ -6,5 +6,5 @@
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Credit Services</label>
+    <label>Credit Services Access</label>
 </PermissionSet>
