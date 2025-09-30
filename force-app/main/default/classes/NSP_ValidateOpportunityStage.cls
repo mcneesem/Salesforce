@@ -292,7 +292,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         for( String groupName : groupOrder ) {
             Boolean passCheck = false;
             Boolean passCheckDNE = true;
-            String groupRelObjName = getGroupRelObjName( groupName , groupedStageValMap );
+            String groupRelObjName = NSP_ValidateOpportunityStage.getGroupRelObjName( groupName , groupedStageValMap );
             Integer i = 0;
             if( ( groupedStageValMap != null ) && ( valObjectMap != null ) ) {
                 List<SObject> valObjectList = valObjectMap.get(groupRelObjName);
@@ -423,7 +423,7 @@ public with sharing class NSP_ValidateOpportunityStage {
             }
 
             // handle special cases
-            passCheckCount = evaluateSpecialCases(
+            passCheckCount = NSP_ValidateOpportunityStage.evaluateSpecialCases(
                 passCheckCount ,
                 groupCheckDNE ,
                 groupCheckMixed ,
