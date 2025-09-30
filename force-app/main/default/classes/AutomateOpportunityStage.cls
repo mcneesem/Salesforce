@@ -21,8 +21,8 @@ public with sharing class AutomateOpportunityStage {
     }
 
     @InvocableMethod( label='Automate Opportunity Stage' description='Automates Opportunity Stage progression' category='Opportunity' )
-    public static void automateOpportunityStage( List<Id> autoStageOppIds ){
-        if ( ( autoStageOppIds != null ) && !autoStageOppIds.isEmpty() ){
+    public static void automateOpportunityStage( List<Id> autoStageOppIds ) {
+        if ( ( autoStageOppIds != null ) && !autoStageOppIds.isEmpty() ) {
             try {
                 List<Opportunity> stageAutoOptyList = new List<Opportunity>();
                 List<Opportunity> updateOptyList = new List<Opportunity>();
@@ -61,9 +61,7 @@ public with sharing class AutomateOpportunityStage {
                 {
                     stageAutoOptyList = AutomateOpportunityStage.getStageAutoOptyList( stageAutoOptyList , opp );
                 }
-
                 updateOptyList = AutomateOpportunityStage.getUpdateOptyList( stageAutoOptyList );
-
                 // Update Opportunity Stages
                 if ( !updateOptyList.isEmpty() ) {
                     List<Database.SaveResult> results = Database.update( stageAutoOptyList , false );
@@ -73,7 +71,6 @@ public with sharing class AutomateOpportunityStage {
                         results
                     );
                 }
-
             } catch ( Exception e ) {
                 NSP_ErrorLogHandler.logException(
                     AutomateOpportunityStage.class.getName() ,
@@ -90,13 +87,15 @@ public with sharing class AutomateOpportunityStage {
         Opportunity opp
         )
     {
-        if( ( AutomateOpportunityStage.optyAutoStages != null ) 
-          && !AutomateOpportunityStage.optyAutoStages.isEmpty() ) {
+        if ( ( AutomateOpportunityStage.optyAutoStages != null )
+            && !AutomateOpportunityStage.optyAutoStages.isEmpty()
+            )
+        {
             for ( Opportunity_Stage_Progression__mdt stageAuto : AutomateOpportunityStage.optyAutoStages ) {
                 if ( ( opp.StageName == stageAuto.Stage__c )
                     && ( opp.NSP_PrimaryProduct__c == stageAuto.Primary_Product__c )
                     && ( stageAuto.Is_Automated__c )
-                   )
+                    )
                 {
                     opp.StageName = stageAuto.Next_Stage__c;
                     stageAutoOptyList.add( opp );
@@ -113,12 +112,11 @@ public with sharing class AutomateOpportunityStage {
         )
     {
         List<Opportunity> updateOptyList = new List<Opportunity>();
-        if( ( stageAutoOptyList != null ) && !stageAutoOptyList.isEmpty() ) {
+        if ( ( stageAutoOptyList != null ) && !stageAutoOptyList.isEmpty() ) {
             NSP_ValidateOpportunityStage.validateOpportunityStage( stageAutoOptyList , true );
-
             // Prepare the valid ones for update
             for ( Opportunity checkedOpp : stageAutoOptyList ) {
-                if( checkedOpp.NextStep != NSP_ValidateOpportunityStage.FAILED ) {
+                if ( checkedOpp.NextStep != NSP_ValidateOpportunityStage.FAILED ) {
                     updateOptyList.add( checkedOpp );
                 }
             }
