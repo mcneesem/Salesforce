@@ -3,10 +3,9 @@
     <fullName>NSP_Term_Line__c</fullName>
     <defaultValue>false</defaultValue>
     <description>When selected, terminates the quote line.</description>
-    <externalId>false</externalId>
     <inlineHelpText>When selected, terminates the quote line.</inlineHelpText>
     <label>Term Line</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

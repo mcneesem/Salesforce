@@ -3,9 +3,8 @@
     <fullName>NSP_IsScholarshipApplied__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Indicates if Scholarship Pricing is applicable</description>
-    <externalId>false</externalId>
     <label>IsScholarshipApplied</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

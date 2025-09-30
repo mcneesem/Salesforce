@@ -3,7 +3,6 @@
     <fullName>Matching_Product_Code__c</fullName>
     <description>Used for Separate Project creation</description>
     <encryptionScheme>None</encryptionScheme>
-    <externalId>false</externalId>
     <inlineHelpText>Products that decide Separate Project</inlineHelpText>
     <label>Matching Product Code</label>
     <length>3000</length>

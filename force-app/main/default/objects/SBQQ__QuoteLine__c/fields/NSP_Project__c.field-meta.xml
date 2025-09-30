@@ -3,7 +3,6 @@
     <fullName>NSP_Project__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <description>Project twin field with order product</description>
-    <externalId>false</externalId>
     <inlineHelpText>This project will be stamped on Order Product.</inlineHelpText>
     <label>Project</label>
     <referenceTo>pse__Proj__c</referenceTo>

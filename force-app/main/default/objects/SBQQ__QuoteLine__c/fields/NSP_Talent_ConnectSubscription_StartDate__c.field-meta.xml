@@ -3,10 +3,9 @@
     <fullName>NSP_Talent_ConnectSubscription_StartDate__c</fullName>
     <description>Field to hold the Talent Connect Subscription Start Date</description>
     <encryptionScheme>None</encryptionScheme>
-    <externalId>false</externalId>
     <label>Talent Connect Subscription Start Date</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Date</type>
 </CustomField>
