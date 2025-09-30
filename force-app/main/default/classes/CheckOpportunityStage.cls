@@ -3,16 +3,13 @@ public with sharing class CheckOpportunityStage {
 
     @InvocableMethod( label='Check Opportunity Stage' description='Checks if User can move Opportunity to specific Stage' category='Opportunity' )
     public static List<CheckStageResponse> checkOpportunityStage( List<CheckStageRequest> inputs ) {
-
         List<CheckStageResponse> outputs = new List<CheckStageResponse>();
-
-        if( ( inputs != null ) && !inputs.isEmpty() ) {
+        if ( ( inputs != null ) && !inputs.isEmpty() ) {
             for ( CheckStageRequest input : inputs ) {
                 CheckStageResponse output = new CheckStageResponse();
                 List<Opportunity> opps = new List<Opportunity>();
                 output.checkStage = false;
-                Id optyId = input.oppRecordId;
-                if( optyId != null ) {
+                if( input.oppRecordId != null ) {
                     opps = [
                         SELECT
                             Id ,
@@ -39,7 +36,7 @@ public with sharing class CheckOpportunityStage {
                             StageName ,
                             Type
                         FROM Opportunity
-                        WHERE ( Id = :optyId )
+                        WHERE ( Id = :input.oppRecordId )
                         LIMIT 1
                     ];
                 }
@@ -56,14 +53,18 @@ public with sharing class CheckOpportunityStage {
         }
         return outputs;
     }
+
     public class CheckStageRequest {
         @InvocableVariable(label='Opportunity Id' description='Opportunity record' required=true)
         public Id oppRecordId;
         @InvocableVariable(label='Stage' description='Stage Name' required=true)
         public String stageName;
     }
+
     public class CheckStageResponse {
         @InvocableVariable(label='Stage Check Result' description='Stage Check Result' required=true)
         public Boolean checkStage;
     }
+
 }
+//
