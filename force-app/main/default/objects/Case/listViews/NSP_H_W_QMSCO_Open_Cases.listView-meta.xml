@@ -27,7 +27,7 @@
         <operation>equals</operation>
         <value>Case.PEO</value>
     </filters>
-    <label>H&amp;W QMSCO Open Cases</label>
+    <label>H&amp;W QMCSO Open Cases</label>
     <queue>NSP_Health_Welfare_QMSCO</queue>
     <sharedTo>
         <group>NSP_H_W_Email_Templates_and_Quick_Text</group>
