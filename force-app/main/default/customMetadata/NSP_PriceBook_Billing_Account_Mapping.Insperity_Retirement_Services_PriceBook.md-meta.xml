@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>NSP_Applicable_Pricing_Model__c</field>
-        <value xsi:type="xsd:string">RET - Bundled Plus #2,RET - Bundled Plus #3,RET - Mid-Market #1,RET - Mid-Market #2,RET - Mid-Market #3,RET - Participant Fee Only,RET- Bundled Plus,RET- Legacy Non Revenue,RET- Legacy Revenue,RET - WO no Admin,RET - WO with Admin</value>
+        <value xsi:type="xsd:string">RET - Bundled Plus #2,RET - Bundled Plus #3,RET - Mid-Market #1,RET - Mid-Market #2,RET - Mid-Market #3,RET - Participant Fee Only,RET- Bundled Plus,RET- Legacy Non Revenue,RET- Legacy Revenue,RET - WO no Admin,RET - WO with Admin,RET - Bundled Plus #4</value>
     </values>
     <values>
         <field>NSP_PriceBookId__c</field>
