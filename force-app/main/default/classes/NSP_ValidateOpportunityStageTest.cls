@@ -44,7 +44,7 @@ private class NSP_ValidateOpportunityStageTest {
         insert stpCheckList;
 
         Opportunity opp1=NSP_TestHelper.createOpenOpportunity(acnt.Id,'New Business',false);
-        opp1.StageName = 'Proposal';
+        opp1.StageName = 'Prospecting';
         opp1.NSP_PrimaryProduct__c = 'WX';
         opp1.NSP_Partner__c=acnt.Id;
         try{            
@@ -57,6 +57,7 @@ private class NSP_ValidateOpportunityStageTest {
         opp2.StageName = 'Prospecting';
         opp2.NSP_BidNumber__c='unique123';
         opp2.NSP_PrimaryProduct__c = 'WO';
+        opp2.NSP_Number_of_Employees__c = 50;
         try{            
             insert opp2;
         }catch(Exception ex){
@@ -545,14 +546,14 @@ private class NSP_ValidateOpportunityStageTest {
         Opportunity oppty = oppList[0];
 
         if(oppty!=null){
+            // Create NSP_Employee_Split__c records
+            NSP_Employee_Split__c splitRecord1 = new NSP_Employee_Split__c( NSP_Opportunity__c = oppty.Id, NSP_Number_of_Employees__c = 25, NSP_Percent_Split__c = 50 );
+            NSP_Employee_Split__c splitRecord2 = new NSP_Employee_Split__c( NSP_Opportunity__c = oppty.Id, NSP_Number_of_Employees__c = 25, NSP_Percent_Split__c = 50 );
+
+            // Insert NSP_Employee_Split__c records
+            insert new List<NSP_Employee_Split__c>{ splitRecord1, splitRecord2 };
+
             oppty.StageName='Data Collection';
-            oppty.NSP_PrimaryProduct__c = '';
-            try{
-                update oppty;
-            }catch(Exception ex){
-                ex.getStackTraceString();
-            }
-            oppty.NSP_PrimaryProduct__c = 'WO';
             try{
                 update oppty;
             }catch(Exception ex){
@@ -1097,7 +1098,7 @@ private class NSP_ValidateOpportunityStageTest {
         System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition(false, 'true', 'DOES_NOT_EQUAL'));
         test.stopTest();
     }
-    
+
     @isTest
     private static void test_evaluateQuoteExistingQuote() {
         Opportunity opp = [SELECT Id FROM Opportunity WHERE StageName != NULL AND SBQQ__PrimaryQuote__c != null LIMIT 1][0];
