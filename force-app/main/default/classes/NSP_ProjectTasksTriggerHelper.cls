@@ -17,6 +17,8 @@ public class NSP_ProjectTasksTriggerHelper {
     private static final String SUBMIT_TERMINATION_CHECKLIST = 'Submit Termination Checklist';
     private static final String LEVIESTASK = 'Employee Levies Provided';
     private static final String LINE_BREAK = '<br/><br/>';
+    private static final String HSA_OPTUM_NO_MM='NSP_HSA_No_Optum';
+    private static final String HSA_OPTUM_MM='HSA_Optum';
 
     //
     // Iterates throught the list of new pse__Project_Task__c and passes the required attributes to other methods.
@@ -142,6 +144,8 @@ public class NSP_ProjectTasksTriggerHelper {
                 if(pTask.Name == LEVIESTASK){
                     levies.add(pTask);
                 }
+                //Create HSA Optum Bank Project Tasks
+                createHSASubtask(pTask);
                 //Checking for Project Task Account
                 if ( pTask.NSP_Account_Id__c != null
                     && pTask.Name == TERMINATIONANALYSIS
@@ -165,6 +169,26 @@ public class NSP_ProjectTasksTriggerHelper {
         }
     }
 
+    private void createHSASubtask(pse__Project_Task__c pTask){
+        List<pse__Project_Task__c> hsaOptumMM = new List<pse__Project_Task__c>();
+        List<pse__Project_Task__c> hsaOptumNoMM = new List<pse__Project_Task__c>();
+        String hsaOptum = NSP_MMImplProfile_ServHelpUpdate.hsaOptumChildren();
+        if( pTask != null && String.isNotBlank(hsaOptum) ) {
+            if(pTask.Name == NSP_ServiceConstants.HSA && hsaOptum == HSA_OPTUM_MM){
+                hsaOptumMM.add(pTask);
+            }
+            if(pTask.Name == NSP_ServiceConstants.HSA && hsaOptum == HSA_OPTUM_NO_MM){
+                hsaOptumNoMM.add(pTask);
+            }
+            
+            if( hsaOptumMM != null && !hsaOptumMM.isEmpty() ){
+                createProjectTaskForHSAChildren(hsaOptumMM, HSA_OPTUM_MM);
+            }
+            if(hsaOptumNoMM != null && !hsaOptumNoMM.isEmpty()){
+                createProjectTaskForHSAChildren(hsaOptumNoMM, HSA_OPTUM_NO_MM);
+            }
+        }
+    }
      /***********************************************************************************************
     * MethodName:  createSubtask
     * Description : Create sub tasks for garnishments and levies
@@ -442,6 +466,92 @@ public class NSP_ProjectTasksTriggerHelper {
                 e ,
                 'createCobraSubTasks'
             );
+        }
+    }
+
+    public void createProjectTaskForHSAChildren( List<pse__Project_Task__c> projectTaskList , String automation ) {
+        Id ipId = null;
+        Integer hierarchyDepth = null;
+        String longDescription = null;
+        NSP_ProjectTask_Automation__mdt pta = null;
+        if ( String.isNotBlank( automation ) ) {
+            pta =  NSP_ProjectTask_Automation__mdt.getInstance( automation );
+            if ( automation == HSA_OPTUM_MM ) {
+                hierarchyDepth = 1;
+                longDescription = System.label.HSA_With_Optum_Bank;
+            }
+            if ( automation == HSA_OPTUM_NO_MM ) {
+                hierarchyDepth = 2;
+                longDescription = System.label.HSA_With_No_Optum_Bank;
+            }
+        }
+        List<pse__Project_Task__c> hsaProjectTaskList = new List<pse__Project_Task__c>();
+        try {
+            for ( pse__Project_Task__c pt : projectTaskList ) {
+                if ( pt.Name==NSP_ServiceConstants.HSA && ( pta != null ) ) {
+                    pse__Project_Task__c eachProjecttask = createProjectTaskfromParent( pt );
+                    ipId = pt.Implementation_Profile__c;
+                    eachProjecttask.NSP_Sub_Category__c = pta.NSP_Sub_Category__c;
+                    eachProjecttask.Name = pta.NSP_Task_Name__c;
+                    eachProjecttask.pse__Hierarchy_Depth__c = hierarchyDepth;
+                    eachProjecttask.pse__Order__c= pta.Order__c;
+                    eachProjecttask.Task_Order__c= pta.Task_Order__c;
+                    eachProjecttask.NSP_Visible_to_Client__c = pta.Visible_to_Client__c;
+                    eachProjecttask.pse__Long_Description__c = longDescription;
+                    hsaProjectTaskList.add( eachProjecttask );
+                }
+                if ( ( hsaProjectTaskList != null ) && !hsaProjectTaskList.isEmpty() ) {
+                    List<Database.SaveResult> insertChildResults = Database.insert( hsaProjectTaskList , false );
+                    NSP_ErrorLogHandler.logResults(
+                        NSP_ProjectTasksTriggerHelper.class.getName() ,
+                        'createProjectTaskForHSAChildren' ,
+                        insertChildResults
+                    );
+                }
+            }
+            //Insert Implementation Automation Record
+            insertHsaIpAutomations( ipId , automation );
+        } catch ( Exception e ) {
+            NSP_ProjectTasksTriggerHelper.handleException(
+                e ,
+                'createProjectTaskForHSAChildren'
+            );
+        }
+    }
+
+    private void insertHsaIpAutomations( Id ipId , String automation ) {
+        List<NSP_Implementation_Profile_Automation__c> ipAutomationList = new List<NSP_Implementation_Profile_Automation__c>();
+        List<Implementation_Profile__c> ipRec = new List<Implementation_Profile__c>();
+        Implementation_Profile__c implementationProfile = null;
+        NSP_Implementation_Automations__mdt ipa = null;
+        if ( automation != null ) {
+            ipa = NSP_Implementation_Automations__mdt.getInstance( automation );
+        }
+        if ( ( ipId != null ) && ( ipa != null ) ) {
+            ipRec = [
+                SELECT Id, RecordTypeId 
+                FROM Implementation_Profile__c 
+                WHERE ( Id = :ipId )
+                LIMIT 1
+            ];
+            if ( ipRec != null ) {
+                implementationProfile = ipRec[0];
+            }
+            //Creating Implementation Profile record
+            NSP_Implementation_Profile_Automation__c ipAutomation = NSP_MMImplProfile_ServHelpUpdate.createIPAutomation(
+                implementationProfile,ipa.NSP_Automation_Name__c ,
+                ipa.NSP_Method_Name__c ,
+                ipa.NSP_Section__c
+            );
+            ipAutomationList.add( ipAutomation );
+            if ( ( ipAutomationList != null ) && !ipAutomationList.isEmpty() ) {
+                List<Database.SaveResult> ipAutomationResults = Database.insert( ipAutomationList , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_ProjectTasksTriggerHelper.class.getName() ,
+                    'insertHsaIpAutomations' ,
+                    ipAutomationResults
+                );
+            }
         }
     }
 
