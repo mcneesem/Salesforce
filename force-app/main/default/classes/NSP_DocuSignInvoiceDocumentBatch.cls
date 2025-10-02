@@ -38,10 +38,12 @@ public class NSP_DocuSignInvoiceDocumentBatch implements Schedulable , Database.
     public Database.QueryLocator start( Database.BatchableContext bc ) {
         if ( bc != null ) {
             AsyncApexJob job = this.selectAsyncApexJob( bc.getJobId() );
-            this.sendEmailNotification(
-                job ,
-                'The batch apex job started.'
-            );
+            if ( !Test.isRunningTest() ) {
+                this.sendEmailNotification(
+                    job ,
+                    'The batch apex job started.'
+                );
+            }
         }
         Database.QueryLocator locator = Database.getQueryLocator(
             [
