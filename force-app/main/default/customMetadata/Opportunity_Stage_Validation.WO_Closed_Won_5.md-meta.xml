@@ -8,11 +8,11 @@
     </values>
     <values>
         <field>Field__c</field>
-        <value xsi:type="xsd:string">NSP_TotalAnnualPayroll__c</value>
+        <value xsi:type="xsd:string">Type</value>
     </values>
     <values>
         <field>Group__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">CW2</value>
     </values>
     <values>
         <field>IsActive__c</field>
@@ -24,7 +24,7 @@
     </values>
     <values>
         <field>Operation__c</field>
-        <value xsi:type="xsd:string">IS_NOT_BLANK</value>
+        <value xsi:type="xsd:string">EQUALS</value>
     </values>
     <values>
         <field>Primary_Product__c</field>
@@ -36,6 +36,6 @@
     </values>
     <values>
         <field>Value__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">New Product</value>
     </values>
 </CustomMetadata>
