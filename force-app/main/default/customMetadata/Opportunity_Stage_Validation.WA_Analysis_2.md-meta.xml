@@ -24,7 +24,7 @@
     </values>
     <values>
         <field>Operation__c</field>
-        <value xsi:type="xsd:string">DOES_NOT_EQUAL</value>
+        <value xsi:type="xsd:string">EQUALS</value>
     </values>
     <values>
         <field>Primary_Product__c</field>
@@ -36,6 +36,6 @@
     </values>
     <values>
         <field>Value__c</field>
-        <value xsi:type="xsd:string">Cancelled</value>
+        <value xsi:type="xsd:string">New Product</value>
     </values>
 </CustomMetadata>

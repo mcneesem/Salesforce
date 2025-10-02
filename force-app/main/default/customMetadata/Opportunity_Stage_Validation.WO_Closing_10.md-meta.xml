@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>Group__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">C3</value>
     </values>
     <values>
         <field>IsActive__c</field>
