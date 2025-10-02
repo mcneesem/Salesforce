@@ -26,6 +26,11 @@
                 <label>Key User Buyer</label>
             </value>
             <value>
+                <fullName>Survey Contact</fullName>
+                <default>false</default>
+                <label>Survey Contact</label>
+            </value>
+            <value>
                 <fullName>ATS Survey Contact</fullName>
                 <default>false</default>
                 <label>ATS Survey Contact</label>
