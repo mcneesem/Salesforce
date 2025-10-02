@@ -918,6 +918,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_Payroll__c.DCAA_Detail_With_Job_Costing__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Payroll__c.DCAA_Detailed_Report__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Payroll__c.Middleware_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
