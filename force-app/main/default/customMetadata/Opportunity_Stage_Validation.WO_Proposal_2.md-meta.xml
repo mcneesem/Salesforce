@@ -4,11 +4,15 @@
     <protected>false</protected>
     <values>
         <field>Error_Message__c</field>
-        <value xsi:type="xsd:string">Only If</value>
+        <value xsi:type="xsd:string">Please add HR360 Proposal Event before moving to Proposal stage</value>
     </values>
     <values>
         <field>Field__c</field>
         <value xsi:type="xsd:string">Type</value>
+    </values>
+    <values>
+        <field>Group_Condition__c</field>
+        <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
         <field>Group__c</field>

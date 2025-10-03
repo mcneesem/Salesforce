@@ -8,7 +8,11 @@
     </values>
     <values>
         <field>Field__c</field>
-        <value xsi:type="xsd:string">Id</value>
+        <value xsi:type="xsd:string">Type</value>
+    </values>
+    <values>
+        <field>Group_Condition__c</field>
+        <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
         <field>Group__c</field>
@@ -24,7 +28,7 @@
     </values>
     <values>
         <field>Operation__c</field>
-        <value xsi:type="xsd:string">DOES_NOT_EXIST</value>
+        <value xsi:type="xsd:string">EQUALS</value>
     </values>
     <values>
         <field>Primary_Product__c</field>
@@ -36,6 +40,6 @@
     </values>
     <values>
         <field>Value__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">New Product</value>
     </values>
 </CustomMetadata>

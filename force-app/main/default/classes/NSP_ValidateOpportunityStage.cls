@@ -391,7 +391,7 @@ public with sharing class NSP_ValidateOpportunityStage {
     {
         Integer passCheckCount = 0;
         Boolean groupCheckDNE = false; // if group is a DOES NOT EXIST case
-        Boolean groupCheckMixed = false; // if group is a mixed object case
+        Boolean groupConditionFailed = false; // if group is a mixed object case
         if ( ( groupedStageValMap != null ) && groupedStageValMap.containsKey( groupName ) ) {
             for ( Opportunity_Stage_Validation__mdt val : groupedStageValMap.get( groupName ) ) {
                 Object valFieldValue = null;
@@ -411,16 +411,15 @@ public with sharing class NSP_ValidateOpportunityStage {
                     );
                 } else if ( NSP_ValidateOpportunityStage.checkCondition( valFieldValue , val.Value__c , val.Operation__c ) ){
                     passCheckCount++;
-                } else if ( ( val.Object__c == OPPORTUNITY_OBJ )
-                         && ( val.Error_Message__c == ONLY_IF ) ) { // checkCondition failed and Group looks at Opportunity, must be mixed group
-                    groupCheckMixed = true;
+                } else if ( val.Group_Condition__c ) { // checkCondition failed for a Group Condition
+                    groupConditionFailed = true;
                 }
             }
             // handle special cases
             passCheckCount = NSP_ValidateOpportunityStage.evaluateSpecialCases(
                 passCheckCount ,
                 groupCheckDNE ,
-                groupCheckMixed ,
+                groupConditionFailed ,
                 groupName ,
                 groupedStageValMap
             );
@@ -431,20 +430,20 @@ public with sharing class NSP_ValidateOpportunityStage {
     private static Integer evaluateSpecialCases(
         Integer passCheckCount ,
         Boolean groupCheckDNE ,
-        Boolean groupCheckMixed ,
+        Boolean groupConditionFailed ,
         String groupName ,
         Map<String,List<Opportunity_Stage_Validation__mdt>> groupedStageValMap
         )
     {
         if ( ( groupedStageValMap != null ) && groupedStageValMap.containsKey( groupName ) ) {
-            if ( groupCheckDNE ) { // check DNE case first
+            if ( groupCheckDNE ) { // check Does Not Exist case first
                 if ( passCheckCount >= ( groupedStageValMap.get(groupName).size() - 1 ) ) {
                     passCheckCount = NSP_ValidateOpportunityStage.ERROR_DOES_NOT_EXIST; // if record exists that should not, trip error message
                 } else {
                     passCheckCount = groupedStageValMap.get(groupName).size(); // if not all DNE criteria met, make sure error message is skipped
                 }
-            } else if ( groupCheckMixed ) {
-                passCheckCount = groupedStageValMap.get(groupName).size(); // if Object condition of mixed case doesn't pass, whole group passes
+            } else if ( groupConditionFailed ) {
+                passCheckCount = groupedStageValMap.get(groupName).size(); // if group condition doesn't pass, whole group passes
             }
         }
         return passCheckCount;
@@ -690,8 +689,8 @@ public with sharing class NSP_ValidateOpportunityStage {
                     && ( ( opp.Type == NSP_SalesConstants.NEW_BUSINESS_OPPORTUNITY )
                         || ( ( opp.Type == NSP_SalesConstants.OPPORTUNITY_TYPE_EXISTING_PRODUCT )
                             && ( opp.NSP_AddonType__c == NSP_SalesConstants.OPPORTUNITY_SUBTYPE_AMENDMENT )
-                            )
-                        )
+                           )
+                       )
                     )
                 {
                     NSP_ValidateOpportunityStage.addValError(
