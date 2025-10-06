@@ -6021,14 +6021,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>pse__CreateEVAForHeldRRBatch</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>pse__CreateEVAForHeldRRBatchTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>pse__CreateProjectApiTestUtils</apexClass>
         <enabled>true</enabled>
     </classAccesses>
