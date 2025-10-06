@@ -521,6 +521,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>NSP_CreateProjectTaskController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>NSP_CreateProjectTemplateFromCase</apexClass>
         <enabled>true</enabled>
     </classAccesses>
