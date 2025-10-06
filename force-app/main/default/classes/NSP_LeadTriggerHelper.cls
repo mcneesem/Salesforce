@@ -381,20 +381,7 @@ public with sharing class NSP_LeadTriggerHelper {
             
             Set<Id> leadIdSet = new Set<Id>();
             Set<Id> ownersIdSet = new Set<Id>();    
-            Id userId = UserInfo.getUserId();
-
-            for ( Id leadId : leadNewMap.keySet() ) {
-                Lead oldRecord = this.getMappedLeadSafe( leadOldMap , leadId );
-                Lead newRecord = this.getMappedLeadSafe( leadNewMap , leadId );
-                //  Validate only if Owner has changed, and if Lead owner is not equals to logged user.
-                if( (newRecord != null && oldRecord != null) && 
-                (newRecord.OwnerId != oldRecord.OwnerId) && 
-                (oldRecord.OwnerId != userId)){
-                    leadIdSet.add( leadId );
-                    ownersIdSet.add( newRecord.OwnerId );
-                    ownersIdSet.add( oldRecord.OwnerId );
-                }
-            }
+            this.collectLeadsOwners(leadNewMap, leadOldMap, leadIdSet, ownersIdSet);
             
             if(ownersIdSet.size() > 0){
                 // Get Leads owners Roles
@@ -436,6 +423,24 @@ public with sharing class NSP_LeadTriggerHelper {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    private void collectLeadsOwners(Map<Id,Lead> leadNewMap, Map<Id,Lead> leadOldMap,  Set<Id> leadIdSet, Set<Id> ownersIdSet){
+
+        Id userId = UserInfo.getUserId();
+
+        for ( Id leadId : leadNewMap.keySet() ) {
+            Lead oldRecord = this.getMappedLeadSafe( leadOldMap , leadId );
+            Lead newRecord = this.getMappedLeadSafe( leadNewMap , leadId );
+            //  Validate only if Owner has changed, and if Lead owner is not equals to logged user.
+            if( (newRecord != null && oldRecord != null) && 
+            (newRecord.OwnerId != oldRecord.OwnerId) && 
+            (oldRecord.OwnerId != userId)){
+                leadIdSet.add( leadId );
+                ownersIdSet.add( newRecord.OwnerId );
+                ownersIdSet.add( oldRecord.OwnerId );
             }
         }
     }
