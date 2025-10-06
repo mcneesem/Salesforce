@@ -3,6 +3,6 @@
     <fullName>Error_Message__c</fullName>
     <fieldManageability>DeveloperControlled</fieldManageability>
     <label>Error Message</label>
-    <required>true</required>
+    <required>false</required>
     <type>TextArea</type>
 </CustomField>
