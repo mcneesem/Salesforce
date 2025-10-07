@@ -11,6 +11,10 @@
         <value xsi:type="xsd:string">NSP_Booked_Date__c</value>
     </values>
     <values>
+        <field>Group_Condition__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
         <field>Group__c</field>
         <value xsi:type="xsd:string">CW3</value>
     </values>
