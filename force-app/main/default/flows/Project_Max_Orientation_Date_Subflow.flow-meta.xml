@@ -192,7 +192,7 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>varOpportunity</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -423,20 +423,6 @@
             <operator>EqualTo</operator>
             <value>
                 <elementReference>varOpportunity.Id</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>StageName</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <stringValue>Closed Won</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>NSP_Lock_Opportunity__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>false</booleanValue>
             </value>
         </filters>
         <object>Opportunity</object>
