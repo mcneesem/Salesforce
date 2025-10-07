@@ -2136,14 +2136,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>MMSO - East</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMSO - Houston</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>MMSO - National Accounts</fullName>
             <default>false</default>
         </values>
@@ -2161,10 +2153,6 @@
         </values>
         <values>
             <fullName>MMSO - West</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMSO - Western</fullName>
             <default>false</default>
         </values>
         <values>
