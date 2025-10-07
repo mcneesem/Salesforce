@@ -29030,11 +29030,6 @@ m   <fieldPermissions>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>pse__Project_Task__c.NSP_Client_Liaison_Name__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>pse__Project_Task__c.NSP_Record_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -29042,21 +29037,6 @@ m   <fieldPermissions>
         <editable>true</editable>
         <field>pse__Project_Task__c.NSP_Group_Membership_for_Plan_Projects__c</field>
         <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>pse__Project_Task__c.NSP_HR_Specialist_Name__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>pse__Project_Task__c.NSP_Client_Liaison_Email__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>pse__Project_Task__c.NSP_HR_Specialist_Email__c</field>
-        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>

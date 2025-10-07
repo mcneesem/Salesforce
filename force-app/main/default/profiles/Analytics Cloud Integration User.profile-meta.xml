@@ -4869,7 +4869,7 @@
         <editable>true</editable>
         <field>Asset.NSP_SKU__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Asset.NSP_SaaS_URL__c</field>
@@ -14201,7 +14201,7 @@
         <field>Implementation_Profile__c.NSP_collected_copies_of_state_WC_policy__c</field>
         <readable>true</readable>
     </fieldPermissions>
-  
+
     <fieldPermissions>
         <editable>false</editable>
         <field>Implementation_Profile__c.NSP_compensation_structu_Provide_Details__c</field>
@@ -67984,16 +67984,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>pse__Project_Task__c.NSP_Client_Liaison_Email__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>pse__Project_Task__c.NSP_Client_Liaison_Name__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>pse__Project_Task__c.NSP_Competitor_s_that_won_the_business__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -68035,16 +68025,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Project_Task__c.NSP_Group_Membership_for_Plan_Projects__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>pse__Project_Task__c.NSP_HR_Specialist_Email__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>pse__Project_Task__c.NSP_HR_Specialist_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Profile xmlns="http://soap.sforce.com/2006/04/metadata">     
+<Profile xmlns="http://soap.sforce.com/2006/04/metadata">
     <applicationVisibilities>
         <application>NSP_Field_Service</application>
         <default>false</default>
@@ -12440,7 +12440,7 @@
         <editable>false</editable>
         <field>NSP_Account_Regulated_area__c.NSP_Case__c</field>
         <readable>true</readable>
-    </fieldPermissions> 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Account_Team__c.NSP_Assignment_Queue__c</field>
@@ -13166,7 +13166,7 @@
         <field>NSP_CGNDQ__c.NSP_Paper_Submit_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>   
+<fieldPermissions>
         <field>NSP_CGNDQ__c.NSP_Parent_Client_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -13275,7 +13275,7 @@
         <field>NSP_CGNDQ__c.NSP_Q8__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>      
+<fieldPermissions>
         <field>NSP_CGNDQ__c.NSP_Record_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -13689,7 +13689,7 @@
         <field>NSP_Compliance__c.NSP_to_Pay_Excise__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>      
+    <fieldPermissions>
         <field>NSP_Compliance__c.NSP_Plan_Subplan_Relationship__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -13728,7 +13728,7 @@
         <field>NSP_Compliance__c.NSP_Refunds_Reclassified_to_Catch_Up__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>     
+    <fieldPermissions>
         <field>NSP_Compliance__c.NSP_Record_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -13826,7 +13826,7 @@
         <editable>false</editable>
         <field>NSP_Contribution__c.NSP_Tier_2__c</field>
         <readable>true</readable>
-    </fieldPermissions> 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Controlled_Group_Members__c.NSP_Enter_Date__c</field>
@@ -14117,7 +14117,7 @@
         <field>NSP_Deconversion__c.NSP_Reason__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>        
+    <fieldPermissions>
         <field>NSP_Deconversion__c.NSP_Record_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -15900,7 +15900,7 @@
         <editable>true</editable>
         <field>NSP_Focus_Item__c.NSP_End_Date__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Focus_Item__c.Focus_Item__c</field>
@@ -16440,37 +16440,37 @@
         <editable>false</editable>
         <field>NSP_Plan_SubPlan__c.NSP_Subplan_ID__c</field>
         <readable>true</readable>
-    </fieldPermissions>	
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Plan_SubPlan__c.NSP_Annual_Profit_Sharing__c</field>
         <readable>true</readable>
-    </fieldPermissions>	 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Plan_SubPlan__c.NSP_Auto_Deferral__c</field>
         <readable>true</readable>
-    </fieldPermissions>	 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Plan_SubPlan__c.NSP_DM_Active_EE_Requirements__c</field>
         <readable>true</readable>
-    </fieldPermissions>	 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Plan_SubPlan__c.NSP_Disc_Match_Effective_Date__c</field>
         <readable>true</readable>
-    </fieldPermissions> 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Plan_SubPlan__c.NSP_DM_Term_EE_Requirement__c</field>
         <readable>true</readable>
-    </fieldPermissions>	 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Plan_SubPlan__c.NSP_Discretionary__c</field>
         <readable>true</readable>
-    </fieldPermissions>	 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Plan_SubPlan__c.NSP_if_QNEC__c</field>
@@ -16480,37 +16480,37 @@
         <editable>false</editable>
         <field>NSP_Plan_SubPlan__c.NSP_Plan_Effective_Date__c</field>
         <readable>true</readable>
-    </fieldPermissions> 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Plan_SubPlan__c.NSP_Plan_Effective_Date__c</field>
         <readable>true</readable>
-    </fieldPermissions>	 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Plan_SubPlan__c.NSP_Plan_Id_for_Merge__c</field>
         <readable>true</readable>
-    </fieldPermissions>	 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Plan_SubPlan__c.NSP_Plan_Subplan_Relationship__c</field>
         <readable>true</readable>
-    </fieldPermissions>	 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Plan_SubPlan__c.NSP_Plan_Type__c</field>
         <readable>true</readable>
-    </fieldPermissions>	 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Plan_SubPlan__c.NSP_PS_Allocation_Method__c</field>
         <readable>true</readable>
-    </fieldPermissions>	 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Plan_SubPlan__c.NSP_PS_QNEC_Active_EE_Requirements__c</field>
         <readable>true</readable>
-    </fieldPermissions>	 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Plan_SubPlan__c.NSP_Profit_Sharing_Effective_Date__c</field>
@@ -16520,32 +16520,32 @@
         <editable>false</editable>
         <field>NSP_Plan_SubPlan__c.NSP_PS_Term_EE_Requirements__c</field>
         <readable>true</readable>
-    </fieldPermissions>	 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Plan_SubPlan__c.NSP_Record_ID__c</field>
         <readable>true</readable>
-    </fieldPermissions>	 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Plan_SubPlan__c.NSP_Status__c</field>
         <readable>true</readable>
-    </fieldPermissions>	 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Plan_SubPlan__c.NSP_Original_PE_Date__c</field>
         <readable>true</readable>
-    </fieldPermissions>	
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Plan_SubPlan__c.NSP_Subplan_Name__c</field>
         <readable>true</readable>
-    </fieldPermissions>	 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Plan_SubPlan__c.NSP_Test_Plan_Status__c</field>
         <readable>true</readable>
-    </fieldPermissions>	 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Plan_SubPlan__c.NSP_Test_Plan_Status_Date__c</field>
@@ -16690,7 +16690,7 @@
         <editable>false</editable>
         <field>NSP_Relationship_Strategy_Action_Plan__c.NSP_Status_Complete_Date__c</field>
         <readable>true</readable>
-    </fieldPermissions>  
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>AssetRETEducationAssociation__c.NSP_AIMs__c</field>
@@ -23230,7 +23230,7 @@
         <editable>true</editable>
         <field>pse__Proj__c.NSP_BPS_Project_Template__c</field>
         <readable>true</readable>
-    </fieldPermissions>	
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Proj__c.Access_List__c</field>
@@ -23386,15 +23386,15 @@
         <field>pse__Proj__c.NSP_NetSuite_External_ID__c</field>
         <readable>false</readable>
     </fieldPermissions>
-   
-   
-   
+
+
+
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Proj__c.NSP_OneVoice_External_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
-   
+
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Proj__c.NSP_RET_Client_ID__c</field>
@@ -23420,7 +23420,7 @@
         <field>pse__Proj__c.NSP_Total_Projected_Employee_Enrollment__c</field>
         <readable>true</readable>
     </fieldPermissions>
-   
+
     <fieldPermissions>
         <editable>true</editable>
         <field>pse__Proj__c.NSP_Visible_to_Client__c</field>
@@ -24555,7 +24555,7 @@
         <editable>true</editable>
         <field>pse__Proj__c.WX_Carrier_Sync_Status__c</field>
         <readable>true</readable>
-    </fieldPermissions>   
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>pse__Project_Location__c.pse__Description__c</field>
@@ -24936,7 +24936,7 @@
         <field>pse__Project_Task__c.NSP_Address__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    
+
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Project_Task__c.NSP_AIMS_Account__c</field>
@@ -24970,16 +24970,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Project_Task__c.NSP_CC_Emails__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>pse__Project_Task__c.NSP_Client_Liaison_Email__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>pse__Project_Task__c.NSP_Client_Liaison_Name__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -25131,16 +25121,6 @@
         <editable>true</editable>
         <field>pse__Project_Task__c.NSP_How_when_Traditional_Employment_prst__c</field>
         <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>pse__Project_Task__c.NSP_HR_Specialist_Email__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>pse__Project_Task__c.NSP_HR_Specialist_Name__c</field>
-        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -28702,7 +28682,7 @@
         <field>Implementation_Profile__c.NSP_collected_copies_of_state_WC_policy__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    
+
     <fieldPermissions>
         <editable>false</editable>
         <field>Implementation_Profile__c.NSP_current_waiting_period__c</field>
@@ -29508,7 +29488,7 @@
         <field>Implementation_Profile__c.NSP_Job_Costing__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions> 
+    <fieldPermissions>
         <editable>false</editable>
         <field>Implementation_Profile__c.NSP_Locations_Status__c</field>
         <readable>true</readable>
@@ -29747,7 +29727,7 @@
         <editable>false</editable>
         <field>NSP_IP_Additional_Client_Contact__c.NSP_Contact_Method__c</field>
         <readable>true</readable>
-    </fieldPermissions> 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_IP_Additional_Client_Contact__c.NSP_AIMS_Client__c</field>
@@ -30077,77 +30057,77 @@
         <editable>false</editable>
         <field>NSP_Sales_to_Implementation__c.NSP_Conv_Guide_Emailed__c</field>
         <readable>true</readable>
-    </fieldPermissions>   
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Sales_to_Implementation__c.NSP_Conversion_Fee_Amount__c</field>
         <readable>true</readable>
-    </fieldPermissions> 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Sales_to_Implementation__c.NSP_Conversion_Status__c</field>
         <readable>true</readable>
-    </fieldPermissions> 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Sales_to_Implementation__c.NSP_Counter_Signed_EA__c</field>
         <readable>true</readable>
-    </fieldPermissions> 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Sales_to_Implementation__c.NSP_Current_Administrator__c</field>
         <readable>true</readable>
-    </fieldPermissions> 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Sales_to_Implementation__c.NSP_Current_RecordKeeper__c</field>
         <readable>true</readable>
-    </fieldPermissions> 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Sales_to_Implementation__c.NSP_Date_Assigned__c</field>
         <readable>true</readable>
-    </fieldPermissions> 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Sales_to_Implementation__c.NSP_Date_Completed__c</field>
         <readable>true</readable>
-    </fieldPermissions> 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Sales_to_Implementation__c.NSP_Date_Delivered__c</field>
         <readable>true</readable>
-    </fieldPermissions> 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Sales_to_Implementation__c.NSP_Date_Items_Cleared__c</field>
         <readable>true</readable>
-    </fieldPermissions> 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Sales_to_Implementation__c.NSP_Date_Received__c</field>
         <readable>true</readable>
-    </fieldPermissions> 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Sales_to_Implementation__c.NSP_Date_Requested__c</field>
         <readable>true</readable>
-    </fieldPermissions> 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Sales_to_Implementation__c.NSP_Auto_Enroll__c</field>
         <readable>true</readable>
-    </fieldPermissions> 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Sales_to_Implementation__c.NSP_Company_Association__c</field>
         <readable>true</readable>
-    </fieldPermissions> 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Sales_to_Implementation__c.NSP_Description_Box__c</field>
         <readable>true</readable>
-    </fieldPermissions> 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Sales_to_Implementation__c.NSP_Eligibility_Rules__c</field>
@@ -30707,32 +30687,32 @@
         <editable>false</editable>
         <field>NSP_Sales_to_Implementation__c.NSP_Product__c</field>
         <readable>true</readable>
-    </fieldPermissions> 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Sales_to_Implementation__c.NSP_Product_Category__c</field>
         <readable>true</readable>
-    </fieldPermissions> 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Sales_to_Implementation__c.NSP_Projected_Term_Date__c</field>
         <readable>true</readable>
-    </fieldPermissions> 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Sales_to_Implementation__c.NSP_QC_Rep__c</field>
         <readable>true</readable>
-    </fieldPermissions> 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Sales_to_Implementation__c.NSP_QC_Signoff_Date__c</field>
         <readable>true</readable>
-    </fieldPermissions> 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Sales_to_Implementation__c.NSP_Reason_for_Freeze__c</field>
         <readable>true</readable>
-    </fieldPermissions> 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Sales_to_Implementation__c.NSP_Record_ID__c</field>
@@ -30992,7 +30972,7 @@
         <editable>false</editable>
         <field>NSP_Sales_to_Implementation__c.NSP_Term_Deconversion_Fee__c</field>
         <readable>true</readable>
-    </fieldPermissions> 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Sales_to_Implementation__c.NSP_Termed_Hours__c</field>
@@ -31613,7 +31593,7 @@
         <field>ServiceAppointment.NSP_Project_Task_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    
+
     <fieldPermissions>
         <editable>true</editable>
         <field>ServiceAppointment.NSP_Orientation_Address__c</field>
@@ -33228,7 +33208,7 @@
         <editable>false</editable>
         <field>Asset.Description</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Asset.ProductDescription</field>
@@ -34465,7 +34445,7 @@
     <layoutAssignments>
         <layout>pse__Proj__c-RET Deconversion 2020 Form</layout>
         <recordType>pse__Proj__c.RET_Deconversion_2020_Form</recordType>
-    </layoutAssignments>    
+    </layoutAssignments>
     <layoutAssignments>
         <layout>pse__Proj__c-TES%2BBPS</layout>
         <recordType>pse__Proj__c.TES_BPS</recordType>
@@ -36184,12 +36164,12 @@
         <default>false</default>
         <recordType>pse__Proj__c.PSA_Project</recordType>
         <visible>false</visible>
-    </recordTypeVisibilities>   
+    </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>pse__Proj__c.RET_Deconversion_2020_Form</recordType>
         <visible>true</visible>
-    </recordTypeVisibilities> 
+    </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>pse__Proj__c.Service_Plan_Level_3</recordType>
@@ -36507,15 +36487,15 @@
     <tabVisibilities>
         <tab>NSP_Deconversion__c</tab>
         <visibility>Hidden</visibility>
-    </tabVisibilities>   
+    </tabVisibilities>
     <tabVisibilities>
         <tab>NSP_Client_Change_Fields__c</tab>
         <visibility>Hidden</visibility>
-    </tabVisibilities> 
+    </tabVisibilities>
     <tabVisibilities>
         <tab>NSP_Client_Sub_Plan_History__c</tab>
         <visibility>Hidden</visibility>
-    </tabVisibilities> 
+    </tabVisibilities>
     <tabVisibilities>
         <tab>NSP_Compliance__c</tab>
         <visibility>Hidden</visibility>
@@ -37337,9 +37317,9 @@
         <enabled>true</enabled>
         <name>ViewRoles</name>
     </userPermissions>
-        <userPermissions>        
+        <userPermissions>
 	<enabled>false</enabled>
-        <name>ManageDynamicDashboards</name> 
+        <name>ManageDynamicDashboards</name>
     </userPermissions>
     <userPermissions>
         <enabled>false</enabled>
@@ -37347,19 +37327,19 @@
     </userPermissions>
     <userPermissions>
         <enabled>false</enabled>
-        <name>ScheduleJob</name> 
+        <name>ScheduleJob</name>
     </userPermissions>
     <userPermissions>
         <enabled>false</enabled>
-        <name>ScheduleReports</name> 
+        <name>ScheduleReports</name>
     </userPermissions>
     <userPermissions>
         <enabled>false</enabled>
-        <name>ViewMyTeamsDashboards</name> 
+        <name>ViewMyTeamsDashboards</name>
     </userPermissions>
     <userPermissions>
         <enabled>false</enabled>
-        <name>ViewPublicReports</name> 
+        <name>ViewPublicReports</name>
     </userPermissions>
     <userPermissions>
         <enabled>false</enabled>
@@ -37383,27 +37363,27 @@
     </userPermissions>
     <userPermissions>
         <enabled>false</enabled>
-        <name>NewReportBuilder</name> 
+        <name>NewReportBuilder</name>
     </userPermissions>
     <userPermissions>
         <enabled>false</enabled>
-        <name>ManageSubscriptions</name> 
+        <name>ManageSubscriptions</name>
     </userPermissions>
     <userPermissions>
         <enabled>false</enabled>
-        <name>ManageDashbdsInPubFolders</name> 
+        <name>ManageDashbdsInPubFolders</name>
     </userPermissions>
     <userPermissions>
         <enabled>false</enabled>
-        <name>EditMyDashboards</name> 
+        <name>EditMyDashboards</name>
     </userPermissions>
     <userPermissions>
         <enabled>false</enabled>
-        <name>EditMyReports</name> 
+        <name>EditMyReports</name>
     </userPermissions>
     <userPermissions>
         <enabled>false</enabled>
-        <name>CreateReportFolders</name> 
+        <name>CreateReportFolders</name>
     </userPermissions>
     <userPermissions>
         <enabled>false</enabled>
@@ -37411,19 +37391,19 @@
     </userPermissions>
     <userPermissions>
         <enabled>false</enabled>
-        <name>CreateDashboardFolders</name> 
+        <name>CreateDashboardFolders</name>
     </userPermissions>
     <userPermissions>
         <enabled>false</enabled>
-        <name>ChangeDashboardColors</name> 
+        <name>ChangeDashboardColors</name>
     </userPermissions>
     <userPermissions>
         <enabled>false</enabled>
-        <name>CanUseNewDashboardBuilder</name> 
+        <name>CanUseNewDashboardBuilder</name>
     </userPermissions>
     <userPermissions>
         <enabled>false</enabled>
-        <name>CreateCustomizeReports</name>  
+        <name>CreateCustomizeReports</name>
     </userPermissions>
     <userPermissions>
         <enabled>false</enabled>
@@ -37447,30 +37427,30 @@
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
-        <name>RunReports</name> 
+        <name>RunReports</name>
     </userPermissions>
     <userPermissions>
         <enabled>false</enabled>
-        <name>ViewPublicDashboards</name> 
+        <name>ViewPublicDashboards</name>
     </userPermissions>
     <userPermissions>
         <enabled>false</enabled>
-        <name>AccessCMC</name> 
+        <name>AccessCMC</name>
     </userPermissions>
     <userPermissions>
         <enabled>false</enabled>
-        <name>ManageCustomReportTypes</name> 
+        <name>ManageCustomReportTypes</name>
     </userPermissions>
     <userPermissions>
         <enabled>false</enabled>
-        <name>GovernNetworks</name> 
+        <name>GovernNetworks</name>
     </userPermissions>
     <userPermissions>
         <enabled>false</enabled>
-        <name>ManageAnalyticSnapshots</name> 
+        <name>ManageAnalyticSnapshots</name>
     </userPermissions>
     <userPermissions>
         <enabled>false</enabled>
-        <name>CreateReportInLightning</name> 
+        <name>CreateReportInLightning</name>
     </userPermissions>
 </Profile>
