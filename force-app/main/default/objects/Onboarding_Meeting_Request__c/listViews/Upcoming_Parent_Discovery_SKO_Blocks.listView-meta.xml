@@ -4,10 +4,10 @@
     <columns>NAME</columns>
     <columns>Start__c</columns>
     <columns>End__c</columns>
-    <columns>On__c</columns>
     <columns>Start_Time_picklist__c</columns>
     <columns>End_Time_picklist__c</columns>
-    <columns>Available_Reps__c</columns>
+    <columns>Time_Zone__c</columns>
+    <columns>Total_Slots_Offered__c</columns>
     <columns>Parent__c</columns>
     <columns>Meeting_Type__c</columns>
     <filterScope>Everything</filterScope>

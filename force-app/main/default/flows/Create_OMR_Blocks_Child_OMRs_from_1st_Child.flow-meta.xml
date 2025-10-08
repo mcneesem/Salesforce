@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>61.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Set_Element_Create_Child_OMR_Records_from_1st_Child</name>
         <label>Set Element : Create_Child_OMR_Records_from_1st_Child</label>
@@ -39,7 +40,8 @@
             <label>Child Next Matching Date Is After Selected End Date</label>
         </rules>
     </decisions>
-    <description>9/26/2014 : Clone of Create_Child_OMRs_from_1st_Child. Added  &quot;Total Slots Offered&quot; and Removed Available Slots</description>
+    <description>9/26/2024 : Clone of Create_Child_OMRs_from_1st_Child. Added  &quot;Total Slots Offered&quot; and Removed Available Slots
+9/24/2025 : Added Time zone</description>
     <environments>Default</environments>
     <formulas>
         <name>child_next_date_that_matches_selected_day_of_week</name>
@@ -128,6 +130,12 @@
             <field>Start__c</field>
             <value>
                 <elementReference>$Record.Start__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Time_Zone__c</field>
+            <value>
+                <elementReference>$Record.Time_Zone__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
