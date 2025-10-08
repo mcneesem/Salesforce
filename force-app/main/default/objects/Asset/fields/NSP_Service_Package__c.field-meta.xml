@@ -12,6 +12,11 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
+                <fullName>HRScale</fullName>
+                <default>false</default>
+                <label>HRScale</label>
+            </value>
+            <value>
                 <fullName>WO - Full Bundle</fullName>
                 <default>false</default>
                 <label>WO - Full Bundle</label>
