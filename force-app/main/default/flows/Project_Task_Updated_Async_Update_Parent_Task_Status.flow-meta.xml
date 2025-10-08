@@ -104,6 +104,19 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Set_Fault_Element_Get_Task_Dependency</name>
+        <label>Set Fault Element : Get_Task_Dependency</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>FaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Task_Dependency</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
         <name>Set_Fault_Element_Parent_Task_Update_Status</name>
         <label>Set Fault Element : Parent_Task_Update_Status</label>
         <locationX>0</locationX>
@@ -324,6 +337,31 @@ When Mix of of child task status = Complete and Canceled then Set Parent = Compl
         </rules>
     </decisions>
     <decisions>
+        <description>If Task has Preceding Task Not Completed then don&apos;t update the Dependent Task:
+
+Validation Rule - You cannot start a dependent task without completing the preceding task</description>
+        <name>Has_Open_Preceding_Tasks</name>
+        <label>Has Open Preceding Tasks?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>No_Open_Preceding_Task_Exists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Task_Dependency</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_All_Child_Tasks</targetReference>
+            </connector>
+            <label>No : Open Preceding Task Exists</label>
+        </rules>
+    </decisions>
+    <decisions>
         <description>Check if Parent Tasks exists</description>
         <name>Is_Parent_Task_Exists</name>
         <label>Is Parent Task Exists?</label>
@@ -434,14 +472,16 @@ When Mix of of child task status = Complete and Canceled then Set Parent = Compl
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_All_Child_Tasks</targetReference>
+                <targetReference>Get_Task_Dependency</targetReference>
             </connector>
             <label>Yes : Parent Record Exist</label>
         </rules>
     </decisions>
     <description>AZD-447254 : Update Parent Task Status when Child Task is Updated
 
-1) When one of child task status = Complete  then Set Parent = In Progress , 2) When Mix of of child task status = Complete and Canceled then Set Parent = Complete ,3) When all child task status = Complete  then Set Parent = Complete 4) When all child task status = Canceled  then Set Parent = Canceled</description>
+1) When one of child task status = Complete  then Set Parent = In Progress , 2) When Mix of of child task status = Complete and Canceled then Set Parent = Complete ,3) When all child task status = Complete  then Set Parent = Complete 4) When all child task status = Canceled  then Set Parent = Canceled
+
+AZD-500937 : Added Validation logic for Task Dependency and Preceding Task.</description>
     <environments>Default</environments>
     <interviewLabel>Project Task - Updated - Async - Update Parent Task Status {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Project Task - Updated - Async - Update Parent Task Status</label>
@@ -514,6 +554,47 @@ When Mix of of child task status = Complete and Canceled then Set Parent = Compl
         <object>pse__Project_Task__c</object>
         <queriedFields>Id</queriedFields>
         <queriedFields>pse__Status__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>See if Current Task has Preceding Task with Type = Finish to Start (FS)</description>
+        <name>Get_Task_Dependency</name>
+        <label>Get Task Dependency</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Has_Open_Preceding_Tasks</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_Task_Dependency</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>pse__Dependent_Task__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Parent_Task_Record.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>pse__Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Finish to Start (FS)</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Preceding_Task_Is_Completed__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>pse__Project_Task_Dependency__c</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>pse__Dependent_Task__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
