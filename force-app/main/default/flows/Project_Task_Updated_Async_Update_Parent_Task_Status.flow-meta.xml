@@ -115,6 +115,10 @@
                 <stringValue>Get_Task_Dependency</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Set_Fault_Element_Parent_Task_Update_Status</name>
