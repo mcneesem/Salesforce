@@ -91,16 +91,16 @@
         <label>Workday</label>
     </customValue>
     <customValue>
-        <fullName>Contingent Workforce</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Contingent Workforce</label>
-    </customValue>
-    <customValue>
         <fullName>Consulting Services</fullName>
         <default>false</default>
         <isActive>false</isActive>
         <label>Consulting Services</label>
+    </customValue>
+    <customValue>
+        <fullName>Contingent Workforce</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Contingent Workforce</label>
     </customValue>
     <customValue>
         <fullName>BPS Only</fullName>

@@ -116,5 +116,9 @@
             <controllingFieldValue>Insurance Services</controllingFieldValue>
             <valueName>Property &amp; Casualty</valueName>
         </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Insurance Services</controllingFieldValue>
+            <valueName>Revolution</valueName>
+        </valueSettings>
     </valueSet>
 </CustomField>

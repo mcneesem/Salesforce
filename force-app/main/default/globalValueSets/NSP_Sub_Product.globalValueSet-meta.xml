@@ -101,10 +101,9 @@
         <label>Compensation Services</label>
     </customValue>
     <customValue>
-        <fullName>TimeStar Mgd Hosted</fullName>
+        <fullName>Revolution</fullName>
         <default>false</default>
-        <isActive>false</isActive>
-        <label>TimeStar Mgd Hosted</label>
+        <label>Revolution</label>
     </customValue>
     <customValue>
         <fullName>Timestar SaaS</fullName>
