@@ -407,11 +407,13 @@ public with sharing class NSP_LeadTriggerHelper {
                     Boolean allowOldUser = (
                         ( oldRecord != null )
                         && ( oldRecord.OwnerId != null )
+                        && usersRoles.containsKey(oldRecord.OwnerId)
                         && userRoleMap.containsKey( usersRoles.get( oldRecord.OwnerId ).UserRoleId )
                         );
                     Boolean allowNewUser = (
                         ( newRecord != null )
                         && ( newRecord.OwnerId != null )
+                        && usersRoles.containsKey(newRecord.OwnerId)
                         && userRoleMap.containsKey( usersRoles.get( newRecord.OwnerId ).UserRoleId )
                         );
                     if ( !allowOldUser || !allowNewUser ) {
