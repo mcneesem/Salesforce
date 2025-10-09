@@ -2006,6 +2006,19 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_OneVoice_External_ID__c</fieldItem>
                 <identifier>RecordNSP_OneVoice_External_ID_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>NOT (1 AND 2)</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Retirement Svc-Education</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET Education</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -3017,8 +3030,8 @@
                     </criteria>
                 </visibilityRule>
             </componentInstance>
-            </itemInstances>
-            <itemInstances>
+        </itemInstances>
+        <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
                     <name>columns</name>
