@@ -3,9 +3,8 @@
     <fullName>NSP_Custom_Pricing__c</fullName>
     <defaultValue>false</defaultValue>
     <description>When true the price of the product will be entered by user at edit lines</description>
-    <externalId>false</externalId>
     <label>Custom Pricing</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

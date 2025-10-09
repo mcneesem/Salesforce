@@ -96,6 +96,7 @@ private class NSP_DocuSignInvoiceDocumentBatchTest {
         NSP_DocuSignInvoiceDocumentBatch invBatch = new NSP_DocuSignInvoiceDocumentBatch(new List<String>{invc[0].Id});
         ID ebatchprocessid = Database.executeBatch(invBatch,1);
         NSP_DocuSignInvoiceDocumentBatch.testHandleException(null,null);
+        NSP_DocuSignRESTUtility.testHandleException(null,null);
         Integer batchSize = NSP_DocuSignInvoiceDocumentBatch.getBatchSize();
         System.assertNotEquals(null,batchSize);
         System.assertNotEquals(null, ebatchprocessid);

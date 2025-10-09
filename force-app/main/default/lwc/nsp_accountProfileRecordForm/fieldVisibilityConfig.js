@@ -94,12 +94,6 @@ const FIELD_VISIBILITY_CONFIG = {
       ],
     },
   ],
-  NSP_PremierEmployeeDirectoryViewSetup__c: [
-    {
-      expValue: ['Yes'],
-      dependentFields: ['NSP_Select_View__c'],
-    },
-  ],
 
   NSP_Union_Employees__c: [
     {

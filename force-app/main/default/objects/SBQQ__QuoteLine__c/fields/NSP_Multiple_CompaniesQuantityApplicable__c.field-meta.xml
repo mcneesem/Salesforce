@@ -3,9 +3,8 @@
     <fullName>NSP_Multiple_CompaniesQuantityApplicable__c</fullName>
     <defaultValue>false</defaultValue>
     <description>When true the list price is also driven by Total_Employess_of_all_companies on quote</description>
-    <externalId>false</externalId>
     <label>Multiple Companies Quantity Applicable</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

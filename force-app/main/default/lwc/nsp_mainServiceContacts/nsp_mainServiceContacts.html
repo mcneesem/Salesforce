@@ -85,22 +85,39 @@
                                         data-id="checkbox" onchange={handleInput} label="Client Communication Contact">
                                     </lightning-input>
                                 </li>
-                                <template if:true={supportPicklistValues}>
+                                <template lwc:if={supportPicklistValues}>
                                     <li class="slds-item slds-hint-parent">
-                                        <c-nsp_multi-select label="Support Role" onselect={handleSelect}
-                                            field-api-name='NSP_Support_Role__c' options={supportPicklistValues}>
+                                        <c-nsp_multi-select
+                                            label="Support Role"
+                                            onselect={handleSelect}
+                                            field-api-name='NSP_Support_Role__c'
+                                            options={supportPicklistValues}
+                                            >
                                         </c-nsp_multi-select>
                                     </li>
                                 </template>
-                                <template if:true={serviceRolePicklistValues}>
+                                <template lwc:if={serviceRolePicklistValues}>
                                     <li class="slds-item slds-hint-parent">
-                                            <c-nsp_multi-select label="Service Role"
-                                                field-api-name='NSP_Service_Roles__c' onselect={handleSelect}
-                                                options={serviceRolePicklistValues}>
+                                        <c-nsp_multi-select
+                                            label="Service Role"
+                                            field-api-name='NSP_Service_Roles__c'
+                                            onselect={handleSelect}
+                                            options={serviceRolePicklistValues}
+                                            >
                                         </c-nsp_multi-select>
                                     </li>
                                 </template>
-
+                                <template lwc:if={hrScaleClientRolePicklistValues}>
+                                    <li class="slds-item slds-hint-parent">
+                                        <c-nsp_multi-select
+                                            label="HRScale Client Role"
+                                            field-api-name='HRScale_Client_Roles__c'
+                                            onselect={handleSelect}
+                                            options={hrScaleClientRolePicklistValues}
+                                            >
+                                        </c-nsp_multi-select>
+                                    </li>
+                                </template>
                             </ol>
                         </div>
                         <div class="slds-var-p-top_medium">

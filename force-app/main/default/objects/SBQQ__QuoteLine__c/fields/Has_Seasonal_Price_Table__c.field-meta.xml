@@ -3,9 +3,8 @@
     <fullName>Has_Seasonal_Price_Table__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Twin field with product. Used in Custom Script</description>
-    <externalId>false</externalId>
     <label>Has Seasonal Price Table</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

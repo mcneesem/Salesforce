@@ -3,6 +3,6 @@
     <fullName>Mismatch_Asset__c</fullName>
     <defaultValue>false</defaultValue>
     <label>Mismatch Asset</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>

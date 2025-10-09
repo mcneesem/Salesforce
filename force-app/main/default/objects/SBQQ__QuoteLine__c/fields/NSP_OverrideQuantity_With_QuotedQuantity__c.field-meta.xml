@@ -3,9 +3,8 @@
     <fullName>NSP_OverrideQuantity_With_QuotedQuantity__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Override Quantity With Quoted Quantity</description>
-    <externalId>false</externalId>
     <label>Override Quantity With Quoted Quantity</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

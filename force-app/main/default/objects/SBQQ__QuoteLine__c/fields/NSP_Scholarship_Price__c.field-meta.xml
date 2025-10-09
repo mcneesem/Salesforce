@@ -3,9 +3,8 @@
     <fullName>NSP_Scholarship_Price__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Indicates if Scholarship discount is applied</description>
-    <externalId>false</externalId>
     <label>Scholarship Price</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

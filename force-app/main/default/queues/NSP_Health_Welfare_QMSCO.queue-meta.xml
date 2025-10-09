@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
-    <email>qmcsocoordinator@insperity.com.invalid</email>
-    <name>Health &amp; Welfare QMSCO</name>
+    <email>qmcsocoordinator@insperity.com</email>
+    <name>Health &amp; Welfare QMCSO</name>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

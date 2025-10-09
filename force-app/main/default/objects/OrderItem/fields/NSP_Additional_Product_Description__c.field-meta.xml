@@ -3,10 +3,9 @@
     <fullName>NSP_Additional_Product_Description__c</fullName>
     <description>Holds product description with price and quantity</description>
     <encryptionScheme>None</encryptionScheme>
-    <externalId>false</externalId>
     <label>Additional Product Description</label>
     <length>32768</length>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>LongTextArea</type>
     <visibleLines>3</visibleLines>
 </CustomField>

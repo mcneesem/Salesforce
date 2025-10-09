@@ -3,9 +3,8 @@
     <fullName>NSP_Project_Go_Live_Date__c</fullName>
     <description>Captures the Project Go Live Date</description>
     <encryptionScheme>None</encryptionScheme>
-    <externalId>false</externalId>
     <label>Project Go Live Date</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Date</type>
 </CustomField>

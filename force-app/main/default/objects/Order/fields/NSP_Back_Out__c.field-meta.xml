@@ -3,8 +3,7 @@
     <fullName>NSP_Back_Out__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Identifies Backed Out Orders</description>
-    <externalId>false</externalId>
     <label>Back Out</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>

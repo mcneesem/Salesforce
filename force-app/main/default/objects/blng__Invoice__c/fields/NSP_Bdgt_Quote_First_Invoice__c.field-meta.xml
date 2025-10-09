@@ -3,9 +3,8 @@
     <fullName>NSP_Bdgt_Quote_First_Invoice__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Indicate if this is the first invoice from a Budgetary quote</description>
-    <externalId>false</externalId>
     <label>Budgetary Quote First Invoice</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

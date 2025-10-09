@@ -3,8 +3,7 @@
     <fullName>NSP_No_Minimum_Fee__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Created as a part of WX and TimeStar - Consumption Schedules</description>
-    <externalId>false</externalId>
     <label>No Minimum Fee</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>

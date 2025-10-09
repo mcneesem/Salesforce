@@ -3,8 +3,7 @@
     <fullName>Prevent_Asset_Updates__c</fullName>
     <defaultValue>false</defaultValue>
     <description>If checked, this flag will prevent the assets from updating</description>
-    <externalId>false</externalId>
     <label>Prevent Asset Updates</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>

@@ -4,6 +4,7 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>System Admin Lite</label>
     <permissionSets>Account_Assignment_Method_Edit_Access</permissionSets>
+    <permissionSets>Account_Edit_PCM_Investor_Fields</permissionSets>
     <permissionSets>Account_Profile_Access</permissionSets>
     <permissionSets>Account_Team_Management</permissionSets>
     <permissionSets>Accrual_Profile_access</permissionSets>
@@ -21,6 +22,7 @@
     <permissionSets>Case_Compensation_Access</permissionSets>
     <permissionSets>Client_goal_project_task_junction_access</permissionSets>
     <permissionSets>Docusign_Account_Management_Report</permissionSets>
+    <permissionSets>Docusign_Log_Visibility</permissionSets>
     <permissionSets>Edit_Integrated_Fields</permissionSets>
     <permissionSets>Field_Access_to_System_Admin_Lite</permissionSets>
     <permissionSets>Finance_Logger</permissionSets>

@@ -1,5 +1,8 @@
 public class NSP_Implementationprofile_ServiceHelper {
-    // test w/ NSP_FSOImplementationControllerTest, NSP_ImpprofileServiceHelper_Test, NSP_MMImplProfile_UpdateTest (83%)
+    // test w/ NSP_FSOImplementationControllerTest, NSP_ImpprofileServiceHelper_Test, NSP_MMImplProfile_UpdateTest, NSP_Implprofile_ServiceHelperUpdate_Test (77%)
+    // test w/ NSP_FSOImplementationControllerTest, NSP_ImpprofileServiceHelper_Test, NSP_MMImplProfile_UpdateTest (76%)
+    // test w/ NSP_FSOImplementationControllerTest, NSP_ImpprofileServiceHelper_Test (75%)
+    // test w/ NSP_FSOImplementationControllerTest (21%)
 
     private List<Case> caseToInsertList = new List<Case>();
     private List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
@@ -408,7 +411,6 @@ public class NSP_Implementationprofile_ServiceHelper {
         if(ipRecordsByAutomation.containsKey(FLSA_EXEMPTION_REVIEW_EMAIL)){
             emailNotifyforFlsaExemptionReview();
         }
-		
         if (ipRecordsByAutomation.containsKey(LICENSED_CONTRACTOR_YES_FSO)) {  
             emailNotifyForLicensedContractor(LICENSED_CONTRACTOR_YES_FSO, Licensed_Automation_Name_FSO);  
         }  
@@ -416,28 +418,43 @@ public class NSP_Implementationprofile_ServiceHelper {
             emailNotifyForLicensedContractor(LICENSED_CONTRACTOR_YES_MM, Licensed_Automation_Name_MM);  
         } 
     }
-    
-    private void finish(){
-        recToInsert.sort();
-        database.insert(recToInsert,false);
-        Savepoint sp = Database.setSavepoint();
-        Messaging.sendEmail(lstEmailMessages);
-        Database.rollback(sp); 
-        List<Messaging.SingleEmailMessage> msgListToBeSend = new List<Messaging.SingleEmailMessage>();
-        for (Messaging.SingleEmailMessage email : lstEmailMessages) {
-            Messaging.SingleEmailMessage emailToSend = new Messaging.SingleEmailMessage();
-            emailToSend.setToAddresses(email.getToAddresses());
-            emailToSend.setPlainTextBody(email.getPlainTextBody());
-            emailToSend.setHTMLBody(email.getHTMLBody());
-            emailToSend.setSubject(email.getSubject());
-            emailToSend.setCcAddresses(email.getCcAddresses());
-            emailToSend.setFileAttachments(email.getFileAttachments());
-            emailToSend.setOrgWideEmailAddressId(email.getOrgWideEmailAddressId());
-            emailToSend.setSaveAsActivity(email.getSaveAsActivity());
-            emailToSend.setWhatId(email.getWhatId());
-            msgListToBeSend.add(emailToSend);
+
+    private void finish() {
+        try {
+            recToInsert.sort();
+            List<Database.SaveResult> results = Database.insert( recToInsert , false );
+            NSP_ErrorLogHandler.logResults(
+                NSP_Implementationprofile_ServiceHelper.class.getName() ,
+                'finish:insert' ,
+                results
+            );
+            if ( ( Limits.getEmailInvocations() + 2 ) < Limits.getLimitEmailInvocations() ) { // prevent LimitExceptions...
+                Savepoint sp = Database.setSavepoint();
+                Messaging.sendEmail( lstEmailMessages );
+                Database.rollback( sp );
+                List<Messaging.SingleEmailMessage> msgListToBeSend = new List<Messaging.SingleEmailMessage>();
+                for ( Messaging.SingleEmailMessage email : lstEmailMessages ) {
+                    Messaging.SingleEmailMessage emailToSend = new Messaging.SingleEmailMessage();
+                    emailToSend.setToAddresses( email.getToAddresses() );
+                    emailToSend.setPlainTextBody( email.getPlainTextBody() );
+                    emailToSend.setHTMLBody( email.getHTMLBody() );
+                    emailToSend.setSubject( email.getSubject() );
+                    emailToSend.setCcAddresses( email.getCcAddresses() );
+                    emailToSend.setFileAttachments( email.getFileAttachments() );
+                    emailToSend.setOrgWideEmailAddressId( email.getOrgWideEmailAddressId() );
+                    emailToSend.setSaveAsActivity( email.getSaveAsActivity() );
+                    emailToSend.setWhatId( email.getWhatId() );
+                    msgListToBeSend.add( emailToSend );
+                }
+                Messaging.sendEmail( msgListToBeSend );
+            }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_Implementationprofile_ServiceHelper.class.getName() ,
+                'finish' ,
+                e
+            );
         }
-        Messaging.sendEmail(msgListToBeSend);
     }
 
     private void populateEligibleRecords() {
@@ -3212,7 +3229,7 @@ public class NSP_Implementationprofile_ServiceHelper {
                 NSP_Orientation_Rep__r.NSP_Work_Email__c ,
                 NSP_Onboarding_Specialist_Coordinator__r.NSP_Work_email__c ,
                 NSP_HR_Specialist__c ,
-            	NSP_HR_Specialist__r.NSP_Work_email__c ,
+                NSP_HR_Specialist__r.NSP_Work_email__c ,
                 NSP_HR_Specialist__r.pse__Salesforce_User__c ,
                 NSP_Payroll_Specialist__r.NSP_Work_email__c ,
                 NSP_Project_Manager__c ,
@@ -3220,8 +3237,8 @@ public class NSP_Implementationprofile_ServiceHelper {
                 NSP_Project_Manager__r.Name ,
                 NSP_Project_Manager__r.pse__Salesforce_User__c ,
                 NSP_Project_Manager__r.NSP_Job_Title__c,
-            	NSP_HR_Quality_Support_Team_Member__c ,
-            	NSP_HR_Quality_Support_Team_Member__r.NSP_Work_email__c ,
+                NSP_HR_Quality_Support_Team_Member__c ,
+                NSP_HR_Quality_Support_Team_Member__r.NSP_Work_email__c ,
                 RecordTypeId ,
                 Account__r.NSP_Service_Segment__c,
                 NSP_Sr_Onboarding_Benefit_Rep__c,
@@ -3235,9 +3252,9 @@ public class NSP_Implementationprofile_ServiceHelper {
                 NSP_Legal_Name__c ,
                 Contractor_s_License__c ,
                 Effective_Date_Payroll_Worker_comp_EPLI__c ,
-            	NSP_Project__c,
-            	Who_should_the_FLSA_team_reach_out_to__c ,
-            	NSP_Related_Clients__c
+                NSP_Project__c,
+                Who_should_the_FLSA_team_reach_out_to__c ,
+                NSP_Related_Clients__c
             FROM Implementation_Profile__c
             WHERE ( Id IN :ipIds )
         ]);
@@ -3951,4 +3968,6 @@ public class NSP_Implementationprofile_ServiceHelper {
         }
         return contactsFormatted;
     }
+
 }
+//
