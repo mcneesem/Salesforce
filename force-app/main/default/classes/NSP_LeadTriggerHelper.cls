@@ -407,13 +407,11 @@ public with sharing class NSP_LeadTriggerHelper {
                     Boolean allowOldUser = (
                         ( oldRecord != null )
                         && ( oldRecord.OwnerId != null )
-                        && usersRoles.containsKey(oldRecord.OwnerId)
                         && userRoleMap.containsKey( usersRoles.get( oldRecord.OwnerId ).UserRoleId )
                         );
                     Boolean allowNewUser = (
                         ( newRecord != null )
                         && ( newRecord.OwnerId != null )
-                        && usersRoles.containsKey(newRecord.OwnerId)
                         && userRoleMap.containsKey( usersRoles.get( newRecord.OwnerId ).UserRoleId )
                         );
                     if ( !allowOldUser || !allowNewUser ) {
@@ -424,6 +422,7 @@ public with sharing class NSP_LeadTriggerHelper {
         }
     }
     
+    // collect the  Leads OwnerId (User.Id) values...
     private void collectLeadsOwners(Map<Id,Lead> leadNewMap, Map<Id,Lead> leadOldMap,  Set<Id> leadIdSet, Set<Id> ownersIdSet){
         
         if(leadNewMap != null){
@@ -431,7 +430,7 @@ public with sharing class NSP_LeadTriggerHelper {
             for ( Id leadId : leadNewMap.keySet() ) {
                 Lead oldRecord = this.getMappedLeadSafe( leadOldMap , leadId );
                 Lead newRecord = this.getMappedLeadSafe( leadNewMap , leadId );
-                //  Validate only if Owner has changed, and if Lead owner is not equals to logged user.
+                //  Validate only if Owner has changed, and if Lead owner is not logged user.
                 if( (newRecord != null && oldRecord != null) &&
                     (newRecord.OwnerId != oldRecord.OwnerId) &&
                 (oldRecord.OwnerId != userId)){
