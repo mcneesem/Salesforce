@@ -3,12 +3,12 @@
     <fullName>Primary_Termination_Reason</fullName>
     <active>true</active>
     <errorConditionFormula>AND(
-  NOT( $Permission.Bypass_Termination_Reason_Rules ) ,
+  $Permission.Enforce_Termination_Reason_Rule,
   Account__r.WO_Asset__r.NSP_Written_Term_recd__c ,
   OR(
     ISBLANK( TEXT( Primary_Term_Reason__c ) ) ,
     ISBLANK( TEXT( Sub_Term_Reason__c ) )
   )
 )</errorConditionFormula>
-    <errorMessage>You must complete both the Primary Term Reason and Sub Term Reason(s) when an Asset linked to an Account in the Renewal Probability Account Group has &apos;Written Termination Notice Received&apos; selected.</errorMessage>
+    <errorMessage>You must complete both the Primary Term Reason and Sub Term Reason(s) when an Asset linked to an Account in the Renewal Probability Account Group has Written Termination Notice Received selected.</errorMessage>
 </ValidationRule>
