@@ -299,10 +299,10 @@
         <label>Dotcoms</label>
     </customValue>
     <customValue>
-        <fullName>Abra Migration</fullName>
+        <fullName>TimeStar Mgd Hosted</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Abra Migration</label>
+        <label>TimeStar Mgd Hosted</label>
     </customValue>
     <customValue>
         <fullName>Add On Software</fullName>
