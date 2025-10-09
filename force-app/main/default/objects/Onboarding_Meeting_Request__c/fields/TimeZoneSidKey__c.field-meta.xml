@@ -3,12 +3,13 @@
     <fullName>TimeZoneSidKey__c</fullName>
     <description>AZD-497743 - Added for OMR future use only</description>
     <externalId>false</externalId>
-    <formula>CASE( TEXT(Time_Zone__c) , 
-      &quot;ET&quot;, &quot;America/New_York&quot;,
-      &quot;CT&quot;, &quot;America/Chicago&quot;,
-      &quot;MT&quot;, &quot;America/Denver&quot; ,
-      &quot;PT&quot;, &quot;America/Los_Angeles&quot;,
-      &quot;&quot;
+    <formula>CASE(
+  TEXT( Time_Zone__c ) ,
+  &quot;ET&quot; , &quot;America/New_York&quot; ,
+  &quot;CT&quot; , &quot;America/Chicago&quot; ,
+  &quot;MT&quot; , &quot;America/Denver&quot; ,
+  &quot;PT&quot; , &quot;America/Los_Angeles&quot; ,
+  &quot;&quot;
 )</formula>
     <label>TimeZoneSidKey</label>
     <required>false</required>
