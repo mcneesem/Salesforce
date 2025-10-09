@@ -781,6 +781,7 @@ public with sharing class NSP_ValidateOpportunityStage {
     }
 
     // NSP_ValidateOpportunityStageTest
+    @TestVisible
     public static Boolean checkCondition( Object fieldValue , String ruleValue , String operation ) {
         Boolean retVal = false;
         if ( operation == Operator.IS_BLANK.name() ) {
@@ -911,6 +912,7 @@ public with sharing class NSP_ValidateOpportunityStage {
     //
     //
 
+    @TestVisible
     private static Boolean hasAllowClosedLostPermission {
         private get {
             if ( hasAllowClosedLostPermission == null ) {
@@ -921,6 +923,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         private set;
     }
 
+    @TestVisible
     private static Boolean hasCLSOOppOwnerPermission {
         private get {
             if ( hasCLSOOppOwnerPermission == null ) {
@@ -931,6 +934,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         private set;
     }
 
+    @TestVisible
     private static Boolean hasCLSOOppPermission {
         private get {
             if ( hasCLSOOppPermission == null ) {
@@ -941,6 +945,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         private set;
     }
 
+    @TestVisible
     private static Boolean hasAllowCLMMPerm {
         private get {
             if ( hasAllowCLMMPerm == null ) {
@@ -951,6 +956,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         private set;
     }
 
+    @TestVisible
     private static Boolean hasAllowCLRETPerm {
         private get {
             if ( hasAllowCLRETPerm == null ) {
@@ -961,6 +967,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         private set;
     }
 
+    @TestVisible
     private static Boolean hasAllowCLInsurancePerm {
         private get {
             if ( hasAllowCLInsurancePerm == null ) {
@@ -971,6 +978,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         private set;
     }
 
+    @TestVisible
     private static Boolean hasAllowCLRecruitingPerm {
         private get {
             if ( hasAllowCLRecruitingPerm == null ) {
@@ -981,6 +989,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         private set;
     }
 
+    @TestVisible
     private static Boolean hasAllowCLTechnologyPerm {
         private get {
             if ( hasAllowCLTechnologyPerm == null ) {
@@ -991,6 +1000,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         private set;
     }
 
+    @TestVisible
     private static Boolean hasAllowCWNCSUserPerm {
         private get {
             if ( hasAllowCWNCSUserPerm == null ) {
@@ -1005,6 +1015,7 @@ public with sharing class NSP_ValidateOpportunityStage {
     //
     //
 
+    @TestVisible
     private static Map<Id,User> permittedRETSCUserMap {
         private get {
             if ( permittedRETSCUserMap == null ) {
@@ -1015,6 +1026,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         private set;
     }
 
+    @TestVisible
     private static Map<Id,User> permittedInsSalesUserMap {
         private get {
             if ( permittedInsSalesUserMap == null ) {
@@ -1025,6 +1037,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         private set;
     }
 
+    @TestVisible
     private static Map<Id,User> permittedRecSalesUserMap {
         private get {
             if ( permittedRecSalesUserMap == null ) {
@@ -1035,6 +1048,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         private set;
     }
 
+    @TestVisible
     private static Map<Id,User> permittedTechSalesUserMap {
         private get {
             if ( permittedTechSalesUserMap == null ) {
@@ -1045,6 +1059,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         private set;
     }
 
+    @TestVisible
     private static Map<Id,User> permittedBPCUserMap {
         private get {
             if ( permittedBPCUserMap == null ) {
@@ -1055,6 +1070,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         private set;
     }
 
+    @TestVisible
     private static Map<Id,User> permittedCWOppOwnerUserMap {
         private get {
             if ( permittedCWOppOwnerUserMap == null ) {
