@@ -53,7 +53,10 @@ NOT(ISBLANK(NSP_Client__c)),
 NOT(ISBLANK(NSP_Project_Task__c)),
 NOT(ISBLANK(TEXT(NSP_Status__c))),
 NOT(ISBLANK(TEXT(NSP_Term_Code__c))),
-NOT(ISBLANK(TEXT(NSP_Term_Reason__c)))
+NOT(ISBLANK(TEXT(NSP_Term_Reason__c))),
+NOT(ISBLANK(NSP_Client_Owner__c)),
+NOT(ISBLANK(Client_Owner_Email__c)),
+NOT(ISBLANK(Client_Owner_Phone__c))
 ),
 AND(
 NOT(ISBLANK(NSP_CSA_Effective_Date__c)),

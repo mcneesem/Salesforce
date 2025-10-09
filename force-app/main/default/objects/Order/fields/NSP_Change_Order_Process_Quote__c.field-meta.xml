@@ -3,8 +3,7 @@
     <fullName>NSP_Change_Order_Process_Quote__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Field to indicate that its a change order quote</description>
-    <externalId>false</externalId>
     <label>Change Order Process Quote</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>

@@ -1,6 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>56.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Set_Fault_Element_Copy_Legal_Entity</name>
+        <label>Set Fault Element: Copy Legal Entity</label>
+        <locationX>314</locationX>
+        <locationY>708</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Copy Legal Entity</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_Order_Product</name>
+        <label>Set Fault Element: Get_Order_Product</label>
+        <locationX>842</locationX>
+        <locationY>492</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Order_Product</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Check_Order_Item</name>
+        <label>Check Order Item</label>
+        <locationX>710</locationX>
+        <locationY>276</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_Order_Item</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__OrderItem__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Order_Product</targetReference>
+            </connector>
+            <label>Has Order Item</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Order_Product</name>
+        <label>Check Order Product</label>
+        <locationX>314</locationX>
+        <locationY>492</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Found_Order_Product</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Order_Product</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_Legal_Entity</targetReference>
+            </connector>
+            <label>Found Order Product</label>
+        </rules>
+    </decisions>
     <environments>Default</environments>
     <interviewLabel>Update Legal Entity on Order Product Consumption Schedule {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Update Legal Entity on Order Product Consumption Schedule</label>
@@ -23,50 +101,18 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordCreates>
-        <name>Create_Error_Log</name>
-        <label>Create Error Log</label>
-        <locationX>572</locationX>
-        <locationY>528</locationY>
-        <inputAssignments>
-            <field>NSP_Class__c</field>
-            <value>
-                <elementReference>$Flow.CurrentRecord</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Description__c</field>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Object__c</field>
-            <value>
-                <stringValue>Order product Consumption Schedule</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Record_Id__c</field>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <object>NSP_Error_Log__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
     <recordLookups>
-        <name>Get_Order_Item</name>
-        <label>Get Order Item</label>
-        <locationX>308</locationX>
-        <locationY>288</locationY>
+        <description>Prevent DmlExceptions: FIELD_CUSTOM_VALIDATION_EXCEPTION: Can&apos;t change Legal Entity on order item consumption schedules for activated order products.</description>
+        <name>Get_Order_Product</name>
+        <label>Get Order Product</label>
+        <locationX>314</locationX>
+        <locationY>384</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Copy_Legal_Entity_from_OrderItem</targetReference>
+            <targetReference>Check_Order_Product</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Create_Error_Log</targetReference>
+            <targetReference>Set_Fault_Element_Get_Order_Product</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -83,35 +129,42 @@
                 <booleanValue>false</booleanValue>
             </value>
         </filters>
+        <filters>
+            <field>SBQQ__Activated__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>OrderItem</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
-        <name>Copy_Legal_Entity_from_OrderItem</name>
-        <label>Copy Legal Entity from OrderItem</label>
-        <locationX>308</locationX>
-        <locationY>408</locationY>
+        <name>Copy_Legal_Entity</name>
+        <label>Copy Legal Entity</label>
+        <locationX>50</locationX>
+        <locationY>600</locationY>
         <faultConnector>
-            <targetReference>Create_Error_Log</targetReference>
+            <targetReference>Set_Fault_Element_Copy_Legal_Entity</targetReference>
         </faultConnector>
         <inputAssignments>
             <field>blng__LegalEntity__c</field>
             <value>
-                <elementReference>Get_Order_Item.blng__LegalEntity__c</elementReference>
+                <elementReference>Get_Order_Product.blng__LegalEntity__c</elementReference>
             </value>
         </inputAssignments>
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <start>
-        <locationX>50</locationX>
+        <locationX>122</locationX>
         <locationY>0</locationY>
         <object>SBQQ__OrderItemConsumptionSchedule__c</object>
         <recordTriggerType>Create</recordTriggerType>
         <scheduledPaths>
             <name>Update_Legal_Entity</name>
             <connector>
-                <targetReference>Get_Order_Item</targetReference>
+                <targetReference>Check_Order_Item</targetReference>
             </connector>
             <label>Update Legal Entity</label>
             <offsetNumber>1</offsetNumber>
@@ -121,4 +174,39 @@
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Draft</status>
+    <subflows>
+        <name>Insperity_Fault_Handler_Subflow</name>
+        <label>Insperity Fault Handler Subflow</label>
+        <locationX>314</locationX>
+        <locationY>816</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>varFaultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Update_Legal_Entity_on_Order_Product_Consumption_Schedule</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
 </Flow>

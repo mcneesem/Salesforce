@@ -3,8 +3,7 @@
     <fullName>NSP_AnniversaryBlngApplicable__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Indicates if anniversary billing is applicable</description>
-    <externalId>false</externalId>
     <label>Anniversary Billing Applicable?</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>

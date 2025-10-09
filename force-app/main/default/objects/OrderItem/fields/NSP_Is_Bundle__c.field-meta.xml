@@ -3,8 +3,7 @@
     <fullName>NSP_Is_Bundle__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Indicates if the order product is a bundle product</description>
-    <externalId>false</externalId>
     <label>Is Bundle</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>

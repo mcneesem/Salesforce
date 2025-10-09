@@ -3,9 +3,8 @@
     <fullName>NSP_Override_Start_Date__c</fullName>
     <description>Date to store start date of order product when it is activated.</description>
     <encryptionScheme>None</encryptionScheme>
-    <externalId>false</externalId>
     <label>Override Start Date</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Date</type>
 </CustomField>

@@ -3,12 +3,11 @@
     <fullName>NSP_Partner__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <description>Partner Account</description>
-    <externalId>false</externalId>
     <label>Partner</label>
     <referenceTo>Account</referenceTo>
     <relationshipLabel>Orders (Partner)</relationshipLabel>
     <relationshipName>Orders</relationshipName>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Lookup</type>
 </CustomField>

@@ -2057,6 +2057,7 @@ export function amendmentForClonedLineCalculation (quote, lines){
                 }
                 if(line.record["SBQQ__BillingFrequency__c"] == 'Annual'){
 					line.record["NSP_Delta_Total__c"] = line.record["NSP_Delta_Total__c"] - disc;
+                    line.record["SBQQ__NetPrice__c"] = line.record["SBQQ__NetPrice__c"] - disc;
                 }
             }
 

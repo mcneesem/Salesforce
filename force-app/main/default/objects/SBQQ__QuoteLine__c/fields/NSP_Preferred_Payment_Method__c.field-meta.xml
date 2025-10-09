@@ -4,7 +4,7 @@
     <description>Captures the Preferred Payment Method</description>
     <label>Preferred Payment Method</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
@@ -25,6 +25,42 @@
                 <fullName>Contractor Management</fullName>
                 <default>false</default>
                 <label>Contractor Management</label>
+            </value>
+            <value>
+                <fullName>Admin_WO</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Admin_WO</label>
+            </value>
+            <value>
+                <fullName>NewComp_WO</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>NewComp_WO</label>
+            </value>
+            <value>
+                <fullName>PPTFEE</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>PPTFEE</label>
+            </value>
+            <value>
+                <fullName>PPTFEE_WO</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>PPTFEE_WO</label>
+            </value>
+            <value>
+                <fullName>RK-REV</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>RK-REV</label>
+            </value>
+            <value>
+                <fullName>RK-REV_WO</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>RK-REV_WO</label>
             </value>
         </valueSetDefinition>
     </valueSet>

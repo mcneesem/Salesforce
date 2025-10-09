@@ -4,13 +4,12 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <deprecated>false</deprecated>
     <description>Subscription created from this order product</description>
-    <externalId>false</externalId>
     <inlineHelpText>Subscription created from this order product</inlineHelpText>
     <label>Subscription</label>
     <referenceTo>SBQQ__Subscription__c</referenceTo>
     <relationshipLabel>Order Products</relationshipLabel>
     <relationshipName>SubscriptionOrderProducts</relationshipName>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Lookup</type>
 </CustomField>

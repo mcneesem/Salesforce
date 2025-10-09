@@ -72,6 +72,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.Ready_to_Process__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.Requested_Jobs__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -99,7 +104,17 @@
         <editable>true</editable>
         <field>Case.Verification_Report_Attached__c</field>
         <readable>true</readable>
-        </fieldPermissions>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Wire_Reason__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Wire_Scenario__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Accrual_Profile__c.Cloned_from_AP_Template__c</field>

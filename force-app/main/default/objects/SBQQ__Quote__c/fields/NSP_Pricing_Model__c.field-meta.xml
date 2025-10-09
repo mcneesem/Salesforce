@@ -140,6 +140,11 @@
                 <default>false</default>
                 <label>RET - WO with Admin</label>
             </value>
+            <value>
+                <fullName>RET - Bundled Plus #4</fullName>
+                <default>false</default>
+                <label>RET - Bundled Plus #4</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

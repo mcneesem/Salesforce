@@ -3,8 +3,7 @@
     <fullName>NSP_Rev_Rec_Rules_Reviewed__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Internal: Flag to indicate Reviewing Revenue Recognition rules logic is executed</description>
-    <externalId>false</externalId>
     <label>Rev Rec Rules Reviewed?</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>
