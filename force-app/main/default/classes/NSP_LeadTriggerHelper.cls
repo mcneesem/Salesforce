@@ -362,13 +362,56 @@ public with sharing class NSP_LeadTriggerHelper {
                 && CustomPermissionController.checkUserPermission( 'Bypass_Lead_Sales_Office_Validation' , UserInfo.getUserId() )
                 )
             {
-                this.restrictLeadOwnerChangeByRole( leadNewMap , leadOldMap );
+                Map<Id,Lead> leadNewOwnersMap = new Map<Id,Lead>();
+                Map<Id,Lead> leadOldOwnersMap  = new Map<Id,Lead>();
+                this.checkLeadOwnerChange(leadNewMap, leadOldMap, leadNewOwnersMap, leadOldOwnersMap);
+                if(leadNewOwnersMap.size() > 0){
+                    this.restrictLeadOwnerChangeByRole( leadNewOwnersMap , leadOldOwnersMap );
+                }
+
             } else {
                 this.restrictLeadOwnerChangeByGroupMember( leadNewMap , leadOldMap );
             }
         }
     }
-    
+
+    //
+    // Iterates throught the lead map and identifies any field change, only Owner should be updated.
+    // @param leadNewMap Map of New leads.
+    // @param leadOldMap Map of Old leads.
+    // @param by reference, leadNewOwnersMap Map of New leads owners.
+    // @param by reference, leadOldOwnersMap Map of Old leads owners.
+    // @return void
+    // @ADO-421989
+    //
+    private void checkLeadOwnerChange(Map<Id,Lead> leadNewMap, Map<Id,Lead> leadOldMap, Map<Id,Lead> leadNewOwnersMap, Map<Id,Lead> leadOldOwnersMap){
+        if(leadNewMap != null){
+            Id userId = UserInfo.getUserId();
+            Set<String> fieldsNames = null;
+            for(Id leadId : leadNewMap.keySet()){
+                Lead newRecord = this.getMappedLeadSafe( leadNewMap , leadId );
+                Lead oldRecord = this.getMappedLeadSafe( leadOldMap , leadId );
+                //  If logged user is not the current Lead's owner
+                if(oldRecord.OwnerId != userId){
+                    boolean ownerChanged = true;
+                    if(fieldsNames == null) fieldsNames = newRecord.getPopulatedFieldsAsMap().keySet();
+                    //  Only owner field should be updated
+                    for (String field : fieldsNames) {
+                        if(newRecord.get(field) != oldRecord.get(field) && !field.equals('OwnerId')){
+                            newRecord.addError( System.Label.NSP_LeadTriggerError );
+                            ownerChanged = false;
+                            break;
+                        }
+                    }
+                    if(ownerChanged){
+                        leadNewOwnersMap.put(leadId, newRecord);
+                        leadOldOwnersMap.put(leadId, oldRecord);
+                    }
+                }
+            }
+        }
+    }
+
     //
     // Iterates throught the lead map and identifies the records that needs to worked based on various criterias.
     // @param leadNewMap Map of New leads.
