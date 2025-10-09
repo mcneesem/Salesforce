@@ -16,6 +16,7 @@ ISCHANGED( Max_Orientation_Date__c )
 )),
 NOT($Permission.Bypass_Lock_Opportunity_Edits),
 RecordType.DeveloperName = &quot;Opportunity_Locked&quot;,
+NOT(ISCHANGED (StageName)),
 ISPICKVAL(StageName, &apos;Closed Won&apos;)
 )</errorConditionFormula>
     <errorMessage>Once Opportunity is Closed Won it cannot be modified. Please contact Sales Operations team.</errorMessage>
