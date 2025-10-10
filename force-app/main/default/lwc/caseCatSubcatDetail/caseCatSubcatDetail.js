@@ -409,7 +409,10 @@ export default class CaseCatSubcatDetail extends LightningElement {
         this.dispatchChangeFields();
     }
 
-    getCatDependenciesMap(){
+    getCatDependenciesMap() {
+        if (this.variant === "sidebar") {
+            this.showAllCategory = true;
+        }
         getCategoryDependenciesMap({recordTypeId: this.recTypeId, isCatViewAll : this.showAllCategory}).then((response) => {
             let result = JSON.parse(response);
             if(this.categoryOptions.length == 0 ){
