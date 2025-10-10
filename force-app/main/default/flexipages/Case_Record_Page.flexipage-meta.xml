@@ -708,17 +708,6 @@
                 <fieldItem>Record.Reason</fieldItem>
                 <identifier>RecordReasonField</identifier>
                 <visibilityRule>
-                    <booleanFilter>NOT( 1 AND 2 ) AND 3</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Category__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Retirement Svc-Education</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>RET Education</rightValue>
-                    </criteria>
                     <criteria>
                         <leftValue>{!Record.NSP_Category__c}</leftValue>
                         <operator>NE</operator>
@@ -1382,10 +1371,16 @@
                 <fieldItem>Record.Description</fieldItem>
                 <identifier>RecordDescriptionField</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_Category__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Compensation Services</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HR COE Escalation</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1399,10 +1394,16 @@
                 <fieldItem>Record.Description</fieldItem>
                 <identifier>RecordDescriptionField2</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_Category__c}</leftValue>
                         <operator>NE</operator>
                         <rightValue>Compensation Services</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>HR COE Escalation</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
