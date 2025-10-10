@@ -2411,6 +2411,10 @@
     <picklistValues>
         <picklist>NSP_Service_Package__c</picklist>
         <values>
+            <fullName>HRScale</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>WO - AS Agency</fullName>
             <default>false</default>
         </values>
