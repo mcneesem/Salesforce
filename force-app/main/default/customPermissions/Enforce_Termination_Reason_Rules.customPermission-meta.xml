@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Enforce Termination Revision validation rules</description>
+    <description>Custom Permission to Enforce Termination Revision Rules on NSP_Account_Group__c.</description>
     <isLicensed>false</isLicensed>
     <label>Enforce Termination Reason Rules</label>
 </CustomPermission>
