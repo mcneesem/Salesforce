@@ -103,7 +103,6 @@
     <customValue>
         <fullName>Revolution</fullName>
         <default>false</default>
-        <isActive>true</isActive>
         <label>Revolution</label>
     </customValue>
     <customValue>
