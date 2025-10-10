@@ -1,9 +1,10 @@
 @isTest
 private class NSP_ValidateOpportunityStageTest {
+
     //Test Setup Method to populate test data
     @testSetup
     private static void setupData(){
-        
+
         Account acnt=NSP_TestHelper.createAccount(true);
         Contact cntct=NSP_TestHelper.createContact(true);
 
@@ -30,9 +31,9 @@ private class NSP_ValidateOpportunityStageTest {
             Status__c = 'Completed'
         );
         insert stpCheckList;
-        
+
         List<SObject> sOList = new List<SObject>();
-		Id eventRecTypeId = Schema.SObjectType.Event.getRecordTypeInfosByDeveloperName().get('Core_Sales_Event_RT').getRecordTypeId();
+        Id eventRecTypeId = Schema.SObjectType.Event.getRecordTypeInfosByDeveloperName().get('Core_Sales_Event_RT').getRecordTypeId();
         Id taskRecTypeId = Schema.SObjectType.Task.getRecordTypeInfosByDeveloperName().get('Core_Sales_Task_RT').getRecordTypeId();
 
         User userRecordInt = [Select Id, Email from User where Id = '0054x0000057MPSAA2'];
@@ -56,16 +57,16 @@ private class NSP_ValidateOpportunityStageTest {
             NSP_Status__c='Open'
         );
         sOList.add(eventRec);
-		
-		//Task and Events Insert
+
+        //Task and Events Insert
         if(userRecordInt != null) {
             System.runAs(userRecordInt){
                 insert sOList;
             }
         }
 
-        Test.startTest();		
-		blng__BillingRule__c objBillingRule = NSP_TestHelper.createBillingRule();
+        Test.startTest();
+        blng__BillingRule__c objBillingRule = NSP_TestHelper.createBillingRule();
         blng__RevenueRecognitionRule__c objRevRecRule =  NSP_TestHelper.createRevrecRule('1');
         blng__TaxRule__c objTaxRule = NSP_TestHelper.createRevTaxRule();
         Product2 objproduct = NSP_TestHelper.createProduct('Test Product',false);
@@ -81,19 +82,19 @@ private class NSP_ValidateOpportunityStageTest {
         objproduct.NSP_IsScholarshipPrice_Applicable__c ='YES';
         insert objproduct;
         PriceBookEntry objPbe     = NSP_TestHelper.createPriceBookEntry(objproduct.Id,200.0,true);
-        
-		//create quote
+
+        //create quote
         SBQQ__Quote__c objQuote   = NSP_TestHelper.createCPQQuote(acnt.Id,opp.Id,true);
-        
-		// create quote lines
+
+        // create quote lines
         List<SBQQ__Quoteline__c> qlines = NSP_TestHelper.createCPQQuotelines(objQuote,new List<Product2>{objproduct},new List<PriceBookEntry> {objPbe}, true);
-        
-		// create order from quote
+
+        // create order from quote
         objQuote.SBQQ__Primary__c = true;
         objQuote.SBQQ__Ordered__c = true;
         update objQuote;
 
-        //insert OpportunityLineItem        
+        //insert OpportunityLineItem
         OpportunityLineItem OLI = new OpportunityLineItem();
         OLI.OpportunityId = opp.Id;
         OLI.Product2Id = objproduct.Id;
@@ -102,11 +103,11 @@ private class NSP_ValidateOpportunityStageTest {
         insert OLI;
         Test.stopTest();
 
-		// Create NSP_Employee_Split__c records
-		NSP_Employee_Split__c splitRecord1 = new NSP_Employee_Split__c( NSP_Opportunity__c = opp.Id, NSP_Number_of_Employees__c = 25, NSP_Percent_Split__c = 50 );
-		NSP_Employee_Split__c splitRecord2 = new NSP_Employee_Split__c( NSP_Opportunity__c = opp.Id, NSP_Number_of_Employees__c = 25, NSP_Percent_Split__c = 50 );
-		insert new List<NSP_Employee_Split__c>{ splitRecord1, splitRecord2 };
-		
+        // Create NSP_Employee_Split__c records
+        NSP_Employee_Split__c splitRecord1 = new NSP_Employee_Split__c( NSP_Opportunity__c = opp.Id, NSP_Number_of_Employees__c = 25, NSP_Percent_Split__c = 50 );
+        NSP_Employee_Split__c splitRecord2 = new NSP_Employee_Split__c( NSP_Opportunity__c = opp.Id, NSP_Number_of_Employees__c = 25, NSP_Percent_Split__c = 50 );
+        insert new List<NSP_Employee_Split__c>{ splitRecord1, splitRecord2 };
+
         User userRecord1 = new User(
             ProfileId = [SELECT Profile_ID__c, Profile_Name__c FROM NSP_Profile_Detail__mdt WHERE Profile_Name__c = 'System Administrator'][0].Profile_ID__c,
             LastName = 'TestClassUser',
@@ -122,7 +123,7 @@ private class NSP_ValidateOpportunityStageTest {
             LocaleSidKey = 'en_US'
         );
         insert userRecord1;
-		
+
         User userRecord2 = new User(
             ProfileId = [SELECT Profile_ID__c, Profile_Name__c FROM NSP_Profile_Detail__mdt WHERE Profile_Name__c = 'System Administrator'][0].Profile_ID__c,
             LastName = 'TestClassUser',
@@ -139,7 +140,7 @@ private class NSP_ValidateOpportunityStageTest {
         );
         insert userRecord2;
 
-        // Creating Groups 
+        // Creating Groups
         Group gp1= new Group();
         gp1.Name='0302 Phoenix 2';
         Group gp2= new Group();
@@ -147,14 +148,14 @@ private class NSP_ValidateOpportunityStageTest {
         // Inserting groups
         List<Group> groups= new List<Group>{gp1, gp2};
         Insert groups;
-	}
+    }
 
     @isTest
     private static void testValidateOpportunityStageDC() {
         Test.startTest();
         List<Opportunity> oppList = [SELECT Id , OwnerId FROM Opportunity WHERE NSP_BidNumber__c = '123' LIMIT 1];
         Opportunity opty = oppList[0];
-		opty.StageName = 'Data Collection';
+        opty.StageName = 'Data Collection';
         try{
             update opty;
         }catch(Exception ex){
@@ -163,7 +164,7 @@ private class NSP_ValidateOpportunityStageTest {
         Test.stopTest();
 
         // Check for expected errors or state changes
-		Opportunity updatedOpportunity = [SELECT Id, StageName FROM Opportunity WHERE Id = :oppList[0].Id];
+        Opportunity updatedOpportunity = [SELECT Id, StageName FROM Opportunity WHERE Id = :oppList[0].Id];
         System.assertEquals('Prospecting', updatedOpportunity.StageName, 'Stage should remain unchanged.');
     }
 
@@ -172,9 +173,9 @@ private class NSP_ValidateOpportunityStageTest {
         Test.startTest();
         List<Opportunity> oppList = [SELECT Id , OwnerId FROM Opportunity WHERE NSP_BidNumber__c = '123' LIMIT 1];
         Opportunity opty = oppList[0];
-		opty.NSP_PrimaryProduct__c = 'Performance Management';
-		opty.NSP_Number_of_Employees__c = 0;
-		opty.StageName = 'Analysis';
+        opty.NSP_PrimaryProduct__c = 'Performance Management';
+        opty.NSP_Number_of_Employees__c = 0;
+        opty.StageName = 'Analysis';
         try{
             update opty;
         }catch(Exception ex){
@@ -183,7 +184,7 @@ private class NSP_ValidateOpportunityStageTest {
         Test.stopTest();
 
         // Check for expected errors or state changes
-		Opportunity updatedOpportunity = [SELECT Id, StageName FROM Opportunity WHERE Id = :oppList[0].Id];
+        Opportunity updatedOpportunity = [SELECT Id, StageName FROM Opportunity WHERE Id = :oppList[0].Id];
         System.assertEquals('Prospecting', updatedOpportunity.StageName, 'Stage should remain unchanged.');
     }
 
@@ -192,8 +193,8 @@ private class NSP_ValidateOpportunityStageTest {
         Test.startTest();
         List<Opportunity> oppList = [SELECT Id , OwnerId FROM Opportunity WHERE NSP_BidNumber__c = '123' LIMIT 1];
         Opportunity opty = oppList[0];
-		opty.NSP_PrimaryProduct__c = 'WO';
-		opty.StageName = 'Proposal';
+        opty.NSP_PrimaryProduct__c = 'WO';
+        opty.StageName = 'Proposal';
         try{
             update opty;
         }catch(Exception ex){
@@ -202,7 +203,7 @@ private class NSP_ValidateOpportunityStageTest {
         Test.stopTest();
 
         // Check for expected errors or state changes
-		Opportunity updatedOpportunity = [SELECT Id, StageName FROM Opportunity WHERE Id = :oppList[0].Id];
+        Opportunity updatedOpportunity = [SELECT Id, StageName FROM Opportunity WHERE Id = :oppList[0].Id];
         System.assertEquals('Prospecting', updatedOpportunity.StageName, 'Stage should remain unchanged.');
     }
 
@@ -211,8 +212,8 @@ private class NSP_ValidateOpportunityStageTest {
         Test.startTest();
         List<Opportunity> oppList = [SELECT Id , OwnerId FROM Opportunity WHERE NSP_BidNumber__c = '123' LIMIT 1];
         Opportunity opty = oppList[0];
-		opty.NSP_PrimaryProduct__c = 'WO';
-		opty.StageName = 'Closing';
+        opty.NSP_PrimaryProduct__c = 'WO';
+        opty.StageName = 'Closing';
         try{
             update opty;
         }catch(Exception ex){
@@ -221,7 +222,7 @@ private class NSP_ValidateOpportunityStageTest {
         Test.stopTest();
 
         // Check for expected errors or state changes
-		Opportunity updatedOpportunity = [SELECT Id, StageName FROM Opportunity WHERE Id = :oppList[0].Id];
+        Opportunity updatedOpportunity = [SELECT Id, StageName FROM Opportunity WHERE Id = :oppList[0].Id];
         System.assertEquals('Prospecting', updatedOpportunity.StageName, 'Stage should remain unchanged.');
     }
 
@@ -230,8 +231,8 @@ private class NSP_ValidateOpportunityStageTest {
         Test.startTest();
         List<Opportunity> oppList = [SELECT Id , OwnerId FROM Opportunity WHERE NSP_BidNumber__c = '123' LIMIT 1];
         Opportunity opty = oppList[0];
-		opty.NSP_PrimaryProduct__c = 'HRScale';
-		opty.StageName = 'Booking';
+        opty.NSP_PrimaryProduct__c = 'HRScale';
+        opty.StageName = 'Booking';
         try{
             update opty;
         }catch(Exception ex){
@@ -240,7 +241,7 @@ private class NSP_ValidateOpportunityStageTest {
         Test.stopTest();
 
         // Check for expected errors or state changes
-		Opportunity updatedOpportunity = [SELECT Id, StageName FROM Opportunity WHERE Id = :oppList[0].Id];
+        Opportunity updatedOpportunity = [SELECT Id, StageName FROM Opportunity WHERE Id = :oppList[0].Id];
         System.assertEquals('Booking', updatedOpportunity.StageName, 'Stage should remain unchanged.');
     }
 
@@ -249,8 +250,8 @@ private class NSP_ValidateOpportunityStageTest {
         Test.startTest();
         List<Opportunity> oppList = [SELECT Id , OwnerId FROM Opportunity WHERE NSP_BidNumber__c = '123' LIMIT 1];
         Opportunity opty = oppList[0];
-		opty.NSP_PrimaryProduct__c = 'HR Consulting Services';
-		opty.StageName = 'Closed Won';
+        opty.NSP_PrimaryProduct__c = 'HR Consulting Services';
+        opty.StageName = 'Closed Won';
         try{
             update opty;
         }catch(Exception ex){
@@ -259,7 +260,7 @@ private class NSP_ValidateOpportunityStageTest {
         Test.stopTest();
 
         // Check for expected errors or state changes
-		Opportunity updatedOpportunity = [SELECT Id, StageName FROM Opportunity WHERE Id = :oppList[0].Id];
+        Opportunity updatedOpportunity = [SELECT Id, StageName FROM Opportunity WHERE Id = :oppList[0].Id];
         System.assertEquals('Closed Won', updatedOpportunity.StageName, 'Stage should change.');
     }
 
@@ -268,8 +269,8 @@ private class NSP_ValidateOpportunityStageTest {
         Test.startTest();
         List<Opportunity> oppList = [SELECT Id , OwnerId FROM Opportunity WHERE NSP_BidNumber__c = '123' LIMIT 1];
         Opportunity opty = oppList[0];
-		opty.NSP_PrimaryProduct__c = 'WA';
-		opty.StageName = 'Closed Lost';
+        opty.NSP_PrimaryProduct__c = 'WA';
+        opty.StageName = 'Closed Lost';
         try{
             update opty;
         }catch(Exception ex){
@@ -278,7 +279,7 @@ private class NSP_ValidateOpportunityStageTest {
         Test.stopTest();
 
         // Check for expected errors or state changes
-		Opportunity updatedOpportunity = [SELECT Id, StageName FROM Opportunity WHERE Id = :oppList[0].Id];
+        Opportunity updatedOpportunity = [SELECT Id, StageName FROM Opportunity WHERE Id = :oppList[0].Id];
         System.assertEquals('Prospecting', updatedOpportunity.StageName, 'Stage should remain unchanged.');
     }
 
@@ -294,7 +295,7 @@ private class NSP_ValidateOpportunityStageTest {
 
     @isTest
     private static void test_getSalesOfficeGroup() {
-		List<String> salesOfficeMembership = new List<String>{ '301' };
+        List<String> salesOfficeMembership = new List<String>{ '301' };
 
         Test.startTest();
         NSP_ValidateOpportunityStage.getSalesOfficeGroup( UserInfo.getUserId() , salesOfficeMembership );
@@ -303,17 +304,17 @@ private class NSP_ValidateOpportunityStageTest {
 
     @isTest
     private static void test_Booleans() {
-		Test.startTest();
+        Test.startTest();
 
-		Boolean permCheck1 = NSP_ValidateOpportunityStage.hasCLSOOppOwnerPermission;
-		Boolean permCheck2 = NSP_ValidateOpportunityStage.hasCLSOOppPermission;
-		Boolean permCheck3 = NSP_ValidateOpportunityStage.hasAllowCLMMPerm;
-		Boolean permCheck4 = NSP_ValidateOpportunityStage.hasAllowCLRETPerm;
-		Boolean permCheck5 = NSP_ValidateOpportunityStage.hasAllowCLInsurancePerm;
-		Boolean permCheck6 = NSP_ValidateOpportunityStage.hasAllowCLRecruitingPerm;
-		Boolean permCheck7 = NSP_ValidateOpportunityStage.hasAllowCLTechnologyPerm;
+        Boolean permCheck1 = NSP_ValidateOpportunityStage.hasCLSOOppOwnerPermission;
+        Boolean permCheck2 = NSP_ValidateOpportunityStage.hasCLSOOppPermission;
+        Boolean permCheck3 = NSP_ValidateOpportunityStage.hasAllowCLMMPerm;
+        Boolean permCheck4 = NSP_ValidateOpportunityStage.hasAllowCLRETPerm;
+        Boolean permCheck5 = NSP_ValidateOpportunityStage.hasAllowCLInsurancePerm;
+        Boolean permCheck6 = NSP_ValidateOpportunityStage.hasAllowCLRecruitingPerm;
+        Boolean permCheck7 = NSP_ValidateOpportunityStage.hasAllowCLTechnologyPerm;
     }
-    
+
     @isTest
     private static void testCheckCondition() {
         Date today = Date.today();
@@ -347,6 +348,7 @@ private class NSP_ValidateOpportunityStageTest {
         System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition(false, 'true', 'DOES_NOT_EQUAL'));
         test.stopTest();
     }
+
     @isTest
     private static void evaluateClosedLost_PublicGroup(){
         test.startTest();
@@ -356,34 +358,34 @@ private class NSP_ValidateOpportunityStageTest {
         User userRecord2 = userRecord2List[0];
         userRecord2.UserRoleId = [SELECT Id FROM UserRole WHERE Name= 'District Administrator'][0].Id;
         update userRecord2;
-        // adding Users to groups 
+        // adding Users to groups
         List<Group> GroupList =[Select id from Group where Name='0302 Phoenix 2'];
         Group gp1 = GroupList[0];
         GroupMember bpagm = new GroupMember (UserOrGroupId = userRecord2.Id, GroupId = gp1.Id);
         List<GroupMember> groupMemberList= new List<GroupMember>{bpagm};
             // Inserting Group Members
             Insert groupMemberList;
-        
+
         System.runAs(userRecord2){
             if(oppty!=null){
-                try{            
+                try{
                     oppty.StageName='Closed Lost';
                     Update oppty;
                 }catch(Exception ex){
                     ex.getStackTraceString();
                 }
-                
+
             }
         }
         test.stopTest();
     }
-	
+
     @isTest
     private static void evaluateClosedLost_PublicGroup2(){
         test.startTest();
         List<Opportunity> oppList=[Select Id,OWNER.USERROLE.DeveloperName,StageName, NSP_Sales_Office__c FROM Opportunity WHERE NSP_BidNumber__c = '123' LIMIT 1];
         Opportunity oppty = oppList[0];
-        
+
         List<User> userRecord1List = [SELECT Id FROM User WHERE Email = 'testuser1@insperity.com' Limit 1];
         User userRecord1 = userRecord1List[0];
         userRecord1.NSP_Sales_Office_Membership__c = '302';
@@ -392,7 +394,7 @@ private class NSP_ValidateOpportunityStageTest {
         User userRecord2 = userRecord2List[0];
         userRecord2.UserRoleId = [SELECT Id FROM UserRole WHERE Name= 'District Administrator'][0].Id;
         update userRecord2;
-        // adding Users to groups 
+        // adding Users to groups
         List<Group> GroupList =[Select id from Group where Name='0302 Phoenix 2'];
         Group gp1 = GroupList[0];
         GroupMember bpagm = new GroupMember (UserOrGroupId = userRecord2.Id, GroupId = gp1.Id);
@@ -401,36 +403,37 @@ private class NSP_ValidateOpportunityStageTest {
             Insert groupMemberList;
         System.runAs(userRecord2){
             if(oppty!=null){
-                try{            
+                try{
                     oppty.StageName='Closed Lost';
                     Update oppty;
                 }catch(Exception ex){
                     ex.getStackTraceString();
                 }
-                
+
             }
         }
         test.stopTest();
     }
-    
+
     @isTest
-    private static void isStageNameNull(){		
+    private static void isStageNameNull(){
         test.startTest();
-        
+
         boolean inserted = false;
         Opportunity opp = new Opportunity(Name = 'Test Opportunity');
         List<Opportunity> oppList = new  List<Opportunity>();
         oppList.add(opp);
-        
+
         try {
-        	NSP_ValidateOpportunityStage.validateOpportunityStage(oppList);
-            insert oppList;   
+            NSP_ValidateOpportunityStage.validateOpportunityStage(oppList);
+            insert oppList;
             inserted = true;
         } catch(Exception e) {
             e.getStackTraceString();
         }
-        
+
         Assert.areEqual(false, inserted, 'StageName is missing');
         test.stopTest();
     }
 }
+//
