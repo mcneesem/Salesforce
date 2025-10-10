@@ -2,5 +2,5 @@
 <CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Enforce Termination Revision validation rules</description>
     <isLicensed>false</isLicensed>
-    <label>Enforce_Termination_Reason_Rule</label>
+    <label>Enforce Termination Reason Rules</label>
 </CustomPermission>
