@@ -4,7 +4,7 @@
         <enabled>true</enabled>
         <name>Enforce_Termination_Reason_Rules</name>
     </customPermissions>
-    <description>Permission Set that contains the custom permission Enforce_Termination_Reason_Rules to Enforce the Termination Reason Rules</description>
+    <description>Grants the Custom Permission to Enforce Termination Revision Rules on NSP_Account_Group__c.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Enforce Termination Reason Rules</label>
 </PermissionSet>
