@@ -3,10 +3,10 @@
     <fullName>Secondary_Termination_Reason</fullName>
     <active>true</active>
     <errorConditionFormula>AND(
-$Permission.Enforce_Termination_Reason_Rule,
-Account__r.WO_Asset__r.NSP_Written_Term_recd__c = TRUE,
-NOT(ISBLANK(TEXT(Secondary_Term_Reason__c))),
-ISBLANK(TEXT(Secondary_Sub_Term_Reason__c))
+  $Permission.Enforce_Termination_Reason_Rule,
+  Account__r.WO_Asset__r.NSP_Written_Term_recd__c = TRUE,
+  NOT(ISBLANK(TEXT(Secondary_Term_Reason__c))),
+  ISBLANK(TEXT(Secondary_Sub_Term_Reason__c))
 )</errorConditionFormula>
     <errorMessage>You must complete the Primary Term Reason and its Sub Term Reason(s) before selecting a Secondary Term Reason and its Sub Term Reason(s).</errorMessage>
 </ValidationRule>
