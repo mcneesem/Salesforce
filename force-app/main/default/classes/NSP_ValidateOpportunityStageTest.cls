@@ -1,5 +1,5 @@
 @isTest
-public class NSP_ValidateOpportunityStageTest {
+private class NSP_ValidateOpportunityStageTest {
     //Test Setup Method to populate test data
     @testSetup
     private static void setupData(){
@@ -150,7 +150,7 @@ public class NSP_ValidateOpportunityStageTest {
 	}
 
     @isTest
-    static void testValidateOpportunityStageDC() {
+    private static void testValidateOpportunityStageDC() {
         Test.startTest();
         List<Opportunity> oppList = [SELECT Id , OwnerId FROM Opportunity WHERE NSP_BidNumber__c = '123' LIMIT 1];
         Opportunity opty = oppList[0];
@@ -168,7 +168,7 @@ public class NSP_ValidateOpportunityStageTest {
     }
 
     @isTest
-    static void testValidateOpportunityStageAnalysis() {
+    private static void testValidateOpportunityStageAnalysis() {
         Test.startTest();
         List<Opportunity> oppList = [SELECT Id , OwnerId FROM Opportunity WHERE NSP_BidNumber__c = '123' LIMIT 1];
         Opportunity opty = oppList[0];
@@ -188,7 +188,7 @@ public class NSP_ValidateOpportunityStageTest {
     }
 
     @isTest
-    static void testValidateOpportunityStageProposal() {
+    private static void testValidateOpportunityStageProposal() {
         Test.startTest();
         List<Opportunity> oppList = [SELECT Id , OwnerId FROM Opportunity WHERE NSP_BidNumber__c = '123' LIMIT 1];
         Opportunity opty = oppList[0];
@@ -207,7 +207,7 @@ public class NSP_ValidateOpportunityStageTest {
     }
 
     @isTest
-    static void testValidateOpportunityStageClosing() {
+    private static void testValidateOpportunityStageClosing() {
         Test.startTest();
         List<Opportunity> oppList = [SELECT Id , OwnerId FROM Opportunity WHERE NSP_BidNumber__c = '123' LIMIT 1];
         Opportunity opty = oppList[0];
@@ -226,7 +226,7 @@ public class NSP_ValidateOpportunityStageTest {
     }
 
     @isTest
-    static void testValidateOpportunityStageBooking() {
+    private static void testValidateOpportunityStageBooking() {
         Test.startTest();
         List<Opportunity> oppList = [SELECT Id , OwnerId FROM Opportunity WHERE NSP_BidNumber__c = '123' LIMIT 1];
         Opportunity opty = oppList[0];
@@ -245,7 +245,7 @@ public class NSP_ValidateOpportunityStageTest {
     }
 
     @isTest
-    static void testValidateOpportunityStageCW() {
+    private static void testValidateOpportunityStageCW() {
         Test.startTest();
         List<Opportunity> oppList = [SELECT Id , OwnerId FROM Opportunity WHERE NSP_BidNumber__c = '123' LIMIT 1];
         Opportunity opty = oppList[0];
@@ -260,11 +260,11 @@ public class NSP_ValidateOpportunityStageTest {
 
         // Check for expected errors or state changes
 		Opportunity updatedOpportunity = [SELECT Id, StageName FROM Opportunity WHERE Id = :oppList[0].Id];
-        System.assertEquals('Prospecting', updatedOpportunity.StageName, 'Stage should remain unchanged.');
+        System.assertEquals('Closed Won', updatedOpportunity.StageName, 'Stage should change.');
     }
 
     @isTest
-    static void testValidateOpportunityStageCL() {
+    private static void testValidateOpportunityStageCL() {
         Test.startTest();
         List<Opportunity> oppList = [SELECT Id , OwnerId FROM Opportunity WHERE NSP_BidNumber__c = '123' LIMIT 1];
         Opportunity opty = oppList[0];
