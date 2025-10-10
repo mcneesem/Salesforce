@@ -18,23 +18,10 @@ public with sharing class LeadMostRecentCampaign {
                     WHERE ( Id IN :campaignMap.keySet() )
                 ];
             }
-            List<Lead> modifiedRecords = new List<Lead>();
-            if ( ( records != null ) && !records.isEmpty() ) {
-                for ( Lead record : records ) {
-                    String campaignName = null;
-                    if ( campaignMap.containsKey( record.Id ) ) {
-                        campaignName = campaignMap.get( record.Id );
-                    }
-                    if ( record.Most_Recent_Campaign__c != campaignName ) {
-                        modifiedRecords.add(
-                            new Lead(
-                                Id=record.Id ,
-                                Most_Recent_Campaign__c=campaignName
-                            )
-                        );
-                    }
-                }
-            }
+            List<Lead> modifiedRecords = LeadMostRecentCampaign.buildModifiedRecords(
+                records ,
+                campaignMap
+            );
             if ( ( modifiedRecords != null ) && !modifiedRecords.isEmpty() ) {
                 List<Database.SaveResult> results = Database.update( modifiedRecords , false );
                 NSP_ErrorLogHandler.logResults(
@@ -50,6 +37,31 @@ public with sharing class LeadMostRecentCampaign {
                 e
             );
         }
+    }
+
+    private static List<Lead> buildModifiedRecords( List<Lead> records , Map<Id,String> campaignMap ) {
+        List<Lead> modifiedRecords = new List<Lead>();
+        if ( ( campaignMap != null )
+            && ( records != null )
+            && !records.isEmpty()
+            )
+        {
+            for ( Lead record : records ) {
+                String campaignName = null;
+                if ( campaignMap.containsKey( record.Id ) ) {
+                    campaignName = campaignMap.get( record.Id );
+                }
+                if ( record.Most_Recent_Campaign__c != campaignName ) {
+                    modifiedRecords.add(
+                        new Lead(
+                            Id=record.Id ,
+                            Most_Recent_Campaign__c=campaignName
+                        )
+                    );
+                }
+            }
+        }
+        return modifiedRecords;
     }
 
     public class Request {
