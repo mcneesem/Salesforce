@@ -36,6 +36,11 @@
                 <default>false</default>
                 <label>Business Team</label>
             </value>
+            <value>
+                <fullName>IPS/WOSS</fullName>
+                <default>false</default>
+                <label>IPS/WOSS</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
