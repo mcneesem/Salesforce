@@ -25,12 +25,12 @@ public with sharing class NSP_ValidateOpportunityStage {
     public static Set<String> validHRProducts = new Set<String>{NSP_SalesConstants.WO, NSP_SalesConstants.WS, NSP_SalesConstants.HRScale};
     private static Set<String> validHR360Products = new Set<String>{NSP_SalesConstants.WO, NSP_SalesConstants.WS, NSP_SalesConstants.HRScale};
     private static Boolean checkOnly = false;
-    public static List<string> analysisStageCriteraTypes = System.Label.NSP_AnalysisStageCriteria.split(',');
-    public static List<string> proposeStageCriteraTypes = System.Label.NSP_ProposeStageCriteria.split(',');
-    public static List<string> exitCriteriaProductException = System.Label.NSP_ExitCriteriaProductException.split(',');
-    public static List<string> ownerBasedCriteriaProducts = System.Label.NSP_OwnerBasedCriteriaProducts.split(',');
-    public static List<string> nonOwnerBasedCriteriaProducts = System.Label.NSP_NonOwnerBasedCriteriaProducts.split(',');
-    public static List<string> closeLostRoleinOpportunityTeam = System.Label.Close_Lost_Role_in_Opportunity_Team.split(',');
+    public static List<String> analysisStageCriteraTypes = System.Label.NSP_AnalysisStageCriteria.split(',');
+    public static List<String> proposeStageCriteraTypes = System.Label.NSP_ProposeStageCriteria.split(',');
+    public static List<String> exitCriteriaProductException = System.Label.NSP_ExitCriteriaProductException.split(',');
+    public static List<String> ownerBasedCriteriaProducts = System.Label.NSP_OwnerBasedCriteriaProducts.split(',');
+    public static List<String> nonOwnerBasedCriteriaProducts = System.Label.NSP_NonOwnerBasedCriteriaProducts.split(',');
+    public static List<String> closeLostRoleinOpportunityTeam = System.Label.Close_Lost_Role_in_Opportunity_Team.split(',');
     private static List<Opportunity_Stage_Validation__mdt> optyStageVals = Opportunity_Stage_Validation__mdt.getAll().values();
     private static final String AGGREGATES = 'Aggregates';
     private static final String DEFAULT_PRODUCT = 'Default';
@@ -43,12 +43,12 @@ public with sharing class NSP_ValidateOpportunityStage {
     //
     //
 
-    public static void validateOpportunityStage( List<Opportunity> newList ) {
-        NSP_ValidateOpportunityStage.validateOpportunityStage( newList , false );
-    }
-
     public static void validateOpportunityStage( Opportunity record , Boolean checkOnlyLocal ) {
         NSP_ValidateOpportunityStage.validateOpportunityStage( new List<Opportunity>{ record } , checkOnlyLocal );
+    }
+
+    public static void validateOpportunityStage( List<Opportunity> newList ) {
+        NSP_ValidateOpportunityStage.validateOpportunityStage( newList , false );
     }
 
     public static void validateOpportunityStage( List<Opportunity> newList , Boolean checkOnlyLocal ) {
@@ -247,7 +247,7 @@ public with sharing class NSP_ValidateOpportunityStage {
             }
             if ( ( valObjectAgs != null )
                 && NSP_ValidateOpportunityStage.checkCondition( valObjectAgs.get(val.Field__c) , valValue , val.Operation__c )
-               )
+                )
             {
                 passCheckCount++;
             }
@@ -520,8 +520,8 @@ public with sharing class NSP_ValidateOpportunityStage {
                     && ( ( opp.Type == NSP_SalesConstants.NEW_BUSINESS_OPPORTUNITY )
                         || ( ( opp.Type == NSP_SalesConstants.OPPORTUNITY_TYPE_EXISTING_PRODUCT )
                             && ( opp.NSP_AddonType__c == NSP_SalesConstants.OPPORTUNITY_SUBTYPE_AMENDMENT )
-                           )
-                       )
+                            )
+                        )
                     )
                 {
                     NSP_ValidateOpportunityStage.addValError(
