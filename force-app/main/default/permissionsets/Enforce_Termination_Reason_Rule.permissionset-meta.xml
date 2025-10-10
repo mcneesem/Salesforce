@@ -2,9 +2,9 @@
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customPermissions>
         <enabled>true</enabled>
-        <name>Enforce_Termination_Reason_Rule</name>
+        <name>Enforce_Termination_Reason_Rules</name>
     </customPermissions>
     <description>Permission Set that contains the custom permission Enforce_Termination_Reason_Rules to Enforce the Termination Reason Rules</description>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Enforce_Termination_Reason_Rule</label>
+    <label>Enforce Termination Reason Rules</label>
 </PermissionSet>
