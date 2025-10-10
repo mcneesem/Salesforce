@@ -3,7 +3,7 @@
     <fullName>Primary_Termination_Reason</fullName>
     <active>true</active>
     <errorConditionFormula>AND(
-  $Permission.Enforce_Termination_Reason_Rules,
+  $Permission.Enforce_Termination_Reason_Rules ,
   Account__r.WO_Asset__r.NSP_Written_Term_recd__c ,
   OR(
     ISBLANK( TEXT( Primary_Term_Reason__c ) ) ,
