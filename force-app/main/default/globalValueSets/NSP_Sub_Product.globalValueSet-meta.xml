@@ -149,10 +149,10 @@
         <label>WX Choice Customized Plan</label>
     </customValue>
     <customValue>
-        <fullName>TimeStar-Software-as-a-Service</fullName>
+        <fullName>Abra Migration</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>TimeStar-Software-as-a-Service</label>
+        <label>Abra Migration</label>
     </customValue>
     <customValue>
         <fullName>Tier 1</fullName>
@@ -165,12 +165,6 @@
         <default>false</default>
         <isActive>false</isActive>
         <label>Tier 2</label>
-    </customValue>
-    <customValue>
-        <fullName>Tier 6</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Tier 6</label>
     </customValue>
     <customValue>
         <fullName>Tier 3</fullName>
@@ -191,100 +185,22 @@
         <label>Tier 5</label>
     </customValue>
     <customValue>
-        <fullName>TFW Migration</fullName>
+        <fullName>Tier 6</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>TFW Migration</label>
+        <label>Tier 6</label>
     </customValue>
     <customValue>
-        <fullName>Sage Time</fullName>
+        <fullName>TimeStar-Software-as-a-Service</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Sage Time</label>
+        <label>TimeStar-Software-as-a-Service</label>
     </customValue>
     <customValue>
-        <fullName>TimeStar On Prem</fullName>
+        <fullName>Add On Software</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>TimeStar On Prem</label>
-    </customValue>
-    <customValue>
-        <fullName>Sage OrgPlus</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Sage OrgPlus</label>
-    </customValue>
-    <customValue>
-        <fullName>Pro Services</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Pro Services</label>
-    </customValue>
-    <customValue>
-        <fullName>PerformSmart Renewal</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>PerformSmart Renewal</label>
-    </customValue>
-    <customValue>
-        <fullName>PerformSmart</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>PerformSmart</label>
-    </customValue>
-    <customValue>
-        <fullName>Performance Now</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Performance Now</label>
-    </customValue>
-    <customValue>
-        <fullName>OrgPlus Desktop</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>OrgPlus Desktop</label>
-    </customValue>
-    <customValue>
-        <fullName>OPRT Renewal</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>OPRT Renewal</label>
-    </customValue>
-    <customValue>
-        <fullName>OPRT Express</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>OPRT Express</label>
-    </customValue>
-    <customValue>
-        <fullName>OPRT</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>OPRT</label>
-    </customValue>
-    <customValue>
-        <fullName>Hardware</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Hardware</label>
-    </customValue>
-    <customValue>
-        <fullName>ExpenseAble Express</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ExpenseAble Express</label>
-    </customValue>
-    <customValue>
-        <fullName>ExpenseAble Corporate</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ExpenseAble Corporate</label>
-    </customValue>
-    <customValue>
-        <fullName>Descriptions Now</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Descriptions Now</label>
+        <label>Add On Software</label>
     </customValue>
     <customValue>
         <fullName>CompuPayTime</fullName>
@@ -293,10 +209,100 @@
         <label>CompuPayTime</label>
     </customValue>
     <customValue>
+        <fullName>Descriptions Now</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Descriptions Now</label>
+    </customValue>
+    <customValue>
         <fullName>Dotcoms</fullName>
         <default>false</default>
         <isActive>false</isActive>
         <label>Dotcoms</label>
+    </customValue>
+    <customValue>
+        <fullName>ExpenseAble Corporate</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>ExpenseAble Corporate</label>
+    </customValue>
+    <customValue>
+        <fullName>ExpenseAble Express</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>ExpenseAble Express</label>
+    </customValue>
+    <customValue>
+        <fullName>Hardware</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Hardware</label>
+    </customValue>
+    <customValue>
+        <fullName>OPRT</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>OPRT</label>
+    </customValue>
+    <customValue>
+        <fullName>OPRT Express</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>OPRT Express</label>
+    </customValue>
+    <customValue>
+        <fullName>OPRT Renewal</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>OPRT Renewal</label>
+    </customValue>
+    <customValue>
+        <fullName>OrgPlus Desktop</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>OrgPlus Desktop</label>
+    </customValue>
+    <customValue>
+        <fullName>Performance Now</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Performance Now</label>
+    </customValue>
+    <customValue>
+        <fullName>PerformSmart</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>PerformSmart</label>
+    </customValue>
+    <customValue>
+        <fullName>PerformSmart Renewal</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>PerformSmart Renewal</label>
+    </customValue>
+    <customValue>
+        <fullName>Pro Services</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Pro Services</label>
+    </customValue>
+    <customValue>
+        <fullName>Sage OrgPlus</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Sage OrgPlus</label>
+    </customValue>
+    <customValue>
+        <fullName>Sage Time</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Sage Time</label>
+    </customValue>
+    <customValue>
+        <fullName>TFW Migration</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>TFW Migration</label>
     </customValue>
     <customValue>
         <fullName>TimeStar Mgd Hosted</fullName>
@@ -305,10 +311,10 @@
         <label>TimeStar Mgd Hosted</label>
     </customValue>
     <customValue>
-        <fullName>Add On Software</fullName>
+        <fullName>TimeStar On Prem</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Add On Software</label>
+        <label>TimeStar On Prem</label>
     </customValue>
     <description>Global value set for sub products on Lead and Opportunity</description>
     <masterLabel>Sub Product</masterLabel>
