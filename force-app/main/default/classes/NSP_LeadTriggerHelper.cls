@@ -362,41 +362,10 @@ public with sharing class NSP_LeadTriggerHelper {
                 && CustomPermissionController.checkUserPermission( 'Bypass_Lead_Sales_Office_Validation' , UserInfo.getUserId() )
                 )
             {
-                Map<Id,Lead> leadNewOwnersMap = new Map<Id,Lead>();
-                Map<Id,Lead> leadOldOwnersMap  = new Map<Id,Lead>();
-                this.checkLeadOwnerChange(leadNewMap, leadOldMap, leadNewOwnersMap, leadOldOwnersMap);
-                if(leadNewOwnersMap.size() > 0){
-                    this.restrictLeadOwnerChangeByRole( leadNewOwnersMap , leadOldOwnersMap );
-                }
+                this.restrictLeadOwnerChangeByRole( leadNewMap , leadOldMap );
 
             } else {
                 this.restrictLeadOwnerChangeByGroupMember( leadNewMap , leadOldMap );
-            }
-        }
-    }
-
-    //
-    // Iterates throught the lead map and identifies any field change, only Owner should be updated.
-    // @param leadNewMap Map of New leads.
-    // @param leadOldMap Map of Old leads.
-    // @param by reference, leadNewOwnersMap Map of New leads owners.
-    // @param by reference, leadOldOwnersMap Map of Old leads owners.
-    // @return void
-    // @ADO-421989
-    //
-    private void checkLeadOwnerChange(Map<Id,Lead> leadNewMap, Map<Id,Lead> leadOldMap, Map<Id,Lead> leadNewOwnersMap, Map<Id,Lead> leadOldOwnersMap){
-        if(leadNewMap != null){
-            Id userId = UserInfo.getUserId();
-            for(Id leadId : leadNewMap.keySet()){
-                Lead newRecord = this.getMappedLeadSafe( leadNewMap , leadId );
-                Lead oldRecord = this.getMappedLeadSafe( leadOldMap , leadId );
-                if((newRecord.OwnerId ==  oldRecord.OwnerId) && oldRecord.OwnerId != userId){
-                    newRecord.addError( System.Label.NSP_LeadTriggerError );
-                }
-                else{
-                   leadNewOwnersMap.put(leadId, newRecord);
-                   leadOldOwnersMap.put(leadId, oldRecord);
-                }
             }
         }
     }
@@ -408,11 +377,9 @@ public with sharing class NSP_LeadTriggerHelper {
     // @return void
     //
     private void restrictLeadOwnerChangeByRole( Map<Id,Lead> leadNewMap , Map<Id,Lead> leadOldMap ) {
-        
         Set<Id> leadIdSet = new Set<Id>();
         Set<Id> ownersIdSet = new Set<Id>();
         this.collectLeadsOwners(leadNewMap, leadOldMap, leadIdSet, ownersIdSet);
-        
         if(ownersIdSet.size() > 0){
             // Get Leads owners Roles
             Map<Id,User> usersRoles = null;
@@ -456,19 +423,22 @@ public with sharing class NSP_LeadTriggerHelper {
     
     // collect the  Leads OwnerId (User.Id) values...
     private void collectLeadsOwners(Map<Id,Lead> leadNewMap, Map<Id,Lead> leadOldMap,  Set<Id> leadIdSet, Set<Id> ownersIdSet){
-        
         if(leadNewMap != null){
             Id userId = UserInfo.getUserId();
             for ( Id leadId : leadNewMap.keySet() ) {
                 Lead oldRecord = this.getMappedLeadSafe( leadOldMap , leadId );
                 Lead newRecord = this.getMappedLeadSafe( leadNewMap , leadId );
-                //  Validate only if Owner has changed, and if Lead owner is not logged user.
-                if( (newRecord != null && oldRecord != null) &&
-                    (newRecord.OwnerId != oldRecord.OwnerId) &&
-                (oldRecord.OwnerId != userId)){
-                    leadIdSet.add( leadId );
-                    ownersIdSet.add( newRecord.OwnerId );
-                    ownersIdSet.add( oldRecord.OwnerId );
+                if(newRecord != null && oldRecord != null){
+                    //  If owner has not changed and Lead's owner is not the current logged user
+                    if((newRecord.OwnerId == oldRecord.OwnerId) && (oldRecord.OwnerId != userId)){
+                        newRecord.addError( System.Label.NSP_LeadTriggerError );
+                    }
+                    //  If owner has changed, and Lead's owner is not the current logged user.
+                    else if((newRecord.OwnerId != oldRecord.OwnerId) && (oldRecord.OwnerId != userId)){
+                        leadIdSet.add( leadId );
+                        ownersIdSet.add( newRecord.OwnerId );
+                        ownersIdSet.add( oldRecord.OwnerId );
+                    }
                 }
             }
         }
