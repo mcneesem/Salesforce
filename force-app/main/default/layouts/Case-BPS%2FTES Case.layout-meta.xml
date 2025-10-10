@@ -466,28 +466,28 @@
             <sortOrder>4</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Edit</actionName>
-            <actionType>StandardButton</actionType>
+            <actionName>FSL__NewTask</actionName>
+            <actionType>QuickAction</actionType>
             <sortOrder>5</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Delete</actionName>
+            <actionName>Edit</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>6</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>PrintableView</actionName>
+            <actionName>Delete</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>7</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>CloseCase</actionName>
+            <actionName>PrintableView</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>8</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Case.NSP_Add_Multiple_Contacts</actionName>
-            <actionType>QuickAction</actionType>
+            <actionName>CloseCase</actionName>
+            <actionType>StandardButton</actionType>
             <sortOrder>9</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
@@ -504,11 +504,6 @@
             <actionName>Case.nsp_Create_Project_From_Template</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>12</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>FSL__NewTask</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>13</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList>
