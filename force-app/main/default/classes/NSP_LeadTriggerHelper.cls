@@ -387,26 +387,15 @@ public with sharing class NSP_LeadTriggerHelper {
     private void checkLeadOwnerChange(Map<Id,Lead> leadNewMap, Map<Id,Lead> leadOldMap, Map<Id,Lead> leadNewOwnersMap, Map<Id,Lead> leadOldOwnersMap){
         if(leadNewMap != null){
             Id userId = UserInfo.getUserId();
-            Set<String> fieldsNames = null;
             for(Id leadId : leadNewMap.keySet()){
                 Lead newRecord = this.getMappedLeadSafe( leadNewMap , leadId );
                 Lead oldRecord = this.getMappedLeadSafe( leadOldMap , leadId );
-                //  If logged user is not the current Lead's owner
-                if(oldRecord.OwnerId != userId){
-                    boolean ownerChanged = true;
-                    if(fieldsNames == null) fieldsNames = newRecord.getPopulatedFieldsAsMap().keySet();
-                    //  Only owner field should be updated
-                    for (String field : fieldsNames) {
-                        if(newRecord.get(field) != oldRecord.get(field) && !field.equals('OwnerId')){
-                            newRecord.addError( System.Label.NSP_LeadTriggerError );
-                            ownerChanged = false;
-                            break;
-                        }
-                    }
-                    if(ownerChanged){
-                        leadNewOwnersMap.put(leadId, newRecord);
-                        leadOldOwnersMap.put(leadId, oldRecord);
-                    }
+                if((newRecord.OwnerId ==  oldRecord.OwnerId) && oldRecord.OwnerId != userId){
+                    newRecord.addError( System.Label.NSP_LeadTriggerError );
+                }
+                else{
+                   leadNewOwnersMap.put(leadId, newRecord);
+                   leadOldOwnersMap.put(leadId, oldRecord);
                 }
             }
         }
