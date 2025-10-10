@@ -4,7 +4,7 @@
     <active>true</active>
     <errorConditionFormula>AND(
   $Permission.Enforce_Termination_Reason_Rules ,
-  Account__r.WO_Asset__r.NSP_Written_Term_recd__c = TRUE ,
+  Account__r.WO_Asset__r.NSP_Written_Term_recd__c ,
   NOT( ISBLANK( TEXT( Secondary_Term_Reason__c ) ) ) ,
   ISBLANK( TEXT( Secondary_Sub_Term_Reason__c ) )
 )</errorConditionFormula>
