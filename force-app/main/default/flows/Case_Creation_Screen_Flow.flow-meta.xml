@@ -235,7 +235,7 @@
         <label>Populate Case Fields</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-         <assignmentItems>
+        <assignmentItems>
             <assignToReference>caseRecord.RecordTypeId</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -1055,6 +1055,12 @@
                 <name>selectedVersion</name>
                 <value>
                     <elementReference>selectedVersion</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>variant</name>
+                <value>
+                    <stringValue>unfiltered</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>
