@@ -243,7 +243,10 @@ public with sharing class NSP_ValidateOpportunityStage {
         if ( val != null ) {
             String valValue = val.Value__c;
             if ( String.isNotBlank( valValue ) && ( valValue.indexOf( 'Field Value: ' ) > -1 ) ) {
-                valValue = opp.get( valValue.substringAfter( 'Field Value: ' ) ).toString();
+                Object fieldValue = opp.get( valValue.substringAfter( 'Field Value: ' ) );
+                if ( fieldValue != null ) {
+                    valValue = fieldValue.toString();
+                }
             }
             if ( ( valObjectAgs != null )
                 && NSP_ValidateOpportunityStage.checkCondition( valObjectAgs.get(val.Field__c) , valValue , val.Operation__c )
