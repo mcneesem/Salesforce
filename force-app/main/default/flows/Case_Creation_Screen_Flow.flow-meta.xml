@@ -374,6 +374,13 @@
                 <elementReference>Get_Parent_Case.NSP_Detail__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>variantValue</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>unfiltered</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Get_Accessible_Record_Types</targetReference>
         </connector>
@@ -1060,7 +1067,7 @@
             <inputParameters>
                 <name>variant</name>
                 <value>
-                    <stringValue>unfiltered</stringValue>
+                    <elementReference>variantValue</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>
@@ -1647,5 +1654,15 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>variantValue</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
     </variables>
 </Flow>
