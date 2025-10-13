@@ -49,6 +49,27 @@
                 <stringValue>0054x000008PgqNAAS</stringValue>
             </value>
         </filters>
+        <filters>
+            <field>NSP_Sales_Service_Account_Status__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Active</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Sales_Service_Account_Status__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Onboarding</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Sales_Service_Account_Status__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>On Demand</stringValue>
+            </value>
+        </filters>
         <object>Account</object>
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
@@ -65,7 +86,7 @@
         <label>Opportunity Creation From Account Insert Update</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <flowName>Subflow_Opportunity_Creation_From_Account_Events</flowName>
+        <flowName>Opportunity_Subflow_Creation_from_Account_Events</flowName>
         <inputAssignments>
             <name>AccountId</name>
             <value>
