@@ -2423,7 +2423,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                 mailBody += 'The Insperity effective date for Payroll/Worker’s Comp/EPLI has changed from '
                     + ipRec.NSP_Old_Effective_Date_EPLI__c.format()
                     + ' to '
-                    + ipRec.Effective_Date_Payroll_Worker_comp_EPLI__c.format()
+                    + ( ( ipRec.Effective_Date_Payroll_Worker_comp_EPLI__c != null ) ? ipRec.Effective_Date_Payroll_Worker_comp_EPLI__c.format() : '' )
                     +'.'
                     ;
             }
@@ -2435,7 +2435,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                 mailBody += 'The Insperity benefits effective date has changed from '
                     + (ipRec.NSP_Old_Insperity_Ben_effective_date__c).format()
                     + ' to '
-                    + (ipRec.Insperity_benefits_effective_date__c).format()
+                    + ( ( ipRec.Insperity_benefits_effective_date__c != null ) ? ipRec.Insperity_benefits_effective_date__c.format() : '' )
                     +'.'
                     ;
             }
@@ -2447,7 +2447,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                 mailBody += 'The Medical Package has changed from  '
                     + ipRec.NSP_Old_Benefits_Package__c
                     + ' to '
-                    + ipRec.Benefits_Package__c
+                    + ( ( ipRec.Benefits_Package__c != null ) ? ipRec.Benefits_Package__c : '' )
                     + '.'
                     ;
             }
