@@ -16,7 +16,7 @@
             <property label="showAllCategory" name="showAllCategory" type="Boolean" default="false"/>
             <property label="showAllSubCategory" name="showAllSubCategory" type="Boolean" default="false"/>
             <property label="selectedRecTypeId" name="selectedRecTypeId" type="String"/>
-            <property label="variant" name="variant" type="string"/>
+            <property label="variant" name="variant" type="String"/>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
