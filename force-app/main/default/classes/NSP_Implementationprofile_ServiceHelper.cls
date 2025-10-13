@@ -57,7 +57,6 @@ public class NSP_Implementationprofile_ServiceHelper {
     private static final String WC_NOTIFICATION_FN = 'NSP_WC_Notification';
     private static final String EPLI_POLICY_FN = 'NSP_EPLI_POLICY';
     private static final String LOGO_COLLECTED_FN = 'NSP_Logo_Collected';
-    private static final String PAYROLL_SUMMARY_FN = 'NSP_TaxState';
     private static final String FEIN_NOTIFY_FN = 'NSP_FEIN_Template';
     private static final String SUB_ACCOUNT_FN = 'NSP_SubaccountTemplate';
     private static final String EMPLOYEE_DIRECTORY_FN = 'NSP_EmployeeDirectory';
@@ -110,7 +109,7 @@ public class NSP_Implementationprofile_ServiceHelper {
         NSP_ServiceConstants.SRP_NOTIFY_401 ,
         NSP_ServiceConstants.SRP_RET_SALES ,
         WC_NOTIFICATION_FN,EPLI_POLICY_FN ,
-        LOGO_COLLECTED_FN,PAYROLL_SUMMARY_FN ,
+        LOGO_COLLECTED_FN ,
         FEIN_NOTIFY_FN ,
         SUB_ACCOUNT_FN ,
         EMPLOYEE_DIRECTORY_FN ,
@@ -160,7 +159,6 @@ public class NSP_Implementationprofile_ServiceHelper {
             WC_NOTIFICATION_FN ,
             EPLI_POLICY_FN ,
             LOGO_COLLECTED_FN ,
-            PAYROLL_SUMMARY_FN ,
             FEIN_NOTIFY_FN ,
             SUB_ACCOUNT_FN ,
             EMPLOYEE_DIRECTORY_FN ,
@@ -338,9 +336,6 @@ public class NSP_Implementationprofile_ServiceHelper {
         }
         if(ipRecordsByAutomation.containsKey(LOGO_COLLECTED_FN)){
             emailNotifyforLogoCollected();
-        }
-        if(ipRecordsByAutomation.containsKey(PAYROLL_SUMMARY_FN)){
-            emailNotifyforTaxState();
         }
         if(ipRecordsByAutomation.containsKey(FEIN_NOTIFY_FN)){
             emailNotifyforFEIN();
@@ -544,9 +539,6 @@ public class NSP_Implementationprofile_ServiceHelper {
             }
             if(automationsToExecute.contains(LOGO_COLLECTED_FN)){
                 checkforLogoCollected(ipRec, existingRec);
-            }
-            if(automationsToExecute.contains(PAYROLL_SUMMARY_FN)){
-                checkforTaxState(ipRec, existingRec);
             }
             if(automationsToExecute.contains(FEIN_NOTIFY_FN)){
                 checkforFEIN(ipRec, existingRec);
@@ -2376,63 +2368,6 @@ public class NSP_Implementationprofile_ServiceHelper {
            
     if(impRecordId!=null && impAutomationName !=null){
         NSP_Implprofile_ServiceHelperUpdate.automationRecordUpdate(impRecordId,impAutomationName,impMethodName,impAutomationRecordType,impAutomationSection );
-        }  
-    }
-
-    /**
-     Automation Section: Payroll 
-     Automation Name: Payroll Spec Unemployment Tax States
-     Automation icon: envelope
-    */
-
-    private void checkforTaxState(Implementation_Profile__c newIp, Implementation_Profile__c existingRec){
-        
-        List<String> stateCodes=new List<String>{'AK','AR','CT','IL','IA','KY','ME','MA','MN',
-            'ND','OH','PA','RI','SD','TN','VT','WA','DE','KA','MS','SC'};
-                if(newIp.RecordTypeId == ipFSORecordTypeId &&  newIp.NSP_CheckToSendPayrollSpecialist_Summary__c &&
-                   newIp.Employees_work_in_the_following_states__c!=null && findSharedValue(stateCodes,newIp.Employees_work_in_the_following_states__c)){
-                       
-                       updateEligibleRecordsMap(ipRecordsByAutomation, newIp.Id, PAYROLL_SUMMARY_FN);
-                       
-                   }
-    }
-    private  void emailNotifyforTaxState(){
-        List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
-        NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(PAYROLL_SUMMARY_FN);
-        for(Id ipRecId : ipRecordsByAutomation.get(PAYROLL_SUMMARY_FN)){
-            Implementation_Profile__c ipRec = newIPs.get(ipRecId); 
-            if((isRerun || ipRec.NSP_Form_Completed__c) && !isSaveForm ){  
-                Implementation_Profile__c ipWithValue=(Implementation_Profile__c) data.get(IP_IDENTIFIER).get(ipRecId); 
-                List<String> listOfToAddress= new List<String>();
-                if(!String.isBlank(ipWithValue.NSP_Payroll_Specialist__r.NSP_Work_email__c)){
-                    
-                    listOfToAddress.add(ipWithValue.NSP_Payroll_Specialist__r.NSP_Work_email__c);
-                
-                    if(!isRerun && !ipAutomationdata?.get(IP_AUTOMATION_IDENTIFIER).contains(ipRec.Id+'_'+PAYROLL_SUMMARY_FN+'_'+NSP_ServiceConstants.FSOProfile)){
-                        
-                        lstEmailMessages.add(NSP_IP_MM_EmailAutomationsController.getMailObject(ipRec,listOfToAddress,null,null,mapOfEmailTempaltes.get(PAYROLL_SUMMARY_FN).Id,isRerun));
-                        ipAutomationRecords.add(ipAutomationHelper.createIPAutomation(ipRec, ipa.NSP_Automation_Name__c, ipa.NSP_Method_Name__c,ipa.NSP_Section__c));
-                    }
-                    else if(isRerun){
-                        lstEmailMessages.add(NSP_IP_MM_EmailAutomationsController.getMailObject(ipRec,listOfToAddress,null,null,mapOfEmailTempaltes.get(PAYROLL_SUMMARY_FN).Id,isRerun));
-                        impRecordId = ipRec.Id;
-                        impAutomationName = ipa.NSP_Automation_Name__c;
-                        impMethodName = ipa.NSP_Method_Name__c;
-                        impAutomationSection = ipa.NSP_Section__c;
-                        if(ipRec.RecordTypeId==ipFSORecordTypeId){
-                            impAutomationRecordType=NSP_ServiceConstants.FSOProfile;
-                        }
-                        if(ipRec.RecordTypeId==ipMMRecordTypeId){
-                            impAutomationRecordType=NSP_ServiceConstants.MIDDLEMARKET;
-                        }
-                    }
-                }
-            }
-            
-        }
-        recToInsert.addAll(ipAutomationRecords);
-        if(impRecordId!=null && impAutomationName !=null){
-            NSP_Implprofile_ServiceHelperUpdate.automationRecordUpdate(impRecordId,impAutomationName,impMethodName,impAutomationRecordType,impAutomationSection );
         }
     }
 
