@@ -19,5 +19,5 @@ RecordType.DeveloperName = &quot;Opportunity_Locked&quot;,
 NOT(ISCHANGED (StageName)),
 ISPICKVAL(StageName, &apos;Closed Won&apos;)
 )</errorConditionFormula>
-    <errorMessage>Once Opportunity is Closed Won it cannot be modified. Please contact Sales Operations team.</errorMessage>
+    <errorMessage>You do not have access to edit an Opportunity, once it is Closed Won it cannot be modified. Please contact Sales Operations team.</errorMessage>
 </ValidationRule>
