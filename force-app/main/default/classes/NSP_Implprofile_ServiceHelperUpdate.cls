@@ -2463,7 +2463,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         return d == null ? '' : d.format();
     }
     private static String safeStringFormat(String s) {
-        return s == null ? '' : s;
+        return String.isBlank( s ) ? '' : s;
     }
 
     private static void sendMail(
