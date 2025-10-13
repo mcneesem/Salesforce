@@ -331,7 +331,7 @@
     <masterLabel>Focus Item Record Page</masterLabel>
     <sobjectType>NSP_Focus_Item__c</sobjectType>
     <template>
-        <name>flexipage:recordHomeSimpleViewTemplate</name>
+        <name>flexipage:recordHomeTemplateDesktop</name>
         <properties>
             <name>enablePageActionConfig</name>
             <value>false</value>
