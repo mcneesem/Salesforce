@@ -6,8 +6,8 @@
   AND(
     ( NSP_Category__c != &quot;Compensation Services&quot; ) ,
     ( NSP_Category__c != &quot;Payroll Shared Services&quot; ) ,
-    ( NSP_Category__c != &quot;HR COE Escalation&quot; ),
-    ( NSP_Category__c != &quot;Payroll Services&quot; )
+    ( NSP_Category__c != &quot;Payroll Services&quot; ) ,
+    ( NSP_Category__c != &quot;HR COE Escalation&quot; )
   ) ,
   /* Category: Compensation Services */
   AND(
@@ -39,11 +39,6 @@
     ISPICKVAL( Docusign_Form_To_Send__c , &quot;FLSA Test for Exemption - CA&quot; ) ,
     NOT( ISBLANK( TEXT( Exemption_Type__c ) ) )
   ) ,
-/* Category: HR COE Escalation */
-  AND(
-    ( NSP_Category__c = &quot;HR COE Escalation&quot; ) ,
-    NOT ( ISBLANK ( NSP_Detail__c  ))
-  ) ,
   AND(
     ( NSP_Category__c = &quot;Payroll Shared Services&quot; ) ,
     ( NSP_SubCategory__c = &quot;Docusign&quot; ) ,
@@ -67,6 +62,11 @@
     NOT( ISBLANK( TEXT( Ready_to_Process__c ) ) ) ,
     NOT( ISBLANK( Pay_Date__c ) ) ,
     NOT( ISBLANK( Payroll_Number__c ) )
+  ) ,
+  /* Category: HR COE Escalation */
+  AND(
+    ( NSP_Category__c = &quot;HR COE Escalation&quot; ) ,
+    NOT( ISBLANK( NSP_Detail__c  ) )
   )
 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
