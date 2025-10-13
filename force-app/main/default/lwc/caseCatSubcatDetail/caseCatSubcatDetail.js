@@ -410,8 +410,7 @@ export default class CaseCatSubcatDetail extends LightningElement {
     }
 
     getCatDependenciesMap() {
-
-        if (( this.variant === "sidebar" ) || ( this.variant === "unfiltered" ) ) {
+        if ( this.isSidebar || this.isUnfiltered ) {
             this.showAllCategory = true;
         }
         getCategoryDependenciesMap({recordTypeId: this.recTypeId, isCatViewAll : this.showAllCategory}).then((response) => {
@@ -472,7 +471,7 @@ export default class CaseCatSubcatDetail extends LightningElement {
             this.handleVersionRendering();
             this.handleDisplayConfidentialCheckBox();
         }
-        if (this.variant === 'sidebar') {
+        if ( this.isSidebar ) {
             this.dispatchSelectionUpdate();
         }
     }
@@ -497,7 +496,7 @@ export default class CaseCatSubcatDetail extends LightningElement {
 
     handleDetailRendering() {
         const localKey = `${this.selectedCategory}-${this.selectedSubCategory}`;
-        if (this.selectedDetail !== undefined || (this.variant === 'sidebar' && this.selectedDetail === null)) {
+        if ( ( this.selectedDetail !== undefined ) || ( this.isSidebar && ( this.selectedDetail === null ) ) ) {
             this.detailOptions = this.createOptions(this.categoryWrapper.mCatSubToDetails[localKey]);
             this.showDetail = this.detailOptions.length > 0;
         }
@@ -505,7 +504,7 @@ export default class CaseCatSubcatDetail extends LightningElement {
 
     handleVersionRendering() {
         const localKey = `${this.selectedCategory}-${this.selectedSubCategory}`;
-        if (this.selectedVersion !== undefined || (this.variant === 'sidebar' && this.selectedVersion === null)) {
+        if ( ( this.selectedVersion !== undefined ) || ( this.isSidebar && ( this.selectedVersion === null ) ) ) {
             this.versionOptions = this.createOptions(this.categoryWrapper.mCatSubDetailToVersions[`${localKey}-${this.selectedDetail}`]);
             this.showVersion = this.versionOptions.length > 0;
         }
@@ -513,8 +512,16 @@ export default class CaseCatSubcatDetail extends LightningElement {
 
     @api variant;
 
+    get isSidebar() {
+        return ( this.variant === "sidebar" );
+    }
+
+    get isUnfiltered() {
+        return ( this.variant === "unfiltered" );
+    }
+
     get showTitle() {
-        return ( this.variant !== "sidebar" );
+        return !this.isSidebar;
     }
 
     get smallDeviceSize() {
@@ -522,7 +529,7 @@ export default class CaseCatSubcatDetail extends LightningElement {
     }
 
     get mediumDeviceSize() {
-        return ( ( this.variant === "sidebar" ) ? this.smallDeviceSize : "6" );
+        return ( this.isSidebar ? this.smallDeviceSize : "6" );
     }
 
     get largeDeviceSize() {
