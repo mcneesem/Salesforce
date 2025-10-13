@@ -20,5 +20,5 @@
   NOT( ISCHANGED( StageName ) ) ,
   ISPICKVAL( StageName , &apos;Closed Won&apos; )
 )</errorConditionFormula>
-    <errorMessage>You do not have access to edit an Opportunity, once it is Closed Won it cannot be modified. Please contact Sales Operations team.</errorMessage>
+    <errorMessage>You do not have access to edit this Opportunity. Once it is Closed Won it cannot be modified. Please contact Sales Operations team.</errorMessage>
 </ValidationRule>
