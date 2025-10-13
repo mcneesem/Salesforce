@@ -428,17 +428,14 @@ public with sharing class NSP_LeadTriggerHelper {
             for ( Id leadId : leadNewMap.keySet() ) {
                 Lead oldRecord = this.getMappedLeadSafe( leadOldMap , leadId );
                 Lead newRecord = this.getMappedLeadSafe( leadNewMap , leadId );
-                if(newRecord != null && oldRecord != null){
-                    //  If owner has not changed and Lead's owner is not the current logged user
-                    if((newRecord.OwnerId == oldRecord.OwnerId) && (oldRecord.OwnerId != userId)){
-                        newRecord.addError( System.Label.NSP_LeadTriggerError );
-                    }
-                    //  If owner has changed, and Lead's owner is not the current logged user.
-                    else if((newRecord.OwnerId != oldRecord.OwnerId) && (oldRecord.OwnerId != userId)){
-                        leadIdSet.add( leadId );
-                        ownersIdSet.add( newRecord.OwnerId );
-                        ownersIdSet.add( oldRecord.OwnerId );
-                    }
+                //  If owner has not changed and Lead's owner is not the current logged user
+                if((newRecord != null && oldRecord != null) &&
+                (newRecord.isConverted == oldRecord.isConverted)  && 
+                (newRecord.OwnerId != oldRecord.OwnerId) && 
+                (oldRecord.OwnerId != userId)){
+                    leadIdSet.add( leadId );
+                    ownersIdSet.add( newRecord.OwnerId );
+                    ownersIdSet.add( oldRecord.OwnerId );
                 }
             }
         }
