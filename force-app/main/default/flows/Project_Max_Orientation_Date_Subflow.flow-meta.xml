@@ -405,7 +405,6 @@
         <queriedFields>Opportunity__c</queriedFields>
     </recordLookups>
     <recordLookups>
-        <description>Prevent DmlExceptions: FIELD_CUSTOM_VALIDATION_EXCEPTION: Once an Opportunity is Closed Won it cannot be modified. Please contact Sales Operations team.  ( (StageName Does Not Equal Closed Won) AND (NSP_Lock_Opportunity__c Equals False) )</description>
         <name>Get_Opportunity_Info</name>
         <label>Get Opportunity Info</label>
         <locationX>314</locationX>
