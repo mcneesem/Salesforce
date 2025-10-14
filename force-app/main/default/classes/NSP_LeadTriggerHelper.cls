@@ -356,14 +356,11 @@ public with sharing class NSP_LeadTriggerHelper {
             && Trigger.isUpdate
             && ( leadNewMap != null )
             && this.isEnabledRestrictLeadOwnerChange()
+            && ( !(String.isNotBlank( UserInfo.getUserRoleId() )
+            && CustomPermissionController.checkUserPermission( 'Bypass_Lead_Sales_Office_Validation' , UserInfo.getUserId() )))
             )
         {
-            if ( !(String.isNotBlank( UserInfo.getUserRoleId() )
-                && CustomPermissionController.checkUserPermission( 'Bypass_Lead_Sales_Office_Validation' , UserInfo.getUserId()) )
-                )
-            {
-                this.restrictLeadOwnerChangeByGroupMember( leadNewMap , leadOldMap );
-            }
+            this.restrictLeadOwnerChangeByGroupMember( leadNewMap , leadOldMap );
         }
     }
     
