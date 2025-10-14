@@ -15,7 +15,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_Other_Competitor</targetReference>
+            <targetReference>Make_Other_Competitor_Blank</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -55,7 +55,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Update_Other_Competitor</targetReference>
+                <targetReference>Make_Other_Competitor_Blank</targetReference>
             </connector>
             <label>Is Not Other</label>
         </rules>
