@@ -4,11 +4,15 @@
     <protected>false</protected>
     <values>
         <field>Error_Message__c</field>
-        <value xsi:type="xsd:string">Only If</value>
+        <value xsi:type="xsd:string">Please ensure Checklist is completed before moving to Booking stage</value>
     </values>
     <values>
         <field>Field__c</field>
         <value xsi:type="xsd:string">NSP_Account_Segment__c</value>
+    </values>
+    <values>
+        <field>Group_Condition__c</field>
+        <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
         <field>Group__c</field>
