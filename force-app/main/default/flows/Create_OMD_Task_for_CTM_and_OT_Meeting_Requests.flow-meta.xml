@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>61.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Assign_Task_Fields</name>
         <label>Assign Task Fields</label>
@@ -347,7 +348,8 @@
             <label>Yes : Task is Completed</label>
         </rules>
     </decisions>
-    <description>Create/Update Task Record for CTM and Employee/Additional OT Meeting Requests</description>
+    <description>Create/Update Task Record for CTM and Employee/Additional OT Meeting Requests
+Added Timezone , updated text</description>
     <environments>Default</environments>
     <formulas>
         <name>f_AccountName</name>
@@ -652,9 +654,9 @@
 -
 Client Number: {!f_AIMSClientNum}
 -
-Time Block Selected:  {!$Record.Onboarding_Meeting_Request__r.Date_Valid__c} , {!$Record.Onboarding_Meeting_Request__r.Start_Time_picklist__c} - {!$Record.Onboarding_Meeting_Request__r.End_Time_picklist__c}
+Time Block Selected:  {!$Record.Onboarding_Meeting_Request__r.Date_Valid__c} , {!$Record.Onboarding_Meeting_Request__r.Start_Time_picklist__c} - {!$Record.Onboarding_Meeting_Request__r.End_Time_picklist__c} {!$Record.Onboarding_Meeting_Request__r.Time_Zone__c}
 -
-Preferred Transition Meeting Time within Selected Block: {!$Record.Preferred_Meeting_Time__c}
+Proposed Transition Meeting Time within Selected Block: {!$Record.Preferred_Meeting_Time__c}
 -
 Alternate Transition Meeting Date/Time(s): {!$Record.Alternate_Meeting_Date_Time__c}
 -
@@ -703,9 +705,9 @@ Number of Employee Orientation Meetings Requested: {!$Record.No_of_Emp_OT_Meetin
 Meeting Type : {!f_meeting_request_type}
 
 ***** Meeting {!$Record.Meeting_Request_Number__c} Info *********
-Time Block Selected: {!$Record.Onboarding_Meeting_Request__r.Date_Valid__c} , {!$Record.Onboarding_Meeting_Request__r.Start_Time_picklist__c} - {!$Record.Onboarding_Meeting_Request__r.End_Time_picklist__c}
+Time Block Selected: {!$Record.Onboarding_Meeting_Request__r.Date_Valid__c} , {!$Record.Onboarding_Meeting_Request__r.Start_Time_picklist__c} - {!$Record.Onboarding_Meeting_Request__r.End_Time_picklist__c} {!$Record.Onboarding_Meeting_Request__r.Time_Zone__c}
 -
-Preferred Time within Selected Time Block: {!$Record.Preferred_Meeting_Time__c}
+Proposed Time within Selected Time Block: {!$Record.Preferred_Meeting_Time__c}
 -
 Meeting Participant Count: {!$Record.Meeting_Participant_Count__c}
 If Meeting Participant Count is Greater than or Equal to 50, Meeting Type: {!$Record.Meeting_Type__c}
