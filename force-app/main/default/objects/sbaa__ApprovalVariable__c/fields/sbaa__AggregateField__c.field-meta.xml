@@ -87,6 +87,16 @@
                 <default>false</default>
                 <label>Discounted_Add__c</label>
             </value>
+            <value>
+                <fullName>Add_Change_Discount_Rate__c</fullName>
+                <default>false</default>
+                <label>Add_Change_Discount_Rate__c</label>
+            </value>
+            <value>
+                <fullName>Add_Change_Minimum_Fee__c</fullName>
+                <default>false</default>
+                <label>Add_Change_Minimum_Fee__c</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
