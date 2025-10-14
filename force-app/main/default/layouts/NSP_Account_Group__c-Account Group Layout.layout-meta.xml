@@ -102,7 +102,7 @@
     <relatedLists>
         <excludeButtons>MassChangeOwner</excludeButtons>
         <excludeButtons>New</excludeButtons>
-        <fields>NAME</fields>
+        <fields>Asset.NAME</fields>
         <fields>Asset_Status__c</fields>
         <fields>iSolved__c</fields>
         <fields>AIMS_Client__c</fields>
