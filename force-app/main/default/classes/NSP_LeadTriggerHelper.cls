@@ -358,85 +358,11 @@ public with sharing class NSP_LeadTriggerHelper {
             && this.isEnabledRestrictLeadOwnerChange()
             )
         {
-            if ( String.isNotBlank( UserInfo.getUserRoleId() )
-                && CustomPermissionController.checkUserPermission( 'Bypass_Lead_Sales_Office_Validation' , UserInfo.getUserId() )
+            if ( !(String.isNotBlank( UserInfo.getUserRoleId() )
+                && CustomPermissionController.checkUserPermission( 'Bypass_Lead_Sales_Office_Validation' , UserInfo.getUserId()) )
                 )
             {
-                this.restrictLeadOwnerChangeByRole( leadNewMap , leadOldMap );
-
-            } else {
                 this.restrictLeadOwnerChangeByGroupMember( leadNewMap , leadOldMap );
-            }
-        }
-    }
-
-    //
-    // Iterates throught the lead map and identifies the records that needs to worked based on various criterias.
-    // @param leadNewMap Map of New leads.
-    // @param leadOldMap Map of Old leads.
-    // @return void
-    //
-    private void restrictLeadOwnerChangeByRole( Map<Id,Lead> leadNewMap , Map<Id,Lead> leadOldMap ) {
-        Set<Id> leadIdSet = new Set<Id>();
-        Set<Id> ownersIdSet = new Set<Id>();
-        this.collectLeadsOwners(leadNewMap, leadOldMap, leadIdSet, ownersIdSet);
-        if(ownersIdSet.size() > 0){
-            // Get Leads owners Roles
-            Map<Id,User> usersRoles = null;
-            usersRoles = new Map<Id,User>([
-                SELECT Id , UserRoleId
-                FROM User
-                WHERE ( Id IN :ownersIdSet )]);
-            //  Get Users Roles hierarchy (three levels deep)
-            Id userRoleId = UserInfo.getUserRoleId();
-            Map<Id,UserRole> userRoleMap = new Map<Id,UserRole>([
-                SELECT Id, ParentRoleId
-                FROM UserRole
-                WHERE ( Id = :userRoleId 
-                OR ( ParentRoleId = :userRoleId )
-                OR ( ParentRole.ParentRoleId = :userRoleId )
-                OR ( ParentRole.ParentRole.ParentRoleId = :userRoleId )
-                )]);
-            
-            if ( ( usersRoles != null ) && !usersRoles.isEmpty() ){
-                for ( Id leadId : leadIdSet ) {
-                    Lead oldRecord = this.getMappedLeadSafe( leadOldMap , leadId );
-                    Lead newRecord = this.getMappedLeadSafe( leadNewMap , leadId );
-                    //  Both users should belong to the upper Role hierarchy
-                    Boolean allowOldUser = (
-                        ( oldRecord != null )
-                        && ( oldRecord.OwnerId != null )
-                        && userRoleMap.containsKey( usersRoles.get( oldRecord.OwnerId ).UserRoleId )
-                        );
-                    Boolean allowNewUser = (
-                        ( newRecord != null )
-                        && ( newRecord.OwnerId != null )
-                        && userRoleMap.containsKey( usersRoles.get( newRecord.OwnerId ).UserRoleId )
-                        );
-                    if ( !allowOldUser || !allowNewUser ) {
-                        leadNewMap.get( leadId ).Id.addError( System.Label.NSP_LeadTriggerError );
-                    }
-                }
-            }
-        }
-    }
-    
-    // collect the  Leads OwnerId (User.Id) values...
-    private void collectLeadsOwners(Map<Id,Lead> leadNewMap, Map<Id,Lead> leadOldMap,  Set<Id> leadIdSet, Set<Id> ownersIdSet){
-        if(leadNewMap != null){
-            Id userId = UserInfo.getUserId();
-            for ( Id leadId : leadNewMap.keySet() ) {
-                Lead oldRecord = this.getMappedLeadSafe( leadOldMap , leadId );
-                Lead newRecord = this.getMappedLeadSafe( leadNewMap , leadId );
-                //  If owner has not changed and Lead's owner is not the current logged user
-                if((newRecord != null && oldRecord != null) &&
-                (newRecord.isConverted == oldRecord.isConverted)  && 
-                (newRecord.OwnerId != oldRecord.OwnerId) && 
-                (oldRecord.OwnerId != userId)){
-                    leadIdSet.add( leadId );
-                    ownersIdSet.add( newRecord.OwnerId );
-                    ownersIdSet.add( oldRecord.OwnerId );
-                }
             }
         }
     }
