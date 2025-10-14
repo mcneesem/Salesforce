@@ -6,6 +6,7 @@
     <inlineHelpText>Briefly explain the situation and/or driver.</inlineHelpText>
     <label>Details</label>
     <length>32768</length>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Html</type>
     <visibleLines>25</visibleLines>

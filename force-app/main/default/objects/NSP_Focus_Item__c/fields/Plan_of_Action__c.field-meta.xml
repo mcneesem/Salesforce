@@ -6,6 +6,7 @@
     <inlineHelpText>Briefly describe your action plan to address the situation/driver.</inlineHelpText>
     <label>Plan of Action</label>
     <length>32768</length>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Html</type>
     <visibleLines>25</visibleLines>
