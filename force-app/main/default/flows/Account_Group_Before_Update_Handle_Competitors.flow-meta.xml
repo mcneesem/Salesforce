@@ -19,8 +19,8 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Update_Other_Competitor</name>
-        <label>Update Other Competitor</label>
+        <name>Make_Other_Competitor_Blank</name>
+        <label>Make Other Competitor Blank</label>
         <locationX>226</locationX>
         <locationY>779</locationY>
         <assignmentItems>
@@ -93,8 +93,8 @@
         </rules>
     </decisions>
     <environments>Default</environments>
-    <interviewLabel>AccountGroup_BeforeUpdate_ {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>AccountGroup_BeforeUpdate_UpdateCompetitorAndOtherCompetitor</label>
+    <interviewLabel>Account Group - Before Update - Handle Competitors {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Account Group - Before Update - Handle Competitors</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
