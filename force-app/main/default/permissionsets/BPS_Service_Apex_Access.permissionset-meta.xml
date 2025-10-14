@@ -521,6 +521,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>NSP_CreateProjectTaskController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>NSP_CreateProjectTemplateFromCase</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -6017,14 +6021,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>pse__CreateEVAForHeldRRBatch</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>pse__CreateEVAForHeldRRBatchTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>pse__CreateProjectApiTestUtils</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -8425,10 +8421,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>pse__IMilestones</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>pse__IMiscellaneousAdjustmentSelector</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -9706,14 +9698,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>pse__PaginatorIncrementalTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>pse__PerformanceLoggingService</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>pse__PerformanceLoggingServiceTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -11477,22 +11461,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>pse__RF_ForecastInstrumentation</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>pse__RF_ForecastInstrumentationFactory</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>pse__RF_ForecastInstrumentationFactoryTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>pse__RF_ForecastInstrumentationTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>pse__RF_ForecastResult</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -11554,14 +11522,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>pse__RF_IForecastCorrelator</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>pse__RF_IForecastInstrumentation</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>pse__RF_IForecastInstrumentationFactory</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -11957,10 +11917,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>pse__RM_IRateCardMatcherService</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>pse__RM_IResourceRequestName</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -12070,18 +12026,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>pse__RM_ProposedEngagement</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>pse__RM_RateCardMatcherService</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>pse__RM_RateCardMatcherServiceImpl</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>pse__RM_RateCardMatcherServiceTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
