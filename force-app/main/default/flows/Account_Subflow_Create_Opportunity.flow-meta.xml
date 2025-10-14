@@ -60,7 +60,7 @@
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Get Account Owner Record</stringValue>
+                <stringValue>Get_Account_Owner_Record</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -111,7 +111,7 @@
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Get Public Group Id</stringValue>
+                <stringValue>Get_Public_Group_Id</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -214,6 +214,57 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_if_Account_Owner_Exists</name>
+        <label>Check if Account Owner Exists</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_Owner</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Account_Owner_Record</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Public_Group_Id</targetReference>
+            </connector>
+            <label>Has Owner</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_if_Public_Group_Records_Exist</name>
+        <label>Check if Public Group Records Exist</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_Public_Groups</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Public_Group_Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Public_Group_Id</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Loop_Over_Public_Groups</targetReference>
+            </connector>
+            <label>Has Public Groups</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>If_Open_Opportunity_Exists</name>
         <label>If Open Opportunity Exists</label>
         <locationX>0</locationX>
@@ -268,7 +319,7 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Public_Groups_for_Owner</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -285,8 +336,8 @@
         <dataType>Date</dataType>
         <expression>TODAY() + 120</expression>
     </formulas>
-    <interviewLabel>Opportunity - Subflow - Creation from Account Events {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Opportunity - Subflow - Creation from Account Events</label>
+    <interviewLabel>Account - Subflow - Create Opportunity {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Account - Subflow - Create Opportunity</label>
     <loops>
         <name>Loop_Over_Public_Groups</name>
         <label>Loop Over Public Groups</label>
@@ -404,7 +455,7 @@
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Public_Group_Id</targetReference>
+            <targetReference>Check_if_Account_Owner_Exists</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Assign_varFaultElement_Get_Account_Owner_Record</targetReference>
@@ -491,7 +542,7 @@
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Loop_Over_Public_Groups</targetReference>
+            <targetReference>Check_if_Public_Group_Records_Exist</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Assign_varFaultElement_Get_Public_Group_Id</targetReference>
@@ -595,7 +646,7 @@
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Subflow_Opportunity_Creation_From_Account_Events</stringValue>
+                <stringValue>Account_Subflow_Create_Opportunity</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -625,16 +676,6 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>IsOwnerInAllowedGroup</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <booleanValue>false</booleanValue>
-        </value>
     </variables>
     <variables>
         <name>publicGroupIds</name>

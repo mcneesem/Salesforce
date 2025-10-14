@@ -86,7 +86,7 @@
         <label>Opportunity Creation From Account Insert Update</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <flowName>Opportunity_Subflow_Creation_from_Account_Events</flowName>
+        <flowName>Account_Subflow_Create_Opportunity</flowName>
         <inputAssignments>
             <name>AccountId</name>
             <value>
