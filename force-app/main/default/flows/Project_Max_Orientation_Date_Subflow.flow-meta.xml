@@ -192,7 +192,7 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>varOpportunity</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -405,7 +405,6 @@
         <queriedFields>Opportunity__c</queriedFields>
     </recordLookups>
     <recordLookups>
-        <description>Prevent DmlExceptions: FIELD_CUSTOM_VALIDATION_EXCEPTION: Once an Opportunity is Closed Won it cannot be modified. Please contact Sales Operations team.  ( (StageName Does Not Equal Closed Won) AND (NSP_Lock_Opportunity__c Equals False) )</description>
         <name>Get_Opportunity_Info</name>
         <label>Get Opportunity Info</label>
         <locationX>314</locationX>
@@ -423,20 +422,6 @@
             <operator>EqualTo</operator>
             <value>
                 <elementReference>varOpportunity.Id</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>StageName</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <stringValue>Closed Won</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>NSP_Lock_Opportunity__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>false</booleanValue>
             </value>
         </filters>
         <object>Opportunity</object>
