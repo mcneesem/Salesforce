@@ -708,17 +708,6 @@
                 <fieldItem>Record.Reason</fieldItem>
                 <identifier>RecordReasonField</identifier>
                 <visibilityRule>
-                    <booleanFilter>NOT( 1 AND 2 ) AND 3</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Category__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Retirement Svc-Education</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>RET Education</rightValue>
-                    </criteria>
                     <criteria>
                         <leftValue>{!Record.NSP_Category__c}</leftValue>
                         <operator>NE</operator>
