@@ -95,7 +95,7 @@ public static Opportunity createOpenOpportunity(
         Opportunity opp = new Opportunity(
             Name = 'Test Opportunity',
             CloseDate = Date.today().addDays(10),
-            StageName = 'Discovery',
+            StageName = 'Prospecting',
             Type = type,
             AccountId = accountId,
             CurrencyIsoCode = DEFAULT_CURRENCY_CODE
