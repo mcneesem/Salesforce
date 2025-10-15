@@ -29,7 +29,6 @@ export default class DiscoveryCallCompleted extends NavigationMixin(LightningEle
             this.updateInputVariables();
 
             if ( ( this.currentUserId == updateUserId )
-                 && this.checkDCCompletedAccess
                  && ( this.recordId == this.eventId
                    || this.recordId == this.whatId )
                )
@@ -59,7 +58,9 @@ export default class DiscoveryCallCompleted extends NavigationMixin(LightningEle
     }
 
     openModal() {
-        this.isModalOpen = true;
+        if (this.checkDCCompletedAccess) {
+            this.isModalOpen = true;
+        }
     }
 
     closeModal() {
