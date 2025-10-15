@@ -351,13 +351,30 @@ public with sharing class NSP_LeadTriggerHelper {
     // @DF-01301-The District Administrator is able to reassign the Lead to themself.
     //
     public void restrictLeadOwnerChange( Map<Id,Lead> leadNewMap , Map<Id,Lead> leadOldMap ) {
+        Boolean isBypassed = (
+            String.isNotBlank( UserInfo.getUserRoleId() )
+            && CustomPermissionController.checkUserPermission( 'Bypass_Lead_Sales_Office_Validation' , UserInfo.getUserId() )
+        );
         // only enforced during before-update Triggers that contain a new Lead record Map...
-        if ( Trigger.isBefore
+        if ( !isBypassed
+            && Trigger.isBefore
             && Trigger.isUpdate
             && ( leadNewMap != null )
             && this.isEnabledRestrictLeadOwnerChange()
             )
         {
+            this.restrictLeadOwnerChangeByGroupMember( leadNewMap , leadOldMap );
+        }
+    }
+    
+    //
+    // Iterates throught the lead map and identifies the records that needs to worked based on various criterias.
+    // @param leadNewMap Map of New leads.
+    // @param leadOldMap Map of Old leads.
+    // @return void
+    //
+    private void restrictLeadOwnerChangeByGroupMember( Map<Id,Lead> leadNewMap , Map<Id,Lead> leadOldMap ) {
+        if ( leadNewMap != null ) {
             // collect the previous record OwnerId (User.Id) values...
             Set<Id> ownerIdset = this.collectOwnerIdset( leadNewMap , leadOldMap );
             // collect previous Lead Owner's salesoffice details...
