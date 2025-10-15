@@ -2032,6 +2032,10 @@
         <enabled>true</enabled>
         <name>Bypass_Available_Lead_Conversion_Rules</name>
     </customPermissions>
+    <customSettingAccesses>
+        <enabled>true</enabled>
+        <name>AVA_SFCLOUD__AvaTax__c</name>
+    </customSettingAccesses>
     <description>Standard user permissions across all Salesforce CPQ objects.</description>
     <fieldPermissions>
         <editable>false</editable>

@@ -1558,6 +1558,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>blng__Payment__c.blng__BillingFinanceBook__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>blng__Payment__c.blng__PaymentDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
