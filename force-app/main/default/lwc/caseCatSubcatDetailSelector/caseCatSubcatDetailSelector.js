@@ -10,6 +10,7 @@ export default class CaseCatSubcatDetailSelector extends LightningElement {
     @api showConfidential;
     @api showAllCategory;
     @api showAllSubCategory;
+    @api variant;
 
     handleConfidentialField(event) {
         if (event && event.detail !== undefined) {
