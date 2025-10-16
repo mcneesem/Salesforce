@@ -85,6 +85,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>I_9_Service_Exception__c</picklist>
+        <values>
+            <fullName>I-9 Collection Exception</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Opt-Out</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_Account_Status__c</picklist>
         <values>
             <fullName>Active</fullName>
