@@ -16,7 +16,7 @@
     )
   ) ,
   NOT( $Permission.Bypass_Lock_Opportunity_Edits ) ,
-  ( RecordType.DeveloperName = &quot;Opportunity_Locked&quot; ) ,
+  ( RecordTypeId = &quot;0124x000000yRvE&quot; ) ,
   NOT( ISCHANGED( StageName ) ) ,
   ISPICKVAL( StageName , &apos;Closed Won&apos; )
 )</errorConditionFormula>
