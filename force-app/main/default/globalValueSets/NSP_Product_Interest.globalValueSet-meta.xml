@@ -61,6 +61,11 @@
         <label>Insurance Services (Property &amp; Casualty)</label>
     </customValue>
     <customValue>
+        <fullName>Insurance Services (Revolution)</fullName>
+        <default>false</default>
+        <label>Insurance Services (Revolution)</label>
+    </customValue>
+    <customValue>
         <fullName>Quickbooks Integration(Insperity Integra)</fullName>
         <default>false</default>
         <label>Integra</label>
