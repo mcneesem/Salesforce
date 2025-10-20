@@ -2,7 +2,6 @@ import { LightningElement, api } from 'lwc';
 import { subscribe, onError } from 'lightning/empApi';
 import { NavigationMixin } from 'lightning/navigation';
 import Id from '@salesforce/user/Id'; // Import the user ID
-import hasDCCompletedAccess from '@salesforce/customPermission/Opportunity_Discovery_Call_Completed_Access';
 
 export default class DiscoveryCallCompleted extends NavigationMixin(LightningElement) {
     @api recordId;
@@ -53,14 +52,8 @@ export default class DiscoveryCallCompleted extends NavigationMixin(LightningEle
         ];
     }
 
-    get checkDCCompletedAccess() {
-        return hasDCCompletedAccess;
-    }
-
     openModal() {
-        if (this.checkDCCompletedAccess) {
-            this.isModalOpen = true;
-        }
+        this.isModalOpen = true;
     }
 
     closeModal() {
