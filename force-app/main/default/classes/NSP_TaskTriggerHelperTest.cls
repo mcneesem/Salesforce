@@ -38,7 +38,7 @@ public class NSP_TaskTriggerHelperTest {
             insert accoutObject1;
             Opportunity opportuniytObject = new Opportunity();
             opportuniytObject.Name = 'Test Oppty';
-            opportuniytObject.stagename = 'Discovery';
+            opportuniytObject.stagename = 'Prospecting';
             opportuniytObject.CloseDate = date.today();
             opportuniytObject.accountId = accoutObject1.Id;
             
