@@ -52,12 +52,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>NSP_Account_Group__c.Other_Competitor__c</field>
+        <field>NSP_Account_Group__c.Did_Client_Go_To_A_Competitor__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Account_Group__c.Eligible_To_Return_To_Insperity_At_Time__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Account_Group__c.Other_Competitor__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

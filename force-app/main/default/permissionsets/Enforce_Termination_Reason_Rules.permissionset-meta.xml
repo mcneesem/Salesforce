@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Permission Set that contains the custom permission Bypass_Termination_Reason_Rules to Bypass the Termination Reason Rules</description>
     <customPermissions>
         <enabled>true</enabled>
-        <name>Bypass_Termination_Reason_Rules</name>
+        <name>Enforce_Termination_Reason_Rules</name>
     </customPermissions>
+    <description>Grants the Custom Permission to Enforce Termination Revision Rules on NSP_Account_Group__c.</description>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Bypass Termination Reason Rules</label>
+    <label>Enforce Termination Reason Rules</label>
 </PermissionSet>
