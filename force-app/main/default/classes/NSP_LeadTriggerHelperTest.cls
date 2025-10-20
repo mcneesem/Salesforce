@@ -781,4 +781,48 @@ private class NSP_LeadTriggerHelperTest {
         }
         Test.stopTest();
     }
+
+    @IsTest 
+    private static void testTransferDiscoveryCall() {
+        
+        Test.startTest();
+        List<User> users = [SELECT Id FROM User WHERE Profile.Name = 'System Administrator' LIMIT 2];
+
+        if(users != null && users.size() == 2) {
+            
+            Lead testLead = new Lead(
+            FirstName = 'Test',
+            LastName = 'Lead',
+            Company = 'Test Company',
+            Email = 'testlead@testcompany.com',
+            OwnerId = users[0].Id
+            );
+            insert testLead;
+    
+            // Create Event with Discovery Call subtype and Open status
+            DateTime testtime = System.now();
+            Id eventRecTypeId = Schema.SObjectType.Event.getRecordTypeInfosByDeveloperName().get('Core_Sales_Event_RT').getRecordTypeId();
+            Event testEvent = new Event(
+            OwnerId = users[0].Id,
+            NSP_Lead__c = testLead.Id,
+            RecordTypeId = eventRecTypeId,
+            NSP_Event_Type__c = 'Core Sales',
+            NSP_Event_Subtype__c = 'Discovery Call',
+            NSP_Status__c = 'Open',
+            ActivityDateTime = testtime,
+            StartDateTime = testtime,
+            EndDateTime = testtime,
+            ActivityDate = System.today()
+            );
+            insert testEvent;
+
+            testLead.OwnerId = users[1].Id;
+            update testLead;
+
+            Test.stopTest();
+            Event event = [SELECT id, OwnerId FROM Event WHERE id = :testEvent.id ];
+            System.assertEquals(users[1].Id, event.OwnerId);
+       }       
+    }
+
 }

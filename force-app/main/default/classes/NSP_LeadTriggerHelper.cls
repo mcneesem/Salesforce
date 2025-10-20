@@ -170,6 +170,9 @@ public with sharing class NSP_LeadTriggerHelper {
             List<String> zipCodeUpdateList = new List<String>();
             Boolean isOwnerAssignment = true;
             Boolean isZipCodeUpdate = false;
+            // ADO-504541
+            Map<Id,Id> leadNewOwner = new Map<Id,Id>();
+            Map<Id,Id> leadOldOwner = new Map<Id,Id>();
             // Added as part of STY-01725
             //iterating over trigger.newmap
             for (Id leadId: leadNewMap.keySet()) {
@@ -284,6 +287,11 @@ public with sharing class NSP_LeadTriggerHelper {
                     zipCodeUpdateList.add(leadNewMap.get(leadId).PostalCode.substring(0,5));
                 }
                 // Added as part of DF-01846
+                //  ADO-504541
+                if( leadNewMap.get(leadId).OwnerId != leadOldMap.get(leadId).OwnerId){
+                    leadNewOwner.put(leadId, leadNewMap.get(leadId).OwnerId);
+                    leadOldOwner.put(leadId, leadOldMap.get(leadId).OwnerId);
+                }
             }
             if(!zipCodeLeadList.isEmpty() && !zipCodeUpdateList.isEmpty()){
                 isOwnerAssignment = false;
@@ -322,6 +330,10 @@ public with sharing class NSP_LeadTriggerHelper {
             //Added as part of CR--027 (Convert the child Leads to contacts on Parent Lead Conversion)
             createContact(leadNewMap.values());
             setSalesOfficeDetails(leadNewMap.values(),leadOldMap);  // added for STY-03154
+            //  ADO-504541
+            if(leadNewOwner.size() > 0){
+                transferDiscoveryCall(leadNewOwner, leadOldOwner);
+            }         
         } catch ( Exception e ) {
             NSP_LeadTriggerHelper.handleException( e , 'beforeUpdateDirector' );
         }
@@ -1518,6 +1530,62 @@ public with sharing class NSP_LeadTriggerHelper {
             return permittedDUNSRoutingUserMap;
         }
         private set;
+    }
+
+    //
+    // Description: This method tranfers any related discovery call to the new Lead's owner
+    // @param: newLeadOwner
+    // @param: oldLeadOwner
+    // @return: void
+    //
+    private static void transferDiscoveryCall(Map<Id,Id> newLeadOwner, Map<Id,Id> oldLeadOwner){
+        Map<Id,Id> eventNewOwner =  new Map<Id,Id>();
+        for ( Event event : [
+                        SELECT Id , NSP_Lead__c , OwnerId 
+                        FROM Event
+                        WHERE (
+                            ( NSP_Lead__c IN : oldLeadOwner.keySet() )
+                            AND ( OwnerId IN : oldLeadOwner.values()) 
+                            AND (NSP_Event_Subtype__c = 'Discovery Call')
+                            AND (NSP_Status__c = 'Open'))
+                    ]
+            )
+        {
+            if ( oldLeadOwner.containsKey( event.NSP_Lead__c )
+                && event.OwnerId == oldLeadOwner.get( event.NSP_Lead__c )
+                )
+            {
+                eventNewOwner.put(event.Id, newLeadOwner.get(event.NSP_Lead__c ));
+            }
+        }
+        
+        if(eventNewOwner.size() > 0 && Limits.getFutureCalls() < Limits.getLimitFutureCalls()){
+            transferDiscoveryCallAsync( JSON.serialize(eventNewOwner) );
+        }
+    }
+    //
+    // Description: This method async tranfers any related discovery call to the new Lead's owner
+    // @param: strEventNewOwner
+    // @return: void
+    //
+    @future
+    private static void transferDiscoveryCallAsync(String strEventNewOwner){
+        if(strEventNewOwner != null){
+            Map<Id,Id> eventNewOwner = (Map<Id,Id>)JSON.deserialize(
+                strEventNewOwner ,
+                Map<Id,Id>.class
+            );
+            List<Event> updateEvents = new List<Event>();
+            for ( Event event : [SELECT Id , OwnerId FROM Event WHERE ( Id IN :eventNewOwner.keySet() )])
+            {
+                event.OwnerId = eventNewOwner.get(event.Id); 
+                updateEvents.add(event);
+            }   
+            if(updateEvents.size() > 0)
+            {
+                update updateEvents;
+            }                    
+        }
     }
 }
 //
