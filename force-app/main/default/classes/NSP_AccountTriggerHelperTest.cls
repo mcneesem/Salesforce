@@ -184,7 +184,7 @@ private class NSP_AccountTriggerHelperTest {
         Opportunity opportuniytObject = new Opportunity();
         opportuniytObject.Name = 'Test Oppty';
         opportuniytObject.AccountId = accountList[0].id;
-        opportuniytObject.stagename = NSP_SalesConstants.DISCOVERY_STAGE;
+        opportuniytObject.StageName = 'Prospecting';
         opportuniytObject.CloseDate = date.today();
         opportuniytObject.NSP_PrimaryProduct__c = 'WO';
         insert opportuniytObject;
@@ -635,7 +635,7 @@ private class NSP_AccountTriggerHelperTest {
         Opportunity opp = new Opportunity();
         opp.name = 'Opportunity 1';
         opp.AccountId = acct.Id;
-        opp.stagename = NSP_SalesConstants.DISCOVERY_STAGE;
+        opp.StageName = 'Prospecting';
         opp.CloseDate = date.today();
         opp.NSP_PrimaryProduct__c = 'WO';
         opp.OwnerId = users[0].Id;
