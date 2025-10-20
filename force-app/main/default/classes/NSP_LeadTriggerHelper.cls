@@ -288,10 +288,7 @@ public with sharing class NSP_LeadTriggerHelper {
                 }
                 // Added as part of DF-01846
                 //  ADO-504541
-                if( leadNewMap.get(leadId).OwnerId != leadOldMap.get(leadId).OwnerId){
-                    leadNewOwner.put(leadId, leadNewMap.get(leadId).OwnerId);
-                    leadOldOwner.put(leadId, leadOldMap.get(leadId).OwnerId);
-                }
+                verifyOwnerChange(leadId, leadOldMap.get(leadId), leadNewMap.get(leadId), leadOldOwner, leadNewOwner);
             }
             if(!zipCodeLeadList.isEmpty() && !zipCodeUpdateList.isEmpty()){
                 isOwnerAssignment = false;
@@ -331,9 +328,8 @@ public with sharing class NSP_LeadTriggerHelper {
             createContact(leadNewMap.values());
             setSalesOfficeDetails(leadNewMap.values(),leadOldMap);  // added for STY-03154
             //  ADO-504541
-            if(leadNewOwner.size() > 0){
-                transferDiscoveryCall(leadNewOwner, leadOldOwner);
-            }         
+            transferDiscoveryCall(leadNewOwner, leadOldOwner);
+                     
         } catch ( Exception e ) {
             NSP_LeadTriggerHelper.handleException( e , 'beforeUpdateDirector' );
         }
@@ -1533,14 +1529,29 @@ public with sharing class NSP_LeadTriggerHelper {
     }
 
     //
+    // Description: This method populates two maps when Lead's owner changes.
+    // @param: oldLeadOwner
+    // @param: newLeadOwner
+    // @param: leadOldOwner (reference)
+    // @param: leadNewOwner (reference)
+    // @return: void
+    //
+    private static void verifyOwnerChange(Id leadId, Lead leadOld, Lead leadNew, Map<Id,Id> leadOldOwner, Map<Id,Id> leadNewOwner){
+        if( leadOld.OwnerId != leadNew.OwnerId){
+            leadOldOwner.put(leadId, leadOld.OwnerId);
+            leadNewOwner.put(leadId, leadNew.OwnerId);
+        }
+    }
+    //
     // Description: This method tranfers any related discovery call to the new Lead's owner
     // @param: newLeadOwner
     // @param: oldLeadOwner
     // @return: void
     //
     private static void transferDiscoveryCall(Map<Id,Id> newLeadOwner, Map<Id,Id> oldLeadOwner){
-        Map<Id,Id> eventNewOwner =  new Map<Id,Id>();
-        for ( Event event : [
+        if(oldLeadOwner.size() > 0){
+            Map<Id,Id> eventNewOwner =  new Map<Id,Id>();
+            for ( Event event : [
                         SELECT Id , NSP_Lead__c , OwnerId 
                         FROM Event
                         WHERE (
@@ -1550,17 +1561,17 @@ public with sharing class NSP_LeadTriggerHelper {
                             AND (NSP_Status__c = 'Open'))
                     ]
             )
-        {
-            if ( oldLeadOwner.containsKey( event.NSP_Lead__c )
-                && event.OwnerId == oldLeadOwner.get( event.NSP_Lead__c )
-                )
             {
-                eventNewOwner.put(event.Id, newLeadOwner.get(event.NSP_Lead__c ));
+                if ( oldLeadOwner.containsKey( event.NSP_Lead__c )
+                    && event.OwnerId == oldLeadOwner.get( event.NSP_Lead__c )
+                    )
+                {
+                    eventNewOwner.put(event.Id, newLeadOwner.get(event.NSP_Lead__c ));
+                }
             }
-        }
-        
-        if(eventNewOwner.size() > 0 && Limits.getFutureCalls() < Limits.getLimitFutureCalls()){
-            transferDiscoveryCallAsync( JSON.serialize(eventNewOwner) );
+            if(eventNewOwner.size() > 0 && Limits.getFutureCalls() < Limits.getLimitFutureCalls()){
+                transferDiscoveryCallAsync( JSON.serialize(eventNewOwner) );
+            }
         }
     }
     //
