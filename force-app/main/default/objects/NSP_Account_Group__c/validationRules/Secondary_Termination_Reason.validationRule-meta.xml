@@ -9,5 +9,5 @@
   NOT( ISBLANK( TEXT( Secondary_Term_Reason__c ) ) ) ,
   ISBLANK( TEXT( Secondary_Sub_Term_Reason__c ) )
 )</errorConditionFormula>
-    <errorMessage>A Secondary Sub Term Reason must be completed when Secondary Term Reason is chosen.</errorMessage>
+    <errorMessage>A Secondary Sub Term Reason must be completed when Secondary Term Reason is chosen when an Asset linked to the primary Account in the Renewal Probability Account Group has &apos;Written Termination Notice Received&apos; selected..</errorMessage>
 </ValidationRule>
