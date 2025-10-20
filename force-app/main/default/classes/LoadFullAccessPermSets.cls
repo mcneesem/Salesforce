@@ -70,10 +70,11 @@ public class LoadFullAccessPermSets {
     // ************************************ Record Type Visibility ************************************
     //  Description :   Upserts PermissionSetRecordTypeVisibility for all Record Types of specified 
     //                  object name into specified Perm Set.
-    // *******************************************************************************************
+    // ************************************************************************************************
     @future(callout=true)
     public static void loadRecTypeVisibility(Id permSetId) {
-        if (!String.isBlank(permSetId)) {
+        if ( OrgSettings__c.getOrgDefaults().IsEnabled_loadRecTypeVisibility__c 
+            && !String.isBlank(permSetId) ) {
             List<RecordType> recTypeList =  [SELECT DeveloperName, SobjectType, NamespacePrefix FROM RecordType WHERE IsActive = true];
             MetadataService.MetadataPort service = NSP_PrepSandbox.createService();
 
