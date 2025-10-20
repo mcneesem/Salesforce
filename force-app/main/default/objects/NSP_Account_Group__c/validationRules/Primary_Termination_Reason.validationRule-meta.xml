@@ -24,5 +24,5 @@
     )
   )
 )</errorConditionFormula>
-    <errorMessage>You must complete both the Primary Term Reason and Sub Term Reason(s) when an Asset linked to an Account in the Renewal Probability Account Group has Written Termination Notice Received selected.</errorMessage>
+    <errorMessage>You must complete the Termination Information section when an Asset linked to the primary Account in the Renewal Probability Account Group has 'Written Termination Notice Received' selected.</errorMessage>
 </ValidationRule>
