@@ -116,6 +116,16 @@
                 <label>External Referral</label>
             </value>
             <value>
+                <fullName>Gifting</fullName>
+                <default>false</default>
+                <label>Gifting</label>
+            </value>
+            <value>
+                <fullName>In-Product</fullName>
+                <default>false</default>
+                <label>In-Product</label>
+            </value>
+            <value>
                 <fullName>Insperity Blog</fullName>
                 <default>false</default>
                 <label>Insperity Blog</label>
