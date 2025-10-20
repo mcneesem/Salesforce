@@ -239,9 +239,10 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         resourceMap.put('RequestAuthDomain', docusignSettings.BaseUrl__c);
         resourceMap.put('RequestAuthEndpoint', 'https://' + docusignSettings.BaseUrl__c + '/oauth/token');
         resourceMap.put('NSP_Invoice_Workflow_Name', 'Invoice AutoGen');
-        resourceMap.put('RequestAuthBody', 'grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer&assertion=');
+        resourceMap.put('RequestAuthBody', 'grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&assertion=');
         resourceMap.put('RequestAuthContentType','application/x-www-form-urlencoded');
         resourceMap.put('RequestIntegratorKey',docusignSettings.IntegrationKey__c);
+        resourceMap.put('RequestScope','signature impersonation spring_read spring_write');
         resourceMap.put(
             'RequestPrivateKey' ,
             docusignSettings.PrivateKey1__c
@@ -252,7 +253,6 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                 + docusignSettings.PrivateKey6__c
                 + docusignSettings.PrivateKey7__c
         );
-        resourceMap.put('RequestScope','signature spring_read spring_write');
 
 
 
