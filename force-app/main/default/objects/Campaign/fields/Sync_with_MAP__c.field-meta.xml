@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sync_with_MAP__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Checkbox to help with Eloqua SOQL to determine what campaigns to import from SF to Eloqua</description>
+    <label>Sync with MAP</label>
+    <trackHistory>true</trackHistory>
+    <type>Checkbox</type>
+</CustomField>
