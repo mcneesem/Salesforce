@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Notes_For_Concessions</fullName>
+    <active>true</active>
+    <description>This rule ensures that Notes field is populated whenever Concessions is marked as Waived or Reduced</description>
+    <errorConditionFormula>AND( 
+ OR( 
+  ISPICKVAL(Pricing_Upgrade_Concessions__c, &apos;Waived&apos;),
+  ISPICKVAL(Pricing_Upgrade_Concessions__c, &apos;Reduced&apos;)
+ ),
+ OR(
+  ISBLANK(Notes__c ),
+  ISNULL(Notes__c)
+ ),
+ NOT($Permission.Bypass_Price_Increase_Validation_Rules)
+)</errorConditionFormula>
+    <errorMessage>Please add notes for Waived/Reduced Concessions.</errorMessage>
+</ValidationRule>
