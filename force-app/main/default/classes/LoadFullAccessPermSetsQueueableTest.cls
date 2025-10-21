@@ -24,6 +24,7 @@ public class LoadFullAccessPermSetsQueueableTest {
         OrgSettings__c setting = new OrgSettings__c();
         setting.ExternalIdObjects1__c = 'blng__GLRule__c,blng__GLAccount__c';
         setting.IsSandbox__c = false;
+        setting.IsEnabled_loadRecTypeVisibility__c = true;
         insert setting;
         List<String> objectApiNames = new List<String>{'Account', 'EntityDefinition','blng__GLRule__c','blng__GLAccount__c'};
         LoadFullAccessPermSets.runLoadFullAccessPermSets(null, null, objectApiNames, null);
