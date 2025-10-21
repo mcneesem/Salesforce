@@ -2,10 +2,9 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Price_Increase_Date__c</fullName>
     <defaultValue>IF(
-  TODAY()  &lt;  
- DATE( YEAR(  TODAY() ) ,04,01) 
- , DATE( YEAR( TODAY() ) ,04,01)
- , DATE( YEAR( TODAY() )+1 ,04,01)
+  ( TODAY() &lt; DATE( YEAR( TODAY() ) , 04 , 01 ) ) ,
+  DATE( YEAR( TODAY() ) , 04 , 01 ) ,
+  DATE( ( YEAR( TODAY() ) + 1 ) , 04 , 01 )
 )</defaultValue>
     <description>Date for Price Increase.</description>
     <encryptionScheme>None</encryptionScheme>
