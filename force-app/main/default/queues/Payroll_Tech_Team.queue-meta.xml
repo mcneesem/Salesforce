@@ -6,4 +6,10 @@
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
+    <queueSobject>
+        <sobjectType>Task</sobjectType>
+    </queueSobject>
+    <queueSobject>
+        <sobjectType>pse__Project_Task__c</sobjectType>
+    </queueSobject>
 </Queue>
