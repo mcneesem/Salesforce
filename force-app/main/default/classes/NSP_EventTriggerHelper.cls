@@ -23,6 +23,7 @@ public with sharing class NSP_EventTriggerHelper {
                 eventList.add(evt);
             }
             //  ADO-504540
+            //  If WhoId starts with '00Q' then it's a Lead
             if((evt.NSP_Event_Subtype__c != null && evt.NSP_Event_Subtype__c == DISCOVERY_CALL) && 
             (evt.WhoId != null && ((String)evt.WhoId).startsWith('00Q'))){
                 evt.Creator_Title__c = getUserTitle();
