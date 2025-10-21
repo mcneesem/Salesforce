@@ -45,7 +45,7 @@
         <connector>
             <targetReference>Set_Forecast_field_to_Yes</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
+        <filterLogic>1 AND 2 AND (3 OR 4)</filterLogic>
         <filters>
             <field>StageName</field>
             <operator>IsChanged</operator>
@@ -58,6 +58,20 @@
             <operator>EqualTo</operator>
             <value>
                 <stringValue>Proposal</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_PrimaryProduct__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>WO</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_PrimaryProduct__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>WS</stringValue>
             </value>
         </filters>
         <object>Opportunity</object>
