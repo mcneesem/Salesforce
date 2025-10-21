@@ -16,17 +16,23 @@ public with sharing class NSP_EventTriggerHelper {
     // @return void
     public void beforeInsertDirector(List<Event> newList) {
         List<Event> eventList = new List<Event>();
+        List<Id> eventTitle = new List<Id>();
         for(Event evt : newList){
             evt.NSP_Last_Assigned_Owner__c = evt.OwnerId; // Added as part of STY-01774
             //Added as part of STY-03437
             if(evt.WhatId != null || evt.WhoId != null){
                 eventList.add(evt);
             }
+            if(evt.OwnerId != null){
+                eventTitle.add(evt.id);
+            }
+            System.debug('EventId ' + evt.Id);
         }
         updateEventSales(newList,null);
         if(!eventList.isEmpty()){
             populateWhatAndWhoNamesEvent(eventList);//Update of NSP_What_Name__c and NSP_Who_Name__c before Insert
         }
+        //updateEventTitle(eventTitle);
     }
 
     // Iterates throught the map of new Event and passes the required attributes to other methods.
