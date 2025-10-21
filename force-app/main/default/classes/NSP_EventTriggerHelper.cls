@@ -10,22 +10,22 @@ public with sharing class NSP_EventTriggerHelper {
     private static final String EMPTY_STRING = '';
     private static final String WORD_SEPARATOR =  ' : ';
     private static Id coreSalesEventRecordType = NSP_GenericRecordType.getRecordTypeId( 'Event' , 'Core_Sales_Event_RT' );
-
+    private static String userTitle = null;
     // Iterates throught the list of new Event and passes the required attributes to other methods.
     // @param newList List of New Event.  
     // @return void
     public void beforeInsertDirector(List<Event> newList) {
         List<Event> eventList = new List<Event>();
-        //  ADO-504540
-        Map<Id, String> ownerTitle = getOwnerTitle(newList);
         for(Event evt : newList){
             evt.NSP_Last_Assigned_Owner__c = evt.OwnerId; // Added as part of STY-01774
             //Added as part of STY-03437
             if(evt.WhatId != null || evt.WhoId != null){
                 eventList.add(evt);
             }
-            if(ownerTitle.containsKey(evt.OwnerId)){
-                evt.Owner_Title__c = ownerTitle.get(evt.OwnerId);
+            //  ADO-504540
+            if((evt.NSP_Event_Subtype__c != null && evt.NSP_Event_Subtype__c == DISCOVERY_CALL) && 
+            (evt.WhoId != null && ((String)evt.WhoId).startsWith('00Q'))){
+                evt.Creator_Title__c = getUserTitle();
             }
         }
         updateEventSales(newList,null);
@@ -564,26 +564,20 @@ public with sharing class NSP_EventTriggerHelper {
         private set;
     }
   
+    // 
+    // Method : getUserTitle
+    // Description : Get the current user's job title
+    // @param : none
+    // @return String
     //
-    // Description : Returns the list os users titles
-    // @param newEventList List of new Events
-    // @return Map of User Id and User Title
-    //  ADO-504540
-    //
-    private static Map<Id, String> getOwnerTitle(List<Event> newList){
-        Map<Id, String> ownersTitle = new Map<Id, String>();
-        if(newList != null){
-            List<Id> ownerId =  new List<Id>();
-            for(Event event : newList){
-                if(event.OwnerId != null){
-                    ownerId.add(event.OwnerId);
-                }
-            }
-            for(User user : [SELECT Id, Title FROM User WHERE Id IN :ownerId AND Title != null]){
-                ownersTitle.put(user.Id, user.Title);
+    private static String getUserTitle(){
+        if(userTitle == null){
+            List<User> user = [SELECT Id, Title FROM User WHERE Id = :UserInfo.getUserId()];
+            if(user.size() > 0){
+                userTitle = user[0].Title;
             }
         }
-        return ownersTitle;
+        return userTitle;
     }
 }
 //

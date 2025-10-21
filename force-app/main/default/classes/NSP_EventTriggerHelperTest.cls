@@ -293,40 +293,44 @@ private class NSP_EventTriggerHelperTest {
     }
 
     @IsTest 
-    private static void testEventOwnerTitle() {
+    private static void testEventCreatorTitle() {
         
         Test.startTest();
-        List<User> users = [SELECT Id, Title FROM User WHERE Profile.Name = 'System Administrator' AND title != null LIMIT 1];
-        if(users != null && users.size() == 1) {
-            Lead testLead = new Lead(
-            FirstName = 'Test',
-            LastName = 'Lead',
-            Company = 'Test Company',
-            Email = 'testlead@testcompany.com',
-            OwnerId = users[0].Id
-            );
-            insert testLead;
+        List<User> user = [SELECT Id, Title FROM User WHERE Profile.Name = 'System Administrator' AND title != null LIMIT 1];
+        if(user != null && user.size() == 1) {
+            System.runAs(user[0]) {
+                Lead testLead = new Lead(
+                FirstName = 'Test',
+                LastName = 'Lead',
+                Company = 'Test Company',
+                Email = 'testlead@testcompany.com',
+                OwnerId = user[0].Id
+                );
+                insert testLead;
     
-            // Create Event with Discovery Call subtype and Open status
-            DateTime testtime = System.now();
-            Id eventRecTypeId = Schema.SObjectType.Event.getRecordTypeInfosByDeveloperName().get('Core_Sales_Event_RT').getRecordTypeId();
-            Event testEvent = new Event(
-            OwnerId = users[0].Id,
-            NSP_Lead__c = testLead.Id,
-            RecordTypeId = eventRecTypeId,
-            NSP_Event_Type__c = 'Core Sales',
-            NSP_Event_Subtype__c = 'Discovery Call',
-            NSP_Status__c = 'Open',
-            ActivityDateTime = testtime,
-            StartDateTime = testtime,
-            EndDateTime = testtime,
-            ActivityDate = System.today()
-            );
-            insert testEvent;
+                // Create Event with Discovery Call subtype and Open status
+                DateTime testtime = System.now();
+                Id eventRecTypeId = Schema.SObjectType.Event.getRecordTypeInfosByDeveloperName().get('Core_Sales_Event_RT').getRecordTypeId();
+                Event testEvent = new Event(
+                WhoId = testLead.Id,    
+                OwnerId = user[0].Id,
+                NSP_Lead__c = testLead.Id,
+                RecordTypeId = eventRecTypeId,
+                NSP_Event_Type__c = 'Core Sales',
+                NSP_Event_Subtype__c = 'Discovery Call',
+                NSP_Status__c = 'Open',
+                ActivityDateTime = testtime,
+                StartDateTime = testtime,
+                EndDateTime = testtime,
+                ActivityDate = System.today()
+                );
+                insert testEvent;
 
-            Test.stopTest();
-            Event event = [SELECT id, Owner_Title__c FROM Event WHERE id = :testEvent.id ];
-            System.assertEquals(users[0].title, event.Owner_Title__c);
+                Test.stopTest();
+                Event event = [SELECT id, Creator_Title__c FROM Event WHERE id = :testEvent.id ];
+                System.assertEquals(user[0].title, event.Creator_Title__c);
+
+            }
        }       
     }
 
