@@ -1,6 +1,6 @@
 public with sharing class NSP_EventTriggerHelper {
     // test w/ NSP_EventTriggerHelperTest, LeadLastActivityDateHelperTest (82%)
-    // test w/ NSP_EventTriggerHelperTest (82%)
+    // test w/ NSP_EventTriggerHelperTest (81%)
     // test w/ LeadLastActivityDateHelperTest (35%)
 
     private static final String DISCOVERY_CALL = 'Discovery Call';
@@ -16,23 +16,22 @@ public with sharing class NSP_EventTriggerHelper {
     // @return void
     public void beforeInsertDirector(List<Event> newList) {
         List<Event> eventList = new List<Event>();
-        List<Id> eventTitle = new List<Id>();
+        //  ADO-504540
+        Map<Id, String> ownerTitle = getOwnerTitle(newList);
         for(Event evt : newList){
             evt.NSP_Last_Assigned_Owner__c = evt.OwnerId; // Added as part of STY-01774
             //Added as part of STY-03437
             if(evt.WhatId != null || evt.WhoId != null){
                 eventList.add(evt);
             }
-            if(evt.OwnerId != null){
-                eventTitle.add(evt.id);
+            if(ownerTitle.containsKey(evt.OwnerId)){
+                evt.Owner_Title__c = ownerTitle.get(evt.OwnerId);
             }
-            System.debug('EventId ' + evt.Id);
         }
         updateEventSales(newList,null);
         if(!eventList.isEmpty()){
             populateWhatAndWhoNamesEvent(eventList);//Update of NSP_What_Name__c and NSP_Who_Name__c before Insert
         }
-        //updateEventTitle(eventTitle);
     }
 
     // Iterates throught the map of new Event and passes the required attributes to other methods.
@@ -564,6 +563,27 @@ public with sharing class NSP_EventTriggerHelper {
         }
         private set;
     }
-
+  
+    //
+    // Description : Returns the list os users titles
+    // @param newEventList List of new Events
+    // @return Map of User Id and User Title
+    //  ADO-504540
+    //
+    private static Map<Id, String> getOwnerTitle(List<Event> newList){
+        Map<Id, String> ownersTitle = new Map<Id, String>();
+        if(newList != null){
+            List<Id> ownerId =  new List<Id>();
+            for(Event event : newList){
+                if(event.OwnerId != null){
+                    ownerId.add(event.OwnerId);
+                }
+            }
+            for(User user : [SELECT Id, Title FROM User WHERE Id IN :ownerId AND Title != null]){
+                ownersTitle.put(user.Id, user.Title);
+            }
+        }
+        return ownersTitle;
+    }
 }
 //

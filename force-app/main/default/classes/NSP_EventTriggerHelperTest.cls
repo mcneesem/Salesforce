@@ -291,4 +291,43 @@ private class NSP_EventTriggerHelperTest {
         }
         Test.stopTest();
     }
+
+    @IsTest 
+    private static void testEventOwnerTitle() {
+        
+        Test.startTest();
+        List<User> users = [SELECT Id, Title FROM User WHERE Profile.Name = 'System Administrator' AND title != null LIMIT 1];
+        if(users != null && users.size() == 1) {
+            Lead testLead = new Lead(
+            FirstName = 'Test',
+            LastName = 'Lead',
+            Company = 'Test Company',
+            Email = 'testlead@testcompany.com',
+            OwnerId = users[0].Id
+            );
+            insert testLead;
+    
+            // Create Event with Discovery Call subtype and Open status
+            DateTime testtime = System.now();
+            Id eventRecTypeId = Schema.SObjectType.Event.getRecordTypeInfosByDeveloperName().get('Core_Sales_Event_RT').getRecordTypeId();
+            Event testEvent = new Event(
+            OwnerId = users[0].Id,
+            NSP_Lead__c = testLead.Id,
+            RecordTypeId = eventRecTypeId,
+            NSP_Event_Type__c = 'Core Sales',
+            NSP_Event_Subtype__c = 'Discovery Call',
+            NSP_Status__c = 'Open',
+            ActivityDateTime = testtime,
+            StartDateTime = testtime,
+            EndDateTime = testtime,
+            ActivityDate = System.today()
+            );
+            insert testEvent;
+
+            Test.stopTest();
+            Event event = [SELECT id, Owner_Title__c FROM Event WHERE id = :testEvent.id ];
+            System.assertEquals(users[0].title, event.Owner_Title__c);
+       }       
+    }
+
 }
