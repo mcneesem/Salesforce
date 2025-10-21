@@ -160,6 +160,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Gifting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In-Product</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Insperity Blog</fullName>
             <default>false</default>
         </values>
@@ -193,6 +201,26 @@
         </values>
         <values>
             <fullName>RM - Event - Alliances</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RM - Event - Loyalty %28COI%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RM - Event - Loyalty %28Client Engagement%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RM - Event - Loyalty %28Generic%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RM - Event - Loyalty %28Local Sponsorship%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RM - Event - Loyalty %28Our Client%27s Clients%29</fullName>
             <default>false</default>
         </values>
         <values>
