@@ -97,11 +97,15 @@ public class LoadFullAccessPermSets {
                 }
             }
 
-            if (permSet != null && !Test.isRunningTest()) {
-                List<MetadataService.SaveResult> results = service.updateMetadata( new MetadataService.Metadata[] { permSet });
-                if ( !results[0].success ) {
-                    LoadFullAccessPermSetsQueueable.createErrorLog( 'loadRecTypeVisibility' , null , 'RecTypeVisibility errors: ' + results[0].errors[0].message );
-                }
+            updatePermSet( permSet , service );
+        }
+    }
+
+    private static void updatePermSet( MetadataService.PermissionSet permSet , MetadataService.MetadataPort service ){
+        if (permSet != null && !Test.isRunningTest()) {
+            List<MetadataService.SaveResult> results = service.updateMetadata( new MetadataService.Metadata[] { permSet });
+            if ( !results[0].success ) {
+                LoadFullAccessPermSetsQueueable.createErrorLog( 'loadRecTypeVisibility' , null , 'RecTypeVisibility errors: ' + results[0].errors[0].message );
             }
         }
     }
