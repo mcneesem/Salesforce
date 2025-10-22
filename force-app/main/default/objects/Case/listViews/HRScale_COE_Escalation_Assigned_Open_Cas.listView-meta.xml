@@ -5,13 +5,13 @@
     <columns>CASES.SUBJECT</columns>
     <columns>CASES.STATUS</columns>
     <columns>NSP_Owner__c</columns>
-    <columns>NSP_Category_Picklist__c</columns>
+    <columns>NSP_Category__c</columns>
     <columns>NSP_SubCategory__c</columns>
     <columns>NSP_ClientNumber__c</columns>
     <columns>ASSET.NAME</columns>
     <columns>CASES.PRIORITY</columns>
     <columns>CASES.CASE_NUMBER</columns>
-    <filterScope>Queue</filterScope>
+    <filterScope>Everything</filterScope>
     <filters>
         <field>CASES.STATUS</field>
         <operation>equals</operation>
@@ -28,7 +28,6 @@
         <value>HRScale COE Escalation</value>
     </filters>
     <label>HRScale COE Escalation Assigned Open Cas</label>
-    <queue>HRScale_COE_Escalation</queue>
     <sharedTo>
         <allInternalUsers></allInternalUsers>
     </sharedTo>
