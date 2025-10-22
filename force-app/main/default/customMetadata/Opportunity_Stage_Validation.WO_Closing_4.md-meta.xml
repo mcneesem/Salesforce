@@ -4,11 +4,15 @@
     <protected>false</protected>
     <values>
         <field>Error_Message__c</field>
-        <value xsi:type="xsd:string">Only If</value>
+        <value xsi:type="xsd:string">Please add Closing Appointment Event before moving to Closing stage</value>
     </values>
     <values>
         <field>Field__c</field>
         <value xsi:type="xsd:string">Fee_Inclusive__c</value>
+    </values>
+    <values>
+        <field>Group_Condition__c</field>
+        <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
         <field>Group__c</field>

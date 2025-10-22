@@ -326,7 +326,7 @@
         <faultConnector>
             <targetReference>Assign_varFaultElement_Get_Related_Events</targetReference>
         </faultConnector>
-        <filterLogic>1 AND (2 OR 3) AND 4 AND 5 AND (6 OR 7)</filterLogic>
+        <filterLogic>1 AND (2 OR 3) AND 4 AND 5 AND (6 OR 7) AND 8</filterLogic>
         <filters>
             <field>WhatId</field>
             <operator>EqualTo</operator>
@@ -374,6 +374,13 @@
             <operator>EqualTo</operator>
             <value>
                 <stringValue>0124x000000yRv3AAE</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>IsChild</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
             </value>
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>

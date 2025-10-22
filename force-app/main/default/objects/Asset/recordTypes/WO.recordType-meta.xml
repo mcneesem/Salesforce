@@ -85,6 +85,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>I_9_Service_Exception__c</picklist>
+        <values>
+            <fullName>I-9 Collection Exception</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Opt-Out</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NSP_Account_Status__c</picklist>
         <values>
             <fullName>Active</fullName>
@@ -834,6 +845,14 @@
         </values>
         <values>
             <fullName>127</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>128</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>129</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2403,6 +2422,10 @@
     <picklistValues>
         <picklist>NSP_Service_Package__c</picklist>
         <values>
+            <fullName>HRScale</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>WO - AS Agency</fullName>
             <default>false</default>
         </values>
@@ -2466,15 +2489,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>MMSO - East</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMSO - Houston</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>MMSO - National Accounts</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMSO - Northeast</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2482,7 +2501,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>MMSO - Western</fullName>
+            <fullName>MMSO - Southwest</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMSO - West</fullName>
             <default>false</default>
         </values>
         <values>

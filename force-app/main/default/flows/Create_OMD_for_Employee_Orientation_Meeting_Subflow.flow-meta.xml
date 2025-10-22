@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <apiVersion>61.0</apiVersion>
+    <apiVersion>64.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Assign_OMD_Record_to_Collection</name>
         <label>Assign OMD Record to Collection</label>
-        <locationX>50</locationX>
-        <locationY>1922</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>rc_OMD_OT_Meetings</assignToReference>
             <operator>Add</operator>
@@ -20,8 +21,8 @@
     <assignments>
         <name>Assign_Scheduling_Blocks_Collection</name>
         <label>Assign : Scheduling Blocks Collection</label>
-        <locationX>182</locationX>
-        <locationY>350</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>rc_Blocks_Scheduling</assignToReference>
             <operator>Add</operator>
@@ -36,8 +37,8 @@
     <assignments>
         <name>Assign_Temp_Block_Collection</name>
         <label>Assign : Temp Block Collection</label>
-        <locationX>270</locationX>
-        <locationY>1406</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>rc_temp_blocks</assignToReference>
             <operator>Add</operator>
@@ -52,8 +53,8 @@
     <assignments>
         <name>Assign_to_OMD_Record</name>
         <label>Assign to OMD Record</label>
-        <locationX>50</locationX>
-        <locationY>1814</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>r_OMD_Each_OT_Meeting.Preferred_Meeting_Time__c</assignToReference>
             <operator>Assign</operator>
@@ -166,8 +167,8 @@
     <assignments>
         <name>Clear_off_Temp_Block_Collection</name>
         <label>Clear-off Temp Block Collection</label>
-        <locationX>50</locationX>
-        <locationY>1706</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>rc_temp_blocks</assignToReference>
             <operator>Assign</operator>
@@ -179,8 +180,8 @@
     <assignments>
         <name>Decrement_Slot_Remaining</name>
         <label>Decrement Slot Remaining</label>
-        <locationX>138</locationX>
-        <locationY>1214</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>Loop_Decrement_Slots_Remaining.Slots_Remaining__c</assignToReference>
             <operator>Subtract</operator>
@@ -195,8 +196,8 @@
     <assignments>
         <name>Increment_Counter</name>
         <label>Increment Counter</label>
-        <locationX>50</locationX>
-        <locationY>566</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>v_Counter</assignToReference>
             <operator>Add</operator>
@@ -211,8 +212,8 @@
     <assignments>
         <name>Re_Initialize_Block_Collection</name>
         <label>Re-Initialize Block Collection</label>
-        <locationX>50</locationX>
-        <locationY>1598</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>rc_Blocks_Scheduling</assignToReference>
             <operator>Assign</operator>
@@ -228,8 +229,8 @@
         <description>resetting record for each screen data</description>
         <name>Reset_OMD_Record</name>
         <label>Reset OMD Record</label>
-        <locationX>50</locationX>
-        <locationY>2030</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>r_OMD_Each_OT_Meeting</assignToReference>
             <operator>Assign</operator>
@@ -242,8 +243,8 @@
     <assignments>
         <name>Set_Fault_Element_Get_OMR_Dates_in_Time_Parameters_After_SKO</name>
         <label>Set Fault Element : Get_OMR_Dates_in_Time_Parameters_After_SKO</label>
-        <locationX>578</locationX>
-        <locationY>350</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -267,8 +268,8 @@
         <name>Filter_Blocks</name>
         <elementSubtype>FilterCollectionProcessor</elementSubtype>
         <label>Filter Blocks</label>
-        <locationX>50</locationX>
-        <locationY>674</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignNextValueToReference>currentItem_Filter_Records</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
         <collectionReference>rc_Blocks_Scheduling</collectionReference>
@@ -302,8 +303,8 @@
         <name>Sort_OMR_Blocks_by_date_and_time</name>
         <elementSubtype>SortCollectionProcessor</elementSubtype>
         <label>Sort OMR Blocks by date and time</label>
-        <locationX>50</locationX>
-        <locationY>782</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <collectionProcessorType>SortCollectionProcessor</collectionProcessorType>
         <collectionReference>rc_Blocks_Scheduling</collectionReference>
         <connector>
@@ -323,8 +324,8 @@
     <decisions>
         <name>Block_Selected</name>
         <label>Block Selected</label>
-        <locationX>270</locationX>
-        <locationY>1106</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnector>
             <targetReference>Assign_Temp_Block_Collection</targetReference>
         </defaultConnector>
@@ -348,8 +349,8 @@
     <decisions>
         <name>Loop_No_of_OT_Meetings</name>
         <label>Loop : No of OT Meetings</label>
-        <locationX>182</locationX>
-        <locationY>458</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Loop_until_No_of_Meetings</name>
@@ -368,7 +369,8 @@
         </rules>
     </decisions>
     <description>New Version for Onboarding Meeting Detail Records and Multiple Task Records.
-Added OMD as record Input</description>
+Added OMD as record Input
+Added Time zone, Date Format and removed display text</description>
     <dynamicChoiceSets>
         <name>pc_Meeting_Type</name>
         <dataType>Picklist</dataType>
@@ -420,8 +422,8 @@ Added OMD as record Input</description>
     <loops>
         <name>Loop_Decrement_Slots_Remaining</name>
         <label>Loop : Decrement Slots Remaining</label>
-        <locationX>50</locationX>
-        <locationY>998</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <collectionReference>rc_Blocks_Scheduling</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -453,8 +455,8 @@ Added OMD as record Input</description>
     <recordLookups>
         <name>Get_OMR_Dates_in_Time_Parameters_After_SKO</name>
         <label>Get OMR Dates in Time Parameters After SKO</label>
-        <locationX>182</locationX>
-        <locationY>242</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assign_Scheduling_Blocks_Collection</targetReference>
@@ -508,8 +510,8 @@ Added OMD as record Input</description>
     <screens>
         <name>Employee_Orientation_Meeting</name>
         <label>Employee Orientation Meeting</label>
-        <locationX>50</locationX>
-        <locationY>890</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -556,7 +558,7 @@ Added OMD as record Input</description>
         </fields>
         <fields>
             <name>eom_block_1</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 16px;&quot;&gt;Employee Orientation Meeting #{!v_Counter}:&lt;/strong&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;em style=&quot;font-size: 14px; color: rgb(240, 5, 5);&quot;&gt;Note: All times below are displayed in Central Time Zone&lt;/em&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(240, 5, 5);&quot;&gt;For New Client Employee Orientation Meetings only: Please choose a projected date and time below. Orientation Meeting timing and scheduling will be discussed with the client during the Client Transition Meeting. You will receive a confirmation chatter email/notification once the OT Meeting has been scheduled.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 16px;&quot;&gt;Employee Orientation Meeting #{!v_Counter}:&lt;/strong&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(240, 5, 5);&quot;&gt;For New Client Employee Orientation Meetings only: Please choose a projected date and time below. Orientation Meeting timing and scheduling will be discussed with the client during the Client Transition Meeting. You will receive a confirmation chatter email/notification once the OT Meeting has been scheduled.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -602,7 +604,7 @@ Added OMD as record Input</description>
             <inputParameters>
                 <name>columns</name>
                 <value>
-                    <stringValue>[{&quot;apiName&quot;:&quot;Date_Valid_Formula__c&quot;,&quot;guid&quot;:&quot;column-1f37&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Date Valid&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;label&quot;:&quot;Date Valid&quot;,&quot;type&quot;:&quot;date&quot;},{&quot;apiName&quot;:&quot;Start_Time_picklist__c&quot;,&quot;guid&quot;:&quot;column-453a&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:1,&quot;label&quot;:&quot;Start Time&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;End_Time_picklist__c&quot;,&quot;guid&quot;:&quot;column-5e98&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:2,&quot;label&quot;:&quot;End Time&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;Slots_Remaining__c&quot;,&quot;guid&quot;:&quot;column-fa41&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Available Slots&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:3,&quot;label&quot;:&quot;Slots Remaining&quot;,&quot;type&quot;:&quot;number&quot;}]</stringValue>
+                    <stringValue>[{&quot;apiName&quot;:&quot;Date_Valid_ISO_Format__c&quot;,&quot;guid&quot;:&quot;column-1f37&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Date Valid&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;label&quot;:&quot;Date Valid ISO&quot;,&quot;type&quot;:&quot;customRichText&quot;},{&quot;apiName&quot;:&quot;Start_Time_picklist__c&quot;,&quot;guid&quot;:&quot;column-453a&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:1,&quot;label&quot;:&quot;Start Time&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;End_Time_picklist__c&quot;,&quot;guid&quot;:&quot;column-5e98&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:2,&quot;label&quot;:&quot;End Time&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;Time_Zone__c&quot;,&quot;guid&quot;:&quot;column-ca45&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Time Zone&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:3,&quot;label&quot;:&quot;Time Zone&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;Slots_Remaining__c&quot;,&quot;guid&quot;:&quot;column-fa41&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Available Slots&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:4,&quot;label&quot;:&quot;Slots Remaining&quot;,&quot;type&quot;:&quot;number&quot;}]</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -613,6 +615,12 @@ Added OMD as record Input</description>
             </inputParameters>
             <inputParameters>
                 <name>shouldDisplayLabel</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isShowSearchBar</name>
                 <value>
                     <booleanValue>true</booleanValue>
                 </value>
@@ -632,7 +640,7 @@ Added OMD as record Input</description>
         <fields>
             <name>Preferred_Meeting_Time_within_Selected_Time_Block_1</name>
             <dataType>String</dataType>
-            <fieldText>Preferred Meeting Time within Selected Time Block (include meeting time zone)</fieldText>
+            <fieldText>Proposed Meeting Time within Selected Time Block</fieldText>
             <fieldType>InputField</fieldType>
             <helpText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Enter up to 100 characters&lt;/span&gt;&lt;/p&gt;</helpText>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -748,8 +756,8 @@ Added OMD as record Input</description>
     <screens>
         <name>Employee_Orientation_Meeting_Type_Start_Screen</name>
         <label>Employee Orientation Meeting Type Start Screen</label>
-        <locationX>182</locationX>
-        <locationY>134</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -830,8 +838,8 @@ Added OMD as record Input</description>
     <screens>
         <name>Error_Processing_Request</name>
         <label>Error Processing Request</label>
-        <locationX>578</locationX>
-        <locationY>566</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -852,7 +860,7 @@ Added OMD as record Input</description>
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>56</locationX>
+        <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Employee_Orientation_Meeting_Type_Start_Screen</targetReference>
@@ -862,8 +870,8 @@ Added OMD as record Input</description>
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
-        <locationX>578</locationX>
-        <locationY>458</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>Error_Processing_Request</targetReference>
         </connector>

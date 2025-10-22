@@ -467,6 +467,16 @@
                 <default>false</default>
                 <label>Autumn Lane Advisors</label>
             </value>
+            <value>
+                <fullName>128</fullName>
+                <default>false</default>
+                <label>Aureon Partners LLC</label>
+            </value>
+            <value>
+                <fullName>129</fullName>
+                <default>false</default>
+                <label>VantEdge Partners</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

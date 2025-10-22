@@ -223,4 +223,16 @@
         <recordType>pse__Proj__c.TES_BPS</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>pse__Project_Task__c.BPS_Project_Task</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>pse__Project_Task__c.PEO_Project_Task</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>pse__Project_Task__c.RET_Project_Task</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
 </PermissionSet>

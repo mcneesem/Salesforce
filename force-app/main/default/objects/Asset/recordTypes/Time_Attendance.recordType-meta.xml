@@ -2210,6 +2210,10 @@
     <picklistValues>
         <picklist>NSP_Service_Package__c</picklist>
         <values>
+            <fullName>HRScale</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>WO - AS Agency</fullName>
             <default>false</default>
         </values>
@@ -2257,15 +2261,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>MMSO - East</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMSO - Houston</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>MMSO - National Accounts</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMSO - Northeast</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2273,7 +2273,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>MMSO - Western</fullName>
+            <fullName>MMSO - Southwest</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMSO - West</fullName>
             <default>false</default>
         </values>
         <values>

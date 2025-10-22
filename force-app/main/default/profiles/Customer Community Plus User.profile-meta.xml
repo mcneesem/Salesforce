@@ -1441,7 +1441,6 @@
         <field>Case.NSP_Dunning_Type__c</field>
         <readable>false</readable>
     </fieldPermissions>
-    
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.NSP_FLSA_Case__c</field>
@@ -1957,7 +1956,6 @@
         <field>Contact.NSP_Preferred_First_Name__c</field>
         <readable>false</readable>
     </fieldPermissions>
-    
     <fieldPermissions>
         <editable>false</editable>
         <field>Contact.NSP_Reference_Information__c</field>
@@ -3888,7 +3886,6 @@
         <field>Implementation_Profile__c.NSP_Provide_previous_coverage_details__c</field>
         <readable>false</readable>
     </fieldPermissions>
-    
     <fieldPermissions>
         <editable>false</editable>
         <field>Implementation_Profile__c.NSP_RS_Doc_Contact_Info__c</field>
@@ -7874,7 +7871,6 @@
         <field>NSP_ReportRequest__c.NSP_Phone_Number__c</field>
         <readable>false</readable>
     </fieldPermissions>
-    
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_ReportRequest__c.NSP_Question10_MatrixSubCategories__c</field>
@@ -9275,7 +9271,6 @@
         <field>NSP_Verification_Log__c.NSP_Verification_Note__c</field>
         <readable>false</readable>
     </fieldPermissions>
-   
     <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.NSP_Budgetary_Quote__c</field>
@@ -10481,14 +10476,12 @@
         <field>pse__Proj__c.NSP_NetSuite_External_ID__c</field>
         <readable>false</readable>
     </fieldPermissions>
-    
-    
+
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Proj__c.NSP_OneVoice_External_ID__c</field>
         <readable>false</readable>
     </fieldPermissions>
-   
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Proj__c.NSP_RET_Client_ID__c</field>
@@ -10509,7 +10502,6 @@
         <field>pse__Proj__c.NSP_Sales_Rep__c</field>
         <readable>false</readable>
     </fieldPermissions>
-    
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Proj__c.NSP_Template_Generated__c</field>
@@ -10525,7 +10517,6 @@
         <field>pse__Proj__c.NSP_Total_Projected_Employee_Enrollment__c</field>
         <readable>false</readable>
     </fieldPermissions>
-    
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Proj__c.NSP_Visible_to_Client__c</field>
@@ -10803,32 +10794,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>pse__Project_Task__c.NSP_Client_Liaison_Email__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>pse__Project_Task__c.NSP_Client_Liaison_Name__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>pse__Project_Task__c.NSP_Create_Work_Order__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Project_Task__c.NSP_Detail__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>pse__Project_Task__c.NSP_HR_Specialist_Email__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>pse__Project_Task__c.NSP_HR_Specialist_Name__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -10977,40 +10948,40 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-		<editable>false</editable>
-		<field>blng__Invoice__c.Invoice_ID_18__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>false</editable>
-		<field>blng__InvoiceLine__c.Invoice_Line_ID_18__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>false</editable>
-		<field>blng__CreditNote__c.Credit_Note_ID_18__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>false</editable>
-		<field>blng__CreditNoteLine__c.Credit_Note_Line_ID_18__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>false</editable>
-		<field>blng__DebitNote__c.Debit_Note_ID_18__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>false</editable>
-		<field>blng__DebitNoteLine__c.Debit_Note_Line_ID_18__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>false</editable>
-		<field>blng__Payment__c.Payment_ID_18__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
+        <editable>false</editable>
+        <field>blng__Invoice__c.Invoice_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__InvoiceLine__c.Invoice_Line_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__CreditNote__c.Credit_Note_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__CreditNoteLine__c.Credit_Note_Line_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__DebitNote__c.Debit_Note_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__DebitNoteLine__c.Debit_Note_Line_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__Payment__c.Payment_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <userLicense>Customer Community Plus</userLicense>
     <userPermissions>
         <enabled>true</enabled>
@@ -11027,7 +10998,7 @@
     <layoutAssignments>
         <layout>pse__Proj__c-PEO Project Billable</layout>
         <recordType>pse__Proj__c.PEO_Project_Billable</recordType>
-    </layoutAssignments>    
+    </layoutAssignments>
     <layoutAssignments>
         <layout>pse__Proj__c-Project Community Layout</layout>
         <recordType>pse__Proj__c.PEO_Project</recordType>
@@ -11064,7 +11035,7 @@
         <layout>Implementation_Profile__c-Community MM Implementation Profile</layout>
         <recordType>Implementation_Profile__c.Middle_Market</recordType>
     </layoutAssignments>
-	<layoutAssignments>
+    <layoutAssignments>
         <layout>Implementation_Profile__c-Community FSO Implementation Profile</layout>
         <recordType>Implementation_Profile__c.FSO</recordType>
     </layoutAssignments>
@@ -11075,7 +11046,7 @@
         <layout>NSP_Project_Team__c-Community Project Team Layout</layout>
         <recordType>NSP_Project_Team__c.NSP_FSO_Project_Team</recordType>
     </layoutAssignments>
-	<layoutAssignments>
+    <layoutAssignments>
         <layout>NSP_Project_Team__c-Community Project Team Layout</layout>
         <recordType>NSP_Project_Team__c.NSP_Middle_Market_Project_Team</recordType>
     </layoutAssignments>

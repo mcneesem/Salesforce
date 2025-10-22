@@ -101,13 +101,18 @@ public with sharing class NSP_TerminationFormTriggerHelper {
             List<NSP_Sub_Client__c> lTerminatedSubClients = new List<NSP_Sub_Client__c>(
                 [
                     SELECT
-                        Id , NSP_Account__c , NSP_Sub_Client__c , NSP_Renewal_Date__c ,
-                        NSP_Original_Contract_Date__c , NSP_Account_Status_Date__c ,
+                        Id ,
+                        NSP_Account__c ,
+                        NSP_Sub_Client__c ,
+                        Is_Primary_Contract__c ,
+                        NSP_Renewal_Date__c ,
+                        NSP_Original_Contract_Date__c ,
+                        NSP_Account_Status_Date__c ,
                         NSP_Asset__r.NSP_Account_Status_Date__c
                     FROM NSP_Sub_Client__c
                     WHERE (
-                        NSP_Account__c IN: sAccountIds
-                        AND NSP_Asset__c IN: terminatedAssetsList
+                        ( NSP_Account__c IN :sAccountIds )
+                        AND ( NSP_Asset__c IN :terminatedAssetsList )
                     )
                 ]
             );
@@ -122,9 +127,9 @@ public with sharing class NSP_TerminationFormTriggerHelper {
                         NSP_Original_Contract_Date__c
                     FROM NSP_Sub_Client__c
                     WHERE (
-                        NSP_Account__c IN: sAccountIds
-                        AND NSP_Asset__c IN: assetsList
-                        AND NSP_Account_Status__c != :NSP_ServiceConstants.TERMINATED
+                        ( NSP_Account__c IN :sAccountIds )
+                        AND ( NSP_Asset__c IN :assetsList )
+                        AND ( NSP_Account_Status__c != :NSP_ServiceConstants.TERMINATED )
                     )
                 ]
             );

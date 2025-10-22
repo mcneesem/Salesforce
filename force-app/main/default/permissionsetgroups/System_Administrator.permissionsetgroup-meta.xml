@@ -11,6 +11,7 @@
     <permissionSets>Admin_Layout_Access</permissionSets>
     <permissionSets>Allow_Delete_Accounts</permissionSets>
     <permissionSets>Allow_Delete_Leads</permissionSets>
+    <permissionSets>Asset_Contact_Edit_Access</permissionSets>
     <permissionSets>Asset_Hardware_Edit</permissionSets>
     <permissionSets>Billing_and_CPQ_Data_Load</permissionSets>
     <permissionSets>Bundle_Template_Flag_fields_Permission</permissionSets>

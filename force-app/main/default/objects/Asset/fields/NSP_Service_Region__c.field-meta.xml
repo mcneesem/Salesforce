@@ -17,19 +17,9 @@
                 <label>MMSO - Central</label>
             </value>
             <value>
-                <fullName>MMSO - East</fullName>
-                <default>false</default>
-                <label>MMSO - East</label>
-            </value>
-            <value>
                 <fullName>MMSO - Enterprise</fullName>
                 <default>false</default>
                 <label>MMSO - Enterprise</label>
-            </value>
-            <value>
-                <fullName>MMSO - Houston</fullName>
-                <default>false</default>
-                <label>MMSO - Houston</label>
             </value>
             <value>
                 <fullName>MMSO - National Accounts</fullName>
@@ -37,14 +27,24 @@
                 <label>MMSO - National Accounts</label>
             </value>
             <value>
+                <fullName>MMSO - Northeast</fullName>
+                <default>false</default>
+                <label>MMSO - Northeast</label>
+            </value>
+            <value>
                 <fullName>MMSO - Southeast</fullName>
                 <default>false</default>
                 <label>MMSO - Southeast</label>
             </value>
             <value>
-                <fullName>MMSO - Western</fullName>
+                <fullName>MMSO - Southwest</fullName>
                 <default>false</default>
-                <label>MMSO - Western</label>
+                <label>MMSO - Southwest</label>
+            </value>
+            <value>
+                <fullName>MMSO - West</fullName>
+                <default>false</default>
+                <label>MMSO - West</label>
             </value>
             <value>
                 <fullName>FSO - Central</fullName>
@@ -76,6 +76,48 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>FSO - Houston</label>
+            </value>
+            <value>
+                <fullName>MMSO - East</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>MMSO - East</label>
+            </value>
+            <value>
+                <fullName>MMSO - Houston</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>MMSO - Houston</label>
+            </value>
+            <value>
+                <fullName>MMSO - MidMarket</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>MMSO - MidMarket</label>
+            </value>
+            <value>
+                <fullName>MMSO - Western</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>MMSO - Western</label>
+            </value>
+            <value>
+                <fullName>WO - WD Bundle Plus</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>WO - WD Bundle Plus</label>
+            </value>
+            <value>
+                <fullName>WO - WD Full Bundle</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>WO - WD Full Bundle</label>
+            </value>
+            <value>
+                <fullName>WS - WD Bundle Plus</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>WS - WD Bundle Plus</label>
             </value>
         </valueSetDefinition>
     </valueSet>
