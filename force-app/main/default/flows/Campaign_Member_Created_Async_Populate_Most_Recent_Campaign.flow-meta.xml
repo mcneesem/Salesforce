@@ -1,84 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>61.0</apiVersion>
-    <assignments>
-        <name>Assign_new_Most_Recent_Campaign_Name</name>
-        <label>Assign new Most Recent Campaign Name</label>
-        <locationX>176</locationX>
-        <locationY>492</locationY>
-        <assignmentItems>
-            <assignToReference>varLead.Most_Recent_Campaign__c</assignToReference>
-            <operator>Assign</operator>
+    <actionCalls>
+        <name>Lead_Most_Recent_Campaign</name>
+        <label>Lead Most Recent Campaign</label>
+        <locationX>308</locationX>
+        <locationY>276</locationY>
+        <actionName>LeadMostRecentCampaign</actionName>
+        <actionType>apex</actionType>
+        <faultConnector>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </faultConnector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>campaignName</name>
             <value>
                 <elementReference>$Record.Campaign.Name</elementReference>
             </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Update_Lead_Record</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_varFaultElement_Get_Lead_Record</name>
-        <label>Assign varFaultElement - Get Lead Record</label>
-        <locationX>968</locationX>
-        <locationY>384</locationY>
-        <assignmentItems>
-            <assignToReference>varFaultElement</assignToReference>
-            <operator>Assign</operator>
+        </inputParameters>
+        <inputParameters>
+            <name>leadId</name>
             <value>
-                <stringValue>Get_Lead_Record</stringValue>
+                <elementReference>$Record.LeadId</elementReference>
             </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_varFaultElement_Update_Lead_Record</name>
-        <label>Assign varFaultElement - Update Lead Record</label>
-        <locationX>440</locationX>
-        <locationY>708</locationY>
-        <assignmentItems>
-            <assignToReference>varFaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Update_Lead_Record</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <decisions>
-        <name>Null_and_Most_Recent_Campaign_check</name>
-        <label>Null and Most Recent Campaign check</label>
-        <locationX>440</locationX>
-        <locationY>384</locationY>
-        <defaultConnectorLabel>Missing information</defaultConnectorLabel>
-        <rules>
-            <name>Lead_record_found_and_should_be_updated</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>varLead.Id</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>varLead.Most_Recent_Campaign__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <elementReference>$Record.Campaign.Name</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Assign_new_Most_Recent_Campaign_Name</targetReference>
-            </connector>
-            <label>Lead record found and should be updated</label>
-        </rules>
-    </decisions>
+        </inputParameters>
+        <nameSegment>LeadMostRecentCampaign</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <apiVersion>61.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <environments>Default</environments>
     <interviewLabel>Campaign Member - Created - Async - Populate Most Recent Campaign {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Campaign Member - Created - Async - Populate Most Recent Campaign</label>
@@ -101,41 +50,6 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordLookups>
-        <name>Get_Lead_Record</name>
-        <label>Get Lead Record</label>
-        <locationX>440</locationX>
-        <locationY>276</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Null_and_Most_Recent_Campaign_check</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Assign_varFaultElement_Get_Lead_Record</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$Record.LeadId</elementReference>
-            </value>
-        </filters>
-        <object>Lead</object>
-        <outputReference>varLead</outputReference>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>Most_Recent_Campaign__c</queriedFields>
-    </recordLookups>
-    <recordUpdates>
-        <name>Update_Lead_Record</name>
-        <label>Update Lead Record</label>
-        <locationX>176</locationX>
-        <locationY>600</locationY>
-        <faultConnector>
-            <targetReference>Assign_varFaultElement_Update_Lead_Record</targetReference>
-        </faultConnector>
-        <inputReference>varLead</inputReference>
-    </recordUpdates>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
@@ -172,7 +86,7 @@
         <recordTriggerType>Create</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Get_Lead_Record</targetReference>
+                <targetReference>Lead_Most_Recent_Campaign</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
@@ -182,13 +96,13 @@
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
-        <locationX>968</locationX>
-        <locationY>492</locationY>
+        <locationX>572</locationX>
+        <locationY>384</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
             <value>
-                <elementReference>varFaultElement</elementReference>
+                <stringValue>Lead_Most_Recent_Campaign</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -204,19 +118,4 @@
             </value>
         </inputAssignments>
     </subflows>
-    <variables>
-        <name>varFaultElement</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varLead</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Lead</objectType>
-    </variables>
 </Flow>

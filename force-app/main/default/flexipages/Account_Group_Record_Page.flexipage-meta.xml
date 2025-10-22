@@ -784,10 +784,16 @@
                             <value>NSP_Detail__c</value>
                         </valueListItems>
                         <valueListItems>
+                            <value>Details__c</value>
+                        </valueListItems>
+                        <valueListItems>
                             <value>NSP_Estimated_Impact__c</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>NSP_Status__c</value>
+                            <value>Plan_of_Action__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Item_Owner__c</value>
                         </valueListItems>
                         <valueListItems>
                             <value>NSP_Start_Date__c</value>
@@ -796,10 +802,7 @@
                             <value>NSP_End_Date__c</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>NSP_AIMS_Client__c</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Area_of_Focus__c</value>
+                            <value>Due_Date__c</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -1206,6 +1209,45 @@
                 <componentName>postChangeSurveyAccountGroup</componentName>
                 <identifier>c_postChangeSurveyAccountGroup</identifier>
                 <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Termination_Revision_Access}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>NSP_Account_Group__c.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>Asset_Terminations__r</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListComponentOverride</name>
+                    <value>ADVGRID</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>rowsToDisplay</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer2</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Renewal Probability</rightValue>
+                    </criteria>
                     <criteria>
                         <leftValue>{!$Permission.CustomPermission.Termination_Revision_Access}</leftValue>
                         <operator>EQUAL</operator>

@@ -2423,8 +2423,8 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                 mailBody += 'The Insperity effective date for Payroll/Worker’s Comp/EPLI has changed from '
                     + ipRec.NSP_Old_Effective_Date_EPLI__c.format()
                     + ' to '
-                    + ipRec.Effective_Date_Payroll_Worker_comp_EPLI__c.format()
-                    +'.'
+                    + NSP_Implprofile_ServiceHelperUpdate.safeDateFormat( ipRec.Effective_Date_Payroll_Worker_comp_EPLI__c )
+                    + '.'
                     ;
             }
             mailBody += '<br/>';
@@ -2435,8 +2435,8 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                 mailBody += 'The Insperity benefits effective date has changed from '
                     + (ipRec.NSP_Old_Insperity_Ben_effective_date__c).format()
                     + ' to '
-                    + (ipRec.Insperity_benefits_effective_date__c).format()
-                    +'.'
+                    + NSP_Implprofile_ServiceHelperUpdate.safeDateFormat( ipRec.Insperity_benefits_effective_date__c )
+                    + '.'
                     ;
             }
             mailBody += '<br/>';
@@ -2447,7 +2447,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                 mailBody += 'The Medical Package has changed from  '
                     + ipRec.NSP_Old_Benefits_Package__c
                     + ' to '
-                    + ipRec.Benefits_Package__c
+                    + NSP_Implprofile_ServiceHelperUpdate.safeStringFormat( ipRec.Benefits_Package__c )
                     + '.'
                     ;
             }
@@ -2457,6 +2457,14 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                 ;
         }
         return mailBody;
+    }
+
+    private static String safeDateFormat( Date d ) {
+        return ( ( d == null ) ? '' : d.format() );
+    }
+
+    private static String safeStringFormat( String s ) {
+        return ( String.isBlank( s ) ? '' : s );
     }
 
     private static void sendMail(

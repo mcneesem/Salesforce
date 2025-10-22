@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Preceding_Task_Is_Completed__c</fullName>
+    <description>AZD-494460 Check if Preceding task is completed, Refer in flow</description>
+    <formula>pse__Preceding_Task__r.Is_Completed__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Preceding Task Is Completed</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

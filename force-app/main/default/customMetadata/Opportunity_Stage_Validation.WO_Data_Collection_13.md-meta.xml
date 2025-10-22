@@ -11,6 +11,10 @@
         <value xsi:type="xsd:string">EmpSplit_TotalPercentSplit</value>
     </values>
     <values>
+        <field>Group_Condition__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
         <field>Group__c</field>
         <value xsi:nil="true"/>
     </values>

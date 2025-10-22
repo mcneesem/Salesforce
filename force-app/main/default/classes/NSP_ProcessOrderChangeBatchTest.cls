@@ -1,10 +1,10 @@
-@IsTest
+@isTest
 private class NSP_ProcessOrderChangeBatchTest {
     private static final Id CHOICECLIENTSUBPLANRECORDTYPEID = NSP_GenericRecordType.getRecordTypeId('NSP_Client_Sub_Plan_History__c', 'Choice');
     private static final Id RETSERVICESASSETRECORDTYPEID = NSP_GenericRecordType.getRecordTypeId('Asset', NSP_ServiceConstants.RET_CHOICE_ASSET_RECORDTYPE);
 
-    @TestSetup
-    private static void setupTestData(){
+    @testSetup
+    private static void setupTestData() {
         ProcessOrderChangeBatchSettings__c settings = ProcessOrderChangeBatchSettings__c.getOrgDefaults();
         settings.IsEnabled__c = true;
         settings.BatchSize__c = 10;
@@ -12,33 +12,38 @@ private class NSP_ProcessOrderChangeBatchTest {
         NSP_QuoteTriggerHandler.TriggerDisabled = true;
         NSP_AccountTriggerHandler.TriggerDisabled = true;
         NSP_AccountGroupTriggerHandler.TriggerDisabled = true;
-        Profile adminProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
-        User u2 = new User(Alias = 'newUser', Email='newuser@insperity.com',
-                           EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
-                           LocaleSidKey='en_US', ProfileId = adminProfile.Id,
-                           TimeZoneSidKey='America/Los_Angeles', UserName='newuser@insperity.com.test');
-        System.runAs(u2) {
-            
+        List<User> deploymentManagers = [
+            SELECT Id
+            FROM User
+            WHERE ( Id = '0054x0000056lRZAAY' )
+            LIMIT 1
+        ];
+        Assert.isNotNull( deploymentManagers , 'Null Deployment Manager query results.' );
+        Assert.isTrue( ( deploymentManagers.size() > 0 ) , 'No Deployment Manager query results.' );
+        Assert.isTrue( ( deploymentManagers.size() == 1 ) , 'Incorrect Deployment Manager query results.' );
+        User deploymentManager = deploymentManagers[0];
+        System.runAs( deploymentManager ) {
+
             AVA_MAPPER__Entity_Use_code__c entityObj = new AVA_MAPPER__Entity_Use_code__c();
             entityObj.Name = 'ABC';
             entityObj.AVA_MAPPER__Description__c = 'FEDERAL GOV';
             insert entityObj;
-            
+
             Pricebook2 priceBookRec = NSP_TestHelper.getStandardPriceBook2();
-            
+
             Test.getStandardPricebookId();
             Account objaccount = NSP_TestHelper.createAccount(false);
             objaccount.Name = NSP_TestHelper.DEFAULT_COMPANY_NAME;
             objaccount.AVA_MAPPER__Entity_Use_code__c = entityObj.Id;
             objaccount.AVA_MAPPER__Is_Seller_Importer_Of_Record__c = false;
             insert objaccount;
-            
+
             Contact objCon = NSP_TestHelper.createContact(objaccount.id, false);
             objCon.NSP_Sales_Tax_Contact_Key__c = '123';
             objCon.RecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Contact' , 'Sales_Tax' );
             objCon.NSP_Sales_Tax_Contact_Counter__c = 2;
             insert objCon;
-            
+
             pse__Proj__c hcmProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c());
             hcmProject.Name = NSP_ServiceConstants.HCM_PROJECT_NAME;
             hcmProject.pse__Start_Date__c = Date.Today();
@@ -46,14 +51,14 @@ private class NSP_ProcessOrderChangeBatchTest {
             hcmProject.TemplateName__c = NSP_ServiceConstants.HCM_PROJECT_NAME;
             hcmProject.Project_Implementer__c = UserInfo.getUserId();
             insert hcmProject;
-            
-            
+
+
             Opportunity objOpportunity = NSP_TestHelper.createOpenOpportunity(objaccount.Id, 'New Product', false);
             objOpportunity.NSP_Signed_CSA__c = true;
             objOpportunity.NSP_Signed_Delivery_Order__c = true;
             insert objOpportunity;
-            
-            
+
+
             blng__BillingRule__c brObj = new blng__BillingRule__c();
             brObj.blng__Active__c = true;
             brObj.Name = 'Test InsBR';
@@ -61,7 +66,7 @@ private class NSP_ProcessOrderChangeBatchTest {
             brObj.blng__InitialBillingTrigger__c = 'Order Product Activation Date';
             brObj.blng__PartialPeriodTreatment__c = 'Combine';
             insert brObj;
-            
+
             blng__FinanceBook__c blngFinanceRec = new blng__FinanceBook__c();
             blngFinanceRec.blng__Active__c = true;
             blngFinanceRec.blng__FinancePeriodDuration__c = 'Monthly';
@@ -73,23 +78,23 @@ private class NSP_ProcessOrderChangeBatchTest {
             invPlanRecord.blng__BillingScheduleCreation__c = 'Order Product Activation';
             invPlanRecord.Name = 'Invoice Plan';
             insert invPlanRecord;
-            
+
             blng__RevenueRecognitionRule__c rrObj = new blng__RevenueRecognitionRule__c();
             rrObj.blng__Active__c = true;
             rrObj.blng__CreateRevenueSchedule__c = 'No';
             insert rrObj;
-            
+
             blng__TaxRule__c taxRuleObj = new blng__TaxRule__c();
             taxRuleObj.blng__Active__c = true;
             taxRuleObj.blng__TaxableYesNo__c = 'No';
             insert taxRuleObj;
-            
+
             blng__GLRule__c taxTreatmentRec = new blng__GLRule__c(blng__Active__c = true, blng__Notes__c = 'Created to record: Sales Tax Allocation', Name = 'Test GLRule');
             insert taxTreatmentRec;
-            
+
             blng__LegalEntity__c legalEntityRec = new blng__LegalEntity__c(blng__Active__c = true, NSP_Company_Name__c = 'Insperity Business Services', blng__City__c = 'KINGWOOD', blng__State__c = 'TX', blng__County__c = 'US', blng__Street1__c = '19001 CRESCENT SPRINGS DR', blng__ZipPostalCode__c = '77339-3802', Name = 'Test Legal Entity');
             insert legalEntityRec;
-            
+
             blng__BillingTreatment__c blngTreatmentRecord = new blng__BillingTreatment__c();
             blngTreatmentRecord.blng__Active__c = true;
             blngTreatmentRecord.blng__BillingRule__c = brObj.Id;
@@ -98,7 +103,7 @@ private class NSP_ProcessOrderChangeBatchTest {
             blngTreatmentRecord.blng__BillingLegalEntity__c = legalEntityRec.Id;
             blngTreatmentRecord.blng__CancellationRule__c = 'LIFO by Order Product Creation Date';
             insert blngTreatmentRecord;
-            
+
             ConsumptionSchedule csch =  NSP_TestHelper.createConsumptionSchedule('IWX Consumption');
             insert csch;
             // create consumtpion rate
@@ -107,12 +112,12 @@ private class NSP_ProcessOrderChangeBatchTest {
             // activate consumption schedule
             csch.isActive = true;
             update csch;
-            
-            
+
+
             List<Product2> productList = new List<Product2>();
             Product2 objproduct = NSP_TestHelper.createProduct('Test Product', false);
-            objproduct.ProductCode = 'IWXBundleW2'; 
-            objproduct.SBQQ__ChargeType__c = NSP_CPQConstants.PRODUCT_CHARGETYPE_RECURRING;  
+            objproduct.ProductCode = 'IWXBundleW2';
+            objproduct.SBQQ__ChargeType__c = NSP_CPQConstants.PRODUCT_CHARGETYPE_RECURRING;
             objproduct.SBQQ__BillingType__c = 'Arrears';
             objproduct.NSP_Priority_Amendment__c = 11.0;
             objproduct.SBQQ__SubscriptionType__c = NSP_CPQConstants.SUBS_RENEWABLE;
@@ -124,7 +129,7 @@ private class NSP_ProcessOrderChangeBatchTest {
             objproduct.NSP_ApplicableProductAmendNew__c = NSP_CPQConstants.QUOTELINE_APPLICABLEPRODUCT;
             objproduct.blng__TaxRule__c = taxRuleObj.Id;
             productList.add(objproduct);
-            
+
             Product2 objInvproduct = NSP_TestHelper.createProduct('Test Product1', false);
             objInvproduct.ProductCode = 'IWXBundle';
             objInvproduct.SBQQ__ChargeType__c = NSP_CPQConstants.PRODUCT_CHARGETYPE_RECURRING;
@@ -141,7 +146,7 @@ private class NSP_ProcessOrderChangeBatchTest {
             productList.add(objInvproduct);
 
             String fixedPrice = 'Fixed Price';
-            
+
             Product2 objproduct2 = NSP_TestHelper.createProduct('Test Product2', false);
             objproduct2.ProductCode = 'IWXBundle';
             objproduct2.SBQQ__ChargeType__c = NSP_CPQConstants.PRODUCT_CHARGETYPE_RECURRING;
@@ -158,7 +163,7 @@ private class NSP_ProcessOrderChangeBatchTest {
             objproduct2.blng__TaxRule__c = taxRuleObj.Id;
             objproduct2.NSP_ApplicableProductAmendNew__c = NSP_CPQConstants.QUOTELINE_APPLICABLEPRODUCT;
             productList.add(objproduct2);
-            
+
             Product2 objproduct3 = NSP_TestHelper.createProduct('Test Product3', false);
             objproduct3.ProductCode = 'IWXBundle';
             objproduct3.SBQQ__ChargeType__c = NSP_CPQConstants.PRODUCT_CHARGETYPE_RECURRING;
@@ -176,14 +181,14 @@ private class NSP_ProcessOrderChangeBatchTest {
             objproduct3.blng__TaxRule__c = taxRuleObj.Id;
             objproduct3.NSP_ApplicableProductAmendNew__c = NSP_CPQConstants.QUOTELINE_APPLICABLEPRODUCT;
             productList.add(objproduct3);
-            
+
             SBQQ.TriggerControl.disable();
             insert productList;
             SBQQ.TriggerControl.enable();
-            
+
             ProductConsumptionSchedule psch = NSP_TestHelper.linkProductToCs(objproduct3.id,csch.id );
             insert psch;
-            
+
             List<PriceBookEntry> priceBookEntList = new List<PriceBookEntry>();
             PriceBookEntry objPriceBookEntry = NSP_TestHelper.createPriceBookEntry(objproduct.Id, 100, false);
             PriceBookEntry objPriceBookEntry1 = NSP_TestHelper.createPriceBookEntry(objInvproduct.Id, 100, false);
@@ -194,17 +199,17 @@ private class NSP_ProcessOrderChangeBatchTest {
             priceBookEntList.add(objPriceBookEntry2);
             priceBookEntList.add(objPriceBookEntry3);
             insert priceBookEntList;
-            
+
             NSP_Address__c nspAddress = NSP_TestHelper.createCustomAddress();
             nspAddress.NSP_Related_Site__c = objaccount.Id;
-            insert nspAddress;     
-            
+            insert nspAddress;
+
             SBQQ__Quote__c objQuote = NSP_TestHelper.createCPQQuote(objaccount.Id, objOpportunity.Id, false);
             objQuote.SBQQ__primary__c = true;
             objQuote.NSP_Billing_Address__c = nspAddress.Id;
             objQuote.SBQQ__ShippingStreet__c = 'Alondra Boulevard';
-            objQuote.SBQQ__ShippingCity__c = 'San Francisco';   
-            objQuote.SBQQ__StartDate__c = System.today().toStartOfMonth().addMonths(-3);    
+            objQuote.SBQQ__ShippingCity__c = 'San Francisco';
+            objQuote.SBQQ__StartDate__c = System.today().toStartOfMonth().addMonths(-3);
             objQuote.SBQQ__ShippingState__c = 'California';
             objQuote.SBQQ__ShippingCountry__c = 'United States';
             objQuote.SBQQ__ShippingPostalCode__c = '94103';
@@ -216,10 +221,10 @@ private class NSP_ProcessOrderChangeBatchTest {
             objQuote.SBQQ__PriceBook__c = priceBookRec.Id;
             objQuote.NSP_Change_Order_Process_Quote__c = true;
             insert objQuote;
-            
+
             objOpportunity.StageName = 'Closed Won';
             update objOpportunity;
-            
+
             List<SBQQ__QuoteLine__c> objQuoteLine = NSP_TestHelper.createCPQQuotelines(objQuote, productList, priceBookEntList, true);
             objQuoteLine[0].NSP_Action_Type__c = NSP_CPQConstants.ACTION_UPSELL;
             objQuoteLine[2].NSP_Action_Type__c = NSP_CPQConstants.ACTION_UPSELL;
@@ -228,34 +233,34 @@ private class NSP_ProcessOrderChangeBatchTest {
             objQuoteLine[2].NSP_Previous_Quantity__c = 500;
             objQuoteLine[0].NSP_Quoted_Quantity__c = 5;
             objQuoteLine[1].NSP_Quoted_Quantity__c = 5;
-            objQuoteLine[2].NSP_Quoted_Quantity__c = 5;     
-            objQuoteLine[0].SBQQ__SubscriptionType__c = NSP_CPQConstants.SUBS_RENEWABLE;  
-            objQuoteLine[1].SBQQ__SubscriptionType__c = NSP_CPQConstants.SUBS_RENEWABLE;    
-            objQuoteLine[2].NSP_ServiceAssetCategory__c = NSP_CPQConstants.QUOTELINE_APPLICANTTRACKING;  
-            objQuoteLine[3].NSP_ServiceAssetCategory__c = NSP_CPQConstants.QUOTELINE_APPLICANTTRACKING;  
-            objQuoteLine[2].SBQQ__SubscriptionType__c = NSP_CPQConstants.SUBS_EVERGREEN;  
-            objQuoteLine[3].SBQQ__SubscriptionType__c = NSP_CPQConstants.SUBS_EVERGREEN;  
+            objQuoteLine[2].NSP_Quoted_Quantity__c = 5;
+            objQuoteLine[0].SBQQ__SubscriptionType__c = NSP_CPQConstants.SUBS_RENEWABLE;
+            objQuoteLine[1].SBQQ__SubscriptionType__c = NSP_CPQConstants.SUBS_RENEWABLE;
+            objQuoteLine[2].NSP_ServiceAssetCategory__c = NSP_CPQConstants.QUOTELINE_APPLICANTTRACKING;
+            objQuoteLine[3].NSP_ServiceAssetCategory__c = NSP_CPQConstants.QUOTELINE_APPLICANTTRACKING;
+            objQuoteLine[2].SBQQ__SubscriptionType__c = NSP_CPQConstants.SUBS_EVERGREEN;
+            objQuoteLine[3].SBQQ__SubscriptionType__c = NSP_CPQConstants.SUBS_EVERGREEN;
             objQuoteLine[2].SBQQ__SubscriptionPricing__c = fixedPrice;
             objQuoteLine[0].NSP_Total_Free_Periods__c = 1 ;
             objQuoteLine[1].NSP_Total_Free_Periods__c = 1 ;
             objQuoteLine[2].NSP_Total_Free_Periods__c = 1 ;
             objQuoteLine[0].NSP_Scholarship_Price__c = true ;
-            objQuoteLine[1].NSP_Quoted_Quantity__c = 25;  
-            objQuoteLine[1].NSP_Previous_Quantity__c = 22; 
+            objQuoteLine[1].NSP_Quoted_Quantity__c = 25;
+            objQuoteLine[1].NSP_Previous_Quantity__c = 22;
             objQuoteLine[1].NSP_Scholarship_Price__c = true ;
             objQuoteLine[1].SBQQ__Source__c  = objQuoteLine[0].Id ;
             objQuoteLine[2].SBQQ__Source__c  = objQuoteLine[1].Id ;
             objQuoteLine[0].SBQQ__Source__c  = objQuoteLine[2].Id ;
-            objQuoteLine[1].NSP_Action_Type__c = NSP_CPQConstants.ACTION_UPSELL;   
+            objQuoteLine[1].NSP_Action_Type__c = NSP_CPQConstants.ACTION_UPSELL;
             objQuoteLine[2].NSP_Action_Type__c = NSP_CPQConstants.ACTION_DOWNGRADE;
             objQuoteLine[2].NSP_Scholarship_Price__c = true ;
             objQuoteLine[3].SBQQ__HasConsumptionSchedule__c = true;
             update objQuoteLine;
-            
+
             objQuote.SBQQ__Ordered__c = true;
             test.startTest();
             update objQuote;
-            
+
             blng__PaymentMethod__c objPaymntMethod = new blng__PaymentMethod__c();
             objPaymntMethod.blng__Account__c = objaccount.Id;
             objPaymntMethod.blng__Active__c = true;
@@ -273,7 +278,7 @@ private class NSP_ProcessOrderChangeBatchTest {
         }
     }
 
-    @IsTest
+    @isTest
     private static void testProcessChange() {
         list<SBQQ__Quote__c> quoteList = [SELECT Id from SBQQ__Quote__c where SBQQ__primary__c = true];
         Test.startTest();
@@ -283,23 +288,23 @@ private class NSP_ProcessOrderChangeBatchTest {
         newAsset.NSP_Client_is_Lead_Parent__c = true;
         newAsset.NSP_Price_Level__c= 'RET - Bundled Plus #2';
         Database.insert(newAsset);
-        
+
         Asset newMemberAsset = (Asset)NSP_TestExtendedDataFactory.createSObject(new Asset(), NSP_CPQConstants.ASSETDEFAULTS, false);
         newMemberAsset.RecordTypeId = RETSERVICESASSETRECORDTYPEID;
         newMemberAsset.NSP_Process_Order_Change__c = true;
         newMemberAsset.NSP_RET_lead_parent__c = newAsset.Id;
         newMemberAsset.NSP_ReAssigned_Order_Quote_Id__c = quoteList[0].id;
         Database.insert(newMemberAsset);
-        
-        
+
+
         NSP_ProcessOrderChangeBatch bch = new NSP_ProcessOrderChangeBatch();
-        Database.executeBatch(bch,Integer.valueof(system.label.NSP_OrderChangeBatchSize)); 
+        Database.executeBatch(bch,Integer.valueof(system.label.NSP_OrderChangeBatchSize));
         Test.stopTest();
         Asset newAsset1=[SELECT Id,NSP_Change_Order_Process_Contract_Status__c FROM Asset WHERE Id=:newMemberAsset.Id limit 1];
         system.AssertEquals('Change Order Created',newAsset1.NSP_Change_Order_Process_Contract_Status__c);
     }
 
-    @IsTest
+    @isTest
     private static void testProcessCancellation() {
         list<SBQQ__Quote__c> quoteList = [SELECT Id from SBQQ__Quote__c where SBQQ__primary__c = true];
         Test.startTest();
@@ -309,7 +314,7 @@ private class NSP_ProcessOrderChangeBatchTest {
         newAsset.NSP_Client_is_Lead_Parent__c = true;
         newAsset.NSP_Price_Level__c= 'RET - Bundled Plus #2';
         Database.insert(newAsset);
-        
+
         Asset newMemberAsset = (Asset)NSP_TestExtendedDataFactory.createSObject(new Asset(), NSP_CPQConstants.ASSETDEFAULTS, false);
         newMemberAsset.RecordTypeId = RETSERVICESASSETRECORDTYPEID;
         newMemberAsset.NSP_Process_Order_Change__c = true;
@@ -317,15 +322,15 @@ private class NSP_ProcessOrderChangeBatchTest {
         newMemberAsset.NSP_ReAssigned_Order_Quote_Id__c = quoteList[0].id;
         newMemberAsset.NSP_Change_Order_Process_Contract_Status__c = 'Ready To Close';
         Database.insert(newMemberAsset);
-        
-        
+
+
         NSP_ProcessOrderChangeBatch bch = new NSP_ProcessOrderChangeBatch();
-        Database.executeBatch(bch,Integer.valueof(system.label.NSP_OrderChangeBatchSize)); 
+        Database.executeBatch(bch,Integer.valueof(system.label.NSP_OrderChangeBatchSize));
         system.AssertEquals('Ready To Close',newMemberAsset.NSP_Change_Order_Process_Contract_Status__c);
         Test.stopTest();
     }
 
-    @IsTest
+    @isTest
     private static void testSchedulable() {
         Test.startTest();
         NSP_ProcessOrderChangeBatch.schedule();

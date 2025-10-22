@@ -12,6 +12,11 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
+                <fullName>NCI-RS</fullName>
+                <default>false</default>
+                <label>NCI-RS</label>
+            </value>
+            <value>
                 <fullName>2025 2-year Agreement</fullName>
                 <default>false</default>
                 <label>2025 2-year Agreement</label>
@@ -30,6 +35,11 @@
                 <fullName>2025 Inc 5000 Promotion</fullName>
                 <default>false</default>
                 <label>2025 Inc 5000 Promotion</label>
+            </value>
+            <value>
+                <fullName>2025 Q4 CMP</fullName>
+                <default>false</default>
+                <label>2025 Q4 CMP</label>
             </value>
             <value>
                 <fullName>2025 WX Free Months</fullName>

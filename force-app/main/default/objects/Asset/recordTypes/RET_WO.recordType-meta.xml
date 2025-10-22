@@ -2117,6 +2117,10 @@
     <picklistValues>
         <picklist>NSP_Service_Package__c</picklist>
         <values>
+            <fullName>HRScale</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>WO - AS Agency</fullName>
             <default>false</default>
         </values>
@@ -2145,6 +2149,18 @@
         <picklist>NSP_Service_Region__c</picklist>
         <values>
             <fullName>FSO - Southwest</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMSO - Northeast</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMSO - Southwest</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMSO - West</fullName>
             <default>false</default>
         </values>
     </picklistValues>

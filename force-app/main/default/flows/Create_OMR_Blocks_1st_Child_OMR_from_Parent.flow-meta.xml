@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>61.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Set_Element_Friday_Create_1st_Child_OMR</name>
         <label>Set Element : Friday_Create_1st_Child_OMR</label>
@@ -539,7 +540,8 @@
             <label>No</label>
         </rules>
     </decisions>
-    <description>9/26/2024 : Clone of Create_1st_Child_OMR_from_Parent . Added &quot;Total Slots Offered&quot; and Removed- Available_Slots</description>
+    <description>9/26/2024 : Clone of Create_1st_Child_OMR_from_Parent . Added &quot;Total Slots Offered&quot; and Removed- Available_Slots.
+09/24/2025 : Added Timezone</description>
     <environments>Default</environments>
     <formulas>
         <name>Friday_NextDateThatMatches</name>
@@ -660,6 +662,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Time_Zone__c</field>
+            <value>
+                <elementReference>$Record.Time_Zone__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Total_Slots_Offered__c</field>
             <value>
                 <elementReference>$Record.Total_Slots_Offered__c</elementReference>
@@ -728,6 +736,12 @@
             <field>Start__c</field>
             <value>
                 <elementReference>$Record.Start__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Time_Zone__c</field>
+            <value>
+                <elementReference>$Record.Time_Zone__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -805,6 +819,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Time_Zone__c</field>
+            <value>
+                <elementReference>$Record.Time_Zone__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Total_Slots_Offered__c</field>
             <value>
                 <elementReference>$Record.Total_Slots_Offered__c</elementReference>
@@ -876,6 +896,12 @@
             <field>Start__c</field>
             <value>
                 <elementReference>$Record.Start__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Time_Zone__c</field>
+            <value>
+                <elementReference>$Record.Time_Zone__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -953,6 +979,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Time_Zone__c</field>
+            <value>
+                <elementReference>$Record.Time_Zone__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Total_Slots_Offered__c</field>
             <value>
                 <elementReference>$Record.Total_Slots_Offered__c</elementReference>
@@ -1024,6 +1056,12 @@
             <field>Start__c</field>
             <value>
                 <elementReference>$Record.Start__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Time_Zone__c</field>
+            <value>
+                <elementReference>$Record.Time_Zone__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1101,6 +1139,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Time_Zone__c</field>
+            <value>
+                <elementReference>$Record.Time_Zone__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Total_Slots_Offered__c</field>
             <value>
                 <elementReference>$Record.Total_Slots_Offered__c</elementReference>
@@ -1172,6 +1216,12 @@
             <field>Start__c</field>
             <value>
                 <elementReference>$Record.Start__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Time_Zone__c</field>
+            <value>
+                <elementReference>$Record.Time_Zone__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1249,6 +1299,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Time_Zone__c</field>
+            <value>
+                <elementReference>$Record.Time_Zone__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Total_Slots_Offered__c</field>
             <value>
                 <elementReference>$Record.Total_Slots_Offered__c</elementReference>
@@ -1320,6 +1376,12 @@
             <field>Start__c</field>
             <value>
                 <elementReference>$Record.Start__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Time_Zone__c</field>
+            <value>
+                <elementReference>$Record.Time_Zone__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>

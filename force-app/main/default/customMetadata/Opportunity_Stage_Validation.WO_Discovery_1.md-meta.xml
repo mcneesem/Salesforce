@@ -11,12 +11,16 @@
         <value xsi:type="xsd:string">NSP_Event_Subtype__c</value>
     </values>
     <values>
+        <field>Group_Condition__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
         <field>Group__c</field>
         <value xsi:nil="true"/>
     </values>
     <values>
         <field>IsActive__c</field>
-        <value xsi:type="xsd:boolean">true</value>
+        <value xsi:type="xsd:boolean">false</value>
     </values>
     <values>
         <field>Object__c</field>

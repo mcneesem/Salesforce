@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <apiVersion>61.0</apiVersion>
+    <apiVersion>64.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Assign_Final_OMR_info_to_OMD_Record</name>
         <label>Assign Final OMR info to OMD Record</label>
-        <locationX>710</locationX>
-        <locationY>458</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>r_OMD.Id</assignToReference>
             <operator>Assign</operator>
@@ -41,8 +42,8 @@
     <assignments>
         <name>Reparent_OMD_Record</name>
         <label>Reparent OMD Record</label>
-        <locationX>270</locationX>
-        <locationY>998</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>r_OMD.Onboarding_Meeting_Request__c</assignToReference>
             <operator>Assign</operator>
@@ -57,8 +58,8 @@
     <assignments>
         <name>Set_Fault_Element_Get_Final_Meeting_Date_Time_OMR_Record</name>
         <label>Set Fault Element : Get_Final_Meeting_Date_Time_OMR_Record</label>
-        <locationX>1370</locationX>
-        <locationY>674</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
             <operator>Assign</operator>
@@ -74,8 +75,8 @@
     <assignments>
         <name>Set_Fault_Element_Get_OMD_Record</name>
         <label>Set Fault Element : Get_OMD_Record</label>
-        <locationX>1634</locationX>
-        <locationY>350</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
             <operator>Assign</operator>
@@ -91,8 +92,8 @@
     <assignments>
         <name>Set_Fault_Element_Get_Triggering_Task_Record</name>
         <label>Set Fault Element : Get_Triggering_Task_Record</label>
-        <locationX>1898</locationX>
-        <locationY>242</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
             <operator>Assign</operator>
@@ -108,8 +109,8 @@
     <assignments>
         <name>Set_Fault_Element_Update_Final_OMR_info_to_Task_Record</name>
         <label>Set Fault Element : Update_Final_OMR_info_to_Task_Record</label>
-        <locationX>842</locationX>
-        <locationY>890</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
             <operator>Assign</operator>
@@ -125,8 +126,8 @@
     <assignments>
         <name>Set_Fault_Element_Update_OMD_Record</name>
         <label>Set Fault Element : Update_OMD_Record</label>
-        <locationX>314</locationX>
-        <locationY>1406</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
             <operator>Assign</operator>
@@ -141,8 +142,8 @@
     <decisions>
         <name>Is_Slot_Available</name>
         <label>Is Slot Available?</label>
-        <locationX>710</locationX>
-        <locationY>674</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnector>
             <targetReference>Screen_Invalid_Slot</targetReference>
         </defaultConnector>
@@ -167,8 +168,8 @@
         <description>Check if OMD Record exists -&gt; Avoid error for Old Meeting Records</description>
         <name>OMD_Record_Exist</name>
         <label>OMD Record : Exist?</label>
-        <locationX>314</locationX>
-        <locationY>1190</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Yes_Exist</name>
@@ -189,8 +190,8 @@
     <decisions>
         <name>Selected_OMR_vs_Final_OMR</name>
         <label>Selected OMR vs. Final OMR</label>
-        <locationX>314</locationX>
-        <locationY>890</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Selected_OMR_Matches_Final_OMR</name>
@@ -223,7 +224,8 @@
             <label>Selected OMR Does Not Match Final OMR</label>
         </rules>
     </decisions>
-    <description>Added check for OMD Record, Stop regenerating the Task for Final OMR, Handle Cancel Task</description>
+    <description>Added check for OMD Record, Stop regenerating the Task for Final OMR, Handle Cancel Task
+Added Timezone</description>
     <dynamicChoiceSets>
         <name>End_Time</name>
         <dataType>Picklist</dataType>
@@ -239,6 +241,14 @@
         <object xsi:nil="true"/>
         <picklistField>Final_OMR_Start_Time__c</picklistField>
         <picklistObject>Onboarding_Meeting_Detail__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>Timezone</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Time_Zone__c</picklistField>
+        <picklistObject>Onboarding_Meeting_Request__c</picklistObject>
     </dynamicChoiceSets>
     <environments>Default</environments>
     <formulas>
@@ -368,8 +378,8 @@
     <recordLookups>
         <name>Get_Final_Meeting_Date_Time_OMR_Record</name>
         <label>Get Final Meeting Date/Time OMR Record</label>
-        <locationX>710</locationX>
-        <locationY>566</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Is_Slot_Available</targetReference>
@@ -420,6 +430,13 @@
                 <numberValue>0.0</numberValue>
             </value>
         </filters>
+        <filters>
+            <field>Time_Zone__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>final_time_zone</elementReference>
+            </value>
+        </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Onboarding_Meeting_Request__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -428,8 +445,8 @@
         <description>Get the OMD Record associated to Task and Originally Selected Time Block</description>
         <name>Get_OMD_Record</name>
         <label>Get OMD Record</label>
-        <locationX>710</locationX>
-        <locationY>242</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Finalized_Meeting_Information</targetReference>
@@ -452,8 +469,8 @@
     <recordLookups>
         <name>Get_Triggering_Task_Record</name>
         <label>Get Triggering Task Record</label>
-        <locationX>710</locationX>
-        <locationY>134</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_OMD_Record</targetReference>
@@ -479,8 +496,8 @@
     <recordUpdates>
         <name>Update_Final_OMR_info_to_Task_Record</name>
         <label>Update Final OMR info to Task Record</label>
-        <locationX>314</locationX>
-        <locationY>782</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>Selected_OMR_vs_Final_OMR</targetReference>
         </connector>
@@ -507,8 +524,8 @@
         <description>Update OMD Record with Final OMR Meeting info</description>
         <name>Update_OMD_Record</name>
         <label>Update OMD Record</label>
-        <locationX>50</locationX>
-        <locationY>1298</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <faultConnector>
             <targetReference>Set_Fault_Element_Update_OMD_Record</targetReference>
         </faultConnector>
@@ -517,8 +534,8 @@
     <screens>
         <name>Error_Processing_Request</name>
         <label>Error Processing Request</label>
-        <locationX>314</locationX>
-        <locationY>1622</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -526,6 +543,14 @@
             <name>Error_Message_Error_Processing_Request</name>
             <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 14px; color: rgb(18, 17, 17);&quot;&gt;There is an error processing the  Request. Please contact System Admin for more information.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
@@ -533,8 +558,8 @@
     <screens>
         <name>Finalized_Meeting_Information</name>
         <label>Finalized Meeting Information</label>
-        <locationX>710</locationX>
-        <locationY>350</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -545,6 +570,14 @@
             <name>Enter_Final_OMR_Information_CTM</name>
             <fieldText>&lt;h2&gt;&lt;strong style=&quot;font-size: var(--lwc-fontSize5,1rem);&quot;&gt;Enter Final OMR Meeting Information&lt;/strong&gt;&lt;/h2&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
@@ -567,6 +600,14 @@
             <name>Update_Final_OMR_Information_CTM</name>
             <fieldText>&lt;h2&gt;&lt;strong style=&quot;font-size: var(--lwc-fontSize5,1rem);&quot;&gt;Update Final OMR Meeting Information&lt;/strong&gt;&lt;/h2&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
@@ -589,6 +630,14 @@
             <name>Enter_Final_OMR_Information_OT</name>
             <fieldText>&lt;h2&gt;&lt;strong style=&quot;font-size: var(--lwc-fontSize5,1rem);&quot;&gt;Enter Final Employee Orientation Meeting Information&lt;/strong&gt;&lt;/h2&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Original Time Block Selected:&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!t_origtimeblockselected}&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
@@ -611,6 +660,14 @@
             <name>Update_Final_OMR_Information_OT</name>
             <fieldText>&lt;h2&gt;&lt;strong style=&quot;font-size: var(--lwc-fontSize5,1rem);&quot;&gt;Update Final Employee Orientation Meeting Information&lt;/strong&gt;&lt;/h2&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
@@ -637,6 +694,31 @@
             <helpText>&lt;p&gt;Please enter valid date&lt;/p&gt;</helpText>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <fields>
+            <name>final_time_zone</name>
+            <choiceReferences>Timezone</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Time Zone</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <fields>
             <name>final_Start_Time</name>
@@ -647,6 +729,14 @@
             <helpText>&lt;p&gt;Times are in Central Time Zone&lt;/p&gt;</helpText>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <fields>
             <name>final_End_Time</name>
@@ -657,6 +747,14 @@
             <helpText>&lt;p&gt;Times are in Central Time Zone&lt;/p&gt;</helpText>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <nextOrFinishButtonLabel>Save</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
@@ -665,8 +763,8 @@
     <screens>
         <name>Screen_Invalid_Slot</name>
         <label>Screen : Invalid Slot</label>
-        <locationX>1106</locationX>
-        <locationY>782</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -674,12 +772,20 @@
             <name>Message_Not_Valid_Slot</name>
             <fieldText>&lt;p&gt;There are no slots available for the time block you selected.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>584</locationX>
+        <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Triggering_Task_Record</targetReference>
@@ -689,8 +795,8 @@
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
-        <locationX>314</locationX>
-        <locationY>1514</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>Error_Processing_Request</targetReference>
         </connector>
@@ -715,14 +821,16 @@
         </inputAssignments>
     </subflows>
     <textTemplates>
+        <description>updated for timezone</description>
         <name>t_origtimeblockselected</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>{!Get_OMD_Record.Onboarding_Meeting_Request__r.Date_Valid__c}, {!Get_OMD_Record.Onboarding_Meeting_Request__r.Start_Time_picklist__c} - {!Get_OMD_Record.Onboarding_Meeting_Request__r.End_Time_picklist__c}</text>
+        <text>{!Get_OMD_Record.Onboarding_Meeting_Request__r.Date_Valid__c}, {!Get_OMD_Record.Onboarding_Meeting_Request__r.Start_Time_picklist__c} - {!Get_OMD_Record.Onboarding_Meeting_Request__r.End_Time_picklist__c} {!Get_OMD_Record.Onboarding_Meeting_Request__r.Time_Zone__c}</text>
     </textTemplates>
     <textTemplates>
+        <description>updated for timezone</description>
         <name>template_for_final_OMR_details_field</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>{!finalmeetingDate}, {!final_Start_Time} - {!final_End_Time} CT</text>
+        <text>{!finalmeetingDate}, {!final_Start_Time} - {!final_End_Time} {!final_time_zone}</text>
     </textTemplates>
     <variables>
         <name>FaultElement</name>

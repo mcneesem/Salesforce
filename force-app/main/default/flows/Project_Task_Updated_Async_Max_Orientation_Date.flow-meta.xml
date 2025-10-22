@@ -34,7 +34,7 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>varProject</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -87,7 +87,7 @@
         <label>Get Project Info</label>
         <locationX>209</locationX>
         <locationY>384</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Is_related_Project_WO</targetReference>
         </connector>
