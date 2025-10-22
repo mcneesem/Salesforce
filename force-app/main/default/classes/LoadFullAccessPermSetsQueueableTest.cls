@@ -1,7 +1,8 @@
 @isTest
-public class LoadFullAccessPermSetsQueueableTest {
+private class LoadFullAccessPermSetsQueueableTest {
+
     @testSetup
-    static void testData() {
+    private static void testData() {
         List<PermissionSet> psList = new List<PermissionSet>();
         PermissionSet ps1 = new PermissionSet(Label='FA Test Read Permission Set',Name='FA_Test_Read_Permission_Set');
         PermissionSet ps2 = new PermissionSet(Label='FA Test Edit Permission Set',Name='FA_Test_Edit_Permission_Set');
@@ -11,7 +12,7 @@ public class LoadFullAccessPermSetsQueueableTest {
     }
 
     @isTest
-    static void testLoadFullAccessPermSets1() {
+    private static void testLoadFullAccessPermSets1() {
         Test.startTest();
         LoadFullAccessPermSets.runLoadFullAccessPermSets('FA_Test_Read_Permission_Set', 'FA_Test_Edit_Permission_Set', null, null);
         LoadFullAccessPermSetsQueueable.sendCompletionEmail();
@@ -19,7 +20,7 @@ public class LoadFullAccessPermSetsQueueableTest {
     }
 
     @isTest
-    static void testLoadFullAccessPermSets2() {
+    private static void testLoadFullAccessPermSets2() {
         Test.startTest();
         OrgSettings__c setting = new OrgSettings__c();
         setting.ExternalIdObjects1__c = 'blng__GLRule__c,blng__GLAccount__c';
@@ -33,7 +34,7 @@ public class LoadFullAccessPermSetsQueueableTest {
     }
 
     @isTest
-    static void testLoadFullAccessPermSetsQueueable() {
+    private static void testLoadFullAccessPermSetsQueueable() {
         Id readPermSetId = [SELECT Id FROM PermissionSet WHERE Name = 'FA_Test_Read_Permission_Set' LIMIT 1].Id;
         Id editPermSetId = [SELECT Id FROM PermissionSet WHERE Name = 'FA_Test_Edit_Permission_Set' LIMIT 1].Id;
         Map<id,Boolean> psMap = new map<id,Boolean>{ readPermSetId => false, editPermSetId => true };
@@ -74,3 +75,4 @@ public class LoadFullAccessPermSetsQueueableTest {
     }
 
 }
+//
