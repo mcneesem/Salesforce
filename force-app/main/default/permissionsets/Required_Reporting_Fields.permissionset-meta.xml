@@ -413,6 +413,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Case.Change_Order__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Case.Client_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -444,6 +449,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.Email_Cadence_Start_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Escalated_Case__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Escalated_Change_Order__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
