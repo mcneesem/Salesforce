@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MM_Onboarding_Support_Team_Project_Task</fullName>
+    <filterScope>Queue</filterScope>
+    <label>MM Onboarding Support Team</label>
+    <queue>MM_Onboarding_Support_Team</queue>
+    <sharedTo>
+        <allInternalUsers></allInternalUsers>
+    </sharedTo>
+</ListView>
