@@ -791,10 +791,10 @@ private class NSP_LeadTriggerHelperTest {
         if(users != null && users.size() == 2) {
             
             Lead testLead = new Lead(
-            FirstName = 'Test',
-            LastName = 'Lead',
-            Company = 'Test Company',
-            Email = 'testlead@testcompany.com',
+            FirstName = 'Test 1245',
+            LastName = 'Lead 45788',
+            Company = 'Test Company 787845',
+            Email = 'testlead88555@testcompany.com',
             OwnerId = users[0].Id
             );
             insert testLead;
@@ -804,7 +804,7 @@ private class NSP_LeadTriggerHelperTest {
             Id eventRecTypeId = Schema.SObjectType.Event.getRecordTypeInfosByDeveloperName().get('Core_Sales_Event_RT').getRecordTypeId();
             Event testEvent = new Event(
             OwnerId = users[0].Id,
-            NSP_Lead__c = testLead.Id,
+            WhoId = testLead.Id,
             RecordTypeId = eventRecTypeId,
             NSP_Event_Type__c = 'Core Sales',
             NSP_Event_Subtype__c = 'Discovery Call',

@@ -170,9 +170,6 @@ public with sharing class NSP_LeadTriggerHelper {
             List<String> zipCodeUpdateList = new List<String>();
             Boolean isOwnerAssignment = true;
             Boolean isZipCodeUpdate = false;
-            // ADO-504541
-            Map<Id,Id> leadNewOwner = new Map<Id,Id>();
-            Map<Id,Id> leadOldOwner = new Map<Id,Id>();
             // Added as part of STY-01725
             //iterating over trigger.newmap
             for (Id leadId: leadNewMap.keySet()) {
@@ -287,8 +284,6 @@ public with sharing class NSP_LeadTriggerHelper {
                     zipCodeUpdateList.add(leadNewMap.get(leadId).PostalCode.substring(0,5));
                 }
                 // Added as part of DF-01846
-                //  ADO-504541
-                verifyOwnerChange(leadId, leadOldMap.get(leadId), leadNewMap.get(leadId), leadOldOwner, leadNewOwner);
             }
             if(!zipCodeLeadList.isEmpty() && !zipCodeUpdateList.isEmpty()){
                 isOwnerAssignment = false;
@@ -328,8 +323,7 @@ public with sharing class NSP_LeadTriggerHelper {
             createContact(leadNewMap.values());
             setSalesOfficeDetails(leadNewMap.values(),leadOldMap);  // added for STY-03154
             //  ADO-504541
-            transferDiscoveryCall(leadNewOwner, leadOldOwner);
-                     
+            transferDiscoveryCall(leadNewMap, leadOldMap);
         } catch ( Exception e ) {
             NSP_LeadTriggerHelper.handleException( e , 'beforeUpdateDirector' );
         }
@@ -1529,44 +1523,35 @@ public with sharing class NSP_LeadTriggerHelper {
     }
 
     //
-    // Description: This method populates two maps when Lead's owner changes.
-    // @param: oldLeadOwner
-    // @param: newLeadOwner
-    // @param: leadOldOwner (reference)
-    // @param: leadNewOwner (reference)
-    // @return: void
-    //
-    private static void verifyOwnerChange(Id leadId, Lead leadOld, Lead leadNew, Map<Id,Id> leadOldOwner, Map<Id,Id> leadNewOwner){
-        if( leadOld.OwnerId != leadNew.OwnerId){
-            leadOldOwner.put(leadId, leadOld.OwnerId);
-            leadNewOwner.put(leadId, leadNew.OwnerId);
-        }
-    }
-    //
     // Description: This method tranfers any related discovery call to the new Lead's owner
     // @param: newLeadOwner
     // @param: oldLeadOwner
     // @return: void
     //
-    private static void transferDiscoveryCall(Map<Id,Id> newLeadOwner, Map<Id,Id> oldLeadOwner){
-        if(oldLeadOwner.size() > 0){
+    private static void transferDiscoveryCall(Map<Id,Lead> leadNewMap , Map<Id,Lead> leadOldMap) {
+        
+        Map<Id,Id> leadOwnerTransfer = new Map<Id,Id>();
+
+        for (Id leadId: leadNewMap.keySet()) {
+           if(leadNewMap.get(leadId).OwnerId != leadOldMap.get(leadId).OwnerId){
+                leadOwnerTransfer.put(leadId, leadNewMap.get(leadId).OwnerId);
+            }
+        }
+        
+        if(leadOwnerTransfer.size() > 0){
             Map<Id,Id> eventNewOwner =  new Map<Id,Id>();
             for ( Event event : [
-                        SELECT Id , NSP_Lead__c , OwnerId 
-                        FROM Event
+                        SELECT Id , WhoId FROM Event
                         WHERE (
-                            ( NSP_Lead__c IN : oldLeadOwner.keySet() )
-                            AND ( OwnerId IN : oldLeadOwner.values()) 
+                            ( WhoId IN : leadOwnerTransfer.keySet() )
                             AND (NSP_Event_Subtype__c = 'Discovery Call')
-                            AND (NSP_Status__c = 'Open'))
+                            AND (NSP_Status__c = 'Open' OR NSP_Status__c = null))
                     ]
             )
             {
-                if ( oldLeadOwner.containsKey( event.NSP_Lead__c )
-                    && event.OwnerId == oldLeadOwner.get( event.NSP_Lead__c )
-                    )
+                if ( leadOwnerTransfer.containsKey( event.WhoId ))
                 {
-                    eventNewOwner.put(event.Id, newLeadOwner.get(event.NSP_Lead__c ));
+                    eventNewOwner.put(event.Id, leadOwnerTransfer.get(event.WhoId ));
                 }
             }
             if(eventNewOwner.size() > 0 && Limits.getFutureCalls() < Limits.getLimitFutureCalls()){
