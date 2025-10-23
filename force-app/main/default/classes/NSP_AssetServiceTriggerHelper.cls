@@ -18,7 +18,7 @@ Modification Log     :  11/09/2023-Suhas : Added RET Client Id for Sync WO Asset
 * Ramya Ravi                   01/16/2022          v6.0 - Create project from asset <STY-02234>
 */
 public class NSP_AssetServiceTriggerHelper {
-    // test w/ NSP_AssetServiceTriggerHelperTest (78%)
+    // test w/ NSP_AssetServiceTriggerHelperTest (77%)
 
     public final String PEORECORDTYPE = 'PEO';
     public final String HRSPECIALISTROLE = 'HR Specialist';
@@ -451,9 +451,18 @@ public class NSP_AssetServiceTriggerHelper {
     private Asset updateAssets(Asset getAsst, Asset assLst){
         Asset returnAsset = getAsst;
         getAsst.NSP_WO_AIMS_Client_Number__c = assLst.NSP_Client__c;
-        if(getAsst.RecordTypeId == RETWOAssetRecordTypeId){
+        //10212025-STY-462099-START
+        if( 
+            getAsst != null &&
+            (
+                getAsst.RecordTypeId == RETWOAssetRecordTypeId
+            )
+            && !getAsst.Disable_Sync_RET_Client_ID__c
+          )
+        {
             getAsst.NSP_RET_Client_ID__c = assLst.NSP_Client__c;//11092023-STY-241721
         }
+        //10212025-STY-462099-END
         getAsst.NSP_Client__c = null;
         getAsst.NSP_Company_Name__c = null;
         getAsst.NSP_Account_Status__c = assLst.NSP_Account_Status__c;
@@ -484,19 +493,46 @@ public class NSP_AssetServiceTriggerHelper {
     private  List<Asset> returnRETBPSassets(List<ID> accountID){
         List<Asset> RETBPSassets = new  List<Asset>();
 
-        for( Asset assLst :[Select id,NSP_WO_AIMS_Client_Number__c,
-                            AccountId, NSP_Company_Name__c, NSP_Client__c,
-                            NSP_Account_Status__c, NSP_Account_Status_Date__c, NSP_Client_Segment_type__c,
-                            NSP_Client_SegmentDate__c, NSP_Service_Package__c, NSP_AIMS_First_Pay_Date__c, NSP_Legal_Name__c,
-                            NSP_DBA__c, NSP_Business_Type__c, NSP_FEIN__c, NSP_Business_Inception_Date__c,
-                            NSP_SIC_Code__c, NSP_Legal_Entity_Description__c, NSP_NAICS_Code__c, NSP_AIMS_Original_First_Pay_Date__c,
-                            NSP_Sales_Office__c,NSP_RET_Region__c,NSP_RET_AIMS_Original_Empl_Date__c,NSP_RET_NAICS_Description__c,
-                            NSP_Phone__c,NSP_RET_Phone_Ext__c,NSP_Email__c,NSP_Renewal_Date__c,RecordTypeId
-                            FROM Asset WHERE AccountId in : accountID AND
-                            RecordType.DeveloperName IN: AssetRecTypeSet ]  ){
-                                RETBPSassets.add(assLst);
-                            }
-
+        for( Asset assLst :[
+                Select 
+                    id,
+                    NSP_WO_AIMS_Client_Number__c,
+                    Disable_Sync_RET_Client_ID__c,
+                    AccountId,
+                    NSP_Company_Name__c,
+                    NSP_Client__c,
+                    NSP_Account_Status__c,
+                    NSP_Account_Status_Date__c,
+                    NSP_Client_Segment_type__c,
+                    NSP_Client_SegmentDate__c,
+                    NSP_Service_Package__c,
+                    NSP_AIMS_First_Pay_Date__c,
+                    NSP_Legal_Name__c,
+                    NSP_DBA__c,
+                    NSP_Business_Type__c,
+                    NSP_FEIN__c,
+                    NSP_Business_Inception_Date__c,
+                    NSP_SIC_Code__c,
+                    NSP_Legal_Entity_Description__c,
+                    NSP_NAICS_Code__c,
+                    NSP_AIMS_Original_First_Pay_Date__c,
+                    NSP_Sales_Office__c,
+                    NSP_RET_Region__c,
+                    NSP_RET_AIMS_Original_Empl_Date__c,
+                    NSP_RET_NAICS_Description__c,
+                    NSP_Phone__c,
+                    NSP_RET_Phone_Ext__c,
+                    NSP_Email__c,
+                    NSP_Renewal_Date__c,
+                    RecordTypeId
+                FROM Asset
+                WHERE AccountId in : accountID
+                AND RecordType.DeveloperName IN: AssetRecTypeSet 
+             ]
+           )
+        {
+            RETBPSassets.add(assLst);
+        }
         return RETBPSassets;
     }
 
@@ -781,6 +817,19 @@ public class NSP_AssetServiceTriggerHelper {
         for(Asset asset : newMap.values()){
             // Check whether Exception checkbox is being checked or Exception reason is being populated.
             Asset oldAsset = oldMap.get(asset.Id);
+            //10212025-STY-462099-START
+            if( oldAsset != null &&
+                asset.RecordTypeId == RETWOAssetRecordTypeId &&
+                String.isNotempty(asset.NSP_WO_AIMS_Client_Number__c) &&
+                !asset.Disable_Sync_RET_Client_ID__c &&
+                ( ( asset.NSP_WO_AIMS_Client_Number__c != oldAsset.NSP_WO_AIMS_Client_Number__c ) ||
+                  ( asset.Disable_Sync_RET_Client_ID__c != oldAsset.Disable_Sync_RET_Client_ID__c )
+                )
+              )
+            {
+               asset.NSP_RET_Client_ID__c = asset.NSP_WO_AIMS_Client_Number__c;
+            }
+            //10212025-STY-462099-END
             if((asset.NSP_Segment_Exception__c && !oldAsset.NSP_Segment_Exception__c)
                || (String.isNotBlank(asset.NSP_Segment_Exception_Reason__c) && String.isBlank(oldAsset.NSP_Segment_Exception_Reason__c))){
                    updateSegmentExceptionDetails(asset);
