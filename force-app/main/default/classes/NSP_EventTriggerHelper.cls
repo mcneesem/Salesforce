@@ -10,7 +10,6 @@ public with sharing class NSP_EventTriggerHelper {
     private static final String EMPTY_STRING = '';
     private static final String WORD_SEPARATOR =  ' : ';
     private static Id coreSalesEventRecordType = NSP_GenericRecordType.getRecordTypeId( 'Event' , 'Core_Sales_Event_RT' );
-    private static String userTitle = null;
     // Iterates throught the list of new Event and passes the required attributes to other methods.
     // @param newList List of New Event.  
     // @return void
@@ -23,9 +22,8 @@ public with sharing class NSP_EventTriggerHelper {
                 eventList.add(evt);
             }
             //  ADO-504540
-            //  If WhoId starts with '00Q' then it's a Lead
-            if((evt.WhoId != null && ((String)evt.WhoId).startsWith('00Q'))){
-                evt.Creator_Title__c = getUserTitle();
+            if(evt.WhoId != null && evt.WhoId.getSObjectType() == Lead.getSObjectType()){
+                evt.Creator_Title__c = NSP_EventTriggerHelper.userTitle;
             }
         }
         updateEventSales(newList,null);
@@ -570,14 +568,24 @@ public with sharing class NSP_EventTriggerHelper {
     // @param : none
     // @return String
     //
-    private static String getUserTitle(){
-        if(userTitle == null){
-            List<User> user = [SELECT Id, Title FROM User WHERE Id = :UserInfo.getUserId()];
-            if(user.size() > 0){
-                userTitle = user[0].Title;
+    private static String userTitle {
+        private get {
+            if ( userTitle == null ) {
+                String local = '';
+                List<User> records = [
+                    SELECT Id , Title
+                    FROM User
+                    WHERE ( Id = :UserInfo.getUserId() )
+                    LIMIT 1
+                ];
+                if ( !records.isEmpty() ){
+                    local = records[0].Title;
+                }
+                userTitle = local;
             }
+            return userTitle;
         }
-        return userTitle;
+        private set;
     }
 }
 //
