@@ -323,7 +323,7 @@ public with sharing class NSP_LeadTriggerHelper {
             createContact(leadNewMap.values());
             setSalesOfficeDetails(leadNewMap.values(),leadOldMap);  // added for STY-03154
             //  ADO-504541
-            transferDiscoveryCall(leadNewMap, leadOldMap);
+            NSP_LeadTriggerHelper.transferDiscoveryCall(leadNewMap, leadOldMap);
         } catch ( Exception e ) {
             NSP_LeadTriggerHelper.handleException( e , 'beforeUpdateDirector' );
         }
@@ -1531,13 +1531,15 @@ public with sharing class NSP_LeadTriggerHelper {
     private static void transferDiscoveryCall(Map<Id,Lead> leadNewMap , Map<Id,Lead> leadOldMap) {
         
         Map<Id,Id> leadOwnerTransfer = new Map<Id,Id>();
+        if((leadOldMap != null ) && ( leadNewMap != null ) && !leadNewMap.isEmpty()){
+            for (Id leadId: leadNewMap.keySet()) {
 
-        for (Id leadId: leadNewMap.keySet()) {
-           if(leadNewMap.get(leadId).OwnerId != leadOldMap.get(leadId).OwnerId){
-                leadOwnerTransfer.put(leadId, leadNewMap.get(leadId).OwnerId);
+               if( (leadNewMap.containsKey(leadId) && leadOldMap.containsKey(leadId)) 
+               &&  (leadNewMap.get(leadId).OwnerId != leadOldMap.get(leadId).OwnerId)){
+                    leadOwnerTransfer.put(leadId, leadNewMap.get(leadId).OwnerId);
+                }
             }
         }
-        
         if(leadOwnerTransfer.size() > 0){
             Map<Id,Id> eventNewOwner =  new Map<Id,Id>();
             for ( Event event : [
@@ -1549,9 +1551,9 @@ public with sharing class NSP_LeadTriggerHelper {
                     ]
             )
             {
-                if ( leadOwnerTransfer.containsKey( event.WhoId ))
+                if ( leadOwnerTransfer.containsKey( event.WhoId ) && leadOwnerTransfer.get(event.WhoId) != null)
                 {
-                    eventNewOwner.put(event.Id, leadOwnerTransfer.get(event.WhoId ));
+                    eventNewOwner.put(event.Id, leadOwnerTransfer.get(event.WhoId));
                 }
             }
             if(eventNewOwner.size() > 0 && Limits.getFutureCalls() < Limits.getLimitFutureCalls()){
@@ -1566,21 +1568,38 @@ public with sharing class NSP_LeadTriggerHelper {
     //
     @future
     private static void transferDiscoveryCallAsync(String strEventNewOwner){
-        if(strEventNewOwner != null){
-            Map<Id,Id> eventNewOwner = (Map<Id,Id>)JSON.deserialize(
-                strEventNewOwner ,
-                Map<Id,Id>.class
-            );
-            List<Event> updateEvents = new List<Event>();
-            for ( Event event : [SELECT Id , OwnerId FROM Event WHERE ( Id IN :eventNewOwner.keySet() )])
-            {
-                event.OwnerId = eventNewOwner.get(event.Id); 
-                updateEvents.add(event);
-            }   
-            if(updateEvents.size() > 0)
-            {
-                update updateEvents;
-            }                    
+        try{
+            if(String.isNotBlank(strEventNewOwner)){
+                Map<Id,Id> eventNewOwner = (Map<Id,Id>)JSON.deserialize(
+                    strEventNewOwner ,
+                    Map<Id,Id>.class
+                );
+                if((eventNewOwner != null ) && !eventNewOwner.isEmpty()){
+                    List<Event> updateEvents = new List<Event>();
+                    for ( Event event : [SELECT Id , OwnerId FROM Event WHERE ( Id IN :eventNewOwner.keySet() )])
+                    {
+                        if(eventNewOwner.containsKey( event.Id )){
+                            event.OwnerId = eventNewOwner.get(event.Id); 
+                            updateEvents.add(event);
+                        }
+                    }   
+                    if(updateEvents.size() > 0)
+                    {
+                        List<Database.SaveResult> results = Database.update( updateEvents , false );
+                        NSP_ErrorLogHandler.logResults(
+                        NSP_LeadTriggerHelper.class.getName() ,
+                        'transferDiscoveryCallAsync:update' ,
+                        results
+                        );
+                    }                    
+                }
+            }
+        }
+        catch(Exception e){
+            NSP_ErrorLogHandler.logException(
+            NSP_LeadTriggerHelper.class.getName() ,
+            'transferDiscoveryCallAsync' ,
+            e);          
         }
     }
 }
