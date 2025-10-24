@@ -4,6 +4,6 @@
     <protected>false</protected>
     <values>
         <field>Value__c</field>
-        <value xsi:type="xsd:string">grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer&amp;assertion=</value>
+        <value xsi:type="xsd:string">grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&amp;assertion=</value>
     </values>
 </CustomMetadata>
