@@ -1,5 +1,6 @@
 public class NSP_IP_Automation_Helper {
-    
+
+    private Map<String, Case> caseToInsertSubjectIpList = new Map<String, Case>();
     private static Id ipFSORecordTypeId = SObjectType.Implementation_Profile__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.FSOProfile).getRecordTypeId();
     private static Id ipMMRecordTypeId = SObjectType.Implementation_Profile__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.MMProfile).getRecordTypeId();
     
@@ -48,15 +49,12 @@ public class NSP_IP_Automation_Helper {
    }
    
    public void getAllCases(Set<Id> ipIds){
-       
-      
+
       for(Case eachCase:  [SELECT Id,Subject,NSP_SubCategory__c, NSP_Category__c,NSP_Implementation_Profile__c
              FROM Case WHERE NSP_Implementation_Profile__c in:ipIds]){
-             existingCases.add(eachCase.NSP_Implementation_Profile__c+'_'+eachCase.Subject+'_'+
-             eachCase.NSP_Category__c+'_'+eachCase.NSP_SubCategory__c);
-                 
-            
-      }  
+             caseToInsertSubjectIpList.put(eachCase.Subject,eachCase);
+             existingCases.add(eachCase.NSP_Implementation_Profile__c+'_'+eachCase.Subject+'_'+eachCase.NSP_Category__c+'_'+eachCase.NSP_SubCategory__c);
+      }
    }
    
    public List<Case> getnewCasestoInsert(List<Case> caseList){
@@ -76,10 +74,26 @@ public class NSP_IP_Automation_Helper {
 
       return newCaseList;
    }
-    
    
+   public List<Case> getNewCasesToInsertSubjectIp(List<Case> caseList){
+      
+      List<Case> newCaseList=new List<Case>();
 
-   
-    
+      if(caseList != null && !caseList.isEmpty()){
+         for(Case cc: caseList){
+            if( caseToInsertSubjectIpList.isEmpty() ||
+                !caseToInsertSubjectIpList.containsKey(cc.Subject) ||
+                ( 
+                  caseToInsertSubjectIpList.containsKey(cc.Subject) &&
+                  ( caseToInsertSubjectIpList.get(cc.Subject).NSP_Implementation_Profile__c != cc.NSP_Implementation_Profile__c )
+                )
+              )
+            {
+               newCaseList.add(cc);
+            }
+         }
+      }
 
+      return newCaseList;
+   }
 }
