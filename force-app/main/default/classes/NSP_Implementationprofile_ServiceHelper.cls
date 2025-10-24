@@ -2371,8 +2371,8 @@ public class NSP_Implementationprofile_ServiceHelper {
         }
         recToInsert.addAll(ipAutomationRecords);
            
-        if(impRecordId!=null && impAutomationName !=null){
-            NSP_Implprofile_ServiceHelperUpdate.automationRecordUpdate(impRecordId,impAutomationName,impMethodName,impAutomationRecordType,impAutomationSection );
+    if(impRecordId!=null && impAutomationName !=null){
+        NSP_Implprofile_ServiceHelperUpdate.automationRecordUpdate(impRecordId,impAutomationName,impMethodName,impAutomationRecordType,impAutomationSection );
         }
     }
 
