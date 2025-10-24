@@ -22,9 +22,7 @@ public with sharing class NSP_EventTriggerHelper {
                 eventList.add(evt);
             }
             //  ADO-504540
-            if(evt.WhoId != null && evt.WhoId.getSObjectType() == Lead.getSObjectType()){
-                evt.Creator_Title__c = NSP_EventTriggerHelper.userTitle;
-            }
+            evt.Creator_Title__c = NSP_EventTriggerHelper.userTitle;
         }
         updateEventSales(newList,null);
         if(!eventList.isEmpty()){
