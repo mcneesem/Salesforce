@@ -1190,6 +1190,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>HRScale</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Insurance Services</fullName>
             <default>false</default>
         </values>
