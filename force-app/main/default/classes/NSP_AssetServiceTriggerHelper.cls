@@ -839,7 +839,7 @@ public class NSP_AssetServiceTriggerHelper {
         for(Asset asset : newMap.values()){
             // Check whether Exception checkbox is being checked or Exception reason is being populated.
             Asset oldAsset = oldMap.get(asset.Id);
-            updateRETClientId(asset, oldAsset);//10212025-STY-462099
+            NSP_AssetServiceTriggerHelper.updateRETClientId( asset , oldAsset );//10212025-STY-462099
             if((asset.NSP_Segment_Exception__c && !oldAsset.NSP_Segment_Exception__c)
                || (String.isNotBlank(asset.NSP_Segment_Exception_Reason__c) && String.isBlank(oldAsset.NSP_Segment_Exception_Reason__c))){
                    updateSegmentExceptionDetails(asset);
@@ -883,19 +883,19 @@ public class NSP_AssetServiceTriggerHelper {
             throwErrorMessageForNonEditFields(newMap.values(), oldMap, false, false);
         }
     }
-    
-    private static void updateRETClientId(Asset asset, Asset oldAsset) {
-        if (oldAsset != null &&
-            asset != null &&
-            asset.RecordTypeId == RETWOAssetRecordTypeId &&
-            String.isNotEmpty(asset.NSP_WO_AIMS_Client_Number__c) &&
-            !asset.Disable_Sync_RET_Client_ID__c &&
-            (
-                asset.NSP_WO_AIMS_Client_Number__c != oldAsset.NSP_WO_AIMS_Client_Number__c ||
-                asset.Disable_Sync_RET_Client_ID__c != oldAsset.Disable_Sync_RET_Client_ID__c
+
+    private static void updateRETClientId( Asset record , Asset recordOld ) {
+        if ( ( record != null )
+            && ( record.RecordTypeId == NSP_AssetServiceTriggerHelper.RETWOAssetRecordTypeId )
+            && String.isNotEmpty( record.NSP_WO_AIMS_Client_Number__c )
+            && !record.Disable_Sync_RET_Client_ID__c
+            && ( recordOld != null )
+            && ( ( record.NSP_WO_AIMS_Client_Number__c != recordOld.NSP_WO_AIMS_Client_Number__c )
+                || ( record.Disable_Sync_RET_Client_ID__c != recordOld.Disable_Sync_RET_Client_ID__c )
+                )
             )
-        ) {
-            asset.NSP_RET_Client_ID__c = asset.NSP_WO_AIMS_Client_Number__c;
+        {
+            record.NSP_RET_Client_ID__c = record.NSP_WO_AIMS_Client_Number__c;
         }
     }
 
