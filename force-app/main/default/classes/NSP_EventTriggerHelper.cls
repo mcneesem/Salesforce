@@ -576,7 +576,7 @@ public with sharing class NSP_EventTriggerHelper {
                     WHERE ( Id = :UserInfo.getUserId() )
                     LIMIT 1
                 ];
-                if ( !records.isEmpty() ){
+                if ( !records.isEmpty() && ( records[0] != null ) && String.isNotBlank( records[0].Title ) ){
                     local = records[0].Title;
                 }
                 userTitle = local;
