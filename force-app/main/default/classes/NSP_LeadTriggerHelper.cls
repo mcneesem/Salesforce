@@ -1529,38 +1529,48 @@ public with sharing class NSP_LeadTriggerHelper {
     // @return: void
     //
     private static void transferDiscoveryCall(Map<Id,Lead> leadNewMap , Map<Id,Lead> leadOldMap) {
-        
+        Map<Id,Id> leadOwnerTransfer = calculateEventNewOwnerMap(leadNewMap, leadOldMap);
+        if(leadOwnerTransfer.size() > 0){
+            Map<Id,Id> eventNewOwner =  calculateEventNewOwnerMap(leadOwnerTransfer);
+            if(eventNewOwner.size() > 0 && Limits.getFutureCalls() < Limits.getLimitFutureCalls()){
+                transferDiscoveryCallAsync( JSON.serialize(eventNewOwner) );
+            }
+        }
+    }
+    
+    private static Map<Id,Id> calculateEventNewOwnerMap( Map<Id,Id> leadOwnerTransfer){
+        Map<Id,Id> eventNewOwner =  new Map<Id,Id>();
+        for ( Event event : [
+                SELECT Id , WhoId FROM Event
+                WHERE (
+                ( WhoId IN : leadOwnerTransfer.keySet() )
+                AND (NSP_Event_Subtype__c = 'Discovery Call')
+                AND (NSP_Status__c = 'Open' OR NSP_Status__c = null))
+            ]
+            )
+        {
+            if ( leadOwnerTransfer.containsKey( event.WhoId ) && leadOwnerTransfer.get(event.WhoId) != null)
+            {
+                eventNewOwner.put(event.Id, leadOwnerTransfer.get(event.WhoId));
+            }
+        }
+        return eventNewOwner;
+    }
+
+    private static Map<Id,Id> calculateEventNewOwnerMap(Map<Id,Lead> leadNewMap , Map<Id,Lead> leadOldMap ){
+
         Map<Id,Id> leadOwnerTransfer = new Map<Id,Id>();
         if((leadOldMap != null ) && ( leadNewMap != null ) && !leadNewMap.isEmpty()){
             for (Id leadId: leadNewMap.keySet()) {
-
                if( (leadNewMap.containsKey(leadId) && leadOldMap.containsKey(leadId)) 
                &&  (leadNewMap.get(leadId).OwnerId != leadOldMap.get(leadId).OwnerId)){
                     leadOwnerTransfer.put(leadId, leadNewMap.get(leadId).OwnerId);
                 }
             }
         }
-        if(leadOwnerTransfer.size() > 0){
-            Map<Id,Id> eventNewOwner =  new Map<Id,Id>();
-            for ( Event event : [
-                        SELECT Id , WhoId FROM Event
-                        WHERE (
-                            ( WhoId IN : leadOwnerTransfer.keySet() )
-                            AND (NSP_Event_Subtype__c = 'Discovery Call')
-                            AND (NSP_Status__c = 'Open' OR NSP_Status__c = null))
-                    ]
-            )
-            {
-                if ( leadOwnerTransfer.containsKey( event.WhoId ) && leadOwnerTransfer.get(event.WhoId) != null)
-                {
-                    eventNewOwner.put(event.Id, leadOwnerTransfer.get(event.WhoId));
-                }
-            }
-            if(eventNewOwner.size() > 0 && Limits.getFutureCalls() < Limits.getLimitFutureCalls()){
-                transferDiscoveryCallAsync( JSON.serialize(eventNewOwner) );
-            }
-        }
+        return leadOwnerTransfer;
     }
+
     //
     // Description: This method async tranfers any related discovery call to the new Lead's owner
     // @param: strEventNewOwner
