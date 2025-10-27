@@ -25,7 +25,7 @@ public class NSP_AssetServiceTriggerHelper {
     public final String BTHRSPECIALISTROLE = 'Bus. Team-HRSp/CL';
     public final String MHRSPECIALISTROLE = 'Manager, HR Services';
     public final List<String> lAccountTeamRoles = new List<String>{HRSPECIALISTROLE,BTHRSPECIALISTROLE,MHRSPECIALISTROLE};
-        public final String REVIEWBIOMETRICSUBJECT = 'Review Biometric Timekeeping and Policies with Client';
+    public final String REVIEWBIOMETRICSUBJECT = 'Review Biometric Timekeeping and Policies with Client';
     public final String VALIDATEBIOMETRICSUBJECT = 'Validate Biometric Consent form removed from OEE; Discuss removal of handbook policy w/ client';
     public final String HRSERVICECATEGORY = 'HR Services';
     public final String HRINFRASTRUCTURESUBCATEGORY = 'HR Infrastructure';
@@ -41,19 +41,19 @@ public class NSP_AssetServiceTriggerHelper {
     public static List<string> OnboardingStatusRecordTypes = System.Label.NSP_Asset_Record_Type_with_Initial_Status_Onboarding.split(',');
     public static List<String> NonServiceAsset = System.Label.NSP_Non_Service_Asset.split(',');
     public static List<String> AssetStartDateCurrentMonth = System.Label.NSP_Asset_Status_Start_Date_Current_Month.split(',');
-    Static final List<String> AssetRecTypeSet =System.Label.ASSET_BPS_RET_RECORDTYPES.split(',')  ;//<STY-02841>
-    private static final Map<String, Schema.RecordTypeInfo> ASSET_RECORD_TYPES = NSP_GenericRecordType.getRecordTypeMap(ASSET);
-    Static final Id HardwareLoanerAsset = ASSET_RECORD_TYPES.get(NSP_ServiceConstants.HARDWARE_LOANER_RECORD_TYPE).getRecordTypeId();
-    Static final Id HardwareAsset = ASSET_RECORD_TYPES.get(NSP_ServiceConstants.HARDWARE_RECORD_TYPE).getRecordTypeId();
-    Static final Id InsuranceServiceRT = ASSET_RECORD_TYPES.get(NSP_ServiceConstants.INSURANCE_SERVICES_RECORDTYPE).getRecordTypeId();
-    Static final Id ApplicantTrackingRT = ASSET_RECORD_TYPES.get(NSP_ServiceConstants.APPLICANT_TRACKING_RECORD_TYPE).getRecordTypeId();
-    Static final Id EmploymentScreeningRT = ASSET_RECORD_TYPES.get(NSP_ServiceConstants.EMPLOYMENT_SCREENING_RECORD_TYPE).getRecordTypeId();
-    Static final Id CertifyRT = ASSET_RECORD_TYPES.get(NSP_ServiceConstants.CERTIFY).getRecordTypeId();
-    Static final Id XmlAssetRecordId = ASSET_RECORD_TYPES.get(NSP_ServiceConstants.XML_ASSET).getRecordTypeId();
-    Static final Id TimeAttendanceRecordId = ASSET_RECORD_TYPES.get(NSP_ServiceConstants.TIME_ATTENDANCE_ASSET).getRecordTypeId();
-    Static final Id WOAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId(ASSET,NSP_ServiceConstants.WO_ASSET_RECORDTYPE);//<STY-02841>
-    Static final Id RETChoiceAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId(ASSET,NSP_ServiceConstants.RET_CHOICE_ASSET_RECORDTYPE); //<STY-03527>
-    Static final Id RETWOAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId(ASSET,NSP_ServiceConstants.RET_WO_ASSET_RECORDTYPE); //<STY-03527>
+    static final List<String> AssetRecTypeSet = System.Label.ASSET_BPS_RET_RECORDTYPES.split( ',' ); //<STY-02841>
+    private static final Map<String, Schema.RecordTypeInfo> ASSET_RECORD_TYPES = NSP_GenericRecordType.getRecordTypeMap( 'Asset' );
+    static final Id HardwareLoanerAsset = ASSET_RECORD_TYPES.get(NSP_ServiceConstants.HARDWARE_LOANER_RECORD_TYPE).getRecordTypeId();
+    static final Id HardwareAsset = ASSET_RECORD_TYPES.get(NSP_ServiceConstants.HARDWARE_RECORD_TYPE).getRecordTypeId();
+    static final Id InsuranceServiceRT = ASSET_RECORD_TYPES.get(NSP_ServiceConstants.INSURANCE_SERVICES_RECORDTYPE).getRecordTypeId();
+    static final Id ApplicantTrackingRT = ASSET_RECORD_TYPES.get(NSP_ServiceConstants.APPLICANT_TRACKING_RECORD_TYPE).getRecordTypeId();
+    static final Id EmploymentScreeningRT = ASSET_RECORD_TYPES.get(NSP_ServiceConstants.EMPLOYMENT_SCREENING_RECORD_TYPE).getRecordTypeId();
+    static final Id CertifyRT = ASSET_RECORD_TYPES.get(NSP_ServiceConstants.CERTIFY).getRecordTypeId();
+    static final Id XmlAssetRecordId = ASSET_RECORD_TYPES.get(NSP_ServiceConstants.XML_ASSET).getRecordTypeId();
+    static final Id TimeAttendanceRecordId = ASSET_RECORD_TYPES.get(NSP_ServiceConstants.TIME_ATTENDANCE_ASSET).getRecordTypeId();
+    static final Id WOAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId(ASSET,NSP_ServiceConstants.WO_ASSET_RECORDTYPE);//<STY-02841>
+    static final Id RETChoiceAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId(ASSET,NSP_ServiceConstants.RET_CHOICE_ASSET_RECORDTYPE); //<STY-03527>
+    static final Id RETWOAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId(ASSET,NSP_ServiceConstants.RET_WO_ASSET_RECORDTYPE); //<STY-03527>
     private static final Id wxWaAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId(ASSET, 'NSP_Asset_Product');
     private static final Id CPQ_ASSET_RECORDTYPE_ID = NSP_GenericRecordType.getRecordTypeId(ASSET, 'NSP_CPQ_Asset');
     private static final Id PERFORM_SMART_ASSET = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE,NSP_ServiceConstants.PERFORMANCE_ASSET );
@@ -64,10 +64,10 @@ public class NSP_AssetServiceTriggerHelper {
     private static final Id hardWareRecordTypeId = NSP_GenericRecordType.getRecordTypeId(ASSET, 'Hardware_Asset');
     private static final String errorMessage = System.Label.NSP_Error_Message_Without_CreateAsset_PermSet_On_Asset;
 
-    /*****************************************************************
-    * Creating Constructor to call FF API's
-    * Creating Mock records of FF Api's Using interfaces
-    */
+    //
+    // Creating Constructor to call FF API's
+    // Creating Mock records of FF Api's Using interfaces
+    //
     public NSP_FF_APIs implInstance = new NSP_FF_APIImpl();
     public NSP_AssetServiceTriggerHelper(){
         if(Test.isRunningTest()){
@@ -157,7 +157,7 @@ public class NSP_AssetServiceTriggerHelper {
                 notEditableRETFieldsAssetList.add(asset);
             }
         }
-        
+
         //Added as part of DF-04204
         if(!accIdSet.isEmpty()){
             assetAccIdNameMap = new Map<Id, Account>([SELECT Id, Name FROM Account WHERE Id IN: accIdSet]);
@@ -180,19 +180,47 @@ public class NSP_AssetServiceTriggerHelper {
         }
 
         // Get the existing WO asset linked to the account set and create map<Account ID , WOAsset>
-        for(Asset asset: [Select id, NSP_WO_AIMS_Client_Number__c,
-                            AccountId, NSP_Company_Name__c, NSP_Client__c,
-                            NSP_Account_Status__c, NSP_Account_Status_Date__c, NSP_Client_Segment_type__c,
-                            NSP_Client_SegmentDate__c, NSP_Service_Package__c, NSP_AIMS_First_Pay_Date__c, NSP_Legal_Name__c,
-                            NSP_DBA__c, NSP_Business_Type__c, NSP_FEIN__c, NSP_Business_Inception_Date__c,
-                            NSP_SIC_Code__c, NSP_Legal_Entity_Description__c, NSP_NAICS_Code__c, NSP_AIMS_Original_First_Pay_Date__c,
-                            NSP_Sales_Office__c,NSP_RET_Region__c,NSP_RET_AIMS_Original_Empl_Date__c,NSP_RET_NAICS_Description__c,
-                            NSP_Phone__c,NSP_RET_Phone_Ext__c,NSP_Email__c,NSP_Renewal_Date__c
-                            FROM Asset WHERE
-                            AccountId in : accountID AND
-                            RecordTypeId =: WOAssetRecordTypeId  AND
-                            NSP_Account_Status__c = : NSP_ServiceConstants.ASSET_ACTIVE_STATUS AND
-                            NSP_Client__c!= null]){
+        for ( Asset asset : [
+                    SELECT
+                        Id ,
+                        NSP_WO_AIMS_Client_Number__c ,
+                        AccountId ,
+                        NSP_Company_Name__c ,
+                        NSP_Client__c ,
+                        Disable_Sync_RET_Client_ID__c ,
+                        NSP_Account_Status__c ,
+                        NSP_Account_Status_Date__c ,
+                        NSP_Client_Segment_type__c ,
+                        NSP_Client_SegmentDate__c ,
+                        NSP_Service_Package__c ,
+                        NSP_AIMS_First_Pay_Date__c ,
+                        NSP_Legal_Name__c ,
+                        NSP_DBA__c ,
+                        NSP_Business_Type__c ,
+                        NSP_FEIN__c ,
+                        NSP_Business_Inception_Date__c ,
+                        NSP_SIC_Code__c ,
+                        NSP_Legal_Entity_Description__c ,
+                        NSP_NAICS_Code__c ,
+                        NSP_AIMS_Original_First_Pay_Date__c ,
+                        NSP_Sales_Office__c ,
+                        NSP_RET_Region__c ,
+                        NSP_RET_AIMS_Original_Empl_Date__c ,
+                        NSP_RET_NAICS_Description__c ,
+                        NSP_Phone__c ,
+                        NSP_RET_Phone_Ext__c ,
+                        NSP_Email__c ,
+                        NSP_Renewal_Date__c
+                    FROM Asset
+                    WHERE (
+                        ( AccountId IN :accountID )
+                        AND ( RecordTypeId = :WOAssetRecordTypeId )
+                        AND ( NSP_Account_Status__c = :NSP_ServiceConstants.ASSET_ACTIVE_STATUS )
+                        AND ( NSP_Client__c != null )
+                    )
+                ]
+            )
+        {
             // Populate Map <Account ID , WOAsset>
             List<Asset> assetLst = RETBPSassets.containsKey(asset.AccountId) ? RETBPSassets.get(asset.AccountId) : new List<Asset>();
             assetLst.add(asset);
@@ -280,7 +308,7 @@ public class NSP_AssetServiceTriggerHelper {
                     accountIdSet.add(asset.AccountId);
                      woAssetIdSet.add(asset.Id);
                 }
-            }       
+            }
             if (asset.RecordTypeId == wXRecordTypeId && asset.AccountId != NULL && asset.NSP_WX_WA_CHILD_ID__c != NULL && asset.NSP_WX_WA_Parent_ID__c != null && (asset.Status != NSP_ServiceConstants.ASSETBLACKOUT || asset.Status != NSP_ServiceConstants.TERMINATED)) {
                 listWXParentIds.add(asset.NSP_WX_WA_Parent_ID__c);
                 mapwXParentIdAccountId.put(asset.NSP_WX_WA_Parent_ID__c, asset.AccountId);
@@ -439,26 +467,19 @@ public class NSP_AssetServiceTriggerHelper {
             updateaccountPayrollEmployee(assetPayrollSet);
         }
     }
-    /* Helper methods to reuse in afterInsert and afterUpdate methods
-* updateAssets()
-* ReturnRETBPSassets()
-* ReturnAssetRecordtypes()
-* UpdateLstAssets()
-* //Added as a part of <STY-02841>
-* Updated for RET_Client_ID Bug 12142023
-*/
 
-    private Asset updateAssets(Asset getAsst, Asset assLst){
+    // Helper methods to reuse in afterInsert and afterUpdate methods
+    // updateAssets()
+    // ReturnRETBPSassets()
+    // ReturnAssetRecordtypes()
+    // UpdateLstAssets()
+    private Asset updateAssets( Asset getAsst , Asset assLst ) {
         Asset returnAsset = getAsst;
         getAsst.NSP_WO_AIMS_Client_Number__c = assLst.NSP_Client__c;
         //10212025-STY-462099-START
-        if( 
-            getAsst != null &&
-            (
-                getAsst.RecordTypeId == RETWOAssetRecordTypeId
+        if ( ( getAsst.RecordTypeId == RETWOAssetRecordTypeId )
+            && !assLst.Disable_Sync_RET_Client_ID__c
             )
-            && !getAsst.Disable_Sync_RET_Client_ID__c
-          )
         {
             getAsst.NSP_RET_Client_ID__c = assLst.NSP_Client__c;//11092023-STY-241721
         }
@@ -467,17 +488,17 @@ public class NSP_AssetServiceTriggerHelper {
         getAsst.NSP_Company_Name__c = null;
         getAsst.NSP_Account_Status__c = assLst.NSP_Account_Status__c;
         getAsst.NSP_Account_Status_Date__c = assLst.NSP_Account_Status_Date__c;
-        getAsst.NSP_Client_Segment_type__c =assLst.NSP_Client_Segment_type__c;
-        getAsst.NSP_Client_SegmentDate__c =assLst.NSP_Client_SegmentDate__c;
+        getAsst.NSP_Client_Segment_type__c = assLst.NSP_Client_Segment_type__c;
+        getAsst.NSP_Client_SegmentDate__c = assLst.NSP_Client_SegmentDate__c;
         getAsst.NSP_Service_Package__c = assLst.NSP_Service_Package__c;
         getAsst.NSP_AIMS_First_Pay_Date__c = assLst.NSP_AIMS_First_Pay_Date__c;
-        getAsst.NSP_Legal_Name__c =assLst.NSP_Legal_Name__c;
-        getAsst.NSP_DBA__c =assLst.NSP_DBA__c;
-        getAsst.NSP_Business_Type__c= assLst.NSP_Business_Type__c;
+        getAsst.NSP_Legal_Name__c = assLst.NSP_Legal_Name__c;
+        getAsst.NSP_DBA__c = assLst.NSP_DBA__c;
+        getAsst.NSP_Business_Type__c = assLst.NSP_Business_Type__c;
         getAsst.NSP_FEIN__c = assLst.NSP_FEIN__c;
         getAsst.NSP_Business_Inception_Date__c = assLst.NSP_Business_Inception_Date__c;
         getAsst.NSP_SIC_Code__c = assLst.NSP_SIC_Code__c;
-        getAsst.NSP_Legal_Entity_Description__c =assLst.NSP_Legal_Entity_Description__c;
+        getAsst.NSP_Legal_Entity_Description__c = assLst.NSP_Legal_Entity_Description__c;
         getAsst.NSP_NAICS_Code__c = assLst.NSP_NAICS_Code__c;
         getAsst.NSP_AIMS_Original_First_Pay_Date__c = assLst.NSP_AIMS_Original_First_Pay_Date__c;
         getAsst.NSP_Sales_Office__c = assLst.NSP_Sales_Office__c;
@@ -491,47 +512,48 @@ public class NSP_AssetServiceTriggerHelper {
     }
 
     private  List<Asset> returnRETBPSassets(List<ID> accountID){
-        List<Asset> RETBPSassets = new  List<Asset>();
-
-        for( Asset assLst :[
-                Select 
-                    id,
-                    NSP_WO_AIMS_Client_Number__c,
-                    Disable_Sync_RET_Client_ID__c,
-                    AccountId,
-                    NSP_Company_Name__c,
-                    NSP_Client__c,
-                    NSP_Account_Status__c,
-                    NSP_Account_Status_Date__c,
-                    NSP_Client_Segment_type__c,
-                    NSP_Client_SegmentDate__c,
-                    NSP_Service_Package__c,
-                    NSP_AIMS_First_Pay_Date__c,
-                    NSP_Legal_Name__c,
-                    NSP_DBA__c,
-                    NSP_Business_Type__c,
-                    NSP_FEIN__c,
-                    NSP_Business_Inception_Date__c,
-                    NSP_SIC_Code__c,
-                    NSP_Legal_Entity_Description__c,
-                    NSP_NAICS_Code__c,
-                    NSP_AIMS_Original_First_Pay_Date__c,
-                    NSP_Sales_Office__c,
-                    NSP_RET_Region__c,
-                    NSP_RET_AIMS_Original_Empl_Date__c,
-                    NSP_RET_NAICS_Description__c,
-                    NSP_Phone__c,
-                    NSP_RET_Phone_Ext__c,
-                    NSP_Email__c,
-                    NSP_Renewal_Date__c,
-                    RecordTypeId
-                FROM Asset
-                WHERE AccountId in : accountID
-                AND RecordType.DeveloperName IN: AssetRecTypeSet 
-             ]
-           )
+        List<Asset> records = new List<Asset>();
+        for ( Asset assLst : [
+                    SELECT 
+                        Id ,
+                        NSP_WO_AIMS_Client_Number__c ,
+                        Disable_Sync_RET_Client_ID__c ,
+                        AccountId ,
+                        NSP_Company_Name__c ,
+                        NSP_Client__c ,
+                        NSP_Account_Status__c ,
+                        NSP_Account_Status_Date__c ,
+                        NSP_Client_Segment_type__c ,
+                        NSP_Client_SegmentDate__c ,
+                        NSP_Service_Package__c ,
+                        NSP_AIMS_First_Pay_Date__c ,
+                        NSP_Legal_Name__c ,
+                        NSP_DBA__c ,
+                        NSP_Business_Type__c ,
+                        NSP_FEIN__c ,
+                        NSP_Business_Inception_Date__c ,
+                        NSP_SIC_Code__c ,
+                        NSP_Legal_Entity_Description__c ,
+                        NSP_NAICS_Code__c ,
+                        NSP_AIMS_Original_First_Pay_Date__c ,
+                        NSP_Sales_Office__c ,
+                        NSP_RET_Region__c ,
+                        NSP_RET_AIMS_Original_Empl_Date__c ,
+                        NSP_RET_NAICS_Description__c ,
+                        NSP_Phone__c ,
+                        NSP_RET_Phone_Ext__c ,
+                        NSP_Email__c ,
+                        NSP_Renewal_Date__c ,
+                        RecordTypeId
+                    FROM Asset
+                    WHERE (
+                        ( AccountId IN :accountID )
+                        AND ( RecordType.DeveloperName IN :AssetRecTypeSet )
+                    )
+                ]
+            )
         {
-            RETBPSassets.add(assLst);
+            records.add( assLst );
         }
         return RETBPSassets;
     }
@@ -877,18 +899,15 @@ public class NSP_AssetServiceTriggerHelper {
         }
     }
 
-    /**
-* Iterates throught the list of Future Assets and passes the required attributes to other methods.
-*Method Name:createCaseFromAsset
-* @param newList List of Future Assets.
-* @param set<Id>sAccountIds set of Account Ids
-* @return void
-*
-*/
-
-    public void createCaseFromAsset(List<Asset> lFutureAssets,Set<Id> sAccountIds){
-
-        Id peoRecordTypeId =  Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(PEORECORDTYPE)?.getRecordTypeId();
+    //
+    // Iterates throught the list of Future Assets and passes the required attributes to other methods.
+    // Method Name:createCaseFromAsset
+    // @param newList List of Future Assets.
+    // @param set<Id>sAccountIds set of Account Ids
+    // @return void
+    //
+    public void createCaseFromAsset( List<Asset> lFutureAssets , Set<Id> sAccountIds ) {
+        Id peoRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Case' , 'PEO' );
 
         List<NSP_Account_Team__c> lAccountTeams = new List<NSP_Account_Team__c>([SELECT Id,NSP_Account__c,NSP_Role__c,NSP_User__c,NSP_Primary__c FROM NSP_Account_Team__c WHERE NSP_Account__c IN : sAccountIds AND NSP_Role__c IN : lAccountTeamRoles]);
 
@@ -977,24 +996,19 @@ public class NSP_AssetServiceTriggerHelper {
         }
     }
 
-    /**
-     * Iterates throught the list of new Assets to create new groups and group Members
-     * @param set of AccountIds.
-     * Method Name: createAccGroupsMembersGroups
-     * @param list of New Assets
-     * @return void
-     *
-     */
-    public void createAccGroupsMembersGroups( Map<Id,Set<Id>> mapAccountIdRecordTypeId, List<Asset> newList){
-        Id autoCreatedRecordTypeId= Schema.SObjectType.NSP_Account_Group__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.AUTOMATICALLY_CREATED).getRecordTypeId();
-
-
-        Map<Id,set<String>> mapAccountIdSetGroupType = new Map<Id,set<String>>();
-        set<NSP_Account_Group__c> lstAccGroups = new set<NSP_Account_Group__c>();
+    //
+    // Iterates throught the list of new Assets to create new groups and group Members
+    // @param set of AccountIds.
+    // Method Name: createAccGroupsMembersGroups
+    // @param list of New Assets
+    // @return void
+    //
+    public void createAccGroupsMembersGroups( Map<Id,Set<Id>> mapAccountIdRecordTypeId , List<Asset> newList ) {
+        Id autoCreatedRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'NSP_Account_Group__c' , 'Automatically_Created' );
+        Map<Id,Set<String>> mapAccountIdSetGroupType = new Map<Id,Set<String>>();
+        Set<NSP_Account_Group__c> lstAccGroups = new Set<NSP_Account_Group__c>();
         List<NSP_Account_Group_Member__c> lstAccGroupMembrs = new List<NSP_Account_Group_Member__c>();
-
-        Id wORecordTypeId = Schema.SObjectType.Asset.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.WO_ASSET_RECORDTYPE).getRecordTypeId();
-
+        Id wORecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'WO' );
         //check if AccountGroup Already exists with the associated Account Group member to Account
         for(NSP_Account_Group_Member__c accGroupMember: [SELECT Id, NSP_Member_Account__c , NSP_Member_Account__r.Name, NSP_Group__c, NSP_Group__r.NSP_Type__c, NSP_Group__r.Name FROM  NSP_Account_Group_Member__c  WHERE NSP_Member_Account__c IN: mapAccountIdRecordTypeId.keyset()]){
             if(mapAccountIdSetGroupType.containsKey(accGroupMember.NSP_Member_Account__c)){
@@ -1147,19 +1161,18 @@ public class NSP_AssetServiceTriggerHelper {
         }
     }
 
-    /**
-     * Create WX AccountGroup When Asset is Updated
-     * Method Name:createWXAssetGroupsonUpdate
-     * @param List<Asset> newList
-     * @param Map<Id,Asset> oldMap
-     * @return void
-     */
-    public static void createWXAssetGroupsonUpdate(List < Asset > newList, Map < Id, Asset > oldMap) {
-        Map < String, String > mapwXParentIdAccountId = new Map < String, String > ();
-        Map < String, String > mapOldParentIdAccountId = new Map < String, String > ();
-
-        try{
-            Id wxRecordTypeId = Schema.SObjectType.Asset.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.WX_WA).getRecordTypeId();
+    //
+    // Create WX AccountGroup When Asset is Updated
+    // Method Name:createWXAssetGroupsonUpdate
+    // @param List<Asset> newList
+    // @param Map<Id,Asset> oldMap
+    // @return void
+    //
+    public static void createWXAssetGroupsonUpdate( List<Asset> newList , Map<Id,Asset> oldMap ) {
+        Map<String,String> mapwXParentIdAccountId = new Map<String,String>();
+        Map<String,String> mapOldParentIdAccountId = new Map<String,String>();
+        try {
+            Id wxRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'NSP_Asset_Product' );
             for (Asset asst: newList) {
                 if (isWxAsset(asst, wxRecordTypeId, oldMap)) {
                     mapwXParentIdAccountId.put(asst.NSP_WX_WA_Parent_ID__c, asst.AccountId);
@@ -1212,18 +1225,17 @@ public class NSP_AssetServiceTriggerHelper {
     }
 
 
-    /**
-     * When Asset is WxAsset, New Account Group and Account GroupMember is Created
-     * @param List<Asset> newList
-     * @param List<String> listWXParentIds
-     * @param Map<String,String> mapwXParentIdAccountId
-     * @param Id wXRecordTypeId
-     * @return void
-     */
-    private static void createWXAccountGroup(Set < String > setWXParentIds, Map < String, String > mapwXParentIdAccountId, Id wXRecordTypeId) {
+    //
+    // When Asset is WxAsset, New Account Group and Account GroupMember is Created
+    // @param List<Asset> newList
+    // @param List<String> listWXParentIds
+    // @param Map<String,String> mapwXParentIdAccountId
+    // @param Id wXRecordTypeId
+    // @return void
+    //
+    private static void createWXAccountGroup( Set<String> setWXParentIds , Map<String,String> mapwXParentIdAccountId , Id wXRecordTypeId ) {
+        Id wxRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'NSP_Account_Group__c' , 'Automatically_Created' );
 
-        Id autoCreatedRecordTypeId= Schema.SObjectType.NSP_Account_Group__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.AUTOMATICALLY_CREATED).getRecordTypeId();
-        
         List < sObject > lstRecordsToUpsert = new List < sObject > ();
 
         WxAssetGroup assetAccountsWrapper = getParentCountOfAsset(setWXParentIds, wXRecordTypeId);
