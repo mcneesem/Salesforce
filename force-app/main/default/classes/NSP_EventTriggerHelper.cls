@@ -10,23 +10,24 @@ public with sharing class NSP_EventTriggerHelper {
     private static final String EMPTY_STRING = '';
     private static final String WORD_SEPARATOR =  ' : ';
     private static Id coreSalesEventRecordType = NSP_GenericRecordType.getRecordTypeId( 'Event' , 'Core_Sales_Event_RT' );
+
     // Iterates throught the list of new Event and passes the required attributes to other methods.
     // @param newList List of New Event.  
     // @return void
-    public void beforeInsertDirector(List<Event> newList) {
+    public void beforeInsertDirector( List<Event> newList ) {
         List<Event> eventList = new List<Event>();
-        for(Event evt : newList){
-            evt.NSP_Last_Assigned_Owner__c = evt.OwnerId; // Added as part of STY-01774
-            //Added as part of STY-03437
-            if(evt.WhatId != null || evt.WhoId != null){
-                eventList.add(evt);
+        if ( ( newList != null ) && !newList.isEmpty() ) {
+            for ( Event evt : newList ) {
+                evt.NSP_Last_Assigned_Owner__c = evt.OwnerId; // STY-01774
+                if ( ( evt.WhatId != null ) || ( evt.WhoId != null ) ) {
+                    eventList.add( evt ); // STY-03437
+                }
+                evt.Creator_Title__c = NSP_EventTriggerHelper.userTitle; // ADO-504540
             }
-            //  ADO-504540
-            evt.Creator_Title__c = NSP_EventTriggerHelper.userTitle;
+            this.updateEventSales( newList , null );
         }
-        updateEventSales(newList,null);
-        if(!eventList.isEmpty()){
-            populateWhatAndWhoNamesEvent(eventList);//Update of NSP_What_Name__c and NSP_Who_Name__c before Insert
+        if ( !eventList.isEmpty() ) {
+            this.populateWhatAndWhoNamesEvent( eventList );//Update of NSP_What_Name__c and NSP_Who_Name__c before Insert
         }
     }
 
@@ -563,8 +564,6 @@ public with sharing class NSP_EventTriggerHelper {
     // 
     // Method : getUserTitle
     // Description : Get the current user's job title
-    // @param : none
-    // @return String
     //
     private static String userTitle {
         private get {
