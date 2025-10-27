@@ -1234,7 +1234,7 @@ public class NSP_AssetServiceTriggerHelper {
     // @return void
     //
     private static void createWXAccountGroup( Set<String> setWXParentIds , Map<String,String> mapwXParentIdAccountId , Id wXRecordTypeId ) {
-        Id wxRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'NSP_Account_Group__c' , 'Automatically_Created' );
+        Id autoCreatedRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'NSP_Account_Group__c' , 'Automatically_Created' );
 
         List < sObject > lstRecordsToUpsert = new List < sObject > ();
 
