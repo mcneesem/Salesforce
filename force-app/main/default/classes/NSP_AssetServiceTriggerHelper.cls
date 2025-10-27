@@ -825,6 +825,21 @@ public class NSP_AssetServiceTriggerHelper {
         private set;
     }
 
+    private static void updateRETClientId( Asset record , Asset recordOld ) {
+        if ( ( record != null )
+            && ( record.RecordTypeId == NSP_AssetServiceTriggerHelper.RETWOAssetRecordTypeId )
+            && String.isNotEmpty( record.NSP_WO_AIMS_Client_Number__c )
+            && !record.Disable_Sync_RET_Client_ID__c
+            && ( recordOld != null )
+            && ( ( record.NSP_WO_AIMS_Client_Number__c != recordOld.NSP_WO_AIMS_Client_Number__c )
+                || ( record.Disable_Sync_RET_Client_ID__c != recordOld.Disable_Sync_RET_Client_ID__c )
+                )
+            )
+        {
+            record.NSP_RET_Client_ID__c = record.NSP_WO_AIMS_Client_Number__c;
+        }
+    }
+
     //
     // Iterates throught the list of new Assets and passes the required attributes to other methods.
     // Method Name:beforeUpdateDirector
@@ -881,21 +896,6 @@ public class NSP_AssetServiceTriggerHelper {
         //As a part of DF-04328
         if(!notEditableRETFieldsAssetList.isEmpty()){
             throwErrorMessageForNonEditFields(newMap.values(), oldMap, false, false);
-        }
-    }
-
-    private static void updateRETClientId( Asset record , Asset recordOld ) {
-        if ( ( record != null )
-            && ( record.RecordTypeId == NSP_AssetServiceTriggerHelper.RETWOAssetRecordTypeId )
-            && String.isNotEmpty( record.NSP_WO_AIMS_Client_Number__c )
-            && !record.Disable_Sync_RET_Client_ID__c
-            && ( recordOld != null )
-            && ( ( record.NSP_WO_AIMS_Client_Number__c != recordOld.NSP_WO_AIMS_Client_Number__c )
-                || ( record.Disable_Sync_RET_Client_ID__c != recordOld.Disable_Sync_RET_Client_ID__c )
-                )
-            )
-        {
-            record.NSP_RET_Client_ID__c = record.NSP_WO_AIMS_Client_Number__c;
         }
     }
 
