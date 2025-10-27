@@ -555,7 +555,7 @@ public class NSP_AssetServiceTriggerHelper {
         {
             records.add( assLst );
         }
-        return RETBPSassets;
+        return records;
     }
 
     /**
