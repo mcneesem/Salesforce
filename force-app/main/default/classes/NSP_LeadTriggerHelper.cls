@@ -322,8 +322,7 @@ public with sharing class NSP_LeadTriggerHelper {
             //Added as part of CR--027 (Convert the child Leads to contacts on Parent Lead Conversion)
             createContact(leadNewMap.values());
             setSalesOfficeDetails(leadNewMap.values(),leadOldMap);  // added for STY-03154
-            //  ADO-504541
-            NSP_LeadTriggerHelper.transferDiscoveryCall(leadNewMap, leadOldMap);
+            NSP_LeadTriggerHelper.transferDiscoveryCall( leadNewMap , leadOldMap ); // ADO-504541
         } catch ( Exception e ) {
             NSP_LeadTriggerHelper.handleException( e , 'beforeUpdateDirector' );
         }
@@ -1528,47 +1527,61 @@ public with sharing class NSP_LeadTriggerHelper {
     // @param: oldLeadOwner
     // @return: void
     //
-    private static void transferDiscoveryCall(Map<Id,Lead> leadNewMap , Map<Id,Lead> leadOldMap) {
-        Map<Id,Id> leadOwnerTransfer = calculateEventNewOwnerMap(leadNewMap, leadOldMap);
-        if(leadOwnerTransfer.size() > 0){
-            Map<Id,Id> eventNewOwner =  calculateEventNewOwnerMap(leadOwnerTransfer);
-            if(eventNewOwner.size() > 0 && Limits.getFutureCalls() < Limits.getLimitFutureCalls()){
-                transferDiscoveryCallAsync( JSON.serialize(eventNewOwner) );
-            }
-        }
-    }
-    
-    private static Map<Id,Id> calculateEventNewOwnerMap( Map<Id,Id> leadOwnerTransfer){
-        Map<Id,Id> eventNewOwner =  new Map<Id,Id>();
-        for ( Event event : [
-                SELECT Id , WhoId FROM Event
-                WHERE (
-                ( WhoId IN : leadOwnerTransfer.keySet() )
-                AND (NSP_Event_Subtype__c = 'Discovery Call')
-                AND (NSP_Status__c = 'Open' OR NSP_Status__c = null))
-            ]
+    private static void transferDiscoveryCall( Map<Id,Lead> leadNewMap , Map<Id,Lead> leadOldMap ) {
+        Map<Id,Id> leadOwnerTransfer = NSP_LeadTriggerHelper.calculateLeadOwnerTransferMap( leadNewMap , leadOldMap );
+        Map<Id,Id> eventNewOwner =  NSP_LeadTriggerHelper.calculateEventNewOwnerMap( leadOwnerTransfer );
+        if ( ( eventNewOwner != null )
+            && !eventNewOwner.isEmpty()
+            && ( Limits.getFutureCalls() < Limits.getLimitFutureCalls() )
             )
         {
-            if ( leadOwnerTransfer.containsKey( event.WhoId ) && leadOwnerTransfer.get(event.WhoId) != null)
-            {
-                eventNewOwner.put(event.Id, leadOwnerTransfer.get(event.WhoId));
-            }
+            NSP_LeadTriggerHelper.transferDiscoveryCallAsync( JSON.serialize( eventNewOwner ) );
         }
-        return eventNewOwner;
     }
 
-    private static Map<Id,Id> calculateEventNewOwnerMap(Map<Id,Lead> leadNewMap , Map<Id,Lead> leadOldMap ){
-
+    private static Map<Id,Id> calculateLeadOwnerTransferMap( Map<Id,Lead> leadNewMap , Map<Id,Lead> leadOldMap ) {
         Map<Id,Id> leadOwnerTransfer = new Map<Id,Id>();
-        if((leadOldMap != null ) && ( leadNewMap != null ) && !leadNewMap.isEmpty()){
-            for (Id leadId: leadNewMap.keySet()) {
-               if( (leadNewMap.containsKey(leadId) && leadOldMap.containsKey(leadId)) 
-               &&  (leadNewMap.get(leadId).OwnerId != leadOldMap.get(leadId).OwnerId)){
-                    leadOwnerTransfer.put(leadId, leadNewMap.get(leadId).OwnerId);
+        if ( ( leadOldMap != null )
+            && ( leadNewMap != null )
+            && !leadNewMap.isEmpty()
+            )
+        {
+            for ( Id leadId: leadNewMap.keySet() ) {
+                if ( leadNewMap.containsKey( leadId )
+                    && leadOldMap.containsKey( leadId )
+                    && ( leadNewMap.get(leadId).OwnerId != leadOldMap.get(leadId).OwnerId )
+                    )
+                {
+                    leadOwnerTransfer.put( leadId , leadNewMap.get( leadId ).OwnerId );
                 }
             }
         }
         return leadOwnerTransfer;
+    }
+
+    private static Map<Id,Id> calculateEventNewOwnerMap( Map<Id,Id> leadOwnerTransfer ) {
+        Map<Id,Id> eventNewOwner =  new Map<Id,Id>();
+        if ( ( leadOwnerTransfer != null ) && !leadOwnerTransfer.isEmpty() ) {
+            for ( Event record : [
+                        SELECT Id , WhoId
+                        FROM Event
+                        WHERE (
+                            ( WhoId IN :leadOwnerTransfer.keySet() )
+                            AND ( NSP_Event_Subtype__c = 'Discovery Call' )
+                            AND ( ( NSP_Status__c = 'Open' ) OR ( NSP_Status__c = null ) )
+                        )
+                    ]
+                )
+            {
+                if ( leadOwnerTransfer.containsKey( record.WhoId )
+                    && ( leadOwnerTransfer.get( record.WhoId ) != null )
+                    )
+                {
+                    eventNewOwner.put( record.Id , leadOwnerTransfer.get( record.WhoId ) );
+                }
+            }
+        }
+        return eventNewOwner;
     }
 
     //
@@ -1577,39 +1590,44 @@ public with sharing class NSP_LeadTriggerHelper {
     // @return: void
     //
     @future
-    private static void transferDiscoveryCallAsync(String strEventNewOwner){
-        try{
-            if(String.isNotBlank(strEventNewOwner)){
-                Map<Id,Id> eventNewOwner = (Map<Id,Id>)JSON.deserialize(
+    private static void transferDiscoveryCallAsync( String strEventNewOwner ) {
+        try {
+            Map<Id,Id> eventNewOwner = null;
+            if ( String.isNotBlank( strEventNewOwner ) ) {
+                eventNewOwner = (Map<Id,Id>)JSON.deserialize(
                     strEventNewOwner ,
                     Map<Id,Id>.class
                 );
-                if((eventNewOwner != null ) && !eventNewOwner.isEmpty()){
-                    List<Event> updateEvents = new List<Event>();
-                    for ( Event event : [SELECT Id , OwnerId FROM Event WHERE ( Id IN :eventNewOwner.keySet() )])
-                    {
-                        if(eventNewOwner.containsKey( event.Id )){
-                            event.OwnerId = eventNewOwner.get(event.Id); 
-                            updateEvents.add(event);
-                        }
-                    }   
-                    if(updateEvents.size() > 0)
-                    {
-                        List<Database.SaveResult> results = Database.update( updateEvents , false );
-                        NSP_ErrorLogHandler.logResults(
-                        NSP_LeadTriggerHelper.class.getName() ,
-                        'transferDiscoveryCallAsync:update' ,
-                        results
-                        );
-                    }                    
+            }
+            List<Event> records = new List<Event>();
+            if ( ( eventNewOwner != null ) && !eventNewOwner.isEmpty() ) {
+                for ( Event record : [
+                            SELECT Id , OwnerId
+                            FROM Event
+                            WHERE ( Id IN :eventNewOwner.keySet() )
+                        ]
+                    )
+                {
+                    if ( eventNewOwner.containsKey( record.Id ) && ( eventNewOwner.get( record.Id ) != null ) ) {
+                        record.OwnerId = eventNewOwner.get( record.Id );
+                        records.add( record );
+                    }
                 }
             }
-        }
-        catch(Exception e){
+            if ( !records.isEmpty() ) {
+                List<Database.SaveResult> results = Database.update( records , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_LeadTriggerHelper.class.getName() ,
+                    'transferDiscoveryCallAsync:update' ,
+                    results
+                );
+            }
+        } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
-            NSP_LeadTriggerHelper.class.getName() ,
-            'transferDiscoveryCallAsync' ,
-            e);          
+                NSP_LeadTriggerHelper.class.getName() ,
+                'transferDiscoveryCallAsync' ,
+                e
+            );
         }
     }
 }
