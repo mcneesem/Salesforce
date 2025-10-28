@@ -1,5 +1,5 @@
 public class NSP_IP_Automation_Helper {
-	// test w/ NSP_IP_Automation_Helper_Test (90%)
+	// test w/ NSP_IP_Automation_Helper_Test (87%)
 	
     private Map<String, Case> caseToInsertSubjectIpList = new Map<String, Case>();
     private static Id ipFSORecordTypeId = SObjectType.Implementation_Profile__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.FSOProfile).getRecordTypeId();
@@ -80,13 +80,19 @@ public class NSP_IP_Automation_Helper {
 
       if(caseList != null && !caseList.isEmpty()){
          for(Case cc: caseList){
-            if( this.caseToInsertSubjectIpList.isEmpty() ||
-                !this.caseToInsertSubjectIpList.containsKey(cc.Subject) ||
+            if( 
+                this.caseToInsertSubjectIpList.isEmpty() ||
                 ( 
-                  this.caseToInsertSubjectIpList.containsKey(cc.Subject) &&
-                  ( this.caseToInsertSubjectIpList.get(cc.Subject).NSP_Implementation_Profile__c != cc.NSP_Implementation_Profile__c )
-                )
-              )
+                  String.isNotBlank( cc.Subject ) &&
+                  ( !this.caseToInsertSubjectIpList.containsKey(cc.Subject)||
+                     (  
+                        this.caseToInsertSubjectIpList.containsKey(cc.Subject) && 
+                        ( this.caseToInsertSubjectIpList.containsKey(cc.Subject) != null ) &&
+                        ( this.caseToInsertSubjectIpList.get(cc.Subject).NSP_Implementation_Profile__c != cc.NSP_Implementation_Profile__c )
+                     )
+                  )
+               )
+             )
             {
                newCaseList.add(cc);
             }
