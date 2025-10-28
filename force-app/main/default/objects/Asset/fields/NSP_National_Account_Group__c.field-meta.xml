@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_National_Account_Group__c</fullName>
     <description>When a new value is added here, make sure to update the formula for Case National Account Group (Case.National_Account_Group__c) and Project National Account Group (pse__proj__c.National_Account_Group__c).</description>
-    <externalId>false</externalId>
     <label>National Account Group</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
@@ -476,6 +475,11 @@
                 <fullName>129</fullName>
                 <default>false</default>
                 <label>VantEdge Partners</label>
+            </value>
+            <value>
+                <fullName>130</fullName>
+                <default>false</default>
+                <label>Allied Services Group</label>
             </value>
         </valueSetDefinition>
     </valueSet>

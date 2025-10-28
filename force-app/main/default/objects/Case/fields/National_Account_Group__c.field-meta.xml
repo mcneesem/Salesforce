@@ -101,6 +101,7 @@
     &apos;127&apos; , &apos;Autumn Lane Advisors&apos; ,
     &apos;128&apos; , &apos;Aureon Partners LLC&apos; ,
     &apos;129&apos; , &apos;VantEdge Partners&apos; ,
+    &apos;130&apos; , &apos;Allied Services Group&apos;,
     TEXT( Account.WO_Asset__r.NSP_National_Account_Group__c )
   )
 )</formula>
