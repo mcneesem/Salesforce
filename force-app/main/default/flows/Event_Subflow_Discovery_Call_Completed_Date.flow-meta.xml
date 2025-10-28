@@ -160,7 +160,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Get_Public_Group_Id</targetReference>
+            <targetReference>Check_if_Role_ID_Exists</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -487,6 +487,28 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_if_Role_ID_Exists</name>
+        <label>Check if Role ID Exists</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_Role_ID</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varOpportunity.Owner.UserRoleId</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Public_Group_Id</targetReference>
+            </connector>
+            <label>Has Role ID</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_varOpportunity_for_info_related_to_Close_Lost</name>
         <label>Check varOpportunity for info related to Close Lost</label>
         <locationX>0</locationX>
@@ -627,7 +649,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Get_Public_Group_Id</targetReference>
+            <targetReference>Check_if_Role_ID_Exists</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Not a Close Lost Opty</defaultConnectorLabel>
         <rules>
