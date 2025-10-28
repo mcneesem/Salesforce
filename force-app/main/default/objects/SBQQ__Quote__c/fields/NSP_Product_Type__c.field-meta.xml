@@ -224,6 +224,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>List Price</controllingFieldValue>
+            <controllingFieldValue>WO</controllingFieldValue>
+            <valueName>Time and Attendance</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>List Price</controllingFieldValue>
             <controllingFieldValue>WX</controllingFieldValue>
             <controllingFieldValue>WA</controllingFieldValue>
             <controllingFieldValue>WO</controllingFieldValue>
@@ -266,10 +271,6 @@
             <controllingFieldValue>WA</controllingFieldValue>
             <controllingFieldValue>WO</controllingFieldValue>
             <valueName>Time and Attendance Hardware</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>WO</controllingFieldValue>
-            <valueName>Time and Attendance</valueName>
         </valueSettings>
     </valueSet>
     <visibleLines>4</visibleLines>

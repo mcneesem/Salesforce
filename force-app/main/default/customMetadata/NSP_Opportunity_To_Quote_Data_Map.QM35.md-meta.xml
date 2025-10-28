@@ -28,7 +28,7 @@
     </values>
     <values>
         <field>NSP_Product_Type__c</field>
-        <value xsi:type="xsd:string">Time and Attendance Hardware</value>
+        <value xsi:type="xsd:string">Time and Attendance;Time and Attendance Hardware</value>
     </values>
     <values>
         <field>NSP_User_Group__c</field>
