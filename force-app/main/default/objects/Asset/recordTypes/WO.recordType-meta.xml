@@ -87,7 +87,7 @@
     <picklistValues>
         <picklist>I_9_Service_Exception__c</picklist>
         <values>
-            <fullName>Business Team</fullName>
+            <fullName>I-9 Collection Exception</fullName>
             <default>false</default>
         </values>
         <values>
