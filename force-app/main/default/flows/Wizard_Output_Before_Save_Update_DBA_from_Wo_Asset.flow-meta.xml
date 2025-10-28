@@ -15,6 +15,19 @@
             </value>
         </assignmentItems>
     </assignments>
+    <assignments>
+        <name>Assignment_varFaultElement_Wo_Asset</name>
+        <label>Assignment varFaultElement - Wo Asset</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Wo_Asset</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
     <decisions>
         <name>Validate_WO_Asset_Presence</name>
         <label>Validate WO Asset Presence</label>
@@ -26,7 +39,7 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Wo_Asset</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -68,14 +81,10 @@
         <connector>
             <targetReference>Validate_WO_Asset_Presence</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assignment_varFaultElement_Wo_Asset</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
-        <filters>
-            <field>AccountId</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <stringValue></stringValue>
-            </value>
-        </filters>
         <filters>
             <field>Status</field>
             <operator>EqualTo</operator>
@@ -97,6 +106,13 @@
                 <stringValue></stringValue>
             </value>
         </filters>
+        <filters>
+            <field>NSP_DBA__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Asset</object>
         <queriedFields>Id</queriedFields>
@@ -111,13 +127,6 @@
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>NSP_ClientName__c</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <stringValue></stringValue>
-            </value>
-        </filters>
-        <filters>
             <field>RecordTypeId</field>
             <operator>EqualTo</operator>
             <value>
@@ -126,6 +135,27 @@
         </filters>
         <filters>
             <field>NSP_Case__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Case__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_ClientName__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_ClientName__c</field>
             <operator>NotEqualTo</operator>
             <value>
                 <stringValue></stringValue>
@@ -143,4 +173,11 @@
         <triggerType>RecordBeforeSave</triggerType>
     </start>
     <status>Draft</status>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
 </Flow>
