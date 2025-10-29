@@ -143,68 +143,60 @@ public with sharing class NSP_OpportunityTriggerHelper {
 
     }
 
-/**
-* Iterates throught the map of new Opportunity and passes the required attributes to other methods.
-* @param newList List of New Opportunity.
-* @param opportunityNewMap Map of Opportunity id and Opportunity records.
-* @return void
-*
-*/
-
-    public void afterInsertDirector(List<Opportunity> newList,Map<Id, Opportunity> opportunityNewMap){
-
+    //
+    // Iterates throught the map of new Opportunity and passes the required attributes to other methods.
+    // @param newList List of New Opportunity.
+    // @param opportunityNewMap Map of Opportunity id and Opportunity records.
+    // @return void
+    //
+    public void afterInsertDirector( List<Opportunity> newList , Map<Id,Opportunity> opportunityNewMap ) {
         Set<String> accountIdSet = new Set<String>();
-        //publish opportunity event
-        List<Integration_Opportunity_Event__e> opportunityEventList = New List<Integration_Opportunity_Event__e>();
-        List<Opportunity> updateResyncFlagOpportunityList = new List<Opportunity>();
         //Opportunity list to capture opportunities created with HSA contribution data
         List<Opportunity> newTaskOpportunityList = new List<Opportunity>();
-        Set<Id> OpportunityAccountId= new Set<Id>();
-        for(Id opportunityId : opportunityNewMap.keySet()){
-            accountIdSet.add(opportunityNewMap.get(opportunityId).accountid);
-            if(opportunityNewMap.get(opportunityId).NSP_Ready_for_Integration_Sync__c){
-                opportunityEventList.add(new Integration_Opportunity_Event__e(Id__c = opportunityId));
-                updateResyncFlagOpportunityList.add(opportunityNewMap.get(opportunityId));
+        Set<Id> opportunityAccountIds = new Set<Id>();
+        Set<Id> integrationSyncIds = new Set<Id>();
+        for ( Id opportunityId : opportunityNewMap.keySet() ) {
+            Opportunity newOpportunity = opportunityNewMap.get( opportunityId );
+            integrationSyncIds = this.collectIntegrationSyncIds( newOpportunity , integrationSyncIds , true );
+            accountIdSet.add( newOpportunity.AccountId );
+            if ( String.isNotBlank( newOpportunity.NSP_Contribution_Level__c )
+                && String.isNotBlank( newOpportunity.NSP_Frequency_of_Distribution__c )
+                )
+            {
+                newTaskOpportunityList.add( newOpportunity );
             }
-
-            if(! String.isBlank(opportunityNewMap.get(opportunityId).NSP_Contribution_Level__c)
-               && ! String.isBlank(opportunityNewMap.get(opportunityId).NSP_Frequency_of_Distribution__c)){
-                   newTaskOpportunityList.add(opportunityNewMap.get(opportunityId));
-               }
             // Added as a part of DF-01497
-            if(opportunityNewMap.get(opportunityId).NSP_Primary_Contact__c==Null ||
-               opportunityNewMap.get(opportunityId).NSP_Customer_Signer__c==Null){
-                OpportunityAccountId.add(opportunityNewMap.get(opportunityId).accountId);
+            if ( ( newOpportunity.NSP_Primary_Contact__c == null )
+                || ( newOpportunity.NSP_Customer_Signer__c == null )
+                )
+            {
+                opportunityAccountIds.add( newOpportunity.AccountId );
             }
         }
-        /* Moving to NSP_UpdateRelatedAccounts class as part of DF-01058 */
-        NSP_UpdateRelatedAccounts.updateRelatedAccounts(accountIdSet);
-
-        /*Update Account status to 'Prospecting' once opportunity is added and there are no assets*/
-        NSP_UpdateRelatedAccounts.updateAccountStatus(accountIdSet);
-
-        if(! newTaskOpportunityList.isEmpty()){
-            NSP_EventAndTaskHelperFunctions.createTaskRecordsForNCSQueue(newTaskOpportunityList, null);
+        // Moving to NSP_UpdateRelatedAccounts class as part of DF-01058
+        NSP_UpdateRelatedAccounts.updateRelatedAccounts( accountIdSet );
+        // Update Account status to 'Prospecting' once opportunity is added and there are no assets
+        NSP_UpdateRelatedAccounts.updateAccountStatus( accountIdSet );
+        //
+        if ( !newTaskOpportunityList.isEmpty() ) {
+            NSP_EventAndTaskHelperFunctions.createTaskRecordsForNCSQueue( newTaskOpportunityList , null );
         }
         // added as a part of DF-01497
-        getRelatedACR(OpportunityAccountId,opportunityNewMap.keySet());
-
+        getRelatedACR( opportunityAccountIds , opportunityNewMap.keySet() );
         // Send the list to publish event bus
-        if ( NSP_OpportunityTriggerHelper.platformEventSettings.IsEnabled_IntegrationOpportunityEvent__c ) {
-            this.publishEventBus( opportunityEventList , updateResyncFlagOpportunityList );
-        }
-
+        this.publishIntegrationSyncEvents(
+            integrationSyncIds ,
+            NSP_OpportunityTriggerHelper.platformEventSettings.IsEnabled_IntegrationOpportunityEvent__c
+        );
     }
 
-/**
-* Iterates throught the Opportunity map and identifies the records that needs to worked based on various criterias.
-* @param opportunityNewMap Map of New Opportunity.
-* @param opportunityOldMap Map of Old Opportunity.
-* @return void
-*
-*/
-
-    public void beforeUpdateDirector(Map<Id, Opportunity> opportunityNewMap,Map<Id, Opportunity> opportunityOldMap){
+    //
+    // Iterates throught the Opportunity map and identifies the records that needs to worked based on various criterias.
+    // @param opportunityNewMap Map of New Opportunity.
+    // @param opportunityOldMap Map of Old Opportunity.
+    // @return void
+    //
+    public void beforeUpdateDirector( Map<Id,Opportunity> opportunityNewMap , Map<Id,Opportunity> opportunityOldMap ) {
         //Creating collection of account and opportunity
         Set<String> accountIdSet =  new Set<String>();
         Set<String> MODaccountIdSet =  new Set<String>();
@@ -385,16 +377,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
         NSP_ChildOpportunitiesHelperFunctions childOpptyHlprObj = new NSP_ChildOpportunitiesHelperFunctions();
         childOpptyHlprObj.updateChildOpportunityOnProductChange(primaryProductChanged);
 
-        //call updateTriggerclass for metadata check ad update integration sync field on account
-        Set<Id> opportunityIdSetToUpdateResyncFLag = new Set<Id>();
-        NSP_SObjectUpdateTriggerHelper sObjectUpdateObj = new NSP_SObjectUpdateTriggerHelper();
-        opportunityIdSetToUpdateResyncFLag.addAll(sObjectUpdateObj.fetchUpdFieldsLst('Opportunity', (Map<Id, sObject>) opportunityNewMap, (Map<Id, sObject>) opportunityOldMap));
-
-        if(opportunityIdSetToUpdateResyncFLag.size() > 0){
-            for(Id opptyId : opportunityIdSetToUpdateResyncFLag){
-                opportunityNewMap.get(opptyId).NSP_Ready_for_Integration_Sync__c = true;
-            }
-        }
+        this.assignReadyForIntegrationSync( opportunityNewMap , opportunityOldMap );
 
         if(ownerChangedOpptyList.size()>0){
             NSP_OpportunityTriggerHelperFunctions.populateServiceEmail(ownerChangedOpptyList, ownerIdSet);
@@ -417,7 +400,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
     // @param opportunityNewMap Map of New Opportunity.
     // @param opportunityOldMap Map of Old Opportunity.
     // @return void
-    public void afterUpdateDirector(Map<Id, Opportunity> opportunityNewMap,Map<Id, Opportunity> opportunityOldMap){
+    public void afterUpdateDirector( Map<Id,Opportunity> opportunityNewMap , Map<Id,Opportunity> opportunityOldMap ) {
         List<String> closedOpportunityIdList = new List<String>();
         List<String> closedWonOpportunityIdList = new List<String>();
         List<String> reopenedOpportunityIdList = new List<String>();
@@ -425,10 +408,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
         Set<String> recordTypeSet = new Set<String>();
         Set<String> backoutOptySet = new Set<String>();
         List<Opportunity> closedWonOpptyList = new List<Opportunity>();
-        List<Integration_Opportunity_Event__e> opportunityEventList = new List<Integration_Opportunity_Event__e>();
-        List<Integration_Opportunity_Event__e> opportunityStageChangeEventList = new List<Integration_Opportunity_Event__e>();
         List<Id> stageAutoOpportunityIds = new List<Id>();
-        List<Opportunity> updateResyncFlagOpportunityList = new List<Opportunity>();
         List<Opportunity> closedOpptyList = new List<Opportunity>();
         List<String> productCodeList = new List<String>{'Employment Screening','Expense Management','Insurance Services'};
         //opportunity list to store oppty records where Primary Quote is newly created
@@ -445,6 +425,8 @@ public with sharing class NSP_OpportunityTriggerHelper {
         //List of string to store opportunity id fro changed sales tax records
         List<String> salesTaxChanged = new List<String>();
 
+        Set<Id> integrationSyncIdsAnalysis = new Set<Id>();
+        Set<Id> integrationSyncIds = new Set<Id>();
         //Iterating over the opportunity new map
         for(Id opportunityId : opportunityNewMap.keySet()){
 
@@ -460,15 +442,20 @@ public with sharing class NSP_OpportunityTriggerHelper {
             closedWonOpportunityIdList = optyClosedWonParentCheck( newOpportunity , oldOpportunity , closedWonOpportunityIdList );
             closedOpptyList = optyClosedWonProductCheck( newOpportunity , oldOpportunity , productCodeList , closedOpptyList );
             newTaskOpportunityList = optyNewTaskCheck( newOpportunity , oldOpportunity , newTaskOpportunityList );
-            if ( ( newOpportunity.StageName != oldOpportunity.StageName )
+            Boolean isNewStageAnalysis = (
+                ( newOpportunity.StageName != oldOpportunity.StageName )
                 && 'Analysis'.equalsIgnoreCase( newOpportunity.StageName )
-                )
-            {
-                opportunityStageChangeEventList = this.optyPublishEventCheck( newOpportunity , opportunityStageChangeEventList );
-            } else {
-                opportunityEventList = this.optyPublishEventCheck( newOpportunity , opportunityEventList );
-            }
-            updateResyncFlagOpportunityList = optyResyncFlagCheck( newOpportunity , updateResyncFlagOpportunityList );
+            );
+            integrationSyncIdsAnalysis = this.collectIntegrationSyncIds(
+                newOpportunity ,
+                integrationSyncIdsAnalysis ,
+                isNewStageAnalysis
+            );
+            integrationSyncIds = this.collectIntegrationSyncIds(
+                newOpportunity ,
+                integrationSyncIds ,
+                !isNewStageAnalysis
+            );
             backoutOptySet = optyBackoutCheck( newOpportunity , oldOpportunity , backoutOptySet );
             salesTaxChanged = optyTaxCheck( newOpportunity , oldOpportunity , salesTaxChanged );
         }
@@ -482,23 +469,16 @@ public with sharing class NSP_OpportunityTriggerHelper {
                 (Map<Id,sObject>)opportunityOldMap
             );
         }
-        // Send the list to publish event bus
-        if ( !updateResyncFlagOpportunityList.isEmpty() ) {
-            if ( !opportunityEventList.isEmpty()
-                && NSP_OpportunityTriggerHelper.platformEventSettings.IsEnabled_IntegrationOpportunityEvent__c
+        this.publishIntegrationSyncEvents(
+            integrationSyncIds ,
+            NSP_OpportunityTriggerHelper.platformEventSettings.IsEnabled_IntegrationOpportunityEvent__c
+        );
+        this.publishIntegrationSyncEvents(
+            integrationSyncIdsAnalysis ,
+            ( NSP_OpportunityTriggerHelper.platformEventSettings.IsEnabled_IntegrationOpportunityEvent__c
+                || NSP_OpportunityTriggerHelper.platformEventSettings.IsEnabled_OpportunityStageChangeEvent__c
                 )
-            {
-                this.publishEventBus( opportunityEventList , updateResyncFlagOpportunityList );
-            }
-            if ( !opportunityStageChangeEventList.isEmpty()
-                && ( NSP_OpportunityTriggerHelper.platformEventSettings.IsEnabled_IntegrationOpportunityEvent__c
-                    || NSP_OpportunityTriggerHelper.platformEventSettings.IsEnabled_OpportunityStageChangeEvent__c
-                    )
-                )
-            {
-                this.publishEventBus( opportunityStageChangeEventList , updateResyncFlagOpportunityList );
-            }
-        }
+        );
         if ( !closedOpportunityIdList.isEmpty() ) {
             NSP_ChildOpportunitiesHelperFunctions childHlprObj = new NSP_ChildOpportunitiesHelperFunctions();
             childHlprObj.updatesOnChildOpportunity( closedOpportunityIdList );
@@ -548,26 +528,6 @@ public with sharing class NSP_OpportunityTriggerHelper {
             salesTaxChanged.add( newOpportunity.Id );
         }
         return salesTaxChanged;
-    }
-
-    private List<Integration_Opportunity_Event__e> optyPublishEventCheck( Opportunity newOpportunity , List<Integration_Opportunity_Event__e> opportunityEventList ) {
-        //publish opportunity event
-        if ( newOpportunity.NSP_Ready_for_Integration_Sync__c ) {
-            opportunityEventList.add(
-                new Integration_Opportunity_Event__e(
-                    Id__c=newOpportunity.Id
-                )
-            );
-        }
-        return opportunityEventList;
-    }
-
-    private List<Opportunity> optyResyncFlagCheck( Opportunity newOpportunity , List<Opportunity> updateResyncFlagOpportunityList ) {
-        //publish opportunity event
-        if ( newOpportunity.NSP_Ready_for_Integration_Sync__c ) {
-            updateResyncFlagOpportunityList.add( newOpportunity );
-        }
-        return updateResyncFlagOpportunityList;
     }
 
     private List<Id> optyStageAutomationCheck(
@@ -882,6 +842,64 @@ public with sharing class NSP_OpportunityTriggerHelper {
             }
         }
 
+    }
+
+    //
+    // Integration Sync Methods
+    //
+
+    private void assignReadyForIntegrationSync( Map<Id,Opportunity> opportunityNewMap , Map<Id,Opportunity> opportunityOldMap ) {
+        //call updateTriggerclass for metadata check ad update integration sync field on account
+        Set<Id> opportunityIdSetToUpdateResyncFlag = new Set<Id>();
+        NSP_SObjectUpdateTriggerHelper sObjectUpdateObj = new NSP_SObjectUpdateTriggerHelper();
+        opportunityIdSetToUpdateResyncFlag.addAll(
+            sObjectUpdateObj.fetchUpdFieldsLst(
+                'Opportunity' ,
+                (Map<Id,sObject>)opportunityNewMap ,
+                (Map<Id,sObject>)opportunityOldMap
+            )
+        );
+        if ( !opportunityIdSetToUpdateResyncFlag.isEmpty() ){
+            for ( Id opptyId : opportunityIdSetToUpdateResyncFlag ) {
+                opportunityNewMap.get( opptyId ).NSP_Ready_for_Integration_Sync__c = true;
+            }
+        }
+    }
+
+    private Set<Id> collectIntegrationSyncIds( Opportunity record , Set<Id> syncIds , Boolean isValid ) {
+        if ( isValid
+            && ( syncIds != null )
+            && ( record != null )
+            && record.NSP_Ready_for_Integration_Sync__c
+            )
+        {
+            syncIds.add( record.Id );
+        }
+        return syncIds;
+    }
+
+    private void publishIntegrationSyncEvents( Set<Id> syncIds , Boolean isEnabled ) {
+        if ( isEnabled
+            && ( syncIds != null )
+            && !syncIds.isEmpty()
+            )
+        {
+            List<Integration_Opportunity_Event__e> eventList = new List<Integration_Opportunity_Event__e>();
+            List<Opportunity> records = new List<Opportunity>();
+            for ( Id syncId : syncIds ) {
+                eventList.add(
+                    new Integration_Opportunity_Event__e(
+                        Id__c=syncId
+                    )
+                );
+                records.add(
+                    new Opportunity(
+                        Id=syncId
+                    )
+                );
+            }
+            this.publishEventBus( eventList , records );
+        }
     }
 
     //
