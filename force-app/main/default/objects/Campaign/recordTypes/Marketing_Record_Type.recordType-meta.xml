@@ -160,6 +160,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Gifting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In-Product</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Insperity Blog</fullName>
             <default>false</default>
         </values>
