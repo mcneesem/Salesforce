@@ -477,6 +477,11 @@
                 <default>false</default>
                 <label>VantEdge Partners</label>
             </value>
+            <value>
+                <fullName>130</fullName>
+                <default>false</default>
+                <label>Allied Services Group</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
