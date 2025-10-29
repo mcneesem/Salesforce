@@ -134,8 +134,8 @@ private class NSP_OpportunityTriggerServiceHelperTest {
         oProject.pse__Start_Date__c = System.Today();
         oProject.pse__Account__c= acc.Id;
         oProject.TemplateName__c = label.Middle_Market_Implementation_Project;
-      	oProject.RecordTypeId = projectRecordType;
-      	oProject.pse__Project_Type__c =NSP_ServiceConstants.ImplementationProjectType;
+        oProject.RecordTypeId = projectRecordType;
+        oProject.pse__Project_Type__c =NSP_ServiceConstants.ImplementationProjectType;
         insert oProject;
 
         Implementation_Profile__c impProfile = new Implementation_Profile__c();
