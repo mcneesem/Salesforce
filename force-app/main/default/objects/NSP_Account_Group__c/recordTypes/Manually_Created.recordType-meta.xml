@@ -4,18 +4,25 @@
     <active>true</active>
     <label>Manually Created</label>
     <picklistValues>
+        <picklist>Did_Client_Go_To_A_Competitor__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Eligible_To_Return_To_Insperity_At_Time__c</picklist>
         <values>
             <fullName>No</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>None</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Yes</fullName>
-            <default>true</default>
+            <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
@@ -810,12 +817,8 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>None</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Yes</fullName>
-            <default>true</default>
+            <default>false</default>
         </values>
     </picklistValues>
 </RecordType>

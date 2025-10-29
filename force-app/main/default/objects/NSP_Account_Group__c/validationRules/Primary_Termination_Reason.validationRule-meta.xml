@@ -3,12 +3,26 @@
     <fullName>Primary_Termination_Reason</fullName>
     <active>true</active>
     <errorConditionFormula>AND(
-  NOT( $Permission.Bypass_Termination_Reason_Rules ) ,
+  $Permission.Enforce_Termination_Reason_Rules ,
   Account__r.WO_Asset__r.NSP_Written_Term_recd__c ,
+  ( TEXT( NSP_Type__c ) = &quot;Renewal Probability&quot; ) ,
   OR(
     ISBLANK( TEXT( Primary_Term_Reason__c ) ) ,
-    ISBLANK( TEXT( Sub_Term_Reason__c ) )
+    ISBLANK( TEXT( Sub_Term_Reason__c ) ) ,
+    ( LEN( Termination_Key_Points__c ) = 0 ) ,
+    ISBLANK( TEXT( Eligible_To_Return_To_Insperity_At_Time__c ) ) ,
+    ISBLANK( TEXT( Termination_Anticipated__c ) ) ,
+    ISBLANK( TEXT( Did_Client_Go_To_A_Competitor__c ) ) ,
+    ( LEN( Why_Why_Not__c ) = 0 ) ,
+    AND(
+      ( TEXT( Did_Client_Go_To_A_Competitor__c ) = &quot;Yes&quot; ) ,
+      ISBLANK( TEXT( Competitor__c ) )
+    ) ,
+    AND(
+      ( TEXT( Competitor__c ) = &quot;Other&quot; ) ,
+      ISBLANK( Other_Competitor__c )
+    )
   )
 )</errorConditionFormula>
-    <errorMessage>You must complete both the Primary Term Reason and Sub Term Reason(s) when an Asset linked to an Account in the Renewal Probability Account Group has &apos;Written Termination Notice Received&apos; selected.</errorMessage>
+    <errorMessage>You must complete the Termination Information section when an Asset linked to the primary Account in the Renewal Probability Account Group has &apos;Written Termination Notice Received&apos; selected.</errorMessage>
 </ValidationRule>
