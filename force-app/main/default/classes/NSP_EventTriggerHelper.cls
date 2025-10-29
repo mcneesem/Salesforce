@@ -1,6 +1,6 @@
 public with sharing class NSP_EventTriggerHelper {
     // test w/ NSP_EventTriggerHelperTest, LeadLastActivityDateHelperTest (82%)
-    // test w/ NSP_EventTriggerHelperTest (82%)
+    // test w/ NSP_EventTriggerHelperTest (81%)
     // test w/ LeadLastActivityDateHelperTest (35%)
 
     private static final String DISCOVERY_CALL = 'Discovery Call';
@@ -14,18 +14,20 @@ public with sharing class NSP_EventTriggerHelper {
     // Iterates throught the list of new Event and passes the required attributes to other methods.
     // @param newList List of New Event.  
     // @return void
-    public void beforeInsertDirector(List<Event> newList) {
+    public void beforeInsertDirector( List<Event> newList ) {
         List<Event> eventList = new List<Event>();
-        for(Event evt : newList){
-            evt.NSP_Last_Assigned_Owner__c = evt.OwnerId; // Added as part of STY-01774
-            //Added as part of STY-03437
-            if(evt.WhatId != null || evt.WhoId != null){
-                eventList.add(evt);
+        if ( ( newList != null ) && !newList.isEmpty() ) {
+            for ( Event evt : newList ) {
+                evt.NSP_Last_Assigned_Owner__c = evt.OwnerId; // STY-01774
+                if ( ( evt.WhatId != null ) || ( evt.WhoId != null ) ) {
+                    eventList.add( evt ); // STY-03437
+                }
+                evt.Creator_Title__c = NSP_EventTriggerHelper.userTitle; // ADO-504540
             }
+            this.updateEventSales( newList , null );
         }
-        updateEventSales(newList,null);
-        if(!eventList.isEmpty()){
-            populateWhatAndWhoNamesEvent(eventList);//Update of NSP_What_Name__c and NSP_Who_Name__c before Insert
+        if ( !eventList.isEmpty() ) {
+            this.populateWhatAndWhoNamesEvent( eventList );//Update of NSP_What_Name__c and NSP_Who_Name__c before Insert
         }
     }
 
@@ -558,6 +560,34 @@ public with sharing class NSP_EventTriggerHelper {
         }
         private set;
     }
-
+  
+    // 
+    // Method : getUserTitle
+    // Description : Get the current user's job title
+    //
+    private static String userTitle {
+        private get {
+            if ( userTitle == null ) {
+                String local = '';
+                List<User> records = [
+                    SELECT Id , Title
+                    FROM User
+                    WHERE ( Id = :UserInfo.getUserId() )
+                    LIMIT 1
+                ];
+                if ( ( records != null )
+                    && !records.isEmpty()
+                    && ( records[0] != null )
+                    && String.isNotBlank( records[0].Title )
+                    )
+                {
+                    local = records[0].Title;
+                }
+                userTitle = local;
+            }
+            return userTitle;
+        }
+        private set;
+    }
 }
 //
