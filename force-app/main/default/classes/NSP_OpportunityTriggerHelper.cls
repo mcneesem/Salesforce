@@ -190,7 +190,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
         getRelatedACR(OpportunityAccountId,opportunityNewMap.keySet());
 
         // Send the list to publish event bus
-        if(PlatformEventSettings__c.getInstance(UserInfo.getUserId()).IsEnabled_IntegrationOpportunityEvent__c) {
+        if ( NSP_OpportunityTriggerHelper.platformEventSettings.IsEnabled_IntegrationOpportunityEvent__c ) {
             this.publishEventBus( opportunityEventList , updateResyncFlagOpportunityList );
         }
 
@@ -425,7 +425,8 @@ public with sharing class NSP_OpportunityTriggerHelper {
         Set<String> recordTypeSet = new Set<String>();
         Set<String> backoutOptySet = new Set<String>();
         List<Opportunity> closedWonOpptyList = new List<Opportunity>();
-        List<Integration_Opportunity_Event__e> opportunityEventList = New List<Integration_Opportunity_Event__e>();
+        List<Integration_Opportunity_Event__e> opportunityEventList = new List<Integration_Opportunity_Event__e>();
+        List<Integration_Opportunity_Event__e> opportunityStageChangeEventList = new List<Integration_Opportunity_Event__e>();
         List<Id> stageAutoOpportunityIds = new List<Id>();
         List<Opportunity> updateResyncFlagOpportunityList = new List<Opportunity>();
         List<Opportunity> closedOpptyList = new List<Opportunity>();
@@ -459,7 +460,14 @@ public with sharing class NSP_OpportunityTriggerHelper {
             closedWonOpportunityIdList = optyClosedWonParentCheck( newOpportunity , oldOpportunity , closedWonOpportunityIdList );
             closedOpptyList = optyClosedWonProductCheck( newOpportunity , oldOpportunity , productCodeList , closedOpptyList );
             newTaskOpportunityList = optyNewTaskCheck( newOpportunity , oldOpportunity , newTaskOpportunityList );
-            opportunityEventList = optyPublishEventCheck( newOpportunity , opportunityEventList );
+            if ( ( newOpportunity.StageName != oldOpportunity.StageName )
+                && 'Analysis'.equalsIgnoreCase( newOpportunity.StageName )
+                )
+            {
+                opportunityStageChangeEventList = this.optyPublishEventCheck( newOpportunity , opportunityStageChangeEventList );
+            } else {
+                opportunityEventList = this.optyPublishEventCheck( newOpportunity , opportunityEventList );
+            }
             updateResyncFlagOpportunityList = optyResyncFlagCheck( newOpportunity , updateResyncFlagOpportunityList );
             backoutOptySet = optyBackoutCheck( newOpportunity , oldOpportunity , backoutOptySet );
             salesTaxChanged = optyTaxCheck( newOpportunity , oldOpportunity , salesTaxChanged );
@@ -475,11 +483,21 @@ public with sharing class NSP_OpportunityTriggerHelper {
             );
         }
         // Send the list to publish event bus
-        if ( ( updateResyncFlagOpportunityList.size() > 0 )
-            && ( PlatformEventSettings__c.getInstance( UserInfo.getUserId() ).IsEnabled_IntegrationOpportunityEvent__c )
-            )
-        {
-            this.publishEventBus( opportunityEventList , updateResyncFlagOpportunityList );
+        if ( !updateResyncFlagOpportunityList.isEmpty() ) {
+            if ( !opportunityEventList.isEmpty()
+                && NSP_OpportunityTriggerHelper.platformEventSettings.IsEnabled_IntegrationOpportunityEvent__c
+                )
+            {
+                this.publishEventBus( opportunityEventList , updateResyncFlagOpportunityList );
+            }
+            if ( !opportunityStageChangeEventList.isEmpty()
+                && ( NSP_OpportunityTriggerHelper.platformEventSettings.IsEnabled_IntegrationOpportunityEvent__c
+                    || NSP_OpportunityTriggerHelper.platformEventSettings.IsEnabled_OpportunityStageChangeEvent__c
+                    )
+                )
+            {
+                this.publishEventBus( opportunityStageChangeEventList , updateResyncFlagOpportunityList );
+            }
         }
         if ( !closedOpportunityIdList.isEmpty() ) {
             NSP_ChildOpportunitiesHelperFunctions childHlprObj = new NSP_ChildOpportunitiesHelperFunctions();
@@ -903,6 +921,16 @@ public with sharing class NSP_OpportunityTriggerHelper {
         } catch ( Exception e ) {
             NSP_OpportunityTriggerHelper.handleException( e , 'publishEventBus' );
         }
+    }
+
+    private static PlatformEventSettings__c platformEventSettings {
+        private get {
+            if ( platformEventSettings == null ) {
+                platformEventSettings = PlatformEventSettings__c.getInstance( UserInfo.getUserId() );
+            }
+            return platformEventSettings;
+        }
+        private set;
     }
 
     /**
