@@ -87,7 +87,7 @@ public class NSP_IP_Automation_Helper {
                   ( !this.caseToInsertSubjectIpList.containsKey(cc.Subject)||
                      (  
                         this.caseToInsertSubjectIpList.containsKey(cc.Subject) && 
-                        ( this.caseToInsertSubjectIpList.containsKey(cc.Subject) != null ) &&
+                        ( this.caseToInsertSubjectIpList.get(cc.Subject) != null ) &&
                         ( this.caseToInsertSubjectIpList.get(cc.Subject).NSP_Implementation_Profile__c != cc.NSP_Implementation_Profile__c )
                      )
                   )
