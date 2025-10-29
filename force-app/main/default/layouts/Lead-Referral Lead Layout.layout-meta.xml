@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <excludeButtons>DataDotComClean</excludeButtons>
+    <excludeButtons>OpenSlackRecordChannel</excludeButtons>
     <layoutSections>
         <customLabel>false</customLabel>
         <detailHeading>false</detailHeading>
@@ -328,9 +329,14 @@
             <sortOrder>13</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>New_Core_Sales_Task</actionName>
+            <actionName>New_Mid_Market_Event</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>14</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>New_Core_Sales_Task</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>15</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList>

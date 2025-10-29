@@ -4,5 +4,6 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>Marketing Rep</label>
     <permissionSets>Account_Baseline_Fields_for_Sales_Owners_Edit_Access</permissionSets>
+    <permissionSets>Mid_Market</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
