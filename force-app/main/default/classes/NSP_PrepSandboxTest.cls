@@ -1,14 +1,16 @@
 @isTest
-class NSP_PrepSandboxTest {
+private class NSP_PrepSandboxTest {
 
     @IsTest
-    static void testUpdateUserLogins() {
+    private static void testUpdateUserLogins() {
+        String suffix = String.valueOf( System.now().getTime() );
+        String local = 'testuser@example.com.' + suffix; // Prevent DmlException DUPLICATE_USERNAME
         Profile profile = [SELECT Id FROM Profile WHERE Name = 'Standard User' LIMIT 1];
         User user = new User(
             FirstName = 'Test',
             LastName = 'User',
             Email = 'testuser@example.com',
-            Username = 'testuser@example.com.sandbox',
+            Username = local,
             Alias = 'tuser',
             TimeZoneSidKey = 'America/Los_Angeles',
             LocaleSidKey = 'en_US',
@@ -19,7 +21,7 @@ class NSP_PrepSandboxTest {
         insert user;
 
         // Query the test user
-        User testUser = [SELECT Id FROM User WHERE Username = 'testuser@example.com.sandbox'];
+        User testUser = [SELECT Id FROM User WHERE Username = :local];
         UserLogin ulogin = [SELECT Id, IsFrozen, UserId From UserLogin Where UserId = :testUser.Id LIMIT 1];
         if (ulogin != null) {
             ulogin.IsFrozen = true;
@@ -43,7 +45,7 @@ class NSP_PrepSandboxTest {
     }
 
     @isTest
-    static void testSandboxPrep() {
+    private static void testSandboxPrep() {
         // Insert logic here to create records of the objects that the class your testing manipulates.
         Integer queueCount = 0;
 
@@ -63,8 +65,8 @@ class NSP_PrepSandboxTest {
         System.assertEquals(0, queueCount);
     }
 
-    @isTest(SeeAllData = True)
-    static void testManualSteps() {
+    @isTest(SeeAllData=true)
+    private static void testManualSteps() {
         Test.startTest();
         NSP_PrepSandbox.doE2CAddresses('test');
         NSP_PrepSandbox.doCLabels('merge');
@@ -77,7 +79,7 @@ class NSP_PrepSandboxTest {
     }
 
     @isTest
-    static void testPageRef() {
+    private static void testPageRef() {
         Test.startTest();
         PageReference pageRef = Page.SandboxManualSteps;
         Test.setCurrentPage(pageRef);
@@ -89,4 +91,6 @@ class NSP_PrepSandboxTest {
         System.assertEquals(null,prep.runE2CAddressesButton());
         Test.stopTest();
     }
+
 }
+//
