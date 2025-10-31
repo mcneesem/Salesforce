@@ -4,14 +4,14 @@
 
 
 global with sharing class DocusignJWT {
-    
+
     global String alg {get;set;} //RS256 for DocuSign REST integration
     global String iss {get;set;} // Integrator key
     global String sub {get;set;} // DSFProUserName from the user record
     global String aud {get;set;} // Authentication domain
     global String scope {get;set;} // signature scope
-    global String privateKey {get;set;} //Private key 
-    global String exp {get;set;} 
+    global String privateKey {get;set;} //Private key
+    global String exp {get;set;}
     global String iat {get;set;}
     global Map<String,String> claims {get;set;}
     global Integer validFor {get;set;}
@@ -22,30 +22,30 @@ global with sharing class DocusignJWT {
     private static final String STRING_EMPTY = '';
 
 
-    //Constructor 
+    //Constructor
     global DocusignJWT(String alg,String sub,String iss, String privateKey,String scope,String aud) {
-        this.alg = alg; 
-        this.sub = sub; 
-        this.iss = iss; 
-        this.privateKey = privateKey; 
-        this.scope = scope; 
-        this.validFor = 300; 
-        this.aud = aud; 
+        this.alg = alg;
+        this.sub = sub;
+        this.iss = iss;
+        this.privateKey = privateKey;
+        this.scope = scope;
+        this.validFor = 300;
+        this.aud = aud;
     }
-    
+
     //Method which returns the JSON Web Token
     global String issue() {
         String jwt = STRING_EMPTY;
-        
-        //Construct the JSON Web Token Header 
+
+        //Construct the JSON Web Token Header
         JSONGenerator header = JSON.createGenerator(false);
         header.writeStartObject();
         header.writeStringField('alg', this.alg);
         header.writeStringField('typ','JWT'); // Set as JWT
         header.writeEndObject();
         String encodedHeader = base64URLencode(Blob.valueOf(header.getAsString()));
-        
-        //Construct the JSON Body             
+
+        //Construct the JSON Body
         JSONGenerator body = JSON.createGenerator(false);
         body.writeStartObject();
         body.writeStringField('iss', this.iss);
@@ -61,16 +61,16 @@ global with sharing class DocusignJWT {
             }
         }
         body.writeEndObject();
-        
+
         //JSON Web Token in this stage = encodedHeader + . + encodedBody
         jwt = encodedHeader + '.' + base64URLencode(Blob.valueOf(body.getAsString()));
-        
-    	//Sign with Private key to create the signature 
+
+        //Sign with Private key to create the signature
         if (this.alg == HS256 ) {
             Blob key = EncodingUtil.base64Decode(privateKey);
             Blob signature = Crypto.generateMac('hmacSHA256',Blob.valueof(jwt),key);
-            jwt += '.' + base64URLencode(signature);  
-        } 
+            jwt += '.' + base64URLencode(signature);
+        }
         else if (this.alg == RS256 ) {
             Blob signature = null;
             if (cert != null) {
@@ -80,16 +80,16 @@ global with sharing class DocusignJWT {
                 //construct the signature
                 signature = Crypto.sign('rsa-sha256', Blob.valueOf(jwt), privateKeyBlob);
             }
-            jwt += '.' + base64URLencode(signature);  
+            jwt += '.' + base64URLencode(signature);
         } else if ( this.alg == NONE ) {
             jwt += '.';
         }
         return jwt;
-        
+
     }
-    
+
     //Utility method for returning the base64URLEncoded string for the input string
-    private String base64URLencode(Blob input){ 
+    private String base64URLencode(Blob input){
         String output = STRING_EMPTY;
         if (input != null) {
             output = encodingUtil.base64Encode(input);
@@ -98,8 +98,9 @@ global with sharing class DocusignJWT {
             while ( output.endsWith('=')){
                 output = output.subString(0,output.length()-1);
             }
-        }    
+        }
         return output;
-    }   
+    }
 
 }
+//

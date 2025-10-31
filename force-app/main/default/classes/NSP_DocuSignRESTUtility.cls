@@ -1,15 +1,11 @@
 // This class is responsible for initiating workflows by making REST Callouts to DocuSign CLM
 // You can extend the searchForFolder method by invoking it from triggers / scheduled apex / batch jobs
-// You can also create invocable actions by referencing the searchForFolder method and use it in Process Builders
 // startInvoiceWorkflow method is used to start workflow in CLM
 public class NSP_DocuSignRESTUtility {
-    // test w/ NSP_DocuSignInvoiceDocumentBatchTest (87%)
+    // test w/ NSP_DocuSignInvoiceDocumentBatchTest (80%)
 
-    private static final String CONTENT_TYPE = 'Content-type';
+    private static final String CONTENT_TYPE = 'Content-Type';
     private static final String APPLICATION_JSON = 'application/json';
-
-    private NSP_DocuSignRESTUtility() {
-    }
 
     //Get Rest Configuration Setings from Custom Metadata provided as a part of the installation source
     private static Map<String,DocuSignRESTSettings__mdt> settingsMap {
@@ -27,6 +23,46 @@ public class NSP_DocuSignRESTUtility {
                 }
             }
             return settingsMap;
+        }
+        private set;
+    }
+
+    private static String authEndpoint {
+        private get {
+            if ( authEndpoint == null ) {
+                String local = null;
+                if ( NSP_DocuSignRESTUtility.settingsMap != null ) {
+                    DocuSignRESTSettings__mdt setting = NSP_DocuSignRESTUtility.settingsMap.get( 'RequestAuthEndpoint' );
+                    if ( ( setting != null )
+                        && String.isNotBlank( setting.Value__c )
+                        )
+                    {
+                        local = setting.Value__c;
+                    }
+                }
+                authEndpoint = local;
+            }
+            return authEndpoint;
+        }
+        private set;
+    }
+
+    private static String privateKey {
+        private get {
+            if ( privateKey == null ) {
+                String local = '';
+                if ( NSP_DocuSignRESTUtility.settingsMap != null ) {
+                    DocuSignRESTSettings__mdt setting = NSP_DocuSignRESTUtility.settingsMap.get( 'RequestPrivateKey' );
+                    if ( ( setting != null )
+                        && String.isNotBlank( setting.Value__c )
+                        )
+                    {
+                        local = setting.Value__c;
+                    }
+                }
+                privateKey = local;
+            }
+            return privateKey;
         }
         private set;
     }
@@ -61,46 +97,96 @@ public class NSP_DocuSignRESTUtility {
 
     //This method will call the DocuSignJWT class to obtain an access token from DocuSign
     private static CLMTokenRequest getTokenRequest() {
-
-        //Instantiate a request object
-        HttpRequest req = new HttpRequest();
-        //set the request METHOD
-        req.setMethod('POST');
-
-        //set the request endpoint
-        String authendpoint = settingsMap.get('RequestAuthEndpoint').Value__c;
-        req.setEndPoint(authendpoint);
-
-        //set the request headers
-        //1. Content -type
-        String authRequestContentType = settingsMap.get('RequestAuthContentType').Value__c;
-        req.setHeader(NSP_DocuSignRESTUtility.CONTENT_TYPE, authRequestContentType);
-
-        //2. Host
-        String authRequestDomain = settingsMap.get('RequestAuthDomain').Value__c;
-        req.setHeader('Host', authRequestDomain);
-
-        //Body of the request
-        String alg = 'RS256';
-        String iss = settingsMap.get('RequestIntegratorKey').Value__c;
-        String pkey = settingsMap.get('RequestPrivateKey').Value__c;
-        String scope = settingsMap.get('RequestScope').Value__c;
-        DocuSignJWT jwtObject = new DocuSignJWT(alg, settingsMap.get('DSUserName').Value__c, iss, pkey, scope, authRequestDomain);
-
-        //Set the request body
-        String requestBody = settingsMap.get('RequestAuthBody').Value__c + jwtObject .issue();
-        req.setBody(requestBody);
-
-        //call the service
+        // initialize new POST request...
+        HttpRequest request = new HttpRequest();
+        request.setMethod( 'POST' );
+        // set the request endpoint
+        request.setEndPoint( NSP_DocuSignRESTUtility.authEndpoint );
+        // set request headers... and prepare request headers for logging...
+        Map<String,String> requestHeaders = new Map<String,String>();
+        // Content-Type
+        String authRequestContentType = NSP_DocuSignRESTUtility.settingsMap.get( 'RequestAuthContentType' ).Value__c;
+        request.setHeader( NSP_DocuSignRESTUtility.CONTENT_TYPE , authRequestContentType );
+        requestHeaders.put( NSP_DocuSignRESTUtility.CONTENT_TYPE , authRequestContentType );
+        // Host
+        String authRequestDomain = NSP_DocuSignRESTUtility.settingsMap.get( 'RequestAuthDomain' ).Value__c;
+        request.setHeader( 'Host' , authRequestDomain );
+        requestHeaders.put( 'Host' , authRequestDomain );
+        // construct a jwt blob...
+        DocuSignJWT jwtObject = new DocuSignJWT(
+            'RS256' , // alg
+            NSP_DocuSignRESTUtility.settingsMap.get( 'DSUserName' ).Value__c ,
+            NSP_DocuSignRESTUtility.settingsMap.get( 'RequestIntegratorKey' ).Value__c , // iss
+            NSP_DocuSignRESTUtility.privateKey , // pkey
+            NSP_DocuSignRESTUtility.settingsMap.get( 'RequestScope' ).Value__c , // scope
+            authRequestDomain
+        );
+        // set the request body
+        String requestBody = '';
+        try {
+            requestBody = NSP_DocuSignRESTUtility.settingsMap.get( 'RequestAuthBody' ).Value__c + jwtObject.issue();
+        } catch ( Exception e ) {
+            requestHeaders.put(
+                'Jwt-Issue-Apex-Exception' ,
+                e.getTypeName() + ': ' + e.getMessage()
+            );
+        }
+        request.setBody( requestBody );
+        // send the request...
         Http http = new Http();
-        HTTPResponse res = http.send(req);
-
-        //Obtain the access token from the Response
+        HTTPResponse response = http.send( request );
+        // parse response for the access token...
+        // ~ wrap all JSON seralize/deserialize opeations in try/catch blocks to protect against non-JSON endpoint responses...
         CLMTokenRequest token = null;
-        if (res.getStatusCode() == 200) {
-            token = (CLMTokenRequest)JSON.deserialize( res.getBody() , CLMTokenRequest.class );
+        try {
+            // build log...
+            DocuSign_Log__c logEntry = NSP_DocuSignRESTUtility.buildLogEntry(
+                JSON.serialize( requestHeaders ) ,
+                request ,
+                response ,
+                null
+            );
+            if ( response.getStatusCode() == 200 ) {
+                token = (CLMTokenRequest)JSON.deserialize( response.getBody() , CLMTokenRequest.class );
+            }
+            if ( CLMDocumentTransfer.isEnabledRestTokenLogging
+                && ( Limits.getFutureCalls() < Limits.getLimitFutureCalls() ) // prevent LimitExceptions...
+                )
+            {
+                // log authentication attempts...
+                NSP_DocuSignRESTUtility.logAuthenticationAttempts( JSON.serialize( logEntry ) );
+            }
+        } catch ( Exception e ) {
+            System.debug( ' ~ CATCH ~ e=' + e );
         }
         return token;
+    }
+
+    @future
+    public static void logAuthenticationAttempts( String logBlob ) {
+        try {
+            DocuSign_Log__c logEntry = null;
+            if ( String.isNotBlank( logBlob ) ) {
+                logEntry = (DocuSign_Log__c)JSON.deserialize(
+                    logBlob ,
+                    DocuSign_Log__c.class
+                );
+            }
+            if ( logEntry != null ) {
+                List<Database.SaveResult> results = Database.insert( new List<DocuSign_Log__c>{ logEntry } , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_LeadTriggerHelper.class.getName() ,
+                    'logAuthenticationAttempts:insert' ,
+                    results
+                );
+            }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_DocuSignRESTUtility.class.getName() ,
+                'logAuthenticationAttempts' ,
+                e
+            );
+        }
     }
 
     // futureStartInvoiceWorkflow method is created by following above given structure by DocuSign
@@ -139,8 +225,8 @@ public class NSP_DocuSignRESTUtility {
 
                     // set request endpoint...
                     String endpoint = ''
-                        + settingsMap.get( 'CLMv2ApiEndpoint' ).Value__c
-                        + settingsMap.get( 'DSAccountID' ).Value__c
+                        + NSP_DocuSignRESTUtility.settingsMap.get( 'CLMv2ApiEndpoint' ).Value__c
+                        + NSP_DocuSignRESTUtility.settingsMap.get( 'DSAccountID' ).Value__c
                         + '/workflows'
                         ;
                     request.setEndPoint( endpoint );
@@ -213,10 +299,16 @@ public class NSP_DocuSignRESTUtility {
         )
     {
         DocuSign_Log__c logEntry = new DocuSign_Log__c();
-        // Capture Request details
+        // capture request header details...
         if ( String.isNotBlank( requestHeaders ) ) {
-            if ( String.isNotBlank( NSP_DocuSignRESTUtility.accessToken ) ) {
-                requestHeaders = requestHeaders.replace( NSP_DocuSignRESTUtility.accessToken , 'XXX_ACCESS_TOKEN_REMOVED_XXX' );
+            if ( ( request.getEndpoint() != NSP_DocuSignRESTUtility.authEndpoint )
+                && String.isNotBlank( NSP_DocuSignRESTUtility.accessToken )
+                )
+            {
+                requestHeaders = requestHeaders.replace(
+                    NSP_DocuSignRESTUtility.accessToken ,
+                    'XXX_ACCESS_TOKEN_REMOVED_XXX'
+                );
             }
             logEntry.Request_Headers__c = SchemaController.safeText(
                 requestHeaders ,
@@ -227,17 +319,31 @@ public class NSP_DocuSignRESTUtility {
             recordId ,
             sObjectType.DocuSign_Log__c.Fields.Record_Id__c
         );
+        // capture request details...
         if ( request != null ) {
             logEntry.Endpoint__c = SchemaController.safeText(
                 request.getEndpoint() ,
                 sObjectType.DocuSign_Log__c.Fields.Endpoint__c
             );
+            String requestBody = request.getBody();
+            if ( String.isNotBlank( requestBody ) ) {
+                PageReference reference = new PageReference( '/?' + requestBody );
+                if ( reference != null ) {
+                    Map<String,String> parameters = reference.getParameters();
+                    if ( parameters.containsKey( 'assertion' ) ) {
+                        requestBody = requestBody.replace(
+                            parameters.get( 'assertion' ) ,
+                            'XXX_ASSERTION_REMOVED_XXX'
+                        );
+                    }
+                }
+            }
             logEntry.Request_Body__c = SchemaController.safeText(
-                request.getBody() ,
+                requestBody ,
                 sObjectType.DocuSign_Log__c.Fields.Request_Body__c
             );
         }
-        // Capture Response details
+        // capture response details...
         if ( response != null ) {
             Map<String,String> responseHeaders = new Map<String,String>();
             for ( String headerKey : response.getHeaderKeys() ) {
@@ -250,8 +356,18 @@ public class NSP_DocuSignRESTUtility {
                 response.getStatusCode() ,
                 sObjectType.DocuSign_Log__c.Fields.Response_Code__c
             );
+            String responseBody = response.getBody();
+            if ( String.isNotBlank( responseBody ) ) {
+                Map<String,Object> responseBodyDeserialize = (Map<String,Object>)JSON.deserializeUntyped( responseBody );
+                if ( responseBodyDeserialize.containsKey( 'access_token' ) ) {
+                    responseBody = responseBody.replace(
+                        (String)responseBodyDeserialize.get( 'access_token' ) ,
+                        'XXX_ACCESS_TOKEN_REMOVED_XXX'
+                    );
+                }
+            }
             logEntry.Response_Body__c = SchemaController.safeText(
-                response.getBody() ,
+                responseBody ,
                 sObjectType.DocuSign_Log__c.Fields.Response_Body__c
             );
             logEntry.Response_Headers__c = SchemaController.safeText(
@@ -261,17 +377,6 @@ public class NSP_DocuSignRESTUtility {
             logEntry.Response_Status__c = SchemaController.safeText(
                 response.getStatus() ,
                 sObjectType.DocuSign_Log__c.Fields.Response_Status__c
-            );
-            // summarize description message...
-            String message = '';
-            if ( response.getStatusCode() == 201 ) {
-                message = 'Workflow initiated successfully';
-            } else {
-                message = 'Unexpected response: ' + String.valueOf( response.getStatusCode() );
-            }
-            logEntry.Description__c = SchemaController.safeText(
-                message ,
-                sObjectType.DocuSign_Log__c.Fields.Description__c
             );
         }
         return logEntry;
