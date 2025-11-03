@@ -1,11 +1,14 @@
 public class NSP_IP_Automation_Helper {
 	// test w/ NSP_IP_Automation_Helper_Test (87%)
+
     private Map<String, Case> caseToInsertSubjectIpList = new Map<String, Case>();
     private static Id ipFSORecordTypeId = SObjectType.Implementation_Profile__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.FSOProfile).getRecordTypeId();
     private static Id ipMMRecordTypeId = SObjectType.Implementation_Profile__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.MMProfile).getRecordTypeId();
     
     @TestVisible private List<String> existingCases=new List<String>();
     @TestVisible private List<String> existingIpAutomations=new List<String>();
+
+
     public  NSP_Implementation_Profile_Automation__c createIPAutomation(Implementation_Profile__c ipRec, String automationName, String fnName, String section){
       NSP_Implementation_Profile_Automation__c ipAautomation = new NSP_Implementation_Profile_Automation__c();
       ipAautomation.Name = automationName;
@@ -47,10 +50,14 @@ public class NSP_IP_Automation_Helper {
    }
    
    public void getAllCases(Set<Id> ipIds){
+      
+
       for(Case eachCase:  [SELECT Id,Subject,NSP_SubCategory__c, NSP_Category__c,NSP_Implementation_Profile__c
              FROM Case WHERE NSP_Implementation_Profile__c in:ipIds]){
              this.caseToInsertSubjectIpList.put(eachCase.Subject,eachCase);
              existingCases.add(eachCase.NSP_Implementation_Profile__c+'_'+eachCase.Subject+'_'+eachCase.NSP_Category__c+'_'+eachCase.NSP_SubCategory__c);
+      
+      
       }
    }
    
