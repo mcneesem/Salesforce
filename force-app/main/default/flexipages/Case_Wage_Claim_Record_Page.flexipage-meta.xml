@@ -1271,6 +1271,16 @@
                 <identifier>RecordNSP_Assigned_to_Close_Hours_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Exclude_From_Time_Calculation__c</fieldItem>
+                <identifier>RecordExclude_From_Time_Calculation_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-d86abb3d-158b-4391-9639-e1043c2c5795</name>
         <type>Facet</type>
     </flexiPageRegions>
