@@ -468,7 +468,7 @@
     </fieldPermissions> 
     <fieldPermissions>
         <editable>false</editable>
-        <field>Case.Exclude_from_time_calculation__c</field>
+        <field>Case.Exclude_From_Time_Calculation__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

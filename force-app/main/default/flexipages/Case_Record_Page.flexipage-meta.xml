@@ -2473,7 +2473,7 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Exclude_from_time_calculation__c</fieldItem>
+                <fieldItem>Record.Exclude_From_Time_Calculation__c</fieldItem>
                 <identifier>RecordExclude_from_time_calculation_cField</identifier>
             </fieldInstance>
         </itemInstances>
