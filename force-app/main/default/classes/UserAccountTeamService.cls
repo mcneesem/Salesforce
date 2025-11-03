@@ -31,9 +31,9 @@ public with sharing class UserAccountTeamService {
         Boolean hasOwner = (ownerId != null);
         Boolean hasAccess = Schema.sObjectType.UserAccountTeamMember.isAccessible();
         Boolean hasPermission = CustomPermissionController.checkUserPermission(
-            'Default_Account_Team_View' , 
-            UserInfo.getUserId()
-            );
+                'Default_Account_Team_View' ,
+                UserInfo.getUserId()
+        );
 
         if (hasOwner && hasAccess && hasPermission) {
             teamMembers = UserAccountTeamService.queryTeamMembersByOwner(ownerId);
@@ -50,17 +50,17 @@ public with sharing class UserAccountTeamService {
         List<UserAccountTeamMember> result = new List<UserAccountTeamMember>();
         if (ownerId != null) {
             result = [
-                SELECT Id,
-                       OwnerId,
-                       TeamMemberRole,
-                       AccountAccessLevel,
-                       OpportunityAccessLevel,
-                       CaseAccessLevel,
-                       ContactAccessLevel,
-                       UserId,
-                       User.Name
-                FROM UserAccountTeamMember
-                WHERE OwnerId = :ownerId
+                    SELECT Id,
+                            OwnerId,
+                            TeamMemberRole,
+                            AccountAccessLevel,
+                            OpportunityAccessLevel,
+                            CaseAccessLevel,
+                            ContactAccessLevel,
+                            UserId,
+                            User.Name
+                    FROM UserAccountTeamMember
+                    WHERE OwnerId = :ownerId
             ];
         }
         return result;
@@ -94,18 +94,14 @@ public with sharing class UserAccountTeamService {
     public static Integer getPageSize() {
         // Default if not configured
         Integer defaultSize = 1;
-        try {
-            UserDefaultAccountTeamSettings__c customSetting = UserDefaultAccountTeamSettings__c.getOrgDefaults();
-            if (customSetting != null && customSetting?.PageSize__c != null) {
-                // PageSize__c can be numeric or text; coerce to Integer safely
-                defaultSize = customSetting.PageSize__c.intValue();
-                // Guard against invalid values. Page size must be greater than zero...
-                if (defaultSize < 1) {
-                    defaultSize = 1;
-                }
+        UserDefaultAccountTeamSettings__c customSetting = UserDefaultAccountTeamSettings__c.getOrgDefaults();
+        if (customSetting != null && customSetting?.PageSize__c != null) {
+            // PageSize__c can be numeric or text; coerce to Integer safely
+            defaultSize = customSetting.PageSize__c.intValue();
+            // Guard against invalid values. Page size must be greater than zero...
+            if (defaultSize < 1) {
+                defaultSize = 1;
             }
-        } catch (Exception e) {
-            // Swallow and fall back to default
         }
         return defaultSize;
     }
