@@ -64,11 +64,11 @@ export default class UserDefaultAccountTeam extends LightningElement {
     @wire(getPageSize)
     wiredPageSize({ data, error }) {
         if (data != null) {
-        const n = Number(data);
-        this.pageSize = Number.isFinite(n) && n > 0 ? n : DEFAULT_PAGE_SIZE;
+            const n = Number(data);
+            this.pageSize = Number.isFinite(n) && n > 0 ? n : DEFAULT_PAGE_SIZE;
         } else if (error) {
-        // ignore and use default
-        this.pageSize = DEFAULT_PAGE_SIZE;
+            // ignore and use default
+            this.pageSize = DEFAULT_PAGE_SIZE;
         } 
     }
 
@@ -93,16 +93,11 @@ export default class UserDefaultAccountTeam extends LightningElement {
     }
 
     processTeamData(data) {
-        let result; // maintain single return
-
         try {
             const isEmpty = !Array.isArray(data) || data.length === 0;
-
             if (isEmpty) {
                 this.resetState();
                 this.errorMessage = undefined;
-                // keep same contract: no meaningful return
-                result = undefined;
             } else {
                 const teamRows = data.map((member) => ({
                     id: member.id,
@@ -115,22 +110,15 @@ export default class UserDefaultAccountTeam extends LightningElement {
                     caseAccessLevel: member.caseAccessLevel || "",
                     contactAccessLevel: member.contactAccessLevel || "",
                 }));
-
                 this.totalRecords = teamRows.length;
                 this.rows = this.sortData(teamRows, this.sortedBy, this.sortedDirection);
                 this.errorMessage = undefined;
                 this.showAll = false;
-
-                result = undefined;
             }
         } catch (parseError) {
             this.handleError(parseError);
-            result = undefined;
         }
-
-        return result;
     }
-
 
     resetState() {
         this.rows = [];
@@ -143,26 +131,26 @@ export default class UserDefaultAccountTeam extends LightningElement {
         const detail = event?.detail || null;
         const sortField = typeof detail?.fieldName === "string" ? detail.fieldName : undefined;
         const sortDirection = typeof detail?.sortDirection === "string" ? detail.sortDirection : undefined;
-
         // single-return function: track whether we applied a change
         let changed = false;
-
         // Guard: require both field and direction
-        if (sortField && sortDirection) {
-            // No-op if sort settings are unchanged
-            if (!(sortField === this.sortedBy && sortDirection === this.sortedDirection)) {
-                // Update state and re-sort
-                this.sortedBy = sortField;
-                this.sortedDirection = sortDirection;
-                this.rows = this.sortData(this.rows, sortField, sortDirection);
-
-                // reset to initial limited view on sort
-                this.showAll = false;
-
-                changed = true;
-            }
+        // No-op if sort settings are unchanged
+        if ( sortField
+            && sortDirection
+            && ( ( sortField !== this.sortedBy )
+                || ( sortDirection !== this.sortedDirection )
+                )
+            )
+        {
+            // Update state and re-sort
+            this.sortedBy = sortField;
+            this.sortedDirection = sortDirection;
+            this.rows = this.sortData(this.rows, sortField, sortDirection);
+            // reset to initial limited view on sort
+            this.showAll = false;
+            // handle response...
+            changed = true;
         }
-
         // single exit
         return changed;
     }
