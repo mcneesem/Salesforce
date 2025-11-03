@@ -140,8 +140,8 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_Fault_Element_Get_Messging_Session</name>
-        <label>Assign Fault Element : Get Messging Session</label>
+        <name>Assign_Fault_Element_Get_Messaging_Session</name>
+        <label>Assign Fault Element : Get Messaging Session</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
@@ -149,6 +149,23 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>Get_Messaging_Session</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Create_Case_Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_Get_Messaging_User</name>
+        <label>Assign Fault Element : Get Messaging User</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Messaging_User</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -199,7 +216,7 @@
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Messaging_Session_update</stringValue>
+                <stringValue>Update_Messaging_Session</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -847,7 +864,7 @@
             <name>Not_Blank</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Messaging_Session.MessagingEndUserId</leftValueReference>
+                <leftValueReference>Get_Messaging_Session</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -864,6 +881,31 @@
                 <targetReference>Get_Messaging_User</targetReference>
             </connector>
             <label>Not Blank</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Get_Messaging_User_is_Blank</name>
+        <label>Get Messaging User is Blank</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Get_Accessible_Record_Types</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Messaging_User_exist</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Messaging_User</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Account_Contact_setup</targetReference>
+            </connector>
+            <label>Messaging User exist</label>
         </rules>
     </decisions>
     <decisions>
@@ -1058,7 +1100,7 @@
             <targetReference>Get_Messaging_Session_is_Blank</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Assign_Fault_Element_Get_Messging_Session</targetReference>
+            <targetReference>Assign_Fault_Element_Get_Messaging_Session</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1079,8 +1121,11 @@
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Account_Contact_setup</targetReference>
+            <targetReference>Get_Messaging_User_is_Blank</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_Fault_Element_Get_Messaging_User</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
