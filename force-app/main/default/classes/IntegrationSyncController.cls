@@ -1,11 +1,14 @@
 // unified solution for setting "sync flags", publishing "integration sync" events, and clearing "sync flags"...
 // intentionally `without sharing` to prevent ~ INSUFFICIENT_ACCESS_OR_READONLY, insufficient access rights on object id
 public without sharing class IntegrationSyncController {
-    // test w/ IntegrationSyncControllerTest (82%)
+    // test w/ IntegrationSyncControllerTest, NSP_OpportunityTriggerHelperTest (86%)
+    // test w/ IntegrationSyncControllerTest (79%)
     // test w/ NSP_AccountContactRelationHelperTest (29%)
     // test w/ NSP_AccountTeamMemberTriggerHelperTest (29%)
     // test w/ NSP_AccountTeamTriggerTest (29%)
-    // test w/ NSP_ContactTriggerHelperTest (28%)
+    // test w/ NSP_AccountTriggerHelperTest (32%)
+    // test w/ NSP_ContactTriggerHelperTest (29%)
+    // test w/ NSP_OpportunityTriggerHelperTest (32%)
 
     //
     // assign-flag
@@ -30,11 +33,23 @@ public without sharing class IntegrationSyncController {
     // AccountTeamMember-after-insert
     // AccountTeamMember-after-update
     public static void setReadyForIntegrationSync( Set<Id> recordIds ) {
-        IntegrationSyncController.setReadyForIntegrationSync( recordIds , false );
+        IntegrationSyncController.setReadyForIntegrationSync( recordIds , Account.getSObjectType() );
     }
     // Contact-before-update
-    public static void setReadyForIntegrationSync( Set<Id> recordIds , Boolean disableAccountTrigger ) {
-        IntegrationSyncController.updateReadyForIntegrationSync( recordIds , true , disableAccountTrigger );
+    // Event-after-insert
+    // OpportunityTeamMember-after-insert
+    public static void setReadyForIntegrationSync( Set<Id> recordIds , Schema.sObjectType soType ) {
+        if ( soType != null ) {
+            if ( soType == Account.getSObjectType() ) {
+                IntegrationSyncController.updateReadyForIntegrationSync( recordIds , true , false );
+            } else if ( soType == Contact.getSObjectType() ) {
+                IntegrationSyncController.updateReadyForIntegrationSync( recordIds , true , true );
+            } else if ( soType == Event.getSObjectType() ) {
+                NSP_OpportunityTriggerHelper.setReadyForIntegrationSync( recordIds );
+            } else if ( soType == OpportunityTeamMember.getSObjectType() ) {
+                NSP_OpportunityTriggerHelper.setReadyForIntegrationSync( recordIds );
+            }
+        }
     }
 
     // clear-flag
@@ -119,7 +134,7 @@ public without sharing class IntegrationSyncController {
         IntegrationSyncController.publishIntegrationAccountEvents( events , new Set<Id>() );
     }
     private static void publishIntegrationAccountEvents( List<SObject> events , Set<Id> recordIds ) {
-        if ( PlatformEventSettings__c.getInstance( UserInfo.getUserId() ).IsEnabled_IntegrationAccountEvent__c ) {
+        if ( IntegrationSyncController.isEnabledIntegrationAccountEvent ) {
             if ( ( events != null )
                 && !events.isEmpty()
                 && ( ( events.getSObjectType() == Integration_Account_Event__e.getSObjectType() )
@@ -136,6 +151,34 @@ public without sharing class IntegrationSyncController {
             }
             IntegrationSyncController.clearReadyForIntegrationSync( recordIds );
         }
+    }
+
+    //
+    // Custom Settings
+    //
+
+    private static PlatformEventSettings__c settings {
+        private get {
+            if ( settings == null ) {
+                settings = PlatformEventSettings__c.getInstance( UserInfo.getUserId() );
+            }
+            return settings;
+        }
+        private set;
+    }
+
+    private static Boolean isEnabledIntegrationAccountEvent {
+        private get {
+            if ( isEnabledIntegrationAccountEvent == null ) {
+                Boolean local = False;
+                if ( IntegrationSyncController.settings != null ) {
+                    local = IntegrationSyncController.settings.IsEnabled_IntegrationAccountEvent__c;
+                }
+                isEnabledIntegrationAccountEvent = local;
+            }
+            return isEnabledIntegrationAccountEvent;
+        }
+        private set;
     }
 
 }

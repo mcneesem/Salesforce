@@ -1,7 +1,10 @@
 public with sharing class NSP_EventTriggerHelper {
-    // test w/ NSP_EventTriggerHelperTest, LeadLastActivityDateHelperTest (82%)
-    // test w/ NSP_EventTriggerHelperTest (81%)
-    // test w/ LeadLastActivityDateHelperTest (35%)
+    // test w/ NSP_EventTriggerHelperTest, NSP_AccountTriggerHelperTest, NSP_OpportunityTriggerHelperTest (87%)
+    // test w/ NSP_EventTriggerHelperTest, NSP_AccountTriggerHelperTest (84%)
+    // test w/ NSP_EventTriggerHelperTest (82%)
+    // test w/ NSP_AccountTriggerHelperTest (59%)
+    // test w/ NSP_OpportunityTriggerHelperTest (37%)
+    // test w/ LeadLastActivityDateHelperTest (34%)
 
     private static final String DISCOVERY_CALL = 'Discovery Call';
     private static final String CLOSING_APPT = 'Closing Appointment';
@@ -12,7 +15,7 @@ public with sharing class NSP_EventTriggerHelper {
     private static Id coreSalesEventRecordType = NSP_GenericRecordType.getRecordTypeId( 'Event' , 'Core_Sales_Event_RT' );
 
     // Iterates throught the list of new Event and passes the required attributes to other methods.
-    // @param newList List of New Event.  
+    // @param newList List of New Event.
     // @return void
     public void beforeInsertDirector( List<Event> newList ) {
         List<Event> eventList = new List<Event>();
@@ -32,7 +35,7 @@ public with sharing class NSP_EventTriggerHelper {
     }
 
     // Iterates throught the map of new Event and passes the required attributes to other methods.
-    // @param newList List of New Event.  
+    // @param newList List of New Event.
     // @param eventNewMap Map of Event id and Event records.
     // @return void
     public void afterInsertDirector(List<Event> newList, Map<Id,Event> eventNewMap) {
@@ -42,8 +45,8 @@ public with sharing class NSP_EventTriggerHelper {
     }
 
     // Iterates throught the Event map and identifies the records that needs to worked based on various criterias.
-    // @param eventNewMap Map of New Event. 
-    // @param eventOldMap Map of Old Event. 
+    // @param eventNewMap Map of New Event.
+    // @param eventOldMap Map of Old Event.
     // @return void
     public void beforeUpdateDirector(Map<Id,Event> eventNewMap, Map<Id,Event> eventOldMap) {
         updateEventSales(eventNewMap.values(),eventOldMap);
@@ -135,7 +138,7 @@ public with sharing class NSP_EventTriggerHelper {
             && ( newEventRecord.RecordTypeId == NSP_EventTriggerHelper.eventRecordType )
             && ( oldEventRecord != null )
             && ( oldEventRecord.StartDateTime != newEventRecord.StartDateTime || oldEventRecord.EndDateTime != newEventRecord.EndDateTime )
-            && ( ( newEventRecord.WhatId != null && newEventRecord.FSL__Event_Type__c == 'Resource Absence' ) 
+            && ( ( newEventRecord.WhatId != null && newEventRecord.FSL__Event_Type__c == 'Resource Absence' )
                 || ( ( newEventRecord.WhatId == null && newEventRecord.Type == null )
                     && ( newEventRecord.IsRecurrence2 == true || newEventRecord.IsRecurrence == true )
                     )
@@ -168,10 +171,10 @@ public with sharing class NSP_EventTriggerHelper {
     }
 
     //
-    // Method Name : updateResourceAbsenceDate 
+    // Method Name : updateResourceAbsenceDate
     // Description : Method to update start and end date on RAs for recurring events
-    // @param Map of Event. 
-    // @return void  
+    // @param Map of Event.
+    // @return void
     //
     private void updateResourceAbsenceDate( Map<Id,Event> rescheduledEventsMap ) {
         try {
@@ -336,7 +339,7 @@ public with sharing class NSP_EventTriggerHelper {
 
     private void updateOpportunitiesWithDiscoverCalls( List<Event> newList ) {
         try {
-            Set<Id> updateOpportunityIDList = new Set<Id>();
+            Set<Id> opportunityIds = new Set<Id>();
             for ( Event event : newList ) {
                 if ( ( event != null )
                     && ( event.WhatId != null )
@@ -345,24 +348,13 @@ public with sharing class NSP_EventTriggerHelper {
                     && ( event.WhatId.getSObjectType() == Opportunity.getSObjectType() )
                     )
                 {
-                    updateOpportunityIDList.add(event.WhatId);
+                    opportunityIds.add(event.WhatId);
                 }
             }
-            List<Opportunity> listOpportunity = [
-                SELECT Id , NSP_Ready_for_Integration_Sync__c
-                FROM Opportunity 
-                WHERE ( Id IN :updateOpportunityIDList )
-            ];
-            List<Opportunity> updateOpportunityList = new List<Opportunity>();
-            for ( Opportunity oppty : listOpportunity ) {
-                Opportunity opp = new Opportunity();
-                opp.Id = oppty.Id;
-                opp.NSP_Ready_for_Integration_Sync__c = true;
-                updateOpportunityList.add( opp );
-            }
-            if ( !updateOpportunityList.isEmpty() ) {
-                Database.update( updateOpportunityList );
-            }
+            IntegrationSyncController.setReadyForIntegrationSync(
+                opportunityIds ,
+                Event.getSObjectType()
+            );
         } catch ( Exception e ) {
             NSP_EventTriggerHelper.handleException( e , 'updateOpportunitiesWithDiscoverCalls' );
         }
@@ -428,27 +420,23 @@ public with sharing class NSP_EventTriggerHelper {
     set<Id> ownerIdSet = new set<Id>();
     for(Event newEvent : newList){
         Event oldEvent = OldEventMap != null ? OldEventMap.get(newEvent.Id):null;
-        
         if(Trigger.isInsert || newEvent.OwnerId != oldEvent.OwnerId ){
-            ownerIdSet.add(newEvent.ownerId);    
+            ownerIdSet.add(newEvent.ownerId);
         }
     }
-
     if(ownerIdSet.Size() > 0){
         Map<Id,User> userIdMap = new Map<Id,User>([SELECT Id,NSP_SalesDivision__c,NSP_Sales_Office__c,NSP_SalesRegion__c from user WHERE Id In :ownerIdSet AND NSP_Sales_Office__c != null ]);
-        
         for(Event newEvent : newList){
             Event oldEvent = OldEventMap != null ? OldEventMap.get(newEvent.Id):null;
-            
             if((Trigger.isInsert || newEvent.OwnerId != oldEvent.OwnerId) && userIdMap.containsKey(newEvent.ownerId) ){
                 user eachUser = userIdMap.get(newEvent.OwnerId);
                 newEvent.NSP_Sales_Region__c = eachUser.NSP_SalesRegion__c;  // sales region
                 newEvent.NSP_Sales_Division__c = eachUser.NSP_SalesDivision__c; // sales division
                 newEvent.NSP_Sales_Office__c = eachUser.NSP_Sales_Office__c; // sales office
             }
-        }    
+        }
     }
-  }  
+  }
 
     // Method Name : populateWhatAndWhoNamesEvent
     // Description : Method to update NSP_What_Name__c and/or NSP_Who_Name__c on Event Object
@@ -457,8 +445,7 @@ public with sharing class NSP_EventTriggerHelper {
     // @return void
     private void populateWhatAndWhoNamesEvent(List<Event> newEventList) {
         List<String> fieldApiNamesList = new List<String>{ 'WhatId', 'WhoId' };
-            Map<String, Set<String>> targetRecordIdsByObjectApiNameMap = new Map<String, Set<String>>();
-        
+        Map<String, Set<String>> targetRecordIdsByObjectApiNameMap = new Map<String, Set<String>>();
         //Code to populate What and Who records by their Object Type
         for(Event taskToBeUpdateRecord : newEventList) {
             for(String fieldApiName : fieldApiNamesList) {
@@ -472,7 +459,6 @@ public with sharing class NSP_EventTriggerHelper {
                 }
             }
         }
-        
         //Code to fetch target object details (Id, Name) using dynamic SOQL query.
         Map<Id, String> targetRelatedObjectsMap = new Map<Id, String>();
         List<Schema.DescribeSObjectResult> describeSObjectResults = Schema.describeSObjects(new List<String>(targetRecordIdsByObjectApiNameMap.keySet()));
@@ -490,7 +476,6 @@ public with sharing class NSP_EventTriggerHelper {
                                                                                  objectApiNameLabelMap.get(objectApiName));
             targetRelatedObjectsMap.putAll(relatedRecordDetailsMap);
         }
-        
         for(Event eventToBeUpdateRecord : newEventList) {
             eventToBeUpdateRecord.NSP_What_Name__c = String.isNotBlank(eventToBeUpdateRecord.WhatId) ? targetRelatedObjectsMap.get(eventToBeUpdateRecord.WhatId) : EMPTY_STRING;
             eventToBeUpdateRecord.NSP_Who_Name__c  = String.isNotBlank(eventToBeUpdateRecord.WhoId) ? targetRelatedObjectsMap.get(eventToBeUpdateRecord.WhoId) : EMPTY_STRING;
@@ -522,7 +507,7 @@ public with sharing class NSP_EventTriggerHelper {
             NSP_EventTriggerHelper.handleException( e , methodName );
         }
     }
-    
+
     private static void handleException( Exception e , String methodName ) {
         NSP_ErrorLogHandler.logException(
             NSP_EventTriggerHelper.class.getName() ,
@@ -560,8 +545,8 @@ public with sharing class NSP_EventTriggerHelper {
         }
         private set;
     }
-  
-    // 
+
+    //
     // Method : getUserTitle
     // Description : Get the current user's job title
     //
@@ -589,5 +574,6 @@ public with sharing class NSP_EventTriggerHelper {
         }
         private set;
     }
+
 }
 //
