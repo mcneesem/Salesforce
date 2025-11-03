@@ -64,24 +64,21 @@ export default class UserDefaultAccountTeam extends LightningElement {
     @wire(getPageSize)
     wiredPageSize({ data, error }) {
         if (data != null) {
-            const n = Number(data);
-            this.pageSize = Number.isFinite(n) && n > 0 ? n : DEFAULT_PAGE_SIZE;
+        const n = Number(data);
+        this.pageSize = Number.isFinite(n) && n > 0 ? n : DEFAULT_PAGE_SIZE;
         } else if (error) {
-            // ignore and use default
-            this.pageSize = DEFAULT_PAGE_SIZE;
+        // ignore and use default
+        this.pageSize = DEFAULT_PAGE_SIZE;
         } 
     }
 
     @wire(getTeamMembersByOwner, { ownerId: "$recordId" })
     wiredTeam({ data, error }) {
-        if (error) {
-            this.handleError(error);
-            return;
-        }
-
         if (Array.isArray(data)) {
             this.processTeamData(data);
-        } else {
+        } else if (error) {
+            this.handleError(error);
+        } else{
             this.resetState();
         }
     }
@@ -96,32 +93,42 @@ export default class UserDefaultAccountTeam extends LightningElement {
     }
 
     processTeamData(data) {
-        if (data.length === 0) {
-            this.resetState();
-            this.errorMessage = undefined;
-            return;
-        }
+        let result; // maintain single return
 
         try {
-            const teamRows = data.map((member) => ({
-                id: member.id,
-                ownerId: member.ownerId,
-                userId: member.userId,
-                userName: member.userName || "",
-                teamMemberRole: member.teamMemberRole || "",
-                accountAccessLevel: member.accountAccessLevel || "",
-                opportunityAccessLevel: member.opportunityAccessLevel || "",
-                caseAccessLevel: member.caseAccessLevel || "",
-                contactAccessLevel: member.contactAccessLevel || "",
-            }));
+            const isEmpty = !Array.isArray(data) || data.length === 0;
 
-            this.totalRecords = teamRows.length;
-            this.rows = this.sortData(teamRows, this.sortedBy, this.sortedDirection);
-            this.errorMessage = undefined;
-            this.showAll = false;
+            if (isEmpty) {
+                this.resetState();
+                this.errorMessage = undefined;
+                // keep same contract: no meaningful return
+                result = undefined;
+            } else {
+                const teamRows = data.map((member) => ({
+                    id: member.id,
+                    ownerId: member.ownerId,
+                    userId: member.userId,
+                    userName: member.userName || "",
+                    teamMemberRole: member.teamMemberRole || "",
+                    accountAccessLevel: member.accountAccessLevel || "",
+                    opportunityAccessLevel: member.opportunityAccessLevel || "",
+                    caseAccessLevel: member.caseAccessLevel || "",
+                    contactAccessLevel: member.contactAccessLevel || "",
+                }));
+
+                this.totalRecords = teamRows.length;
+                this.rows = this.sortData(teamRows, this.sortedBy, this.sortedDirection);
+                this.errorMessage = undefined;
+                this.showAll = false;
+
+                result = undefined;
+            }
         } catch (parseError) {
             this.handleError(parseError);
+            result = undefined;
         }
+
+        return result;
     }
 
 
@@ -133,35 +140,37 @@ export default class UserDefaultAccountTeam extends LightningElement {
 
     handleSort(event) {
         // Validate event and detail payload before using
-        const detail = event && event.detail ? event.detail : null;
-        const sortField = detail && typeof detail.fieldName === "string" ? detail.fieldName : undefined;
-        const sortDirection = detail && typeof detail.sortDirection === "string" ? detail.sortDirection : undefined;
+        const detail = event?.detail || null;
+        const sortField = typeof detail?.fieldName === "string" ? detail.fieldName : undefined;
+        const sortDirection = typeof detail?.sortDirection === "string" ? detail.sortDirection : undefined;
+
+        // single-return function: track whether we applied a change
+        let changed = false;
 
         // Guard: require both field and direction
-        if (!sortField || !sortDirection) {
-            return;
+        if (sortField && sortDirection) {
+            // No-op if sort settings are unchanged
+            if (!(sortField === this.sortedBy && sortDirection === this.sortedDirection)) {
+                // Update state and re-sort
+                this.sortedBy = sortField;
+                this.sortedDirection = sortDirection;
+                this.rows = this.sortData(this.rows, sortField, sortDirection);
+
+                // reset to initial limited view on sort
+                this.showAll = false;
+
+                changed = true;
+            }
         }
 
-        // No-op if sort settings are unchanged
-        if (sortField === this.sortedBy && sortDirection === this.sortedDirection) {
-            return;
-        }
-
-        // Update state and re-sort
-        this.sortedBy = sortField;
-        this.sortedDirection = sortDirection;
-        this.rows = this.sortData(this.rows, sortField, sortDirection);
-
-        // reset to initial limited view on sort
-        this.showAll = false;
+        // single exit
+        return changed;
     }
 
     sortData(rowsToSort, sortField, sortDirection) {
-        let result = [];
+        let result = rowsToSort;
 
-        if (!sortField) {
-            result = rowsToSort;
-        } else {
+        if (sortField) {
             const directionMultiplier = sortDirection === "desc" ? -1 : 1;
             result = [...rowsToSort].sort((rowA, rowB) => {
                 const valueA = (rowA?.[sortField]?.toString() || "").toLowerCase();
