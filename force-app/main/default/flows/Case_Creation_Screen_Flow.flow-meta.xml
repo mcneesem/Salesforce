@@ -140,6 +140,23 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_Fault_Element_Get_Messging_Session</name>
+        <label>Assign Fault Element : Get Messging Session</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Messaging_Session</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Create_Case_Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_Fault_Element_Get_Parent_Case</name>
         <label>Assign Fault Element : Get_Parent_Case</label>
         <locationX>0</locationX>
@@ -174,8 +191,8 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_Fault_Element_Messaging_Session_update</name>
-        <label>Assign Fault Element :Messaging Session update</label>
+        <name>Assign_Fault_Element_Update_Messaging_Session</name>
+        <label>Assign Fault Element : Update Messaging Session</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
@@ -777,7 +794,7 @@
             <label>From Project</label>
         </rules>
         <rules>
-            <name>From_MessagingService</name>
+            <name>From_Messaging_Session</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>recordId</leftValueReference>
@@ -789,7 +806,7 @@
             <connector>
                 <targetReference>Category_Sub_Category</targetReference>
             </connector>
-            <label>From MessagingService</label>
+            <label>From Messaging Session</label>
         </rules>
     </decisions>
     <decisions>
@@ -836,6 +853,13 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Get_Messaging_Session.MessagingEndUserId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Get_Messaging_User</targetReference>
             </connector>
@@ -862,7 +886,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Messaging_Session_update</targetReference>
+                <targetReference>Update_Messaging_Session</targetReference>
             </connector>
             <label>Case Created by Messaging Session</label>
         </rules>
@@ -1033,6 +1057,9 @@
         <connector>
             <targetReference>Get_Messaging_Session_is_Blank</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_Fault_Element_Get_Messging_Session</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -1115,15 +1142,15 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
-        <name>Messaging_Session_update</name>
-        <label>Messaging Session update</label>
+        <name>Update_Messaging_Session</name>
+        <label>Update Messaging Session</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Is_Reload_Enabled</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Assign_Fault_Element_Messaging_Session_update</targetReference>
+            <targetReference>Assign_Fault_Element_Update_Messaging_Session</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
