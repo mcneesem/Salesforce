@@ -51,29 +51,6 @@
     <apiVersion>64.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
-        <name>Account_Contact_setup</name>
-        <label>Account Contact setup</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>contextAccountId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Messaging_User.AccountId</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>contextContactId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Messaging_User.ContactId</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Get_Accessible_Record_Types</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Account_Path</name>
         <label>Account Path</label>
         <locationX>0</locationX>
@@ -413,6 +390,29 @@
         </assignmentItems>
         <connector>
             <targetReference>Store_Project_Account_Id</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Store_Messaging_User_Attributes</name>
+        <label>Store Messaging User Attributes</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>contextAccountId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Messaging_User.AccountId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>contextContactId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Messaging_User.ContactId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Accessible_Record_Types</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -903,7 +903,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Account_Contact_setup</targetReference>
+                <targetReference>Store_Messaging_User_Attributes</targetReference>
             </connector>
             <label>Messaging User exist</label>
         </rules>
