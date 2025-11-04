@@ -7,13 +7,20 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
+                            <value>MessagingSession.New_Case</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Case_Creation_Screen_Flow}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
                             <value>Edit</value>
                         </valueListItems>
                         <valueListItems>
                             <value>Delete</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>MessagingSession.New_Case</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
