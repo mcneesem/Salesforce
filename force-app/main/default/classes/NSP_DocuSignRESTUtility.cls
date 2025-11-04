@@ -352,16 +352,6 @@ public class NSP_DocuSignRESTUtility {
                 response.getStatusCode() ,
                 sObjectType.DocuSign_Log__c.Fields.Response_Code__c
             );
-            String responseBody = response.getBody();
-            if ( String.isNotBlank( responseBody ) ) {
-                Map<String,Object> responseBodyDeserialize = (Map<String,Object>)JSON.deserializeUntyped( responseBody );
-                if ( responseBodyDeserialize.containsKey( 'access_token' ) ) {
-                    responseBody = responseBody.replace(
-                        (String)responseBodyDeserialize.get( 'access_token' ) ,
-                        'XXX_ACCESS_TOKEN_REMOVED_XXX'
-                    );
-                }
-            }
             logEntry.Response_Body__c = SchemaController.safeText(
                 NSP_DocuSignRESTUtility.removeResponseAccessToken( response.getBody() ) ,
                 sObjectType.DocuSign_Log__c.Fields.Response_Body__c
