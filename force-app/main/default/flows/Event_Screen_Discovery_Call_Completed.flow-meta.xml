@@ -389,6 +389,7 @@
         <queriedFields>District_Manager_Id__c</queriedFields>
         <queriedFields>NSP_Last_Updated__c</queriedFields>
         <queriedFields>Discovery_Call_Created_Date__c</queriedFields>
+        <queriedFields>NSP_Customer_Signer__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <description>Ensure current User has &apos;Edit&apos; record access to prevent DmlExceptions.</description>
