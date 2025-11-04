@@ -126,6 +126,51 @@
                 <default>false</default>
                 <label>Termination</label>
             </value>
+            <value>
+                <fullName>Third Party/Vendor Issue</fullName>
+                <default>false</default>
+                <label>Third Party/Vendor Issue</label>
+            </value>
+            <value>
+                <fullName>Integration Issue</fullName>
+                <default>false</default>
+                <label>Integration Issue</label>
+            </value>
+            <value>
+                <fullName>Security/Access Issue</fullName>
+                <default>false</default>
+                <label>Security/Access Issue</label>
+            </value>
+            <value>
+                <fullName>No Issue Found</fullName>
+                <default>false</default>
+                <label>No Issue Found</label>
+            </value>
+            <value>
+                <fullName>Enhancement Request</fullName>
+                <default>false</default>
+                <label>Enhancement Request</label>
+            </value>
+            <value>
+                <fullName>Report Issue</fullName>
+                <default>false</default>
+                <label>Report Issue</label>
+            </value>
+            <value>
+                <fullName>Internal Process Issue</fullName>
+                <default>false</default>
+                <label>Internal Process Issue</label>
+            </value>
+            <value>
+                <fullName>Communication Issue</fullName>
+                <default>false</default>
+                <label>Communication Issue</label>
+            </value>
+            <value>
+                <fullName>Audit/Review Finding</fullName>
+                <default>false</default>
+                <label>Audit/Review Finding</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
