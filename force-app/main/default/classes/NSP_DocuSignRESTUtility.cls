@@ -2,7 +2,7 @@
 // You can extend the searchForFolder method by invoking it from triggers / scheduled apex / batch jobs
 // startInvoiceWorkflow method is used to start workflow in CLM
 public class NSP_DocuSignRESTUtility {
-    // test w/ NSP_DocuSignInvoiceDocumentBatchTest (80%)
+    // test w/ NSP_DocuSignInvoiceDocumentBatchTest (84%)
 
     private static final String CONTENT_TYPE = 'Content-Type';
     private static final String APPLICATION_JSON = 'application/json';
@@ -132,13 +132,11 @@ public class NSP_DocuSignRESTUtility {
             );
         }
         request.setBody( requestBody );
-        // send the request...
-        Http http = new Http();
-        HTTPResponse response = http.send( request );
-        // parse response for the access token...
-        // ~ wrap all JSON seralize/deserialize opeations in try/catch blocks to protect against non-JSON endpoint responses...
         CLMTokenRequest token = null;
         try {
+            // send the request...
+            Http http = new Http();
+            HTTPResponse response = http.send( request );
             // build log...
             DocuSign_Log__c logEntry = NSP_DocuSignRESTUtility.buildLogEntry(
                 JSON.serialize( requestHeaders ) ,
@@ -146,20 +144,42 @@ public class NSP_DocuSignRESTUtility {
                 response ,
                 null
             );
+            // parse response for the access token...
             if ( response.getStatusCode() == 200 ) {
                 token = (CLMTokenRequest)JSON.deserialize( response.getBody() , CLMTokenRequest.class );
             }
-            if ( CLMDocumentTransfer.isEnabledRestTokenLogging
-                && ( Limits.getFutureCalls() < Limits.getLimitFutureCalls() ) // prevent LimitExceptions...
-                )
-            {
-                // log authentication attempts...
-                NSP_DocuSignRESTUtility.logAuthenticationAttempts( JSON.serialize( logEntry ) );
-            }
+            // log authentication attempts...
+            NSP_DocuSignRESTUtility.logAuthenticationAttempts( logEntry );
         } catch ( Exception e ) {
-            System.debug( ' ~ CATCH ~ e=' + e );
+            String message = ''
+                + NSP_DocuSignRESTUtility.class.getName()
+                + '.'
+                + 'getTokenRequest'
+                + ': '
+                + e.getTypeName()
+                + ': '
+                + e.getMessage()
+                ;
+            NSP_DocuSignRESTUtility.logAuthenticationAttempts(
+                new DocuSign_Log__c(
+                    Description__c=SchemaController.safeText(
+                        message ,
+                        sObjectType.DocuSign_Log__c.Fields.Description__c
+                    )
+                )
+            );
         }
         return token;
+    }
+
+    private static void logAuthenticationAttempts( DocuSign_Log__c logEntry ) {
+        if ( CLMDocumentTransfer.isEnabledRestTokenLogging
+            && ( logEntry != null )
+            && ( Limits.getFutureCalls() < Limits.getLimitFutureCalls() ) // prevent LimitExceptions...
+            )
+        {
+            NSP_DocuSignRESTUtility.logAuthenticationAttempts( JSON.serialize( logEntry ) );
+        }
     }
 
     @future
@@ -300,21 +320,10 @@ public class NSP_DocuSignRESTUtility {
     {
         DocuSign_Log__c logEntry = new DocuSign_Log__c();
         // capture request header details...
-        if ( String.isNotBlank( requestHeaders ) ) {
-            if ( ( request.getEndpoint() != NSP_DocuSignRESTUtility.authEndpoint )
-                && String.isNotBlank( NSP_DocuSignRESTUtility.accessToken )
-                )
-            {
-                requestHeaders = requestHeaders.replace(
-                    NSP_DocuSignRESTUtility.accessToken ,
-                    'XXX_ACCESS_TOKEN_REMOVED_XXX'
-                );
-            }
-            logEntry.Request_Headers__c = SchemaController.safeText(
-                requestHeaders ,
-                sObjectType.DocuSign_Log__c.Fields.Request_Headers__c
-            );
-        }
+        logEntry.Request_Headers__c = SchemaController.safeText(
+            NSP_DocuSignRESTUtility.removeRequestAccessToken( requestHeaders , request ) ,
+            sObjectType.DocuSign_Log__c.Fields.Request_Headers__c
+        );
         logEntry.Record_Id__c = SchemaController.safeText(
             recordId ,
             sObjectType.DocuSign_Log__c.Fields.Record_Id__c
@@ -325,21 +334,8 @@ public class NSP_DocuSignRESTUtility {
                 request.getEndpoint() ,
                 sObjectType.DocuSign_Log__c.Fields.Endpoint__c
             );
-            String requestBody = request.getBody();
-            if ( String.isNotBlank( requestBody ) ) {
-                PageReference reference = new PageReference( '/?' + requestBody );
-                if ( reference != null ) {
-                    Map<String,String> parameters = reference.getParameters();
-                    if ( parameters.containsKey( 'assertion' ) ) {
-                        requestBody = requestBody.replace(
-                            parameters.get( 'assertion' ) ,
-                            'XXX_ASSERTION_REMOVED_XXX'
-                        );
-                    }
-                }
-            }
             logEntry.Request_Body__c = SchemaController.safeText(
-                requestBody ,
+                NSP_DocuSignRESTUtility.removeRequestAssertion( request.getBody() ) ,
                 sObjectType.DocuSign_Log__c.Fields.Request_Body__c
             );
         }
@@ -367,7 +363,7 @@ public class NSP_DocuSignRESTUtility {
                 }
             }
             logEntry.Response_Body__c = SchemaController.safeText(
-                responseBody ,
+                NSP_DocuSignRESTUtility.removeResponseAccessToken( response.getBody() ) ,
                 sObjectType.DocuSign_Log__c.Fields.Response_Body__c
             );
             logEntry.Response_Headers__c = SchemaController.safeText(
@@ -380,6 +376,50 @@ public class NSP_DocuSignRESTUtility {
             );
         }
         return logEntry;
+    }
+
+    private static String removeRequestAccessToken( String requestHeaders , HttpRequest request ) {
+        if ( String.isNotBlank( requestHeaders )
+            && ( request != null )
+            && ( request.getEndpoint() != NSP_DocuSignRESTUtility.authEndpoint )
+            && String.isNotBlank( NSP_DocuSignRESTUtility.accessToken )
+            )
+        {
+            requestHeaders = requestHeaders.replace(
+                NSP_DocuSignRESTUtility.accessToken ,
+                'XXX_ACCESS_TOKEN_REMOVED_XXX'
+            );
+        }
+        return requestHeaders;
+    }
+
+    private static String removeRequestAssertion( String requestBody ) {
+        if ( String.isNotBlank( requestBody ) ) {
+            PageReference reference = new PageReference( '/?' + requestBody );
+            if ( reference != null ) {
+                Map<String,String> parameters = reference.getParameters();
+                if ( parameters.containsKey( 'assertion' ) ) {
+                    requestBody = requestBody.replace(
+                        parameters.get( 'assertion' ) ,
+                        'XXX_ASSERTION_REMOVED_XXX'
+                    );
+                }
+            }
+        }
+        return requestBody;
+    }
+
+    private static String removeResponseAccessToken( String responseBody ) {
+        if ( String.isNotBlank( responseBody ) ) {
+            Map<String,Object> responseBodyDeserialize = (Map<String,Object>)JSON.deserializeUntyped( responseBody );
+            if ( responseBodyDeserialize.containsKey( 'access_token' ) ) {
+                responseBody = responseBody.replace(
+                    (String)responseBodyDeserialize.get( 'access_token' ) ,
+                    'XXX_ACCESS_TOKEN_REMOVED_XXX'
+                );
+            }
+        }
+        return responseBody;
     }
 
     public static void testHandleException( Exception e , String methodName ) {
