@@ -328,6 +328,7 @@ private class NSP_ValidateOpportunityStageTest {
         // Test Double
         System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition(1.0, '1.0', 'EQUALS'));
         System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition(1.0, '2.0', 'DOES_NOT_EQUAL'));
+        System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition(1.0, 'Field Value: NSP_Number_of_Employees__c', 'DOES_NOT_EQUAL'));
 
         // Test Integer
         System.assertEquals(true, NSP_ValidateOpportunityStage.checkCondition(1, '1', 'EQUALS'));

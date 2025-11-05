@@ -16,9 +16,9 @@ public with sharing class NSP_ValidateOpportunityStage {
     //                         all the other group criteria is found. If the metadata records in the group are for Opportunity
     //                         object, validation fails if the Opportunity being validated matches all the other criteria
     //                         in the group.
-    //                      3. When one or more records in a group is marked as a Group Condition, then the validation defined by 
+    //                      3. When one or more records in a group is marked as a Group Condition, then the validation defined by
     //                         the entire group is only applicable when each Group Condition evaluates to true. If all Group
-    //                         Conditions are not met, then the Opportunity or related object criteria in the group are not 
+    //                         Conditions are not met, then the Opportunity or related object criteria in the group are not
     //                         required and the validation passes.
     // ***************************************************************************************************************************
 
@@ -790,8 +790,8 @@ public with sharing class NSP_ValidateOpportunityStage {
         if ( operation == Operator.IS_BLANK.name() ) {
             retVal = ( String.isBlank( String.valueOf( fieldValue ) ) || ( fieldValue == null ) );
         } else if ( operation == Operator.IS_NOT_BLANK.name() ) {
-            retVal = ( !String.isBlank( String.valueOf( fieldValue ) ) && ( fieldValue != null ) );
-        } else if ( !String.isBlank( ruleValue )
+            retVal = ( String.isNotBlank( String.valueOf( fieldValue ) ) && ( fieldValue != null ) );
+        } else if ( String.isNotBlank( ruleValue )
             && ( ( operation == Operator.EQUALS.name() )
                 || ( operation == Operator.DOES_NOT_EQUAL.name() )
                 || ( operation == Operator.GREATER_THAN_OR_EQUALS.name() )
@@ -809,10 +809,11 @@ public with sharing class NSP_ValidateOpportunityStage {
                     ruleValueDate ,
                     operation
                 );
-            } else if (
-                ( fieldValue instanceOf Decimal )
-                || ( fieldValue instanceOf Double )
-                || ( fieldValue instanceOf Integer )
+            } else if ( ruleValue.replaceFirst( '[.]' , '' ).isNumeric() // Prevent System.TypeException: Invalid decimal: Field Value: *****
+                && ( ( fieldValue instanceOf Decimal )
+                    || ( fieldValue instanceOf Double )
+                    || ( fieldValue instanceOf Integer )
+                    )
                 )
             {
                 retVal = NSP_ValidateOpportunityStage.checkConditionDecimal(
@@ -862,7 +863,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         } else if (
             ( operation == Operator.IS_IN.name() )
             && ( ruleValue != null )
-            && !String.isBlank( String.valueOf( ruleValue ) )
+            && String.isNotBlank( String.valueOf( ruleValue ) )
             )
         {
             Set<String> ruleValueSet = new Set<String>(
@@ -872,7 +873,7 @@ public with sharing class NSP_ValidateOpportunityStage {
         } else if (
             ( operation == Operator.IS_NOT_IN.name() )
             && ( ruleValue != null )
-            && !String.isBlank( String.valueOf( ruleValue ) )
+            && String.isNotBlank( String.valueOf( ruleValue ) )
             )
         {
             Set<String> ruleValueSet = new Set<String>(
@@ -890,9 +891,9 @@ public with sharing class NSP_ValidateOpportunityStage {
         } else if ( operation == Operator.DOES_NOT_EQUAL.name() ) {
             retVal = fieldValue != ruleValue;
         } else if ( operation == Operator.GREATER_THAN_OR_EQUALS.name() ) {
-            retVal = fieldValue != null && !String.isBlank(String.valueOf(fieldValue)) && fieldValue >= ruleValue;
+            retVal = fieldValue != null && String.isNotBlank(String.valueOf(fieldValue)) && fieldValue >= ruleValue;
         } else if ( operation == Operator.LESS_THAN_OR_EQUALS.name() ) {
-            retVal = fieldValue != null && !String.isBlank(String.valueOf(fieldValue)) && fieldValue <= ruleValue;
+            retVal = fieldValue != null && String.isNotBlank(String.valueOf(fieldValue)) && fieldValue <= ruleValue;
         }
         return retVal;
     }
@@ -904,9 +905,9 @@ public with sharing class NSP_ValidateOpportunityStage {
         } else if ( operation == Operator.DOES_NOT_EQUAL.name() ) {
             retVal = fieldValue != ruleValue;
         } else if ( operation == Operator.GREATER_THAN_OR_EQUALS.name() ) {
-            retVal = fieldValue != null && !String.isBlank(String.valueOf(fieldValue)) && fieldValue >= ruleValue;
+            retVal = fieldValue != null && String.isNotBlank(String.valueOf(fieldValue)) && fieldValue >= ruleValue;
         } else if ( operation == Operator.LESS_THAN_OR_EQUALS.name() ) {
-            retVal = fieldValue != null && !String.isBlank(String.valueOf(fieldValue)) && fieldValue <= ruleValue;
+            retVal = fieldValue != null && String.isNotBlank(String.valueOf(fieldValue)) && fieldValue <= ruleValue;
         }
         return retVal;
     }
