@@ -114,6 +114,7 @@ public with sharing class NSP_TerminationFormTriggerHelper {
                         ( NSP_Account__c IN :sAccountIds )
                         AND ( NSP_Asset__c IN :terminatedAssetsList )
                     )
+                    ORDER BY NSP_Account__c ASC , NSP_Sub_Client__c ASC
                 ]
             );
             List<NSP_Sub_Client__c> lSubClients = new List<NSP_Sub_Client__c>(
@@ -131,6 +132,7 @@ public with sharing class NSP_TerminationFormTriggerHelper {
                         AND ( NSP_Asset__c IN :assetsList )
                         AND ( NSP_Account_Status__c != :NSP_ServiceConstants.TERMINATED )
                     )
+                    ORDER BY NSP_Account__c ASC , NSP_Sub_Client__c ASC
                 ]
             );
             Map<Id,String> mTermAccountToSubClientNumbers = new Map<Id,String>();

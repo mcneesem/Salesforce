@@ -1,18 +1,8 @@
-/**
-* Represents test class for set account stage batch class
-*/
+@isTest
+private class NSP_SetAccountStageBatchTest {
 
-@isTest(SeeAllData=false)
-public class NSP_SetAccountStageBatchTest {
-    
-    /**
-* Does test data setup
-* @param N/A. 
-* @return void                          
-*/
-    
     @testSetup
-    static void testData() {
+    private static void testData() {
             Test.startTest();
         //Account creation
         Account accoutObject = new Account();
@@ -21,52 +11,56 @@ public class NSP_SetAccountStageBatchTest {
         accoutObject.NSP_Account_Status__c = 'Active';
         //inserting account
         insert accoutObject;
-        
+
         List<Opportunity> optyList = new List<Opportunity>();
-        
+
         //Opportunity Createtion
         Opportunity opportunityObject = new Opportunity();
         opportunityObject.Name = 'Test Opportunity';
-        opportunityObject.stagename = 'Discovery';
+        opportunityObject.StageName = 'Prospecting';
         opportunityObject.accountid = accoutObject.id;
-        opportunityObject.CloseDate = date.today();        
+        opportunityObject.CloseDate = date.today();
         //Adding opportunity object to the list
         optyList.add(opportunityObject);
         //Opportunity Createtion
         Opportunity opportunityObject1 = new Opportunity();
         opportunityObject1.Name = 'Test Opportunity';
-        opportunityObject1.stagename = 'Discovery';
+        opportunityObject1.StageName = 'Prospecting';
         opportunityObject1.accountid = accoutObject.id;
         opportunityObject1.CloseDate = date.today();
         //Adding opportunity object to the list
         optyList.add(opportunityObject1);
         //inserting opportunity records
         insert optyList;
-        
+
         SBQQ__Quote__c primaryQuote = new SBQQ__Quote__c();
         primaryQuote.SBQQ__Primary__c = true;
         primaryQuote.SBQQ__Opportunity2__c = optyList[0].Id;
         primaryQuote.SBQQ__Account__c = accoutObject.id;
         primaryQuote.SBQQ__Status__c='Approved';
-        
+
         insert primaryQuote;
         Test.stopTest();
         //optyList[1].StageName='Closed Won';
         optyList[0].StageName='Closed Won';
-        
+
         update optyList;
-                
+
     }
-    static testMethod void testSetAccountSatge() {  
+
+    @isTest
+    private static void testSetAccountSatge() {
         Test.startTest();
-		//Calling the batch        
+        //Calling the batch
         Database.executeBatch(new NSP_SetAccountStageBatch(),15);
         System.assert(true,true);
-        
+
         NSP_SetAccountStageScheduler testsche = new NSP_SetAccountStageScheduler();
-		String sch = '0 0 23 * * ?';
-		system.schedule('Test status Check', sch, testsche );
-        
+        String sch = '0 0 23 * * ?';
+        system.schedule('Test status Check', sch, testsche );
+
         Test.stopTest();
     }
+
 }
+//

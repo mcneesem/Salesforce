@@ -64,31 +64,38 @@ public with sharing class ProjectPercentageCompleteQueueable implements Queueabl
                 ];
                 // select the current record for percent complete comparions...
                 List<pse__Proj__c> currentRecords = [
-                    SELECT Id , NSP_Project_Complete__c
+                    SELECT
+                        Id ,
+                        NSP_Project_Complete__c ,
+                        TemplateName__c ,
+                        Project_Implementer__c ,
+                        pse__End_Date__c
                     FROM pse__Proj__c
                     WHERE ( Id = :projectId )
                 ];
-                Decimal currentPercentComplete = null;
+                pse__Proj__c currentRecord = null;
                 if ( ( currentRecords != null ) && !currentRecords.isEmpty() ) {
-                    currentPercentComplete = currentRecords[0].NSP_Project_Complete__c;
+                    currentRecord = currentRecords[0];
                 }
-                // calculate new percent complete values...
-                pse__Proj__c record = null;
-                for ( AggregateResult ar : groupedResults ) {
-                    if ( ( ar.get( 'pse__Project__c' ) != null )
-                        && ( projectId == (Id)ar.get( 'pse__Project__c' ) )
-                        )
-                    {
-                        // only update the project when the current percent is blank, or when the new percent is significantly changed...
-                        record = this.calculateProjectPercentageComplete(
-                            projectId ,
-                            currentPercentComplete ,
-                            (Decimal)ar.get( 'expr0' ) ,
-                            (Decimal)ar.get( 'expr1' )
-                        );
-                    }
+                Boolean isUpdateRestricted = false;
+                Decimal currentPercentComplete = null;
+                if ( currentRecord != null ) {
+                    currentPercentComplete = currentRecord.NSP_Project_Complete__c;
+                    // Prevent DmlExceptions: FIELD_CUSTOM_VALIDATION_EXCEPTION: Please enter the value for End Date
+                    isUpdateRestricted = (
+                        ( currentRecord.TemplateName__c == 'ITA-Implementation' )
+                        && String.isNotBlank( currentRecord.Project_Implementer__c )
+                        && ( currentRecord.pse__End_Date__c == null )
+                    );
                 }
-                if ( record != null ) {
+                // conditionally calculate new percent complete values...
+                pse__Proj__c record = this.calculateProjectPercentageComplete(
+                    groupedResults ,
+                    projectId ,
+                    currentPercentComplete
+                );
+                // only update the project when the current percent is blank, or when the new percent is significantly changed...
+                if ( ( record != null ) && !isUpdateRestricted ) {
                     List<Database.SaveResult> results = Database.update( new List<pse__Proj__c>{ record } , false );
                     NSP_ErrorLogHandler.logResults(
                         ProjectPercentageCompleteQueueable.class.getName() ,
@@ -104,6 +111,27 @@ public with sharing class ProjectPercentageCompleteQueueable implements Queueabl
                 e
             );
         }
+    }
+
+    private pse__Proj__c calculateProjectPercentageComplete( AggregateResult[] groupedResults , Id projectId , Decimal current ) {
+        pse__Proj__c record = null;
+        if ( ( groupedResults != null ) && !groupedResults.isEmpty() ) {
+            for ( AggregateResult ar : groupedResults ) {
+                if ( ( ar.get( 'pse__Project__c' ) != null )
+                    && ( projectId == (Id)ar.get( 'pse__Project__c' ) )
+                    )
+                {
+                    // only update the project when the current percent is blank, or when the new percent is significantly changed...
+                    record = this.calculateProjectPercentageComplete(
+                        projectId ,
+                        current ,
+                        (Decimal)ar.get( 'expr0' ) ,
+                        (Decimal)ar.get( 'expr1' )
+                    );
+                }
+            }
+        }
+        return record;
     }
 
     private pse__Proj__c calculateProjectPercentageComplete( Id projectId , Decimal current , Decimal count , Decimal total ) {

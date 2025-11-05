@@ -76,7 +76,7 @@ private class NSP_OpportunityTriggerServiceHelperTest {
     }
 
     @isTest
-    private static void updateImplementationProfileTest(){
+    private static void updateImplementationProfileTest() {
         Test.startTest();
         Map<Id,User> permittedUsersMap = CustomPermissionController.getPermittedUsersMap( 'Opportunity_Closed_Won_NCS_User' );
         List<User> userRecords = [
@@ -117,6 +117,7 @@ private class NSP_OpportunityTriggerServiceHelperTest {
             oppty.NSP_Time_Entry_Recommendation__c = NSP_ServiceConstants.Premier_Time_Att;
             oppty.NSP_Signed_CSA__c = true;
             oppty.NSP_Signed_CSA_Date__c = system.today();
+            oppty.NSP_CountAsSale__c = 'No';
             update oppty;
             Test.stopTest();
             System.assertEquals(impProfile.Account__c, acc.Id);
@@ -133,8 +134,8 @@ private class NSP_OpportunityTriggerServiceHelperTest {
         oProject.pse__Start_Date__c = System.Today();
         oProject.pse__Account__c= acc.Id;
         oProject.TemplateName__c = label.Middle_Market_Implementation_Project;
-      	oProject.RecordTypeId = projectRecordType;
-      	oProject.pse__Project_Type__c =NSP_ServiceConstants.ImplementationProjectType;
+        oProject.RecordTypeId = projectRecordType;
+        oProject.pse__Project_Type__c =NSP_ServiceConstants.ImplementationProjectType;
         insert oProject;
 
         Implementation_Profile__c impProfile = new Implementation_Profile__c();

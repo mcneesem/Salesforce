@@ -413,6 +413,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Case.Change_Order__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Case.Client_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -444,6 +449,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.Email_Cadence_Start_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Escalated_Case__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Escalated_Change_Order__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -658,6 +673,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Event.Creator_Title__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Event.NSP_Activity_ID_18__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -814,6 +834,61 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Account_Group__c.Account__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Account_Group__c.Competitor__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Account_Group__c.Did_Client_Go_To_A_Competitor__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Account_Group__c.Eligible_To_Return_To_Insperity_At_Time__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Account_Group__c.Other_Competitor__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Account_Group__c.Primary_Term_Reason__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Account_Group__c.Secondary_Sub_Term_Reason__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Account_Group__c.Secondary_Term_Reason__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Account_Group__c.Sub_Term_Reason__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Account_Group__c.Termination_Anticipated__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Account_Group__c.Termination_Key_Points__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Account_Group__c.Why_Why_Not__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1474,6 +1549,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__Quote__c.Run_Quote_Calc_for_Termination__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+     <fieldPermissions>
+        <editable>false</editable>
+        <field>Task.Creator_Title__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

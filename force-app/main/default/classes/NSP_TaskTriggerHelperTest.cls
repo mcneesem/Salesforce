@@ -38,7 +38,7 @@ public class NSP_TaskTriggerHelperTest {
             insert accoutObject1;
             Opportunity opportuniytObject = new Opportunity();
             opportuniytObject.Name = 'Test Oppty';
-            opportuniytObject.stagename = 'Discovery';
+            opportuniytObject.stagename = 'Prospecting';
             opportuniytObject.CloseDate = date.today();
             opportuniytObject.accountId = accoutObject1.Id;
             
@@ -66,7 +66,7 @@ public class NSP_TaskTriggerHelperTest {
     @isTest
     static void testTaskInsert() {
         Id taskRecTypeId = Schema.SObjectType.Task.getRecordTypeInfosByDeveloperName().get('Core_Sales_Task_RT').getRecordTypeId();
-        List<Opportunity> opportunityList = [SELECT ID,NSP_PrimaryProduct__c,stagename FROM OPPORTUNITY WHERE stagename = 'Discovery'];
+        List<Opportunity> opportunityList = [SELECT ID,NSP_PrimaryProduct__c,stagename FROM OPPORTUNITY WHERE stagename = 'Prospecting'];
         Lead getLead = [SELECT Id, Name,LastActivityDate,DNB_connect_DUNS_Number__c FROM Lead WHERE firstname = 'Test' LIMIT 1];
         getLead.NumberOfEmployees = 123;
         //updating list

@@ -160,7 +160,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Get_Opty_Owner_in_BPA_Public_Group</targetReference>
+            <targetReference>Check_if_Role_ID_Exists</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -248,6 +248,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_Public_Group_Ids</name>
+        <label>Assign Public Group Ids</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>publicGroupIds</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Loop_Over_Public_Groups.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_Over_Public_Groups</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_varFaultElement_Discovery_Call_Follow_Up_Custom_Notification</name>
         <label>Assign varFaultElement - Discovery Call Follow-Up Custom Notification</label>
         <locationX>0</locationX>
@@ -316,6 +332,19 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_varFaultElement_Get_Public_Group_Id</name>
+        <label>Assign varFaultElement - Get Public Group Id</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Public_Group_Id</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
         <name>Assign_varFaultElement_Get_the_Owners_District_Manager</name>
         <label>Assign varFaultElement - Get the Owner&apos;s District Manager</label>
         <locationX>0</locationX>
@@ -348,6 +377,54 @@
             <targetReference>Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Role_Related_Id</name>
+        <label>Role Related Id</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>roleRelatedId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Loop_Over_Public_Groups.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_Over_Public_Groups</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Check_for_Group_Type</name>
+        <label>Check for Group Type</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Assign_Public_Group_Ids</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Role_Id</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop_Over_Public_Groups.RelatedId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>varOpportunity.Owner.UserRoleId</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Loop_Over_Public_Groups.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Role</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Role_Related_Id</targetReference>
+            </connector>
+            <label>Is Role Id</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Check_for_HR360_Primary_Product</name>
         <label>Check for HR360 Primary Product</label>
@@ -378,6 +455,57 @@
                 <targetReference>Assign_Opportunity_Close_Date</targetReference>
             </connector>
             <label>HR360 Primary Product Selected</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_if_Public_Group_Records_Exist</name>
+        <label>Check if Public Group Records Exist</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_Public_Groups</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Public_Group_Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Public_Group_Id</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Loop_Over_Public_Groups</targetReference>
+            </connector>
+            <label>Has Public Groups</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_if_Role_ID_Exists</name>
+        <label>Check if Role ID Exists</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_Role_ID</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varOpportunity.Owner.UserRoleId</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Public_Group_Id</targetReference>
+            </connector>
+            <label>Has Role ID</label>
         </rules>
     </decisions>
     <decisions>
@@ -521,7 +649,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Get_Opty_Owner_in_BPA_Public_Group</targetReference>
+            <targetReference>Check_if_Role_ID_Exists</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Not a Close Lost Opty</defaultConnectorLabel>
         <rules>
@@ -651,6 +779,20 @@
     </formulas>
     <interviewLabel>Event - Subflow - Discovery Call Completed Date {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Event - Subflow - Discovery Call Completed Date</label>
+    <loops>
+        <name>Loop_Over_Public_Groups</name>
+        <label>Loop Over Public Groups</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <collectionReference>Get_Public_Group_Id</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Check_for_Group_Type</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Get_Opty_Owner_in_BPA_Public_Group</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -706,12 +848,12 @@
         <faultConnector>
             <targetReference>Assign_varFaultElement_Get_Opty_Owner_in_BPA_Public_Group</targetReference>
         </faultConnector>
-        <filterLogic>and</filterLogic>
+        <filterLogic>1 AND (2 OR 3)</filterLogic>
         <filters>
             <field>GroupId</field>
-            <operator>EqualTo</operator>
+            <operator>In</operator>
             <value>
-                <stringValue>00GPb00000CfwnVMAR</stringValue>
+                <elementReference>publicGroupIds</elementReference>
             </value>
         </filters>
         <filters>
@@ -721,9 +863,58 @@
                 <elementReference>varOpportunity.OwnerId</elementReference>
             </value>
         </filters>
+        <filters>
+            <field>UserOrGroupId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>roleRelatedId</elementReference>
+            </value>
+        </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>GroupMember</object>
         <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Public_Group_Id</name>
+        <label>Get Public Group Id</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_if_Public_Group_Records_Exist</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_Public_Group_Id</targetReference>
+        </faultConnector>
+        <filterLogic>1 OR (2 AND 3)</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Business Performance Advisor</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RelatedId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varOpportunity.Owner.UserRoleId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Type</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Role</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Group</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <queriedFields>RelatedId</queriedFields>
+        <queriedFields>Type</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
@@ -844,6 +1035,20 @@
         <name>collectionRecipientIds</name>
         <dataType>String</dataType>
         <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>publicGroupIds</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>roleRelatedId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>

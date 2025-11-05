@@ -393,7 +393,10 @@ public void updateActivitySales(List<Task> newList,Map<Id,Task> OldTaskMap){
                 NSP_ServiceConstants.PI_CONTINGENT_WORKFORCE => NSP_ServiceConstants.CONTINGENT_WORKFORCE ,
                 NSP_ServiceConstants.PI_CONTRACTOR_MANAGEMENT => NSP_ServiceConstants.CONTRACTOR_MANAGEMENT ,
                 NSP_ServiceConstants.PI_HRCORE_ONBOARDING_AMENDMENT => NSP_ServiceConstants.HRCORE_ONBOARDING_AMENDMENT ,
-                NSP_ServiceConstants.EMPLOYMENT_SCREENING => NSP_TaskTriggerHelper.EMPLOYMENT_SCREENING
+                NSP_ServiceConstants.EMPLOYMENT_SCREENING => NSP_TaskTriggerHelper.EMPLOYMENT_SCREENING,
+                    'Insurance Services (Health & Wellness)' =>  NSP_ServiceConstants.INSURANCE_SERVICES ,
+                    'Insurance Services (Property & Casualty)' =>  NSP_ServiceConstants.INSURANCE_SERVICES ,
+                    'Insurance Services (Revolution)' => NSP_ServiceConstants.INSURANCE_SERVICES 
             };
         }
     }

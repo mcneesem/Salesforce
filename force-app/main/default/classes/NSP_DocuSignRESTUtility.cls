@@ -31,10 +31,36 @@ public class NSP_DocuSignRESTUtility {
         private set;
     }
 
-    private static String accessToken = null;
+    private static String accessToken {
+        private get {
+            if ( accessToken == null ) {
+                String local = null;
+                if ( NSP_DocuSignRESTUtility.tokenRequest != null ) {
+                    local = NSP_DocuSignRESTUtility.tokenRequest.Access_Token;
+                }
+                accessToken = local;
+            }
+            return accessToken;
+        }
+        private set;
+    }
+
+    public static String getAccessToken() {
+        return NSP_DocuSignRESTUtility.accessToken;
+    }
+
+    private static CLMTokenRequest tokenRequest {
+        private get {
+            if ( tokenRequest == null ) {
+                tokenRequest = NSP_DocuSignRESTUtility.getTokenRequest();
+            }
+            return tokenRequest;
+        }
+        private set;
+    }
 
     //This method will call the DocuSignJWT class to obtain an access token from DocuSign
-    public static String getAccessToken() {
+    private static CLMTokenRequest getTokenRequest() {
 
         //Instantiate a request object
         HttpRequest req = new HttpRequest();
@@ -70,18 +96,11 @@ public class NSP_DocuSignRESTUtility {
         HTTPResponse res = http.send(req);
 
         //Obtain the access token from the Response
+        CLMTokenRequest token = null;
         if (res.getStatusCode() == 200) {
-            System.JSONParser parser = System.JSON.createParser(res.getBody());
-            while (parser.nextToken() != null) {
-                if ((parser.getCurrentToken() == JSONToken.FIELD_NAME) && (parser.getText() == 'access_token')) {
-                    parser.nextToken();
-                    NSP_DocuSignRESTUtility.accessToken = parser.getText();
-                    break;
-                }
-            }
+            token = (CLMTokenRequest)JSON.deserialize( res.getBody() , CLMTokenRequest.class );
         }
-
-        return NSP_DocuSignRESTUtility.accessToken;
+        return token;
     }
 
     // futureStartInvoiceWorkflow method is created by following above given structure by DocuSign
@@ -109,10 +128,8 @@ public class NSP_DocuSignRESTUtility {
     // startInvoiceWorkflow method is created by following above given structure by DocuSign
     // Takes List of String - Invoice SF Ids 18 characters as parameter
     public static void startInvoiceWorkflow( List<String> sfInvIds ) {
-        // Get the access token
-        NSP_DocuSignRESTUtility.getAccessToken();
         //Call CLM API if a non-empty access token is returned
-        if ( !String.isEmpty( NSP_DocuSignRESTUtility.accessToken ) ) {
+        if ( String.isNotBlank( NSP_DocuSignRESTUtility.accessToken ) ) {
             List<DocuSign_Log__c> logList = new List<DocuSign_Log__c>();
             for ( String singleInvId : sfInvIds ) {
                 DocuSign_Log__c logEntry = new DocuSign_Log__c();
@@ -198,8 +215,11 @@ public class NSP_DocuSignRESTUtility {
         DocuSign_Log__c logEntry = new DocuSign_Log__c();
         // Capture Request details
         if ( String.isNotBlank( requestHeaders ) ) {
+            if ( String.isNotBlank( NSP_DocuSignRESTUtility.accessToken ) ) {
+                requestHeaders = requestHeaders.replace( NSP_DocuSignRESTUtility.accessToken , 'XXX_ACCESS_TOKEN_REMOVED_XXX' );
+            }
             logEntry.Request_Headers__c = SchemaController.safeText(
-                requestHeaders.replace( NSP_DocuSignRESTUtility.accessToken , 'XXX_ACCESS_TOKEN_REMOVED_XXX' ) ,
+                requestHeaders ,
                 sObjectType.DocuSign_Log__c.Fields.Request_Headers__c
             );
         }

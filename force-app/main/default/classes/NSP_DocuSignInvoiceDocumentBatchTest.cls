@@ -11,6 +11,14 @@ private class NSP_DocuSignInvoiceDocumentBatchTest {
         settings.BatchSize__c = 25;
         settings.BccAddresses__c = UserInfo.getUserEmail();
         upsert settings;
+
+        CLMTokenRequest request = new CLMTokenRequest();
+        request.Access_Token = 'Access_Token';
+        request.Token_Type = 'Token_Type';
+        request.Expires_In = 'Expires_In';
+        request.ApiBase_Url = 'ApiBase_Url';
+        request.Scope = 'Scope';
+
         //Test Data Setup
         // NSP_InvoiceTriggerHandler.TriggerDisabled = true;
         NSP_AccountTriggerHandler.TriggerDisabled = true;
