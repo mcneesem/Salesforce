@@ -1,5 +1,5 @@
 public with sharing class ProjectPercentageCompleteQueueable implements Queueable {
-    // test w/ ProjectPercentageCompleteQueueableTest (88%)
+    // test w/ ProjectPercentageCompleteQueueableTest (90%)
 
     //
     // public entry points...
@@ -12,7 +12,8 @@ public with sharing class ProjectPercentageCompleteQueueable implements Queueabl
     }
 
     public static void enqueueJob( List<Id> local ) {
-        if ( ( local != null )
+        if ( ProjectPercentageCompleteQueueable.isEnabled
+            && ( local != null )
             && ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() )
             )
         {
@@ -33,7 +34,10 @@ public with sharing class ProjectPercentageCompleteQueueable implements Queueabl
     }
 
     public void execute( QueueableContext context ) {
-        if ( this.projectIds != null ) {
+        if ( ProjectPercentageCompleteQueueable.isEnabled
+            && ( this.projectIds != null )
+            )
+        {
             if ( !this.projectIds.isEmpty() ) {
                 Id projectId = this.projectIds.remove( 0 ); // remove top projectId for each link in the queueable chain...
                 this.updateProjectPercentageComplete( projectId );
@@ -142,11 +146,11 @@ public with sharing class ProjectPercentageCompleteQueueable implements Queueabl
             && ( total > 0 )
             )
         {
-            Decimal newPercentComplete = ( count / total );
-            if ( ( current == null )
-                || ( current.round() != newPercentComplete.round() )
-                )
-            {
+            // translate current and new value to incremental steps...
+            current = this.getStepValue( current );
+            Decimal newPercentComplete = this.getStepValue( count / total );
+            // only re-populate for significant changes...
+            if ( current != newPercentComplete ) {
                 record = new pse__Proj__c(
                     Id=projectId ,
                     NSP_Project_Complete__c=newPercentComplete
@@ -154,6 +158,76 @@ public with sharing class ProjectPercentageCompleteQueueable implements Queueabl
             }
         }
         return record;
+    }
+
+    public Decimal getStepValue( Decimal value ) {
+        // enforce 0% floor...
+        if ( value == null ) {
+            value = 0.0;
+        }
+        // cap value within a defined step size...
+        // ~ i.e. when stepSize=1, the result will always be: 0, 1, 2, 3, etc...
+        // ~ i.e. when stepSize=5, the result will always be: 0, 5, 10, 15, etc...
+        // ~ i.e. when stepSize=10, the result will always be: 0, 10, 20, 30, etc...
+        value = ( ( value / ProjectPercentageCompleteQueueable.stepSize ).round( System.RoundingMode.HALF_UP ) * ProjectPercentageCompleteQueueable.stepSize ).intValue();
+        // enforce 100% ceiling...
+        if ( value > 100.0 ) {
+            value = 100.0;
+        }
+        return value;
+    }
+
+    //
+    // Custom Settings
+    //
+
+    private static ProjectPercentageCompleteSettings__c settings {
+        private get {
+            if ( settings == null ) {
+                settings = ProjectPercentageCompleteSettings__c.getInstance( UserInfo.getUserId() );
+            }
+            return settings;
+        }
+        private set;
+    }
+
+    private static Boolean isEnabled {
+        private get {
+            if ( isEnabled == null ) {
+                Boolean local = False;
+                if ( ProjectPercentageCompleteQueueable.settings != null ) {
+                    local = ProjectPercentageCompleteQueueable.settings.IsEnabled__c;
+                }
+                isEnabled = local;
+            }
+            return isEnabled;
+        }
+        private set;
+    }
+
+    private static Integer stepSize {
+        private get {
+            if ( stepSize == null ) {
+                Integer local = 1;
+                if ( ( ProjectPercentageCompleteQueueable.settings != null )
+                    && ( ProjectPercentageCompleteQueueable.settings.StepSize__c != null )
+                   )
+                {
+                    local = ProjectPercentageCompleteQueueable.settings.StepSize__c.intValue();
+                }
+                // step size must be greater than zero...
+                if ( local < 1 ) {
+                    local = 1;
+                }
+                // step size must be less than or equal to 100...
+                if ( local > 100 ) {
+                    local = 100;
+                }
+                stepSize = local;
+            }
+            return stepSize;
+        }
+        private set;
     }
 
 }
