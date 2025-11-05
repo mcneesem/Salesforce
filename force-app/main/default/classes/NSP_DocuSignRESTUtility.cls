@@ -176,6 +176,8 @@ public class NSP_DocuSignRESTUtility {
         if ( CLMDocumentTransfer.isEnabledRestTokenLogging
             && ( logEntry != null )
             && ( Limits.getFutureCalls() < Limits.getLimitFutureCalls() ) // prevent LimitExceptions...
+            && !System.isFuture()
+            && !System.isBatch()
             )
         {
             NSP_DocuSignRESTUtility.logAuthenticationAttempts( JSON.serialize( logEntry ) );
