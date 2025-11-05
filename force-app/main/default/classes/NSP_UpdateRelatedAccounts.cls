@@ -10,7 +10,7 @@
 // @Story/Defect: DF-01058
 //
 public without sharing class NSP_UpdateRelatedAccounts {
-    // test w/ NSP_UpdateRelatedAccountsTest (88%)
+    // test w/ NSP_UpdateRelatedAccountsTest (90%)
     // test w/ NSP_OpportunityTriggerHelperTest (64%)
 
     // Updates the last updated date on the related accounts(this helps in identifying the account that can be set as inactive).
@@ -42,10 +42,8 @@ public without sharing class NSP_UpdateRelatedAccounts {
     }
 
     public static void updateAccountStatus( Set<String> accountIdSet ) {
-        if ( LeadConversionSettings__c.getInstance( UserInfo.getUserId() ).Is_Enabled_SOQL_Fix__c ) {
-            updateAccountStatusFuture( accountIdSet );
-        } else {
-            updateAccountStatusInternal( accountIdSet );
+        if ( Limits.getFutureCalls() < Limits.getLimitFutureCalls() ) { // prevent LimitExceptions...
+            NSP_UpdateRelatedAccounts.updateAccountStatusFuture( accountIdSet );
         }
     }
 
@@ -61,39 +59,39 @@ public without sharing class NSP_UpdateRelatedAccounts {
     // @param accountIdSet Set of account ids related to opportunity.
     // @return void
     private static void updateAccountStatusInternal( Set<String> accountIdSet ){
-        List<Account> accountTobeUpdatedList = new List<Account>();
-        for ( Account accountObj : [
-                    SELECT
-                        Id ,
-                        NSP_Sales_Service_Account_Status__c ,
-                        ( SELECT Id FROM Assets ) ,
-                        (
-                            SELECT Id , StageName
-                            FROM Opportunities
-                            WHERE ( StageName NOT IN ( 'Closed Won' , 'Closed Lost' ) )
+        try {
+            List<Account> accountTobeUpdatedList = new List<Account>();
+            for ( Account accountObj : [
+                        SELECT
+                            Id ,
+                            NSP_Sales_Service_Account_Status__c ,
+                            ( SELECT Id FROM Assets ) ,
+                            (
+                                SELECT Id , StageName
+                                FROM Opportunities
+                                WHERE ( StageName NOT IN ( 'Closed Won' , 'Closed Lost' ) )
+                            )
+                        FROM Account
+                        WHERE (
+                            ( Id IN :accountIdSet )
+                            AND ( NSP_Sales_Service_Account_Status__c != :NSP_SalesConstants.PROSPECTING )
                         )
-                    FROM Account
-                    WHERE (
-                        ( Id IN :accountIdSet )
-                        AND ( NSP_Sales_Service_Account_Status__c != :NSP_SalesConstants.PROSPECTING )
-                    )
-                ]
-            )
-        {
-            if ( ( accountObj.Assets != null )
-                && ( accountObj.Assets.size() == 0 )
+                    ]
                 )
             {
-                accountObj.NSP_Sales_Service_Account_Status__c = NSP_SalesConstants.PROSPECTING;
-                accountTobeUpdatedList.add( accountObj );
+                if ( ( accountObj.Assets != null )
+                    && ( accountObj.Assets.isEmpty() )
+                    )
+                {
+                    accountObj.NSP_Sales_Service_Account_Status__c = NSP_SalesConstants.PROSPECTING;
+                    accountTobeUpdatedList.add( accountObj );
+                }
             }
-        }
-        if ( !accountTobeUpdatedList.isEmpty() ) {
-            try {
+            if ( !accountTobeUpdatedList.isEmpty() ) {
                 update accountTobeUpdatedList;
-            } catch( Exception e ) {
-                NSP_UpdateRelatedAccounts.handleException( e , 'updateAccountStatus' );
             }
+        } catch( Exception e ) {
+            NSP_UpdateRelatedAccounts.handleException( e , 'updateAccountStatus' );
         }
     }
 
