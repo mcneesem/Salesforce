@@ -2473,6 +2473,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Exclude_From_Time_Calculation__c</fieldItem>
+                <identifier>RecordExclude_from_time_calculation_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.First_Level_2_Owner_Assigned_Date__c</fieldItem>
                 <identifier>RecordFirst_Level_2_Owner_Assigned_Date_cField</identifier>
                 <visibilityRule>
