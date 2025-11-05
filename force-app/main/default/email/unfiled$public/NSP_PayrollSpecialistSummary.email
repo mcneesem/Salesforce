@@ -26,7 +26,7 @@
   {!relatedTo.NSP_Provide_Details_Enrollment_fee__c} </p>
   </apex:outputPanel>
   <apex:outputPanel rendered="{!relatedTo.NSP_Any_special_pay_codes_Needed__c= 'Yes'}">
-   <p>• The client has special pay IPes and/or relabeling.  Please review the following <br /> notes for details:
+   <p>• The client has special pay codes and/or relabeling.  Please review the following <br /> notes for details:
   {!relatedTo.NSP_Any_special_pay_code_Provide_Details__c} </p>
   </apex:outputPanel>
   <apex:outputPanel rendered="{!CONTAINS(relatedTo.NSP_Select_all_that_apply__c ,'Integra')}">
