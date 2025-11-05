@@ -2486,6 +2486,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>NSP_Pricing_Table__c.IsPricingActive__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>NSP_Pricing_Table__c.NSP_End_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
