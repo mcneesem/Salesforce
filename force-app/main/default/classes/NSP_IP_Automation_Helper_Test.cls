@@ -7,7 +7,8 @@ Story                :
 Modification Log     :                                                                              
 *--------------------------------------------------------------------------------------------------  
 * Developer                   Date                   Description                                    
-* -------------------------------------------------------------------------------------------------  
+* ------------------------------------------------------------------------------------------------- 
+* Masthan                     10/24/2025             Added test for getNewCasesToInsertSubjectIp to cover new logic introduced in NSP_IP_Automation_Helper
 */
 @isTest
 public class NSP_IP_Automation_Helper_Test {
@@ -87,6 +88,7 @@ public class NSP_IP_Automation_Helper_Test {
             NSP_IP_Automation_Helper helper = new NSP_IP_Automation_Helper();
         helper.getAllIPAutomation(ipIds);
         helper.getnewCasestoInsert(new List<Case>{caseRecord});
+        helper.getNewCasesToInsertSubjectIp(new List<Case>{caseRecord});
         NSP_Implementation_Profile_Automation__c ipAutomation2 = helper.createIPAutomation(ipRec, TEST_AUTOMATION, TEST_FUNCTION, TEST_SECTION);
         helper.getnewAutomationListtoInsert(new List<NSP_Implementation_Profile_Automation__c>{ipAutomation2});
         helper.getAllCases(ipIds);

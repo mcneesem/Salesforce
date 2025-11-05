@@ -5,6 +5,7 @@ public class NSP_Implementationprofile_ServiceHelper {
     // test w/ NSP_FSOImplementationControllerTest (21%)
 
     private List<Case> caseToInsertList = new List<Case>();
+    private List<Case> caseToInsertSubjectIpList = new List<Case>();
     private List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
     private String impRecordId;
     private String  impAutomationName;
@@ -252,6 +253,10 @@ public class NSP_Implementationprofile_ServiceHelper {
         if ( !caseToInsertList.isEmpty() ) {
             //check for existing Cases to avoid duplications
             recToInsert.addAll( ipAutomationHelper.getnewCasestoInsert( caseToInsertList ) );
+        }
+        if(!caseToInsertSubjectIpList.isEmpty()){
+            //check for existing Cases to avoid duplications
+            recToInsert.addAll( ipAutomationHelper.getNewCasesToInsertSubjectIp( caseToInsertSubjectIpList ) );
         }
         if ( !ipAutomationRecords.isEmpty() ) {
             //check for existing Automation record and store the new Automation records
@@ -1547,7 +1552,7 @@ public class NSP_Implementationprofile_ServiceHelper {
                     )
                 );
                 if ( eachCase != null ) {
-                    caseToInsertList.add( eachCase );
+                    caseToInsertSubjectIpList.add( eachCase );
                 }
             }
         }
