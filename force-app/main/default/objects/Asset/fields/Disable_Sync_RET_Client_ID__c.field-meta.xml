@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Disable_Sync_RET_Client_ID__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>This checkbox lets users opt out of automatic syncing</description>
+    <label>Disable Sync RET-Client ID</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

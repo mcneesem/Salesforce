@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HRScale_COE_Escalation_Task</fullName>
+    <filterScope>Queue</filterScope>
+    <label>HRScale COE Escalation</label>
+    <queue>HRScale_COE_Escalation</queue>
+    <sharedTo>
+        <allInternalUsers></allInternalUsers>
+    </sharedTo>
+</ListView>

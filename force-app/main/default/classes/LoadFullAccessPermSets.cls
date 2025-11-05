@@ -8,7 +8,7 @@ public class LoadFullAccessPermSets {
     //                 for all (or optional list of) object API names. Method launches a Queueable
     //                 (LoadFullAccessPermSetsQueueable) chain with each queued job upserting ObjectPermissions
     //                 and FieldPermissions into each Perm Set for a single object from the list
-    // 
+    //
     //  Params:        readPermSetId:      Id of perm set to be loaded with Read permissions
     //                 editPermSetId:      Id of perm set to be loaded with Edit permissions
     //                 objectApiNames:     optional List<String> of object API names; if null, method
@@ -41,8 +41,8 @@ public class LoadFullAccessPermSets {
         }
 
         if ( objectApiNames.isEmpty() ) {
-            List<EntityDefinition> entities = [SELECT QualifiedApiName, InternalSharingModel, NamespacePrefix FROM EntityDefinition 
-                WHERE KeyPrefix != null AND PublisherId != 'CDC' AND IsCustomSetting = false 
+            List<EntityDefinition> entities = [SELECT QualifiedApiName, InternalSharingModel, NamespacePrefix FROM EntityDefinition
+                WHERE KeyPrefix != null AND PublisherId != 'CDC' AND IsCustomSetting = false
                 ORDER BY InternalSharingModel];
 
             objectApiNames = getobjectApiNames(entities , filterNamespaces);
@@ -68,12 +68,15 @@ public class LoadFullAccessPermSets {
     }
 
     // ************************************ Record Type Visibility ************************************
-    //  Description :   Upserts PermissionSetRecordTypeVisibility for all Record Types of specified 
+    //  Description :   Upserts PermissionSetRecordTypeVisibility for all Record Types of specified
     //                  object name into specified Perm Set.
-    // *******************************************************************************************
+    // ************************************************************************************************
     @future(callout=true)
     public static void loadRecTypeVisibility(Id permSetId) {
-        if (!String.isBlank(permSetId)) {
+        if ( OrgSettings__c.getOrgDefaults().IsEnabled_loadRecTypeVisibility__c
+            && !String.isBlank( permSetId )
+            )
+        {
             List<RecordType> recTypeList =  [SELECT DeveloperName, SobjectType, NamespacePrefix FROM RecordType WHERE IsActive = true];
             MetadataService.MetadataPort service = NSP_PrepSandbox.createService();
 
@@ -84,7 +87,7 @@ public class LoadFullAccessPermSets {
             }
 
             for (RecordType recType : recTypeList) {
-                MetadataService.PermissionSetRecordTypeVisibility recTypeVis = new MetadataService.PermissionSetRecordTypeVisibility(); 
+                MetadataService.PermissionSetRecordTypeVisibility recTypeVis = new MetadataService.PermissionSetRecordTypeVisibility();
                 String prefix = (recType.NamespacePrefix == null) ? '' : recType.NamespacePrefix + '__';
                 recTypeVis.recordType = recType.SobjectType + '.' + prefix + recType.DeveloperName;
                 recTypeVis.visible = true;
@@ -96,11 +99,15 @@ public class LoadFullAccessPermSets {
                 }
             }
 
-            if (permSet != null && !Test.isRunningTest()) {
-                List<MetadataService.SaveResult> results = service.updateMetadata( new MetadataService.Metadata[] { permSet });
-                if ( !results[0].success ) {
-                    LoadFullAccessPermSetsQueueable.createErrorLog( 'loadRecTypeVisibility' , null , 'RecTypeVisibility errors: ' + results[0].errors[0].message );
-                }
+            updatePermSet( permSet , service );
+        }
+    }
+
+    private static void updatePermSet( MetadataService.PermissionSet permSet , MetadataService.MetadataPort service ) {
+        if ( ( permSet != null ) && !Test.isRunningTest() ) {
+            List<MetadataService.SaveResult> results = service.updateMetadata( new MetadataService.Metadata[] { permSet } );
+            if ( !results[0].success ) {
+                LoadFullAccessPermSetsQueueable.createErrorLog( 'loadRecTypeVisibility' , null , 'RecTypeVisibility errors: ' + results[0].errors[0].message );
             }
         }
     }

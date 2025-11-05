@@ -1009,6 +1009,26 @@
                 <identifier>RecordNSP_Case_Issue_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Escalated_Case__c</fieldItem>
+                <identifier>RecordEscalated_Case_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Change_Order__c</fieldItem>
+                <identifier>RecordChange_Order_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-ed4dbdbc-a876-4d27-9acf-30624fa2e658</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -1041,6 +1061,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_X0_5__c</fieldItem>
                 <identifier>RecordNSP_X0_5_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Escalated_Change_Order__c</fieldItem>
+                <identifier>RecordEscalated_Change_Order_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-38efe6a2-f517-427e-9a90-469344c51f4a</name>

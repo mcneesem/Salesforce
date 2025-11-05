@@ -1,9 +1,7 @@
-//
-// This code is provided as an example only, no warranty is expressed or implied. If you choose to use 
-// any or all of this sample code, you agree to assume all risk and liability associated with that use.
-//
 public with sharing class CLMDocumentTransfer {
-    // test w/ CLMDocumentTransferTest (87%)
+    // test w/ CLMDocumentTransferTest, SpringCMTests (88%)
+    // test w/ CLMDocumentTransferTest (79%)
+    // test w/ SpringCMTests (13%)
 
     String dsAccountId;
     String iss;
@@ -66,7 +64,7 @@ public with sharing class CLMDocumentTransfer {
         //
         Blob docBlob;
         if (Test.isRunningTest()) {
-            docBlob = Blob.valueOf('Test Content'); 
+            docBlob = Blob.valueOf('Test Content');
         } else {
             docBlob = svc.GetDocumentById(clmDocId).downloadDocument('');
             System.assert(docInfo != null);
@@ -148,6 +146,20 @@ public with sharing class CLMDocumentTransfer {
                 isEnabledClmDocumentReceived = local;
             }
             return isEnabledClmDocumentReceived;
+        }
+        private set;
+    }
+
+    public static Boolean isEnabledRestToken {
+        public get {
+            if ( isEnabledRestToken == null ) {
+                Boolean local = False;
+                if ( CLMDocumentTransfer.settings != null ) {
+                    local = CLMDocumentTransfer.settings.IsEnabledRestToken__c;
+                }
+                isEnabledRestToken = local;
+            }
+            return isEnabledRestToken;
         }
         private set;
     }

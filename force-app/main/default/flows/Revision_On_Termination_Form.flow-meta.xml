@@ -17,7 +17,7 @@
             <assignToReference>$Record.Name</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Termformname</elementReference>
+                <elementReference>revisedTerminationFormName</elementReference>
             </value>
         </assignmentItems>
     </assignments>
@@ -45,9 +45,9 @@
     </decisions>
     <environments>Default</environments>
     <formulas>
-        <name>Termformname</name>
+        <name>revisedTerminationFormName</name>
         <dataType>String</dataType>
-        <expression>&quot;Revised  &quot; &amp; {!$Record.Name}</expression>
+        <expression>LEFT( &quot;Revised &quot; &amp; {!$Record.Name} , 80 )</expression>
     </formulas>
     <interviewLabel>Revision On Termination Form {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Revision On Termination Form</label>

@@ -1,21 +1,12 @@
-/*
-*Test class for NSP_ImplementationHelper
-*@Bindushree R
-*Since Sept 2022
-*/
-
 @isTest
-public class NSP_ImplementationHelperTest {
-    
-    public static Id projectPEORecordTypeId = SObjectType.pse__Proj__c.getRecordTypeInfosByDeveloperName().get('PEO_Project').getRecordTypeId();
-    public static Id checklistBookingId = SObjectType.NSP_Checklist__c.getRecordTypeInfosByDeveloperName().get('NSP_Booking_Checklist').getRecordTypeId();
-    public static Id stpChecklistId = SObjectType.NSP_Checklist__c.getRecordTypeInfosByDeveloperName().get('NSP_Sold_to_Paid_Checklist').getRecordTypeId();
+private class NSP_ImplementationHelperTest {
 
-    
+    private static Id projectPEORecordTypeId = SObjectType.pse__Proj__c.getRecordTypeInfosByDeveloperName().get('PEO_Project').getRecordTypeId();
+    private static Id checklistBookingId = SObjectType.NSP_Checklist__c.getRecordTypeInfosByDeveloperName().get('NSP_Booking_Checklist').getRecordTypeId();
+    private static Id stpChecklistId = SObjectType.NSP_Checklist__c.getRecordTypeInfosByDeveloperName().get('NSP_Sold_to_Paid_Checklist').getRecordTypeId();
+
     @testSetup
-    public static void setupData(){
-        
-
+    private static void setupData() {
         //account creation
         Account newAccount = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), 'NSP_TestDataFactory.AccountDefaults', false);
         newAccount.Name = 'Test Account';
@@ -24,7 +15,7 @@ public class NSP_ImplementationHelperTest {
         Opportunity opportuniytObject2 = new Opportunity();
         opportuniytObject2.Name = 'Test Oppty Email';
         opportuniytObject2.AccountId = newAccount.id;
-        opportuniytObject2.stagename = NSP_SalesConstants.DISCOVERY_STAGE;
+        opportuniytObject2.StageName = 'Prospecting';
         opportuniytObject2.CloseDate = date.today();
         opportuniytObject2.NSP_PrimaryProduct__c = 'WO';
         opportuniytObject2.NSP_Number_of_Employees__c = 151; //!do not change. Test might fail
@@ -33,7 +24,7 @@ public class NSP_ImplementationHelperTest {
         opportuniytObject2.NSP_TransactionType__c = NSP_SalesConstants.TRANSACTION_TYPE_TERMINATION;
         //Inserting Opportunity Object
         insert opportuniytObject2;
-        
+
         List<Task> taskList = new List<Task>();
         Id taskRecTypeId = Schema.SObjectType.Task.getRecordTypeInfosByDeveloperName().get('Core_Sales_Task_RT').getRecordTypeId();
         Task taskRec = new Task(
@@ -46,14 +37,14 @@ public class NSP_ImplementationHelperTest {
         );
         taskList.add(taskRec);
         insert taskList;
-        
 
-        
-        
+
+
+
         //update opportunity
         opportuniytObject2.StageName = 'Closed Won';
         update opportuniytObject2;
-        
+
         //Booklist checklist creation
         List<NSP_Checklist__c> cc = new List<NSP_Checklist__c>();
         NSP_Checklist__c checklist = new NSP_Checklist__c();
@@ -61,7 +52,7 @@ public class NSP_ImplementationHelperTest {
         checklist.NSP_Does_company_have_more_than_one_FEIN__c=true;
         checklist.NSP_Commission_only_employees__c=true;
         checklist.recordTypeId=checklistBookingId;
-        cc.add(checklist);        
+        cc.add(checklist);
         //STP checklist creation
         NSP_Checklist__c stp = new NSP_Checklist__c();
         stp.NSP_Opportunity__c=opportuniytObject2.id;
@@ -81,16 +72,16 @@ public class NSP_ImplementationHelperTest {
         stp.NSP_Pay_Frequency__c='Weekly';
         stp.NSP_Has_company_ever_run_payroll_before__c='Yes';
         stp.NSP_Full_Time_Employees__c=50;
-        cc.add(stp); 
-        
+        cc.add(stp);
+
         if(!cc.isEmpty()){
             insert cc;
         }
-        
+
         //project creation
        pse__Proj__c oProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
        oProject.Name='test';
-	   oProject.pse__Project_Type__c =  NSP_ServiceConstants.ImplementationProjectType;
+       oProject.pse__Project_Type__c =  NSP_ServiceConstants.ImplementationProjectType;
        oProject.pse__Start_Date__c = Date.Today();
        oProject.pse__End_Date__c = System.Today().addDays(100);
        oProject.RecordTypeId = projectPEORecordTypeId;
@@ -98,34 +89,30 @@ public class NSP_ImplementationHelperTest {
        oProject.pse__Account__c=newAccount.id;
         insert oProject;
     }
-    
-    /*
-    *Test method for checkPrepopulateIPData
-    *This test method to  NSP_implementaionhelper 
-    
-    */    
-    static testmethod void checkPrepopulateIPDataMM() {
+
+    @isTest
+    private static void checkPrepopulateIPDataMM() {
         test.startTest();
-        
-        
-        List<Implementation_profile__c> ipList = [SELECT Id,Insperity_pay_frequency__c FROM Implementation_profile__c WHERE Id!=null LIMIT 1]; 
-        
+
+
+        List<Implementation_profile__c> ipList = [SELECT Id,Insperity_pay_frequency__c FROM Implementation_profile__c WHERE Id!=null LIMIT 1];
+
         System.assertEquals('Weekly',ipList[0].Insperity_pay_frequency__c);
         test.stopTest();
     }
-    
-    static testmethod void checkPrepopulateIPDataFso() {
+
+    @isTest
+    private static void checkPrepopulateIPDataFso() {
         test.startTest();
         Account acc=[SELECT Id, Name from Account WHERE Name = 'Test Account' LIMIT 1];
-        
+
         Implementation_profile__c ip = new Implementation_profile__c();
         ip.account__c=acc.id;
         insert ip;
-        
+
         System.assertEquals(acc.id,ip.account__c);
         test.stopTest();
     }
-        
-        
 
 }
+//

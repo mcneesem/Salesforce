@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>QM49</label>
+    <protected>false</protected>
+    <values>
+        <field>NSP_Client_for_Life__c</field>
+        <value xsi:type="xsd:string">Stand Alone</value>
+    </values>
+    <values>
+        <field>NSP_Default_Recordtype__c</field>
+        <value xsi:type="xsd:string">NSP_Standard</value>
+    </values>
+    <values>
+        <field>NSP_Opportunity_Primary_Product__c</field>
+        <value xsi:type="xsd:string">Time &amp; Attendance</value>
+    </values>
+    <values>
+        <field>NSP_Partner__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>NSP_PriceBook__c</field>
+        <value xsi:type="xsd:string">Standalone Pricebook</value>
+    </values>
+    <values>
+        <field>NSP_Pricing_Model__c</field>
+        <value xsi:type="xsd:string">List Price</value>
+    </values>
+    <values>
+        <field>NSP_Product_Type__c</field>
+        <value xsi:type="xsd:string">Time and Attendance;Time and Attendance Hardware</value>
+    </values>
+    <values>
+        <field>NSP_User_Group__c</field>
+        <value xsi:nil="true"/>
+    </values>
+</CustomMetadata>

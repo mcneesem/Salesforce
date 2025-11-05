@@ -117,6 +117,16 @@
                 <label>External Referral</label>
             </value>
             <value>
+                <fullName>Gifting</fullName>
+                <default>false</default>
+                <label>Gifting</label>
+            </value>
+            <value>
+                <fullName>In-Product</fullName>
+                <default>false</default>
+                <label>In-Product</label>
+            </value>
+            <value>
                 <fullName>Insperity Blog</fullName>
                 <default>false</default>
                 <label>Insperity Blog</label>
@@ -474,6 +484,14 @@
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
             <valueName>External Referral</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
+            <valueName>Gifting</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>
+            <valueName>In-Product</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Child: Delivery Mechanism Type</controllingFieldValue>

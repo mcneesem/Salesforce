@@ -856,6 +856,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>130</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>22</fullName>
             <default>false</default>
         </values>
@@ -1523,6 +1527,10 @@
         </values>
         <values>
             <fullName>Expense Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HRScale</fullName>
             <default>false</default>
         </values>
         <values>
