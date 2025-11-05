@@ -5,6 +5,21 @@
     <compactLayoutAssignment>NSP_Custom_Compact_Layout</compactLayoutAssignment>
     <label>Insurance Service</label>
     <picklistValues>
+        <picklist>Component__c</picklist>
+        <values>
+            <fullName>Health %26 Welfare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Property %26 Casualty</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Revolution</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>ConsequenceOfFailure</picklist>
         <values>
             <fullName>Critical</fullName>
