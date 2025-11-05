@@ -88,6 +88,13 @@
                 <numberValue>1.0</numberValue>
             </value>
         </filters>
+        <filters>
+            <field>OrderItemId__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
         <object>SBQQ__SubscriptionConsumptionRate__c</object>
         <recordTriggerType>Create</recordTriggerType>
         <scheduledPaths>
