@@ -1,11 +1,5 @@
-/* 
-*    ClassName:NSP_ContactTriggerHelper
-*    @description: Represents the Contact trigger helper which handles all the logic.
-*    @date: 06/07/2021
-*    @author: Tejas
-*/
 public with sharing class NSP_ContactTriggerHelper {
-    // test w/ NSP_ContactTriggerHelperTest (90%)
+    // test w/ NSP_ContactTriggerHelperTest (91%)
 
     public static final String INSPERITYROLE = 'Insperity';
     public static final String CUSTOMERROLE = 'Customer';
@@ -27,27 +21,27 @@ public with sharing class NSP_ContactTriggerHelper {
     //
     public void beforeInsertDirector( List<Contact> newList ) {
         //STY-02849/DF-05013 - Default Resource Fields on manually created contacts - start
-        //Modified as part of SOQL fix 228901 
+        //Modified as part of SOQL fix 228901
         String loggedInUserProfileName;
         loggedInUserProfileName = getLoggedInUserProfileName();
 
         Id regionId, workCalenderId = null;
-        //Modified as part of SOQL fix 228901 
-        //if(loggedInUserProfileName.size() > 0 && ALLOWED_PROFILES.contains(loggedInUserProfileName[0].Name)) 
+        //Modified as part of SOQL fix 228901
+        //if(loggedInUserProfileName.size() > 0 && ALLOWED_PROFILES.contains(loggedInUserProfileName[0].Name))
         if( loggedInUserProfileName != null && ALLOWED_PROFILES.contains(loggedInUserProfileName) ){
             regionId = getRegionId();
-        	workCalenderId = getWorkCalendarId();
+            workCalenderId = getWorkCalendarId();
         }
         //STY-02849/DF-05013 - Default Resource Fields on manually created contacts - end
-        
+
         for(Contact conObj : newList){
             if(conObj.recordTypeId == NEW_CON_REC_TYPE_ID){
                 conObj.recordTypeId = RESOURCE_REC_TYPE_ID; // Added as  part of STY-02840
             }
             conObj.NSP_isContactInsertion__c = true;
-            
+
             //STY-02849/DF-05013 - Default Resource Fields on manually created contacts - start
-            //modified as part of SOQL fix 228901 
+            //modified as part of SOQL fix 228901
             if( loggedInUserProfileName != null && ALLOWED_PROFILES.contains(loggedInUserProfileName) ){
                 conObj.pse__Is_Resource_Active__c = true;
                 conObj.pse__Is_Resource__c = true;
@@ -89,36 +83,29 @@ public with sharing class NSP_ContactTriggerHelper {
     // @param newMap List of New Contact.
     // @return void
     //
-    public void afterInsertDirector( List<Contact> newList , Map <Id,Contact > newMap ) {
-        Map<Id, Contact> conIdcontactMap = new Map<Id,Contact>();
-        Set <Id> contactIdSet = new Set<Id> ();
-        List < Contact > clientRefernceContactList = new List < Contact > ();
+    public void afterInsertDirector( List<Contact> newList , Map<Id,Contact > newMap ) {
         //Modified as part of SOQL fix 228901
         String loggedInUserProfileName;
         loggedInUserProfileName = getLoggedInUserProfileName();
 
         //Modified as part of SOQL fix 228901
         if ( loggedInUserProfileName != null && !INT_DM_PROFILES.contains(loggedInUserProfileName) ){
-            for (Contact conObj: newList) {
-                if (conObj.NSP_Client_Reference__c) {
-                    clientRefernceContactList.add(conObj);
+            Set<Id> contactIdSet = new Set<Id>();
+            List<Contact> clientRefernceContactList = new List<Contact>();
+            for ( Contact conObj : newList ) {
+                if ( conObj.NSP_Client_Reference__c ) {
+                    clientRefernceContactList.add( conObj );
                 }
-                if(LeadConversionSettings__c.getInstance(UserInfo.getUserId()).Is_Enabled_SOQL_Fix__c) {
-                    contactIdSet.add(conObj.Id);
-                }
-                else {
-                    conIdcontactMap.put(conObj.Id, conObj);
-                }
+                contactIdSet.add( conObj.Id );
             }
-
-            if( !conIdcontactMap.isEmpty() ) {
-                updateWorkPhoneEmailOnACROld(conIdcontactMap);
-            } else if( !contactIdSet.isEmpty() ) {
-                updateWorkPhoneEmailOnACRNew(contactIdSet);
+            if ( !contactIdSet.isEmpty()
+                && ( Limits.getFutureCalls() < Limits.getLimitFutureCalls() ) // prevent LimitExceptions...
+                )
+            {
+                NSP_ContactTriggerHelper.updateWorkPhoneEmailOnACR( contactIdSet );
             }
-
-            if (clientRefernceContactList.size() > 0) {
-                createTaskforClientReference(clientRefernceContactList);
+            if ( !clientRefernceContactList.isEmpty() ) {
+                this.createTaskforClientReference( clientRefernceContactList );
             }
         }
         if (newList != null && !newList.isEmpty() && Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
@@ -171,7 +158,10 @@ public with sharing class NSP_ContactTriggerHelper {
                     newMap ,
                     oldMap
                 );
-                IntegrationSyncController.setReadyForIntegrationSync( accountIdSetToUpdateResyncFlag , true );
+                IntegrationSyncController.setReadyForIntegrationSync(
+                    accountIdSetToUpdateResyncFlag ,
+                    Contact.getSObjectType()
+                );
                 // handle office details...
                 setSalesOfficeDetails( newMap.values() , oldMap );
             }
@@ -187,7 +177,7 @@ public with sharing class NSP_ContactTriggerHelper {
     // @return void
     //
     public void afterUpdateDirector( Map<Id,Contact> newMap , Map<Id,Contact> oldMap ) {
-        //Modified as part of SOQL fix 228901 
+        //Modified as part of SOQL fix 228901
         String loggedInUserProfileName;
         List<Contact> queueNewContact = new List<Contact>();
         Map<Id, Contact> queueOldMap = new Map<Id, Contact>();
@@ -195,48 +185,40 @@ public with sharing class NSP_ContactTriggerHelper {
 
         loggedInUserProfileName = getLoggedInUserProfileName();
         try {
-            List<Contact> clientRefernceContactList = new List<Contact>();
-            Map<Id, Contact> conIdcontactMap = new Map<Id,Contact>();
-            Set <Id> contactIdSet = new Set<Id> ();
             //Modified as part of SOQL fix 228901
             if ( loggedInUserProfileName != null && !INT_DM_PROFILES.contains(loggedInUserProfileName) ){
-                for(Contact conObj : newMap.values()){
-                    Contact oldContact = ( ( oldMap != null ) ? oldMap.get(conObj.Id) : null );
+                List<Contact> clientRefernceContactList = new List<Contact>();
+                Set<Id> contactIdSet = new Set<Id>();
+                for ( Contact conObj : newMap.values() ) {
+                    Contact oldContact = ( ( oldMap != null ) ? oldMap.get( conObj.Id ) : null );
                     if ( oldContact != null ) {
-                        if ( conObj.NSP_Client_Reference__c != oldContact.NSP_Client_Reference__c
+                        if ( ( conObj.NSP_Client_Reference__c != oldContact.NSP_Client_Reference__c )
                             && conObj.NSP_Client_Reference__c
                             )
                         {
                             clientRefernceContactList.add(conObj);
                         }
-                        if ( (conObj.NSP_Work_Phone__c != null && oldContact.NSP_Work_Phone__c != conObj.NSP_Work_Phone__c)
-                            || (conObj.NSP_Work_email__c != null && oldContact.NSP_Work_email__c != conObj.NSP_Work_email__c)
-                            || oldContact.NSP_Employee_Status__c != conObj.NSP_Employee_Status__c
-                            || oldContact.NSP_Status_Date__c != conObj.NSP_Status_Date__c
-                            || oldContact.NSP_Job_Title__c != conObj.NSP_Job_Title__c
+                        if ( ( conObj.NSP_Work_Phone__c != null && ( oldContact.NSP_Work_Phone__c != conObj.NSP_Work_Phone__c ) )
+                            || ( conObj.NSP_Work_email__c != null && ( oldContact.NSP_Work_email__c != conObj.NSP_Work_email__c ) )
+                            || ( oldContact.NSP_Employee_Status__c != conObj.NSP_Employee_Status__c )
+                            || ( oldContact.NSP_Status_Date__c != conObj.NSP_Status_Date__c )
+                            || ( oldContact.NSP_Job_Title__c != conObj.NSP_Job_Title__c )
                             )
                         {
-                            if ( LeadConversionSettings__c.getInstance( UserInfo.getUserId() ).Is_Enabled_SOQL_Fix__c ) {
-                                contactIdSet.add( conObj.Id );
-                            } else {
-                                conIdcontactMap.put( conObj.Id , conObj );
-                            }
+                            contactIdSet.add( conObj.Id );
                         }
                     }
                 }
-                if ( !conIdcontactMap.isEmpty() ) {
-                    updateWorkPhoneEmailOnACROld( conIdcontactMap );
-                } else if( !contactIdSet.isEmpty() ) {
-                    updateWorkPhoneEmailOnACRNew( contactIdSet );
+                if ( !contactIdSet.isEmpty()
+                    && ( Limits.getFutureCalls() < Limits.getLimitFutureCalls() ) // prevent LimitExceptions...
+                    )
+                {
+                    NSP_ContactTriggerHelper.updateWorkPhoneEmailOnACR( contactIdSet );
                 }
                 if ( !clientRefernceContactList.isEmpty() ) {
-                    createTaskforClientReference( clientRefernceContactList );
+                    this.createTaskforClientReference( clientRefernceContactList );
                 }
             }
-            NSP_SObjectHistoryTrackingHelper.enqueueJob(
-                (Map<Id,sObject>)newMap ,
-                (Map<Id,sObject>)oldMap
-            );
         } catch ( Exception e ) {
             NSP_ContactTriggerHelper.handleException( e , 'afterUpdateDirector' );
         }
@@ -247,7 +229,7 @@ public with sharing class NSP_ContactTriggerHelper {
                 {
                     queueOldMap.put(conObj.Id,oldContact);
                     queueNewContact.add(conObj);
-                    processedContact.add(conObj.Id); 
+                    processedContact.add(conObj.Id);
                 }
             }
         }
@@ -262,14 +244,13 @@ public with sharing class NSP_ContactTriggerHelper {
         }
     }
 
-    /**
-* Iterates throught the list of new Contact and passes the required attributes to other methods.
-* @param newList List of New Contact.
-* @param newMap List of New Contact.
-* @return void
-*                
-*/
-    public void createTaskforClientReference(List<Contact> clientReferenceContactList){
+    //
+    // Iterates throught the list of new Contact and passes the required attributes to other methods.
+    // @param newList List of New Contact.
+    // @param newMap List of New Contact.
+    // @return void
+    //
+    public void createTaskforClientReference( List<Contact> clientReferenceContactList ) {
         List<Task> taskList = new List<Task>();
         for(Contact conObj : clientReferenceContactList){
             Task taskObj = new Task();
@@ -282,71 +263,69 @@ public with sharing class NSP_ContactTriggerHelper {
         insert taskList;
     }
 
-/**
-* Method Name : updatePhoneNum 
-* Description : Method to format Phone number on update
-* Author : Raksha       Date : 22/02/2022
-* @param newContactList,contactOldMap.  
-* @return void  
-*/   
-public void updatePhoneNum(List<Contact> newContactList,Map<Id,Contact> contactOldMap){
-    for(Contact newContact : newContactList ) {
-        Contact oldContact = contactOldMap != null ? contactOldMap.get(newContact.Id) : null;
-        if((Trigger.isInsert || (oldContact != null && newContact.Phone != oldContact.Phone)) && newContact.Phone != null ) {
-            Pattern nonAlphanumeric = Pattern.compile('[^a-zA-Z0-9]');
-            String initialNum = nonAlphanumeric.matcher(newContact.Phone).replaceAll('').replace(NSP_ServiceConstants.EXT,'x');
-            Pattern numFormat10Dig = Pattern.compile('^\\(?(\\d{3})\\)?[-\\. ]?(\\d{3})[-\\. ]?(\\d{4})');
-            Pattern numFormat10Ext = Pattern.compile('^\\(?(\\d{3})\\)?[-\\. ]?(\\d{3})[-\\. ]?(\\d{4})(x\\d{3})?$');
-            Pattern numFormat11Dig;
-            Pattern numFormat11Ext;
-            if(initialNum.startsWith('1')) {
-                numFormat11Dig = Pattern.compile('^\\(?(\\d{3})\\)?[-\\. ]?(\\d{3})[-\\. ]?(\\d{5})');  
-                numFormat11Ext = Pattern.compile('^\\(?(\\d{3})\\)?[-\\. ]?(\\d{3})[-\\. ]?(\\d{5})(x\\d{3})?$');
-                if(numFormat11Dig.matcher(initialNum).matches() || numFormat11Ext.matcher(initialNum).matches()) {
+    //
+    // Method Name : updatePhoneNum
+    // Description : Method to format Phone number on update
+    // @param newContactList,contactOldMap.
+    // @return void
+    //
+    public void updatePhoneNum( List<Contact> newContactList , Map<Id,Contact> contactOldMap ) {
+        for(Contact newContact : newContactList ) {
+            Contact oldContact = contactOldMap != null ? contactOldMap.get(newContact.Id) : null;
+            if((Trigger.isInsert || (oldContact != null && newContact.Phone != oldContact.Phone)) && newContact.Phone != null ) {
+                Pattern nonAlphanumeric = Pattern.compile('[^a-zA-Z0-9]');
+                String initialNum = nonAlphanumeric.matcher(newContact.Phone).replaceAll('').replace(NSP_ServiceConstants.EXT,'x');
+                Pattern numFormat10Dig = Pattern.compile('^\\(?(\\d{3})\\)?[-\\. ]?(\\d{3})[-\\. ]?(\\d{4})');
+                Pattern numFormat10Ext = Pattern.compile('^\\(?(\\d{3})\\)?[-\\. ]?(\\d{3})[-\\. ]?(\\d{4})(x\\d{3})?$');
+                Pattern numFormat11Dig;
+                Pattern numFormat11Ext;
+                if(initialNum.startsWith('1')) {
+                    numFormat11Dig = Pattern.compile('^\\(?(\\d{3})\\)?[-\\. ]?(\\d{3})[-\\. ]?(\\d{5})');
+                    numFormat11Ext = Pattern.compile('^\\(?(\\d{3})\\)?[-\\. ]?(\\d{3})[-\\. ]?(\\d{5})(x\\d{3})?$');
+                    if(numFormat11Dig.matcher(initialNum).matches() || numFormat11Ext.matcher(initialNum).matches()) {
+                        newContact.NSP_Formatted_Phone_Num__c = formatPhoneNumbers(newContact.Phone);
+                    }
+                }
+                if(numFormat10Dig.matcher(initialNum).matches() || numFormat10Ext.matcher(initialNum).matches()) {
                     newContact.NSP_Formatted_Phone_Num__c = formatPhoneNumbers(newContact.Phone);
                 }
+                else {
+                    newContact.NSP_Formatted_Phone_Num__c = newContact.Phone;
+                }
             }
-            if(numFormat10Dig.matcher(initialNum).matches() || numFormat10Ext.matcher(initialNum).matches()) {
-                newContact.NSP_Formatted_Phone_Num__c = formatPhoneNumbers(newContact.Phone);
-            }
-            else {
-                newContact.NSP_Formatted_Phone_Num__c = newContact.Phone;
+            if(newContact.Phone == null){
+                newContact.NSP_Formatted_Phone_Num__c = null;
             }
         }
-        if(newContact.Phone == null){
-            newContact.NSP_Formatted_Phone_Num__c = null;
+    }
+
+    //
+    // Method Name : formatPhoneNumbers
+    // Description : Method to format Phone number
+    // @param String input called from updatePhoneNum.
+    // @return String
+    //
+    public String formatPhoneNumbers( String input ) {
+        String requiredOutput;
+        input = input.replaceAll('\\(', '').replaceAll('\\)', '');
+        input = input.replaceAll('-', '');
+        String trimString = input.deleteWhitespace();
+        List<String> parts = new List<String>();
+        if(trimString.contains(NSP_ServiceConstants.EXT)) {
+            parts = trimString.split(NSP_ServiceConstants.EXT);
+            requiredOutput = formatCommonPattern(parts.get(0).trim())+ ' x'+parts.get(1);
+        } else  if(trimString.contains('x')) {
+            parts = trimString.split('x');
+            requiredOutput = formatCommonPattern(parts.get(0).trim())+ ' x'+parts.get(1);
+        } else {
+            requiredOutput = formatCommonPattern(trimString);
         }
+        return requiredOutput;
     }
-}
-/**
-* Method Name : formatPhoneNumbers 
-* Description : Method to format Phone number
-* Author : Raksha       Date : 22/02/2022
-* @param String input called from updatePhoneNum.  
-* @return String  
-*/   
-public String formatPhoneNumbers(String input) {
-    String requiredOutput;
-    input = input.replaceAll('\\(', '').replaceAll('\\)', '');
-    input = input.replaceAll('-', '');
-    String trimString = input.deleteWhitespace();
-    List<String> parts = new List<String>();
-    if(trimString.contains(NSP_ServiceConstants.EXT)) {
-        parts = trimString.split(NSP_ServiceConstants.EXT);
-        requiredOutput = formatCommonPattern(parts.get(0).trim())+ ' x'+parts.get(1);
-    } else  if(trimString.contains('x')) {
-        parts = trimString.split('x');
-        requiredOutput = formatCommonPattern(parts.get(0).trim())+ ' x'+parts.get(1);
-    } else {
-        requiredOutput = formatCommonPattern(trimString);
-    }
-    return requiredOutput;
-}
 
     //
     // Method Name : formatCommonPattern
     // Description : Method to construct common pattern and format Phone number
-    // Author : Raksha       Date : 22/02/2022
     // @param String input called from formatPhoneNumbers.
     // @return String
     //
@@ -360,19 +339,12 @@ public String formatPhoneNumbers(String input) {
         return codeNumber;
     }
 
-    /* Description: This method sets sales office details from user 
-     * 
-     * @param: contactList
-     * @return: void
-     * Modification History:
-     * -------------------------------------------------------------------------------------
-     *  Date              | Description
-     * -------------------------------------------------------------------------------------
-     *  08/05/2022          created this new method
-     * 
-     * 
-    */
-    public void setSalesOfficeDetails(List<Contact> newList,Map<Id, Contact> contactOldMap){
+    //
+    // Description: This method sets sales office details from user
+    // @param: contactList
+    // @return: void
+    //
+    public void setSalesOfficeDetails( List<Contact> newList , Map<Id, Contact> contactOldMap ) {
         set<Id> ownerIdSet = new set<Id>();
         for(Contact newContact: newList) {
             Contact oldContact = contactOldMap != null ? contactOldMap.get(newContact.Id) : null;
@@ -403,7 +375,7 @@ public String formatPhoneNumbers(String input) {
             }
         }
     }
-    
+
     public void updateSSNLast4(List<Contact> newList,Map<Id, Contact> contactOldMap){
         for(Contact newContact: newList){
             Contact oldContact = contactOldMap != null ? contactOldMap.get(newContact.Id) : null;
@@ -415,8 +387,8 @@ public String formatPhoneNumbers(String input) {
             }
         }
     }
-    
-    /* updateContactRoles function definition */
+
+    // updateContactRoles function definition
     public void updateContactRoles(Set<Id> sUserIds, List<Contact> lContacts){
         Map<Id,User> mUsers = new Map<Id,User>([SELECT Id,Profile.UserLicense.Name FROM User WHERE Id in : sUserIds]);
         for(Contact oContact : lContacts){
@@ -429,60 +401,7 @@ public String formatPhoneNumbers(String input) {
         }
     }
 
-        //
-    // @MethodName: updateWorkPhoneEmailOnACROld
-    // @Description: This method describes to update the ACR when ever Contact's Email and Work Phone.
-    // @param : Map<Id, Contact> conIdcontactMap
-    // @createdDate : 12/13/2022
-    // @Story : STY-02840
-    // @return void
     //
-    private void updateWorkPhoneEmailOnACROld( Map<Id,Contact> conIdcontactMap ) {
-        List<AccountContactRelation> acrList = new List<AccountContactRelation>();
-        List<Contact> conList = new List<Contact>();
-        Set<Id> conIdSet = new Set<Id>();
-        Contact cont;
-        List<Profile> integrationUser = new NSP_sObjectSelector('Profile').setSecurityEnforce(false).selectByName(NSP_ServiceConstants.INTEGRATION_USER, null, true);
-        try {
-            for(AccountContactRelation acr : [SELECT Id, AccountId, 
-                                              ContactId,
-                                              Contact.NSP_isContactInsertion__c,
-                                              NSP_Work_Email__c, 
-                                              NSP_Work_Phone__c,
-                                              IsDirect,
-                                              createdById,
-                                              CreatedBy.ProfileId
-                                              FROM AccountContactRelation 
-                                              WHERE ContactId IN: conIdcontactMap.keySet() 
-                                              AND isDirect = true
-                                              AND CreatedBy.ProfileId !=: integrationUser[0].Id]){
-                                                  conIdSet.add(acr.ContactId);
-                                                  cont = conIdcontactMap.get(acr.ContactId);
-                                                  acr.NSP_Work_Email__c = cont.NSP_Work_email__c;
-                                                  acr.NSP_Work_Phone__c = cont.NSP_Work_Phone__c;
-                                                  acr.NSP_Employee_Status__c = cont.NSP_Employee_Status__c;
-                                   				  acr.NSP_Status_Date__c = cont.NSP_Status_Date__c;
-                                                  acr.NSP_Job_Title__c = cont.NSP_Job_Title__c;
-                                                  acrList.add(acr);
-                                              }
-            for(Contact con : [SELECT Id, NSP_isContactInsertion__c FROM Contact WHERE Id IN: conIdSet]){
-                con.NSP_isContactInsertion__c = false;
-                conList.add(con);
-            }
-            if(!acrList.isEmpty()){
-                update acrList ; // Don't chnage to Database.update
-            }
-            
-            if(!conList.isEmpty()){
-                update conList ; // Don't chnage to Database.update
-            }
-        } catch ( Exception e ) {
-            NSP_ContactTriggerHelper.handleException( e , 'updateWorkPhoneEmailOnACROld' );
-        }
-    }
-
-    //
-    // @MethodName: updateWorkPhoneEmailOnACRNew
     // @Description: This method describes to update the ACR when ever Contact's Email and Work Phone.
     // @param : Map<Id, Contact> conIdcontactMap
     // @createdDate : 12/13/2022
@@ -490,7 +409,7 @@ public String formatPhoneNumbers(String input) {
     // @return void
     //
     @future
-    private static void updateWorkPhoneEmailOnACRNew( Set<Id> contactIdSet ) {
+    private static void updateWorkPhoneEmailOnACR( Set<Id> contactIdSet ) {
         List<AccountContactRelation> acrList = new List<AccountContactRelation>();
         List<Contact> conUpdateList = new List<Contact>();
         Map<Id, Contact> conIdcontactMap = new Map<Id, Contact> ();
@@ -524,7 +443,7 @@ public String formatPhoneNumbers(String input) {
                             IsDirect ,
                             CreatedById ,
                             CreatedBy.ProfileId
-                        FROM AccountContactRelation 
+                        FROM AccountContactRelation
                         WHERE (
                             ContactId IN :contactIdSet
                             AND isDirect = true
@@ -545,21 +464,21 @@ public String formatPhoneNumbers(String input) {
                     acrList.add(acr);
                 }
             }
-            
+
             if(!acrList.isEmpty()){
                 update acrList ; // Don't change to Database.update
             }
-            
+
             if(!conIdcontactMap.isEmpty()){
                 update conUpdateList; // Don't change to Database.update
             }
         } catch ( Exception e ) {
-            NSP_ContactTriggerHelper.handleException( e , 'updateWorkPhoneEmailOnACRNew' );
+            NSP_ContactTriggerHelper.handleException( e , 'updateWorkPhoneEmailOnACR' );
         }
     }
 
     //
-    // Method Name : getLoggedInUserProfileName 
+    // Method Name : getLoggedInUserProfileName
     // Date : 11/08/2023
     // @param
     // @return String profileName
@@ -584,15 +503,14 @@ public String formatPhoneNumbers(String input) {
         return profileName;
     }
 
-    /**
-	* Method Name : getRegionId 
-	* Description : STY-02849/DF-05013 Method to United State region id
-	* Date : 21/06/2023
-	* @param   
-	* @return Id 
-	*/
+    //
+    // Method Name : getRegionId
+    // Description : STY-02849/DF-05013 Method to United State region id
+    // @param
+    // @return Id
+    //
     public Id getRegionId() {
-        List<String> regionFields = new List<String>{'Id','Name'};        
+        List<String> regionFields = new List<String>{'Id','Name'};
         String queryRegion = new NSP_QueryBuilder('pse__Region__c', regionFields)
                 .addFilter('Name', NSP_ServiceConstants.UnitedStatesRegion).setSecurityEnforce(false).build();
         List<pse__Region__c> regionRecords = Database.query(queryRegion);
@@ -601,16 +519,15 @@ public String formatPhoneNumbers(String input) {
         }
         return null;
     }
-    
-    /**
-	* Method Name : getWorkCalendarId 
-	* Description : STY-02849/DF-05013 Method to work Calender US40 record id
-	* Date : 21/06/2023
-	* @param   
-	* @return Id 
-	*/
+
+    //
+    // Method Name : getWorkCalendarId
+    // Description : STY-02849/DF-05013 Method to work Calender US40 record id
+    // @param
+    // @return Id
+    //
     public Id getWorkCalendarId() {
-        List<String> wcFields = new List<String>{'Id','Name'};        
+        List<String> wcFields = new List<String>{'Id','Name'};
         String queryWC = new NSP_QueryBuilder('pse__Work_Calendar__c', wcFields)
                 .addFilter('Name', WORK_CALENDAR_US40).setSecurityEnforce(false).build();
         List<pse__Work_Calendar__c> wcRecords = Database.query(queryWC);

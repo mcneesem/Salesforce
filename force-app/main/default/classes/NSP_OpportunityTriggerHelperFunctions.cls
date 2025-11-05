@@ -1,18 +1,6 @@
-//
-// Apex Class Name      :  NSP_OpportunityTriggerHelperFunctions for Opportunity Trigger Helper
-// Version              :  1.0
-// Created Date         :  07/02/2021
-// Function             :  This class is used as a helper to Opportunity Trigger Handler.
-// Story                :
-// Modification Log     :
-//--------------------------------------------------------------------------------------------------
-// Developer                   Date                   Description
-// -------------------------------------------------------------------------------------------------
-// Rakesh                  07/02/2021            First Iteration
-//
 public with sharing class NSP_OpportunityTriggerHelperFunctions {
-    // test w/ NSP_OpportunityTriggerHelperTest, NSP_AccountTriggerHelperTest (91%)
-    // test w/ NSP_OpportunityTriggerHelperTest (81%)
+    // test w/ NSP_OpportunityTriggerHelperTest, NSP_AccountTriggerHelperTest (90%)
+    // test w/ NSP_OpportunityTriggerHelperTest (84%)
     // test w/ NSP_AccountTriggerHelperTest (65%)
 
     private static Map<Id,User> customerSuccessUsers;
@@ -42,7 +30,6 @@ public with sharing class NSP_OpportunityTriggerHelperFunctions {
             opportunityObject.NSP_Mid_Market_Sales_Email__c = Label.NSP_Mid_Market_Sales_Email; //'midmarketleads@insperity.com'
             //stamping new client sales email on opportunity record.
             //DF-01858
-            //opportunityObject.NSP_New_Client_Sales_Email__c = Label.NSP_New_Client_Sales_Email;
             // Added if condition as part of DF-01369
             setOpportunityName(opportunityObject);
             //STY-01818 - Setting Client for Life
@@ -51,11 +38,6 @@ public with sharing class NSP_OpportunityTriggerHelperFunctions {
             setNewClientSalesEmail(opportunityObject);
             //If backout fields are not blank checking backout check box to true
             setBackOutCheckbox(opportunityObject);
-            // update ready to sync to true whenever opportunity is cloned
-            // added as a part of DF-01145
-            if (opportunityObject.isClone()) {
-                opportunityObject.NSP_Ready_for_Integration_Sync__c = true;
-            }
             //When Opportunity has primary product as WO then price is set to WO price book
             setPriceBookForWO(opportunityObject);
         }
@@ -135,7 +117,7 @@ public with sharing class NSP_OpportunityTriggerHelperFunctions {
     // @param opptyPrimaryProduct String for opportunity primary product
     // @return void
     //
-    public static String setClientForLifeOnOppty( String opptyCfl , String opptyPrimaryProduct ) {
+    private static String setClientForLifeOnOppty( String opptyCfl , String opptyPrimaryProduct ) {
         if ( String.isnotBlank( opptyPrimaryProduct ) ) {
             if ( opptyPrimaryProduct.equals( NSP_SalesConstants.WO )
                 || opptyPrimaryProduct.equals( NSP_SalesConstants.WS )
@@ -206,11 +188,6 @@ public with sharing class NSP_OpportunityTriggerHelperFunctions {
     // based on the Opportunity owner's sales office
     // @param: newOpportunityList, userIdSet
     // @return: void
-    // Modification History:
-    // -------------------------------------------------------------------------------------
-    // author           | Date              | Description
-    // -------------------------------------------------------------------------------------
-    // Tejas           10/28/2021          created this new method
     //
     public static void populateServiceEmail( List<Opportunity> newOpportunityList , Set<Id> userIdSet ) {
         List < NSP_Service_Team_Office_Mapping__mdt > officeEmailsMappingList = [SELECT Id, NSP_Sales_Offices__c, NSP_Service_Team_Email__c
@@ -235,11 +212,10 @@ public with sharing class NSP_OpportunityTriggerHelperFunctions {
     //
     // MethodName: getAccountOwnerEmail
     // Description : This method will update the Point of Contact and Customer Signer on Opportunity after Insert
-    // Params:       Set<Id> accountId
-    // Author : Nischay Jindal
+    // Params: Set<Id> accountId
     //
     public static void getAccountOwnerEmail( Set<Id> accountId ) {
-        //  Added by Nischay as a part of STY-02090
+        // STY-02090
         Map<Id,Id> accountOpportunityMap = new Map<Id,Id>();
         List<Opportunity>opportunityList =[Select Id , Name,NSP_Customer_Signer__c ,NSP_Primary_Contact__c,AccountId from Opportunity WHERE AccountId IN:accountId];
         for(Opportunity opp:opportunityList){
@@ -265,45 +241,35 @@ public with sharing class NSP_OpportunityTriggerHelperFunctions {
         }
     }
 
-    //
-    // MethodName: updateOppOwnerPremier
-    // Description : This method will update publish event for premier pathway opportunity owner update
-    // Params: newMap, oldMap
-    // Author : Rahul Singh
-    // Created Date : 9/29/22
-    // Added as part of 569324 charwell request.
-    //
+    // Account-after-update
+    // when an Account changes ownership, publish a Platform Event to Premier Pathway for each Opportunity related to the transferred Account...
     public static void updateOppOwnerPremier( Map<Id,Account> newMap , Map<Id,Account> oldMap ) {
-
-        set<Id> accountIdSet = new set<Id>();
-        for(Account newAccount: newMap.values()){
-        Account oldAccount = oldMap != null ? oldMap.get(newAccount.Id):null;
-            if(newAccount.OwnerId != oldAccount.OwnerId && newAccount.OwnerId != null){
-                accountIdSet.add(newAccount.Id);
+        try {
+            Set<Id> accountIdSet = new Set<Id>();
+            if ( ( newMap != null ) && !newMap.isEmpty() ) {
+                for ( Account newAccount : newMap.values() ) {
+                    Account oldAccount = ( ( oldMap != null ) ? oldMap.get( newAccount.Id ) : null );
+                    if ( ( oldAccount != null )
+                        && ( newAccount.OwnerId != oldAccount.OwnerId )
+                        && ( newAccount.OwnerId != null )
+                        )
+                    {
+                        accountIdSet.add( newAccount.Id );
+                    }
+                }
             }
-        }
-
-        if(accountIdSet.Size() > 0){
-            List<Opportunity>opportunityList = [Select Id, Name, OwnerId, AccountId from Opportunity WHERE AccountId  IN :accountIdSet];
-            List<Integration_Opportunity_Event__e> opportunityEventList = New List<Integration_Opportunity_Event__e>();
-            for(Opportunity opportunityObject: opportunityList){
-                opportunityEventList.add(New Integration_Opportunity_Event__e(Id__c = opportunityObject.Id));
+            if ( !accountIdSet.isEmpty() ) {
+                NSP_OpportunityTriggerHelper.publishIntegrationSyncEvents([
+                    SELECT Id
+                    FROM Opportunity
+                    WHERE ( AccountId IN :accountIdSet )
+                ]);
             }
-
-            if ( PlatformEventSettings__c.getInstance( UserInfo.getUserId() ).IsEnabled_IntegrationOpportunityEvent__c ) {
-                NSP_OpportunityTriggerHelperFunctions.publishEventBus( opportunityEventList , opportunityList );
-            }
-        }
-    }
-
-    private static void publishEventBus( List<Integration_Opportunity_Event__e> eventList , List<Opportunity> objectList ) {
-        if ( ( eventList != null ) && !eventList.isEmpty() ) {
-            // Publishing records Event
-            List<Database.SaveResult> results = EventBus.publish( eventList );
-            NSP_ErrorLogHandler.logResults(
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
                 NSP_OpportunityTriggerHelperFunctions.class.getName() ,
-                'publishEventBus' ,
-                results
+                'updateOppOwnerPremier' ,
+                e
             );
         }
     }
