@@ -1178,8 +1178,15 @@ public with sharing class NSP_OpportunityTriggerHelper {
         }
         try{
             if(upsertList != null && upsertList.size() > 0){
-                upsert upsertList;
+                List<Database.UpsertResult> upsertResults = Database.upsert( upsertList, false);
+                NSP_ErrorLogHandler.logResults(
+                    NSP_OpportunityTriggerHelper.class.getName() ,
+                    'createAssetForCloseWonOpportunity:upsert' ,
+                    upsertResults
+                );
             }
+            //Create Purchased Products
+            PurchasedProductsCreateBatch.executeBatch( closedWonOpptyList );
         } catch ( Exception e ) {
             NSP_OpportunityTriggerHelper.handleException( e , 'createAssetForCloseWonOpportunity' );
         }
