@@ -243,7 +243,6 @@
             </value>
         </assignmentItems>
         <connector>
-            <isGoTo>true</isGoTo>
             <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
@@ -293,10 +292,6 @@
                 <stringValue>Get_Portal_Clients</stringValue>
             </value>
         </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
-        </connector>
     </assignments>
     <assignments>
         <name>Set_Fault_Element_Update_Records</name>
@@ -413,16 +408,17 @@
         </value>
     </constants>
     <decisions>
-        <name>Add_Team_Memebers</name>
-        <label>Add Team Memebers?</label>
+        <description>Add Team Members</description>
+        <name>Add_Team_Members</name>
+        <label>Add Team Members?</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Update_Team_Memebers</targetReference>
+            <targetReference>Update_Team_Members</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Yes_Add_New_Team_Memebers</name>
+            <name>Yes_Add_New_Team_Members</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>rc_add_team_members</leftValueReference>
@@ -441,18 +437,25 @@
             <connector>
                 <targetReference>Create_Records</targetReference>
             </connector>
-            <label>Yes : Add New Team Memebers</label>
+            <label>Yes : Add New Team Members</label>
         </rules>
     </decisions>
     <decisions>
-        <name>Delete_Team_Memebers</name>
-        <label>Delete Team Memebers?</label>
+        <name>Delete_Team_Members</name>
+        <label>Delete Team Members?</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Yes_Delete_Team_Memebers</name>
+            <name>Yes_Delete_Team_Members</name>
             <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>rc_delete_team_members</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <conditions>
                 <leftValueReference>rc_delete_team_members</leftValueReference>
                 <operator>IsEmpty</operator>
@@ -660,17 +663,24 @@ if Source has Set Value to null and Target has valid record then delete</descrip
         </rules>
     </decisions>
     <decisions>
-        <name>Update_Team_Memebers</name>
-        <label>Update Team Memebers?</label>
+        <name>Update_Team_Members</name>
+        <label>Update Team Members?</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Delete_Team_Memebers</targetReference>
+            <targetReference>Delete_Team_Members</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Yes_Update_Team_Memebers</name>
+            <name>Yes_Update_Team_Members</name>
             <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>rc_update_team_members</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <conditions>
                 <leftValueReference>rc_update_team_members</leftValueReference>
                 <operator>IsEmpty</operator>
@@ -681,7 +691,7 @@ if Source has Set Value to null and Target has valid record then delete</descrip
             <connector>
                 <targetReference>Update_Records</targetReference>
             </connector>
-            <label>Yes : Update Team Memebers</label>
+            <label>Yes : Update Team Members</label>
         </rules>
     </decisions>
     <decisions>
@@ -766,7 +776,7 @@ if Source has Set Value to null and Target has valid record then delete</descrip
             <targetReference>Filter_Team_Members_for_Each_Portal_Client_Record</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Add_Team_Memebers</targetReference>
+            <targetReference>Add_Team_Members</targetReference>
         </noMoreValuesConnector>
     </loops>
     <loops>
@@ -808,7 +818,7 @@ if Source has Set Value to null and Target has valid record then delete</descrip
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Update_Team_Memebers</targetReference>
+            <targetReference>Update_Team_Members</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Set_Fault_Element_Create_Records</targetReference>
@@ -820,9 +830,6 @@ if Source has Set Value to null and Target has valid record then delete</descrip
         <label>Delete Records</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <connector>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
-        </connector>
         <faultConnector>
             <targetReference>Set_Fault_Element_Delete_Records</targetReference>
         </faultConnector>
@@ -957,7 +964,7 @@ if Source has Set Value to null and Target has valid record then delete</descrip
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Delete_Team_Memebers</targetReference>
+            <targetReference>Delete_Team_Members</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Set_Fault_Element_Update_Records</targetReference>
