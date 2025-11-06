@@ -1037,7 +1037,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Level_2_Assigned_Date__c</fieldItem>
                 <identifier>RecordNSP_Level_2_Assigned_Date_cField</identifier>
