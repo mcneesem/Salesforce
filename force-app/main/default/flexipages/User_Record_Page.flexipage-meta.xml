@@ -136,7 +136,7 @@
                 </visibilityRule>
             </componentInstance>
         </itemInstances>
-                <itemInstances>
+        <itemInstances>
             <componentInstance>
                 <componentName>userDefaultAccountTeam</componentName>
                 <identifier>c_userDefaultAccountTeam</identifier>
