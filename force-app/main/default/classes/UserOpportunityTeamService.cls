@@ -1,5 +1,5 @@
 public with sharing class UserOpportunityTeamService {
-    // test w/ UserOpportunityTeamServiceTest (95%)
+    // test w/ UserOpportunityTeamServiceTest (100%)
     // Major Test covering class: UserOpportunityTeamServiceTest
 
     // DTO
@@ -51,11 +51,11 @@ public with sharing class UserOpportunityTeamService {
         if (ownerId != null) {
             result = [
                 SELECT Id,
-                       UserId,
-                       OwnerId,
-                       OpportunityAccessLevel,
-                       TeamMemberRole,
-                       User.Name
+                    UserId,
+                    OwnerId,
+                    OpportunityAccessLevel,
+                    TeamMemberRole,
+                    User.Name
                 FROM UserTeamMember
                 WHERE OwnerId = :ownerId
             ];
@@ -89,19 +89,14 @@ public with sharing class UserOpportunityTeamService {
     public static Integer getPageSize() {
         // Default if not configured
         Integer defaultSize = 1;
-
-        try {
-            UserDefaultOpportunityTeamSettings__c customSetting = UserDefaultOpportunityTeamSettings__c.getOrgDefaults();
-            if (customSetting != null && customSetting.PageSize__c != null) {
-                // PageSize__c can be numeric or text; coerce to Integer safely
-                defaultSize = customSetting.PageSize__c.intValue();
-                // Guard against negative or zero values. Page Size must be greater than zero...
-                if (defaultSize < 1) {
-                    defaultSize = 1;
-                }
+        UserDefaultOpportunityTeamSettings__c customSetting = UserDefaultOpportunityTeamSettings__c.getOrgDefaults();
+        if (customSetting != null && customSetting.PageSize__c != null) {
+            // PageSize__c can be numeric or text; coerce to Integer safely
+            defaultSize = customSetting.PageSize__c.intValue();
+            // Guard against negative or zero values. Page Size must be greater than zero...
+            if (defaultSize < 1) {
+                defaultSize = 1;
             }
-        } catch (Exception e) {
-            System.debug('UserOpportunityTeamService.getPageSize: ' + e.getMessage());
         }
 
         return defaultSize;
