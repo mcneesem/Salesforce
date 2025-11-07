@@ -1,6 +1,7 @@
 public with sharing class PdsContactController {
-
-    /**
+    // test w/ NSP_PayrollTriggerHelperTest (83%)
+    /* AZD-502310 : Class used to get the count of PC and HR Contacts from SCC
+     * Refer : LWC Component to Show/Hide the Flow Compoent on PDS Page Layout
      * Get the Count of PC Contact from SCC:
      * Derives Sub Client Id from NSP_Payroll__c via recordId.
      */

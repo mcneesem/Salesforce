@@ -177,7 +177,7 @@ private class NSP_PayrollTriggerHelperTest {
         update pds;
         pds.NSP_Primary_Payroll_Contact__c = con.Id;
         update pds;
-        
+                
         Test.stopTest();
         NSP_Payroll__c assertPDS = [SELECT Id, NSP_Payroll_SCC__c  FROM NSP_Payroll__c WHERE Id != null LIMIT 1];
         system.assert(subClientCon.NSP_Is_Primary__c);
@@ -256,5 +256,52 @@ private class NSP_PayrollTriggerHelperTest {
         User userobj = [Select Id, Name From User WHERE userName = 'testpallavi257045@testpallavi.testpallavi' LIMIT 1];
         system.assertEquals(assertpds.Payroll_Specialist__c,userobj.Name);
         system.assertNotEquals(assertpds.Payroll_Specialist__c,null);
-        }
+        } 
+    
+    @isTest private static void getSCCPCCountTest() {
+        
+        Test.startTest();
+        NSP_Sub_Client__c subCli = [SELECT Id, NSP_Account__c ,NSP_Account__r.NSP_AIMS_Client__c FROM NSP_Sub_Client__c LIMIT 1];
+        Contact con = [SELECT Id,LastName FROM Contact WHERE LastName = 'Test con' LIMIT 1];        
+            
+        NSP_Sub_Client_Contact__c subClientCon = [SELECT Id, NSP_Payroll_Contact__c FROM NSP_Sub_Client_Contact__c WHERE Id != null LIMIT 1];
+        subClientCon.NSP_Payroll_Contact__c = true;
+        subClientCon.NSP_Sub_Client__c = subCli.Id;
+        update subClientCon;
+               
+        NSP_Payroll__c pds = [SELECT Id, NSP_Sub_Client_Name__c FROM NSP_Payroll__c WHERE Id != null LIMIT 1];
+        pds.NSP_Sub_Client_Name__c = subCli.Id;
+        update pds;
+        System.debug('subCli-'+ subCli) ;  
+        System.debug('pds- '+ pds) ;
+        Integer result = PdsContactController.getSCCPCCount(pds.Id);
+        Test.stopTest();
+
+        // From setup: payroll-contact=true under the same sub client
+        System.assertEquals(1, result, 'Should count only NSP_Payroll_Contact__c=true records for the given Sub Client');
+    }
+    
+     @isTest private static void getSCCHRCountTest() {
+        
+        Test.startTest();
+        NSP_Sub_Client__c subCli = [SELECT Id, NSP_Account__c ,NSP_Account__r.NSP_AIMS_Client__c FROM NSP_Sub_Client__c LIMIT 1];
+        Contact con = [SELECT Id,LastName FROM Contact WHERE LastName = 'Test con' LIMIT 1];        
+            
+        NSP_Sub_Client_Contact__c subClientCon = [SELECT Id, NSP_HR_Contact__c FROM NSP_Sub_Client_Contact__c WHERE Id != null LIMIT 1];
+        subClientCon.NSP_HR_Contact__c = true;
+        subClientCon.NSP_Sub_Client__c = subCli.Id;
+        update subClientCon;
+        
+        
+        NSP_Payroll__c pds = [SELECT Id, NSP_Sub_Client_Name__c FROM NSP_Payroll__c WHERE Id != null LIMIT 1];
+        pds.NSP_Sub_Client_Name__c = subCli.Id;
+        update pds;
+
+        Integer result = PdsContactController.getSCCHRCount(pds.Id);
+        Test.stopTest();
+
+        // From setup:  hr-contact=true under the same sub client
+        System.assertEquals(1, result, 'Should count only NSP_HR_Contact__c=true records for the given Sub Client');
+    }
+    
 }
