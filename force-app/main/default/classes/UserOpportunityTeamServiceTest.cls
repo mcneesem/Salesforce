@@ -1,7 +1,7 @@
-@IsTest
+@isTest
 private class UserOpportunityTeamServiceTest {
 
-    @IsTest
+    @isTest
     private static void mapTeamMembers_NullAndEmptyInputs() {
         List<UserOpportunityTeamService.TeamMember> mappedFromNull = UserOpportunityTeamService.mapTeamMmebers(null);
         System.Assert.areNotEqual(null, mappedFromNull, 'Null input should return non-null list');
@@ -13,7 +13,7 @@ private class UserOpportunityTeamServiceTest {
         System.Assert.areEqual(0, mappedFromEmpty.size(), 'Empty input should return empty list');
     }
 
-    @IsTest
+    @isTest
     private static void mapTeamMembers_FabricatedRecord_NoDml() {
         // Fabricate an in-memory UserTeamMember sObject (Not Inserted)
         // Only set fields used by mapper; use a stub Id for stable assertion.
@@ -36,7 +36,7 @@ private class UserOpportunityTeamServiceTest {
         System.Assert.areEqual('', mappedRecord.userName, 'userName should be empty when related user is not loaded');
     }
 
-    @IsTest
+    @isTest
     private static void teamMemberDTO_DirectInstantiation_GettersSetters() {
         // Explicitly cover TeamMember class by constructing and setting fields
         UserOpportunityTeamService.TeamMember dto = new UserOpportunityTeamService.TeamMember();
@@ -59,7 +59,7 @@ private class UserOpportunityTeamServiceTest {
         System.Assert.areEqual('Edit', dto.opportunityAccessLevel);
     }
 
-    @IsTest
+    @isTest
     private static void getTeamMembersByOwner_NullOwner_ReturnsEmpty() {
         Test.startTest();
         List<UserOpportunityTeamService.TeamMember> result = UserOpportunityTeamService.getTeamMembersByOwner(null);
@@ -68,7 +68,7 @@ private class UserOpportunityTeamServiceTest {
         System.Assert.areEqual(0, result.size(), 'Null ownerId should return empty list');
     }
 
-    @IsTest
+    @isTest
     private static void getTeamMembersByOwner_NoRecords_ReturnsEmpty() {
         // Use a placeholder Id for owner; no DML on UserAccountTeamMember will occur.
         Id ownerId = '005000000000009AAA';
@@ -79,7 +79,7 @@ private class UserOpportunityTeamServiceTest {
         System.Assert.areEqual(0, result.size(), 'No UserAccountTeamMember records -> empty list');
     }
 
-    @IsTest
+    @isTest
     private static void queryTeamMembersByOwner_NoDml_ReturnsEmpty() {
         Id ownerId = '005000000000010AAA';
         Test.startTest();
@@ -90,7 +90,7 @@ private class UserOpportunityTeamServiceTest {
 
     // New tests for getPageSize coverage
 
-    @IsTest
+    @isTest
     private static void getPageSize_ConfiguredValueFromOrgDefaults() {
         // Arrange: ensure org default exists with a specific numeric value
         UserDefaultOpportunityTeamSettings__c orgDefaults = UserDefaultOpportunityTeamSettings__c.getOrgDefaults();
@@ -109,7 +109,7 @@ private class UserOpportunityTeamServiceTest {
         System.Assert.areEqual(7, size, 'Should return the configured PageSize from org defaults');
     }
 
-    @IsTest
+    @isTest
     private static void getPageSize_ConfiguredValueOfLessThanOneFromOrgDefaults() {
         // Arrange: ensure org default exists with a specific numeric value
         UserDefaultOpportunityTeamSettings__c orgDefaults = UserDefaultOpportunityTeamSettings__c.getOrgDefaults();
@@ -128,7 +128,7 @@ private class UserOpportunityTeamServiceTest {
         System.Assert.areEqual(1, size, 'Should return the configured PageSize from org defaults');
     }
 
-    @IsTest
+    @isTest
     private static void getPageSize_FallbackToDefaultWhenMissing() {
         // Arrange: remove org defaults by setting to null fields and deleting record if possible
         // Note: In tests, getOrgDefaults() returns the org defaults record if it exists. We'll create,
@@ -143,4 +143,6 @@ private class UserOpportunityTeamServiceTest {
         // Assert default (5) from implementation
         System.Assert.areEqual(1, size, 'Should fall back to default when org defaults are missing');
     }
+
 }
+//
