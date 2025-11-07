@@ -2360,6 +2360,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Audit%2FReview Finding</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Communication Issue</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Configuration Adjustment</fullName>
             <default>false</default>
         </values>
@@ -2372,11 +2380,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Enhancement Request</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Information</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Insperity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Integration Issue</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Internal Process Issue</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2392,6 +2412,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>No Issue Found</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Other</fullName>
             <default>false</default>
         </values>
@@ -2404,7 +2428,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Report Issue</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Reports</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Security%2FAccess Issue</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2417,6 +2449,10 @@
         </values>
         <values>
             <fullName>Termination</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Third Party%2FVendor Issue</fullName>
             <default>false</default>
         </values>
         <values>
