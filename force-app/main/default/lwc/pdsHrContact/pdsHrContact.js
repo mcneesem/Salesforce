@@ -1,11 +1,10 @@
 import { LightningElement, api, track, wire } from 'lwc';
 import getSCCHRCount from '@salesforce/apex/PdsContactController.getSCCHRCount';
-import { refreshApex } from '@salesforce/apex';
 import { NavigationMixin } from 'lightning/navigation';
 import { RefreshEvent } from "lightning/refresh";
-import { getRecordNotifyChange } from 'lightning/uiRecordApi';
 
-export default class pdsHrContact extends NavigationMixin(LightningElement) {
+
+export default class PdsHrContact extends NavigationMixin(LightningElement) {
     // Record Page context Id (NSP_Payroll__c Id)
     @api recordId;
 
@@ -29,12 +28,10 @@ export default class pdsHrContact extends NavigationMixin(LightningElement) {
         this.loading = false;
         if (data !== undefined && data !== null) {
             // data is Integer count now
-            console.log('data:', data);
             this.showFlow = data > 1;
         } else if (error) {
             console.error('Error fetching data:', error);
             this.showFlow = false;
-            console.log('error:', error);
         }
     }
 

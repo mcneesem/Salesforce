@@ -1,11 +1,10 @@
 import { LightningElement, api, track, wire } from 'lwc';
 import getSCCPCCount from '@salesforce/apex/PdsContactController.getSCCPCCount';
-import { refreshApex } from '@salesforce/apex';
 import { NavigationMixin } from 'lightning/navigation';
 import { RefreshEvent } from "lightning/refresh";
-import { getRecordNotifyChange } from 'lightning/uiRecordApi';
 
-export default class pdsPayrollContact extends NavigationMixin(LightningElement) {
+
+export default class PdsPayrollContact extends NavigationMixin(LightningElement) {
     // Record Page context Id (NSP_Payroll__c Id)
     @api recordId;
 

@@ -6,15 +6,17 @@ public with sharing class PdsContactController {
      */
     @AuraEnabled(cacheable=true)
     public static Integer getSCCPCCount(Id recordId) {
+        Integer pcCount = 0;
         String scId = fetchSubClientId(recordId);
-        if (String.isBlank(scId)) return 0;
-
-        return [
-            SELECT COUNT()
-            FROM NSP_Sub_Client_Contact__c
-            WHERE NSP_Sub_Client__c = :scId
-              AND NSP_Payroll_Contact__c = true
-        ];
+        if (!String.isBlank(scId)) {
+            pcCount = [
+                SELECT COUNT()
+                FROM NSP_Sub_Client_Contact__c
+                WHERE NSP_Sub_Client__c = :scId
+                AND NSP_Payroll_Contact__c = true
+            ];
+        }
+        return pcCount;
     }
 
     /**
@@ -23,26 +25,31 @@ public with sharing class PdsContactController {
      */
     @AuraEnabled(cacheable=true)
     public static Integer getSCCHRCount(Id recordId) {
+        Integer hrCount = 0;
         String scId = fetchSubClientId(recordId);
-        if (String.isBlank(scId)) return 0;
-
-        return [
-            SELECT COUNT()
-            FROM NSP_Sub_Client_Contact__c
-            WHERE NSP_Sub_Client__c = :scId
-              AND NSP_HR_Contact__c = true
-        ];
+        if (!String.isBlank(scId)) {
+            hrCount = [
+                SELECT COUNT()
+                FROM NSP_Sub_Client_Contact__c
+                WHERE NSP_Sub_Client__c = :scId
+                AND NSP_HR_Contact__c = true
+            ];
+        }
+        return hrCount;
     }
 
     // Get the Sub Client Id from NSP_Payroll__c
     private static String fetchSubClientId(Id recordId) {
-        if (recordId == null) return null;
-        NSP_Payroll__c pdsRec = [
-            SELECT NSP_Sub_Client_Name__c
-            FROM NSP_Payroll__c
-            WHERE Id = :recordId
-            LIMIT 1
-        ];
-        return pdsRec.NSP_Sub_Client_Name__c;
-    }
+        String subClientId = null;
+        if (recordId != null) {
+            NSP_Payroll__c pdsRec = [
+                SELECT NSP_Sub_Client_Name__c
+                FROM NSP_Payroll__c
+                WHERE Id = :recordId
+                LIMIT 1
+            ];
+            subClientId = pdsRec.NSP_Sub_Client_Name__c;
+        }
+        return subClientId;
+    }    
 }

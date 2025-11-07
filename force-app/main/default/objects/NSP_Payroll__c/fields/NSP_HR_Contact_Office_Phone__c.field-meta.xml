@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_HR_Contact_Office_Phone__c</fullName>
     <externalId>false</externalId>
-    <formula>IF( NSP_HR_Contact_SCC__c = null &amp;&amp; NSP_HR_Contact__c != null , NSP_ACRMobile__c , NSP_HR_Contact_SCC__r.NSP_Work_Phone__c )</formula>
+    <formula>IF( NSP_HR_Contact_SCC__c != null, NSP_HR_Contact_SCC__r.NSP_Work_Phone__c , Null)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>HR Contact Office Phone</label>
     <required>false</required>
