@@ -1089,7 +1089,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.NSP_Implementation_Profile__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
