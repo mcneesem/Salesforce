@@ -1169,16 +1169,26 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>required</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.I_9_Service_Exception__c</fieldItem>
-                <identifier>RecordI_9_Service_Exception_cField</identifier>
+                <fieldItem>Record.I_9_Availability__c</fieldItem>
+                <identifier>RecordI_9_Availability_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-d1feaae4-31b2-4172-9cab-8ba7abdab35e</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>required</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.E_Verify_Services__c</fieldItem>
+                <identifier>RecordE_Verify_Services__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-1c85432b-2433-417d-9f8b-246bd5d354ba</name>
         <type>Facet</type>
     </flexiPageRegions>

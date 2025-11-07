@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>E_Verify_Services__c</fullName>
+    <label>E-Verify Services</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>I_9_Availability__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>NSP Managed - All Employees</fullName>
+                <default>false</default>
+                <label>NSP Managed - All Employees</label>
+            </value>
+            <value>
+                <fullName>NSP Managed - Required States</fullName>
+                <default>true</default>
+                <label>NSP Managed - Required States</label>
+            </value>
+            <value>
+                <fullName>Client Managed</fullName>
+                <default>false</default>
+                <label>Client Managed</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>I-9 Exception</controllingFieldValue>
+            <controllingFieldValue>Standard</controllingFieldValue>
+            <valueName>NSP Managed - All Employees</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>I-9 Exception</controllingFieldValue>
+            <controllingFieldValue>Standard</controllingFieldValue>
+            <valueName>NSP Managed - Required States</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>I-9 Exception</controllingFieldValue>
+            <controllingFieldValue>Opt-Out</controllingFieldValue>
+            <controllingFieldValue>Standard</controllingFieldValue>
+            <valueName>Client Managed</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

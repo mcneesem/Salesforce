@@ -183,6 +183,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Asset.E_Verify_Services__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Asset.Employees_First_Pay__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -228,7 +233,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Asset.I_9_Service_Exception__c</field>
+        <field>Asset.I_9_Availability__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
