@@ -28,7 +28,7 @@ export default class UserDefaultOpportunityTeam extends LightningElement {
 
     // use getter to get the title of the page
     get title() {
-        return "Default Account Team (" + this.totalRecords + ")";
+        return "Default Opportunity Team (" + this.totalRecords + ")";
     }
 
     // rows to render (either limited by pageSize or all)
