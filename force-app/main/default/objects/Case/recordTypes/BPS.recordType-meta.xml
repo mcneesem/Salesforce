@@ -1252,7 +1252,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Level 2 %3A Non-Standard %28NSP%29 %2F HRS Reviews and Non-Complex %28CP%29</fullName>
+            <fullName>Level 2 %3A Non-Standard %28NSP%29</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1260,11 +1260,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Level 4 %3A Equity%2FDeferred Comp Escalation %28CP%29</fullName>
+            <fullName>Level 4 %3A Equity%2FDeferred Comp %28CP%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Level 5 %3A Agreement to Process %28CP%29</fullName>
+            <fullName>Level 5 %3A ATP %28CP%29</fullName>
             <default>false</default>
         </values>
         <values>
