@@ -77,7 +77,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Opportunity_Primary_Product__c</fieldItem>
                 <identifier>RecordNSP_Opportunity_Primary_Product__cField</identifier>
@@ -941,7 +941,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Opportunity_Primary_Product__c</fieldItem>
                 <identifier>RecordNSP_Opportunity_Primary_Product__cField2</identifier>
@@ -1233,7 +1233,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Opportunity_Primary_Product__c</fieldItem>
                 <identifier>RecordNSP_Opportunity_Primary_Product__cField3</identifier>
@@ -2005,7 +2005,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Opportunity_Primary_Product__c</fieldItem>
                 <identifier>RecordNSP_Opportunity_Primary_Product__cField4</identifier>
@@ -2387,7 +2387,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Opportunity_Primary_Product__c</fieldItem>
                 <identifier>RecordNSP_Opportunity_Primary_Product__cField5</identifier>
@@ -2819,7 +2819,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Opportunity_Primary_Product__c</fieldItem>
                 <identifier>RecordNSP_Opportunity_Primary_Product__cField6</identifier>
@@ -3388,7 +3388,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Opportunity_Primary_Product__c</fieldItem>
                 <identifier>RecordNSP_Opportunity_Primary_Product_cField</identifier>
@@ -3983,7 +3983,7 @@
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
+                    <booleanFilter>1 AND (2 OR 3)</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Checklist_Type__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -3993,6 +3993,11 @@
                         <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>WX</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HRCore Solution</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -4014,7 +4019,7 @@
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection2</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
+                    <booleanFilter>1 AND (2 OR 3)</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Checklist_Type__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -4024,6 +4029,11 @@
                         <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>WO</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HR360 Solution</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -4107,7 +4117,7 @@
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection5</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
+                    <booleanFilter>1 AND (2 OR 3)</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Checklist_Type__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -4117,6 +4127,11 @@
                         <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>WX</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HRCore Solution</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -4138,7 +4153,7 @@
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection6</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
+                    <booleanFilter>1 AND (2 OR 3)</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Checklist_Type__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -4148,6 +4163,11 @@
                         <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>WX</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HRCore Solution</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -4169,7 +4189,7 @@
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection7</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND (2 OR 3 OR 4)</booleanFilter>
+                    <booleanFilter>1 AND (2 OR 3 OR 4 OR 5 OR 6)</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Checklist_Type__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -4189,6 +4209,16 @@
                         <leftValue>{!Record.NSP_Opportunity__r.NSP_PrimaryProduct__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>HRScale</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HR360 Solution</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HR360 Solution - Select Edition</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -4210,7 +4240,7 @@
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection8</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+                    <booleanFilter>1 AND (2 OR 3 OR 4 OR 5)</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Checklist_Type__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -4225,6 +4255,16 @@
                         <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>WO</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HRCore Solution</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HR360 Solution</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -4279,6 +4319,10 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Tabs</value>
+                </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>tabs</name>
                     <value>maintabs</value>
@@ -4357,6 +4401,10 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Tabs</value>
+                </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>tabs</name>
                     <value>sidebartabs</value>
