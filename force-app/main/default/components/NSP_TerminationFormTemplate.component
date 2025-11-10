@@ -1,7 +1,7 @@
 <apex:component controller="NSP_TerminationFormTemplateController" access="global">
-    <apex:image id="Logo" url="{!TopLogoUrl}" style="width:800px; height:auto;"/><br/>
-    <apex:outputText value="TERMINATIONS / REINSTATEMENTS" style="padding-left: 80px; font-weight:bold;"/><br/>
-    <apex:outputText value="PLEASE PROCESS TERMS AS STATED" style="padding-left: 80px; font-weight:bold;"/><br/><br/>
+    <apex:image id="Logo" url="{!TopLogoUrl}" style="width:600px; height:auto;"/><br/><br/>
+    <apex:outputText value="TERMINATIONS / REINSTATEMENTS" style=" font-weight:bold;"/><br/>
+    <apex:outputText value="PLEASE PROCESS TERMS AS STATED" style=" font-weight:bold;"/><br/><br/>
 
     <!-- Termination Section -->
     <apex:outputPanel rendered="{!NOT(ISBLANK(wrapTerminationList))}">
@@ -227,6 +227,6 @@
     </apex:dataTable>
     <br/><br/>
     <b><big>Terminations Team </big></b><br/><br/>
-    <apex:image id="Logo2" url="{!AddressLogoUrl}" width="200" height="56"/><br/>
-    <apex:image id="Logo1" url="{!BottomLogoUrl}" style="width:800px; height:auto;" />
+    <apex:image id="Logo2" url="{!AddressLogoUrl}" width="200" height="56"/><br/><br/>
+    <apex:image id="Logo1" url="{!BottomLogoUrl}" style="width:600px; height:auto;" />
 </apex:component>
