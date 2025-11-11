@@ -1108,6 +1108,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_Pricing_Table__c.IsPricingActive__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Project_Team__c.NSP_Assignee__c</field>
         <readable>true</readable>
     </fieldPermissions>
