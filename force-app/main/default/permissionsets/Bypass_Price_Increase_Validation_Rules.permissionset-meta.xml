@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Bypass_Price_Increase_Validation_Rules</name>
+    </customPermissions>
+    <description>This permission set helps bypass all the validation rules on the Price Increase Object via Custom Permission.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Bypass Price Increase Validation Rules</label>
+</PermissionSet>
