@@ -260,20 +260,41 @@ private class NSP_PayrollTriggerHelperTest {
     
     @isTest private static void getSCCPCCountTest() {
         
-        Test.startTest();
-        NSP_Sub_Client__c subCli = [SELECT Id, NSP_Account__c ,NSP_Account__r.NSP_AIMS_Client__c FROM NSP_Sub_Client__c LIMIT 1];
-        Contact con = [SELECT Id,LastName FROM Contact WHERE LastName = 'Test con' LIMIT 1];        
-            
-        NSP_Sub_Client_Contact__c subClientCon = [SELECT Id, NSP_Payroll_Contact__c FROM NSP_Sub_Client_Contact__c WHERE Id != null LIMIT 1];
+        Test.startTest();       
+        List<NSP_Sub_Client__c> subCliList = [SELECT Id, NSP_Account__c, NSP_Account__r.NSP_AIMS_Client__c FROM NSP_Sub_Client__c LIMIT 1 ];
+        NSP_Sub_Client__c subCli;
+
+        if (!subCliList.isEmpty()) {
+            subCli = subCliList[0];            
+        }
+
+        List<Contact> conList = [SELECT Id, LastName FROM Contact WHERE LastName = 'Test con' LIMIT 1 ];
+        Contact con;
+
+        if (!conList.isEmpty()) {
+            con = conList[0];    
+        }
+
+        List<NSP_Sub_Client_Contact__c> subClientConList = [SELECT Id, NSP_Payroll_Contact__c FROM NSP_Sub_Client_Contact__c WHERE Id != null LIMIT 1 ];
+        NSP_Sub_Client_Contact__c subClientCon;
+
+        if (!subClientConList.isEmpty()) {
+            subClientCon = subClientConList[0];
+        }
+
         subClientCon.NSP_Payroll_Contact__c = true;
         subClientCon.NSP_Sub_Client__c = subCli.Id;
         update subClientCon;
-               
-        NSP_Payroll__c pds = [SELECT Id, NSP_Sub_Client_Name__c FROM NSP_Payroll__c WHERE Id != null LIMIT 1];
+                      
+        List<NSP_Payroll__c> pdsList = [SELECT Id, NSP_Sub_Client_Name__c FROM NSP_Payroll__c WHERE Id != null LIMIT 1 ];
+        NSP_Payroll__c pds;
+
+        if (!pdsList.isEmpty()) {
+            pds = pdsList[0];    
+        }
+
         pds.NSP_Sub_Client_Name__c = subCli.Id;
         update pds;
-        System.debug('subCli-'+ subCli) ;  
-        System.debug('pds- '+ pds) ;
         Integer result = PdsContactController.getSCCPCCount(pds.Id);
         Test.stopTest();
 
@@ -283,17 +304,37 @@ private class NSP_PayrollTriggerHelperTest {
     
      @isTest private static void getSCCHRCountTest() {
         
-        Test.startTest();
-        NSP_Sub_Client__c subCli = [SELECT Id, NSP_Account__c ,NSP_Account__r.NSP_AIMS_Client__c FROM NSP_Sub_Client__c LIMIT 1];
-        Contact con = [SELECT Id,LastName FROM Contact WHERE LastName = 'Test con' LIMIT 1];        
-            
-        NSP_Sub_Client_Contact__c subClientCon = [SELECT Id, NSP_HR_Contact__c FROM NSP_Sub_Client_Contact__c WHERE Id != null LIMIT 1];
+        Test.startTest();       
+        List<NSP_Sub_Client__c> subCliList = [SELECT Id, NSP_Account__c, NSP_Account__r.NSP_AIMS_Client__c FROM NSP_Sub_Client__c LIMIT 1 ];
+        NSP_Sub_Client__c subCli;
+
+        if (!subCliList.isEmpty()) {
+            subCli = subCliList[0];            
+        }
+
+        List<Contact> conList = [SELECT Id, LastName FROM Contact WHERE LastName = 'Test con' LIMIT 1 ];
+        Contact con;
+
+        if (!conList.isEmpty()) {
+            con = conList[0];    
+        }
+                
+        List<NSP_Sub_Client_Contact__c> subClientConList = [SELECT Id, NSP_HR_Contact__c FROM NSP_Sub_Client_Contact__c WHERE Id != null LIMIT 1 ];
+        NSP_Sub_Client_Contact__c subClientCon;
+
+        if (!subClientConList.isEmpty()) {
+            subClientCon = subClientConList[0];
+        }        
         subClientCon.NSP_HR_Contact__c = true;
         subClientCon.NSP_Sub_Client__c = subCli.Id;
         update subClientCon;
-        
-        
-        NSP_Payroll__c pds = [SELECT Id, NSP_Sub_Client_Name__c FROM NSP_Payroll__c WHERE Id != null LIMIT 1];
+                
+        List<NSP_Payroll__c> pdsList = [SELECT Id, NSP_Sub_Client_Name__c FROM NSP_Payroll__c WHERE Id != null LIMIT 1 ];
+        NSP_Payroll__c pds;
+
+        if (!pdsList.isEmpty()) {
+            pds = pdsList[0];    
+        }
         pds.NSP_Sub_Client_Name__c = subCli.Id;
         update pds;
 
