@@ -261,10 +261,11 @@ private class NSP_PayrollTriggerHelperTest {
         if (!pdsList.isEmpty()) {
             pds = pdsList[0];
         }
+        Integer result = null;
         if ( pds != null ) {
             pds.NSP_Sub_Client_Name__c = subCli.Id;
             update pds;
-            Integer result = PdsContactController.getSCCPCCount(pds.Id);
+            result = PdsContactController.getSCCPCCount(pds.Id);
         }
         Test.stopTest();
 
@@ -299,10 +300,11 @@ private class NSP_PayrollTriggerHelperTest {
         if (!pdsList.isEmpty()) {
             pds = pdsList[0];
         }
+        Integer result = null;
         if ( pds != null ) {
             pds.NSP_Sub_Client_Name__c = subCli.Id;
             update pds;
-            Integer result = PdsContactController.getSCCHRCount(pds.Id);
+            result = PdsContactController.getSCCHRCount(pds.Id);
         }
         Test.stopTest();
 
