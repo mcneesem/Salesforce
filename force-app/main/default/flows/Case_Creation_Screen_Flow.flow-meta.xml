@@ -117,6 +117,40 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_Fault_Element_Get_Messaging_Session</name>
+        <label>Assign Fault Element : Get Messaging Session</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Messaging_Session</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Create_Case_Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_Get_Messaging_User</name>
+        <label>Assign Fault Element : Get Messaging User</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Messaging_User</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Create_Case_Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_Fault_Element_Get_Parent_Case</name>
         <label>Assign Fault Element : Get_Parent_Case</label>
         <locationX>0</locationX>
@@ -143,6 +177,23 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>Get_Project</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Create_Case_Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_Update_Messaging_Session</name>
+        <label>Assign Fault Element : Update Messaging Session</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Messaging_Session</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -339,6 +390,29 @@
         </assignmentItems>
         <connector>
             <targetReference>Store_Project_Account_Id</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Store_Messaging_User_Attributes</name>
+        <label>Store Messaging User Attributes</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>contextAccountId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Messaging_User.AccountId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>contextContactId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Messaging_User.ContactId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Accessible_Record_Types</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -550,7 +624,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Is_Reload_Enabled</targetReference>
+                <targetReference>Is_Case_Created_by_Messaging_Session</targetReference>
             </connector>
             <label>Case Created</label>
         </rules>
@@ -650,6 +724,21 @@
             </connector>
             <label>Is Project</label>
         </rules>
+        <rules>
+            <name>Is_Messaging_Session</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>recordId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>0Mw</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Messaging_Session</targetReference>
+            </connector>
+            <label>Is Messaging Session</label>
+        </rules>
     </decisions>
     <decisions>
         <description>Evaluate the sourceRecordId is Account or Contact or Case</description>
@@ -721,6 +810,21 @@
             </connector>
             <label>From Project</label>
         </rules>
+        <rules>
+            <name>From_Messaging_Session</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>recordId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>0Mw</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Category_Sub_Category</targetReference>
+            </connector>
+            <label>From Messaging Session</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Confidential_Decision</name>
@@ -745,6 +849,88 @@
                 <targetReference>ConfidentialYesAssignment</targetReference>
             </connector>
             <label>Confidential Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Get_Messaging_Session_is_Blank</name>
+        <label>Get Messaging Session is Blank</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Get_Accessible_Record_Types</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Not_Blank</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Messaging_Session</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Messaging_Session.MessagingEndUserId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Messaging_User</targetReference>
+            </connector>
+            <label>Not Blank</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Get_Messaging_User_is_Blank</name>
+        <label>Get Messaging User is Blank</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Get_Accessible_Record_Types</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Messaging_User_exist</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Messaging_User</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Store_Messaging_User_Attributes</targetReference>
+            </connector>
+            <label>Messaging User exist</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_Case_Created_by_Messaging_Session</name>
+        <label>Is Case Created by Messaging Session</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Is_Reload_Enabled</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Case_Created_by_Messaging_Session</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>recordId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>0Mw</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Messaging_Session</targetReference>
+            </connector>
+            <label>Case Created by Messaging Session</label>
         </rules>
     </decisions>
     <decisions>
@@ -905,6 +1091,54 @@
         <inputReference>caseRecord</inputReference>
     </recordCreates>
     <recordLookups>
+        <name>Get_Messaging_Session</name>
+        <label>Get Messaging Session</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Messaging_Session_is_Blank</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_Fault_Element_Get_Messaging_Session</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>MessagingSession</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Messaging_User</name>
+        <label>Get Messaging User</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Messaging_User_is_Blank</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_Fault_Element_Get_Messaging_User</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Messaging_Session.MessagingEndUserId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>MessagingEndUser</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Parent_Case</name>
         <label>Get Parent Case</label>
         <locationX>0</locationX>
@@ -952,6 +1186,33 @@
         <object>pse__Proj__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordUpdates>
+        <name>Update_Messaging_Session</name>
+        <label>Update Messaging Session</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Is_Reload_Enabled</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_Fault_Element_Update_Messaging_Session</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>CaseId</field>
+            <value>
+                <elementReference>caseRecord.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>MessagingSession</object>
+    </recordUpdates>
     <runInMode>DefaultMode</runInMode>
     <screens>
         <name>Blank_Record_Id</name>
