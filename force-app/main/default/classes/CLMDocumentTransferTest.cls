@@ -1,10 +1,14 @@
-@isTest (isParallel=false)
+@isTest
 private class CLMDocumentTransferTest {
 
-    @isTest private static void testCLMDocSettings() {
+    @isTest
+    private static void testCLMDocSettings() {
         CLMDocumentTransferSettings__c settings = CLMDocumentTransferSettings__c.getOrgDefaults();
         settings.IsEnabledClmDocumentReceived__c = true;
         upsert settings;
+
+        System.debug( CLMDocumentTransfer.isEnabledRestToken );
+        System.debug( CLMDocumentTransfer.isEnabledRestTokenLogging );
 
         account acct = new account();
         acct.name='Test';
@@ -38,7 +42,7 @@ private class CLMDocumentTransferTest {
         cdl.LinkedEntityId = blnginv.id;
         cdl.ContentDocumentId = cvList[0].ContentDocumentId;
         cdl.shareType = 'V';
-        insert cdl;  
+        insert cdl;
 
         test.startTest();
         CLMDocumentTransfer.downloadDocument(cv.id,cdl.LinkedEntityId);
