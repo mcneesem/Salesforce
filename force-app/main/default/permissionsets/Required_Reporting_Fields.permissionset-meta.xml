@@ -143,6 +143,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>AccountContactRelation.Workday_Employee_URL__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Asset.AMR_IES_e_Verify_Client__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -470,7 +475,7 @@
         <editable>false</editable>
         <field>Case.Escalation_Notice__c</field>
         <readable>true</readable>
-    </fieldPermissions> 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.Exclude_From_Time_Calculation__c</field>
