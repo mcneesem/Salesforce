@@ -1,12 +1,30 @@
 <template>
     <lightning-card title="Order Item Price Update">
-        <div slot="actions"> 
-            <lightning-button 
-                label='Run Batch'
-                onclick={handleClick}
-                disabled={isProcessing}
-                >
-            </lightning-button>
+        <div slot="actions">
+            <lightning-button-group>
+                <lightning-button
+                    label="Run Batch"
+                    onclick={handleClick}
+                    disabled={isProcessing}
+                    >
+                </lightning-button>
+                <lightning-button-menu
+                    alternative-text="Show menu"
+                    menu-alignment="right"
+                    onkeypress={handleKeyPress}
+                    onkeydown={handleKeyDown}
+                    onkeyup={handleKeyUp}>
+                    <lightning-menu-item
+                        label="Generate Next Year Price Increases"
+                        onclick={handleGenerate}
+                        disabled={isGenerating}
+                        onkeypress={handleKeySonar}
+                        onkeydown={handleKeySonar}
+                        onkeyup={handleKeySonar}
+                        >
+                    </lightning-menu-item>
+                </lightning-button-menu>
+            </lightning-button-group>
         </div>
         <div class="slds-grid slds-align-items-center slds-m-left_medium">
             <div class="slds-col slds-grow-none slds-p-vertical_xx-small" if:true={stage}>

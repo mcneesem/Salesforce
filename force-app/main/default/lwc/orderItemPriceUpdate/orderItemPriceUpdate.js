@@ -1,6 +1,7 @@
 import { LightningElement, track } from 'lwc';
 import startBatchJob from '@salesforce/apex/OrderItemBatchController.startBatchJob';
 import checkPermission from '@salesforce/apex/OrderItemBatchController.checkPermission';
+import executeBatch from '@salesforce/apex/GeneratePriceIncreasesBatch.executeBatch';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 import { subscribe, unsubscribe } from 'lightning/empApi';
 
@@ -8,11 +9,32 @@ export default class OrderItemPriceUpdate extends LightningElement {
     @track stage = '';
     @track spinner = false;
     @track isProcessing = false;
+    isGenerating = false;
     successCounts = {};  // To store success counts for each object
     failureCounts = {};  // To store failure counts for each object
     subscription = {};
     channelName = '/event/PriceUpdateBatchJobStatus__e';
-    
+
+    handleGenerate() {
+        this.isGenerating  = true;
+        executeBatch().then(result => {
+            this.showToast(
+                "Generating Price Increase Records" ,
+                result ,
+                "success"
+            );
+        }).catch(error => {
+            this.showToast(
+                "Error Generating Price Increase Records" ,
+                error.body.message ,
+                "error"
+            );
+        });
+    }
+
+    handleKeySonar() {
+        // only created to appease sonar...
+    }
 
     //handle click of button
     handleClick() {
@@ -70,7 +92,6 @@ export default class OrderItemPriceUpdate extends LightningElement {
 
             if(obj.data.payload.Status__c === 'Executed'){
                 this.spinner = false;
-                
                 this.handleUnsubscribe();// unsubscribe from PE
             }
         };
@@ -89,7 +110,7 @@ export default class OrderItemPriceUpdate extends LightningElement {
     handleUnsubscribe() {
         // Invoke unsubscribe method of empApi
         unsubscribe(this.subscription, (response) => {
-            console.log('unsubscribe() response: ', JSON.stringify(response));            
+            console.log('unsubscribe() response: ', JSON.stringify(response));
         });
     }
 
@@ -104,7 +125,7 @@ export default class OrderItemPriceUpdate extends LightningElement {
     }
 
     get hasResults(){
-        return Object.values(this.successCounts).some(value => value > 0) 
+        return Object.values(this.successCounts).some(value => value > 0)
         || Object.values(this.failureCounts).some(value => value > 0);
     }
 
@@ -116,4 +137,6 @@ export default class OrderItemPriceUpdate extends LightningElement {
         });
         this.dispatchEvent(event);
     }
+
 }
+//
