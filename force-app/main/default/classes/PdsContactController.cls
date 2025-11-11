@@ -8,7 +8,7 @@ public with sharing class PdsContactController {
     @AuraEnabled(cacheable=true)
     public static Integer getSCCPCCount(Id recordId) {
         Integer pcCount = 0;
-        String scId = fetchSubClientId(recordId);
+        String scId = PdsContactController.fetchSubClientId(recordId);
         if (!String.isBlank(scId)) {
             pcCount = [
                 SELECT COUNT()
@@ -27,7 +27,7 @@ public with sharing class PdsContactController {
     @AuraEnabled(cacheable=true)
     public static Integer getSCCHRCount(Id recordId) {
         Integer hrCount = 0;
-        String scId = fetchSubClientId(recordId);
+        String scId = PdsContactController.fetchSubClientId(recordId);
         if (!String.isBlank(scId)) {
             hrCount = [
                 SELECT COUNT()
@@ -39,18 +39,22 @@ public with sharing class PdsContactController {
         return hrCount;
     }
 
-    // Get the Sub Client Id from NSP_Payroll__c
+    // Get the Sub Client Id from NSP_Payroll__c  , Added List to Avoid Query Exception  
     private static String fetchSubClientId(Id recordId) {
         String subClientId = null;
         if (recordId != null) {
-            NSP_Payroll__c pdsRec = [
+            List<NSP_Payroll__c> pdsList = [
                 SELECT NSP_Sub_Client_Name__c
                 FROM NSP_Payroll__c
                 WHERE Id = :recordId
                 LIMIT 1
             ];
-            subClientId = pdsRec.NSP_Sub_Client_Name__c;
+
+            if (!pdsList.isEmpty()) {
+                subClientId = pdsList[0].NSP_Sub_Client_Name__c;
+            }
         }
         return subClientId;
-    }    
+    }
+
 }
