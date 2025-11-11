@@ -383,7 +383,7 @@
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <description>Use this Variable to Set all back up fields to null value</description>
         <name>v_NullValue</name>

@@ -97,7 +97,7 @@
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <description>Invoke the Sub flow to compute the logic for PC/HR/OSS contacts on PDS</description>
         <name>Update_PDS_HR_PC_OSS_Contacts</name>
