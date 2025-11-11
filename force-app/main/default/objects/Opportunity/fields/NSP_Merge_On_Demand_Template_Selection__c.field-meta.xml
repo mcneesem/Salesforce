@@ -50,12 +50,12 @@
             <value>
                 <fullName>MidMarketCSA</fullName>
                 <default>false</default>
-                <label>MidMarket CSA</label>
+                <label>MidMarket CSA - 24 Month</label>
             </value>
             <value>
                 <fullName>MidMarketCSAAnnualRenewal</fullName>
                 <default>false</default>
-                <label>MidMarket CSA Annual Renewal</label>
+                <label>MidMarket CSA - 12 Month</label>
             </value>
             <value>
                 <fullName>MidMarketEPLIAddendum</fullName>
