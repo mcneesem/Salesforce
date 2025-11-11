@@ -27,6 +27,23 @@
     <apiVersion>64.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
+        <description>Prevent DmlExceptions: FIELD_CUSTOM_VALIDATION_EXCEPTION: Please enter a regen date.</description>
+        <name>Assign_Regen_Date</name>
+        <label>Assign Regen Date</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varOpportunity.NSP_Regen_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>todaysDate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Event_Subflow_Discovery_Call_Updates_on_Opportunity</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_Stage_and_Reason_Lost_to_varUpdateOpportunity</name>
         <label>Assign Stage and Reason Lost to varUpdateOpportunity</label>
         <locationX>0</locationX>
@@ -67,7 +84,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Event_Subflow_Discovery_Call_Updates_on_Opportunity</targetReference>
+            <targetReference>Check_Reason_Lost</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -165,6 +182,58 @@
                 <targetReference>Move_Opty_to_Close_Lost_Screen</targetReference>
             </connector>
             <label>Yes they can</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Prevent DmlExceptions: FIELD_CUSTOM_VALIDATION_EXCEPTION: Please enter a regen date.</description>
+        <name>Check_Reason_Lost</name>
+        <label>Check Reason Lost</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Event_Subflow_Discovery_Call_Updates_on_Opportunity</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Regen</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varOpportunity.NSP_Lost_Reason__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Regen</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Regen_Date</targetReference>
+            </connector>
+            <label>Is Regen</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Prevent DmlExceptions: FIELD_CUSTOM_VALIDATION_EXCEPTION: Please enter a regen date.</description>
+        <name>Check_Regen_Date</name>
+        <label>Check Regen Date</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Event_Subflow_Discovery_Call_Updates_on_Opportunity</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Blank</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varOpportunity.NSP_Regen_Date__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Regen_Date</targetReference>
+            </connector>
+            <label>Is Blank</label>
         </rules>
     </decisions>
     <decisions>
@@ -319,6 +388,11 @@
         <picklistObject>Opportunity</picklistObject>
     </dynamicChoiceSets>
     <environments>Default</environments>
+    <formulas>
+        <name>todaysDate</name>
+        <dataType>Date</dataType>
+        <expression>TODAY()</expression>
+    </formulas>
     <interviewLabel>Event - Screen - Discovery Call Completed {!$Flow.CurrentDateTime}</interviewLabel>
     <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Event - Screen - Discovery Call Completed</label>
@@ -390,6 +464,7 @@
         <queriedFields>NSP_Last_Updated__c</queriedFields>
         <queriedFields>Discovery_Call_Created_Date__c</queriedFields>
         <queriedFields>NSP_Customer_Signer__c</queriedFields>
+        <queriedFields>NSP_Regen_Date__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <description>Ensure current User has &apos;Edit&apos; record access to prevent DmlExceptions.</description>
