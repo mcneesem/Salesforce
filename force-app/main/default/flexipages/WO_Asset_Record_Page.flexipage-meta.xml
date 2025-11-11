@@ -1169,7 +1169,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>required</value>
+                    <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.I_9_Availability__c</fieldItem>
                 <identifier>RecordI_9_Availability_cField</identifier>
@@ -1183,7 +1183,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>required</value>
+                    <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.E_Verify_Services__c</fieldItem>
                 <identifier>RecordE_Verify_Services__cField</identifier>
