@@ -64,6 +64,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Area_of_Focus__c</fieldItem>
+                <identifier>RecordNSP_Area_of_Focus_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.Focus_Item__c</fieldItem>
                 <identifier>RecordFocus_Item_cField</identifier>
             </fieldInstance>
@@ -84,16 +94,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Comments__c</fieldItem>
-                <identifier>RecordNSP_Comments_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.Details__c</fieldItem>
                 <identifier>RecordDetails_cField</identifier>
             </fieldInstance>
@@ -104,8 +104,15 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_System_Generated__c</fieldItem>
-                <identifier>RecordNSP_System_Generated_cField</identifier>
+                <fieldItem>Record.NSP_Comments__c</fieldItem>
+                <identifier>RecordNSP_Comments_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Termination_Revision_Access}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>false</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-867cf431-c21c-46e2-8b6c-db478a765ffd</name>
@@ -247,6 +254,16 @@
                 <identifier>RecordCreatedByIdField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_System_Generated__c</fieldItem>
+                <identifier>RecordNSP_System_Generated_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-a7110ed4-d282-495d-921c-550c2136fd5d</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -349,6 +366,10 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Tabs</value>
+                </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>tabs</name>
                     <value>Facet-c1a87684-6581-457f-97b1-470531356b4b</value>
