@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <classAccesses>
+        <apexClass>UserOpportunityTeamService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Default_Opportunity_Team_View</name>
+    </customPermissions>
+    <description>Display the default opportunity team member on user record page</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Default Opportunity Team (View)</label>
+</PermissionSet>
