@@ -312,6 +312,30 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Primary_Payroll_Contact__c</fieldItem>
                 <identifier>RecordNSP_Primary_Payroll_Contact__cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Payroll_Data_Sheet_Contact_Components}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>false</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Primary_Payroll_Contact__c</fieldItem>
+                <identifier>RecordNSP_Primary_Payroll_Contact_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Payroll_Data_Sheet_Contact_Components}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -636,6 +660,30 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_HR_Contact__c</fieldItem>
                 <identifier>RecordNSP_HR_Contact__cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Payroll_Data_Sheet_Contact_Components}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>false</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_HR_Contact__c</fieldItem>
+                <identifier>RecordNSP_HR_Contact_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Payroll_Data_Sheet_Contact_Components}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -798,6 +846,30 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_On_site_Supervisor__c</fieldItem>
                 <identifier>RecordNSP_On_site_Supervisor__cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Payroll_Data_Sheet_Contact_Components}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>false</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_On_site_Supervisor__c</fieldItem>
+                <identifier>RecordNSP_On_site_Supervisor_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Payroll_Data_Sheet_Contact_Components}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2603,6 +2675,19 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentName>pdsPayrollContact</componentName>
+                <identifier>c_pdsPayrollContact</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Payroll_Data_Sheet_Contact_Components}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-00fc0884-85d8-4c6d-ad21-6ad9c3e1f048</value>
@@ -2635,6 +2720,19 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection3</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>pdsHrContact</componentName>
+                <identifier>c_pdsHrContact</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Payroll_Data_Sheet_Contact_Components}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
