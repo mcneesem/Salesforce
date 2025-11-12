@@ -13,6 +13,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Purchased_Product__c.Is_Bundle__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Purchased_Product__c.NSP_External_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -24,6 +29,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Purchased_Product__c.Original_Opportunity_Product__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Purchased_Product__c.Parent_Bundle_Product__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

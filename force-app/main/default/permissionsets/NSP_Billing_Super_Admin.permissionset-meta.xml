@@ -7211,6 +7211,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Product2.Roll_Up_bundle__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Product2.SBQQ__AssetAmendmentBehavior__c</field>
         <readable>true</readable>
     </fieldPermissions>
