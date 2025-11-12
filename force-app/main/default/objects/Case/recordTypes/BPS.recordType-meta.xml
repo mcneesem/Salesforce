@@ -1248,7 +1248,27 @@
     <picklistValues>
         <picklist>NSP_Complexity_Level__c</picklist>
         <values>
-            <fullName>Level 1 %E2%80%93 Standard %28NSP%29</fullName>
+            <fullName>Level 1 %3A Standard %28NSP%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Level 2 %3A Non-Standard %28NSP%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Level 3 %3A Legal Escalation %28CP%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Level 4 %3A Equity%2FDeferred Comp %28CP%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Level 5 %3A ATP %28CP%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Level 6 %3A Settlement %28CP%29</fullName>
             <default>false</default>
         </values>
     </picklistValues>
