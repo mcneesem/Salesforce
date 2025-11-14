@@ -149,7 +149,7 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
                     Id ,
                     NSP_Sales_Service_Account_Status__c ,
                     (
-                        SELECT Id , Status , NSP_Termination_Date__c
+                        SELECT Id , Status , NSP_Termination_Date__c, RecordType.Name 
                         FROM Assets
                         WHERE ( RecordTypeName__c NOT IN :NSP_AccountTerminationBatch.CPQ_HARDWARE )
                     ) ,
@@ -161,7 +161,8 @@ public without sharing class NSP_AccountTerminationBatch implements ISelfSchedul
                 WHERE ( Id IN :accountIdSet )
             ];
             for ( Account acc : listofAccts ) {
-                Boolean allAssetsTerminated = scanAssets( acc.Assets );
+                List<Asset> filteredAssets = NSP_AssetServiceTriggerHelper.filterOnAssetRecordTypes(acc.Assets);
+                Boolean allAssetsTerminated = scanAssets( filteredAssets );
                 Boolean allOpportunitiesClosed = scanOpportunities( acc.Opportunities );
                 if ( allAssetsTerminated && allOpportunitiesClosed ) {
                     //terminate Account if no open Asset/Opportunity found

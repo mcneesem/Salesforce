@@ -315,9 +315,7 @@ public class NSP_AssetServiceTriggerHelper {
             }
         }
 
-        List<Account> listofaccts=[SELECT Id , NSP_Sales_Service_Account_Status__c, (SELECT Id,Status, NSP_Account_Status__c,AccountID  FROM Assets),
-                                         (SELECT ID, StageName FROM Opportunities where StageName NOT IN('Closed Won', 'Closed Lost'))
-                                         FROM Account WHERE Id IN :accountID];
+        List<Account> listofaccts=NSP_AssetServiceTriggerHelper.getAccounts(accountID);
         if(!listofaccts.isEmpty()){
             for (Account acc : listofaccts){
                 listOfAsset.addAll(acc.Assets);
@@ -781,9 +779,7 @@ public class NSP_AssetServiceTriggerHelper {
            }
         }
 
-    List<Account> listofaccts=[SELECT Id , NSP_Sales_Service_Account_Status__c, (SELECT Id,Status, NSP_Account_Status__c,AccountID  FROM Assets),
-                                       (SELECT ID, StageName FROM Opportunities where StageName NOT IN('Closed Won', 'Closed Lost'))
-                                       FROM Account WHERE Id IN :sAccountIds];
+    List<Account> listofaccts= NSP_AssetServiceTriggerHelper.getAccounts(new List<Id>(sAccountIds));
     if(!listofaccts.isEmpty()){
         for (Account acc : listofaccts){
                listOfAsset.addAll(acc.Assets);
@@ -1969,38 +1965,14 @@ Implementation profile related to the account of the created asset
     public void updateAccountStatus( List<Asset> assetList , List<Account> accountList ) {
         List<Account> accountsToUpdate = new List<Account>();
         for ( Account acc : accountList ) {
-            Boolean anyActive = false;
-            Boolean anyOnBoarding = false;
-            Boolean anyOnDemand = false;
-            for ( Asset ass: acc.Assets ) {
-                if ( String.isNotBlank( ass.Status ) ) {
-                    if ( ass.Status.equals( NSP_SalesConstants.ACTIVE ) ) {
-                        // Checking if Asset status is equal to null or not
-                        // AND CHecking if Asset status is equal to Active or not
-                        anyActive=true;
-                    } else if ( ass.Status.equals( NSP_SalesConstants.ONBOARDING ) ) {
-                        // Checking if Asset  status is equal to null or not
-                        // AND CHecking if Asset  status is equal to ONBOARDING or not
-                        anyOnBoarding=true;
-                    } else if ( ass.Status.equals( NSP_ServiceConstants.AssetStatusOnDemand ) ) {
-                        // Checking if Asset  status is equal to null or not
-                        // AND Checking if Asset  status is equal to On Demand or not
-                        anyOnDemand=true;
-                    }
-                }
+            String derived = deriveServiceAccountStatus(acc);
+            if (derived != null) {
+                acc.NSP_Sales_Service_Account_Status__c = derived;
             }
-            if ( anyActive ) {
-                acc.NSP_Sales_Service_Account_Status__c = NSP_SalesConstants.ACTIVE;
-            } else if ( anyOnBoarding ) {
-                acc.NSP_Sales_Service_Account_Status__c = NSP_SalesConstants.ONBOARDING;
-            } else if ( anyOnDemand ) {
-                acc.NSP_Sales_Service_Account_Status__c = NSP_ServiceConstants.AssetStatusOnDemand;
-            } else if ( ( acc.Opportunities != null ) && !acc.Opportunities.isEmpty()  ) {
-                acc.NSP_Sales_Service_Account_Status__c = NSP_SalesConstants.PROSPECTING;
-            }
-            accountsToUpdate.add( acc );
+            accountsToUpdate.add(acc);
         }
-        if ( accountsToUpdate.size() > 0 ) {
+
+        if (!accountsToUpdate?.isEmpty()) {
             try {
                 List<Database.SaveResult> results = Database.update( accountsToUpdate , false );
                 NSP_ErrorLogHandler.logResults(
@@ -2015,6 +1987,45 @@ Implementation profile related to the account of the created asset
                 );
             }
         }
+    }
+
+    // Helper to derive the Account status based on related assets with precedence:
+    // Active > Onboarding > On Demand > Prospecting (if any open Opportunities)
+    private static String deriveServiceAccountStatus(Account acc) {
+        String returnValue = '';
+
+        Boolean anyActive = false;
+        Boolean anyOnBoarding = false;
+        Boolean anyOnDemand = false;
+
+        List<Asset> filteredAssets = NSP_AssetServiceTriggerHelper.filterOnAssetRecordTypes(acc != null ? acc.Assets : null);
+        for (Asset assetRecord : filteredAssets) {
+            if (assetRecord != null || String.isNotBlank(assetRecord.Status)) {
+                if (assetRecord.Status == NSP_SalesConstants.ACTIVE) {
+                    anyActive = true;
+                    break; // highest precedence found
+                } else if (assetRecord.Status == NSP_SalesConstants.ONBOARDING) {
+                    anyOnBoarding = true;
+                } else if (assetRecord.Status == NSP_ServiceConstants.AssetStatusOnDemand) {
+                    anyOnDemand = true;
+                }
+            }
+        }
+
+        if (anyActive) {
+            returnValue =  NSP_SalesConstants.ACTIVE;
+        }
+        if (anyOnBoarding) {
+            returnValue =  NSP_SalesConstants.ONBOARDING;
+        }
+        if (anyOnDemand) {
+            returnValue =  NSP_ServiceConstants.AssetStatusOnDemand;
+        }
+        if (acc != null && acc.Opportunities != null && !acc.Opportunities.isEmpty()) {
+            returnValue =  NSP_SalesConstants.PROSPECTING;
+        }
+        
+        return returnValue;
     }
 
     /***********************************************************************************************
@@ -2169,6 +2180,54 @@ Implementation profile related to the account of the created asset
                 assetRec.addError( nonEditableField , NSP_AssetServiceTriggerHelper.errorMessage );
             }
         }
+    }
+    
+    //== Method to check for the exclude list of record type names from the Asset
+    //@input params: List of Assets
+    //@output params: List of Assets
+    public static List<Asset> filterOnAssetRecordTypes(List<Asset> records) {
+        List<Asset> result = new List<Asset>();
+        // Option A: return a new filtered list (no in-place mutation)
+        if (records != null || !records.isEmpty()) {
+            // List of Asset Record type names to exclude
+            Set<String> excludedNames = new Set<String>
+            {
+                'RET WO',
+                    'RET Choice',
+                    'CPQ Asset',
+                    'Hardware Asset',
+                    'Hardware Loaner Asset',
+                    'Certify',
+                    'XML',
+                    'Integra',
+                    'Time & Attendance',
+                    'Performance Management'
+                    };
+                        
+                        
+                        for (Asset record : records) {
+                            String rtName = (record != null && record.RecordType != null) ? record.RecordType.Name : null;
+                            if (String.isNotBlank(rtName) && !excludedNames.contains(rtName)) {
+                                result.add(record);
+                            }
+                        }
+        }
+        return result;
+    }
+
+    // == Method to return the List of accounts
+    //@input params: List of Assets
+    //@output params:
+    private static List<Account> getAccounts(List<Id> accountID) {
+        List<Account> returnList = [SELECT Id, NSP_Sales_Service_Account_Status__c, (SELECT Id, Status, NSP_Account_Status__c, AccountID, RecordType.Name FROM Assets),
+                                         (SELECT ID, StageName FROM Opportunities where StageName NOT IN ('Closed Won', 'Closed Lost'))
+                                         FROM Account WHERE Id IN :accountID];
+                                         
+        if (returnList == null || returnList.isEmpty()) {
+            returnList = new List<Account>();
+        }
+
+        return returnList;
     }
 
 }
