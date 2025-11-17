@@ -65,7 +65,7 @@ public without sharing class NSP_UpdateRelatedAccounts {
                         SELECT
                             Id ,
                             NSP_Sales_Service_Account_Status__c ,
-                            ( SELECT Id, RecordType.Name FROM Assets ) ,
+                            ( SELECT Id , RecordType.Name FROM Assets ) ,
                             (
                                 SELECT Id , StageName
                                 FROM Opportunities
@@ -79,7 +79,7 @@ public without sharing class NSP_UpdateRelatedAccounts {
                     ]
                 )
             {
-                List<Asset> filteredAssets = NSP_AssetServiceTriggerHelper.filterOnAssetRecordTypes(accountObj.Assets);
+                List<Asset> filteredAssets = NSP_AssetServiceTriggerHelper.filterOnAssetRecordTypes( accountObj.Assets );
                 if ( ( filteredAssets != null )
                     && ( filteredAssets.isEmpty() )
                     )
