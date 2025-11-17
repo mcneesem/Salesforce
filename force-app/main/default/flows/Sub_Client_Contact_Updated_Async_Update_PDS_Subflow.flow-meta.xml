@@ -764,14 +764,14 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>r_PDS.NSP_PrimaryPayrollConta_International_Ph__c</assignToReference>
+            <assignToReference>r_PDS_to_update.NSP_PrimaryPayrollConta_International_Ph__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>v_NullValue</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>r_PDS.NSP_Primary_Payroll_Con_Located_Outside__c</assignToReference>
+            <assignToReference>r_PDS_to_update.NSP_Primary_Payroll_Con_Located_Outside__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>false</booleanValue>
@@ -1018,19 +1018,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Fault_Element_Get_Payroll_Data_Sheet</name>
-        <label>Set Fault Element : Get_Payroll_Data_Sheet</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>FaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Get_Payroll_Data_Sheet</stringValue>
-            </value>
-        </assignmentItems>
-    </assignments>
-    <assignments>
         <name>Set_Fault_Element_Get_Sub_Client_Contact_Records</name>
         <label>Set Fault Element : Get_Sub_Client_Contact_Records</label>
         <locationX>0</locationX>
@@ -1043,25 +1030,21 @@
             </value>
         </assignmentItems>
         <connector>
-            <isGoTo>true</isGoTo>
             <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Fault_Element_Update_PDS_Record</name>
-        <label>Set Fault Element : Update_PDS_Record</label>
+        <name>Set_Fault_Element_Get_Sub_Client_Record</name>
+        <label>Set Fault Element : Get_Sub_Client_Record</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Update_PDS_Record</stringValue>
+                <stringValue>Get_Sub_Client_Record</stringValue>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
-        </connector>
     </assignments>
     <collectionProcessors>
         <name>Filter_HR_Contacts</name>
@@ -1181,29 +1164,6 @@
         </sortOptions>
     </collectionProcessors>
     <decisions>
-        <description>Check Record before Update</description>
-        <name>Check_for_Null</name>
-        <label>Check for Null</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Valid_Record</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>r_PDS_to_update</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Update_PDS_Record</targetReference>
-            </connector>
-            <label>Valid Record</label>
-        </rules>
-    </decisions>
-    <decisions>
         <description>Loop for Each SCC Contact Flag : PC or HR or OSS :
 1) Execute Multiple Route when there are Multiple SCC with PC/HR or OSS Found - Count &gt;1 , Remove PC/HR/OSS when same as SCC Contact on PDS
 2) Execute Remove Route when there PC/HR Or OSS removed from SCC - Count = 0
@@ -1220,6 +1180,13 @@
             <name>SCCs_with_Multiple_PC</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
+                <leftValueReference>r_SCC_Record</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
                 <leftValueReference>Loop_For_Each_SCCFlag</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
@@ -1234,10 +1201,17 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>r_triggering_scc_record.NSP_Contact__c</leftValueReference>
+                <leftValueReference>r_SCC_Record.NSP_Contact__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <elementReference>r_PDS.NSP_Primary_Payroll_Contact__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>r_SCC_Record.NSP_Payroll_Contact__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1248,6 +1222,13 @@
         <rules>
             <name>SCCs_with_Multiple_HR</name>
             <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>r_SCC_Record</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <conditions>
                 <leftValueReference>Loop_For_Each_SCCFlag</leftValueReference>
                 <operator>EqualTo</operator>
@@ -1263,7 +1244,14 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>r_triggering_scc_record.NSP_Contact__c</leftValueReference>
+                <leftValueReference>r_SCC_Record.NSP_HR_Contact__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>r_SCC_Record.NSP_Contact__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <elementReference>r_PDS.NSP_HR_Contact__c</elementReference>
@@ -1277,6 +1265,13 @@
         <rules>
             <name>SCCs_with_Multiple_OSS</name>
             <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>r_SCC_Record</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <conditions>
                 <leftValueReference>Loop_For_Each_SCCFlag</leftValueReference>
                 <operator>EqualTo</operator>
@@ -1292,7 +1287,14 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>r_triggering_scc_record.NSP_Contact__c</leftValueReference>
+                <leftValueReference>r_SCC_Record.NSP_On_Site_Supervisor__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>r_SCC_Record.NSP_Contact__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <elementReference>r_PDS.NSP_On_site_Supervisor__c</elementReference>
@@ -1479,14 +1481,50 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Valid_PDS_Record</name>
-        <label>Valid PDS Record?</label>
+        <name>Valid_Input_Set</name>
+        <label>Valid Input Set?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Valid_Input</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>v_SubClient_Id</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>r_PDS</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Sub_Client_Record</targetReference>
+            </connector>
+            <label>Yes : Valid Input</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Valid_SC_and_PDS_Record</name>
+        <label>Valid SC and PDS Record?</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Yes_Valid_Record</name>
             <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>r_SubClient</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <conditions>
                 <leftValueReference>r_PDS</leftValueReference>
                 <operator>IsBlank</operator>
@@ -1532,29 +1570,8 @@
             <label>Yes : Has SCC Records</label>
         </rules>
     </decisions>
-    <decisions>
-        <name>Valid_Sub_Client</name>
-        <label>Valid Sub Client ?</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Yes_Valid_RecordId</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>r_triggering_scc_record</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_Payroll_Data_Sheet</targetReference>
-            </connector>
-            <label>Yes : Valid RecordId</label>
-        </rules>
-    </decisions>
-    <description>AZD-502310 , Subflow - When PC/HR/OSS Flags updated on SCC Update the PC/HR/OSS on PDS Record.</description>
+    <description>AZD-502310 , Subflow - When PC/HR/OSS Flags updated on SCC Update the PC/HR/OSS on PDS Record.
+11/11 - Input as Sub Client and Out as PDS Record</description>
     <environments>Default</environments>
     <formulas>
         <description>Used in looping when processing each SCC Contact PC , HR and OSS</description>
@@ -1576,9 +1593,6 @@
         <nextValueConnector>
             <targetReference>Process_each_SCC_Flag</targetReference>
         </nextValueConnector>
-        <noMoreValuesConnector>
-            <targetReference>Check_for_Null</targetReference>
-        </noMoreValuesConnector>
     </loops>
     <loops>
         <name>Loop_SCC_Extract_HR_Record</name>
@@ -1642,36 +1656,6 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
-        <name>Get_Payroll_Data_Sheet</name>
-        <label>Get Payroll Data Sheet</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Valid_PDS_Record</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Set_Fault_Element_Get_Payroll_Data_Sheet</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>NSP_Sub_Client_Name__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>r_triggering_scc_record.NSP_Sub_Client__c</elementReference>
-            </value>
-        </filters>
-        <object>NSP_Payroll__c</object>
-        <outputReference>r_PDS</outputReference>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>NSP_Payroll_SCC__c</queriedFields>
-        <queriedFields>NSP_HR_Contact_SCC__c</queriedFields>
-        <queriedFields>NSP_OSS_SCC__c</queriedFields>
-        <queriedFields>NSP_Primary_Payroll_Contact__c</queriedFields>
-        <queriedFields>NSP_HR_Contact__c</queriedFields>
-        <queriedFields>NSP_On_site_Supervisor__c</queriedFields>
-    </recordLookups>
-    <recordLookups>
         <description>Retrieve all Payroll, HR and On-Site Supervisor Contacts</description>
         <name>Get_Sub_Client_Contact_Records</name>
         <label>Get Sub Client Contact Records</label>
@@ -1689,7 +1673,7 @@
             <field>NSP_Sub_Client__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>r_triggering_scc_record.NSP_Sub_Client__c</elementReference>
+                <elementReference>r_SubClient.Id</elementReference>
             </value>
         </filters>
         <filters>
@@ -1721,26 +1705,40 @@
         <queriedFields>NSP_On_Site_Supervisor__c</queriedFields>
         <queriedFields>NSP_Contact__c</queriedFields>
     </recordLookups>
-    <recordUpdates>
-        <name>Update_PDS_Record</name>
-        <label>Update PDS Record</label>
+    <recordLookups>
+        <name>Get_Sub_Client_Record</name>
+        <label>Get Sub Client Record</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Valid_SC_and_PDS_Record</targetReference>
+        </connector>
         <faultConnector>
-            <targetReference>Set_Fault_Element_Update_PDS_Record</targetReference>
+            <targetReference>Set_Fault_Element_Get_Sub_Client_Record</targetReference>
         </faultConnector>
-        <inputReference>r_PDS_to_update</inputReference>
-    </recordUpdates>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>v_SubClient_Id</elementReference>
+            </value>
+        </filters>
+        <object>NSP_Sub_Client__c</object>
+        <outputReference>r_SubClient</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>NSP_Account__c</queriedFields>
+    </recordLookups>
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Valid_Sub_Client</targetReference>
+            <targetReference>Valid_Input_Set</targetReference>
         </connector>
     </start>
     <status>Draft</status>
     <subflows>
-        <description>Fault Handler</description>
         <name>Insperity_Fault_Handler_Subflow</name>
         <label>Insperity Fault Handler Subflow</label>
         <locationX>0</locationX>
@@ -1824,7 +1822,7 @@
         <name>r_PDS</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
-        <isInput>false</isInput>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>NSP_Payroll__c</objectType>
     </variables>
@@ -1833,7 +1831,7 @@
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
-        <isOutput>false</isOutput>
+        <isOutput>true</isOutput>
         <objectType>NSP_Payroll__c</objectType>
     </variables>
     <variables>
@@ -1861,13 +1859,23 @@
         <objectType>NSP_Sub_Client_Contact__c</objectType>
     </variables>
     <variables>
-        <description>Triggering SCC Record</description>
-        <name>r_triggering_scc_record</name>
+        <description>Sub Client Record
+1) Pass SCC Record when Record Trigger from SCC
+2) Pass Null for when Record Trigger from Create PDS</description>
+        <name>r_SCC_Record</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>NSP_Sub_Client_Contact__c</objectType>
+    </variables>
+    <variables>
+        <name>r_SubClient</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>NSP_Sub_Client__c</objectType>
     </variables>
     <variables>
         <name>rc_SCC</name>
@@ -1893,24 +1901,11 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>v_SCCId_HR</name>
+        <description>Sub Client Record Id</description>
+        <name>v_SubClient_Id</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>v_SCCId_OSS</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>v_SCCId_PC</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
 </Flow>
