@@ -1,5 +1,5 @@
 public with sharing class RecalculateRetailPriceBatch implements ISelfSchedulable , Schedulable , Database.Batchable<sObject> , Database.Stateful  {
-    // test w/ GeneratePriceIncreasesBatchTest (92%)
+    // test w/ RecalculateRetailPriceBatchTest (92%)
 
     //
     // External Entry Point
@@ -8,10 +8,10 @@ public with sharing class RecalculateRetailPriceBatch implements ISelfSchedulabl
     public static void executeBatch() {
         Database.executeBatch(
             new RecalculateRetailPriceBatch( ) ,
-            RecalculateRetailPriceBatch.batchSize 
+            RecalculateRetailPriceBatch.batchSize
         );
     }
-    
+
     //
     //schedulable
     //
@@ -26,18 +26,18 @@ public with sharing class RecalculateRetailPriceBatch implements ISelfSchedulabl
             New RecalculateRetailPriceBatch()
         );
     }
-    
+
     public void execute( SchedulableContext sc ) {
         Database.executeBatch(
             new RecalculateRetailPriceBatch() ,
             RecalculateRetailPriceBatch.batchSize
         );
     }
-    
+
     //preserved asset records across all chunks
     //this prevents reprocessing of purchased products belonging to same asset
     private Set<Id> assetIdSet = new Set<Id>();
-    
+
     //constants
     private static final String CANCELED = 'Canceled';
 
@@ -45,14 +45,13 @@ public with sharing class RecalculateRetailPriceBatch implements ISelfSchedulabl
     public Database.QueryLocator start(Database.BatchableContext bc){
         return Database.getQueryLocator(
             [
-                SELECT 
-                	Parent.Asset__c 
-                FROM Purchased_Product__History 
+                SELECT Parent.Asset__c
+                FROM Purchased_Product__History
                 WHERE (
                     ( CreatedDate = LAST_N_DAYS:1  )
                     AND (
                         ( //price is updated
-                            ( Field = 'Component_Price__c' OR Field = 'created' ) 
+                            ( Field = 'Component_Price__c' OR Field = 'created' )
                             AND ( Parent.Purchase_Status__c != :CANCELED )
                         )
                         OR ( //purchase status is changed
@@ -63,7 +62,7 @@ public with sharing class RecalculateRetailPriceBatch implements ISelfSchedulabl
             ]
         );
     }
-    
+
     public void execute(Database.BatchableContext bc, List<Purchased_Product__History> scope) {
         if( ( scope != null )
            && ( !scope.isEmpty() )
@@ -71,44 +70,46 @@ public with sharing class RecalculateRetailPriceBatch implements ISelfSchedulabl
         {
             //assets for current chunk
             Set<Id> localAssetIdSet = new Set<Id>();
-            
+
             //make sure asset hasn't already been processed
             for(Purchased_Product__History historyRecord : scope){
                 //new asset in the chunk
-                if(( historyRecord.Parent.Asset__c != null ) 
+                if(( historyRecord.Parent.Asset__c != null )
                    && ( !assetIDSet.contains(historyRecord.Parent.Asset__c) ))
                 {
                     //use new asset for recalculation
                     localAssetIdSet.add(historyRecord.Parent.Asset__c);
                 }
             }
-            
-            if(( localAssetIdSet != null ) 
+
+            if(( localAssetIdSet != null )
                && ( !localAssetIdSet.isEmpty() ))
             {
                 //fetch all Purchased Products under those unique Assets for current chunk
-                List<Purchased_Product__c> allPP = [SELECT 
-                                                    id, 
-                                                    Is_Bundle__c, 
-                                                    Asset__c, 
-                                                    Component_Price__c, 
-                                                    Retail_Price__c, 
-                                                    Parent_Bundle_Product__c, 
-                                                    Product__r.ProductCode,
-                                                    Purchase_Status__c 
-                                                    FROM Purchased_Product__c 
-                                                    WHERE Asset__c IN :localAssetIdSet 
-                                                    ORDER BY Asset__c, Is_Bundle__c DESC];
-                
+                List<Purchased_Product__c> allPP = [
+                    SELECT
+                        Id ,
+                        Is_Bundle__c ,
+                        Asset__c ,
+                        Component_Price__c ,
+                        Retail_Price__c ,
+                        Parent_Bundle_Product__c ,
+                        Product__r.ProductCode ,
+                        Purchase_Status__c
+                    FROM Purchased_Product__c
+                    WHERE Asset__c IN :localAssetIdSet
+                    ORDER BY Asset__c, Is_Bundle__c DESC
+                ];
+
                 //rollup logic
                 RecalculateRetailPriceBatch.rollUpBundles(allPP);
-                
+
                 //update set with new values
                 this.assetIdSet.addAll(localAssetIdSet);
             }
         }
     }
-    
+
     public void finish(Database.BatchableContext bc) {
         if( RecalculateRetailPriceBatch.isEnabled ){
             try {
@@ -123,10 +124,10 @@ public with sharing class RecalculateRetailPriceBatch implements ISelfSchedulabl
                 RecalculateRetailPriceBatch.sendEmail(
                     toUsers ,
                     'RecalculateRetailPriceBatch Complete' ,
-                    'Retail Prices on various Purchased Products were recalculated successfully accross ' 
+                    'Retail Prices on various Purchased Products were recalculated successfully accross '
                     + this.assetIdSet.size() + ' Assets.'
                 );
-                
+
             } catch ( exception e ) {
                 NSP_ErrorLogHandler.logException(
                     RecalculateRetailPriceBatch.class.getName() ,
@@ -134,10 +135,10 @@ public with sharing class RecalculateRetailPriceBatch implements ISelfSchedulabl
                     e
                 );
             }
-            
+
         }
     }
-    
+
     //method that rolls-up prices of child Purchased products on to parent
     private static void rollUpBundles(List<Purchased_Product__c> allPPs){
         if( allPPs != null && !allPPs.isEmpty() ){
@@ -146,31 +147,31 @@ public with sharing class RecalculateRetailPriceBatch implements ISelfSchedulabl
             //key = ProductCode-AssetId
             Map<String, Purchased_Product__c> productCodeMap = new Map<String,Purchased_Product__c>();
             Map<String, Decimal> productPriceMap = new Map<String, Decimal>();
-            
+
             //process purchased products
             for(Purchased_Product__C pp : allPPs){
                 RecalculateRetailPriceBatch.handleParentProduct(pp,productCodeMap,productPriceMap);
                 RecalculateRetailPriceBatch.handleChildProduct(pp,productCodeMap,productPriceMap);
                 RecalculateRetailPriceBatch.handleStandaloneProduct(pp,productCodeMap,productPriceMap);
             }
-            
+
             //insert only parent purchased records (subset of chunk size)
             RecalculateRetailPriceBatch.performDML( productCodeMap , productPriceMap );
         }
     }
 
-	//method to handle Parent Purchased Products    
+    //method to handle Parent Purchased Products
     private static void handleParentProduct(
-        Purchased_Product__c pp, 
+        Purchased_Product__c pp,
         Map<String,Purchased_Product__c> productCodeMap,
         Map<String, Decimal> productPriceMap)
     {
-        if(( pp != null ) 
-           && ( pp.Is_Bundle__c ) 
-           && ( String.isBlank( pp.Parent_Bundle_Product__c ) ) 
+        if(( pp != null )
+           && ( pp.Is_Bundle__c )
+           && ( String.isBlank( pp.Parent_Bundle_Product__c ) )
            && ( String.isNotBlank( pp.Product__r.ProductCode ) )
-           && ( pp.Purchase_Status__c != CANCELED ) 
-           && ( productCodeMap != null ) 
+           && ( pp.Purchase_Status__c != CANCELED )
+           && ( productCodeMap != null )
            && ( productPriceMap != null )
           )
         {
@@ -179,20 +180,20 @@ public with sharing class RecalculateRetailPriceBatch implements ISelfSchedulabl
             productPriceMap.put(pp.Product__r.ProductCode + '-' + pp.Asset__c, pp.Component_Price__c);
         }
     }
-    
+
     //method to handle Child Purchased Products
     private static void handleChildProduct(
-        Purchased_Product__c pp, 
+        Purchased_Product__c pp,
         Map<String,Purchased_Product__c> productCodeMap,
         Map<String, Decimal> productPriceMap)
     {
-        if(( pp != null) 
+        if(( pp != null)
            && ( !pp.Is_Bundle__c )
-           && ( String.isNotBlank( pp.Parent_Bundle_Product__c ) ) 
+           && ( String.isNotBlank( pp.Parent_Bundle_Product__c ) )
            && ( pp.Component_Price__c != null )
            && ( pp.Component_Price__c != 0.00)
-           && ( pp.Purchase_Status__c != CANCELED) 
-           && ( productCodeMap != null ) 
+           && ( pp.Purchase_Status__c != CANCELED)
+           && ( productCodeMap != null )
            && ( productPriceMap != null ))
         {
             //check for active and applicable bundles
@@ -207,26 +208,26 @@ public with sharing class RecalculateRetailPriceBatch implements ISelfSchedulabl
             }
         }
     }
-    
+
     //method to handle Standalone Purchased Products
     private static void handleStandaloneProduct(
-        Purchased_Product__c pp, 
+        Purchased_Product__c pp,
         Map<String,Purchased_Product__c> productCodeMap,
         Map<String, Decimal> productPriceMap)
     {
-        if(( pp != null ) 
-           && ( !pp.Is_Bundle__c ) 
+        if(( pp != null )
+           && ( !pp.Is_Bundle__c )
            && ( String.isBlank( pp.Parent_Bundle_Product__c ) )
-           && ( pp.Purchase_Status__c != CANCELED ) 
-           && ( productCodeMap != null ) 
+           && ( pp.Purchase_Status__c != CANCELED )
+           && ( productCodeMap != null )
            && ( productPriceMap != null ))
         {
             productCodeMap.put( pp.Product__r.ProductCode + '-' + pp.Asset__c , pp );
             productPriceMap.put( pp.Product__r.ProductCode + '-' + pp.Asset__c , pp.Component_Price__c );
         }
     }
-    
-    
+
+
     //method that perdorms dml for Parent Purchased products
     private static void performDML(Map<String, Purchased_Product__c> productCodeMap, Map<String, Decimal> productPriceMap){
         List<Purchased_Product__c> updateList = new List<Purchased_Product__c>();
@@ -262,7 +263,7 @@ public with sharing class RecalculateRetailPriceBatch implements ISelfSchedulabl
             }
         }
     }
-    
+
     //method to send email via flow
     private static void sendEmail( String[] listOfToAddresses , String subject , String body ) {
         Map<String,Object> inputs = new Map<String,Object>();
@@ -274,7 +275,7 @@ public with sharing class RecalculateRetailPriceBatch implements ISelfSchedulabl
             sendEmailFlow.start();
         }
     }
-    
+
     // attributes controlled by Custom Settings...
     // ~ intentionally static to allow Custom Settings to modify the attributes a running job...
     //
@@ -327,7 +328,7 @@ public with sharing class RecalculateRetailPriceBatch implements ISelfSchedulabl
         }
         private set;
     }
-    
+
     private static List<String> monitorEmailAddresses  {
         private get {
             if ( monitorEmailAddresses == null ) {
@@ -347,4 +348,6 @@ public with sharing class RecalculateRetailPriceBatch implements ISelfSchedulabl
         }
         private set;
     }
+
 }
+//
