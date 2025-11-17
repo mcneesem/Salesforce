@@ -29,21 +29,17 @@
   AND(
     ( NSP_Category__c = &quot;Payroll Shared Services&quot; ) ,
     ( NSP_SubCategory__c = &quot;Docusign&quot; ) ,
-    NOT( ISBLANK( TEXT( Docusign_Form_To_Send__c ) ) ) ,
-    NOT( ISPICKVAL( Docusign_Form_To_Send__c , &quot;FLSA Test for Exemption - CA&quot; ) ) ,
-    NOT( ISPICKVAL( Docusign_Form_To_Send__c , &quot;Verification Report&quot; ) )
+    NOT( ISBLANK( Docusign_Form_To_Send_Multi__c ) )
   ) ,
   AND(
     ( NSP_Category__c = &quot;Payroll Shared Services&quot; ) ,
     ( NSP_SubCategory__c = &quot;Docusign&quot; ) ,
-    ISPICKVAL( Docusign_Form_To_Send__c , &quot;FLSA Test for Exemption - CA&quot; ) ,
-    NOT( ISBLANK( TEXT( Exemption_Type__c ) ) )
+    NOT( ISBLANK( Docusign_Form_To_Send_Multi__c ) )
   ) ,
   AND(
     ( NSP_Category__c = &quot;Payroll Shared Services&quot; ) ,
     ( NSP_SubCategory__c = &quot;Docusign&quot; ) ,
-    ISPICKVAL( Docusign_Form_To_Send__c , &quot;Verification Report&quot; ) ,
-    Verification_Report_Attached__c
+    NOT( ISBLANK( Docusign_Form_To_Send_Multi__c ) )
   ) ,
   /* Category: Payroll Services */
   AND(
