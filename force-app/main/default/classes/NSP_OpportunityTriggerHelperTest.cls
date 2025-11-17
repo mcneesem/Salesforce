@@ -1111,4 +1111,38 @@ static void createAssetTest3(){
         System.assertEquals('0124x000000yRuxAAE', recordId);
         Test.stopTest();
     }
+
+    @isTest
+    private static void testServicesOpportunity() {
+        Test.startTest();
+        List<PermissionSetAssignment> psa = [
+            SELECT AssigneeId
+            FROM PermissionSetAssignment
+            WHERE
+                PermissionSet.Name = 'NSPSteelBrickCPQUser'
+                AND Assignee.isActive = true
+            LIMIT 1
+        ];
+        System.assert((psa != null && psa.size() == 1), 'No Services_Opportunity_Owner user found');
+        System.assert(CustomPermissionController.checkUserPermission('Services_Opportunity_Owner', psa[0].AssigneeId), 'Custom PS Services_Opportunity_Owner not assigned');
+        Account acct = new Account();
+        acct.Name = 'Test Account Opp';
+        insert acct;
+        Opportunity opp = new Opportunity();
+        opp.AccountId = acct.Id;
+        opp.CloseDate = date.today();
+        opp.NSP_PrimaryProduct__c = 'WX';
+        opp.StageName = 'Prospecting';
+        opp.OwnerId = psa[0].AssigneeId;
+        insert opp;
+        Test.stopTest();
+        List<Opportunity> opp1 = [
+            SELECT Id , Is_Services_Opportunity__c
+            FROM Opportunity
+            WHERE Id = :opp.Id
+            LIMIT 1
+        ];
+        Boolean isServiceOpportunity = true;
+        System.assertEquals(isServiceOpportunity, opp1[0].Is_Services_Opportunity__c);
+    }
 }

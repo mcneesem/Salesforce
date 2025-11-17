@@ -96,10 +96,12 @@ public with sharing class NSP_OpportunityTriggerHelper {
                 changeOpportunityRecordType(closedStageList);
             }
 
-              // checking for closeddate is lessthan today or Not
+            // checking for closeddate is lessthan today or Not
             if(opportunityObject.CloseDate != null && opportunityObject.CloseDate < date.today()){
             closedOppList.add(opportunityObject);
             }
+            // ADO-498657
+            NSP_OpportunityTriggerHelper.setServicesOpportunity( null , opportunityObject.OwnerId , opportunityObject );
         }
 
         NSP_OpportunityTriggerHelperFunctions oppHelperFuncObj = new NSP_OpportunityTriggerHelperFunctions();
@@ -342,6 +344,8 @@ public with sharing class NSP_OpportunityTriggerHelper {
                 closedOppList.add(newOpportunity);
             }
             checkPrimaryProductChange( newOpportunity , oldOpportunity , primaryProductChanged );
+            // ADO-498657
+            NSP_OpportunityTriggerHelper.setServicesOpportunity( oldOpportunity.OwnerId , newOpportunity.OwnerId , newOpportunity );
         }
 
         NSP_OpportunityTriggerHelperFunctions oppHelperFuncObj = new NSP_OpportunityTriggerHelperFunctions();
@@ -1861,5 +1865,23 @@ public with sharing class NSP_OpportunityTriggerHelper {
         private set;
     }
 
+    //
+    // Description : Set field "Is Service Opportunity" to true if Opportunity's owner has PS 'Services_Opportunity_Owner'
+    // @param: Old Opportunity owner 
+    // @param: New Opportunity owner 
+    // @param: Opportunity 
+    // @return void
+    //
+    private static void setServicesOpportunity( Id oldOwner , Id newOwner , Opportunity record ) {
+        if ( ( record != null ) && ( oldOwner != newOwner ) ) {
+            record.Is_Services_Opportunity__c = CustomPermissionController.checkUserPermission(
+                'Services_Opportunity_Owner' ,
+                newOwner
+            );
+            if ( record.Is_Services_Opportunity__c ) {
+                record.NSP_Sales_Office__c	= null;
+            }
+        }
+    }
 }
 //
