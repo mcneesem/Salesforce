@@ -38,7 +38,7 @@ public class NSP_AssetServiceTriggerHelper {
     public final String ASSET_STATUS_BACKOUT = 'Backout';
     private static final String ASSET = 'Asset';
     public static final Id PEORECORDTYPE = NSP_GenericRecordType.getRecordTypeId('pse__Proj__c',NSP_ServiceConstants.PEOProject);
-    public static List<string> OnboardingStatusRecordTypes = System.Label.NSP_Asset_Record_Type_with_Initial_Status_Onboarding.split(',');
+    public static List<String> OnboardingStatusRecordTypes = System.Label.NSP_Asset_Record_Type_with_Initial_Status_Onboarding.split(',');
     public static List<String> NonServiceAsset = System.Label.NSP_Non_Service_Asset.split(',');
     public static List<String> AssetStartDateCurrentMonth = System.Label.NSP_Asset_Status_Start_Date_Current_Month.split(',');
     static final List<String> AssetRecTypeSet = System.Label.ASSET_BPS_RET_RECORDTYPES.split( ',' ); //<STY-02841>
@@ -315,15 +315,14 @@ public class NSP_AssetServiceTriggerHelper {
             }
         }
 
-        List<Account> listofaccts=NSP_AssetServiceTriggerHelper.getAccounts(accountID);
-        if(!listofaccts.isEmpty()){
-            for (Account acc : listofaccts){
-                listOfAsset.addAll(acc.Assets);
+        List<Account> listofaccts = NSP_AssetServiceTriggerHelper.getAccounts( accountID );
+        if ( !listofaccts.isEmpty() ) {
+            for ( Account acc : listofaccts ) {
+                listOfAsset.addAll( acc.Assets );
             }
         }
-
         //Call to updateAccountStatus method - DF-03777
-        updateAccountStatus(listofAsset,listOfaccts);
+        this.updateAccountStatus( listofAsset , listOfaccts );
 
         if(isValid){
             //Get all BPS assets related to the Same account
@@ -779,14 +778,14 @@ public class NSP_AssetServiceTriggerHelper {
            }
         }
 
-    List<Account> listofaccts= NSP_AssetServiceTriggerHelper.getAccounts(new List<Id>(sAccountIds));
-    if(!listofaccts.isEmpty()){
-        for (Account acc : listofaccts){
-               listOfAsset.addAll(acc.Assets);
-     }
-    }
-    //Call to updateAccountStatus method - DF-03777
-    updateAccountStatus(listofAsset,listOfaccts);
+        List<Account> listofaccts = NSP_AssetServiceTriggerHelper.getAccounts( new List<Id>( sAccountIds ) );
+        if ( !listofaccts.isEmpty() ){
+            for ( Account acc : listofaccts ) {
+                listOfAsset.addAll( acc.Assets );
+            }
+        }
+        //Call to updateAccountStatus method - DF-03777
+        this.updateAccountStatus( listofAsset , listOfaccts );
 
         if(!asstIdSet.isEmpty()){
             mapGovernmentContratcorOnPDS(asstIdSet);
@@ -1965,14 +1964,13 @@ Implementation profile related to the account of the created asset
     public void updateAccountStatus( List<Asset> assetList , List<Account> accountList ) {
         List<Account> accountsToUpdate = new List<Account>();
         for ( Account acc : accountList ) {
-            String derived = NSP_AssetServiceTriggerHelper.deriveServiceAccountStatus(acc);
-            if ( string.isNotBlank(derived) ) {
+            String derived = NSP_AssetServiceTriggerHelper.deriveServiceAccountStatus( acc );
+            if ( String.isNotBlank( derived ) ) {
                 acc.NSP_Sales_Service_Account_Status__c = derived;
             }
-            accountsToUpdate.add(acc);
+            accountsToUpdate.add( acc );
         }
-
-        if (!accountsToUpdate?.isEmpty()) {
+        if ( !accountsToUpdate?.isEmpty() ) {
             try {
                 List<Database.SaveResult> results = Database.update( accountsToUpdate , false );
                 NSP_ErrorLogHandler.logResults(
@@ -1991,16 +1989,14 @@ Implementation profile related to the account of the created asset
 
     // Helper to derive the Account status based on related assets with precedence:
     // Active > Onboarding > On Demand > Prospecting (if any open Opportunities)
-    private static String deriveServiceAccountStatus(Account acc) {
+    private static String deriveServiceAccountStatus( Account acc ) {
         String returnValue = '';
-
         Boolean anyActive = false;
         Boolean anyOnBoarding = false;
         Boolean anyOnDemand = false;
-
-        List<Asset> filteredAssets = NSP_AssetServiceTriggerHelper.filterOnAssetRecordTypes(acc != null ? acc.Assets : null);
-        for (Asset assetRecord : filteredAssets) {
-            if (assetRecord != null || String.isNotBlank(assetRecord.Status)) {
+        List<Asset> filteredAssets = NSP_AssetServiceTriggerHelper.filterOnAssetRecordTypes( ( acc != null ) ? acc.Assets : null );
+        for ( Asset assetRecord : filteredAssets ) {
+            if ( ( assetRecord != null ) && String.isNotBlank( assetRecord.Status ) ) {
                 if (assetRecord.Status == NSP_SalesConstants.ACTIVE) {
                     anyActive = true;
                     break; // highest precedence found
@@ -2011,20 +2007,22 @@ Implementation profile related to the account of the created asset
                 }
             }
         }
-
-        if (anyActive) {
+        if ( anyActive ) {
             returnValue =  NSP_SalesConstants.ACTIVE;
         }
-        if (anyOnBoarding) {
+        if ( anyOnBoarding ) {
             returnValue =  NSP_SalesConstants.ONBOARDING;
         }
-        if (anyOnDemand) {
+        if ( anyOnDemand ) {
             returnValue =  NSP_ServiceConstants.AssetStatusOnDemand;
         }
-        if (acc != null && acc.Opportunities != null && !acc.Opportunities.isEmpty()) {
+        if ( ( acc != null )
+            && ( acc.Opportunities != null )
+            && !acc.Opportunities.isEmpty()
+            )
+        {
             returnValue =  NSP_SalesConstants.PROSPECTING;
         }
-        
         return returnValue;
     }
 
@@ -2185,32 +2183,29 @@ Implementation profile related to the account of the created asset
     //== Method to check for the exclude list of record type names from the Asset
     //@input params: List of Assets
     //@output params: List of Assets
-    public static List<Asset> filterOnAssetRecordTypes(List<Asset> records) {
+    public static List<Asset> filterOnAssetRecordTypes( List<Asset> records ) {
         List<Asset> result = new List<Asset>();
         // Option A: return a new filtered list (no in-place mutation)
         if ( ( records != null ) && !records.isEmpty() ) {
             // List of Asset Record type names to exclude
-            Set<String> excludedNames = new Set<String>
-            {
+            Set<String> excludedNames = new Set<String>{
                 'RET WO',
-                    'RET Choice',
-                    'CPQ Asset',
-                    'Hardware Asset',
-                    'Hardware Loaner Asset',
-                    'Certify',
-                    'XML',
-                    'Integra',
-                    'Time & Attendance',
-                    'Performance Management'
-                    };
-                        
-                        
-                        for (Asset record : records) {
-                            String rtName = (record != null && record.RecordType != null) ? record.RecordType.Name : null;
-                            if (String.isNotBlank(rtName) && !excludedNames.contains(rtName)) {
-                                result.add(record);
-                            }
-                        }
+                'RET Choice',
+                'CPQ Asset',
+                'Hardware Asset',
+                'Hardware Loaner Asset',
+                'Certify',
+                'XML',
+                'Integra',
+                'Time & Attendance',
+                'Performance Management'
+            };
+            for ( Asset record : records ) {
+                String rtName = ( ( ( record != null ) && ( record.RecordType != null ) ) ? record.RecordType.Name : null );
+                if ( String.isNotBlank( rtName ) && !excludedNames.contains( rtName ) ) {
+                    result.add( record );
+                }
+            }
         }
         return result;
     }
@@ -2226,11 +2221,18 @@ Implementation profile related to the account of the created asset
                     Id ,
                     NSP_Sales_Service_Account_Status__c ,
                     (
-                        SELECT Id , Status , NSP_Account_Status__c , AccountId , RecordType.Name
+                        SELECT
+                            Id ,
+                            Status ,
+                            NSP_Account_Status__c ,
+                            AccountId ,
+                            RecordType.Name
                         FROM Assets
                     ) ,
                     (
-                        SELECT Id , StageName
+                        SELECT
+                            Id ,
+                            StageName
                         FROM Opportunities
                         WHERE ( StageName NOT IN ( 'Closed Won' , 'Closed Lost' ) )
                     )
