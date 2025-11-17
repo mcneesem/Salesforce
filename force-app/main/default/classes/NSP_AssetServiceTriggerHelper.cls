@@ -1965,8 +1965,8 @@ Implementation profile related to the account of the created asset
     public void updateAccountStatus( List<Asset> assetList , List<Account> accountList ) {
         List<Account> accountsToUpdate = new List<Account>();
         for ( Account acc : accountList ) {
-            String derived = deriveServiceAccountStatus(acc);
-            if (derived != null) {
+            String derived = NSP_AssetServiceTriggerHelper.deriveServiceAccountStatus(acc);
+            if ( string.isNotBlank(derived) ) {
                 acc.NSP_Sales_Service_Account_Status__c = derived;
             }
             accountsToUpdate.add(acc);
@@ -2188,7 +2188,7 @@ Implementation profile related to the account of the created asset
     public static List<Asset> filterOnAssetRecordTypes(List<Asset> records) {
         List<Asset> result = new List<Asset>();
         // Option A: return a new filtered list (no in-place mutation)
-        if (records != null || !records.isEmpty()) {
+        if ( ( records != null ) && !records.isEmpty() ) {
             // List of Asset Record type names to exclude
             Set<String> excludedNames = new Set<String>
             {
@@ -2218,15 +2218,26 @@ Implementation profile related to the account of the created asset
     // == Method to return the List of accounts
     //@input params: List of Assets
     //@output params:
-    private static List<Account> getAccounts(List<Id> accountID) {
-        List<Account> returnList = [SELECT Id, NSP_Sales_Service_Account_Status__c, (SELECT Id, Status, NSP_Account_Status__c, AccountID, RecordType.Name FROM Assets),
-                                         (SELECT ID, StageName FROM Opportunities where StageName NOT IN ('Closed Won', 'Closed Lost'))
-                                         FROM Account WHERE Id IN :accountID];
-                                         
-        if (returnList == null || returnList.isEmpty()) {
-            returnList = new List<Account>();
+    private static List<Account> getAccounts( List<Id> accountIds ) {
+        List<Account> returnList = new List<Account>();
+        if ( ( accountIds != null ) && !accountIds.isEmpty() ) {
+            returnList = [
+                SELECT
+                    Id ,
+                    NSP_Sales_Service_Account_Status__c ,
+                    (
+                        SELECT Id , Status , NSP_Account_Status__c , AccountId , RecordType.Name
+                        FROM Assets
+                    ) ,
+                    (
+                        SELECT Id , StageName
+                        FROM Opportunities
+                        WHERE ( StageName NOT IN ( 'Closed Won' , 'Closed Lost' ) )
+                    )
+                FROM Account
+                WHERE ( Id IN :accountIds )
+            ];
         }
-
         return returnList;
     }
 
