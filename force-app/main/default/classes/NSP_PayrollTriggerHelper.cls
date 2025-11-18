@@ -21,7 +21,7 @@ public class NSP_PayrollTriggerHelper {
     {
         if(newPayrollList == null){
             newPayrollList = newPayrollMap.values();
-        }
+            }
         Boolean isPayrollSpecialist=false;
         Set<Id> contactidsSet = new Set<Id>();
         Set<Id> subClientIdsSet = new Set<Id>();
@@ -44,12 +44,12 @@ public class NSP_PayrollTriggerHelper {
                     subClientIdsSet.add(payrolls.NSP_Sub_Client_Name__c);
                 }
                 // AZD-443324
-                if ( 
+                if (
                         ( newPayrollMap == null &&
                             payrolls.NSP_On_site_Supervisor__c != null &&
-                            !NSP_PayrollTriggerHelper.isEnabledOnsiteSupervisor 
+                            !NSP_PayrollTriggerHelper.isEnabledOnsiteSupervisor
                         ) ||
-                        ( 
+                        (
                             oldPayrollMap != null &&
                             newPayrollMap != null &&
                             oldPayrollMap.get(payrolls.Id).NSP_On_site_Supervisor__c != newPayrollMap.get(payrolls.Id).NSP_On_site_Supervisor__c
@@ -60,15 +60,15 @@ public class NSP_PayrollTriggerHelper {
                     payrolls.On_Site_View_Payroll_Paperwork__c = false;
                 }
                 // AZD-443324
-                if ( 
-                        ( 
+                if (
+                        (
                             newPayrollMap == null &&
                             payrolls.NSP_Primary_Payroll_Contact__c != null &&
-                            !NSP_PayrollTriggerHelper.isEnabledPrimaryPayrollContact 
+                            !NSP_PayrollTriggerHelper.isEnabledPrimaryPayrollContact
                         ) ||
-                        ( 
+                        (
                             oldPayrollMap != null &&
-                            newPayrollMap != null && 
+                            newPayrollMap != null &&
                             oldPayrollMap.get(payrolls.Id).NSP_Primary_Payroll_Contact__c != newPayrollMap.get(payrolls.Id).NSP_Primary_Payroll_Contact__c
                         )
                     )
@@ -77,14 +77,14 @@ public class NSP_PayrollTriggerHelper {
                     payrolls.Primary_View_Payroll_Paperwork__c = false;
                 }
                 // AZD-443324
-                if ( 
+                if (
                         (
                             newPayrollMap == null &&
                             payrolls.NSP_HR_Contact__c != null &&
-                            !NSP_PayrollTriggerHelper.isEnabledHRContact 
+                            !NSP_PayrollTriggerHelper.isEnabledHRContact
                         ) ||
-                        ( 
-                            oldPayrollMap != null && 
+                        (
+                            oldPayrollMap != null &&
                             newPayrollMap != null &&
                             oldPayrollMap.get(payrolls.Id).NSP_HR_Contact__c != newPayrollMap.get(payrolls.Id).NSP_HR_Contact__c
                         )
@@ -94,13 +94,13 @@ public class NSP_PayrollTriggerHelper {
                     payrolls.View_Payroll_Paperwork__c = false;
                 }
                 // AZD-443324
-                if ( 
-                        ( 
+                if (
+                        (
                             newPayrollMap == null &&
                             payrolls.NSP_Back_Up_Payroll_Contact__c != null &&
-                            !NSP_PayrollTriggerHelper.isEnabledBackUpPayrollContact 
+                            !NSP_PayrollTriggerHelper.isEnabledBackUpPayrollContact
                         ) ||
-                        ( 
+                        (
                             oldPayrollMap != null &&
                             newPayrollMap != null &&
                             oldPayrollMap.get(payrolls.Id).NSP_Back_Up_Payroll_Contact__c != newPayrollMap.get(payrolls.Id).NSP_Back_Up_Payroll_Contact__c
@@ -282,10 +282,10 @@ public class NSP_PayrollTriggerHelper {
     public void checkForGovernmentContractor(List<NSP_Payroll__c> Payrolls){
     //AZD-509194 - Kill Switch for Create PDS . NSP_Government_Contractor__c Flag is now on Create PDS Flow
       if(!NSP_PayrollTriggerHelper.isEnabledCreateUpdatePDS)
-      { 
+      {
             Set<Id> subClientIdSet = new Set<Id>(); // To store Subclient
             Map<Id, Boolean> subClientGovConMap = new Map<Id, Boolean>(); // Map of SubCLient and Its related Asset Government Contrator
-            
+
             for(NSP_Payroll__c pRoll : Payrolls){
                 if(String.isNotBlank(pRoll.NSP_Sub_Client_Name__c)){
                     subClientIdSet.add(pRoll.NSP_Sub_Client_Name__c);
@@ -330,7 +330,7 @@ public class NSP_PayrollTriggerHelper {
     */
 
   public static void updatePDSRelatedContactFields(List<NSP_Payroll__c> newList) {
-	
+
      //AZD-509194 - Kill Switch for Create PDS . Implemented in Create PDS Flow
       if(!NSP_PayrollTriggerHelper.isEnabledCreateUpdatePDS)
         {
@@ -392,24 +392,24 @@ public class NSP_PayrollTriggerHelper {
             }
 
             // Update Payroll field logic based on respective confirmation checkbox
-            for(NSP_Payroll__c pdsNew : newList) {        
+            for(NSP_Payroll__c pdsNew : newList) {
                 // get all related subclient contacts for sub client
                 if( subClientConBySubCliIds.get(pdsNew.NSP_Sub_Client_Name__c) != null )
                 {
                         List<NSP_Sub_Client_Contact__c>  subCliConList = subClientConBySubCliIds.get(pdsNew.NSP_Sub_Client_Name__c) ;
                         if( !subCliConList.isEmpty() ){
                             for(NSP_Sub_Client_Contact__c subClientCon : subCliConList ){
-            
+
                             // update PDS field On Site Supervisor Contact And On Site Supervisor Contact SCC
                             if ( subClientCon.NSP_On_Site_Supervisor__c == true && !NSP_PayrollTriggerHelper.isEnabledOnsiteSupervisor ) {
                                 pdsNew.NSP_On_Site_Supervisor__c = subClientCon.NSP_Contact__c;
                                 pdsNew.NSP_OSS_SCC__c = subClientCon.Id;
-                            }            
+                            }
                             // update PDS field Payroll Contact And Payroll Contact SCC
                             if ( subClientCon.NSP_Payroll_Contact__c == true && !NSP_PayrollTriggerHelper.isEnabledPrimaryPayrollContact ) {
                                 pdsNew.NSP_Primary_Payroll_Contact__c = subClientCon.NSP_Contact__c;
                                 pdsNew.NSP_Payroll_SCC__c = subClientCon.Id;
-                            }            
+                            }
                             // update PDS field HR Contact And HR Contact SCC
                             if ( subClientCon.NSP_HR_Contact__c == true && pdsNew.NSP_HR_Contact__c == null && !NSP_PayrollTriggerHelper.isEnabledHRContact ) {
                                 pdsNew.NSP_HR_Contact__c = subClientCon.NSP_Contact__c;
@@ -419,7 +419,7 @@ public class NSP_PayrollTriggerHelper {
                     }
                 }
             }
-  		}
+  	    }
     }
 
     /**
@@ -473,7 +473,7 @@ public class NSP_PayrollTriggerHelper {
     */
 
     public void updatePDSContactRelatedFields(List<NSP_Payroll__c> newList, map<Id,NSP_Payroll__c> oldMap){
-      
+
        //AZD-509194 - Kill Switch for Create PDS . Implemented on Create PDS Flow
     if(!NSP_PayrollTriggerHelper.isEnabledCreateUpdatePDS){
         Map<Id,List<NSP_Sub_Client_Contact__c>> subClienBySCC = new Map<Id,List<NSP_Sub_Client_Contact__c>>();
@@ -482,7 +482,7 @@ public class NSP_PayrollTriggerHelper {
 
         for(NSP_Payroll__c payrolls : newList){
             if ( !NSP_PayrollTriggerHelper.isEnabledBackUpPayrollContact &&
-                    ( 
+                    (
                         ( payrolls.NSP_Back_Up_Payroll_Contact__c != null && oldMap == null ) ||
                         ( oldMap != null && payrolls.NSP_Back_Up_Payroll_Contact__c != oldMap.get(payrolls.Id).NSP_Back_Up_Payroll_Contact__c )
                     )
@@ -491,7 +491,7 @@ public class NSP_PayrollTriggerHelper {
                 subClientIds.add(payrolls.NSP_Sub_Client_Name__c);
             }
             if ( !NSP_PayrollTriggerHelper.isEnabledOnsiteSupervisor &&
-                    ( 
+                    (
                         ( payrolls.NSP_On_site_Supervisor__c != null && oldMap == null ) ||
                         ( oldMap != null && payrolls.NSP_On_site_Supervisor__c != oldMap.get(payrolls.Id).NSP_On_site_Supervisor__c )
                     )
@@ -499,8 +499,8 @@ public class NSP_PayrollTriggerHelper {
             {
                 subClientIds.add(payrolls.NSP_Sub_Client_Name__c);
             }
-            if ( !NSP_PayrollTriggerHelper.isEnabledPrimaryPayrollContact && 
-                    ( 
+            if ( !NSP_PayrollTriggerHelper.isEnabledPrimaryPayrollContact &&
+                    (
                         ( payrolls.NSP_Primary_Payroll_Contact__c != null && oldMap == null ) ||
                         ( oldMap != null && payrolls.NSP_Primary_Payroll_Contact__c != oldMap.get(payrolls.Id).NSP_Primary_Payroll_Contact__c )
                     )
@@ -548,7 +548,7 @@ public class NSP_PayrollTriggerHelper {
                     Boolean isPrimaryFound = false;
                     Boolean isHrConFound = false;
                     Boolean isSupervisorFound = false;
-                    if ( 
+                    if (
                         ( payroll.NSP_Sub_Client_Name__c != null ) &&  subClienBySCC.containsKey( payroll.NSP_Sub_Client_Name__c )
                         )
                     {
@@ -788,7 +788,7 @@ public class NSP_PayrollTriggerHelper {
                                     if(String.isNotBlank(payrollReviewers)){payrollReviewers=payrollReviewers+'; ';}
                                     payrollReviewers = payrollReviewers + reviewerName;
                                 }
-                            }                            
+                            }
                             if ( newPayrollMap.get(payroll.Id).NSP_Back_Up_Payroll_Contact__c != null
                                 && newPayrollMap.get(payroll.Id).Back_Up_View_Payroll_Paperwork__c
                                 && mapOfContacts.get(newPayrollMap.get(payroll.Id).NSP_Back_Up_Payroll_Contact__c) != null
@@ -852,7 +852,6 @@ public class NSP_PayrollTriggerHelper {
         }
     }
 
-    //
     // Custom Settings
     // AZD-443324 : AZD-443324 : Added Custom Settings to eliminate automation for individual contacts
     //
@@ -923,7 +922,7 @@ public class NSP_PayrollTriggerHelper {
         }
         private set;
     }
-    
+
     public static Boolean isEnabledCreateUpdatePDS {
         public get {
             if ( isEnabledCreateUpdatePDS == null ) {
