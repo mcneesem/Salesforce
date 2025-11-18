@@ -21,6 +21,7 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.Outgoing_Approval_Process_Notify_Owner_of_Rejection</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>Email_Alert_Outgoing_Approval_Request_Notify_MidMarket_Admins</name>
@@ -43,6 +44,7 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.Outgoing_Approval_Request_Notify_MidMarket_Admins</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>Email_Alert_Outgoing_Approval_Request_Notify_Owner_of_Approval</name>
@@ -65,8 +67,10 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.Outgoing_Approval_Request_Notify_Owner_of_Approval</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Assign_Stage_Close_Lost_Outgoing</name>
         <label>Assign Stage = Close Lost - Outgoing</label>
@@ -84,6 +88,13 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>Not Approved</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordOutgoingOpty.Closed_Lost_Group__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Outgoing</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -373,7 +384,7 @@
             <label>Yes - found Outgoing Opty</label>
         </rules>
     </decisions>
-    <description>MidMarket email check added. Updated Email Alerts. Removed MM Admin. Required Approve or Reject</description>
+    <description>Updated to include Closed Lost Group so Primary Reason Lost can be populated. MidMarket email check added. Updated Email Alerts. Removed MM Admin. Required Approve or Reject</description>
     <environments>Default</environments>
     <interviewLabel>Opportunity - Outgoing - Approve or Reject {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Opportunity - Outgoing - Approve or Reject</label>
@@ -482,6 +493,14 @@
             <name>Complete_Screen_DisplayText</name>
             <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Approval/Rejection process complete.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
@@ -506,6 +525,14 @@
             <fieldType>RadioButtons</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
