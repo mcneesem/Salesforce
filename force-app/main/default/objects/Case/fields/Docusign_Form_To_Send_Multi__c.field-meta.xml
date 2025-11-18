@@ -217,6 +217,11 @@
                 <label>Void/Lost/Stolen Check Reissue Auth</label>
             </value>
             <value>
+                <fullName>Garnishment Release Authorization</fullName>
+                <default>false</default>
+                <label>Garnishment Release Authorization</label>
+            </value>
+            <value>
                 <fullName>FLSA Test for Exemption (including IL)</fullName>
                 <default>false</default>
                 <isActive>false</isActive>

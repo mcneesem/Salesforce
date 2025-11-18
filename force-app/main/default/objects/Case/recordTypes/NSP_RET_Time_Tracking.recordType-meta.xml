@@ -313,6 +313,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Garnishment Release Authorization</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>IRS Form W-2 Duplicate Request %28EN%29</fullName>
             <default>false</default>
         </values>

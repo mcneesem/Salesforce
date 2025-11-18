@@ -36,11 +36,6 @@
     ( NSP_SubCategory__c = &quot;Docusign&quot; ) ,
     NOT( ISBLANK( Docusign_Form_To_Send_Multi__c ) )
   ) ,
-  AND(
-    ( NSP_Category__c = &quot;Payroll Shared Services&quot; ) ,
-    ( NSP_SubCategory__c = &quot;Docusign&quot; ) ,
-    NOT( ISBLANK( Docusign_Form_To_Send_Multi__c ) )
-  ) ,
   /* Category: Payroll Services */
   AND(
     ( NSP_Category__c = &quot;Payroll Services&quot; ) ,
