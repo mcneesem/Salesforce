@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Send_SSNV_Team_Email</name>
         <label>Send SSNV Team Email</label>
-        <locationX>138</locationX>
-        <locationY>1538</locationY>
+        <locationX>226</locationX>
+        <locationY>1922</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
@@ -95,12 +95,12 @@
     <actionCalls>
         <name>Split_String_Bcc_Email_Addresses</name>
         <label>Split String Bcc Email Addresses</label>
-        <locationX>138</locationX>
-        <locationY>1322</locationY>
+        <locationX>226</locationX>
+        <locationY>1514</locationY>
         <actionName>StringSplitterAction</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Assign_Bcc_Email_Addresses</targetReference>
+            <targetReference>Was_Bcc_Email_Address_found</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -124,8 +124,8 @@
     <assignments>
         <name>Assign_Bcc_Email_Addresses</name>
         <label>Assign Bcc Email Addresses</label>
-        <locationX>138</locationX>
-        <locationY>1430</locationY>
+        <locationX>226</locationX>
+        <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>varBccEmailAddresses</assignToReference>
             <operator>Add</operator>
@@ -140,8 +140,8 @@
     <assignments>
         <name>Assign_SC_Work_email</name>
         <label>Assign SC Work email</label>
-        <locationX>138</locationX>
-        <locationY>1214</locationY>
+        <locationX>226</locationX>
+        <locationY>1406</locationY>
         <assignmentItems>
             <assignToReference>varWorkEmail</assignToReference>
             <operator>Assign</operator>
@@ -156,7 +156,7 @@
     <assignments>
         <name>Assign_var_FaultElement_Get_Active_Sub_Client</name>
         <label>Assign var FaultElement - Get Active Sub Client</label>
-        <locationX>1322</locationX>
+        <locationX>1234</locationX>
         <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -173,7 +173,7 @@
     <assignments>
         <name>Assign_var_FaultElement_Get_Sub_Client_Contact</name>
         <label>Assign var FaultElement - Get Sub Client Contact</label>
-        <locationX>794</locationX>
+        <locationX>706</locationX>
         <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -190,7 +190,7 @@
     <assignments>
         <name>Assign_varFaultElement_Get_Account_on_Case</name>
         <label>Assign varFaultElement - Get Account on Case</label>
-        <locationX>1586</locationX>
+        <locationX>1498</locationX>
         <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -207,7 +207,7 @@
     <assignments>
         <name>Assign_varFaultElement_Get_SSNVS_Team_Cases</name>
         <label>Assign varFaultElement - Get SSNVS Team Cases</label>
-        <locationX>2378</locationX>
+        <locationX>2290</locationX>
         <locationY>242</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -223,8 +223,8 @@
     <assignments>
         <name>Assign_varFaultElement_Send_SSNV_Team_Email</name>
         <label>Assign varFaultElement - Send_SSNV_Team_Email</label>
-        <locationX>402</locationX>
-        <locationY>1646</locationY>
+        <locationX>490</locationX>
+        <locationY>2030</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -268,7 +268,7 @@
     <decisions>
         <name>Was_Account_found_on_Case</name>
         <label>Was Account found on Case?</label>
-        <locationX>1262</locationX>
+        <locationX>1185</locationX>
         <locationY>350</locationY>
         <defaultConnector>
             <targetReference>No_Account_found_Error</targetReference>
@@ -293,7 +293,7 @@
     <decisions>
         <name>Was_Active_SCC_On_Site_Supervisor_Payroll_Contact_with_Work_Email_found</name>
         <label>Was Active SCC On-Site Supervisor/Payroll Contact with Work Email found?</label>
-        <locationX>290</locationX>
+        <locationX>246</locationX>
         <locationY>890</locationY>
         <defaultConnector>
             <targetReference>No_Active_SCC_On_Site_Sup_Payroll_Contact_found_Error</targetReference>
@@ -304,7 +304,7 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>SubClientContactCollection</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsEmpty</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -316,10 +316,42 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Was_Bcc_Email_Address_found</name>
+        <label>Was Bcc Email Address found?</label>
+        <locationX>226</locationX>
+        <locationY>1622</locationY>
+        <defaultConnector>
+            <targetReference>Assign_Bcc_Email_Addresses</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Bcc_Email_foiund</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Split_String_Bcc_Email_Addresses.resultList</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Split_String_Bcc_Email_Addresses.resultList</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Bcc_Email_Addresses</targetReference>
+            </connector>
+            <label>Bcc Email foiund</label>
+        </rules>
+    </decisions>
+    <decisions>
         <description>Confirms that a Case Account is listed</description>
         <name>Was_Case_found</name>
         <label>Was Case found?</label>
-        <locationX>1688</locationX>
+        <locationX>1605</locationX>
         <locationY>242</locationY>
         <defaultConnector>
             <targetReference>No_Case_found_Error</targetReference>
@@ -342,9 +374,34 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Was_SCC_On_site_Sup_Payroll_Contact_Work_Email_found</name>
+        <label>Was SCC On-site Sup/Payroll Contact Work Email found?</label>
+        <locationX>226</locationX>
+        <locationY>1214</locationY>
+        <defaultConnector>
+            <targetReference>Assign_SC_Work_email</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>SCC_On_site_Sup_Payroll_Contact_Work_Email_found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop_thru_SCC_On_Site_Supervisor_and_Payroll_Contact_Filter.NSP_Work_Email__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_SC_Work_email</targetReference>
+            </connector>
+            <label>SCC On-site Sup/Payroll Contact Work Email found</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Was_Sub_Client_found</name>
         <label>Was Sub Client found?</label>
-        <locationX>674</locationX>
+        <locationX>608</locationX>
         <locationY>674</locationY>
         <defaultConnector>
             <targetReference>No_Sub_Client_found_Error</targetReference>
@@ -378,7 +435,7 @@
         <collectionReference>SCC_On_Site_Supervisor_and_Payroll_Contact_filter</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>Assign_SC_Work_email</targetReference>
+            <targetReference>Was_SCC_On_site_Sup_Payroll_Contact_Work_Email_found</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>Email_Sent_Message</targetReference>
@@ -406,7 +463,7 @@
     <recordLookups>
         <name>Get_Account_on_Case</name>
         <label>Get Account on Case</label>
-        <locationX>674</locationX>
+        <locationX>608</locationX>
         <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -431,7 +488,7 @@
     <recordLookups>
         <name>Get_Active_Sub_Client</name>
         <label>Get Active Sub Client</label>
-        <locationX>674</locationX>
+        <locationX>608</locationX>
         <locationY>566</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -482,7 +539,7 @@
         <description>Gets and stores data for SSNVS Team Cases</description>
         <name>Get_SSNVS_Team_Cases</name>
         <label>Get SSNVS Team Cases</label>
-        <locationX>1688</locationX>
+        <locationX>1605</locationX>
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -568,7 +625,7 @@
     <recordLookups>
         <name>Get_Sub_Client_Contact</name>
         <label>Get Sub Client Contact</label>
-        <locationX>290</locationX>
+        <locationX>246</locationX>
         <locationY>782</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -635,7 +692,7 @@
         <name>Email_Sent_Message</name>
         <label>Email Sent Message</label>
         <locationX>50</locationX>
-        <locationY>1928</locationY>
+        <locationY>2312</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -658,7 +715,7 @@
     <screens>
         <name>Flow_Fault_Message</name>
         <label>Flow Fault Message</label>
-        <locationX>2378</locationX>
+        <locationX>2290</locationX>
         <locationY>458</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -682,7 +739,7 @@
     <screens>
         <name>No_Account_found_Error</name>
         <label>No Account found Error</label>
-        <locationX>1850</locationX>
+        <locationX>1762</locationX>
         <locationY>458</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -706,7 +763,7 @@
     <screens>
         <name>No_Active_SCC_On_Site_Sup_Payroll_Contact_found_Error</name>
         <label>No Active SCC On-Site Sup/Payroll Contact found Error</label>
-        <locationX>530</locationX>
+        <locationX>442</locationX>
         <locationY>998</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -730,7 +787,7 @@
     <screens>
         <name>No_Case_found_Error</name>
         <label>No Case found Error</label>
-        <locationX>2114</locationX>
+        <locationX>2026</locationX>
         <locationY>350</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -754,7 +811,7 @@
     <screens>
         <name>No_Sub_Client_found_Error</name>
         <label>No Sub Client found Error</label>
-        <locationX>1058</locationX>
+        <locationX>970</locationX>
         <locationY>782</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -776,7 +833,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>1562</locationX>
+        <locationX>1479</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_SSNVS_Team_Cases</targetReference>
@@ -786,7 +843,7 @@
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
-        <locationX>2378</locationX>
+        <locationX>2290</locationX>
         <locationY>350</locationY>
         <connector>
             <targetReference>Flow_Fault_Message</targetReference>
@@ -829,14 +886,6 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>currentItem_On_site_Supervisor_Payroll_Contact</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>NSP_Sub_Client_Contact__c</objectType>
-    </variables>
-    <variables>
         <name>currentItem_SCC_On_Site_Supervisor_and_Payroll_Contact_filter</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
@@ -856,7 +905,7 @@
         <name>SubClientContactCollection</name>
         <dataType>SObject</dataType>
         <isCollection>true</isCollection>
-        <isInput>true</isInput>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>NSP_Sub_Client_Contact__c</objectType>
     </variables>
@@ -889,16 +938,6 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varSenderEmail</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <stringValue>SSNVS@insperity.com</stringValue>
-        </value>
     </variables>
     <variables>
         <name>varSubClient</name>
