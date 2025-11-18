@@ -14,6 +14,10 @@
                 <stringValue>Get_PDS_Record</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Set_Fault_Element_Update_PDS_Record</name>
@@ -294,19 +298,5 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>NSP_Payroll__c</objectType>
-    </variables>
-    <variables>
-        <name>RecordId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>Records_Collection</name>
-        <dataType>String</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>true</isOutput>
     </variables>
 </Flow>

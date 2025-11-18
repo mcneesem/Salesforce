@@ -18,6 +18,20 @@
             <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <description>Set r_scc_record to Null when Operation is Create PDS</description>
+        <name>Set_SCC_Record_to_Null</name>
+        <label>Set SCC Record to Null</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>r_SCC_Record</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <connector>
+            <targetReference>Sub_Client_Contact_Updated_Async_Update_PDS_Subflow</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <description>Kill Switch for Workday - Verify Payroll Data Sheet Custom Settings enable for Workday - Create PDS</description>
         <name>Kill_Switch_Enable_For_Workday</name>
@@ -36,7 +50,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Sub_Client_Contact_Updated_Async_Update_PDS_Subflow</targetReference>
+                <targetReference>Set_SCC_Record_to_Null</targetReference>
             </connector>
             <label>Yes : Enable For Workday</label>
         </rules>
@@ -66,8 +80,8 @@
     </decisions>
     <description>AZD-509194 : Flow will populate the Contact fields , Invoked either by Manual / Integration Process- Workday Implementation</description>
     <environments>Default</environments>
-    <interviewLabel>PDS - Created - Async - Update Contact Fields {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>PDS - Created - Async - Update Contact Fields</label>
+    <interviewLabel>Payroll Data Sheet - Created - Async - Populate Sub Client Contact Information {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Payroll Data Sheet - Created - Async - Populate Sub Client Contact Information</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -120,6 +134,7 @@
     </start>
     <status>Draft</status>
     <subflows>
+        <description>Fault Handler</description>
         <name>Insperity_Fault_Handler_Subflow</name>
         <label>Insperity Fault Handler Subflow</label>
         <locationX>0</locationX>
@@ -134,7 +149,7 @@
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>PDS_Created_Async_Update_Contact_Fields</stringValue>
+                <stringValue>Payroll_Data_Sheet_Created_Async_Populate_Sub_Client_Contact_Information</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>

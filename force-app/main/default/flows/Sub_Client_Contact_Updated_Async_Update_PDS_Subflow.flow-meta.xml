@@ -1045,6 +1045,10 @@
                 <stringValue>Get_Sub_Client_Record</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
     </assignments>
     <collectionProcessors>
         <name>Filter_HR_Contacts</name>
