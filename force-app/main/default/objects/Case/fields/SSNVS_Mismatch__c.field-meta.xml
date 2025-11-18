@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SSNVS_Mismatch__c</fullName>
+    <description>If Pick list values are updated, be sure to update the Visibility filter on this field on Case Record Page</description>
+    <label>SSNVS Mismatch</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>1 - SSN not in file (never issued)</fullName>
+                <default>false</default>
+                <label>1 - SSN not in file (never issued)</label>
+            </value>
+            <value>
+                <fullName>3 - Name matches; DOB does not match</fullName>
+                <default>false</default>
+                <label>3 - Name matches; DOB does not match</label>
+            </value>
+            <value>
+                <fullName>5 - Name does not match; DOB not checked</fullName>
+                <default>false</default>
+                <label>5 - Name does not match; DOB not checked</label>
+            </value>
+            <value>
+                <fullName>6 - SSN did not verify, other reason</fullName>
+                <default>false</default>
+                <label>6 - SSN did not verify, other reason</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

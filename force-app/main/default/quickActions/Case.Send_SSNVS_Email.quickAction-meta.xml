@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Button and Flow access - Case - SSNVS Mismatch Access Permission Set</description>
+    <flowDefinition>Case_Send_SSNVS_Team_Email</flowDefinition>
+    <label>Send SSNVS Email</label>
+    <optionsCreateFeedItem>false</optionsCreateFeedItem>
+    <type>Flow</type>
+</QuickAction>

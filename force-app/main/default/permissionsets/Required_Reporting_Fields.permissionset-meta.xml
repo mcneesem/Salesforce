@@ -588,6 +588,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Case.SSNVS_Mismatch__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Case.SUI_Confirmation__c</field>
         <readable>true</readable>
     </fieldPermissions>
