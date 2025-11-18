@@ -19,6 +19,29 @@
         </connector>
     </assignments>
     <decisions>
+        <description>Kill Switch for Workday - Verify Payroll Data Sheet Custom Settings enable for Workday - Create PDS</description>
+        <name>Kill_Switch_Enable_For_Workday</name>
+        <label>Kill Switch : Enable For Workday?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Enable_For_Workday</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Payroll_Data_Sheet_Settings__c.IsEnabledCreateUpdatePDS__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Sub_Client_Contact_Updated_Async_Update_PDS_Subflow</targetReference>
+            </connector>
+            <label>Yes : Enable For Workday</label>
+        </rules>
+    </decisions>
+    <decisions>
         <description>Verify if return is not null</description>
         <name>Valid_Record</name>
         <label>Valid Record ?</label>
@@ -89,7 +112,7 @@
         <recordTriggerType>Create</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Sub_Client_Contact_Updated_Async_Update_PDS_Subflow</targetReference>
+                <targetReference>Kill_Switch_Enable_For_Workday</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
