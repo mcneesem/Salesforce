@@ -1,17 +1,4 @@
-/**
- * Author: Sales Team
-* Represents test class for lead opportunity helper
-* Test Class to cover Opportunity Trigger Handler and Helper classes
-* Modified Date: 19 Aug 2021
-Modification Log     :                                                                              
-*--------------------------------------------------------------------------------------------------  
-* Developer                   Date                   Description                                    
-* -------------------------------------------------------------------------------------------------  
-* Rahul Singh 26/10/2022 Create OCR as part of user story - 128223
-* Rahul Singh 22/12/2022 Create for enrollment fee payment user story - 194265
-*/
-
-@isTest(SeeAllData=false)
+@isTest
 public class NSP_OpportunityTriggerHelperTest {
    
     public static final String OPP_NSP_UPSELL_PRODUCT_ADD_ONS_RETIREMENT_SERVICES = 'Retirement Services'; // Added as part of Code Fix
@@ -1145,4 +1132,6 @@ static void createAssetTest3(){
         Boolean isServiceOpportunity = true;
         System.assertEquals(isServiceOpportunity, opp1[0].Is_Services_Opportunity__c);
     }
+
 }
+//
