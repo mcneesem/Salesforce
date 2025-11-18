@@ -182,6 +182,11 @@
                 <label>Fluctuating Workweek Client Acknowledgement</label>
             </value>
             <value>
+                <fullName>Garnishment Release Authorization</fullName>
+                <default>false</default>
+                <label>Garnishment Release Authorization</label>
+            </value>
+            <value>
                 <fullName>IRS Form W-2 Duplicate Request (EN)</fullName>
                 <default>false</default>
                 <label>IRS Form W-2 Duplicate Request (EN)</label>
@@ -215,11 +220,6 @@
                 <fullName>Void/Lost/Stolen Check Reissue Auth</fullName>
                 <default>false</default>
                 <label>Void/Lost/Stolen Check Reissue Auth</label>
-            </value>
-            <value>
-                <fullName>Garnishment Release Authorization</fullName>
-                <default>false</default>
-                <label>Garnishment Release Authorization</label>
             </value>
             <value>
                 <fullName>FLSA Test for Exemption (including IL)</fullName>
