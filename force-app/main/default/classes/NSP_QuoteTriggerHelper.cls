@@ -1521,22 +1521,31 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
     // @return void
     //
     public void calcTaxOnOpportunity( Map<Id,SBQQ__Quote__c> quoteNewMap , Map<Id,SBQQ__Quote__c> quoteOldMap )  {
-        List<Opportunity> opportunitiesToUpdate = new List<Opportunity>();
-        for ( SBQQ__Quote__c newQuote : quoteNewMap.values() ) {
-            if ( ( newQuote.SBQQ__Primary__c == true )
-                && ( newQuote.NSP_Budgetary_Quote__c == true )
-                && ( newQuote.SBQQ__Status__c == NSP_CPQConstants.QUOTE_STATUS_APPROVED )
-                && ( newQuote.SBQQ__Status__c != quoteOldMap.get( newQuote.Id ).SBQQ__Status__c )
-                )
-            {
-                Opportunity op = new Opportunity();
-                op.Id = newQuote.SBQQ__Opportunity2__c;
-                op.AVA_SFCLOUD__Calculate_Tax__c = true;
-                opportunitiesToUpdate.add( op );
+        try{
+            List<Opportunity> opportunitiesToUpdate = new List<Opportunity>();
+            for ( SBQQ__Quote__c newQuote : quoteNewMap.values() ) {
+                if ( ( newQuote.SBQQ__Primary__c == true )
+                    && ( newQuote.NSP_Budgetary_Quote__c == true )
+                    && ( newQuote.SBQQ__Status__c == NSP_CPQConstants.QUOTE_STATUS_APPROVED )
+                    && ( newQuote.SBQQ__Status__c != quoteOldMap.get( newQuote.Id ).SBQQ__Status__c )
+                    )
+                {
+                    Opportunity op = new Opportunity();
+                    op.Id = newQuote.SBQQ__Opportunity2__c;
+                    op.AVA_SFCLOUD__Calculate_Tax__c = true;
+                    opportunitiesToUpdate.add( op );
+                }
             }
-        }
-        if ( !opportunitiesToUpdate.isEmpty() ) {
-            update opportunitiesToUpdate;
+            if ( !opportunitiesToUpdate.isEmpty() ) {
+                List<Database.SaveResult> updateResults = Database.update( opportunitiesToUpdate , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_QuoteTriggerHelper.class.getName() ,
+                    'calcTaxOnOpportunity:update' ,
+                    updateResults
+                );
+            }
+        } catch(Exception e){
+            NSP_QuoteTriggerHelper.handleException( e , 'calcTaxOnOpportunity' );
         }
     }
 
