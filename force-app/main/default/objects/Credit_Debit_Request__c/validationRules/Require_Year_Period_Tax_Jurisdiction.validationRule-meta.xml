@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Year_Period_Tax_Jurisdiction</fullName>
+    <active>true</active>
+    <description>If Fin Category = Client Debit AND Fin Subcategory = Tax Debit Year Period &amp; Tax_Jurisdiction are required fields</description>
+    <errorConditionFormula>AND(
+  NOT( $Permission.Bypass_Credit_Debit_Request_Require_Year_Period_Tax_Jurisdiction ) ,
+  AND(
+    ISPICKVAL( Fin_Category__c , &quot;Client Debit&quot; ) ,
+    ISPICKVAL( Fin_Subcategory__c , &quot;Tax Debit&quot; ) ,
+    OR(
+      ISBLANK( TEXT( Year__c ) ) ,
+      ISBLANK( Period__c ) ,
+      ISBLANK( Tax_Jurisdiction__c )
+    )
+  )
+)</errorConditionFormula>
+    <errorMessage>Year, Period, and Tax Jurisdiction are required.</errorMessage>
+</ValidationRule>
