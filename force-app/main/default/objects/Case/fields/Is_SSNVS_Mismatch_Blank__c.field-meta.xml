@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Is_SSNVS_Mismatch_Blank__c</fullName>
-    <formula>AND(
-ISBLANK(TEXT( SSNVS_Mismatch__c ))
-)</formula>
+    <formula>ISBLANK( TEXT( SSNVS_Mismatch__c ) )</formula>
     <label>Is SSNVS Mismatch Blank?</label>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
