@@ -1,5 +1,5 @@
 public class NSP_SubscriptionTriggerHelper {
-    // test w/ NSP_SubscriptionTriggerHelperTest (75%)
+    // test w/ NSP_SubscriptionTriggerHelperTest (76%)
 
     //
     // Iterates throught the list of new subscriptions and passes the required attributes to other methods.
@@ -17,7 +17,6 @@ public class NSP_SubscriptionTriggerHelper {
     //
     public void afterInsertDirector( List<SBQQ__Subscription__c> newList ) {
         processEntitlements(newList);
-        updateSubscriptionRate(newList);
     }
 
     //
@@ -40,66 +39,17 @@ public class NSP_SubscriptionTriggerHelper {
     }
 
     //
-    // Iterates throught the list of new subscriptions and update subscription rate value
-    // @param newList List of New subscriptions.
-    // @return void
-    //
-    private void updateSubscriptionRate( List<SBQQ__Subscription__c> newList ) {
-        Set<Id> setOpId = new Set<Id>();
-        if( ( newList != null ) && !newList.isEmpty() ) {
-            for ( SBQQ__Subscription__c sbsq : newList ) {
-                if ( sbsq.SBQQ__HasConsumptionSchedule__c ) {
-                    setOpId.add( sbsq.SBQQ__OrderProduct__c );
-                }
-            }
-        }
-        if ( !setOpId.isempty() ) {
-            List<SBQQ__OrderItemConsumptionRate__c> lstCSUpdate = new List<SBQQ__OrderItemConsumptionRate__c>();
-            List<SBQQ__OrderItemConsumptionSchedule__c> lstOLS = [
-                SELECT
-                    Id ,
-                    (
-                        SELECT Id
-                        FROM SBQQ__OrderItemConsumptionRates__r
-                        WHERE (
-                            ( SBQQ__PricingMethod__c = 'FlatFee' )
-                            AND ( SBQQ__LowerBound__c = 0 )
-                            AND ( SBQQ__UpperBound__c = 1 )
-                        )
-                    )
-                FROM SBQQ__OrderItemConsumptionSchedule__c
-                WHERE ( SBQQ__OrderItem__c IN :setOpId )
-            ];
-            if ( !lstOLS.isEmpty() ) {
-                for ( SBQQ__OrderItemConsumptionSchedule__c lstQCS : lstOLS ) {
-                    for ( SBQQ__OrderItemConsumptionRate__c oicr : lstQCS.SBQQ__OrderItemConsumptionRates__r ) {
-                        lstCSUpdate.add(
-                            new SBQQ__OrderItemConsumptionRate__c(
-                                Id=oicr.Id ,
-                                SBQQ__UpperBound__c=0
-                            )
-                        );
-                    }
-                }
-            }
-            if ( !lstCSUpdate.isEmpty() ) {
-                update lstCSUpdate;
-            }
-        }
-    }
-
-    //
     // Iterates throught the list of new subscriptions and populates field values before record insert.
     // @param newList List of New subscriptions.
     // @return void
     //
     //
     public void populateFieldValuesOnInsert (List<SBQQ__Subscription__c> newList) {
-        
+
         Set<String> orderItemIds = new Set<String> ();
         for ( SBQQ__Subscription__c sub : newList ) {
             if(sub.SBQQ__OrderProduct__c != null) {
-                orderItemIds.add(sub.SBQQ__OrderProduct__c); 
+                orderItemIds.add(sub.SBQQ__OrderProduct__c);
             }
             //This code is used to set the subscription start and end date
             if(sub.NSP_SubscriptionStartDate__c == NSP_CPQConstants.SUBS_PROJGOLIVE && sub.NSP_ProjectGoLiveDate__c != null && sub.NSP_Quote_Type__c == NSP_CPQConstants.ORDER_TYPE_NEW){
@@ -116,14 +66,14 @@ public class NSP_SubscriptionTriggerHelper {
                 sub.SBQQ__RequiredById__c = null;
             }
         }
-        
+
         if(orderItemIds.size()>0){
             Map<Id, OrderItem> orderlinesMap = new Map<Id, OrderItem>([SELECT Id, OrderItemNumber, NSP_Override_Start_Date__c,ServiceDate, Order.blng__BillingAccount__c FROM OrderItem WHERE Id IN:orderItemIds]);
             for ( SBQQ__Subscription__c sub : newList ) {
                 if(orderlinesMap.containsKey(sub.SBQQ__OrderProduct__c)){
                     OrderItem currOrderLine = orderlinesMap.get(sub.SBQQ__OrderProduct__c);
                     if(currOrderLine.NSP_Override_Start_Date__c!=null && currOrderLine.NSP_Override_Start_Date__c!=currOrderLine.ServiceDate) {
-                        
+
                         sub.SBQQ__SubscriptionStartDate__c = currOrderLine.NSP_Override_Start_Date__c;
                     }
 
@@ -132,9 +82,9 @@ public class NSP_SubscriptionTriggerHelper {
                     }
                 }
             }
-            
+
         }
-        
+
     }
 
     //
@@ -152,14 +102,14 @@ public class NSP_SubscriptionTriggerHelper {
         Map<Id,SBQQ__Subscription__c> updateSubsMap = new Map<Id,SBQQ__Subscription__c>();
         for ( SBQQ__Subscription__c sub : newList ) {
             if(sub.SBQQ__QuoteLine__c != null) {
-                quoteLineIds.add(sub.SBQQ__QuoteLine__c); 
+                quoteLineIds.add(sub.SBQQ__QuoteLine__c);
             }
-                
+
                 if(sub.NSP_Remove_Bundle_Details__c && (sub.SBQQ__RootId__c != null || sub.SBQQ__RequiredById__c != null || sub.SBQQ__RequiredByProduct__c != null )){
                     sub.SBQQ__RootId__c = null;
                     sub.SBQQ__RequiredByProduct__c = null;
                     sub.SBQQ__RequiredById__c = null;
-                    
+
                 }
                 if(sub.NSP_ProjectGoLiveDate__c != null && sub.SBQQ__TerminatedDate__c != null && sub.SBQQ__BillingFrequency__c == 'Annual' && sub.SBQQ__RevisedSubscription__c !=null){
                     sub.SBQQ__TerminatedDate__c = sub.NSP_ProjectGoLiveDate__c - 1;
@@ -178,7 +128,7 @@ public class NSP_SubscriptionTriggerHelper {
         if(revOrderProdIds.size() > 0){
             updateTermDateonOP(revOrderProdIds);
         }
-        
+
     }
 
     //
@@ -204,7 +154,7 @@ public class NSP_SubscriptionTriggerHelper {
             if(subs.SBQQ__Contract__c!=null && subs.NSP_Order_Type__c == 'New Product' && String.isEmpty(subs.NSP_Product_Type_Exclusions_Internal__c) ){
                 contractIdSet.add(subs.SBQQ__Contract__c);
             }
-            
+
             if(subs.NSP_Create_Entitlement__c==true &&(subs.NSP_Quote_Type__c==NSP_CPQConstants.QUOTE_TYPE_NEW||(subs.NSP_QLAction__c==NSP_CPQConstants.ACTION_NEW && subs.NSP_Quote_Type__c==NSP_CPQConstants.QUOTE_TYPE_AMENDMENT))){
                 supportSubs.add(subs);
                 accountIds.add(subs.SBQQ__Account__c);
@@ -458,7 +408,7 @@ public class NSP_SubscriptionTriggerHelper {
     // @param  Set of Order Product Ids
     // @return void
     //
-    @future  
+    @future
     public static void updateTermDateonOP(Set<Id> orderProdIdSet){
         List<OrderItem> opUpdateList = new List<OrderItem>();
         List<OrderItem> opList = [Select SBQQ__TerminatedDate__c,SBQQ__Subscription__r.SBQQ__TerminatedDate__c,SBQQ__Subscription__r.NSP_ProjectGoLiveDate__c FROM OrderItem WHERE Id IN :orderProdIdSet];

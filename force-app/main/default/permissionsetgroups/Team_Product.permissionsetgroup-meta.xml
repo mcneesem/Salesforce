@@ -5,6 +5,8 @@
     <label>Team Product</label>
     <permissionSets>Assign_Connected_App_Data_Loader</permissionSets>
     <permissionSets>Assign_Connected_App_Workbench</permissionSets>
+    <permissionSets>Default_Account_Team_View</permissionSets>
+    <permissionSets>Default_Opportunity_Team_View</permissionSets>
     <permissionSets>Run_Flows</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

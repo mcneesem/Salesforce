@@ -125,6 +125,32 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentName>userDefaultOpportunityTeam</componentName>
+                <identifier>c_userDefaultOpportunityTeam</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Default_Opportunity_Team_View}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>userDefaultAccountTeam</componentName>
+                <identifier>c_userDefaultAccountTeam</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Default_Account_Team_View}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>tabs</name>
                     <value>chattertabs</value>

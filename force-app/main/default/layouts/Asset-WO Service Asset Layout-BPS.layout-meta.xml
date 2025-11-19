@@ -543,6 +543,31 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Product__c</fields>
+        <fields>Quoted_Quantity__c</fields>
+        <fields>Purchase_Status__c</fields>
+        <fields>Component_Price__c</fields>
+        <fields>Retail_Price__c</fields>
+        <fields>Total_Price__c</fields>
+        <fields>CREATED_DATE</fields>
+        <fields>LAST_UPDATE</fields>
+        <relatedList>Purchased_Product__c.Asset__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Purchased_Product__c</fields>
+        <fields>Current_PEPM__c</fields>
+        <fields>Current_Retail_Price__c</fields>
+        <fields>Difference__c</fields>
+        <fields>Price_Increase__c</fields>
+        <fields>Pricing_Upgrade_Concessions__c</fields>
+        <fields>Price_Increase_Date__c</fields>
+        <fields>CREATED_DATE</fields>
+        <fields>LAST_UPDATE</fields>
+        <relatedList>Price_Increase__c.Asset__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <fields>CREATED_DATE</fields>
         <fields>CREATEDBY_USER</fields>
         <relatedList>NSP_Note__c.NSP_Asset__c</relatedList>

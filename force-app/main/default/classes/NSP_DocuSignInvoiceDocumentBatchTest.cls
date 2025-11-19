@@ -3,6 +3,12 @@ private class NSP_DocuSignInvoiceDocumentBatchTest {
 
     @TestSetup
     private static void createTestData() {
+        CLMDocumentTransferSettings__c restSettings = CLMDocumentTransferSettings__c.getOrgDefaults();
+        restSettings.IsEnabledClmDocumentReceived__c = true;
+        restSettings.IsEnabledRestToken__c = true;
+        restSettings.IsEnabledRestTokenLogging__c = true;
+        upsert restSettings;
+
         Order_Settings__c orderSetting = Order_Settings__c.getOrgDefaults();
         upsert orderSetting;
 
@@ -136,6 +142,13 @@ private class NSP_DocuSignInvoiceDocumentBatchTest {
             '0 0 3 * * ? *' ,
             new NSP_DocuSignInvoiceDocumentBatch()
         );
+        Test.stopTest();
+    }
+
+    @isTest
+    private static void testLogAuthenticationAttempts() {
+        Test.startTest();
+        NSP_DocuSignRESTUtility.logAuthenticationAttempts( JSON.serialize( new Docusign_Log__c() ) );
         Test.stopTest();
     }
 

@@ -371,6 +371,11 @@
                 <default>false</default>
                 <label>Standard iSolved Clocks - G7+ Support</label>
             </value>
+            <value>
+                <fullName>Biometric Clock - GT10</fullName>
+                <default>false</default>
+                <label>Biometric Clock - GT10</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

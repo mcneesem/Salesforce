@@ -1,30 +1,22 @@
 public with sharing class NSP_OpportunityTeamMemberTriggerHelper {
-    // test w/ NSP_OpportunityTeamMemberTriggerTest (90%)
+    // test w/ NSP_OpportunityTeamMemberTriggerTest (85%)
 
     // Iterates through OpportunityTeamMember records and passes the required attributes to other methods.
     public void afterInsertDirector( List<OpportunityTeamMember> newList , Map<Id,OpportunityTeamMember> newMapDEPRECATED ) {
         try {
-            Set<Id> oppIdSet = new Set<Id>();
+            Set<Id> opportunityIds = new Set<Id>();
             for ( OpportunityTeamMember oppTeamMemberObj : newList ) {
                 if ( ( oppTeamMemberObj.TeamMemberRole == NSP_IntegrationConstants.BPAROLE )
                     || ( oppTeamMemberObj.TeamMemberRole == NSP_IntegrationConstants.BPCROLE )
                     )
                 {
-                    oppIdSet.add( oppTeamMemberObj.OpportunityId );
+                    opportunityIds.add( oppTeamMemberObj.OpportunityId );
                 }
             }
-            if ( !oppIdSet.isEmpty() ) {
-                List<Opportunity> oppList = new List<Opportunity>();
-                for ( Id oppId : oppIdSet ) {
-                    Opportunity oppObj = new Opportunity();
-                    oppObj.Id = oppId;
-                    oppObj.NSP_Ready_for_Integration_Sync__c = true;
-                    oppList.add( oppObj );
-                }
-                if ( !oppList.isEmpty() ) {
-                    update oppList;
-                }
-            }
+            IntegrationSyncController.setReadyForIntegrationSync(
+                opportunityIds ,
+                OpportunityTeamMember.getSObjectType()
+            );
             NSP_EnrollmentFeePaymentSharing.onOppTeamMemberInsert( newList );
         } catch ( Exception e ) {
             NSP_OpportunityTeamMemberTriggerHelper.handleException( e , 'afterInsertDirector' );
@@ -57,18 +49,10 @@ public with sharing class NSP_OpportunityTeamMemberTriggerHelper {
                     (Map<Id,sObject>)oldOpptyMap
                 )
             );
-            if ( !opptyIdSetToUpdateResyncFlag.isEmpty() ) {
-                List<Opportunity> updateOppList = new List<Opportunity>();
-                for ( Id opptyId : opptyIdSetToUpdateResyncFlag ) {
-                    Opportunity oppObj = new Opportunity();
-                    oppObj.Id = opptyId;
-                    oppObj.NSP_Ready_for_Integration_Sync__c = true;
-                    updateOppList.add( oppObj );
-                }
-                if ( !updateOppList.isEmpty() ) {
-                    update updateOppList;
-                }
-            }
+            IntegrationSyncController.setReadyForIntegrationSync(
+                opptyIdSetToUpdateResyncFlag ,
+                OpportunityTeamMember.getSObjectType()
+            );
         } catch ( Exception e ) {
             NSP_OpportunityTeamMemberTriggerHelper.handleException( e , 'afterUpdateDirector' );
         }

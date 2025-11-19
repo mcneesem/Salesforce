@@ -3,8 +3,7 @@
     <description>Group of Permission Sets required to Change Agent Queues in Manage Agent Queues in Omni-Channel Supervisor.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Manage Agent Queues</label>
-    <permissionSets>Customize_Application</permissionSets>
     <permissionSets>Manage_Public_List_Views</permissionSets>
-    <permissionSets>Manage_Users</permissionSets>
+    <permissionSets>Manage_Queue_Memberships</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

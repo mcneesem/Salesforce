@@ -67,7 +67,7 @@ public with sharing class LeadMostRecentCampaign {
     public class Request {
         @InvocableVariable(label='Lead Id' description='Id of the Lead to modify' required=true)
         public Id leadId;
-        @InvocableVariable(label='Most Recent Campaign Name' description='Name of the Most Recent Campaign' required=true)
+        @InvocableVariable(label='Most Recent Campaign Name' description='Name of the Most Recent Campaign')
         public String campaignName;
     }
 

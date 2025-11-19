@@ -2,7 +2,12 @@
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <fieldPermissions>
         <editable>true</editable>
-        <field>Asset.I_9_Service_Exception__c</field>
+        <field>Asset.E_Verify_Services__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Asset.I_9_Availability__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

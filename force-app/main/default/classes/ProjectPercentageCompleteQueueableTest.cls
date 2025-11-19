@@ -2,12 +2,17 @@
 private class ProjectPercentageCompleteQueueableTest {
 
     @testSetup
-    public static void setup() {
-        ProjectTaskTriggerSettings__c settings = ProjectTaskTriggerSettings__c.getOrgDefaults();
-        settings.IsEnabled__c = true;
-        settings.IsEnabledQueueablePercentage__c = true;
-        settings.IsEnabledFuturePercentage__c = false;
-        upsert settings;
+    private static void setup() {
+        ProjectTaskTriggerSettings__c taskSettings = ProjectTaskTriggerSettings__c.getOrgDefaults();
+        taskSettings.IsEnabled__c = true;
+        taskSettings.IsEnabledQueueablePercentage__c = true;
+        taskSettings.IsEnabledFuturePercentage__c = false;
+        upsert taskSettings;
+        //
+        ProjectPercentageCompleteSettings__c percentageSettings = ProjectPercentageCompleteSettings__c.getOrgDefaults();
+        percentageSettings.IsEnabled__c = true;
+        percentageSettings.StepSize__c = 1;
+        upsert percentageSettings;
     }
 
     @isTest

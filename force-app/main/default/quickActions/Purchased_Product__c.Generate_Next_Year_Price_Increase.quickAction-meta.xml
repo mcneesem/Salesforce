@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldOverrides>
+        <field>Asset__c</field>
+        <formula>Purchased_Product__c.Asset__c</formula>
+    </fieldOverrides>
+    <fieldOverrides>
+        <field>Current_PEPM__c</field>
+        <formula>Purchased_Product__c.Total_Price__c</formula>
+    </fieldOverrides>
+    <fieldOverrides>
+        <field>Current_Retail_Price__c</field>
+        <formula>Purchased_Product__c.Retail_Price__c</formula>
+    </fieldOverrides>
+    <fieldOverrides>
+        <field>Purchased_Product__c</field>
+        <formula>Purchased_Product__c.Id</formula>
+    </fieldOverrides>
+    <fieldOverrides>
+        <field>Unique_Id__c</field>
+        <formula>CASESAFEID(Purchased_Product__r.Id )
+&amp; &quot;-&quot; 
+&amp; TEXT( YEAR(
+ IF(
+  TODAY() &lt;
+  DATE( YEAR( TODAY() ) ,04,01)
+  , DATE( YEAR( TODAY() ) ,04,01)
+  , DATE( YEAR( TODAY() )+1 ,04,01)
+ )
+))</formula>
+    </fieldOverrides>
+    <label>Generate Next Year Price Increase</label>
+    <optionsCreateFeedItem>true</optionsCreateFeedItem>
+    <quickActionLayout>
+        <layoutSectionStyle>TwoColumnsLeftToRight</layoutSectionStyle>
+        <quickActionLayoutColumns>
+            <quickActionLayoutItems>
+                <emptySpace>false</emptySpace>
+                <field>Purchased_Product__c</field>
+                <uiBehavior>Required</uiBehavior>
+            </quickActionLayoutItems>
+        </quickActionLayoutColumns>
+        <quickActionLayoutColumns/>
+    </quickActionLayout>
+    <successMessage>Price Increase Created Successfully</successMessage>
+    <targetObject>Price_Increase__c</targetObject>
+    <targetParentField>Purchased_Product__c</targetParentField>
+    <type>Create</type>
+</QuickAction>
