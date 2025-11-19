@@ -37,6 +37,7 @@ public with sharing class GeneratePriceIncreasesBatch implements Database.Batcha
                         )
                     ) 
                     AND ( Asset__r.Status = 'Active' )
+                    AND ( Purchase_Status__c != 'Canceled' )
                 )
             ]
         );
