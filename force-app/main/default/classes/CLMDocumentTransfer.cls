@@ -1,7 +1,5 @@
 public with sharing class CLMDocumentTransfer {
-    // test w/ CLMDocumentTransferTest, SpringCMTests (88%)
-    // test w/ CLMDocumentTransferTest (79%)
-    // test w/ SpringCMTests (13%)
+    // test w/ CLMDocumentTransferTest (90%)
 
     String dsAccountId;
     String iss;
@@ -35,9 +33,16 @@ public with sharing class CLMDocumentTransfer {
             dataCenter = dcs.DataCenter__c;
             version = dcs.Version__c;
         }
-        DSAPIUserAuthenticator auth = new DSAPIUserAuthenticator(dsAccountId,iss,aud,sub,pkey,dataCenter,version);
-        this.authenticator = auth;
-        this.svc = new SpringCMService(authenticator);
+        this.authenticator = new DSAPIUserAuthenticator(
+            dsAccountId ,
+            iss ,
+            aud ,
+            sub ,
+            pkey ,
+            dataCenter ,
+            version
+        );
+        this.svc = new SpringCMService( this.authenticator );
     }
 
     //
@@ -160,6 +165,20 @@ public with sharing class CLMDocumentTransfer {
                 isEnabledRestToken = local;
             }
             return isEnabledRestToken;
+        }
+        private set;
+    }
+
+    public static Boolean isEnabledRestTokenLogging {
+        public get {
+            if ( isEnabledRestTokenLogging == null ) {
+                Boolean local = False;
+                if ( CLMDocumentTransfer.settings != null ) {
+                    local = CLMDocumentTransfer.settings.IsEnabledRestTokenLogging__c;
+                }
+                isEnabledRestTokenLogging = local;
+            }
+            return isEnabledRestTokenLogging;
         }
         private set;
     }

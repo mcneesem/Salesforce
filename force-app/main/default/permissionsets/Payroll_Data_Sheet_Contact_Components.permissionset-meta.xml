@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <classAccesses>
+        <apexClass>PdsContactController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Payroll_Data_Sheet_Contact_Components</name>
+    </customPermissions>
+    <description>AZD-502310 , Read Only Access to  PC/HR/OSS on PDS Page layout. 
+Refer Custom Permission for LWC Component</description>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Payroll__c.ACR_Work_Phone__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Sub_Client_Contact__c.Contact_full_name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Payroll Data Sheet Contact Components</label>
+</PermissionSet>

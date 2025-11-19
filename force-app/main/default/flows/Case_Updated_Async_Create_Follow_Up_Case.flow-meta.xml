@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>65.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Common_Case_Field_Assignment</name>
+        <label>Common Case Field Assignment</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varChildCaseRecord.AccountId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.AccountId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varChildCaseRecord.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.CreatedById</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varChildCaseRecord.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Open</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varChildCaseRecord.NSP_Case_Sub_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Not Started</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varChildCaseRecord.Origin</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Follow-up</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varChildCaseRecord.NSP_Category__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>WX/WA</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varChildCaseRecord.RecordTypeId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>0124x0000019l92AAA</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varChildCaseRecord.ParentId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Child_Case</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Create_EE_Reversal_Confirmation_Case</name>
+        <label>Create EE Reversal Confirmation Case</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varChildCaseRecord.Subject</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>EE Reversal Confirmation Case</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varChildCaseRecord.NSP_SubCategory__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Payroll</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varChildCaseRecord.NSP_Due_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>VarDueDate_Add_8</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Common_Case_Field_Assignment</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Create_Tax_Debit_Confirmation_Case</name>
+        <label>Create Tax Debit Confirmation Case</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varChildCaseRecord.Subject</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Tax Debit Confirmation</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varChildCaseRecord.NSP_SubCategory__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Tax</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varChildCaseRecord.NSP_Due_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>VarDueDate_Add_3</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Common_Case_Field_Assignment</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Check_Child_Case</name>
+        <label>Check Child Case</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>If_Not_Null</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varChildCaseRecord</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Child_Case</targetReference>
+            </connector>
+            <label>If Not Null</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Sub_Category</name>
+        <label>Check Sub Category</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Create_Tax_Debit_Confirmation_Case</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>If Tax</defaultConnectorLabel>
+        <rules>
+            <name>If_Banking</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NSP_SubCategory__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Banking</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_EE_Reversal_Confirmation_Case</targetReference>
+            </connector>
+            <label>If Banking</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <formulas>
+        <description>Adding up 3 business days with the parent case closed date.</description>
+        <name>VarDueDate_Add_3</name>
+        <dataType>Date</dataType>
+        <expression>CASE(
+    WEEKDAY(DATEVALUE({!$Record.ClosedDate})),
+    1, DATEVALUE({!$Record.ClosedDate}) + 3,
+    2, DATEVALUE({!$Record.ClosedDate}) + 3,
+    3, DATEVALUE({!$Record.ClosedDate}) + 3,
+    4, DATEVALUE({!$Record.ClosedDate}) + 5,
+    5, DATEVALUE({!$Record.ClosedDate}) + 5,
+    6, DATEVALUE({!$Record.ClosedDate}) + 5,
+    7, DATEVALUE({!$Record.ClosedDate}) + 4,
+    DATEVALUE({!$Record.ClosedDate}) + 3
+)</expression>
+    </formulas>
+    <formulas>
+        <description>Adding up 8 business days with Parent Case closed date</description>
+        <name>VarDueDate_Add_8</name>
+        <dataType>Date</dataType>
+        <expression>CASE(
+    WEEKDAY(DATEVALUE({!$Record.ClosedDate})),
+    1, DATEVALUE({!$Record.ClosedDate}) + 10,
+    2, DATEVALUE({!$Record.ClosedDate}) + 10,
+    3, DATEVALUE({!$Record.ClosedDate}) + 10,
+    4, DATEVALUE({!$Record.ClosedDate}) + 12,
+    5, DATEVALUE({!$Record.ClosedDate}) + 12,
+    6, DATEVALUE({!$Record.ClosedDate}) + 12,
+    7, DATEVALUE({!$Record.ClosedDate}) + 11,
+    DATEVALUE({!$Record.ClosedDate}) + 8
+)</expression>
+    </formulas>
+    <interviewLabel>Case - Updated - Async - Create Follow Up Case {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Case - Updated - Async - Create Follow Up Case</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>Create_Child_Case</name>
+        <label>Create Child Case</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <faultConnector>
+            <targetReference>Fault_Handler_Subflow_Flow</targetReference>
+        </faultConnector>
+        <inputReference>varChildCaseRecord</inputReference>
+    </recordCreates>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <filterLogic>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND ( (7 AND 8) OR (9 AND 10) )</filterLogic>
+        <filters>
+            <field>AccountId</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Is_Case_Closed__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Is_Case_Closed__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Category__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>WX/WA</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_SubCategory__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Banking</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Detail__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Manual Debit</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_SubCategory__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Tax</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Detail__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Tax Debit</stringValue>
+            </value>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <scheduledPaths>
+            <connector>
+                <targetReference>Check_Sub_Category</targetReference>
+            </connector>
+            <pathType>AsyncAfterCommit</pathType>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Draft</status>
+    <subflows>
+        <name>Fault_Handler_Subflow_Flow</name>
+        <label>Fault Handler Subflow Flow</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <stringValue>Create_Child_Case</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Case_Updated_Async_Create_Follow_Up_Case</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <variables>
+        <name>varChildCaseRecord</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Case</objectType>
+    </variables>
+</Flow>

@@ -277,6 +277,23 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_varFaultElement_Get_Customer_Signer</name>
+        <label>Assign varFaultElement - Get_Customer_Signer</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Customer_Signer</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_varFaultElement_Get_Opty_Owner_in_BPA_Public_Group</name>
         <label>Assign varFaultElement - Get Opty Owner in BPA Public Group</label>
         <locationX>0</locationX>
@@ -326,6 +343,57 @@
             <targetReference>Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
+    <decisions>
+        <description>Prevent DmlExceptions: FIELD_FILTER_VALIDATION_EXCEPTION: Value does not exist or does not match filter criteria. [NSP_Customer_Signer__c]
+~ When Opportunity.NSP_Customer_Signer__c is populated, then Opportunity.NSP_Customer_Signer__r.AccountId must be populated.</description>
+        <name>Check_Customer_Signer</name>
+        <label>Check Customer Signer</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Is_closeLostOptyBoolean_set_to_TRUE</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_Customer_Signer</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varOpportunity.NSP_Customer_Signer__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Customer_Signer</targetReference>
+            </connector>
+            <label>Has Customer Signer</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Prevent DmlExceptions: FIELD_FILTER_VALIDATION_EXCEPTION: Value does not exist or does not match filter criteria. [NSP_Customer_Signer__c]
+~ When Opportunity.NSP_Customer_Signer__c is populated, then Opportunity.NSP_Customer_Signer__r.AccountId must be populated.</description>
+        <name>Check_Customer_Signer_Account</name>
+        <label>Check Customer Signer Account</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Found_Customer_Signer_Account</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Customer_Signer</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Is_closeLostOptyBoolean_set_to_TRUE</targetReference>
+            </connector>
+            <label>Found Customer Signer Account</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Check_for_HR360_Primary_Product</name>
         <label>Check for HR360 Primary Product</label>
@@ -505,8 +573,15 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>varOpportunity.NSP_Customer_Signer__c</leftValueReference>
+                <operator>WasSet</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>Is_closeLostOptyBoolean_set_to_TRUE</targetReference>
+                <targetReference>Check_Customer_Signer</targetReference>
             </connector>
             <label>Yes - varOpportunity has relevant info</label>
         </rules>
@@ -723,6 +798,37 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Customer_Signer</name>
+        <label>Get Customer Signer</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Customer_Signer_Account</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_Customer_Signer</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varOpportunity.NSP_Customer_Signer__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>AccountId</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Contact</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordLookups>
         <name>Get_Opty_Owner_in_BPA_Public_Group</name>
         <label>Get Opty Owner in BPA Public Group</label>

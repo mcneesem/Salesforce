@@ -121,7 +121,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>NSP_Focus_Item__c.NSP_System_Generated__c</field>
         <readable>true</readable>
     </fieldPermissions>

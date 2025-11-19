@@ -67,6 +67,11 @@
                 <default>false</default>
                 <label>Parent_Amend_Required_is_Red__c</label>
             </value>
+            <value>
+                <fullName>SBQQ__ProductCode__c</fullName>
+                <default>false</default>
+                <label>SBQQ__ProductCode__c</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

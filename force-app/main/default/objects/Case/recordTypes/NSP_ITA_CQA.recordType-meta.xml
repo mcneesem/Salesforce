@@ -1235,27 +1235,27 @@
     <picklistValues>
         <picklist>NSP_Complexity_Level__c</picklist>
         <values>
-            <fullName>Level 1 %E2%80%93 Standard %28NSP%29</fullName>
+            <fullName>Level 1 %3A Standard %28NSP%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Level 2 %E2%80%93 Non-Standard %28NSP%29</fullName>
+            <fullName>Level 2 %3A Non-Standard %28NSP%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Level 3 %E2%80%93 Legal Escalation %28CP%29</fullName>
+            <fullName>Level 3 %3A Legal Escalation %28CP%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Level 4 %E2%80%93 Equity%2FDeferred Comp %28CP%29</fullName>
+            <fullName>Level 4 %3A Equity%2FDeferred Comp %28CP%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Level 5 %E2%80%93 ATP %28CP%29</fullName>
+            <fullName>Level 5 %3A ATP %28CP%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Level 6 %E2%80%93 Settlement %28CP%29</fullName>
+            <fullName>Level 6 %3A Settlement %28CP%29</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2327,6 +2327,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Audit%2FReview Finding</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Communication Issue</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Configuration Adjustment</fullName>
             <default>false</default>
         </values>
@@ -2339,11 +2347,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Enhancement Request</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Information</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Insperity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Integration Issue</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Internal Process Issue</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2359,6 +2379,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>No Issue Found</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Other</fullName>
             <default>false</default>
         </values>
@@ -2371,7 +2395,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Report Issue</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Reports</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Security%2FAccess Issue</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2384,6 +2416,10 @@
         </values>
         <values>
             <fullName>Termination</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Third Party%2FVendor Issue</fullName>
             <default>false</default>
         </values>
         <values>

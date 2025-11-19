@@ -4,16 +4,30 @@
     <externalId>false</externalId>
     <formula>IF(
   ( SBQQ__ProcessingOrder__c = 6 ) ,
-  &quot;1,001 or more&quot; ,
+  &quot;1,000 or more&quot; ,
   IF(
-    OR(
-      ( SBQQ__ProcessingOrder__c = 2 ) ,
-      ( SBQQ__ProcessingOrder__c = 3 ) ,
-      ( SBQQ__ProcessingOrder__c = 4 ) ,
-      ( SBQQ__ProcessingOrder__c = 5 )
-    ),
-    ( TEXT( SBQQ__LowerBound__c + 1 ) &amp; &quot; - &quot; &amp; TEXT( SBQQ__UpperBound__c ) ) ,
-    ( TEXT( SBQQ__LowerBound__c ) &amp; &quot; - &quot; &amp; TEXT( SBQQ__UpperBound__c ) )
+    AND(
+      ( SBQQ__ProcessingOrder__c = 1 ) ,
+      ( SBQQ__Price__c = 0 )
+    ) ,
+    ( TEXT( SBQQ__LowerBound__c ) &amp; &quot; - &quot; &amp; TEXT( SBQQ__UpperBound__c - 1 ) ) ,
+    IF(
+      AND(
+        ( SBQQ__ProcessingOrder__c = 1 ) ,
+        ( SBQQ__Price__c &gt; 0 )
+      ) ,
+      ( TEXT( SBQQ__LowerBound__c + 1 ) &amp; &quot; - &quot; &amp; TEXT( SBQQ__UpperBound__c - 1 ) ) ,
+      IF(
+        OR(
+          ( SBQQ__ProcessingOrder__c = 2 ) ,
+          ( SBQQ__ProcessingOrder__c = 3 ) ,
+          ( SBQQ__ProcessingOrder__c = 4 ) ,
+          ( SBQQ__ProcessingOrder__c = 5 )
+        ),
+        ( TEXT( SBQQ__LowerBound__c ) &amp; &quot; - &quot; &amp; TEXT( SBQQ__UpperBound__c - 1 ) ) ,
+        NULL
+      )
+    )
   )
 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>

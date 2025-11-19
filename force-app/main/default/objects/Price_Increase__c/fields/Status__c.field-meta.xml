@@ -1,24 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>I_9_Service_Exception__c</fullName>
-    <label>I-9 Service Exception</label>
+    <fullName>Status__c</fullName>
+    <defaultValue>&quot;Pending&quot;</defaultValue>
+    <description>Field to track Price Increase Completion Status</description>
+    <inlineHelpText>Mark Current Status</inlineHelpText>
+    <label>Status</label>
     <required>false</required>
-    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>I-9 Collection Exception</fullName>
+                <fullName>Pending</fullName>
                 <default>false</default>
-                <label>I-9 Collection Exception</label>
+                <label>Pending</label>
             </value>
             <value>
-                <fullName>Opt-Out</fullName>
+                <fullName>Completed</fullName>
                 <default>false</default>
-                <label>Opt-Out</label>
+                <label>Completed</label>
             </value>
         </valueSetDefinition>
     </valueSet>

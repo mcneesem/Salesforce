@@ -34,7 +34,8 @@
              ></lightning-input>  
             </div>
              
-          <div class="pillDiv slds-hide">        
+          <div class="pillDiv slds-hide">  
+            <template if:true={selectedRecord}>     
             <span class="slds-icon_container slds-combobox__input-entity-icon">
               <lightning-icon icon-name={iconName} size="x-small" alternative-text="icon"></lightning-icon>  
             </span>
@@ -47,6 +48,7 @@
             <button class="slds-button slds-button_icon slds-input__icon slds-input__icon_right" title="Remove selected option">
             <lightning-icon icon-name="utility:close" size="x-small" alternative-text="close icon" onclick={handleRemove}></lightning-icon> 
            </button>
+           </template> 
           </div>  
          
       

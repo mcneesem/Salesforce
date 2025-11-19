@@ -2486,6 +2486,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>NSP_Pricing_Table__c.IsPricingActive__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>NSP_Pricing_Table__c.NSP_End_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2887,6 +2892,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Product2.Flat_Fee_Reference_Price__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Product2.Qualifies_For_Price_Increase__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

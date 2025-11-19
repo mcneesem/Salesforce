@@ -621,8 +621,7 @@ public class NSP_AccountTriggerHelper {
                     || accOwnerSalesOfficeMap.containsKey( UserInfo.getUserId() )
                 );
                 Boolean isAllowUpdate = this.isAllowedAccountChange(
-                    ( acc.NSP_Last_Updated__c != oldRecord.NSP_Last_Updated__c ) ,
-                    ( acc.Zip_Based_Location__c != oldRecord.Zip_Based_Location__c ) ,
+                    this.isAllowedFieldChanges( acc , oldRecord ) ,
                     ( oldRecord.OwnerId == availableUserId ) ,
                     isAllowAssignAvailable ,
                     accOwnerSalesOfficeMap.isEmpty() ,
@@ -630,7 +629,7 @@ public class NSP_AccountTriggerHelper {
                     isValidCurrentUser
                 );
                 if ( !isAllowUpdate ) {
-                    acc.addError( System.label.NSP_AccountTriggerError );
+                    acc.addError( System.Label.NSP_AccountTriggerError );
                 }
             }
         } catch ( Exception e ) {
@@ -639,9 +638,23 @@ public class NSP_AccountTriggerHelper {
     }
 
     // helper method to defeat sonar cognitive complexity...
+    private Boolean isAllowedFieldChanges( Account newRecord , Account oldRecord ) {
+        Boolean response = false;
+        if ( ( newRecord != null ) && ( oldRecord != null ) ) {
+            response = (
+                ( newRecord.NSP_Last_Updated__c != oldRecord.NSP_Last_Updated__c )
+                || ( newRecord.Zip_Based_Location__c != oldRecord.Zip_Based_Location__c )
+                || ( ( newRecord.NSP_Sales_Service_Account_Status__c != oldRecord.NSP_Sales_Service_Account_Status__c )
+                    && ( newRecord.NSP_Sales_Service_Account_Status__c == 'Prospecting' )
+                    )
+            );
+        }
+        return response;
+    }
+
+    // helper method to defeat sonar cognitive complexity...
     private Boolean isAllowedAccountChange(
-        Boolean isChangedLastUpdated ,
-        Boolean isChangedZipBasedLocation ,
+        Boolean isAllowedBypass ,
         Boolean isAvailablePreviousOwner ,
         Boolean isAllowAssignAvailable ,
         Boolean isEmptyAccountOwnerSalesOfficeMap ,
@@ -649,13 +662,10 @@ public class NSP_AccountTriggerHelper {
         Boolean isValidCurrentUser
         )
     {
-        Boolean isAllowUpdate = (
-            isChangedLastUpdated
-            || isChangedZipBasedLocation
-        );
+        Boolean isAllowed = isAllowedBypass;
         if ( isAvailablePreviousOwner ) {
             if ( isAllowAssignAvailable ) {
-                isAllowUpdate = true;
+                isAllowed = isAllowAssignAvailable;
             }
         } else if (
             ( isEmptyAccountOwnerSalesOfficeMap )
@@ -663,9 +673,9 @@ public class NSP_AccountTriggerHelper {
             || ( isValidCurrentUser )
             )
         {
-            isAllowUpdate = true;
+            isAllowed = true;
         }
-        return isAllowUpdate;
+        return isAllowed;
     }
 
     private List<String> selectLoggedInUserGroupName() {

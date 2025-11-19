@@ -1,23 +1,9 @@
-/**
-Apex Class Name      :  NSP_OpportunityTriggerHelper for Opportunity Trigger
-Version              :  1.0
-Created Date         :  12/24/2021
-Function             :  This class is used as a helper to Opportunity Trigger Handler.
-Story                :
-Modification Log     :
-*--------------------------------------------------------------------------------------------------
-* Developer                   Date                   Description
-* -------------------------------------------------------------------------------------------------
-* Tejas                 07/02/2021            First Iteration
-* Rahul Singh           26/10/2022            Create OCR
-* Rahul Singh           11/17/2022            User STory 128436
-* Rahul Singh           22/12/2022            User STory 194265
-* Rahul Singh           02/02/2023            user story - 192368
-*/
 public with sharing class NSP_OpportunityTriggerHelper {
+    // test w/ NSP_OpportunityTriggerHelperTest, NSP_AccountTriggerHelperTest, OpportunityCloseWonTest (82%)
     // test w/ NSP_OpportunityTriggerHelperTest, OpportunityCloseWonTest (80%)
-    // test w/ NSP_OpportunityTriggerHelperTest (78%)
-    // test w/ NSP_AccountTriggerHelperTest (40%)
+    // test w/ NSP_OpportunityTriggerHelperTest (76%)
+    // test w/ NSP_AccountTriggerHelperTest (42%)
+    // test w/ OpportunityCloseWonTest (38%)
 
     public static List<String> analysisStageCriteraTypes = System.Label.NSP_AnalysisStageCriteria.split(',');
     public static List<String> proposeStageCriteraTypes = System.Label.NSP_ProposeStageCriteria.split(',');
@@ -119,6 +105,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
         NSP_OpportunityTriggerHelperFunctions oppHelperFuncObj = new NSP_OpportunityTriggerHelperFunctions();
         //Setting direct assignments to opportunity records
         oppHelperFuncObj.setDirectOpptyFieldsAssignments(newList);
+        this.assignReadyForIntegrationSync( newList );
 
         if(!opportunityWoWxList.isEmpty()){
             //Calling method to stamp WO/WX emails on oprty record
@@ -186,7 +173,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
         // Send the list to publish event bus
         this.publishIntegrationSyncEvents(
             integrationSyncIds ,
-            NSP_OpportunityTriggerHelper.platformEventSettings.IsEnabled_IntegrationOpportunityEvent__c
+            NSP_OpportunityTriggerHelper.isEnabledIntegrationOpportunityEvent
         );
     }
 
@@ -376,7 +363,6 @@ public with sharing class NSP_OpportunityTriggerHelper {
         changeOpportunityRecordType(lockOpportunitiesList);
         NSP_ChildOpportunitiesHelperFunctions childOpptyHlprObj = new NSP_ChildOpportunitiesHelperFunctions();
         childOpptyHlprObj.updateChildOpportunityOnProductChange(primaryProductChanged);
-
         this.assignReadyForIntegrationSync( opportunityNewMap , opportunityOldMap );
 
         if(ownerChangedOpptyList.size()>0){
@@ -471,12 +457,12 @@ public with sharing class NSP_OpportunityTriggerHelper {
         }
         this.publishIntegrationSyncEvents(
             integrationSyncIds ,
-            NSP_OpportunityTriggerHelper.platformEventSettings.IsEnabled_IntegrationOpportunityEvent__c
+            NSP_OpportunityTriggerHelper.isEnabledIntegrationOpportunityEvent
         );
         this.publishIntegrationSyncEvents(
             integrationSyncIdsAnalysis ,
-            ( NSP_OpportunityTriggerHelper.platformEventSettings.IsEnabled_IntegrationOpportunityEvent__c
-                || NSP_OpportunityTriggerHelper.platformEventSettings.IsEnabled_OpportunityStageChangeEvent__c
+            ( NSP_OpportunityTriggerHelper.isEnabledIntegrationOpportunityEvent
+                || NSP_OpportunityTriggerHelper.isEnabledOpportunityStageChangeEvent
                 )
         );
         if ( !closedOpportunityIdList.isEmpty() ) {
@@ -746,14 +732,13 @@ public with sharing class NSP_OpportunityTriggerHelper {
         }
     }
 
-
-/**
-* prevent the users when existing Business opportunity with Interest in Retirement
-* services for accounts who does not own WO products is created.
-* @param opportunityList list of New Opportunity.
-* @return void
-*/
-    public void retirementServicesForNonWOProducts(List<Opportunity> opportunityList){
+    //
+    // prevent the users when existing Business opportunity with Interest in Retirement
+    // services for accounts who does not own WO products is created.
+    // @param opportunityList list of New Opportunity.
+    // @return void
+    //
+    public void retirementServicesForNonWOProducts( List<Opportunity> opportunityList ) {
         Map<Id, List<Asset>> accountIdAssetListMap = new Map<Id, List<Asset>>();
         Set<Id> accountIdsSet = new Set<Id>();
 
@@ -783,16 +768,14 @@ public with sharing class NSP_OpportunityTriggerHelper {
         }
     }
 
-
-    /**
-* Setting Opportunity Type to Renewal for Renewal Oportunities
-* copy value from original opportunity to renewal /Amendment opportunity
-* Stage = Proposal : Number of Employees = Populated from original opportunity.
-* @param opportunityList list of New Opportunity.
-* @return void
-*/
-
-    public void setTypeforRenewalOpportunity(List<Opportunity> opportunityList){
+    //
+    // Setting Opportunity Type to Renewal for Renewal Oportunities
+    // copy value from original opportunity to renewal /Amendment opportunity
+    // Stage = Proposal : Number of Employees = Populated from original opportunity.
+    // @param opportunityList list of New Opportunity.
+    // @return void
+    //
+    public void setTypeforRenewalOpportunity( List<Opportunity> opportunityList ) {
 
         set<Id> contractIdSet = new set<Id> ();
 
@@ -848,8 +831,21 @@ public with sharing class NSP_OpportunityTriggerHelper {
     // Integration Sync Methods
     //
 
+    // Opportunity-before-insert
+    private void assignReadyForIntegrationSync( List<Opportunity> records ) {
+        // sync cloned opportunities...
+        if ( ( records != null ) && !records.isEmpty() ) {
+            for ( Opportunity record : records ) {
+                if ( record.isClone() ) {
+                    record.NSP_Ready_for_Integration_Sync__c = true;
+                }
+            }
+        }
+    }
+
+    // Opportunity-before-update
     private void assignReadyForIntegrationSync( Map<Id,Opportunity> opportunityNewMap , Map<Id,Opportunity> opportunityOldMap ) {
-        //call updateTriggerclass for metadata check ad update integration sync field on account
+        // sync opportunities with critical field changes...
         Set<Id> opportunityIdSetToUpdateResyncFlag = new Set<Id>();
         NSP_SObjectUpdateTriggerHelper sObjectUpdateObj = new NSP_SObjectUpdateTriggerHelper();
         opportunityIdSetToUpdateResyncFlag.addAll(
@@ -860,12 +856,14 @@ public with sharing class NSP_OpportunityTriggerHelper {
             )
         );
         if ( !opportunityIdSetToUpdateResyncFlag.isEmpty() ){
-            for ( Id opptyId : opportunityIdSetToUpdateResyncFlag ) {
-                opportunityNewMap.get( opptyId ).NSP_Ready_for_Integration_Sync__c = true;
+            for ( Id recordId : opportunityIdSetToUpdateResyncFlag ) {
+                opportunityNewMap.get( recordId ).NSP_Ready_for_Integration_Sync__c = true;
             }
         }
     }
 
+    // Opportunity-after-insert
+    // Opportunity-after-update
     private Set<Id> collectIntegrationSyncIds( Opportunity record , Set<Id> syncIds , Boolean isValid ) {
         if ( isValid
             && ( syncIds != null )
@@ -878,7 +876,56 @@ public with sharing class NSP_OpportunityTriggerHelper {
         return syncIds;
     }
 
+    // Event-after-insert
+    // OpportunityTeamMember-after-insert
+    public static void setReadyForIntegrationSync( Set<Id> syncIds ) {
+        if ( ( syncIds != null ) && !syncIds.isEmpty() ) {
+            if ( NSP_OpportunityTriggerHelper.isEnabledDmlRelatedOpportunities ) {
+                List<Opportunity> records = new List<Opportunity>();
+                for ( Id syncId : syncIds ) {
+                    Opportunity record = new Opportunity();
+                    record.Id = syncId;
+                    record.NSP_Ready_for_Integration_Sync__c = true;
+                    records.add( record );
+                }
+                if ( !records.isEmpty() ) {
+                    Database.update( records );
+                }
+            } else {
+                NSP_OpportunityTriggerHelper helper = new NSP_OpportunityTriggerHelper();
+                helper.publishIntegrationSyncEvents(
+                    syncIds ,
+                    NSP_OpportunityTriggerHelper.isEnabledIntegrationOpportunityEvent ,
+                    false
+                );
+            }
+        }
+    }
+
+    // Account-after-update
+    public static void publishIntegrationSyncEvents( List<Opportunity> records ) {
+        if ( ( records != null ) && !records.isEmpty() ) {
+            Map<Id,Opportunity> recordMap = new Map<Id,Opportunity>( records );
+            NSP_OpportunityTriggerHelper helper = new NSP_OpportunityTriggerHelper();
+            helper.publishIntegrationSyncEvents(
+                recordMap.keySet() ,
+                NSP_OpportunityTriggerHelper.isEnabledIntegrationOpportunityEvent ,
+                false
+            );
+        }
+    }
+
+    // Opportunity-after-insert
+    // Opportunity-after-update
     private void publishIntegrationSyncEvents( Set<Id> syncIds , Boolean isEnabled ) {
+        this.publishIntegrationSyncEvents(
+            syncIds ,
+            isEnabled ,
+            true
+        );
+    }
+
+    private void publishIntegrationSyncEvents( Set<Id> syncIds , Boolean isEnabled , Boolean isEnabledDml ) {
         if ( isEnabled
             && ( syncIds != null )
             && !syncIds.isEmpty()
@@ -892,11 +939,13 @@ public with sharing class NSP_OpportunityTriggerHelper {
                         Id__c=syncId
                     )
                 );
-                records.add(
-                    new Opportunity(
-                        Id=syncId
-                    )
-                );
+                if ( isEnabledDml ) {
+                    records.add(
+                        new Opportunity(
+                            Id=syncId
+                        )
+                    );
+                }
             }
             this.publishEventBus( eventList , records );
         }
@@ -941,6 +990,10 @@ public with sharing class NSP_OpportunityTriggerHelper {
         }
     }
 
+    //
+    // Custom Settings
+    //
+
     private static PlatformEventSettings__c platformEventSettings {
         private get {
             if ( platformEventSettings == null ) {
@@ -951,13 +1004,54 @@ public with sharing class NSP_OpportunityTriggerHelper {
         private set;
     }
 
-    /**
-* Iterates tthrough closed won oportunity and looks for product where asset should be created
-* @param closedWonOpptyList of closed won Opportunity.
-* @return void
-*
-*/
-     public void createAssetForCloseWonOpportunity(List<Opportunity> closedWonOpptyList){
+    private static Boolean isEnabledDmlRelatedOpportunities {
+        private get {
+            if ( isEnabledDmlRelatedOpportunities == null ) {
+                Boolean local = False;
+                if ( NSP_OpportunityTriggerHelper.platformEventSettings != null ) {
+                    local = NSP_OpportunityTriggerHelper.platformEventSettings.IsEnabled_DmlRelatedOpportunities__c;
+                }
+                isEnabledDmlRelatedOpportunities = local;
+            }
+            return isEnabledDmlRelatedOpportunities;
+        }
+        private set;
+    }
+
+    private static Boolean isEnabledIntegrationOpportunityEvent {
+        private get {
+            if ( isEnabledIntegrationOpportunityEvent == null ) {
+                Boolean local = False;
+                if ( NSP_OpportunityTriggerHelper.platformEventSettings != null ) {
+                    local = NSP_OpportunityTriggerHelper.platformEventSettings.IsEnabled_IntegrationOpportunityEvent__c;
+                }
+                isEnabledIntegrationOpportunityEvent = local;
+            }
+            return isEnabledIntegrationOpportunityEvent;
+        }
+        private set;
+    }
+
+    private static Boolean isEnabledOpportunityStageChangeEvent {
+        private get {
+            if ( isEnabledOpportunityStageChangeEvent == null ) {
+                Boolean local = False;
+                if ( NSP_OpportunityTriggerHelper.platformEventSettings != null ) {
+                    local = NSP_OpportunityTriggerHelper.platformEventSettings.IsEnabled_OpportunityStageChangeEvent__c;
+                }
+                isEnabledOpportunityStageChangeEvent = local;
+            }
+            return isEnabledOpportunityStageChangeEvent;
+        }
+        private set;
+    }
+
+    //
+    // Iterates tthrough closed won oportunity and looks for product where asset should be created
+    // @param closedWonOpptyList of closed won Opportunity.
+    // @return void
+    //
+    public void createAssetForCloseWonOpportunity( List<Opportunity> closedWonOpptyList ) {
         createHardwareAssets(closedWonOpptyList);
         Set<Id> productIds = new Set<Id>();
         Set<Id> accountIds = new Set<Id>();
@@ -1084,8 +1178,15 @@ public with sharing class NSP_OpportunityTriggerHelper {
         }
         try{
             if(upsertList != null && upsertList.size() > 0){
-                upsert upsertList;
+                List<Database.UpsertResult> upsertResults = Database.upsert( upsertList, false);
+                NSP_ErrorLogHandler.logResults(
+                    NSP_OpportunityTriggerHelper.class.getName() ,
+                    'createAssetForCloseWonOpportunity:upsert' ,
+                    upsertResults
+                );
             }
+            //Create Purchased Products
+            PurchasedProductsCreateBatch.executeBatch( closedWonOpptyList );
         } catch ( Exception e ) {
             NSP_OpportunityTriggerHelper.handleException( e , 'createAssetForCloseWonOpportunity' );
         }
@@ -1141,12 +1242,12 @@ public with sharing class NSP_OpportunityTriggerHelper {
         }
     }
 
-    /***********************************************************************************************
-    * MethodName: getRelatedACR
-    * Description : This method will fetch the Primary ACR records related to Opportunity Account
-    * Params:       Set<Id> accountId ,Set<Id>OpportunityIds
-    * ********************************************************************************************/
-    public static void getRelatedACR(Set<Id> accountId ,Set<Id>OpportunityIds){
+    //
+    // MethodName: getRelatedACR
+    // Description : This method will fetch the Primary ACR records related to Opportunity Account
+    // Params: Set<Id> accountId ,Set<Id>OpportunityIds
+    //
+    public static void getRelatedACR( Set<Id> accountId , Set<Id> OpportunityIds ) {
       Map < Id, AccountContactRelation > accountACRMap = new Map < Id, AccountContactRelation > ();
         Set<Id> OppAccountId = new Set<Id>();
         for (AccountContactRelation accountContactRelation: [Select Id , ContactId ,NSP_Is_Primary__c, AccountId from AccountContactRelation WHERE NSP_Is_Primary__c =true AND AccountId IN: accountId]) {
@@ -1225,20 +1326,12 @@ public with sharing class NSP_OpportunityTriggerHelper {
         }
     }
 
-
-/* Description: This method used to create rewards record for Contact role
-     *
-     * @param: opportunityList, opportunityMap
-     * @return: void
-     * Modification History:
-     * -------------------------------------------------------------------------------------
-     *  Date              | Description
-     * -------------------------------------------------------------------------------------
-     *  14/09/2022          created this new method added for STY-03287
-     *
-     *
-    */
-    public void creteRewardForContactRole(Map<Id, Opportunity> opportunityNewMap,Map<Id, Opportunity> opportunityOldMap){
+    //
+    // Description: This method used to create rewards record for Contact role
+    // @param: opportunityList, opportunityMap
+    // @return: void
+    //
+    public void creteRewardForContactRole( Map<Id,Opportunity> opportunityNewMap , Map<Id,Opportunity> opportunityOldMap ) {
         set<String> primaryProductSet = new set<String>{'WX','WA','WO'};
         map<Id,String> opportunityIdToRewardTypeMap = new map<Id,String>();
         for(Opportunity newOpportunity: opportunityNewMap.Values()){
@@ -1371,13 +1464,12 @@ public with sharing class NSP_OpportunityTriggerHelper {
         return newReward;
     }
 
-  /**
-* Iterates tthrough closed won oportunity and looks for product where asset should be created
-* @param closedWonOpptyList of closed won Opportunity.
-* @return void
-*
-*/
-    public void createAsset(List<Opportunity> closedWonOpptyList,Set<String> accountIdSet,Set<String> recordTypeSet){
+    //
+    // Iterates tthrough closed won oportunity and looks for product where asset should be created
+    // @param closedWonOpptyList of closed won Opportunity.
+    // @return void
+    //
+    public void createAsset( List<Opportunity> closedWonOpptyList , Set<String> accountIdSet , Set<String> recordTypeSet ) {
         Set<Id> productIds = new Set<Id>();
         Set<Id> accountIds = new Set<Id>();
         Map<Id,String> recordTypeMap = new Map<Id,String>();
@@ -1439,15 +1531,12 @@ public with sharing class NSP_OpportunityTriggerHelper {
         }
     }
 
-    /***********************************************************************************************
-    * MethodName: enrollmentFeeCheck
-    * Description : This method will update enrollment fee payment
-    * Params:       Map<Id, Opportunity> opportunityNewMap,Map<Id, Opportunity> opportunityOldMap
-    * Author : Rahul Singh
-    * Created Date:22/12/22
-    * Created for enrollment fee payment user story - 194265
-    * ********************************************************************************************/
-    public void enrollmentFeeCheck(Map<Id, Opportunity> opportunityNewMap,Map<Id, Opportunity> opportunityOldMap){
+    //
+    // MethodName: enrollmentFeeCheck
+    // Description : This method will update enrollment fee payment
+    // Params: Map<Id, Opportunity> opportunityNewMap,Map<Id, Opportunity> opportunityOldMap
+    //
+    public void enrollmentFeeCheck( Map<Id,Opportunity> opportunityNewMap , Map<Id,Opportunity> opportunityOldMap ) {
         set<Id> oppIdTrue = new set<Id>();
         set<Id> oppIdFalse = new set<Id>();
         list<NSP_Enrollment_Fee_Payment__c> enrollmentUpdateList = new list<NSP_Enrollment_Fee_Payment__c>();
@@ -1570,14 +1659,13 @@ public with sharing class NSP_OpportunityTriggerHelper {
         }
     }
 
-    /*
-     * Method Name : createHardwareAssets
-     * Description : Method to create hardware assets
-     * Author : CPQ Team     Date : 01/23/2023
-     * @param List of closed won opportunities
-     * @return void
-     */
-    private void createHardwareAssets(List<Opportunity> closedWonOpptyList){
+    //
+    // Method Name : createHardwareAssets
+    // Description : Method to create hardware assets
+    // @param List of closed won opportunities
+    // @return void
+    //
+    private void createHardwareAssets( List<Opportunity> closedWonOpptyList ) {
         List<Asset> assetsToCreate= new List<Asset>();
         String rectype = Schema.SObjectType.ASSET.getRecordTypeInfosByName().get(NSP_CPQConstants.HARDWARE_ASSET).getRecordTypeId();
         List<OpportunityLineItem> opptyLineItemList=[SELECT Name,Opportunity.accountId,OpportunityId,SBQQ__QuoteLine__r.SBQQ__EndDate__c,Product2Id,Quantity,Product2.NSP_ServiceAssetCategory__c,NSP_AccountName__c,SBQQ__QuoteLine__r.SBQQ__Quote__r.NSP_Billing_Account__c,SBQQ__QuoteLine__r.NSP_Support_ProductCode__c,SBQQ__QuoteLine__r.SBQQ__Quote__r.SBQQ__Type__c,SBQQ__QuoteLine__r.NSP_ActionType__c,SBQQ__QuoteLine__r.NSP_Product_Type__c
