@@ -503,11 +503,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Case.Is_SSNVS_Mismatch_Blank__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Case.Location_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -589,11 +584,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.Required_Documentation_Attached__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Case.SSNVS_Mismatch__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
