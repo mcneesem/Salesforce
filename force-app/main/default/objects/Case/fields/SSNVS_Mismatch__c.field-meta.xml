@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>SSNVS_Mismatch__c</fullName>
-    <description>If Pick list values are updated, be sure to update the Visibility filter on this field on Case Record Page</description>
     <label>SSNVS Mismatch</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
