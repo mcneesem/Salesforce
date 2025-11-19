@@ -194,31 +194,16 @@
                         <valueListItems>
                             <value>Case.Send_SSNVS_Email</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND ( 2 OR 3 OR 4 OR 5 )</booleanFilter>
+                                <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!$Permission.CustomPermission.Case_Send_SSNVS_Team_Email}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
                                 </criteria>
                                 <criteria>
-                                    <leftValue>{!Record.SSNVS_Mismatch__c}</leftValue>
+                                    <leftValue>{!Record.Is_SSNVS_Mismatch_Blank__c}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>1 - SSN not in file (never issued)</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.SSNVS_Mismatch__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>3 - Name matches; DOB does not match</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.SSNVS_Mismatch__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>5 - Name does not match; DOB not checked</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.SSNVS_Mismatch__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>6 - SSN did not verify, other reason</rightValue>
+                                    <rightValue>false</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
