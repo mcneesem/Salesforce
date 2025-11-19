@@ -26,6 +26,12 @@
         <cssExposed>false</cssExposed>
     </standardValue>
     <standardValue>
+        <fullName>Assisted - SVS OPS</fullName>
+        <default>false</default>
+        <label>Assisted - SVS OPS</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
         <fullName>BPS - Assigned to Regeneration</fullName>
         <default>false</default>
         <label>BPS - Assigned to Regeneration</label>
@@ -137,6 +143,12 @@
         <fullName>Premier Concern - NO RISK</fullName>
         <default>false</default>
         <label>Premier Concern - NO RISK</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>PS - VM</fullName>
+        <default>false</default>
+        <label>PS - VM</label>
         <cssExposed>false</cssExposed>
     </standardValue>
     <standardValue>
