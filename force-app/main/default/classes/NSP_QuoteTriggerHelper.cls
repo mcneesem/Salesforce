@@ -1520,8 +1520,8 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
     // @param QuoteOldMap Map of Old Quote.
     // @return void
     //
-    public void calcTaxOnOpportunity( Map<Id,SBQQ__Quote__c> quoteNewMap , Map<Id,SBQQ__Quote__c> quoteOldMap )  {
-        try{
+    public void calcTaxOnOpportunity( Map<Id,SBQQ__Quote__c> quoteNewMap , Map<Id,SBQQ__Quote__c> quoteOldMap ) {
+        try {
             List<Opportunity> opportunitiesToUpdate = new List<Opportunity>();
             for ( SBQQ__Quote__c newQuote : quoteNewMap.values() ) {
                 if ( ( newQuote.SBQQ__Primary__c == true )
@@ -1544,7 +1544,7 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
                     updateResults
                 );
             }
-        } catch(Exception e){
+        } catch ( Exception e ) {
             NSP_QuoteTriggerHelper.handleException( e , 'calcTaxOnOpportunity' );
         }
     }
