@@ -3,7 +3,7 @@
     <fullName>NSP_Lost_Reason__c</fullName>
     <description>Field used to track lost reason</description>
     <externalId>false</externalId>
-    <label>Reason Lost</label>
+    <label>Primary Reason Lost</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
