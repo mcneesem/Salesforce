@@ -2,6 +2,9 @@
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>All</fullName>
     <columns>NAME</columns>
+    <columns>Effective_Date__c</columns>
+    <columns>Benefits_Effective_Date__c</columns>
+    <columns>Benefits_Waiting_Period__c</columns>
     <columns>CREATEDBY_USER</columns>
     <columns>CREATED_DATE</columns>
     <columns>UPDATEDBY_USER</columns>
