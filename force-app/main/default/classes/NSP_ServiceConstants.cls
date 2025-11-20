@@ -361,7 +361,7 @@ public class NSP_ServiceConstants {
     public final static String CATEGORY4 = 'Onboarding Follow Up';
     public final static String SUBCATEGORY4 ='Workers Comp';
     public final static String SUBJECT4='Client has an immediate need for WC Certs. See IP for certs requested';
-    public final static String CATEGORY5 = 'H&W Reporting & Compliance';
+    public final static String CATEGORY5 = 'H&W Benefits Compliance';
     public final static String SUBCATEGORY5 ='Seasonal Employer';
     public final static String COMMENTS ='See the Implementation Profile for Seasonal Employee details.';
     public final static String CATEGORY6 = 'Payroll Services';
