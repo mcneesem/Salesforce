@@ -1,6 +1,6 @@
 @isTest
-public class BudgetaryQuoteTaxControllerQueueTest {
-    
+private class BudgetaryQuoteTaxControllerQueueTest {
+
     @testSetup
     private static void testData() {
 
@@ -95,4 +95,6 @@ public class BudgetaryQuoteTaxControllerQueueTest {
         System.assertEquals(10,quoteList[0].NSP_Sales_Tax__c,'The Sales Tax should be updated on the quote.');
 
     }
+
 }
+//
