@@ -48,7 +48,7 @@
         <default>false</default>
         <label>BPS - Enrolled</label>
         <cssExposed>false</cssExposed>
-        </standardValue>
+    </standardValue>
     <standardValue>
         <fullName>Changed to Hourly Non-Exempt</fullName>
         <default>false</default>
