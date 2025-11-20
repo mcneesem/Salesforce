@@ -1,0 +1,19 @@
+<messaging:emailTemplate Subject="INSPERITY/CLIENT REVISED TERMINATION LETTER" 
+    recipientType="Contact" 
+    relatedToType="NSP_Termination_Form__c">
+
+    <messaging:htmlEmailBody >
+        <p>Hello,</p>
+        <p>
+            Please find attached revised reinstatement letter for your reference.
+        </p>
+        <p>
+            For additional questions, please contact your Payroll Specialist or HRS directly.
+        </p>
+        <p>Regards,</p>
+        <p><b>Termination Team</b></p>
+        <c:NSP_InsperityEmailLogo ></c:NSP_InsperityEmailLogo>
+        <p style="color:red; font-weight:bold;">**OUTGOING ONLY - NO REPLIES WILL BE SENT FROM THIS MAILBOX**</p>
+    </messaging:htmlEmailBody>
+
+</messaging:emailTemplate>
