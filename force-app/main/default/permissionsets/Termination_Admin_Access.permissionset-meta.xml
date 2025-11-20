@@ -8,6 +8,36 @@
         <enabled>true</enabled>
         <name>Termination_Admin_Access</name>
     </customPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>CLM_Document__c.Termination_Form__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Termination_Form__c.Lower_Case_Client_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Termination_Form__c.Termination_Email_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Termination_Form__c.Termination_Letter_Template_Shown__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Termination_Form__c.Termination_Letter_Template__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Termination_Form__c.X16_Days_Calculation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <flowAccesses>
         <enabled>true</enabled>
         <flow>Termination_Forms_Manual_Emails_Screen_Flow</flow>

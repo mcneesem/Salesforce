@@ -22,6 +22,32 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
+                            <value>CustomButton.NSP_Termination_Form__c.Generate_Term_Letter</value>
+                            <visibilityRule>
+                                <booleanFilter>1 AND (2 OR 3 OR 4)</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.Termination_Letter_Template_Shown__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Termination_Admin_Access}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>System Administrator</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>System Admin Lite</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
                             <value>Edit</value>
                         </valueListItems>
                         <valueListItems>
@@ -1261,6 +1287,26 @@
                 <identifier>RecordCreatedByIdField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Termination_Letter_Template__c</fieldItem>
+                <identifier>RecordTermination_Letter_Template_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Termination_Email_Status__c</fieldItem>
+                <identifier>RecordTermination_Email_Status_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-ec17f073-de5a-4ead-9233-03e9354e0237</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -1283,6 +1329,26 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Confirm_File_Upload__c</fieldItem>
                 <identifier>RecordConfirm_File_Upload_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.X16_Days_Calculation__c</fieldItem>
+                <identifier>RecordX16_Days_Calculation_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Lower_Case_Client_Name__c</fieldItem>
+                <identifier>RecordLower_Case_Client_Name_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-a08fbcc9-5c44-483e-bec2-2074c6cf24bd</name>
@@ -1644,6 +1710,10 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Tabs</value>
+                </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>tabs</name>
                     <value>maintabs</value>

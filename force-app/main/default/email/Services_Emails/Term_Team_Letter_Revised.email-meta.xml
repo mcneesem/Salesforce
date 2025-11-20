@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <available>true</available>
+    <description>When Term Form Record Type = Payroll Specialist or Credit Specialist AND Revised = Yes</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Term Team Letter-Revised</name>
+    <style>none</style>
+    <subject>INSPERITY/CLIENT REVISED TERMINATION LETTER</subject>
+    <type>visualforce</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
