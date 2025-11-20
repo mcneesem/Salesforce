@@ -86,8 +86,7 @@ public class BudgetaryQuoteTaxControllerQueueTest {
         opportunityList[0].StageName = 'Closed Won';
         update opportunityList;
 
-        BudgetaryQuoteTaxControllerQueue queueJob = new BudgetaryQuoteTaxControllerQueue(new List<String>{opportunityList[0].Id});
-        System.enqueueJob(queueJob);
+        BudgetaryQuoteTaxControllerQueue.enqueueJob(new List<String>{opportunityList[0].Id});
         BudgetaryQuoteTaxControllerQueue.testHandleException(null,null);
 
         Test.stopTest();

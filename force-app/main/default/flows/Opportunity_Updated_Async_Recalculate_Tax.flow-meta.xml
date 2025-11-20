@@ -38,10 +38,10 @@
             <label>Recalculate Tax</label>
         </rules>
     </decisions>
-    <description>Recalculate the tax on the opportunity when the primary quote is switched</description>
+    <description>When a quote is marked as primary, initiate the tax recalculation on opportunity</description>
     <environments>Default</environments>
-    <interviewLabel>Quote - Updated - Recalculate - Opportunity -Tax {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Quote - Updated - Recalculate - Opportunity -Tax</label>
+    <interviewLabel>Opportunity - Updated - Async - Recalculate Tax {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Opportunity - Updated - Async - Recalculate Tax</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
