@@ -659,6 +659,15 @@
     <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Account__c</fields>
+        <fields>iSolved_ID__c</fields>
+        <fields>Requested_Date__c</fields>
+        <fields>Fin_Category__c</fields>
+        <fields>Total__c</fields>
+        <relatedList>Credit_Debit_Request__c.Case__c</relatedList>
+    </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>
     <runAssignmentRulesDefault>false</runAssignmentRulesDefault>
