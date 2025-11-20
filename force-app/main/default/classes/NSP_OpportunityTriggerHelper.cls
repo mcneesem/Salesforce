@@ -490,7 +490,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
         setPartnerAccount( partnerAccountOpportunityMap );
         NSP_EnrollmentFeePaymentSharing.onOppClose( opportunityNewMap );
         if ( salesTaxChanged.size()>0 ) {
-            System.enqueueJob(new BudgetaryQuoteTaxControllerQueue( salesTaxChanged ) );
+            BudgetaryQuoteTaxControllerQueue.enqueueJob( salesTaxChanged );
         }
         if ( backoutOptySet.size() > 0 ) {
             NSP_AssetUpdate.assetBackoutUpdate( backoutOptySet , NSP_SalesConstants.BACKOUT_STATUS );
@@ -940,11 +940,11 @@ public with sharing class NSP_OpportunityTriggerHelper {
                     )
                 );
                 if ( isEnabledDml ) {
-                records.add(
-                    new Opportunity(
-                        Id=syncId
-                    )
-                );
+                    records.add(
+                        new Opportunity(
+                            Id=syncId
+                        )
+                    );
                 }
             }
             this.publishEventBus( eventList , records );
