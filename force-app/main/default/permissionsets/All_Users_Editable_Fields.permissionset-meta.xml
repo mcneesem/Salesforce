@@ -27,6 +27,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.Docusign_Form_To_Send_Multi__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.Docusign_Form_To_Send__c</field>
         <readable>true</readable>
     </fieldPermissions>
