@@ -4439,6 +4439,25 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>SSNVS_Mismatch__c</picklist>
+        <values>
+            <fullName>1 - SSN not in file %28never issued%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3 - Name matches%3B DOB does not match</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5 - Name does not match%3B DOB not checked</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>6 - SSN did not verify%2C other reason</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Type</picklist>
         <values>
             <fullName>WO%2FWA Transition</fullName>
