@@ -121,7 +121,7 @@ public class NSP_OrderItemTriggerHelper {
                     cat2ListOrderItems.add(eachItem.Id); // Category 2 - Scholarship Applicable - Delete Partner consumption schedules
                 }
                 if(seasonalApplied){
-                    cat4ListOrderItems.add(eachItem.id); 
+                    cat4ListOrderItems.add(eachItem.id);
                 }
             }
             if(eachItem.NSP_ServiceAssetCategory__c != null && eachItem.NSP_ServiceAssetCategory__c != NSP_CPQConstants.HARDWARE_ASSET && eachItem.NSP_ServiceAsset__c == null){
@@ -157,8 +157,8 @@ public class NSP_OrderItemTriggerHelper {
         switch on category {
             when 1 {
                 List<SBQQ__OrderItemConsumptionSchedule__c> orderItemCSList = [
-                    SELECT Id 
-                    FROM SBQQ__OrderItemConsumptionSchedule__c 
+                    SELECT Id
+                    FROM SBQQ__OrderItemConsumptionSchedule__c
                     WHERE (
                         SBQQ__OrderItem__c IN :orderItemIds
                         AND (
@@ -283,20 +283,20 @@ public class NSP_OrderItemTriggerHelper {
                 && orderItemNewMap.get(op.Id).NSP_Project_Completion_Date__c != orderItemOldMap.get(op.id).NSP_Project_Completion_Date__c
                 )
             {
-                if ( actionTypeValues.contains(op.SBQQ__QuoteLine__r.NSP_ActionType__c ) 
-                    && op.SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c == RENEWABLE 
+                if ( actionTypeValues.contains(op.SBQQ__QuoteLine__r.NSP_ActionType__c )
+                    && op.SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c == RENEWABLE
                     && op.NSP_ReCalculation_Status_Internal__c != 'Processing'
                     && op.NSP_ReCalculation_Status_Internal__c != 'Staged'
                     )
                 {
-                    statusIdToChange.add(op.Id);   
+                    statusIdToChange.add(op.Id);
                 }
-                if ( !(actionTypeValues.contains(op.SBQQ__QuoteLine__r.NSP_ActionType__c ) && op.SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c == RENEWABLE) 
+                if ( !(actionTypeValues.contains(op.SBQQ__QuoteLine__r.NSP_ActionType__c ) && op.SBQQ__QuoteLine__r.SBQQ__SubscriptionType__c == RENEWABLE)
                     && op.NSP_ReCalculation_Status_Internal__c == 'Not Applicable'
                     && op.SBQQ__Activated__c == false
                     )
                 {
-                    orderLinesToActivate.add(op.Id);   
+                    orderLinesToActivate.add(op.Id);
                 }
             }
             if ( orderItemNewMap.get(op.Id).NSP_Payment_Method__c != orderItemOldMap.get(op.id).NSP_Payment_Method__c ) {
@@ -316,7 +316,7 @@ public class NSP_OrderItemTriggerHelper {
                     freeMonths += orderItemNewMap.get(op.Id).NSP_Total_Free_Periods__c;
                 }
                 Date currDate = System.Date.today();
-                Date startDate = System.Date.today().toStartOfMonth(); 
+                Date startDate = System.Date.today().toStartOfMonth();
                 Date endDate = startDate.addMonths(1).addDays(-1);
                 if ( currDate!=startDate
                     && op.Product2.NSP_Partial_Period_Free_Treatment__c == true
@@ -350,7 +350,7 @@ public class NSP_OrderItemTriggerHelper {
                 opTerminationMap.put(op.Id,orderItemNewMap.get(op.Id).SBQQ__TerminatedDate__c);
             }
             //Update Bill through override date for anniversay billing products when invoice is cancelled and rebilled
-            
+
             if ( orderItemNewMap.get(op.Id).blng__InvoiceRunProcessingStatus__c == NSP_CPQConstants.INVRUN_PENDING
                 && orderItemNewMap.get(op.Id).blng__BillThroughDateOverride__c == null
                 && orderItemNewMap.get(op.Id).NSP_AnniversaryBlngApplicable__c == true
@@ -405,7 +405,7 @@ public class NSP_OrderItemTriggerHelper {
         // STY-03095 - logic to handle order line reprocessing that calls CPQ Quote Calculator API
         if ( !statusIdToChange.isEmpty() || !orderLinesToActivate.isEmpty() ) {
             for ( OrderItem oi : orderItemNewMap.values() ) {
-                
+
                 if ( statusIdToChange.contains(oi.Id) ) {
                     oi.NSP_Order_Product_Activated__c = true;
                     oi.NSP_ReCalculation_Status_Internal__c = 'Processing';
@@ -413,7 +413,7 @@ public class NSP_OrderItemTriggerHelper {
                     oi.blng__OverrideInitialRevenueStartDate__c = oi.NSP_Project_Completion_Date__c;
                     oi.blng__OverrideNextBillingDate__c = oi.NSP_Project_Completion_Date__c;
                 }
-                    
+
             }
         }
         // STY-03076 - logic to handle multiple invoice lines grouping
@@ -466,10 +466,10 @@ public class NSP_OrderItemTriggerHelper {
     //
     public void afterUpdateDirector( Map<Id,OrderItem> OrderItemNewMap , Map<Id,OrderItem> OrderItemOldMap ) {
         Set<Id> orderIdSet = new Set<Id>();
-        Map<Id,OrderItem> opActiveMap = new Map<Id,OrderItem>();   
+        Map<Id,OrderItem> opActiveMap = new Map<Id,OrderItem>();
         Map<Id,Decimal> activeUserMap = new Map<Id,Decimal>();
-        String accId = null; 
-            
+        String accId = null;
+
         for (OrderItem op : [
                     SELECT
                         Id , OrderItemNumber , Order.Type , ServiceDate , SBQQ__QuoteLine__c , SBQQ__QuoteLine__r.NSP_ActionType__c ,
@@ -482,17 +482,12 @@ public class NSP_OrderItemTriggerHelper {
                 ]
             )
         {
-            if(OrderItemOldMap.get(op.id).SBQQ__Status__c != NSP_CPQConstants.ORDER_ACTIVATED
-            && OrderItemNewMap.get(op.Id).SBQQ__Status__c == NSP_CPQConstants.ORDER_ACTIVATED && op.Order.Status != NSP_CPQConstants.ORDER_ACTIVATED) {
-                if ( ( op.Order.NSP_Usage_Products_Count__c == 0 && op.Order.Type == NSP_CPQConstants.QUOTE_TYPE_NEW )
-                    || op.Order.Type == NSP_CPQConstants.SUPPLEMENTAL
-                    || op.Order.Type == NSP_CPQConstants.QUOTE_TYPE_AMENDMENT
-                    && op.Order.NSP_Transaction_Type__c != NSP_CPQConstants.QUOTE_TYPE_TERMINATION
-                    )
-                {
-                    orderIdSet.add(op.OrderId);
-                }
-            }
+            orderIdSet = this.collectOrderIdsToActivate(
+                op ,
+                OrderItemNewMap.get( op.Id ) ,
+                OrderItemOldMap.get( op.Id ) ,
+                orderIdSet
+            );
             //Set map value which will update service asset
             if ( OrderItemNewMap.get(op.Id).NSP_ServiceAssetCategory__c != null
                 && OrderItemNewMap.get(op.Id).NSP_ServiceAsset__c != null
@@ -520,8 +515,8 @@ public class NSP_OrderItemTriggerHelper {
                 }
             }
         }
-        if(orderIdSet.size()>0){
-            activateOrder(orderIdSet);
+        if ( !orderIdSet.isEmpty() ) {
+            NSP_OrderItemTriggerHelper.activateOrder( orderIdSet );
         }
         if(opActiveMap != null && opActiveMap.size()>0 && accId != null){
             NSP_AssetTriggerHandler.TriggerDisabled=true;
@@ -533,49 +528,85 @@ public class NSP_OrderItemTriggerHelper {
         }
     }
 
-    /**
-    * Method Name : activateOrderProduct 
-    * Description : Method to activate order product based on order activation trigger
-    * Author : CPQ Team       Date : 09/06/2022
-    * @param OrderNewMap Map of New Order. 
-    * @param OrderOldMap Map of Old Order.   
-    * @return void  
-    */
-    public static void activateOrder(Set<Id> orderIdSet){
+    private Set<Id> collectOrderIdsToActivate(
+        OrderItem record ,
+        OrderItem recordNew ,
+        OrderItem recordOld ,
+        Set<Id> orderIdSet
+        )
+    {
+        if ( orderIdSet == null ) {
+           orderIdSet = new Set<Id>();
+        }
+        if ( ( recordOld.SBQQ__Status__c != NSP_CPQConstants.ORDER_ACTIVATED )
+            && ( recordNew.SBQQ__Status__c == NSP_CPQConstants.ORDER_ACTIVATED )
+            && ( record.Order.Status != NSP_CPQConstants.ORDER_ACTIVATED )
+            && record.Order.Status != NSP_CPQConstants.ORDER_DRAFT
+            && ( ( ( record.Order.NSP_Usage_Products_Count__c == 0 ) && ( record.Order.Type == NSP_CPQConstants.QUOTE_TYPE_NEW ) )
+                || ( record.Order.Type == NSP_CPQConstants.SUPPLEMENTAL )
+                || ( ( record.Order.Type == NSP_CPQConstants.QUOTE_TYPE_AMENDMENT )
+                    && ( record.Order.NSP_Transaction_Type__c != NSP_CPQConstants.QUOTE_TYPE_TERMINATION )
+                    )
+                )
+            )
+        {
+            orderIdSet.add( record.OrderId );
+        }
+        return  orderIdSet;
+    }
+
+    //
+    // Method Name : activateOrderProduct
+    // Description : Method to activate order product based on order activation trigger
+    // Author : CPQ Team
+    // Date : 09/06/2022
+    // @param OrderNewMap Map of New Order.
+    // @param OrderOldMap Map of Old Order.
+    // @return void
+    //
+    public static void activateOrder( Set<Id> orderIdSet ) {
         List<Order> orderUp = new List<Order>();
         AggregateResult[] groupedResults = [
-            SELECT COUNT(Id)Ids,OrderId
+            SELECT
+                COUNT(Id)Ids ,
+                OrderId
             FROM OrderItem
             WHERE (
-                OrderId IN :orderIdSet
-                AND SBQQ__Status__c != :NSP_CPQConstants.ORDER_ACTIVATED
+                ( OrderId IN :orderIdSet )
+                AND ( SBQQ__Status__c != :NSP_CPQConstants.ORDER_ACTIVATED )
             )
             GROUP BY OrderId
         ];
-        
-        if(groupedResults.isEmpty()){
-            for(Id ordId : orderIdSet){
+        if ( !groupedResults.isEmpty() ) {
+            Set<Id> okOrderIds = new Set<Id>();
+            for ( AggregateResult ar : groupedResults ) {
+                okOrderIds.add( (Id)ar.get( 'OrderId' ) );
+            }
+            orderIdSet.removeAll( okOrderIds );
+        }
+        if ( !orderIdSet.isEmpty() ) {
+            for ( Id ordId : orderIdSet ) {
                 Order orderToUpdate = new Order();
                 orderToUpdate.ID = ordId;
                 orderToUpdate.Status = NSP_CPQConstants.ORDER_ACTIVATED;
-                orderUp.add(orderToUpdate);
+                orderUp.add( orderToUpdate );
             }
-            if(orderUp != null && orderUp.size() > 0){
-                try {
-                    database.update( orderUp );
-                } catch ( Exception e ) {
-                    NSP_ErrorLogHandler.logException(
-                        NSP_OrderItemTriggerHelper.class.getName() ,
-                        'activateOrder' ,
-                        e
-                    );
-                }
+        }
+        if ( ( orderUp != null ) && !orderUp.isEmpty() ) {
+            try {
+                database.update( orderUp );
+            } catch ( Exception e ) {
+                NSP_ErrorLogHandler.logException(
+                    NSP_OrderItemTriggerHelper.class.getName() ,
+                    'activateOrder' ,
+                    e
+                );
             }
         }
     }
 
     //
-    // Method Name : populateLegalEntityOnOrderItem 
+    // Method Name : populateLegalEntityOnOrderItem
     // Description : Method to copy legal entity from Proudcts to Order Products
     // Author : Samba Raju      Date : 10/17/2022
     //
@@ -610,11 +641,11 @@ public class NSP_OrderItemTriggerHelper {
     }
 
     //
-    // Method Name : updateAsset 
+    // Method Name : updateAsset
     // Description : Method to update order product value on asset
     // Author : Raksha     Date : 11/20/2022
-    // @param opIdMap Map of order product.   
-    // @return void  
+    // @param opIdMap Map of order product.
+    // @return void
     //
     public static void updateAsset(Map<Id,String> opIdMap){
         Set<Id> optyId = new Set<Id>();
@@ -643,7 +674,7 @@ public class NSP_OrderItemTriggerHelper {
         {
             if(op.Order.OpportunityId != null){
                 optyId.add(op.Order.OpportunityId);
-            } 
+            }
             if(op.NSP_ServiceAssetCategory__c != null){
                 String recType = Schema.SObjectType.ASSET.getRecordTypeInfosByName().get(op.NSP_ServiceAssetCategory__c).getRecordTypeId();
                 if(!retirementRecordTypeName.contains(op.NSP_ServiceAssetCategory__c)){
@@ -704,8 +735,8 @@ public class NSP_OrderItemTriggerHelper {
                 ];
             }else{
                 assetList = [
-                    SELECT Id , Status , NSP_Termination_Date__c , RecordTypeId , Opportunity__c , NSP_OrderProduct__c , AccountId 
-                    FROM Asset 
+                    SELECT Id , Status , NSP_Termination_Date__c , RecordTypeId , Opportunity__c , NSP_OrderProduct__c , AccountId
+                    FROM Asset
                     WHERE (
                         Opportunity__c IN :optyId
                         AND RecordTypeId IN :recordTypeId
@@ -724,7 +755,7 @@ public class NSP_OrderItemTriggerHelper {
                     ordObj.Id = ordProdMap.get(assetObj.RecordTypeId).Id;
                     ordObj.NSP_ServiceAsset__c = assetObj.Id;
                     ordItemList.add(ordObj);
-                    updateAssetList.add(assetObj); 
+                    updateAssetList.add(assetObj);
                 }
             }
             if ( type == NSP_CPQConstants.QUOTE_TYPE_AMENDMENT
@@ -778,7 +809,7 @@ public class NSP_OrderItemTriggerHelper {
     }
 
     //
-    // Method Name : retrieveACHActivePaymentMethods 
+    // Method Name : retrieveACHActivePaymentMethods
     // Description : Method to retrieve the ACH Active Payment Methods
     // Author : CPQ Team     Date : 11/20/2022
     //
@@ -805,7 +836,7 @@ public class NSP_OrderItemTriggerHelper {
             NSP_OrderItemTriggerHelper.handleException( e , methodName );
         }
     }
-    
+
     private static void handleException( Exception e , String methodName ) {
         NSP_ErrorLogHandler.logException(
             NSP_OrderItemTriggerHelper.class.getName() ,
