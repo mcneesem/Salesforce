@@ -1,17 +1,4 @@
-/**
- * Author: Sales Team
-* Represents test class for lead opportunity helper
-* Test Class to cover Opportunity Trigger Handler and Helper classes
-* Modified Date: 19 Aug 2021
-Modification Log     :                                                                              
-*--------------------------------------------------------------------------------------------------  
-* Developer                   Date                   Description                                    
-* -------------------------------------------------------------------------------------------------  
-* Rahul Singh 26/10/2022 Create OCR as part of user story - 128223
-* Rahul Singh 22/12/2022 Create for enrollment fee payment user story - 194265
-*/
-
-@isTest(SeeAllData=false)
+@isTest
 public class NSP_OpportunityTriggerHelperTest {
    
     public static final String OPP_NSP_UPSELL_PRODUCT_ADD_ONS_RETIREMENT_SERVICES = 'Retirement Services'; // Added as part of Code Fix
@@ -1111,4 +1098,40 @@ static void createAssetTest3(){
         System.assertEquals('0124x000000yRuxAAE', recordId);
         Test.stopTest();
     }
+
+    @isTest
+    private static void testServicesOpportunity() {
+        Test.startTest();
+        List<PermissionSetAssignment> psa = [
+            SELECT AssigneeId
+            FROM PermissionSetAssignment
+            WHERE
+                PermissionSet.Name = 'NSPSteelBrickCPQUser'
+                AND Assignee.isActive = true
+            LIMIT 1
+        ];
+        System.assert((psa != null && psa.size() == 1), 'No Services_Opportunity_Owner user found');
+        System.assert(CustomPermissionController.checkUserPermission('Services_Opportunity_Owner', psa[0].AssigneeId), 'Custom PS Services_Opportunity_Owner not assigned');
+        Account acct = new Account();
+        acct.Name = 'Test Account Opp';
+        insert acct;
+        Opportunity opp = new Opportunity();
+        opp.AccountId = acct.Id;
+        opp.CloseDate = date.today();
+        opp.NSP_PrimaryProduct__c = 'WX';
+        opp.StageName = 'Prospecting';
+        opp.OwnerId = psa[0].AssigneeId;
+        insert opp;
+        Test.stopTest();
+        List<Opportunity> opp1 = [
+            SELECT Id , Is_Services_Opportunity__c
+            FROM Opportunity
+            WHERE Id = :opp.Id
+            LIMIT 1
+        ];
+        Boolean isServiceOpportunity = true;
+        System.assertEquals(isServiceOpportunity, opp1[0].Is_Services_Opportunity__c);
+    }
+
 }
+//

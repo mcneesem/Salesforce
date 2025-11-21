@@ -2032,6 +2032,10 @@
         <enabled>true</enabled>
         <name>Bypass_Available_Lead_Conversion_Rules</name>
     </customPermissions>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Services_Opportunity_Owner</name>
+    </customPermissions>
     <customSettingAccesses>
         <enabled>true</enabled>
         <name>AVA_SFCLOUD__AvaTax__c</name>
