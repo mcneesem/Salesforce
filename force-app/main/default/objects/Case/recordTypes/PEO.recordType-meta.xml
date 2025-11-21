@@ -4438,6 +4438,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Assisted - SVS OPS</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>BPS - Assigned to Regeneration</fullName>
             <default>false</default>
         </values>
@@ -4511,6 +4515,10 @@
         </values>
         <values>
             <fullName>Other Exemption</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PS - VM</fullName>
             <default>false</default>
         </values>
         <values>
