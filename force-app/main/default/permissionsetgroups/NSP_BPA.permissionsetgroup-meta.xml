@@ -7,6 +7,7 @@
     <permissionSets>Account_Edit_Other_Current_Provider</permissionSets>
     <permissionSets>Account_Owner_Restrict_Update</permissionSets>
     <permissionSets>Account_Partner_Update_Loyalty_from_SO</permissionSets>
+    <permissionSets>Allow_Closed_Lost_Opportunity</permissionSets>
     <permissionSets>Allow_sending_of_List_Emails</permissionSets>
     <permissionSets>Basic_SetUp_Config_Access</permissionSets>
     <permissionSets>Bloomfire_Custom_User</permissionSets>

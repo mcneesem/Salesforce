@@ -6,6 +6,7 @@
     <permissionSets>Account_Assignment_Method_Edit_Access</permissionSets>
     <permissionSets>Account_Create</permissionSets>
     <permissionSets>Account_Edit_Other_Current_Provider</permissionSets>
+    <permissionSets>Allow_Closed_Lost_Opportunity</permissionSets>
     <permissionSets>Assets_Edit</permissionSets>
     <permissionSets>Basic_SetUp_Config_Access</permissionSets>
     <permissionSets>Bloomfire_Custom_User</permissionSets>

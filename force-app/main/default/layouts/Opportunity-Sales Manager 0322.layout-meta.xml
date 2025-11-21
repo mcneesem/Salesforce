@@ -479,11 +479,16 @@
         <label>Close Lost / Back Out</label>
         <layoutColumns>
             <layoutItems>
-                <emptySpace>true</emptySpace>
+                <behavior>Edit</behavior>
+                <field>Closed_Lost_Group__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Lost_Reason__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Sub_Reason_Lost__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

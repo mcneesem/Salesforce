@@ -448,7 +448,8 @@ public class NSP_OpportunityTriggerHelperTest {
                 List<String> pOppIdSet = new List<String>{opp.Id};
                 opp.ownerId = userRecord.Id;
                 opp.NSP_PrimaryProduct__c = 'Insurance Services';
-                opp.NSP_Lost_Reason__c = 'Backout';
+                opp.Closed_Lost_Group__c = 'Sales';
+                opp.NSP_Lost_Reason__c = 'Benefits';
                 opp.stagename = NSP_SalesConstants.CLOSED_LOST;
                 database.update(opp);
                 NSP_ChildOpportunitiesHelperFunctions.updateChildOpportunityOnReopen(pOppIdSet);

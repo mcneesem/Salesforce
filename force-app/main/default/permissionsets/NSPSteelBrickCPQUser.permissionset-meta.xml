@@ -2647,6 +2647,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.Closed_Lost_Group__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.Enrollment_fee_Subtotal__c</field>
         <readable>true</readable>
@@ -2724,6 +2729,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Opportunity.SBQQ__RenewedContract__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.Sub_Reason_Lost__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
