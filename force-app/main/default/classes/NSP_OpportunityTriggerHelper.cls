@@ -490,7 +490,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
         setPartnerAccount( partnerAccountOpportunityMap );
         NSP_EnrollmentFeePaymentSharing.onOppClose( opportunityNewMap );
         if ( salesTaxChanged.size()>0 ) {
-            NSP_BudgetaryQuoteTaxController.stampTaxFieldsToQuote( salesTaxChanged );
+            BudgetaryQuoteTaxControllerQueue.enqueueJob( salesTaxChanged );
         }
         if ( backoutOptySet.size() > 0 ) {
             NSP_AssetUpdate.assetBackoutUpdate( backoutOptySet , NSP_SalesConstants.BACKOUT_STATUS );
