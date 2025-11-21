@@ -319,6 +319,13 @@
                 <stringValue></stringValue>
             </value>
         </filters>
+        <filters>
+            <field>SuppliedEmail</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>wxbusinessteam@insperity.com</stringValue>
+            </value>
+        </filters>
         <object>Case</object>
         <recordTriggerType>Create</recordTriggerType>
         <scheduledPaths>
