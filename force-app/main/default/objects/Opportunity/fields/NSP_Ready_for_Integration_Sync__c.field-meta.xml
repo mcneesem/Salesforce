@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Ready_for_Integration_Sync__c</fullName>
     <defaultValue>true</defaultValue>
-    <description>Checkbox is marked true if Opportunity is ready for integration sync</description>
+    <description>DEPRECATED ~ Checkbox is marked true if Opportunity is ready for integration sync</description>
     <externalId>false</externalId>
     <label>Ready for Integration Sync</label>
     <trackFeedHistory>false</trackFeedHistory>

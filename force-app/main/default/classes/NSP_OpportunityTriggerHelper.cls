@@ -1,7 +1,7 @@
 public with sharing class NSP_OpportunityTriggerHelper {
-    // test w/ NSP_OpportunityTriggerHelperTest, NSP_AccountTriggerHelperTest, OpportunityCloseWonTest (82%)
-    // test w/ NSP_OpportunityTriggerHelperTest, OpportunityCloseWonTest (80%)
-    // test w/ NSP_OpportunityTriggerHelperTest (76%)
+    // test w/ NSP_OpportunityTriggerHelperTest, NSP_AccountTriggerHelperTest, OpportunityCloseWonTest (77%)
+    // test w/ NSP_OpportunityTriggerHelperTest, OpportunityCloseWonTest (76%)
+    // test w/ NSP_OpportunityTriggerHelperTest (72%)
     // test w/ NSP_AccountTriggerHelperTest (42%)
     // test w/ OpportunityCloseWonTest (38%)
 
@@ -107,7 +107,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
         NSP_OpportunityTriggerHelperFunctions oppHelperFuncObj = new NSP_OpportunityTriggerHelperFunctions();
         //Setting direct assignments to opportunity records
         oppHelperFuncObj.setDirectOpptyFieldsAssignments(newList);
-        this.assignReadyForIntegrationSync( newList );
+        this.assignReadyForIntegrationSync( newList ); // DEPRECATED
 
         if(!opportunityWoWxList.isEmpty()){
             //Calling method to stamp WO/WX emails on oprty record
@@ -146,7 +146,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
         Set<Id> integrationSyncIds = new Set<Id>();
         for ( Id opportunityId : opportunityNewMap.keySet() ) {
             Opportunity newOpportunity = opportunityNewMap.get( opportunityId );
-            integrationSyncIds = this.collectIntegrationSyncIds( newOpportunity , integrationSyncIds , true );
+            integrationSyncIds = this.collectIntegrationSyncIds( newOpportunity , integrationSyncIds , true ); // DEPRECATED
             accountIdSet.add( newOpportunity.AccountId );
             if ( String.isNotBlank( newOpportunity.NSP_Contribution_Level__c )
                 && String.isNotBlank( newOpportunity.NSP_Frequency_of_Distribution__c )
@@ -173,10 +173,12 @@ public with sharing class NSP_OpportunityTriggerHelper {
         // added as a part of DF-01497
         getRelatedACR( opportunityAccountIds , opportunityNewMap.keySet() );
         // Send the list to publish event bus
-        this.publishIntegrationSyncEvents(
+        this.publishIntegrationSyncEvents( // DEPRECATED
             integrationSyncIds ,
             NSP_OpportunityTriggerHelper.isEnabledIntegrationOpportunityEvent
         );
+        // publish sync events for all new opportunies...
+        this.publishNewRecords( newList );
     }
 
     //
@@ -367,7 +369,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
         changeOpportunityRecordType(lockOpportunitiesList);
         NSP_ChildOpportunitiesHelperFunctions childOpptyHlprObj = new NSP_ChildOpportunitiesHelperFunctions();
         childOpptyHlprObj.updateChildOpportunityOnProductChange(primaryProductChanged);
-        this.assignReadyForIntegrationSync( opportunityNewMap , opportunityOldMap );
+        this.assignReadyForIntegrationSync( opportunityNewMap , opportunityOldMap ); // DEPRECATED
 
         if(ownerChangedOpptyList.size()>0){
             NSP_OpportunityTriggerHelperFunctions.populateServiceEmail(ownerChangedOpptyList, ownerIdSet);
@@ -432,16 +434,16 @@ public with sharing class NSP_OpportunityTriggerHelper {
             closedWonOpportunityIdList = optyClosedWonParentCheck( newOpportunity , oldOpportunity , closedWonOpportunityIdList );
             closedOpptyList = optyClosedWonProductCheck( newOpportunity , oldOpportunity , productCodeList , closedOpptyList );
             newTaskOpportunityList = optyNewTaskCheck( newOpportunity , oldOpportunity , newTaskOpportunityList );
-            Boolean isNewStageAnalysis = (
+            Boolean isNewStageAnalysis = ( // DEPRECATED
                 ( newOpportunity.StageName != oldOpportunity.StageName )
                 && 'Analysis'.equalsIgnoreCase( newOpportunity.StageName )
             );
-            integrationSyncIdsAnalysis = this.collectIntegrationSyncIds(
+            integrationSyncIdsAnalysis = this.collectIntegrationSyncIds( // DEPRECATED
                 newOpportunity ,
                 integrationSyncIdsAnalysis ,
                 isNewStageAnalysis
             );
-            integrationSyncIds = this.collectIntegrationSyncIds(
+            integrationSyncIds = this.collectIntegrationSyncIds( // DEPRECATED
                 newOpportunity ,
                 integrationSyncIds ,
                 !isNewStageAnalysis
@@ -459,16 +461,18 @@ public with sharing class NSP_OpportunityTriggerHelper {
                 (Map<Id,sObject>)opportunityOldMap
             );
         }
-        this.publishIntegrationSyncEvents(
+        this.publishIntegrationSyncEvents( // DEPRECATED
             integrationSyncIds ,
             NSP_OpportunityTriggerHelper.isEnabledIntegrationOpportunityEvent
         );
-        this.publishIntegrationSyncEvents(
+        this.publishIntegrationSyncEvents( // DEPRECATED
             integrationSyncIdsAnalysis ,
             ( NSP_OpportunityTriggerHelper.isEnabledIntegrationOpportunityEvent
                 || NSP_OpportunityTriggerHelper.isEnabledOpportunityStageChangeEvent
                 )
         );
+        // publish sync events for critically modified opportunies...
+        this.publishCriticalRecords( opportunityNewMap , opportunityOldMap );
         if ( !closedOpportunityIdList.isEmpty() ) {
             NSP_ChildOpportunitiesHelperFunctions childHlprObj = new NSP_ChildOpportunitiesHelperFunctions();
             childHlprObj.updatesOnChildOpportunity( closedOpportunityIdList );
@@ -835,10 +839,15 @@ public with sharing class NSP_OpportunityTriggerHelper {
     // Integration Sync Methods
     //
 
+    // DEPRECATED
     // Opportunity-before-insert
     private void assignReadyForIntegrationSync( List<Opportunity> records ) {
         // sync cloned opportunities...
-        if ( ( records != null ) && !records.isEmpty() ) {
+        if ( NSP_OpportunityTriggerHelper.isEnabledDmlOpportunities
+            && ( records != null )
+            && !records.isEmpty()
+            )
+        {
             for ( Opportunity record : records ) {
                 if ( record.isClone() ) {
                     record.NSP_Ready_for_Integration_Sync__c = true;
@@ -847,29 +856,26 @@ public with sharing class NSP_OpportunityTriggerHelper {
         }
     }
 
+    // DEPRECATED
     // Opportunity-before-update
     private void assignReadyForIntegrationSync( Map<Id,Opportunity> opportunityNewMap , Map<Id,Opportunity> opportunityOldMap ) {
-        // sync opportunities with critical field changes...
-        Set<Id> opportunityIdSetToUpdateResyncFlag = new Set<Id>();
-        NSP_SObjectUpdateTriggerHelper sObjectUpdateObj = new NSP_SObjectUpdateTriggerHelper();
-        opportunityIdSetToUpdateResyncFlag.addAll(
-            sObjectUpdateObj.fetchUpdFieldsLst(
-                'Opportunity' ,
-                (Map<Id,sObject>)opportunityNewMap ,
-                (Map<Id,sObject>)opportunityOldMap
-            )
-        );
-        if ( !opportunityIdSetToUpdateResyncFlag.isEmpty() ){
-            for ( Id recordId : opportunityIdSetToUpdateResyncFlag ) {
-                opportunityNewMap.get( recordId ).NSP_Ready_for_Integration_Sync__c = true;
+        if ( NSP_OpportunityTriggerHelper.isEnabledDmlOpportunities ) {
+            // sync opportunities with critical field changes...
+            Set<Id> opportunityIdSetToUpdateResyncFlag = this.identifyCriticalRecordIds( opportunityNewMap , opportunityOldMap );
+            if ( !opportunityIdSetToUpdateResyncFlag.isEmpty() ){
+                for ( Id recordId : opportunityIdSetToUpdateResyncFlag ) {
+                    opportunityNewMap.get( recordId ).NSP_Ready_for_Integration_Sync__c = true;
+                }
             }
         }
     }
 
+    // DEPRECATED
     // Opportunity-after-insert
     // Opportunity-after-update
     private Set<Id> collectIntegrationSyncIds( Opportunity record , Set<Id> syncIds , Boolean isValid ) {
-        if ( isValid
+        if ( NSP_OpportunityTriggerHelper.isEnabledDmlOpportunities
+            && isValid
             && ( syncIds != null )
             && ( record != null )
             && record.NSP_Ready_for_Integration_Sync__c
@@ -878,6 +884,89 @@ public with sharing class NSP_OpportunityTriggerHelper {
             syncIds.add( record.Id );
         }
         return syncIds;
+    }
+
+    // Opportunity-after-insert
+    private void publishNewRecords( List<Opportunity> records ) {
+        // publish sync events for all new opportunies...
+        if ( !NSP_OpportunityTriggerHelper.isEnabledDmlOpportunities ) {
+            Set<Id> syncIds = new Set<Id>();
+            if ( ( records != null ) && !records.isEmpty() ) {
+                for ( Opportunity record : records ) {
+                    syncIds.add( record.Id );
+                }
+            }
+            this.publishIntegrationSyncEvents(
+                syncIds ,
+                NSP_OpportunityTriggerHelper.isEnabledIntegrationOpportunityEvent ,
+                false
+            );
+        }
+    }
+
+    // Opportunity-after-update
+    private void publishCriticalRecords( Map<Id,Opportunity> opportunityNewMap , Map<Id,Opportunity> opportunityOldMap ) {
+        // publish sync events for critically modified opportunies...
+        if ( !NSP_OpportunityTriggerHelper.isEnabledDmlOpportunities ) {
+            Set<Id> criticalRecordIds = this.identifyCriticalRecordIds( opportunityNewMap , opportunityOldMap );
+            Set<Id> syncIdsAnalysis = new Set<Id>();
+            Set<Id> syncIds = new Set<Id>();
+            if ( !criticalRecordIds.isEmpty() ){
+                for ( Id recordId : criticalRecordIds ) {
+                    if ( this.isNewStageAnalysis( recordId, opportunityNewMap , opportunityOldMap ) ) {
+                        syncIdsAnalysis.add( recordId );
+                    } else {
+                        syncIds.add( recordId );
+                    }
+                }
+            }
+            Boolean isEnabledSyncAnalysis = (
+                NSP_OpportunityTriggerHelper.isEnabledIntegrationOpportunityEvent
+                || NSP_OpportunityTriggerHelper.isEnabledOpportunityStageChangeEvent
+            );
+            this.publishIntegrationSyncEvents(
+                syncIdsAnalysis ,
+                isEnabledSyncAnalysis ,
+                false
+            );
+            this.publishIntegrationSyncEvents(
+                syncIds ,
+                NSP_OpportunityTriggerHelper.isEnabledIntegrationOpportunityEvent ,
+                false
+            );
+        }
+    }
+
+    // identify opportunities with critical field changes...
+    private Set<Id> identifyCriticalRecordIds( Map<Id,Opportunity> opportunityNewMap , Map<Id,Opportunity> opportunityOldMap ) {
+        Set<Id> criticalRecordIds = new Set<Id>();
+        if ( ( opportunityNewMap != null ) && ( opportunityOldMap != null ) ) {
+            NSP_SObjectUpdateTriggerHelper sObjectUpdateObj = new NSP_SObjectUpdateTriggerHelper();
+            criticalRecordIds.addAll(
+                sObjectUpdateObj.fetchUpdFieldsLst(
+                    'Opportunity' ,
+                    (Map<Id,sObject>)opportunityNewMap ,
+                    (Map<Id,sObject>)opportunityOldMap
+                )
+            );
+        }
+        return criticalRecordIds;
+    }
+
+    // identify opportunities with StageName changed to 'Analysis'...
+    private Boolean isNewStageAnalysis( Id recordId , Map<Id,Opportunity> opportunityNewMap , Map<Id,Opportunity> opportunityOldMap ) {
+        Boolean response = false;
+        if ( ( opportunityNewMap != null ) && ( opportunityOldMap != null )) {
+            Opportunity newOpportunity = opportunityNewMap.get( recordId );
+            Opportunity oldOpportunity = opportunityOldMap.get( recordId );
+            if ( ( newOpportunity != null ) && ( oldOpportunity != null ) ) {
+                response = (
+                    ( newOpportunity.StageName != oldOpportunity.StageName )
+                    && 'Analysis'.equalsIgnoreCase( newOpportunity.StageName )
+                );
+            }
+        }
+        return response;
     }
 
     // Event-after-insert
@@ -919,14 +1008,17 @@ public with sharing class NSP_OpportunityTriggerHelper {
         }
     }
 
+    // DEPRECATED
     // Opportunity-after-insert
     // Opportunity-after-update
     private void publishIntegrationSyncEvents( Set<Id> syncIds , Boolean isEnabled ) {
-        this.publishIntegrationSyncEvents(
-            syncIds ,
-            isEnabled ,
-            true
-        );
+        if ( NSP_OpportunityTriggerHelper.isEnabledDmlOpportunities ) {
+            this.publishIntegrationSyncEvents(
+                syncIds ,
+                isEnabled ,
+                true
+            );
+        }
     }
 
     private void publishIntegrationSyncEvents( Set<Id> syncIds , Boolean isEnabled , Boolean isEnabledDml ) {
@@ -1004,6 +1096,20 @@ public with sharing class NSP_OpportunityTriggerHelper {
                 platformEventSettings = PlatformEventSettings__c.getInstance( UserInfo.getUserId() );
             }
             return platformEventSettings;
+        }
+        private set;
+    }
+
+    private static Boolean isEnabledDmlOpportunities {
+        private get {
+            if ( isEnabledDmlOpportunities == null ) {
+                Boolean local = False;
+                if ( NSP_OpportunityTriggerHelper.platformEventSettings != null ) {
+                    local = NSP_OpportunityTriggerHelper.platformEventSettings.IsEnabled_DmlOpportunities__c;
+                }
+                isEnabledDmlOpportunities = local;
+            }
+            return isEnabledDmlOpportunities;
         }
         private set;
     }
