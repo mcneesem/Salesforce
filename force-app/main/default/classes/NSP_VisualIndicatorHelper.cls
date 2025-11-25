@@ -1,6 +1,6 @@
 // intentionally `without sharing` to ensure nsp_visualIndicator LWC displays accurate indicators for all records...
 public without sharing class NSP_VisualIndicatorHelper {
-    // test w/ NSP_VisualIndicatorHelper_Test (97%)
+    // test w/ NSP_VisualIndicatorHelper_Test (96%)
 
     //
     // returns the account details for
@@ -237,19 +237,43 @@ public without sharing class NSP_VisualIndicatorHelper {
             && ( Id.valueOf( caseId ).getSObjectType() == Case.getSObjectType() )
             )
         {
-            // Query for EmailMessage records related to the Case
+            // Get Parent Case (if any) to allow OR condition on parent's email messages
+            Id targetCaseId = Id.valueOf(caseId);
+            Id parentCaseId = null;
+                List<Case> caseList = [
+                    SELECT Id, ParentId
+                    FROM Case
+                    WHERE Id = :targetCaseId
+                    LIMIT 1
+                ];
+                if (!caseList.isEmpty()) {
+                    parentCaseId = caseList[0].ParentId;
+                }
+
+            // First, try EmailMessage for the current Case Id
             List<EmailMessage> emailMessages = [
                 SELECT Id
                 FROM EmailMessage
-                WHERE (
-                    ( ParentId = :caseId )
-                    AND ( Incoming = true )
-                    AND ( EmailRoutingAddressId != null )
-                )
+                WHERE ParentId = :targetCaseId
+                  AND Incoming = true
+                  AND EmailRoutingAddressId != null
                 LIMIT 1
             ];
-            // Return true if there are any incoming email messages related to the case
-            if ( !emailMessages.isEmpty() ) {
+
+            // If none found for current Case, and a Parent Case exists, try Parent Case Id
+            if (emailMessages.isEmpty() && parentCaseId != null) {
+                emailMessages = [
+                    SELECT Id
+                    FROM EmailMessage
+                    WHERE ParentId = :parentCaseId
+                      AND Incoming = true
+                      AND EmailRoutingAddressId != null
+                    LIMIT 1
+                ];
+            }
+
+            // Return true if there are any incoming email messages related to the current case or parent
+            if (!emailMessages.isEmpty()) {
                 emailToCaseConfirmed = true;
             }
         }
@@ -283,4 +307,3 @@ public without sharing class NSP_VisualIndicatorHelper {
     }
 
 }
-//
