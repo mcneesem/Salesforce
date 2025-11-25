@@ -66,10 +66,13 @@ global class NSP_SubClientAssetSyncJob implements Database.Batchable<sObject>, S
                         } 
                     } 
                     
-                    //Update Union Employee on sub client
-                    if(ismapSubClientUnionStatus.get(subClientCon.NSP_Sub_Client__c)==true){
+                    if (ismapSubClientUnionStatus != null && ismapSubClientUnionStatus.containsKey(idVal)) {
                         subClient.Id = idVal;
-                        subClient.NSP_Union_Employees__c = true;
+                        
+                        // Set NSP_Union_Employees__c based on map value
+                        subClient.NSP_Union_Employees__c = Boolean.valueOf(
+                            ismapSubClientUnionStatus.get(subClientCon.NSP_Sub_Client__c)
+                        );
                     }
                     
                 }
@@ -117,12 +120,11 @@ global class NSP_SubClientAssetSyncJob implements Database.Batchable<sObject>, S
                         } 
                     }
                     
-                    //build Asset with Union Employee checkbox
-                    if(ismapAssetUnionStatus.get(idVal)==true){
+                    if (ismapAssetUnionStatus != null && ismapAssetUnionStatus.containsKey(idVal)) {
                         asset.Id = idVal;
-                        asset.NSP_Union_Employees__c = true;
                         
-                        system.debug('asset.NSP_Union_Employees__c' + asset.NSP_Union_Employees__c);
+                        // Directly assign based on map value
+                        asset.NSP_Union_Employees__c = Boolean.valueOf(ismapAssetUnionStatus.get(idVal));
                     }
                 }
                 
