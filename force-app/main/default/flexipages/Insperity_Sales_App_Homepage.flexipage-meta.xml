@@ -293,6 +293,19 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>crmAnalyticsDashboardWrapper</componentName>
+                <identifier>c_crmAnalyticsDashboardWrapper</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.View_CRM_Analytics_Dashboard}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentName>wizardHomePage</componentName>
                 <identifier>c_wizardHomePage</identifier>
                 <visibilityRule>

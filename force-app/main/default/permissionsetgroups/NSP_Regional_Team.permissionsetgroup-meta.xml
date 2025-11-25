@@ -30,6 +30,7 @@
     <permissionSets>Opportunity_Team_Group_Check</permissionSets>
     <permissionSets>Report_export_and_print_access</permissionSets>
     <permissionSets>Sales_Service_Object_Permission</permissionSets>
+    <permissionSets>View_CRM_Analytics_Dashboard</permissionSets>
     <permissionSets>bloomfirex__Bloomfire_User</permissionSets>
     <permissionSets>force__EinsteinActivityCaptureIncluded</permissionSets>
     <permissionSets>force__EinsteinAnalyticsPlusUser</permissionSets>

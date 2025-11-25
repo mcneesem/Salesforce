@@ -27,6 +27,7 @@
     <permissionSets>Opportunity_WX_Product_Only</permissionSets>
     <permissionSets>Sales_Service_Object_Permission</permissionSets>
     <permissionSets>Upsell_Task</permissionSets>
+    <permissionSets>View_CRM_Analytics_Dashboard</permissionSets>
     <permissionSets>Xactly_Permission_Set</permissionSets>
     <permissionSets>bloomfirex__Bloomfire_User</permissionSets>
     <permissionSets>force__EinsteinActivityCaptureIncluded</permissionSets>

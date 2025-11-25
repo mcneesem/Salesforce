@@ -1,0 +1,8 @@
+<template>
+    <template lwc:if={dashboardId}>
+        <wave-wave-dashboard-lwc dashboard={dashboardId} height="500" show-title="true"></wave-wave-dashboard-lwc>
+    </template>
+    <template lwc:elseif={error}>
+        <c-error-panel errors={error}></c-error-panel>
+    </template>
+</template>
