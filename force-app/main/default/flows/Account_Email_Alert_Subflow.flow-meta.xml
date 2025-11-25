@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Email_Alert_Notify_CPM_on_Creation_of_Partner_Account_Email_Alert</name>
         <label>Email Alert - Notify CPM on Creation of Partner Account Email Alert</label>
-        <locationX>50</locationX>
-        <locationY>566</locationY>
+        <locationX>176</locationX>
+        <locationY>674</locationY>
         <actionName>Account.Notify_CPM_on_creation_of_Partner_Account</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -17,12 +17,14 @@
                 <elementReference>accountRecordId</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Account.Notify_CPM_on_creation_of_Partner_Account</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>NSP_Email_Alert_for_Verified_Partner_Email_Alert</name>
         <label>NSP_Email_Alert_for_Verified_Partner Email Alert</label>
-        <locationX>1106</locationX>
-        <locationY>566</locationY>
+        <locationX>1232</locationX>
+        <locationY>674</locationY>
         <actionName>Account.NSP_Email_Alert_for_Verified_Partner</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -36,12 +38,14 @@
                 <elementReference>accountRecordId</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Account.NSP_Email_Alert_for_Verified_Partner</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>NSP_Email_Alert_when_number_of_employee_is_changed_Email_Alert</name>
         <label>NSP_Email_Alert_when_number_of_employee_is_changed Email Alert</label>
-        <locationX>578</locationX>
-        <locationY>566</locationY>
+        <locationX>704</locationX>
+        <locationY>674</locationY>
         <actionName>Account.NSP_Email_Alert_when_number_of_employee_is_changed</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -55,8 +59,11 @@
                 <elementReference>accountRecordId</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Account.NSP_Email_Alert_when_number_of_employee_is_changed</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <constants>
         <name>flowName</name>
         <dataType>String</dataType>
@@ -65,10 +72,33 @@
         </value>
     </constants>
     <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check</name>
+        <label>Outbound Email custom setting check</label>
+        <locationX>176</locationX>
+        <locationY>134</locationY>
+        <defaultConnector>
+            <targetReference>Validate_there_is_an_Account_ID_passed_in</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Valid_AccountId_found</name>
         <label>Valid AccountId found?</label>
-        <locationX>1370</locationX>
-        <locationY>350</locationY>
+        <locationX>1496</locationX>
+        <locationY>458</locationY>
         <defaultConnectorLabel>No valid AccountId found</defaultConnectorLabel>
         <rules>
             <name>Yes_Valid_AccountId_found</name>
@@ -89,8 +119,8 @@
     <decisions>
         <name>Validate_there_is_an_Account_ID_passed_in</name>
         <label>Validate there is an Account ID passed in</label>
-        <locationX>578</locationX>
-        <locationY>134</locationY>
+        <locationX>704</locationX>
+        <locationY>242</locationY>
         <defaultConnector>
             <targetReference>Get_Account_Record_to_validate_accountRecordId</targetReference>
         </defaultConnector>
@@ -111,8 +141,8 @@
     <decisions>
         <name>Which_Email_Alert_Should_be_send_triggered</name>
         <label>Which Email Alert Should be send/triggered?</label>
-        <locationX>842</locationX>
-        <locationY>458</locationY>
+        <locationX>968</locationX>
+        <locationY>566</locationY>
         <defaultConnectorLabel>No Email Alert API Matches</defaultConnectorLabel>
         <rules>
             <name>Notify_CPM_on_creation_of_Partner_Account</name>
@@ -160,7 +190,7 @@
             <label>NSP_Email_Alert_for_Verified_Partner</label>
         </rules>
     </decisions>
-    <description>A subflow to trigger/send all Account - Email Alerts</description>
+    <description>Outbound Email bypass added. A subflow to trigger/send all Account - Email Alerts</description>
     <environments>Default</environments>
     <interviewLabel>Account - Email Alert Subflow {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Account - Email Alert Subflow</label>
@@ -186,8 +216,8 @@
     <recordLookups>
         <name>Get_Account_Record_to_validate_accountRecordId</name>
         <label>Get Account Record to validate accountRecordId</label>
-        <locationX>1370</locationX>
-        <locationY>242</locationY>
+        <locationX>1496</locationX>
+        <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Valid_AccountId_found</targetReference>
@@ -209,29 +239,29 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>452</locationX>
+        <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Validate_there_is_an_Account_ID_passed_in</targetReference>
+            <targetReference>Outbound_Email_custom_setting_check</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow`</label>
-        <locationX>314</locationX>
-        <locationY>674</locationY>
+        <locationX>440</locationX>
+        <locationY>782</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Account_Email_Alert_Subflow</stringValue>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <name>faultMessage</name>
             <value>
                 <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>triggeringFlow</name>
-            <value>
-                <elementReference>flowName</elementReference>
             </value>
         </inputAssignments>
     </subflows>

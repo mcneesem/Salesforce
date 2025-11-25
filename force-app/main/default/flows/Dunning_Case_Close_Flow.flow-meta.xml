@@ -4,8 +4,8 @@
         <description>Sends Case Closed Email to CSS</description>
         <name>Send_Email_to_CSS</name>
         <label>Send Email to CSS</label>
-        <locationX>50</locationX>
-        <locationY>455</locationY>
+        <locationX>182</locationX>
+        <locationY>539</locationY>
         <actionName>Case.Dunning_Case_Closed_Email_to_CSS</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -18,14 +18,17 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Case.Dunning_Case_Closed_Email_to_CSS</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>55.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <decisions>
         <description>Checks if CSS Email is present</description>
         <name>CSS_Email_Present</name>
         <label>CSS Email Present?</label>
-        <locationX>314</locationX>
-        <locationY>335</locationY>
+        <locationX>380</locationX>
+        <locationY>323</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>CSS_Email_Valid</name>
@@ -38,11 +41,36 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Send_Email_to_CSS</targetReference>
+                <targetReference>Outbound_Email_custom_setting_check</targetReference>
             </connector>
             <label>CSS Email Valid</label>
         </rules>
     </decisions>
+    <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check</name>
+        <label>Outbound Email custom setting check</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <defaultConnector>
+            <targetReference>Send_Email_to_CSS</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false</label>
+        </rules>
+    </decisions>
+    <description>Outbound Email bypass added.</description>
+    <environments>Default</environments>
     <interviewLabel>Dunning Case Close Flow {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Dunning Case Close Flow</label>
     <processMetadataValues>
@@ -67,8 +95,8 @@
     <recordCreates>
         <name>create_error_log</name>
         <label>create error log</label>
-        <locationX>314</locationX>
-        <locationY>575</locationY>
+        <locationX>446</locationX>
+        <locationY>647</locationY>
         <inputAssignments>
             <field>NSP_Class__c</field>
             <value>
@@ -103,7 +131,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <start>
-        <locationX>188</locationX>
+        <locationX>254</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>CSS_Email_Present</targetReference>
@@ -128,5 +156,5 @@
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
 </Flow>

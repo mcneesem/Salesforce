@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Email_Alert_Send_email_when_Demo_Event_is_created_for_WO_WX_Opportunities</name>
         <label>Email Alert - Send email when Demo Event is created for WO/WX Opportunities</label>
-        <locationX>407</locationX>
-        <locationY>708</locationY>
+        <locationX>621</locationX>
+        <locationY>816</locationY>
         <actionName>Event.NSP_Send_email_when_Demo_Event_is_created_for_WO_WX_opportunities</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -18,13 +18,15 @@
             </value>
         </inputParameters>
         <nameSegment>Event.NSP_Send_email_when_Demo_Event_is_created_for_WO_WX_opportunities</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Assign_varFaultElement_Email_Alert_Send_email_when_Demo_Event_is_created_on_WO_W</name>
         <label>Assign varFaultElement - Email Alert - Send email when Demo Event is created on WO/WX Opty</label>
-        <locationX>671</locationX>
-        <locationY>816</locationY>
+        <locationX>885</locationX>
+        <locationY>924</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -40,7 +42,7 @@
     <assignments>
         <name>Assign_varFaultElement_Get_Opportunity_Info</name>
         <label>Assign varFaultElement - Get Opportunity Info</label>
-        <locationX>1375</locationX>
+        <locationX>1677</locationX>
         <locationY>492</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -56,7 +58,7 @@
     <assignments>
         <name>Assign_varFaultElement_Update_Triggering_Event</name>
         <label>Assign varFaultElement - Update Triggering Event</label>
-        <locationX>935</locationX>
+        <locationX>1149</locationX>
         <locationY>708</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -73,7 +75,7 @@
     <decisions>
         <name>Bypass_Perm_Check</name>
         <label>Bypass Perm Check</label>
-        <locationX>473</locationX>
+        <locationX>522</locationX>
         <locationY>276</locationY>
         <defaultConnector>
             <targetReference>Get_Opportunity_Info</targetReference>
@@ -93,9 +95,32 @@
         </rules>
     </decisions>
     <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check</name>
+        <label>Outbound Email custom setting check</label>
+        <locationX>489</locationX>
+        <locationY>708</locationY>
+        <defaultConnector>
+            <targetReference>Email_Alert_Send_email_when_Demo_Event_is_created_for_WO_WX_Opportunities</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Was_Opty_found_and_WO_or_WX</name>
         <label>Was Opty found and WO or WX?</label>
-        <locationX>803</locationX>
+        <locationX>951</locationX>
         <locationY>492</locationY>
         <defaultConnectorLabel>Opty not found or irrelevant product</defaultConnectorLabel>
         <rules>
@@ -149,6 +174,7 @@
             <label>Opty Found and WO or WX</label>
         </rules>
     </decisions>
+    <description>Outbound Email bypass added.</description>
     <environments>Default</environments>
     <interviewLabel>Event - Created - Async - Event Type Demo Related To Opty {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Event - Created - Async - Event Type Demo Related To Opty</label>
@@ -174,7 +200,7 @@
     <recordLookups>
         <name>Get_Opportunity_Info</name>
         <label>Get Opportunity Info</label>
-        <locationX>803</locationX>
+        <locationX>951</locationX>
         <locationY>384</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -200,10 +226,10 @@
     <recordUpdates>
         <name>Update_Triggering_Event</name>
         <label>Update Triggering Event</label>
-        <locationX>407</locationX>
+        <locationX>489</locationX>
         <locationY>600</locationY>
         <connector>
-            <targetReference>Email_Alert_Send_email_when_Demo_Event_is_created_for_WO_WX_Opportunities</targetReference>
+            <targetReference>Outbound_Email_custom_setting_check</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Assign_varFaultElement_Update_Triggering_Event</targetReference>
@@ -248,7 +274,7 @@
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
-        <locationX>1375</locationX>
+        <locationX>1677</locationX>
         <locationY>600</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>

@@ -4,8 +4,8 @@
         <description>Send Email to Owner of the Case when HCm case is created.</description>
         <name>Send_Email_to_Owner_of_the_Case</name>
         <label>Send Email to Owner of the Case</label>
-        <locationX>176</locationX>
-        <locationY>335</locationY>
+        <locationX>308</locationX>
+        <locationY>431</locationY>
         <actionName>Case.NSP_HCM_Case_Creation_Alert</actionName>
         <actionType>emailAlert</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -15,8 +15,35 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Case.NSP_HCM_Case_Creation_Alert</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>56.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check</name>
+        <label>Outbound Email custom setting check</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <defaultConnector>
+            <targetReference>Send_Email_to_Owner_of_the_Case</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false</label>
+        </rules>
+    </decisions>
+    <description>Outbound Email bypass added.</description>
     <environments>Default</environments>
     <interviewLabel>NSP HCM Case Creation Alert {!$Flow.CurrentDateTime}</interviewLabel>
     <label>NSP HCM Case Creation Alert</label>
@@ -43,7 +70,7 @@
         <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Send_Email_to_Owner_of_the_Case</targetReference>
+            <targetReference>Outbound_Email_custom_setting_check</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -71,5 +98,5 @@
         <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
 </Flow>

@@ -4,7 +4,7 @@
         <name>Email_Alert_NSP_Email_alert_when_referral_lead_is_converted</name>
         <label>Email Alert - NSP_Email_alert_when_referral_lead_is_converted</label>
         <locationX>1106</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <actionName>Lead.NSP_Email_alert_when_referral_lead_is_converted</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -24,7 +24,7 @@
         <name>Email_Alert_NSP_Notify_Lead_Owner_Email_Alert</name>
         <label>Email Alert - NSP_Notify_Lead_Owner_Email_Alert</label>
         <locationX>50</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <actionName>Lead.NSP_Notify_Lead_Owner_Email_Alert</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -44,7 +44,7 @@
         <name>Email_Alert_NSP_Notify_Referral_Lead_Owner_Email_Alert</name>
         <label>Email Alert - NSP_Notify_Referral_Lead_Owner_Email_Alert</label>
         <locationX>578</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <actionName>Lead.NSP_Notify_Referral_Lead_Owner_Email_Alert</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -64,7 +64,7 @@
         <name>Email_Alert_NSP_notify_to_lead_Loyalty</name>
         <label>Email Alert - NSP_notify_to_lead_Loyalty</label>
         <locationX>2162</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <actionName>Lead.NSP_notify_to_lead_Loyalty</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -84,7 +84,7 @@
         <name>Email_Alert_NSP_notify_to_lead_partners</name>
         <label>Email Alert - NSP_notify_to_lead_partners</label>
         <locationX>1634</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <actionName>Lead.NSP_notify_to_lead_partners</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -106,7 +106,7 @@
         <name>Assign_varFaultElement_Email_Alert_NSP_Email_alert_when_referral_lead_is_convert</name>
         <label>Assign varFaultElement - Email_Alert_NSP_Email_alert_when_referral_lead_is_converted</label>
         <locationX>1370</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -123,7 +123,7 @@
         <name>Assign_varFaultElement_Email_Alert_NSP_Notify_Lead_Owner_Email_Alert</name>
         <label>Assign varFaultElement - Email_Alert_NSP_Notify_Lead_Owner_Email_Alert</label>
         <locationX>314</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -139,7 +139,7 @@
         <name>Assign_varFaultElement_Email_Alert_NSP_Notify_Referral_Lead_Owner_Email_Alert</name>
         <label>Assign varFaultElement - Email_Alert_NSP_Notify_Referral_Lead_Owner_Email_Alert</label>
         <locationX>842</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -156,7 +156,7 @@
         <name>Assign_varFaultElement_Email_Alert_NSP_notify_to_lead_Loyalty</name>
         <label>Assign varFaultElement - Email_Alert_NSP_notify_to_lead_Loyalty</label>
         <locationX>2426</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -173,7 +173,7 @@
         <name>Assign_varFaultElement_Email_Alert_NSP_notify_to_lead_partners</name>
         <label>Assign varFaultElement - Email_Alert_NSP_notify_to_lead_partners</label>
         <locationX>1898</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -187,9 +187,32 @@
         </connector>
     </assignments>
     <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check</name>
+        <label>Outbound Email custom setting check</label>
+        <locationX>578</locationX>
+        <locationY>242</locationY>
+        <defaultConnector>
+            <targetReference>Which_Email_Alert_should_be_sent</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Verify_inputs_are_populated</name>
         <label>Verify inputs are populated</label>
-        <locationX>2162</locationX>
+        <locationX>1766</locationX>
         <locationY>134</locationY>
         <defaultConnectorLabel>Inputs missing</defaultConnectorLabel>
         <rules>
@@ -210,7 +233,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Which_Email_Alert_should_be_sent</targetReference>
+                <targetReference>Outbound_Email_custom_setting_check</targetReference>
             </connector>
             <label>Inputs are populated</label>
         </rules>
@@ -219,7 +242,7 @@
         <name>Which_Email_Alert_should_be_sent</name>
         <label>Which Email Alert should be sent?</label>
         <locationX>1370</locationX>
-        <locationY>242</locationY>
+        <locationY>350</locationY>
         <defaultConnectorLabel>N/A</defaultConnectorLabel>
         <rules>
             <name>NSP_Notify_Lead_Owner_Email_Alert</name>
@@ -297,6 +320,7 @@
             <label>NSP_notify_to_lead_Loyalty</label>
         </rules>
     </decisions>
+    <description>Outbound Email bypass added.</description>
     <environments>Default</environments>
     <interviewLabel>Lead - Subflow - Email Alerts {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Lead - Subflow - Email Alerts</label>
@@ -320,7 +344,7 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <start>
-        <locationX>2036</locationX>
+        <locationX>1640</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Verify_inputs_are_populated</targetReference>
@@ -331,7 +355,7 @@
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
         <locationX>314</locationX>
-        <locationY>566</locationY>
+        <locationY>674</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
