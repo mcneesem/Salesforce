@@ -48,6 +48,7 @@
     <permissionSets>Sales_Service_Object_Permission</permissionSets>
     <permissionSets>Task_Due_Date_Required</permissionSets>
     <permissionSets>Transfer_Record</permissionSets>
+    <permissionSets>View_CRM_Analytics_Dashboard</permissionSets>
     <permissionSets>Xactly_Permission_Set</permissionSets>
     <permissionSets>force__EinsteinActivityCaptureIncluded</permissionSets>
     <permissionSets>force__EinsteinAnalyticsPlusUser</permissionSets>
