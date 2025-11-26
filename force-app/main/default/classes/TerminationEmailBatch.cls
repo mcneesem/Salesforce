@@ -6,27 +6,27 @@
 
 public without sharing class TerminationEmailBatch implements ISelfSchedulable , Schedulable, Database.Batchable<SObject> {
     //test w/ TerminationEmailBatch_Test (82%)
-    
+
     //Constants for Email Template DeveloperNames
     private static final String TEMPLATE_INITIAL = 'Term_Letter_Initial';                         
     private static final String TEMPLATE_REVISED = 'Term_Team_Letter_Revised';                     
     private static final String TEMPLATE_REINSTATE_INITIAL = 'Term_Team_Reinstate_Letter_Initial'; 
     private static final String TEMPLATE_REINSTATE_REVISED = 'Term_Team_Reinstate_Letter_Revised'; 
-    
+
     //Constants for RecordType DeveloperNames
     private static final String CREDIT_SPECIALIST = 'NSP_Credit_Specialist_Form';     
-    
+
     //Constants for Email Status Field Values            
     private static final String EMAIL_STATUS_READY = 'Ready to be sent';             
     private static final String EMAIL_STATUS_SENT = 'Email Sent'; 
-    
+
     //Map for Termination Email Templates
     private Map<String, Id> templateMap = new MAP<String, Id>();
-    
+
     private Id defaultTemplateAttachmentId;
     private static final String attachmentFilter = 'LTR-%';
     private String orgWideEmailId;
-    
+
     public TerminationEmailBatch() {
 
         Set<String> templateApiNames = new Set<String>{ 
@@ -35,7 +35,7 @@ public without sharing class TerminationEmailBatch implements ISelfSchedulable ,
             TEMPLATE_REINSTATE_INITIAL,
             TEMPLATE_REINSTATE_REVISED
         };
-  
+
         if ( String.isNotBlank ( TerminationEmailBatch.OrgWideEmailDisplayName) ) {
 
             List<OrgWideEmailAddress> emails = [
@@ -85,7 +85,7 @@ public without sharing class TerminationEmailBatch implements ISelfSchedulable ,
     }
 
     public Database.QueryLocator start( Database.BatchableContext bc ) {
- 
+
         Set<String> recordTypeApiNames = new Set<String>{ 
             CREDIT_SPECIALIST,
             NSP_ServiceConstants.NSP_Payroll_Specialist_Form,
@@ -142,16 +142,17 @@ public without sharing class TerminationEmailBatch implements ISelfSchedulable ,
         }
         
     }
-    
+
     public void finish(Database.BatchableContext bc) {}
-    
+
     private Map<Id, ContentDocumentLink> getAttachments( List<NSP_Termination_Form__c> forms ) {
 
         Map<Id, ContentDocumentLink> attachmentMap = new Map<Id, ContentDocumentLink>();
+
         if ( forms != null 
             && !forms.isEmpty()
            )
-        {   
+        {
             Set<Id> formIds = new Map<Id, NSP_Termination_Form__c>( forms ).keySet();
             for ( ContentDocumentLink link : [ SELECT LinkedEntityId, 
                                                    ContentDocument.LatestPublishedVersionId
@@ -167,19 +168,19 @@ public without sharing class TerminationEmailBatch implements ISelfSchedulable ,
                 }
             }
         }
-        
+
         return attachmentMap;
     }
-    
+
     private void buildEmail( NSP_Termination_Form__c form,
                              Id templateId,
                              ContentDocumentLink docLink,
                              List<Messaging.SingleEmailMessage> emails
                            )
     {
-        
+
         Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-        
+
         if ( form != null 
             && templateId != null 
             && String.isNotBlank( form.Client_Owner_Email__c ) 
@@ -200,8 +201,8 @@ public without sharing class TerminationEmailBatch implements ISelfSchedulable ,
             if( docLink != null &&
                 docLink.ContentDocument != null &&
                 docLink.ContentDocument.LatestPublishedVersionId != null 
-              ) 
-            {  
+              )
+            {
                 attachmentIds.add( docLink.ContentDocument.LatestPublishedVersionId );
             }
             if( !attachmentIds.isEmpty() ){
@@ -212,7 +213,7 @@ public without sharing class TerminationEmailBatch implements ISelfSchedulable ,
             emails.add(email);
         }
     }
-    
+
     private String getTemplateName( NSP_Termination_Form__c form ) {
 
         String templateName = '';
@@ -253,7 +254,7 @@ public without sharing class TerminationEmailBatch implements ISelfSchedulable ,
 
         return templateName;
     }
-    
+
     private void sendAndProcessEmails( List<Messaging.SingleEmailMessage> emailMessages,
                                        List<NSP_Termination_Form__c> originalForms,
                                        List<NSP_Termination_Form__c> formsToUpdate 
@@ -287,7 +288,7 @@ public without sharing class TerminationEmailBatch implements ISelfSchedulable ,
             }
         }
     }
-    
+
     @testVisible()
     private void performDML( List<sObject> records ) {
         if ( ( records != null )
@@ -310,12 +311,12 @@ public without sharing class TerminationEmailBatch implements ISelfSchedulable ,
             } 
         }
     }
-    
+
     //
     // attributes controlled by Custom Settings...
     // ~ intentionally static to allow Custom Settings to modify the attributes a running job...
     //
-    
+
     private static TerminationEmailBatchSettings__c settings {
         private get {
             if ( settings == null ) {
@@ -325,7 +326,7 @@ public without sharing class TerminationEmailBatch implements ISelfSchedulable ,
         }
         private set;
     }
-    
+
     private static Boolean isEnabled {
         private get {
             if ( isEnabled == null ) {
@@ -339,7 +340,7 @@ public without sharing class TerminationEmailBatch implements ISelfSchedulable ,
         }
         private set;
     }
-    
+
     private static Integer batchSize {
         private get {
             if ( batchSize == null ) {
@@ -364,7 +365,7 @@ public without sharing class TerminationEmailBatch implements ISelfSchedulable ,
         }
         private set;
     }
-    
+
     private static String OrgWideEmailDisplayName {
         private get{
             if( OrgWideEmailDisplayName == null){ 
@@ -374,7 +375,7 @@ public without sharing class TerminationEmailBatch implements ISelfSchedulable ,
         }
         private set;
     }
-    
+
     private static String defaultAttachmentName {
         private get{
             if( defaultAttachmentName == null){ 
@@ -384,7 +385,7 @@ public without sharing class TerminationEmailBatch implements ISelfSchedulable ,
         }
         private set;
     }
-    
+
     public static String schedule() {
         String suffix = '';
         if ( Test.isRunningTest() ) {
@@ -396,8 +397,9 @@ public without sharing class TerminationEmailBatch implements ISelfSchedulable ,
             new TerminationEmailBatch()
         );
     }
-    
+
     public void execute( SchedulableContext scon ) {
         Database.executeBatch( new TerminationEmailBatch() , TerminationEmailBatch.batchSize );
     }
+
 }
