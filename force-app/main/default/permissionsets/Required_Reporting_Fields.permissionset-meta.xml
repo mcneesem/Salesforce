@@ -1713,6 +1713,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>OrderItem.Pricing_Model__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Price_Increase__c.Asset__c</field>
         <readable>true</readable>
     </fieldPermissions>

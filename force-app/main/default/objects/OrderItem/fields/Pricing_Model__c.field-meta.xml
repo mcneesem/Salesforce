@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Pricing_Model__c</fullName>
+    <description>Pricing Model from the Quote</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Select Pricing Model for Price Increase</inlineHelpText>
+    <label>Pricing Model</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>List Price</fullName>
+                <default>false</default>
+                <label>List Price</label>
+            </value>
+            <value>
+                <fullName>WX</fullName>
+                <default>false</default>
+                <label>WX</label>
+            </value>
+            <value>
+                <fullName>WA</fullName>
+                <default>false</default>
+                <label>WA</label>
+            </value>
+            <value>
+                <fullName>WO</fullName>
+                <default>false</default>
+                <label>WO</label>
+            </value>
+            <value>
+                <fullName>WS</fullName>
+                <default>false</default>
+                <label>WS</label>
+            </value>
+            <value>
+                <fullName>Lasso</fullName>
+                <default>false</default>
+                <label>Lasso</label>
+            </value>
+            <value>
+                <fullName>RET - Bundled Plus #2</fullName>
+                <default>false</default>
+                <label>RET - Bundled Plus #2</label>
+            </value>
+            <value>
+                <fullName>RET - Bundled Plus #3</fullName>
+                <default>false</default>
+                <label>RET - Bundled Plus #3</label>
+            </value>
+            <value>
+                <fullName>RET - Choice Fee Schedule #4</fullName>
+                <default>false</default>
+                <label>RET - Choice Fee Schedule #4</label>
+            </value>
+            <value>
+                <fullName>RET - Choice Fee Schedule #5</fullName>
+                <default>false</default>
+                <label>RET - Choice Fee Schedule #5</label>
+            </value>
+            <value>
+                <fullName>RET - Mid-Market #1</fullName>
+                <default>false</default>
+                <label>RET - Mid-Market #1</label>
+            </value>
+            <value>
+                <fullName>RET - Mid-Market #2</fullName>
+                <default>false</default>
+                <label>RET - Mid-Market #2</label>
+            </value>
+            <value>
+                <fullName>RET - Mid-Market #3</fullName>
+                <default>false</default>
+                <label>RET - Mid-Market #3</label>
+            </value>
+            <value>
+                <fullName>RET - Participant Fee Only</fullName>
+                <default>false</default>
+                <label>RET - Participant Fee Only</label>
+            </value>
+            <value>
+                <fullName>RET- Bundled Plus</fullName>
+                <default>false</default>
+                <label>RET- Bundled Plus</label>
+            </value>
+            <value>
+                <fullName>RET- Choice Fee Schedule #1</fullName>
+                <default>false</default>
+                <label>RET- Choice Fee Schedule #1</label>
+            </value>
+            <value>
+                <fullName>RET- Choice Fee Schedule #2</fullName>
+                <default>false</default>
+                <label>RET- Choice Fee Schedule #2</label>
+            </value>
+            <value>
+                <fullName>RET- Choice Fee Schedule #3</fullName>
+                <default>false</default>
+                <label>RET- Choice Fee Schedule #3</label>
+            </value>
+            <value>
+                <fullName>RET- Legacy Non Revenue</fullName>
+                <default>false</default>
+                <label>RET- Legacy Non Revenue</label>
+            </value>
+            <value>
+                <fullName>RET- Legacy Revenue</fullName>
+                <default>false</default>
+                <label>RET- Legacy Revenue</label>
+            </value>
+            <value>
+                <fullName>RET- NQDC Fee Schedule</fullName>
+                <default>false</default>
+                <label>RET- NQDC Fee Schedule</label>
+            </value>
+            <value>
+                <fullName>RET- White Label FBT Fee Schedule</fullName>
+                <default>false</default>
+                <label>RET- White Label FBT Fee Schedule</label>
+            </value>
+            <value>
+                <fullName>RET-WA Choice ER RK</fullName>
+                <default>false</default>
+                <label>RET-WA Choice ER RK</label>
+            </value>
+            <value>
+                <fullName>RET-WA Choice ER RK/PPT</fullName>
+                <default>false</default>
+                <label>RET-WA Choice ER RK/PPT</label>
+            </value>
+            <value>
+                <fullName>RET - WO no Admin</fullName>
+                <default>false</default>
+                <label>RET - WO no Admin</label>
+            </value>
+            <value>
+                <fullName>RET - WO with Admin</fullName>
+                <default>false</default>
+                <label>RET - WO with Admin</label>
+            </value>
+            <value>
+                <fullName>RET - Bundled Plus #4</fullName>
+                <default>false</default>
+                <label>RET - Bundled Plus #4</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

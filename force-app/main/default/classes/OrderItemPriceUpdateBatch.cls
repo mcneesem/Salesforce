@@ -1,5 +1,5 @@
 public with sharing class OrderItemPriceUpdateBatch implements Database.Batchable<sObject> , Database.Stateful {
-    // test w/ OrderItemPriceUpdateTest (94%)
+    // test w/ OrderItemPriceUpdateTest (96%)
 
     //variable to maintain count of processed records
     private Map<String,Integer> DML_COUNTS = new Map<String,Integer>{
@@ -44,6 +44,8 @@ public with sharing class OrderItemPriceUpdateBatch implements Database.Batchabl
     private static final String AMOUNT = 'Amount';
     private static final String PER_UNIT = 'PerUnit';
     private static final String FLAT_FEE = 'FlatFee';
+    private Set<Id> orderIdSet = new Set<Id>();
+    private Map<Id,String> orderPricingModelMap = new Map<Id,String>();
 
     public static void executeBatch() {
         Database.executeBatch(
@@ -69,7 +71,9 @@ public with sharing class OrderItemPriceUpdateBatch implements Database.Batchabl
                 blng__BillableUnitPrice__c ,
                 UnitPrice ,
                 NSP_Consumption_Rate_Per_Unit__c ,
-                Update_Record_Price__c
+                Update_Record_Price__c ,
+                Pricing_Model__c ,
+                OrderId
             FROM OrderItem
             WHERE (
                 ( Price_Increase_Status__c = 'Pending' )
@@ -83,7 +87,7 @@ public with sharing class OrderItemPriceUpdateBatch implements Database.Batchabl
 
     //process OP and related records in batches
     public void execute( Database.BatchableContext bc , List<OrderItem> scope ) {
-        if ( OrderItemPriceUpdateBatch.isEnabled 
+        if ( OrderItemPriceUpdateBatch.isEnabled
             && ( scope!= null )
             && !scope.isEmpty()
             )
@@ -143,11 +147,13 @@ public with sharing class OrderItemPriceUpdateBatch implements Database.Batchabl
                     AND ( Update_Record_Price__c = true )
                 )
             ];
-            processSubscriptions( subRecords , opMap );
-            performDML( subRecords );
+            OrderItemPriceUpdateBatch.processSubscriptions( subRecords , opMap );
+            this.performDML( subRecords );
+            //stamp pricing model on Contract and Asset
+            this.processPricingModel( scope );
             //process OPs
-            processOPs( scope );
-            performDML( scope );
+            OrderItemPriceUpdateBatch.processOPs( scope );
+            this.performDML( scope );
         }
     }
 
@@ -393,7 +399,7 @@ public with sharing class OrderItemPriceUpdateBatch implements Database.Batchabl
     //update OrderItem flat prices
     private static void populateFlatPrice( OrderItem op ) {
         //check conditional monthly update
-        if ( ( op != null ) 
+        if ( ( op != null )
             && String.isNotBlank( op.Monthly_Minimum_Price_Increase_Type__c )
             )
         {
@@ -410,7 +416,7 @@ public with sharing class OrderItemPriceUpdateBatch implements Database.Batchabl
 
     //update OrderItem Per unit prices
     private static void populatePerUnitPrices( OrderItem op ) {
-        if ( ( op != null ) 
+        if ( ( op != null )
             && String.isNotBlank(op.Per_Unit_Price_Increase_Type__c )
             )
         {
@@ -425,6 +431,102 @@ public with sharing class OrderItemPriceUpdateBatch implements Database.Batchabl
                     priceField ,
                     ( ( increaseType == PERCENT ) ? ( price * increaseFactor ) : ( price + increaseValue ) )
                 );
+            }
+        }
+    }
+
+    //method to process Pricning Model On Assets and Contracts
+    private void processPricingModel( List<OrderItem> scope ) {
+        if ( ( scope != null ) && ( !scope.isEmpty() ) ) {
+            //maintain localOrders
+            Set<Id> localOrderIdsSet = new Set<Id>();
+            //add un processed orders to local set and Pricing Map
+            for ( OrderItem item : scope ) {
+                if ( String.isNotBlank( item.OrderId )
+                    && ( this.orderIdSet != null )
+                    && !this.orderIdSet.contains( item.OrderId )
+                    && String.isNotBlank( item.Pricing_Model__c ) //blanks are not processed
+                    )
+                {
+                    //new order
+                    localOrderIdsSet.add( item.OrderId );
+                    this.orderPricingModelMap.put( item.OrderId , item.Pricing_Model__c );
+                }
+            }
+            //maintain processed orders
+            this.orderIdSet.addAll( localOrderIdsSet );
+            this.processContracts( localOrderIdsSet );
+            this.processAssets( localOrderIdsSet );
+        }
+    }
+
+    //method to stamp Pricing Model on Contracts
+    private void processContracts( Set<Id> localOrderIdsSet ) {
+        if ( ( localOrderIdsSet != null ) && !localOrderIdsSet.isEmpty() ) {
+            //get Contracts
+            List<Contract> conRecords = [
+                SELECT
+                    Id ,
+                    NSP_Pricing_Model__c ,
+                    SBQQ__Order__c
+                FROM Contract
+                WHERE ( SBQQ__Order__c IN :localOrderIdsSet)
+            ];
+
+            if ( ( conrecords != null ) && !conrecords.isEmpty() ) {
+                //update pricing model on Contract
+                for ( Contract con : conrecords ) {
+                    if ( String.isNotBlank( con.SBQQ__Order__c )
+                        && ( this.orderPricingModelMap != null )
+                        && this.orderPricingModelMap.containsKey( con.SBQQ__Order__c )
+                        && ( this.orderPricingModelMap.get( con.SBQQ__Order__c ) != null )
+                        )
+                    {
+                        con.NSP_Pricing_Model__c = this.orderPricingModelMap.get( con.SBQQ__Order__c );
+                    }
+                }
+                //update contracts
+                this.performDML( conrecords );
+            }
+        }
+    }
+
+    private void processAssets( Set<Id> localOrderIdsSet ) {
+        if ( ( localOrderIdsSet != null ) && !localOrderIdsSet.isEmpty() ) {
+            //extract service assetsfor new local Orders
+            List<Asset> serviceAssetList = [
+                SELECT
+                    Id ,
+                    NSP_Price_Level__c ,
+                    NSP_OrderProduct__c ,
+                    NSP_OrderProduct__r.OrderId
+                FROM Asset
+                WHERE (
+                    Id IN (//check all available OPs for a service asset
+                        SELECT NSP_ServiceAsset__c
+                        FROM OrderItem
+                        WHERE (
+                            ( OrderId IN :localOrderIdsSet )
+                            AND ( NSP_ServiceAsset__c != null )
+                            AND ( SBQQ__QuotedQuantity__c > 0 )
+                        )
+                    )
+                )
+            ];
+            if ( ( serviceAssetList != null ) && !serviceAssetList.isEmpty() ) {
+                //update pricing model on Asset
+                for ( Asset serviceAsset : serviceAssetList ) {
+                    if ( String.isNotBlank( serviceAsset.NSP_OrderProduct__c )
+                        && String.isNotBlank( serviceAsset.NSP_OrderProduct__r.OrderId )
+                        && ( this.orderPricingModelMap != null )
+                        && this.orderPricingModelMap.containsKey( serviceAsset.NSP_OrderProduct__r.OrderId )
+                        )
+                    {
+                        serviceAsset.NSP_Price_Level__c = this.orderPricingModelMap.get( serviceAsset.NSP_OrderProduct__r.OrderId );
+                    }
+                }
+                //update Assets
+                this.performDML( serviceAssetList );
             }
         }
     }
