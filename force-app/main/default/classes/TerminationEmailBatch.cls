@@ -27,38 +27,44 @@ public without sharing class TerminationEmailBatch implements ISelfSchedulable ,
     private static final String attachmentFilter = 'LTR-%';
     private String orgWideEmailId;
     
-    public TerminationEmailBatch() { 
+    public TerminationEmailBatch() {
+
         Set<String> templateApiNames = new Set<String>{ 
             TEMPLATE_INITIAL, 
             TEMPLATE_REVISED,
             TEMPLATE_REINSTATE_INITIAL,
             TEMPLATE_REINSTATE_REVISED
-         };       
-         if( String.isNotBlank ( TerminationEmailBatch.OrgWideEmailDisplayName) ) {
-             List<OrgWideEmailAddress> emails = [
-                 SELECT Id 
-                 FROM OrgWideEmailAddress
-                 WHERE ( IsVerified = true AND DisplayName =: TerminationEmailBatch.OrgWideEmailDisplayName AND Address != NULL)
-                 LIMIT 1
-             ];
-             if ( !emails.isEmpty() )
-             {
-                 orgWideEmailId = emails[0].Id;
-             } else if( Test.isRunningTest() ){
-                 orgWideEmailId = UserInfo.getUserId();
-             }
-         }
-        for (EmailTemplate template : [ SELECT DeveloperName 
+        };
+  
+        if ( String.isNotBlank ( TerminationEmailBatch.OrgWideEmailDisplayName) ) {
+
+            List<OrgWideEmailAddress> emails = [
+                SELECT Id
+                FROM OrgWideEmailAddress
+                WHERE ( IsVerified = true AND DisplayName =: TerminationEmailBatch.OrgWideEmailDisplayName AND Address != NULL)
+                LIMIT 1
+            ];
+
+            if ( !emails.isEmpty() )
+            {
+                orgWideEmailId = emails[0].Id;
+            } else if( Test.isRunningTest() ) {
+                orgWideEmailId = UserInfo.getUserId();
+            }
+
+        }
+
+        for ( EmailTemplate template : [ SELECT DeveloperName 
                                         FROM EmailTemplate 
                                         WHERE DeveloperName IN: templateApiNames
                                       ]
             )
         {
-            this.templateMap.put(template.DeveloperName, template.Id);
+            this.templateMap.put( template.DeveloperName, template.Id );
         }
-        
-        if(String.isNotBlank(TerminationEmailBatch.defaultAttachmentName)){
-            
+
+        if ( String.isNotBlank( TerminationEmailBatch.defaultAttachmentName ) )
+        {
             List<ContentVersion> contentVersions = [
                 SELECT Id,
                     Title,
@@ -69,91 +75,108 @@ public without sharing class TerminationEmailBatch implements ISelfSchedulable ,
                 LIMIT 1
             ];
 
-            if (!contentVersions.isEmpty() && contentVersions != null) {
+            if ( !contentVersions.isEmpty()
+                && contentVersions != null
+               )
+            {
                 defaultTemplateAttachmentId = contentVersions[0].Id;
             }
-
         }
     }
-    
-     
-    
-    public Database.QueryLocator start(Database.BatchableContext bc) {
+
+    public Database.QueryLocator start( Database.BatchableContext bc ) {
+ 
         Set<String> recordTypeApiNames = new Set<String>{ 
             CREDIT_SPECIALIST,
             NSP_ServiceConstants.NSP_Payroll_Specialist_Form,
             NSP_ServiceConstants.NSP_Client_Reinstatement
         }; 
-        return Database.getQueryLocator([
-            SELECT Client_Owner_Email__c,
-            	NSP_Revision__c,
-            	RecordType.DeveloperName,
-                RecordTypeId,
-            	NSP_Status__c,
-                Termination_Email_Status__c
-            FROM NSP_Termination_Form__c
-            WHERE NSP_Status__c =: NSP_ServiceConstants.TERM_TEAM_APPROVED
-            AND Termination_Email_Status__c =: EMAIL_STATUS_READY
-            AND Client_Owner_Email__c != null 
-            AND NSP_Revision__c != null
-            AND RecordType.DeveloperName IN: recordTypeApiNames 
-        ]);
+
+        return Database.getQueryLocator(
+            [
+            	SELECT Client_Owner_Email__c,
+                    NSP_Revision__c,
+                    RecordType.DeveloperName,
+                    RecordTypeId,
+                    NSP_Status__c,
+                    Termination_Email_Status__c
+                FROM NSP_Termination_Form__c
+                WHERE NSP_Status__c =: NSP_ServiceConstants.TERM_TEAM_APPROVED
+                AND Termination_Email_Status__c =: EMAIL_STATUS_READY
+                AND Client_Owner_Email__c != null 
+                AND NSP_Revision__c != null
+                AND RecordType.DeveloperName IN: recordTypeApiNames 
+            ]
+       );
     }
-    
-    public void execute(Database.BatchableContext bc, List<NSP_Termination_Form__c> forms) {
+
+    public void execute( Database.BatchableContext bc, List<NSP_Termination_Form__c> forms ) {
+
         if ( forms !=null 
             && !forms.isEmpty()
             && String.isNotBlank( orgWideEmailId )
             && TerminationEmailBatch.isEnabled
            )
-            
         {
-            Map<Id, ContentDocumentLink> docMap = getAttachments(forms);
+            Map<Id, ContentDocumentLink> docMap = getAttachments( forms );
             List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
             List<NSP_Termination_Form__c> formsToUpdate = new List<NSP_Termination_Form__c>();
             
-            for (NSP_Termination_Form__c form : forms) {
-                String templateName = getTemplateName(form);
+            for ( NSP_Termination_Form__c form : forms ) {
+                String templateName = getTemplateName( form );
                 ContentDocumentLink docLink = new ContentDocumentLink();
-                if(docMap.containsKey(form.Id)){
-                    docLink = docMap.get(form.Id);
+                if ( docMap.containsKey( form.Id ) )
+                {
+                    docLink = docMap.get( form.Id );
                 }
-                if ( this.templateMap.containsKey(templateName) && this.templateMap.get( templateName ) != null ){
-                    buildEmail(form, this.templateMap.get(templateName),docLink,emails);
+                if ( this.templateMap.containsKey( templateName ) 
+                    && this.templateMap.get( templateName ) != null
+                   )
+                {
+                    buildEmail( form, this.templateMap.get( templateName ), docLink, emails );
                 }
             }
             
-            sendAndProcessEmails(emails,forms,formsToUpdate);
-            performDML(formsToUpdate);
+            sendAndProcessEmails( emails, forms, formsToUpdate );
+            performDML( formsToUpdate );
         }
         
     }
     
     public void finish(Database.BatchableContext bc) {}
     
-    private Map<Id, ContentDocumentLink> getAttachments(List<NSP_Termination_Form__c> forms) {
+    private Map<Id, ContentDocumentLink> getAttachments( List<NSP_Termination_Form__c> forms ) {
+
         Map<Id, ContentDocumentLink> attachmentMap = new Map<Id, ContentDocumentLink>();
-        if( forms != null 
-           && !forms.isEmpty()
-        ){   
-            Set<Id> formIds = new Map<Id, NSP_Termination_Form__c>(forms).keySet();
-            for (ContentDocumentLink link : [
-                SELECT LinkedEntityId, 
-                ContentDocument.LatestPublishedVersionId
-                FROM ContentDocumentLink
-                WHERE LinkedEntityId IN: formIds 
-                AND ContentDocument.LatestPublishedVersion.Title like: attachmentFilter
-                ORDER BY SystemModstamp DESC 
-            ] ) {
-                if (!attachmentMap.containsKey(link.LinkedEntityId)) {
-                    attachmentMap.put(link.LinkedEntityId, link);
+        if ( forms != null 
+            && !forms.isEmpty()
+           )
+        {   
+            Set<Id> formIds = new Map<Id, NSP_Termination_Form__c>( forms ).keySet();
+            for ( ContentDocumentLink link : [ SELECT LinkedEntityId, 
+                                                   ContentDocument.LatestPublishedVersionId
+                                               FROM ContentDocumentLink
+                                               WHERE LinkedEntityId IN: formIds 
+                                               AND ContentDocument.LatestPublishedVersion.Title like: attachmentFilter
+                                               ORDER BY SystemModstamp DESC 
+                                             ]
+                )
+            {
+                if ( !attachmentMap.containsKey( link.LinkedEntityId ) ) {
+                    attachmentMap.put( link.LinkedEntityId, link );
                 }
             }
         }
+        
         return attachmentMap;
     }
     
-    private void buildEmail(NSP_Termination_Form__c form, Id templateId, ContentDocumentLink docLink,List<Messaging.SingleEmailMessage> emails) {
+    private void buildEmail( NSP_Termination_Form__c form,
+                             Id templateId,
+                             ContentDocumentLink docLink,
+                             List<Messaging.SingleEmailMessage> emails
+                           )
+    {
         
         Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
         
@@ -164,17 +187,16 @@ public without sharing class TerminationEmailBatch implements ISelfSchedulable ,
            ) 
         { 
             List<Id> attachmentIds = new List<Id>();
-            Messaging.SingleEmailMessage renderStoredEmailTemplate = Messaging.renderStoredEmailTemplate(templateId,null,form.Id );
-            email.setSubject(renderStoredEmailTemplate.getSubject());
-            email.setHtmlBody(renderStoredEmailTemplate.getHtmlBody());
-            email.setPlainTextBody(renderStoredEmailTemplate.getPlainTextBody());
-            email.setToAddresses(new List<String>{form.Client_Owner_Email__c});
+            Messaging.SingleEmailMessage renderStoredEmailTemplate = Messaging.renderStoredEmailTemplate( templateId, null, form.Id );
+            email.setSubject( renderStoredEmailTemplate.getSubject() );
+            email.setHtmlBody( renderStoredEmailTemplate.getHtmlBody() );
+            email.setPlainTextBody( renderStoredEmailTemplate.getPlainTextBody() );
+            email.setToAddresses( new List<String>{ form.Client_Owner_Email__c } );
             email.setOrgWideEmailAddressId( orgWideEmailId );
-            email.setSaveAsActivity(true);
-            email.setWhatId(form.Id);
-            System.debug('defaultTemplateAttachmentId---->'+defaultTemplateAttachmentId);
-            
+            email.setSaveAsActivity( true );
+            email.setWhatId( form.Id );
             attachmentIds.add( defaultTemplateAttachmentId );
+
             if( docLink != null &&
                 docLink.ContentDocument != null &&
                 docLink.ContentDocument.LatestPublishedVersionId != null 
@@ -183,7 +205,7 @@ public without sharing class TerminationEmailBatch implements ISelfSchedulable ,
                 attachmentIds.add( docLink.ContentDocument.LatestPublishedVersionId );
             }
             if( !attachmentIds.isEmpty() ){
-                email.setEntityAttachments(attachmentIds);
+                email.setEntityAttachments( attachmentIds );
             }
         }
         if ( email != null){ 
@@ -191,25 +213,52 @@ public without sharing class TerminationEmailBatch implements ISelfSchedulable ,
         }
     }
     
-    private String getTemplateName(NSP_Termination_Form__c form) {
+    private String getTemplateName( NSP_Termination_Form__c form ) {
+
         String templateName = '';
-        if (form != null && form.RecordType != null && String.isNotBlank(form.NSP_Revision__c)) {
+
+        if ( form != null && form.RecordType != null
+            && String.isNotBlank( form.NSP_Revision__c ) 
+           )
+        {
             String rt = form.RecordType.DeveloperName;
             String rev = form.NSP_Revision__c;
-            if ((rt == CREDIT_SPECIALIST || rt == NSP_ServiceConstants.NSP_Payroll_Specialist_Form) && rev == NSP_ServiceConstants.NO) {
+
+            if ( ( rt == CREDIT_SPECIALIST 
+                  || rt == NSP_ServiceConstants.NSP_Payroll_Specialist_Form
+                 )
+                && rev == NSP_ServiceConstants.NO
+               )
+            {
                 templateName = TEMPLATE_INITIAL;
-            } else if ((rt == CREDIT_SPECIALIST || rt == NSP_ServiceConstants.NSP_Payroll_Specialist_Form) && rev == NSP_ServiceConstants.YES) {
+            } else if ( ( rt == CREDIT_SPECIALIST
+                         || rt == NSP_ServiceConstants.NSP_Payroll_Specialist_Form
+                        )
+                       && rev == NSP_ServiceConstants.YES
+                      )
+            {
                 templateName = TEMPLATE_REVISED;
-            } else if (rt == NSP_ServiceConstants.NSP_Client_Reinstatement && rev == NSP_ServiceConstants.NO) {
+            } else if ( rt == NSP_ServiceConstants.NSP_Client_Reinstatement
+                       && rev == NSP_ServiceConstants.NO
+                      )
+            {
                 templateName = TEMPLATE_REINSTATE_INITIAL;
-            } else if (rt == NSP_ServiceConstants.NSP_Client_Reinstatement && rev == NSP_ServiceConstants.YES) {
+            } else if ( rt == NSP_ServiceConstants.NSP_Client_Reinstatement
+                       && rev == NSP_ServiceConstants.YES
+                      )
+            {
                 templateName = TEMPLATE_REINSTATE_REVISED;
             }
         }
+
         return templateName;
     }
     
-    private void sendAndProcessEmails( List<Messaging.SingleEmailMessage> emailMessages,List<NSP_Termination_Form__c> originalForms, List<NSP_Termination_Form__c> formsToUpdate ) {
+    private void sendAndProcessEmails( List<Messaging.SingleEmailMessage> emailMessages,
+                                       List<NSP_Termination_Form__c> originalForms,
+                                       List<NSP_Termination_Form__c> formsToUpdate 
+                                     )
+    {
         if ( emailMessages != null
             && originalForms != null
             && !emailMessages.isEmpty()
@@ -218,21 +267,18 @@ public without sharing class TerminationEmailBatch implements ISelfSchedulable ,
            )
         {
             try{
-                system.debug('enter send emails'+emailMessages);
-                Messaging.SendEmailResult[] results = Messaging.sendEmail(emailMessages, false);
-                for (Integer i = 0; i < results.size(); i++) {
-                    if (results[i].isSuccess()) {
+                Messaging.SendEmailResult[] results = Messaging.sendEmail( emailMessages, false );
+                for ( Integer i = 0; i < results.size(); i++ ) {
+                    if ( results[i].isSuccess() ) {
                         NSP_Termination_Form__c form = originalForms[i];
-                        if (form != null) {
+                        if ( form != null ) {
                             form.Termination_Email_Status__c = EMAIL_STATUS_SENT;
-                            formsToUpdate.add(form);
+                            formsToUpdate.add( form );
                         }
-                    }else{
-                        system.debug('issues'+results[i]);
-                    }
+                    } 
                 }
                
-            } catch(Exception e){
+            } catch( Exception e ) {
                 NSP_ErrorLogHandler.logException(
                     TerminationEmailBatch.class.getName() ,
                     'sendAndProcessEmails:sendEmail' ,
@@ -244,7 +290,10 @@ public without sharing class TerminationEmailBatch implements ISelfSchedulable ,
     
     @testVisible()
     private void performDML( List<sObject> records ) {
-        if ( ( records != null ) && !records.isEmpty() ) {
+        if ( ( records != null )
+            && !records.isEmpty()
+           )
+        {
             try {
                 List<Database.SaveResult> results = Database.update( records , false );
                 NSP_ErrorLogHandler.logResults(
