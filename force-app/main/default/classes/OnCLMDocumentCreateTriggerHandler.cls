@@ -36,8 +36,8 @@ public class OnCLMDocumentCreateTriggerHandler extends NSP_TriggerAction impleme
      *
      */
     public void afterInsert(List<sObject> newList, Map<Id, sObject> newMap) {
-       	 OnCLMDocumentCreateTriggerHelper  OnCLMDocumentCreateObject =  new OnCLMDocumentCreateTriggerHelper();
-         OnCLMDocumentCreateObject.afterInsertDocument((Map<Id, CLM_Document__c>) newMap);
+       	 OnCLMDocumentCreateTriggerHelper  helper =  new OnCLMDocumentCreateTriggerHelper();
+         helper.afterInsertDocument((Map<Id, CLM_Document__c>) newMap);
     }
 
     /**
