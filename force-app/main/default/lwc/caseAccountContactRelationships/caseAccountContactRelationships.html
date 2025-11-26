@@ -1,0 +1,36 @@
+<template>
+    <div  class="custom-card">
+    <lightning-card title="Account Contact Information" icon-name ="standard:record"   class="custom-card"> 
+
+        <lightning-button-icon
+            icon-name="utility:refresh"
+            variant="neutral"
+            alternative-text="Refresh"
+            title="Refresh"
+            slot="actions"
+            onclick={handleRefresh}
+            
+            >
+        </lightning-button-icon>
+        <template if:true={displayDataList}>
+            <lightning-datatable
+                key-field="Id"
+                data={displayDataList}
+                columns={coulums}
+                class= "wrap-text-table wrap-header"
+                hide-checkbox-column="true"
+                >
+            </lightning-datatable>
+        </template>
+        <div class="slds-text-align_center" >
+            <lightning-button label="View All" 
+                onclick={handleViewAll}
+                variant="base"
+                title="View All"
+                class="slds-text-link"
+            >
+            </lightning-button>
+        </div>
+    </lightning-card>
+    </div>
+</template>

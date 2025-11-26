@@ -8,5 +8,6 @@
     <permissionSets>Default_Account_Team_View</permissionSets>
     <permissionSets>Default_Opportunity_Team_View</permissionSets>
     <permissionSets>Run_Flows</permissionSets>
+    <permissionSets>Case_Account_Contact_Information</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
