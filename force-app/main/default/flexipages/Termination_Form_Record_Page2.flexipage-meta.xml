@@ -9,7 +9,7 @@
                         <valueListItems>
                             <value>CustomButton.NSP_Termination_Form__c.Generate_Term_Letter</value>
                             <visibilityRule>
-                                <booleanFilter>2 AND (1 OR 3 OR 4)</booleanFilter>
+                                <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!$Permission.CustomPermission.Termination_Admin_Access}</leftValue>
                                     <operator>EQUAL</operator>
@@ -19,16 +19,6 @@
                                     <leftValue>{!Record.Termination_Letter_Template_Shown__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!$User.Profile.Name}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>System Administrator</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!$User.Profile.Name}</leftValue>
-                                    <operator>CONTAINS</operator>
-                                    <rightValue>System Admin Lite</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -1799,7 +1789,7 @@
         <name>sidebar</name>
         <type>Region</type>
     </flexiPageRegions>
-    <masterLabel>CS Termination Form Record Page</masterLabel>
+    <masterLabel>Termination Form Record Page CS</masterLabel>
     <parentFlexiPage>flexipage__default_rec_L</parentFlexiPage>
     <sobjectType>NSP_Termination_Form__c</sobjectType>
     <template>
