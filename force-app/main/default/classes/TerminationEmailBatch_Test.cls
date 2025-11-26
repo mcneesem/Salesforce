@@ -1,7 +1,7 @@
 @isTest
 private class TerminationEmailBatch_Test {
    
-	@TestSetup
+    @TestSetup
     private static void createTestData() {
 
         String title = 'Default_Termination_Attachment';
