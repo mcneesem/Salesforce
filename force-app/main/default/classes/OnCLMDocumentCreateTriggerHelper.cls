@@ -6,31 +6,31 @@
 
 public With Sharing class OnCLMDocumentCreateTriggerHelper {
     // test w/ OnCLMDocumentCreateTest (96%)
-    
+
     /*
      * Handles post-insert logic for CLM_Document__c records.
      * Finds the first non-null related field from a predefined list
      * and triggers document download using CLMDocumentTransfer.
      */
-    
+
     public void afterInsertDocument( Map <Id,CLM_Document__c> newMap ){
-        
+
         // List of related fields to check in priority order  
-        List<String> relatedFieldNames  = new List<String>{ 
+        List<String> relatedFieldNames = new List<String>{ 
             'Opportunity__c',
-                'Account__c',
-                'NSP_Invoice__c',
-                'NSP_CreditNote__c',
-                'NSP_Service_Plan__c',
-                'NSP_Wizard_Output__c',
-                'pse_Project_Task__c',
-                'Termination_Form__c'
-                }; 
-                    
-                    List<CLM_Document__c> clmDocList = new List<CLM_Document__c>();
-        if( newMap != null 
-           && !newMap.isEmpty()
-          )
+            'Account__c',
+            'NSP_Invoice__c',
+            'NSP_CreditNote__c',
+            'NSP_Service_Plan__c',
+            'NSP_Wizard_Output__c',
+            'pse_Project_Task__c',
+            'Termination_Form__c'
+        };
+        List<CLM_Document__c> clmDocList = new List<CLM_Document__c>();
+
+        if ( newMap != null 
+            && !newMap.isEmpty()
+           )
         {
             clmDocList = [ 
                 SELECT Id,
@@ -48,22 +48,22 @@ public With Sharing class OnCLMDocumentCreateTriggerHelper {
                 WHERE Id IN: newMap.keySet()
                 LIMIT 1
             ];
-        }       
-        
-        if( clmDocList != null 
-           && !clmDocList.isEmpty() 
-          )
-        { 
+        }
+
+        if ( clmDocList != null 
+            && !clmDocList.isEmpty() 
+           )
+        {
             for( String fieldApiName : relatedFieldNames  )
-            { 
-                if( String.isNotBlank( fieldApiName )
-                   && clmDocList[0].get( fieldApiName ) != null
-                  )
+            {
+                if ( String.isNotBlank( fieldApiName )
+                    && clmDocList[0].get( fieldApiName ) != null
+                   )
                 {
                     String value = ( String )clmDocList[0].get( fieldApiName );
-                    if( String.isNotBlank( value ) 
-                       && !Test.isRunningTest()
-                      )
+                    if ( String.isNotBlank( value ) 
+                        && !Test.isRunningTest()
+                       )
                     {
                         CLMDocumentTransfer.DownloadDocument( clmDocList[0].CLM_Document_Id__c, value );
                     }
