@@ -8,5 +8,6 @@
     <relationshipName>CLM_Documents</relationshipName>
     <required>false</required>
     <trackTrending>false</trackTrending>
+    <trackHistory>true</trackHistory>
     <type>Lookup</type>
 </CustomField>
