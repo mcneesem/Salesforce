@@ -1,6 +1,6 @@
 @isTest
 private class TerminationEmailBatch_Test {
-   
+
     @TestSetup
     private static void createTestData() {
 
