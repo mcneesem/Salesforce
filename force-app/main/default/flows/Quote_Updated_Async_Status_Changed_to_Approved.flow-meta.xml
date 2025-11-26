@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Email_Alert_for_IWX_Greater_than_20_Approval</name>
         <label>Email Alert for IWX Greater than 20 Approval</label>
-        <locationX>605</locationX>
-        <locationY>1092</locationY>
+        <locationX>671</locationX>
+        <locationY>1740</locationY>
         <actionName>SBQQ__Quote__c.Email_Alert_for_IWX_20_Approval</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -18,12 +18,13 @@
             </value>
         </inputParameters>
         <nameSegment>SBQQ__Quote__c.Email_Alert_for_IWX_20_Approval</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>Email_Alert_for_Quote_Approval</name>
         <label>Email Alert for Quote Approval</label>
-        <locationX>869</locationX>
-        <locationY>876</locationY>
+        <locationX>957</locationX>
+        <locationY>984</locationY>
         <actionName>SBQQ__Quote__c.NSP_Email_Alert_for_Quote_Approval</actionName>
         <actionType>emailAlert</actionType>
         <connector>
@@ -40,13 +41,15 @@
             </value>
         </inputParameters>
         <nameSegment>SBQQ__Quote__c.NSP_Email_Alert_for_Quote_Approval</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Assign_varFaultElement_Email_Alert_for_IWX_Greater_than_20_Approval</name>
         <label>Assign varFaultElement - Email Alert for IWX Greater than 20 Approval</label>
-        <locationX>869</locationX>
-        <locationY>1200</locationY>
+        <locationX>935</locationX>
+        <locationY>1848</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -62,8 +65,8 @@
     <assignments>
         <name>Assign_varFaultElement_Email_Alert_for_Quote_Approval</name>
         <label>Assign varFaultElement - Email Alert for Quote Approval</label>
-        <locationX>1529</locationX>
-        <locationY>984</locationY>
+        <locationX>1221</locationX>
+        <locationY>1092</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -121,7 +124,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Email_Alert_for_Quote_Approval</targetReference>
+                <targetReference>Outbound_Email_custom_setting_check_for_Quote_Approval</targetReference>
             </connector>
             <label>Group Owner has Email</label>
         </rules>
@@ -157,7 +160,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Email_Alert_for_Quote_Approval</targetReference>
+                <targetReference>Outbound_Email_custom_setting_check_for_Quote_Approval</targetReference>
             </connector>
             <label>Owner can receive emails</label>
         </rules>
@@ -166,7 +169,7 @@
         <name>Is_IWX_Discount_greater_than_20</name>
         <label>Is IWX Discount greater than 20</label>
         <locationX>869</locationX>
-        <locationY>984</locationY>
+        <locationY>1524</locationY>
         <defaultConnectorLabel>N/A</defaultConnectorLabel>
         <rules>
             <name>Yes_IWX_Discount_is_greater_than_20</name>
@@ -193,9 +196,58 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Email_Alert_for_IWX_Greater_than_20_Approval</targetReference>
+                <targetReference>Outbound_Email_custom_setting_check_for_IWX</targetReference>
             </connector>
             <label>Yes - IWX Discount is greater than 20</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check_for_IWX</name>
+        <label>Outbound Email custom setting check for IWX</label>
+        <locationX>539</locationX>
+        <locationY>1632</locationY>
+        <defaultConnector>
+            <targetReference>Email_Alert_for_IWX_Greater_than_20_Approval</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false_for_IWX</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false for IWX</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check_for_Quote_Approval</name>
+        <label>Outbound Email custom setting check for Quote Approval</label>
+        <locationX>869</locationX>
+        <locationY>876</locationY>
+        <defaultConnector>
+            <targetReference>Email_Alert_for_Quote_Approval</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false_for_Quote_Approval</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Is_IWX_Discount_greater_than_20</targetReference>
+            </connector>
+            <label>IsEnabledOutbound = false for Quote Approval</label>
         </rules>
     </decisions>
     <decisions>
@@ -235,7 +287,7 @@
             <label>Owned by User</label>
         </rules>
     </decisions>
-    <description>Quote Process Builder flipped to flow. Sends emails when Quote Status is changed to approved, and additional email sent if IWX discount is greater than 20%.</description>
+    <description>Outbound Email bypass added. Quote Process Builder flipped to flow. Sends emails when Quote Status is changed to approved, and additional email sent if IWX discount is greater than 20%.</description>
     <environments>Default</environments>
     <interviewLabel>Quote - Updated - Async - Status Changed to Approved {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Quote - Updated - Async - Status Changed to Approved</label>
@@ -290,8 +342,8 @@
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
-        <locationX>1529</locationX>
-        <locationY>1092</locationY>
+        <locationX>1221</locationX>
+        <locationY>1200</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>

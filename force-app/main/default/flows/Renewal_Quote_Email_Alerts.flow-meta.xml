@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Send_email_for_subscriptions_expired_30_days_ago</name>
         <label>Send email for subscriptions expired 30 days ago</label>
-        <locationX>578</locationX>
-        <locationY>528</locationY>
+        <locationX>974</locationX>
+        <locationY>600</locationY>
         <actionName>SBQQ__Quote__c.Email_Alert_for_Renewal_Quote_Due_for_Order_30_days_ago</actionName>
         <actionType>emailAlert</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -14,12 +14,14 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>SBQQ__Quote__c.Email_Alert_for_Renewal_Quote_Due_for_Order_30_days_ago</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>Send_email_for_subscriptions_expired_yesterday</name>
         <label>Send email for subscriptions expired yesterday</label>
-        <locationX>50</locationX>
-        <locationY>528</locationY>
+        <locationX>182</locationX>
+        <locationY>600</locationY>
         <actionName>SBQQ__Quote__c.Email_Alert_for_Renewal_Quote_Due_for_Order_Yesterday</actionName>
         <actionType>emailAlert</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -29,13 +31,16 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>SBQQ__Quote__c.Email_Alert_for_Renewal_Quote_Due_for_Order_Yesterday</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>55.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <decisions>
         <name>Is_Quote_not_Ordered</name>
         <label>Is Quote not Ordered?</label>
-        <locationX>182</locationX>
-        <locationY>408</locationY>
+        <locationX>248</locationX>
+        <locationY>384</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Quote_not_converted_to_Order</name>
@@ -48,16 +53,62 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Send_email_for_subscriptions_expired_yesterday</targetReference>
+                <targetReference>Outbound_Email_custom_setting_check_for_expired_yesterday</targetReference>
             </connector>
             <label>Quote not converted to Order</label>
         </rules>
     </decisions>
     <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check_for_expired_30_days_ago</name>
+        <label>Outbound Email custom setting check for expired 30 days ago</label>
+        <locationX>842</locationX>
+        <locationY>492</locationY>
+        <defaultConnector>
+            <targetReference>Send_email_for_subscriptions_expired_30_days_ago</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false_for_30_days</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false for 30 days</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check_for_expired_yesterday</name>
+        <label>Outbound Email custom setting check for expired yesterday</label>
+        <locationX>50</locationX>
+        <locationY>492</locationY>
+        <defaultConnector>
+            <targetReference>Send_email_for_subscriptions_expired_yesterday</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Quote_not_ordered</name>
         <label>Quote not ordered</label>
-        <locationX>710</locationX>
-        <locationY>408</locationY>
+        <locationX>1040</locationX>
+        <locationY>384</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Check_quote_is_ordered</name>
@@ -70,11 +121,13 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Send_email_for_subscriptions_expired_30_days_ago</targetReference>
+                <targetReference>Outbound_Email_custom_setting_check_for_expired_30_days_ago</targetReference>
             </connector>
             <label>Check quote is ordered?</label>
         </rules>
     </decisions>
+    <description>Outbound Email bypass added.</description>
+    <environments>Default</environments>
     <interviewLabel>Renewal Quote Email Alerts {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Renewal Quote Email Alerts</label>
     <processMetadataValues>
@@ -99,8 +152,8 @@
     <recordLookups>
         <name>Get_Quote_Details</name>
         <label>Get Quote Details</label>
-        <locationX>710</locationX>
-        <locationY>288</locationY>
+        <locationX>1040</locationX>
+        <locationY>276</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Quote_not_ordered</targetReference>
@@ -120,8 +173,8 @@
     <recordLookups>
         <name>Get_Quote_Record_which_triggered_the_flow</name>
         <label>Get Quote Record which triggered the flow</label>
-        <locationX>182</locationX>
-        <locationY>288</locationY>
+        <locationX>248</locationX>
+        <locationY>276</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Is_Quote_not_Ordered</targetReference>
@@ -139,7 +192,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>122</locationX>
+        <locationX>221</locationX>
         <locationY>0</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -182,5 +235,5 @@
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
 </Flow>

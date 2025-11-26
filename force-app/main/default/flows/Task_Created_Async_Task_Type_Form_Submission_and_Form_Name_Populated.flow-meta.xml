@@ -18,7 +18,7 @@
             </value>
         </inputParameters>
         <nameSegment>Task.Notify_Lead_Owner_for_Lead_from_Website</nameSegment>
-        <versionSegment>1</versionSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>NSP_Notify_Account_Owner_for_Contact_from_Website</name>
@@ -38,9 +38,10 @@
             </value>
         </inputParameters>
         <nameSegment>Task.NSP_Notify_Account_Owner_for_Contact_from_Website</nameSegment>
-        <versionSegment>1</versionSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Assign_varFaultElement_Get_Lead_Owner_Info</name>
         <label>Assign varFaultElement - Get Lead Owner Info</label>
@@ -109,6 +110,7 @@
         </connector>
     </assignments>
     <decisions>
+        <description>Checks the value of the custom setting for Bypass Task Email Alert and Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
         <name>Bypass_Task_Email_Alerts</name>
         <label>Bypass Task Email Alerts?</label>
         <locationX>704</locationX>
@@ -119,12 +121,19 @@
         <defaultConnectorLabel>No Bypass</defaultConnectorLabel>
         <rules>
             <name>Yes_Bypass_email_alerts</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>$Permission.Bypass_Task_Email_Alerts</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <label>Yes - Bypass email alerts</label>
@@ -247,7 +256,7 @@
             <label>Contact</label>
         </rules>
     </decisions>
-    <description>Updates Tasks Account Owner Email Field. If Task related to Lead or Contact, and Task Type = &quot;Form Submission&quot; and Form Name = 1 of 6 specific forms, send email alert</description>
+    <description>Outbound Email bypass added. Updates Tasks Account Owner Email Field. If Task related to Lead or Contact, and Task Type = &quot;Form Submission&quot; and Form Name = 1 of 6 specific forms, send email alert</description>
     <environments>Default</environments>
     <interviewLabel>Task - Created - Async - Task Type Form Submission and Form Name Populated {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Task - Created - Async - Task Type Form Submission and Form Name Populated</label>
