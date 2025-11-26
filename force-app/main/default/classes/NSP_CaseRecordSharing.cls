@@ -133,7 +133,7 @@ public class NSP_CaseRecordSharing {
         List<string> getGrpList = new List<string>();
         if(!catSubCatDetailGroupNamesMap.isEmpty()){
             for(Case cse : [SELECT Id, NSP_Category__c, NSP_SubCategory__c,NSP_Detail__c FROM Case WHERE ID IN: cseList]){
-                 List<string> getGrpListTemp = getGroupListHelper(cse);
+                 List<string> getGrpListTemp = NSP_CaseRecordSharing.getGroupListHelper( cse );
                  if(getGrpListTemp != null){
                     getGrpList.addAll(getGrpListTemp);
                 }
@@ -240,7 +240,7 @@ public class NSP_CaseRecordSharing {
         if(caseRec != null && caseRec.NSP_Detail__c != null && catSubCatDetailGroupNamesMap != null && catSubCatDetailGroupNamesMap.containsKey(caseRec.NSP_Category__c+';'+caseRec.NSP_SubCategory__c+ ';' + caseRec.NSP_Detail__c)){
             groupNames = catSubCatDetailGroupNamesMap.get(caseRec.NSP_Category__c+';'+caseRec.NSP_SubCategory__c+ ';' + caseRec.NSP_Detail__c);
         }
-        if(catSubCatGroupNamesMap.containsKey(caseRec.NSP_Category__c+';'+caseRec.NSP_SubCategory__c)){
+        if(caseRec != null && catSubCatGroupNamesMap!= null &&  catSubCatGroupNamesMap.containsKey(caseRec.NSP_Category__c+';'+caseRec.NSP_SubCategory__c)){
             groupNames = catSubCatGroupNamesMap.get(caseRec.NSP_Category__c+';'+caseRec.NSP_SubCategory__c);
         }
         return groupNames;
