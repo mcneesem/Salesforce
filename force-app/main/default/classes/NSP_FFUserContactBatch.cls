@@ -5,22 +5,35 @@
 * Name : NSP_FFUserContactBatch
 */
 public class NSP_FFUserContactBatch implements Schedulable, Database.Batchable<SObject>, Database.Stateful{
+    // test w/ NSP_FFUserContactBatchTest (92%)
     public static final String FFUSER_CONTACT_SET = 'NSP_FFUserContactBatch';
-    public Database.QueryLocator start(Database.BatchableContext bc){
-        //Commented addFilter('NSP_Financial_Force_User__c', TRUE) and added NSP_Financial_Force_User__c != Null
-        List<String> userFields = new List<String>{
-            'Id',
-                'NSP_IS_FF_User__c',
-                'EmployeeNumber' ,
-                'NSP_Financial_Force_User__c',
-                'NSP_FF_User_Count__c'
-                };
-                    String query = new NSP_QueryBuilder('User', userFields)
-                    .addFilter('NSP_IS_FF_User__c', FALSE)
-                    //.addFilter('NSP_Financial_Force_User__c', TRUE)                          
-                    .setSecurityEnforce(false).build();
-        query += ' AND EmployeeNumber != Null AND (NSP_FF_User_Count__c <=30 OR NSP_FF_User_Count__c = Null) AND NSP_Financial_Force_User__c != Null ';
-        return Database.getQueryLocator(query); 
+    public Database.QueryLocator start(Database.BatchableContext bc) {
+        String filterDaysCount = '7';
+        FF_User_Contact_Batch_Setting__c customSettingRec = FF_User_Contact_Batch_Setting__c.getInstance(UserInfo.getUserId());
+        if (customSettingRec != null && customSettingRec.FF_User_Modified_Days_Count__c != null) {
+            filterDaysCount = String.valueOf(customSettingRec.FF_User_Modified_Days_Count__c);
+        }
+        
+        string query = (
+            'SELECT Id, Name, NSP_IS_FF_User__c, NSP_Employee_Per_ID__c, NSP_Financial_Force_User__c, NSP_FF_User_Count__c' +
+            ' FROM User'+
+            ' WHERE'+
+            ' ID IN'+
+            ' ('+
+            ' SELECT UserId '+ 
+            ' FROM UserHistory'+
+            ' WHERE Field = \'NSP_IS_FF_User__c\''+
+            ' AND CreatedDate = Last_N_Days:' + 
+            filterDaysCount + ')'+
+            ' AND NSP_IS_FF_User__c = TRUE'+
+            ' AND NSP_Employee_Per_ID__c != NULL'+
+            ' AND (NSP_FF_User_Count__c <= 30 OR NSP_FF_User_Count__c = NULL)'+
+            ' AND NSP_Financial_Force_User__c != NULL'
+        );
+        
+        System.debug(LoggingLevel.WARN, ' Query String : ' + query);
+        return Database.getQueryLocator(query);
+        
     }
     public void execute(Database.BatchableContext bc, List<User> userList){
         Id insperityAccountId = System.Label.NSP_Insperity_Account; 
@@ -31,7 +44,7 @@ public class NSP_FFUserContactBatch implements Schedulable, Database.Batchable<S
         List<String> regionField = new List<String>{'Id', 'Name' };
         try{
             for(User usr :userList){
-                userPerIdUserMap.put(usr.EmployeeNumber,usr);
+                userPerIdUserMap.put(usr.NSP_Employee_Per_ID__c,usr);
            }
 
             String regionQuery = new NSP_QueryBuilder('pse__Region__c', regionField).addFilter('Name', NSP_ServiceConstants.UnitedStatesRegion).addLimit(1).build();
