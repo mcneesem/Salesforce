@@ -7,6 +7,6 @@ trigger OnCLMDocumentCreateTrigger on CLM_Document__c (before insert, after inse
     NSP_Trigger_Switch__c triggerSwitch =  NSP_Trigger_Switch__c.getInstance(UserInfo.getUserId());
     //run if trigger switch is off
     if(!triggerSwitch.OnCLMDocumentCreateTrigger__c){
-    	NSP_TriggerDispatcher.run(new OnCLMDocumentCreateTriggerHandler(), 'OnCLMDocumentCreate_Trigger');
+        NSP_TriggerDispatcher.run(new OnCLMDocumentCreateTriggerHandler(), 'OnCLMDocumentCreate_Trigger');
     } 
 }
