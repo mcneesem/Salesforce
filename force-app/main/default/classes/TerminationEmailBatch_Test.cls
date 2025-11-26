@@ -55,7 +55,7 @@ private class TerminationEmailBatch_Test {
         insert cdl;
       
     }
-    
+
    //Executes batch job for TerminationEmailBatch
     @isTest private static void termination(){
         Test.startTest();
@@ -70,5 +70,5 @@ private class TerminationEmailBatch_Test {
         TerminationEmailBatch.schedule();
         test.stopTest();
     }
-    
+
 }
