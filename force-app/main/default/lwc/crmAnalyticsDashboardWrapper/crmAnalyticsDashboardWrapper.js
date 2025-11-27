@@ -8,7 +8,7 @@ export default class CrmAnalyticsDashboardWrapper extends LightningElement {
         if (data) {
             this.dashboardId = data.Dashboard_Id__c;
         } else if (error) {
-            this.error = "An error has occurred, please contact the Administrator"; 
+            this.error = "An error has occurred (crmAnalyticsDashboardWrapper)."; 
         }
     } 
 }

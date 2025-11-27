@@ -3,7 +3,7 @@ private class CRMAnalyticsDashboardControllerTest {
 
     @testSetup
     private static void setup() {
-        CRM_Analytics_Dashboard_Settings__c settings = CRM_Analytics_Dashboard_Settings__c.getInstance( UserInfo.getUserId() );
+        CRM_Analytics_Dashboard_Settings__c settings = CRM_Analytics_Dashboard_Settings__c.getOrgDefaults();
         settings.Dashboard_Id__c = 'dashboard-Id';
         upsert settings;
     }
