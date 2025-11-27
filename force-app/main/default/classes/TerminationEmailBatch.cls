@@ -4,33 +4,48 @@
 /* @date : 10/14/2025
 /***************************************************************************************************/
 
-public without sharing class TerminationEmailBatch implements ISelfSchedulable , Schedulable, Database.Batchable<SObject> {
+public with sharing class TerminationEmailBatch implements ISelfSchedulable, Schedulable, Database.Batchable<SObject> {
     //test w/ TerminationEmailBatch_Test (82%)
 
     //Constants for Email Template DeveloperNames
-    private static final String TEMPLATE_INITIAL = 'Term_Letter_Initial';                         
-    private static final String TEMPLATE_REVISED = 'Term_Team_Letter_Revised';                     
-    private static final String TEMPLATE_REINSTATE_INITIAL = 'Term_Team_Reinstate_Letter_Initial'; 
-    private static final String TEMPLATE_REINSTATE_REVISED = 'Term_Team_Reinstate_Letter_Revised'; 
+    private static final String TEMPLATE_INITIAL = 'Term_Letter_Initial';
+    private static final String TEMPLATE_REVISED = 'Term_Team_Letter_Revised';
+    private static final String TEMPLATE_REINSTATE_INITIAL = 'Term_Team_Reinstate_Letter_Initial';
+    private static final String TEMPLATE_REINSTATE_REVISED = 'Term_Team_Reinstate_Letter_Revised';
 
     //Constants for RecordType DeveloperNames
-    private static final String CREDIT_SPECIALIST = 'NSP_Credit_Specialist_Form';     
+    private static final String CREDIT_SPECIALIST = 'NSP_Credit_Specialist_Form';
 
-    //Constants for Email Status Field Values            
-    private static final String EMAIL_STATUS_READY = 'Ready to be sent';             
-    private static final String EMAIL_STATUS_SENT = 'Email Sent'; 
+    //Constants for Email Status Field Values
+    private static final String EMAIL_STATUS_READY = 'Ready to be sent';
+    private static final String EMAIL_STATUS_SENT = 'Email Sent';
 
     //Map for Termination Email Templates
-    private Map<String, Id> templateMap = new MAP<String, Id>();
+    private Map<String, Id> templateMap = new Map<String, Id>();
 
-    private Id defaultTemplateAttachmentId;
-    private static final String attachmentFilter = 'LTR-%';
-    private String orgWideEmailId;
+    private Id defaultTemplateAttachmentId = null;
+    private Id orgWideEmailId = UserInfo.getUserId();
 
+    public static String schedule() {
+        String suffix = '';
+        if ( Test.isRunningTest() ) {
+            suffix = ' ~ TEST';
+        }
+        return System.schedule(
+            'TerminationEmailBatch ~ every weekday at 5:00 PM CT' + suffix,
+            '0 0 17 ? * MON-FRI',
+            new TerminationEmailBatch()
+        );
+    }
+
+    public void execute( SchedulableContext scon ) {
+        Database.executeBatch( new TerminationEmailBatch() , TerminationEmailBatch.batchSize );
+    }
+    
     public TerminationEmailBatch() {
 
         Set<String> templateApiNames = new Set<String>{ 
-            TEMPLATE_INITIAL, 
+            TEMPLATE_INITIAL,
             TEMPLATE_REVISED,
             TEMPLATE_REINSTATE_INITIAL,
             TEMPLATE_REINSTATE_REVISED
@@ -45,11 +60,10 @@ public without sharing class TerminationEmailBatch implements ISelfSchedulable ,
                 LIMIT 1
             ];
 
-            if ( !emails.isEmpty() )
+            if ( emails != null
+                && !emails.isEmpty() )
             {
                 orgWideEmailId = emails[0].Id;
-            } else if( Test.isRunningTest() ) {
-                orgWideEmailId = UserInfo.getUserId();
             }
 
         }
@@ -75,8 +89,8 @@ public without sharing class TerminationEmailBatch implements ISelfSchedulable ,
                 LIMIT 1
             ];
 
-            if ( !contentVersions.isEmpty()
-                && contentVersions != null
+            if ( contentVersions != null
+                && !contentVersions.isEmpty()
                )
             {
                 defaultTemplateAttachmentId = contentVersions[0].Id;
@@ -112,9 +126,9 @@ public without sharing class TerminationEmailBatch implements ISelfSchedulable ,
 
     public void execute( Database.BatchableContext bc, List<NSP_Termination_Form__c> forms ) {
 
-        if ( forms !=null 
+        if ( forms != null 
             && !forms.isEmpty()
-            && String.isNotBlank( orgWideEmailId )
+            && String.isNotBlank( this.orgWideEmailId )
             && TerminationEmailBatch.isEnabled
            )
         {
@@ -123,22 +137,23 @@ public without sharing class TerminationEmailBatch implements ISelfSchedulable ,
             List<NSP_Termination_Form__c> formsToUpdate = new List<NSP_Termination_Form__c>();
             
             for ( NSP_Termination_Form__c form : forms ) {
-                String templateName = getTemplateName( form );
+                String templateName = this.getTemplateName( form );
                 ContentDocumentLink docLink = new ContentDocumentLink();
                 if ( docMap.containsKey( form.Id ) )
                 {
                     docLink = docMap.get( form.Id );
                 }
-                if ( this.templateMap.containsKey( templateName ) 
+                if ( this.templateMap != null
+                    && this.templateMap.containsKey( templateName ) 
                     && this.templateMap.get( templateName ) != null
                    )
                 {
-                    buildEmail( form, this.templateMap.get( templateName ), docLink, emails );
+                    this.buildEmail( form, this.templateMap.get( templateName ), docLink, emails );
                 }
             }
             
-            sendAndProcessEmails( emails, forms, formsToUpdate );
-            performDML( formsToUpdate );
+            this.sendAndProcessEmails( emails, forms, formsToUpdate );
+            this.performDML( formsToUpdate );
         }
         
     }
@@ -158,7 +173,7 @@ public without sharing class TerminationEmailBatch implements ISelfSchedulable ,
                                                    ContentDocument.LatestPublishedVersionId
                                                FROM ContentDocumentLink
                                                WHERE LinkedEntityId IN: formIds 
-                                               AND ContentDocument.LatestPublishedVersion.Title like: attachmentFilter
+                                               AND ContentDocument.LatestPublishedVersion.Title LIKE 'LTR-%'
                                                ORDER BY SystemModstamp DESC 
                                              ]
                 )
@@ -184,7 +199,7 @@ public without sharing class TerminationEmailBatch implements ISelfSchedulable ,
         if ( form != null 
             && templateId != null 
             && String.isNotBlank( form.Client_Owner_Email__c ) 
-            && String.isNotBlank( orgWideEmailId )
+            && String.isNotBlank( this.orgWideEmailId )
            ) 
         { 
             List<Id> attachmentIds = new List<Id>();
@@ -193,10 +208,10 @@ public without sharing class TerminationEmailBatch implements ISelfSchedulable ,
             email.setHtmlBody( renderStoredEmailTemplate.getHtmlBody() );
             email.setPlainTextBody( renderStoredEmailTemplate.getPlainTextBody() );
             email.setToAddresses( new List<String>{ form.Client_Owner_Email__c } );
-            email.setOrgWideEmailAddressId( orgWideEmailId );
+            email.setOrgWideEmailAddressId( this.orgWideEmailId );
             email.setSaveAsActivity( true );
             email.setWhatId( form.Id );
-            attachmentIds.add( defaultTemplateAttachmentId );
+            attachmentIds.add( this.defaultTemplateAttachmentId );
 
             if( docLink != null &&
                 docLink.ContentDocument != null &&
@@ -384,22 +399,6 @@ public without sharing class TerminationEmailBatch implements ISelfSchedulable ,
             return defaultAttachmentName;
         }
         private set;
-    }
-
-    public static String schedule() {
-        String suffix = '';
-        if ( Test.isRunningTest() ) {
-            suffix = ' ~ TEST';
-        }
-        return System.schedule(
-            'TerminationEmailBatch ~ every weekday at 5:00 PM CT' + suffix,
-            '0 0 17 ? * MON-FRI',
-            new TerminationEmailBatch()
-        );
-    }
-
-    public void execute( SchedulableContext scon ) {
-        Database.executeBatch( new TerminationEmailBatch() , TerminationEmailBatch.batchSize );
     }
 
 }
