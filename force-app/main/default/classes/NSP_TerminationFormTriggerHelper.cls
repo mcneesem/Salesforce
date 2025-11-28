@@ -300,10 +300,6 @@ public with sharing class NSP_TerminationFormTriggerHelper {
                 'updateTermFormFields' ,
                 e
             );
-            
-            /*for(NSP_Termination_Form__c oTerminationForm : termformList){
-                oTerminationForm.addError(e.getMessage());
-            }*/
         }
     }
 
