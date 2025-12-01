@@ -108,7 +108,7 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable, Sch
 
         return Database.getQueryLocator(
             [
-            	SELECT Client_Owner_Email__c,
+                SELECT Client_Owner_Email__c,
                     NSP_Revision__c,
                     RecordType.DeveloperName,
                     RecordTypeId,
