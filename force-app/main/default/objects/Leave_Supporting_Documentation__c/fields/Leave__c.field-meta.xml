@@ -4,7 +4,8 @@
     <description>Medical certs related to leave record.</description>
     <label>Leave</label>
     <referenceTo>Leave__c</referenceTo>
-    <relationshipName>Medical_Certifications</relationshipName>
+    <relationshipLabel>Leave Supporting Documentations</relationshipLabel>
+    <relationshipName>Leave_Supporting_Documentations</relationshipName>
     <relationshipOrder>0</relationshipOrder>
     <reparentableMasterDetail>false</reparentableMasterDetail>
     <trackHistory>true</trackHistory>
