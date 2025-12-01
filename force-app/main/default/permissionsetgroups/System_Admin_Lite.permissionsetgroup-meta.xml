@@ -44,6 +44,7 @@
     <permissionSets>Task_Record_Type_Time_Entry_DO_NOT_USE</permissionSets>
     <permissionSets>Termination_Admin_Access</permissionSets>
     <permissionSets>Termination_Form_Visibility</permissionSets>
+    <permissionSets>View_RET_S2I_Installation_Tab_Access</permissionSets>
     <permissionSets>Wingspan_Log_Visibility</permissionSets>
     <permissionSets>force__PipelineInspectionIncluded</permissionSets>
     <status>Updated</status>
