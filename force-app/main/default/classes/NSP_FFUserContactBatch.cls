@@ -26,11 +26,12 @@ public class NSP_FFUserContactBatch implements Schedulable, Database.Batchable<S
                 FROM UserHistory
                 WHERE Field = 'NSP_IS_FF_User__c'
                 AND CreatedDate >= :startDate
-            )
-            AND NSP_IS_FF_User__c = TRUE
-            AND NSP_Employee_Per_ID__c != NULL
+            ) 
+            AND ( IsActive  = TRUE ) 
+            AND ( NSP_IS_FF_User__c = TRUE ) 
+            AND ( NSP_Employee_Per_ID__c != NULL ) 
             AND (NSP_FF_User_Count__c <= 30 OR NSP_FF_User_Count__c = NULL)
-            AND NSP_Financial_Force_User__c != NULL
+            AND ( NSP_Financial_Force_User__c != NULL )
         ]);
     }
     public void execute(Database.BatchableContext bc, List<User> userList){
