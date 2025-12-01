@@ -53,7 +53,7 @@ public class NSP_FFUserContactBatchTest {
             // Insert custom setting
             FF_User_Contact_Batch_Setting__c customSettingRec = new FF_User_Contact_Batch_Setting__c(
                 SetupOwnerId = primaryUser.Id,
-                SoqlDaysLimit__c = '5'
+                SoqlDaysLimit__c = 5
             );
             insert customSettingRec;
             
