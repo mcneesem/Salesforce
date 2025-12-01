@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Current_Case_Queue__c</fullName>
+    <label>Current Case Queue</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>NSP_ContactCenter</fullName>
+                <default>false</default>
+                <label>Contact Center</label>
+            </value>
+            <value>
+                <fullName>NSP_401k</fullName>
+                <default>false</default>
+                <label>Contact Center 401k</label>
+            </value>
+            <value>
+                <fullName>NSP_401k_Core_Group</fullName>
+                <default>false</default>
+                <label>Contact Center 401k Core</label>
+            </value>
+            <value>
+                <fullName>NSP_Benefits</fullName>
+                <default>false</default>
+                <label>Contact Center Benefits</label>
+            </value>
+            <value>
+                <fullName>Contact_Center_Employment_Verification</fullName>
+                <default>false</default>
+                <label>Contact Center Employment Verification</label>
+            </value>
+            <value>
+                <fullName>NSP_Escalations</fullName>
+                <default>false</default>
+                <label>Contact Center Escalations</label>
+            </value>
+            <value>
+                <fullName>NSP_Contact_Center_Missing_Queue</fullName>
+                <default>false</default>
+                <label>Contact Center Missing Queue</label>
+            </value>
+            <value>
+                <fullName>NSP_Contact_Center_Outbound</fullName>
+                <default>false</default>
+                <label>Contact Center Outbound</label>
+            </value>
+            <value>
+                <fullName>Contact_Center_Recruiting</fullName>
+                <default>false</default>
+                <label>Contact Center Recruiting</label>
+            </value>
+            <value>
+                <fullName>NSP_Contact_Center_Section_125</fullName>
+                <default>false</default>
+                <label>Contact Center Section 125</label>
+            </value>
+            <value>
+                <fullName>NSP_Contact_Center_Spanish</fullName>
+                <default>false</default>
+                <label>Contact Center Spanish</label>
+            </value>
+            <value>
+                <fullName>NSP_Contact_Center_Verification</fullName>
+                <default>false</default>
+                <label>Contact Center Verification</label>
+            </value>
+            <value>
+                <fullName>Contact_Center_W_2</fullName>
+                <default>false</default>
+                <label>Contact Center W-2</label>
+            </value>
+            <value>
+                <fullName>NSP_Web_Support</fullName>
+                <default>false</default>
+                <label>Contact Center Web Support</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
