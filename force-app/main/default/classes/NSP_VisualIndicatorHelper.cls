@@ -238,36 +238,35 @@ public without sharing class NSP_VisualIndicatorHelper {
             )
         {
             // Get Parent Case (if any) to allow OR condition on parent's email messages
-            Id targetCaseId = Id.valueOf(caseId);
-                List<Case> caseList = [
-                    SELECT Id, ParentId
-                    FROM Case
-                    WHERE Id = :targetCaseId
-                    LIMIT 1
-                ];
-                Id parentCaseId = null;
-                if (!caseList.isEmpty()) {
-                    parentCaseId = caseList[0].ParentId;
-                }
-
-                Set<Id> parentIds = new Set<Id>();
-                parentIds.add( targetCaseId );
-                if ( parentCaseId != null ) {
-                    parentIds.add( parentCaseId );
-                }
+            Id targetCaseId = Id.valueOf( caseId );
+            List<Case> caseList = [
+                SELECT Id , ParentId
+                FROM Case
+                WHERE ( Id = :targetCaseId )
+                LIMIT 1
+            ];
+            // collect parent id values...
+            Set<Id> parentIds = new Set<Id>();
+            parentIds.add( targetCaseId );
+            if ( !caseList.isEmpty()
+                && ( caseList[0].ParentId != null )
+                )
+            {
+                parentIds.add( caseList[0].ParentId );
+            }
             // Check EmailMessage for both current Case and Parent Case
             List<EmailMessage> emailMessages = [
                 SELECT Id
                 FROM EmailMessage
                 WHERE (
-                        ( ParentId IN :parentIds )
-                        AND ( Incoming = true )
-                        AND ( EmailRoutingAddressId != null )
-                    )
+                    ( ParentId IN :parentIds )
+                    AND ( Incoming = true )
+                    AND ( EmailRoutingAddressId != null )
+                )
                 LIMIT 1
             ];
             // Return true if there are any incoming email messages related to the case/parent case
-            if (!emailMessages.isEmpty()) {
+            if ( !emailMessages.isEmpty() ) {
                 emailToCaseConfirmed = true;
             }
         }
@@ -301,3 +300,4 @@ public without sharing class NSP_VisualIndicatorHelper {
     }
 
 }
+//
