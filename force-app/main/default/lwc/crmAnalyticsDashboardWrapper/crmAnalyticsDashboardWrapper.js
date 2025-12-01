@@ -10,5 +10,5 @@ export default class CrmAnalyticsDashboardWrapper extends LightningElement {
         } else if (error) {
             this.error = "An error has occurred (crmAnalyticsDashboardWrapper)."; 
         }
-    } 
+    }
 }
