@@ -11,7 +11,7 @@ private class TerminationEmailBatch_Test {
             SetupOwnerId = UserInfo.getUserId(),
             BatchSize__c = 10,
             isEnabled__c = true,
-            OrgWideEmailDisplayName__c = 'OWE Termination',
+            orgWideEmailAddress__c = 'test@gmail.com',
             DefaultAttachmentName__c = title
         );
         insert cs;
