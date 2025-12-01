@@ -11,7 +11,7 @@ public class NSP_FFUserContactBatch implements Schedulable, Database.Batchable<S
         String filterDaysCount = '7';
         FF_User_Contact_Batch_Setting__c customSettingRec = FF_User_Contact_Batch_Setting__c.getInstance(UserInfo.getUserId());
         if (customSettingRec != null && customSettingRec.FF_User_Modified_Days_Count__c != null) {
-            filterDaysCount = String.valueOf(customSettingRec.FF_User_Modified_Days_Count__c);
+            filterDaysCount = String.valueOf(Integer.valueOf(customSettingRec.FF_User_Modified_Days_Count__c));
         }
         
         string query = (
