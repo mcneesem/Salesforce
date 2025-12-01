@@ -9,9 +9,9 @@ private class CRMAnalyticsDashboardControllerTest {
     }
 
     @isTest 
-    private static void testDashboard(){
+    private static void testDashboard() {
         CRM_Analytics_Dashboard_Settings__c result = CRMAnalyticsDashboardController.getDashboardSettings();
-        String expected =  'dashboard-Id'; 
+        String expected =  'dashboard-Id';
         System.Assert.areEqual(expected, result.Dashboard_Id__c);
     }
 
