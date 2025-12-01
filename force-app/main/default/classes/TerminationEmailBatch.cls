@@ -42,7 +42,7 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable, Sch
         Database.executeBatch( new TerminationEmailBatch() , TerminationEmailBatch.batchSize );
     }
     
-    public TerminationEmailBatch() {
+    private TerminationEmailBatch() {
 
         Set<String> templateApiNames = new Set<String>{ 
             TEMPLATE_INITIAL,
@@ -384,7 +384,7 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable, Sch
     private static String orgWideEmailAddress  {
         private get{
             if( orgWideEmailAddress  == null){ 
-              orgWideEmailAddress  = TerminationEmailBatch.settings.orgWideEmailAddress__c;
+              orgWideEmailAddress  = TerminationEmailBatch.settings.OrgWideEmailAddress__c;
             }
             return orgWideEmailAddress;
         }
