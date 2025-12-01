@@ -51,12 +51,12 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable, Sch
             TEMPLATE_REINSTATE_REVISED
         };
 
-        if ( String.isNotBlank ( TerminationEmailBatch.OrgWideEmailDisplayName) ) {
+        if ( String.isNotBlank ( TerminationEmailBatch.orgWideEmailAddress ) ) {
 
             List<OrgWideEmailAddress> emails = [
                 SELECT Id
                 FROM OrgWideEmailAddress
-                WHERE ( IsVerified = true AND DisplayName =: TerminationEmailBatch.OrgWideEmailDisplayName AND Address != NULL)
+                WHERE ( IsVerified = true AND Address =: TerminationEmailBatch.orgWideEmailAddress  AND Address != NULL)
                 LIMIT 1
             ];
 
@@ -381,12 +381,12 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable, Sch
         private set;
     }
 
-    private static String OrgWideEmailDisplayName {
+    private static String orgWideEmailAddress  {
         private get{
-            if( OrgWideEmailDisplayName == null){ 
-               OrgWideEmailDisplayName = TerminationEmailBatch.settings.OrgWideEmailDisplayName__c;
+            if( orgWideEmailAddress  == null){ 
+              orgWideEmailAddress  = TerminationEmailBatch.settings.orgWideEmailAddress__c;
             }
-            return OrgWideEmailDisplayName;
+            return orgWideEmailAddress;
         }
         private set;
     }
