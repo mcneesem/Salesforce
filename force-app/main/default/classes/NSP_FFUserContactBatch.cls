@@ -8,32 +8,30 @@ public class NSP_FFUserContactBatch implements Schedulable, Database.Batchable<S
     // test w/ NSP_FFUserContactBatchTest (92%)
     public static final String FFUSER_CONTACT_SET = 'NSP_FFUserContactBatch';
     public Database.QueryLocator start(Database.BatchableContext bc) {
-        String filterDaysCount = '7';
+        Integer filterDaysCount = 7;
         FF_User_Contact_Batch_Setting__c customSettingRec = FF_User_Contact_Batch_Setting__c.getInstance(UserInfo.getUserId());
-        if (customSettingRec != null && customSettingRec.FF_User_Modified_Days_Count__c != null) {
-            filterDaysCount = String.valueOf(Integer.valueOf(customSettingRec.FF_User_Modified_Days_Count__c));
+        if (customSettingRec != null && String.isNotBlank(customSettingRec.SoqlDaysLimit__c)) {
+            filterDaysCount = Integer.valueOf(customSettingRec.SoqlDaysLimit__c);
         }
+        // Calculate start date dynamically
+        Date startDate = System.today().addDays(-filterDaysCount);
+
         
-        string query = (
-            'SELECT Id, Name, NSP_IS_FF_User__c, NSP_Employee_Per_ID__c, NSP_Financial_Force_User__c, NSP_FF_User_Count__c' +
-            ' FROM User'+
-            ' WHERE'+
-            ' ID IN'+
-            ' ('+
-            ' SELECT UserId '+ 
-            ' FROM UserHistory'+
-            ' WHERE Field = \'NSP_IS_FF_User__c\''+
-            ' AND CreatedDate = Last_N_Days:' + 
-            filterDaysCount + ')'+
-            ' AND NSP_IS_FF_User__c = TRUE'+
-            ' AND NSP_Employee_Per_ID__c != NULL'+
-            ' AND (NSP_FF_User_Count__c <= 30 OR NSP_FF_User_Count__c = NULL)'+
-            ' AND NSP_Financial_Force_User__c != NULL'
-        );
-        
-        System.debug(LoggingLevel.WARN, ' Query String : ' + query);
-        return Database.getQueryLocator(query);
-        
+        // Convert dynamic SOQL to static SOQL using bind variables
+        return Database.getQueryLocator([
+            SELECT Id, Name, NSP_IS_FF_User__c, NSP_Employee_Per_ID__c, NSP_Financial_Force_User__c, NSP_FF_User_Count__c
+            FROM User
+            WHERE Id IN (
+                SELECT UserId
+                FROM UserHistory
+                WHERE Field = 'NSP_IS_FF_User__c'
+                AND CreatedDate >= :startDate
+            )
+            AND NSP_IS_FF_User__c = TRUE
+            AND NSP_Employee_Per_ID__c != NULL
+            AND (NSP_FF_User_Count__c <= 30 OR NSP_FF_User_Count__c = NULL)
+            AND NSP_Financial_Force_User__c != NULL
+        ]);
     }
     public void execute(Database.BatchableContext bc, List<User> userList){
         Id insperityAccountId = System.Label.NSP_Insperity_Account; 
