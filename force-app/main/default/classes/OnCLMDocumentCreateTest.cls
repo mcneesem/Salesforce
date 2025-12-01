@@ -6,13 +6,13 @@
 */
 
 @isTest
-global class OnCLMDocumentCreateTest {
+private class OnCLMDocumentCreateTest {
     
-     global static SpringCMIAuthenticator authenticator;
-     global static SpringCMService svc;
+     private static SpringCMIAuthenticator authenticator;
+     private static SpringCMService svc;
     
     @isTest
-    static void testCLMDocumentInsert() {
+    private static void testCLMDocumentInsert() {
         //Insert Test Account record
         Account account = New Account(Name = 'TestAccount', AccountNumber = '12345',NSP_AIMS_Client__c = 'ateammember1');
         insert account;
