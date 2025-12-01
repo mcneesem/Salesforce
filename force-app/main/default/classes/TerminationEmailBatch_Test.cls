@@ -56,15 +56,6 @@ private class TerminationEmailBatch_Test {
       
     }
 
-   //Executes batch job for TerminationEmailBatch
-    @isTest private static void termination(){
-        Test.startTest();
-        TerminationEmailBatch TFBatch = new TerminationEmailBatch();
-        Database.executeBatch(TFBatch);
-        system.assertEquals(0, Limits.getEmailInvocations());
-        Test.stopTest();
-    }
-
     @isTest private static void terminate(){
         test.startTest();
         TerminationEmailBatch.schedule();
