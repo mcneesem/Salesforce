@@ -4,7 +4,7 @@ private class TerminationEmailBatch_Test {
     @TestSetup
     private static void createTestData() {
 
-        String title = 'Default_Termination_Attachment';
+        String title = 'LTR-Default_Termination_Attachment';
 
         // Utility: ensure Custom Setting instance for this running user
         TerminationEmailBatchSettings__c cs = new TerminationEmailBatchSettings__c(
