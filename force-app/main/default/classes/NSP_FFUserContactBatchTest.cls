@@ -83,47 +83,52 @@ public class NSP_FFUserContactBatchTest {
     @IsTest
     private static void updateFFUserTest(){
         // Arrange
-        pse__Region__c region = [
+        List<pse__Region__c> regions = [
             SELECT Id, Name
             FROM pse__Region__c
             WHERE Name = 'United States'
             LIMIT 1
         ];
-        Assert.areNotEqual(null, region, 'Expected Region to exist');
+        Assert.isTrue(regions.size() == 1, 'Expected one Region to exist');
         
-        User user = [
+        List<User> usersQ = [
             SELECT Id, NSP_IS_FF_User__c, EmployeeNumber, NSP_Employee_Per_ID__c,
                    NSP_Financial_Force_User__c, NSP_FF_User_Count__c
             FROM User
             WHERE NSP_Employee_Per_ID__c = :USER_EMPLOYEE_NUMBER
             LIMIT 1
         ];
-        Contact testContact = [
+        Assert.isTrue(usersQ.size() == 1, 'Expected one User to exist for Per Id');
+        List<Contact> contactsQ = [
             SELECT Id, NSP_Per_ID__c, pse__Salesforce_User__c, pse__Is_Resource_Active__c, pse__Is_Resource__c
             FROM Contact
             WHERE NSP_Per_ID__c = :USER_EMPLOYEE_NUMBER
             LIMIT 1
         ];
+        Assert.isTrue(contactsQ.size() == 1, 'Expected one Contact to exist for Per Id');
+        Contact testContact = contactsQ[0];
         Assert.areEqual(null, testContact.pse__Salesforce_User__c, 'Precondition: Contact should not be linked to a User');
 
         // Act: run full batch lifecycle within governor reset block
-        System.runAs(user){
+        System.runAs(usersQ[0]){
 
             Test.StartTest();
 
             NSP_FFUserContactBatch ffUserContactBatch = new NSP_FFUserContactBatch();
             Database.QueryLocator queryLocator = ffUserContactBatch.start(null);
-            ffUserContactBatch.execute(null, new List<User>{ user });
+            ffUserContactBatch.execute(null, new List<User>{ usersQ[0] });
             ffUserContactBatch.finish(null);
 
             Test.StopTest();
         }
         
         // Assert
-        testContact = [SELECT Id, pse__Salesforce_User__c FROM Contact WHERE Id = :testContact.Id];
-        user = [SELECT Id, EmployeeNumber, NSP_Employee_Per_ID__c, NSP_FF_User_Count__c FROM User WHERE Id = :user.Id];
-        Assert.areEqual(USER_EMPLOYEE_NUMBER, user.NSP_Employee_Per_ID__c, 'Per Id should remain unchanged');
-        Assert.areNotEqual(null, user.NSP_FF_User_Count__c, 'FF User Count should be set after batch');
+        List<Contact> contactPost = [SELECT Id, pse__Salesforce_User__c FROM Contact WHERE Id = :testContact.Id];
+        Assert.isTrue(contactPost.size() == 1, 'Expected one Contact after batch');
+        List<User> userPost = [SELECT Id, EmployeeNumber, NSP_Employee_Per_ID__c, NSP_FF_User_Count__c FROM User WHERE Id = :usersQ[0].Id];
+        Assert.isTrue(userPost.size() == 1, 'Expected one User after batch');
+        Assert.areEqual(USER_EMPLOYEE_NUMBER, userPost[0].NSP_Employee_Per_ID__c, 'Per Id should remain unchanged');
+        Assert.areNotEqual(null, userPost[0].NSP_FF_User_Count__c, 'FF User Count should be set after batch');
     }
     
     /***********************************************************************************************
@@ -133,25 +138,29 @@ public class NSP_FFUserContactBatchTest {
     @IsTest
     private static void updateContactUserException(){
         // Arrange: choose a BPA user that should not match the seeded Contact Per Id
-        pse__Region__c region = [
+        List<pse__Region__c> regions2 = [
             SELECT Id, Name
             FROM pse__Region__c
             WHERE Name = 'United States'
             LIMIT 1
         ];
-        User user = [
+        Assert.isTrue(regions2.size() == 1, 'Expected one Region to exist');
+        List<User> users2 = [
             SELECT Id, NSP_IS_FF_User__c, EmployeeNumber, NSP_Employee_Per_ID__c,
                    NSP_Financial_Force_User__c, NSP_FF_User_Count__c, Email
             FROM User
             WHERE Email = 'jsmithyUserBPA@insperity.com'
             LIMIT 1
         ];
-        Contact testContact = [
+        Assert.isTrue(users2.size() == 1, 'Expected one BPA User to exist');
+        List<Contact> contacts2 = [
             SELECT Id, NSP_Per_ID__c, pse__Salesforce_User__c, pse__Is_Resource_Active__c, pse__Is_Resource__c
             FROM Contact
             WHERE NSP_Per_ID__c = :USER_EMPLOYEE_NUMBER
             LIMIT 1
         ];
+        Assert.isTrue(contacts2.size() == 1, 'Expected one Contact to exist for Per Id');
+        Contact testContact = contacts2[0];
         Assert.areEqual(null, testContact.pse__Salesforce_User__c, 'Precondition: Contact should be unlinked');
         
         // Act
@@ -159,14 +168,15 @@ public class NSP_FFUserContactBatchTest {
 
         NSP_FFUserContactBatch ffUserContactBatch = new NSP_FFUserContactBatch();
         Database.QueryLocator queryLocator = ffUserContactBatch.start(null);
-        ffUserContactBatch.execute(null, new List<User>{ user });
+        ffUserContactBatch.execute(null, new List<User>{ users2[0] });
         ffUserContactBatch.finish(null);
 
         Test.StopTest();
 
         // Assert: Contact should remain unlinked since selection criteria do not match
-        testContact = [SELECT Id, pse__Salesforce_User__c FROM Contact WHERE Id = :testContact.Id];
-        Assert.areEqual(null, testContact.pse__Salesforce_User__c, 'Contact should remain unlinked for negative path');
+        List<Contact> contactPost2 = [SELECT Id, pse__Salesforce_User__c FROM Contact WHERE Id = :testContact.Id];
+        Assert.isTrue(contactPost2.size() == 1, 'Expected one Contact after negative path');
+        Assert.areEqual(null, contactPost2[0].pse__Salesforce_User__c, 'Contact should remain unlinked for negative path');
     }
     
     /***********************************************************************************************
@@ -176,30 +186,33 @@ public class NSP_FFUserContactBatchTest {
     @IsTest
     private static void createPermissionControlTest(){
         // Arrange
-        pse__Region__c region = [
+        List<pse__Region__c> regions3 = [
             SELECT Id, Name
             FROM pse__Region__c
             WHERE Name = 'United States'
             LIMIT 1
         ];
-        User user = [
+        Assert.isTrue(regions3.size() == 1, 'Expected one Region to exist');
+        List<User> users3 = [
             SELECT Id, NSP_IS_FF_User__c, EmployeeNumber, NSP_Employee_Per_ID__c,
                    NSP_Financial_Force_User__c, NSP_FF_User_Count__c
             FROM User
             WHERE NSP_Employee_Per_ID__c = :USER_EMPLOYEE_NUMBER
             LIMIT 1
         ];
+        Assert.isTrue(users3.size() == 1, 'Expected one User to exist for Per Id');
         
         // Act
         Test.startTest();
 
-        NSP_FFUserContactBatch.createPermissionControl(user.id, region.Id);
+        NSP_FFUserContactBatch.createPermissionControl(users3[0].id, regions3[0].Id);
 
         Test.stopTest();
 
         // Assert (basic invariant): Employee Per Id remains the same
-        user = [SELECT Id, NSP_Employee_Per_ID__c FROM User WHERE Id = :user.Id];
-        Assert.areEqual(USER_EMPLOYEE_NUMBER, user.NSP_Employee_Per_ID__c, 'Employee Per Id should remain unchanged after permission control');
+        List<User> userAfterPerm = [SELECT Id, NSP_Employee_Per_ID__c FROM User WHERE Id = :users3[0].Id];
+        Assert.isTrue(userAfterPerm.size() == 1, 'Expected one User after permission control');
+        Assert.areEqual(USER_EMPLOYEE_NUMBER, userAfterPerm[0].NSP_Employee_Per_ID__c, 'Employee Per Id should remain unchanged after permission control');
     }
     
     /**
@@ -228,7 +241,7 @@ public class NSP_FFUserContactBatchTest {
             WHERE CronJobDetail.Name = :jobName
             LIMIT 1
         ];
-        Assert.areEqual(1, triggers.size(), 'Expected one scheduled job for batch');
+        Assert.isTrue(triggers.size() == 1, 'Expected one scheduled job for batch');
         Assert.areNotEqual(null, triggers[0].NextFireTime, 'Next fire time should be set');
     }
 
