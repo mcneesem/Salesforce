@@ -2,19 +2,19 @@ import { LightningElement, wire, api } from 'lwc';
 import getACRDetails from '@salesforce/apex/CaseAccountContactRelationController.getACRDetails';
 import { refreshApex } from '@salesforce/apex';
 export default class CaseAccountContactRelationships extends LightningElement {
-    @api recordId; 
+    @api recordId;
     acrDetailsData;
     acrPrimaryData;
     displayDataList;
     wireData;
     acrDetailsError;
-    coulums =[{label: 'Name', fieldName: 'contactName', type: 'text', minColumnWidth:150},
-        {label: 'Account', fieldName: 'accountName', type: 'text',  minColumnWidth:150},
-        {label: 'Work Phone', fieldName: 'workPhone', type: 'text',  minColumnWidth:150},
-        {label: 'Work Email', fieldName: 'workEmail', type: 'email',  minColumnWidth:150},
-        {label: 'Job Title', fieldName: 'jobTitle', type: 'text',  minColumnWidth:150},
-        {label: 'Status', fieldName: 'status', type: 'text',  minColumnWidth:150},
-        {label: 'Workday Employee Id', fieldName: 'workdayEmployeeId', type: 'text', minColumnWidth:180}
+    coulums =[{label: 'Name', fieldName: 'contactName', type: 'text'},
+        {label: 'Account', fieldName: 'accountName', type: 'text'},
+        {label: 'Work Phone', fieldName: 'workPhone', type: 'text'},
+        {label: 'Work Email', fieldName: 'workEmail', type: 'text'},
+        {label: 'Job Title', fieldName: 'jobTitle', type: 'text'},
+        {label: 'Status', fieldName: 'status', type: 'text'},
+        {label: 'Workday Employee Id', fieldName: 'workdayEmployeeId', type: 'text'}
     ]
 
     @wire(getACRDetails, { caseId: '$recordId' })
@@ -41,4 +41,15 @@ export default class CaseAccountContactRelationships extends LightningElement {
         refreshApex(this.wireData);
     }
 
+    get hasData() {
+        return ( this.total > 0 );
+    }
+
+    get title() {
+        return "Account Contact Information (" + this.total + ")";
+    }
+
+    get total() {
+        return ( this.displayDataList ? this.displayDataList.length : 0 );
+    }
 }

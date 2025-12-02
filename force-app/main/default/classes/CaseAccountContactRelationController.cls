@@ -54,8 +54,17 @@ public without sharing class CaseAccountContactRelationController {
                     acrcd.workPhone = acr.NSP_Work_Phone__c;
                     acrcd.jobTitle = acr.NSP_Job_Title__c;
                     acrcd.accountName = acr.Account.Name;
-                    acrcd.contactName = (( acr.Contact != null) && String.isNotBlank(acr.Contact.Salutation)) ? (acr.Contact.Salutation + ' ' + acr.Contact_Name__c) : acr.Contact_Name__c;
-                    acrcd.isPrimary = caseConMap.containsKey(acr.ContactId) ? caseConMap.get(acr.ContactId).NSP_IsPrimary__c : false;
+                    if(acr.Contact != null && String.isNotBlank(acr.Contact.Salutation)){
+                        acrcd.contactName = acr.Contact.Salutation + ' ' + acr.Contact_Name__c;
+                    }else{
+                        acrcd.contactName = acr.Contact_Name__c;
+                    }
+
+                    if(caseConMap.containsKey(acr.ContactId)){
+                        acrcd.isPrimary = caseConMap.get(acr.ContactId).NSP_IsPrimary__c;
+                    }else{
+                        acrcd.isPrimary = false;
+                    }
                     acrcd.status = acr.NSP_Employee_Status__c;
                     acrcd.workdayEmployeeId = acr.Workday_Employee_ID__c;
 

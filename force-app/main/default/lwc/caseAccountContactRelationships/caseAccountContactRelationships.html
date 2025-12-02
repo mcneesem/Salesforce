@@ -1,6 +1,6 @@
 <template>
     <div  class="custom-card">
-    <lightning-card title="Account Contact Information" icon-name ="standard:record"   class="custom-card"> 
+    <lightning-card title={title} icon-name ="standard:record"   class="custom-card"> 
 
         <lightning-button-icon
             icon-name="utility:refresh"
@@ -12,7 +12,7 @@
             
             >
         </lightning-button-icon>
-        <template if:true={displayDataList}>
+        <template if:true={hasData}>
             <lightning-datatable
                 key-field="Id"
                 data={displayDataList}
@@ -21,16 +21,17 @@
                 hide-checkbox-column="true"
                 >
             </lightning-datatable>
+        
+            <div slot="footer" >
+                <lightning-button label="View All" 
+                    onclick={handleViewAll}
+                    variant="base"
+                    title="View All"
+                    class="slds-text-link"
+                >
+                </lightning-button>
+            </div>
         </template>
-        <div class="slds-text-align_center" >
-            <lightning-button label="View All" 
-                onclick={handleViewAll}
-                variant="base"
-                title="View All"
-                class="slds-text-link"
-            >
-            </lightning-button>
-        </div>
     </lightning-card>
     </div>
 </template>
