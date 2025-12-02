@@ -5,5 +5,5 @@
         <name>View_RET_S2I_Installation_Tab</name>
     </customPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>View RET S2I Installation Tab Access</label>
+    <label>View RET S2I Installation Tab</label>
 </PermissionSet>

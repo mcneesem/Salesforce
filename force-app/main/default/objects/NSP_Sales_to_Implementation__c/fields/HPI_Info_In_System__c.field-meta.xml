@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>HPI_info_in_system__c</fullName>
-    <label>HPI info in system</label>
+    <fullName>HPI_Info_In_System__c</fullName>
+    <label>HPI Info In System</label>
     <required>false</required>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
