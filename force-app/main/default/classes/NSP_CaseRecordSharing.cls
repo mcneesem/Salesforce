@@ -160,7 +160,13 @@ public class NSP_CaseRecordSharing {
         List<string> groupNames = new List<string>();
         if ( caseRec != null ) {
             if ( String.isNotBlank( caseRec.NSP_Detail__c ) ) {
-                String key = caseRec.NSP_Category__c + ';' + caseRec.NSP_SubCategory__c + ';' + caseRec.NSP_Detail__c;
+                String key = ''
+                    + caseRec.NSP_Category__c
+                    + ';'
+                    + caseRec.NSP_SubCategory__c
+                    + ';'
+                    + caseRec.NSP_Detail__c
+                    ;
                 if ( ( NSP_CaseRecordSharing.catSubCatDetailGroupNamesMap != null )
                     && NSP_CaseRecordSharing.catSubCatDetailGroupNamesMap.containsKey( key )
                     && ( NSP_CaseRecordSharing.catSubCatDetailGroupNamesMap.get( key ) != null )
@@ -169,7 +175,11 @@ public class NSP_CaseRecordSharing {
                     groupNames = NSP_CaseRecordSharing.catSubCatDetailGroupNamesMap.get( key );
                 }
             } else {
-                String key = caseRec.NSP_Category__c + ';' + caseRec.NSP_SubCategory__c;
+                String key = ''
+                    + caseRec.NSP_Category__c
+                    + ';'
+                    + caseRec.NSP_SubCategory__c
+                    ;
                 if ( ( NSP_CaseRecordSharing.catSubCatGroupNamesMap!= null )
                     && NSP_CaseRecordSharing.catSubCatGroupNamesMap.containsKey( key )
                     && ( NSP_CaseRecordSharing.catSubCatGroupNamesMap.get( key ) != null )
