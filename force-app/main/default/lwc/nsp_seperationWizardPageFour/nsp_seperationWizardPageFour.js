@@ -108,7 +108,7 @@ radioRequiredFields=['NSP_SpecialItems','NSP_TransitionOfDuties','NSP_SignatureB
 
 
 checkBoxField = ["NSP_COBRA__c","NSP_Bonus__c","Is_Notary_Required__c",
-"Is_Rehire_Clause_Required__c","NSP_Commissions__c",
+"Is_No_Rehire_Clause_Required__c","NSP_Commissions__c",
 "Is_Notary_Required__c","NSP_OutplacementServices__c",
 "NSP_SignatureBlockforClientRequired__c","NSP_VerificationOfEmploymentHotline__c",
 "NSP_DontContestUnemployment__c","NSP_ReferenceTospecificClientDocument__c","NSP_TransitionOfDuties__c","NSP_Equipment__c","NSP_Installments_Check__c"];
@@ -126,7 +126,7 @@ pickValueYesNo = [
 userID;
 financeLevel;
 isclicked;
-currentPageFields=['Is_Rehire_Clause_Required__c','Is_Notary_Required__c','NSP_Installments_Check__c','NSP_NumberOfpayments__c',
+currentPageFields=['Is_No_Rehire_Clause_Required__c','Is_Notary_Required__c','NSP_Installments_Check__c','NSP_NumberOfpayments__c',
 'NSP_Bonus__c','NSP_BonusSelectOne__c','NSP_EnterBonusAmmount__c','NSP_COBRA__c','NSP_COBRASelectOne__c','NSP_COBRA_Amount__c','COBRA_Amount_Type__c','NSP_NumberOfMonthsCOBRA__c','Num_Of_Weeks_Count__c','Through_Date__c','NSP_Commissions__c',
 'NSP_CommissionsSelectOne__c','NSP_CommissionAmount__c','NSP_Equipment__c','NSP_EquipmentSelection__c','NSP_ManufacturerNameandModel__c','NS_FairMarketValue__c',
 'NSP_OutplacementServices__c','NSP_OutplacementServicesValue__c',
