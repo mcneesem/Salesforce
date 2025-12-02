@@ -52,7 +52,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>OMD_Record_Exist</targetReference>
+            <targetReference>Update_Final_OMR_info_to_Task_Record</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -67,10 +67,6 @@
                 <stringValue>Get_Final_Meeting_Date_Time_OMR_Record</stringValue>
             </value>
         </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_Subflow</targetReference>
-        </connector>
     </assignments>
     <assignments>
         <name>Set_Fault_Element_Get_OMD_Record</name>
@@ -84,10 +80,6 @@
                 <stringValue>Get_OMD_Record</stringValue>
             </value>
         </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_Subflow</targetReference>
-        </connector>
     </assignments>
     <assignments>
         <name>Set_Fault_Element_Get_Triggering_Task_Record</name>
@@ -101,10 +93,6 @@
                 <stringValue>Get_Triggering_Task_Record</stringValue>
             </value>
         </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_Subflow</targetReference>
-        </connector>
     </assignments>
     <assignments>
         <name>Set_Fault_Element_Update_Final_OMR_info_to_Task_Record</name>
@@ -118,10 +106,6 @@
                 <stringValue>Update_Final_OMR_info_to_Task_Record</stringValue>
             </value>
         </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_Subflow</targetReference>
-        </connector>
     </assignments>
     <assignments>
         <name>Set_Fault_Element_Update_OMD_Record</name>
@@ -146,29 +130,31 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
+            <isGoTo>true</isGoTo>
             <targetReference>Screen_Invalid_Slot</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Yes_Slot_Available</name>
-            <conditionLogic>(1 AND 2 AND 3) OR (1 AND 4)</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Final_Meeting_Date_Time_OMR_Record</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_Final_Meeting_Date_Time_OMR_Record.Slots_Remaining__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <numberValue>0.0</numberValue>
-                </rightValue>
-            </conditions>
+            <name>Selected_OMR_Final_OMR</name>
+            <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Final_Meeting_Date_Time_OMR_Record.Id</leftValueReference>
                 <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Get_OMD_Record.Onboarding_Meeting_Request__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Final_OMR_info_to_Task_Record</targetReference>
+            </connector>
+            <label>Selected OMR = Final OMR</label>
+        </rules>
+        <rules>
+            <name>Selected_OMR_NOT_Final_OMR</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Final_Meeting_Date_Time_OMR_Record.Id</leftValueReference>
+                <operator>NotEqualTo</operator>
                 <rightValue>
                     <elementReference>Get_OMD_Record.Onboarding_Meeting_Request__c</elementReference>
                 </rightValue>
@@ -181,9 +167,9 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Update_Final_OMR_info_to_Task_Record</targetReference>
+                <targetReference>Reparent_OMD_Record</targetReference>
             </connector>
-            <label>Yes : Slot Available</label>
+            <label>Selected OMR &lt;&gt; Final OMR</label>
         </rules>
     </decisions>
     <decisions>
@@ -210,40 +196,29 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Selected_OMR_vs_Final_OMR</name>
-        <label>Selected OMR vs. Final OMR</label>
+        <description>Check if Date Selected is Valid date</description>
+        <name>Record_Found</name>
+        <label>Record Found ?</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Screen_Invalid_Slot</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Selected_OMR_Matches_Final_OMR</name>
+            <name>Yes_Record_Found</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Final_Meeting_Date_Time_OMR_Record.Id</leftValueReference>
-                <operator>EqualTo</operator>
+                <leftValueReference>Get_Final_Meeting_Date_Time_OMR_Record</leftValueReference>
+                <operator>IsBlank</operator>
                 <rightValue>
-                    <elementReference>Get_OMD_Record.Onboarding_Meeting_Request__c</elementReference>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>OMD_Record_Exist</targetReference>
+                <targetReference>Is_Slot_Available</targetReference>
             </connector>
-            <label>Selected OMR Matches Final OMR</label>
-        </rules>
-        <rules>
-            <name>Selected_OMR_Does_Not_Match_Final_OMR</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Final_Meeting_Date_Time_OMR_Record.Id</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <elementReference>Get_OMD_Record.Onboarding_Meeting_Request__c</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Reparent_OMD_Record</targetReference>
-            </connector>
-            <label>Selected OMR Does Not Match Final OMR</label>
+            <label>Yes : Record Found</label>
         </rules>
     </decisions>
     <description>Added check for OMD Record, Stop regenerating the Task for Final OMR, Handle Cancel Task
@@ -405,7 +380,7 @@ AZD-509188 : Fix the Bug to confirm the Meeting when Final OMR Date = Requested 
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Is_Slot_Available</targetReference>
+            <targetReference>Record_Found</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Set_Fault_Element_Get_Final_Meeting_Date_Time_OMR_Record</targetReference>
@@ -522,7 +497,7 @@ AZD-509188 : Fix the Bug to confirm the Meeting when Final OMR Date = Requested 
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Selected_OMR_vs_Final_OMR</targetReference>
+            <targetReference>OMD_Record_Exist</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Set_Fault_Element_Update_Final_OMR_info_to_Task_Record</targetReference>
