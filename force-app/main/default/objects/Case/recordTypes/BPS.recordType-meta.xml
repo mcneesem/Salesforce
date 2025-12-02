@@ -231,8 +231,9 @@
         </values>
         <values>
             <fullName>NSP_Web_Support</fullName>
+        </values>    
     </picklistValues>
-    <picklistValues>   
+    <picklistValues>
         <picklist>Docusign_Form_To_Send_Multi__c</picklist>
         <values>
             <fullName>Acknowledgement of Receipt of Wages</fullName>
