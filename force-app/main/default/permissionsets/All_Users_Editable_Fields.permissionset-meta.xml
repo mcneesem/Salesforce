@@ -77,6 +77,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.Payroll_Type_Pay_Group__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.Project__c</field>
         <readable>true</readable>
     </fieldPermissions>

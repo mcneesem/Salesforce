@@ -1354,6 +1354,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Method_of_Shipment__c</fieldItem>
+                <identifier>RecordMethod_of_Shipment_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.Ship_Date__c</fieldItem>
                 <identifier>RecordShip_Date_cField</identifier>
             </fieldInstance>
@@ -1368,16 +1378,6 @@
                 <identifier>RecordPay_Date_cField</identifier>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Payroll_Number__c</fieldItem>
-                <identifier>RecordPayroll_Number_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
         <name>Facet-8214b03c-e079-4074-a723-41f1ca90d5ef</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -1388,8 +1388,18 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Method_of_Shipment__c</fieldItem>
-                <identifier>RecordMethod_of_Shipment_cField</identifier>
+                <fieldItem>Record.Payroll_Type_Pay_Group__c</fieldItem>
+                <identifier>RecordPayroll_Type_Pay_Group_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Payroll_Number__c</fieldItem>
+                <identifier>RecordPayroll_Number_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
