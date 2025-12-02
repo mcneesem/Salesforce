@@ -237,11 +237,13 @@ public class NSP_CaseRecordSharing {
 
     private static List<string> getGroupListHelper(Case caseRec){
         List<string> groupNames = new List<string>();
-        if(caseRec != null && caseRec.NSP_Detail__c != null && catSubCatDetailGroupNamesMap != null && catSubCatDetailGroupNamesMap.containsKey(caseRec.NSP_Category__c+';'+caseRec.NSP_SubCategory__c+ ';' + caseRec.NSP_Detail__c)){
-            groupNames = catSubCatDetailGroupNamesMap.get(caseRec.NSP_Category__c+';'+caseRec.NSP_SubCategory__c+ ';' + caseRec.NSP_Detail__c);
-        }
-        if(caseRec != null && catSubCatGroupNamesMap!= null &&  catSubCatGroupNamesMap.containsKey(caseRec.NSP_Category__c+';'+caseRec.NSP_SubCategory__c)){
-            groupNames = catSubCatGroupNamesMap.get(caseRec.NSP_Category__c+';'+caseRec.NSP_SubCategory__c);
+        if(caseRec != null){
+            if(caseRec.NSP_Detail__c != null && catSubCatDetailGroupNamesMap != null && catSubCatDetailGroupNamesMap.containsKey(caseRec.NSP_Category__c+';'+caseRec.NSP_SubCategory__c+ ';' + caseRec.NSP_Detail__c)){
+                groupNames = catSubCatDetailGroupNamesMap.get(caseRec.NSP_Category__c+';'+caseRec.NSP_SubCategory__c+ ';' + caseRec.NSP_Detail__c);
+            }
+            if(catSubCatGroupNamesMap!= null &&  catSubCatGroupNamesMap.containsKey(caseRec.NSP_Category__c+';'+caseRec.NSP_SubCategory__c)){
+                groupNames = catSubCatGroupNamesMap.get(caseRec.NSP_Category__c+';'+caseRec.NSP_SubCategory__c);
+            }
         }
         return groupNames;
     }
