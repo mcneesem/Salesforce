@@ -65,7 +65,7 @@ public with sharing class NSP_SubClientAssetSyncJob implements Database.Batchabl
             List<Asset> updateAssetRecords = new List<Asset>();
             if ( !assetIds.isEmpty() ) {
                 List<Asset> assetRecords = getAssetRecords( assetIds );
-                updateAssetRecords = setUnionFlagOnAssets( assetRecords );
+                updateAssetRecords = setUnionFlagOnAssets( assetRecords, subClientMap );
             }
             
             updateRecords( subClientMap.values(), updateAssetRecords );
@@ -174,16 +174,23 @@ public with sharing class NSP_SubClientAssetSyncJob implements Database.Batchabl
         return returnAssetList;
     }
     
-    private static List<Asset> setUnionFlagOnAssets( List<Asset> assets ) {
+    private static List<Asset> setUnionFlagOnAssets( List<Asset> assets, Map<Id, NSP_Sub_Client__c> subClientMap ) {
+        
         List<Asset> updatedAssets = new List<Asset>();
         for ( Asset asset : assets ) {
             Boolean unionFlag = false;
-            for ( NSP_Sub_Client__c subClient : asset.Sub_Clients__r ) {
-                if ( subClient.NSP_Union_Employees__c ) {
+            
+            for (NSP_Sub_Client__c subClient : asset.Sub_Clients__r) {
+                Boolean isUnionEmployee = subClient.NSP_Union_Employees__c;
+                Boolean existsInMap = subClientMap.containsKey(subClient.Id);
+                Boolean mapHasUnionEmployee = existsInMap && subClientMap.get(subClient.Id).NSP_Union_Employees__c;
+                
+                if ((existsInMap && mapHasUnionEmployee) || (!existsInMap && isUnionEmployee)) {
                     unionFlag = true;
                     break;
                 }
             }
+
             if ( asset.NSP_Union_Employees__c != unionFlag ) {
                 asset.NSP_Union_Employees__c = unionFlag;
                 updatedAssets.add( asset );
