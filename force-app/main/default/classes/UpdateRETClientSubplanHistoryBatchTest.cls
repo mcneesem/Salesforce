@@ -1,4 +1,4 @@
-@IsTest(SeeAllData=false)
+@IsTest
 private class UpdateRETClientSubplanHistoryBatchTest {
     // Constants
     private static final Integer DEFAULT_SCOPE = 50;
@@ -81,8 +81,8 @@ private class UpdateRETClientSubplanHistoryBatchTest {
 
         // Assert - job completed
         AsyncApexJob job = [SELECT Id, Status, NumberOfErrors, JobType, TotalJobItems, CreatedById FROM AsyncApexJob WHERE Id = :jobId LIMIT 1];
-        System.assertEquals('Completed', job.Status, 'Batch should complete successfully');
-        System.assertEquals(0, job.NumberOfErrors, 'Batch should not error');
+        Assert.areEqual('Completed', job.Status, 'Batch should complete successfully');
+        Assert.areEqual(0, job.NumberOfErrors, 'Batch should not error');
 
         // Assert - domain effects: at least one field expected to be updated by the batch.
         // As we don't have the batch internals, assert that target records still exist and are in a consistent state.
@@ -90,7 +90,7 @@ private class UpdateRETClientSubplanHistoryBatchTest {
             SELECT Id, NSP_Current_Subplan__c, NSP_End_Date__c, NSP_Plan_Subplan_Relationship__c, NSP_Asset__c
             FROM NSP_Client_Sub_Plan_History__c
         ];
-        System.assertEquals(existing.size(), afters.size(), 'Batch should not delete client sub plan history records');
+        Assert.areEqual(existing.size(), afters.size(), 'Batch should not delete client sub plan history records');
     }
 
     @IsTest
@@ -111,8 +111,8 @@ private class UpdateRETClientSubplanHistoryBatchTest {
             WHERE CronJobDetail.Name = :jobName
             LIMIT 1
         ];
-        System.assertEquals(1, triggers.size(), 'Expected one scheduled job for batch');
-        System.assertEquals('7', triggers[0].CronJobDetail.JobType, 'Expected job type to be batch/schedulable'); // value may vary by org, assert presence instead
-        System.assert(triggers[0].NextFireTime != null, 'Next fire time should be set');
+        Assert.areEqual(1, triggers.size(), 'Expected one scheduled job for batch');
+        Assert.areEqual('7', triggers[0].CronJobDetail.JobType, 'Expected job type to be batch/schedulable'); // value may vary by org, assert presence instead
+        Assert.isTrue(triggers[0].NextFireTime != null, 'Next fire time should be set');
     }
 }
