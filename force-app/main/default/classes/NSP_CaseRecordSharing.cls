@@ -130,8 +130,8 @@ public class NSP_CaseRecordSharing {
     //
     public static void getGrpNameAndGrpId( List<Case> cseList ) {
         NSP_CaseRecordSharing.grpNameGrpIdMap = new Map<String,Id>();
-        List<String> getGrpList = new List<String>();
-        if ( !NSP_CaseRecordSharing.catSubCatDetailGroupNamesMap.isEmpty() ) {
+        if ( ( cseList != null ) && !cseList.isEmpty() ) {
+            List<String> getGrpList = new List<String>();
             for ( Case cse : [
                         SELECT Id , NSP_Category__c , NSP_SubCategory__c,NSP_Detail__c
                         FROM Case
@@ -139,9 +139,9 @@ public class NSP_CaseRecordSharing {
                     ]
                 )
             {
-                List<String> getGrpListTemp = NSP_CaseRecordSharing.getGroupListHelper( cse );
-                if ( getGrpListTemp != null ) {
-                    getGrpList.addAll( getGrpListTemp );
+                List<String> temp = NSP_CaseRecordSharing.getGroupNamesHelper( cse );
+                if ( ( temp != null ) && !temp.isEmpty() ) {
+                    getGrpList.addAll( temp );
                 }
             }
             for ( group grp : [
@@ -156,21 +156,27 @@ public class NSP_CaseRecordSharing {
         }
     }
 
-    private static List<string> getGroupListHelper( Case caseRec ) {
+    private static List<string> getGroupNamesHelper( Case caseRec ) {
         List<string> groupNames = new List<string>();
         if ( caseRec != null ) {
-            if ( String.isNotBlank( caseRec.NSP_Detail__c )
-                && ( NSP_CaseRecordSharing.catSubCatDetailGroupNamesMap != null )
-                && NSP_CaseRecordSharing.catSubCatDetailGroupNamesMap.containsKey( caseRec.NSP_Category__c + ';' + caseRec.NSP_SubCategory__c + ';' + caseRec.NSP_Detail__c )
-                )
-            {
-                groupNames = NSP_CaseRecordSharing.catSubCatDetailGroupNamesMap.get( caseRec.NSP_Category__c + ';' + caseRec.NSP_SubCategory__c + ';' + caseRec.NSP_Detail__c );
-            }
-            if ( ( NSP_CaseRecordSharing.catSubCatGroupNamesMap!= null )
-                && NSP_CaseRecordSharing.catSubCatGroupNamesMap.containsKey( caseRec.NSP_Category__c + ';' + caseRec.NSP_SubCategory__c )
-                )
-            {
-                groupNames = NSP_CaseRecordSharing.catSubCatGroupNamesMap.get( caseRec.NSP_Category__c+';' + caseRec.NSP_SubCategory__c );
+            if ( String.isNotBlank( caseRec.NSP_Detail__c ) ) {
+                String key = caseRec.NSP_Category__c + ';' + caseRec.NSP_SubCategory__c + ';' + caseRec.NSP_Detail__c;
+                if ( ( NSP_CaseRecordSharing.catSubCatDetailGroupNamesMap != null )
+                    && NSP_CaseRecordSharing.catSubCatDetailGroupNamesMap.containsKey( key )
+                    && ( NSP_CaseRecordSharing.catSubCatDetailGroupNamesMap.get( key ) != null )
+                    )
+                {
+                    groupNames = NSP_CaseRecordSharing.catSubCatDetailGroupNamesMap.get( key );
+                }
+            } else {
+                String key = caseRec.NSP_Category__c + ';' + caseRec.NSP_SubCategory__c;
+                if ( ( NSP_CaseRecordSharing.catSubCatGroupNamesMap!= null )
+                    && NSP_CaseRecordSharing.catSubCatGroupNamesMap.containsKey( key )
+                    && ( NSP_CaseRecordSharing.catSubCatGroupNamesMap.get( key ) != null )
+                    )
+                {
+                    groupNames = NSP_CaseRecordSharing.catSubCatGroupNamesMap.get( key );
+                }
             }
         }
         return groupNames;
