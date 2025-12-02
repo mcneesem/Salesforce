@@ -1237,8 +1237,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.X16_Days_Calculation__c</fieldItem>
-                <identifier>RecordX16_Days_Calculation_cField</identifier>
+                <fieldItem>Record.VA_WC_End_Date__c</fieldItem>
+                <identifier>RecordVA_WC_End_Date__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-ec17f073-de5a-4ead-9233-03e9354e0237</name>
