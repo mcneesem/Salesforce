@@ -120,30 +120,62 @@ public class NSP_CaseRecordSharing {
         }
     }
 
-    /**
-* @MethodName: getGrpNameAndGrpId
-* @Description:  This method describes about getting groupName and GroupId based on Category.
-* @param : List<Case> caseList
-* @createdDate : 10/18/2022
-* @Story : STY-03293
-* @return void                           
-*/   
-    public static void getGrpNameAndGrpId ( List<Case> cseList ) {
-        grpNameGrpIdMap = new Map<String,Id>();
-        List<string> getGrpList = new List<string>();
-        if(!catSubCatDetailGroupNamesMap.isEmpty()){
-            for(Case cse : [SELECT Id, NSP_Category__c, NSP_SubCategory__c,NSP_Detail__c FROM Case WHERE ID IN: cseList]){
-                 List<string> getGrpListTemp = NSP_CaseRecordSharing.getGroupListHelper( cse );
-                 if(getGrpListTemp != null){
-                    getGrpList.addAll(getGrpListTemp);
+    //
+    // @MethodName: getGrpNameAndGrpId
+    // @Description:  This method describes about getting groupName and GroupId based on Category.
+    // @param : List<Case> caseList
+    // @createdDate : 10/18/2022
+    // @Story : STY-03293
+    // @return void
+    //
+    public static void getGrpNameAndGrpId( List<Case> cseList ) {
+        NSP_CaseRecordSharing.grpNameGrpIdMap = new Map<String,Id>();
+        List<String> getGrpList = new List<String>();
+        if ( !NSP_CaseRecordSharing.catSubCatDetailGroupNamesMap.isEmpty() ) {
+            for ( Case cse : [
+                        SELECT Id , NSP_Category__c , NSP_SubCategory__c,NSP_Detail__c
+                        FROM Case
+                        WHERE ( Id IN :cseList )
+                    ]
+                )
+            {
+                List<String> getGrpListTemp = NSP_CaseRecordSharing.getGroupListHelper( cse );
+                if ( getGrpListTemp != null ) {
+                    getGrpList.addAll( getGrpListTemp );
                 }
             }
-            for(group grp : [SELECT Id, Name FROM group WHERE Name IN: getGrpList]){
-                grpNameGrpIdMap.put(grp.Name, grp.Id);
+            for ( group grp : [
+                        SELECT Id , Name
+                        FROM Group
+                        WHERE ( Name IN :getGrpList )
+                    ]
+                )
+            {
+                NSP_CaseRecordSharing.grpNameGrpIdMap.put( grp.Name , grp.Id );
             }
         }
     }
-    
+
+    private static List<string> getGroupListHelper( Case caseRec ) {
+        List<string> groupNames = new List<string>();
+        if ( caseRec != null ) {
+            if ( String.isNotBlank( caseRec.NSP_Detail__c )
+                && ( NSP_CaseRecordSharing.catSubCatDetailGroupNamesMap != null )
+                && NSP_CaseRecordSharing.catSubCatDetailGroupNamesMap.containsKey( caseRec.NSP_Category__c + ';' + caseRec.NSP_SubCategory__c + ';' + caseRec.NSP_Detail__c )
+                )
+            {
+                groupNames = NSP_CaseRecordSharing.catSubCatDetailGroupNamesMap.get( caseRec.NSP_Category__c + ';' + caseRec.NSP_SubCategory__c + ';' + caseRec.NSP_Detail__c );
+            }
+            if ( ( NSP_CaseRecordSharing.catSubCatGroupNamesMap!= null )
+                && NSP_CaseRecordSharing.catSubCatGroupNamesMap.containsKey( caseRec.NSP_Category__c + ';' + caseRec.NSP_SubCategory__c )
+                )
+            {
+                groupNames = NSP_CaseRecordSharing.catSubCatGroupNamesMap.get( caseRec.NSP_Category__c+';' + caseRec.NSP_SubCategory__c );
+            }
+        }
+        return groupNames;
+    }
+
         /**
 * @MethodName: getMapOfCatSubCatPublicGrps
 * @Description:  This method describes about mapping of public groups based on combination of Category and SubCategory.
@@ -235,17 +267,5 @@ public class NSP_CaseRecordSharing {
         );
     }
 
-    private static List<string> getGroupListHelper(Case caseRec){
-        List<string> groupNames = new List<string>();
-        if(caseRec != null){
-            if(caseRec.NSP_Detail__c != null && catSubCatDetailGroupNamesMap != null && catSubCatDetailGroupNamesMap.containsKey(caseRec.NSP_Category__c+';'+caseRec.NSP_SubCategory__c+ ';' + caseRec.NSP_Detail__c)){
-                groupNames = catSubCatDetailGroupNamesMap.get(caseRec.NSP_Category__c+';'+caseRec.NSP_SubCategory__c+ ';' + caseRec.NSP_Detail__c);
-            }
-            if(catSubCatGroupNamesMap!= null &&  catSubCatGroupNamesMap.containsKey(caseRec.NSP_Category__c+';'+caseRec.NSP_SubCategory__c)){
-                groupNames = catSubCatGroupNamesMap.get(caseRec.NSP_Category__c+';'+caseRec.NSP_SubCategory__c);
-            }
-        }
-        return groupNames;
-    }
 }
 //
