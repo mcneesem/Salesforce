@@ -260,4 +260,8 @@ Leave Payment</description>
         <viewAllFields>false</viewAllFields>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
+    <tabSettings>
+        <tab>Leave__c</tab>
+        <visibility>Available</visibility>
+    </tabSettings>
 </PermissionSet>
