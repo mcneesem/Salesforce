@@ -482,6 +482,21 @@
                 <default>false</default>
                 <label>Allied Services Group</label>
             </value>
+            <value>
+                <fullName>131</fullName>
+                <default>false</default>
+                <label>Gillon Capital</label>
+            </value>
+            <value>
+                <fullName>132</fullName>
+                <default>false</default>
+                <label>Starhill Holdings</label>
+            </value>
+            <value>
+                <fullName>133</fullName>
+                <default>false</default>
+                <label>Album Ventures</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
