@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Grants the Permissions require to view Portal-related records, tabs, and components within the internal Org Pages.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Portal Visibility</label>
+    <permissionSets>Portal_Client_Visibility</permissionSets>
+    <permissionSets>Portal_Team_Member_Visibility</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

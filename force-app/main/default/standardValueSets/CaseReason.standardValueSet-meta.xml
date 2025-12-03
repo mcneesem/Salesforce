@@ -26,6 +26,12 @@
         <cssExposed>false</cssExposed>
     </standardValue>
     <standardValue>
+        <fullName>Assisted - SVS OPS</fullName>
+        <default>false</default>
+        <label>Assisted - SVS OPS</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
         <fullName>BPS - Assigned to Regeneration</fullName>
         <default>false</default>
         <label>BPS - Assigned to Regeneration</label>
@@ -44,9 +50,21 @@
         <cssExposed>false</cssExposed>
     </standardValue>
     <standardValue>
+        <fullName>Changed to Hourly Non-Exempt</fullName>
+        <default>false</default>
+        <label>Changed to Hourly Non-Exempt</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
         <fullName>Changed to Non-Exempt</fullName>
         <default>false</default>
         <label>Changed to Non-Exempt</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Changed to Salary Non-Exempt</fullName>
+        <default>false</default>
+        <label>Changed to Salary Non-Exempt</label>
         <cssExposed>false</cssExposed>
     </standardValue>
     <standardValue>
@@ -59,6 +77,12 @@
         <fullName>Client Confirmed</fullName>
         <default>false</default>
         <label>Client Confirmed</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Client Unresponsive</fullName>
+        <default>false</default>
+        <label>Client Unresponsive</label>
         <cssExposed>false</cssExposed>
     </standardValue>
     <standardValue>
@@ -110,6 +134,18 @@
         <cssExposed>false</cssExposed>
     </standardValue>
     <standardValue>
+        <fullName>Left Voicemail</fullName>
+        <default>false</default>
+        <label>Left Voicemail</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>No Voicemail</fullName>
+        <default>false</default>
+        <label>No Voicemail</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
         <fullName>Other Exemption</fullName>
         <default>false</default>
         <label>Other Exemption</label>
@@ -137,6 +173,12 @@
         <fullName>Premier Concern - NO RISK</fullName>
         <default>false</default>
         <label>Premier Concern - NO RISK</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>PS - VM</fullName>
+        <default>false</default>
+        <label>PS - VM</label>
         <cssExposed>false</cssExposed>
     </standardValue>
     <standardValue>
@@ -173,6 +215,12 @@
         <fullName>Referred to Service Team</fullName>
         <default>false</default>
         <label>Referred to Service Team</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Referred to Vendor</fullName>
+        <default>false</default>
+        <label>Referred to Vendor</label>
         <cssExposed>false</cssExposed>
     </standardValue>
     <standardValue>
@@ -233,24 +281,6 @@
         <fullName>Wages Raised</fullName>
         <default>false</default>
         <label>Wages Raised</label>
-        <cssExposed>false</cssExposed>
-    </standardValue>
-    <standardValue>
-        <fullName>Left Voicemail</fullName>
-        <default>false</default>
-        <label>Left Voicemail</label>
-        <cssExposed>false</cssExposed>
-    </standardValue>
-    <standardValue>
-        <fullName>No Voicemail</fullName>
-        <default>false</default>
-        <label>No Voicemail</label>
-        <cssExposed>false</cssExposed>
-    </standardValue>
-    <standardValue>
-        <fullName>Referred to Vendor</fullName>
-        <default>false</default>
-        <label>Referred to Vendor</label>
         <cssExposed>false</cssExposed>
     </standardValue>
 </StandardValueSet>

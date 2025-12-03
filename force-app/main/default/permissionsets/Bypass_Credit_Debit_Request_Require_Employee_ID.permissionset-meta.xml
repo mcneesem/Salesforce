@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Bypass_Credit_Debit_Request_Require_Employee_ID</name>
+    </customPermissions>
+    <description>Grants the Custom Permission to Bypass Credit Debit Request Require Employee ID Rule</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Bypass Credit Debit Request Require Employee ID</label>
+</PermissionSet>

@@ -191,6 +191,22 @@
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
+                        <valueListItems>
+                            <value>Case.Send_SSNVS_Email</value>
+                            <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Case_Send_SSNVS_Team_Email}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Is_SSNVS_Mismatch_Blank__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>false</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -1300,49 +1316,11 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Docusign_Form_To_Send__c</fieldItem>
-                <identifier>RecordDocusign_Form_To_Send_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Verification_Report_Attached__c</fieldItem>
-                <identifier>RecordVerification_Report_Attached_cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Docusign_Form_To_Send__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Verification Report</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Exemption_Type__c</fieldItem>
-                <identifier>RecordExemption_Type_cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Docusign_Form_To_Send__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>FLSA Test for Exemption - CA</rightValue>
-                    </criteria>
-                </visibilityRule>
+                <fieldItem>Record.Docusign_Form_To_Send_Multi__c</fieldItem>
+                <identifier>RecordDocusign_Form_To_Send_Multi_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-409c6cdd-6328-4c8c-ad14-315c74d87220</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <name>Facet-3acaf87a-bbba-46c3-b393-9d577eff226f</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -1354,16 +1332,6 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
                 <identifier>flexipage_column14</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-3acaf87a-bbba-46c3-b393-9d577eff226f</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:column</componentName>
-                <identifier>flexipage_column15</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-9ec311ef-db6b-4329-a346-83d9b08c573d</name>
@@ -1646,6 +1614,29 @@
                         <leftValue>{!Record.NSP_Category__c}</leftValue>
                         <operator>NE</operator>
                         <rightValue>Contractor Management</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.SSNVS_Mismatch__c</fieldItem>
+                <identifier>RecordSSNVS_Mismatch_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>SSNVS Team</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>SSNVS Mismatch</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -3187,7 +3178,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
-                    <value>Payroll Information</value>
+                    <value>Payroll Docusign</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection8</identifier>

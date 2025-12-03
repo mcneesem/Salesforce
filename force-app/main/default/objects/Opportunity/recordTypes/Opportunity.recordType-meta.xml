@@ -5,6 +5,29 @@
     <businessProcess>Opportunity</businessProcess>
     <label>Opportunity</label>
     <picklistValues>
+        <picklist>Closed_Lost_Group__c</picklist>
+        <values>
+            <fullName>NCS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Retirement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>System</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>DB_Competitor__c</picklist>
         <values>
             <fullName>Competitor A</fullName>
@@ -641,7 +664,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Backout</fullName>
+            <fullName>Admin Error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BPA lost prospect</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Benefits</fullName>
             <default>false</default>
         </values>
         <values>
@@ -649,19 +680,23 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Business Profile Expired</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Client</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Closed by System</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Competitor</fullName>
+            <fullName>Competition</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Compliance Issues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Concerned about change management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cost</fullName>
             <default>false</default>
         </values>
         <values>
@@ -669,23 +704,35 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Default Won</fullName>
+            <fullName>Doesn%27t like NSPK Funds</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Features</fullName>
+            <fullName>Duplicate</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Global Pandemic</fullName>
+            <fullName>General</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Implementation</fullName>
+            <fullName>Happy with Current Vendor</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Legacy Client</fullName>
+            <fullName>Has other Outside Plans</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insufficient features%2Fcapabilities</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Kept in-house</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Liquidation Restrictions - frozen funds</fullName>
             <default>false</default>
         </values>
         <values>
@@ -693,19 +740,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Need Alternative to UHC</fullName>
+            <fullName>Match Formula Restrictions</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>No Budget %2F Lost Funding</fullName>
+            <fullName>NCS</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>No Contact</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>No Decision</fullName>
+            <fullName>New Comparability PS</fullName>
             <default>false</default>
         </values>
         <values>
@@ -713,15 +756,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Not Interested</fullName>
+            <fullName>No Interest from Employees</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Not Qualified - Quickbooks</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Not a good fit</fullName>
+            <fullName>Not a good time to make the change</fullName>
             <default>false</default>
         </values>
         <values>
@@ -733,7 +772,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Price</fullName>
+            <fullName>Outside Control Group</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Outside Employees</fullName>
             <default>false</default>
         </values>
         <values>
@@ -741,23 +784,31 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Prohibited Industry</fullName>
+            <fullName>Protected Benefit%28s%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Regen</fullName>
+            <fullName>Retirement Services</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Satisfied with Current</fullName>
+            <fullName>Safe Harbor Annual%2FQACA</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Satisfied with Current Process</fullName>
+            <fullName>Sales Disqualified</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Stayed with Current Insperity Solution</fullName>
+            <fullName>Setup Fee%28s%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Solution Too Robust</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Testing Concerns</fullName>
             <default>false</default>
         </values>
         <values>
@@ -765,7 +816,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Transferred to MidMarket</fullName>
+            <fullName>Union Bid</fullName>
             <default>false</default>
         </values>
         <values>
@@ -773,7 +824,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>WO Competitor</fullName>
+            <fullName>Unresponsive%2FNot engaged</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vesting</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -4808,6 +4863,413 @@
         </values>
         <values>
             <fullName>NCI-RS</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Sub_Reason_Lost__c</picklist>
+        <values>
+            <fullName>ADP Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ADP Total Source</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ADP Workforce Now</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Able</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Advanstaff</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Advantec</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AlphaStaff</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Applicant Tracking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Axcel HR Solutions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Axcet HR Solutions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BambooHR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cannabis Industry</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cbiz</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Change for WSEEs a concern</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Change in ownership%2Fleadership</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Change to co-employment a concern</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Co-Advantage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cobalt Astra</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Competitor pricing%2Fpromotion</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Concerned about complexity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Costs too high - Admin Fees</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Costs too high - Benefits</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Costs too high - Implementation Fees</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Coverage exclusions - Abortion</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Coverage exclusions - Acupuncture</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Coverage exclusions - Fertility</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Coverage exclusions - Gender care</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Custom Business Solutions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE count %3E 5000</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE count too small</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Economy%2Findustry concerns</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Effort for internal team during implementation a concern</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EmphasisHR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Emplicity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Employee Scheduling</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Employer Flexible</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Engage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Expense management not included%2Fintegrated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Extensis</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fusion</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G%26A Partners</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Geographical coverage concerns</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GovCon Pay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Government entity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gusto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HR%26P</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>International employees</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Job costing capabilities</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Just renewed%2Fwent through open enrollment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>JustWorks</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lacking integrations%2FAPIs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Learning</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Legacy HR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lever 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Limited Customization</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Masspay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mobile App</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NEMR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Native American Reservation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Need alternative to UHC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Network concerns</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nextep</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No Single Sign-on</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not eligible for client-retained</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not interested in new solution at present</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not open to coemployment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OEM PEO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Odyssey OneSource</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Offered Revolution</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>P%26R declined - High Risk</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>P%26R declined - Workers%27 comp</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Packages too restrictive</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pay%2Fmanage international employees</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paychex</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paycom</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paycor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payday</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paylocity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payroll</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payroll Only</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prestige</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pricing too complex%2Fconfusing%2Fnot transparent</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ProSource</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prohibited industry</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Questco</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reporting %26 Analytics</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rippling</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Seeking tiered solution to better address needs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sequent</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sequoia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tandem HR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Time %26 Attendance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Time %26 Pay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Too much going on in company</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Took too long%2Ftoo much effort to get to pricing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Trinet</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>UKG</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unknown</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Zenefits</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>isloved reseller</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>isolved direct</fullName>
             <default>false</default>
         </values>
     </picklistValues>

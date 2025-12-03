@@ -64,7 +64,6 @@
     <permissionSets>Organization_Wide_Email_Address_PerformSmart</permissionSets>
     <permissionSets>Organization_Wide_Email_Address_R_D_Credit</permissionSets>
     <permissionSets>Organization_Wide_Email_Address_Referral_Lead_Form_Site</permissionSets>
-    <permissionSets>Organization_Wide_Email_Address_SSNVS_Team</permissionSets>
     <permissionSets>Organization_Wide_Email_Address_Salesforce_Email_to_Case</permissionSets>
     <permissionSets>Organization_Wide_Email_Address_TES_HR_Support_Center</permissionSets>
     <permissionSets>Organization_Wide_Email_Address_Talent_Connect</permissionSets>

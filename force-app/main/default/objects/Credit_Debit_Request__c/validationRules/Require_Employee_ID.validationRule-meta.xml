@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Employee_ID</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+  NOT( $Permission.Bypass_Credit_Debit_Request_Require_Employee_ID ) ,
+  OR(
+    AND(
+      ISPICKVAL( Fin_Category__c , &quot;DD Chargeback Cure&quot; ) ,
+      OR(
+        ISPICKVAL( Fin_Subcategory__c , &quot;DD Chargeback Cure - EE&quot; ) ,
+        ISPICKVAL( Fin_Subcategory__c , &quot;DD Chargeback Cure - Client&quot; )
+      )
+    ) ,
+    AND(
+      ISPICKVAL( Fin_Category__c , &quot;EE Reversal&quot; ) ,
+      ISPICKVAL( Fin_Subcategory__c , &quot;Unsuccessful Reversal&quot; )
+    )
+  ) ,
+  ISBLANK( Employee_ID__c )
+)</errorConditionFormula>
+    <errorMessage>Employee ID is required.</errorMessage>
+</ValidationRule>

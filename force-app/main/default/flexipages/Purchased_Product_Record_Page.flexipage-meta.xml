@@ -12,7 +12,7 @@
                         <valueListItems>
                             <value>Purchased_Product__c.Generate_Next_Year_Price_Increase</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2</booleanFilter>
+                                <booleanFilter>1 AND 2 AND 3</booleanFilter>
                                 <criteria>
                                     <leftValue>{!$Permission.CustomPermission.Run_Price_Updates}</leftValue>
                                     <operator>EQUAL</operator>
@@ -22,6 +22,11 @@
                                     <leftValue>{!Record.Qualifies_For_Price_Increase__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Purchase_Status__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Canceled</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>

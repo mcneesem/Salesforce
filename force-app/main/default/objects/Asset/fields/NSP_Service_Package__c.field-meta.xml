@@ -19,22 +19,22 @@
             <value>
                 <fullName>WO - Full Bundle</fullName>
                 <default>false</default>
-                <label>WO - Full Bundle</label>
+                <label>HR360 - Full Bundle</label>
             </value>
             <value>
                 <fullName>WO - Bundle Plus</fullName>
                 <default>false</default>
-                <label>WO - Bundle Plus</label>
+                <label>HR360 - Bundle Plus</label>
             </value>
             <value>
                 <fullName>WS - Bundle Plus</fullName>
                 <default>false</default>
-                <label>WS - Bundle Plus</label>
+                <label>HR360 SE - Bundle Plus</label>
             </value>
             <value>
                 <fullName>WO - AS Agency</fullName>
                 <default>false</default>
-                <label>WO - AS Agency</label>
+                <label>HR360 - AS Agency</label>
             </value>
             <value>
                 <fullName>WS - Asset Plus Corp</fullName>

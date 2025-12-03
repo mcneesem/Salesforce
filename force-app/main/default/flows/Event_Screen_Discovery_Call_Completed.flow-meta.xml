@@ -56,13 +56,6 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>varOpportunity.NSP_Lost_Reason__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>What_is_the_reason_for_moving_this_opportunity_to_Close_Lost</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>varOpportunity.NSP_ReasonLostNotes__c</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -81,6 +74,27 @@
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varOpportunity.NSP_Lost_Reason__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ReasonLostDependentPicklists.middleValue</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varOpportunity.Closed_Lost_Group__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ReasonLostDependentPicklists.topValue</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varOpportunity.Sub_Reason_Lost__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ReasonLostDependentPicklists.bottomValue</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -370,7 +384,7 @@
             <label>User does not have Edit access</label>
         </rules>
     </decisions>
-    <description>Flipped back to District Manager Id (for now). Added Fault Message screen after Fault Handler. Switched over to newly renamed subflow to avoid confusion. Also handles all Discovery Call Created scenarios. Replaced District Manager Id with DM User. Sends to subflow regardless of Close Lost. Also checks that running user has edit access. Sends update to subflow. Added Product Recommendation on Close Lost</description>
+    <description>Updated with nested Closed Lost picklists. Handles Regen Date errors. Flipped back to District Manager Id (for now). Added Fault Message screen after Fault Handler. Switched over to newly renamed subflow to avoid confusion. Also handles all Discovery Call Created scenarios. Replaced District Manager Id with DM User. Sends to subflow regardless of Close Lost. Also checks that running user has edit access. Sends update to subflow. Added Product Recommendation on Close Lost</description>
     <dynamicChoiceSets>
         <name>optyCloseLost_Picklist</name>
         <dataType>Picklist</dataType>
@@ -544,13 +558,66 @@
             <targetReference>Assign_Stage_and_Reason_Lost_to_varUpdateOpportunity</targetReference>
         </connector>
         <fields>
-            <name>What_is_the_reason_for_moving_this_opportunity_to_Close_Lost</name>
-            <choiceReferences>optyCloseLost_Picklist</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>What is the reason for moving this opportunity to Close Lost?</fieldText>
-            <fieldType>DropdownBox</fieldType>
+            <name>ReasonLostDependentPicklists</name>
+            <extensionName>flowruntime:dependentPicklists</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>dependencyWrapperApiName</name>
+                <value>
+                    <stringValue>Opportunity</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>topPicklistApiName</name>
+                <value>
+                    <stringValue>Closed_Lost_Group__c</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>middlePicklistApiName</name>
+                <value>
+                    <stringValue>NSP_Lost_Reason__c</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>topLabel</name>
+                <value>
+                    <stringValue>Closed Lost Group</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>topRequired</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>middleLabel</name>
+                <value>
+                    <stringValue>Primary Reason Lost</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>middleRequired</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>bottomPicklistApiName</name>
+                <value>
+                    <stringValue>Sub_Reason_Lost__c</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>bottomLabel</name>
+                <value>
+                    <stringValue>Sub Reason Lost</stringValue>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
             <styleProperties>
                 <verticalAlignment>
                     <stringValue>top</stringValue>
@@ -575,9 +642,16 @@
                 </width>
             </styleProperties>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>or</conditionLogic>
                 <conditions>
-                    <leftValueReference>What_is_the_reason_for_moving_this_opportunity_to_Close_Lost</leftValueReference>
+                    <leftValueReference>ReasonLostDependentPicklists.middleValue</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Other</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ReasonLostDependentPicklists.bottomValue</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Other</stringValue>

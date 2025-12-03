@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Fin_Subcategory__c</fullName>
+    <externalId>false</externalId>
+    <label>Fin Subcategory</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Fin_Category__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Tax Credit/Tax Group</fullName>
+                <default>false</default>
+                <label>Tax Credit/Tax Group</label>
+            </value>
+            <value>
+                <fullName>Tax Credit/Payroll</fullName>
+                <default>false</default>
+                <label>Tax Credit/Payroll</label>
+            </value>
+            <value>
+                <fullName>Tax Debit</fullName>
+                <default>false</default>
+                <label>Tax Debit</label>
+            </value>
+            <value>
+                <fullName>PR Funding Chargeback</fullName>
+                <default>false</default>
+                <label>PR Funding Chargeback</label>
+            </value>
+            <value>
+                <fullName>EE Reversal Debit</fullName>
+                <default>false</default>
+                <label>EE Reversal Debit</label>
+            </value>
+            <value>
+                <fullName>DD Chargeback Cure</fullName>
+                <default>false</default>
+                <label>DD Chargeback Cure</label>
+            </value>
+            <value>
+                <fullName>Overfunding Return</fullName>
+                <default>false</default>
+                <label>Overfunding Return</label>
+            </value>
+            <value>
+                <fullName>401K Return</fullName>
+                <default>false</default>
+                <label>401K Return</label>
+            </value>
+            <value>
+                <fullName>Reversal Refund</fullName>
+                <default>false</default>
+                <label>Reversal Refund</label>
+            </value>
+            <value>
+                <fullName>Unsuccessful Reversal</fullName>
+                <default>false</default>
+                <label>Unsuccessful Reversal</label>
+            </value>
+            <value>
+                <fullName>DD Chargeback Cure - EE</fullName>
+                <default>false</default>
+                <label>DD Chargeback Cure - EE</label>
+            </value>
+            <value>
+                <fullName>DD Chargeback Cure - Client</fullName>
+                <default>false</default>
+                <label>DD Chargeback Cure - Client</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Client Tax Credit</controllingFieldValue>
+            <valueName>Tax Credit/Tax Group</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Client Tax Credit</controllingFieldValue>
+            <valueName>Tax Credit/Payroll</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Client Debit</controllingFieldValue>
+            <valueName>Tax Debit</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Client Debit</controllingFieldValue>
+            <valueName>PR Funding Chargeback</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EE Reversal</controllingFieldValue>
+            <valueName>EE Reversal Debit</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EE Reversal</controllingFieldValue>
+            <valueName>Unsuccessful Reversal</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>DD Chargeback Cure</controllingFieldValue>
+            <valueName>DD Chargeback Cure - EE</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>DD Chargeback Cure</controllingFieldValue>
+            <valueName>DD Chargeback Cure - Client</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Client Return</controllingFieldValue>
+            <valueName>Overfunding Return</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Client Return</controllingFieldValue>
+            <valueName>401K Return</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Client Return</controllingFieldValue>
+            <valueName>Reversal Refund</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

@@ -35,6 +35,11 @@
                 <default>false</default>
                 <label>ATS Survey Contact</label>
             </value>
+            <value>
+                <fullName>HRCore Survey Contact</fullName>
+                <default>false</default>
+                <label>HRCore Survey Contact</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
     <visibleLines>3</visibleLines>

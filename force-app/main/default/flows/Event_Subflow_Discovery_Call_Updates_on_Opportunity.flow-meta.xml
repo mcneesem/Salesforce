@@ -117,6 +117,71 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_Close_Lost_info_to_varOpportunityToUpdate_with_Closed_Lost_Group</name>
+        <label>Assign Close Lost info to varOpportunityToUpdate with Closed Lost Group</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varOpportunityToUpdate.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varOpportunity.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varOpportunityToUpdate.StageName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varOpportunity.StageName</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varOpportunityToUpdate.NSP_Lost_Reason__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varOpportunity.NSP_Lost_Reason__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varOpportunityToUpdate.NSP_ReasonLostNotes__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varOpportunity.NSP_ReasonLostNotes__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varOpportunityToUpdate.Product_Recommendation_Outcome__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varOpportunity.Product_Recommendation_Outcome__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>updateOpportunity</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varOpportunityToUpdate.Closed_Lost_Group__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varOpportunity.Closed_Lost_Group__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varOpportunityToUpdate.Sub_Reason_Lost__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varOpportunity.Sub_Reason_Lost__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Opty_Owner_in_BPA_Public_Group</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_Discovery_Call_Completed_Date</name>
         <label>Assign Discovery Call Completed Date</label>
         <locationX>0</locationX>
@@ -468,7 +533,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assign_Close_Lost_info_to_varOpportunityToUpdate</targetReference>
+                <targetReference>Were_Closed_Lost_Group_and_possibly_Sub_Reason_passed_through</targetReference>
             </connector>
             <label>varOpportunity has all Close Lost info</label>
         </rules>
@@ -765,7 +830,33 @@
             <label>Yes - DM was found</label>
         </rules>
     </decisions>
-    <description>Flipped back to use District Manager Id field (for now). Runs through logic when Discovery Call is completed to make updates on related Opportunity as needed.</description>
+    <decisions>
+        <description>A new process was put in place to have several nested picklists for Closed Lost, which include a new field for &quot;Closed Lost Group&quot; and &quot;Sub Reason Lost&quot; that may or may not be populated.</description>
+        <name>Were_Closed_Lost_Group_and_possibly_Sub_Reason_passed_through</name>
+        <label>Were Closed Lost Group and possibly Sub Reason passed through?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Assign_Close_Lost_info_to_varOpportunityToUpdate</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No new process in place</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Nested_Closed_Lost_process_in_place</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varOpportunity.Closed_Lost_Group__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Close_Lost_info_to_varOpportunityToUpdate_with_Closed_Lost_Group</targetReference>
+            </connector>
+            <label>Yes - Nested Closed Lost process in place</label>
+        </rules>
+    </decisions>
+    <description>Updated to account for nested picklists possibly being passed in for Closed Lost process. Added logic to check for Customer Signer to prevent flow errors. Flipped back to use District Manager Id field (for now). Runs through logic when Discovery Call is completed to make updates on related Opportunity as needed.</description>
     <environments>Default</environments>
     <formulas>
         <name>eventCompletedDatePlus60Formula</name>
