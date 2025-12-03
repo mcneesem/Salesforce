@@ -2198,8 +2198,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.SubPlan__c</fieldItem>
-                <identifier>RecordSubPlan_cField</identifier>
+                <fieldItem>Record.NSP_Subplan_Plan_Details_Record_Form__c</fieldItem>
+                <identifier>RecordNSP_Subplan_Plan_Details_Record_Form_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2262,7 +2262,7 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.HPI_info_in_system__c</fieldItem>
+                <fieldItem>Record.HPI_Info_In_System__c</fieldItem>
                 <identifier>RecordHPI_info_in_system_cField</identifier>
             </fieldInstance>
         </itemInstances>
@@ -2622,7 +2622,7 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.X3rd_Contact__c</fieldItem>
+                <fieldItem>Record.Third_Contact__c</fieldItem>
                 <identifier>RecordX3rd_Contact_cField</identifier>
             </fieldInstance>
         </itemInstances>
