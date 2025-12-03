@@ -53,10 +53,19 @@ public with sharing class UpdateRETClientSubplanHistoryBatch implements ISelfSch
         try {
             if ( !recordsToUpdate?.isEmpty() ) {
                 Database.SaveResult[] results = Database.update( recordsToUpdate, false );
-                NSP_ErrorLogHandler.logResults( 'UpdateRETClientSubplanHistoryBatch', 'ExecuteMethod', results );
+                NSP_ErrorLogHandler.logResults(
+                    UpdateRETClientSubplanHistoryBatch.class.getName() , 
+                    'execute:NSP_Client_Sub_Plan_History__c' , 
+                    results
+                );
             }
         } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException( 'UpdateRETClientSubplanHistoryBatch', 'ExecuteMethod', e );
+             NSP_ErrorLogHandler.logException(
+                UpdateRETClientSubplanHistoryBatch.class.getName() , 
+                'execute' , 
+                e
+            );
+
         }
     }    
 
