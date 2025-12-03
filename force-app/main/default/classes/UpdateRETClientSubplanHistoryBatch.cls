@@ -13,7 +13,7 @@ public with sharing class UpdateRETClientSubplanHistoryBatch implements ISelfSch
             suffix = ' ~ TEST';
         }
         return System.schedule(
-            'Update RET Client Subplan History Scheduler ~ everyday at 1 AM' + suffix ,
+            'UpdateRETClientSubplanHistoryBatch ~ everyday at 1 AM' + suffix ,
             '0 0 1 * * ? *' ,
             new UpdateRETClientSubplanHistoryBatch()
         );
