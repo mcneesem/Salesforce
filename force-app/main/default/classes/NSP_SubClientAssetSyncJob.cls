@@ -12,9 +12,30 @@ Modification Log     :
 * Virendra                  10/20/2022                First Iteration
 */
 
-public with sharing class NSP_SubClientAssetSyncJob implements Database.Batchable<sObject>, Schedulable {
-    // test w/ NSP_SubClientAssetSyncJob_Test (97%)
+public with sharing class NSP_SubClientAssetSyncJob implements ISelfSchedulable, Database.Batchable<sObject>, Schedulable {
+    // test w/ NSP_SubClientAssetSyncJob_Test (94%)
     
+    // Executes the batch job to update client sub-plan history records
+    // This method is called by the scheduler to initiate the batch process
+    public void execute( SchedulableContext scon ) {
+        Database.executeBatch( new NSP_SubClientAssetSyncJob(), 200 );
+    }
+
+     public static String schedule() {
+
+        String suffix = '';
+        if ( Test.isRunningTest() ) {
+            suffix = ' ~ TEST';
+        }
+        return System.schedule(
+
+            'NSP_SubClientAssetSyncJob ~ When Paid/NonPaid, Employee Status and Union fields in sub client contact are updated, then it will rollup updated values in Sub Client and Asset level ~ Schedule to run every 4 hour' + suffix ,
+
+            '0 0 */4 * * ?' ,
+            new NSP_SubClientAssetSyncJob()
+        );
+    }
+
     // Batch Start: Query records updated in last 4 hours
     public Database.QueryLocator start( Database.BatchableContext bc ) {
         DateTime last4Hours = System.now().addHours(-4);
@@ -51,9 +72,9 @@ public with sharing class NSP_SubClientAssetSyncJob implements Database.Batchabl
     public void execute( Database.BatchableContext bc, List<NSP_Sub_Client_Contact__c> scope ) {
         Set<Id> subClientIds = new Set<Id>();
         
-        for ( NSP_Sub_Client_Contact__c contact : scope ) {
-            if ( contact.NSP_Sub_Client__c != null ) {
-                subClientIds.add(contact.NSP_Sub_Client__c);
+        for ( NSP_Sub_Client_Contact__c contactRec : scope ) {
+            if ( contactRec.NSP_Sub_Client__c != null ) {
+                subClientIds.add(contactRec.NSP_Sub_Client__c);
             }
         }
         
@@ -63,22 +84,17 @@ public with sharing class NSP_SubClientAssetSyncJob implements Database.Batchabl
             Set<Id> assetIds = NSP_SubClientAssetSyncJob.getAssetIds( subClients, subClientMap );
             
             List<Asset> updateAssetRecords = new List<Asset>();
-            if ( !assetIds.isEmpty() ) {
-                List<Asset> assetRecords = NSP_SubClientAssetSyncJob.getAssetRecords( assetIds );
-                updateAssetRecords = NSP_SubClientAssetSyncJob.setUnionFlagOnAssets( assetRecords, subClientMap );
-            }
+            List<Asset> assetRecords = NSP_SubClientAssetSyncJob.getAssetRecords( assetIds );
+            updateAssetRecords = NSP_SubClientAssetSyncJob.setUnionFlagOnAssets( assetRecords, subClientMap );
             
-            NSP_SubClientAssetSyncJob.updateRecords( subClientMap.values(), updateAssetRecords );
+            if( subClientMap != null && !subClientMap.isEmpty() ) {
+                NSP_SubClientAssetSyncJob.updateRecords( subClientMap.values(), updateAssetRecords );
+            }
         }
     }
     
     // Batch Finish: Optional cleanup
     public void finish( Database.BatchableContext bc ) {}
-    
-    // Schedulable Execute
-    public void execute( SchedulableContext scon ) {
-        Database.executeBatch( new NSP_SubClientAssetSyncJob(), 200 );
-    }
     
     // ---------------- Helper Methods ----------------
     
@@ -156,11 +172,11 @@ public with sharing class NSP_SubClientAssetSyncJob implements Database.Batchabl
         String paidNonPaidValue = 'Paid WSEE';
 
         Boolean returnValue = false;
-        if( ( subClient.NSP_Sub_Client_Contacts__r != null ) && !subClient.NSP_Sub_Client_Contacts__r.isEmpty() ) {
-             for ( NSP_Sub_Client_Contact__c contact : subClient.NSP_Sub_Client_Contacts__r ) {
-                if ( (contact.NSP_Paid_Non_Paid__c == paidNonPaidValue) && 
-                (contact.NSP_Employee_Status__c != employmentStatus) && 
-                (contact.NSP_Union_Employee__c == true ) ) {
+        if( (subClient != null) && ( subClient.NSP_Sub_Client_Contacts__r != null ) && !subClient.NSP_Sub_Client_Contacts__r.isEmpty() ) {
+             for ( NSP_Sub_Client_Contact__c contactRec : subClient.NSP_Sub_Client_Contacts__r ) {
+                if ( (contactRec.NSP_Paid_Non_Paid__c == paidNonPaidValue) && 
+                (contactRec.NSP_Employee_Status__c != employmentStatus) && 
+                (contactRec.NSP_Union_Employee__c == true ) ) {
                     returnValue = true;
                     
                     break;

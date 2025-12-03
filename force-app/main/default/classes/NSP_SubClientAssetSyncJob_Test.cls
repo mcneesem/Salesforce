@@ -127,5 +127,23 @@ private class NSP_SubClientAssetSyncJob_Test {
         Assert.areEqual('7', triggers[0].CronJobDetail.JobType, 'Expected job type to be batch/schedulable'); // value may vary by org, assert presence instead
         Assert.isTrue(triggers[0].NextFireTime != null, 'Next fire time should be set');
     }
+    
+    @IsTest
+    private static void testISelfSchedulable() {
+        Test.startTest();
+        string jobId = NSP_SubClientAssetSyncJob.schedule();
+        
+        List<CronTrigger> triggers = [
+            SELECT Id, State, NextFireTime, TimesTriggered, CronJobDetail.Name, CronJobDetail.JobType
+            FROM CronTrigger 
+            WHERE Id = :jobId
+            LIMIT 1
+        ];
+        
+        Assert.areEqual(1, triggers.size(), 'Expected one scheduled job for batch');
+        
+        Test.stopTest();
+    }
+    
 }
 //
