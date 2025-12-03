@@ -1,18 +1,17 @@
 <template>
     <div  class="custom-card">
     <lightning-card title={title} icon-name ="standard:record"   class="custom-card"> 
-
-        <lightning-button-icon
-            icon-name="utility:refresh"
-            variant="neutral"
-            alternative-text="Refresh"
-            title="Refresh"
-            slot="actions"
-            onclick={handleRefresh}
-            
-            >
-        </lightning-button-icon>
         <template if:true={hasData}>
+            <lightning-button-icon
+                icon-name="utility:refresh"
+                variant="neutral"
+                alternative-text="Refresh"
+                title="Refresh"
+                slot="actions"
+                onclick={handleRefresh}
+                >
+            </lightning-button-icon>
+       
             <lightning-datatable
                 key-field="Id"
                 data={displayDataList}
@@ -23,7 +22,7 @@
             </lightning-datatable>
         
             <div slot="footer" >
-                <lightning-button label="View All" 
+                <lightning-button label="View All"
                     onclick={handleViewAll}
                     variant="base"
                     title="View All"
