@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Route_to_401k_Queue</name>
-        <label>Route to 401k Queue</label>
+        <name>Route_to_Queue_401k</name>
+        <label>Route to Queue (401k)</label>
         <locationX>402</locationX>
-        <locationY>2678</locationY>
+        <locationY>4190</locationY>
         <actionName>routeWork</actionName>
         <actionType>routeWork</actionType>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+            <targetReference>Set_Fault_Element_Route_to_Queue_401k</targetReference>
         </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -78,18 +77,36 @@
         <inputParameters>
             <name>botLabel</name>
         </inputParameters>
+        <inputParameters>
+            <name>externalConversationBotId</name>
+        </inputParameters>
+        <inputParameters>
+            <name>externalConversationBotLabel</name>
+        </inputParameters>
+        <inputParameters>
+            <name>copilotId</name>
+        </inputParameters>
+        <inputParameters>
+            <name>copilotLabel</name>
+        </inputParameters>
+        <inputParameters>
+            <name>agentforceEmployeeAgentId</name>
+        </inputParameters>
+        <inputParameters>
+            <name>agentforceEmployeeAgentLabel</name>
+        </inputParameters>
         <nameSegment>routeWork</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
-        <name>Route_to_Benefits_Queue</name>
-        <label>Route to Benefits Queue</label>
+        <name>Route_to_Queue_Benefits</name>
+        <label>Route to Queue (Benefits)</label>
         <locationX>930</locationX>
-        <locationY>2678</locationY>
+        <locationY>4190</locationY>
         <actionName>routeWork</actionName>
         <actionType>routeWork</actionType>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+            <targetReference>Set_Fault_Element_Route_to_Queue_Benefits</targetReference>
         </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -158,18 +175,36 @@
         <inputParameters>
             <name>botLabel</name>
         </inputParameters>
+        <inputParameters>
+            <name>externalConversationBotId</name>
+        </inputParameters>
+        <inputParameters>
+            <name>externalConversationBotLabel</name>
+        </inputParameters>
+        <inputParameters>
+            <name>copilotId</name>
+        </inputParameters>
+        <inputParameters>
+            <name>copilotLabel</name>
+        </inputParameters>
+        <inputParameters>
+            <name>agentforceEmployeeAgentId</name>
+        </inputParameters>
+        <inputParameters>
+            <name>agentforceEmployeeAgentLabel</name>
+        </inputParameters>
         <nameSegment>routeWork</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
-        <name>Route_to_Queue</name>
-        <label>Route to Queue</label>
-        <locationX>666</locationX>
-        <locationY>3146</locationY>
+        <name>Route_to_Queue_Premier</name>
+        <label>Route to Queue (Premier)</label>
+        <locationX>1106</locationX>
+        <locationY>5330</locationY>
         <actionName>routeWork</actionName>
         <actionType>routeWork</actionType>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+            <targetReference>Set_Fault_Element_Route_to_Queue_Premier</targetReference>
         </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -238,14 +273,164 @@
         <inputParameters>
             <name>botLabel</name>
         </inputParameters>
+        <inputParameters>
+            <name>externalConversationBotId</name>
+        </inputParameters>
+        <inputParameters>
+            <name>externalConversationBotLabel</name>
+        </inputParameters>
+        <inputParameters>
+            <name>copilotId</name>
+        </inputParameters>
+        <inputParameters>
+            <name>copilotLabel</name>
+        </inputParameters>
+        <inputParameters>
+            <name>agentforceEmployeeAgentId</name>
+        </inputParameters>
+        <inputParameters>
+            <name>agentforceEmployeeAgentLabel</name>
+        </inputParameters>
         <nameSegment>routeWork</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <actionCalls>
+        <name>Route_to_Queue_Workday</name>
+        <label>Route to Queue (Workday)</label>
+        <locationX>754</locationX>
+        <locationY>4940</locationY>
+        <actionName>routeWork</actionName>
+        <actionType>routeWork</actionType>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Route_to_Queue_Workday</targetReference>
+        </faultConnector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>serviceChannelId</name>
+            <value>
+                <stringValue>0N94x00000117HMCAY</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>serviceChannelLabel</name>
+            <value>
+                <stringValue>Messaging</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>serviceChannelDevName</name>
+            <value>
+                <stringValue>sfdc_livemessage</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>routingType</name>
+            <value>
+                <stringValue>QueueBased</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>routingConfigId</name>
+        </inputParameters>
+        <inputParameters>
+            <name>routingConfigLabel</name>
+        </inputParameters>
+        <inputParameters>
+            <name>queueId</name>
+            <value>
+                <stringValue>00GO300000ByHHNMA3</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>agentId</name>
+        </inputParameters>
+        <inputParameters>
+            <name>agentLabel</name>
+        </inputParameters>
+        <inputParameters>
+            <name>queueLabel</name>
+            <value>
+                <stringValue>Workday Chat</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>skillOption</name>
+        </inputParameters>
+        <inputParameters>
+            <name>skillRequirementsResourceItem</name>
+        </inputParameters>
+        <inputParameters>
+            <name>botId</name>
+        </inputParameters>
+        <inputParameters>
+            <name>botLabel</name>
+        </inputParameters>
+        <inputParameters>
+            <name>externalConversationBotId</name>
+        </inputParameters>
+        <inputParameters>
+            <name>externalConversationBotLabel</name>
+        </inputParameters>
+        <inputParameters>
+            <name>copilotId</name>
+        </inputParameters>
+        <inputParameters>
+            <name>copilotLabel</name>
+        </inputParameters>
+        <inputParameters>
+            <name>agentforceEmployeeAgentId</name>
+        </inputParameters>
+        <inputParameters>
+            <name>agentforceEmployeeAgentLabel</name>
+        </inputParameters>
+        <nameSegment>routeWork</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
-        <name>Populate_Case_On_Messaging_Session_Record</name>
-        <label>Populate Case On Messaging Session Record</label>
+        <name>Populate_Contact_Id_Existing</name>
+        <label>Populate Contact Id (Existing)</label>
+        <locationX>1150</locationX>
+        <locationY>2078</locationY>
+        <assignmentItems>
+            <assignToReference>contactId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>contactRecord.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Populate_Messaging_Session_ContactId</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Populate_Contact_Id_New</name>
+        <label>Populate Contact Id (New)</label>
+        <locationX>1414</locationX>
+        <locationY>2186</locationY>
+        <assignmentItems>
+            <assignToReference>contactId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Create_Contact</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Populate_Messaging_Session_ContactId</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Populate_Messaging_Session_CaseId</name>
+        <label>Populate Messaging Session (CaseId)</label>
         <locationX>1282</locationX>
-        <locationY>1790</locationY>
+        <locationY>3284</locationY>
         <assignmentItems>
             <assignToReference>messagingSessionRecord.CaseId</assignToReference>
             <operator>Assign</operator>
@@ -254,60 +439,361 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Check_Messaging_Session</targetReference>
+            <targetReference>Update_Messaging_End_User</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>prepareMessagingSessionForContactPopulation</name>
-        <label>prepareMessagingSessionForContactPopulation</label>
+        <name>Populate_Messaging_Session_ContactId</name>
+        <label>Populate Messaging Session (ContactId)</label>
+        <locationX>1282</locationX>
+        <locationY>2468</locationY>
+        <assignmentItems>
+            <assignToReference>messagingSessionRecord.EndUserContactId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>contactId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Topic</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Populate_Messaging_Session_Id</name>
+        <label>Populate Messaging Session (Id)</label>
+        <locationX>1282</locationX>
+        <locationY>956</locationY>
+        <assignmentItems>
+            <assignToReference>messagingSessionRecord.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Select_Messaging_Channel</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Populate_Messaging_Session_Pre_Chat</name>
+        <label>Populate Messaging Session (Pre-Chat)</label>
+        <locationX>1282</locationX>
+        <locationY>3500</locationY>
+        <assignmentItems>
+            <assignToReference>messagingSessionRecord.ClientId__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>input_clientId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>messagingSessionRecord.Description__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>input_Description</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>messagingSessionRecord.Email__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>input_Email</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>messagingSessionRecord.FirstName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>input_FirstName</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>messagingSessionRecord.LastName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>input_LastName</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>messagingSessionRecord.Per_Id__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>input_perId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>messagingSessionRecord.Sub_Topic__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>input_SubTopic</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>messagingSessionRecord.Subject__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>input_Subject</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>messagingSessionRecord.Topic__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>input_Topic</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>messagingSessionRecord.Workday_Employee_ID__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>input_workdayId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Save_Messaging_Session</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Create_Case</name>
+        <label>Set Fault Element: Create_Case</label>
+        <locationX>2514</locationX>
+        <locationY>3284</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_Case</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Create_Contact</name>
+        <label>Set Fault Element: Create_Contact</label>
+        <locationX>1678</locationX>
+        <locationY>2186</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_Contact</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Create_Debug_Log</name>
+        <label>Set Fault Element: Create_Debug_Log</label>
+        <locationX>1106</locationX>
+        <locationY>350</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_Debug_Log</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Route_to_Queue_401k</name>
+        <label>Set Fault Element: Route_to_Queue_401k</label>
+        <locationX>666</locationX>
+        <locationY>4298</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Route_to_Queue_401k</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Route_to_Queue_Benefits</name>
+        <label>Set Fault Element: Route_to_Queue_Benefits</label>
+        <locationX>1194</locationX>
+        <locationY>4298</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Route_to_Queue_Benefits</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Route_to_Queue_Premier</name>
+        <label>Set Fault Element: Route_to_Queue_Premier</label>
+        <locationX>3570</locationX>
+        <locationY>5438</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Route_to_Queue_Premier</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Route_to_Queue_Workday</name>
+        <label>Set Fault Element: Route_to_Queue_Workday</label>
+        <locationX>1018</locationX>
+        <locationY>5048</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Route_to_Queue_Workday</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Save_Messaging_Session</name>
+        <label>Set Fault Element: Save_Messaging_Session</label>
+        <locationX>1986</locationX>
+        <locationY>3716</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Save_Messaging_Session</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Select_Contact_Per_Id</name>
+        <label>Set Fault Element: Select_Contact_Per_Id</label>
+        <locationX>1018</locationX>
+        <locationY>1688</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Select_Contact_Per_Id</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Select_Contact_Workday_Id</name>
+        <label>Set Fault Element: Select_Contact_Workday_Id</label>
+        <locationX>1546</locationX>
+        <locationY>1688</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Select_Contact_Workday_Id</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Select_Messaging_Channel</name>
+        <label>Set Fault Element: Select_Messaging_Channel</label>
+        <locationX>2778</locationX>
+        <locationY>1172</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Select_Messaging_Channel</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Select_Messaging_Session</name>
+        <label>Set Fault Element: Select_Messaging_Session</label>
+        <locationX>3306</locationX>
+        <locationY>848</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Select_Messaging_Session</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Update_Messaging_End_User</name>
+        <label>Set Fault Element: Update_Messaging_End_User</label>
+        <locationX>2250</locationX>
+        <locationY>3500</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Messaging_End_User</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Store_Messaging_Channel_Developer_Name</name>
+        <label>Store Messaging Channel Developer Name</label>
         <locationX>1150</locationX>
-        <locationY>782</locationY>
+        <locationY>1280</locationY>
         <assignmentItems>
-            <assignToReference>messagingSessionRecord.EndUserContactId</assignToReference>
+            <assignToReference>messagingChannelDeveloperName</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>getContactRecords.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>messagingSessionRecord.Id</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>recordId</elementReference>
+                <elementReference>Select_Messaging_Channel.DeveloperName</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Check_Topic</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>prepareMessagingSessionForNewContactPopulation</name>
-        <label>prepareMessagingSessionForNewContactPopulation</label>
-        <locationX>1414</locationX>
-        <locationY>890</locationY>
-        <assignmentItems>
-            <assignToReference>messagingSessionRecord.Id</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>messagingSessionRecord.EndUserContactId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>createContact</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Check_Topic</targetReference>
+            <targetReference>Check_Inputs_Per_Id_Workday_Id</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Translate_Benefits</name>
         <label>Translate: Benefits</label>
         <locationX>1150</locationX>
-        <locationY>1190</locationY>
+        <locationY>2684</locationY>
         <assignmentItems>
             <assignToReference>input_Topic</assignToReference>
             <operator>Assign</operator>
@@ -316,14 +802,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Check_Sub_Topic</targetReference>
+            <targetReference>Check_Sub_Topic_Translation</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Translate_Rollover</name>
         <label>Translate: Rollover</label>
         <locationX>1150</locationX>
-        <locationY>1490</locationY>
+        <locationY>2984</locationY>
         <assignmentItems>
             <assignToReference>input_Topic</assignToReference>
             <operator>Assign</operator>
@@ -335,13 +821,77 @@
             <targetReference>Create_Case</targetReference>
         </connector>
     </assignments>
+    <constants>
+        <name>isDebugEnabled</name>
+        <dataType>Boolean</dataType>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </constants>
+    <decisions>
+        <name>Check_Contact_Selection</name>
+        <label>Check Contact Selection</label>
+        <locationX>1282</locationX>
+        <locationY>1970</locationY>
+        <defaultConnector>
+            <targetReference>Create_Contact</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Contact_Found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>contactRecord</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>contactRecord</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Populate_Contact_Id_Existing</targetReference>
+            </connector>
+            <label>Contact Found</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Debug_Enabled</name>
+        <label>Check Debug Enabled</label>
+        <locationX>1106</locationX>
+        <locationY>134</locationY>
+        <defaultConnector>
+            <targetReference>Check_Input_Variables</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Debug_Enabled</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>isDebugEnabled</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Debug_Log</targetReference>
+            </connector>
+            <label>Is Debug Enabled</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Check_Input_Variables</name>
         <label>Check Input Variables</label>
-        <locationX>666</locationX>
-        <locationY>134</locationY>
+        <locationX>1106</locationX>
+        <locationY>632</locationY>
         <defaultConnector>
-            <targetReference>getMessagingSessionRecord</targetReference>
+            <targetReference>Select_Messaging_Session</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -390,41 +940,187 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Check_Record_Id_2</targetReference>
+                <targetReference>Check_Record_Id_Restart</targetReference>
             </connector>
             <label>Chat IS Restarted</label>
         </rules>
     </decisions>
     <decisions>
-        <name>Check_Messaging_Session</name>
-        <label>Check Messaging Session</label>
+        <name>Check_Inputs_Per_Id_Workday_Id</name>
+        <label>Check Inputs: Per Id / Workday Id</label>
         <locationX>1282</locationX>
-        <locationY>1898</locationY>
+        <locationY>1472</locationY>
         <defaultConnector>
-            <targetReference>updateMessagingEndUser</targetReference>
+            <targetReference>Check_Contact_Selection</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Has_Id</name>
+            <name>Has_Input_Per_Id</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>messagingSessionRecord.Id</leftValueReference>
-                <operator>IsNull</operator>
+                <leftValueReference>input_perId</leftValueReference>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>populateContactOnMessagingSession</targetReference>
+                <targetReference>Select_Contact_Per_Id</targetReference>
             </connector>
-            <label>Has Id</label>
+            <label>Has Input: Per Id</label>
+        </rules>
+        <rules>
+            <name>Has_Input_Workday_Id</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>input_workdayId</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Select_Contact_Workday_Id</targetReference>
+            </connector>
+            <label>Has Input: Workday Id</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Messaging_Channel</name>
+        <label>Check Messaging Channel</label>
+        <locationX>1282</locationX>
+        <locationY>1172</locationY>
+        <defaultConnector>
+            <targetReference>Check_Inputs_Per_Id_Workday_Id</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Found_Messaging_Channel</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Select_Messaging_Channel</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Store_Messaging_Channel_Developer_Name</targetReference>
+            </connector>
+            <label>Found Messaging Channel</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Messaging_Channel_Before_Sub_Topic</name>
+        <label>Check Messaging Channel (Before Sub-Topic)</label>
+        <locationX>930</locationX>
+        <locationY>3824</locationY>
+        <defaultConnector>
+            <targetReference>Check_Sub_Topic</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Workday_Chat</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>messagingChannelDeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Workday_Chat</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Route_to_Queue_Workday</targetReference>
+            </connector>
+            <label>Is Workday Chat</label>
+        </rules>
+        <rules>
+            <name>Is_Premier_Chat</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>messagingChannelDeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Messaging_for_Web</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Sub_Topic</targetReference>
+            </connector>
+            <label>Is Premier Chat</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Messaging_Channel_Routing</name>
+        <label>Check Messaging Channel (Routing)</label>
+        <locationX>1106</locationX>
+        <locationY>4832</locationY>
+        <defaultConnector>
+            <targetReference>Route_to_Queue_Premier</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Workday_Chat_Routing</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>messagingChannelDeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Workday_Chat</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Route_to_Queue_Workday</targetReference>
+            </connector>
+            <label>Is Workday Chat (Routing)</label>
+        </rules>
+        <rules>
+            <name>Is_Premier_Chat_Routing</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>messagingChannelDeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Messaging_for_Web</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Route_to_Queue_Premier</targetReference>
+            </connector>
+            <label>Is Premier Chat (Routing)</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Messaging_Session</name>
+        <label>Check Messaging Session</label>
+        <locationX>2162</locationX>
+        <locationY>848</locationY>
+        <defaultConnector>
+            <targetReference>Missing_Record_Fault_Handler</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Found_Messaging_Session</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Select_Messaging_Session</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Populate_Messaging_Session_Id</targetReference>
+            </connector>
+            <label>Found Messaging Session</label>
         </rules>
     </decisions>
     <decisions>
         <name>Check_Record_Id</name>
         <label>Check Record Id</label>
         <locationX>1282</locationX>
-        <locationY>2462</locationY>
+        <locationY>3716</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>Missing_Record_Id_Fault_Handler</targetReference>
@@ -448,16 +1144,16 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Check_subtopic_for_Case</targetReference>
+                <targetReference>Check_Messaging_Channel_Before_Sub_Topic</targetReference>
             </connector>
             <label>Has Record Id</label>
         </rules>
     </decisions>
     <decisions>
-        <name>Check_Record_Id_2</name>
-        <label>Check Record Id</label>
+        <name>Check_Record_Id_Restart</name>
+        <label>Check Record Id (Restart)</label>
         <locationX>50</locationX>
-        <locationY>242</locationY>
+        <locationY>740</locationY>
         <defaultConnector>
             <targetReference>Missing_Record_Id_Fault_Handler</targetReference>
         </defaultConnector>
@@ -480,7 +1176,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Route_to_Queue</targetReference>
+                <targetReference>Check_Messaging_Channel_Routing</targetReference>
             </connector>
             <label>Has Record Id</label>
         </rules>
@@ -488,35 +1184,10 @@
     <decisions>
         <name>Check_Sub_Topic</name>
         <label>Check Sub-Topic</label>
-        <locationX>1282</locationX>
-        <locationY>1382</locationY>
-        <defaultConnector>
-            <targetReference>Create_Case</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Dese_la_vuelta</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>input_Topic</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Dese la vuelta</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Translate_Rollover</targetReference>
-            </connector>
-            <label>Dese la vuelta</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Check_subtopic_for_Case</name>
-        <label>Check subtopic for Case</label>
         <locationX>930</locationX>
-        <locationY>2570</locationY>
+        <locationY>4082</locationY>
         <defaultConnector>
-            <targetReference>Route_to_Queue</targetReference>
+            <targetReference>Check_Messaging_Channel_Routing</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -614,7 +1285,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Route_to_401k_Queue</targetReference>
+                <targetReference>Route_to_Queue_401k</targetReference>
             </connector>
             <label>401k Case</label>
         </rules>
@@ -727,18 +1398,43 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Route_to_Benefits_Queue</targetReference>
+                <targetReference>Route_to_Queue_Benefits</targetReference>
             </connector>
             <label>Benefits</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Sub_Topic_Translation</name>
+        <label>Check Sub-Topic (Translation)</label>
+        <locationX>1282</locationX>
+        <locationY>2876</locationY>
+        <defaultConnector>
+            <targetReference>Create_Case</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Dese_la_vuelta</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>input_Topic</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Dese la vuelta</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Translate_Rollover</targetReference>
+            </connector>
+            <label>Dese la vuelta</label>
         </rules>
     </decisions>
     <decisions>
         <name>Check_Topic</name>
         <label>Check Topic</label>
         <locationX>1282</locationX>
-        <locationY>1082</locationY>
+        <locationY>2576</locationY>
         <defaultConnector>
-            <targetReference>Check_Sub_Topic</targetReference>
+            <targetReference>Check_Sub_Topic_Translation</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -755,31 +1451,6 @@
                 <targetReference>Translate_Benefits</targetReference>
             </connector>
             <label>Beneficios</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>isContactAvailable</name>
-        <label>isContactAvailable</label>
-        <locationX>1282</locationX>
-        <locationY>674</locationY>
-        <defaultConnector>
-            <targetReference>createContact</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>ContactExists</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>getContactRecords</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>prepareMessagingSessionForContactPopulation</targetReference>
-            </connector>
-            <label>ContactExists</label>
         </rules>
     </decisions>
     <description>5/21/2025 - Updated for Is_Contact_Center Field</description>
@@ -834,16 +1505,16 @@
     </processMetadataValues>
     <processType>RoutingFlow</processType>
     <recordCreates>
+        <description>PEO Case Record Type (Id=0124x0000019l99AAA)</description>
         <name>Create_Case</name>
         <label>Create Case</label>
         <locationX>1282</locationX>
-        <locationY>1682</locationY>
+        <locationY>3176</locationY>
         <connector>
-            <targetReference>Populate_Case_On_Messaging_Session_Record</targetReference>
+            <targetReference>Populate_Messaging_Session_CaseId</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+            <targetReference>Set_Fault_Element_Create_Case</targetReference>
         </faultConnector>
         <inputAssignments>
             <field>Chat_Sub_Topic__c</field>
@@ -872,7 +1543,7 @@
         <inputAssignments>
             <field>Is_Contact_Center__c</field>
             <value>
-                <elementReference>getMessagingSessionRecord.Is_Contact_Center__c</elementReference>
+                <elementReference>Select_Messaging_Session.Is_Contact_Center__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -884,7 +1555,7 @@
         <inputAssignments>
             <field>RecordTypeId</field>
             <value>
-                <elementReference>Get_Case_RecordType.Id</elementReference>
+                <stringValue>0124x0000019l99AAA</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -903,16 +1574,16 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordCreates>
-        <name>createContact</name>
-        <label>createContact</label>
+        <description>Resource Contact Record Type (Id=0124x0000019l9BAAQ)</description>
+        <name>Create_Contact</name>
+        <label>Create Contact</label>
         <locationX>1414</locationX>
-        <locationY>782</locationY>
+        <locationY>2078</locationY>
         <connector>
-            <targetReference>prepareMessagingSessionForNewContactPopulation</targetReference>
+            <targetReference>Populate_Contact_Id_New</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+            <targetReference>Set_Fault_Element_Create_Contact</targetReference>
         </faultConnector>
         <inputAssignments>
             <field>Email</field>
@@ -941,74 +1612,61 @@
         <inputAssignments>
             <field>RecordTypeId</field>
             <value>
-                <elementReference>Get_Contact_Record_Type.Id</elementReference>
+                <stringValue>0124x0000019l9BAAQ</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Workday_Employee_ID__c</field>
+            <value>
+                <elementReference>input_workdayId</elementReference>
             </value>
         </inputAssignments>
         <object>Contact</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
-    <recordLookups>
-        <name>Get_Case_RecordType</name>
-        <label>Get Case RecordType</label>
-        <locationX>1282</locationX>
-        <locationY>458</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+    <recordCreates>
+        <name>Create_Debug_Log</name>
+        <label>Create Debug Log</label>
+        <locationX>842</locationX>
+        <locationY>242</locationY>
         <connector>
-            <targetReference>Get_Contact_Record_Type</targetReference>
+            <targetReference>Check_Input_Variables</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+            <targetReference>Set_Fault_Element_Create_Debug_Log</targetReference>
         </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>DeveloperName</field>
-            <operator>EqualTo</operator>
+        <inputAssignments>
+            <field>NSP_Class__c</field>
             <value>
-                <stringValue>PEO</stringValue>
+                <stringValue>Messaging_Omni_Channel_Flow</stringValue>
             </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>RecordType</object>
+        </inputAssignments>
+        <inputAssignments>
+            <field>NSP_Description__c</field>
+            <value>
+                <elementReference>debugDescription</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>NSP_Method__c</field>
+            <value>
+                <stringValue>Create_Debug_Log</stringValue>
+            </value>
+        </inputAssignments>
+        <object>NSP_Error_Log__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
+    </recordCreates>
     <recordLookups>
-        <name>Get_Contact_Record_Type</name>
-        <label>Get Contact Record Type</label>
-        <locationX>1282</locationX>
-        <locationY>566</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <name>Select_Contact_Per_Id</name>
+        <label>Select Contact (Per Id)</label>
+        <locationX>754</locationX>
+        <locationY>1580</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>isContactAvailable</targetReference>
+            <targetReference>Check_Contact_Selection</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>DeveloperName</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Resource</stringValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>RecordType</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>getContactRecords</name>
-        <label>getContactRecords</label>
-        <locationX>1282</locationX>
-        <locationY>350</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Get_Case_RecordType</targetReference>
-        </connector>
-        <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+            <targetReference>Set_Fault_Element_Select_Contact_Per_Id</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1018,22 +1676,73 @@
                 <elementReference>input_perId</elementReference>
             </value>
         </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Contact</object>
+        <outputReference>contactRecord</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>NSP_Per_ID__c</queriedFields>
+        <queriedFields>Workday_Employee_ID__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Select_Contact_Workday_Id</name>
+        <label>Select Contact (Workday Id)</label>
+        <locationX>1282</locationX>
+        <locationY>1580</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Contact_Selection</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Select_Contact_Workday_Id</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Workday_Employee_ID__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>input_workdayId</elementReference>
+            </value>
+        </filters>
+        <object>Contact</object>
+        <outputReference>contactRecord</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>NSP_Per_ID__c</queriedFields>
+        <queriedFields>Workday_Employee_ID__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Select_Messaging_Channel</name>
+        <label>Select Messaging Channel</label>
+        <locationX>1282</locationX>
+        <locationY>1064</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Messaging_Channel</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Select_Messaging_Channel</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Select_Messaging_Session.MessagingChannelId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>MessagingChannel</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>getMessagingSessionRecord</name>
-        <label>getMessagingSessionRecord</label>
-        <locationX>1282</locationX>
-        <locationY>242</locationY>
+        <name>Select_Messaging_Session</name>
+        <label>Select Messaging Session</label>
+        <locationX>2162</locationX>
+        <locationY>740</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>getContactRecords</targetReference>
+            <targetReference>Check_Messaging_Session</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+            <targetReference>Set_Fault_Element_Select_Messaging_Session</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1048,37 +1757,35 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
-        <name>populateContactOnMessagingSession</name>
-        <label>populateContactOnMessagingSession</label>
-        <locationX>1018</locationX>
-        <locationY>2006</locationY>
+        <name>Save_Messaging_Session</name>
+        <label>Save Messaging Session</label>
+        <locationX>1282</locationX>
+        <locationY>3608</locationY>
         <connector>
-            <targetReference>updateMessagingEndUser</targetReference>
+            <targetReference>Check_Record_Id</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+            <targetReference>Set_Fault_Element_Save_Messaging_Session</targetReference>
         </faultConnector>
         <inputReference>messagingSessionRecord</inputReference>
     </recordUpdates>
     <recordUpdates>
-        <name>updateMessagingEndUser</name>
-        <label>updateMessagingEndUser</label>
+        <name>Update_Messaging_End_User</name>
+        <label>Update Messaging End User</label>
         <locationX>1282</locationX>
-        <locationY>2246</locationY>
+        <locationY>3392</locationY>
         <connector>
-            <targetReference>UpdateMessagingSessionWithPreChatInfo</targetReference>
+            <targetReference>Populate_Messaging_Session_Pre_Chat</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+            <targetReference>Set_Fault_Element_Update_Messaging_End_User</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>getMessagingSessionRecord.MessagingEndUserId</elementReference>
+                <elementReference>Select_Messaging_Session.MessagingEndUserId</elementReference>
             </value>
         </filters>
         <inputAssignments>
@@ -1095,105 +1802,61 @@
         </inputAssignments>
         <object>MessagingEndUser</object>
     </recordUpdates>
-    <recordUpdates>
-        <name>UpdateMessagingSessionWithPreChatInfo</name>
-        <label>UpdateMessagingSessionWithPreChatInfo</label>
-        <locationX>1282</locationX>
-        <locationY>2354</locationY>
-        <connector>
-            <targetReference>Check_Record_Id</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>ClientId__c</field>
-            <value>
-                <elementReference>input_clientId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Description__c</field>
-            <value>
-                <elementReference>input_Description</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Email__c</field>
-            <value>
-                <elementReference>input_Email</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>FirstName__c</field>
-            <value>
-                <elementReference>safeFirstName</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>LastName__c</field>
-            <value>
-                <elementReference>safeLastName</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Per_Id__c</field>
-            <value>
-                <elementReference>input_perId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Sub_Topic__c</field>
-            <value>
-                <elementReference>input_SubTopic</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Subject__c</field>
-            <value>
-                <elementReference>input_Subject</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Topic__c</field>
-            <value>
-                <elementReference>input_Topic</elementReference>
-            </value>
-        </inputAssignments>
-        <object>MessagingSession</object>
-    </recordUpdates>
     <start>
-        <locationX>540</locationX>
+        <locationX>980</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Check_Input_Variables</targetReference>
+            <targetReference>Check_Debug_Enabled</targetReference>
         </connector>
     </start>
     <status>Draft</status>
     <subflows>
         <name>Insperity_Fault_Handler_Subflow</name>
         <label>Insperity Fault Handler Subflow</label>
-        <locationX>1942</locationX>
-        <locationY>2462</locationY>
+        <locationX>1986</locationX>
+        <locationY>3824</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>varFaultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Messaging_Omni_Channel_Flow</stringValue>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <name>faultMessage</name>
             <value>
                 <elementReference>$Flow.FaultMessage</elementReference>
             </value>
         </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Missing_Record_Fault_Handler</name>
+        <label>Missing Record Fault Handler</label>
+        <locationX>3042</locationX>
+        <locationY>956</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
-            <name>triggeringFlow</name>
+            <name>faultElement</name>
+            <value>
+                <stringValue>Check_Messaging_Session</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
             <value>
                 <stringValue>Messaging_Omni_Channel_Flow</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <stringValue>Record not found (Id={!recordId}).</stringValue>
             </value>
         </inputAssignments>
     </subflows>
@@ -1201,21 +1864,59 @@
         <name>Missing_Record_Id_Fault_Handler</name>
         <label>Missing Record Id Fault Handler</label>
         <locationX>138</locationX>
-        <locationY>350</locationY>
+        <locationY>848</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <stringValue>Check_Record_Id_Restart</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Messaging_Omni_Channel_Flow</stringValue>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <name>faultMessage</name>
             <value>
                 <stringValue>Missing value for recordId parameter.</stringValue>
             </value>
         </inputAssignments>
-        <inputAssignments>
-            <name>triggeringFlow</name>
-            <value>
-                <stringValue>Messaging_Omni_Channel_Flow</stringValue>
-            </value>
-        </inputAssignments>
     </subflows>
+    <textTemplates>
+        <name>debugDescription</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>~ input_clientId: {!input_clientId}
+~ input_Description: {!input_Description}
+~ input_Email: {!input_Email}
+~ input_FirstName: {!input_FirstName}
+~ input_LastName: {!input_LastName}
+~ input_perId: {!input_perId}
+~ input_Subject: {!input_Subject}
+~ input_SubTopic: {!input_SubTopic}
+~ input_Topic: {!input_Topic}
+~ input_workdayId: {!input_workdayId}</text>
+    </textTemplates>
+    <variables>
+        <name>contactId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>contactRecord</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Contact</objectType>
+    </variables>
     <variables>
         <name>input_clientId</name>
         <dataType>String</dataType>
@@ -1280,6 +1981,23 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>input_workdayId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>messagingChannelDeveloperName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
+    <variables>
         <name>messagingSessionRecord</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
@@ -1293,5 +2011,15 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
     </variables>
 </Flow>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Group of Permission Sets to be granted to Workday Agent Supervisors.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Workday Agent Supervisor</label>
+    <permissionSets>Address_Book_Management</permissionSets>
+    <permissionSets>NVMStatsSF__View_NVM_Stats</permissionSets>
+    <permissionSets>Omni_Supervisor</permissionSets>
+    <permissionSets>Work_Summary_Visibility</permissionSets>
+    <permissionSets>force__EinsteinGPTWorkSummaries</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

@@ -39,7 +39,23 @@
         <fridayStartTime>07:00:00.000Z</fridayStartTime>
         <mondayEndTime>19:00:00.000Z</mondayEndTime>
         <mondayStartTime>07:00:00.000Z</mondayStartTime>
-        <name>Contact Center Chat</name>
+        <name>Workday Chat</name>
+        <thursdayEndTime>19:00:00.000Z</thursdayEndTime>
+        <thursdayStartTime>07:00:00.000Z</thursdayStartTime>
+        <timeZoneId>America/Chicago</timeZoneId>
+        <tuesdayEndTime>19:00:00.000Z</tuesdayEndTime>
+        <tuesdayStartTime>07:00:00.000Z</tuesdayStartTime>
+        <wednesdayEndTime>19:00:00.000Z</wednesdayEndTime>
+        <wednesdayStartTime>07:00:00.000Z</wednesdayStartTime>
+    </businessHours>
+    <businessHours>
+        <active>true</active>
+        <default>false</default>
+        <fridayEndTime>19:00:00.000Z</fridayEndTime>
+        <fridayStartTime>07:00:00.000Z</fridayStartTime>
+        <mondayEndTime>19:00:00.000Z</mondayEndTime>
+        <mondayStartTime>07:00:00.000Z</mondayStartTime>
+        <name>Premier Chat</name>
         <thursdayEndTime>19:00:00.000Z</thursdayEndTime>
         <thursdayStartTime>07:00:00.000Z</thursdayStartTime>
         <timeZoneId>America/Chicago</timeZoneId>
@@ -65,15 +81,10 @@
         <wednesdayStartTime>07:00:00.000Z</wednesdayStartTime>
     </businessHours>
     <holidays>
-        <activityDate>2023-12-25</activityDate>
-        <businessHours>Default</businessHours>
-        <isRecurring>false</isRecurring>
-        <name>Christmas</name>
-    </holidays>
-    <holidays>
         <businessHours>Contact Center</businessHours>
-        <businessHours>Contact Center Chat</businessHours>
         <businessHours>Contact Center Phone</businessHours>
+        <businessHours>Premier Chat</businessHours>
+        <businessHours>Workday Chat</businessHours>
         <description>Recurring every year on December 25th.</description>
         <isRecurring>true</isRecurring>
         <name>Christmas Day</name>
@@ -83,39 +94,29 @@
         <recurrenceType>RecursYearly</recurrenceType>
     </holidays>
     <holidays>
-        <activityDate>2023-04-07</activityDate>
-        <businessHours>Default</businessHours>
-        <isRecurring>false</isRecurring>
-        <name>Good Friday</name>
-    </holidays>
-    <holidays>
         <activityDate>2024-03-29</activityDate>
         <isRecurring>false</isRecurring>
-        <name>Good Friday</name>
+        <name>Good Friday 2024</name>
     </holidays>
     <holidays>
         <activityDate>2025-04-18</activityDate>
-        <businessHours>Contact Center</businessHours>
-        <businessHours>Contact Center Chat</businessHours>
-        <businessHours>Contact Center Phone</businessHours>
         <isRecurring>false</isRecurring>
         <name>Good Friday 2025</name>
     </holidays>
     <holidays>
-        <activityDate>2024-07-04</activityDate>
+        <activityDate>2026-04-03</activityDate>
+        <businessHours>Contact Center</businessHours>
+        <businessHours>Contact Center Phone</businessHours>
+        <businessHours>Premier Chat</businessHours>
+        <businessHours>Workday Chat</businessHours>
         <isRecurring>false</isRecurring>
-        <name>Independence Day</name>
-    </holidays>
-    <holidays>
-        <activityDate>2023-07-04</activityDate>
-        <businessHours>Default</businessHours>
-        <isRecurring>false</isRecurring>
-        <name>Independence Day</name>
+        <name>Good Friday 2026</name>
     </holidays>
     <holidays>
         <businessHours>Contact Center</businessHours>
-        <businessHours>Contact Center Chat</businessHours>
         <businessHours>Contact Center Phone</businessHours>
+        <businessHours>Premier Chat</businessHours>
+        <businessHours>Workday Chat</businessHours>
         <description>Recurring every year on July 4th.</description>
         <isRecurring>true</isRecurring>
         <name>Independence Day</name>
@@ -125,20 +126,10 @@
         <recurrenceType>RecursYearly</recurrenceType>
     </holidays>
     <holidays>
-        <activityDate>2024-09-02</activityDate>
-        <isRecurring>false</isRecurring>
-        <name>Labor Day</name>
-    </holidays>
-    <holidays>
-        <activityDate>2023-09-04</activityDate>
-        <businessHours>Default</businessHours>
-        <isRecurring>false</isRecurring>
-        <name>Labor Day</name>
-    </holidays>
-    <holidays>
         <businessHours>Contact Center</businessHours>
-        <businessHours>Contact Center Chat</businessHours>
         <businessHours>Contact Center Phone</businessHours>
+        <businessHours>Premier Chat</businessHours>
+        <businessHours>Workday Chat</businessHours>
         <description>Recurring every year on the first Monday of September.</description>
         <isRecurring>true</isRecurring>
         <name>Labor Day</name>
@@ -149,20 +140,10 @@
         <recurrenceType>RecursYearlyNth</recurrenceType>
     </holidays>
     <holidays>
-        <activityDate>2024-01-15</activityDate>
-        <isRecurring>false</isRecurring>
-        <name>Martin Luther King Day</name>
-    </holidays>
-    <holidays>
-        <activityDate>2023-01-16</activityDate>
-        <businessHours>Default</businessHours>
-        <isRecurring>false</isRecurring>
-        <name>Martin Luther King Day</name>
-    </holidays>
-    <holidays>
         <businessHours>Contact Center</businessHours>
-        <businessHours>Contact Center Chat</businessHours>
         <businessHours>Contact Center Phone</businessHours>
+        <businessHours>Premier Chat</businessHours>
+        <businessHours>Workday Chat</businessHours>
         <description>Recurring every year on the third Monday of January.</description>
         <isRecurring>true</isRecurring>
         <name>Martin Luther King Jr. Day</name>
@@ -173,14 +154,10 @@
         <recurrenceType>RecursYearlyNth</recurrenceType>
     </holidays>
     <holidays>
-        <activityDate>2024-05-27</activityDate>
-        <isRecurring>false</isRecurring>
-        <name>Memorial Day</name>
-    </holidays>
-    <holidays>
         <businessHours>Contact Center</businessHours>
-        <businessHours>Contact Center Chat</businessHours>
         <businessHours>Contact Center Phone</businessHours>
+        <businessHours>Premier Chat</businessHours>
+        <businessHours>Workday Chat</businessHours>
         <description>Recurring every year on the last Monday of May.</description>
         <isRecurring>true</isRecurring>
         <name>Memorial Day</name>
@@ -191,15 +168,10 @@
         <recurrenceType>RecursYearlyNth</recurrenceType>
     </holidays>
     <holidays>
-        <activityDate>2023-05-29</activityDate>
-        <businessHours>Default</businessHours>
-        <isRecurring>false</isRecurring>
-        <name>Memorial Day</name>
-    </holidays>
-    <holidays>
         <businessHours>Contact Center</businessHours>
-        <businessHours>Contact Center Chat</businessHours>
         <businessHours>Contact Center Phone</businessHours>
+        <businessHours>Premier Chat</businessHours>
+        <businessHours>Workday Chat</businessHours>
         <description>Recurring every year on January 1st.</description>
         <isRecurring>true</isRecurring>
         <name>New Year&apos;s Day</name>
@@ -209,21 +181,10 @@
         <recurrenceType>RecursYearly</recurrenceType>
     </holidays>
     <holidays>
-        <activityDate>2023-01-02</activityDate>
-        <businessHours>Default</businessHours>
-        <isRecurring>false</isRecurring>
-        <name>New Year&apos;s Day 2023</name>
-    </holidays>
-    <holidays>
-        <activityDate>2024-01-01</activityDate>
-        <businessHours>Default</businessHours>
-        <isRecurring>false</isRecurring>
-        <name>New Year&apos;s Day 2024</name>
-    </holidays>
-    <holidays>
         <businessHours>Contact Center</businessHours>
-        <businessHours>Contact Center Chat</businessHours>
         <businessHours>Contact Center Phone</businessHours>
+        <businessHours>Premier Chat</businessHours>
+        <businessHours>Workday Chat</businessHours>
         <description>Recurring every year on the fourth Thursday of November.</description>
         <isRecurring>true</isRecurring>
         <name>Thanksgiving Day</name>
@@ -235,8 +196,9 @@
     </holidays>
     <holidays>
         <businessHours>Contact Center</businessHours>
-        <businessHours>Contact Center Chat</businessHours>
         <businessHours>Contact Center Phone</businessHours>
+        <businessHours>Premier Chat</businessHours>
+        <businessHours>Workday Chat</businessHours>
         <description>Recurring every year on the fourth Friday of November.</description>
         <isRecurring>true</isRecurring>
         <name>Thanksgiving Day After</name>
@@ -245,17 +207,5 @@
         <recurrenceMonthOfYear>November</recurrenceMonthOfYear>
         <recurrenceStartDate>2025-11-28</recurrenceStartDate>
         <recurrenceType>RecursYearlyNth</recurrenceType>
-    </holidays>
-    <holidays>
-        <activityDate>2023-11-24</activityDate>
-        <businessHours>Default</businessHours>
-        <isRecurring>false</isRecurring>
-        <name>Thanksgiving Friday</name>
-    </holidays>
-    <holidays>
-        <activityDate>2023-11-23</activityDate>
-        <businessHours>Default</businessHours>
-        <isRecurring>false</isRecurring>
-        <name>Thanksgiving Thursday</name>
     </holidays>
 </BusinessHoursSettings>
