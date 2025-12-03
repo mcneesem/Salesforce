@@ -8,9 +8,6 @@
         <lightning-layout-item size="7">
           <div class="slds-m-around_medium">
 
-            <!-- <label class="slds-form-element__label" for="NSP_ReportPlace__c"> <span class="slds-required" >*</span> Where would you like us to place this report ?</label> -->
-
-
             <!--**********Corporate Review ******************-->
             <div if:true={isCorporateReview}>
               <div class="slds-p-vertical_medium ">
@@ -30,14 +27,20 @@
 
             <!-- ******************* Screen Four HRS Reivew Guideline *****************-->
             <div if:true={isHRSReview}>
-              <div style="padding-left:0.1rem;;position:relative">
+              <div style="padding-left:0.1rem;position:relative">
 
                 <div class="slds-text-body_regular slds-p-vertical_medium">HRS Review Guidelines
-                  <lightning-icon icon-name="utility:info" alternative-text="Success!" size="xx-small"
-                    style="padding-left:0.3rem" onclick={showMsg}> </lightning-icon>
+                  <lightning-icon icon-name="utility:info"
+                                  alternative-text="Success!"
+                                  size="xx-small"
+                                  style="padding-left:0.3rem" 
+                                  onclick={showMsg}
+                                  onkeypress={handleKeySonar}
+                                  onkeydown={handleKeySonar}
+                                  onkeyup={handleKeySonar}>
+                    </lightning-icon>
                 </div>
                 <div class="showMsg" style="display:none">
-                  <!-- slds-popover_tooltip  style="position:absolute;top:30px;left:30px;max-width:50rem!important;" -->
                   <div class="slds-popover slds-nubbin_top-left slds-popover_full-width" role="dialog"
                     style="position:absolute;top:52px;left:118px;">
                     <div id="popover-body-id" class="slds-popover__body">
@@ -131,11 +134,11 @@
             <template if:true={enableInsperityPrepared}>
               <lightning-layout multiple-rows=true>
                 <lightning-layout-item size="12">
-                  <lightning-input-field class="slds-p-vertical_medium" id="Is_No_Rehire_Clause_Required__c"
-                    field-name="Is_No_Rehire_Clause_Required__c" onchange={radioOnChange}>
+                  <lightning-input-field class="slds-p-vertical_medium" id="Is_Rehire_Clause_Required__c"
+                    field-name="Is_Rehire_Clause_Required__c" onchange={radioOnChange}>
                   </lightning-input-field>
                   <div
-                    class="slds-text-color_error slds-form-element__label  slds-p-vertical_medium Is_No_Rehire_Clause_Required__c"
+                    class="slds-text-color_error slds-form-element__label  slds-p-vertical_medium Is_Rehire_Clause_Required__c"
                     style="display:none">
                     <div class="California">
                       Reminder: This language will not be included if the Employees's Work State is California or
