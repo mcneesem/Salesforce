@@ -282,7 +282,10 @@ public with sharing class NSP_TerminationFormTriggerHelper {
                             );
                         }
                         if (clientSegmentAsset != null && clientSegmentAsset.containsKey(accountId)){
-                            oTerminationForm.NSP_Segment_Type__c = clientSegmentAsset.get(accountId);
+                            oTerminationForm.NSP_Segment_Type__c = SchemaController.safeText(
+                                clientSegmentAsset.get( accountId ) ,
+                                sObjectType.NSP_Termination_Form__c.Fields.NSP_Segment_Type__c
+                            );
                         }
                         if (accountSubClientsMap != null && accountSubClientsMap.containsKey(accountId)){
                             NSP_Sub_Client__c accountSubClient = accountSubClientsMap.get(accountId);
