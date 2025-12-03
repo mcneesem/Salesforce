@@ -87,23 +87,23 @@ public with sharing class NSP_SubClientAssetSyncJob implements Database.Batchabl
             if ( subClients!= null && !subClients.isEmpty() ) {
                 Database.SaveResult[] subClientResults = Database.update( subClients, false );
                 NSP_ErrorLogHandler.logResults(
-                    NSP_SubClientAssetSyncJob.class.getName() ,
-                    'updateRecords:Asset' ,
+                    NSP_SubClientAssetSyncJob.class.getName(),
+                    'updateRecords:NSP_Sub_Client__c',
                     subClientResults
                 );
             }
             if ( assets != null && !assets.isEmpty() ) {
                 Database.SaveResult[] assetResults = Database.update( assets, false );
                 NSP_ErrorLogHandler.logResults(
-                    NSP_SubClientAssetSyncJob.class.getName() ,
-                    'updateRecords:NSP_Sub_Client__c' ,
+                    NSP_SubClientAssetSyncJob.class.getName(),
+                    'updateRecords:Asset',
                     assetResults
                 );
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
-                NSP_SubClientAssetSyncJob.class.getName() ,
-                'updateRecords' ,
+                NSP_SubClientAssetSyncJob.class.getName(),
+                'updateRecords',
                 e
             );
         }
@@ -141,17 +141,7 @@ public with sharing class NSP_SubClientAssetSyncJob implements Database.Batchabl
         Map<Id, NSP_Sub_Client__c> resultMap = new Map<Id, NSP_Sub_Client__c>();
         if( ( subClients != null ) && !subClients.isEmpty() ) {
             for ( NSP_Sub_Client__c subClient : subClients ) {
-                Boolean unionFlag = false;
-                if( ( subClient.NSP_Sub_Client_Contacts__r != null ) && !subClient.NSP_Sub_Client_Contacts__r.isEmpty() ) {
-                    for ( NSP_Sub_Client_Contact__c contact : subClient.NSP_Sub_Client_Contacts__r ) {
-                        if ( contact.NSP_Paid_Non_Paid__c == 'Paid WSEE' && 
-                            contact.NSP_Employee_Status__c != 'TERMINATED' && 
-                            contact.NSP_Union_Employee__c == true ) {
-                                unionFlag = true;
-                                break;
-                            }
-                    }
-                }
+                Boolean unionFlag = NSP_SubClientAssetSyncJob.computeSubClientContacts( subClient );
                 if ( subClient.NSP_Union_Employees__c != unionFlag ) {
                     subClient.NSP_Union_Employees__c = unionFlag;
                     resultMap.put( subClient.Id, subClient );
@@ -160,13 +150,32 @@ public with sharing class NSP_SubClientAssetSyncJob implements Database.Batchabl
         }
         return resultMap;
     }
+
+    private static Boolean computeSubClientContacts( NSP_Sub_Client__c subClient ) {
+        String employmentStatus = 'TERMINATED';
+        String paidNonPaidValue = 'Paid WSEE';
+
+        Boolean returnValue = false;
+        if( ( subClient.NSP_Sub_Client_Contacts__r != null ) && !subClient.NSP_Sub_Client_Contacts__r.isEmpty() ) {
+             for ( NSP_Sub_Client_Contact__c contact : subClient.NSP_Sub_Client_Contacts__r ) {
+                if ( (contact.NSP_Paid_Non_Paid__c == paidNonPaidValue) && 
+                (contact.NSP_Employee_Status__c != employmentStatus) && 
+                (contact.NSP_Union_Employee__c == true ) ) {
+                    returnValue = true;
+                    
+                    break;
+                 }
+            }
+        }
+
+        return returnValue;
+    }
     
     private static Set<Id> getAssetIds( List<NSP_Sub_Client__c> subClients, Map<Id, NSP_Sub_Client__c> subClientMap ) {
         Set<Id> assetIds = new Set<Id>();
-        
-        if( ( subClients != null ) && !subClients.isEmpty() ) {
+        if( ( subClients != null ) && !subClients.isEmpty() && ( subClientMap != null ) && !subClientMap.isEmpty() ) {
             for ( NSP_Sub_Client__c subClient : subClients ) {
-                if ( subClientMap!= null && subClientMap.containsKey(subClient.Id) && subClient.NSP_Asset__c != null ) {
+                if ( subClientMap.containsKey(subClient.Id) && subClient.NSP_Asset__c != null ) {
                     assetIds.add( subClient.NSP_Asset__c );
                 }
             }
@@ -200,28 +209,43 @@ public with sharing class NSP_SubClientAssetSyncJob implements Database.Batchabl
     }
     
     private static List<Asset> setUnionFlagOnAssets( List<Asset> assets, Map<Id, NSP_Sub_Client__c> subClientMap ) {
-        
         List<Asset> updatedAssets = new List<Asset>();
-        if( (assets != null) && (!assets.isEmpty()) && (subClientMap != null) ) {
+        if ( (assets != null) && (!assets.isEmpty()) && (subClientMap != null) && !subClientMap.isEmpty() ) {
             for ( Asset assetRec : assets ) {
-                Boolean unionFlag = false;
-                
-                for (NSP_Sub_Client__c subClient : assetRec.Sub_Clients__r) {
-                    Boolean isUnionEmployee = subClient.NSP_Union_Employees__c;
-                    Boolean existsInMap = ( (subClientMap.containsKey(subClient.Id)) && (subClientMap.get( subClient.Id ) != null) );
-                    Boolean mapHasUnionEmployee = existsInMap && subClientMap.get(subClient.Id).NSP_Union_Employees__c;
-                    
-                    if ((existsInMap && mapHasUnionEmployee) || (!existsInMap && isUnionEmployee)) {
-                        unionFlag = true;
-                        break;
-                    }
-                }
-                if ( assetRec.NSP_Union_Employees__c != unionFlag ) {
-                    assetRec.NSP_Union_Employees__c = unionFlag;
-                    updatedAssets.add( assetRec );
+                Boolean computedUnionFlag = NSP_SubClientAssetSyncJob.computeAssetUnionFlag( assetRec, subClientMap );
+                if ( assetRec.NSP_Union_Employees__c != computedUnionFlag ) {
+                    assetRec.NSP_Union_Employees__c = computedUnionFlag;
+                    updatedAssets.add(assetRec);
                 }
             }
         }
         return updatedAssets;
+    }
+    
+    private static Boolean computeAssetUnionFlag( Asset assetRec, Map<Id, NSP_Sub_Client__c> subClientMap ) {
+        Boolean returnValue = false;
+        if ( (assetRec != null) && (assetRec.Sub_Clients__r != null) && (!assetRec.Sub_Clients__r.isEmpty()) ) {
+            for ( NSP_Sub_Client__c subClient : assetRec.Sub_Clients__r ) {
+                if ( NSP_SubClientAssetSyncJob.subClientContributesUnion(subClient, subClientMap) ) {
+                    returnValue =  true;
+                    break;
+                }
+            }
+        }
+        
+        return returnValue;
+    }
+    
+    private static Boolean subClientContributesUnion( NSP_Sub_Client__c subClient, Map<Id, NSP_Sub_Client__c> subClientMap ) {
+        Boolean returnValue = false;
+        if ( subClient != null ) {
+            Boolean inMap = subClientMap.containsKey(subClient.Id) && subClientMap.get(subClient.Id) != null;
+            if ( inMap ) {
+                returnValue = subClientMap.get(subClient.Id).NSP_Union_Employees__c;
+            } else {
+                returnValue = subClient.NSP_Union_Employees__c;
+            }
+        }
+        return returnValue;
     }
 }
