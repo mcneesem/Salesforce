@@ -73,7 +73,7 @@ export default class CaseCatSubcatDetail extends LightningElement {
                 this.recordTypeMap = new Map();
                 if(!this.selectedAllRecordTypeMap.has(element.NSP_Category__c)){
                     this.selectedAllRecordTypeMap.set(element.NSP_Category__c, this.recordTypeMap.get(element.NSP_RecordType__c));
-                } 
+                }
                 if(element.NSP_UserTitle__c == 'BPS User'){
                     this.isBPSUser = true;
                 } else {
@@ -170,7 +170,7 @@ export default class CaseCatSubcatDetail extends LightningElement {
                 }),
             );
         });
-    
+
     }
 
     dispatchSelectionUpdate() {
@@ -221,17 +221,17 @@ export default class CaseCatSubcatDetail extends LightningElement {
     handleCategoryChange(value) {
         this.selectedCategory = value;
         this.subCategoryOptions = this.createOptions(this.categoryWrapper.mCatToSubCatogories[value]);
-        this.resetSelection(['Detail', 'Version']);
+        this.resetSelection(['SubCategory','Detail', 'Version']);
         this.showAllSubCategoryButton = !this.isBPSUser && this.subCategoryOptions.length > 0;
-        this.dispatchEvent(new CustomEvent('catsubcatselect', { 
-            detail: { type: 'Category', value: this.selectedCategory } 
+        this.dispatchEvent(new CustomEvent('catsubcatselect', {
+            detail: { type: 'Category', value: this.selectedCategory }
         }));
     }
 
     handleSubCategoryChange(value) {
         this.selectedSubCategory = value;
-        this.dispatchEvent(new CustomEvent('catsubcatselect', { 
-            detail: { type: 'SubCategory', value } 
+        this.dispatchEvent(new CustomEvent('catsubcatselect', {
+            detail: { type: 'SubCategory', value }
         }));
         this.detailOptions = this.createOptions(this.categoryWrapper.mCatSubToDetails[`${this.selectedCategory}-${value}`]);
         this.resetSelection(['Detail', 'Version']);
@@ -255,6 +255,9 @@ export default class CaseCatSubcatDetail extends LightningElement {
     }
 
     resetSelection(fields) {
+        if (fields.includes('SubCategory')) {
+            this.selectedSubCategory = null;
+        }
         if (fields.includes('Detail')) {
             this.showDetail = false;
             this.selectedDetail = null;
@@ -277,10 +280,10 @@ export default class CaseCatSubcatDetail extends LightningElement {
             category:this.selectedCategory,
             subCategory: this.selectedSubCategory,
             accountId: this.accountID}).
-        then((result) => {  
+        then((result) => {
             if(result != null || (result == null && this.selectedCategory != undefined) ){
                 this.assetId = result != null && result.length >= 1 ? result[0].Id : '';
-            }  
+            }
             this.error = undefined;
         })
         .catch((error) => {
@@ -331,7 +334,7 @@ export default class CaseCatSubcatDetail extends LightningElement {
             }
             this.subCategoryOptions = this.createOptions(response);
         }).catch((error) => {
-            
+
         })
     }
 
@@ -435,7 +438,7 @@ export default class CaseCatSubcatDetail extends LightningElement {
                 this.versionOptions = this.createOptions(result.mCatSubDetailToVersions[this.oCase.NSP_Category__c + '-' + this.oCase.NSP_SubCategory__c + '-' + this.oCase.NSP_Detail__c]);
             }
             this.categoryWrapper = result;
-            
+
         }).catch((error) => {
         })
     }
@@ -462,7 +465,7 @@ export default class CaseCatSubcatDetail extends LightningElement {
         });
         this.dispatchEvent(confidentailevent);
     }
-    
+
     renderedCallback() {
         if (this.shouldRenderCallback()) {
             this.renderCallOnce = true;
