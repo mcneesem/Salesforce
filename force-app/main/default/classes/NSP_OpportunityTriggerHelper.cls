@@ -640,7 +640,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
         if ( ( newOpportunity.StageName != oldOpportunity.StageName )
             && newOpportunity.StageName.equals( NSP_SalesConstants.CLOSED_WON )
             && !productCodeList.contains( newOpportunity.NSP_PrimaryProduct__c )
-            )
+            && newOpportunity.NSP_TransactionType__c != NSP_SalesConstants.TRANSACTION_TYPE_TERMINATION )
         {
             closedWonOpptyList.add( newOpportunity );
         }
