@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Set on Opportunity the field Is_Services_Opportunity to true when owner has this permission</description>
+    <isLicensed>false</isLicensed>
+    <label>Services Opportunity Owner</label>
+</CustomPermission>

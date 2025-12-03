@@ -3,13 +3,13 @@
     <fullName>NSP_Lost_Reason__c</fullName>
     <description>Field used to track lost reason</description>
     <externalId>false</externalId>
-    <label>Reason Lost</label>
+    <label>Primary Reason Lost</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
     <type>Picklist</type>
     <valueSet>
-        <controllingField>StageName</controllingField>
+        <controllingField>Closed_Lost_Group__c</controllingField>
         <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
@@ -19,9 +19,14 @@
                 <label>Abandoned</label>
             </value>
             <value>
-                <fullName>Backout</fullName>
+                <fullName>Admin Error</fullName>
                 <default>false</default>
-                <label>Backout</label>
+                <label>Admin Error</label>
+            </value>
+            <value>
+                <fullName>Benefits</fullName>
+                <default>false</default>
+                <label>Benefits</label>
             </value>
             <value>
                 <fullName>Better Fit for Workday</fullName>
@@ -29,14 +34,9 @@
                 <label>Better Fit for Workday</label>
             </value>
             <value>
-                <fullName>Business Profile Expired</fullName>
+                <fullName>BPA lost prospect</fullName>
                 <default>false</default>
-                <label>Business Profile Expired</label>
-            </value>
-            <value>
-                <fullName>Client</fullName>
-                <default>false</default>
-                <label>Client</label>
+                <label>BPA lost prospect</label>
             </value>
             <value>
                 <fullName>Closed by System</fullName>
@@ -44,9 +44,24 @@
                 <label>Closed by System</label>
             </value>
             <value>
-                <fullName>Competitor</fullName>
+                <fullName>Competition</fullName>
                 <default>false</default>
-                <label>Competitor</label>
+                <label>Competition</label>
+            </value>
+            <value>
+                <fullName>Compliance Issues</fullName>
+                <default>false</default>
+                <label>Compliance Issues</label>
+            </value>
+            <value>
+                <fullName>Concerned about change management</fullName>
+                <default>false</default>
+                <label>Concerned about change management</label>
+            </value>
+            <value>
+                <fullName>Cost</fullName>
+                <default>false</default>
+                <label>Cost</label>
             </value>
             <value>
                 <fullName>Declined</fullName>
@@ -54,29 +69,44 @@
                 <label>Declined</label>
             </value>
             <value>
-                <fullName>Default Won</fullName>
+                <fullName>Doesn&apos;t like NSPK Funds</fullName>
                 <default>false</default>
-                <label>Default Won</label>
+                <label>Doesn&apos;t like NSPK Funds</label>
             </value>
             <value>
-                <fullName>Features</fullName>
+                <fullName>Duplicate</fullName>
                 <default>false</default>
-                <label>Features</label>
+                <label>Duplicate</label>
             </value>
             <value>
-                <fullName>Global Pandemic</fullName>
+                <fullName>General</fullName>
                 <default>false</default>
-                <label>Global Pandemic</label>
+                <label>General</label>
             </value>
             <value>
-                <fullName>Implementation</fullName>
+                <fullName>Happy with Current Vendor</fullName>
                 <default>false</default>
-                <label>Implementation</label>
+                <label>Happy with Current Vendor</label>
             </value>
             <value>
-                <fullName>Legacy Client</fullName>
+                <fullName>Has other Outside Plans</fullName>
                 <default>false</default>
-                <label>Legacy Client</label>
+                <label>Has other Outside Plans</label>
+            </value>
+            <value>
+                <fullName>Insufficient features/capabilities</fullName>
+                <default>false</default>
+                <label>Insufficient features/capabilities</label>
+            </value>
+            <value>
+                <fullName>Kept in-house</fullName>
+                <default>false</default>
+                <label>Kept in-house</label>
+            </value>
+            <value>
+                <fullName>Liquidation Restrictions - frozen funds</fullName>
+                <default>false</default>
+                <label>Liquidation Restrictions - frozen funds</label>
             </value>
             <value>
                 <fullName>Lost to Competitor</fullName>
@@ -84,24 +114,19 @@
                 <label>Lost to Competitor</label>
             </value>
             <value>
-                <fullName>Need Alternative to UHC</fullName>
+                <fullName>Match Formula Restrictions</fullName>
                 <default>false</default>
-                <label>Need Alternative to UHC</label>
+                <label>Match Formula Restrictions</label>
             </value>
             <value>
-                <fullName>No Budget / Lost Funding</fullName>
+                <fullName>NCS</fullName>
                 <default>false</default>
-                <label>No Budget / Lost Funding</label>
+                <label>NCS</label>
             </value>
             <value>
-                <fullName>No Contact</fullName>
+                <fullName>New Comparability PS</fullName>
                 <default>false</default>
-                <label>No Contact</label>
-            </value>
-            <value>
-                <fullName>No Decision</fullName>
-                <default>false</default>
-                <label>No Decision</label>
+                <label>New Comparability PS</label>
             </value>
             <value>
                 <fullName>No Decision / Non-Responsive</fullName>
@@ -109,24 +134,19 @@
                 <label>No Decision / Non-Responsive</label>
             </value>
             <value>
-                <fullName>Not a good fit</fullName>
+                <fullName>No Interest from Employees</fullName>
                 <default>false</default>
-                <label>Not a good fit</label>
+                <label>No Interest from Employees</label>
+            </value>
+            <value>
+                <fullName>Not a good time to make the change</fullName>
+                <default>false</default>
+                <label>Not a good time to make the change</label>
             </value>
             <value>
                 <fullName>Not Approved</fullName>
                 <default>false</default>
                 <label>Not Approved</label>
-            </value>
-            <value>
-                <fullName>Not Interested</fullName>
-                <default>false</default>
-                <label>Not Interested</label>
-            </value>
-            <value>
-                <fullName>Not Qualified - Quickbooks</fullName>
-                <default>false</default>
-                <label>Not Qualified - Quickbooks</label>
             </value>
             <value>
                 <fullName>Other</fullName>
@@ -139,9 +159,14 @@
                 <label>Out of Business</label>
             </value>
             <value>
-                <fullName>Price</fullName>
+                <fullName>Outside Control Group</fullName>
                 <default>false</default>
-                <label>Price</label>
+                <label>Outside Control Group</label>
+            </value>
+            <value>
+                <fullName>Outside Employees</fullName>
+                <default>false</default>
+                <label>Outside Employees</label>
             </value>
             <value>
                 <fullName>Price/Cost</fullName>
@@ -149,29 +174,39 @@
                 <label>Price/Cost</label>
             </value>
             <value>
-                <fullName>Prohibited Industry</fullName>
+                <fullName>Protected Benefit(s)</fullName>
                 <default>false</default>
-                <label>Prohibited Industry</label>
+                <label>Protected Benefit(s)</label>
             </value>
             <value>
-                <fullName>Regen</fullName>
+                <fullName>Retirement Services</fullName>
                 <default>false</default>
-                <label>Regen</label>
+                <label>Retirement Services</label>
             </value>
             <value>
-                <fullName>Satisfied with Current</fullName>
+                <fullName>Safe Harbor Annual/QACA</fullName>
                 <default>false</default>
-                <label>Satisfied with Current</label>
+                <label>Safe Harbor Annual/QACA</label>
             </value>
             <value>
-                <fullName>Satisfied with Current Process</fullName>
+                <fullName>Sales Disqualified</fullName>
                 <default>false</default>
-                <label>Satisfied with Current Process</label>
+                <label>Sales Disqualified</label>
             </value>
             <value>
-                <fullName>Stayed with Current Insperity Solution</fullName>
+                <fullName>Setup Fee(s)</fullName>
                 <default>false</default>
-                <label>Stayed with Current Insperity Solution</label>
+                <label>Setup Fee(s)</label>
+            </value>
+            <value>
+                <fullName>Solution Too Robust</fullName>
+                <default>false</default>
+                <label>Solution Too Robust</label>
+            </value>
+            <value>
+                <fullName>Testing Concerns</fullName>
+                <default>false</default>
+                <label>Testing Concerns</label>
             </value>
             <value>
                 <fullName>Timing</fullName>
@@ -179,9 +214,9 @@
                 <label>Timing</label>
             </value>
             <value>
-                <fullName>Transferred to MidMarket</fullName>
+                <fullName>Union Bid</fullName>
                 <default>false</default>
-                <label>Transferred to MidMarket</label>
+                <label>Union Bid</label>
             </value>
             <value>
                 <fullName>Unresponsive</fullName>
@@ -189,9 +224,152 @@
                 <label>Unresponsive</label>
             </value>
             <value>
-                <fullName>WO Competitor</fullName>
+                <fullName>Unresponsive/Not engaged</fullName>
                 <default>false</default>
-                <label>WO Competitor</label>
+                <label>Unresponsive/Not engaged</label>
+            </value>
+            <value>
+                <fullName>Vesting</fullName>
+                <default>false</default>
+                <label>Vesting</label>
+            </value>
+            <value>
+                <fullName>Backout</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Backout</label>
+            </value>
+            <value>
+                <fullName>Business Profile Expired</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Business Profile Expired</label>
+            </value>
+            <value>
+                <fullName>Client</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Client</label>
+            </value>
+            <value>
+                <fullName>Competitor</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Competitor</label>
+            </value>
+            <value>
+                <fullName>Default Won</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Default Won</label>
+            </value>
+            <value>
+                <fullName>Features</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Features</label>
+            </value>
+            <value>
+                <fullName>Global Pandemic</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Global Pandemic</label>
+            </value>
+            <value>
+                <fullName>Implementation</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Implementation</label>
+            </value>
+            <value>
+                <fullName>Legacy Client</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Legacy Client</label>
+            </value>
+            <value>
+                <fullName>Need Alternative to UHC</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Need Alternative to UHC</label>
+            </value>
+            <value>
+                <fullName>No Budget / Lost Funding</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>No Budget / Lost Funding</label>
+            </value>
+            <value>
+                <fullName>No Contact</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>No Contact</label>
+            </value>
+            <value>
+                <fullName>No Decision</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>No Decision</label>
+            </value>
+            <value>
+                <fullName>Not Interested</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Not Interested</label>
+            </value>
+            <value>
+                <fullName>Not Qualified - Quickbooks</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Not Qualified - Quickbooks</label>
+            </value>
+            <value>
+                <fullName>Not a good fit</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Not a good fit</label>
+            </value>
+            <value>
+                <fullName>Price</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Price</label>
+            </value>
+            <value>
+                <fullName>Prohibited Industry</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Prohibited Industry</label>
+            </value>
+            <value>
+                <fullName>Regen</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Regen</label>
+            </value>
+            <value>
+                <fullName>Satisfied with Current</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Satisfied with Current</label>
+            </value>
+            <value>
+                <fullName>Satisfied with Current Process</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Satisfied with Current Process</label>
+            </value>
+            <value>
+                <fullName>Stayed with Current Insperity Solution</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Stayed with Current Insperity Solution</label>
+            </value>
+            <value>
+                <fullName>Transferred to MidMarket</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Transferred to MidMarket</label>
             </value>
             <value>
                 <fullName>UHC Media Coverage Concern</fullName>
@@ -199,183 +377,200 @@
                 <isActive>false</isActive>
                 <label>UHC Media Coverage Concern</label>
             </value>
+            <value>
+                <fullName>WO Competitor</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>WO Competitor</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
-            <controllingFieldValue>Closed Lost - Outgoing</controllingFieldValue>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
-            <valueName>Abandoned</valueName>
+            <controllingFieldValue>Sales</controllingFieldValue>
+            <controllingFieldValue>Outgoing</controllingFieldValue>
+            <valueName>Benefits</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Closed Lost - Outgoing</controllingFieldValue>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
-            <valueName>Backout</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Closed Lost - Outgoing</controllingFieldValue>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
-            <valueName>Business Profile Expired</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Closed Lost - Outgoing</controllingFieldValue>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
-            <valueName>Client</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Closed Lost - Outgoing</controllingFieldValue>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
-            <valueName>Closed by System</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Closed Lost - Outgoing</controllingFieldValue>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
-            <valueName>Competitor</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Closed Lost - Outgoing</controllingFieldValue>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
-            <valueName>Declined</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Closed Lost - Outgoing</controllingFieldValue>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
-            <valueName>Default Won</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Closed Lost - Outgoing</controllingFieldValue>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
-            <valueName>Features</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Closed Lost - Outgoing</controllingFieldValue>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
-            <valueName>Global Pandemic</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Closed Lost - Outgoing</controllingFieldValue>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
-            <valueName>Implementation</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Closed Lost - Outgoing</controllingFieldValue>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
-            <valueName>Legacy Client</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Closed Lost - Outgoing</controllingFieldValue>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
-            <valueName>Lost to Competitor</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Closed Lost - Outgoing</controllingFieldValue>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
-            <valueName>No Budget / Lost Funding</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Closed Lost - Outgoing</controllingFieldValue>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
-            <valueName>No Contact</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Closed Lost - Outgoing</controllingFieldValue>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
-            <valueName>No Decision</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Closed Lost - Outgoing</controllingFieldValue>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
-            <valueName>No Decision / Non-Responsive</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Closed Lost - Outgoing</controllingFieldValue>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
-            <valueName>Not a good fit</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Closed Lost - Outgoing</controllingFieldValue>
-            <valueName>Not Approved</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Closed Lost - Outgoing</controllingFieldValue>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
-            <valueName>Not Interested</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Closed Lost - Outgoing</controllingFieldValue>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
-            <valueName>Not Qualified - Quickbooks</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Closed Lost - Outgoing</controllingFieldValue>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
-            <valueName>Other</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Closed Lost - Outgoing</controllingFieldValue>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
-            <valueName>Out of Business</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Closed Lost - Outgoing</controllingFieldValue>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
-            <valueName>Price</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Closed Lost - Outgoing</controllingFieldValue>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
-            <valueName>Price/Cost</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Closed Lost - Outgoing</controllingFieldValue>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
-            <valueName>Prohibited Industry</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Closed Lost - Outgoing</controllingFieldValue>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
-            <valueName>Regen</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Closed Lost - Outgoing</controllingFieldValue>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
-            <valueName>Satisfied with Current</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Closed Lost - Outgoing</controllingFieldValue>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
-            <valueName>Satisfied with Current Process</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Closed Lost - Outgoing</controllingFieldValue>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
-            <valueName>Stayed with Current Insperity Solution</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Closed Lost - Outgoing</controllingFieldValue>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
-            <valueName>Timing</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Closed Lost - Outgoing</controllingFieldValue>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
-            <valueName>Transferred to MidMarket</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Closed Lost - Outgoing</controllingFieldValue>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
-            <valueName>Unresponsive</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Closed Lost - Outgoing</controllingFieldValue>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
-            <valueName>WO Competitor</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <controllingFieldValue>Sales</controllingFieldValue>
             <valueName>Better Fit for Workday</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Closed Lost</controllingFieldValue>
-            <valueName>Need Alternative to UHC</valueName>
+            <controllingFieldValue>Sales</controllingFieldValue>
+            <controllingFieldValue>Outgoing</controllingFieldValue>
+            <valueName>Concerned about change management</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales</controllingFieldValue>
+            <controllingFieldValue>Outgoing</controllingFieldValue>
+            <valueName>General</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales</controllingFieldValue>
+            <controllingFieldValue>Outgoing</controllingFieldValue>
+            <valueName>Insufficient features/capabilities</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales</controllingFieldValue>
+            <controllingFieldValue>Outgoing</controllingFieldValue>
+            <valueName>Kept in-house</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales</controllingFieldValue>
+            <controllingFieldValue>Outgoing</controllingFieldValue>
+            <valueName>Lost to Competitor</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales</controllingFieldValue>
+            <controllingFieldValue>Outgoing</controllingFieldValue>
+            <valueName>Not a good time to make the change</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales</controllingFieldValue>
+            <controllingFieldValue>Outgoing</controllingFieldValue>
+            <valueName>Out of Business</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales</controllingFieldValue>
+            <controllingFieldValue>Service</controllingFieldValue>
+            <controllingFieldValue>Outgoing</controllingFieldValue>
+            <valueName>Price/Cost</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales</controllingFieldValue>
+            <controllingFieldValue>Outgoing</controllingFieldValue>
+            <valueName>Sales Disqualified</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales</controllingFieldValue>
+            <controllingFieldValue>Outgoing</controllingFieldValue>
+            <valueName>Solution Too Robust</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales</controllingFieldValue>
+            <controllingFieldValue>Outgoing</controllingFieldValue>
+            <valueName>Unresponsive/Not engaged</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Service</controllingFieldValue>
+            <controllingFieldValue>System</controllingFieldValue>
+            <valueName>Closed by System</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Service</controllingFieldValue>
+            <valueName>Declined</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Service</controllingFieldValue>
+            <valueName>Duplicate</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Service</controllingFieldValue>
+            <valueName>No Decision / Non-Responsive</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Service</controllingFieldValue>
+            <controllingFieldValue>Retirement</controllingFieldValue>
+            <valueName>Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Service</controllingFieldValue>
+            <controllingFieldValue>Retirement</controllingFieldValue>
+            <valueName>Timing</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement</controllingFieldValue>
+            <valueName>BPA lost prospect</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement</controllingFieldValue>
+            <valueName>Competition</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement</controllingFieldValue>
+            <valueName>Compliance Issues</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement</controllingFieldValue>
+            <valueName>Cost</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement</controllingFieldValue>
+            <valueName>Doesn&apos;t like NSPK Funds</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement</controllingFieldValue>
+            <valueName>Happy with Current Vendor</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement</controllingFieldValue>
+            <valueName>Has other Outside Plans</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement</controllingFieldValue>
+            <valueName>Liquidation Restrictions - frozen funds</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement</controllingFieldValue>
+            <valueName>Match Formula Restrictions</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement</controllingFieldValue>
+            <valueName>New Comparability PS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement</controllingFieldValue>
+            <valueName>No Interest from Employees</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement</controllingFieldValue>
+            <valueName>Outside Control Group</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement</controllingFieldValue>
+            <valueName>Outside Employees</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement</controllingFieldValue>
+            <valueName>Protected Benefit(s)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement</controllingFieldValue>
+            <valueName>Retirement Services</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement</controllingFieldValue>
+            <valueName>Safe Harbor Annual/QACA</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement</controllingFieldValue>
+            <valueName>Setup Fee(s)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement</controllingFieldValue>
+            <valueName>Testing Concerns</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement</controllingFieldValue>
+            <valueName>Unresponsive</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement</controllingFieldValue>
+            <valueName>Vesting</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>NCS</controllingFieldValue>
+            <valueName>Admin Error</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>NCS</controllingFieldValue>
+            <valueName>Union Bid</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>System</controllingFieldValue>
+            <valueName>Abandoned</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Outgoing</controllingFieldValue>
+            <valueName>Not Approved</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

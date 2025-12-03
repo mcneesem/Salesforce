@@ -175,6 +175,177 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Docusign_Form_To_Send_Multi__c</picklist>
+        <values>
+            <fullName>Acknowledgement of Receipt of Wages</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agreement to Automate Payroll</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA Healthcare Min Wage Affirmation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cell Phone Stipend%2FReimbursements</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Change request Benefits Waiting Period</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Auth for CSP%2FHW Plan Setup</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Change of Status Form</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Direct Debit Authorization</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client EEF Addendum</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Client Owner FLSA Exemption Form</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Company Property%2FEquipment Acknowledgement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Day Rate Acknowledgment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deduction Auth - Union Dues</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deduction Auth - Vacation Advance Notice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deduction Auth CSP - H%26W Plans</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deduction Auth NY - Voluntary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deduction Authorization</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE Deduction Auth - ORK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Employee Change of Personal Information</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Employee Change of Status</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Employee Termination Form %28CA EEs%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Employee Termination Form %28Non-CA%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FLSA Test for Exemption %28CA%29 - Administrative</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FLSA Test for Exemption %28CA%29 - Computer Professional</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FLSA Test for Exemption %28CA%29 - Executive</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FLSA Test for Exemption %28CA%29 - Inside Salesperson</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FLSA Test for Exemption %28CA%29 - Outside Salesperson</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FLSA Test for Exemption %28CA%29 - Professional%2FCreative</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FLSA Test for Exemption %28General%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FLSA Test for Exemption %28IL%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Final Knowledge Check %28IUO%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Final Wage Acknowledgement %28CA%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fluctuating Workweek Acknowledgement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fluctuating Workweek Client Acknowledgement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Garnishment Release Authorization</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IRS Form W-2 Duplicate Request %28EN%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IRS Form W-2 Duplicate Request %28ES%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Student Worker Declaration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Time Off Request %28Insperity branded%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>User Access Request</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verification Report</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Void%2FLost%2FStolen Check Reissue Auth</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Docusign_Form_To_Send__c</picklist>
         <values>
             <fullName>Acknowledgement of Receipt of Wages</fullName>
@@ -4054,6 +4225,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Assisted - SVS OPS</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>BPS - Assigned to Regeneration</fullName>
             <default>false</default>
         </values>
@@ -4111,6 +4286,10 @@
         </values>
         <values>
             <fullName>Other Exemption</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PS - VM</fullName>
             <default>false</default>
         </values>
         <values>

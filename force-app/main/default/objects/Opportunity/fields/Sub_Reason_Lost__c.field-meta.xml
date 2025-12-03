@@ -1,0 +1,925 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sub_Reason_Lost__c</fullName>
+    <label>Sub Reason Lost</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>NSP_Lost_Reason__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Costs too high - Benefits</fullName>
+                <default>false</default>
+                <label>Costs too high - Benefits</label>
+            </value>
+            <value>
+                <fullName>Costs too high - Admin Fees</fullName>
+                <default>false</default>
+                <label>Costs too high - Admin Fees</label>
+            </value>
+            <value>
+                <fullName>Costs too high - Implementation Fees</fullName>
+                <default>false</default>
+                <label>Costs too high - Implementation Fees</label>
+            </value>
+            <value>
+                <fullName>Competitor pricing/promotion</fullName>
+                <default>false</default>
+                <label>Competitor pricing/promotion</label>
+            </value>
+            <value>
+                <fullName>Pricing too complex/confusing/not transparent</fullName>
+                <default>false</default>
+                <label>Pricing too complex/confusing/not transparent</label>
+            </value>
+            <value>
+                <fullName>Took too long/too much effort to get to pricing</fullName>
+                <default>false</default>
+                <label>Took too long/too much effort to get to pricing</label>
+            </value>
+            <value>
+                <fullName>Need alternative to UHC</fullName>
+                <default>false</default>
+                <label>Need alternative to UHC</label>
+            </value>
+            <value>
+                <fullName>Coverage exclusions - Gender care</fullName>
+                <default>false</default>
+                <label>Coverage exclusions - Gender care</label>
+            </value>
+            <value>
+                <fullName>Coverage exclusions - Abortion</fullName>
+                <default>false</default>
+                <label>Coverage exclusions - Abortion</label>
+            </value>
+            <value>
+                <fullName>Coverage exclusions - Fertility</fullName>
+                <default>false</default>
+                <label>Coverage exclusions - Fertility</label>
+            </value>
+            <value>
+                <fullName>Coverage exclusions - Acupuncture</fullName>
+                <default>false</default>
+                <label>Coverage exclusions - Acupuncture</label>
+            </value>
+            <value>
+                <fullName>Offered Revolution</fullName>
+                <default>false</default>
+                <label>Offered Revolution</label>
+            </value>
+            <value>
+                <fullName>Geographical coverage concerns</fullName>
+                <default>false</default>
+                <label>Geographical coverage concerns</label>
+            </value>
+            <value>
+                <fullName>Network concerns</fullName>
+                <default>false</default>
+                <label>Network concerns</label>
+            </value>
+            <value>
+                <fullName>Packages too restrictive</fullName>
+                <default>false</default>
+                <label>Packages too restrictive</label>
+            </value>
+            <value>
+                <fullName>Concerned about complexity</fullName>
+                <default>false</default>
+                <label>Concerned about complexity</label>
+            </value>
+            <value>
+                <fullName>Seeking tiered solution to better address needs</fullName>
+                <default>false</default>
+                <label>Seeking tiered solution to better address needs</label>
+            </value>
+            <value>
+                <fullName>Payroll Only</fullName>
+                <default>false</default>
+                <label>Payroll Only</label>
+            </value>
+            <value>
+                <fullName>Pay/manage international employees</fullName>
+                <default>false</default>
+                <label>Pay/manage international employees</label>
+            </value>
+            <value>
+                <fullName>Employee Scheduling</fullName>
+                <default>false</default>
+                <label>Employee Scheduling</label>
+            </value>
+            <value>
+                <fullName>Applicant Tracking</fullName>
+                <default>false</default>
+                <label>Applicant Tracking</label>
+            </value>
+            <value>
+                <fullName>Time &amp; Attendance</fullName>
+                <default>false</default>
+                <label>Time &amp; Attendance</label>
+            </value>
+            <value>
+                <fullName>Learning</fullName>
+                <default>false</default>
+                <label>Learning</label>
+            </value>
+            <value>
+                <fullName>Limited Customization</fullName>
+                <default>false</default>
+                <label>Limited Customization</label>
+            </value>
+            <value>
+                <fullName>No Single Sign-on</fullName>
+                <default>false</default>
+                <label>No Single Sign-on</label>
+            </value>
+            <value>
+                <fullName>Reporting &amp; Analytics</fullName>
+                <default>false</default>
+                <label>Reporting &amp; Analytics</label>
+            </value>
+            <value>
+                <fullName>Job costing capabilities</fullName>
+                <default>false</default>
+                <label>Job costing capabilities</label>
+            </value>
+            <value>
+                <fullName>Mobile App</fullName>
+                <default>false</default>
+                <label>Mobile App</label>
+            </value>
+            <value>
+                <fullName>Expense management not included/integrated</fullName>
+                <default>false</default>
+                <label>Expense management not included/integrated</label>
+            </value>
+            <value>
+                <fullName>Payroll</fullName>
+                <default>false</default>
+                <label>Payroll</label>
+            </value>
+            <value>
+                <fullName>Lacking integrations/APIs</fullName>
+                <default>false</default>
+                <label>Lacking integrations/APIs</label>
+            </value>
+            <value>
+                <fullName>EE count &gt; 5000</fullName>
+                <default>false</default>
+                <label>EE count &gt; 5000</label>
+            </value>
+            <value>
+                <fullName>EE count too small</fullName>
+                <default>false</default>
+                <label>EE count too small</label>
+            </value>
+            <value>
+                <fullName>Government entity</fullName>
+                <default>false</default>
+                <label>Government entity</label>
+            </value>
+            <value>
+                <fullName>Prohibited industry</fullName>
+                <default>false</default>
+                <label>Prohibited industry</label>
+            </value>
+            <value>
+                <fullName>Cannabis Industry</fullName>
+                <default>false</default>
+                <label>Cannabis Industry</label>
+            </value>
+            <value>
+                <fullName>Not eligible for client-retained</fullName>
+                <default>false</default>
+                <label>Not eligible for client-retained</label>
+            </value>
+            <value>
+                <fullName>International employees</fullName>
+                <default>false</default>
+                <label>International employees</label>
+            </value>
+            <value>
+                <fullName>Native American Reservation</fullName>
+                <default>false</default>
+                <label>Native American Reservation</label>
+            </value>
+            <value>
+                <fullName>P&amp;R declined - Workers&apos; comp</fullName>
+                <default>false</default>
+                <label>P&amp;R declined - Workers&apos; comp</label>
+            </value>
+            <value>
+                <fullName>P&amp;R declined - High Risk</fullName>
+                <default>false</default>
+                <label>P&amp;R declined - High Risk</label>
+            </value>
+            <value>
+                <fullName>Economy/industry concerns</fullName>
+                <default>false</default>
+                <label>Economy/industry concerns</label>
+            </value>
+            <value>
+                <fullName>Change in ownership/leadership</fullName>
+                <default>false</default>
+                <label>Change in ownership/leadership</label>
+            </value>
+            <value>
+                <fullName>Just renewed/went through open enrollment</fullName>
+                <default>false</default>
+                <label>Just renewed/went through open enrollment</label>
+            </value>
+            <value>
+                <fullName>Too much going on in company</fullName>
+                <default>false</default>
+                <label>Too much going on in company</label>
+            </value>
+            <value>
+                <fullName>Change to co-employment a concern</fullName>
+                <default>false</default>
+                <label>Change to co-employment a concern</label>
+            </value>
+            <value>
+                <fullName>Effort for internal team during implementation a concern</fullName>
+                <default>false</default>
+                <label>Effort for internal team during implementation a concern</label>
+            </value>
+            <value>
+                <fullName>Change for WSEEs a concern</fullName>
+                <default>false</default>
+                <label>Change for WSEEs a concern</label>
+            </value>
+            <value>
+                <fullName>Not open to coemployment</fullName>
+                <default>false</default>
+                <label>Not open to coemployment</label>
+            </value>
+            <value>
+                <fullName>Not interested in new solution at present</fullName>
+                <default>false</default>
+                <label>Not interested in new solution at present</label>
+            </value>
+            <value>
+                <fullName>Unknown</fullName>
+                <default>false</default>
+                <label>Unknown</label>
+            </value>
+            <value>
+                <fullName>ADP Other</fullName>
+                <default>false</default>
+                <label>ADP Other</label>
+            </value>
+            <value>
+                <fullName>ADP Total Source</fullName>
+                <default>false</default>
+                <label>ADP Total Source</label>
+            </value>
+            <value>
+                <fullName>ADP Workforce Now</fullName>
+                <default>false</default>
+                <label>ADP Workforce Now</label>
+            </value>
+            <value>
+                <fullName>Able</fullName>
+                <default>false</default>
+                <label>Able</label>
+            </value>
+            <value>
+                <fullName>Advanstaff</fullName>
+                <default>false</default>
+                <label>Advanstaff</label>
+            </value>
+            <value>
+                <fullName>Advantec</fullName>
+                <default>false</default>
+                <label>Advantec</label>
+            </value>
+            <value>
+                <fullName>AlphaStaff</fullName>
+                <default>false</default>
+                <label>AlphaStaff</label>
+            </value>
+            <value>
+                <fullName>Axcel HR Solutions</fullName>
+                <default>false</default>
+                <label>Axcel HR Solutions</label>
+            </value>
+            <value>
+                <fullName>Axcet HR Solutions</fullName>
+                <default>false</default>
+                <label>Axcet HR Solutions</label>
+            </value>
+            <value>
+                <fullName>BambooHR</fullName>
+                <default>false</default>
+                <label>BambooHR</label>
+            </value>
+            <value>
+                <fullName>Cbiz</fullName>
+                <default>false</default>
+                <label>Cbiz</label>
+            </value>
+            <value>
+                <fullName>Co-Advantage</fullName>
+                <default>false</default>
+                <label>Co-Advantage</label>
+            </value>
+            <value>
+                <fullName>Cobalt Astra</fullName>
+                <default>false</default>
+                <label>Cobalt Astra</label>
+            </value>
+            <value>
+                <fullName>Custom Business Solutions</fullName>
+                <default>false</default>
+                <label>Custom Business Solutions</label>
+            </value>
+            <value>
+                <fullName>EmphasisHR</fullName>
+                <default>false</default>
+                <label>EmphasisHR</label>
+            </value>
+            <value>
+                <fullName>Emplicity</fullName>
+                <default>false</default>
+                <label>Emplicity</label>
+            </value>
+            <value>
+                <fullName>Employer Flexible</fullName>
+                <default>false</default>
+                <label>Employer Flexible</label>
+            </value>
+            <value>
+                <fullName>Engage</fullName>
+                <default>false</default>
+                <label>Engage</label>
+            </value>
+            <value>
+                <fullName>Extensis</fullName>
+                <default>false</default>
+                <label>Extensis</label>
+            </value>
+            <value>
+                <fullName>Fusion</fullName>
+                <default>false</default>
+                <label>Fusion</label>
+            </value>
+            <value>
+                <fullName>G&amp;A Partners</fullName>
+                <default>false</default>
+                <label>G&amp;A Partners</label>
+            </value>
+            <value>
+                <fullName>GovCon Pay</fullName>
+                <default>false</default>
+                <label>GovCon Pay</label>
+            </value>
+            <value>
+                <fullName>Gusto</fullName>
+                <default>false</default>
+                <label>Gusto</label>
+            </value>
+            <value>
+                <fullName>HR&amp;P</fullName>
+                <default>false</default>
+                <label>HR&amp;P</label>
+            </value>
+            <value>
+                <fullName>isolved direct</fullName>
+                <default>false</default>
+                <label>isolved direct</label>
+            </value>
+            <value>
+                <fullName>isloved reseller</fullName>
+                <default>false</default>
+                <label>isloved reseller</label>
+            </value>
+            <value>
+                <fullName>JustWorks</fullName>
+                <default>false</default>
+                <label>JustWorks</label>
+            </value>
+            <value>
+                <fullName>Legacy HR</fullName>
+                <default>false</default>
+                <label>Legacy HR</label>
+            </value>
+            <value>
+                <fullName>Lever 1</fullName>
+                <default>false</default>
+                <label>Lever 1</label>
+            </value>
+            <value>
+                <fullName>Masspay</fullName>
+                <default>false</default>
+                <label>Masspay</label>
+            </value>
+            <value>
+                <fullName>NEMR</fullName>
+                <default>false</default>
+                <label>NEMR</label>
+            </value>
+            <value>
+                <fullName>Nextep</fullName>
+                <default>false</default>
+                <label>Nextep</label>
+            </value>
+            <value>
+                <fullName>OEM PEO</fullName>
+                <default>false</default>
+                <label>OEM PEO</label>
+            </value>
+            <value>
+                <fullName>Odyssey OneSource</fullName>
+                <default>false</default>
+                <label>Odyssey OneSource</label>
+            </value>
+            <value>
+                <fullName>Paychex</fullName>
+                <default>false</default>
+                <label>Paychex</label>
+            </value>
+            <value>
+                <fullName>Paycom</fullName>
+                <default>false</default>
+                <label>Paycom</label>
+            </value>
+            <value>
+                <fullName>Paycor</fullName>
+                <default>false</default>
+                <label>Paycor</label>
+            </value>
+            <value>
+                <fullName>Payday</fullName>
+                <default>false</default>
+                <label>Payday</label>
+            </value>
+            <value>
+                <fullName>Paylocity</fullName>
+                <default>false</default>
+                <label>Paylocity</label>
+            </value>
+            <value>
+                <fullName>Prestige</fullName>
+                <default>false</default>
+                <label>Prestige</label>
+            </value>
+            <value>
+                <fullName>ProSource</fullName>
+                <default>false</default>
+                <label>ProSource</label>
+            </value>
+            <value>
+                <fullName>Questco</fullName>
+                <default>false</default>
+                <label>Questco</label>
+            </value>
+            <value>
+                <fullName>Rippling</fullName>
+                <default>false</default>
+                <label>Rippling</label>
+            </value>
+            <value>
+                <fullName>Sequent</fullName>
+                <default>false</default>
+                <label>Sequent</label>
+            </value>
+            <value>
+                <fullName>Sequoia</fullName>
+                <default>false</default>
+                <label>Sequoia</label>
+            </value>
+            <value>
+                <fullName>Tandem HR</fullName>
+                <default>false</default>
+                <label>Tandem HR</label>
+            </value>
+            <value>
+                <fullName>Time &amp; Pay</fullName>
+                <default>false</default>
+                <label>Time &amp; Pay</label>
+            </value>
+            <value>
+                <fullName>Trinet</fullName>
+                <default>false</default>
+                <label>Trinet</label>
+            </value>
+            <value>
+                <fullName>UKG</fullName>
+                <default>false</default>
+                <label>UKG</label>
+            </value>
+            <value>
+                <fullName>Zenefits</fullName>
+                <default>false</default>
+                <label>Zenefits</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Price/Cost</controllingFieldValue>
+            <valueName>Costs too high - Benefits</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Price/Cost</controllingFieldValue>
+            <valueName>Costs too high - Admin Fees</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Price/Cost</controllingFieldValue>
+            <valueName>Costs too high - Implementation Fees</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Price/Cost</controllingFieldValue>
+            <valueName>Competitor pricing/promotion</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Price/Cost</controllingFieldValue>
+            <valueName>Pricing too complex/confusing/not transparent</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Price/Cost</controllingFieldValue>
+            <valueName>Took too long/too much effort to get to pricing</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Concerned about change management</controllingFieldValue>
+            <valueName>Change to co-employment a concern</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Concerned about change management</controllingFieldValue>
+            <valueName>Effort for internal team during implementation a concern</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Concerned about change management</controllingFieldValue>
+            <valueName>Change for WSEEs a concern</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>General</controllingFieldValue>
+            <valueName>Not open to coemployment</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>General</controllingFieldValue>
+            <valueName>Not interested in new solution at present</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>Unknown</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>ADP Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>ADP Total Source</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>ADP Workforce Now</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>Able</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>Advanstaff</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>Advantec</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>AlphaStaff</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>Axcel HR Solutions</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>Axcet HR Solutions</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>BambooHR</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>Cbiz</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>Co-Advantage</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>Cobalt Astra</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>Custom Business Solutions</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>EmphasisHR</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>Emplicity</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>Employer Flexible</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>Engage</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>Extensis</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>Fusion</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>G&amp;A Partners</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>GovCon Pay</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>Gusto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>HR&amp;P</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>isolved direct</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>isloved reseller</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>JustWorks</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>Legacy HR</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>Lever 1</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>Masspay</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>NEMR</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>Nextep</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>OEM PEO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>Odyssey OneSource</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>Paychex</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>Paycom</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>Paycor</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>Payday</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>Paylocity</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>Prestige</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>ProSource</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>Questco</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>Rippling</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>Sequent</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>Sequoia</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>Tandem HR</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>Time &amp; Pay</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>Trinet</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>UKG</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost to Competitor</controllingFieldValue>
+            <valueName>Zenefits</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Benefits</controllingFieldValue>
+            <valueName>Need alternative to UHC</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Benefits</controllingFieldValue>
+            <valueName>Coverage exclusions - Gender care</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Benefits</controllingFieldValue>
+            <valueName>Coverage exclusions - Abortion</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Benefits</controllingFieldValue>
+            <valueName>Coverage exclusions - Fertility</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Benefits</controllingFieldValue>
+            <valueName>Coverage exclusions - Acupuncture</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Benefits</controllingFieldValue>
+            <valueName>Offered Revolution</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Benefits</controllingFieldValue>
+            <valueName>Geographical coverage concerns</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Benefits</controllingFieldValue>
+            <valueName>Network concerns</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Benefits</controllingFieldValue>
+            <valueName>Packages too restrictive</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Solution Too Robust</controllingFieldValue>
+            <valueName>Concerned about complexity</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Solution Too Robust</controllingFieldValue>
+            <valueName>Seeking tiered solution to better address needs</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Solution Too Robust</controllingFieldValue>
+            <valueName>Payroll Only</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Insufficient features/capabilities</controllingFieldValue>
+            <valueName>Pay/manage international employees</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Insufficient features/capabilities</controllingFieldValue>
+            <valueName>Employee Scheduling</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Insufficient features/capabilities</controllingFieldValue>
+            <valueName>Applicant Tracking</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Insufficient features/capabilities</controllingFieldValue>
+            <valueName>Time &amp; Attendance</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Insufficient features/capabilities</controllingFieldValue>
+            <valueName>Learning</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Insufficient features/capabilities</controllingFieldValue>
+            <valueName>Limited Customization</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Insufficient features/capabilities</controllingFieldValue>
+            <valueName>No Single Sign-on</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Insufficient features/capabilities</controllingFieldValue>
+            <valueName>Reporting &amp; Analytics</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Insufficient features/capabilities</controllingFieldValue>
+            <valueName>Job costing capabilities</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Insufficient features/capabilities</controllingFieldValue>
+            <valueName>Mobile App</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Insufficient features/capabilities</controllingFieldValue>
+            <valueName>Expense management not included/integrated</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Insufficient features/capabilities</controllingFieldValue>
+            <valueName>Payroll</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Insufficient features/capabilities</controllingFieldValue>
+            <valueName>Lacking integrations/APIs</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales Disqualified</controllingFieldValue>
+            <valueName>EE count &gt; 5000</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales Disqualified</controllingFieldValue>
+            <valueName>EE count too small</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales Disqualified</controllingFieldValue>
+            <valueName>Government entity</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales Disqualified</controllingFieldValue>
+            <valueName>Prohibited industry</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales Disqualified</controllingFieldValue>
+            <valueName>Cannabis Industry</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales Disqualified</controllingFieldValue>
+            <valueName>Not eligible for client-retained</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales Disqualified</controllingFieldValue>
+            <valueName>International employees</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales Disqualified</controllingFieldValue>
+            <valueName>Native American Reservation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales Disqualified</controllingFieldValue>
+            <valueName>P&amp;R declined - Workers&apos; comp</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales Disqualified</controllingFieldValue>
+            <valueName>P&amp;R declined - High Risk</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Not a good time to make the change</controllingFieldValue>
+            <valueName>Economy/industry concerns</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Not a good time to make the change</controllingFieldValue>
+            <valueName>Change in ownership/leadership</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Not a good time to make the change</controllingFieldValue>
+            <valueName>Just renewed/went through open enrollment</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Not a good time to make the change</controllingFieldValue>
+            <valueName>Too much going on in company</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

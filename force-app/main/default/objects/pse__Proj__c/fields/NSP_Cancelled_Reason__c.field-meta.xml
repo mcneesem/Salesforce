@@ -112,6 +112,11 @@
                 <default>false</default>
                 <label>Client declined to participate</label>
             </value>
+            <value>
+                <fullName>Void</fullName>
+                <default>false</default>
+                <label>Void</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Cancelled</controllingFieldValue>
@@ -188,6 +193,10 @@
         <valueSettings>
             <controllingFieldValue>Cancelled</controllingFieldValue>
             <valueName>Thought Service Level was PEO Like</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cancelled</controllingFieldValue>
+            <valueName>Void</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

@@ -2032,6 +2032,10 @@
         <enabled>true</enabled>
         <name>Bypass_Available_Lead_Conversion_Rules</name>
     </customPermissions>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Services_Opportunity_Owner</name>
+    </customPermissions>
     <customSettingAccesses>
         <enabled>true</enabled>
         <name>AVA_SFCLOUD__AvaTax__c</name>
@@ -2643,6 +2647,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.Closed_Lost_Group__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.Enrollment_fee_Subtotal__c</field>
         <readable>true</readable>
@@ -2720,6 +2729,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Opportunity.SBQQ__RenewedContract__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.Sub_Reason_Lost__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

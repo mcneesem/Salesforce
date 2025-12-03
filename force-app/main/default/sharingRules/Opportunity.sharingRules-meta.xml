@@ -85,10 +85,21 @@
         <sharedTo>
             <group>MidMarket_Administrator</group>
         </sharedTo>
+        <booleanFilter>1 AND  NOT (2 OR 3)</booleanFilter>
         <criteriaItems>
             <field>NSP_Number_of_Employees__c</field>
             <operation>greaterOrEqual</operation>
             <value>150</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Is_Services_Opportunity__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Type</field>
+            <operation>equals</operation>
+            <value>Client Growth Credit</value>
         </criteriaItems>
         <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
@@ -99,10 +110,51 @@
         <sharedTo>
             <group>MidMarket_Administrator</group>
         </sharedTo>
+        <booleanFilter>1 AND  NOT (2 OR 3)</booleanFilter>
         <criteriaItems>
             <field>NSP_PrimaryProduct__c</field>
             <operation>equals</operation>
             <value>HR360 - Select Edition,HRCore - Select Edition,HRScale</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Is_Services_Opportunity__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Type</field>
+            <operation>equals</operation>
+            <value>Client Growth Credit</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Strategic_Sales_Leaders</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Strategic_Sales_Leaders</label>
+        <sharedTo>
+            <group>Strategic_Sales_Leaders</group>
+        </sharedTo>
+        <booleanFilter>(1 OR 4) AND NOT (2 OR 3)</booleanFilter>
+        <criteriaItems>
+            <field>NSP_PrimaryProduct__c</field>
+            <operation>equals</operation>
+            <value>Workday,HRCore Solution,HRCore - Select Edition,HR360 Solution,HR360 - Select Edition,HRScale</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Is_Services_Opportunity__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Type</field>
+            <operation>equals</operation>
+            <value>Client Growth Credit</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>NSP_PrimaryProduct__c</field>
+            <operation>equals</operation>
+            <value></value>
         </criteriaItems>
         <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>

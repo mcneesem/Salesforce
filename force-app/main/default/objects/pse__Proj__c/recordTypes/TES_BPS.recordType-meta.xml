@@ -680,6 +680,10 @@
             <fullName>Thought Service Level was PEO Like</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Void</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>NSP_Change_Order_Classification__c</picklist>

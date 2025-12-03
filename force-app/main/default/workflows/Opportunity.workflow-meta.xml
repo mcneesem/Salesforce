@@ -306,6 +306,22 @@
         <description>Opportunity requires assignment to New Client Sales Specialist</description>
         <protected>false</protected>
         <recipients>
+            <recipient>District Administrator</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>District Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Opportunity Owner</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Regional Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
             <field>NSP_New_Client_Sales_Email__c</field>
             <type>email</type>
         </recipients>

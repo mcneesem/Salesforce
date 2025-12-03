@@ -10,6 +10,7 @@
     <permissionSets>Account_Owner_Restrict_Update</permissionSets>
     <permissionSets>Account_View_All_Modify_All</permissionSets>
     <permissionSets>Advanced_User_Details_Hire_Date_Termination_Date</permissionSets>
+    <permissionSets>Allow_Closed_Lost_Opportunity</permissionSets>
     <permissionSets>Bypass_Task_Event_Cancelled_Status</permissionSets>
     <permissionSets>Checklist_Read_Create</permissionSets>
     <permissionSets>Contact_View_All</permissionSets>
