@@ -26,21 +26,22 @@ export default class Nsp_casecategorycmp extends LightningElement {
 
     @api recordId;
     @api objectApiName = 'Case';
-    
+
     isLoading = false;
     @track oCase = {}; // Case data
     originalCase = {} // store original case data
+    showError = false; // Flag to show validation error
 
     showCaseDetail = false;
     showCaseVersion = false;
 
-    // Wire the Case record  
-    @wire(getRecord, { 
-        recordId: '$recordId', 
-        fields: [CATEGORY_FIELD, SUBCATEGORY_FIELD, DETAIL_FIELD, VERSION_FIELD, RECORD_TYPE_ID_FIELD] 
-    })    
+    // Wire the Case record
+    @wire(getRecord, {
+        recordId: '$recordId',
+        fields: [CATEGORY_FIELD, SUBCATEGORY_FIELD, DETAIL_FIELD, VERSION_FIELD, RECORD_TYPE_ID_FIELD]
+    })
     wiredCase({ error, data }) {
-        if (data) {  
+        if (data) {
             this.oCase = {
                 Id: this.recordId,
                 RecordTypeId: data.fields.RecordTypeId? data.fields.RecordTypeId.value : null,
@@ -49,13 +50,13 @@ export default class Nsp_casecategorycmp extends LightningElement {
                 NSP_Detail__c: data.fields.NSP_Detail__c.value,
                 NSP_Version__c: data.fields.NSP_Version__c.value
             };
-            
+
             this.showCaseDetail = Boolean(this.oCase.NSP_Detail__c);
             this.showCaseVersion = Boolean(this.oCase.NSP_Version__c);
 
             this.originalCase = { ...this.oCase };
             this.isLoading = false;
-            
+
         } else if (error) {
             this.handleError(error);
         }
@@ -70,6 +71,7 @@ export default class Nsp_casecategorycmp extends LightningElement {
     // Event handlers
     editCase() {
         this.isEditing = true;
+        this.showError = false; // Reset validation on edit
     }
 
     cancel() {
@@ -77,35 +79,54 @@ export default class Nsp_casecategorycmp extends LightningElement {
         this.oCase = { ...this.originalCase };
         this.showCaseDetail = Boolean(this.oCase.NSP_Detail__c);
         this.showCaseVersion = Boolean(this.oCase.NSP_Version__c);
+        this.showError = false; // Reset validation on cancel
     }
 
     handleSelectionChange(event) {
         const { category, subCategory, detail, version, detailOptions, versionOptions } = event.detail;
-        
+
+        const prevCategory = this.oCase.NSP_Category__c;
+        // set Category from event
         this.oCase.NSP_Category__c = category;
-        this.oCase.NSP_SubCategory__c = subCategory;
-        this.oCase.NSP_Detail__c = detail;
-        this.oCase.NSP_Version__c = version;
+
+        // when Category value actually changes, clear SubCategory and Detail
+        if (prevCategory !== category) {
+            this.oCase.NSP_SubCategory__c = null;
+            this.oCase.NSP_Detail__c = null;
+        } else {
+            // Preserve incoming selections when Category did not change
+            this.oCase.NSP_SubCategory__c = subCategory;
+            this.oCase.NSP_Detail__c = detail;
+        }
 
         if (detailOptions.length > 0) {
             this.showCaseDetail = true;
-        } 
+        }
         if(versionOptions.length > 0) {
             this.showCaseVersion = true;
         }
     }
 
     updateCase() {
+        // Prevent save if SubCategory is null/empty while Category is set
+        const category = this.oCase.NSP_Category__c;
+        const subCategory = this.oCase.NSP_SubCategory__c;
+
+        // Show validation error if Category is set but SubCategory is unset
+        if (category && (subCategory === null || subCategory === undefined || subCategory === '')) {
+            this.showError = true;
+            return; // Block save
+        }
         this.isLoading = true;
-        
+
         const fields = {};
         fields[ID_FIELD.fieldApiName] = this.recordId;
         fields[CATEGORY_FIELD.fieldApiName] = this.oCase.NSP_Category__c;
         fields[SUBCATEGORY_FIELD.fieldApiName] = this.oCase.NSP_SubCategory__c;
         fields[DETAIL_FIELD.fieldApiName] = this.oCase.NSP_Detail__c;
         fields[VERSION_FIELD.fieldApiName] = this.oCase.NSP_Version__c;
-        
-        
+
+
         const recordInput = { fields };
         updateRecord(recordInput)
             .then(() => {
@@ -116,8 +137,12 @@ export default class Nsp_casecategorycmp extends LightningElement {
                 this.handleError(error);
             });
     }
-    
+
     handleError(error) {
+        // Handle string errors by converting to object
+        if (typeof error === 'string') {
+            error = { message: error };
+        }
         Toast.show({
             message: error,
             mode: 'sticky',
