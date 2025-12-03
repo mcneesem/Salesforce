@@ -25,8 +25,8 @@
   /* Category: Contractor Management */
   AND(
     ( NSP_Category__c = &quot;Contractor Management&quot; ) ,
-    NOT( ISBLANK ( NSP_Detail__c ) )
-   ) ,
+    NOT( ISBLANK( NSP_Detail__c ) )
+  ) ,
   /* Category: Payroll Shared Services */
   AND(
     ( NSP_Category__c = &quot;Payroll Shared Services&quot; ) ,
