@@ -1645,22 +1645,51 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
     // @return void
     //
     private void validateQuote(List<SBQQ__Quote__c> quotes){
+
+        Map<String, String> productRecordTypeMap = new Map<String, String>();
+        List<String> QuoteValidationmdtKeys = new List<String>();
+
+        Map<String,Quote_Validation__mdt> validationRecords = Quote_Validation__mdt.getAll();
+        for (Quote_Validation__mdt validationRecord : validationRecords.values()) {
+        	productRecordTypeMap.put(validationRecord.Opportunity_Primary_Product__c, validationRecord.Asset_Record_Type__c);
+            string uiqueKey = validationRecord.Opportunity_Primary_Product__c+'_'+validationRecord.Opportunity_Primary_Bundle__c+'_'+validationRecord.Asset_Product_Bundle__c +'_'+validationRecord.Asset_Record_Type__c;
+            QuoteValidationmdtKeys.add(uiqueKey);
+    	}
         List<Id> accountIds= new List<Id>();
-        Map<Id,Asset> accountAssetMap= new Map<Id,Asset>();
         for(SBQQ__Quote__c newQuote:quotes){
-            if(newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_NEW) && (newQuote.NSP_Opportunity_Primary_Product__c == 'WX' || newQuote.NSP_Opportunity_Primary_Product__c == 'WA')){
+            if(newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_NEW) && productRecordTypeMap.containsKey(newQuote.NSP_Opportunity_Primary_Product__c)){
                 accountIds.add(newQuote.SBQQ__Account__c);
             }
         }
+        Map<Id,Map<String,Asset>> accountAssetMap= new Map<Id,Map<String,Asset>>();
         if(accountIds.size()>0){
-            for(Asset rec:[SELECT Id,AccountId,NSP_ProductBundle__c FROM Asset WHERE AccountId IN :accountIds AND RecordType.Name='WX_WA' AND Status IN ('Onboarding','Active')]){
-                accountAssetMap.put(rec.AccountId,rec);
+            for(Asset rec: [SELECT Id,AccountId,NSP_ProductBundle__c,RecordType.DeveloperName,NSP_Product_Line__c
+                           FROM Asset
+                           WHERE AccountId IN :accountIds
+                           AND RecordType.DeveloperName IN :productRecordTypeMap.values()
+                           AND Status IN ('Onboarding','Active')
+                           ORDER BY CreatedDate ASC]
+            ){
+                if (!accountAssetMap.containsKey(rec.AccountId)) {
+                    accountAssetMap.put(rec.AccountId, new Map<String, Asset>());
+                }
+                accountAssetMap.get(rec.AccountId).put(rec.RecordType.DeveloperName, rec);
             }
         }
         for(SBQQ__Quote__c newQuote:quotes){
-            if(newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_NEW) && (newQuote.NSP_Opportunity_Primary_Product__c == 'WX' || newQuote.NSP_Opportunity_Primary_Product__c == 'WA') && accountAssetMap.get(newQuote.SBQQ__Account__c)!=null &&
-            !((newQuote.NSP_Opportunity_Primary_Bundle__c == STRING_WO_WS &&accountAssetMap.get(newQuote.SBQQ__Account__c)?.NSP_ProductBundle__c!=STRING_WO_WS)||(newQuote.NSP_Opportunity_Primary_Bundle__c !=STRING_WO_WS &&accountAssetMap.get(newQuote.SBQQ__Account__c)?.NSP_ProductBundle__c==STRING_WO_WS ))){
-                newQuote.addError(WX_WA_QUOTE_VALIDATION_ERROR);
+            if(newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_NEW) &&
+               productRecordTypeMap.containsKey(newQuote.NSP_Opportunity_Primary_Product__c) &&
+               accountAssetMap.ContainsKey(newQuote.SBQQ__Account__c)
+            ){
+                Map<String,Asset> recTypeAssetMap = accountAssetMap.get(newQuote.SBQQ__Account__c);
+                String assetRecordType = productRecordTypeMap.get(newQuote.NSP_Opportunity_Primary_Product__c);
+                if(recTypeAssetMap.containsKey(assetRecordType)){
+                    Asset ast = recTypeAssetMap.get(assetRecordType);
+                    String Key = newQuote.NSP_Opportunity_Primary_Product__c + '_' + newQuote.NSP_Opportunity_Primary_Bundle__c + '_' + ast.NSP_ProductBundle__c + '_' + ast.RecordType.DeveloperName;
+                    if(QuoteValidationmdtKeys.contains(key)){
+                        newQuote.addError(WX_WA_QUOTE_VALIDATION_ERROR);
+                    }
+                }
             }
         }
     }
