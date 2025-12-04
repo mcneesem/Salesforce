@@ -11,11 +11,13 @@
               iSolved_Changes_Validated__c
             ),
             AND(
-              ISCHANGED(iSolved_Changes_Validated__c),
-              $User.Id == CreatedById
+              ISCHANGED( iSolved_Changes_Validated__c ) ,
+              iSolved_Changes_Validated__c ,
+              ( $User.Id == CreatedById )
             )
           )
         )
     </errorConditionFormula>
-    <errorMessage>Due to SOX Compliance, an Approver must check the &quot;iSolved Changes Validated&quot; checkbox field. Please uncheck the field and save your record.</errorMessage>
+    <errorDisplayField>iSolved_Changes_Validated__c</errorDisplayField>
+    <errorMessage>Due to SOX Compliance, a request creator can not approve their own request.</errorMessage>
 </ValidationRule>
