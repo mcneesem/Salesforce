@@ -1,15 +1,9 @@
-public with sharing class NSP_SubClientAssetSyncJob implements ISelfSchedulable , Schedulable , Database.Batchable<sObject> {
+public with sharing class NSP_SubClientAssetSyncJob implements ISelfSchedulable , Schedulable , IJobRunnable , Database.Batchable<sObject> {
     // test w/ NSP_SubClientAssetSyncJob_Test (94%)
 
     //
-    // Schedulable
+    // ISelfSchedulable
     //
-
-    // Executes the batch job to update client sub-plan history records
-    // This method is called by the scheduler to initiate the batch process
-    public void execute( SchedulableContext scon ) {
-        Database.executeBatch( new NSP_SubClientAssetSyncJob() , 200 );
-    }
 
     public static String schedule() {
         String suffix = '';
@@ -21,6 +15,24 @@ public with sharing class NSP_SubClientAssetSyncJob implements ISelfSchedulable 
             '0 0 */4 * * ?' ,
             new NSP_SubClientAssetSyncJob()
         );
+    }
+
+    //
+    // Schedulable
+    //
+
+    // Executes the batch job to update client sub-plan history records
+    // This method is called by the scheduler to initiate the batch process
+    public void execute( SchedulableContext scon ) {
+        NSP_SubClientAssetSyncJob.run();
+    }
+
+    //
+    // IJobRunnable
+    //
+
+    public static Id run() {
+        return Database.executeBatch( new NSP_SubClientAssetSyncJob() , 200 );
     }
 
     //
