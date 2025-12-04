@@ -1661,21 +1661,8 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
                 accountIds.add(newQuote.SBQQ__Account__c);
             }
         }
-        Map<Id,Map<String,Asset>> accountAssetMap= new Map<Id,Map<String,Asset>>();
-        if(accountIds.size()>0){
-            for(Asset rec: [SELECT Id,AccountId,NSP_ProductBundle__c,RecordType.DeveloperName,NSP_Product_Line__c
-                           FROM Asset
-                           WHERE AccountId IN :accountIds
-                           AND RecordType.DeveloperName IN :productRecordTypeMap.values()
-                           AND Status IN ('Onboarding','Active')
-                           ORDER BY CreatedDate ASC]
-            ){
-                if (!accountAssetMap.containsKey(rec.AccountId)) {
-                    accountAssetMap.put(rec.AccountId, new Map<String, Asset>());
-                }
-                accountAssetMap.get(rec.AccountId).put(rec.RecordType.DeveloperName, rec);
-            }
-        }
+        Map<Id, Map<String, Asset>> accountAssetMap = getAccountAssetMap(accountIds, productRecordTypeMap);
+
         for(SBQQ__Quote__c newQuote:quotes){
             if(newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_NEW) &&
                productRecordTypeMap.containsKey(newQuote.NSP_Opportunity_Primary_Product__c) &&
@@ -1692,6 +1679,24 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
                 }
             }
         }
+    }
+
+    private Map<Id, Map<String, Asset>> getAccountAssetMap(List<Id> accountIds, Map<String, String> productRecordTypeMap) {
+        Map<Id, Map<String, Asset>> accountAssetMap = new Map<Id, Map<String, Asset>>();
+        if (!accountIds.isEmpty()) {
+            for (Asset rec : [SELECT Id, AccountId, NSP_ProductBundle__c, RecordType.DeveloperName, NSP_Product_Line__c
+                            FROM Asset
+                            WHERE AccountId IN :accountIds
+                            AND RecordType.DeveloperName IN :productRecordTypeMap.values()
+                            AND Status IN ('Onboarding', 'Active')
+                            ORDER BY CreatedDate ASC]) {
+                if (!accountAssetMap.containsKey(rec.AccountId)) {
+                    accountAssetMap.put(rec.AccountId, new Map<String, Asset>());
+                }
+                accountAssetMap.get(rec.AccountId).put(rec.RecordType.DeveloperName, rec);
+            }
+        }
+        return accountAssetMap;
     }
 
     //
