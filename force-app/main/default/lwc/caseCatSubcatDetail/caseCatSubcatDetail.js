@@ -221,7 +221,7 @@ export default class CaseCatSubcatDetail extends LightningElement {
     handleCategoryChange(value) {
         this.selectedCategory = value;
         this.subCategoryOptions = this.createOptions(this.categoryWrapper.mCatToSubCatogories[value]);
-        this.resetSelection(['SubCategory','Detail', 'Version']);
+        this.resetSelection( [ 'SubCategory' , 'Detail' , 'Version' ] );
         this.showAllSubCategoryButton = !this.isBPSUser && this.subCategoryOptions.length > 0;
         this.dispatchEvent(new CustomEvent('catsubcatselect', {
             detail: { type: 'Category', value: this.selectedCategory }
@@ -234,7 +234,7 @@ export default class CaseCatSubcatDetail extends LightningElement {
             detail: { type: 'SubCategory', value }
         }));
         this.detailOptions = this.createOptions(this.categoryWrapper.mCatSubToDetails[`${this.selectedCategory}-${value}`]);
-        this.resetSelection(['Detail', 'Version']);
+        this.resetSelection( [ 'Detail' , 'Version' ] );
         this.showDetail = this.detailOptions.length > 0;
         this.versionOptions = this.createOptions(this.categoryWrapper.mCatSubDetailToVersions[
             `${this.selectedCategory}-${this.selectedSubCategory}-${this.selectedDetail}`
@@ -254,15 +254,15 @@ export default class CaseCatSubcatDetail extends LightningElement {
         this.showVersion = this.versionOptions.length > 0;
     }
 
-    resetSelection(fields) {
-        if (fields.includes('SubCategory')) {
+    resetSelection( fields ) {
+        if ( fields.includes( 'SubCategory' ) ) {
             this.selectedSubCategory = null;
         }
-        if (fields.includes('Detail')) {
+        if ( fields.includes( 'Detail' ) ) {
             this.showDetail = false;
             this.selectedDetail = null;
         }
-        if (fields.includes('Version')) {
+        if ( fields.includes( 'Version' ) ) {
             this.showVersion = false;
             this.selectedVersion = null;
         }
