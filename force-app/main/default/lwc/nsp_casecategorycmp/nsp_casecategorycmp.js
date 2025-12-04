@@ -30,7 +30,6 @@ export default class Nsp_casecategorycmp extends LightningElement {
     isLoading = false;
     @track oCase = {}; // Case data
     originalCase = {} // store original case data
-    showError = false; // Flag to show validation error
 
     showCaseDetail = false;
     showCaseVersion = false;
@@ -68,10 +67,18 @@ export default class Nsp_casecategorycmp extends LightningElement {
         return !this.isEditing;
     }
 
+    // Display save button when mandatory fields are not empty
+    get isUpdateCaseAllowed() {
+        return ( this.oCase && this.oCase.NSP_Category__c && this.oCase.NSP_SubCategory__c );
+    }
+
+    get isSaveDisabled() {
+        return !this.isUpdateCaseAllowed;
+    }
+
     // Event handlers
     editCase() {
         this.isEditing = true;
-        this.showError = false; // Reset validation on edit
     }
 
     cancel() {
@@ -79,24 +86,22 @@ export default class Nsp_casecategorycmp extends LightningElement {
         this.oCase = { ...this.originalCase };
         this.showCaseDetail = Boolean(this.oCase.NSP_Detail__c);
         this.showCaseVersion = Boolean(this.oCase.NSP_Version__c);
-        this.showError = false; // Reset validation on cancel
     }
 
     handleSelectionChange(event) {
         const { category, subCategory, detail, version, detailOptions, versionOptions } = event.detail;
 
         const prevCategory = this.oCase.NSP_Category__c;
-        // set Category from event
+
         this.oCase.NSP_Category__c = category;
+        this.oCase.NSP_SubCategory__c = subCategory;
+        this.oCase.NSP_Detail__c = detail;
+        this.oCase.NSP_Version__c = version;
 
         // when Category value actually changes, clear SubCategory and Detail
         if (prevCategory !== category) {
             this.oCase.NSP_SubCategory__c = null;
             this.oCase.NSP_Detail__c = null;
-        } else {
-            // Preserve incoming selections when Category did not change
-            this.oCase.NSP_SubCategory__c = subCategory;
-            this.oCase.NSP_Detail__c = detail;
         }
 
         if (detailOptions.length > 0) {
@@ -109,40 +114,27 @@ export default class Nsp_casecategorycmp extends LightningElement {
 
     updateCase() {
         // Prevent save if SubCategory is null/empty while Category is set
-        const category = this.oCase.NSP_Category__c;
-        const subCategory = this.oCase.NSP_SubCategory__c;
 
-        // Show validation error if Category is set but SubCategory is unset
-        if (category && (subCategory === null || subCategory === undefined || subCategory === '')) {
-            this.showError = true;
-            return; // Block save
-        }
-        this.isLoading = true;
+            this.isLoading = true;
+            const fields = {};
+            fields[ID_FIELD.fieldApiName] = this.recordId;
+            fields[CATEGORY_FIELD.fieldApiName] = this.oCase.NSP_Category__c;
+            fields[SUBCATEGORY_FIELD.fieldApiName] = this.oCase.NSP_SubCategory__c;
+            fields[DETAIL_FIELD.fieldApiName] = this.oCase.NSP_Detail__c;
+            fields[VERSION_FIELD.fieldApiName] = this.oCase.NSP_Version__c;
 
-        const fields = {};
-        fields[ID_FIELD.fieldApiName] = this.recordId;
-        fields[CATEGORY_FIELD.fieldApiName] = this.oCase.NSP_Category__c;
-        fields[SUBCATEGORY_FIELD.fieldApiName] = this.oCase.NSP_SubCategory__c;
-        fields[DETAIL_FIELD.fieldApiName] = this.oCase.NSP_Detail__c;
-        fields[VERSION_FIELD.fieldApiName] = this.oCase.NSP_Version__c;
-
-
-        const recordInput = { fields };
-        updateRecord(recordInput)
-            .then(() => {
-                this.isEditing = false;
-                this.isLoading = false;
-            })
-            .catch(error => {
-                this.handleError(error);
-            });
+            const recordInput = { fields };
+            updateRecord(recordInput)
+                .then(() => {
+                    this.isEditing = false;
+                    this.isLoading = false;
+                })
+                .catch(error => {
+                    this.handleError(error);
+                });
     }
 
     handleError(error) {
-        // Handle string errors by converting to object
-        if (typeof error === 'string') {
-            error = { message: error };
-        }
         Toast.show({
             message: error,
             mode: 'sticky',
