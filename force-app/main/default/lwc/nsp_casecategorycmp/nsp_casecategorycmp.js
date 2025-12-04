@@ -89,20 +89,21 @@ export default class Nsp_casecategorycmp extends LightningElement {
     }
 
     handleSelectionChange(event) {
-        const { category, subCategory, detail, version, detailOptions, versionOptions } = event.detail;
+        let { category, subCategory, detail, version, detailOptions, versionOptions } = event.detail;
 
         const prevCategory = this.oCase.NSP_Category__c;
+         // when Category value actually changes, clear SubCategory and Detail
+        if (prevCategory !== category) {
+            subCategory = null;
+            detail = null;
+            version = null;
+        }
 
         this.oCase.NSP_Category__c = category;
         this.oCase.NSP_SubCategory__c = subCategory;
         this.oCase.NSP_Detail__c = detail;
         this.oCase.NSP_Version__c = version;
 
-        // when Category value actually changes, clear SubCategory and Detail
-        if (prevCategory !== category) {
-            this.oCase.NSP_SubCategory__c = null;
-            this.oCase.NSP_Detail__c = null;
-        }
 
         if (detailOptions.length > 0) {
             this.showCaseDetail = true;
@@ -113,8 +114,6 @@ export default class Nsp_casecategorycmp extends LightningElement {
     }
 
     updateCase() {
-        // Prevent save if SubCategory is null/empty while Category is set
-
             this.isLoading = true;
             const fields = {};
             fields[ID_FIELD.fieldApiName] = this.recordId;
