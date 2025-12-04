@@ -1647,13 +1647,13 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
     private void validateQuote(List<SBQQ__Quote__c> quotes){
 
         Map<String, String> productRecordTypeMap = new Map<String, String>();
-        List<String> QuoteValidationmdtKeys = new List<String>();
+        List<String> quoteValidationMdtKeys = new List<String>();
 
         Map<String,Quote_Validation__mdt> validationRecords = Quote_Validation__mdt.getAll();
         for (Quote_Validation__mdt validationRecord : validationRecords.values()) {
         	productRecordTypeMap.put(validationRecord.Opportunity_Primary_Product__c, validationRecord.Asset_Record_Type__c);
             string uiqueKey = validationRecord.Opportunity_Primary_Product__c+'_'+validationRecord.Opportunity_Primary_Bundle__c+'_'+validationRecord.Asset_Product_Bundle__c +'_'+validationRecord.Asset_Record_Type__c;
-            QuoteValidationmdtKeys.add(uiqueKey);
+            quoteValidationMdtKeys.add(uiqueKey);
     	}
         List<Id> accountIds= new List<Id>();
         for(SBQQ__Quote__c newQuote:quotes){
@@ -1685,8 +1685,8 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
                 String assetRecordType = productRecordTypeMap.get(newQuote.NSP_Opportunity_Primary_Product__c);
                 if(recTypeAssetMap.containsKey(assetRecordType)){
                     Asset ast = recTypeAssetMap.get(assetRecordType);
-                    String Key = newQuote.NSP_Opportunity_Primary_Product__c + '_' + newQuote.NSP_Opportunity_Primary_Bundle__c + '_' + ast.NSP_ProductBundle__c + '_' + ast.RecordType.DeveloperName;
-                    if(QuoteValidationmdtKeys.contains(key)){
+                    String key = newQuote.NSP_Opportunity_Primary_Product__c + '_' + newQuote.NSP_Opportunity_Primary_Bundle__c + '_' + ast.NSP_ProductBundle__c + '_' + ast.RecordType.DeveloperName;
+                    if(quoteValidationMdtKeys.contains(key)){
                         newQuote.addError(WX_WA_QUOTE_VALIDATION_ERROR);
                     }
                 }
