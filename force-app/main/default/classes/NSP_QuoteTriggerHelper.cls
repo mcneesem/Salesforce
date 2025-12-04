@@ -1655,12 +1655,7 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
             string uiqueKey = validationRecord.Opportunity_Primary_Product__c+'_'+validationRecord.Opportunity_Primary_Bundle__c+'_'+validationRecord.Asset_Product_Bundle__c +'_'+validationRecord.Asset_Record_Type__c;
             quoteValidationMdtKeys.add(uiqueKey);
     	}
-        List<Id> accountIds= new List<Id>();
-        for(SBQQ__Quote__c newQuote:quotes){
-            if(newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_NEW) && productRecordTypeMap.containsKey(newQuote.NSP_Opportunity_Primary_Product__c)){
-                accountIds.add(newQuote.SBQQ__Account__c);
-            }
-        }
+        List<Id> accountIds = getAccountIds(quotes, productRecordTypeMap);
         Map<Id, Map<String, Asset>> accountAssetMap = getAccountAssetMap(accountIds, productRecordTypeMap);
 
         for(SBQQ__Quote__c newQuote:quotes){
@@ -1679,6 +1674,18 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
                 }
             }
         }
+    }
+
+    private List<Id> getAccountIds(List<SBQQ__Quote__c> quotes, Map<String, String> productRecordTypeMap) {
+        List<Id> accountIds = new List<Id>();
+        for (SBQQ__Quote__c newQuote : quotes) {
+            if (newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_NEW) &&
+                productRecordTypeMap.containsKey(newQuote.NSP_Opportunity_Primary_Product__c)
+            ) {
+                accountIds.add(newQuote.SBQQ__Account__c);
+            }
+        }
+        return accountIds;
     }
 
     private Map<Id, Map<String, Asset>> getAccountAssetMap(List<Id> accountIds, Map<String, String> productRecordTypeMap) {
