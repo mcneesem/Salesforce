@@ -7,7 +7,7 @@ public without sharing class CaseAccountContactRelationController {
     public static List<Detail> getACRDetails(Id caseId) {
         try {
             List<Detail> acrcdList = new List<Detail>();
-            Case record = selectCase(caseId);
+            Case record = CaseAccountContactRelationController.selectCase( caseId );
             if ( record != null ) {
                 List<AccountContactRelation> aCRList = [
                     SELECT Id,
@@ -33,10 +33,12 @@ public without sharing class CaseAccountContactRelationController {
                 ];
 
                 
-                Map<Id, NSP_Case_Contacts__c> caseConMap  = buildCaseContactMap(record.Id);
+                Map<Id, NSP_Case_Contacts__c> caseConMap  = CaseAccountContactRelationController.buildCaseContactMap( record.Id );
                 for (AccountContactRelation acr : aCRList){ 
-                    Detail acrcd = buildDetail(acr, caseConMap);
-                    acrcdList.add(acrcd);
+                    Detail acrcd = CaseAccountContactRelationController.buildDetail( acr, caseConMap );
+                    if( acrcd != null ){
+                        acrcdList.add(acrcd);
+                    }
                 }
             }
         return acrcdList;
@@ -69,44 +71,52 @@ public without sharing class CaseAccountContactRelationController {
 
     private static Detail buildDetail( AccountContactRelation record, Map<Id, NSP_Case_Contacts__c> caseConMap){
         Detail acrcd = new Detail();
-        acrcd.recordId = record.Id;
-        acrcd.workEmail = record.NSP_Work_Email__c;
-        acrcd.workPhone = record.NSP_Work_Phone__c;
-        acrcd.jobTitle = record.NSP_Job_Title__c;
-        acrcd.accountName = record.Account.Name;
-        acrcd.contactName = record.Contact_Name__c;
-        if(( record.Contact != null ) && String.isNotBlank( record.Contact.Salutation )){
-            acrcd.contactName = record.Contact.Salutation + ' ' + record.Contact_Name__c;
+        if( record != null ){
+            acrcd.recordId = record.Id;
+            acrcd.workEmail = record.NSP_Work_Email__c;
+            acrcd.workPhone = record.NSP_Work_Phone__c;
+            acrcd.jobTitle = record.NSP_Job_Title__c;
+            acrcd.accountName = record.Account.Name;
+            acrcd.contactName = record.Contact_Name__c;
+            if(( record.Contact != null ) && String.isNotBlank( record.Contact.Salutation )){
+                acrcd.contactName = record.Contact.Salutation + ' ' + record.Contact_Name__c;
+            }
+            acrcd.isPrimary = false;
+            if(caseConMap != null && caseConMap.containsKey( record.ContactId ) && ( caseConMap.get( record.ContactId ) != null )){
+                acrcd.isPrimary = caseConMap.get(record.ContactId).NSP_IsPrimary__c;
+            }
+            acrcd.status = record.NSP_Employee_Status__c;
+            acrcd.workdayEmployeeId = record.Workday_Employee_ID__c;
         }
-        acrcd.isPrimary = false;
-        if(caseConMap.containsKey( record.ContactId ) && ( caseConMap.get( record.ContactId ) != null )){
-            acrcd.isPrimary = caseConMap.get(record.ContactId).NSP_IsPrimary__c;
-        }
-        acrcd.status = record.NSP_Employee_Status__c;
-        acrcd.workdayEmployeeId = record.Workday_Employee_ID__c;
-        
         return acrcd;
     }
 
     private static Map<Id,NSP_Case_Contacts__c> buildCaseContactMap( Id recordId ){
-        List<NSP_Case_Contacts__c> caseConList = [
-            SELECT Id, NSP_Contact__c, NSP_IsPrimary__c, Workday_Employee_ID__c
-            FROM NSP_Case_Contacts__c
-            WHERE NSP_Case__c = :recordId
-        ];
-
         Map<Id, NSP_Case_Contacts__c> caseConMap = new Map<Id, NSP_Case_Contacts__c>();
-        for (NSP_Case_Contacts__c caseCon : caseConList) {
-            caseConMap.put(caseCon.NSP_Contact__c, caseCon);
+        if(recordId != null){
+            List<NSP_Case_Contacts__c> caseConList = [
+                SELECT Id, NSP_Contact__c, NSP_IsPrimary__c, Workday_Employee_ID__c
+                FROM NSP_Case_Contacts__c
+                WHERE NSP_Case__c = :recordId AND NSP_Contact__c != null
+            ];
+
+            if(!caseConList.isEmpty()){
+                for (NSP_Case_Contacts__c caseCon : caseConList) {
+                    caseConMap.put(caseCon.NSP_Contact__c, caseCon);
+                }
+            }
         }
         return caseConMap;
     }
 
     private static Case selectCase( Id recordId ){
-        List<Case> records = [SELECT Id, AccountId, ContactId FROM Case WHERE Id = :recordId LIMIT 1];
         Case record = null;
-        if ( ( records != null ) && !records.isEmpty() ) {
-            record = records[0];
+        if(recordId != null){
+            List<Case> records = [SELECT Id, AccountId, ContactId FROM Case WHERE Id = :recordId LIMIT 1];
+        
+            if ( ( records != null ) && !records.isEmpty() ) {
+                record = records[0];
+            }
         }
         return record;
     }
