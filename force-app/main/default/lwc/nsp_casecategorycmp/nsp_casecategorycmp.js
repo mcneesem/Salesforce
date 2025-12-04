@@ -115,12 +115,14 @@ export default class Nsp_casecategorycmp extends LightningElement {
 
     updateCase() {
             this.isLoading = true;
+
             const fields = {};
             fields[ID_FIELD.fieldApiName] = this.recordId;
             fields[CATEGORY_FIELD.fieldApiName] = this.oCase.NSP_Category__c;
             fields[SUBCATEGORY_FIELD.fieldApiName] = this.oCase.NSP_SubCategory__c;
             fields[DETAIL_FIELD.fieldApiName] = this.oCase.NSP_Detail__c;
             fields[VERSION_FIELD.fieldApiName] = this.oCase.NSP_Version__c;
+
 
             const recordInput = { fields };
             updateRecord(recordInput)
