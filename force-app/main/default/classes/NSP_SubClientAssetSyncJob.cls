@@ -84,7 +84,7 @@ public with sharing class NSP_SubClientAssetSyncJob implements ISelfSchedulable 
             Map<Id,NSP_Sub_Client__c> subClientMap = NSP_SubClientAssetSyncJob.filterSubClients( subClients );
             Set<Id> assetIds = NSP_SubClientAssetSyncJob.getAssetIds( subClients , subClientMap );
             List<Asset> assetRecords = NSP_SubClientAssetSyncJob.getAssetRecords( assetIds );
-            List<Asset> updateAssetRecords = updateAssetRecords = NSP_SubClientAssetSyncJob.setUnionFlagOnAssets( assetRecords , subClientMap );
+            List<Asset> updateAssetRecords = NSP_SubClientAssetSyncJob.setUnionFlagOnAssets( assetRecords , subClientMap );
             if ( ( subClientMap != null ) && !subClientMap.isEmpty() ) {
                 NSP_SubClientAssetSyncJob.updateRecords( subClientMap.values() , updateAssetRecords );
             }
