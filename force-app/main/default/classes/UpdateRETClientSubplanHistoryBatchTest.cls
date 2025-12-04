@@ -1,9 +1,7 @@
-@IsTest
+@isTest
 private class UpdateRETClientSubplanHistoryBatchTest {
-    // Constants
-    private static final Integer DEFAULT_SCOPE = 50;
 
-    @TestSetup
+    @testSetup
     private static void prepareTestData() {
         Date todayDate = Date.today();
 
@@ -64,7 +62,7 @@ private class UpdateRETClientSubplanHistoryBatchTest {
         insert clientSubPlanHistMember;
     }
 
-    @IsTest
+    @isTest
     private static void testBatchExecute_PositiveAndBulk() {
         // Arrange
         List<NSP_Client_Sub_Plan_History__c> existing = [
@@ -76,7 +74,7 @@ private class UpdateRETClientSubplanHistoryBatchTest {
         // Act
         Test.startTest();
         // Use explicit scope to validate execute/finish under bulk
-        Id jobId = Database.executeBatch(new UpdateRETClientSubplanHistoryBatch(), DEFAULT_SCOPE);
+        Id jobId = Database.executeBatch(new UpdateRETClientSubplanHistoryBatch(), 50);
         Test.stopTest();
 
         // Assert - job completed
@@ -93,7 +91,7 @@ private class UpdateRETClientSubplanHistoryBatchTest {
         Assert.areEqual(existing.size(), afters.size(), 'Batch should not delete client sub plan history records');
     }
 
-    @IsTest
+    @isTest
     private static void testBatchScheduler_SchedulesAndRuns() {
         // Arrange
         String cronExp = '0 0 */4 * * ?'; // Every 4 hours
@@ -116,20 +114,19 @@ private class UpdateRETClientSubplanHistoryBatchTest {
         Assert.isTrue(triggers[0].NextFireTime != null, 'Next fire time should be set');
     }
 
-    @IsTest
+    @isTest
     private static void testISelfSchedulable() {
         Test.startTest();
         string jobId = UpdateRETClientSubplanHistoryBatch.schedule();
-
         List<CronTrigger> triggers = [
             SELECT Id, State, NextFireTime, TimesTriggered, CronJobDetail.Name, CronJobDetail.JobType
-            FROM CronTrigger 
+            FROM CronTrigger
             WHERE Id = :jobId
             LIMIT 1
         ];
-        
         Assert.areEqual(1, triggers.size(), 'Expected one scheduled job for batch');
-
         Test.stopTest();
     }
+
 }
+//
