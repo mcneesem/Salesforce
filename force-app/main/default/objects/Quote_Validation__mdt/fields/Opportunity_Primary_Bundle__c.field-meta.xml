@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Opportunity_Primary_Bundle__c</fullName>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Opportunity Primary Bundle</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>WO/WS</fullName>
+                <default>true</default>
+                <label>WO/WS</label>
+            </value>
+            <value>
+                <fullName>WX</fullName>
+                <default>false</default>
+                <label>WX</label>
+            </value>
+            <value>
+                <fullName>Stand Alone</fullName>
+                <default>false</default>
+                <label>Stand Alone</label>
+            </value>
+            <value>
+                <fullName>WA</fullName>
+                <default>false</default>
+                <label>WA</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
