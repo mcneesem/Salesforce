@@ -135,13 +135,13 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable, Sch
 
         Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
 
-        if (form != null 
-            && form.Id != null 
-            && templateId != null 
-            && String.isNotBlank( form.Client_Owner_Email__c ) 
+        if (form != null
+            && form.Id != null
+            && templateId != null
+            && String.isNotBlank( form.Client_Owner_Email__c )
             && String.isNotBlank( TerminationEmailBatch.orgWideEmailAddressId )
-           ) 
-        { 
+           )
+        {
             List<Id> attachmentIds = new List<Id>();
             Messaging.SingleEmailMessage renderStoredEmailTemplate = Messaging.renderStoredEmailTemplate( templateId, null, form.Id );
             email.setSubject( renderStoredEmailTemplate.getSubject() );
@@ -152,11 +152,11 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable, Sch
             email.setSaveAsActivity( true );
             email.setWhatId( form.Id );
             if( TerminationEmailBatch.defaultTemplateAttachmentId != null ){
-               attachmentIds.add( TerminationEmailBatch.defaultTemplateAttachmentId ); 
+               attachmentIds.add( TerminationEmailBatch.defaultTemplateAttachmentId );
             }
             if( docLink != null &&
                 docLink.ContentDocument != null &&
-                docLink.ContentDocument.LatestPublishedVersionId != null 
+                docLink.ContentDocument.LatestPublishedVersionId != null
               )
             {
                 attachmentIds.add( docLink.ContentDocument.LatestPublishedVersionId );
@@ -165,7 +165,7 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable, Sch
                 email.setEntityAttachments( attachmentIds );
             }
         }
-        if ( email != null){ 
+        if ( email != null){
             emails.add(email);
         }
     }
@@ -175,7 +175,7 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable, Sch
         String templateName = '';
 
         if ( form != null && form.RecordType != null
-            && String.isNotBlank( form.NSP_Revision__c ) 
+            && String.isNotBlank( form.NSP_Revision__c )
            )
         {
             String rt = form.RecordType.DeveloperName;
@@ -197,9 +197,7 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable, Sch
                      templateName = TEMPLATE_REINSTATE_REVISED;
                  }
              }
-            
         }
-
         return templateName;
     }
 
@@ -225,7 +223,6 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable, Sch
                         }
                     } 
                 }
-               
             } catch( Exception e ) {
                 NSP_ErrorLogHandler.logException(
                     TerminationEmailBatch.class.getName() ,
@@ -255,7 +252,7 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable, Sch
                     'performDML' ,
                     e
                 );
-            } 
+            }
         }
     }
 
