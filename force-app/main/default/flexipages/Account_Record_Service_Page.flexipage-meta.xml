@@ -545,7 +545,7 @@
                             <value>Start_Date__c</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Anticipated_Return_To_Work_Date__c</value>
+                            <value>Actual_Return_To_Work_Date__c</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -1114,7 +1114,7 @@
                             <value>Start_Date__c</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Anticipated_Return_To_Work_Date__c</value>
+                            <value>Actual_Return_To_Work_Date__c</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>

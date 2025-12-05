@@ -156,8 +156,8 @@
     <externalSharingModel>ControlledByParent</externalSharingModel>
     <label>Leave Payment</label>
     <nameField>
-        <displayFormat>LP-{0000000000}</displayFormat>
-        <label>LP Record ID</label>
+        <displayFormat>SFP-{0000000000}</displayFormat>
+        <label>SFP Record ID</label>
         <trackHistory>true</trackHistory>
         <type>AutoNumber</type>
     </nameField>
