@@ -70,8 +70,9 @@ public without sharing class CaseAccountContactRelationController {
     }
 
     private static Detail buildDetail( AccountContactRelation record, Map<Id, NSP_Case_Contacts__c> caseConMap){
-        Detail acrcd = new Detail();
-        if( record != null ){
+        Detail acrcd = null;
+        if ( record != null ) {
+            acrcd = new Detail();
             acrcd.recordId = record.Id;
             acrcd.workEmail = record.NSP_Work_Email__c;
             acrcd.workPhone = record.NSP_Work_Phone__c;

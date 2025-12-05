@@ -1,27 +1,35 @@
 <template>
-    <div  class="custom-card">
-    <lightning-card title={title} icon-name ="standard:record"   class="custom-card"> 
-        <template if:true={hasData}>
+    <div class={containerClass}>
+    <lightning-card class={cardClass}>
+        <div slot="title" class={titleSlotClass}>
+            <lightning-icon icon-name="standard:record" size="small"></lightning-icon>
+            <h2 class={titleClass}>{title}</h2>
+        </div>
+        <template lwc:if={hasData}>
             <lightning-button-icon
                 icon-name="utility:refresh"
-                variant="neutral"
+                variant="border-filled"
                 alternative-text="Refresh"
                 title="Refresh"
                 slot="actions"
                 onclick={handleRefresh}
                 >
             </lightning-button-icon>
-       
-            <lightning-datatable
-                key-field="Id"
-                data={displayDataList}
-                columns={coulums}
-                class= "wrap-text-table wrap-header"
-                hide-checkbox-column="true"
-                >
-            </lightning-datatable>
+
+            <div class={summaryClass}>{summary}</div>
+
+            <div class={datatableClass}>
+                <lightning-datatable
+                    key-field="Id"
+                    data={displayDataList}
+                    columns={coulums}
+                    hide-checkbox-column="true"
+                    show-row-number-column="true"
+                    >
+                </lightning-datatable>
+            </div>
         
-            <div slot="footer" >
+            <div slot="footer" class={footerSlotClass}>
                 <lightning-button label="View All"
                     onclick={handleViewAll}
                     variant="base"
