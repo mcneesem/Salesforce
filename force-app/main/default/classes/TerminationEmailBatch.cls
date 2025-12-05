@@ -20,7 +20,7 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable, Sch
     private static final String EMAIL_STATUS_READY = 'Ready to be sent';
     private static final String EMAIL_STATUS_SENT = 'Email Sent';
 
-    private static String schedule() {
+    public static String schedule() {
         String suffix = '';
         if ( Test.isRunningTest() ) {
             suffix = ' ~ TEST';
@@ -336,19 +336,16 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable, Sch
     
     private static Id defaultTemplateAttachmentId {
         private get{
-            if( defaultTemplateAttachmentId == null )
+            if( defaultTemplateAttachmentId == null 
+               && TerminationEmailBatch.settings != null
+               && String.isNotBlank( TerminationEmailBatch.settings.DefaultTemplateAttachmentId__c )
+               && TerminationEmailBatch.settings.DefaultTemplateAttachmentId__c InstanceOf Id )
             { 
-                if ( ( TerminationEmailBatch.settings != null )
-                    && String.isNotBlank( TerminationEmailBatch.settings.DefaultTemplateAttachmentId__c )
-                    && ( TerminationEmailBatch.settings.DefaultTemplateAttachmentId__c InstanceOf Id )
-                   )
-                {
-                    Id checkId = Id.valueOf( TerminationEmailBatch.settings.DefaultTemplateAttachmentId__c );
-                    if ( checkId.getSObjectType() == ContentVersion.getSObjectType() ) {
-                        defaultTemplateAttachmentId = checkId;
-                    }
-                    defaultTemplateAttachmentId = TerminationEmailBatch.settings.DefaultTemplateAttachmentId__c;
+                Id checkId = Id.valueOf( TerminationEmailBatch.settings.DefaultTemplateAttachmentId__c );
+                if ( checkId.getSObjectType() == ContentVersion.getSObjectType() ) {
+                    defaultTemplateAttachmentId = checkId;
                 }
+                defaultTemplateAttachmentId = TerminationEmailBatch.settings.DefaultTemplateAttachmentId__c;
             }
             return defaultTemplateAttachmentId;
         }
