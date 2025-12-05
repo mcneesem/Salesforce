@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <classAccesses>
+        <apexClass>CRMAnalyticsDashboardController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>View_CRM_Analytics_Dashboard</name>
+    </customPermissions>
+    <description>Grants the Custom Permission to view the &quot;CRM Analytics Dashboard Wrapper&quot; LWC.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>View CRM Analytics Dashboard</label>
+</PermissionSet>
