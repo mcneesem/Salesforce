@@ -344,7 +344,7 @@ export default class CaseCatSubcatDetail extends LightningElement {
             this.showAllDetail = false;
             this.showDetail = false;
             this.showVersion = false;
-            this.selectedSubCategory = null;
+            this.selectedSubCategory = null; // Added
             this.selectedDetail = null;
             this.selectedVersion = null;
             this.recordTypeID = this.selectedAllRecordTypeMap.get(event.target.value);
