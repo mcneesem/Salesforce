@@ -23,7 +23,8 @@ public class NSP_QuoteTriggerHelper {
 
     public void beforeInsertDirector( List<SBQQ__Quote__c> newList ) {
         List<SBQQ__Quote__c> primaryQuotes= new List<SBQQ__Quote__c>();
-        validateQuote( newList );
+        ValidateQuoteCreation validator = new ValidateQuoteCreation();
+        validator.validateQuote( newList );
         stampQuoteOwnerGrouponInsert( newList );
         initializeDefaultFieldValuesOnInsert( newList );
         setQuoteDetailsOnInsert( newList );
@@ -1522,21 +1523,21 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
     //
     public void calcTaxOnOpportunity( Map<Id,SBQQ__Quote__c> quoteNewMap , Map<Id,SBQQ__Quote__c> quoteOldMap ) {
         try {
-            List<Opportunity> opportunitiesToUpdate = new List<Opportunity>();
-            for ( SBQQ__Quote__c newQuote : quoteNewMap.values() ) {
-                if ( ( newQuote.SBQQ__Primary__c == true )
-                    && ( newQuote.NSP_Budgetary_Quote__c == true )
-                    && ( newQuote.SBQQ__Status__c == NSP_CPQConstants.QUOTE_STATUS_APPROVED )
-                    && ( newQuote.SBQQ__Status__c != quoteOldMap.get( newQuote.Id ).SBQQ__Status__c )
-                    )
-                {
-                    Opportunity op = new Opportunity();
-                    op.Id = newQuote.SBQQ__Opportunity2__c;
-                    op.AVA_SFCLOUD__Calculate_Tax__c = true;
-                    opportunitiesToUpdate.add( op );
-                }
+        List<Opportunity> opportunitiesToUpdate = new List<Opportunity>();
+        for ( SBQQ__Quote__c newQuote : quoteNewMap.values() ) {
+            if ( ( newQuote.SBQQ__Primary__c == true )
+                && ( newQuote.NSP_Budgetary_Quote__c == true )
+                && ( newQuote.SBQQ__Status__c == NSP_CPQConstants.QUOTE_STATUS_APPROVED )
+                && ( newQuote.SBQQ__Status__c != quoteOldMap.get( newQuote.Id ).SBQQ__Status__c )
+                )
+            {
+                Opportunity op = new Opportunity();
+                op.Id = newQuote.SBQQ__Opportunity2__c;
+                op.AVA_SFCLOUD__Calculate_Tax__c = true;
+                opportunitiesToUpdate.add( op );
             }
-            if ( !opportunitiesToUpdate.isEmpty() ) {
+        }
+        if ( !opportunitiesToUpdate.isEmpty() ) {
                 List<Database.SaveResult> updateResults = Database.update( opportunitiesToUpdate , false );
                 NSP_ErrorLogHandler.logResults(
                     NSP_QuoteTriggerHelper.class.getName() ,
@@ -1637,74 +1638,6 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
         }
     }
 
-    //
-    // Method Name : validateQuote
-    // Description : Method to throw valdiation error if customer has an active or onboarding asset. This will enforce them to amendment
-    // Author : Samba Raju       Date : 06/01/2023
-    // @param quotes list;
-    // @return void
-    //
-    private void validateQuote(List<SBQQ__Quote__c> quotes){
-
-        Map<String, String> productRecordTypeMap = new Map<String, String>();
-        List<String> quoteValidationMdtKeys = new List<String>();
-
-        Map<String,Quote_Validation__mdt> validationRecords = Quote_Validation__mdt.getAll();
-        for (Quote_Validation__mdt validationRecord : validationRecords.values()) {
-        	productRecordTypeMap.put(validationRecord.Opportunity_Primary_Product__c, validationRecord.Asset_Record_Type__c);
-            string uiqueKey = validationRecord.Opportunity_Primary_Product__c+'_'+validationRecord.Opportunity_Primary_Bundle__c+'_'+validationRecord.Asset_Product_Bundle__c +'_'+validationRecord.Asset_Record_Type__c;
-            quoteValidationMdtKeys.add(uiqueKey);
-    	}
-        List<Id> accountIds = getAccountIds(quotes, productRecordTypeMap);
-        Map<Id, Map<String, Asset>> accountAssetMap = getAccountAssetMap(accountIds, productRecordTypeMap);
-
-        for(SBQQ__Quote__c newQuote:quotes){
-            if(newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_NEW) &&
-               productRecordTypeMap.containsKey(newQuote.NSP_Opportunity_Primary_Product__c) &&
-               accountAssetMap.ContainsKey(newQuote.SBQQ__Account__c)
-            ){
-                Map<String,Asset> recTypeAssetMap = accountAssetMap.get(newQuote.SBQQ__Account__c);
-                String assetRecordType = productRecordTypeMap.get(newQuote.NSP_Opportunity_Primary_Product__c);
-                if(recTypeAssetMap.containsKey(assetRecordType)){
-                    Asset ast = recTypeAssetMap.get(assetRecordType);
-                    String key = newQuote.NSP_Opportunity_Primary_Product__c + '_' + newQuote.NSP_Opportunity_Primary_Bundle__c + '_' + ast.NSP_ProductBundle__c + '_' + ast.RecordType.DeveloperName;
-                    if(quoteValidationMdtKeys.contains(key)){
-                        newQuote.addError(WX_WA_QUOTE_VALIDATION_ERROR);
-                    }
-                }
-            }
-        }
-    }
-
-    private List<Id> getAccountIds(List<SBQQ__Quote__c> quotes, Map<String, String> productRecordTypeMap) {
-        List<Id> accountIds = new List<Id>();
-        for (SBQQ__Quote__c newQuote : quotes) {
-            if (newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_NEW) &&
-                productRecordTypeMap.containsKey(newQuote.NSP_Opportunity_Primary_Product__c)
-            ) {
-                accountIds.add(newQuote.SBQQ__Account__c);
-            }
-        }
-        return accountIds;
-    }
-
-    private Map<Id, Map<String, Asset>> getAccountAssetMap(List<Id> accountIds, Map<String, String> productRecordTypeMap) {
-        Map<Id, Map<String, Asset>> accountAssetMap = new Map<Id, Map<String, Asset>>();
-        if (!accountIds.isEmpty()) {
-            for (Asset rec : [SELECT Id, AccountId, NSP_ProductBundle__c, RecordType.DeveloperName, NSP_Product_Line__c
-                            FROM Asset
-                            WHERE AccountId IN :accountIds
-                            AND RecordType.DeveloperName IN :productRecordTypeMap.values()
-                            AND Status IN ('Onboarding', 'Active')
-                            ORDER BY CreatedDate ASC]) {
-                if (!accountAssetMap.containsKey(rec.AccountId)) {
-                    accountAssetMap.put(rec.AccountId, new Map<String, Asset>());
-                }
-                accountAssetMap.get(rec.AccountId).put(rec.RecordType.DeveloperName, rec);
-            }
-        }
-        return accountAssetMap;
-    }
 
     //
     // Description: This method accepts various parameters from which it
