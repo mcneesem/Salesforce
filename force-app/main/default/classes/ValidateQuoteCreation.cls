@@ -5,9 +5,9 @@ public class ValidateQuoteCreation {
     private static Map<String, String> productRecordTypeMap;
     private static List<String> quoteValidationMdtKeys;
 
-	public void validateQuote(List<SBQQ__Quote__c> quotes){
-		productRecordTypeMap = new Map<String, String>();
-		quoteValidationMdtKeys = new List<String>();
+    public void validateQuote(List<SBQQ__Quote__c> quotes){
+        productRecordTypeMap = new Map<String, String>();
+        quoteValidationMdtKeys = new List<String>();
 
         Map<String,Quote_Validation__mdt> validationRecords = Quote_Validation__mdt.getAll();
         for (Quote_Validation__mdt validationRecord : validationRecords.values()) {
