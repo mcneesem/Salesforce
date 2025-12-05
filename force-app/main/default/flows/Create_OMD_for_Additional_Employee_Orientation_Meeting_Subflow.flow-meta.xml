@@ -257,6 +257,23 @@
             <targetReference>Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <description>Added to show the the dates with &gt; 0</description>
+        <name>Set_Target_Collection_Filtered_Collections</name>
+        <label>Set Target Collection : Filtered Collections</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>rc_Blocks_Scheduling</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Filter_Blocks</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Sort_OMRs_by_date_and_time_1</targetReference>
+        </connector>
+    </assignments>
     <choices>
         <name>Yes</name>
         <choiceText>Yes</choiceText>
@@ -298,7 +315,7 @@
             </rightValue>
         </conditions>
         <connector>
-            <targetReference>Sort_OMRs_by_date_and_time_1</targetReference>
+            <targetReference>Set_Target_Collection_Filtered_Collections</targetReference>
         </connector>
     </collectionProcessors>
     <collectionProcessors>
@@ -373,7 +390,8 @@
     </decisions>
     <description>New Version for Onboarding Meeting Detail Records and Multiple Task Records.
 Added OMD as record Input
-Added Time zone, Date(ISO Format),removed display text</description>
+Added Time zone, Date(ISO Format),removed display text
+AZD-509188 - Show Blocks where Slots Offered &gt; 0</description>
     <dynamicChoiceSets>
         <name>pc_Meeting_Type</name>
         <dataType>Picklist</dataType>
