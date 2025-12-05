@@ -9,38 +9,48 @@ public class ValidateQuoteCreation {
         productRecordTypeMap = new Map<String, String>();
         quoteValidationMdtKeys = new List<String>();
 
+        loadValidationRecords();
+
+        Set<Id> accountIds = this.getAccountIds(quotes);
+        Map<Id, Map<String, Asset>> accountAssetMap = this.getAccountAssetMap(accountIds);
+
+        for(SBQQ__Quote__c newQuote:quotes){
+            if(isValidQuote(newQuote) && accountAssetMap != null && accountAssetMap.ContainsKey(newQuote.SBQQ__Account__c)){
+                validateQuoteAgainstAssets(newQuote, accountAssetMap.get(newQuote.SBQQ__Account__c));
+            }
+        }
+    }
+
+    private void validateQuoteAgainstAssets(SBQQ__Quote__c newQuote, Map<String, Asset> recTypeAssetMap){
+        String assetRecordType = productRecordTypeMap.get(newQuote.NSP_Opportunity_Primary_Product__c);
+        if(recTypeAssetMap != null && recTypeAssetMap.containsKey(assetRecordType)){
+            Asset ast = recTypeAssetMap.get(assetRecordType);
+            if(ast != null){
+                String key = newQuote.NSP_Opportunity_Primary_Product__c + '_' + newQuote.NSP_Opportunity_Primary_Bundle__c + '_' + ast.NSP_ProductBundle__c + '_' + ast.RecordType.DeveloperName;
+                if(ValidateQuoteCreation.quoteValidationMdtKeys != null &&
+                    ValidateQuoteCreation.quoteValidationMdtKeys.contains(key) &&
+                    !ValidateQuoteCreation.bypassQuoteCreationError()
+                    ){
+                    newQuote.addError(WX_WA_QUOTE_VALIDATION_ERROR);
+                }
+            }
+        }
+    }
+
+    private boolean isValidQuote(SBQQ__Quote__c newQuote) {
+        return String.isNotBlank( newQuote.SBQQ__Type__c ) &&
+               newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_NEW) &&
+               String.isNotBlank( newQuote.NSP_Opportunity_Primary_Product__c ) &&
+               ValidateQuoteCreation.productRecordTypeMap != null &&
+               ValidateQuoteCreation.productRecordTypeMap.containsKey(newQuote.NSP_Opportunity_Primary_Product__c);
+    }
+
+    private void loadValidationRecords() {
         Map<String,Quote_Validation__mdt> validationRecords = Quote_Validation__mdt.getAll();
         for (Quote_Validation__mdt validationRecord : validationRecords.values()) {
             ValidateQuoteCreation.productRecordTypeMap.put(validationRecord.Opportunity_Primary_Product__c, validationRecord.Asset_Record_Type__c);
             string uiqueKey = validationRecord.Opportunity_Primary_Product__c+'_'+validationRecord.Opportunity_Primary_Bundle__c+'_'+validationRecord.Asset_Product_Bundle__c +'_'+validationRecord.Asset_Record_Type__c;
             ValidateQuoteCreation.quoteValidationMdtKeys.add(uiqueKey);
-        }
-        Set<Id> accountIds = this.getAccountIds(quotes);
-        Map<Id, Map<String, Asset>> accountAssetMap = this.getAccountAssetMap(accountIds);
-
-        for(SBQQ__Quote__c newQuote:quotes){
-            if(String.isNotBlank( newQuote.SBQQ__Type__c ) &&
-               newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_NEW) &&
-               String.isNotBlank( newQuote.NSP_Opportunity_Primary_Product__c ) &&
-               ValidateQuoteCreation.productRecordTypeMap != null &&
-               ValidateQuoteCreation.productRecordTypeMap.containsKey(newQuote.NSP_Opportunity_Primary_Product__c) &&
-               accountAssetMap.ContainsKey(newQuote.SBQQ__Account__c)
-            ){
-                Map<String,Asset> recTypeAssetMap = accountAssetMap.get(newQuote.SBQQ__Account__c);
-                String assetRecordType = productRecordTypeMap.get(newQuote.NSP_Opportunity_Primary_Product__c);
-                if(recTypeAssetMap != null && recTypeAssetMap.containsKey(assetRecordType)){
-                    Asset ast = recTypeAssetMap.get(assetRecordType);
-                    if(ast != null){
-                        String key = newQuote.NSP_Opportunity_Primary_Product__c + '_' + newQuote.NSP_Opportunity_Primary_Bundle__c + '_' + ast.NSP_ProductBundle__c + '_' + ast.RecordType.DeveloperName;
-                        if(ValidateQuoteCreation.quoteValidationMdtKeys != null &&
-                           ValidateQuoteCreation.quoteValidationMdtKeys.contains(key) &&
-                           !ValidateQuoteCreation.bypassQuoteCreationError()
-                          ){
-                            newQuote.addError(WX_WA_QUOTE_VALIDATION_ERROR);
-                        }
-                    }
-                }
-            }
         }
     }
 
