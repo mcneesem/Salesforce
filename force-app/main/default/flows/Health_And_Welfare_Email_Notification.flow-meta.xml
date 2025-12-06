@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Send_Email_To_Sender</name>
         <label>Send Email To Sender</label>
-        <locationX>446</locationX>
-        <locationY>1200</locationY>
+        <locationX>596</locationX>
+        <locationY>1308</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <faultConnector>
@@ -42,14 +42,15 @@
             </value>
         </inputParameters>
         <nameSegment>emailSimple</nameSegment>
-        <versionSegment>1</versionSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>61.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>External_Email_Template_Assignment</name>
         <label>External Email Template Assignment</label>
-        <locationX>578</locationX>
-        <locationY>924</locationY>
+        <locationX>728</locationX>
+        <locationY>1032</locationY>
         <assignmentItems>
             <assignToReference>Email_Template_Id</assignToReference>
             <operator>Assign</operator>
@@ -64,8 +65,8 @@
     <assignments>
         <name>Internal_Email_Template_Assignment</name>
         <label>Internal Email Template Assignment</label>
-        <locationX>50</locationX>
-        <locationY>924</locationY>
+        <locationX>200</locationX>
+        <locationY>1032</locationY>
         <assignmentItems>
             <assignToReference>Email_Template_Id</assignToReference>
             <operator>Assign</operator>
@@ -106,10 +107,33 @@
         </value>
     </constants>
     <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check</name>
+        <label>Outbound Email custom setting check</label>
+        <locationX>679</locationX>
+        <locationY>276</locationY>
+        <defaultConnector>
+            <targetReference>Validate_the_Switch</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Validate_Case_Records</name>
         <label>Validate Case Records</label>
-        <locationX>908</locationX>
-        <locationY>492</locationY>
+        <locationX>1058</locationX>
+        <locationY>600</locationY>
         <defaultConnectorLabel>No Case Records</defaultConnectorLabel>
         <rules>
             <name>Case_Record_With_Internal_Email</name>
@@ -144,8 +168,8 @@
     <decisions>
         <name>Validate_Email</name>
         <label>Validate Email</label>
-        <locationX>446</locationX>
-        <locationY>600</locationY>
+        <locationX>596</locationX>
+        <locationY>708</locationY>
         <defaultConnector>
             <targetReference>External_Email_Template</targetReference>
         </defaultConnector>
@@ -169,8 +193,8 @@
     <decisions>
         <name>Validate_External_Email</name>
         <label>Validate External Email</label>
-        <locationX>710</locationX>
-        <locationY>816</locationY>
+        <locationX>860</locationX>
+        <locationY>924</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Validate_External_Email_True</name>
@@ -198,8 +222,8 @@
     <decisions>
         <name>Validate_Internal_Email_Template</name>
         <label>Validate Internal Email Template</label>
-        <locationX>182</locationX>
-        <locationY>816</locationY>
+        <locationX>332</locationX>
+        <locationY>924</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Internal_Email_Template_True</name>
@@ -227,8 +251,8 @@
     <decisions>
         <name>Validate_the_Switch</name>
         <label>Validate the Switch</label>
-        <locationX>1271</locationX>
-        <locationY>276</locationY>
+        <locationX>1421</locationX>
+        <locationY>384</locationY>
         <defaultConnectorLabel>Switch Turn Off</defaultConnectorLabel>
         <rules>
             <name>Switch_Turned_On</name>
@@ -253,6 +277,7 @@
             <label>Switch Turned On</label>
         </rules>
     </decisions>
+    <description>Outbound Email bypass added.</description>
     <environments>Default</environments>
     <formulas>
         <name>Validate_Switch</name>
@@ -283,8 +308,8 @@
     <recordLookups>
         <name>External_Email_Template</name>
         <label>External Email Template</label>
-        <locationX>710</locationX>
-        <locationY>708</locationY>
+        <locationX>860</locationX>
+        <locationY>816</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Validate_External_Email</targetReference>
@@ -306,8 +331,8 @@
     <recordLookups>
         <name>Get_RelatedCase_Records</name>
         <label>Get_RelatedCase_Records</label>
-        <locationX>908</locationX>
-        <locationY>384</locationY>
+        <locationX>1058</locationX>
+        <locationY>492</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Validate_Case_Records</targetReference>
@@ -334,8 +359,8 @@
     <recordLookups>
         <name>Internal_Email_Template</name>
         <label>Internal Email Template</label>
-        <locationX>182</locationX>
-        <locationY>708</locationY>
+        <locationX>332</locationX>
+        <locationY>816</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Validate_Internal_Email_Template</targetReference>
@@ -355,7 +380,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>402</locationX>
+        <locationX>50</locationX>
         <locationY>0</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -383,7 +408,7 @@
         <recordTriggerType>Create</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Validate_the_Switch</targetReference>
+                <targetReference>Outbound_Email_custom_setting_check</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
@@ -393,8 +418,8 @@
     <subflows>
         <name>Send_Fault_Message</name>
         <label>Send Fault Message</label>
-        <locationX>1106</locationX>
-        <locationY>1308</locationY>
+        <locationX>1256</locationX>
+        <locationY>1416</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
