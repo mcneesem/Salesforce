@@ -146,7 +146,7 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Notnull</name>
-            <conditionLogic>1 AND 2 AND 3 AND (4 OR 5 OR 6 OR 7)</conditionLogic>
+            <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Setup.NSP_Trigger_Switch__c.OpportunityTrigger__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -166,34 +166,6 @@
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Owner.UserRole.Name</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Business Performance Advisor</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Owner.UserRole.Name</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Business Performance Consultant</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Owner.UserRole.Name</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>HCM</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Owner.UserRole.Name</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>PCM</stringValue>
                 </rightValue>
             </conditions>
             <connector>
