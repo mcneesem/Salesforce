@@ -138,7 +138,7 @@ export default class CaseAccountContactRelationships extends LightningElement {
     }
 
     get titleClass() {
-        return ( "slds-show_inline slds-m-left_small" );
+        return ( "slds-show_inline slds-align-middle slds-m-left_small" );
     }
 
     get summaryClass() {
