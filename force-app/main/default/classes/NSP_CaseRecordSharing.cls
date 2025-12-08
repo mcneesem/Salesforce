@@ -156,8 +156,8 @@ public class NSP_CaseRecordSharing {
         }
     }
 
-    private static List<string> getGroupNamesHelper( Case caseRec ) {
-        List<string> groupNames = new List<string>();
+    private static List<String> getGroupNamesHelper( Case caseRec ) {
+        List<String> groupNames = new List<String>();
         if ( caseRec != null ) {
             if ( String.isNotBlank( caseRec.NSP_Detail__c ) ) {
                 String key = ''
