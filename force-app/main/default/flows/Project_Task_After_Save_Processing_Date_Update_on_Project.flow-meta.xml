@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>65.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <environments>Default</environments>
-    <interviewLabel>Project Task - After Save - Processing Date Update on Project {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Project Task - After Save - Async - Processing Date Update on Project</label>
+    <interviewLabel>Project Task - After Save - Async - Update Project Processing Date {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Project Task - After Save - Async - Update Project Processing Date</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -50,14 +51,7 @@
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <filterLogic>(1 AND 2 AND 3 AND 4 AND 5) OR (6)</filterLogic>
-        <filters>
-            <field>pse__Status__c</field>
-            <operator>IsNull</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </filters>
+        <filterLogic>( 1 AND 2 AND 3 AND 4 ) OR ( 5 AND 3 AND 2 AND 4 )</filterLogic>
         <filters>
             <field>pse__Status__c</field>
             <operator>IsChanged</operator>
@@ -119,7 +113,7 @@
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Project_Task_After_Save_Processing_Date_Update_on_Project</stringValue>
+                <stringValue>Project_Task_After_Save_Async_Update_Project_Processing_Date</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
