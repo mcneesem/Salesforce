@@ -365,7 +365,7 @@
     <textTemplates>
         <name>emailBody</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>&lt;p&gt;Thank you for contacting the HRCore Business Team. Your email has been received, a case has been created for you, and the case number is {!$Record.CaseNumber}. A team member will respond to you shortly.&lt;/p&gt;&lt;p&gt;Thank you for allowing Insperity to serve your business!&lt;/p&gt;&lt;p&gt;HRCore Business Team&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://help.insperity.com/hcm/&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;HRCore Center Website&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;img src=&quot;{!emailSignatureLogo}&quot;&gt;&lt;/p&gt;</text>
+        <text>&lt;p&gt;Thank you for contacting the HRCore Business Team. Your email has been received, a case has been created for you, and the case number is {!$Record.CaseNumber}. A team member will respond to you shortly.You can also call us at 866-824-0939 and speak with a member of the team.&lt;/p&gt;&lt;p&gt;Thank you for allowing Insperity to serve your business!&lt;/p&gt;&lt;p&gt;HRCore Business Team&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://help.insperity.com/hcm/&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;HRCore Center Website&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;img src=&quot;{!emailSignatureLogo}&quot;&gt;&lt;/p&gt;</text>
     </textTemplates>
     <variables>
         <name>documentId</name>
