@@ -342,6 +342,11 @@
                 <default>false</default>
                 <label>Amend_Required_Text_Field__c</label>
             </value>
+            <value>
+                <fullName>SBQQ__ProductOption__c</fullName>
+                <default>false</default>
+                <label>SBQQ__ProductOption__c</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
