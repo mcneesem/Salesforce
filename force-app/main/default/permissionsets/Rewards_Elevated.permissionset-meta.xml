@@ -5933,11 +5933,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>NSP_Reward__c.NSP_Reward_Amount__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>NSP_Reward__c.NSP_Reward_Paid_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
