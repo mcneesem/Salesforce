@@ -540,7 +540,7 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Disability_Submission_Date__c</fieldItem>
+                <fieldItem>Record.Insperity_Disability_Submission_Date__c</fieldItem>
                 <identifier>RecordNSP_Disability_Submission_Date_cField</identifier>
             </fieldInstance>
         </itemInstances>

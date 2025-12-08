@@ -162,8 +162,8 @@
     <externalSharingModel>Private</externalSharingModel>
     <label>Leave</label>
     <nameField>
-        <displayFormat>L-{0000000000}</displayFormat>
-        <label>L Record ID</label>
+        <displayFormat>SFL-{0000000000}</displayFormat>
+        <label>SFL Record ID</label>
         <trackHistory>true</trackHistory>
         <type>AutoNumber</type>
     </nameField>

@@ -156,8 +156,8 @@
     <externalSharingModel>ControlledByParent</externalSharingModel>
     <label>Leave Supporting Documentation</label>
     <nameField>
-        <displayFormat>LSD-{0000000000}</displayFormat>
-        <label>LSD Record ID</label>
+        <displayFormat>SFD-{0000000000}</displayFormat>
+        <label>SFD Record ID</label>
         <trackHistory>true</trackHistory>
         <type>AutoNumber</type>
     </nameField>
