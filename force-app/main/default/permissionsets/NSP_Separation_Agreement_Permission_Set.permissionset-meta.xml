@@ -41,6 +41,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>NSP_ReportRequest__c.Is_No_Rehire_Clause_Required__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.NSP_Due_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>

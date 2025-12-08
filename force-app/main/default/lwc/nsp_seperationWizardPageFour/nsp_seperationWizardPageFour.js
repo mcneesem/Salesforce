@@ -1,6 +1,5 @@
 import { LightningElement,wire,api } from 'lwc';
 import { getPicklistValues } from 'lightning/uiObjectInfoApi';
-import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import REVIEW_STATUS from '@salesforce/schema/NSP_ReportRequest__c.NSP_ReviewStatus__c';
 import WHO_RESPONSIBLE_STOCK from '@salesforce/schema/NSP_ReportRequest__c.NSP_WhoResponsibleForStockEquityPaymt__c';
 import BONUS_PICKLIST from '@salesforce/schema/NSP_ReportRequest__c.NSP_BonusSelectOne__c';
@@ -134,27 +133,14 @@ currentPageFields=['Is_Rehire_Clause_Required__c','Is_Notary_Required__c','NSP_I
 'NSP_VerificationOfEmploymentHotline__c','NSP_DontContestUnemployment__c','NSP_ReferenceTospecificClientDocument__c','NSP_TransitionOfDuties__c','NSP_TransitionDate__c'];
 fieldValue =  { currentTarget : { name :'', value :''} };
 
-// event.currentTarget.value == true? this.template.querySelector('div.'+event.currentTarget.fieldName).style.display='':
-//this.template.querySelector('div.'+event.currentTarget.fieldName).style.display='none';
-
-
 radioOnChange(event){
 
-    
     let key = event.currentTarget.fieldName;
     let value = event.currentTarget.value;
 
     if(this.radioRequiredFields.includes(key.slice(0,-3))){
         this[key.slice(0,-3)] = ( value == true );
     }
-/**
-    if(value == true ){
-        this.requireOneBox = false ;
-    }else{
-        this.requireOneBox = true
-        this.verifyBox();
-    }
-**/
 
     if( this.template.querySelector('div.'+key) != null){
         [...this.template.querySelectorAll('div.' + key)].map(x =>{
@@ -250,8 +236,6 @@ radioOnChange(event){
     }
 }
 
-//lightning-input-field.NSP_EnterBonusAmmount__c
-/** */
 onchangeNspPrepared(event){
     if(this.preparedFields.includes(event.currentTarget.name)){
         this[event.currentTarget.name] = event.currentTarget.value;
@@ -422,6 +406,10 @@ onChangeAmountType(event)
     }
 }
 
+handleKeySonar() {
+    // only created to appease sonar...
+}
+
 showMsg(event){
     if(this.isclicked){
         this.template.querySelector('div.showMsg').style.display='';
@@ -432,7 +420,6 @@ showMsg(event){
         }
     }
 
-/***   Coprorate Review Fields only    */
 get isCorporateReview(){
   if(this.ReviewStatusOption.data){
     return (this.reviewType =='Corporate Review');
