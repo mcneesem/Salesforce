@@ -36,7 +36,7 @@ public class CLMDocumentTriggerHandler extends NSP_TriggerAction implements NSP_
      *
      */
     public void afterInsert(List<sObject> newList, Map<Id, sObject> newMap) {
-       	 CLMDocumentTriggerHelper helper = new CLMDocumentTriggerHelper();
+         CLMDocumentTriggerHelper helper = new CLMDocumentTriggerHelper();
          helper.afterInsertDocument((Map<Id, CLM_Document__c>) newMap);
     }
 
