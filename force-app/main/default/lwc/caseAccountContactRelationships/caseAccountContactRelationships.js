@@ -36,6 +36,22 @@ export default class CaseAccountContactRelationships extends LightningElement {
         }
         if ( this.lastUpdatedTimestamp && this.hasData ) {
             this.currentTimestamp = new Date();
+            this.intervalId = setInterval(
+                function() {
+                    this.currentTimestamp = new Date();
+                    if ( !this.hasData // stop summary refresh when data is missing...
+                        || !this.secondsSinceLastUpdate
+                        || ( this.secondsSinceLastUpdate > ( 2 * 60 * 60 ) ) // stop summary refresh after 2 hours...
+                        )
+                    {
+                        if ( this.intervalId ) {
+                            clearInterval( this.intervalId );
+                        }
+                        this.intervalId = undefined;
+                    }
+                }.bind( this ) ,
+                ( 60 * 1000 ) // refresh once per minute ( 1 minute == 60 seconds == 60000 milliseconds )
+            );
         }
     }
 
@@ -61,11 +77,51 @@ export default class CaseAccountContactRelationships extends LightningElement {
         return ( this.displayDataList ? this.displayDataList.length : 0 );
     }
 
-    get summary() {
-        return ( "" + this.total + " items" );
+     get summary() {
+        return ( "" + this.total + " items" + this.lastUpdatedSummary );
     }
 
-     get containerClass() {
+    get lastUpdatedSummary() {
+        return ( this.hasSummaryTimestamps ? " • Updated " + this.lastUpdatedFriendly + " ago" : "" );
+    }
+
+    get lastUpdatedFriendly() {
+        let response = "";
+        if ( this.hoursSinceLastUpdate ) {
+            if ( this.hoursSinceLastUpdate > 1 ) {
+                response = "" + this.hoursSinceLastUpdate + " hours";
+            } else if ( this.hoursSinceLastUpdate > 0 ) {
+                response = "an hour";
+            }
+        } else if ( this.minutesSinceLastUpdate ) {
+            if ( this.minutesSinceLastUpdate > 1 ) {
+                response = "" + this.minutesSinceLastUpdate + " minutes";
+            } else if ( this.minutesSinceLastUpdate > 0 ) {
+                response = "a minute";
+            }
+        } else if ( this.secondsSinceLastUpdate || ( this.secondsSinceLastUpdate === 0 ) ) {
+            response = "a few seconds";
+        }
+        return response;
+    }
+
+    get hoursSinceLastUpdate() {
+        return ( this.secondsSinceLastUpdate ? Math.floor( this.minutesSinceLastUpdate / 60 ) : undefined );
+    }
+
+    get minutesSinceLastUpdate() {
+        return ( this.secondsSinceLastUpdate ? Math.floor( this.secondsSinceLastUpdate / 60 ) : undefined );
+    }
+
+    get secondsSinceLastUpdate() {
+        return ( this.hasSummaryTimestamps ? Math.floor( ( this.currentTimestamp - this.lastUpdatedTimestamp ) / 1000 ) : undefined );
+    }
+
+    get hasSummaryTimestamps() {
+        return ( this.currentTimestamp && this.lastUpdatedTimestamp );
+    }
+
+    get containerClass() {
         return ( "container-border" );
     }
 
