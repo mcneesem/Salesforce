@@ -55,19 +55,19 @@ export default class CaseAccountContactRelationships extends LightningElement {
         }
     }
 
-
-    handleViewAll(){
+    handleViewAll() {
        this.displayDataList = this.acrDetailsData;
     }
 
-
-    handleRefresh(){
-        refreshApex(this.wireData);
+    handleRefresh() {
+        refreshApex( this.wireData );
     }
 
     get hasData() {
         return ( this.total > 0 );
     }
+
+    // title helpers...
 
     get title() {
         return "Account Contact Information (" + this.total + ")";
@@ -77,7 +77,9 @@ export default class CaseAccountContactRelationships extends LightningElement {
         return ( this.displayDataList ? this.displayDataList.length : 0 );
     }
 
-     get summary() {
+    // summary helpers...
+
+    get summary() {
         return ( "" + this.total + " items" + this.lastUpdatedSummary );
     }
 
@@ -121,6 +123,8 @@ export default class CaseAccountContactRelationships extends LightningElement {
         return ( this.currentTimestamp && this.lastUpdatedTimestamp );
     }
 
+    // dynamic style class helpers...
+
     get containerClass() {
         return ( "container-border" );
     }
@@ -148,4 +152,6 @@ export default class CaseAccountContactRelationships extends LightningElement {
     get footerSlotClass() {
         return ( "slds-p-left_small slds-p-right_small card-footer-background" );
     }
+
 }
+//
