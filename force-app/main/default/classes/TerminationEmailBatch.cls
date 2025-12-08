@@ -186,15 +186,15 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable, Sch
                )
              {
              if ( rev == NSP_ServiceConstants.NO ) {
-                     templateName = TEMPLATE_INITIAL;
+                     templateName = TerminationEmailBatch.TEMPLATE_INITIAL;
                  } else if ( rev == NSP_ServiceConstants.YES ) {
-                     templateName = TEMPLATE_REVISED;
+                     templateName = TerminationEmailBatch.TEMPLATE_REVISED;
                  }
              } else if ( rt == NSP_ServiceConstants.NSP_Client_Reinstatement ) {
                  if ( rev == NSP_ServiceConstants.NO ) {
-                     templateName = TEMPLATE_REINSTATE_INITIAL;
+                     templateName = TerminationEmailBatch.TEMPLATE_REINSTATE_INITIAL;
                  } else if ( rev == NSP_ServiceConstants.YES ) {
-                     templateName = TEMPLATE_REINSTATE_REVISED;
+                     templateName = TerminationEmailBatch.TEMPLATE_REINSTATE_REVISED;
                  }
              }
         }
@@ -355,10 +355,10 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable, Sch
             { 
                 Map<String, Id> temMap = new Map<String, Id>();
                 Set<String> templateApiNames = new Set<String>{ 
-                    TEMPLATE_INITIAL,
-                        TEMPLATE_REVISED,
-                        TEMPLATE_REINSTATE_INITIAL,
-                        TEMPLATE_REINSTATE_REVISED
+                    TerminationEmailBatch.TEMPLATE_INITIAL,
+                        TerminationEmailBatch.TEMPLATE_REVISED,
+                        TerminationEmailBatch.TEMPLATE_REINSTATE_INITIAL,
+                        TerminationEmailBatch.TEMPLATE_REINSTATE_REVISED
                         };
                             
                             for ( EmailTemplate template : [ SELECT DeveloperName 
