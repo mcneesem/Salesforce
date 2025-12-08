@@ -116,10 +116,6 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Disability_Submission_Date__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>State_Disability_Submission_Date__c</field>
             </layoutItems>
             <layoutItems>

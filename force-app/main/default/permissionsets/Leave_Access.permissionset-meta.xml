@@ -112,11 +112,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Leave__c.Disability_Submission_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Leave__c.Employee_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
