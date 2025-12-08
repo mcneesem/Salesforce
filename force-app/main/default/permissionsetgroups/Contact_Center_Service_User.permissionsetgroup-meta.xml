@@ -5,6 +5,7 @@
     <label>Contact Center Service User</label>
     <permissionSets>Account_Profile_Access</permissionSets>
     <permissionSets>Cobra_Admin</permissionSets>
+    <permissionSets>Contact_Center_Field_Permissions</permissionSets>
     <permissionSets>Contact_Center_Project_Access</permissionSets>
     <permissionSets>NSP_Main_Service_Contacts</permissionSets>
     <permissionSets>NSP_Read_Access_on_Sub_client_contact_addresses</permissionSets>

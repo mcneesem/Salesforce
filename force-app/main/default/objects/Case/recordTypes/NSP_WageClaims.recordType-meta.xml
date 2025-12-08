@@ -176,6 +176,65 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Current_Case_Queue__c</picklist>
+        <values>
+            <fullName>Contact_Center_Employment_Verification</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contact_Center_Recruiting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contact_Center_W_2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NSP_401k</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NSP_401k_Core_Group</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NSP_Benefits</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NSP_ContactCenter</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NSP_Contact_Center_Missing_Queue</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NSP_Contact_Center_Outbound</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NSP_Contact_Center_Section_125</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NSP_Contact_Center_Spanish</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NSP_Contact_Center_Verification</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NSP_Escalations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NSP_Web_Support</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Docusign_Form_To_Send_Multi__c</picklist>
         <values>
             <fullName>Acknowledgement of Receipt of Wages</fullName>
