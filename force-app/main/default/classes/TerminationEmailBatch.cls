@@ -181,7 +181,7 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable, Sch
             String rt = form.RecordType.DeveloperName;
             String rev = form.NSP_Revision__c;
             
-			if ( ( rt == TerminationEmailBatch.CREDIT_SPECIALIST )
+            if ( ( rt == TerminationEmailBatch.CREDIT_SPECIALIST )
                 || ( rt == NSP_ServiceConstants.NSP_Payroll_Specialist_Form )
                )
              {
