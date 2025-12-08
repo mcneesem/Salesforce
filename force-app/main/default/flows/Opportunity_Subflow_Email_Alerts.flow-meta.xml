@@ -4,7 +4,7 @@
         <name>Email_Alert_Child_Opportunity_Closed_Lost_Email_Alert</name>
         <label>Email Alert - Child Opportunity Closed Lost Email Alert</label>
         <locationX>13250</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <actionName>Opportunity.NSP_Child_Opportunity_Closed_Lost_Email_Alert</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -18,12 +18,13 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Child_Opportunity_Closed_Lost_Email_Alert</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>Email_Alert_MidMarket_Opportunity_Closed_Lost</name>
         <label>Email Alert - MidMarket_Opportunity_Closed_Lost</label>
         <locationX>12194</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <actionName>Opportunity.MidMarket_Opportunity_Closed_Lost</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -37,12 +38,13 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.MidMarket_Opportunity_Closed_Lost</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>Email_Alert_Notify_MidMarket_Team_of_WX_WA_Opty</name>
         <label>Email Alert - Notify MidMarket Team of WX/WA Opty</label>
         <locationX>12722</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <actionName>Opportunity.Notify_MidMarket_Team_of_WX_WA_Opportunity</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -56,12 +58,13 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.Notify_MidMarket_Team_of_WX_WA_Opportunity</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_Notice_of_Termination_For_Account_Owner</name>
         <label>Email Alert - Notice of Termination For Account Owner</label>
         <locationX>7442</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <actionName>Opportunity.NSP_Notice_of_Termination_for_Account_Owner</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -75,12 +78,13 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Notice_of_Termination_for_Account_Owner</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Alert_Mid_Market_sales_when_Opportunity_created_for_Account</name>
         <label>EA - NSP_Alert_Mid_Market_sales_when_Opportunity_created_for_Account</label>
         <locationX>6386</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <actionName>Opportunity.NSP_Alert_Mid_Market_sales_when_Opportunity_created_for_Account_with_more_than_1</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -94,12 +98,13 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Alert_Mid_Market_sales_when_Opportunity_created_for_Account_with_more_than_1</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Alert_Mid_when_opportunity_primary_product_is_updated</name>
         <label>Email Alert - NSP_Alert_Mid_when_opportunity_primary_product_is_updated</label>
         <locationX>9026</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <actionName>Opportunity.NSP_Alert_Mid_when_opportunity_primary_product_is_updated</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -113,12 +118,13 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Alert_Mid_when_opportunity_primary_product_is_updated</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Alert_Mid_when_opportunity_related_account_number_of_ee_is_updat</name>
         <label>Email Alert - NSP_Alert_Mid_when_opportunity_related_account_numofee_is_updated</label>
         <locationX>9554</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <actionName>Opportunity.NSP_Alert_Mid_when_opportunity_related_account_number_of_ee_is_updated</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -132,12 +138,13 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Alert_Mid_when_opportunity_related_account_number_of_ee_is_updated</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Alert_Mid_when_opportunity_updated_with_more_then_150_employee</name>
         <label>Email Alert - NSP_Alert_Mid_when_opportunity_updated_with_more_then_150_employee</label>
         <locationX>6914</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <actionName>Opportunity.NSP_Alert_Mid_when_opportunity_updated_with_more_then_150_employee</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -151,12 +158,13 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Alert_Mid_when_opportunity_updated_with_more_then_150_employee</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Alert_when_Order_is_Generated_for_an_Opportunity</name>
         <label>Email Alert - NSP_Alert_when_Order_is_Generated_for_an_Opportunity</label>
         <locationX>11666</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <actionName>Opportunity.NSP_Alert_when_Order_is_Generated_for_an_Opportunity</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -170,12 +178,13 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Alert_when_Order_is_Generated_for_an_Opportunity</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Email_Alert_Primary_Product_Change_on_Parent_Oppty</name>
         <label>Email Alert - NSP_Email_Alert_Primary_Product_Change_on_Parent_Oppty</label>
         <locationX>5330</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <actionName>Opportunity.NSP_Email_Alert_Primary_Product_Change_on_Parent_Oppty</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -189,12 +198,13 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Email_Alert_Primary_Product_Change_on_Parent_Oppty</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Engage_Service_Team_Email</name>
         <label>Email Alert - NSP_Engage_Service_Team_Email</label>
         <locationX>10082</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <actionName>Opportunity.NSP_Engage_Service_Team_Email</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -208,12 +218,13 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Engage_Service_Team_Email</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Engage_Service_Team_Email_for_WX_Opportunities</name>
         <label>Email Alert - NSP_Engage_Service_Team_Email_for_WX_Opportunities</label>
         <locationX>10610</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <actionName>Opportunity.NSP_Engage_Service_Team_Email_for_WX_Opportunities</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -227,12 +238,13 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Engage_Service_Team_Email_for_WX_Opportunities</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Interest_in_BPS_Email_Alert_for_Non_WX_WA</name>
         <label>Email Alert - NSP_Interest_in_BPS_Email_Alert_for_Non_WX_WA</label>
         <locationX>50</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <actionName>Opportunity.NSP_Interest_in_BPS_Email_Alert_for_Non_WX_WA</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -246,12 +258,13 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Interest_in_BPS_Email_Alert_for_Non_WX_WA</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Interest_in_BPS_Email_Alert_for_WX_WA</name>
         <label>Email Alert - NSP_Interest_in_BPS_Email_Alert_for_WX_WA</label>
         <locationX>578</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <actionName>Opportunity.NSP_Interest_in_BPS_Email_Alert_for_WX_WA</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -265,12 +278,13 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Interest_in_BPS_Email_Alert_for_WX_WA</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Interest_in_Certify_Email_Alert</name>
         <label>Email Alert - NSP_Interest_in_Certify_Email_Alert</label>
         <locationX>3218</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <actionName>Opportunity.NSP_Interest_in_Certify_Email_Alert</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -284,12 +298,13 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Interest_in_Certify_Email_Alert</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Interest_in_Employment_Screening_Email_Alert</name>
         <label>Email Alert - NSP_Interest_in_Employment_Screening_Email_Alert</label>
         <locationX>2690</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <actionName>Opportunity.NSP_Interest_in_Employment_Screening_Email_Alert</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -303,12 +318,13 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Interest_in_Employment_Screening_Email_Alert</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Interest_in_Insurance_Services_Email_Alert</name>
         <label>Email Alert - NSP_Interest_in_Insurance_Services_Email_Alert</label>
         <locationX>1634</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <actionName>Opportunity.NSP_Interest_in_Insurance_Services_Email_Alert</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -322,12 +338,13 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Interest_in_Insurance_Services_Email_Alert</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Interest_in_Integra_Email_Alert</name>
         <label>Email Alert - NSP_Interest_in_Integra_Email_Alert</label>
         <locationX>3746</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <actionName>Opportunity.NSP_Interest_in_Integra_Email_Alert</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -341,12 +358,13 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Interest_in_Integra_Email_Alert</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Interest_in_Recruiting_Email_Alert</name>
         <label>Email Alert - NSP_Interest_in_Recruiting_Email_Alert</label>
         <locationX>2162</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <actionName>Opportunity.NSP_Interest_in_Recruiting_Email_Alert</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -360,12 +378,13 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Interest_in_Recruiting_Email_Alert</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Interest_in_Retirement_Services_Email_Alert</name>
         <label>Email Alert - NSP_Interest_in_Retirement_Services_Email_Alert</label>
         <locationX>1106</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <actionName>Opportunity.NSP_Interest_in_Retirement_Services_Email_Alert</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -379,12 +398,13 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Interest_in_Retirement_Services_Email_Alert</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Notify_Account_Owner_on_Creation_of_New_Opportunity</name>
         <label>Email Alert - NSP_Notify_Account_Owner_on_Creation_of_New_Opportunity</label>
         <locationX>5858</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <actionName>Opportunity.NSP_Notify_Account_Owner_on_Creation_of_New_Opportunity</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -398,12 +418,13 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Notify_Account_Owner_on_Creation_of_New_Opportunity</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Notify_Child_Opportunity_Owner_of_Closed_Won</name>
         <label>Email Alert - NSP_Notify_Child_Opportunity_Owner_of_Closed_Won</label>
         <locationX>4802</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <actionName>Opportunity.NSP_Notify_Child_Opportunity_Owner_of_Closed_Won</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -417,12 +438,13 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Notify_Child_Opportunity_Owner_of_Closed_Won</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Notify_Opportunity_Owner_of_Closed_Won</name>
         <label>Email Alert - NSP_Notify_Opportunity_Owner_of_Closed_Won</label>
         <locationX>7970</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <actionName>Opportunity.NSP_Notify_Opportunity_Owner_of_Closed_Won</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -436,12 +458,13 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Notify_Opportunity_Owner_of_Closed_Won</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Notify_Oppty_Owner_Email_Alert</name>
         <label>Email Alert - NSP_Notify_Oppty_Owner_Email_Alert</label>
         <locationX>8498</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <actionName>Opportunity.NSP_Notify_Oppty_Owner_Email_Alert</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -455,12 +478,13 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Notify_Oppty_Owner_Email_Alert</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_NSP_Parent_opportunity_Closed_Lost_Email_Alert</name>
         <label>Email Alert - NSP_Parent_opportunity_Closed_Lost_Email_Alert</label>
         <locationX>4274</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <actionName>Opportunity.NSP_Parent_opportunity_Closed_Lost_Email_Alert</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -474,12 +498,13 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Parent_opportunity_Closed_Lost_Email_Alert</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>EmailAlert_Signed_CSA_Email_to_Opportunity_Owner_Manager_s_Manager</name>
         <label>Email Alert - Signed_CSA_Email_to_Opportunity_Owner_Manager_s_Manager</label>
         <locationX>11138</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <actionName>Opportunity.Signed_CSA_Email_to_Opportunity_Owner_Manager_s_Manager</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -493,13 +518,15 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.Signed_CSA_Email_to_Opportunity_Owner_Manager_s_Manager</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>61.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Assign_FaultElement_Interest_in_BPS_Non_WX_WA</name>
         <label>Assign FaultElement - Interest in BPS Non WX/WA</label>
         <locationX>314</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -515,7 +542,7 @@
         <name>Assign_FaultElement_Interest_in_BPS_WX_WA</name>
         <label>Assign FaultElement - Interest in BPS WX/WA</label>
         <locationX>842</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -532,7 +559,7 @@
         <name>Assign_FaultElement_Interest_in_Certify</name>
         <label>Assign FaultElement - Interest in Certify</label>
         <locationX>3482</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -549,7 +576,7 @@
         <name>Assign_FaultElement_Interest_in_Employment_Screening</name>
         <label>Assign FaultElement - Interest in Employment Screening</label>
         <locationX>2954</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -566,7 +593,7 @@
         <name>Assign_FaultElement_Interest_in_Insurance_Services</name>
         <label>Assign FaultElement - Interest in Insurance Services</label>
         <locationX>1898</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -583,7 +610,7 @@
         <name>Assign_FaultElement_Interest_in_Integra</name>
         <label>Assign FaultElement - Interest in Integra</label>
         <locationX>4010</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -600,7 +627,7 @@
         <name>Assign_FaultElement_Interest_in_Recruiting</name>
         <label>Assign FaultElement - Interest in Recruiting</label>
         <locationX>2426</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -617,7 +644,7 @@
         <name>Assign_FaultElement_Interest_in_Retirement_Services</name>
         <label>Assign FaultElement - Interest in Retirement Services</label>
         <locationX>1370</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -634,7 +661,7 @@
         <name>Assign_varFaultElement_Account_Owner_different_from_Opty_Owner</name>
         <label>Assign varFaultElement - Account Owner different from Opty Owner</label>
         <locationX>6122</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -651,7 +678,7 @@
         <name>Assign_varFaultElement_Alert_Mid_of_Num_of_EE_on_Acc_Update</name>
         <label>Assign varFaultElement - Alert Mid of Num of EE on Acc Update</label>
         <locationX>9818</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -668,7 +695,7 @@
         <name>Assign_varFaultElement_Alert_Mid_of_Product_Update</name>
         <label>Assign varFaultElement - Alert Mid of Product Update</label>
         <locationX>9290</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -685,7 +712,7 @@
         <name>Assign_varFaultElement_Alert_MidMarket_Sales</name>
         <label>Assign varFaultElement - Alert MidMarket Sales</label>
         <locationX>6650</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -702,7 +729,7 @@
         <name>Assign_varFaultElement_Alert_MidMarket_Sales_of_Opty_NumOfEmployees</name>
         <label>Assign varFaultElement - Alert MidMarket Sales of Opty NumOfEmployees</label>
         <locationX>7178</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -719,7 +746,7 @@
         <name>Assign_varFaultElement_Alert_When_Order_Generated</name>
         <label>Assign varFaultElement - Alert When Order Generated</label>
         <locationX>11930</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -736,7 +763,7 @@
         <name>Assign_varFaultElement_Email_Alert_Child_Opportunity_Closed_Lost_Email_Alert</name>
         <label>Assign varFaultElement - Email Alert - Child Opportunity Closed Lost Email Alert</label>
         <locationX>13514</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -753,7 +780,7 @@
         <name>Assign_varFaultElement_Engage_Service_Team_Email</name>
         <label>Assign varFaultElement - Engage Service Team Email</label>
         <locationX>10346</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -770,7 +797,7 @@
         <name>Assign_varFaultElement_Engage_Service_Team_Email_for_WX_Optys</name>
         <label>Assign varFaultElement - Engage Service Team Email for WX Optys</label>
         <locationX>10874</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -787,7 +814,7 @@
         <name>Assign_varFaultElement_MidMarket_Opty_Closed_Lost</name>
         <label>Assign varFaultElement - MidMarket Opty Closed Lost</label>
         <locationX>12458</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -804,7 +831,7 @@
         <name>Assign_varFaultElement_Notice_of_Termination_for_Account_Owner</name>
         <label>Assign varFaultElement - Notice of Termination for Account Owner</label>
         <locationX>7706</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -821,7 +848,7 @@
         <name>Assign_varFaultElement_Notify_MidMarket_Team_of_WX_WA_Opty</name>
         <label>Assign varFaultElement - Notify MidMarket Team of WX/WA Opty</label>
         <locationX>12986</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -838,7 +865,7 @@
         <name>Assign_varFaultElement_Notify_Opty_Owner_Email_Alert</name>
         <label>Assign varFaultElement - Notify Opty Owner Email Alert</label>
         <locationX>8762</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -855,7 +882,7 @@
         <name>Assign_varFaultElement_Notify_Opty_Owner_of_Closed_Won</name>
         <label>Assign varFaultElement - Notify Opty Owner of Closed Won</label>
         <locationX>8234</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -872,7 +899,7 @@
         <name>Assign_varFaultElement_Parent_Opty_Closed_Lost</name>
         <label>Assign varFaultElement - Parent Opty Closed Lost</label>
         <locationX>4538</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -889,7 +916,7 @@
         <name>Assign_varFaultElement_Parent_Opty_is_Closed_Won</name>
         <label>Assign varFaultElement - Parent Opty is Closed Won</label>
         <locationX>5066</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -906,7 +933,7 @@
         <name>Assign_varFaultElement_Parent_Primary_Product_Changed</name>
         <label>Assign varFaultElement - Parent Primary Product Changed</label>
         <locationX>5594</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -923,7 +950,7 @@
         <name>Assign_varFaultElement_Signed_CSA_Email_to_Owners_Managers_Manager</name>
         <label>Assign varFaultElement - Signed CSA Email to Owner&apos;s Manager&apos;s Manager</label>
         <locationX>11402</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -937,9 +964,32 @@
         </connector>
     </assignments>
     <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check</name>
+        <label>Outbound Email custom setting check</label>
+        <locationX>3350</locationX>
+        <locationY>242</locationY>
+        <defaultConnector>
+            <targetReference>Which_Email_Alert_should_be_sent</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Verify_inputs_are_populated</name>
         <label>Verify inputs are populated</label>
-        <locationX>10478</locationX>
+        <locationX>8696</locationX>
         <locationY>134</locationY>
         <defaultConnectorLabel>Inputs missing</defaultConnectorLabel>
         <rules>
@@ -960,7 +1010,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Which_Email_Alert_should_be_sent</targetReference>
+                <targetReference>Outbound_Email_custom_setting_check</targetReference>
             </connector>
             <label>Inputs are populated</label>
         </rules>
@@ -969,7 +1019,7 @@
         <name>Which_Email_Alert_should_be_sent</name>
         <label>Which Email Alert should be sent?</label>
         <locationX>6914</locationX>
-        <locationY>242</locationY>
+        <locationY>350</locationY>
         <defaultConnectorLabel>N/A</defaultConnectorLabel>
         <rules>
             <name>NSP_Interest_in_BPS_Email_Alert_for_Non_WX_WA</name>
@@ -1362,7 +1412,7 @@
             <label>NSP_Child_Opportunity_Closed_Lost_Email_Alert</label>
         </rules>
     </decisions>
-    <description>HCM Leads Specialist email for WX/WA added. MidMarket Opty Closed Lost added. Updated to check for inputs and update variables</description>
+    <description>Outbound Email bypass added. HCM Leads Specialist email for WX/WA added. MidMarket Opty Closed Lost added. Updated to check for inputs and update variables</description>
     <environments>Default</environments>
     <interviewLabel>Opportunity - Subflow - Email Alerts {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Opportunity - Subflow - Email Alerts</label>
@@ -1386,7 +1436,7 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <start>
-        <locationX>10352</locationX>
+        <locationX>8570</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Verify_inputs_are_populated</targetReference>
@@ -1397,7 +1447,7 @@
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
         <locationX>314</locationX>
-        <locationY>566</locationY>
+        <locationY>674</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
@@ -1408,7 +1458,7 @@
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Opportunity - Subflow - Email Alerts </stringValue>
+                <stringValue>Opportunity_Subflow_Email_Alerts </stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>

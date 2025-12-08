@@ -4,8 +4,8 @@
         <description>Action to send  email alert name &apos;Deconversion Payment Alert&apos;</description>
         <name>Deconversion_Payment_Email_Alert</name>
         <label>Deconversion Payment Email Alert</label>
-        <locationX>50</locationX>
-        <locationY>455</locationY>
+        <locationX>182</locationX>
+        <locationY>539</locationY>
         <actionName>pse__Proj__c.NSP_Deconversion_Payment_Alert</actionName>
         <actionType>emailAlert</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -15,13 +15,16 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>pse__Proj__c.NSP_Deconversion_Payment_Alert</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>56.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <decisions>
         <name>Check_Down_payment</name>
         <label>Check Down payment</label>
-        <locationX>182</locationX>
-        <locationY>335</locationY>
+        <locationX>248</locationX>
+        <locationY>323</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>isDownApaymentRecived</name>
@@ -48,12 +51,35 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Deconversion_Payment_Email_Alert</targetReference>
+                <targetReference>Outbound_Email_custom_setting_check</targetReference>
             </connector>
             <label>isDownApaymentRecived</label>
         </rules>
     </decisions>
-    <description>On After insert and After update</description>
+    <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check</name>
+        <label>Outbound Email custom setting check</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <defaultConnector>
+            <targetReference>Deconversion_Payment_Email_Alert</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false</label>
+        </rules>
+    </decisions>
+    <description>Outbound Email bypass added. On After insert and After update</description>
     <environments>Default</environments>
     <interviewLabel>ProjectAfterFlow {!$Flow.CurrentDateTime}</interviewLabel>
     <label>ProjectAfterFlow</label>
@@ -77,7 +103,7 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <start>
-        <locationX>56</locationX>
+        <locationX>122</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Check_Down_payment</targetReference>
@@ -86,5 +112,5 @@
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
 </Flow>

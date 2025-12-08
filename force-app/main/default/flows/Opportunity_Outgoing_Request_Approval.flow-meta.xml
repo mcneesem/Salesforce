@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Email_Alert_Outgoing_Approval_Request_MidMarket_or_Enterprise</name>
         <label>Email Alert - Outgoing Approval Request - MidMarket or Enterprise</label>
-        <locationX>50</locationX>
-        <locationY>782</locationY>
+        <locationX>138</locationX>
+        <locationY>890</locationY>
         <actionName>Opportunity.Outgoing_Approval_Request_MidMarket_or_Enterprise</actionName>
         <actionType>emailAlert</actionType>
         <connector>
@@ -21,12 +21,13 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.Outgoing_Approval_Request_MidMarket_or_Enterprise</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>Email_Alert_Outgoing_Approval_Request_Other_Account_Segments</name>
         <label>Email Alert - Outgoing Approval Request - Other Account Segments</label>
-        <locationX>842</locationX>
-        <locationY>890</locationY>
+        <locationX>1106</locationX>
+        <locationY>998</locationY>
         <actionName>Opportunity.Outgoing_Approval_Request_Other_Account_Segments</actionName>
         <actionType>emailAlert</actionType>
         <connector>
@@ -43,8 +44,10 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.Outgoing_Approval_Request_Other_Account_Segments</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Assign_Stage_In_Review</name>
         <label>Assign Stage = In Review</label>
@@ -64,7 +67,7 @@
     <assignments>
         <name>Assign_Stage_In_Review_Other_Account_Segments</name>
         <label>Assign Stage = In Review - Other Account Segments</label>
-        <locationX>842</locationX>
+        <locationX>1018</locationX>
         <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>recordOutgoingOpty.StageName</assignToReference>
@@ -80,8 +83,8 @@
     <assignments>
         <name>Assign_varFaultElement_Email_Alert_Outgoing_Approval_Request_MidMarket_or_Ent</name>
         <label>Assign varFaultElement - Email Alert Outgoing Approval Request - MidMarket or Enterprise</label>
-        <locationX>314</locationX>
-        <locationY>890</locationY>
+        <locationX>402</locationX>
+        <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -97,8 +100,8 @@
     <assignments>
         <name>Assign_varFaultElement_Email_Alert_Outgoing_Approval_Request_Other_Account_Seg</name>
         <label>Assign varFaultElement - Email Alert - Outgoing Approval Request - Other Account Segments</label>
-        <locationX>1106</locationX>
-        <locationY>998</locationY>
+        <locationX>1370</locationX>
+        <locationY>1106</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -114,7 +117,7 @@
     <assignments>
         <name>Assign_varFaultElement_Get_and_validate_Outgoing_Opty</name>
         <label>Assign varFaultElement - Get and validate Outgoing Opty</label>
-        <locationX>2162</locationX>
+        <locationX>2426</locationX>
         <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -130,7 +133,7 @@
     <assignments>
         <name>Assign_varFaultElement_Update_Outgoing_Opty</name>
         <label>Assign varFaultElement - Update Outgoing Opty</label>
-        <locationX>578</locationX>
+        <locationX>666</locationX>
         <locationY>782</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -147,7 +150,7 @@
     <assignments>
         <name>Assign_varFaultElement_Update_Outgoing_Opty_Other_Account_Segments</name>
         <label>Assign varFaultElement - Update Outgoing Opty - Other Account Segments</label>
-        <locationX>1370</locationX>
+        <locationX>1634</locationX>
         <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -164,7 +167,7 @@
     <decisions>
         <name>Are_DM_and_RM_fields_populated</name>
         <label>Are DM and RM fields populated?</label>
-        <locationX>1238</locationX>
+        <locationX>1458</locationX>
         <locationY>566</locationY>
         <defaultConnector>
             <targetReference>Need_to_Add_DM_User_to_Opty_Screen</targetReference>
@@ -208,9 +211,61 @@
         </rules>
     </decisions>
     <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check_MidMarket</name>
+        <label>Outbound Email custom setting check MidMarket</label>
+        <locationX>50</locationX>
+        <locationY>782</locationY>
+        <defaultConnector>
+            <targetReference>Email_Alert_Outgoing_Approval_Request_MidMarket_or_Enterprise</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false_MidMarket</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Opportunity_Has_Been_Submitted_Screen</targetReference>
+            </connector>
+            <label>IsEnabledOutbound = false MidMarket</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check_Other_Segments</name>
+        <label>Outbound Email custom setting check Other Segments</label>
+        <locationX>1018</locationX>
+        <locationY>890</locationY>
+        <defaultConnector>
+            <targetReference>Email_Alert_Outgoing_Approval_Request_Other_Account_Segments</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false_Other_Segments</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Opportunity_Has_Been_Submitted_Screen</targetReference>
+            </connector>
+            <label>IsEnabledOutbound = false Other Segments</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Was_Opty_Id_passed_in</name>
         <label>Was Opty Id passed in?</label>
-        <locationX>1848</locationX>
+        <locationX>2074</locationX>
         <locationY>134</locationY>
         <defaultConnectorLabel>Opty Id not available</defaultConnectorLabel>
         <rules>
@@ -246,7 +301,7 @@
     <decisions>
         <name>Was_Outgoing_Opty_found</name>
         <label>Was Outgoing Opty found?</label>
-        <locationX>1271</locationX>
+        <locationX>1458</locationX>
         <locationY>350</locationY>
         <defaultConnectorLabel>Outgoing Opty not found</defaultConnectorLabel>
         <rules>
@@ -275,7 +330,7 @@
     <decisions>
         <name>What_is_the_Account_Segment</name>
         <label>What is the Account Segment?</label>
-        <locationX>644</locationX>
+        <locationX>754</locationX>
         <locationY>458</locationY>
         <defaultConnector>
             <targetReference>Are_DM_and_RM_fields_populated</targetReference>
@@ -304,7 +359,7 @@
             <label>MidMarket or Enterprise</label>
         </rules>
     </decisions>
-    <description>Added RM with DM. Updated email alerts. Custom approval process flow for Outgoing Opportunities to go to Workday</description>
+    <description>Outbound Email bypass added. Added RM with DM. Updated email alerts. Custom approval process flow for Outgoing Opportunities to go to Workday</description>
     <environments>Default</environments>
     <interviewLabel>Opportunity - Outgoing - Submit for Approval {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Opportunity - Outgoing - Request Approval</label>
@@ -330,7 +385,7 @@
     <recordLookups>
         <name>Get_and_validate_Outgoing_Opty</name>
         <label>Get and validate Outgoing Opty</label>
-        <locationX>1271</locationX>
+        <locationX>1458</locationX>
         <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -375,7 +430,7 @@
         <locationX>50</locationX>
         <locationY>674</locationY>
         <connector>
-            <targetReference>Email_Alert_Outgoing_Approval_Request_MidMarket_or_Enterprise</targetReference>
+            <targetReference>Outbound_Email_custom_setting_check_MidMarket</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Assign_varFaultElement_Update_Outgoing_Opty</targetReference>
@@ -385,10 +440,10 @@
     <recordUpdates>
         <name>Update_Outgoing_Opty_Other_Account_Segments</name>
         <label>Update Outgoing Opty - Other Account Segments</label>
-        <locationX>842</locationX>
+        <locationX>1018</locationX>
         <locationY>782</locationY>
         <connector>
-            <targetReference>Email_Alert_Outgoing_Approval_Request_Other_Account_Segments</targetReference>
+            <targetReference>Outbound_Email_custom_setting_check_Other_Segments</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Assign_varFaultElement_Update_Outgoing_Opty_Other_Account_Segments</targetReference>
@@ -398,7 +453,7 @@
     <screens>
         <name>Need_to_Add_DM_User_to_Opty_Screen</name>
         <label>Need to Add DM User to Opty Screen</label>
-        <locationX>1634</locationX>
+        <locationX>1898</locationX>
         <locationY>674</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -407,6 +462,14 @@
             <name>DMUserAndRMNeedToBePopulated_DisplayText</name>
             <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong&gt;The DM User and RM fields on the Outgoing Opportunity need to be populated before you can submit it for approval.&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
@@ -414,8 +477,8 @@
     <screens>
         <name>Opportunity_Has_Been_Submitted_Screen</name>
         <label>Opportunity Has Been Submitted Screen</label>
-        <locationX>644</locationX>
-        <locationY>1364</locationY>
+        <locationX>754</locationX>
+        <locationY>1556</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -423,12 +486,20 @@
             <name>Opportunity_Submitted_DisplayText</name>
             <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;The Opportunity has been submitted for approval.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>1722</locationX>
+        <locationX>1948</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Was_Opty_Id_passed_in</targetReference>
@@ -438,7 +509,7 @@
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
-        <locationX>2162</locationX>
+        <locationX>2426</locationX>
         <locationY>458</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>

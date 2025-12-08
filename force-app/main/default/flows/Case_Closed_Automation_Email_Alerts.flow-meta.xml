@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Expensable_Case_Closed_Email_Alert</name>
         <label>Expensable Case Closed Email Alert</label>
-        <locationX>50</locationX>
-        <locationY>384</locationY>
+        <locationX>308</locationX>
+        <locationY>492</locationY>
         <actionName>Case.ExpensAble_Case_Closed</actionName>
         <actionType>emailAlert</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -14,12 +14,14 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Case.ExpensAble_Case_Closed</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>Integra_Case_closed_email_alert</name>
         <label>Integra Case closed email alert</label>
-        <locationX>314</locationX>
-        <locationY>384</locationY>
+        <locationX>572</locationX>
+        <locationY>492</locationY>
         <actionName>Case.Integra_Case_Closed</actionName>
         <actionType>emailAlert</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -29,12 +31,14 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Case.Integra_Case_Closed</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>OrgPlus_Case_Closed_Email_Alert</name>
         <label>OrgPlus – Case Closed Email Alert</label>
-        <locationX>578</locationX>
-        <locationY>384</locationY>
+        <locationX>836</locationX>
+        <locationY>492</locationY>
         <actionName>Case.OrgPlus_Case_Closed</actionName>
         <actionType>emailAlert</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -44,12 +48,14 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Case.OrgPlus_Case_Closed</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>PerformSmart_Case_Closed_Email_Alert</name>
         <label>PerformSmart – Case Closed Email Alert</label>
-        <locationX>842</locationX>
-        <locationY>384</locationY>
+        <locationX>1100</locationX>
+        <locationY>492</locationY>
         <actionName>Case.PerformSmart_Case_Closed</actionName>
         <actionType>emailAlert</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -59,12 +65,14 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Case.PerformSmart_Case_Closed</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>WX_Tax_Case_Closed_Email_Alert</name>
         <label>WX Tax – Case Closed Email Alert</label>
-        <locationX>1106</locationX>
-        <locationY>384</locationY>
+        <locationX>1364</locationX>
+        <locationY>492</locationY>
         <actionName>Case.WX_Tax_Case_Closed</actionName>
         <actionType>emailAlert</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -74,12 +82,14 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Case.WX_Tax_Case_Closed</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>XML_Case_Closed_Email_Alert</name>
         <label>XML – Case Closed Email Alert</label>
-        <locationX>1370</locationX>
-        <locationY>384</locationY>
+        <locationX>1628</locationX>
+        <locationY>492</locationY>
         <actionName>Case.XML_Case_Closed</actionName>
         <actionType>emailAlert</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -89,13 +99,16 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Case.XML_Case_Closed</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <decisions>
         <name>Original_Queue_Assigned_Check</name>
         <label>Original Queue Assigned Check</label>
-        <locationX>842</locationX>
-        <locationY>276</locationY>
+        <locationX>1100</locationX>
+        <locationY>384</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Expensable_Queue</name>
@@ -188,6 +201,30 @@
             <label>XML Queue</label>
         </rules>
     </decisions>
+    <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check</name>
+        <label>Outbound Email custom setting check</label>
+        <locationX>572</locationX>
+        <locationY>276</locationY>
+        <defaultConnector>
+            <targetReference>Original_Queue_Assigned_Check</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false</label>
+        </rules>
+    </decisions>
+    <description>Outbound Email bypass added.</description>
     <environments>Default</environments>
     <interviewLabel>Case Closed Automation Email Alerts {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Case Closed Automation Email Alerts</label>
@@ -211,7 +248,7 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <start>
-        <locationX>188</locationX>
+        <locationX>50</locationX>
         <locationY>0</locationY>
         <filterLogic>( 1 AND 2 AND 3 AND 4 AND ( 5 OR 6 OR 7 OR 8 OR 9 OR 10 ) )</filterLogic>
         <filters>
@@ -288,7 +325,7 @@
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Original_Queue_Assigned_Check</targetReference>
+                <targetReference>Outbound_Email_custom_setting_check</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>

@@ -4,7 +4,7 @@
         <name>Send_Compensation_Service_Request_email</name>
         <label>Send Compensation Service Request email</label>
         <locationX>182</locationX>
-        <locationY>1190</locationY>
+        <locationY>1298</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
@@ -59,7 +59,7 @@
         <name>Assign_Contact_Name_to_Variable</name>
         <label>Assign Contact Name to Variable</label>
         <locationX>182</locationX>
-        <locationY>674</locationY>
+        <locationY>782</locationY>
         <assignmentItems>
             <assignToReference>contactName</assignToReference>
             <operator>Assign</operator>
@@ -75,7 +75,7 @@
         <name>Assign_Email_Logo_Document_Id</name>
         <label>Assign Email Logo Document Id</label>
         <locationX>50</locationX>
-        <locationY>998</locationY>
+        <locationY>1106</locationY>
         <assignmentItems>
             <assignToReference>EmailLogo_DocumentId</assignToReference>
             <operator>Assign</operator>
@@ -91,7 +91,7 @@
         <name>Assign_Sent_Email_to_True</name>
         <label>Assign Sent Email to True</label>
         <locationX>182</locationX>
-        <locationY>1298</locationY>
+        <locationY>1406</locationY>
         <assignmentItems>
             <assignToReference>varCasetoUpdate.Sent_Email__c</assignToReference>
             <operator>Assign</operator>
@@ -114,7 +114,7 @@
         <name>Assign_varFaultElement_Get_ACR_Record</name>
         <label>Assign varFaultElement - Get ACR Record</label>
         <locationX>1546</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -131,7 +131,7 @@
         <name>Assign_varFaultElement_Get_Compensation_Services_Cases</name>
         <label>Assign varFaultElement - Get Compensation Services Cases</label>
         <locationX>2074</locationX>
-        <locationY>242</locationY>
+        <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -147,7 +147,7 @@
         <name>Assign_varFaultElement_Send_Compensation_Service_Request</name>
         <label>Assign varFaultElement - Send Compensation Service Request</label>
         <locationX>754</locationX>
-        <locationY>1298</locationY>
+        <locationY>1406</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -164,7 +164,7 @@
         <name>Assign_varFaultElement_Update_Case_Field_Sent_Email</name>
         <label>Assign varFaultElement - Update Case Field Sent Email</label>
         <locationX>490</locationX>
-        <locationY>1514</locationY>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -181,7 +181,7 @@
         <name>Check_Email_Logo_Document</name>
         <label>Check Email Logo Document</label>
         <locationX>182</locationX>
-        <locationY>890</locationY>
+        <locationY>998</locationY>
         <defaultConnector>
             <targetReference>Send_Compensation_Service_Request_email</targetReference>
         </defaultConnector>
@@ -206,7 +206,7 @@
         <name>Is_Sent_Email_populated</name>
         <label>Is Sent Email populated?</label>
         <locationX>941</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <defaultConnector>
             <targetReference>Email_Already_Sent_Error</targetReference>
         </defaultConnector>
@@ -228,10 +228,33 @@
         </rules>
     </decisions>
     <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check</name>
+        <label>Outbound Email custom setting check</label>
+        <locationX>580</locationX>
+        <locationY>134</locationY>
+        <defaultConnector>
+            <targetReference>Get_Compensation_Services_Cases</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Was_ACR_found</name>
         <label>Was ACR found?</label>
         <locationX>600</locationX>
-        <locationY>566</locationY>
+        <locationY>674</locationY>
         <defaultConnector>
             <targetReference>No_ACR_found_Error</targetReference>
         </defaultConnector>
@@ -257,7 +280,7 @@
         <name>Was_Case_found</name>
         <label>Was Case found?</label>
         <locationX>1375</locationX>
-        <locationY>242</locationY>
+        <locationY>350</locationY>
         <defaultConnector>
             <targetReference>No_Case_found_Error</targetReference>
         </defaultConnector>
@@ -278,7 +301,7 @@
             <label>Case found</label>
         </rules>
     </decisions>
-    <description>Sends Compensation Request email to Contact&apos;s ACR Work email listed for Account listed on Case</description>
+    <description>Outbound Email bypass added. Sends Compensation Request email to Contact&apos;s ACR Work email listed for Account listed on Case</description>
     <environments>Default</environments>
     <formulas>
         <name>EmailLogoHeaderFooter</name>
@@ -311,7 +334,7 @@
         <name>Get_ACR_Record</name>
         <label>Get ACR Record</label>
         <locationX>941</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Is_Sent_Email_populated</targetReference>
@@ -359,7 +382,7 @@
         <name>Get_Compensation_Services_Cases</name>
         <label>Get Compensation Services Cases</label>
         <locationX>1375</locationX>
-        <locationY>134</locationY>
+        <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Was_Case_found</targetReference>
@@ -423,7 +446,7 @@
         <name>Get_Email_Logo_Document</name>
         <label>Get Email Logo Document</label>
         <locationX>182</locationX>
-        <locationY>782</locationY>
+        <locationY>890</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Email_Logo_Document</targetReference>
@@ -447,7 +470,7 @@
         <name>Update_Case_Field_Sent_Email</name>
         <label>Update Case Field Sent Email</label>
         <locationX>182</locationX>
-        <locationY>1406</locationY>
+        <locationY>1514</locationY>
         <connector>
             <targetReference>Email_Sent_Message</targetReference>
         </connector>
@@ -460,7 +483,7 @@
         <name>Email_Already_Sent_Error</name>
         <label>Email Already Sent Error</label>
         <locationX>1282</locationX>
-        <locationY>566</locationY>
+        <locationY>674</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -484,7 +507,7 @@
         <name>Email_Sent_Message</name>
         <label>Email Sent Message</label>
         <locationX>182</locationX>
-        <locationY>1514</locationY>
+        <locationY>1622</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -508,7 +531,7 @@
         <name>Flow_Fault_Error</name>
         <label>Flow Fault Error</label>
         <locationX>2074</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -532,7 +555,7 @@
         <name>No_ACR_found_Error</name>
         <label>No ACR found Error</label>
         <locationX>1018</locationX>
-        <locationY>674</locationY>
+        <locationY>782</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -556,7 +579,7 @@
         <name>No_Case_found_Error</name>
         <label>No Case found Error</label>
         <locationX>1810</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -577,10 +600,10 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>1249</locationX>
+        <locationX>454</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_Compensation_Services_Cases</targetReference>
+            <targetReference>Outbound_Email_custom_setting_check</targetReference>
         </connector>
     </start>
     <status>Draft</status>
@@ -588,7 +611,7 @@
         <name>Fault_Handler</name>
         <label>Fault Handler</label>
         <locationX>2074</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <connector>
             <targetReference>Flow_Fault_Error</targetReference>
         </connector>

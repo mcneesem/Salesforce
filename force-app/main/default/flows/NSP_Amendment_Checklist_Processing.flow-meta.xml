@@ -4,8 +4,8 @@
         <description>Amendment Checklist Processed</description>
         <name>Amendment_Checklist_Processed</name>
         <label>Amendment Checklist Processed</label>
-        <locationX>50</locationX>
-        <locationY>1487</locationY>
+        <locationX>204</locationX>
+        <locationY>1463</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
@@ -36,13 +36,15 @@
                 <elementReference>SubjectCompleted</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <description>Amendment Ready for Processing STY-02111</description>
         <name>Amendment_Ready_for_Processing_0</name>
         <label>Amendment Ready for Processing</label>
-        <locationX>50</locationX>
-        <locationY>455</locationY>
+        <locationX>204</locationX>
+        <locationY>539</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
@@ -73,13 +75,15 @@
                 <elementReference>Subject</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <description>Quality Control Assignment Alert STY-02117</description>
         <name>Quality_Control_Assignment_Alert_0</name>
         <label>Quality Control Assignment Alert</label>
-        <locationX>50</locationX>
-        <locationY>911</locationY>
+        <locationX>204</locationX>
+        <locationY>947</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
@@ -110,13 +114,16 @@
                 <elementReference>SubjectQC</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>55.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <decisions>
         <name>Check_Condition</name>
         <label>Check Condition</label>
-        <locationX>182</locationX>
-        <locationY>335</locationY>
+        <locationX>336</locationX>
+        <locationY>431</locationY>
         <defaultConnector>
             <targetReference>Check_Condition_0</targetReference>
         </defaultConnector>
@@ -161,8 +168,8 @@
     <decisions>
         <name>Check_Condition_0</name>
         <label>Check Condition</label>
-        <locationX>182</locationX>
-        <locationY>791</locationY>
+        <locationX>336</locationX>
+        <locationY>839</locationY>
         <defaultConnector>
             <targetReference>Get_EmailMessage_for_Completion</targetReference>
         </defaultConnector>
@@ -193,8 +200,8 @@
     <decisions>
         <name>Check_Condition_0_0</name>
         <label>Check Condition</label>
-        <locationX>182</locationX>
-        <locationY>1367</locationY>
+        <locationX>336</locationX>
+        <locationY>1355</locationY>
         <defaultConnector>
             <targetReference>Get_Task_records</targetReference>
         </defaultConnector>
@@ -233,7 +240,7 @@
         <name>Check_Condition_0_0_0</name>
         <label>Check Condition</label>
         <locationX>182</locationX>
-        <locationY>1943</locationY>
+        <locationY>1955</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>RET_QC_CRM_Task_Creation</name>
@@ -265,6 +272,33 @@
             <label>RET QC CRM Task Creation</label>
         </rules>
     </decisions>
+    <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check</name>
+        <label>Outbound Email custom setting check</label>
+        <locationX>182</locationX>
+        <locationY>323</locationY>
+        <defaultConnector>
+            <targetReference>Check_Condition</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Task_records</targetReference>
+            </connector>
+            <label>IsEnabledOutbound = false</label>
+        </rules>
+    </decisions>
+    <description>Outbound Email bypass added.</description>
     <environments>Default</environments>
     <formulas>
         <name>Comment</name>
@@ -317,8 +351,8 @@
         <description>Create Email Message Records</description>
         <name>Create_Email_Message_Records_0</name>
         <label>Create Email Message Records</label>
-        <locationX>50</locationX>
-        <locationY>575</locationY>
+        <locationX>204</locationX>
+        <locationY>647</locationY>
         <connector>
             <targetReference>Check_Condition_0</targetReference>
         </connector>
@@ -371,8 +405,8 @@
         <description>Create Email Message Records</description>
         <name>Create_Email_Message_Records_0_0_0_0</name>
         <label>Create Email Message Records</label>
-        <locationX>50</locationX>
-        <locationY>1031</locationY>
+        <locationX>204</locationX>
+        <locationY>1055</locationY>
         <connector>
             <targetReference>Get_EmailMessage_for_Completion</targetReference>
         </connector>
@@ -425,8 +459,8 @@
         <description>Create Email Message Records</description>
         <name>Create_Email_Message_Records_0_0_0_0_0</name>
         <label>Create Email Message Records</label>
-        <locationX>50</locationX>
-        <locationY>1607</locationY>
+        <locationX>204</locationX>
+        <locationY>1571</locationY>
         <connector>
             <targetReference>Get_Task_records</targetReference>
         </connector>
@@ -480,7 +514,7 @@
         <name>Create_Task_Record</name>
         <label>Create Task Record</label>
         <locationX>50</locationX>
-        <locationY>2183</locationY>
+        <locationY>2171</locationY>
         <inputAssignments>
             <field>ActivityDate</field>
             <value>
@@ -497,6 +531,12 @@
             <field>NSP_Start_Date__c</field>
             <value>
                 <elementReference>Today</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>NSP_Time_Entry__c</field>
+            <value>
+                <stringValue>Preparing/implementing required plan documents &amp; amendments</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -530,12 +570,6 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>NSP_Time_Entry__c</field>
-            <value>
-                <stringValue>Preparing/implementing required plan documents &amp; amendments</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>WhatId</field>
             <value>
                 <elementReference>$Record.Id</elementReference>
@@ -547,7 +581,7 @@
     <recordLookups>
         <name>Get_EmailMessage_for_Completion</name>
         <label>Get EmailMessage for Completion</label>
-        <locationX>182</locationX>
+        <locationX>336</locationX>
         <locationY>1247</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -606,7 +640,7 @@
         <name>Get_Task_records</name>
         <label>Get Task records</label>
         <locationX>182</locationX>
-        <locationY>1823</locationY>
+        <locationY>1847</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Condition_0_0_0</targetReference>
@@ -634,13 +668,13 @@
         <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Check_Condition</targetReference>
+            <targetReference>Outbound_Email_custom_setting_check</targetReference>
         </connector>
         <object>NSP_Amendment_Checklist__c</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <textTemplates>
         <name>EmailBody</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
