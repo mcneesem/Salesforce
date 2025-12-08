@@ -3,8 +3,8 @@
     <actionCalls>
         <name>FeinDocumentationEmail</name>
         <label>FeinDocumentationEmail</label>
-        <locationX>50</locationX>
-        <locationY>1440</locationY>
+        <locationX>155</locationX>
+        <locationY>1548</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <faultConnector>
@@ -54,14 +54,15 @@
             </value>
         </inputParameters>
         <nameSegment>emailSimple</nameSegment>
-        <versionSegment>1</versionSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Assign_varFaultElement</name>
         <label>Assign varFaultElement getToAddressv</label>
-        <locationX>1898</locationX>
-        <locationY>492</locationY>
+        <locationX>2003</locationX>
+        <locationY>600</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -77,8 +78,8 @@
     <assignments>
         <name>Assign_varFaultElement_Content_Document</name>
         <label>Assign varFaultElement Content Document</label>
-        <locationX>578</locationX>
-        <locationY>1140</locationY>
+        <locationX>683</locationX>
+        <locationY>1248</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -94,8 +95,8 @@
     <assignments>
         <name>Assign_varFaultElement_FeinDocEmail</name>
         <label>Assign varFaultElement FeinDocEmail</label>
-        <locationX>314</locationX>
-        <locationY>1548</locationY>
+        <locationX>419</locationX>
+        <locationY>1656</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -110,8 +111,8 @@
     <assignments>
         <name>Assign_varFaultElement_GetIp</name>
         <label>Assign varFaultElement GetIp</label>
-        <locationX>1106</locationX>
-        <locationY>924</locationY>
+        <locationX>1211</locationX>
+        <locationY>1032</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -127,8 +128,8 @@
     <assignments>
         <name>AssignFeinDocumentationEmail</name>
         <label>AssignFeinDocumentationEmail</label>
-        <locationX>908</locationX>
-        <locationY>600</locationY>
+        <locationX>1013</locationX>
+        <locationY>708</locationY>
         <assignmentItems>
             <assignToReference>ToEmailAddress</assignToReference>
             <operator>Assign</operator>
@@ -143,8 +144,8 @@
     <assignments>
         <name>recordLink</name>
         <label>Record link creation</label>
-        <locationX>138</locationX>
-        <locationY>1248</locationY>
+        <locationX>243</locationX>
+        <locationY>1356</locationY>
         <assignmentItems>
             <assignToReference>ContentRecordLink</assignToReference>
             <operator>Add</operator>
@@ -159,8 +160,8 @@
     <decisions>
         <name>CheckFeinDocumentationPresent</name>
         <label>CheckFeinDocumentationPresent</label>
-        <locationX>1271</locationX>
-        <locationY>492</locationY>
+        <locationX>1376</locationX>
+        <locationY>600</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>CheckFeinDocumentationEmailPresent</name>
@@ -181,8 +182,8 @@
     <decisions>
         <name>CheckToAddress</name>
         <label>CheckToAddress</label>
-        <locationX>908</locationX>
-        <locationY>708</locationY>
+        <locationX>1013</locationX>
+        <locationY>816</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>FeinDocumentationIsNotNull</name>
@@ -203,8 +204,8 @@
     <decisions>
         <name>GetIpIsBlank</name>
         <label>GetIpIsBlank</label>
-        <locationX>446</locationX>
-        <locationY>924</locationY>
+        <locationX>551</locationX>
+        <locationY>1032</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>isNotNull</name>
@@ -239,8 +240,8 @@
     <decisions>
         <name>IsFeinDocumentationName</name>
         <label>IsFeinDocumentationName</label>
-        <locationX>1716</locationX>
-        <locationY>276</locationY>
+        <locationX>1821</locationX>
+        <locationY>384</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>FeinDocumentation</name>
@@ -258,6 +259,30 @@
             <label>FeinDocumentation</label>
         </rules>
     </decisions>
+    <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check</name>
+        <label>Outbound Email custom setting check</label>
+        <locationX>812</locationX>
+        <locationY>276</locationY>
+        <defaultConnector>
+            <targetReference>IsFeinDocumentationName</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false</label>
+        </rules>
+    </decisions>
+    <description>Outbound Email bypass added.</description>
     <environments>Default</environments>
     <formulas>
         <name>recordLinkCreation</name>
@@ -269,8 +294,8 @@
     <loops>
         <name>loop_On_Content_Document</name>
         <label>loop On Content Document</label>
-        <locationX>50</locationX>
-        <locationY>1140</locationY>
+        <locationX>155</locationX>
+        <locationY>1248</locationY>
         <collectionReference>get_Content_Document</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -302,8 +327,8 @@
     <recordLookups>
         <name>get_Content_Document</name>
         <label>get Content Document</label>
-        <locationX>50</locationX>
-        <locationY>1032</locationY>
+        <locationX>155</locationX>
+        <locationY>1140</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>loop_On_Content_Document</targetReference>
@@ -335,8 +360,8 @@
     <recordLookups>
         <name>GetIp</name>
         <label>GetIp</label>
-        <locationX>446</locationX>
-        <locationY>816</locationY>
+        <locationX>551</locationX>
+        <locationY>924</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>GetIpIsBlank</targetReference>
@@ -363,8 +388,8 @@
     <recordLookups>
         <name>GetToaddressFromMetadata</name>
         <label>GetToaddressFromMetadata</label>
-        <locationX>1271</locationX>
-        <locationY>384</locationY>
+        <locationX>1376</locationX>
+        <locationY>492</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>CheckFeinDocumentationPresent</targetReference>
@@ -394,7 +419,7 @@
         </outputAssignments>
     </recordLookups>
     <start>
-        <locationX>581</locationX>
+        <locationX>50</locationX>
         <locationY>0</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -415,7 +440,7 @@
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>IsFeinDocumentationName</targetReference>
+                <targetReference>Outbound_Email_custom_setting_check</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
@@ -425,8 +450,8 @@
     <subflows>
         <name>Fault_Flow_For_Email</name>
         <label>Fault Handler Subflow</label>
-        <locationX>314</locationX>
-        <locationY>1656</locationY>
+        <locationX>419</locationX>
+        <locationY>1764</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>

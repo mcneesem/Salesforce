@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Send_Email_NSPHardship</name>
         <label>Send Email NSPHardship</label>
-        <locationX>291</locationX>
-        <locationY>1068</locationY>
+        <locationX>613</locationX>
+        <locationY>1176</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <faultConnector>
@@ -60,14 +60,15 @@
             </value>
         </inputParameters>
         <nameSegment>emailSimple</nameSegment>
-        <versionSegment>1</versionSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>59.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>EmailRecipient</name>
         <label>EmailRecipient</label>
-        <locationX>852</locationX>
-        <locationY>600</locationY>
+        <locationX>1174</locationX>
+        <locationY>708</locationY>
         <assignmentItems>
             <assignToReference>RecipientEmail</assignToReference>
             <operator>Add</operator>
@@ -82,8 +83,8 @@
     <assignments>
         <name>PersonalEmailRecipient</name>
         <label>PersonalEmailRecipient</label>
-        <locationX>588</locationX>
-        <locationY>600</locationY>
+        <locationX>910</locationX>
+        <locationY>708</locationY>
         <assignmentItems>
             <assignToReference>RecipientEmail</assignToReference>
             <operator>Assign</operator>
@@ -98,8 +99,8 @@
     <assignments>
         <name>WebEmailRecipient</name>
         <label>WebEmailRecipient</label>
-        <locationX>60</locationX>
-        <locationY>384</locationY>
+        <locationX>382</locationX>
+        <locationY>492</locationY>
         <assignmentItems>
             <assignToReference>RecipientEmail</assignToReference>
             <operator>Assign</operator>
@@ -114,8 +115,8 @@
     <assignments>
         <name>WorkEmailAsRecipient</name>
         <label>WorkEmailAsRecipient</label>
-        <locationX>324</locationX>
-        <locationY>600</locationY>
+        <locationX>646</locationX>
+        <locationY>708</locationY>
         <assignmentItems>
             <assignToReference>RecipientEmail</assignToReference>
             <operator>Assign</operator>
@@ -130,8 +131,8 @@
     <decisions>
         <name>Check_for_ContactId</name>
         <label>Check for ContactId</label>
-        <locationX>1050</locationX>
-        <locationY>384</locationY>
+        <locationX>1372</locationX>
+        <locationY>492</locationY>
         <defaultConnectorLabel>Contact ID NULL</defaultConnectorLabel>
         <rules>
             <name>Contact_Not_Null</name>
@@ -152,8 +153,8 @@
     <decisions>
         <name>Check_For_Email</name>
         <label>Check For Email</label>
-        <locationX>555</locationX>
-        <locationY>276</locationY>
+        <locationX>877</locationX>
+        <locationY>384</locationY>
         <defaultConnector>
             <targetReference>Check_for_ContactId</targetReference>
         </defaultConnector>
@@ -177,8 +178,8 @@
     <decisions>
         <name>Check_for_email_type</name>
         <label>Check for email type</label>
-        <locationX>720</locationX>
-        <locationY>492</locationY>
+        <locationX>1042</locationX>
+        <locationY>600</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Contact_Work_Email</name>
@@ -229,8 +230,8 @@
     <decisions>
         <name>Check_for_Recipient</name>
         <label>Check for Recipient</label>
-        <locationX>555</locationX>
-        <locationY>960</locationY>
+        <locationX>877</locationX>
+        <locationY>1068</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>RecipientEmail_Not_Null</name>
@@ -248,7 +249,30 @@
             <label>RecipientEmail Not Null</label>
         </rules>
     </decisions>
-    <description>Emails are sent out after case creation when the case owner is RET-NSPHardship and RecordType is PEO</description>
+    <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check</name>
+        <label>Outbound Email custom setting check</label>
+        <locationX>497</locationX>
+        <locationY>276</locationY>
+        <defaultConnector>
+            <targetReference>Check_For_Email</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false</label>
+        </rules>
+    </decisions>
+    <description>Outbound Email bypass added. Emails are sent out after case creation when the case owner is RET-NSPHardship and RecordType is PEO</description>
     <environments>Default</environments>
     <interviewLabel>Hardship Case Creation Alert {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Hardship Case Creation Alert</label>
@@ -308,7 +332,7 @@
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Check_For_Email</targetReference>
+                <targetReference>Outbound_Email_custom_setting_check</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
@@ -318,8 +342,8 @@
     <subflows>
         <name>Fault_Flow</name>
         <label>Fault Flow</label>
-        <locationX>555</locationX>
-        <locationY>1176</locationY>
+        <locationX>877</locationX>
+        <locationY>1284</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>

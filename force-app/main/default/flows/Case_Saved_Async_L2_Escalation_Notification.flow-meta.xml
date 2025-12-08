@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Email_Notification_To_Contacts</name>
         <label>Email Notification To Contacts</label>
-        <locationX>473</locationX>
-        <locationY>816</locationY>
+        <locationX>940</locationX>
+        <locationY>924</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
@@ -76,8 +76,8 @@
     <assignments>
         <name>Set_Fault_Element_Get_Case_Contacts</name>
         <label>Set Fault Element : Get_Case_Contacts</label>
-        <locationX>913</locationX>
-        <locationY>492</locationY>
+        <locationX>1380</locationX>
+        <locationY>600</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
             <operator>Assign</operator>
@@ -92,8 +92,8 @@
     <decisions>
         <name>Check_For_Work_Email</name>
         <label>Check For Work Email</label>
-        <locationX>737</locationX>
-        <locationY>708</locationY>
+        <locationX>1204</locationX>
+        <locationY>816</locationY>
         <defaultConnector>
             <targetReference>Iterated_Over_Case_Contacts</targetReference>
         </defaultConnector>
@@ -117,8 +117,8 @@
     <decisions>
         <name>Custom_Setting_Time_and_Support</name>
         <label>Custom Setting : Time and Support</label>
-        <locationX>847</locationX>
-        <locationY>276</locationY>
+        <locationX>1314</locationX>
+        <locationY>384</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Time_and_Support</name>
@@ -144,10 +144,33 @@
         </rules>
     </decisions>
     <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check</name>
+        <label>Outbound Email custom setting check</label>
+        <locationX>643</locationX>
+        <locationY>276</locationY>
+        <defaultConnector>
+            <targetReference>Custom_Setting_Time_and_Support</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Valid_Case_Contact</name>
         <label>Valid Case Contact</label>
-        <locationX>517</locationX>
-        <locationY>492</locationY>
+        <locationX>984</locationX>
+        <locationY>600</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Yes_Valid</name>
@@ -172,15 +195,15 @@
             <label>Yes : Valid</label>
         </rules>
     </decisions>
-    <description>added email thread logging - updated to custom settings</description>
+    <description>Outbound Email bypass added. Added email thread logging - updated to custom settings</description>
     <environments>Default</environments>
     <interviewLabel>Case - Saved - Async - L2 Escalation Notification {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Case - Saved - Async - L2 Escalation Notification</label>
     <loops>
         <name>Iterated_Over_Case_Contacts</name>
         <label>Iterate Over Case Contact Records</label>
-        <locationX>385</locationX>
-        <locationY>600</locationY>
+        <locationX>852</locationX>
+        <locationY>708</locationY>
         <collectionReference>Get_Case_Contacts</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -209,8 +232,8 @@
     <recordLookups>
         <name>Get_Case_Contacts</name>
         <label>Get Case Contacts</label>
-        <locationX>517</locationX>
-        <locationY>384</locationY>
+        <locationX>984</locationX>
+        <locationY>492</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Valid_Case_Contact</targetReference>
@@ -280,7 +303,7 @@
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Custom_Setting_Time_and_Support</targetReference>
+                <targetReference>Outbound_Email_custom_setting_check</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
@@ -290,8 +313,8 @@
     <subflows>
         <name>Insperity_Fault_Handler_Subflow</name>
         <label>Insperity_Fault_Handler_Subflow</label>
-        <locationX>913</locationX>
-        <locationY>600</locationY>
+        <locationX>1380</locationX>
+        <locationY>708</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
@@ -315,8 +338,8 @@
     <subflows>
         <name>Unable_to_Send_Email_Notification</name>
         <label>Unable to Send Email Notification</label>
-        <locationX>737</locationX>
-        <locationY>924</locationY>
+        <locationX>1204</locationX>
+        <locationY>1032</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
