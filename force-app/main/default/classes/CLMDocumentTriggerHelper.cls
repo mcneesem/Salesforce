@@ -57,19 +57,23 @@ public With Sharing class CLMDocumentTriggerHelper {
             CLM_Document__c record = clmDocList[0];
             for( String fieldApiName : relatedFieldNames  )
             {
-                if ( String.isNotBlank( fieldApiName )
-                    && record.get( fieldApiName ) != null
-                   )
-                {
-                    String value = ( String )record.get( fieldApiName );
-                    if ( ( Limits.getFutureCalls() < Limits.getLimitFutureCalls() )
-                        && String.isNotBlank( value ) 
-                        && !Test.isRunningTest()
-                       )
-                    {
-                        CLMDocumentTransfer.downloadDocument( record.CLM_Document_Id__c, value );
-                    }
-                }
+                createDocument(record,fieldApiName);
+            }
+        }
+    }
+    
+    private void createDocument( CLM_Document__c record, String fieldApiName ) {
+        if ( String.isNotBlank( fieldApiName )
+            && record.get( fieldApiName ) != null
+           )
+        {
+            String value = ( String )record.get( fieldApiName );
+            if ( ( Limits.getFutureCalls() < Limits.getLimitFutureCalls() )
+                && String.isNotBlank( value ) 
+                && !Test.isRunningTest()
+               )
+            {
+                CLMDocumentTransfer.downloadDocument( record.CLM_Document_Id__c, value );
             }
         }
     }
