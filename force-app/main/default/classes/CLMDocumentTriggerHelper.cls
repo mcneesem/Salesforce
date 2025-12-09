@@ -1,4 +1,4 @@
-/* 
+/*
 *    Class Name  : CLMDocumentTriggerHelper
 *    @Description: Represents the OnCLMDocumentCreate trigger helper of Service Stream which handles all the logic.
 *    @Date       : 25/11/2025
@@ -15,8 +15,8 @@ public With Sharing class CLMDocumentTriggerHelper {
 
     public void afterInsertDocument( Map <Id,CLM_Document__c> newMap ){
 
-        // List of related fields to check in priority order  
-        List<String> relatedFieldNames = new List<String>{ 
+        // List of related fields to check in priority order
+        List<String> relatedFieldNames = new List<String>{
             'Opportunity__c',
             'Account__c',
             'NSP_Invoice__c',
@@ -28,11 +28,11 @@ public With Sharing class CLMDocumentTriggerHelper {
         };
         List<CLM_Document__c> clmDocList = new List<CLM_Document__c>();
 
-        if ( newMap != null 
+        if ( newMap != null
             && !newMap.isEmpty()
            )
         {
-            clmDocList = [ 
+            clmDocList = [
                 SELECT Id,
                 CLM_Document_Id__c,
                 pse_Project_Task__c,
@@ -44,32 +44,33 @@ public With Sharing class CLMDocumentTriggerHelper {
                 NSP_CreditNote__c,
                 NSP_Service_Plan__c,
                 NSP_Wizard_Output__c
-                FROM CLM_Document__c 
+                FROM CLM_Document__c
                 WHERE Id IN: newMap.keySet()
                 LIMIT 1
             ];
         }
 
-        if ( clmDocList != null 
-            && !clmDocList.isEmpty() 
+        if ( clmDocList != null
+            && !clmDocList.isEmpty()
            )
         {
             CLM_Document__c record = clmDocList[0];
             for( String fieldApiName : relatedFieldNames  )
             {
-                createDocument(record,fieldApiName);
+                this.createDocument(record,fieldApiName);
             }
         }
     }
-    
+
     private void createDocument( CLM_Document__c record, String fieldApiName ) {
         if ( String.isNotBlank( fieldApiName )
+            && record != null
             && record.get( fieldApiName ) != null
            )
         {
             String value = ( String )record.get( fieldApiName );
             if ( ( Limits.getFutureCalls() < Limits.getLimitFutureCalls() )
-                && String.isNotBlank( value ) 
+                && String.isNotBlank( value )
                 && !Test.isRunningTest()
                )
             {
