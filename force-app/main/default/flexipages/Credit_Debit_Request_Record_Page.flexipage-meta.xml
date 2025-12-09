@@ -130,6 +130,30 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.iSolved_Changes_Validated__c</fieldItem>
                 <identifier>RecordiSolved_Changes_Validated_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Is_Record_Creator__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>false</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.iSolved_Changes_Validated__c</fieldItem>
+                <identifier>RecordiSolved_Changes_Validated_cField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Is_Record_Creator__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>

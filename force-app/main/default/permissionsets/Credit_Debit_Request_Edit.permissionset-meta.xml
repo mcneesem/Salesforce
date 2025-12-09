@@ -52,6 +52,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Credit_Debit_Request__c.Is_Record_Creator__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Credit_Debit_Request__c.Payroll_Approval__c</field>
         <readable>true</readable>
