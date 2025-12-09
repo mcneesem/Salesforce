@@ -60,12 +60,12 @@ public with sharing class ValidateQuoteCreation {
         private set;
     }
 
-    private static Map<String, Quote_Validation__mdt> validationRecords {
+    private static List<Quote_Validation__mdt> validationRecords {
         private get {
             if (validationRecords == null) {
-                validationRecords = new Map<String, Quote_Validation__mdt>();
+                validationRecords = new List<Quote_Validation__mdt>();
                 for (Quote_Validation__mdt record : Quote_Validation__mdt.getAll().values()) {
-                    validationRecords.put(record.Id, record);
+                    validationRecords.add(record);
                 }
             }
             return validationRecords;
@@ -77,7 +77,7 @@ public with sharing class ValidateQuoteCreation {
         private get {
             if (productRecordTypeMap == null) {
                 Map<String, String> local = new Map<String, String>();
-                for (Quote_Validation__mdt validationRecord : ValidateQuoteCreation.validationRecords.values()) {
+                for (Quote_Validation__mdt validationRecord : ValidateQuoteCreation.validationRecords) {
                     local.put(validationRecord.Opportunity_Primary_Product__c, validationRecord.Asset_Record_Type__c);
                 }
                 productRecordTypeMap = local;
@@ -91,7 +91,7 @@ public with sharing class ValidateQuoteCreation {
         private get {
             if ( quoteValidationMdtKeys == null ) {
                 List<String> local = new List<String>();
-                for (Quote_Validation__mdt validationRecord : ValidateQuoteCreation.validationRecords.values()) {
+                for (Quote_Validation__mdt validationRecord : ValidateQuoteCreation.validationRecords) {
                     string uniqueKey = validationRecord.Opportunity_Primary_Product__c+'_'
                                       +validationRecord.Opportunity_Primary_Bundle__c+'_'
                                       +validationRecord.Asset_Product_Bundle__c +'_'
