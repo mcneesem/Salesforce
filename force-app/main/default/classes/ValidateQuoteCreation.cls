@@ -34,7 +34,7 @@ public with sharing class ValidateQuoteCreation {
         Boolean value = false;
         if(newQuote != null){
             value = String.isNotBlank( newQuote.SBQQ__Type__c ) &&
-               		newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_NEW) &&
+                    newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_NEW) &&
                     String.isNotBlank( newQuote.SBQQ__Account__c ) &&
                     String.isNotBlank( newQuote.NSP_Opportunity_Primary_Product__c ) &&
                     ValidateQuoteCreation.productRecordTypeMap != null &&
