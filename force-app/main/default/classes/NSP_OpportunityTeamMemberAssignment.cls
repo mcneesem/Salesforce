@@ -33,7 +33,7 @@ public class NSP_OpportunityTeamMemberAssignment {
             
         List<OpportunityTeamMember> oOwnerOppTeamList = new List<OpportunityTeamMember> ();
         List<OpportunityTeamMember> nOwneroppTeamList = new List<OpportunityTeamMember> ();
-        Map<Id,String> ownerIdTitleMap = new Map<Id, String>();
+        Map<Id,String> ownerIdRoleNameMap = new Map<Id, String>();
         Map<Id,OpportunityTeamMember> oppIdoppteamIdMap = new Map<Id, OpportunityTeamMember> (); 
         Map<Id,Id> oppIdOwnerIdMap = new Map<Id,Id>();
         for( Opportunity nOpp : newMap.values() ){
@@ -65,7 +65,7 @@ public class NSP_OpportunityTeamMemberAssignment {
                         ]
                 )
             {
-                ownerIdTitleMap.put(oppOwner.Id, oppOwner.Title);
+                ownerIdRoleNameMap.put(oppOwner.Id, oppOwner.UserRole.Name);
             }
             // Mapping OppId and Opp Team 
             for( OpportunityTeamMember oppTeamMem : [
@@ -84,11 +84,15 @@ public class NSP_OpportunityTeamMemberAssignment {
                 oppIdoppteamIdMap.put(oppTeamMem.OpportunityId, oppTeamMem);
             }
             for( Opportunity opp : [SELECT Id,OwnerId FROM Opportunity WHERE ID IN: oppIdOwnerIdMap.keyset()] ){
-                if( oppIdoppteamIdMap.containsKey(opp.Id) ){
+                if( oppIdoppteamIdMap.containsKey( opp.Id ) ){
                     // Modified as a part of DF-01483
-                    OpportunityTeamMember oppTeamMem = oppIdoppteamIdMap.get(opp.Id) ;
-                    oppTeamMem.TeamMemberRole = getNewOptyTeamRoleName( ownerIdTitleMap.get(oppTeamMem.UserId) );
-
+                    OpportunityTeamMember oppTeamMem = oppIdoppteamIdMap.get( opp.Id ) ;
+                    if( NSP_OpportunityTeamMemberAssignment.oppTeamRoleValues.contains( ownerIdRoleNameMap.get( oppTeamMem.UserId ) ) ){
+                        oppTeamMem.TeamMemberRole = ownerIdRoleNameMap.get( oppTeamMem.UserId );
+                    }else{
+                        // assigning 'Other' Role to the opportunity Team Member after the owner is hetting changed
+                        oppTeamMem.TeamMemberRole = NSP_SalesConstants.OpportunityTeamMemberRole;
+                    }
                     oppTeamMem.OpportunityAccessLevel = OPP_TEAMMEMBER_ACCESS;
                     oOwnerOppTeamList.add(oppTeamMem); 
                 }
@@ -109,19 +113,6 @@ public class NSP_OpportunityTeamMemberAssignment {
                 }
             }
         }
-    }
-
-    // Description: Method to determine Opportunity Team Member Role
-    public static String getNewOptyTeamRoleName( String userTitle ){
-        String newOTRName = NSP_SalesConstants.OpportunityTeamMemberRole;
-        for( String otrPickVal : NSP_OpportunityTeamMemberAssignment.oppTeamRoleValues ){
-            if( String.isNotBlank( userTitle )
-                && userTitle.contains( otrPickVal ) )
-            {
-                newOTRName = otrPickVal;
-            }
-        }     
-        return newOTRName;
     }
 
     private static List<String> oppTeamRoleValues {
