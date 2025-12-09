@@ -243,6 +243,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Asset.HRScale__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Asset.I_9_Availability__c</field>
         <readable>true</readable>
     </fieldPermissions>

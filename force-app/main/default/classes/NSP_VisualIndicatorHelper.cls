@@ -53,6 +53,7 @@ public without sharing class NSP_VisualIndicatorHelper {
                             NSP_Client_Retained_Workers_Comp__c ,
                             NSP_Pending_Termination__c ,
                             NSP_Product_Line__c ,
+                            HRScale__c,
                             RecordTypeId ,
                             NSP_National_Account__c
                         FROM Assets
@@ -163,6 +164,10 @@ public without sharing class NSP_VisualIndicatorHelper {
             }
             if (asset.NSP_Product_Line__c != null  && asset.NSP_Product_Line__c == wsProductLine) {
                 accWrapper.workSyncClientTrue = NSP_ServiceConstants.VALUE_TRUE;
+            }
+            // HRScale Indicator
+            if (asset.HRScale__c == true) {
+                accWrapper.hrScale = NSP_ServiceConstants.VALUE_TRUE;
             }
         }
         if (asset.NSP_Client_Retained_Workers_Comp__c != null && asset.NSP_Client_Retained_Workers_Comp__c == '100% Client') {
@@ -297,6 +302,8 @@ public without sharing class NSP_VisualIndicatorHelper {
         public Boolean pendingTermination {get;set;}
         @AuraEnabled
         public Boolean vocSurveyIndicator {get;set;}
+        @AuraEnabled
+        public Boolean hrScale { get; set; }
     }
 
 }
