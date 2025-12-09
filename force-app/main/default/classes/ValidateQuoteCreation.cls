@@ -1,5 +1,5 @@
 public with sharing class ValidateQuoteCreation {
-    // test w/ ValidateQuoteCreationTest (93%)
+    // test w/ ValidateQuoteCreationTest (100%)
 
     public void validateQuote(List<SBQQ__Quote__c> quotes){
         Set<Id> accountIds = this.getAccountIds(quotes);
@@ -46,14 +46,10 @@ public with sharing class ValidateQuoteCreation {
     private static Boolean hasBypassQuoteCreationError {
         private get {
             if ( hasBypassQuoteCreationError == null ) {
-               if (Test.isRunningTest()) {
-                    hasBypassQuoteCreationError = true;
-                } else {
-                    hasBypassQuoteCreationError = CustomPermissionController.checkUserPermission(
-                        'Bypass_Quote_Creation_Error',
-                        UserInfo.getUserId()
-                    );
-                }
+                hasBypassQuoteCreationError = CustomPermissionController.checkUserPermission(
+                    'Bypass_Quote_Creation_Error',
+                    UserInfo.getUserId()
+                );
             }
             return hasBypassQuoteCreationError;
         }
