@@ -53,7 +53,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Credit_Debit_Request__c.Is_Record_Creator__c</field>
+        <field>Credit_Debit_Request__c.Is_Creator__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
