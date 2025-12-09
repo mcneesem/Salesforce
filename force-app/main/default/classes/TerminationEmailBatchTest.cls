@@ -55,10 +55,12 @@ private class TerminationEmailBatchTest {
         insert cs;
     }
 
-    @isTest private static void terminate(){
+    @isTest
+    private static void terminate(){
         test.startTest();
         TerminationEmailBatch.schedule();
         test.stopTest();
     }
 
 }
+//
