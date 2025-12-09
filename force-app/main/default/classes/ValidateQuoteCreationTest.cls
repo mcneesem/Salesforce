@@ -1,13 +1,15 @@
-@IsTest
+@isTest
 private class ValidateQuoteCreationTest {
+
     @testSetup
-    private static void setupTestData(){
+    private static void setupTestData() {
         Account acc1 = NSP_TestHelper.createAccount(true);
         NSP_TestHelper.createContact(acc1.id, true);
         NSP_TestHelper.createProduct('Test Product',true);
     }
+
     @isTest
-    private static void validateQuoteCreateFailureTest(){
+    private static void validateQuoteCreateFailureTest() {
         Account acc1 = [SELECT Id, Name FROM Account WHERE Name != null LIMIT 1];
         Product2 product1 = [SELECT  Id, Name FROM Product2 WHERE NAME != Null LIMIT 1];
         Opportunity opp1 = NSP_TestHelper.createOpenOpportunity(acc1.Id,NSP_QuoteTriggerTest.NEW_PRODUCT,false);
@@ -44,7 +46,7 @@ private class ValidateQuoteCreationTest {
     }
 
     @isTest
-    private static void validateQuoteCreateSuccessTest(){
+    private static void validateQuoteCreateSuccessTest() {
         Account acc1 = [SELECT Id, Name FROM Account WHERE Name != null LIMIT 1];
         Product2 product1 = [SELECT  Id, Name FROM Product2 WHERE NAME != Null LIMIT 1];
         Opportunity opp1 = NSP_TestHelper.createOpenOpportunity(acc1.Id,NSP_QuoteTriggerTest.NEW_PRODUCT,false);
@@ -71,4 +73,6 @@ private class ValidateQuoteCreationTest {
 
         System.assert(quoteResults.isSuccess() == true, 'Quote should be created');
     }
+
 }
+//
