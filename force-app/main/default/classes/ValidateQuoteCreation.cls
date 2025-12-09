@@ -1,8 +1,6 @@
 public with sharing class ValidateQuoteCreation {
     // test w/ ValidateQuoteCreationTest (93%)
 
-    private static final String WX_WA_QUOTE_VALIDATION_ERROR = System.Label.NSP_WX_WA_Quote_Validation_Message;
-
     public void validateQuote(List<SBQQ__Quote__c> quotes){
         Set<Id> accountIds = this.getAccountIds(quotes);
         Map<Id, Map<String, Asset>> accountAssetMap = this.getAccountAssetMap(accountIds);
@@ -25,7 +23,7 @@ public with sharing class ValidateQuoteCreation {
                         ValidateQuoteCreation.quoteValidationMdtKeys.contains(key) &&
                         !ValidateQuoteCreation.hasBypassQuoteCreationError
                     ){
-                        newQuote.addError(WX_WA_QUOTE_VALIDATION_ERROR);
+                        newQuote.addError(System.Label.NSP_WX_WA_Quote_Validation_Message);
                     }
                 }
             }
@@ -44,7 +42,7 @@ public with sharing class ValidateQuoteCreation {
         }
         return value;
     }
-    
+
     private static Boolean hasBypassQuoteCreationError {
         private get {
             if ( hasBypassQuoteCreationError == null ) {
@@ -61,15 +59,28 @@ public with sharing class ValidateQuoteCreation {
         }
         private set;
     }
-    
-    private static Map<String,String> productRecordTypeMap {
+
+    private static Map<String, Quote_Validation__mdt> validationRecords {
         private get {
-            if ( productRecordTypeMap == null ) {
-                productRecordTypeMap = new Map<String, String>();
-                Map<String, Quote_Validation__mdt> validationRecords = Quote_Validation__mdt.getAll();
-                for (Quote_Validation__mdt validationRecord : validationRecords.values()) {
-                    productRecordTypeMap.put(validationRecord.Opportunity_Primary_Product__c, validationRecord.Asset_Record_Type__c);
+            if (validationRecords == null) {
+                validationRecords = new Map<String, Quote_Validation__mdt>();
+                for (Quote_Validation__mdt record : Quote_Validation__mdt.getAll().values()) {
+                    validationRecords.put(record.Id, record);
                 }
+            }
+            return validationRecords;
+        }
+        private set;
+    }
+
+    private static Map<String, String> productRecordTypeMap {
+        private get {
+            if (productRecordTypeMap == null) {
+                Map<String, String> local = new Map<String, String>();
+                for (Quote_Validation__mdt validationRecord : ValidateQuoteCreation.validationRecords.values()) {
+                    local.put(validationRecord.Opportunity_Primary_Product__c, validationRecord.Asset_Record_Type__c);
+                }
+                productRecordTypeMap = local;
             }
             return productRecordTypeMap;
         }
@@ -79,15 +90,15 @@ public with sharing class ValidateQuoteCreation {
     private static List<String> quoteValidationMdtKeys {
         private get {
             if ( quoteValidationMdtKeys == null ) {
-            	quoteValidationMdtKeys = new List<String>();
-                Map<String, Quote_Validation__mdt> validationRecords = Quote_Validation__mdt.getAll();
-                for (Quote_Validation__mdt validationRecord : validationRecords.values()) {
+                List<String> local = new List<String>();
+                for (Quote_Validation__mdt validationRecord : ValidateQuoteCreation.validationRecords.values()) {
                     string uniqueKey = validationRecord.Opportunity_Primary_Product__c+'_'
                                       +validationRecord.Opportunity_Primary_Bundle__c+'_'
                                       +validationRecord.Asset_Product_Bundle__c +'_'
                                       +validationRecord.Asset_Record_Type__c;
-                    quoteValidationMdtKeys.add(uniqueKey);
+                    local.add(uniqueKey);
                 }
+                quoteValidationMdtKeys = local;
             }
             return quoteValidationMdtKeys;
         }

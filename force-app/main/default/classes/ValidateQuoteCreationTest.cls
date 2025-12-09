@@ -1,7 +1,7 @@
 @IsTest
-public class ValidateQuoteCreationTest {
-    @testSetup
-    static void setupTestData(){
+private class ValidateQuoteCreationTest {
+	@testSetup
+    private static void setupTestData(){
         Account acc1 = NSP_TestHelper.createAccount(true);
         NSP_TestHelper.createContact(acc1.id, true);
         NSP_TestHelper.createProduct('Test Product',true);
