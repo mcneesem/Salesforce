@@ -22,7 +22,7 @@ public class NSP_QuoteTriggerHelper {
     private static final String LASSO_PARTNERNAME = System.Label.NSP_Lasso_PartnerName;
 
     public void beforeInsertDirector( List<SBQQ__Quote__c> newList ) {
-        List<SBQQ__Quote__c> primaryQuotes= new List<SBQQ__Quote__c>();
+        List<SBQQ__Quote__c> primaryQuotes = new List<SBQQ__Quote__c>();
         ValidateQuoteCreation validator = new ValidateQuoteCreation();
         validator.validateQuote( newList );
         stampQuoteOwnerGrouponInsert( newList );
