@@ -35,18 +35,18 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable, Sch
     public void execute( SchedulableContext scon ) {
         Database.executeBatch( new TerminationEmailBatch() , TerminationEmailBatch.batchSize );
     }
-    
+
     public Database.QueryLocator start( Database.BatchableContext bc ) {
 
-        Set<String> recordTypeApiNames = new Set<String>{ 
+        Set<String> recordTypeApiNames = new Set<String>{
             TerminationEmailBatch.CREDIT_SPECIALIST,
             NSP_ServiceConstants.NSP_Payroll_Specialist_Form,
             NSP_ServiceConstants.NSP_Client_Reinstatement
-        }; 
+        };
 
         return Database.getQueryLocator(
             [
-            	SELECT Client_Owner_Email__c,
+                SELECT Client_Owner_Email__c,
                     NSP_Revision__c,
                     RecordType.DeveloperName,
                     RecordTypeId,
@@ -55,9 +55,9 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable, Sch
                 FROM NSP_Termination_Form__c
                 WHERE NSP_Status__c =: NSP_ServiceConstants.TERM_TEAM_APPROVED
                 AND Termination_Email_Status__c =: EMAIL_STATUS_READY
-                AND Client_Owner_Email__c != null 
+                AND Client_Owner_Email__c != null
                 AND NSP_Revision__c != null
-                AND RecordType.DeveloperName IN: recordTypeApiNames 
+                AND RecordType.DeveloperName IN: recordTypeApiNames
             ]
        );
     }
@@ -68,13 +68,11 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable, Sch
             && forms != null
             && !forms.isEmpty()
             && String.isNotBlank( TerminationEmailBatch.orgWideEmailAddressId )
-            
            )
         {
-            Map<Id, ContentDocumentLink> docMap = getAttachments( forms );
+            Map<Id, ContentDocumentLink> docMap = this.getAttachments( forms );
             List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
             List<NSP_Termination_Form__c> formsToUpdate = new List<NSP_Termination_Form__c>();
-            
             for ( NSP_Termination_Form__c form : forms ) {
                 String templateName = this.getTemplateName( form );
                 ContentDocumentLink docLink = null;
@@ -83,18 +81,16 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable, Sch
                     docLink = docMap.get( form.Id );
                 }
                 if ( TerminationEmailBatch.templateMap != null
-                    && TerminationEmailBatch.templateMap.containsKey( templateName ) 
+                    && TerminationEmailBatch.templateMap.containsKey( templateName )
                     && TerminationEmailBatch.templateMap.get( templateName ) != null
                    )
                 {
                     this.buildEmail( form, TerminationEmailBatch.templateMap.get( templateName ), docLink, emails );
                 }
             }
-            
             this.sendAndProcessEmails( emails, forms, formsToUpdate );
             this.performDML( formsToUpdate );
         }
-        
     }
 
     public void finish(Database.BatchableContext bc) {}
@@ -103,17 +99,17 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable, Sch
 
         Map<Id, ContentDocumentLink> attachmentMap = new Map<Id, ContentDocumentLink>();
 
-        if ( forms != null 
+        if ( forms != null
             && !forms.isEmpty()
            )
         {
             Set<Id> formIds = new Map<Id, NSP_Termination_Form__c>( forms ).keySet();
-            for ( ContentDocumentLink link : [ SELECT LinkedEntityId, 
+            for ( ContentDocumentLink link : [ SELECT LinkedEntityId,
                                                    ContentDocument.LatestPublishedVersionId
                                                FROM ContentDocumentLink
-                                               WHERE LinkedEntityId IN: formIds 
+                                               WHERE LinkedEntityId IN: formIds
                                                AND ContentDocument.LatestPublishedVersion.Title LIKE 'LTR-%'
-                                               ORDER BY SystemModstamp DESC 
+                                               ORDER BY SystemModstamp DESC
                                              ]
                 )
             {
@@ -180,7 +176,6 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable, Sch
         {
             String rt = form.RecordType.DeveloperName;
             String rev = form.NSP_Revision__c;
-            
             if ( ( rt == TerminationEmailBatch.CREDIT_SPECIALIST )
                 || ( rt == NSP_ServiceConstants.NSP_Payroll_Specialist_Form )
                )
@@ -203,7 +198,7 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable, Sch
 
     private void sendAndProcessEmails( List<Messaging.SingleEmailMessage> emailMessages,
                                        List<NSP_Termination_Form__c> originalForms,
-                                       List<NSP_Termination_Form__c> formsToUpdate 
+                                       List<NSP_Termination_Form__c> formsToUpdate
                                      )
     {
         if ( emailMessages != null
@@ -221,12 +216,12 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable, Sch
                             form.Termination_Email_Status__c = EMAIL_STATUS_SENT;
                             formsToUpdate.add( form );
                         }
-                    } 
+                    }
                 }
             } catch( Exception e ) {
                 NSP_ErrorLogHandler.logException(
                     TerminationEmailBatch.class.getName() ,
-                    'sendAndProcessEmails:sendEmail' ,
+                    'sendAndProcessEmails' ,
                     e
                 );
             }
@@ -309,7 +304,6 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable, Sch
         }
         private set;
     }
-    
     private static Id orgWideEmailAddressId {
         private get {
             if ( orgWideEmailAddressId == null ) {
@@ -330,14 +324,13 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable, Sch
         }
         private set;
     }
-    
     private static Id defaultTemplateAttachmentId {
         private get{
-            if( defaultTemplateAttachmentId == null 
+            if( defaultTemplateAttachmentId == null
                && TerminationEmailBatch.settings != null
                && String.isNotBlank( TerminationEmailBatch.settings.DefaultTemplateAttachmentId__c )
                && TerminationEmailBatch.settings.DefaultTemplateAttachmentId__c InstanceOf Id )
-            { 
+            {
                 Id checkId = Id.valueOf( TerminationEmailBatch.settings.DefaultTemplateAttachmentId__c );
                 if ( checkId.getSObjectType() == ContentVersion.getSObjectType() ) {
                     defaultTemplateAttachmentId = checkId;
@@ -348,21 +341,19 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable, Sch
         }
         private set;
     }
-    
     private static Map<String, Id> templateMap {
         private get{
             if( templateMap == null )
-            { 
+            {
                 Map<String, Id> temMap = new Map<String, Id>();
-                Set<String> templateApiNames = new Set<String>{ 
+                Set<String> templateApiNames = new Set<String>{
                     TerminationEmailBatch.TEMPLATE_INITIAL,
                         TerminationEmailBatch.TEMPLATE_REVISED,
                         TerminationEmailBatch.TEMPLATE_REINSTATE_INITIAL,
                         TerminationEmailBatch.TEMPLATE_REINSTATE_REVISED
                         };
-                            
-                            for ( EmailTemplate template : [ SELECT DeveloperName 
-                                                            FROM EmailTemplate 
+                            for ( EmailTemplate template : [ SELECT DeveloperName
+                                                            FROM EmailTemplate
                                                             WHERE DeveloperName IN: templateApiNames
                                                            ]
                                 )
@@ -370,7 +361,6 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable, Sch
                             temMap.put( template.DeveloperName, template.Id );
                         }
                 templateMap = temMap;
-                
             }
             return templateMap;
         }
