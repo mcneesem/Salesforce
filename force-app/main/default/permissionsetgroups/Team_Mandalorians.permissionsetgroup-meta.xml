@@ -7,5 +7,6 @@
     <permissionSets>Assign_Connected_App_Workbench</permissionSets>
     <permissionSets>Default_Account_Team_View</permissionSets>
     <permissionSets>Default_Opportunity_Team_View</permissionSets>
+    <permissionSets>Case_Account_Contact_Information</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

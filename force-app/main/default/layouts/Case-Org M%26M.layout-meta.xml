@@ -338,9 +338,11 @@
         <fields>NSP_Work_Phone__c</fields>
         <fields>NSP_Home_Phone__c</fields>
         <fields>NSP_Work_Email__c</fields>
+        <fields>Email__c</fields>
         <fields>NSP_Contact_Email__c</fields>
         <fields>NSP_Per_Id__c</fields>
         <fields>NSP_IsPrimary__c</fields>
+        <fields>Workday_Employee_ID__c</fields>
         <relatedList>NSP_Case_Contacts__c.NSP_Case__c</relatedList>
     </relatedLists>
     <relatedLists>
