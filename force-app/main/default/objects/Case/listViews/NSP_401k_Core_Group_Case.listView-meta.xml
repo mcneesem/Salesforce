@@ -10,9 +10,13 @@
     <columns>OWNER_NAME</columns>
     <columns>CASES.NAME</columns>
     <columns>NSP_Owner__c</columns>
-    <filterScope>Queue</filterScope>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CASES.STATUS</field>
+        <operation>equals</operation>
+        <value>Open,ReOpened</value>
+    </filters>
     <label>401k Core Group</label>
-    <queue>NSP_401k_Core_Group</queue>
     <sharedTo>
         <allInternalUsers></allInternalUsers>
     </sharedTo>

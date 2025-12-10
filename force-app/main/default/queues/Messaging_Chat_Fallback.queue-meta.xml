@@ -5,6 +5,9 @@
     <name>Messaging Chat Fallback</name>
     <queueRoutingConfig>Messaging_Default</queueRoutingConfig>
     <queueSobject>
+        <sobjectType>Case</sobjectType>
+    </queueSobject>
+    <queueSobject>
         <sobjectType>MessagingSession</sobjectType>
     </queueSobject>
 </Queue>
