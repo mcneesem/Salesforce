@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>HRCore&apos;s new email templates for outbound manual initially or automated delivery.</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Insperity_HR</letterhead>
+    <name>Open Enrollment Email – Insperity Insurance Services</name>
+    <style>freeForm</style>
+    <subject>{!Account.Name} - isolved Benefits Renewal Approaching</subject>
+    <textOnly>Hi {!Contact.NSP_Preferred_First_Name__c},
+
+
+
+Your annual benefits open enrollment is upon us! Based on our records your benefits plan year begins on {Benefits Renewal Date}.
+
+I will be working directly with you to configure your new plan year changes and set up open enrollment. Once you have reviewed the renewal documents sent to you from Insperity Insurance Services and signed off on them, please let me know so that I can make the necessary updates in iSolved to the benefit plans.
+
+Do you plan to use isolved for open enrollment? If so, typically we would like to start this as soon as possible so new cards can be mailed out before the new plan year begins. If not, I&apos;m happy to show you how to enter your employees’ enrolments manually so that their payroll deductions are correct for the new plan year.</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

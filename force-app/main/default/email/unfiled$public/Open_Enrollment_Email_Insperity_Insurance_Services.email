@@ -1,0 +1,48 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<p class="MsoNormal" style=""><span style="line-height: 115%; font-family: &quot;Times New Roman&quot;, serif;">Hi&nbsp;{!Contact.NSP_Preferred_First_Name__c},</span></p><p class="MsoNormal" style=""><span style="color:red"><br></span></p>
+
+<p class="MsoNormal" style=""></p><p class="MsoNormal" style="">Your annual benefits open enrollment is upon us!&nbsp;Based
+on our records your benefits plan year begins on <span style="line-height: 115%; font-family: &quot;Times New Roman&quot;, serif; color: red;">{Benefits Renewal Date}</span><span style="line-height: 115%; font-family: &quot;Times New Roman&quot;, serif;">.</span><o:p></o:p></p><p class="MsoNormal" style=""><span style="line-height: 115%; font-family: &quot;Times New Roman&quot;, serif;"><br></span></p>
+
+<p class="MsoNormal" style="">I will be working directly with you to configure your new
+plan year changes and set up open enrollment.&nbsp;Once you have reviewed the
+renewal documents sent to you from Insperity Insurance Services and signed off
+on them, <b>please let me know</b> so that I can make the necessary updates in
+iSolved to the benefit plans.<o:p></o:p></p><p class="MsoNormal" style=""><br></p>
+
+<p class="MsoNormal" style="">Do you plan to use isolved for open enrollment? If so,
+typically we would like to start this as soon as possible so new cards can be
+mailed out before the new plan year begins. If not, I'm happy to show you how
+to enter your employees’ enrolments manually so that their payroll deductions
+are correct for the new plan year.<o:p></o:p></p><p class="MsoNormal" style=""><br></p>
+
+<p class="MsoNormal" style="">Next Steps:<o:p></o:p></p><p class="MsoNormal" style=""><br></p>
+
+<ul style="margin-top: 0in;" type="disc">
+ <li class="MsoNormal" style="margin-bottom:0in;line-height:normal;mso-list:l0 level1 lfo1;
+     tab-stops:list .5in">Sign off on new rates/plans from IIS and&nbsp;<b>let
+     me know you have done so</b><o:p></o:p></li>
+ <li class="MsoNormal" style="margin-bottom:0in;line-height:normal;mso-list:l0 level1 lfo1;
+     tab-stops:list .5in">I will configure iSolved<o:p></o:p></li>
+ <li class="MsoNormal" style="margin-bottom:0in;line-height:normal;mso-list:l0 level1 lfo1;
+     tab-stops:list .5in">I will send an export to you from iSolved with the
+     updated information to sign off on<o:p></o:p></li>
+ <li class="MsoNormal" style="margin-bottom:0in;line-height:normal;mso-list:l0 level1 lfo1;
+     tab-stops:list .5in">We will set up a call to review the employee
+     enrollment portal and any questions you have about the iSolved enrollment
+     process<o:p></o:p></li>
+ <li class="MsoNormal" style="margin-bottom:0in;line-height:normal;mso-list:l0 level1 lfo1;
+     tab-stops:list .5in">Open Enrollment starts in iSolved for the dates you
+     choose<o:p></o:p></li>
+ <li class="MsoNormal" style="margin-bottom:0in;line-height:normal;mso-list:l0 level1 lfo1;
+     tab-stops:list .5in">You will approve all benefits once the Open
+     Enrollment Closes, and let me know once you have done so<o:p></o:p></li>
+ <li class="MsoNormal" style="margin-bottom:0in;line-height:normal;mso-list:l0 level1 lfo1;
+     tab-stops:list .5in">I will make sure carriers are updated via Insperity
+     Insurance Services</li>
+</ul><div style=""><span style="line-height: 115%; font-family: Aptos, sans-serif;">If you have any questions, do not hesitate to
+reach out to me via email or phone, I'm always happy to help!</span></div><div style=""><span style="line-height: 115%; font-family: Aptos, sans-serif;"><br></span></div><p style="font-size: 12pt;"></p>]]></td>
+</tr>
+</table>
