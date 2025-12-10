@@ -888,6 +888,12 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.DNB_Connect_DUNS_Number__c</fieldItem>
                 <identifier>RecordDNB_Connect_DUNS_Number_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Lead_ID_18__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -898,6 +904,12 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Named_Account_Group__c</fieldItem>
                 <identifier>RecordNamed_Account_Group_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Lead_ID_18__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-b59e6338-ef71-4ea7-a5ae-48ab0c832437</name>
@@ -1338,6 +1350,12 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Named_Account_Group__c</fieldItem>
                 <identifier>RecordNamed_Account_Group_cField3</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Lead_ID_18__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-c0add9bb-1921-4454-bb0b-f9b01fbf6ac6</name>
@@ -1568,6 +1586,12 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.DNB_Connect_DUNS_Number__c</fieldItem>
                 <identifier>RecordDNB_Connect_DUNS_Number_cField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Lead_ID_18__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1578,6 +1602,12 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Named_Account_Group__c</fieldItem>
                 <identifier>RecordNamed_Account_Group_cField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Lead_ID_18__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
