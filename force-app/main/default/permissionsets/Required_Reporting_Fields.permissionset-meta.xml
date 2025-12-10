@@ -118,6 +118,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>AccountContactRelation.Arbitration_Agreement_Opt_Out__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>AccountContactRelation.Client_Communication_Contact__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1724,6 +1729,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Order.Termination_Order_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OrderItem.Pricing_Model__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
