@@ -139,6 +139,7 @@ private class NSP_EnrollmentFeePaymentTriggerClassTest {
         insert efpShare;
 
         oppObj.StageName = 'Closed Lost';
+        oppObj.Closed_Lost_Group__c = 'Service';
         oppObj.NSP_Lost_Reason__c = 'Other';
         update oppObj;
 
