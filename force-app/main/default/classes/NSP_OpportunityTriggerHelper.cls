@@ -1793,7 +1793,6 @@ public with sharing class NSP_OpportunityTriggerHelper {
                     if(oppItem.SBQQ__QuoteLine__r.NSP_Product_Type__c==NSP_CPQConstants.TIME_AND_ATTENDANCE){
                         hardwareAsset.NSP_Contract_Length__c='365';
                     }
-                    hardwareAsset.NSP_Termination_Date__c=oppItem.SBQQ__QuoteLine__r.SBQQ__EndDate__c;
                     hardwareAsset.NSP_Billing_Account__c=oppItem.SBQQ__QuoteLine__r.SBQQ__Quote__r.NSP_Billing_Account__c;
                     hardwareAsset.NSP_Date_Purchased__c=system.today();
                     hardwareAsset.NSP_Licenses__c=1;
