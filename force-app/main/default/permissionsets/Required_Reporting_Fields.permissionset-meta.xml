@@ -2058,6 +2058,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>User.Bypass_Duplicate_Rules__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>User.NSP_Service_Region__c</field>
         <readable>true</readable>
     </fieldPermissions>
