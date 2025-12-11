@@ -35,7 +35,8 @@ public without sharing class NSP_ChildOpportunitiesHelperFunctions {
                 // Update the stage to closed lost on child optys
                 opportunityObject.stagename = NSP_SalesConstants.CLOSED_LOST;
                 // Entering the lost reason as well
-                opportunityObject.NSP_Lost_Reason__c = opportunityObject.NSP_Parent_Opportunity__r.NSP_Lost_Reason__c;
+                opportunityObject.Closed_Lost_Group__c = 'Retirement';
+                opportunityObject.NSP_Lost_Reason__c = 'BPA lost prospect';
                 opportunityObject.NSP_Is_Parent_Opportunity_Closed_Lost__c = TRUE;
                 // ADO-340819
                 // Update close date and lock record
