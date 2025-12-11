@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prevent_Creator_Edit_iSolvedChanges</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+  NOT( $Permission.Bypass_Credit_Debit_Request_Edit_iSolved_Changes_Validated ) ,
+  OR(
+    AND(
+      ISNEW() ,
+      iSolved_Changes_Validated__c
+    ) ,
+    AND(
+      ISCHANGED( iSolved_Changes_Validated__c ) ,
+      iSolved_Changes_Validated__c ,
+      Is_Creator__c
+    )
+  )
+)</errorConditionFormula>
+    <errorDisplayField>iSolved_Changes_Validated__c</errorDisplayField>
+    <errorMessage>Due to SOX Compliance, a request creator can not approve their own request.</errorMessage>
+</ValidationRule>
