@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Send_Email_on_Schedule</name>
         <label>Send Email on Schedule</label>
-        <locationX>50</locationX>
-        <locationY>1308</locationY>
+        <locationX>258</locationX>
+        <locationY>1416</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <faultConnector>
@@ -37,8 +37,8 @@
     <assignments>
         <name>Assign_Previous_OwnerId</name>
         <label>Assign Previous OwnerId</label>
-        <locationX>798</locationX>
-        <locationY>708</locationY>
+        <locationX>1006</locationX>
+        <locationY>816</locationY>
         <assignmentItems>
             <assignToReference>previousOwnerId</assignToReference>
             <operator>Assign</operator>
@@ -53,8 +53,8 @@
     <assignments>
         <name>Set_Fault_Element_Get_Previous_Owner</name>
         <label>Set Fault Element: Get_Previous_Owner</label>
-        <locationX>842</locationX>
-        <locationY>1200</locationY>
+        <locationX>1050</locationX>
+        <locationY>1308</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -70,8 +70,8 @@
     <assignments>
         <name>Set_Fault_Element_Get_SA_History</name>
         <label>Set Fault Element: Get SA History</label>
-        <locationX>1634</locationX>
-        <locationY>384</locationY>
+        <locationX>1842</locationX>
+        <locationY>492</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -87,8 +87,8 @@
     <assignments>
         <name>Set_Fault_Element_Send_Email_on_Schedule</name>
         <label>Set Fault Element: Send Email on Schedule</label>
-        <locationX>314</locationX>
-        <locationY>1416</locationY>
+        <locationX>522</locationX>
+        <locationY>1524</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -103,8 +103,8 @@
     <decisions>
         <name>Check_OwnerId</name>
         <label>Check OwnerId</label>
-        <locationX>930</locationX>
-        <locationY>600</locationY>
+        <locationX>1138</locationX>
+        <locationY>708</locationY>
         <defaultConnector>
             <targetReference>Loop_SA_History</targetReference>
         </defaultConnector>
@@ -129,8 +129,8 @@
         <description>Prevent DmlExceptions: The target object&apos;s email address is not valid Email address is invalid: rsandoval@00d4x000003x74teaq</description>
         <name>Check_Previous_Owner</name>
         <label>Check Previous Owner</label>
-        <locationX>314</locationX>
-        <locationY>1200</locationY>
+        <locationX>522</locationX>
+        <locationY>1308</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Is_Valid</name>
@@ -165,8 +165,8 @@
     <decisions>
         <name>Check_PreviousOwnerId</name>
         <label>Check PreviousOwnerId</label>
-        <locationX>710</locationX>
-        <locationY>984</locationY>
+        <locationX>918</locationX>
+        <locationY>1092</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>PreviousOwnerId_Found</name>
@@ -185,10 +185,33 @@
         </rules>
     </decisions>
     <decisions>
+        <description>Prevent Access Exceptions: You do not have sufficient privileges to access the controller: NSP_SAEmail_DateTimeController</description>
+        <name>Check_Running_User</name>
+        <label>Check Running User</label>
+        <locationX>621</locationX>
+        <locationY>276</locationY>
+        <defaultConnector>
+            <targetReference>Get_SA_History</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Excluded_User</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$User.Username</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>@00d</stringValue>
+                </rightValue>
+            </conditions>
+            <label>Is Excluded User</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_SA_History_Record</name>
         <label>Check SA History Record</label>
-        <locationX>1040</locationX>
-        <locationY>384</locationY>
+        <locationX>1248</locationX>
+        <locationY>492</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Valid_SA_History</name>
@@ -212,8 +235,8 @@
     <loops>
         <name>Loop_SA_History</name>
         <label>Loop: SA History</label>
-        <locationX>710</locationX>
-        <locationY>492</locationY>
+        <locationX>918</locationX>
+        <locationY>600</locationY>
         <collectionReference>Get_SA_History</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -245,8 +268,8 @@
     <recordLookups>
         <name>Get_Previous_Owner</name>
         <label>Get Previous Owner</label>
-        <locationX>314</locationX>
-        <locationY>1092</locationY>
+        <locationX>522</locationX>
+        <locationY>1200</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Previous_Owner</targetReference>
@@ -276,8 +299,8 @@
     <recordLookups>
         <name>Get_SA_History</name>
         <label>Get SA History</label>
-        <locationX>1040</locationX>
-        <locationY>276</locationY>
+        <locationX>1248</locationX>
+        <locationY>384</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_SA_History_Record</targetReference>
@@ -307,7 +330,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>287</locationX>
+        <locationX>50</locationX>
         <locationY>0</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -335,7 +358,7 @@
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Get_SA_History</targetReference>
+                <targetReference>Check_Running_User</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
@@ -345,8 +368,8 @@
     <subflows>
         <name>Fault_Handler</name>
         <label>Fault Handler</label>
-        <locationX>314</locationX>
-        <locationY>1524</locationY>
+        <locationX>522</locationX>
+        <locationY>1632</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
