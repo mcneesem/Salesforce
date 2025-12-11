@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IMP_Type__c</fullName>
+    <label>IMP Type</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>&quot;Start Up</fullName>
+                <default>false</default>
+                <label>&quot;Start Up</label>
+            </value>
+            <value>
+                <fullName>Association</fullName>
+                <default>false</default>
+                <label>Association</label>
+            </value>
+            <value>
+                <fullName>Association w/transfer</fullName>
+                <default>false</default>
+                <label>Association w/transfer</label>
+            </value>
+            <value>
+                <fullName>Trailing Conversion&quot;</fullName>
+                <default>false</default>
+                <label>Trailing Conversion&quot;</label>
+            </value>
+            <value>
+                <fullName>Transfer from - Choice</fullName>
+                <default>false</default>
+                <label>Transfer from - Choice</label>
+            </value>
+            <value>
+                <fullName>Transfer from - Custom</fullName>
+                <default>false</default>
+                <label>Transfer from - Custom</label>
+            </value>
+            <value>
+                <fullName>Transfer from multipile plans</fullName>
+                <default>false</default>
+                <label>Transfer from multipile plans</label>
+            </value>
+            <value>
+                <fullName>Transfer from NSPk</fullName>
+                <default>false</default>
+                <label>Transfer from NSPk</label>
+            </value>
+            <value>
+                <fullName>Transfer from Outside Vendor</fullName>
+                <default>false</default>
+                <label>Transfer from Outside Vendor</label>
+            </value>
+            <value>
+                <fullName>Transfer with ORK</fullName>
+                <default>false</default>
+                <label>Transfer with ORK</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
