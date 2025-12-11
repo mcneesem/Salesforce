@@ -24,7 +24,11 @@
           IF(
             NSP_Order_Product_Type__c = &apos;WO Retirement Services&apos; ,
             &apos;WO Retirement Services&apos; ,
-            NSP_Order_Product_Type__c
+            IF(
+              NSP_Order_Product_Type__c = &apos;Applicant Tracking&apos; ,
+              &apos;Talent Connect&apos; ,
+              NSP_Order_Product_Type__c
+            )
           )
         )
       )

@@ -5869,7 +5869,7 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>WX/WA Quote Validation Message</shortDescription>
-        <value>Quote cannot be created for this Opportunity</value>
+        <value>An active Asset already exists. Please use Manage Order from Account to create an amendment or select Existing Product if product is still in implementation.</value>
     </labels>
     <labels>
         <fullName>NSP_WX_Wet_Envelope</fullName>

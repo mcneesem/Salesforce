@@ -22,8 +22,9 @@ public class NSP_QuoteTriggerHelper {
     private static final String LASSO_PARTNERNAME = System.Label.NSP_Lasso_PartnerName;
 
     public void beforeInsertDirector( List<SBQQ__Quote__c> newList ) {
-        List<SBQQ__Quote__c> primaryQuotes= new List<SBQQ__Quote__c>();
-        validateQuote( newList );
+        List<SBQQ__Quote__c> primaryQuotes = new List<SBQQ__Quote__c>();
+        ValidateQuoteCreation validator = new ValidateQuoteCreation();
+        validator.validateQuote( newList );
         stampQuoteOwnerGrouponInsert( newList );
         initializeDefaultFieldValuesOnInsert( newList );
         setQuoteDetailsOnInsert( newList );
@@ -1637,33 +1638,6 @@ public void initializeDefaultFieldValuesOnInsert(List<SBQQ__Quote__c> newQuotesL
         }
     }
 
-    //
-    // Method Name : validateQuote
-    // Description : Method to throw valdiation error if customer has an active or onboarding asset. This will enforce them to amendment
-    // Author : Samba Raju       Date : 06/01/2023
-    // @param quotes list;
-    // @return void
-    //
-    private void validateQuote(List<SBQQ__Quote__c> quotes){
-        List<Id> accountIds= new List<Id>();
-        Map<Id,Asset> accountAssetMap= new Map<Id,Asset>();
-        for(SBQQ__Quote__c newQuote:quotes){
-            if(newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_NEW) && (newQuote.NSP_Opportunity_Primary_Product__c == 'WX' || newQuote.NSP_Opportunity_Primary_Product__c == 'WA')){
-                accountIds.add(newQuote.SBQQ__Account__c);
-            }
-        }
-        if(accountIds.size()>0){
-            for(Asset rec:[SELECT Id,AccountId,NSP_ProductBundle__c FROM Asset WHERE AccountId IN :accountIds AND RecordType.Name='WX_WA' AND Status IN ('Onboarding','Active')]){
-                accountAssetMap.put(rec.AccountId,rec);
-            }
-        }
-        for(SBQQ__Quote__c newQuote:quotes){
-            if(newQuote.SBQQ__Type__c.equals(NSP_CPQConstants.QUOTE_TYPE_NEW) && (newQuote.NSP_Opportunity_Primary_Product__c == 'WX' || newQuote.NSP_Opportunity_Primary_Product__c == 'WA') && accountAssetMap.get(newQuote.SBQQ__Account__c)!=null &&
-            !((newQuote.NSP_Opportunity_Primary_Bundle__c == STRING_WO_WS &&accountAssetMap.get(newQuote.SBQQ__Account__c)?.NSP_ProductBundle__c!=STRING_WO_WS)||(newQuote.NSP_Opportunity_Primary_Bundle__c !=STRING_WO_WS &&accountAssetMap.get(newQuote.SBQQ__Account__c)?.NSP_ProductBundle__c==STRING_WO_WS ))){
-                newQuote.addError(WX_WA_QUOTE_VALIDATION_ERROR);
-            }
-        }
-    }
 
     //
     // Description: This method accepts various parameters from which it

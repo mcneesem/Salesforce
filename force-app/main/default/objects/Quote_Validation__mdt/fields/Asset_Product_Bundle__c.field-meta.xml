@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Asset_Product_Bundle__c</fullName>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Asset Product Bundle</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>WA</fullName>
+                <default>true</default>
+                <label>WA</label>
+            </value>
+            <value>
+                <fullName>WA (WO to WA)</fullName>
+                <default>false</default>
+                <label>WA (WO to WA)</label>
+            </value>
+            <value>
+                <fullName>Payroll Only</fullName>
+                <default>false</default>
+                <label>Payroll Only</label>
+            </value>
+            <value>
+                <fullName>WOSS</fullName>
+                <default>false</default>
+                <label>WOSS</label>
+            </value>
+            <value>
+                <fullName>WX</fullName>
+                <default>false</default>
+                <label>WX</label>
+            </value>
+            <value>
+                <fullName>WX (WO to WX)</fullName>
+                <default>false</default>
+                <label>WX (WO to WX)</label>
+            </value>
+            <value>
+                <fullName>WO/WS</fullName>
+                <default>false</default>
+                <label>WO/WS</label>
+            </value>
+            <value>
+                <fullName>Stand Alone</fullName>
+                <default>false</default>
+                <label>Stand Alone</label>
+            </value>
+            <value>
+                <fullName>Certify</fullName>
+                <default>false</default>
+                <label>Certify</label>
+            </value>
+            <value>
+                <fullName>Expensable</fullName>
+                <default>false</default>
+                <label>Expensable</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
