@@ -108,16 +108,16 @@ public with sharing class InsperityWOBillingAccountTransferBatch implements Data
 
     public void finish( Database.BatchableContext bc ) {
         try {
-            // Send an email to the Apex job's submitter notifying of job completion.
-            // Get the ID of the AsyncApexJob representing this batch job from Database.BatchableContext.
-            // Query the AsyncApexJob object to retrieve the current job's information.
-            AsyncApexJob async = [
-                SELECT Id , Status , NumberOfErrors , JobItemsProcessed , TotalJobItems , CreatedBy.Email
-                FROM AsyncApexJob
-                WHERE ( Id = :bc.getJobId() )
-            ];
+            if( EmailDeliverabilityController.IsEnabledOutbound ){
+                // Send an email to the Apex job's submitter notifying of job completion.
+                // Get the ID of the AsyncApexJob representing this batch job from Database.BatchableContext.
+                // Query the AsyncApexJob object to retrieve the current job's information.
+                AsyncApexJob async = [
+                    SELECT Id , Status , NumberOfErrors , JobItemsProcessed , TotalJobItems , CreatedBy.Email
+                    FROM AsyncApexJob
+                    WHERE ( Id = :bc.getJobId() )
+                ];
 
-            if( Email_Deliverability_Settings__c.getInstance(UserInfo.getUserId()).IsEnabledOutbound__c ){
                 Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
                 String[] toAddresses = new String[]{ async.CreatedBy.Email };
                 mail.setToAddresses( toAddresses );
