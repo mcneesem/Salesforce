@@ -1,17 +1,3 @@
-/**************************************************************************************************   
-Version              :  1.0                                                                          
-Created Date         :  October 10, 2021                                                             
-Function             :   Represents the Lead trigger helper which handles all the logic.
-Test class           :  NSP_LeadTriggerHelperTest
-Story                :                                                                             
-Modification Log     :                                                                               
-*--------------------------------------------------------------------------------------------------  
-* Developer                   Date                   Description                                     
-* -------------------------------------------------------------------------------------------------  
-
-* Tejas           October 10, 2021          First Iteration
-* Harsha Khiroya  Feb 25, 2021              DF-01321
-***************************************************************************************************/
 public with sharing class NSP_LeadTriggerHelper {
     // test w/ NSP_LeadTriggerHelperTest (84%)
 
@@ -214,7 +200,7 @@ public with sharing class NSP_LeadTriggerHelper {
                 // Added as part of DF-01301
                 // As part of DF-00998 comments
                 // If the loggedIn user is either Inbound or Outbound and Assign Lead Checkbox is checked then only Lead assignment rule will trigger
-                // If the loggedIn user is not Inbound or Outbound solutions user, then No Lead assignment rules will trigger 
+                // If the loggedIn user is not Inbound or Outbound solutions user, then No Lead assignment rules will trigger
                 //
                 if ( (
                         leadNewMap.get(leadId).NSP_Lead_Routing__c == true
@@ -236,7 +222,7 @@ public with sharing class NSP_LeadTriggerHelper {
                         //If the Lead Company is associated with National Account, route the correct National Account Queue
                         nationalAccountLeadList.add(leadNewMap.get(leadId));
                     } else if (
-                        leadNewMap.get(leadId).NumberOfEmployees != null 
+                        leadNewMap.get(leadId).NumberOfEmployees != null
                         && Integer.valueof(leadNewMap.get(leadId).NumberOfEmployees) >= Integer.valueOf(System.Label.NSP_EMP_THRESH_150)
                         && leadNewMap.get(leadId).NSP_Product_Interest__c != null
                         )
@@ -367,7 +353,7 @@ public with sharing class NSP_LeadTriggerHelper {
             this.restrictLeadOwnerChangeByGroupMember( leadNewMap , leadOldMap );
         }
     }
-    
+
     //
     // Iterates throught the lead map and identifies the records that needs to worked based on various criterias.
     // @param leadNewMap Map of New leads.
@@ -633,7 +619,7 @@ public with sharing class NSP_LeadTriggerHelper {
             SELECT COUNT(Id)
             FROM Lead
             WHERE NSP_Parent_Lead__c = :record.Id
-        ]; 
+        ];
         if ( groupedResults != null && !groupedResults.isEmpty() ) {
             List<Lead> parents = [
                 SELECT Id , OwnerId
@@ -677,14 +663,13 @@ public with sharing class NSP_LeadTriggerHelper {
         }
     }
 
-  /**
-* Stamps partner email on lead record
-* @param newList List of New leads. 
-* @param acctIdSet set of account ids. 
-* @return void             
-*                
-*/
-    public void putPartnerEmailOnLead(List < Lead > newList, Set < String > accountIdSet) {
+    //
+    // Stamps partner email on lead record
+    // @param newList List of New leads.
+    // @param acctIdSet set of account ids.
+    // @return void
+    //
+    public void putPartnerEmailOnLead( List<Lead> newList , Set<String> accountIdSet ) {
         //map to store account id and primary contact's email
         Map < String, String > mapAccountsPrimaryContact = new Map < String, String > ();
         //Iterating over ACR obejct based on the account ids
@@ -694,7 +679,6 @@ public with sharing class NSP_LeadTriggerHelper {
                                                    //populating map with account ids and primary contact email
                                                    mapAccountsPrimaryContact.put(acrObject.accountid, acrObject.contact.email);
                                                }
-        
         for (Lead leadObject: newList) {
             if (mapAccountsPrimaryContact.containskey(leadObject.NSP_Partner__c)) {
                 //stamping partner's primary contact email on lead records
@@ -702,15 +686,14 @@ public with sharing class NSP_LeadTriggerHelper {
             }
         }
     }
-    
-    /**
-* Stamps set leads stage to MPL 
-* @param newList List of New leads. 
-* @param leadOldMap Map of old leads
-* @return void             
-*                
-*/
-    public void setLeadStageToMarketingPriortisedLead(List < Lead > newList, Map < Id, Lead > leadOldMap) {
+
+    //
+    // Stamps set leads stage to MPL
+    // @param newList List of New leads.
+    // @param leadOldMap Map of old leads
+    // @return void
+    //
+    public void setLeadStageToMarketingPriortisedLead( List<Lead> newList , Map<Id,Lead> leadOldMap ) {
         //iterating over new lead records
         for (Lead leadObject: newList) {
             if (!(leadOldMap.get(leadObject.id).NSP_Lead_Stage__c).equals(NSP_SalesConstants.LEAD_STAGE_SRL)) {
@@ -718,14 +701,14 @@ public with sharing class NSP_LeadTriggerHelper {
             }
         }
     }
-    
-    /**
-* Assigns the leads to the Mid Market Queue 
-* @param midMarketLead List of lead for Mid Market
-* @return void             
-*                
-*/
-    public void assignLeadToMidMarket(List < Lead > midMarketLead) {
+
+    //
+    // Assigns the leads to the Mid Market Queue
+    // @param midMarketLead List of lead for Mid Market
+    // @return void
+    //
+    //
+    public void assignLeadToMidMarket( List<Lead> midMarketLead ) {
         //Fetching the queue id for the mid market queue
         List < Group > midMarketQueue = [SELECT Id, DeveloperName, name FROM Group WHERE Type = 'Queue'
                                          AND DeveloperName =: System.label.NSP_DEVELOPERNAME_MIDMARKET
@@ -743,13 +726,13 @@ public with sharing class NSP_LeadTriggerHelper {
     }
 
     //
-    // Assigns the leads to the inBound Solutions Queue 
-    // @param inBoundSolutionsList List of lead for inBound Solutions 
-    // @return void 
+    // Assigns the leads to the inBound Solutions Queue
+    // @param inBoundSolutionsList List of lead for inBound Solutions
+    // @return void
     // @CreatedDate: 1/19/2022
     // @Story: DF-01009
     //
-    public void assignLeadToInboundSolutions(List<Lead> inBoundSolutionsList){   
+    public void assignLeadToInboundSolutions( List<Lead> inBoundSolutionsList ) {
         //Fetching the queue id for the inBound SolutionsQueue queue
         List<Group> inBoundSolutionsQueue = [SELECT Id,DeveloperName,name FROM Group WHERE Type = 'Queue' AND DeveloperName = :System.label.NSP_DEVELOPERNAME_INBOUNDSOLUTIONS];
         for(Lead leadObject : inBoundSolutionsList){
@@ -759,13 +742,13 @@ public with sharing class NSP_LeadTriggerHelper {
     }
 
     //
-    // Assigns the leads to the Outbound Team Queue 
+    // Assigns the leads to the Outbound Team Queue
     // @param outboundTeamList List of lead for outbound team
-    // @return void 
+    // @return void
     // @CreatedDate: 7/22/2024
     // @Story: 290414
     //
-    public void assignLeadToOutboundTeam(List<Lead> outboundTeamList){
+    public void assignLeadToOutboundTeam( List<Lead> outboundTeamList ) {
         //Fetching the queue id for the inBound SolutionsQueue queue
         List<Group> outboundTeamListQueue = [SELECT Id FROM Group WHERE Type = 'Queue' AND DeveloperName = :System.label.Outbound_Team_DeveloperName];
         for(Lead leadObject : outboundTeamList){
@@ -775,13 +758,13 @@ public with sharing class NSP_LeadTriggerHelper {
     }
 
     //
-    // Assigns the leads to the Field Marketing Team Queue 
+    // Assigns the leads to the Field Marketing Team Queue
     // @param fieldMarketingTeamList List of lead for field marketing team
-    // @return void 
+    // @return void
     // @CreatedDate: 7/31/2024
     // @Story: 297391
     //
-    public void assignLeadToFieldMarketingTeam(List<Lead> fieldMarketingTeamList){
+    public void assignLeadToFieldMarketingTeam( List<Lead> fieldMarketingTeamList ) {
         //Fetching the queue id for the inBound SolutionsQueue queue
         if(String.isNotBlank(System.label.Field_Marketing_Team_DeveloperName)){
             List<Group> fieldMarketingTeamListQueue = [
@@ -801,40 +784,36 @@ public with sharing class NSP_LeadTriggerHelper {
         }
     }
 
-/**
-* Assigns the leads to the Payroll/HCM  Queue 
-* @param payrollHCMLead List of lead for Payroll/HCM
-* @return void             
-*                
-*/
-    public void assignLeadToPayrollHCM(List < Lead > payrollHCMLead) {
+    //
+    // Assigns the leads to the Payroll/HCM  Queue
+    // @param payrollHCMLead List of lead for Payroll/HCM
+    // @return void
+    //
+    //
+    public void assignLeadToPayrollHCM( List<Lead> payrollHCMLead ) {
         List < Group > payrollHCMQueue = [SELECT Id, DeveloperName, name FROM Group WHERE Type = 'Queue'
                                           AND DeveloperName =: System.label.NSP_DEVELOPERNAME_PAYROLLHCM
                                          ];
         for (Lead leadObject: payrollHCMLead) {
             leadObject.OwnerId = payrollHCMQueue[0].id;
           leadObject.NSP_Lead_Routing__c = FALSE;
-            
         }
-        
     }
-    /**
-* Assigns the leads to the respective National Account Queues 
-* @param nationalAccountLeadList List of lead related to National Account
-* @return void             
-*                
-*/
-    public void assignLeadToNationalAccountQueue(List < Lead > nationalAccountLeadList) {
-        //Splitting the stirng to create a list 
+
+    //
+    // Assigns the leads to the respective National Account Queues
+    // @param nationalAccountLeadList List of lead related to National Account
+    // @return void
+    //
+    public void assignLeadToNationalAccountQueue( List<Lead> nationalAccountLeadList ) {
+        //Splitting the stirng to create a list
         List < String > nationalAccountList = Label.NSP_National_Accounts.split(',');
         //Query to fetch the correct queue name
         List < Group > nationalAccountQueues = [SELECT Id, DeveloperName, name FROM Group WHERE Type = 'Queue'
                                                 AND Name in: nationalAccountList
                                                ];
-        
         //Iterating over the lead records to assign lead owner
         for (Lead leadObject: nationalAccountLeadList) {
-            
             for (Group grpObject: nationalAccountQueues) {
                 if (leadObject.Company.equalsIgnoreCase(grpObject.Name)) {
                     //Assigning queue as the lead owner
@@ -856,7 +835,7 @@ public with sharing class NSP_LeadTriggerHelper {
         List<Lead> finalRoundRobinList = new List<Lead>();
         // build a list of zip codes used by the qualified Lead records...
         List<String> zipBasedLocationList = new List<String>();
-        // build a translation map from 5-digit zip codes to location names... 
+        // build a translation map from 5-digit zip codes to location names...
         Map<String,String> zipMap = this.buildZipCodeLocationNameMap( zipCodeList );
         if ( zipMap != null ) {
             for ( Lead leadObj : leadsForRoundRobin ) {
@@ -888,7 +867,7 @@ public with sharing class NSP_LeadTriggerHelper {
         }
     }
 
-    // build a map from 5-digit zip codes to location names... 
+    // build a map from 5-digit zip codes to location names...
     private Map<String,String> buildZipCodeLocationNameMap( List<String> zipcodes ) {
         List<NSP_Zip_To_City_Mapping__c> records = [
             SELECT NSP_Zip__c , NSP_Location_Name__c
@@ -920,47 +899,46 @@ public with sharing class NSP_LeadTriggerHelper {
         return zipcode;
     }
 
-    /**
-* Marks the contact which refered the lead as COI on the converted Account 
-* @param leadList List of lead. 
-* @return void             
-*                
-*/
-    
-    public void setContactasCOI(Map < String, Lead > accountLeadMap, Map < String, Lead > opportunityLeadMap) {
-         
-        List < AccountContactRelation > acrList = new List < AccountContactRelation > ();
-        List < OpportunityContactRole > ocrList = new List < OpportunityContactRole > ();
-        for (String accntID: accountLeadMap.keyset()) {
-            Lead leadObject = accountLeadMap.get(accntID);
-            AccountContactRelation acrObject = new AccountContactRelation();
-            acrObject.AccountId = accntID;
-            acrObject.ContactId = leadObject.NSP_Referred_By_COI__c;
-            acrObject.Roles = leadObject.NSP_Referral_Source__c;
-            acrObject.NSP_isReferral__c = true;
-            acrObject.NSP_Nonprofit_Organization_Name__c = leadObject.NSP_Nonprofit_Organization_Name__c;
-            acrObject.NSP_Nonprofit_Organization_Tax_Id__c = leadObject.NSP_Nonprofit_Organization_Tax_Id__c;
-            acrObject.NSP_Referralbenefitsanonprofitorg__c = leadObject.NSP_Referralbenefitsanonprofitorg__c;
-            acrList.add(acrObject);
-        }
-        for (String opportunityId: opportunityLeadMap.keySet()) {
-            Lead leadObject = opportunityLeadMap.get(opportunityId);
-            OpportunityContactRole ocrObject = new OpportunityContactRole();
-            ocrObject.OpportunityId = leadObject.convertedOpportunityId;
-            ocrObject.ContactId = leadObject.NSP_Referred_By_COI__c;
-            ocrObject.Role = leadObject.NSP_Referral_Source__c;
-            ocrObject.NSP_isReferral__c = true;
-            ocrObject.NSP_Nonprofit_Organization_Name__c = leadObject.NSP_Nonprofit_Organization_Name__c;
-            ocrObject.NSP_Nonprofit_Organization_Tax_Id__c = leadObject.NSP_Nonprofit_Organization_Tax_Id__c;
-            ocrObject.NSP_Referralbenefitsanonprofitorg__c = leadObject.NSP_Referralbenefitsanonprofitorg__c;   
-                                                          
-            ocrList.add(ocrObject);
-        }
+    //
+    // Marks the contact which refered the lead as COI on the converted Account
+    // @param leadList List of lead.
+    // @return void
+    //
+    public void setContactasCOI( Map<String,Lead> accountLeadMap , Map<String,Lead> opportunityLeadMap ) {
         try {
-            if(acrList.size() > 0){
+            List<AccountContactRelation> acrList = new List<AccountContactRelation>();
+            for ( String accntID : accountLeadMap.keyset() ) {
+                Lead leadObject = accountLeadMap.get( accntID );
+                AccountContactRelation acrObject = new AccountContactRelation();
+                acrObject.AccountId = accntID;
+                acrObject.ContactId = leadObject.NSP_Referred_By_COI__c;
+                acrObject.Roles = leadObject.NSP_Referral_Source__c;
+                acrObject.NSP_isReferral__c = true;
+                acrObject.NSP_Nonprofit_Organization_Name__c = leadObject.NSP_Nonprofit_Organization_Name__c;
+                acrObject.NSP_Nonprofit_Organization_Tax_Id__c = leadObject.NSP_Nonprofit_Organization_Tax_Id__c;
+                acrObject.NSP_Referralbenefitsanonprofitorg__c = leadObject.NSP_Referralbenefitsanonprofitorg__c;
+                acrList.add( acrObject );
+            }
+            List<OpportunityContactRole> ocrList = new List<OpportunityContactRole>();
+            for ( String opportunityId : opportunityLeadMap.keySet() ) {
+                Lead leadObject = opportunityLeadMap.get( opportunityId );
+                // Prevent DmlExceptions: REQUIRED_FIELD_MISSING, Required fields are missing: [OpportunityId]: [OpportunityId]
+                if ( ( leadObject != null ) && ( leadObject.convertedOpportunityId != null ) ) {
+                    OpportunityContactRole ocrObject = new OpportunityContactRole();
+                    ocrObject.OpportunityId = leadObject.convertedOpportunityId;
+                    ocrObject.ContactId = leadObject.NSP_Referred_By_COI__c;
+                    ocrObject.Role = leadObject.NSP_Referral_Source__c;
+                    ocrObject.NSP_isReferral__c = true;
+                    ocrObject.NSP_Nonprofit_Organization_Name__c = leadObject.NSP_Nonprofit_Organization_Name__c;
+                    ocrObject.NSP_Nonprofit_Organization_Tax_Id__c = leadObject.NSP_Nonprofit_Organization_Tax_Id__c;
+                    ocrObject.NSP_Referralbenefitsanonprofitorg__c = leadObject.NSP_Referralbenefitsanonprofitorg__c;
+                    ocrList.add( ocrObject );
+                }
+            }
+            if ( !acrList.isEmpty() ) {
                 insert acrList;
             }
-            if(ocrList.size() > 0){
+            if ( !ocrList.isEmpty() ) {
                 insert ocrList;
             }
         } catch ( Exception e ) {
@@ -1266,75 +1244,75 @@ public with sharing class NSP_LeadTriggerHelper {
         Id child;
         Id parent;
         List<Database.LeadConvert> massleadconvert = new List<Database.LeadConvert>();
-      
-    for (Lead newLead: newLeadList) {
-        if (newLead.IsConverted && newLead.NSP_Parent_Lead__c == null && newLead.ConvertedOpportunityId != null) {
-            parentMap.put(newLead.Id, newLead);
-        } else if (newLead.IsConverted && newLead.NSP_Parent_Lead__c != null && newLead.ConvertedOpportunityId != null) {
-            childMap.put(newLead.Id, newLead);
-            allLeadList.add(newLead.DNB_Connect_DUNS_Number__c);
-            child = newLead.Id;
-              parent = newLead.NSP_Parent_Lead__c;
-            convertedOpty = newLead.ConvertedOpportunityId;
-            accountId = newLead.ConvertedAccountId;
-        }
-    }
-      
-    if (parentMap != null && !parentMap.isEmpty()) {
-          parentResult = [SELECT Id, Salutation, FirstName, MiddleName, LastName, Suffix, IsConverted, NSP_Parent_Lead__c, NSP_Parent_Lead__r.Status FROM Lead WHERE NSP_Parent_Lead__c IN: parentMap.keySet()];
-    } else if (childMap != null && !childMap.isEmpty()) {
-          childResult = [SELECT Id, Salutation, FirstName, MiddleName, LastName, Suffix, IsConverted, NSP_Parent_Lead__c, DNB_Connect_DUNS_Number__c FROM Lead WHERE ((DNB_Connect_DUNS_Number__c != null AND DNB_Connect_DUNS_Number__c IN: allLeadList) OR (DNB_Connect_DUNS_Number__c = null AND ((NSP_Parent_Lead__c = :parent) OR (Id = :parent))))  AND Id != : child];
-    }
-    if (parentResult != null && !parentResult.isEmpty()) {
-        LeadStatus convertStatus = [SELECT Id, MasterLabel FROM LeadStatus WHERE IsConverted = true LIMIT 1];
-        for (Lead childLead: parentResult) {
-            Database.LeadConvert lc = new Database.LeadConvert();
-            if (!childLead.IsConverted) {
-                taskIdSet.add(childLead.Id);
-                  if (parentMap != null && !parentMap.isEmpty() && parentMap.get(childLead.NSP_Parent_Lead__c) != null && parentMap.get(childLead.NSP_Parent_Lead__c).ConvertedOpportunityId != null) mapLead.put(childLead.Id, parentMap.get(childLead.NSP_Parent_Lead__c).ConvertedOpportunityId);
-                lc.setLeadId(childLead.id);
-                lc.setAccountId(parentMap.get(childLead.NSP_Parent_Lead__c).ConvertedAccountId);
-                lc.setOwnerId(userinfo.getUserId());
-                lc.setDoNotCreateOpportunity(TRUE);
-                lc.setConvertedStatus(convertStatus.MasterLabel);
-                massleadconvert.add( lc );
+
+        for (Lead newLead: newLeadList) {
+            if (newLead.IsConverted && newLead.NSP_Parent_Lead__c == null && newLead.ConvertedOpportunityId != null) {
+                parentMap.put(newLead.Id, newLead);
+            } else if (newLead.IsConverted && newLead.NSP_Parent_Lead__c != null && newLead.ConvertedOpportunityId != null) {
+                childMap.put(newLead.Id, newLead);
+                allLeadList.add(newLead.DNB_Connect_DUNS_Number__c);
+                child = newLead.Id;
+                parent = newLead.NSP_Parent_Lead__c;
+                convertedOpty = newLead.ConvertedOpportunityId;
+                accountId = newLead.ConvertedAccountId;
             }
         }
-    }
-    if (childResult !=null && !childResult.isEmpty()) {
-        LeadStatus convertStatus = [SELECT Id, MasterLabel FROM LeadStatus WHERE IsConverted = true LIMIT 1];
-        for (Lead childLead: childResult) {
-            Database.LeadConvert lc = new Database.LeadConvert();
-            if (childLead.IsConverted == false) {
-                taskIdSet.add(childLead.Id);
-                if (convertedOpty != null) mapLead.put(childLead.Id, convertedOpty);
-                lc.setLeadId(childLead.id);
-                lc.setAccountId(accountId);
-                lc.setOwnerId(userinfo.getUserId());
-                lc.setDoNotCreateOpportunity(TRUE);
-                lc.setConvertedStatus(convertStatus.MasterLabel);
-                massleadconvert.add( lc );
+
+        if (parentMap != null && !parentMap.isEmpty()) {
+            parentResult = [SELECT Id, Salutation, FirstName, MiddleName, LastName, Suffix, IsConverted, NSP_Parent_Lead__c, NSP_Parent_Lead__r.Status FROM Lead WHERE NSP_Parent_Lead__c IN: parentMap.keySet()];
+        } else if (childMap != null && !childMap.isEmpty()) {
+            childResult = [SELECT Id, Salutation, FirstName, MiddleName, LastName, Suffix, IsConverted, NSP_Parent_Lead__c, DNB_Connect_DUNS_Number__c FROM Lead WHERE ((DNB_Connect_DUNS_Number__c != null AND DNB_Connect_DUNS_Number__c IN: allLeadList) OR (DNB_Connect_DUNS_Number__c = null AND ((NSP_Parent_Lead__c = :parent) OR (Id = :parent))))  AND Id != : child];
+        }
+        if (parentResult != null && !parentResult.isEmpty()) {
+            LeadStatus convertStatus = [SELECT Id, MasterLabel FROM LeadStatus WHERE IsConverted = true LIMIT 1];
+            for (Lead childLead: parentResult) {
+                Database.LeadConvert lc = new Database.LeadConvert();
+                if (!childLead.IsConverted) {
+                    taskIdSet.add(childLead.Id);
+                    if (parentMap != null && !parentMap.isEmpty() && parentMap.get(childLead.NSP_Parent_Lead__c) != null && parentMap.get(childLead.NSP_Parent_Lead__c).ConvertedOpportunityId != null) mapLead.put(childLead.Id, parentMap.get(childLead.NSP_Parent_Lead__c).ConvertedOpportunityId);
+                    lc.setLeadId(childLead.id);
+                    lc.setAccountId(parentMap.get(childLead.NSP_Parent_Lead__c).ConvertedAccountId);
+                    lc.setOwnerId(userinfo.getUserId());
+                    lc.setDoNotCreateOpportunity(TRUE);
+                    lc.setConvertedStatus(convertStatus.MasterLabel);
+                    massleadconvert.add( lc );
+                }
             }
         }
-    }
-    if (mapLead != null && !mapLead.isEmpty()) {
-        List < Task > taskList = [SELECT Id, WhatId, WhoId FROM Task WHERE WhoId IN: mapLead.keySet()];
-        List < Event > eventList = [SELECT Id, WhatId, WhoId FROM Event WHERE WhoId IN: mapLead.keySet()];
-        if (taskList !=null && !taskList.isEmpty()) {
-            for (Task taskObj: taskList) {
-                taskObj.WhatId = mapLead.get(taskObj.WhoId);
-                taskObj.WhoId = null;
-                linkTaskList.add(taskObj);
+        if (childResult !=null && !childResult.isEmpty()) {
+            LeadStatus convertStatus = [SELECT Id, MasterLabel FROM LeadStatus WHERE IsConverted = true LIMIT 1];
+            for (Lead childLead: childResult) {
+                Database.LeadConvert lc = new Database.LeadConvert();
+                if (childLead.IsConverted == false) {
+                    taskIdSet.add(childLead.Id);
+                    if (convertedOpty != null) mapLead.put(childLead.Id, convertedOpty);
+                    lc.setLeadId(childLead.id);
+                    lc.setAccountId(accountId);
+                    lc.setOwnerId(userinfo.getUserId());
+                    lc.setDoNotCreateOpportunity(TRUE);
+                    lc.setConvertedStatus(convertStatus.MasterLabel);
+                    massleadconvert.add( lc );
+                }
             }
         }
-        if (eventList !=null && !eventList.isEmpty()) {
-            for (Event eventObj: eventList) {
-                eventObj.WhatId = mapLead.get(eventObj.WhoId);
-                eventObj.WhoId = null;
-                linkEventList.add(eventObj);
+        if (mapLead != null && !mapLead.isEmpty()) {
+            List < Task > taskList = [SELECT Id, WhatId, WhoId FROM Task WHERE WhoId IN: mapLead.keySet()];
+            List < Event > eventList = [SELECT Id, WhatId, WhoId FROM Event WHERE WhoId IN: mapLead.keySet()];
+            if (taskList !=null && !taskList.isEmpty()) {
+                for (Task taskObj: taskList) {
+                    taskObj.WhatId = mapLead.get(taskObj.WhoId);
+                    taskObj.WhoId = null;
+                    linkTaskList.add(taskObj);
+                }
+            }
+            if (eventList !=null && !eventList.isEmpty()) {
+                for (Event eventObj: eventList) {
+                    eventObj.WhatId = mapLead.get(eventObj.WhoId);
+                    eventObj.WhoId = null;
+                    linkEventList.add(eventObj);
+                }
             }
         }
-    }
         try {
             if ( !massleadconvert.isEmpty() ) {
                 Database.convertLead( massleadconvert );
@@ -1381,7 +1359,7 @@ public with sharing class NSP_LeadTriggerHelper {
                 FROM Contact
                 WHERE ( AccountId IN :recordIds )
             ]);
-            // checking for the existing Primary ACR associated with the account 
+            // checking for the existing Primary ACR associated with the account
             List<AccountContactRelation> accountContactRelationLists = [
                 SELECT Id , NSP_Is_Primary__c , AccountId
                 FROM AccountContactRelation
@@ -1420,28 +1398,18 @@ public with sharing class NSP_LeadTriggerHelper {
         }
     }
 
-    /* Description: This method sets sales office details from user 
-     * 
-     * @param: leadList, leadMap
-     * @return: void
-     * Modification History:
-     * -------------------------------------------------------------------------------------
-     *  Date              | Description
-     * -------------------------------------------------------------------------------------
-     *  08/05/2022          created this new method added for STY-03154
-     * 
-     * 
-    */
-    
-    public void setSalesOfficeDetails(List<Lead> newList,Map<Id, Lead> leadOldMap) {
-
+    //
+    // Description: This method sets sales office details from user
+    // @param: leadList, leadMap
+    // @return: void
+    //
+    public void setSalesOfficeDetails( List<Lead> newList , Map<Id,Lead> leadOldMap ) {
         set<Id> ownerIdSet = new set<Id>();
         set<string> officeSet = new set<string>(); // sales office set
         set<Id> recordToOwnerProcess = new set<Id>();  // record to be process set
         set<Id> recordToOfficeProcess = new set<Id>();  // record to be process set
         map<String,NSP_Sales_Office_Mapping__c> salesOfficeToMappingMap =  new map<String,NSP_Sales_Office_Mapping__c>();
         Map<Id,User> userIdMap;
-        
         for(Lead newLead: newList) {
             Lead oldLead = leadOldMap != null ? leadOldMap.get(newLead.Id):null;
             if(Trigger.isInsert)
@@ -1466,23 +1434,18 @@ public with sharing class NSP_LeadTriggerHelper {
                 officeSet.add(newLead.NSP_Sales_Office__c);
             }
         }
-        
         if(ownerIdSet.Size() > 0) {
             userIdMap = new Map<Id,User>([SELECT Id,NSP_SalesDivision__c,NSP_Sales_Office__c,NSP_SalesRegion__c from user where Id In :ownerIdSet AND NSP_Sales_Office__c != null ]);
-            
         }
-        
         // values assigned from sales office mapping
         if(officeSet.Size() > 0) {
-            for(NSP_Sales_Office_Mapping__c eachMapping : [SELECT Id,NSP_Sales_Office__c,NSP_Sales_Division__c,NSP_Sales_Region__c 
-                                                            FROM NSP_Sales_Office_Mapping__c 
+            for(NSP_Sales_Office_Mapping__c eachMapping : [SELECT Id,NSP_Sales_Office__c,NSP_Sales_Division__c,NSP_Sales_Region__c
+                                                            FROM NSP_Sales_Office_Mapping__c
                                                             WHERE NSP_Sales_Office__c In : officeSet AND isActive__c = true])
             {
                 salesOfficeToMappingMap.put(eachMapping.NSP_Sales_Office__c,eachMapping);
             }
         }
-        
-        
         for(Lead newLead: newList)
         {
             if( (Trigger.isInsert || recordToOfficeProcess.contains(newLead.Id)) &&  String.isNotBlank(newLead.NSP_Sales_Office__c) && salesOfficeToMappingMap.containsKey(newLead.NSP_Sales_Office__c))
@@ -1510,7 +1473,7 @@ public with sharing class NSP_LeadTriggerHelper {
             );
         }
     }
-    
+
     private static Map<Id,User> permittedDUNSRoutingUserMap {
         private get {
             if ( permittedDUNSRoutingUserMap == null ) {
@@ -1630,5 +1593,6 @@ public with sharing class NSP_LeadTriggerHelper {
             );
         }
     }
+
 }
 //
