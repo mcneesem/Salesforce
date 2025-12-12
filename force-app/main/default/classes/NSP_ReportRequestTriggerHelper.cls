@@ -279,7 +279,7 @@ public with sharing class NSP_ReportRequestTriggerHelper {
             caseContact.NSP_Contact__c = repRequest.NSP_WSEE__c;
         }
         if ( ( repRequest.NSP_Client_Contact__c != null ) && clientContactIsPresent ) {
-            caseContact.NSP_IsPrimary__c = ( ( repRequest.NSP_RequestingMultipleEmployees__c == 'Yes' ) ? true : false );
+            caseContact.NSP_IsPrimary__c = ( repRequest.NSP_RequestingMultipleEmployees__c == 'Yes' );
             caseContact.NSP_Contact__c = repRequest.NSP_Client_Contact__c;
         }
         return caseContact;
