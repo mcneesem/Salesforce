@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>65.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Extract all Portal Client IDs into text collection</description>
+        <name>Assign_Portal_Client_Id_s</name>
+        <label>Assign : Portal Client Id&apos;s</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>portalclient_ids</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Loop_Multiple_Portal_Clients.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_Multiple_Portal_Clients</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Delete_Pay_Periods</name>
+        <label>Set Fault Element : Delete_Pay_Periods</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>FaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Delete_Pay_Periods</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_All_Portal_Pay_Periods</name>
+        <label>Set Fault Element : Get_All_Portal_Pay_Periods</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>FaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_All_Portal_Pay_Periods</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_Portal_Clients</name>
+        <label>Set Fault Element : Get_Portal_Clients</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>FaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Portal_Clients</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <description>Validate if collection is not empty</description>
+        <name>Pay_Period_Exists</name>
+        <label>Pay Period Exists?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Pay_Period_Exist</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>rc_all_pay_periords</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>rc_all_pay_periords</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Delete_Pay_Periods</targetReference>
+            </connector>
+            <label>Yes : Pay Period Exist</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Validate if collection is not empty</description>
+        <name>Portal_Client_Record_Exists</name>
+        <label>Portal Client Record Exists?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Record_Exist</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>rc_portal_clients</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>rc_portal_clients</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Loop_Multiple_Portal_Clients</targetReference>
+            </connector>
+            <label>Yes : Record Exist</label>
+        </rules>
+    </decisions>
+    <description>AZD-500803</description>
+    <environments>Default</environments>
+    <interviewLabel>Implementation Profile - Pay Period Deleted - Delete Portal Client Pay Period {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Implementation Profile - Pay Period Deleted - Delete Portal Client Pay Period</label>
+    <loops>
+        <description>Assuming we have multiple PCs for given Account</description>
+        <name>Loop_Multiple_Portal_Clients</name>
+        <label>Loop : Multiple Portal Clients</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <collectionReference>rc_portal_clients</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Assign_Portal_Client_Id_s</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Get_All_Portal_Pay_Periods</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordDeletes>
+        <name>Delete_Pay_Periods</name>
+        <label>Delete Pay Periods</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Delete_Pay_Periods</targetReference>
+        </faultConnector>
+        <inputReference>rc_all_pay_periords</inputReference>
+    </recordDeletes>
+    <recordLookups>
+        <description>Retrieve Pay Period records for all Portal Client IDs into collection</description>
+        <name>Get_All_Portal_Pay_Periods</name>
+        <label>Get All Portal Pay Periods</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Pay_Period_Exists</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_All_Portal_Pay_Periods</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Portal_Client__c</field>
+            <operator>In</operator>
+            <value>
+                <elementReference>portalclient_ids</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Implementation_Pay_Period__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <object>Portal_Pay_Period__c</object>
+        <outputReference>rc_all_pay_periords</outputReference>
+        <queriedFields>Id</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <description>Retrieve Portal Clients Records for given parent account, assuming multiple PC records may exists</description>
+        <name>Get_Portal_Clients</name>
+        <label>Get Portal Clients</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Portal_Client_Record_Exists</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_Portal_Clients</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Account__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.NSP_Implementation_Profile__r.Account__c</elementReference>
+            </value>
+        </filters>
+        <object>Portal_Client__c</object>
+        <outputReference>rc_portal_clients</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Account__c</queriedFields>
+    </recordLookups>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Portal_Clients</targetReference>
+        </connector>
+        <object>Implementation_Pay_Period__c</object>
+        <recordTriggerType>Delete</recordTriggerType>
+        <triggerType>RecordBeforeDelete</triggerType>
+    </start>
+    <status>Draft</status>
+    <variables>
+        <name>FaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Collection of Portal Client ID&apos;s</description>
+        <name>portalclient_ids</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Pay Periods for all Portal Client ID&apos;s for an triggering IP account</description>
+        <name>rc_all_pay_periords</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Portal_Pay_Period__c</objectType>
+    </variables>
+    <variables>
+        <description>Portal Clients record collection</description>
+        <name>rc_portal_clients</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Portal_Client__c</objectType>
+    </variables>
+</Flow>
