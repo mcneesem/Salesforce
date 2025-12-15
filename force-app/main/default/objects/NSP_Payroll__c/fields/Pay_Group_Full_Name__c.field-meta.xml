@@ -3,9 +3,9 @@
     <fullName>Pay_Group_Full_Name__c</fullName>
     <externalId>false</externalId>
     <formula>HYPERLINK(
-    &apos;/&apos; &amp; NSP_Sub_Client_Name__r.Id,
-    NSP_Sub_Client_Name__r.Pay_Group_Full_Name__c,
-    &apos;_self&apos;
+  &apos;/&apos; &amp; NSP_Sub_Client_Name__r.Id ,
+  NSP_Sub_Client_Name__r.Pay_Group_Full_Name__c ,
+  &apos;_self&apos;
 )</formula>
     <label>Pay Group Full Name</label>
     <required>false</required>
