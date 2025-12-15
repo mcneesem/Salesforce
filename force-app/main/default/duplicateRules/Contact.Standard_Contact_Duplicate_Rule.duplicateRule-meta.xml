@@ -4,7 +4,16 @@
     <actionOnUpdate>Allow</actionOnUpdate>
     <alertText>You&apos;re creating a duplicate record. We recommend you use an existing record instead.</alertText>
     <description>Duplicate Rule for Contacts using the Standard Contact Matching Rule</description>
-    <duplicateRuleFilter xsi:nil="true"/>
+    <duplicateRuleFilter>
+        <booleanFilter xsi:nil="true"/>
+        <duplicateRuleFilterItems>
+            <field>Bypass_Duplicate_Rules__c</field>
+            <operation>equals</operation>
+            <value>false</value>
+            <sortOrder>1</sortOrder>
+            <table>User</table>
+        </duplicateRuleFilterItems>
+    </duplicateRuleFilter>
     <duplicateRuleMatchRules>
         <matchRuleSObjectType>Contact</matchRuleSObjectType>
         <matchingRule>Standard_Contact_Match_Rule_v1_1</matchingRule>
