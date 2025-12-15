@@ -5,6 +5,9 @@ private class InvoiceMissingFilesAlertBatchTest {
 
     @testSetup
     private static void setupTestData() {
+        Email_Deliverability_Settings__c emailSetting = new Email_Deliverability_Settings__c();
+        insert emailSetting;
+
         Order_Settings__c orderSetting = Order_Settings__c.getOrgDefaults();
         orderSetting.EffectiveDateStartOfMonth__c = true;
         upsert orderSetting;

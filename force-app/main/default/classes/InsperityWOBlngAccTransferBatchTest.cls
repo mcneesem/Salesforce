@@ -1,6 +1,9 @@
 @isTest private class InsperityWOBlngAccTransferBatchTest {
 
     @testSetup private static void dataSetup() {
+        Email_Deliverability_Settings__c emailSetting = new Email_Deliverability_Settings__c();
+        insert emailSetting;
+
         NSP_InvoiceTriggerHandler.TriggerDisabled = true;
         NSP_AccountTriggerHandler.TriggerDisabled = true;
         NSP_OrderItemTriggerHandler.TriggerDisabled = true;
@@ -13,7 +16,7 @@
         NSP_SubscriptionTriggerHandler.TriggerDisabled=true;
         NSP_ContractTriggerHandler.TriggerDisabled=true;
         Map<Id,Id> producRevRuleMap= new Map<Id,Id>();
-                
+
         Account objaccount = NSP_TestHelper.createAccount(true);
         Account objaccount1 = NSP_TestHelper.createAccount(true);
         objaccount1.Previous_Month_Account__c = objaccount.name;
@@ -30,7 +33,7 @@
         recTreatment.blng__RevenueDistributionMethod__c=dis.Id;
         recTreatment.blng__RevenueRecognitionRule__c=rRule.Id;
         insert recTreatment;
-        
+
         Product2 objproduct = NSP_TestHelper.createProduct('Test Product',false);
         objproduct.SBQQ__ChargeType__c = 'Recurring';
         objproduct.SBQQ__BillingType__c = 'Arrears';
@@ -42,7 +45,7 @@
         objproduct.blng__TaxRule__c=tRule.Id;
         insert objproduct;
         producRevRuleMap.put(objproduct.Id,rRule.Id);
-        
+
         blng__RevenueRecognitionRule__c rRule1=NSP_TestHelper.createRevrecRule(NSP_CPQConstants.DELAY_12_1);
         Product2 objproduct1 = NSP_TestHelper.createProduct('Test Product1',false);
         objproduct1.SBQQ__ChargeType__c = 'Recurring';
