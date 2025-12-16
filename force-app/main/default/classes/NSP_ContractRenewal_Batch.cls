@@ -5,7 +5,7 @@
 // Name : NSP_ContractRenewal_Batch
 //
 public class NSP_ContractRenewal_Batch implements Database.Batchable<SObject>, Database.Stateful {
-    // test w/ NSP_ContractRenewal_Batch_Test (96%)
+    // test w/ NSP_ContractRenewal_Batch_Test (93%)
 
     public Integer recordsProcessed = 0; // stores number of records processed.
     public String query;
@@ -113,24 +113,26 @@ public class NSP_ContractRenewal_Batch implements Database.Batchable<SObject>, D
         // Get the ID of the AsyncApexJob representing this batch job
         // from Database.BatchableContext.
         // Query the AsyncApexJob object to retrieve the current job's information.
-        AsyncApexJob apexJob = [
-            SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email
-            FROM AsyncApexJob WHERE Id = :BC.getJobId()
-        ];
-        // OPTIONAL: Send an email to the Apex job's submitter notifying of job completion.
-        Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-        String[] toAddresses = new String[] {apexJob.CreatedBy.Email};
-        mail.setToAddresses(toAddresses);
-        mail.setSubject('Contract Renewal Batch ' + apexJob.Status);
-        mail.setPlainTextBody(
-            'The batch Apex job processed ' + apexJob.TotalJobItems +
-            ' batches with '+ apexJob.NumberOfErrors + ' failures.' +
-            'Total Records :'+recordsProcessed
-        );
-        try {
-            Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ mail } );
-        } catch ( Exception e ) {
-            System.debug( ' ~ CATCH ~ e=' + e );
+        if( EmailDeliverabilityController.IsEnabledOutbound ){
+            AsyncApexJob apexJob = [
+                SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email
+                FROM AsyncApexJob WHERE Id = :BC.getJobId()
+            ];
+            // OPTIONAL: Send an email to the Apex job's submitter notifying of job completion.
+            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+            String[] toAddresses = new String[] {apexJob.CreatedBy.Email};
+            mail.setToAddresses(toAddresses);
+            mail.setSubject('Contract Renewal Batch ' + apexJob.Status);
+            mail.setPlainTextBody(
+                'The batch Apex job processed ' + apexJob.TotalJobItems +
+                ' batches with '+ apexJob.NumberOfErrors + ' failures.' +
+                'Total Records :'+recordsProcessed
+            );
+            try {
+                Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ mail } );
+            } catch ( Exception e ) {
+                System.debug( ' ~ CATCH ~ e=' + e );
+            }
         }
     }
 

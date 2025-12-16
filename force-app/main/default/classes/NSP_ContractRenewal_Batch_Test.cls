@@ -14,6 +14,9 @@ public class NSP_ContractRenewal_Batch_Test {
     //Test Setup Method to populate test data
     @testSetup
     static void setupTestData(){
+        Email_Deliverability_Settings__c emailSetting = new Email_Deliverability_Settings__c();
+        insert emailSetting;
+
        // NSP_TestHelper th = new NSP_TestHelper();
         Account acc1 = NSP_TestHelper.createAccount(true);
         NSP_TestHelper.createContact(acc1.id, true);

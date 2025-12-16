@@ -1,4 +1,5 @@
 public with sharing class EmailDeliverabilityController {
+    // test w/ EmailDeliverabilityControllerTest (100%)
     private static Email_Deliverability_Settings__c settings {
         private get {
             if ( settings == null ) {
