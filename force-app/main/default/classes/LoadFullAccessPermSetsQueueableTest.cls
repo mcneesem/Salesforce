@@ -14,8 +14,22 @@ private class LoadFullAccessPermSetsQueueableTest {
     @isTest
     private static void testLoadFullAccessPermSets1() {
         Test.startTest();
-        LoadFullAccessPermSets.runLoadFullAccessPermSets('FA_Test_Read_Permission_Set', 'FA_Test_Edit_Permission_Set', null, null);
-        LoadFullAccessPermSetsQueueable.sendCompletionEmail();
+        List<User> deploymentManagers = [
+            SELECT Id
+            FROM User
+            WHERE ( Id = '0054x0000056lRZAAY' )
+            LIMIT 1
+        ];
+        Assert.isNotNull( deploymentManagers , 'Null Deployment Manager query results.' );
+        Assert.isTrue( ( deploymentManagers.size() > 0 ) , 'No Deployment Manager query results.' );
+        Assert.isTrue( ( deploymentManagers.size() == 1 ) , 'Incorrect Deployment Manager query results.' );
+        User deploymentManager = deploymentManagers[0];
+        System.runas( deploymentManager ) {
+            Email_Deliverability_Settings__c emailSetting = new Email_Deliverability_Settings__c();
+            insert emailSetting;
+            LoadFullAccessPermSets.runLoadFullAccessPermSets('FA_Test_Read_Permission_Set', 'FA_Test_Edit_Permission_Set', null, null);
+            LoadFullAccessPermSetsQueueable.sendCompletionEmail();
+        }
         Test.stopTest();
     }
 
