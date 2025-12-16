@@ -5,7 +5,7 @@
     <formula>IF(
   NOT( ISBLANK( Workday_Employee_ID__c ) ) ,
   HYPERLINK(
-    $Setup.Workday_URL_Settings__c.Instance_URL__c + &apos;/d/search.htmld?q=worker%3A&apos; + Workday_Employee_ID__c ,
+    $Setup.Workday_URL_Settings__c.Client_Instance_URL__c + &apos;/d/search.htmld?q=worker%3A&apos; + Workday_Employee_ID__c ,
     Workday_Employee_ID__c
   ) ,
   null

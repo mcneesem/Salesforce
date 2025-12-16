@@ -191,6 +191,9 @@
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.Contact.Leave_Self_Service</value>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -350,6 +353,9 @@
                                     <rightValue>true</rightValue>
                                 </criteria>
                             </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.Contact.Leave_Self_Service</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
