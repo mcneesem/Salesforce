@@ -31,6 +31,9 @@
                 <stringValue>Delete_Pay_Periods</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Set_Fault_Element_Get_All_Portal_Pay_Periods</name>
@@ -44,6 +47,10 @@
                 <stringValue>Get_All_Portal_Pay_Periods</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Set_Fault_Element_Get_Portal_Clients</name>
@@ -57,6 +64,10 @@
                 <stringValue>Get_Portal_Clients</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
     </assignments>
     <decisions>
         <description>Validate if collection is not empty</description>
@@ -118,10 +129,10 @@
             <label>Yes : Record Exist</label>
         </rules>
     </decisions>
-    <description>AZD-500803</description>
+    <description>12/11/2025 - AZD-500803</description>
     <environments>Default</environments>
-    <interviewLabel>Implementation Profile - Pay Period Deleted - Delete Portal Client Pay Period {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Implementation Profile - Pay Period Deleted - Delete Portal Client Pay Period</label>
+    <interviewLabel>Implementation Pay Period Deleted Delete Portal Pay Period {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Implementation Pay Period Deleted Delete Portal Pay Period</label>
     <loops>
         <description>Assuming we have multiple PCs for given Account</description>
         <name>Loop_Multiple_Portal_Clients</name>
@@ -172,7 +183,7 @@
         <label>Get All Portal Pay Periods</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Pay_Period_Exists</targetReference>
         </connector>
@@ -204,7 +215,7 @@
         <label>Get Portal Clients</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Portal_Client_Record_Exists</targetReference>
         </connector>
@@ -235,6 +246,31 @@
         <triggerType>RecordBeforeDelete</triggerType>
     </start>
     <status>Draft</status>
+    <subflows>
+        <name>Insperity_Fault_Handler_Subflow</name>
+        <label>Insperity Fault Handler Subflow</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>FaultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Implementation_Pay_Period_Deleted_Delete_Portal_Pay_Period</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>FaultElement</name>
         <dataType>String</dataType>
