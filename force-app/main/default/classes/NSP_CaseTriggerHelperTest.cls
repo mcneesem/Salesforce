@@ -45,6 +45,9 @@ private class NSP_CaseTriggerHelperTest {
     
     @testSetup
     static void testData() {
+        Email_Deliverability_Settings__c emailSetting = new Email_Deliverability_Settings__c();
+        insert emailSetting;
+
         List<Case> caseList = new List<Case>();
         Account newAccount = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), ACCOUNTDEFAULTS, true);
         Account assetAccount = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), ACCOUNTDEFAULTS, false);
