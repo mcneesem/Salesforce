@@ -1732,23 +1732,24 @@ Implementation profile related to the account of the created asset
         }
     }
 
-    /*****************************************************************************************
-* MethodName    : sendMail
-* Description   : This method is used to send email
-* Params        : Map<Id, Asset> newMap, String templateName, List<String> sendToAddress
-* *****************************************************************************************/
-    public void sendMail(Set<Id> assetIdSet, Set<Id> accountIdSet, String templateName, List<String> sendToAddress){
-        if( EmailDeliverabilityController.IsEnabledOutbound ){
+    //
+    // MethodName : sendMail
+    // Description : This method is used to send email
+    // Params : Map<Id, Asset> newMap, String templateName, List<String> sendToAddress
+    //
+    public void sendMail( Set<Id> assetIdSet , Set<Id> accountIdSet , String templateName , List<String> sendToAddress ) {
+        if ( EmailDeliverabilityController.IsEnabledOutbound ) {
             String mailBody;
             List<Messaging.SingleEmailMessage> emailList = new List<Messaging.SingleEmailMessage>();
 
             List<String> fields = new List<String>{'Id'};
-                Id emailTemplateId = NSP_sObjectSelector.selectByDeveloperName(fields, templateName).Id;
+            Id emailTemplateId = NSP_sObjectSelector.selectByDeveloperName(fields, templateName).Id;
 
             List<String> rsvpFields = new List<String>{'Id'};
-                String query = new NSP_QueryBuilder('NSP_Relationship_Strategy_Action_Plan__c', rsvpFields)
+            String query = new NSP_QueryBuilder('NSP_Relationship_Strategy_Action_Plan__c', rsvpFields)
                 .addFilter('NSP_Account__c', new List<Id>(accountIdSet), NSP_QueryBuilder.Operator.INCLUDES)
-                .orderBy('createdDate', 'DESC', false).addLimit(1).build();
+                .orderBy('createdDate', 'DESC', false).addLimit(1).build()
+                ;
             List<NSP_Relationship_Strategy_Action_Plan__c> rsvp = (List<NSP_Relationship_Strategy_Action_Plan__c>)Database.query(query);
 
             if(!rsvp.isEmpty()){
