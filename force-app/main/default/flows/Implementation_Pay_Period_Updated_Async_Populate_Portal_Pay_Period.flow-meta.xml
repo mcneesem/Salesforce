@@ -4,8 +4,8 @@
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <description>12/11/2025 - AZD-500803</description>
     <environments>Default</environments>
-    <interviewLabel>Implementation Pay Period Saved Async Populate Portal Pay Period {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Implementation Pay Period Saved Async Populate Portal Pay Period</label>
+    <interviewLabel>Implementation Pay Period Update Async Populate Portal Pay Period {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Implementation Pay Period Updated Async Populate Portal Pay Period</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -58,7 +58,7 @@
             </value>
         </filters>
         <object>Implementation_Pay_Period__c</object>
-        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <connector>
                 <targetReference>Implementation_Pay_Period_Populate_Portal_Pay_Period_Subflow</targetReference>
