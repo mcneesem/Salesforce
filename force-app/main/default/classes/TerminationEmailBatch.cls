@@ -1,4 +1,4 @@
-public with sharing class TerminationEmailBatch implements ISelfSchedulable , Schedulable , Database.Batchable<SObject> {
+public with sharing class TerminationEmailBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<SObject> {
     //test w/ TerminationEmailBatchTest (84%)
 
     //Constants for Email Template DeveloperNames
@@ -14,6 +14,17 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable , Sc
     private static final String EMAIL_STATUS_READY = 'Ready to be sent';
     private static final String EMAIL_STATUS_SENT = 'Email Sent';
 
+    //
+    // argument-free constructor is required to be "runnable"...
+    //
+
+    public TerminationEmailBatch() {
+    }
+
+    //
+    // ISelfSchedulable
+    //
+
     public static String schedule() {
         String suffix = '';
         if ( Test.isRunningTest() ) {
@@ -26,9 +37,40 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable , Sc
         );
     }
 
-    public void execute( SchedulableContext scon ) {
-        Database.executeBatch( new TerminationEmailBatch() , TerminationEmailBatch.batchSize );
+    //
+    // Scheduleable
+    //
+
+    public void execute( SchedulableContext sc ) {
+        this.call( 'run' , null );
     }
+
+    //
+    // Callable
+    //
+
+    public Object call( String action , Map<String,Object> args ) {
+        Object response = null;
+        if ( action == 'run' ) {
+            response = this.run();
+        }
+        return response;
+    }
+
+    //
+    // IJobRunnable
+    //
+
+    public Id run() {
+        return Database.executeBatch(
+            new TerminationEmailBatch() ,
+            TerminationEmailBatch.batchSize
+        );
+    }
+
+    //
+    // Batchable
+    //
 
     public Database.QueryLocator start( Database.BatchableContext bc ) {
         Set<String> recordTypeApiNames = new Set<String>{
