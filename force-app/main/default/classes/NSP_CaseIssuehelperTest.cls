@@ -29,6 +29,9 @@ public class NSP_CaseIssuehelperTest {
     * ********************************************************************************************/                
     @testSetup
     static void testData() {
+        Email_Deliverability_Settings__c emailSetting = new Email_Deliverability_Settings__c();
+        insert emailSetting;
+
         Account newAccount = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), ACCOUNTDEFAULTS, true);
         //create new contact
         Contact newContact = (Contact)NSP_TestExtendedDataFactory.createSObject(new Contact(), 'NSP_TestDataFactory.ContactDefaultsLight', false);
