@@ -1,5 +1,12 @@
-public with sharing class NSP_SubClientAssetSyncJob implements ISelfSchedulable , Schedulable , IJobRunnable , Database.Batchable<sObject> {
+public with sharing class NSP_SubClientAssetSyncJob implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<sObject> {
     // test w/ NSP_SubClientAssetSyncJob_Test (94%)
+
+    //
+    // argument-free constructor is required to be "runnable"...
+    //
+
+    public NSP_SubClientAssetSyncJob() {
+    }
 
     //
     // ISelfSchedulable
@@ -24,14 +31,26 @@ public with sharing class NSP_SubClientAssetSyncJob implements ISelfSchedulable 
     // Executes the batch job to update client sub-plan history records
     // This method is called by the scheduler to initiate the batch process
     public void execute( SchedulableContext scon ) {
-        NSP_SubClientAssetSyncJob.run();
+        this.call( 'run' , null );
+    }
+
+    //
+    // Callable
+    //
+
+    public Object call( String action , Map<String,Object> args ) {
+        Object response = null;
+        if ( action == 'run' ) {
+            response = this.run();
+        }
+        return response;
     }
 
     //
     // IJobRunnable
     //
 
-    public static Id run() {
+    public Id run() {
         return Database.executeBatch( new NSP_SubClientAssetSyncJob() , 200 );
     }
 
