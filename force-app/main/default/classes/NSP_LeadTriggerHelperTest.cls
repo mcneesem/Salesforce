@@ -798,8 +798,8 @@ private class NSP_LeadTriggerHelperTest {
         insert testLead;
     
         // Create Event with Discovery Call subtype and Open status
-        DateTime testtime = System.now();
         Id eventRecTypeId = NSP_GenericRecordType.getRecordTypeId( 'Event' , 'Core_Sales_Event_RT' );
+        Date todayDate = System.today();
         Event testEvent = new Event(
         OwnerId = users[0].Id,
         WhoId = testLead.Id,
@@ -807,10 +807,10 @@ private class NSP_LeadTriggerHelperTest {
         NSP_Event_Type__c = 'Core Sales',
         NSP_Event_Subtype__c = 'Discovery Call',
         NSP_Status__c = 'Open',
-        ActivityDateTime = testtime,
-        StartDateTime = testtime,
-        EndDateTime = testtime,
-        ActivityDate = System.today()
+        ActivityDateTime = todayDate,
+        StartDateTime = todayDate,
+        EndDateTime = todayDate,
+        ActivityDate = todayDate
         );
         insert testEvent;
 
@@ -818,8 +818,8 @@ private class NSP_LeadTriggerHelperTest {
         update testLead;
 
         Test.stopTest();
-        Event event = [SELECT id, OwnerId FROM Event WHERE id = :testEvent.id ];
-        System.assertEquals(users[1].Id, event.OwnerId);
+        List<Event> eventCheck = [SELECT id, OwnerId FROM Event WHERE id = :testEvent.id ];
+        System.assert((eventCheck != null && !eventCheck.isEmpty()), 'No Event found');
+        System.assertEquals(users[1].Id, eventCheck[0].OwnerId);
     }
-
 }

@@ -1133,6 +1133,51 @@ static void createAssetTest3(){
         Boolean isServiceOpportunity = true;
         System.assertEquals(isServiceOpportunity, opp1[0].Is_Services_Opportunity__c);
     }
+    
+    @IsTest 
+    private static void testTransferDiscoveryCall() {
+        
+        Test.startTest();
+        List<User> users = [SELECT Id FROM User WHERE Profile.Name = 'System Administrator' LIMIT 2];
+        System.assert((users != null && users.size() == 2), 'No System Administrator user found');
 
+        Account acct = new Account();
+        acct.Name = 'Test Account Opp';
+        insert acct;
+
+        Opportunity opp = new Opportunity();
+        opp.AccountId = acct.Id;
+        opp.CloseDate = date.today();
+        opp.NSP_PrimaryProduct__c = 'WX';
+        opp.StageName = 'Prospecting';
+        opp.OwnerId = users[0].Id;
+        insert opp;
+    
+        // Create Event with Discovery Call subtype and Open status
+        Id eventRecTypeId = NSP_GenericRecordType.getRecordTypeId( 'Event' , 'Core_Sales_Event_RT' );
+        Date todayDate = System.today();
+        Event testEvent = new Event(
+        OwnerId = users[0].Id,
+        WhatId = opp.Id,
+        RecordTypeId = eventRecTypeId,
+        NSP_Event_Type__c = 'Core Sales',
+        NSP_Event_Subtype__c = 'Discovery Call',
+        NSP_Status__c = 'Open',
+        ActivityDateTime = todayDate,
+        StartDateTime = todayDate,
+        EndDateTime = todayDate,
+        ActivityDate = todayDate
+        );
+        insert testEvent;
+
+        NSP_OpportunityTriggerHandler.runOnce = true;
+        opp.OwnerId = users[1].Id;
+        update opp;
+
+        Test.stopTest();
+        List<Event> eventCheck = [SELECT id, OwnerId FROM Event WHERE id = :testEvent.id ];
+        System.assert((eventCheck != null && !eventCheck.isEmpty()), 'No Event found');
+        System.assertEquals(users[1].Id, eventCheck[0].OwnerId);
+    }
 }
 //
