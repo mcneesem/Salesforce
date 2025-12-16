@@ -482,16 +482,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Benefit_Term_Reason__c</fieldItem>
-                <identifier>RecordBenefit_Term_Reason_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.Return_To_Work_Form_Received_Date__c</fieldItem>
                 <identifier>RecordReturn_to_Work_Form_Received_Date_cField</identifier>
             </fieldInstance>
@@ -566,26 +556,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.State_Disability_Submission_Date__c</fieldItem>
                 <identifier>RecordState_Disability_Submission_Date_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.State_Baby_Bonding_Submission_Date__c</fieldItem>
-                <identifier>RecordState_Baby_Bonding_Submission_Date_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.State_Family_Leave_Submission_Date__c</fieldItem>
-                <identifier>RecordState_Family_Leave_Submission_Date_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-819e8146-e407-4044-a0cd-10e1006a3b96</name>
