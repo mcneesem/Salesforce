@@ -35,35 +35,35 @@
             <assignToReference>r_pc_pay_period_to_update.First_Pay_Period_Start__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>$Record.Insperity_first_day_of_1st_pay_period__c</elementReference>
+                <elementReference>recordImplementationPayPeriod.Insperity_first_day_of_1st_pay_period__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_pc_pay_period_to_update.First_Pay_Period_End__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>$Record.Insperity_last_day_of_1st_pay_period__c</elementReference>
+                <elementReference>recordImplementationPayPeriod.Insperity_last_day_of_1st_pay_period__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_pc_pay_period_to_update.First_Pay_Date__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>$Record.Insperity_1st_pay_date__c</elementReference>
+                <elementReference>recordImplementationPayPeriod.Insperity_1st_pay_date__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_pc_pay_period_to_update.Pay_Frequency__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>$Record.Frequency__c</elementReference>
+                <elementReference>recordImplementationPayPeriod.Frequency__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_pc_pay_period_to_update.Implementation_Pay_Period__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>$Record.Id</elementReference>
+                <elementReference>recordImplementationPayPeriod.Id</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -113,35 +113,35 @@
             <assignToReference>r_pc_pay_period_to_create.First_Pay_Period_Start__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>$Record.Insperity_first_day_of_1st_pay_period__c</elementReference>
+                <elementReference>recordImplementationPayPeriod.Insperity_first_day_of_1st_pay_period__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_pc_pay_period_to_create.First_Pay_Period_End__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>$Record.Insperity_last_day_of_1st_pay_period__c</elementReference>
+                <elementReference>recordImplementationPayPeriod.Insperity_last_day_of_1st_pay_period__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_pc_pay_period_to_create.First_Pay_Date__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>$Record.Insperity_1st_pay_date__c</elementReference>
+                <elementReference>recordImplementationPayPeriod.Insperity_1st_pay_date__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_pc_pay_period_to_create.Pay_Frequency__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>$Record.Frequency__c</elementReference>
+                <elementReference>recordImplementationPayPeriod.Frequency__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_pc_pay_period_to_create.Implementation_Pay_Period__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>$Record.Id</elementReference>
+                <elementReference>recordImplementationPayPeriod.Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -262,7 +262,7 @@
             <leftValueReference>currentItem_Filter_Pay_Periods_for_Each_PC.Implementation_Pay_Period__c</leftValueReference>
             <operator>EqualTo</operator>
             <rightValue>
-                <elementReference>$Record.Id</elementReference>
+                <elementReference>recordImplementationPayPeriod.Id</elementReference>
             </rightValue>
         </conditions>
         <connector>
@@ -492,8 +492,8 @@ If Pay Period is exists then Update Pay Period for the current PC else Create ne
     </decisions>
     <description>12/11/2025 - AZD-500803</description>
     <environments>Default</environments>
-    <interviewLabel>Implementation Profile - Pay Period Created or Updated - Async - Create or Update Portal Client Pay Period {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Implementation Profile - Pay Period Created or Updated - Async - Create or Update Portal Client Pay Period</label>
+    <interviewLabel>Implementation Pay Period Populate Portal Pay Period Subflow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Implementation Pay Period Populate Portal Pay Period Subflow</label>
     <loops>
         <description>Loop runs only once as there will be only one record should exists for each PC</description>
         <name>Loop_Extract_Pay_Period_Record</name>
@@ -574,7 +574,7 @@ If Pay Period is exists then Update Pay Period for the current PC else Create ne
         <label>Get All Portal Pay Periods</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Loop_For_Each_Portal_Client_Record</targetReference>
         </connector>
@@ -605,7 +605,7 @@ If Pay Period is exists then Update Pay Period for the current PC else Create ne
         <label>Get Portal Clients</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Portal_Client_Record_Exists</targetReference>
         </connector>
@@ -617,7 +617,7 @@ If Pay Period is exists then Update Pay Period for the current PC else Create ne
             <field>Account__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>$Record.NSP_Implementation_Profile__r.Account__c</elementReference>
+                <elementReference>recordImplementationPayPeriod.NSP_Implementation_Profile__r.Account__c</elementReference>
             </value>
         </filters>
         <object>Portal_Client__c</object>
@@ -641,51 +641,9 @@ If Pay Period is exists then Update Pay Period for the current PC else Create ne
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <filterLogic>or</filterLogic>
-        <filters>
-            <field>Insperity_1st_pay_date__c</field>
-            <operator>IsChanged</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Insperity_first_day_of_1st_pay_period__c</field>
-            <operator>IsChanged</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Insperity_last_day_of_1st_pay_period__c</field>
-            <operator>IsChanged</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Frequency__c</field>
-            <operator>IsChanged</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </filters>
-        <filters>
-            <field>CreatedDate</field>
-            <operator>IsChanged</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </filters>
-        <object>Implementation_Pay_Period__c</object>
-        <recordTriggerType>CreateAndUpdate</recordTriggerType>
-        <scheduledPaths>
-            <connector>
-                <targetReference>Get_Portal_Clients</targetReference>
-            </connector>
-            <pathType>AsyncAfterCommit</pathType>
-        </scheduledPaths>
-        <triggerType>RecordAfterSave</triggerType>
+        <connector>
+            <targetReference>Get_Portal_Clients</targetReference>
+        </connector>
     </start>
     <status>Draft</status>
     <subflows>
@@ -703,7 +661,7 @@ If Pay Period is exists then Update Pay Period for the current PC else Create ne
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Implementation_Profile_Pay_Period_Created_or_Updated_Async_Create_or_Update_Port</stringValue>
+                <stringValue>Implementation_Pay_Period_Populate_Portal_Pay_Period_Subflow</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -804,5 +762,13 @@ If Pay Period is exists then Update Pay Period for the current PC else Create ne
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Portal_Client__c</objectType>
+    </variables>
+    <variables>
+        <name>recordImplementationPayPeriod</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Implementation_Pay_Period__c</objectType>
     </variables>
 </Flow>
