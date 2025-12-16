@@ -32,8 +32,8 @@ private class OnCLMDocumentCreateTest {
         insert clm2; 
         System.assertEquals('TestCLM1', clm1.Name);
         System.assertEquals('TestCLM2', clm2.Name);
-        Update clm1;
-        Delete clm1;
+        update clm1;
+        delete clm1;
         Test.stopTest();
     }
 
