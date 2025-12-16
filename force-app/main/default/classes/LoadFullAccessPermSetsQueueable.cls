@@ -204,18 +204,18 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
 
     // ************************ Chain Completion Email ************************
     public static void sendCompletionEmail(){
-        Messaging.SingleEmailMessage oEmail = new Messaging.SingleEmailMessage();
-        oEmail.setSubject(OrgSettings__c.getOrgDefaults().SandboxName__c + ': LoadFullAccessPermSets job finished');
-        String[] sendingTo = new String[]{'sfconfig@insperity.com'};
-        oEmail.setToAddresses(sendingTo);
-        oEmail.setSaveAsActivity(false);
-        oEmail.setPlainTextBody('Your LoadFullAccessPermSets job has finished for org: ' + OrgSettings__c.getOrgDefaults().SandboxName__c + '.');
-        try {
-            if( EmailDeliverabilityController.IsEnabledOutbound ){
+        if( EmailDeliverabilityController.IsEnabledOutbound ){
+            Messaging.SingleEmailMessage oEmail = new Messaging.SingleEmailMessage();
+            oEmail.setSubject(OrgSettings__c.getOrgDefaults().SandboxName__c + ': LoadFullAccessPermSets job finished');
+            String[] sendingTo = new String[]{'sfconfig@insperity.com'};
+            oEmail.setToAddresses(sendingTo);
+            oEmail.setSaveAsActivity(false);
+            oEmail.setPlainTextBody('Your LoadFullAccessPermSets job has finished for org: ' + OrgSettings__c.getOrgDefaults().SandboxName__c + '.');
+            try {
                 Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ oEmail } );
+            } catch ( Exception e ) {
+                System.debug( ' ~ CATCH ~ e=' + e );
             }
-        } catch ( Exception e ) {
-            System.debug( ' ~ CATCH ~ e=' + e );
         }
     }
 
