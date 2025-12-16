@@ -24,7 +24,10 @@ public class NSP_AssetServiceTriggerHelperTest {
 */
     
     @testSetup
-    static void testData() {    
+    static void testData() {
+        Email_Deliverability_Settings__c emailSetting = new Email_Deliverability_Settings__c();
+        insert emailSetting;
+
         Id wxWaAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE, 'NSP_Asset_Product');
         Id retChoiceAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE,NSP_ServiceConstants.RET_CHOICE_ASSET_RECORDTYPE);
 		Test.startTest();

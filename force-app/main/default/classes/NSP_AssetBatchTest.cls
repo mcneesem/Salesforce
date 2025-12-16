@@ -2,6 +2,9 @@
 public class NSP_AssetBatchTest {
     @testSetup
     public static void setupProjectTaskdata(){
+        Email_Deliverability_Settings__c emailSetting = new Email_Deliverability_Settings__c();
+        insert emailSetting;
+
         Id woRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset', NSP_ServiceConstants.WO_ASSET_RECORDTYPE);
         //Test Setup
         Account oAccount = new Account(Name = 'ABC Company');

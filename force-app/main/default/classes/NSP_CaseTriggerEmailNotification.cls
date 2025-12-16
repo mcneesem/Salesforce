@@ -198,39 +198,41 @@ public class NSP_CaseTriggerEmailNotification {
     * @Description :  To send email with template structure
     */
     public static void sendMail(Id emailTemplateId, String htmlBody, List<Case> caseList, List<String> toAddresses){
-        //set template structure for the email template
-        OrgWideEmailAddress orgWideAddress;
-        List<String> ccAddresses = new List<String>{System.Label.NSP_Report_Dev_Team_CC_Address};
-        List<Messaging.SingleEmailMessage> emailList = new List<Messaging.SingleEmailMessage>();
-        try{
-            if(Label.NSP_Report_Dev_OrgWideEmail != null && !Test.isRunningTest()){
-                List<String> orgWideEmailFields = new List<String>{'Id'};
-                String query = new NSP_QueryBuilder(NSP_ServiceConstants.ORG_WIDE_EMAIL_SOBJECT_TYPE, orgWideEmailFields)
-                                .addFilter('Address', Label.NSP_Report_Dev_OrgWideEmail).setSecurityEnforce(false).build();
-                orgWideAddress = Database.query(query);
-            }
-            for(Case caseRec : caseList){
-                Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-                email= Messaging.renderStoredEmailTemplate(emailTemplateId, UserInfo.getUserId() , caseRec.Id);
-                email.setTemplateId(emailTemplateId);
-                email.setToAddresses(toAddresses);
-                email.setHtmlBody(htmlBody);
-                email.setWhatId(caseRec.Id);
-                email.setSaveAsActivity(true);
-                email.setTargetObjectId(UserInfo.getUserId());
-                email.setTreatTargetObjectAsRecipient(false);
-                email.setUseSignature(false);
-                email.setCcAddresses(ccAddresses);
-                if(orgWideAddress != null && orgWideAddress.Id != null && !Test.isRunningTest()){
-                    email.setOrgWideEmailAddressId(orgWideAddress.Id);
+        if( EmailDeliverabilityController.IsEnabledOutbound ){
+            //set template structure for the email template
+            OrgWideEmailAddress orgWideAddress;
+            List<String> ccAddresses = new List<String>{System.Label.NSP_Report_Dev_Team_CC_Address};
+            List<Messaging.SingleEmailMessage> emailList = new List<Messaging.SingleEmailMessage>();
+            try{
+                if(Label.NSP_Report_Dev_OrgWideEmail != null && !Test.isRunningTest()){
+                    List<String> orgWideEmailFields = new List<String>{'Id'};
+                    String query = new NSP_QueryBuilder(NSP_ServiceConstants.ORG_WIDE_EMAIL_SOBJECT_TYPE, orgWideEmailFields)
+                                    .addFilter('Address', Label.NSP_Report_Dev_OrgWideEmail).setSecurityEnforce(false).build();
+                    orgWideAddress = Database.query(query);
                 }
-                emailList.add(email);
+                for(Case caseRec : caseList){
+                    Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
+                    email= Messaging.renderStoredEmailTemplate(emailTemplateId, UserInfo.getUserId() , caseRec.Id);
+                    email.setTemplateId(emailTemplateId);
+                    email.setToAddresses(toAddresses);
+                    email.setHtmlBody(htmlBody);
+                    email.setWhatId(caseRec.Id);
+                    email.setSaveAsActivity(true);
+                    email.setTargetObjectId(UserInfo.getUserId());
+                    email.setTreatTargetObjectAsRecipient(false);
+                    email.setUseSignature(false);
+                    email.setCcAddresses(ccAddresses);
+                    if(orgWideAddress != null && orgWideAddress.Id != null && !Test.isRunningTest()){
+                        email.setOrgWideEmailAddressId(orgWideAddress.Id);
+                    }
+                    emailList.add(email);
+                }
+                if(emailList.size() > 0){
+                    Messaging.sendEmail(emailList);
+                }
+            } catch (Exception ex) {
+                NSP_ErrorLogHandler.logSaveException('NSP_CaseTriggerEmailNotification', 'sendMail', ex.getMessage());
             }
-            if(emailList.size() > 0){
-                Messaging.sendEmail(emailList);
-            }
-        }catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_CaseTriggerEmailNotification', 'sendMail', ex.getMessage());
         }
     }
 
