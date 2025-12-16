@@ -430,6 +430,29 @@
         </rules>
     </decisions>
     <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check</name>
+        <label>Outbound Email custom setting check</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Is_Notification_Enabled</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Recipients_Check</name>
         <label>Recipients Check</label>
         <locationX>0</locationX>
@@ -451,6 +474,7 @@
             <label>Recipients Exists</label>
         </rules>
     </decisions>
+    <description>Outbound Email bypass added.</description>
     <environments>Default</environments>
     <interviewLabel>Contract Termination Failure Email Notification {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Contract Termination Failure Email Notification</label>
@@ -508,7 +532,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Is_Notification_Enabled</targetReference>
+            <targetReference>Outbound_Email_custom_setting_check</targetReference>
         </connector>
     </start>
     <status>Draft</status>

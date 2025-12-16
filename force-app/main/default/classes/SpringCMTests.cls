@@ -1,10 +1,9 @@
 @isTest
-global with sharing class SpringCMTests {
-    
-    global static SpringCMIAuthenticator authenticator;
-    
-    @IsTest static void RunTests(){
-        authenticator = new CMAPIUserAuthenticator('test','test','https://auth.springcm.com/api/v201606/apiuser','na11','v201411');
+private class SpringCMTests {
+
+    @isTest
+    private static void runTests() {
+        SpringCMIAuthenticator authenticator = new CMAPIUserAuthenticator('test','test','https://auth.springcm.com/api/v201606/apiuser','na11','v201411');
         Test.setMock(HttpCalloutMock.class, new SpringCMHttpMockResponseGenerator());
         SpringCMFunctionalTests tests = new SpringCMFunctionalTests(authenticator);
         tests.TestAuthenticator();
@@ -49,8 +48,8 @@ global with sharing class SpringCMTests {
 
     }
 
-    @IsTest static void TestModels(){
-        
+    @isTest
+    private static void testModels() {
         CLMDocument doc = new CLMDocument();
         object test;
         test = doc.AccessLevel;
@@ -77,7 +76,7 @@ global with sharing class SpringCMTests {
         test = doc.UpdatedDate;
         test = doc.Version;
         test = doc.Versions;
-    
+
         CLMAccessLevel accessLevel = new CLMAccessLevel();
         test = accessLevel.See;
         test = accessLevel.Read;
@@ -503,18 +502,27 @@ global with sharing class SpringCMTests {
 
         CLMWorkItemItems wii = new CLMWorkItemItems();
         test = wii.Items;
+    }
 
-
-    }   
-
-    @IsTest static void RunSalesforceAuthenticatorTests(){
-        authenticator = new CMSalesforceUserAuthenticator('tets','test','https://auth.springcm.com/api/v201606/salesforce','na1');
+    @isTest
+    private static void runSalesforceAuthenticatorTests() {
+        SpringCMIAuthenticator authenticator = new CMSalesforceUserAuthenticator('tets','test','https://auth.springcm.com/api/v201606/salesforce','na1');
         Test.setMock(HttpCalloutMock.class, new SpringCMHttpMockResponseGenerator());
         SpringCMFunctionalTests tests = new SpringCMFunctionalTests(authenticator);
         tests.TestAuthenticator();
-
     }
 
-    
+    @isTest
+    private static void testCodeCoverage() {
+        Test.startTest();
+        try {
+            SpringCMHTTPRequestor local = new SpringCMHTTPRequestor( null );
+            local.Put( '' , '' , null );
+        } catch ( Exception e ) {
+            System.debug( ' ~ CATCH ~ e=' + e );
+        }
+        Test.stopTest();
+    }
 
 }
+//

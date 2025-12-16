@@ -14,7 +14,7 @@
     <permissionSets>RET_Services_Fields_Edit</permissionSets>
     <permissionSets>RET_Services_Sales_to_Implementation</permissionSets>
     <permissionSets>Task_Record_Type_Task</permissionSets>
-    <permissionSets>Termination_form_field_access</permissionSets>
+    <permissionSets>Termination_Form_Field_Access</permissionSets>
     <permissionSets>bloomfirex__Bloomfire_User</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

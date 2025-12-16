@@ -7,6 +7,8 @@
     <permissionSets>Account_Profile_Access</permissionSets>
     <permissionSets>Account_Team_Management</permissionSets>
     <permissionSets>Bypass_Lead_Email_Alerts</permissionSets>
+    <permissionSets>Bypass_Lock_Opportunity_Edits</permissionSets>
+    <permissionSets>Bypass_Opportunity_Allow_Reopen_Closed_Lost</permissionSets>
     <permissionSets>Bypass_Opportunity_Email_Alerts</permissionSets>
     <permissionSets>Bypass_Order_Prevent_Status_Change</permissionSets>
     <permissionSets>Bypass_Task_Email_Alerts</permissionSets>

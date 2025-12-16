@@ -8,8 +8,7 @@
         <actionName>c:NSP_NavigateToRecord</actionName>
         <actionType>component</actionType>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_subflow</targetReference>
+            <targetReference>Assign_Fault_Element_Navigate_to_credit_termination_form</targetReference>
         </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -20,7 +19,6 @@
         </inputParameters>
         <nameSegment>c:NSP_NavigateToRecord</nameSegment>
         <storeOutputAutomatically>true</storeOutputAutomatically>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Navigate_to_Payroll_form</name>
@@ -30,8 +28,7 @@
         <actionName>c:NSP_NavigateToRecord</actionName>
         <actionType>component</actionType>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_subflow</targetReference>
+            <targetReference>Assign_Fault_Element_Navigate_to_Payroll_form</targetReference>
         </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -42,7 +39,6 @@
         </inputParameters>
         <nameSegment>c:NSP_NavigateToRecord</nameSegment>
         <storeOutputAutomatically>true</storeOutputAutomatically>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Navigate_to_reinstatement_form</name>
@@ -52,8 +48,7 @@
         <actionName>c:NSP_NavigateToRecord</actionName>
         <actionType>component</actionType>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_subflow</targetReference>
+            <targetReference>Assign_Fault_Element_Navigate_to_reinstatement_form</targetReference>
         </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -63,18 +58,18 @@
             </value>
         </inputParameters>
         <nameSegment>c:NSP_NavigateToRecord</nameSegment>
+        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Navigate_to_Termination_Form_record</name>
         <label>Navigate to Termination form record</label>
         <locationX>3735</locationX>
-        <locationY>3014</locationY>
+        <locationY>3104</locationY>
         <actionName>c:NSP_FlowNavigatetoRecord</actionName>
         <actionType>component</actionType>
         <faultConnector>
-            <targetReference>Fault_Handler_subflow</targetReference>
+            <targetReference>Assign_Fault_Element</targetReference>
         </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -84,10 +79,265 @@
             </value>
         </inputParameters>
         <nameSegment>c:NSP_FlowNavigatetoRecord</nameSegment>
+        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>59.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_Fault_Element</name>
+        <label>Assign Fault Element</label>
+        <locationX>3999</locationX>
+        <locationY>3212</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Navigate_to_Termination_Form_record</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_Create_Payroll_specialist_form</name>
+        <label>Assign Fault Element</label>
+        <locationX>2690</locationX>
+        <locationY>1814</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_Payroll_specialist_form</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_Create_Reinstatement_form</name>
+        <label>Assign Fault Element</label>
+        <locationX>1106</locationX>
+        <locationY>1814</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_Reinstatement_form</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_Create_Termination_Form</name>
+        <label>Assign Fault Element</label>
+        <locationX>4527</locationX>
+        <locationY>2996</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_Termination_Form</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_Credit_Specialist_Record_Type</name>
+        <label>Assign Fault Element</label>
+        <locationX>5770</locationX>
+        <locationY>1598</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Credit_Specialist_Record_Type</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_Credit_Specialist_termination_form</name>
+        <label>Assign Fault Element</label>
+        <locationX>5242</locationX>
+        <locationY>1814</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Credit_Specialist_termination_form</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_Get_Asset_record</name>
+        <label>Assign Fault Element</label>
+        <locationX>7002</locationX>
+        <locationY>674</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Asset_record</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_Get_Existing_Term_form</name>
+        <label>Assign Fault Element</label>
+        <locationX>7794</locationX>
+        <locationY>242</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Existing_Term_form</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_Get_Record_type</name>
+        <label>Assign Fault Element</label>
+        <locationX>6738</locationX>
+        <locationY>2780</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Record_type</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_Get_Recordtype</name>
+        <label>Assign Fault Element</label>
+        <locationX>7530</locationX>
+        <locationY>458</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Recordtype</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_Navigate_to_credit_termination_form</name>
+        <label>Assign Fault Element</label>
+        <locationX>4714</locationX>
+        <locationY>2030</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Navigate_to_credit_termination_form</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_Navigate_to_Payroll_form</name>
+        <label>Assign Fault Element</label>
+        <locationX>2162</locationX>
+        <locationY>2030</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Navigate_to_Payroll_form</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_Navigate_to_reinstatement_form</name>
+        <label>Assign Fault Element</label>
+        <locationX>578</locationX>
+        <locationY>2030</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Navigate_to_reinstatement_form</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_Payroll_Specialist_Recordtype</name>
+        <label>Assign Fault Element</label>
+        <locationX>3218</locationX>
+        <locationY>1598</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Payroll_Specialist_Recordtype</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_Record_type</name>
+        <label>Assign Fault Element</label>
+        <locationX>1634</locationX>
+        <locationY>1598</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Record_type</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </connector>
+    </assignments>
     <choices>
         <name>No</name>
         <choiceText>No</choiceText>
@@ -567,7 +817,7 @@
         <name>Formid_null_check</name>
         <label>Formid null check</label>
         <locationX>3999</locationX>
-        <locationY>2906</locationY>
+        <locationY>2996</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Not_null_check</name>
@@ -589,7 +839,7 @@
         <name>Getrecordtype_null_check</name>
         <label>Getrecordtype null check</label>
         <locationX>4395</locationX>
-        <locationY>2690</locationY>
+        <locationY>2780</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Not_Null</name>
@@ -702,8 +952,7 @@
             <targetReference>Form_not_null</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_subflow</targetReference>
+            <targetReference>Assign_Fault_Element_Create_Payroll_specialist_form</targetReference>
         </faultConnector>
         <inputAssignments>
             <field>NSP_Project_Task__c</field>
@@ -735,8 +984,7 @@
             <targetReference>Form_Id_null_check</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_subflow</targetReference>
+            <targetReference>Assign_Fault_Element_Create_Reinstatement_form</targetReference>
         </faultConnector>
         <inputAssignments>
             <field>NSP_Project_Task__c</field>
@@ -763,13 +1011,12 @@
         <name>Create_Termination_Form</name>
         <label>Create Termination Form</label>
         <locationX>3999</locationX>
-        <locationY>2798</locationY>
+        <locationY>2888</locationY>
         <connector>
             <targetReference>Formid_null_check</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_subflow</targetReference>
+            <targetReference>Assign_Fault_Element_Create_Termination_Form</targetReference>
         </faultConnector>
         <inputAssignments>
             <field>NSP_Project_Task__c</field>
@@ -801,8 +1048,7 @@
             <targetReference>Credit_Form_null_check</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_subflow</targetReference>
+            <targetReference>Assign_Fault_Element_Credit_Specialist_termination_form</targetReference>
         </faultConnector>
         <inputAssignments>
             <field>NSP_Project_Task__c</field>
@@ -835,8 +1081,7 @@
             <targetReference>Check_credit_specialist_recordtype</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_subflow</targetReference>
+            <targetReference>Assign_Fault_Element_Credit_Specialist_Record_Type</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -860,8 +1105,7 @@
             <targetReference>Check_asset_record</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_subflow</targetReference>
+            <targetReference>Assign_Fault_Element_Get_Asset_record</targetReference>
         </faultConnector>
         <filterLogic>(1 AND 2 AND (3 OR 4) AND 5)</filterLogic>
         <filters>
@@ -913,8 +1157,7 @@
             <targetReference>Check_if_incomplete_forms_are_there</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_subflow</targetReference>
+            <targetReference>Assign_Fault_Element_Get_Existing_Term_form</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -939,14 +1182,13 @@
         <name>Get_Record_type</name>
         <label>Get Record type</label>
         <locationX>4395</locationX>
-        <locationY>2582</locationY>
+        <locationY>2672</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Getrecordtype_null_check</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_subflow</targetReference>
+            <targetReference>Assign_Fault_Element_Get_Record_type</targetReference>
         </faultConnector>
         <filterLogic>or</filterLogic>
         <filters>
@@ -984,8 +1226,7 @@
             <targetReference>Check_Recordtype</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_subflow</targetReference>
+            <targetReference>Assign_Fault_Element_Get_Recordtype</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1016,8 +1257,7 @@
             <targetReference>Check_Recordtype_1</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_subflow</targetReference>
+            <targetReference>Assign_Fault_Element_Payroll_Specialist_Recordtype</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1041,8 +1281,7 @@
             <targetReference>Recordtype_null_check</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_subflow</targetReference>
+            <targetReference>Assign_Fault_Element_Record_type</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1076,6 +1315,38 @@
             <fieldType>RadioButtons</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Display_Fault_Handler_Error_Message</name>
+        <label>Display Fault Handler Error Message</label>
+        <locationX>3999</locationX>
+        <locationY>3230</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Fault_Handler_Error_Message</name>
+            <fieldText>&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
@@ -1344,17 +1615,26 @@
         <label>Fault Handler subflow</label>
         <locationX>3999</locationX>
         <locationY>3122</locationY>
+        <connector>
+            <targetReference>Display_Fault_Handler_Error_Message</targetReference>
+        </connector>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
-            <name>faultMessage</name>
+            <name>faultElement</name>
             <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
+                <elementReference>varFaultElement</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>faultFlow</name>
             <value>
                 <elementReference>FlowName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
             </value>
         </inputAssignments>
     </subflows>
@@ -1390,5 +1670,12 @@
         <value>
             <elementReference>$UserRole.Name</elementReference>
         </value>
+    </variables>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
 </Flow>

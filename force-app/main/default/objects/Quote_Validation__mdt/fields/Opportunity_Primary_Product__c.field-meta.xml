@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Opportunity_Primary_Product__c</fullName>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Opportunity Primary Product</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>WX</fullName>
+                <default>false</default>
+                <label>HRCore Solution</label>
+            </value>
+            <value>
+                <fullName>WA</fullName>
+                <default>false</default>
+                <label>HRCore - Select Edition</label>
+            </value>
+            <value>
+                <fullName>WO</fullName>
+                <default>false</default>
+                <label>HR360 Solution</label>
+            </value>
+            <value>
+                <fullName>WS</fullName>
+                <default>false</default>
+                <label>HR360 - Select Edition</label>
+            </value>
+            <value>
+                <fullName>HRScale</fullName>
+                <default>false</default>
+                <label>HRScale</label>
+            </value>
+            <value>
+                <fullName>Applicant Tracking</fullName>
+                <default>false</default>
+                <label>Applicant Tracking</label>
+            </value>
+            <value>
+                <fullName>Contractor Management</fullName>
+                <default>false</default>
+                <label>Contractor Management</label>
+            </value>
+            <value>
+                <fullName>Employment Screening</fullName>
+                <default>false</default>
+                <label>Employment Screening</label>
+            </value>
+            <value>
+                <fullName>Expense Management</fullName>
+                <default>false</default>
+                <label>Expense Management</label>
+            </value>
+            <value>
+                <fullName>HR Consulting Services</fullName>
+                <default>false</default>
+                <label>HR Consulting Services</label>
+            </value>
+            <value>
+                <fullName>Insurance Services</fullName>
+                <default>false</default>
+                <label>Insurance Services</label>
+            </value>
+            <value>
+                <fullName>Learning &amp; Development</fullName>
+                <default>false</default>
+                <label>Learning &amp; Development</label>
+            </value>
+            <value>
+                <fullName>Organizational Planning</fullName>
+                <default>false</default>
+                <label>Organizational Planning</label>
+            </value>
+            <value>
+                <fullName>Performance Management</fullName>
+                <default>false</default>
+                <label>Performance Management</label>
+            </value>
+            <value>
+                <fullName>Recruiting Services</fullName>
+                <default>false</default>
+                <label>Recruiting Services</label>
+            </value>
+            <value>
+                <fullName>Retirement Services</fullName>
+                <default>false</default>
+                <label>Retirement Services</label>
+            </value>
+            <value>
+                <fullName>Time &amp; Attendance</fullName>
+                <default>false</default>
+                <label>Time &amp; Attendance</label>
+            </value>
+            <value>
+                <fullName>Workday</fullName>
+                <default>false</default>
+                <label>Workday</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

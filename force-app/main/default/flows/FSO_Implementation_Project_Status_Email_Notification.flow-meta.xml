@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Send_Email_to_IP_Coordinators</name>
         <label>Send Email to IP Coordinators (Static List)</label>
-        <locationX>198</locationX>
-        <locationY>1416</locationY>
+        <locationX>583</locationX>
+        <locationY>1524</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
@@ -62,8 +62,8 @@
     <actionCalls>
         <name>Send_Email_to_IP_OT_Reps</name>
         <label>Send Email to IP OT Reps</label>
-        <locationX>638</locationX>
-        <locationY>2256</locationY>
+        <locationX>1023</locationX>
+        <locationY>2364</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
@@ -111,8 +111,8 @@
     <assignments>
         <name>Assign_Active</name>
         <label>Assign Active</label>
-        <locationX>814</locationX>
-        <locationY>492</locationY>
+        <locationX>1199</locationX>
+        <locationY>600</locationY>
         <assignmentItems>
             <assignToReference>v_EmailBody</assignToReference>
             <operator>Assign</operator>
@@ -134,8 +134,8 @@
     <assignments>
         <name>Assign_Cancelled</name>
         <label>Assign Cancelled</label>
-        <locationX>550</locationX>
-        <locationY>492</locationY>
+        <locationX>935</locationX>
+        <locationY>600</locationY>
         <assignmentItems>
             <assignToReference>v_EmailBody</assignToReference>
             <operator>Assign</operator>
@@ -157,8 +157,8 @@
     <assignments>
         <name>Assign_Collection_Filtered_List</name>
         <label>Assign Collection (Filtered List)</label>
-        <locationX>550</locationX>
-        <locationY>1008</locationY>
+        <locationX>935</locationX>
+        <locationY>1116</locationY>
         <assignmentItems>
             <assignToReference>c_ToAddress_IP_Static_List</assignToReference>
             <operator>Add</operator>
@@ -173,8 +173,8 @@
     <assignments>
         <name>Assign_Email_Recipient_Size</name>
         <label>Assign Email Recipient Size</label>
-        <locationX>462</locationX>
-        <locationY>1200</locationY>
+        <locationX>847</locationX>
+        <locationY>1308</locationY>
         <assignmentItems>
             <assignToReference>v_Collection_Size</assignToReference>
             <operator>AssignCount</operator>
@@ -189,8 +189,8 @@
     <assignments>
         <name>Assign_On_Hold</name>
         <label>Assign On Hold</label>
-        <locationX>286</locationX>
-        <locationY>492</locationY>
+        <locationX>671</locationX>
+        <locationY>600</locationY>
         <assignmentItems>
             <assignToReference>v_EmailBody</assignToReference>
             <operator>Assign</operator>
@@ -213,8 +213,8 @@
         <name>Filter_Static_List</name>
         <elementSubtype>FilterCollectionProcessor</elementSubtype>
         <label>Filter Static List (Custom Mtd)</label>
-        <locationX>462</locationX>
-        <locationY>792</locationY>
+        <locationX>847</locationX>
+        <locationY>900</locationY>
         <assignNextValueToReference>currentItem_Filter_Static_List</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
         <collectionReference>Get_IP_Email_List.rc_ToAddress_IP_Static_List</collectionReference>
@@ -254,8 +254,8 @@
     <decisions>
         <name>Check_for_Null_IP_OT_Rep_Address_List</name>
         <label>IP OT Rep Address List (Is Null?)</label>
-        <locationX>682</locationX>
-        <locationY>1932</locationY>
+        <locationX>1067</locationX>
+        <locationY>2040</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>OT_Rep_Exisits</name>
@@ -283,8 +283,8 @@
     <decisions>
         <name>Check_For_Null_Static_Recipient</name>
         <label>Check For Null (Custom Metadata) Static Recipient</label>
-        <locationX>682</locationX>
-        <locationY>684</locationY>
+        <locationX>1067</locationX>
+        <locationY>792</locationY>
         <defaultConnector>
             <targetReference>Check_for_Null_IP_OT_Rep_Address_List</targetReference>
         </defaultConnector>
@@ -315,8 +315,8 @@
     <decisions>
         <name>Check_Rep</name>
         <label>Check Rep</label>
-        <locationX>902</locationX>
-        <locationY>2148</locationY>
+        <locationX>1287</locationX>
+        <locationY>2256</locationY>
         <defaultConnector>
             <targetReference>Iterate_Rep_List</targetReference>
         </defaultConnector>
@@ -338,10 +338,33 @@
         </rules>
     </decisions>
     <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check</name>
+        <label>Outbound Email custom setting check</label>
+        <locationX>561</locationX>
+        <locationY>276</locationY>
+        <defaultConnector>
+            <targetReference>Get_IP_Email_List</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Project_Status</name>
         <label>Project Status?</label>
-        <locationX>682</locationX>
-        <locationY>384</locationY>
+        <locationX>1067</locationX>
+        <locationY>492</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>From_Active_to_On_Hold</name>
@@ -392,8 +415,8 @@
     <decisions>
         <name>Static_Email_Recipient_Size</name>
         <label>Static Email Recipient Size</label>
-        <locationX>462</locationX>
-        <locationY>1308</locationY>
+        <locationX>847</locationX>
+        <locationY>1416</locationY>
         <defaultConnector>
             <targetReference>Check_for_Null_IP_OT_Rep_Address_List</targetReference>
         </defaultConnector>
@@ -414,7 +437,7 @@
             <label>Size &lt;= 5</label>
         </rules>
     </decisions>
-    <description>Email Notification on Project Status change</description>
+    <description>Outbound Email bypass added. Email Notification on Project Status change</description>
     <environments>Default</environments>
     <formulas>
         <name>isNullRep</name>
@@ -426,8 +449,8 @@
     <loops>
         <name>Add_Static_List_to_Collection</name>
         <label>Add Static List to Collection</label>
-        <locationX>462</locationX>
-        <locationY>900</locationY>
+        <locationX>847</locationX>
+        <locationY>1008</locationY>
         <collectionReference>Filter_Static_List</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -440,8 +463,8 @@
     <loops>
         <name>Iterate_Rep_List</name>
         <label>Iterate Rep List</label>
-        <locationX>550</locationX>
-        <locationY>2040</locationY>
+        <locationX>935</locationX>
+        <locationY>2148</locationY>
         <collectionReference>Get_IP_Email_List.c_ToAddressList_IP_OT_Rep_Final_List</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -538,7 +561,7 @@
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Get_IP_Email_List</targetReference>
+                <targetReference>Outbound_Email_custom_setting_check</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
@@ -548,8 +571,8 @@
     <subflows>
         <name>Get_IP_Email_List</name>
         <label>Get IP Email List</label>
-        <locationX>682</locationX>
-        <locationY>276</locationY>
+        <locationX>1067</locationX>
+        <locationY>384</locationY>
         <connector>
             <targetReference>Project_Status</targetReference>
         </connector>
@@ -607,8 +630,8 @@
     <subflows>
         <name>Insperity_Fault_Handler_Subflow2</name>
         <label>Fault Handler</label>
-        <locationX>902</locationX>
-        <locationY>2364</locationY>
+        <locationX>1287</locationX>
+        <locationY>2472</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
@@ -632,8 +655,8 @@
     <subflows>
         <name>Insperity_Fault_Handler_Subflow_Flow_1</name>
         <label>Fault Handler</label>
-        <locationX>462</locationX>
-        <locationY>1524</locationY>
+        <locationX>847</locationX>
+        <locationY>1632</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>

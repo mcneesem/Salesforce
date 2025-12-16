@@ -829,6 +829,19 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentName>caseAccountContactRelationships</componentName>
+                <identifier>c_caseAccountContactRelationships</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Case_Account_Contact_Information}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-647933ab-c253-4757-92a9-68d6f4a7a3b6</value>

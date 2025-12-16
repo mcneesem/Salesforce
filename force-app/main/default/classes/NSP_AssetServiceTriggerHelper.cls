@@ -511,7 +511,7 @@ public class NSP_AssetServiceTriggerHelper {
     private  List<Asset> returnRETBPSassets(List<ID> accountID){
         List<Asset> records = new List<Asset>();
         for ( Asset assLst : [
-                    SELECT 
+                    SELECT
                         Id ,
                         NSP_WO_AIMS_Client_Number__c ,
                         Disable_Sync_RET_Client_ID__c ,
@@ -1994,12 +1994,16 @@ Implementation profile related to the account of the created asset
         Boolean anyActive = false;
         Boolean anyOnBoarding = false;
         Boolean anyOnDemand = false;
+        Boolean anyProspecting = (
+            ( acc != null )
+            && ( acc.Opportunities != null )
+            && !acc.Opportunities.isEmpty()
+        );
         List<Asset> filteredAssets = NSP_AssetServiceTriggerHelper.filterOnAssetRecordTypes( ( acc != null ) ? acc.Assets : null );
         for ( Asset assetRecord : filteredAssets ) {
             if ( ( assetRecord != null ) && String.isNotBlank( assetRecord.Status ) ) {
                 if (assetRecord.Status == NSP_SalesConstants.ACTIVE) {
                     anyActive = true;
-                    break; // highest precedence found
                 } else if (assetRecord.Status == NSP_SalesConstants.ONBOARDING) {
                     anyOnBoarding = true;
                 } else if (assetRecord.Status == NSP_ServiceConstants.AssetStatusOnDemand) {
@@ -2008,20 +2012,13 @@ Implementation profile related to the account of the created asset
             }
         }
         if ( anyActive ) {
-            returnValue =  NSP_SalesConstants.ACTIVE;
-        }
-        if ( anyOnBoarding ) {
-            returnValue =  NSP_SalesConstants.ONBOARDING;
-        }
-        if ( anyOnDemand ) {
-            returnValue =  NSP_ServiceConstants.AssetStatusOnDemand;
-        }
-        if ( ( acc != null )
-            && ( acc.Opportunities != null )
-            && !acc.Opportunities.isEmpty()
-            )
-        {
-            returnValue =  NSP_SalesConstants.PROSPECTING;
+            returnValue = NSP_SalesConstants.ACTIVE;
+        } else if ( anyOnBoarding ) {
+            returnValue = NSP_SalesConstants.ONBOARDING;
+        } else if ( anyOnDemand ) {
+            returnValue = NSP_ServiceConstants.AssetStatusOnDemand;
+        } else if ( anyProspecting ) {
+            returnValue = NSP_SalesConstants.PROSPECTING;
         }
         return returnValue;
     }
@@ -2179,7 +2176,7 @@ Implementation profile related to the account of the created asset
             }
         }
     }
-    
+
     //== Method to check for the exclude list of record type names from the Asset
     //@input params: List of Assets
     //@output params: List of Assets

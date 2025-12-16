@@ -4,11 +4,11 @@
         <name>Open_Case</name>
         <label>Open Case</label>
         <locationX>567</locationX>
-        <locationY>1484</locationY>
+        <locationY>1982</locationY>
         <actionName>addScreenPop</actionName>
         <actionType>addScreenPop</actionType>
         <connector>
-            <targetReference>Route_to_Basic_Queue</targetReference>
+            <targetReference>Check_Vonage_Queue</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Set_Fault_Element_Open_Case</targetReference>
@@ -21,14 +21,14 @@
             </value>
         </inputParameters>
         <nameSegment>addScreenPop</nameSegment>
+        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
-        <description>Route all the Voice Calls to Salesforce SCV Basic Queue</description>
-        <name>Route_to_Basic_Queue</name>
-        <label>Route to Basic Queue</label>
-        <locationX>567</locationX>
-        <locationY>1592</locationY>
+        <name>Route_to_Queue_Primary</name>
+        <label>Route to Queue (Primary)</label>
+        <locationX>831</locationX>
+        <locationY>2198</locationY>
         <actionName>routeWork</actionName>
         <actionType>routeWork</actionType>
         <connector>
@@ -111,19 +111,152 @@
             <name>botLabel</name>
         </inputParameters>
         <inputParameters>
+            <name>externalConversationBotId</name>
+        </inputParameters>
+        <inputParameters>
+            <name>externalConversationBotLabel</name>
+        </inputParameters>
+        <inputParameters>
+            <name>copilotId</name>
+        </inputParameters>
+        <inputParameters>
+            <name>copilotLabel</name>
+        </inputParameters>
+        <inputParameters>
+            <name>agentforceEmployeeAgentId</name>
+        </inputParameters>
+        <inputParameters>
+            <name>agentforceEmployeeAgentLabel</name>
+        </inputParameters>
+        <inputParameters>
             <name>isQueueVariable</name>
             <value>
                 <booleanValue>false</booleanValue>
             </value>
         </inputParameters>
         <nameSegment>routeWork</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <actionCalls>
+        <name>Route_to_Queue_Workday</name>
+        <label>Route to Queue (Workday)</label>
+        <locationX>303</locationX>
+        <locationY>2198</locationY>
+        <actionName>routeWork</actionName>
+        <actionType>routeWork</actionType>
+        <connector>
+            <targetReference>Set_Related_Case</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Route_to_Queue_Benefits</targetReference>
+        </faultConnector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>psrInteractionInfo</name>
+            <value>
+                <elementReference>Open_Case.routingInteractionInfoList</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>serviceChannelId</name>
+            <value>
+                <stringValue>0N94x00000117MSCAY</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>serviceChannelLabel</name>
+            <value>
+                <stringValue>Phone</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>serviceChannelDevName</name>
+            <value>
+                <stringValue>sfdc_phone</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>routingType</name>
+            <value>
+                <stringValue>QueueBased</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>routingConfigId</name>
+        </inputParameters>
+        <inputParameters>
+            <name>routingConfigLabel</name>
+        </inputParameters>
+        <inputParameters>
+            <name>queueId</name>
+            <value>
+                <stringValue>00GO300000ByM7NMAV</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>agentId</name>
+        </inputParameters>
+        <inputParameters>
+            <name>agentLabel</name>
+        </inputParameters>
+        <inputParameters>
+            <name>queueLabel</name>
+            <value>
+                <stringValue>Workday Voice</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>skillOption</name>
+        </inputParameters>
+        <inputParameters>
+            <name>skillRequirementsResourceItem</name>
+        </inputParameters>
+        <inputParameters>
+            <name>botId</name>
+        </inputParameters>
+        <inputParameters>
+            <name>botLabel</name>
+        </inputParameters>
+        <inputParameters>
+            <name>externalConversationBotId</name>
+        </inputParameters>
+        <inputParameters>
+            <name>externalConversationBotLabel</name>
+        </inputParameters>
+        <inputParameters>
+            <name>copilotId</name>
+        </inputParameters>
+        <inputParameters>
+            <name>copilotLabel</name>
+        </inputParameters>
+        <inputParameters>
+            <name>agentforceEmployeeAgentId</name>
+        </inputParameters>
+        <inputParameters>
+            <name>agentforceEmployeeAgentLabel</name>
+        </inputParameters>
+        <inputParameters>
+            <name>isQueueVariable</name>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </inputParameters>
+        <nameSegment>routeWork</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Set_Fault_Element_Create_Case</name>
-        <label>Set Fault Element: Create Case</label>
-        <locationX>1766</locationX>
-        <locationY>1484</locationY>
+        <label>Set Fault Element: Create_Case</label>
+        <locationX>1887</locationX>
+        <locationY>1982</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -137,10 +270,27 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Set_Fault_Element_Create_Debug_Log</name>
+        <label>Set Fault Element: Create_Debug_Log</label>
+        <locationX>567</locationX>
+        <locationY>350</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_Debug_Log</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_Fault_Element_Get_Callback_Case</name>
         <label>Set Fault Element: Get_Callback_Case</label>
         <locationX>358</locationX>
-        <locationY>950</locationY>
+        <locationY>1448</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -155,9 +305,9 @@
     </assignments>
     <assignments>
         <name>Set_Fault_Element_Open_Case</name>
-        <label>Set Fault Element: Open Case</label>
-        <locationX>1502</locationX>
-        <locationY>1592</locationY>
+        <label>Set Fault Element: Open_Case</label>
+        <locationX>1623</locationX>
+        <locationY>2090</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -172,14 +322,31 @@
     </assignments>
     <assignments>
         <name>Set_Fault_Element_Route_to_Basic_Queue</name>
-        <label>Set Fault Element: Route to Basic Queue</label>
-        <locationX>1238</locationX>
-        <locationY>1700</locationY>
+        <label>Set Fault Element: Route_to_Queue_Primary</label>
+        <locationX>1095</locationX>
+        <locationY>2306</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Route_to_Basic_Queue</stringValue>
+                <stringValue>Route_to_Queue_Primary</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Route_to_Queue_Benefits</name>
+        <label>Set Fault Element: Route_to_Queue_Workday</label>
+        <locationX>567</locationX>
+        <locationY>2306</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Route_to_Queue_Workday</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -189,9 +356,9 @@
     </assignments>
     <assignments>
         <name>Set_Fault_Element_Update_Voice_Call</name>
-        <label>Set Fault Element: Update Voice Call</label>
-        <locationX>974</locationX>
-        <locationY>1916</locationY>
+        <label>Set Fault Element: Update_Voice_Call</label>
+        <locationX>1359</locationX>
+        <locationY>2804</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -207,7 +374,7 @@
         <name>Set_Related_Case</name>
         <label>Set Related Case</label>
         <locationX>567</locationX>
-        <locationY>1700</locationY>
+        <locationY>2588</locationY>
         <assignmentItems>
             <assignToReference>input_record.CaseId__c</assignToReference>
             <operator>Assign</operator>
@@ -219,11 +386,18 @@
             <targetReference>Update_Voice_Call</targetReference>
         </connector>
     </assignments>
+    <constants>
+        <name>isDebugEnabled</name>
+        <dataType>Boolean</dataType>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </constants>
     <decisions>
         <name>Check_Callback_Case</name>
         <label>Check Callback Case</label>
         <locationX>336</locationX>
-        <locationY>734</locationY>
+        <locationY>1232</locationY>
         <defaultConnector>
             <targetReference>Create_Case</targetReference>
         </defaultConnector>
@@ -276,7 +450,7 @@
         <name>Check_Callback_Case_Selection</name>
         <label>Check Callback Case Selection</label>
         <locationX>50</locationX>
-        <locationY>950</locationY>
+        <locationY>1448</locationY>
         <defaultConnector>
             <targetReference>Create_Case</targetReference>
         </defaultConnector>
@@ -299,10 +473,60 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_Debug_Enabled</name>
+        <label>Check Debug Enabled</label>
+        <locationX>567</locationX>
+        <locationY>134</locationY>
+        <defaultConnector>
+            <targetReference>Is_Enabled_Check_Vonage_Queue</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Debug_Enabled</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>isDebugEnabled</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Debug_Log</targetReference>
+            </connector>
+            <label>Is Debug Enabled</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Vonage_Queue</name>
+        <label>Check Vonage Queue</label>
+        <locationX>567</locationX>
+        <locationY>2090</locationY>
+        <defaultConnector>
+            <targetReference>Route_to_Queue_Primary</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Workday</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>input_record.Contact_Center_Queue__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Workday</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Route_to_Queue_Workday</targetReference>
+            </connector>
+            <label>Is Workday</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Exclude_Voice_Calls_for_Cases</name>
         <label>Exclude Voice Calls for Cases</label>
         <locationX>413</locationX>
-        <locationY>242</locationY>
+        <locationY>740</locationY>
         <defaultConnector>
             <targetReference>Is_Enabled_Check_Callback_Case</targetReference>
         </defaultConnector>
@@ -338,7 +562,7 @@
         <name>Is_Enabled_Check_Callback_Case</name>
         <label>Is Enabled Check Callback Case?</label>
         <locationX>567</locationX>
-        <locationY>626</locationY>
+        <locationY>1124</locationY>
         <defaultConnector>
             <targetReference>Create_Case</targetReference>
         </defaultConnector>
@@ -363,7 +587,7 @@
         <name>Is_Enabled_Check_Vonage_Queue</name>
         <label>Is Enabled Check Vonage Queue?</label>
         <locationX>567</locationX>
-        <locationY>134</locationY>
+        <locationY>632</locationY>
         <defaultConnector>
             <targetReference>Is_Enabled_Check_Callback_Case</targetReference>
         </defaultConnector>
@@ -415,7 +639,7 @@ Routes each call to the default queue (Basic Queue) and, if the agent accepts, s
         <name>Create_Case</name>
         <label>Create Case</label>
         <locationX>567</locationX>
-        <locationY>1376</locationY>
+        <locationY>1874</locationY>
         <assignRecordIdToReference>caseRecord.Id</assignRecordIdToReference>
         <connector>
             <targetReference>Open_Case</targetReference>
@@ -455,11 +679,43 @@ Routes each call to the default queue (Basic Queue) and, if the agent accepts, s
         </inputAssignments>
         <object>Case</object>
     </recordCreates>
+    <recordCreates>
+        <name>Create_Debug_Log</name>
+        <label>Create Debug Log</label>
+        <locationX>303</locationX>
+        <locationY>242</locationY>
+        <connector>
+            <targetReference>Is_Enabled_Check_Vonage_Queue</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Create_Debug_Log</targetReference>
+        </faultConnector>
+        <inputAssignments>
+            <field>NSP_Class__c</field>
+            <value>
+                <stringValue>Voice_Omni_Channel_Flow</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>NSP_Description__c</field>
+            <value>
+                <elementReference>debugDescription</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>NSP_Method__c</field>
+            <value>
+                <stringValue>Create_Debug_Log</stringValue>
+            </value>
+        </inputAssignments>
+        <object>NSP_Error_Log__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
     <recordLookups>
         <name>Get_Callback_Case</name>
         <label>Get Callback Case</label>
         <locationX>50</locationX>
-        <locationY>842</locationY>
+        <locationY>1340</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Callback_Case_Selection</targetReference>
@@ -487,7 +743,7 @@ Routes each call to the default queue (Basic Queue) and, if the agent accepts, s
         <name>Update_Voice_Call</name>
         <label>Update Voice Call</label>
         <locationX>567</locationX>
-        <locationY>1808</locationY>
+        <locationY>2696</locationY>
         <faultConnector>
             <targetReference>Set_Fault_Element_Update_Voice_Call</targetReference>
         </faultConnector>
@@ -497,15 +753,15 @@ Routes each call to the default queue (Basic Queue) and, if the agent accepts, s
         <locationX>441</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Is_Enabled_Check_Vonage_Queue</targetReference>
+            <targetReference>Check_Debug_Enabled</targetReference>
         </connector>
     </start>
     <status>Draft</status>
     <subflows>
         <name>Fault_Handler</name>
         <label>Fault Handler</label>
-        <locationX>974</locationX>
-        <locationY>2024</locationY>
+        <locationX>1359</locationX>
+        <locationY>2912</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
@@ -526,6 +782,13 @@ Routes each call to the default queue (Basic Queue) and, if the agent accepts, s
             </value>
         </inputAssignments>
     </subflows>
+    <textTemplates>
+        <name>debugDescription</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>~ recordId: {!recordId}
+~ input_record: {!input_record}
+~ caseRecord: {!caseRecord}</text>
+    </textTemplates>
     <variables>
         <name>caseRecord</name>
         <dataType>SObject</dataType>

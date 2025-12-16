@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Send_Email_to_Case_Owner</name>
         <label>Send Email to Case Owner</label>
-        <locationX>396</locationX>
-        <locationY>576</locationY>
+        <locationX>528</locationX>
+        <locationY>684</locationY>
         <actionName>Case.Send_Email_to_Case_Owner_after_reopening_a_case</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -18,9 +18,10 @@
             </value>
         </inputParameters>
         <nameSegment>Case.Send_Email_to_Case_Owner_after_reopening_a_case</nameSegment>
-        <versionSegment>1</versionSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <decisions>
         <description>~ User must be Active with a non-null and non-blank Email
 ~ Queue must have a non-null and non-blank Email</description>
@@ -54,7 +55,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Send_Email_to_Case_Owner</targetReference>
+                <targetReference>Outbound_Email_custom_setting_check</targetReference>
             </connector>
             <label>Has Active User Email</label>
         </rules>
@@ -76,11 +77,35 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Send_Email_to_Case_Owner</targetReference>
+                <targetReference>Outbound_Email_custom_setting_check</targetReference>
             </connector>
             <label>Has Queue Email</label>
         </rules>
     </decisions>
+    <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check</name>
+        <label>Outbound Email custom setting check</label>
+        <locationX>396</locationX>
+        <locationY>576</locationY>
+        <defaultConnector>
+            <targetReference>Send_Email_to_Case_Owner</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false</label>
+        </rules>
+    </decisions>
+    <description>Outbound Email bypass added.</description>
     <environments>Default</environments>
     <interviewLabel>Case Automation Reopened Email Alert {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Case Automation Reopened Email Alert</label>
@@ -142,8 +167,8 @@
     <subflows>
         <name>Fault_Handler</name>
         <label>Fault Handler</label>
-        <locationX>836</locationX>
-        <locationY>684</locationY>
+        <locationX>792</locationX>
+        <locationY>792</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>

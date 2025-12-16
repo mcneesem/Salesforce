@@ -24,6 +24,7 @@
     <permissionSets>Sales_Service_Object_Permission</permissionSets>
     <permissionSets>force__EinsteinActivityCaptureIncluded</permissionSets>
     <permissionSets>force__EinsteinAnalyticsPlusUser</permissionSets>
+    <permissionSets>force__HighVelocitySalesUserIncluded</permissionSets>
     <permissionSets>force__InboxIncluded</permissionSets>
     <permissionSets>force__NextBestActionRecUnlimitedPSL</permissionSets>
     <permissionSets>force__SalesCloudEinsteinIncluded</permissionSets>

@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Send_Email_on_Schedule</name>
         <label>Send Email on Schedule</label>
-        <locationX>88</locationX>
-        <locationY>1092</locationY>
+        <locationX>50</locationX>
+        <locationY>1308</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <faultConnector>
@@ -30,12 +30,14 @@
             </value>
         </inputParameters>
         <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Assign_Previous_OwnerId</name>
         <label>Assign Previous OwnerId</label>
-        <locationX>440</locationX>
+        <locationX>798</locationX>
         <locationY>708</locationY>
         <assignmentItems>
             <assignToReference>previousOwnerId</assignToReference>
@@ -49,9 +51,26 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Set_Fault_Element_Get_Previous_Owner</name>
+        <label>Set Fault Element: Get_Previous_Owner</label>
+        <locationX>842</locationX>
+        <locationY>1200</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Previous_Owner</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_Fault_Element_Get_SA_History</name>
         <label>Set Fault Element: Get SA History</label>
-        <locationX>1144</locationX>
+        <locationX>1634</locationX>
         <locationY>384</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
@@ -68,8 +87,8 @@
     <assignments>
         <name>Set_Fault_Element_Send_Email_on_Schedule</name>
         <label>Set Fault Element: Send Email on Schedule</label>
-        <locationX>352</locationX>
-        <locationY>1200</locationY>
+        <locationX>314</locationX>
+        <locationY>1416</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -84,7 +103,7 @@
     <decisions>
         <name>Check_OwnerId</name>
         <label>Check OwnerId</label>
-        <locationX>572</locationX>
+        <locationX>930</locationX>
         <locationY>600</locationY>
         <defaultConnector>
             <targetReference>Loop_SA_History</targetReference>
@@ -107,9 +126,46 @@
         </rules>
     </decisions>
     <decisions>
+        <description>Prevent DmlExceptions: The target object&apos;s email address is not valid Email address is invalid: rsandoval@00d4x000003x74teaq</description>
+        <name>Check_Previous_Owner</name>
+        <label>Check Previous Owner</label>
+        <locationX>314</locationX>
+        <locationY>1200</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Valid</name>
+            <conditionLogic>1 AND 2 AND NOT 3</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Previous_Owner</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Previous_Owner.Email</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Previous_Owner.Email</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>@00d</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_Email_on_Schedule</targetReference>
+            </connector>
+            <label>Is Valid</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_PreviousOwnerId</name>
         <label>Check PreviousOwnerId</label>
-        <locationX>352</locationX>
+        <locationX>710</locationX>
         <locationY>984</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -123,7 +179,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Send_Email_on_Schedule</targetReference>
+                <targetReference>Get_Previous_Owner</targetReference>
             </connector>
             <label>PreviousOwnerId Found</label>
         </rules>
@@ -131,7 +187,7 @@
     <decisions>
         <name>Check_SA_History_Record</name>
         <label>Check SA History Record</label>
-        <locationX>616</locationX>
+        <locationX>1040</locationX>
         <locationY>384</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -156,7 +212,7 @@
     <loops>
         <name>Loop_SA_History</name>
         <label>Loop: SA History</label>
-        <locationX>352</locationX>
+        <locationX>710</locationX>
         <locationY>492</locationY>
         <collectionReference>Get_SA_History</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -187,9 +243,40 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
+        <name>Get_Previous_Owner</name>
+        <label>Get Previous Owner</label>
+        <locationX>314</locationX>
+        <locationY>1092</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Previous_Owner</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_Previous_Owner</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>previousOwnerId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>IsActive</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>User</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_SA_History</name>
         <label>Get SA History</label>
-        <locationX>616</locationX>
+        <locationX>1040</locationX>
         <locationY>276</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -220,7 +307,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>50</locationX>
+        <locationX>287</locationX>
         <locationY>0</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -258,8 +345,8 @@
     <subflows>
         <name>Fault_Handler</name>
         <label>Fault Handler</label>
-        <locationX>352</locationX>
-        <locationY>1308</locationY>
+        <locationX>314</locationX>
+        <locationY>1524</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>

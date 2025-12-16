@@ -17,6 +17,11 @@
                 <label>NCI-RS</label>
             </value>
             <value>
+                <fullName>2026 Quick Start</fullName>
+                <default>false</default>
+                <label>2026 Quick Start</label>
+            </value>
+            <value>
                 <fullName>2025 2-year Agreement</fullName>
                 <default>false</default>
                 <label>2025 2-year Agreement</label>

@@ -496,6 +496,10 @@
                 <behavior>Edit</behavior>
                 <field>Price_Update_Records__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Pricing_Model__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

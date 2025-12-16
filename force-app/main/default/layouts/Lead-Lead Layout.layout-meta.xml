@@ -129,10 +129,6 @@
                 <behavior>Edit</behavior>
                 <field>NSP_Product_Interest__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>DNB_Connect_DUNS_Number__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

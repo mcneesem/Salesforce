@@ -108,18 +108,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>DNB_Connect_DUNS_Number__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Named_Account_Group__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>DNBConnect__D_B_Connect_Company_Profile__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>NSP_Account_ID_18__c</field>
             </layoutItems>
         </layoutColumns>
@@ -154,10 +142,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>DnB_Match_Grade__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>DnB_Employee_Count_Here__c</field>
             </layoutItems>
             <layoutItems>
                 <emptySpace>true</emptySpace>

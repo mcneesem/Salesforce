@@ -4,13 +4,20 @@
             <header class="slds-media slds-media--center slds-has-flexi-truncate">
                 <div class="slds-media__body" data-aura-rendered-by="1233:0">
                     <h2 class="slds-card__header-title">
-                        <lightning-formatted-text class="slds-text-heading_small" value={label.header}>
+                        <lightning-formatted-text
+                            class="slds-text-heading_small"
+                            value={label.header}
+                            >
                         </lightning-formatted-text>
                     </h2>
                 </div>
                 <div class="slds-no-flex">
                     <template lwc:if={view}>
-                        <lightning-button label={label.editCase} onclick={editCase}></lightning-button>
+                        <lightning-button
+                            label={label.editCase}
+                            onclick={editCase}
+                            >
+                        </lightning-button>
                     </template>
                 </div>
             </header>
@@ -20,14 +27,34 @@
                 <lightning-spinner></lightning-spinner>
             </template>
             <template lwc:if={view}>
-                <lightning-record-view-form record-id={recordId} object-api-name={objectApiName} density="compact">
-                    <lightning-output-field field-name="NSP_Category__c" value={oCase.NSP_Category__c}></lightning-output-field>
-                    <lightning-output-field field-name="NSP_SubCategory__c" value={oCase.NSP_SubCategory__c}></lightning-output-field>
+                <lightning-record-view-form
+                    record-id={recordId}
+                    object-api-name={objectApiName}
+                    density="compact"
+                    >
+                    <lightning-output-field
+                        field-name="NSP_Category__c"
+                        value={oCase.NSP_Category__c}
+                        >
+                    </lightning-output-field>
+                    <lightning-output-field
+                        field-name="NSP_SubCategory__c"
+                        value={oCase.NSP_SubCategory__c}
+                        >
+                    </lightning-output-field>
                     <template lwc:if={showCaseDetail}>
-                        <lightning-output-field field-name="NSP_Detail__c" value={oCase.NSP_Detail__c}></lightning-output-field>
+                        <lightning-output-field
+                            field-name="NSP_Detail__c"
+                            value={oCase.NSP_Detail__c}
+                            >
+                        </lightning-output-field>
                     </template>
                     <template lwc:if={showCaseVersion}>
-                        <lightning-output-field field-name="NSP_Version__c" value={oCase.NSP_Version__c}></lightning-output-field>
+                        <lightning-output-field
+                            field-name="NSP_Version__c"
+                            value={oCase.NSP_Version__c}
+                            >
+                        </lightning-output-field>
                     </template>
                 </lightning-record-view-form>
             </template>
@@ -44,9 +71,19 @@
                     >
                 </c-case-cat-subcat-detail>
                 <div class="slds-align_absolute-center">
-                    <lightning-button variant="brand" label={label.save} onclick={updateCase} 
-                    class="slds-m-right_small"></lightning-button>
-                    <lightning-button label={label.cancel} onclick={cancel}></lightning-button>
+                    <lightning-button
+                        variant="brand"
+                        label={label.save}
+                        onclick={updateCase}
+                        disabled={isSaveDisabled}
+                        class="slds-m-right_small"
+                        >
+                    </lightning-button>
+                    <lightning-button
+                        label={label.cancel}
+                        onclick={cancel}
+                        >
+                    </lightning-button>
                 </div>
             </template>
         </div>

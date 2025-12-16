@@ -3,12 +3,12 @@
     <actionCalls>
         <name>Send_Email_Notification</name>
         <label>Send Email Notification</label>
-        <locationX>50</locationX>
-        <locationY>242</locationY>
+        <locationX>182</locationX>
+        <locationY>350</locationY>
         <actionName>AccountContactRelation.Email_Alert_to_ACR_Account_Owner</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
-            <targetReference>Failed_To_Send_Email_Notification</targetReference>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
         </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -18,13 +18,37 @@
             </value>
         </inputParameters>
         <nameSegment>AccountContactRelation.Email_Alert_to_ACR_Account_Owner</nameSegment>
-        <versionSegment>1</versionSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check</name>
+        <label>Outbound Email custom setting check</label>
+        <locationX>50</locationX>
+        <locationY>242</locationY>
+        <defaultConnector>
+            <targetReference>Send_Email_Notification</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Validate_Account_Owner</name>
         <label>Validate Account Owner</label>
-        <locationX>314</locationX>
+        <locationX>380</locationX>
         <locationY>134</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -59,11 +83,12 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Send_Email_Notification</targetReference>
+                <targetReference>Outbound_Email_custom_setting_check</targetReference>
             </connector>
             <label>Active Account Owner</label>
         </rules>
     </decisions>
+    <description>Outbound Email bypass added</description>
     <environments>Default</environments>
     <interviewLabel>Account Contact Relation - Notify Account Owner {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Account Contact Relation - Notify Account Owner</label>
@@ -87,7 +112,7 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <start>
-        <locationX>188</locationX>
+        <locationX>254</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Validate_Account_Owner</targetReference>
@@ -95,10 +120,10 @@
     </start>
     <status>Draft</status>
     <subflows>
-        <name>Failed_To_Send_Email_Notification</name>
-        <label>Failed To Send Email Notification</label>
-        <locationX>314</locationX>
-        <locationY>350</locationY>
+        <name>Insperity_Fault_Handler_Subflow</name>
+        <label>Insperity Fault Handler Subflow</label>
+        <locationX>446</locationX>
+        <locationY>458</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>

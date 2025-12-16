@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Send_Renewal_Email</name>
         <label>Send Renewal Email</label>
-        <locationX>628</locationX>
-        <locationY>505</locationY>
+        <locationX>242</locationX>
+        <locationY>384</locationY>
         <actionName>SBQQ__Quote__c.NSP_Email_Alert_to_Quote_Owner_on_Creation_of_Renewal_Quote</actionName>
         <actionType>emailAlert</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -14,22 +14,33 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>SBQQ__Quote__c.NSP_Email_Alert_to_Quote_Owner_on_Creation_of_Renewal_Quote</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>53.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <decisions>
-        <name>Bypass_Flag</name>
-        <label>Bypass ?</label>
-        <locationX>219</locationX>
-        <locationY>397</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Bypass_and_Outbound_Email_custom_setting_check</name>
+        <label>Bypass and Outbound Email custom setting check</label>
+        <locationX>374</locationX>
+        <locationY>276</locationY>
+        <defaultConnectorLabel>Do not send email</defaultConnectorLabel>
         <rules>
             <name>Run</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Bypass</leftValueReference>
+                <leftValueReference>$Setup.NSP_Trigger_Switch__c.AutoLaunchedFlows__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -38,11 +49,8 @@
             <label>Run</label>
         </rules>
     </decisions>
-    <formulas>
-        <name>Bypass</name>
-        <dataType>Boolean</dataType>
-        <expression>{!$Setup.NSP_Trigger_Switch__c.AutoLaunchedFlows__c}</expression>
-    </formulas>
+    <description>Outbound Email bypass added.</description>
+    <environments>Default</environments>
     <interviewLabel>Renewal Email After 5 Mins {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Renewal Email After 5 Mins</label>
     <processMetadataValues>
@@ -54,7 +62,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>FREE_FORM_CANVAS</stringValue>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -65,8 +73,8 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <start>
-        <locationX>120</locationX>
-        <locationY>32</locationY>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>SBQQ__Type__c</field>
@@ -87,7 +95,7 @@
         <scheduledPaths>
             <name>Action_After_5mins</name>
             <connector>
-                <targetReference>Bypass_Flag</targetReference>
+                <targetReference>Bypass_and_Outbound_Email_custom_setting_check</targetReference>
             </connector>
             <label>Action After 5mins</label>
             <offsetNumber>5</offsetNumber>
@@ -97,5 +105,5 @@
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
 </Flow>

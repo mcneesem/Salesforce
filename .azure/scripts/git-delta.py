@@ -43,6 +43,73 @@ def copyDirectoryRecurse( filedir , output ):
                             if os.path.isdir( subpath ):
                                 copyDirectoryRecurse( subpath , output )
 
+# Copy Folder Metadata
+def copyFolderMetadataRecurse( filedir , output ):
+    if filedir:
+        if os.path.exists( filedir ):
+            if os.path.isdir( filedir ):
+                # metadata types with associated folder metadata types...
+                metadataTypes = [ "dashboards" , "documents" , "email" , "reports" ]
+                # ensure we stop searching at the base folder for the metadata type...
+                basedir = os.path.basename( filedir )
+                if ( basedir in metadataTypes ):
+                    basedir = None
+                # identify the folder metadata type from the file path...
+                folderMetadataType = None
+                parts = filedir.replace( PATH_FORCE_APP_MAIN_DEFAULT , "" ).split( os.sep )
+                if parts:
+                    if ( "dashboards" in parts ):
+                        folderMetadataType = "dashboardFolder"
+                    elif ( "documents" in parts ):
+                        folderMetadataType = "documentFolder"
+                    elif ( "email" in parts ):
+                        folderMetadataType = "emailFolder"
+                    elif ( "reports" in parts ):
+                        folderMetadataType = "reportFolder"
+                # construct the search file name...
+                folderMetadataFileExt = None
+                if folderMetadataType:
+                    folderMetadataFileExt = "." + folderMetadataType + "-meta.xml"
+                folderMetadataFile = None
+                if ( folderMetadataFileExt and basedir ):
+                    folderMetadataFile = ( basedir + folderMetadataFileExt )
+                # search the current directory...
+                parentdir = os.path.dirname( filedir )
+                if ( folderMetadataFile and parentdir ):
+                    if os.path.exists( parentdir ):
+                        if os.path.isdir( parentdir ):
+                            # GitDelta.Solution=DevOps skips the sub-folder metadata files...
+                            # ~ if ( os.path.basename( parentdir ) in metadataTypes ):
+                            # ~ this condition only searches for folder metadata files in the root-folder of the metadata type...
+                            # GitDelta.Solution=PMCC always includes these sub-folder metadta files for completeness of the deployment package...
+                            # ~ if True:
+                            if ( True or ( os.path.basename( parentdir ) in metadataTypes ) ):
+                                for i , sub in enumerate( os.listdir( parentdir ) ):
+                                    if ( sub == folderMetadataFile ):
+                                        # found the desired folder metadata file...
+                                        folderMetadataFilePath = os.path.join(
+                                            parentdir ,
+                                            folderMetadataFile
+                                        )
+                                        copyFile( folderMetadataFilePath , output )
+                            # recuse up the directory structure...
+                            copyFolderMetadataRecurse( parentdir , output )
+
+# Copy Master Detail Fields
+def copyMasterDetailFields( filedir , output ):
+    if filedir:
+        if os.path.exists( filedir ):
+            if os.path.isdir( filedir ):
+                for i , sub in enumerate( os.listdir( filedir ) ):
+                    if ( sub == "fields" ):
+                        fieldsSubPath = os.path.join( filedir , sub )
+                        for i , field in enumerate( os.listdir( fieldsSubPath ) ):
+                            fieldPath = os.path.join( fieldsSubPath , field )
+                            with open( fieldPath , 'r' ) as f:
+                                content = f.read()
+                                if ( content and ( "<type>MasterDetail</type>" in content ) ):
+                                    copyFile( fieldPath , output )
+
 # Get File Path Without Extension
 def getFilePathWithoutExtension( filepath ):
     filepathWithoutExtension = filepath
@@ -79,7 +146,15 @@ def copyFilePaths( filepaths , output , verbose=False ):
             # conditionally copy more related files...
             filedir = os.path.dirname( filepath )
             if any( metadataType in filepath for metadataType in [ "/aura/" , "/lwc/" ] ):
+                # always deploy full lwc (and aura) component directories...
                 copyDirectoryRecurse( filedir , output )
+            if any( metadataType in filepath for metadataType in [ "/dashboards/" , "/documents/" , "/email/" , "/reports/" ] ):
+                # handle metadata types with associated folder metadata types...
+                copyFolderMetadataRecurse( filedir , output )
+            if "/objects/" in filepath:
+                # always the deploy the master-detail fields when an object file changes...
+                if filepath.endswith( ".object" + metaFileSuffix ):
+                    copyMasterDetailFields( filedir , output )
             if "/staticresources/" in filepath:
                 copyFile(
                     getFilePathWithoutExtension( filepath ) + ".resource" + metaFileSuffix ,
@@ -222,8 +297,8 @@ def writeMetadataFile( filepath , searchFullNames , metadataType , verbose=False
     if verbose:
         print( " ----- " )
 
-# Safe Get Xml From String
-def safeGetXmlFromString( line , verbose=False ):
+# Trim Diff Line
+def trimDiffLine( line , verbose=False ):
     if line:
         # + indicates added line...
         if line.startswith( "+" ):
@@ -231,6 +306,11 @@ def safeGetXmlFromString( line , verbose=False ):
             line = line[1:]
         # strip all leading/trailing whitespace...
         line = line.strip()
+    return line
+
+# Safe Get Xml From String
+def safeGetXmlFromString( line , verbose=False ):
+    line = trimDiffLine( line , verbose )
     root = None
     if line:
         try:
@@ -239,6 +319,25 @@ def safeGetXmlFromString( line , verbose=False ):
         except Exception as e:
             root = None
     return root
+
+# Is Ignored Element
+def isIgnoredElement( line , verbose=False ):
+    isIgnored = False
+    line = trimDiffLine( line , verbose )
+    if line:
+        # convert end tags to open elements to reduce comparison complexity...
+        if "</" in line:
+            line = line.replace( "</" , "<" )
+        # compile the set of ignored parent elements...
+        # ~ identified from the metadata coverage report...
+        ignoredElementsCustomLabels = { "<labels>" }
+        ignoredElementsWorkflows = { "<alerts>" , "<fieldUpdates>" , "<flowActions>" , "<knowledgePublishes>" , "<outboundMessages>" , "<rules" , "<tasks>" }
+        ignoredElementsSharingRules = { "<sharingCriteriaRules>" , "<sharingGuestRules>" , "<sharingOwnerRules>" , "<sharingTerritoryRules>" }
+        ignoredElements = ignoredElementsCustomLabels | ignoredElementsWorkflows | ignoredElementsSharingRules
+        # only ignore specific elements...
+        if line in ignoredElements:
+            isIgnored = True
+    return isIgnored
 
 # Find Modified Elements
 # ~ find the <fullName> elements of any modified parent elements...
@@ -264,7 +363,7 @@ def findModifiedElements( lines , verbose=False ):
             else:
                 # track the current <fullName> element while reading each line of the `git diff` output...
                 hasElementText = False
-                rootCheck = safeGetXmlFromString( line )
+                rootCheck = safeGetXmlFromString( line , verbose )
                 if rootCheck is not None:
                     if ( rootCheck.tag == "fullName" ):
                         currentFullName = rootCheck.text
@@ -272,9 +371,13 @@ def findModifiedElements( lines , verbose=False ):
                         hasElementText = True
                 # + indicates added line...
                 if line.startswith( "+" ):
-                    # ignore containing parent elements...
-                    # ~ i.e. when an totally new parent element is added...
-                    if hasElementText and currentFullName and currentPath:
+                    # ignore specific containing parent elements...
+                    # ~ elements without text are parent elements containing child elements (hasElementText=false)...
+                    # ~ i.e. when an totally new Custom Label is added, git see a new line like "+    <label>"...
+                    isIgnored = False
+                    if not hasElementText:
+                        isIgnored = isIgnoredElement( line , verbose )
+                    if not isIgnored and currentFullName and currentPath:
                         if currentPath not in response:
                             response[currentPath] = []
                         if currentFullName not in response[currentPath]:
