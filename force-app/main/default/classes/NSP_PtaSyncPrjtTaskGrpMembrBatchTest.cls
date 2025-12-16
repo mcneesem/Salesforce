@@ -1,18 +1,8 @@
-/**
-* @description  :   Test class for NSP_PtaSyncWithProjectTasksGrpMembrBatch .
-* @date 11/14/2022
-* Author : Abhishek Kumar
-* Name : NSP_PtaSyncPrjtTaskGrpMembrBatchTest.cls
-*/
 @isTest
-public class NSP_PtaSyncPrjtTaskGrpMembrBatchTest {
+private class NSP_PtaSyncPrjtTaskGrpMembrBatchTest {
 
-    /***********************************************************************************************
-    * MethodName: testData
-    * Description : Setting the Test Data
-    * ********************************************************************************************/
     @testSetup
-    static void setupTestData(){
+    private static void setupTestData() {
         //Get Record type Id of RET Project Type
         Id retProjectRecordTypeId = NSP_GenericRecordType.getRecordTypeId('pse__Proj__c', NSP_ServiceConstants.PROJECT_RET_RECORDTYPE);
 
@@ -22,7 +12,7 @@ public class NSP_PtaSyncPrjtTaskGrpMembrBatchTest {
         newProj.TemplateName__c = NSP_ServiceConstants.PROJECT_GENERAL_BUSINESS_TEMPLATE;
         newProj.RecordTypeId = retProjectRecordTypeId;
         newProj.pse__Start_Date__c = date.newInstance(2023, 01, 01);
-        newProj.pse__End_Date__c =  date.newInstance(2091, 12, 31); 
+        newProj.pse__End_Date__c =  date.newInstance(2091, 12, 31);
         insert newProj;
 
         pse__Project_Task__c newProjTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
@@ -42,14 +32,10 @@ public class NSP_PtaSyncPrjtTaskGrpMembrBatchTest {
         newContact.pse__Salesforce_User__c = testUser.Id;
         insert newContact;
 
-        }
-    
-    /***********************************************************************************************
-    * MethodName: ptaCreationforGrpMembersTest
-    * Description : Unit test for NSP_PtaSyncWithProjectTasksGrpMembrBatch with Grp member
-    * ********************************************************************************************/
+    }
+
     @isTest
-    static void ptaCreationforGrpMembersTest(){
+    private static void ptaCreationforGrpMembersTest() {
         try{
             //Given
             pse__Project_Task__c projectTaskRec = [SELECT Id FROM pse__Project_Task__c WHERE Name = 'test projectTask' LIMIT 1 ];
@@ -57,11 +43,11 @@ public class NSP_PtaSyncPrjtTaskGrpMembrBatchTest {
             Contact contactRec = [SELECT Id,pse__Salesforce_User__c FROM Contact WHERE lastName= 'Test' LIMIT 1];
 
             User testUser = [ SELECT Id,NSP_Group_Member_For_Plan_Projects__c FROM User WHERE ID =: contactRec.pse__Salesforce_User__c ];
-            //update user Group Member Value 
+            //update user Group Member Value
             testUser.NSP_Group_Member_For_Plan_Projects__c = 'Group 1' ;
 
             update testUser;
-        
+
             //When
             test.startTest();
             NSP_PtaSyncWithProjectTasksGrpMembrBatch batchSch = new NSP_PtaSyncWithProjectTasksGrpMembrBatch();
@@ -69,7 +55,7 @@ public class NSP_PtaSyncPrjtTaskGrpMembrBatchTest {
             batchSch.execute(null);
             test.stopTest();
             //Then
-            pse__Project_Task_Assignment__c newPta = [SELECT id,pse__Resource__c,pse__Project_Task__c 
+            pse__Project_Task_Assignment__c newPta = [SELECT id,pse__Resource__c,pse__Project_Task__c
                                                         FROM pse__Project_Task_Assignment__c
                                                         WHERE  pse__Project_Task__c =: projectTaskRec.Id LIMIT 1];
             System.assertEquals(contactRec.Id,newPta.pse__Resource__c,'Pta Created with contact');
@@ -77,18 +63,14 @@ public class NSP_PtaSyncPrjtTaskGrpMembrBatchTest {
         }
     }
 
-    /***********************************************************************************************
-    * MethodName: noPtaforUserWithoutGrpMembersTest
-    * Description : Unit test for NSP_PtaSyncWithProjectTasksGrpMembrBatch without Grp member
-    * ********************************************************************************************/
     @isTest
-    static void noPtaforUserWithoutGrpMembersTest(){
+    private static void noPtaforUserWithoutGrpMembersTest() {
         try{
             //Given
             pse__Project_Task__c projectTaskRec = [SELECT Id FROM pse__Project_Task__c WHERE Name = 'test projectTask' LIMIT 1 ];
 
             Contact contactRec = [SELECT Id FROM Contact WHERE lastName= 'Test' LIMIT 1];
-        
+
             //When
             test.startTest();
             NSP_PtaSyncWithProjectTasksGrpMembrBatch batchSch = new NSP_PtaSyncWithProjectTasksGrpMembrBatch();
@@ -96,7 +78,7 @@ public class NSP_PtaSyncPrjtTaskGrpMembrBatchTest {
             batchSch.execute(null);
             test.stopTest();
             //Then
-            pse__Project_Task_Assignment__c newPta = [SELECT id,pse__Resource__c,pse__Project_Task__c 
+            pse__Project_Task_Assignment__c newPta = [SELECT id,pse__Resource__c,pse__Project_Task__c
                                                         FROM pse__Project_Task_Assignment__c
                                                         WHERE  pse__Project_Task__c =: projectTaskRec.Id LIMIT 1];
             System.assertNotEquals(contactRec.Id,newPta.pse__Resource__c,'Pta Not Created with contact');
@@ -104,6 +86,16 @@ public class NSP_PtaSyncPrjtTaskGrpMembrBatchTest {
             System.debug( ' ~ ex=' + ex );
         }
     }
-    
-    
+
+    @isTest
+    private static void codeCoverageTest() {
+        Test.startTest();
+        NSP_PtaSyncWithProjectTasksGrpMembrBatch.testHandleException( null , null );
+        NSP_PtaSyncWithProjectTasksGrpMembrBatch.schedule();
+        Callable runner = (Callable)Type.forName( 'NSP_PtaSyncWithProjectTasksGrpMembrBatch' ).newInstance();
+        runner.call( 'run' , null );
+        Test.stopTest();
+    }
+
 }
+//
