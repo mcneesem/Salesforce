@@ -8,10 +8,13 @@ trigger OnCLMDocumentCreateTrigger on CLM_Document__c (
     after unDelete
     )
 {
-    NSP_Trigger_Switch__c triggerSwitch =  NSP_Trigger_Switch__c.getInstance( UserInfo.getUserId() );
+    NSP_Trigger_Switch__c triggerSwitch = NSP_Trigger_Switch__c.getInstance( UserInfo.getUserId() );
     //run if trigger switch is off
     if ( !triggerSwitch.CLMDocumentTrigger__c ) {
-        NSP_TriggerDispatcher.run( new CLMDocumentTriggerHandler() , 'OnCLMDocumentCreate_Trigger' );
+        NSP_TriggerDispatcher.run(
+            new CLMDocumentTriggerHandler() ,
+            'OnCLMDocumentCreate_Trigger'
+        );
     }
 }
 //
