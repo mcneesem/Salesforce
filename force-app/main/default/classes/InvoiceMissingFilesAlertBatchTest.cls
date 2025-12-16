@@ -5,8 +5,9 @@ private class InvoiceMissingFilesAlertBatchTest {
 
     @testSetup
     private static void setupTestData() {
-        Email_Deliverability_Settings__c emailSetting = new Email_Deliverability_Settings__c();
-        insert emailSetting;
+        Email_Deliverability_Settings__c emailSetting = Email_Deliverability_Settings__c.getOrgDefaults();
+        emailSetting.IsEnabledOutbound__c = true;
+        upsert emailSetting;
 
         Order_Settings__c orderSetting = Order_Settings__c.getOrgDefaults();
         orderSetting.EffectiveDateStartOfMonth__c = true;
@@ -101,7 +102,7 @@ private class InvoiceMissingFilesAlertBatchTest {
         Test.stopTest();
     }
 
-    @IsTest
+    @isTest
     private static void testBatchWithInvIds() {
 
         //fetch activated orders
@@ -155,4 +156,6 @@ private class InvoiceMissingFilesAlertBatchTest {
         Test.stopTest();
         System.assert(true, 'Scheduled job was created.');
     }
+
 }
+//

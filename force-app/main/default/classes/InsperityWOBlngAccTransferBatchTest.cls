@@ -1,15 +1,18 @@
-@isTest private class InsperityWOBlngAccTransferBatchTest {
+@isTest
+private class InsperityWOBlngAccTransferBatchTest {
 
-    @testSetup private static void dataSetup() {
-        Email_Deliverability_Settings__c emailSetting = new Email_Deliverability_Settings__c();
-        insert emailSetting;
+    @testSetup
+    private static void dataSetup() {
+        Email_Deliverability_Settings__c emailSetting = Email_Deliverability_Settings__c.getOrgDefaults();
+        emailSetting.IsEnabledOutbound__c = true;
+        upsert emailSetting;
 
         NSP_InvoiceTriggerHandler.TriggerDisabled = true;
         NSP_AccountTriggerHandler.TriggerDisabled = true;
         NSP_OrderItemTriggerHandler.TriggerDisabled = true;
         NSP_OrderTriggerHandler.TriggerDisabled = true;
         NSP_AccountTriggerHandler.TriggerDisabled = true;
-        NSP_OpportunityTriggerHandler.TriggerDisabled = true; 
+        NSP_OpportunityTriggerHandler.TriggerDisabled = true;
         NSP_QuoteTriggerHandler.TriggerDisabled = true;
         NSP_ContactTriggerHandler.TriggerDisabled=true;
         NSP_QuoteLineTriggerHandler.TriggerDisabled=true;
@@ -57,7 +60,7 @@
         objproduct1.blng__TaxRule__c=tRule.Id;
         insert objproduct1;
         producRevRuleMap.put(objproduct1.Id,rRule1.Id);
-        
+
         blng__RevenueRecognitionRule__c rRule2=NSP_TestHelper.createRevrecRule(NSP_CPQConstants.IMMEDIATE_REV);
         Product2 objproduct2 = NSP_TestHelper.createProduct('Test Product2',false);
         objproduct2.SBQQ__ChargeType__c = 'Recurring';
@@ -69,7 +72,7 @@
         objproduct2.blng__TaxRule__c=tRule.Id;
         insert objproduct2;
         producRevRuleMap.put(objproduct2.Id,rRule2.Id);
-        
+
         Opportunity objOpprtunity = NSP_TestHelper.createOpenOpportunity(objaccount.Id,'New Product',true);
         PriceBookEntry objPbe     = NSP_TestHelper.createPriceBookEntry(objproduct.Id,200.0,true);
         PriceBookEntry objPbe1     = NSP_TestHelper.createPriceBookEntry(objproduct1.Id,200.0,true);
@@ -80,13 +83,13 @@
         objQuote.SBQQ__Primary__c = true;
         objQuote.SBQQ__Ordered__c = true;
         Test.startTest();
-        update objQuote; 
+        update objQuote;
         list<OrderItem> orderItemList = new list<OrderItem>([select id,blng__InvoiceRunProcessingStatus__c,blng__BillingAccount__c from OrderItem where Order.SBQQ__Quote__c =:objQuote.Id]);
         list<Order> orderList = new list<Order>([select id,blng__BillingAccount__c,NSP_Back_Out__c,Prevent_Reassignment__c from Order where SBQQ__Quote__c =:objQuote.Id]);
         //orderList[0].NSP_Project_Go_Live_Date__c=system.today();
         //orderList[0].Status='Reviewed';
         orderList[0].NSP_Back_Out__c = false;
-        orderList[0].Prevent_Reassignment__c = false;  
+        orderList[0].Prevent_Reassignment__c = false;
         orderList[0].blng__BillingAccount__c=objaccount.id;
         update orderList;
         for(OrderItem oitem:orderItemList){
@@ -100,7 +103,8 @@
         Test.stopTest();
     }
 
-    @isTest private static void testMethod_InsperityWOBillingAccountTransferBatch() {
+    @isTest
+    private static void testMethod_InsperityWOBillingAccountTransferBatch() {
         List<String> strAccNames = new List<String>();
         String currentMonthId = '';
         list<account> acclist = [select id,Previous_Month_Account__c from account];
@@ -109,21 +113,22 @@
             strAccNames.add(acclist[1].Previous_Month_Account__c);
         } else {
             currentMonthId = acclist[0].id;
-            strAccNames.add(acclist[0].Previous_Month_Account__c);          
+            strAccNames.add(acclist[0].Previous_Month_Account__c);
         }
-        
-         list<order> query = [SELECT Id,blng__BillingAccount__c ,(select id,blng__BillingAccount__c,blng__InvoiceRunProcessingStatus__c,Has_Consumption_Schedule__c from  orderitems) from order];
+
+        list<order> query = [SELECT Id,blng__BillingAccount__c ,(select id,blng__BillingAccount__c,blng__InvoiceRunProcessingStatus__c,Has_Consumption_Schedule__c from  orderitems) from order];
         list<orderitem> query1 = [select id,OrderId,blng__BillingAccount__c,blng__InvoiceRunProcessingStatus__c,Has_Consumption_Schedule__c from  orderitem];
 
         // This code runs as the system user
         User u = [select id,email from user where name = 'Deployment Manager'];
-        
-        System.runAs(u) 
-        {  
+
+        System.runAs(u) {
             test.starttest();
             InsperityWOBillingAccountTransferBatch BatchClass = new InsperityWOBillingAccountTransferBatch(strAccNames[0],currentMonthId);
             Database.executeBatch(BatchClass, 20);
             test.stoptest();
         }
     }
+
 }
+//

@@ -190,15 +190,14 @@ public class NSP_CaseTriggerEmailNotification {
         return mailBody;
     }
 
-    /*
-    * @Name        :  sendMail
-    * @Param       :  Id emailTemplateId, String htmlBody, List<Case> caseList,
-    *                 List<String> toAddresses
-    * @Return      :  void
-    * @Description :  To send email with template structure
-    */
-    public static void sendMail(Id emailTemplateId, String htmlBody, List<Case> caseList, List<String> toAddresses){
-        if( EmailDeliverabilityController.IsEnabledOutbound ){
+    //
+    // @Name : sendMail
+    // @Param : Id emailTemplateId, String htmlBody, List<Case> caseList, List<String> toAddresses
+    // @Return : void
+    // @Description : To send email with template structure
+    //
+    public static void sendMail( Id emailTemplateId , String htmlBody , List<Case> caseList , List<String> toAddresses ) {
+        if ( EmailDeliverabilityController.IsEnabledOutbound ) {
             //set template structure for the email template
             OrgWideEmailAddress orgWideAddress;
             List<String> ccAddresses = new List<String>{System.Label.NSP_Report_Dev_Team_CC_Address};

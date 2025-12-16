@@ -31,7 +31,7 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
     public void execute(QueueableContext context) {
 
         String currObjName = objectApiNames.remove(0); // remove top item from objectApiNames in each link in chain
-        
+
         if (filterNamespaces == null) {
             filterNamespaces = new List<String>();
         }
@@ -69,12 +69,11 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
 
     // *************************************** Object Permissions ************************************************
     //  Description :   Upserts ObjectPermssions for specified object name into specified Perm Set recursivesly.
-    //                  Method analyzes upsert results and (1) initiates a retry if ViewAll/ModifyAll object 
+    //                  Method analyzes upsert results and (1) initiates a retry if ViewAll/ModifyAll object
     //                  permission error is encountered, (2) moves object name to bottom of list if object
     //                  permission depency is encountered. Dependency retries are limited to five attempts.
     // ***********************************************************************************************************
     public static void loadObjectPermissions(Id permSetId, Boolean editFlag, List<String> objectApiNames, String currObjName, Map<String, Integer> depRetry, Boolean allPermFlag) {
-        
         if (!String.isBlank(permSetId)) {
             List<ObjectPermissions> opList = new List<ObjectPermissions>();
             Boolean retryFlag = false;
@@ -203,8 +202,8 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
     }
 
     // ************************ Chain Completion Email ************************
-    public static void sendCompletionEmail(){
-        if( EmailDeliverabilityController.IsEnabledOutbound ){
+    public static void sendCompletionEmail() {
+        if ( EmailDeliverabilityController.IsEnabledOutbound ) {
             Messaging.SingleEmailMessage oEmail = new Messaging.SingleEmailMessage();
             oEmail.setSubject(OrgSettings__c.getOrgDefaults().SandboxName__c + ': LoadFullAccessPermSets job finished');
             String[] sendingTo = new String[]{'sfconfig@insperity.com'};

@@ -22,10 +22,12 @@ private class NSP_CaseTriggerEmailNotificationTest {
         'Id',
         'NSP_CorporateEmployeeEE__c', 'AccountId', 'ContactId'
     };
+
     @testSetup
     private static void testData() {
-        Email_Deliverability_Settings__c emailSetting = new Email_Deliverability_Settings__c();
-        insert emailSetting;
+        Email_Deliverability_Settings__c emailSetting = Email_Deliverability_Settings__c.getOrgDefaults();
+        emailSetting.IsEnabledOutbound__c = true;
+        upsert emailSetting;
 
         List<Case> caseList = new List<Case>();
         Account newAccount = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), ACCOUNTDEFAULTS, true);
@@ -90,7 +92,7 @@ private class NSP_CaseTriggerEmailNotificationTest {
         Case itaCqaCase = (Case)NSP_TestExtendedDataFactory.createSObject(new Case(), CASEDEFAULTS, false);
         itaCqaCase.RecordTypeId =NSP_GenericRecordType.getRecordTypeId('Case', NSP_ServiceConstants.NSP_ITA_CQA);
         itaCqaCase.NSP_CQA_Resulting_Severity__c = NSP_ServiceConstants.L1_CA_ACCURALS_MISCALCULATION;
-       	itaCqaCase.Project__c = bpsProject.Id;
+        itaCqaCase.Project__c = bpsProject.Id;
         caseList.add(itaCqaCase);
 
         //To get case recordtypeId
@@ -100,9 +102,9 @@ private class NSP_CaseTriggerEmailNotificationTest {
         hcmCase.Subject = NSP_ServiceConstants.HCM_TEST_CASE_SUBJECT;
         hcmCase.NSP_Opened_Date__c = Date.Today();
         hcmCase.Status = NSP_ServiceConstants.OPEN;
-      	caseList.add(hcmCase);
+        caseList.add(hcmCase);
 
-		//Creating case for Report dev Notification testing
+        //Creating case for Report dev Notification testing
         Case caseRecord = (Case)NSP_TestExtendedDataFactory.createSObject(new Case(), CASEDEFAULTS, false);
         caseRecord.NSP_Category__c = NSP_ServiceConstants.CASE_CATEGORY_SERVICE_OPERATIONS;
         caseRecord.NSP_SubCategory__c = NSP_ServiceConstants.CASE_SUB_CATEGORY_REQUEST_CUSTOMIZED_REPORT;
@@ -118,7 +120,7 @@ private class NSP_CaseTriggerEmailNotificationTest {
         bpsCaseRecord.Subject = 'Test BPS Case';
         bpsCaseRecord.AccountId = newAccount.Id;
         bpsCaseRecord.Type = 'Congruex';
-       	caseList.add(bpsCaseRecord);
+        caseList.add(bpsCaseRecord);
 
         // WgaeClaims Case
         Id recordTypeIdPEO = NSP_GenericRecordType.getRecordTypeId('Case', NSP_ServiceConstants.PEO);
@@ -128,7 +130,7 @@ private class NSP_CaseTriggerEmailNotificationTest {
         wageClaimsCaseRecord.AccountId = newAccount.Id;
         wageClaimsCaseRecord.NSP_Category__c = NSP_ServiceConstants.FLSA_CATEGORY;
         wageClaimsCaseRecord.NSP_SubCategory__c = NSP_ServiceConstants.CASE_SUB_CATEGORY_WAGE_CLAIMS;
-       	caseList.add(wageClaimsCaseRecord);
+        caseList.add(wageClaimsCaseRecord);
 
         Database.insert(caseList);
 

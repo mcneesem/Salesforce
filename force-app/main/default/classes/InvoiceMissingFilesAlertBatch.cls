@@ -163,7 +163,7 @@ public class InvoiceMissingFilesAlertBatch implements Schedulable , Database.Bat
 
     private void sendEmailNotification( AsyncApexJob job , String plainTextBody ) {
         try {
-            if( EmailDeliverabilityController.IsEnabledOutbound ){
+            if ( EmailDeliverabilityController.IsEnabledOutbound ) {
                 Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
                 List<String> toAddresses = new List<String>();
                 if ( job != null ) {

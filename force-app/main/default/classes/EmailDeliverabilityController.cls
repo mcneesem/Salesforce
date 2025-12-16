@@ -1,5 +1,6 @@
 public with sharing class EmailDeliverabilityController {
     // test w/ EmailDeliverabilityControllerTest (100%)
+
     private static Email_Deliverability_Settings__c settings {
         private get {
             if ( settings == null ) {
@@ -13,13 +14,16 @@ public with sharing class EmailDeliverabilityController {
     public static Boolean isEnabledOutbound {
         public get {
             if ( isEnabledOutbound == null ) {
-                isEnabledOutbound = true;
+                Boolean local = false;
                 if ( EmailDeliverabilityController.settings != null ) {
-                    isEnabledOutbound = EmailDeliverabilityController.settings.IsEnabledOutbound__c;
+                    local = EmailDeliverabilityController.settings.IsEnabledOutbound__c;
                 }
+                isEnabledOutbound = local;
             }
             return isEnabledOutbound;
         }
         private set;
     }
+
 }
+//

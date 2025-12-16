@@ -25,8 +25,9 @@ private class LoadFullAccessPermSetsQueueableTest {
         Assert.isTrue( ( deploymentManagers.size() == 1 ) , 'Incorrect Deployment Manager query results.' );
         User deploymentManager = deploymentManagers[0];
         System.runas( deploymentManager ) {
-            Email_Deliverability_Settings__c emailSetting = new Email_Deliverability_Settings__c();
-            insert emailSetting;
+            Email_Deliverability_Settings__c emailSetting = Email_Deliverability_Settings__c.getOrgDefaults();
+            emailSetting.IsEnabledOutbound__c = true;
+            upsert emailSetting;
             LoadFullAccessPermSets.runLoadFullAccessPermSets('FA_Test_Read_Permission_Set', 'FA_Test_Edit_Permission_Set', null, null);
             LoadFullAccessPermSetsQueueable.sendCompletionEmail();
         }
@@ -54,7 +55,7 @@ private class LoadFullAccessPermSetsQueueableTest {
         Map<id,Boolean> psMap = new map<id,Boolean>{ readPermSetId => false, editPermSetId => true };
         Map<String, Integer> depRetry = new Map<String, Integer>();
 
-        List<EntityDefinition> entities = [SELECT QualifiedApiName FROM EntityDefinition 
+        List<EntityDefinition> entities = [SELECT QualifiedApiName FROM EntityDefinition
             WHERE QualifiedApiName IN ('Account','EntityDefinition','Idea')]; // one success case, one bad case, one ViewAll case
 
         List<String> objectApiNames = new List<String>();
