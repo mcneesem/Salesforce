@@ -153,11 +153,9 @@ public with sharing class JobRunnerController {
             message = ( ( hasWaitingJobs ) ? 'Has waiting jobs.' : message );
             if ( !hasWaitingJobs ) {
                 try {
+                    // send email to service address that handles all job requests...
                     Messaging.SingleEmailMessage mail = JobRunnerController.prepareEmailMessage( batchClassName );
-                    if( EmailDeliverabilityController.IsEnabledOutbound ){
-                        // send email to service address that handles all job requests...
-                        Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ mail } );
-                    }
+                    Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ mail } );
                     // log results...
                     NSP_ErrorLogHandler.logInfo(
                         JobRunnerController.class.getName() ,
@@ -180,7 +178,6 @@ public with sharing class JobRunnerController {
         }
     }
 
-    @TestVisible
     private static Messaging.SingleEmailMessage prepareEmailMessage( String requestedClassName ) {
         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
         if ( JobRunnerController.orgWideEmailAddressId != null ) {
@@ -227,7 +224,9 @@ public with sharing class JobRunnerController {
     // see JobRunnerEmailHandler
     public static void handleJobRequest( Messaging.InboundEmail email , Messaging.InboundEnvelope envelope ) {
         if ( JobRunnerController.hasPermission
-          && JobRunnerController.isEnabled ){
+            && JobRunnerController.isEnabled
+            )
+        {
             try {
                 // prepare a log for all attempts to execute a job via the service address...
                 String requestDescription = JobRunnerController.describeJobRequest( email );

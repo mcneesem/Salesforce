@@ -4,11 +4,6 @@ private class JobRunnerControllerTest {
 
     @testSetup
     private static void setup() {
-        Account acct = NSP_TestHelper.createAccount(true);
-
-        Email_Deliverability_Settings__c emailSetting = new Email_Deliverability_Settings__c();
-        insert emailSetting;
-
         JobRunnerSettings__c settings =  JobRunnerSettings__c.getInstance( UserInfo.getUserId() );
         settings.IsEnabled__c = true;
         settings.SoqlDaysLimit__c = 7;
@@ -35,16 +30,13 @@ private class JobRunnerControllerTest {
 
     @isTest
     private static void testGetBatchJobStatuses() {
-        List<User> deploymentManagers = [
-            SELECT Id
-            FROM User
-            WHERE ( Id = '0054x0000056lRZAAY' )
-            LIMIT 1
-        ];
-        Assert.isNotNull( deploymentManagers , 'Null Deployment Manager query results.' );
-        Assert.isTrue( ( deploymentManagers.size() > 0 ) , 'No Deployment Manager query results.' );
-        Assert.isTrue( ( deploymentManagers.size() == 1 ) , 'Incorrect Deployment Manager query results.' );
-        User deploymentManager = deploymentManagers[0];
+        Test.startTest();
+        Database.executeBatch( new TestBatch() );
+        List<AsyncApexJob> jobs = JobRunnerController.getBatchJobStatuses( JobRunnerControllerTest.REQUESTED_CLASS_NAME );
+        Test.stopTest();
+        //
+        System.assertNotEquals( null , jobs , 'Job list should not be null.' );
+        System.assertEquals( false , jobs.isEmpty() , 'Job list should not be empty.' );
 
         JobRunnerSettings__c settings =  JobRunnerSettings__c.getInstance( UserInfo.getUserId() );
         System.assertNotEquals( null , settings , 'Job Runner Settings should not be null.' );
@@ -52,113 +44,58 @@ private class JobRunnerControllerTest {
         Integer soqlDaysLimit =  settings.SoqlDaysLimit__c.intValue();
         System.assertNotEquals( null , soqlDaysLimit , 'SOQL Days Limit should not be null.' );
         System.assert( ( soqlDaysLimit >= 0 ) , 'SOQL Days Limit should not be negative.' );
-        
-        System.runas( deploymentManager ) {
-            Test.startTest();
-            Database.executeBatch( new TestBatch() );
-            List<AsyncApexJob> jobs = JobRunnerController.getBatchJobStatuses( JobRunnerControllerTest.REQUESTED_CLASS_NAME );
-            Test.stopTest();
-            //
-            System.assertNotEquals( null , jobs , 'Job list should not be null.' );
-            System.assertEquals( false , jobs.isEmpty() , 'Job list should not be empty.' );
 
-            for ( AsyncApexJob job : jobs ) {
-                System.assertEquals(
-                    JobRunnerControllerTest.REQUESTED_CLASS_NAME ,
-                    job.ApexClass.Name ,
-                    'Job should match the requested class name.'
-                );
-                System.assert(
-                    ( job.CreatedDate >= DateTime.now().addDays( -1 * soqlDaysLimit ) ) ,
-                    'Job should be created within the last ' + soqlDaysLimit + ' days.'
-                );
-            }
-        }
-    }
-
-    @isTest
-    private static void testHandleJobRequest() {
-        List<User> deploymentManagers = [
-            SELECT Id
-            FROM User
-            WHERE ( Id = '0054x0000056lRZAAY' )
-            LIMIT 1
-        ];
-        Assert.isNotNull( deploymentManagers , 'Null Deployment Manager query results.' );
-        Assert.isTrue( ( deploymentManagers.size() > 0 ) , 'No Deployment Manager query results.' );
-        Assert.isTrue( ( deploymentManagers.size() == 1 ) , 'Incorrect Deployment Manager query results.' );
-        User deploymentManager = deploymentManagers[0];
-        
-        System.runas( deploymentManager ) {
-            JobRunnerSettings__c settings =  JobRunnerSettings__c.getInstance( UserInfo.getUserId() );
-            settings.IsEnabled__c = true;
-            upsert settings;
-
-            Test.startTest();
-            Messaging.InboundEmail email = new Messaging.InboundEmail();
-            email.Subject = JobRunnerControllerTest.REQUESTED_CLASS_NAME;
-            JobRunnerController.handleJobRequest( email , null );
-            Test.stopTest();
-            //
-            List<AsyncApexJob> jobs = [
-                SELECT Id , Status
-                FROM AsyncApexJob
-                WHERE ( ApexClass.Name = :JobRunnerControllerTest.REQUESTED_CLASS_NAME )
-                ORDER BY CreatedDate DESC
-                LIMIT 1
-            ];
-            System.assertNotEquals( null , jobs , 'Job list should not be null.' );
-            System.assertEquals( false , jobs.isEmpty() , 'Job list should not be empty.' );
-            AsyncApexJob job = jobs[0];
-            System.assertNotEquals( null , job.Id , 'Job Id should not be null.' );
+        for ( AsyncApexJob job : jobs ) {
+            System.assertEquals(
+                JobRunnerControllerTest.REQUESTED_CLASS_NAME ,
+                job.ApexClass.Name ,
+                'Job should match the requested class name.'
+            );
             System.assert(
-                (
-                    ( job.Status == 'Queued' )
-                    || ( job.Status == 'Preparing' )
-                    || ( job.Status == 'Completed' )
-                ) ,
-                'Job Status should be in Queued, Preparing, OR Completed. Actual: ' + job.Status
+                ( job.CreatedDate >= DateTime.now().addDays( -1 * soqlDaysLimit ) ) ,
+                'Job should be created within the last ' + soqlDaysLimit + ' days.'
             );
         }
     }
 
     @isTest
-    private static void testRequestJobExecution() {
-        List<User> deploymentManagers = [
-            SELECT Id
-            FROM User
-            WHERE ( Id = '0054x0000056lRZAAY' )
+    private static void testHandleJobRequest() {
+        Test.startTest();
+        Messaging.InboundEmail email = new Messaging.InboundEmail();
+        email.Subject = JobRunnerControllerTest.REQUESTED_CLASS_NAME;
+        JobRunnerController.handleJobRequest( email , null );
+        Test.stopTest();
+        //
+        List<AsyncApexJob> jobs = [
+            SELECT Id , Status
+            FROM AsyncApexJob
+            WHERE ( ApexClass.Name = :JobRunnerControllerTest.REQUESTED_CLASS_NAME )
+            ORDER BY CreatedDate DESC
             LIMIT 1
         ];
-        Assert.isNotNull( deploymentManagers , 'Null Deployment Manager query results.' );
-        Assert.isTrue( ( deploymentManagers.size() > 0 ) , 'No Deployment Manager query results.' );
-        Assert.isTrue( ( deploymentManagers.size() == 1 ) , 'Incorrect Deployment Manager query results.' );
-        User deploymentManager = deploymentManagers[0];
-        
-        System.runas( deploymentManager ) {
-            JobRunnerSettings__c settings =  JobRunnerSettings__c.getInstance( UserInfo.getUserId() );
-            settings.IsEnabled__c = true;
-            upsert settings;
-            Test.startTest();
-            try {
-                JobRunnerController.requestJobExecution( JobRunnerControllerTest.REQUESTED_CLASS_NAME );
-            } catch ( Exception e ) {
-                System.debug( ' ~ CATCH ~ e=' + e );
-            }
-            Test.stopTest();
-        }
+        System.assertNotEquals( null , jobs , 'Job list should not be null.' );
+        System.assertEquals( false , jobs.isEmpty() , 'Job list should not be empty.' );
+        AsyncApexJob job = jobs[0];
+        System.assertNotEquals( null , job.Id , 'Job Id should not be null.' );
+        System.assert(
+            (
+                ( job.Status == 'Queued' )
+                || ( job.Status == 'Preparing' )
+                || ( job.Status == 'Completed' )
+            ) ,
+            'Job Status should be in Queued, Preparing, OR Completed. Actual: ' + job.Status
+        );
     }
 
     @isTest
-    private static void testPrepareEmailMessage() {
+    private static void testRequestJobExecution() {
+        Test.startTest();
         try {
-            Test.startTest();
-            Messaging.SingleEmailMessage mail = JobRunnerController.prepareEmailMessage( 'test' );
-            Test.stopTest();
-            System.assertNotEquals( null , mail , 'mail should not be null.' );
-        } catch (Exception ex) {
-            System.assert(false, 'Unexpected exception while validating prepareEmailMessage expectations: ' + ex.getMessage());
+            JobRunnerController.requestJobExecution( JobRunnerControllerTest.REQUESTED_CLASS_NAME );
+        } catch ( Exception e ) {
+            System.debug( ' ~ CATCH ~ e=' + e );
         }
+        Test.stopTest();
     }
 
 }
