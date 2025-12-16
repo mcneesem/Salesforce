@@ -1,4 +1,4 @@
-import { LightningElement,wire,api, track } from 'lwc';
+import { LightningElement , wire , api } from 'lwc';
 import { getPicklistValues } from 'lightning/uiObjectInfoApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import NSP_Reason_for_Separation from '@salesforce/schema/NSP_ReportRequest__c.NSP_Reason_for_Separation__c';
@@ -46,27 +46,29 @@ get findAge(){
      && endDateInput != null && endDateInput != '')
      {
     // convert user input values into date object
-	let startDate = new Date(startDateInput);
-	let endDate  = new Date(endDateInput);
-	 	 
-	// get difference between two date;
-	let difference=endDate - startDate.getTime(); 
-	 	 
-	let  ageDate = new Date(difference); 
+    let startDate = new Date(startDateInput);
+    let endDate  = new Date(endDateInput);
+
+    // get difference between two date;
+    let difference=endDate - startDate.getTime(); 
+
+    let  ageDate = new Date(difference); 
     let age = Math.abs(ageDate.getUTCFullYear() - 1970);
         if(age >= 40)
         {
         this.template.querySelector('div.AgeOverForty')!=null?
         ( this.template.querySelector('div.AgeOverForty').style.display='',this.NSP_WSEE_SameUnit_as_Others_Last_90_days = true ) : ''; 
         this.NSP_Age_Range_Is__c=  'Over 40'
-	    return this.NSP_Age_Range_Is__c ; 
-        }else{
-            this.template.querySelector('div.AgeOverForty')!=null?
-            this.template.querySelector('div.AgeOverForty').style.display='none' : ''; 
+            return this.NSP_Age_Range_Is__c ;
+        } else {
+            if ( this.template.querySelector('div.AgeOverForty') != null ) {
+                this.template.querySelector('div.AgeOverForty').style.display = 'none';
+            }
             this.NSP_WSEE_SameUnit_as_Others_Last_90_days = false;
             this.NSP_WSEE_SameUnit_as_Others_Last_90_days__c = null;
-            this.template.querySelector('div.NSP_WSEE_SameUnit_as_Others_Last_90_days__c')!=null?
-            this.template.querySelector("div.NSP_WSEE_SameUnit_as_Others_Last_90_days__c").style.display='none' : '';
+            if ( this.template.querySelector('div.NSP_WSEE_SameUnit_as_Others_Last_90_days__c') != null ) {
+                this.template.querySelector("div.NSP_WSEE_SameUnit_as_Others_Last_90_days__c").style.display = 'none';
+            }
             this.NSP_Age_Range_Is__c = 'Under 40'
             return this.NSP_Age_Range_Is__c ;
         }
@@ -99,9 +101,9 @@ ReasonforSeparationValues;
 
 
 
-connectedCallback(){
- 
-}
+    connectedCallback() {
+        // only populated to appease sonar...
+    }
 
 handleOnload(event){
     if(event.detail != null &&  event.detail.records != null){
@@ -109,16 +111,14 @@ handleOnload(event){
         this.fieldsData =Object.values(JSON.parse(JSON.stringify(event.detail.records)))[0].fields
         this.recordTypeId =  Object.values(JSON.parse(JSON.stringify(event.detail.records)))[0].recordTypeId;
         if(this.fieldsData != null &&  this.fieldsData != undefined && this.fieldsData !='' ){
-            if(this.fieldsData.NSP_ClientName__c!=null && this.fieldsData.NSP_ClientName__c.value != null){
+            if ( this.fieldsData.NSP_ClientName__c?.value != null ) {
                 this.clientName=this.fieldsData.NSP_ClientName__c.value;
             }
-            if(this.fieldsData.NSP_RequestingMultipleEmployees__c != null  && this.fieldsData.NSP_RequestingMultipleEmployees__c.value != null){
-             this.IsMultipleEmployee =  (this.fieldsData.NSP_RequestingMultipleEmployees__c.value  == 'Yes');
+            if ( this.fieldsData.NSP_RequestingMultipleEmployees__c?.value != null ) {
+                this.IsMultipleEmployee =  (this.fieldsData.NSP_RequestingMultipleEmployees__c.value  == 'Yes');
             }
-
-            if(this.fieldsData.NSP_ReviewType__c != null  && this.fieldsData.NSP_ReviewType__c.value != null){
-                if(this.fieldsData.NSP_ReviewType__c.value =='HRS Review' )
-                {
+            if ( this.fieldsData.NSP_ReviewType__c?.value != null ) {
+                if ( this.fieldsData.NSP_ReviewType__c.value == 'HRS Review' ) {
                     this.template.querySelector("lightning-radio-group.NSP_CSC_matter_for_any_WSEE__c")!= null ?
                     (this.template.querySelector("lightning-radio-group.NSP_CSC_matter_for_any_WSEE__c").value = 'No', this.isDisable = true , this.NSP_CSC_matter_for_any_WSEE__c ='No'):null;
 
@@ -305,21 +305,28 @@ handlelookupRecord(event){
     }
 
 }
-handleSubmit(event){
+
+    handleSubmit( event ) {
+        // only populated to appease sonar...
+    }
+
+    hanldeNext( event ) {
+        // only populated to appease sonar...
+    }
+
+    handlePrev( event ) {
+        this.isPrevClick = true;
+        this.dispatchEvent(
+            new CustomEvent(
+                'prev' ,
+                { detail : this.reReqId }
+            )
+        );
+    }
+
+    findFileSize() {
+        // only populated to appease sonar...
+    }
+
 }
-
-hanldeNext(event){
-}
-
-
-handlePrev(event){
-    this.isPrevClick=true;
-    this.dispatchEvent(new CustomEvent('prev', {detail: this.reReqId}));
-  }
-
-  findFileSize(){
-      
-  }
-
-
-}
+//

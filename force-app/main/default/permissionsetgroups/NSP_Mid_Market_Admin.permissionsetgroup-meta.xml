@@ -9,6 +9,7 @@
     <permissionSets>Account_Manage_PCM_Firms</permissionSets>
     <permissionSets>Account_View_All_Modify_All</permissionSets>
     <permissionSets>Advanced_User_Details_Hire_Date_Termination_Date</permissionSets>
+    <permissionSets>Allow_Closed_Lost_Opportunity</permissionSets>
     <permissionSets>Allow_Update_MidMarket_Role</permissionSets>
     <permissionSets>Assets_Edit</permissionSets>
     <permissionSets>Basic_SetUp_Config_Access</permissionSets>
@@ -48,6 +49,7 @@
     <permissionSets>Sales_Service_Object_Permission</permissionSets>
     <permissionSets>Task_Due_Date_Required</permissionSets>
     <permissionSets>Transfer_Record</permissionSets>
+    <permissionSets>View_CRM_Analytics_Dashboard</permissionSets>
     <permissionSets>Xactly_Permission_Set</permissionSets>
     <permissionSets>force__EinsteinActivityCaptureIncluded</permissionSets>
     <permissionSets>force__EinsteinAnalyticsPlusUser</permissionSets>

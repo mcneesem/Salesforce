@@ -276,10 +276,16 @@ public with sharing class NSP_TerminationFormTriggerHelper {
                     Id accountId = oProjectTask?.pse__Project__r?.pse__Account__c;
                     if(accountId != null){
                         if ( accountToSubClientNumbers != null ) {
-                            oTerminationForm.NSP_Client_Sub_Account_Numbers__c = accountToSubClientNumbers.get(accountId);
+                            oTerminationForm.NSP_Client_Sub_Account_Numbers__c = SchemaController.safeText(
+                                accountToSubClientNumbers.get( accountId ) ,
+                                sObjectType.NSP_Termination_Form__c.Fields.NSP_Client_Sub_Account_Numbers__c
+                            );
                         }
                         if (clientSegmentAsset != null && clientSegmentAsset.containsKey(accountId)){
-                            oTerminationForm.NSP_Segment_Type__c = clientSegmentAsset.get(accountId);
+                            oTerminationForm.NSP_Segment_Type__c = SchemaController.safeText(
+                                clientSegmentAsset.get( accountId ) ,
+                                sObjectType.NSP_Termination_Form__c.Fields.NSP_Segment_Type__c
+                            );
                         }
                         if (accountSubClientsMap != null && accountSubClientsMap.containsKey(accountId)){
                             NSP_Sub_Client__c accountSubClient = accountSubClientsMap.get(accountId);

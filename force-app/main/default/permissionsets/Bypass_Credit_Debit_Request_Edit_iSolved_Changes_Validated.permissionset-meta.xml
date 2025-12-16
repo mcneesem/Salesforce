@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Bypass_Credit_Debit_Request_Edit_iSolved_Changes_Validated</name>
+    </customPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Bypass Credit Debit Request Edit iSolved Changes Validated</label>
+</PermissionSet>

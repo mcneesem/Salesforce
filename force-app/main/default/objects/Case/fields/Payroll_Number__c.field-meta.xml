@@ -3,7 +3,7 @@
     <fullName>Payroll_Number__c</fullName>
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
-    <label>Payroll Number</label>
+    <label>Payroll Number / Run Number</label>
     <length>50</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

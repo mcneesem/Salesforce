@@ -330,10 +330,16 @@
                 <fieldItem>Record.AssetId</fieldItem>
                 <identifier>RecordAssetIdField</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_Category__c}</leftValue>
                         <operator>NE</operator>
                         <rightValue>WX/WA</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.View_Case_Compensation_section}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>false</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -347,10 +353,21 @@
                 <fieldItem>Record.AssetId</fieldItem>
                 <identifier>RecordAssetIdField2</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 OR ( 2 AND 3 )</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_Category__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>WX/WA</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.View_Case_Compensation_section}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Compensation Services</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1354,6 +1371,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Method_of_Shipment__c</fieldItem>
+                <identifier>RecordMethod_of_Shipment_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.Ship_Date__c</fieldItem>
                 <identifier>RecordShip_Date_cField</identifier>
             </fieldInstance>
@@ -1368,16 +1395,6 @@
                 <identifier>RecordPay_Date_cField</identifier>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Payroll_Number__c</fieldItem>
-                <identifier>RecordPayroll_Number_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
         <name>Facet-8214b03c-e079-4074-a723-41f1ca90d5ef</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -1388,8 +1405,18 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Method_of_Shipment__c</fieldItem>
-                <identifier>RecordMethod_of_Shipment_cField</identifier>
+                <fieldItem>Record.Payroll_Type_Pay_Group__c</fieldItem>
+                <identifier>RecordPayroll_Type_Pay_Group_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Payroll_Number__c</fieldItem>
+                <identifier>RecordPayroll_Number_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2991,6 +3018,19 @@
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
                 <identifier>force_relatedListSingleContainer</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>caseAccountContactRelationships</componentName>
+                <identifier>c_caseAccountContactRelationships</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Case_Account_Contact_Information}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>

@@ -7,8 +7,8 @@
                     <name>uiBehavior</name>
                     <value>required</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Name</fieldItem>
-                <identifier>RecordNameField2</identifier>
+                <fieldItem>Record.NSP_Contact_Name_Pref_First_Name__c</fieldItem>
+                <identifier>RecordNSP_Contact_Name_Pref_First_Name_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-e52152ff-ee28-46db-a239-3bc6c7d0fc82</name>

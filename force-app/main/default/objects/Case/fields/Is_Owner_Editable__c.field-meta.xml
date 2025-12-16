@@ -5,6 +5,7 @@
   /* Handle Unsupported Categories */
   AND(
     ( NSP_Category__c != &quot;Compensation Services&quot; ) ,
+    ( NSP_Category__c != &quot;Contractor Management&quot; ) ,
     ( NSP_Category__c != &quot;Payroll Shared Services&quot; ) ,
     ( NSP_Category__c != &quot;Payroll Services&quot; ) ,
     ( NSP_Category__c != &quot;HR COE Escalation&quot; )
@@ -20,6 +21,11 @@
     ( NSP_Category__c = &quot;Compensation Services&quot; ) ,
     ( NSP_SubCategory__c != &quot;Salary Survey&quot; ) ,
     ( ISPICKVAL( Required_Documentation_Attached__c , &quot;Yes&quot; ) )
+  ) ,
+  /* Category: Contractor Management */
+  AND(
+    ( NSP_Category__c = &quot;Contractor Management&quot; ) ,
+    NOT( ISBLANK( NSP_Detail__c ) )
   ) ,
   /* Category: Payroll Shared Services */
   AND(

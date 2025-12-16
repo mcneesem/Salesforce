@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <environments>Default</environments>
     <interviewLabel>Messaging Session Created Async Case Ownership {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Messaging Session Created Async Case Ownership</label>
@@ -27,6 +28,13 @@
         <locationX>50</locationX>
         <locationY>0</locationY>
         <filterLogic>or</filterLogic>
+        <filters>
+            <field>OwnerId</field>
+            <operator>StartsWith</operator>
+            <value>
+                <stringValue>005</stringValue>
+            </value>
+        </filters>
         <filters>
             <field>OwnerId</field>
             <operator>EqualTo</operator>
@@ -64,9 +72,9 @@
         </filters>
         <filters>
             <field>OwnerId</field>
-            <operator>StartsWith</operator>
+            <operator>EqualTo</operator>
             <value>
-                <stringValue>005</stringValue>
+                <stringValue>00GO300000ByHHNMA3</stringValue>
             </value>
         </filters>
         <object>MessagingSession</object>

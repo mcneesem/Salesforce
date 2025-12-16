@@ -3,8 +3,8 @@
     <actionCalls>
         <name>NCS_Notify</name>
         <label>NCS Notify</label>
-        <locationX>176</locationX>
-        <locationY>384</locationY>
+        <locationX>341</locationX>
+        <locationY>492</locationY>
         <actionName>Opportunity.NSP_Opportunity_requires_assignment_to_New_Client_Sales_Specialist</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -25,8 +25,8 @@
     <assignments>
         <name>Assign_varFaultElement_NCS_Notify</name>
         <label>Assign varFaultElement - NCS_Notify</label>
-        <locationX>440</locationX>
-        <locationY>492</locationY>
+        <locationX>605</locationX>
+        <locationY>600</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -116,9 +116,32 @@
         </value>
     </constants>
     <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check</name>
+        <label>Outbound Email custom setting check</label>
+        <locationX>209</locationX>
+        <locationY>384</locationY>
+        <defaultConnector>
+            <targetReference>NCS_Notify</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>OwnerIDNullCheck</name>
         <label>OwnerIDNullCheck</label>
-        <locationX>440</locationX>
+        <locationX>539</locationX>
         <locationY>276</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -146,11 +169,12 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>NCS_Notify</targetReference>
+                <targetReference>Outbound_Email_custom_setting_check</targetReference>
             </connector>
             <label>Notnull</label>
         </rules>
     </decisions>
+    <description>Outbound Email bypass added.</description>
     <environments>Default</environments>
     <interviewLabel>Opportunity - Updated - Async - Booking Notifications {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Opportunity - Updated - Async - Booking Notifications</label>
@@ -219,8 +243,8 @@
     <subflows>
         <name>Fault_Handler</name>
         <label>Fault Handler</label>
-        <locationX>440</locationX>
-        <locationY>600</locationY>
+        <locationX>605</locationX>
+        <locationY>708</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>

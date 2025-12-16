@@ -18,8 +18,10 @@
             </value>
         </inputParameters>
         <nameSegment>Case.NSP_Case_Assignment_Email_Notification</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>64.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Add_Active_Group_Member_Id</name>
         <label>Add Active Group Member Id</label>
@@ -99,7 +101,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Send_Email_Alert_For_Case_Creation</targetReference>
+            <targetReference>Outbound_Email_custom_setting_check</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -186,7 +188,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Send_Email_Alert_For_Case_Creation</targetReference>
+                <targetReference>Outbound_Email_custom_setting_check</targetReference>
             </connector>
             <label>Has Group Email</label>
         </rules>
@@ -281,12 +283,35 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Send_Email_Alert_For_Case_Creation</targetReference>
+                <targetReference>Outbound_Email_custom_setting_check</targetReference>
             </connector>
             <label>is service user</label>
         </rules>
     </decisions>
-    <description>Updated for AZD-427202</description>
+    <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check</name>
+        <label>Outbound Email custom setting check</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Send_Email_Alert_For_Case_Creation</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false</label>
+        </rules>
+    </decisions>
+    <description>Outbound Email bypass added. Updated for AZD-427202</description>
     <environments>Default</environments>
     <interviewLabel>Case Custom Notification {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Case Custom Notification</label>

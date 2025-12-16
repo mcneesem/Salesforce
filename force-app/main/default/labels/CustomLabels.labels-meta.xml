@@ -5869,7 +5869,7 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>WX/WA Quote Validation Message</shortDescription>
-        <value>Quote cannot be created for this Opportunity</value>
+        <value>An active Asset already exists. Please use Manage Order from Account to create an amendment or select Existing Product if product is still in implementation.</value>
     </labels>
     <labels>
         <fullName>NSP_WX_Wet_Envelope</fullName>
@@ -6655,7 +6655,7 @@ Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plu
         <protected>false</protected>
         <shortDescription>Separation Agreement Terms List</shortDescription>
         <value>&lt;ul&gt;
-  &lt;li&gt;The consideration is &lt;b&gt;MORE THAN&lt;/b&gt; $50,000.&lt;/li&gt;
+  &lt;li&gt;The consideration is &lt;b&gt;MORE THAN&lt;/b&gt; $100,000.&lt;/li&gt;
   &lt;li&gt;The payment of the consideration is in multiple payments (i.e. it is not in a lump sum)&lt;/li&gt;
   &lt;li&gt;Insperity is named as a party to the client prepared Agreement&lt;/li&gt;
   &lt;li&gt;There is an open or closed CSC Management for the WSEE&lt;/li&gt;

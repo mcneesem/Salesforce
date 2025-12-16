@@ -4694,6 +4694,10 @@
             <fullName>NCI-RS</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>2026 Quick Start</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Sub_Reason_Lost__c</picklist>

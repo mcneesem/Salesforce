@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Service Presence Statuses: Available</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Service Presence Statuses: Available</label>
+    <servicePresenceStatusAccesses>
+        <enabled>true</enabled>
+        <servicePresenceStatus>Available</servicePresenceStatus>
+    </servicePresenceStatusAccesses>
+</PermissionSet>

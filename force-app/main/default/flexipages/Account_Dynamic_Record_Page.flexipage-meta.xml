@@ -593,6 +593,12 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.DNB_Connect_DUNS_Number__c</fieldItem>
                 <identifier>RecordDNB_Connect_DUNS_Number_cField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Account_ID_18__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -603,6 +609,12 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.DNBConnect__D_B_Connect_Company_Profile__c</fieldItem>
                 <identifier>RecordDNBConnect_D_B_Connect_Company_Profile_cField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Account_ID_18__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -613,6 +625,12 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Named_Account_Group__c</fieldItem>
                 <identifier>RecordNamed_Account_Group_cField3</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Account_ID_18__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -703,6 +721,12 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.DnB_Employee_Count_Here__c</fieldItem>
                 <identifier>RecordDnB_Employee_Count_Here_cField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Account_ID_18__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-b747c09b-93ca-4669-821e-98717e103f41</name>
@@ -1181,6 +1205,12 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Named_Account_Group__c</fieldItem>
                 <identifier>RecordNamed_Account_Group_cField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Account_ID_18__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-83556135-6095-4c99-b6da-b92b13839c73</name>
@@ -2671,6 +2701,12 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.DNB_Connect_DUNS_Number__c</fieldItem>
                 <identifier>RecordDNB_Connect_DUNS_Number_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Account_ID_18__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2681,6 +2717,12 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Named_Account_Group__c</fieldItem>
                 <identifier>RecordNamed_Account_Group_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Account_ID_18__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -6445,6 +6487,12 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.DNBConnect__D_B_Connect_Company_Profile__c</fieldItem>
                 <identifier>RecordDNBConnect_D_B_Connect_Company_Profile_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Account_ID_18__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -8849,10 +8897,15 @@
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection9</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Account_ID_18__c}</leftValue>
+                        <operator>NE</operator>
                     </criteria>
                 </visibilityRule>
             </componentInstance>

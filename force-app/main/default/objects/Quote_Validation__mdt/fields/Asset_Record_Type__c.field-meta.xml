@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Asset_Record_Type__c</fullName>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Asset Record Type</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Applicant_Tracking</fullName>
+                <default>false</default>
+                <label>Applicant Tracking</label>
+            </value>
+            <value>
+                <fullName>Certify</fullName>
+                <default>false</default>
+                <label>Certify</label>
+            </value>
+            <value>
+                <fullName>Contingent_Workforce</fullName>
+                <default>false</default>
+                <label>Contingent Workforce</label>
+            </value>
+            <value>
+                <fullName>Contractor_Management</fullName>
+                <default>false</default>
+                <label>Contractor Management</label>
+            </value>
+            <value>
+                <fullName>NSP_CPQ_Asset</fullName>
+                <default>false</default>
+                <label>CPQ Asset</label>
+            </value>
+            <value>
+                <fullName>Employment_Screening</fullName>
+                <default>false</default>
+                <label>Employment Screening</label>
+            </value>
+            <value>
+                <fullName>Hardware_Asset</fullName>
+                <default>false</default>
+                <label>Hardware Asset</label>
+            </value>
+            <value>
+                <fullName>Hardware_Loaner_Asset</fullName>
+                <default>false</default>
+                <label>Hardware Loaner Asset</label>
+            </value>
+            <value>
+                <fullName>Insurance_Service</fullName>
+                <default>false</default>
+                <label>Insurance Service</label>
+            </value>
+            <value>
+                <fullName>Integra</fullName>
+                <default>false</default>
+                <label>Integra</label>
+            </value>
+            <value>
+                <fullName>Learning_Development</fullName>
+                <default>false</default>
+                <label>Learning &amp; Development</label>
+            </value>
+            <value>
+                <fullName>Organizational_Planning</fullName>
+                <default>false</default>
+                <label>Organizational Planning</label>
+            </value>
+            <value>
+                <fullName>Performance_Management</fullName>
+                <default>false</default>
+                <label>Performance Management</label>
+            </value>
+            <value>
+                <fullName>Recruiting_Services</fullName>
+                <default>false</default>
+                <label>Recruiting Services</label>
+            </value>
+            <value>
+                <fullName>RET_Choice</fullName>
+                <default>false</default>
+                <label>RET Choice</label>
+            </value>
+            <value>
+                <fullName>RET_WO</fullName>
+                <default>false</default>
+                <label>RET WO</label>
+            </value>
+            <value>
+                <fullName>Time_Attendance</fullName>
+                <default>false</default>
+                <label>Time &amp; Attendance</label>
+            </value>
+            <value>
+                <fullName>WO</fullName>
+                <default>false</default>
+                <label>WO</label>
+            </value>
+            <value>
+                <fullName>NSP_Asset_Product</fullName>
+                <default>false</default>
+                <label>WX_WA</label>
+            </value>
+            <value>
+                <fullName>XML</fullName>
+                <default>false</default>
+                <label>XML</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -3,12 +3,12 @@
     <actionCalls>
         <name>Send_Email_Notification_For_Task</name>
         <label>Send Email Notification For Task</label>
-        <locationX>842</locationX>
-        <locationY>1151</locationY>
+        <locationX>1238</locationX>
+        <locationY>1163</locationY>
         <actionName>Task.Task_Queue_Assignment_Notification</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
-            <targetReference>Create_Error_Record_For_Sales</targetReference>
+            <targetReference>Assign_varFaultElement_Send_Email_Notification_For_Task</targetReference>
         </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -17,16 +17,18 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Task.Task_Queue_Assignment_Notification</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>Task_Created_Email</name>
         <label>Task Created Email</label>
-        <locationX>50</locationX>
-        <locationY>1151</locationY>
+        <locationX>182</locationX>
+        <locationY>1163</locationY>
         <actionName>Task.Email_Alert_When_Service_Task_Is_Created</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
-            <targetReference>Create_Error_Record</targetReference>
+            <targetReference>Assign_varFaultElement_Task_Created_Email</targetReference>
         </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -35,13 +37,49 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Task.Email_Alert_When_Service_Task_Is_Created</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>57.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_varFaultElement_Send_Email_Notification_For_Task</name>
+        <label>Assign varFaultElement - Send Email Notification For Task</label>
+        <locationX>1502</locationX>
+        <locationY>1271</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Send_Email_Notification_For_Task</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Task_Created_Email</name>
+        <label>Assign varFaultElement - Task Created Email</label>
+        <locationX>446</locationX>
+        <locationY>1271</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Task_Created_Email</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
     <assignments>
         <name>storeuserqueueid</name>
         <label>storeuserqueueid</label>
-        <locationX>402</locationX>
-        <locationY>695</locationY>
+        <locationX>468</locationX>
+        <locationY>647</locationY>
         <assignmentItems>
             <assignToReference>UserIdList</assignToReference>
             <operator>Add</operator>
@@ -56,8 +94,8 @@
     <assignments>
         <name>storsaleseuserqueueid</name>
         <label>storsaleseuserqueueid</label>
-        <locationX>1194</locationX>
-        <locationY>695</locationY>
+        <locationX>1524</locationX>
+        <locationY>647</locationY>
         <assignmentItems>
             <assignToReference>SalesUserIdList</assignToReference>
             <operator>Add</operator>
@@ -72,8 +110,8 @@
     <decisions>
         <name>Check_If_Owner_Present</name>
         <label>Check_If_Owner_Present</label>
-        <locationX>314</locationX>
-        <locationY>1031</locationY>
+        <locationX>380</locationX>
+        <locationY>947</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Not_Present</name>
@@ -107,7 +145,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Task_Created_Email</targetReference>
+                <targetReference>Outbound_Email_custom_setting_check_task_created_email</targetReference>
             </connector>
             <label>Not Present</label>
         </rules>
@@ -115,8 +153,8 @@
     <decisions>
         <name>Check_If_Queue</name>
         <label>Check If Queue</label>
-        <locationX>930</locationX>
-        <locationY>335</locationY>
+        <locationX>1205</locationX>
+        <locationY>323</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Its_Queue</name>
@@ -236,8 +274,8 @@
     <decisions>
         <name>Check_To_Send_Email_Notif</name>
         <label>Check To Send Email Notif</label>
-        <locationX>1106</locationX>
-        <locationY>1031</locationY>
+        <locationX>1436</locationX>
+        <locationY>947</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Valid_Owner</name>
@@ -264,18 +302,66 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Send_Email_Notification_For_Task</targetReference>
+                <targetReference>Outbound_Email_custom_setting_check_notification_of_task</targetReference>
             </connector>
             <label>Valid Owner</label>
         </rules>
     </decisions>
+    <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check_notification_of_task</name>
+        <label>Outbound Email custom setting check notification of task</label>
+        <locationX>1106</locationX>
+        <locationY>1055</locationY>
+        <defaultConnector>
+            <targetReference>Send_Email_Notification_For_Task</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false_notification_of_task</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false notification of task</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check_task_created_email</name>
+        <label>Outbound Email custom setting check task created email</label>
+        <locationX>50</locationX>
+        <locationY>1055</locationY>
+        <defaultConnector>
+            <targetReference>Task_Created_Email</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false_task_created_email</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false task created email</label>
+        </rules>
+    </decisions>
+    <description>Flipped to Fault Handler Subflow. Outbound Email bypass added.</description>
+    <environments>Default</environments>
     <interviewLabel>Task Queue Service Email {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Task Queue Service Email</label>
     <loops>
         <name>Get_Group_User</name>
         <label>Get_Group_User</label>
-        <locationX>314</locationX>
-        <locationY>575</locationY>
+        <locationX>380</locationX>
+        <locationY>539</locationY>
         <collectionReference>getQueueUser</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -288,8 +374,8 @@
     <loops>
         <name>Get_sales_Group_User</name>
         <label>Get_sales_Group_User</label>
-        <locationX>1106</locationX>
-        <locationY>575</locationY>
+        <locationX>1436</locationX>
+        <locationY>539</locationY>
         <collectionReference>GetSalesQueueUser</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -318,87 +404,11 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordCreates>
-        <name>Create_Error_Record</name>
-        <label>Create Error Record</label>
-        <locationX>314</locationX>
-        <locationY>1271</locationY>
-        <inputAssignments>
-            <field>NSP_Class__c</field>
-            <value>
-                <stringValue>Task Queue Service Email</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Description__c</field>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Method__c</field>
-            <value>
-                <stringValue>Get Email</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Object__c</field>
-            <value>
-                <stringValue>Group</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Record_Id__c</field>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <object>NSP_Error_Log__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
-    <recordCreates>
-        <name>Create_Error_Record_For_Sales</name>
-        <label>Create Error Record For Sales</label>
-        <locationX>1106</locationX>
-        <locationY>1271</locationY>
-        <inputAssignments>
-            <field>NSP_Class__c</field>
-            <value>
-                <stringValue>Task Queue Service Email</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Description__c</field>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Method__c</field>
-            <value>
-                <stringValue>Get Sales Email</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Object__c</field>
-            <value>
-                <stringValue>Group</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Record_Id__c</field>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <object>NSP_Error_Log__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
     <recordLookups>
         <name>Get_Group_Email</name>
         <label>Get Group Email</label>
-        <locationX>314</locationX>
-        <locationY>911</locationY>
+        <locationX>380</locationX>
+        <locationY>839</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_If_Owner_Present</targetReference>
@@ -420,8 +430,8 @@
     <recordLookups>
         <name>Get_Sales_Group_Email</name>
         <label>Get_Sales_Group_Email</label>
-        <locationX>1106</locationX>
-        <locationY>911</locationY>
+        <locationX>1436</locationX>
+        <locationY>839</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_To_Send_Email_Notif</targetReference>
@@ -443,8 +453,8 @@
     <recordLookups>
         <name>getQueueUser</name>
         <label>getQueueUser</label>
-        <locationX>314</locationX>
-        <locationY>455</locationY>
+        <locationX>380</locationX>
+        <locationY>431</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Group_User</targetReference>
@@ -466,8 +476,8 @@
     <recordLookups>
         <name>GetSalesQueueUser</name>
         <label>GetSalesQueueUser</label>
-        <locationX>1106</locationX>
-        <locationY>455</locationY>
+        <locationX>1436</locationX>
+        <locationY>431</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_sales_Group_User</targetReference>
@@ -487,7 +497,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>804</locationX>
+        <locationX>1079</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Check_If_Queue</targetReference>
@@ -496,7 +506,32 @@
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
+    <subflows>
+        <name>Fault_Handler_Subflow</name>
+        <label>Fault Handler Subflow</label>
+        <locationX>446</locationX>
+        <locationY>1379</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>varFaultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Task_Queue_Service_Email</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>SalesUserIdList</name>
         <dataType>String</dataType>
@@ -510,5 +545,12 @@
         <isCollection>true</isCollection>
         <isInput>true</isInput>
         <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
 </Flow>

@@ -1,14 +1,187 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Check_User_Permission</name>
+        <label>Check User Permission</label>
+        <locationX>666</locationX>
+        <locationY>458</locationY>
+        <actionName>CustomPermissionController</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Check_Admin_Permission</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Check_User_Permission</targetReference>
+        </faultConnector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>customPermissionName</name>
+            <value>
+                <stringValue>Admin_Layout_Access</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>userId</name>
+            <value>
+                <elementReference>messagingSessionRecord.OwnerId</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>CustomPermissionController</nameSegment>
+        <offset>0</offset>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
     <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Set_Fault_Element_Check_User_Permission</name>
+        <label>Set Fault Element: Check_User_Permission</label>
+        <locationX>1018</locationX>
+        <locationY>566</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Check_User_Permission</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Unable_to_update_the_Case_Owner</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Update_Case_Owner</name>
+        <label>Set Fault Element: Update_Case_Owner</label>
+        <locationX>1546</locationX>
+        <locationY>1142</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Case_Owner</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Unable_to_update_the_Case_Owner</targetReference>
+        </connector>
+    </assignments>
     <decisions>
-        <name>Validate_Session_Owner</name>
-        <label>Validate Session Owner</label>
-        <locationX>314</locationX>
+        <name>Check_Admin_Permission</name>
+        <label>Check Admin Permission</label>
+        <locationX>666</locationX>
+        <locationY>566</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_Admin_Permission</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Check_User_Permission</leftValueReference>
+                <operator>WasVisited</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Check_User_Permission.hasPermission</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Case_Owner</targetReference>
+            </connector>
+            <label>Has Admin Permission</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Owner_Queue_Or_User</name>
+        <label>Check Owner Queue Or User</label>
+        <locationX>666</locationX>
         <locationY>242</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Is_Contact_Center_Owner</name>
+            <name>Is_Owner_Queue</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>messagingSessionRecord.Owner:Group.Id</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Validate_Session_Owner_Queue</targetReference>
+            </connector>
+            <label>Is Owner Queue</label>
+        </rules>
+        <rules>
+            <name>Is_Owner_User</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>messagingSessionRecord.Owner:User.Id</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Validate_Session_Owner_User</targetReference>
+            </connector>
+            <label>Is Owner User</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Validate_Messaging_Session</name>
+        <label>Validate Messaging Session</label>
+        <locationX>1238</locationX>
+        <locationY>134</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Valid</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>messagingSessionRecord</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>messagingSessionRecord.OwnerId</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>messagingSessionRecord.CaseId</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>messagingSessionRecord.Case.Status</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Owner_Queue_Or_User</targetReference>
+            </connector>
+            <label>Is Valid</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Validate_Session_Owner_Queue</name>
+        <label>Validate Session Owner (Queue)</label>
+        <locationX>50</locationX>
+        <locationY>350</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Contact_Center_Queue</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>messagingSessionRecord.OwnerId</leftValueReference>
@@ -46,8 +219,40 @@
                 </rightValue>
             </conditions>
             <conditions>
+                <leftValueReference>messagingSessionRecord.OwnerId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>00GO300000ByHHNMA3</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Case_Owner</targetReference>
+            </connector>
+            <label>Is Contact Center Queue</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Validate_Session_Owner_User</name>
+        <label>Validate Session Owner (User)</label>
+        <locationX>534</locationX>
+        <locationY>350</locationY>
+        <defaultConnector>
+            <targetReference>Check_User_Permission</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Contact_Center_User</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>messagingSessionRecord.Owner:User.UserRoleId</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
                 <leftValueReference>messagingSessionRecord.Owner:User.UserRole.DeveloperName</leftValueReference>
-                <operator>StartsWith</operator>
+                <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Contact_Center_</stringValue>
                 </rightValue>
@@ -55,50 +260,7 @@
             <connector>
                 <targetReference>Update_Case_Owner</targetReference>
             </connector>
-            <label>Is Contact Center Owner</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Validating_the_Messaging_Session</name>
-        <label>Validating the Messaging Session</label>
-        <locationX>578</locationX>
-        <locationY>134</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Is_Valid</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>messagingSessionRecord</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>messagingSessionRecord.CaseId</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>messagingSessionRecord.CaseId</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>messagingSessionRecord.Case.Status</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Closed</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Validate_Session_Owner</targetReference>
-            </connector>
-            <label>Is Valid</label>
+            <label>Is Contact Center User</label>
         </rules>
     </decisions>
     <environments>Default</environments>
@@ -126,10 +288,10 @@
     <recordUpdates>
         <name>Update_Case_Owner</name>
         <label>Update Case Owner</label>
-        <locationX>50</locationX>
-        <locationY>350</locationY>
+        <locationX>666</locationX>
+        <locationY>1034</locationY>
         <faultConnector>
-            <targetReference>Unable_to_update_the_Case_Owner</targetReference>
+            <targetReference>Set_Fault_Element_Update_Case_Owner</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -148,23 +310,23 @@
         <object>Case</object>
     </recordUpdates>
     <start>
-        <locationX>452</locationX>
+        <locationX>1112</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Validating_the_Messaging_Session</targetReference>
+            <targetReference>Validate_Messaging_Session</targetReference>
         </connector>
     </start>
     <status>Draft</status>
     <subflows>
         <name>Unable_to_update_the_Case_Owner</name>
         <label>Unable to update the Case Owner</label>
-        <locationX>314</locationX>
-        <locationY>458</locationY>
+        <locationX>1546</locationX>
+        <locationY>1250</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
             <value>
-                <stringValue>Update_Case_Owner</stringValue>
+                <elementReference>varFaultElement</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -187,5 +349,15 @@
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>MessagingSession</objectType>
+    </variables>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
     </variables>
 </Flow>

@@ -18,7 +18,7 @@
             </value>
         </inputParameters>
         <nameSegment>Task.NSP_Required_For_Booking_Task_Email_Alert</nameSegment>
-        <versionSegment>1</versionSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>NSP_Send_email_when_Demo_Activity_is_created_for_WO_WX_opportunities</name>
@@ -38,9 +38,10 @@
             </value>
         </inputParameters>
         <nameSegment>Task.NSP_Send_email_when_Demo_Activity_is_created_for_WO_WX_opportunities</nameSegment>
-        <versionSegment>1</versionSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Assign_varFaultElement_Get_Owner_Info</name>
         <label>Assign varFaultElement - Get Owner Info</label>
@@ -92,6 +93,7 @@
         </connector>
     </assignments>
     <decisions>
+        <description>Checks the value of the custom setting for Bypass Task Email Alert and Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
         <name>Bypass_Task_Email_Alerts</name>
         <label>Bypass Task Email Alerts?</label>
         <locationX>605</locationX>
@@ -102,12 +104,19 @@
         <defaultConnectorLabel>No Bypass</defaultConnectorLabel>
         <rules>
             <name>Yes_Bypass</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>$Permission.Bypass_Task_Email_Alerts</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <label>Yes - Bypass</label>
@@ -186,6 +195,7 @@
             <label>Demo on Opty Task</label>
         </rules>
     </decisions>
+    <description>Outbound Email bypass added.</description>
     <environments>Default</environments>
     <interviewLabel>Task - Created - Async - Task Type Populated {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Task - Created - Async - Task Type Populated</label>

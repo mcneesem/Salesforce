@@ -4,7 +4,7 @@
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <inlineHelpText>Attach a screen shot of the Address/Location ID from AIMS. If shipping to an alternate address, enter the address in the Case Description.</inlineHelpText>
-    <label>Location Id</label>
+    <label>Location ID / Delivery Package Desc</label>
     <length>50</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

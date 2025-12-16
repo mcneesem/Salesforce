@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_ContactCenter_Case</fullName>
-    <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
+    <columns>CASES.CREATED_DATE</columns>
     <columns>CASES.CASE_NUMBER</columns>
     <columns>CASES.SUBJECT</columns>
-    <columns>NSP_Response_After_Close__c</columns>
+    <columns>CASES.ORIGIN</columns>
     <columns>CASES.STATUS</columns>
-    <columns>CASES.PRIORITY</columns>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>NAME</columns>
     <columns>CASES.EMAIL</columns>
+    <columns>NSP_Category__c</columns>
+    <columns>NSP_SubCategory__c</columns>
+    <columns>NSP_IsJunkMail__c</columns>
     <columns>OWNER_NAME</columns>
-    <columns>CASES.NAME</columns>
-    <columns>NSP_Owner__c</columns>
-    <filterScope>Queue</filterScope>
+    <columns>CASES.PRIORITY</columns>
+    <columns>NSP_Last_Message_Date__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>NSP_Case_Created_date__c</field>
+        <operation>greaterThan</operation>
+        <value>5/4/2025</value>
+    </filters>
     <label>Contact Center</label>
-    <queue>NSP_ContactCenter</queue>
     <sharedTo>
         <allInternalUsers></allInternalUsers>
     </sharedTo>

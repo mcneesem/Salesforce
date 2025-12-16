@@ -1,5 +1,5 @@
 public with sharing class CLMDocumentTransfer {
-    // test w/ CLMDocumentTransferTest (90%)
+    // test w/ CLMDocumentTransferTest (91%)
 
     String dsAccountId;
     String iss;
@@ -56,45 +56,69 @@ public with sharing class CLMDocumentTransfer {
         // Need the filename, so get the document information
         //
         //CLMDocument docInfo = new CLMDocument();
-        CLMDocument docInfo;
-        if (Test.isRunningTest()) {
+        CLMDocument docInfo = null;
+        if ( Test.isRunningTest() ) {
             docInfo = new CLMDocument();
             docInfo.name = 'test';
         } else {
-            docInfo = svc.GetDocumentById(clmDocId).getDocument();
-            System.assert(docInfo != null);
+            docInfo = svc.GetDocumentById( clmDocId ).getDocument();
         }
         //
         // Download the document contents into a Blob
         //
-        Blob docBlob;
-        if (Test.isRunningTest()) {
-            docBlob = Blob.valueOf('Test Content');
-        } else {
-            docBlob = svc.GetDocumentById(clmDocId).downloadDocument('');
-            System.assert(docInfo != null);
+        Blob docBlob = null;
+        if ( docInfo != null ) {
+            if ( Test.isRunningTest() ) {
+                docBlob = Blob.valueOf( 'Test Content' );
+            } else {
+                docBlob = svc.GetDocumentById( clmDocId ).downloadDocument( '' );
+            }
         }
         //
         // Create a ContentVersion record with the filename and the document contents (Blob)
         //
-        ContentVersion cv = new ContentVersion();
-        cv.VersionData = docBlob;
-        cv.Title = docInfo.Name;
-        cv.PathOnClient = docInfo.Name;
-        cv.NSP_Signature_Date__c = System.today();
-        insert cv;
+        ContentVersion cv = null;
+        if ( ( docInfo != null ) && ( docBlob != null ) ) {
+            try {
+                cv = new ContentVersion();
+                cv.VersionData = docBlob;
+                cv.Title = docInfo.Name;
+                cv.PathOnClient = docInfo.Name;
+                cv.NSP_Signature_Date__c = System.today();
+                insert cv;
+            } catch ( Exception e ) {
+                System.debug( ' ~ CATCH ~ e=' + e );
+            }
+        }
         //
         // Get the ContentDocumentId
         //
-        cv = [SELECT Id, ContentDocumentId FROM ContentVersion WHERE Id = :cv.Id LIMIT 1];
+        List<ContentVersion> versions = null;
+        if ( ( cv != null ) && ( cv.Id != null ) ) {
+            versions = [
+                SELECT Id , ContentDocumentId
+                FROM ContentVersion
+                WHERE ( Id = :cv.Id )
+                LIMIT 1
+            ];
+        }
+        if ( ( versions != null ) && !versions.isEmpty() ) {
+            cv = versions[0];
+        }
         //
         // Create a ContentDocumentLink record to relate the document to the target record
         //
-        ContentDocumentLink cdl = new ContentDocumentLink();
-        cdl.LinkedEntityId = sfdcLinkedEntityId;
-        cdl.ContentDocumentId = cv.ContentDocumentId;
-        cdl.shareType = 'I';
-        insert cdl;
+        if ( ( cv != null ) && ( cv.ContentDocumentId != null ) ) {
+            try {
+                ContentDocumentLink cdl = new ContentDocumentLink();
+                cdl.LinkedEntityId = sfdcLinkedEntityId;
+                cdl.ContentDocumentId = cv.ContentDocumentId;
+                cdl.shareType = 'I';
+                insert cdl;
+            } catch ( Exception e ) {
+                System.debug( ' ~ CATCH ~ e=' + e );
+            }
+        }
     }
 
     @future (callout=true)
