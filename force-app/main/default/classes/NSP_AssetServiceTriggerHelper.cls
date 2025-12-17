@@ -475,7 +475,7 @@ public class NSP_AssetServiceTriggerHelper {
         getAsst.NSP_WO_AIMS_Client_Number__c = assLst.NSP_Client__c;
         //10212025-STY-462099-START
         if ( ( getAsst.RecordTypeId == RETWOAssetRecordTypeId )
-            && !assLst.Disable_Sync_RET_Client_ID__c
+            && !getAsst.Disable_Sync_RET_Client_ID__c
             )
         {
             getAsst.NSP_RET_Client_ID__c = assLst.NSP_Client__c;//11092023-STY-241721
@@ -828,6 +828,7 @@ public class NSP_AssetServiceTriggerHelper {
             && ( recordOld != null )
             && ( ( record.NSP_WO_AIMS_Client_Number__c != recordOld.NSP_WO_AIMS_Client_Number__c )
                 || ( record.Disable_Sync_RET_Client_ID__c != recordOld.Disable_Sync_RET_Client_ID__c )
+                || ( record.NSP_RET_Client_ID__c != recordOld.NSP_RET_Client_ID__c )     
                 )
             )
         {
