@@ -11,6 +11,7 @@
     <permissionSets>Freeze_Users</permissionSets>
     <permissionSets>Manage_Internal_Users</permissionSets>
     <permissionSets>Monitor_Login_History</permissionSets>
+    <permissionSets>Queue_Membership_View</permissionSets>
     <permissionSets>Sales_Provisioning_Visibility</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
