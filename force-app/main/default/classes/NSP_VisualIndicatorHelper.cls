@@ -53,7 +53,7 @@ public without sharing class NSP_VisualIndicatorHelper {
                             NSP_Client_Retained_Workers_Comp__c ,
                             NSP_Pending_Termination__c ,
                             NSP_Product_Line__c ,
-                            HRScale__c,
+                            Is_HRScale__c,
                             RecordTypeId ,
                             NSP_National_Account__c
                         FROM Assets
@@ -166,7 +166,7 @@ public without sharing class NSP_VisualIndicatorHelper {
                 accWrapper.workSyncClientTrue = NSP_ServiceConstants.VALUE_TRUE;
             }
             // HRScale Indicator
-            if (asset.HRScale__c == true) {
+            if (asset.Is_HRScale__c == true) {
                 accWrapper.hrScale = NSP_ServiceConstants.VALUE_TRUE;
             }
         }
