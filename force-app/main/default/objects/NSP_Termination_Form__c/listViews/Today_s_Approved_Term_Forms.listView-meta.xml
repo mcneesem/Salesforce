@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Today_s_Approved_Term_Forms</fullName>
+    <columns>NAME</columns>
+    <columns>RECORDTYPE</columns>
+    <columns>NSP_Client__c</columns>
+    <columns>NSP_Project_Task__c</columns>
+    <columns>NSP_Status__c</columns>
+    <columns>OWNER.FIRST_NAME</columns>
+    <columns>OWNER.LAST_NAME</columns>
+    <columns>NSP_Last_Date_Wages_Paid_Through__c</columns>
+    <columns>NSP_Benefit_Termination_Date__c</columns>
+    <columns>NSP_Pay_Date__c</columns>
+    <columns>NSP_Term_Reason__c</columns>
+    <columns>NSP_SubTerm_reason__c</columns>
+    <columns>Credit_Specialist__c</columns>
+    <columns>Approval_Date__c</columns>
+    <columns>BPA__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Approval_Date__c</field>
+        <operation>equals</operation>
+        <value>TODAY</value>
+    </filters>
+    <label>Today&apos;s Approved Term Forms</label>
+    <sharedTo>
+        <allInternalUsers></allInternalUsers>
+    </sharedTo>
+</ListView>
