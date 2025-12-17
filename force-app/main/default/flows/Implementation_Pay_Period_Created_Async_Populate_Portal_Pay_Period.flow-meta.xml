@@ -2,10 +2,40 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>65.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <description>Validate IP Record</description>
+        <name>Validate_IP_Record</name>
+        <label>Validate IP Record</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Valid_IP_Record</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NSP_Implementation_Profile__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_Implementation_Profile__r.Account__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Implementation_Pay_Period_Populate_Portal_Pay_Period_Subflow</targetReference>
+            </connector>
+            <label>Valid IP Record</label>
+        </rules>
+    </decisions>
     <description>12/11/2025 - AZD-500803</description>
     <environments>Default</environments>
-    <interviewLabel>Implementation Pay Period Saved Async Populate Portal Pay Period {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Implementation Pay Period Created Async Populate Portal Pay Period</label>
+    <interviewLabel>Implementation Pay Period - Created - Populate Portal Pay Period {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Implementation Pay Period - Created - Populate Portal Pay Period</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -32,7 +62,7 @@
         <recordTriggerType>Create</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Implementation_Pay_Period_Populate_Portal_Pay_Period_Subflow</targetReference>
+                <targetReference>Validate_IP_Record</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>

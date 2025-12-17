@@ -174,15 +174,15 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Fault_Element_Create_Pay_Periods_for_Payroll_Client</name>
-        <label>Set Fault Element : Create_Pay_Periods_for_Payroll_Client</label>
+        <name>Set_Fault_Element_Create_Pay_Period</name>
+        <label>Set Fault Element : Create_Pay_Period</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Create_Pay_Periods_for_Payroll_Client</stringValue>
+                <stringValue>Create_Pay_Period</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -224,15 +224,15 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Fault_Element_Update_Pay_Periods_for_Payroll_Client</name>
-        <label>Set Fault Element : Update_Pay_Periods_for_Payroll_Client</label>
+        <name>Set_Fault_Element_Update_Pay_Period</name>
+        <label>Set Fault Element : Update_Pay_Period</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Update_Pay_Periods_for_Payroll_Client</stringValue>
+                <stringValue>Update_Pay_Period</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -458,6 +458,43 @@ If Pay Period is exists then Update Pay Period for the current PC else Create ne
         </rules>
     </decisions>
     <decisions>
+        <description>Validate IP Record</description>
+        <name>Validate_IP_Record</name>
+        <label>Validate IP Record</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Valid_IP_Record</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>recordImplementationPayPeriod</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>recordImplementationPayPeriod.NSP_Implementation_Profile__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>recordImplementationPayPeriod.NSP_Implementation_Profile__r.Account__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Portal_Clients</targetReference>
+            </connector>
+            <label>Valid IP Record</label>
+        </rules>
+    </decisions>
+    <decisions>
         <description>Validate if update collection is not empty</description>
         <name>Validate_Update</name>
         <label>Validate Update</label>
@@ -492,8 +529,8 @@ If Pay Period is exists then Update Pay Period for the current PC else Create ne
     </decisions>
     <description>12/11/2025 - AZD-500803</description>
     <environments>Default</environments>
-    <interviewLabel>Implementation Pay Period Populate Portal Pay Period Subflow {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Implementation Pay Period Populate Portal Pay Period Subflow</label>
+    <interviewLabel>Implementation Pay Period - Populate Portal Pay Period - Subflow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Implementation Pay Period - Populate Portal Pay Period - Subflow</label>
     <loops>
         <description>Loop runs only once as there will be only one record should exists for each PC</description>
         <name>Loop_Extract_Pay_Period_Record</name>
@@ -564,7 +601,7 @@ If Pay Period is exists then Update Pay Period for the current PC else Create ne
         <locationX>0</locationX>
         <locationY>0</locationY>
         <faultConnector>
-            <targetReference>Set_Fault_Element_Create_Pay_Periods_for_Payroll_Client</targetReference>
+            <targetReference>Set_Fault_Element_Create_Pay_Period</targetReference>
         </faultConnector>
         <inputReference>rc_pay_periods_create</inputReference>
     </recordCreates>
@@ -634,7 +671,7 @@ If Pay Period is exists then Update Pay Period for the current PC else Create ne
             <targetReference>Validate_Create</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Set_Fault_Element_Update_Pay_Periods_for_Payroll_Client</targetReference>
+            <targetReference>Set_Fault_Element_Update_Pay_Period</targetReference>
         </faultConnector>
         <inputReference>rc_pay_periords_update</inputReference>
     </recordUpdates>
@@ -642,7 +679,7 @@ If Pay Period is exists then Update Pay Period for the current PC else Create ne
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_Portal_Clients</targetReference>
+            <targetReference>Validate_IP_Record</targetReference>
         </connector>
     </start>
     <status>Draft</status>
