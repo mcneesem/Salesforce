@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Notify_Orientation_Planner</name>
         <label>Notify Orientation Planner</label>
-        <locationX>50</locationX>
-        <locationY>1032</locationY>
+        <locationX>225</locationX>
+        <locationY>1140</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <faultConnector>
@@ -54,13 +54,13 @@
             </value>
         </inputParameters>
         <nameSegment>emailSimple</nameSegment>
-        <versionSegment>1</versionSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>OnboardingMeetingDetailHistory</name>
         <label>OnboardingMeetingDetailHistory</label>
-        <locationX>710</locationX>
-        <locationY>492</locationY>
+        <locationX>885</locationX>
+        <locationY>600</locationY>
         <actionName>OnboardingMeetingDetailHistory</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -77,15 +77,16 @@
             </value>
         </inputParameters>
         <nameSegment>OnboardingMeetingDetailHistory</nameSegment>
+        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Apex_Response_OMD_History_String</name>
         <label>Apex Response : OMD History String</label>
-        <locationX>314</locationX>
-        <locationY>708</locationY>
+        <locationX>489</locationX>
+        <locationY>816</locationY>
         <assignmentItems>
             <assignToReference>response</assignToReference>
             <operator>Assign</operator>
@@ -100,8 +101,8 @@
     <assignments>
         <name>Set_Fault_Element_Get_Onboarding_Detail_History</name>
         <label>Set Fault Element : Get_Onboarding_Detail_History</label>
-        <locationX>1898</locationX>
-        <locationY>384</locationY>
+        <locationX>2073</locationX>
+        <locationY>492</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
             <operator>Assign</operator>
@@ -117,8 +118,8 @@
     <assignments>
         <name>Set_Fault_Element_Get_Queue</name>
         <label>Set Fault Element : Get_Queue</label>
-        <locationX>842</locationX>
-        <locationY>924</locationY>
+        <locationX>1017</locationX>
+        <locationY>1032</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
             <operator>Assign</operator>
@@ -134,8 +135,8 @@
     <assignments>
         <name>Set_Fault_Element_Notify_Orientation_Planner</name>
         <label>Set Fault Element : Notify_Orientation_Planner</label>
-        <locationX>314</locationX>
-        <locationY>1140</locationY>
+        <locationX>489</locationX>
+        <locationY>1248</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
             <operator>Assign</operator>
@@ -150,8 +151,8 @@
     <assignments>
         <name>Set_Fault_Element_OnboardingMeetingDetailHistory</name>
         <label>Set Fault Element : OnboardingMeetingDetailHistory</label>
-        <locationX>1370</locationX>
-        <locationY>600</locationY>
+        <locationX>1545</locationX>
+        <locationY>708</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
             <operator>Assign</operator>
@@ -167,8 +168,8 @@
     <decisions>
         <name>History_Exists</name>
         <label>History Exists</label>
-        <locationX>1172</locationX>
-        <locationY>384</locationY>
+        <locationX>1347</locationX>
+        <locationY>492</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Yes_History_Exists</name>
@@ -187,10 +188,33 @@
         </rules>
     </decisions>
     <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check</name>
+        <label>Outbound Email custom setting check</label>
+        <locationX>654</locationX>
+        <locationY>276</locationY>
+        <defaultConnector>
+            <targetReference>Get_Onboarding_Detail_History</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Valid_Queue</name>
         <label>Valid Queue?</label>
-        <locationX>314</locationX>
-        <locationY>924</locationY>
+        <locationX>489</locationX>
+        <locationY>1032</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Yes_Valid</name>
@@ -211,8 +235,8 @@
     <decisions>
         <name>Valid_Response</name>
         <label>Valid Response ?</label>
-        <locationX>710</locationX>
-        <locationY>600</locationY>
+        <locationX>885</locationX>
+        <locationY>708</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Yes_Response_is_valid</name>
@@ -237,7 +261,7 @@
             <label>Yes : Response is valid</label>
         </rules>
     </decisions>
-    <description>OMD History Notification , Read Queue Email</description>
+    <description>Outbound Email bypass added. OMD History Notification , Read Queue Email</description>
     <environments>Default</environments>
     <formulas>
         <name>f_LastModifiedDateTime</name>
@@ -285,8 +309,8 @@ TEXT(YEAR({!$Record.Onboarding_Meeting_Request_Date__c}))</expression>
     <recordLookups>
         <name>Get_Onboarding_Detail_History</name>
         <label>Get Onboarding Detail History</label>
-        <locationX>1172</locationX>
-        <locationY>276</locationY>
+        <locationX>1347</locationX>
+        <locationY>384</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>History_Exists</targetReference>
@@ -329,8 +353,8 @@ TEXT(YEAR({!$Record.Onboarding_Meeting_Request_Date__c}))</expression>
         <description>Get Onboarding Meeting Request Queue</description>
         <name>Get_Queue</name>
         <label>Get Queue</label>
-        <locationX>314</locationX>
-        <locationY>816</locationY>
+        <locationX>489</locationX>
+        <locationY>924</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Valid_Queue</targetReference>
@@ -351,7 +375,7 @@ TEXT(YEAR({!$Record.Onboarding_Meeting_Request_Date__c}))</expression>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>353</locationX>
+        <locationX>50</locationX>
         <locationY>0</locationY>
         <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
         <filterLogic>and</filterLogic>
@@ -366,7 +390,7 @@ TEXT(YEAR({!$Record.Onboarding_Meeting_Request_Date__c}))</expression>
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Get_Onboarding_Detail_History</targetReference>
+                <targetReference>Outbound_Email_custom_setting_check</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
@@ -376,8 +400,8 @@ TEXT(YEAR({!$Record.Onboarding_Meeting_Request_Date__c}))</expression>
     <subflows>
         <name>Insperity_Fault_Handler</name>
         <label>Insperity Fault Handler</label>
-        <locationX>314</locationX>
-        <locationY>1248</locationY>
+        <locationX>489</locationX>
+        <locationY>1356</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>

@@ -4,7 +4,7 @@
         <name>Copy_1_of_Send_Email</name>
         <label>Send Email</label>
         <locationX>1194</locationX>
-        <locationY>1151</locationY>
+        <locationY>1163</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <faultConnector>
@@ -42,12 +42,14 @@
                 <stringValue>{!$Record.NSP_Account_Name__c} {!$Record.NSP_Client__c} will remain as a PEO Client/Not transitioning to WX</stringValue>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>Copy_2_of_Send_Email</name>
         <label>Send Email</label>
         <locationX>2338</locationX>
-        <locationY>1031</locationY>
+        <locationY>1055</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <faultConnector>
@@ -85,12 +87,14 @@
                 <stringValue>{!$Record.NSP_Account_Name__c} {!$Record.NSP_Client__c} will TERMINATE PEO/Not transitioning to WX</stringValue>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>Copy_3_of_Send_Email</name>
         <label>Send Email</label>
         <locationX>3482</locationX>
-        <locationY>1391</locationY>
+        <locationY>1379</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <faultConnector>
@@ -127,12 +131,14 @@
                 <stringValue>{!$Record.NSP_Account_Name__c} will not be Transitioning from WX to WO</stringValue>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>Send_Email</name>
         <label>Send Email</label>
         <locationX>50</locationX>
-        <locationY>1031</locationY>
+        <locationY>1055</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <faultConnector>
@@ -173,13 +179,16 @@
                 <stringValue>Transition PEO to WX {!$Record.NSP_Account_Name__c} {!$Record.NSP_Client__c} </stringValue>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>56.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Assign_Additional_Emails</name>
         <label>Assign Additional Emails</label>
         <locationX>1194</locationX>
-        <locationY>1031</locationY>
+        <locationY>1055</locationY>
         <assignmentItems>
             <assignToReference>toAddress</assignToReference>
             <operator>Add</operator>
@@ -202,7 +211,7 @@
         <name>Assign_Email_Address_to_List</name>
         <label>Assign Email Address to List</label>
         <locationX>138</locationX>
-        <locationY>815</locationY>
+        <locationY>863</locationY>
         <assignmentItems>
             <assignToReference>toAddress</assignToReference>
             <operator>Add</operator>
@@ -218,7 +227,7 @@
         <name>Copy_1_of_Assign_Additional_Emails</name>
         <label>Assign Additional Emails</label>
         <locationX>3482</locationX>
-        <locationY>1031</locationY>
+        <locationY>1055</locationY>
         <assignmentItems>
             <assignToReference>toAddress</assignToReference>
             <operator>Add</operator>
@@ -241,7 +250,7 @@
         <name>Copy_1_of_Assign_Email_Address_to_List</name>
         <label>Assign Email Address to List</label>
         <locationX>1282</locationX>
-        <locationY>815</locationY>
+        <locationY>863</locationY>
         <assignmentItems>
             <assignToReference>toAddress</assignToReference>
             <operator>Add</operator>
@@ -257,7 +266,7 @@
         <name>Copy_2_of_Assign_Email_Address_to_List</name>
         <label>Assign Email Address to List</label>
         <locationX>2426</locationX>
-        <locationY>815</locationY>
+        <locationY>863</locationY>
         <assignmentItems>
             <assignToReference>toAddress</assignToReference>
             <operator>Add</operator>
@@ -273,7 +282,7 @@
         <name>Copy_3_of_Assign_Email_Address_to_List</name>
         <label>Assign Email Address to List</label>
         <locationX>3570</locationX>
-        <locationY>815</locationY>
+        <locationY>863</locationY>
         <assignmentItems>
             <assignToReference>toAddress</assignToReference>
             <operator>Add</operator>
@@ -289,7 +298,7 @@
         <name>Check_For_Conditions</name>
         <label>Check For Conditions</label>
         <locationX>2690</locationX>
-        <locationY>335</locationY>
+        <locationY>431</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Transition_Type_PEO_to_WX</name>
@@ -433,7 +442,7 @@
         <name>Check_If_Account_Team_Exists</name>
         <label>Check If Account Team Exists</label>
         <locationX>314</locationX>
-        <locationY>575</locationY>
+        <locationY>647</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Account_Records_Exists</name>
@@ -455,7 +464,7 @@
         <name>Copy_1_of_Check_If_Account_Team_Exists</name>
         <label>Check If Account Team Exists</label>
         <locationX>1458</locationX>
-        <locationY>575</locationY>
+        <locationY>647</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Copy_1_of_Account_Records_Exists</name>
@@ -477,7 +486,7 @@
         <name>Copy_2_of_Check_If_Account_Team_Exists</name>
         <label>Check If Account Team Exists</label>
         <locationX>2602</locationX>
-        <locationY>575</locationY>
+        <locationY>647</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Copy_2_of_Account_Records_Exists</name>
@@ -499,7 +508,7 @@
         <name>Copy_3_of_Check_If_Account_Team_Exists</name>
         <label>Check If Account Team Exists</label>
         <locationX>4010</locationX>
-        <locationY>575</locationY>
+        <locationY>647</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Copy_3_of_Account_Records_Exists</name>
@@ -517,6 +526,30 @@
             <label>Account Records Exists</label>
         </rules>
     </decisions>
+    <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check</name>
+        <label>Outbound Email custom setting check</label>
+        <locationX>1194</locationX>
+        <locationY>323</locationY>
+        <defaultConnector>
+            <targetReference>Check_For_Conditions</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false</label>
+        </rules>
+    </decisions>
+    <description>Outbound Email bypass added.</description>
     <environments>Default</environments>
     <interviewLabel>Send Sales Notification {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Send Sales Notification WO to WX and WX to WO</label>
@@ -524,7 +557,7 @@
         <name>Copy_1_of_Loop_Account_Teams</name>
         <label>Loop Account Teams</label>
         <locationX>1194</locationX>
-        <locationY>695</locationY>
+        <locationY>755</locationY>
         <collectionReference>Copy_1_of_Get_Account_Teams</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -538,7 +571,7 @@
         <name>Copy_2_of_Loop_Account_Teams</name>
         <label>Loop Account Teams</label>
         <locationX>2338</locationX>
-        <locationY>695</locationY>
+        <locationY>755</locationY>
         <collectionReference>Copy_2_of_Get_Account_Teams</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -552,7 +585,7 @@
         <name>Copy_3_of_Loop_Account_Teams</name>
         <label>Loop Account Teams</label>
         <locationX>3482</locationX>
-        <locationY>695</locationY>
+        <locationY>755</locationY>
         <collectionReference>Copy_3_of_Get_Account_Teams</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -566,7 +599,7 @@
         <name>Loop_Account_Teams</name>
         <label>Loop Account Teams</label>
         <locationX>50</locationX>
-        <locationY>695</locationY>
+        <locationY>755</locationY>
         <collectionReference>Get_Account_Teams</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -599,7 +632,7 @@
         <name>Copy_1_of_Create_Log_Error</name>
         <label>Create Log Error</label>
         <locationX>4802</locationX>
-        <locationY>575</locationY>
+        <locationY>647</locationY>
         <inputAssignments>
             <field>NSP_Class__c</field>
             <value>
@@ -637,7 +670,7 @@
         <name>Create_Log_Error</name>
         <label>Create Log Error</label>
         <locationX>3746</locationX>
-        <locationY>1511</locationY>
+        <locationY>1487</locationY>
         <inputAssignments>
             <field>NSP_Class__c</field>
             <value>
@@ -675,7 +708,7 @@
         <name>Copy_1_of_Get_Account_Teams</name>
         <label>Get Account Teams</label>
         <locationX>1458</locationX>
-        <locationY>455</locationY>
+        <locationY>539</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Copy_1_of_Check_If_Account_Team_Exists</targetReference>
@@ -758,7 +791,7 @@
         <name>Copy_2_of_Get_Account_Teams</name>
         <label>Get Account Teams</label>
         <locationX>2602</locationX>
-        <locationY>455</locationY>
+        <locationY>539</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Copy_2_of_Check_If_Account_Team_Exists</targetReference>
@@ -841,7 +874,7 @@
         <name>Copy_3_of_Get_Account_Teams</name>
         <label>Get Account Teams</label>
         <locationX>4010</locationX>
-        <locationY>455</locationY>
+        <locationY>539</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Copy_3_of_Check_If_Account_Team_Exists</targetReference>
@@ -874,7 +907,7 @@
         <name>Get_Account_Group</name>
         <label>Get Account Group</label>
         <locationX>3482</locationX>
-        <locationY>1151</locationY>
+        <locationY>1163</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Update_Renewal_Probability_Account_Group</targetReference>
@@ -906,7 +939,7 @@
         <name>Get_Account_Teams</name>
         <label>Get Account Teams</label>
         <locationX>314</locationX>
-        <locationY>455</locationY>
+        <locationY>539</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_If_Account_Team_Exists</targetReference>
@@ -1017,10 +1050,10 @@
         <object>NSP_Account_Group__c</object>
     </recordUpdates>
     <start>
-        <locationX>2564</locationX>
+        <locationX>1068</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Check_For_Conditions</targetReference>
+            <targetReference>Outbound_Email_custom_setting_check</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>

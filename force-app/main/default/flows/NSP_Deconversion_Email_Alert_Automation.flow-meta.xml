@@ -4,8 +4,8 @@
         <description>Action for Qc Rep Assignment Email Alert</description>
         <name>Qc_Rep_Assignment_Email_Alert</name>
         <label>Qc Rep Assignment Email Alert</label>
-        <locationX>50</locationX>
-        <locationY>455</locationY>
+        <locationX>242</locationX>
+        <locationY>539</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
@@ -36,13 +36,15 @@
                 <elementReference>emailSubjectQcRepAssignment</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <description>Action for Qc Rep Trailing Email Alert</description>
         <name>Qc_Rep_Trailing_Email_Alert</name>
         <label>Qc Rep Trailing Email Alert</label>
-        <locationX>50</locationX>
-        <locationY>911</locationY>
+        <locationX>242</locationX>
+        <locationY>947</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
@@ -73,8 +75,11 @@
                 <elementReference>emailSubjectQcRepTrailing</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>56.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <constants>
         <description>Email Subject for Qc rep Assignment alert</description>
         <name>emailSubjectQcRepAssignment</name>
@@ -94,8 +99,8 @@
         <description>Check if QC Rep is updated or populated</description>
         <name>Check_if_QC_Rep_is_updated</name>
         <label>Check if QC Rep is updated</label>
-        <locationX>182</locationX>
-        <locationY>335</locationY>
+        <locationX>374</locationX>
+        <locationY>431</locationY>
         <defaultConnector>
             <targetReference>QcRepTrailingUpdated</targetReference>
         </defaultConnector>
@@ -124,11 +129,34 @@
         </rules>
     </decisions>
     <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check</name>
+        <label>Outbound Email custom setting check</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <defaultConnector>
+            <targetReference>Check_if_QC_Rep_is_updated</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false</label>
+        </rules>
+    </decisions>
+    <decisions>
         <description>Check if QC Rep Trailing is updated or populated</description>
         <name>QcRepTrailingUpdated</name>
         <label>QcRepTrailingUpdated</label>
-        <locationX>182</locationX>
-        <locationY>791</locationY>
+        <locationX>374</locationX>
+        <locationY>839</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>isQcRepTrailingUpdated</name>
@@ -153,7 +181,7 @@
             <label>isQcRepTrailingUpdated?</label>
         </rules>
     </decisions>
-    <description>Deconversion Email Alert Automation for Resource assignment</description>
+    <description>Outbound Email bypass added. Deconversion Email Alert Automation for Resource assignment</description>
     <environments>Default</environments>
     <formulas>
         <description>Deconversion Record Url</description>
@@ -186,8 +214,8 @@
         <description>Create Email Message Records for traceability</description>
         <name>Create_Email_Message_Rec</name>
         <label>Create Email Message Rec</label>
-        <locationX>50</locationX>
-        <locationY>575</locationY>
+        <locationX>242</locationX>
+        <locationY>647</locationY>
         <connector>
             <targetReference>QcRepTrailingUpdated</targetReference>
         </connector>
@@ -240,8 +268,8 @@
         <description>Create Email Message Records for traceability</description>
         <name>Create_Email_Message_Record</name>
         <label>Create Email Message Record</label>
-        <locationX>50</locationX>
-        <locationY>1031</locationY>
+        <locationX>242</locationX>
+        <locationY>1055</locationY>
         <inputAssignments>
             <field>FromAddress</field>
             <value>
@@ -288,10 +316,10 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <start>
-        <locationX>56</locationX>
+        <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Check_if_QC_Rep_is_updated</targetReference>
+            <targetReference>Outbound_Email_custom_setting_check</targetReference>
         </connector>
         <filterLogic>or</filterLogic>
         <filters>
@@ -312,7 +340,7 @@
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <textTemplates>
         <description>Email body for Qc Rep Assignment Alert</description>
         <name>emailBodyQcRepAssignment</name>

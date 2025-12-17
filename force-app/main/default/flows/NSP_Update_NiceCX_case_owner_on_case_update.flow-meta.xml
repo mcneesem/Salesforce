@@ -1,34 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <actionCalls>
-        <description>Send the mail when the queue name is incorrect</description>
-        <name>Queue_Name_is_incorrect</name>
-        <label>Queue Name is incorrect</label>
-        <locationX>578</locationX>
-        <locationY>539</locationY>
-        <actionName>emailSimple</actionName>
-        <actionType>emailSimple</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>emailBody</name>
-            <value>
-                <stringValue>{!$Record.NSP_NiceCX_Queue__c} Queue Name is incorrect and does not exist in Salesforce. Please check your API request and resend the request with correct data.</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>emailAddresses</name>
-            <value>
-                <elementReference>$Label.NSP_NiceCX_Flow_Error_Receipent</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>emailSubject</name>
-            <value>
-                <stringValue>{!$Record.NSP_NiceCX_Queue__c} Queue Name Incorrect</stringValue>
-            </value>
-        </inputParameters>
-    </actionCalls>
     <apiVersion>57.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <decisions>
         <name>Check_NiceCx_Agent_Queue_and_Update_Owner</name>
         <label>Check NiceCx Agent/Queue and Update Owner</label>
@@ -66,7 +39,7 @@
             <label>NiceCX Queue has value</label>
         </rules>
     </decisions>
-    <description>runs when nicecx case is updated</description>
+    <description>Added Fault Handler Subflow. runs when nicecx case is updated</description>
     <environments>Default</environments>
     <interviewLabel>Update NiceCX case on case update {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Update NiceCX case Owner on case update</label>
@@ -100,7 +73,7 @@
             <targetReference>Update_Queue_as_owner</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Queue_Name_is_incorrect</targetReference>
+            <targetReference>Fault_Handler_Subflow</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -194,5 +167,24 @@
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
+    <subflows>
+        <name>Fault_Handler_Subflow</name>
+        <label>Fault Handler Subflow</label>
+        <locationX>578</locationX>
+        <locationY>539</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>NSP_Update_NiceCX_case_owner_on_case_update</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
 </Flow>

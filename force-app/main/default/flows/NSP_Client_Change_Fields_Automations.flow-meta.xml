@@ -4,8 +4,8 @@
         <description>Aftd EEs field value is greater than two Alert</description>
         <name>Aftd_EEs_value_is_greater_than_2_Alert</name>
         <label>Aftd EEs value is greater than 2 Alert</label>
-        <locationX>50</locationX>
-        <locationY>2423</locationY>
+        <locationX>182</locationX>
+        <locationY>2303</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
@@ -36,13 +36,15 @@
                 <elementReference>emailSubjectAftdEEs</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <description>Aftd EEs field value is greater than two Alert</description>
         <name>Aftd_EEs_value_is_greater_than_2_Alert_0</name>
         <label>Aftd EEs value is greater than 2 Alert</label>
-        <locationX>314</locationX>
-        <locationY>2303</locationY>
+        <locationX>446</locationX>
+        <locationY>2195</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
@@ -73,13 +75,15 @@
                 <elementReference>emailSubjectAftdEEs</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <description>Email alert to CAM Resource for Assignment</description>
         <name>CAM_Resource_Assignment_Alert</name>
         <label>CAM Resource Assignment Alert</label>
-        <locationX>182</locationX>
-        <locationY>1151</locationY>
+        <locationX>314</locationX>
+        <locationY>1163</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
@@ -110,13 +114,15 @@
                 <elementReference>emailSubjectCamResAssignment</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <description>Qc rep Assignment Email Alert</description>
         <name>Qc_rep_Assignment_Email_Alert</name>
         <label>Qc rep Assignment Email Alert</label>
-        <locationX>182</locationX>
-        <locationY>1607</locationY>
+        <locationX>314</locationX>
+        <locationY>1571</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
@@ -147,14 +153,17 @@
                 <elementReference>emailSubjectQcRepAssignment</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>55.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <description>Assign Related Ret Ed Rec Url</description>
         <name>Assign_Ret_Ed_Rec_Url</name>
         <label>Assign Ret Ed Rec Url</label>
-        <locationX>50</locationX>
-        <locationY>2303</locationY>
+        <locationX>182</locationX>
+        <locationY>2195</locationY>
         <assignmentItems>
             <assignToReference>RetEdRelatedRecUrl</assignToReference>
             <operator>Assign</operator>
@@ -194,8 +203,8 @@
         <description>Check if Aftd EEs field value is greater than two</description>
         <name>Check_if_Aftd_EEs_field_value_is_greater_than_two</name>
         <label>Check if Aftd EEs field value is greater than two</label>
-        <locationX>314</locationX>
-        <locationY>2183</locationY>
+        <locationX>446</locationX>
+        <locationY>2087</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>isAftdEEsGreaterThan2</name>
@@ -254,10 +263,10 @@
     <decisions>
         <name>Check_if_CAM_Resource_and_Error_Found_checked</name>
         <label>Check if CAM Resource and Error Found checked</label>
-        <locationX>314</locationX>
-        <locationY>695</locationY>
+        <locationX>182</locationX>
+        <locationY>647</locationY>
         <defaultConnector>
-            <targetReference>Check_if_CAM_Resource_field_is_updated</targetReference>
+            <targetReference>Outbound_Email_custom_setting_check</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -294,8 +303,8 @@
         <description>Check if CAM Resource field is populated or updated</description>
         <name>Check_if_CAM_Resource_field_is_updated</name>
         <label>Check if CAM Resource field is updated</label>
-        <locationX>314</locationX>
-        <locationY>1031</locationY>
+        <locationX>446</locationX>
+        <locationY>1055</locationY>
         <defaultConnector>
             <targetReference>Check_if_Qc_Rep_is_updated</targetReference>
         </defaultConnector>
@@ -327,8 +336,8 @@
         <description>Check if Qc Rep is populated or updated</description>
         <name>Check_if_Qc_Rep_is_updated</name>
         <label>Check if Qc Rep is updated</label>
-        <locationX>314</locationX>
-        <locationY>1487</locationY>
+        <locationX>446</locationX>
+        <locationY>1463</locationY>
         <defaultConnector>
             <targetReference>Get_Education_Rec_associated_with_Asset</targetReference>
         </defaultConnector>
@@ -356,7 +365,30 @@
             <label>isQcRepUpdated?</label>
         </rules>
     </decisions>
-    <description>Client Change Fields object email alert and task creation</description>
+    <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check</name>
+        <label>Outbound Email custom setting check</label>
+        <locationX>182</locationX>
+        <locationY>947</locationY>
+        <defaultConnector>
+            <targetReference>Check_if_CAM_Resource_field_is_updated</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false</label>
+        </rules>
+    </decisions>
+    <description>Outbound Email bypass added. Client Change Fields object email alert and task creation</description>
     <environments>Default</environments>
     <formulas>
         <description>Client Change Field Record Url</description>
@@ -402,10 +434,10 @@ if({!$Record.NSP_Move_Deferrals__c}, &apos;Move Deferrals?, &apos;, &apos;&apos;
     <recordCreates>
         <name>Create_a_Task_and_assign_to_CAM_Resource</name>
         <label>Create a Task and assign to CAM Resource</label>
-        <locationX>182</locationX>
-        <locationY>815</locationY>
+        <locationX>50</locationX>
+        <locationY>755</locationY>
         <connector>
-            <targetReference>Check_if_CAM_Resource_field_is_updated</targetReference>
+            <targetReference>Outbound_Email_custom_setting_check</targetReference>
         </connector>
         <inputAssignments>
             <field>ActivityDate</field>
@@ -474,7 +506,7 @@ if({!$Record.NSP_Move_Deferrals__c}, &apos;Move Deferrals?, &apos;, &apos;&apos;
         <description>Create Email Message Records for tracebility</description>
         <name>Create_Email_Message_Rec</name>
         <label>Create Email Message Rec</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>1271</locationY>
         <connector>
             <targetReference>Check_if_Qc_Rep_is_updated</targetReference>
@@ -528,8 +560,8 @@ if({!$Record.NSP_Move_Deferrals__c}, &apos;Move Deferrals?, &apos;, &apos;&apos;
         <description>Create Email Message Records for tracebility</description>
         <name>Create_Email_Message_Rec_0</name>
         <label>Create Email Message Rec</label>
-        <locationX>182</locationX>
-        <locationY>1727</locationY>
+        <locationX>314</locationX>
+        <locationY>1679</locationY>
         <connector>
             <targetReference>Get_Education_Rec_associated_with_Asset</targetReference>
         </connector>
@@ -582,8 +614,8 @@ if({!$Record.NSP_Move_Deferrals__c}, &apos;Move Deferrals?, &apos;, &apos;&apos;
         <description>Create Email Message Records for tracebility</description>
         <name>Create_Email_Message_Rec_0_0</name>
         <label>Create Email Message Rec</label>
-        <locationX>50</locationX>
-        <locationY>2543</locationY>
+        <locationX>182</locationX>
+        <locationY>2411</locationY>
         <inputAssignments>
             <field>FromAddress</field>
             <value>
@@ -633,8 +665,8 @@ if({!$Record.NSP_Move_Deferrals__c}, &apos;Move Deferrals?, &apos;, &apos;&apos;
         <description>Create Email Message Records for tracebility</description>
         <name>Create_Email_Message_Rec_0_0_0</name>
         <label>Create Email Message Rec</label>
-        <locationX>314</locationX>
-        <locationY>2423</locationY>
+        <locationX>446</locationX>
+        <locationY>2303</locationY>
         <inputAssignments>
             <field>FromAddress</field>
             <value>
@@ -683,8 +715,8 @@ if({!$Record.NSP_Move_Deferrals__c}, &apos;Move Deferrals?, &apos;, &apos;&apos;
     <recordLookups>
         <name>Get_all_Client_Changes_Quality_Control_Issue_Tasks</name>
         <label>Get all Client Changes - Quality Control Issue Tasks</label>
-        <locationX>314</locationX>
-        <locationY>575</locationY>
+        <locationX>182</locationX>
+        <locationY>539</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_if_CAM_Resource_and_Error_Found_checked</targetReference>
@@ -711,8 +743,8 @@ if({!$Record.NSP_Move_Deferrals__c}, &apos;Move Deferrals?, &apos;, &apos;&apos;
     <recordLookups>
         <name>Get_BPS_Record_Type</name>
         <label>Get BPS Record Type</label>
-        <locationX>314</locationX>
-        <locationY>455</locationY>
+        <locationX>182</locationX>
+        <locationY>431</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_all_Client_Changes_Quality_Control_Issue_Tasks</targetReference>
@@ -742,8 +774,8 @@ if({!$Record.NSP_Move_Deferrals__c}, &apos;Move Deferrals?, &apos;, &apos;&apos;
         <description>Get Education Rec associated with Asset on client change</description>
         <name>Get_Education_Rec_associated_with_Asset</name>
         <label>Get Education Rec associated with Asset</label>
-        <locationX>314</locationX>
-        <locationY>1943</locationY>
+        <locationX>446</locationX>
+        <locationY>1871</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Email_Message_Rec_with_same_Subject</targetReference>
@@ -771,8 +803,8 @@ if({!$Record.NSP_Move_Deferrals__c}, &apos;Move Deferrals?, &apos;, &apos;&apos;
         <description>Get Email Message Rec with same Subject</description>
         <name>Get_Email_Message_Rec_with_same_Subject</name>
         <label>Get Email Message Rec with same Subject</label>
-        <locationX>314</locationX>
-        <locationY>2063</locationY>
+        <locationX>446</locationX>
+        <locationY>1979</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_if_Aftd_EEs_field_value_is_greater_than_two</targetReference>
@@ -800,8 +832,8 @@ if({!$Record.NSP_Move_Deferrals__c}, &apos;Move Deferrals?, &apos;, &apos;&apos;
         <description>Get RET Service Mdt with Email address stored in it</description>
         <name>Get_RET_Service_Mdt_with_Email_address</name>
         <label>Get RET Service Mdt with Email address</label>
-        <locationX>314</locationX>
-        <locationY>335</locationY>
+        <locationX>182</locationX>
+        <locationY>323</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_BPS_Record_Type</targetReference>
@@ -819,7 +851,7 @@ if({!$Record.NSP_Move_Deferrals__c}, &apos;Move Deferrals?, &apos;, &apos;&apos;
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>188</locationX>
+        <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_RET_Service_Mdt_with_Email_address</targetReference>
@@ -828,7 +860,7 @@ if({!$Record.NSP_Move_Deferrals__c}, &apos;Move Deferrals?, &apos;, &apos;&apos;
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <textTemplates>
         <description>Aftd EEs Greater Than 2 Email Body</description>
         <name>AftdEEsGreaterThan2EmailBody</name>
