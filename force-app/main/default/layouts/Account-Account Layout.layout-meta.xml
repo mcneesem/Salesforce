@@ -66,6 +66,10 @@
                 <field>ParentId</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Product_Solution__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Sales_Service_Account_Status__c</field>
             </layoutItems>
