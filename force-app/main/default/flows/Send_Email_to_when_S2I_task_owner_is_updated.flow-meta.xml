@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Send_Email_to_task_owner</name>
         <label>Send Email to task owner</label>
-        <locationX>50</locationX>
-        <locationY>455</locationY>
+        <locationX>242</locationX>
+        <locationY>539</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
@@ -41,13 +41,16 @@
                 <stringValue>S2I Installation – Quality Control Issue</stringValue>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>55.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <decisions>
         <name>Check_if_owner_Id_is_changed</name>
         <label>Check if owner Id is changed</label>
-        <locationX>182</locationX>
-        <locationY>335</locationY>
+        <locationX>374</locationX>
+        <locationY>431</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>changed</name>
@@ -79,6 +82,30 @@
             <label>changed?</label>
         </rules>
     </decisions>
+    <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check</name>
+        <label>Outbound Email custom setting check</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <defaultConnector>
+            <targetReference>Check_if_owner_Id_is_changed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false</label>
+        </rules>
+    </decisions>
+    <description>Outbound Email bypass added.</description>
     <environments>Default</environments>
     <formulas>
         <name>linkToTask</name>
@@ -109,8 +136,8 @@
     <recordCreates>
         <name>Create_Email_Message_Record_to_trace_email_sent</name>
         <label>Create Email Message Record to trace email sent.</label>
-        <locationX>50</locationX>
-        <locationY>575</locationY>
+        <locationX>242</locationX>
+        <locationY>647</locationY>
         <inputAssignments>
             <field>FromAddress</field>
             <value>
@@ -157,16 +184,16 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <start>
-        <locationX>56</locationX>
+        <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Check_if_owner_Id_is_changed</targetReference>
+            <targetReference>Outbound_Email_custom_setting_check</targetReference>
         </connector>
         <object>Task</object>
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <textTemplates>
         <name>emailBody</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
