@@ -129,10 +129,40 @@
             <label>Yes : Record Exist</label>
         </rules>
     </decisions>
+    <decisions>
+        <description>Validate IP Record</description>
+        <name>Validate_IP_Record</name>
+        <label>Validate IP Record</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Valid_IP_Record</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NSP_Implementation_Profile__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_Implementation_Profile__r.Account__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Portal_Clients</targetReference>
+            </connector>
+            <label>Valid IP Record</label>
+        </rules>
+    </decisions>
     <description>12/11/2025 - AZD-500803</description>
     <environments>Default</environments>
-    <interviewLabel>Implementation Pay Period Deleted Delete Portal Pay Period {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Implementation Pay Period Deleted Delete Portal Pay Period</label>
+    <interviewLabel>Implementation Pay Period - Deleted - Delete Portal Pay Period {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Implementation Pay Period - Deleted - Delete Portal Pay Period</label>
     <loops>
         <description>Assuming we have multiple PCs for given Account</description>
         <name>Loop_Multiple_Portal_Clients</name>
@@ -239,7 +269,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_Portal_Clients</targetReference>
+            <targetReference>Validate_IP_Record</targetReference>
         </connector>
         <object>Implementation_Pay_Period__c</object>
         <recordTriggerType>Delete</recordTriggerType>
