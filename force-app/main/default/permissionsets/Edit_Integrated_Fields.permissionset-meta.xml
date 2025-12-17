@@ -31,16 +31,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>NSP_Payroll__c.Account__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.NSP_External_Id__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Contact.Middleware_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -157,6 +147,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Sub_Client__c.ABCP_Period__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Sub_Client__c.Arbitration_Agreement__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
