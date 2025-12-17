@@ -156,6 +156,29 @@
         </rules>
     </decisions>
     <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check</name>
+        <label>Outbound Email custom setting check</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Fetch_Project_Team_Records_Based_on_Project</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Validate_Contact_Exists</name>
         <label>Validate Contact Exists</label>
         <locationX>0</locationX>
@@ -184,6 +207,7 @@
             <label>Contact Exists For Project Team Manager</label>
         </rules>
     </decisions>
+    <description>Outbound Email bypass added.</description>
     <environments>Default</environments>
     <formulas>
         <name>Project_Task_Link</name>
@@ -321,7 +345,7 @@
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Fetch_Project_Team_Records_Based_on_Project</targetReference>
+                <targetReference>Outbound_Email_custom_setting_check</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
