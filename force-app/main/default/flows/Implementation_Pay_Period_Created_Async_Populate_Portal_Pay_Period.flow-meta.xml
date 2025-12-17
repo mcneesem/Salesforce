@@ -34,8 +34,8 @@
     </decisions>
     <description>12/11/2025 - AZD-500803</description>
     <environments>Default</environments>
-    <interviewLabel>Implementation Pay Period - Created - Populate Portal Pay Period {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Implementation Pay Period - Created - Populate Portal Pay Period</label>
+    <interviewLabel>Implementation Pay Period - Created - Async - Populate Portal Pay Period {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Implementation Pay Period - Created - Async - Populate Portal Pay Period</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -58,6 +58,14 @@
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>NSP_Implementation_Profile__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
         <object>Implementation_Pay_Period__c</object>
         <recordTriggerType>Create</recordTriggerType>
         <scheduledPaths>

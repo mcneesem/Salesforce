@@ -34,8 +34,8 @@
     </decisions>
     <description>12/11/2025 - AZD-500803</description>
     <environments>Default</environments>
-    <interviewLabel>Implementation Pay Period - Updated - Populate Portal Pay Period {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Implementation Pay Period - Updated - Populate Portal Pay Period</label>
+    <interviewLabel>Implementation Pay Period - Updated - Async - Populate Portal Pay Period {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Implementation Pay Period - Updated - Async - Populate Portal Pay Period</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -58,12 +58,12 @@
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <filterLogic>or</filterLogic>
+        <filterLogic>1 AND ( 2 OR 3 OR 4 OR 5)</filterLogic>
         <filters>
-            <field>Insperity_1st_pay_date__c</field>
-            <operator>IsChanged</operator>
+            <field>NSP_Implementation_Profile__c</field>
+            <operator>IsNull</operator>
             <value>
-                <booleanValue>true</booleanValue>
+                <booleanValue>false</booleanValue>
             </value>
         </filters>
         <filters>
@@ -82,6 +82,13 @@
         </filters>
         <filters>
             <field>Frequency__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Insperity_1st_pay_date__c</field>
             <operator>IsChanged</operator>
             <value>
                 <booleanValue>true</booleanValue>
