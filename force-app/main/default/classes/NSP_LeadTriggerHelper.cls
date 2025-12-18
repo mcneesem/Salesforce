@@ -1602,9 +1602,7 @@ public with sharing class NSP_LeadTriggerHelper {
                     NSP_SalesRegion__c
                 FROM User 
                 WHERE ( Id IN :eventNewOwner.values() )]);
-            if(( salesOfficeMap != null ) && !salesOfficeMap.isEmpty() ){
-                eventRecords = NSP_LeadTriggerHelper.getEventRecords(salesOfficeMap, eventNewOwner);
-            }
+            eventRecords = NSP_LeadTriggerHelper.getEventRecords(salesOfficeMap, eventNewOwner);
         }
         return eventRecords;
     }
@@ -1622,7 +1620,7 @@ public with sharing class NSP_LeadTriggerHelper {
             WHERE ( Id IN :eventNewOwner.keySet() )]){
             if ( eventNewOwner.containsKey( eventRecord.Id ) && ( eventNewOwner.get( eventRecord.Id ) != null ) ) {
                 eventRecord.OwnerId = eventNewOwner.get( eventRecord.Id );
-                if(salesOfficeMap.containsKey(eventRecord.OwnerId)){
+                if(salesOfficeMap != null && salesOfficeMap.containsKey(eventRecord.OwnerId)){
                     User userRecord = salesOfficeMap.get(eventRecord.OwnerId);
                     if(userRecord != null){
                         eventRecord.NSP_Sales_Office__c = userRecord.NSP_Sales_Office__c;
