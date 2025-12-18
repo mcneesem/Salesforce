@@ -1571,17 +1571,16 @@ public with sharing class NSP_LeadTriggerHelper {
                     Map<Id,Id>.class
                 );
             }
-            if ( ( eventNewOwner != null ) && !eventNewOwner.isEmpty() ) {
-                List<Event> eventRecords =  NSP_LeadTriggerHelper.getEventsToUpdate(eventNewOwner);
-                if ( !eventRecords.isEmpty() ) {
-                    List<Database.SaveResult> results = Database.update( eventRecords , false );
-                    NSP_ErrorLogHandler.logResults(
-                        NSP_LeadTriggerHelper.class.getName() ,
-                        'transferDiscoveryCallAsync:update' ,
-                        results
-                    );
-                }
+            List<Event> eventRecords =  NSP_LeadTriggerHelper.getEventsToUpdate(eventNewOwner);
+            if ( ( eventRecords != null ) && !eventRecords.isEmpty() ) {
+                List<Database.SaveResult> results = Database.update( eventRecords , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_LeadTriggerHelper.class.getName() ,
+                    'transferDiscoveryCallAsync:update' ,
+                    results
+                );
             }
+            
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 NSP_LeadTriggerHelper.class.getName() ,
