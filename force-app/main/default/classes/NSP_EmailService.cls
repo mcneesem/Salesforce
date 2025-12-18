@@ -1,5 +1,5 @@
 public with sharing class NSP_EmailService {
-    // test w/ NSP_ResourceRequestTriggerHelper (81%)
+    // test w/ NSP_EmailServiceTest (93%)
     
     public static void sendEmail( Map<Id,Id> mRecordtoUser , String emailDeveloperName ) {
         if ( EmailDeliverabilityController.IsEnabledOutbound ) {
