@@ -55,25 +55,30 @@ private class UserQueueMembershipServiceTest {
     private static void getQueueMembershipsByUser_whenMembershipExists_returnsMappedRows() {
         // Arrange
         User testUser = createStandardTestUser();
+        
+        PermissionSet ps = [Select id from permissionSet where Name = 'Queue_Membership_View' limit 1];
+        PermissionSetAssignment psa = new PermissionsetAssignment( AssigneeId = testUser.Id, permissionSetId =ps.id);
+        insert psa;
         GroupMember createdMembership = createQueueAndMembership(testUser, 'Test_Queue_Dev', 'Test Queue');
-        
-        // Act
-        Test.startTest();
-        List<UserQueueMembershipService.QueueMembershipRow> memberRows = UserQueueMembershipService.getQueueMembershipsByUser(testUser.Id);
-        Test.stopTest();
-        
-        // Assert
-        System.Assert.areNotEqual(null, memberRows, 'Should not return null');
-        System.Assert.areEqual(1, memberRows.size(), 'Expected exactly one membership row');
-        
-        UserQueueMembershipService.QueueMembershipRow firstRow = memberRows[0];
-        System.Assert.areEqual(createdMembership.Id, firstRow.id, 'GroupMember Id should map to DTO.id');
-        System.Assert.areEqual(createdMembership.GroupId, firstRow.groupId, 'Group Id should map to DTO.groupId');
-        
-        Group relatedGroup = [SELECT Id, Name, DeveloperName FROM Group WHERE Id = :createdMembership.GroupId];
-        System.Assert.areEqual(relatedGroup.Name, firstRow.queueName, 'Group.Name should map to DTO.queueName');
-        System.Assert.areEqual(relatedGroup.DeveloperName, firstRow.queueDeveloperName, 'Group.DeveloperName should map to DTO.queueDeveloperName');
-        System.Assert.areEqual('Queue Member', firstRow.reasonForMembership, 'Reason should map as implemented');
+        System.runAs(testUser){
+            // Act
+            Test.startTest();
+            List<UserQueueMembershipService.QueueMembershipRow> memberRows = UserQueueMembershipService.getQueueMembershipsByUser(testUser.Id);
+            Test.stopTest();
+            
+            // Assert
+            System.Assert.areNotEqual(null, memberRows, 'Should not return null');
+            System.Assert.areEqual(1, memberRows.size(), 'Expected exactly one membership row');
+            
+            UserQueueMembershipService.QueueMembershipRow firstRow = memberRows[0];
+            System.Assert.areEqual(createdMembership.Id, firstRow.id, 'GroupMember Id should map to DTO.id');
+            System.Assert.areEqual(createdMembership.GroupId, firstRow.groupId, 'Group Id should map to DTO.groupId');
+            
+            Group relatedGroup = [SELECT Id, Name, DeveloperName FROM Group WHERE Id = :createdMembership.GroupId];
+            System.Assert.areEqual(relatedGroup.Name, firstRow.queueName, 'Group.Name should map to DTO.queueName');
+            System.Assert.areEqual(relatedGroup.DeveloperName, firstRow.queueDeveloperName, 'Group.DeveloperName should map to DTO.queueDeveloperName');
+            System.Assert.areEqual('Queue Member', firstRow.reasonForMembership, 'Reason should map as implemented');
+        }
     }
     
     @IsTest
