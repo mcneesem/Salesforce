@@ -123,6 +123,29 @@
         </rules>
     </decisions>
     <decisions>
+        <description>Checks the value of the custom setting Notification_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Notification_custom_setting_check</name>
+        <label>Outbound Notification custom setting check</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Does_collectionRecipientIds_have_at_least_one_recipient</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound notification</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Notification_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Was_the_Discovery_Call_Custom_Notification_found</name>
         <label>Was the Discovery Call Custom Notification found?</label>
         <locationX>0</locationX>
@@ -144,7 +167,7 @@
             <label>Yes - Notification Found</label>
         </rules>
     </decisions>
-    <description>Sends the &quot;Discovery Call Complete&quot; Custom Notification</description>
+    <description>Outbound Notification bypass added. Sends the &quot;Discovery Call Complete&quot; Custom Notification</description>
     <environments>Default</environments>
     <interviewLabel>Event - Subflow - Send Discovery Call Custom Notification {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Event - Subflow - Send Discovery Call Custom Notification</label>
@@ -196,7 +219,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Does_collectionRecipientIds_have_at_least_one_recipient</targetReference>
+            <targetReference>Outbound_Notification_custom_setting_check</targetReference>
         </connector>
     </start>
     <status>Draft</status>
