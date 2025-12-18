@@ -100,27 +100,29 @@ public class NSP_InvoiceBatch implements Database.Batchable<SObject> , Database.
 
     private void sendEmailNotification( AsyncApexJob job , String plainTextBody ) {
         try {
-            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-            List<String> toAddresses = new List<String>();
-            if ( job != null ) {
-                toAddresses.add( job.CreatedBy.Email );
-            } else {
-                toAddresses.add( UserInfo.getUserEmail() );
+            if ( EmailDeliverabilityController.IsEnabledOutbound ) {
+                Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+                List<String> toAddresses = new List<String>();
+                if ( job != null ) {
+                    toAddresses.add( job.CreatedBy.Email );
+                } else {
+                    toAddresses.add( UserInfo.getUserEmail() );
+                }
+                mail.setToAddresses( toAddresses );
+                if ( ( NSP_InvoiceBatch.bccAddresses != null ) && !NSP_InvoiceBatch.bccAddresses.isEmpty() ) {
+                    mail.setBccAddresses( NSP_InvoiceBatch.bccAddresses );
+                }
+                String statusSuffix = '';
+                if ( job != null ) {
+                    statusSuffix = ': ' + job.Status;
+                }
+                mail.setSubject( 'Draft Invoice Post Batch Job' + statusSuffix );
+                if ( String.isBlank( plainTextBody ) ) {
+                    plainTextBody = '.';
+                }
+                mail.setPlainTextBody( plainTextBody );
+                Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ mail } );
             }
-            mail.setToAddresses( toAddresses );
-            if ( ( NSP_InvoiceBatch.bccAddresses != null ) && !NSP_InvoiceBatch.bccAddresses.isEmpty() ) {
-                mail.setBccAddresses( NSP_InvoiceBatch.bccAddresses );
-            }
-            String statusSuffix = '';
-            if ( job != null ) {
-                statusSuffix = ': ' + job.Status;
-            }
-            mail.setSubject( 'Draft Invoice Post Batch Job' + statusSuffix );
-            if ( String.isBlank( plainTextBody ) ) {
-                plainTextBody = '.';
-            }
-            mail.setPlainTextBody( plainTextBody );
-            Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ mail } );
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 NSP_InvoiceBatch.class.getName() ,

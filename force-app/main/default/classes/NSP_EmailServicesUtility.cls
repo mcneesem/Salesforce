@@ -286,17 +286,21 @@ Paratmenters: Messaging.SingleEmailMessage[]
 Description: Use this method to send an array of Email messages.
 Return : boolean
 **************************************/
-    public static boolean sendEmailMessage(Messaging.SingleEmailMessage[] emailMessages){     	
+    public static boolean sendEmailMessage( Messaging.SingleEmailMessage[] emailMessages ) {
         Messaging.SendEmailResult[] results;
-        boolean isEmailSent=true;
-        
-        try{ 
-            results = Messaging.sendEmail(emailMessages);
-        }catch(System.EmailException ex){
-            isEmailSent=false;
+        boolean isEmailSent = true;
+
+        try {
+            if ( EmailDeliverabilityController.IsEnabledOutbound ) {
+                results = Messaging.sendEmail(emailMessages);
+            } else {
+                isEmailSent = false;
+            }
+        } catch( System.EmailException ex ) {
+            isEmailSent = false;
             return isEmailSent;
         }
-        
+
         return isEmailSent;
     }
 

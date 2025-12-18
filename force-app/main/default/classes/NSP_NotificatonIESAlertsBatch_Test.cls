@@ -12,12 +12,12 @@ Modification Log     :
 * Anil                      12/01/22                First Iteration
 */
 @isTest
-public with sharing class NSP_NotificatonIESAlertsBatch_Test {
+private with sharing class NSP_NotificatonIESAlertsBatch_Test {
     /**
      * @description createTestData
      */
     @TestSetup
-    public static void createTestData() {
+    private static void createTestData() {
         
         Account accIns = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), 'NSP_TestDataFactory.AccountDefaults', false);
         accIns.Name = 'Test';
@@ -52,7 +52,7 @@ public with sharing class NSP_NotificatonIESAlertsBatch_Test {
     }
 
     @isTest
-    static void testNotificatonIESAlertsBatchScheduler() {
+    private static void testNotificatonIESAlertsBatchScheduler() {
         DateTime runtime = System.now().addDays( 1 );
         String cronExp = '0 0 0 ' + runtime.day() + ' ' + runtime.month() + ' ? ' + runtime.year();
         Test.startTest();
@@ -76,7 +76,7 @@ public with sharing class NSP_NotificatonIESAlertsBatch_Test {
     } 
 
     @isTest
-    static void terminatedEmailTemplateA(){
+    private static void terminatedEmailTemplateA(){
         //GIVEN
         Asset asset = Database.Query(new NSP_QueryBuilder( 'Asset', new List<String>{'Id', 'NSP_Account_Status__c'}).addLimit(1).build());
 
@@ -117,7 +117,7 @@ public with sharing class NSP_NotificatonIESAlertsBatch_Test {
     }
 
     @isTest
-    static void terminatedEmailTemplateB(){
+    private static void terminatedEmailTemplateB(){
         //GIVEN
         Asset asset = Database.Query(new NSP_QueryBuilder( 'Asset', new List<String>{'Id', 'NSP_Account_Status__c'}).addLimit(1).build());
 
@@ -163,7 +163,7 @@ public with sharing class NSP_NotificatonIESAlertsBatch_Test {
     }
 
     @isTest
-    static void terminatedEmailTemplateC(){
+    private static void terminatedEmailTemplateC(){
         //GIVEN
         Asset asset = Database.Query(new NSP_QueryBuilder( 'Asset', new List<String>{'Id', 'NSP_Account_Status__c'}).addLimit(1).build());
 
@@ -206,7 +206,7 @@ public with sharing class NSP_NotificatonIESAlertsBatch_Test {
     }
 
     @isTest
-    static void terminatedEmailTemplateD(){
+    private static void terminatedEmailTemplateD(){
         //GIVEN
         Asset asset = Database.Query(new NSP_QueryBuilder( 'Asset', new List<String>{'Id', 'NSP_Account_Status__c'}).addLimit(1).build());
 
@@ -247,7 +247,7 @@ public with sharing class NSP_NotificatonIESAlertsBatch_Test {
     }
 
     @isTest
-    static void terminatedEmailTemplateE(){
+    private static void terminatedEmailTemplateE(){
         //GIVEN
         Asset asset = Database.Query(new NSP_QueryBuilder( 'Asset', new List<String>{'Id', 'NSP_Account_Status__c'}).addLimit(1).build());
 
@@ -288,7 +288,7 @@ public with sharing class NSP_NotificatonIESAlertsBatch_Test {
     }
 
     @isTest
-    static void terminatedEmailTemplateF(){
+    private static void terminatedEmailTemplateF(){
         //GIVEN
         Asset asset = Database.Query(new NSP_QueryBuilder( 'Asset', new List<String>{'Id', 'NSP_Account_Status__c'}).addLimit(1).build());
 
@@ -324,7 +324,7 @@ public with sharing class NSP_NotificatonIESAlertsBatch_Test {
     }
 
     @isTest
-    static void terminatedEmailTemplateG(){
+    private static void terminatedEmailTemplateG(){
         //GIVEN
         Asset asset = Database.Query(new NSP_QueryBuilder( 'Asset', new List<String>{'Id', 'NSP_Account_Status__c'}).addLimit(1).build());
 
@@ -368,7 +368,7 @@ public with sharing class NSP_NotificatonIESAlertsBatch_Test {
      * @description when no subclientcontact is matched no email is trigged.
      */
     @isTest
-    static void terminatedEmailTemplateNegativeCase(){
+    private static void terminatedEmailTemplateNegativeCase(){
         //WHEN
         Test.startTest();
         Database.executeBatch(new NSP_NotificatonIESAlertsBatch(), 100);

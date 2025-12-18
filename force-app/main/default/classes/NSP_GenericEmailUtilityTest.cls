@@ -3,6 +3,9 @@ private class NSP_GenericEmailUtilityTest {
 
     @IsTest
     private static void testSendEmail() {
+        Email_Deliverability_Settings__c emailSetting = Email_Deliverability_Settings__c.getOrgDefaults();
+        emailSetting.IsEnabledOutbound__c = true;
+        upsert emailSetting;
         Messaging.SingleEmailMessage[] emails = new Messaging.SingleEmailMessage[1];
         Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
         email.setToAddresses(new List<String>{'test@example.com'});
@@ -17,6 +20,9 @@ private class NSP_GenericEmailUtilityTest {
     
     @IsTest
     private static void testNoSendEmail() {
+        Email_Deliverability_Settings__c emailSetting = Email_Deliverability_Settings__c.getOrgDefaults();
+        emailSetting.IsEnabledOutbound__c = true;
+        upsert emailSetting;
         Messaging.SingleEmailMessage[] emails = new Messaging.SingleEmailMessage[1];
         Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
         email.setToAddresses(new List<String>{''});
