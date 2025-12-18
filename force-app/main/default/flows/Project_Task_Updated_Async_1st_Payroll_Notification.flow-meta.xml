@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Send_Email_Alert</name>
         <label>Send Email Alert</label>
-        <locationX>176</locationX>
-        <locationY>384</locationY>
+        <locationX>440</locationX>
+        <locationY>492</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <faultConnector>
@@ -63,11 +63,12 @@
         <offset>0</offset>
     </actionCalls>
     <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Assign_FaultElement_Send_Email_Alert</name>
         <label>Assign FaultElement - Send Email Alert</label>
-        <locationX>440</locationX>
-        <locationY>492</locationY>
+        <locationX>704</locationX>
+        <locationY>600</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -82,8 +83,8 @@
     <decisions>
         <name>Is_user_active</name>
         <label>Is user active</label>
-        <locationX>440</locationX>
-        <locationY>276</locationY>
+        <locationX>704</locationX>
+        <locationY>384</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>User_is_active</name>
@@ -101,6 +102,30 @@
             <label>User is active</label>
         </rules>
     </decisions>
+    <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check</name>
+        <label>Outbound Email custom setting check</label>
+        <locationX>440</locationX>
+        <locationY>276</locationY>
+        <defaultConnector>
+            <targetReference>Is_user_active</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false</label>
+        </rules>
+    </decisions>
+    <description>Outbound Email bypass added.</description>
     <environments>Default</environments>
     <formulas>
         <name>FormulaLink</name>
@@ -171,7 +196,7 @@ LEFT($Api.Enterprise_Server_URL_530,(FIND(&apos;com/&apos;,$Api.Enterprise_Serve
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Is_user_active</targetReference>
+                <targetReference>Outbound_Email_custom_setting_check</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
@@ -181,8 +206,8 @@ LEFT($Api.Enterprise_Server_URL_530,(FIND(&apos;com/&apos;,$Api.Enterprise_Serve
     <subflows>
         <name>Insperity_Fault_Handler_Subflow_Flow_1</name>
         <label>Insperity Fault Handler Subflow Flow 1</label>
-        <locationX>440</locationX>
-        <locationY>600</locationY>
+        <locationX>704</locationX>
+        <locationY>708</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>

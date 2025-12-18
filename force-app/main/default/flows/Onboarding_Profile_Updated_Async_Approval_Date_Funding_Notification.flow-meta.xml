@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Send_Email_to_Intake_specialist</name>
         <label>Send Email to Intake specialist</label>
-        <locationX>50</locationX>
-        <locationY>816</locationY>
+        <locationX>308</locationX>
+        <locationY>924</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <faultConnector>
@@ -60,13 +60,15 @@
             </value>
         </inputParameters>
         <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Assign_FaultElement_Get_History_record</name>
         <label>Assign FaultElement - Get History record</label>
-        <locationX>1370</locationX>
-        <locationY>384</locationY>
+        <locationX>1628</locationX>
+        <locationY>492</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -82,8 +84,8 @@
     <assignments>
         <name>Assign_FaultElement_Send_Email_Alert</name>
         <label>Assign FaultElement - Send Email Alert</label>
-        <locationX>314</locationX>
-        <locationY>924</locationY>
+        <locationX>572</locationX>
+        <locationY>1032</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -98,8 +100,8 @@
     <assignments>
         <name>Count_Of_History_Records</name>
         <label>Count Of History Records</label>
-        <locationX>578</locationX>
-        <locationY>492</locationY>
+        <locationX>836</locationX>
+        <locationY>600</locationY>
         <assignmentItems>
             <assignToReference>Checknumber</assignToReference>
             <operator>AssignCount</operator>
@@ -114,8 +116,8 @@
     <decisions>
         <name>Check_Count_of_history_records</name>
         <label>Check Count of history records</label>
-        <locationX>578</locationX>
-        <locationY>600</locationY>
+        <locationX>836</locationX>
+        <locationY>708</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>One_History_Record_found</name>
@@ -136,8 +138,8 @@
     <decisions>
         <name>Check_nulll_for_history_list</name>
         <label>Check nulll for history list</label>
-        <locationX>842</locationX>
-        <locationY>384</locationY>
+        <locationX>1100</locationX>
+        <locationY>492</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>History_count_list_is_not_null</name>
@@ -165,8 +167,8 @@
     <decisions>
         <name>Is_Intake_Specialist_is_active</name>
         <label>Is &apos;Intake Specialist&apos; is active</label>
-        <locationX>314</locationX>
-        <locationY>708</locationY>
+        <locationX>572</locationX>
+        <locationY>816</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>User_is_active</name>
@@ -191,6 +193,30 @@
             <label>User is active</label>
         </rules>
     </decisions>
+    <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check</name>
+        <label>Outbound Email custom setting check</label>
+        <locationX>572</locationX>
+        <locationY>276</locationY>
+        <defaultConnector>
+            <targetReference>Get_Onboarding_profile_history</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false</label>
+        </rules>
+    </decisions>
+    <description>Outbound Email bypass added.</description>
     <environments>Default</environments>
     <formulas>
         <name>History_Records_Size</name>
@@ -230,8 +256,8 @@ LEFT($Api.Enterprise_Server_URL_530,(FIND(&apos;com/&apos;,$Api.Enterprise_Serve
     <recordLookups>
         <name>Get_Onboarding_profile_history</name>
         <label>Get Onboarding profile history</label>
-        <locationX>842</locationX>
-        <locationY>276</locationY>
+        <locationX>1100</locationX>
+        <locationY>384</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_nulll_for_history_list</targetReference>
@@ -262,7 +288,7 @@ LEFT($Api.Enterprise_Server_URL_530,(FIND(&apos;com/&apos;,$Api.Enterprise_Serve
         <sortOrder>Desc</sortOrder>
     </recordLookups>
     <start>
-        <locationX>188</locationX>
+        <locationX>50</locationX>
         <locationY>0</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -304,7 +330,7 @@ LEFT($Api.Enterprise_Server_URL_530,(FIND(&apos;com/&apos;,$Api.Enterprise_Serve
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Get_Onboarding_profile_history</targetReference>
+                <targetReference>Outbound_Email_custom_setting_check</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
@@ -314,8 +340,8 @@ LEFT($Api.Enterprise_Server_URL_530,(FIND(&apos;com/&apos;,$Api.Enterprise_Serve
     <subflows>
         <name>Insperity_Fault_Handler_Subflow_Flow</name>
         <label>Insperity Fault Handler Subflow Flow</label>
-        <locationX>314</locationX>
-        <locationY>1032</locationY>
+        <locationX>572</locationX>
+        <locationY>1140</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
