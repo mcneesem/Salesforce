@@ -65,7 +65,22 @@ private class NSP_NotifyPMForITAProjTest {
         listIP.add(impl);
         }
         insert listIP;
-        
+
+        List<User> deploymentManagers = [
+            SELECT Id
+            FROM User
+            WHERE ( Id = '0054x0000056lRZAAY' )
+            LIMIT 1
+        ];
+        Assert.isNotNull( deploymentManagers , 'Null Deployment Manager query results.' );
+        Assert.isTrue( ( deploymentManagers.size() > 0 ) , 'No Deployment Manager query results.' );
+        Assert.isTrue( ( deploymentManagers.size() == 1 ) , 'Incorrect Deployment Manager query results.' );
+        User deploymentManager = deploymentManagers[0];
+        System.runas( deploymentManager ) {
+            Email_Deliverability_Settings__c emailSetting = Email_Deliverability_Settings__c.getOrgDefaults();
+            emailSetting.IsEnabledOutbound__c = true;
+            upsert emailSetting;
+        }        
     }
     
     @isTest
