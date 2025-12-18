@@ -1502,7 +1502,7 @@ public with sharing class NSP_LeadTriggerHelper {
         }
     }
 
-    public static Map<Id,Id> calculateOwnerTransferMap( Map<Id,sObject> recordNewMap , Map<Id,sObject> recordOldMap ) {
+    private static Map<Id,Id> calculateOwnerTransferMap( Map<Id,sObject> recordNewMap , Map<Id,sObject> recordOldMap ) {
         Map<Id,Id> recordOwnerTransfer = new Map<Id,Id>();
         if ( ( recordOldMap != null )
             && ( recordNewMap != null )
@@ -1522,7 +1522,7 @@ public with sharing class NSP_LeadTriggerHelper {
         return recordOwnerTransfer;
     }
 
-    public static Map<Id,Id> calculateEventNewOwnerMap( Map<Id,Id> recordOwnerTransfer ) {
+    private static Map<Id,Id> calculateEventNewOwnerMap( Map<Id,Id> recordOwnerTransfer ) {
         Map<Id,Id> eventNewOwner =  new Map<Id,Id>();
         if ( ( recordOwnerTransfer != null ) && !recordOwnerTransfer.isEmpty() ) {
             for ( Event eventRecord : [
@@ -1562,7 +1562,7 @@ public with sharing class NSP_LeadTriggerHelper {
     // @return: void
     //
     @future
-    public static void transferDiscoveryCallAsync( String strEventNewOwner ) {
+    private static void transferDiscoveryCallAsync( String strEventNewOwner ) {
         try {
             Map<Id,Id> eventNewOwner = null;
             if ( String.isNotBlank( strEventNewOwner ) ) {
@@ -1593,34 +1593,38 @@ public with sharing class NSP_LeadTriggerHelper {
 
     private static List<Event> getEventsToUpdate(Map<Id,Id> eventNewOwner){
         List<Event> eventRecords = new List<Event>();
-        //  Get new owner's Sales Office ADO-437605
-        Map<Id,User> salesOfficeMap = new Map<Id, User>([
-            SELECT
-                Id ,
-                NSP_SalesDivision__c ,
-                NSP_Sales_Office__c ,
-                NSP_SalesRegion__c
-            FROM User 
-            WHERE ( Id IN :eventNewOwner.values() )]);
-        for ( Event eventRecord : [
-                    SELECT
-                        Id ,
-                        OwnerId ,
-                        NSP_Sales_Office__c ,
-                        NSP_Sales_Division__c ,
-                        NSP_Sales_Region__c
-                    FROM Event
-                    WHERE ( Id IN :eventNewOwner.keySet() )]){
-            if ( eventNewOwner.containsKey( eventRecord.Id ) && ( eventNewOwner.get( eventRecord.Id ) != null ) ) {
-                eventRecord.OwnerId = eventNewOwner.get( eventRecord.Id );
-                //  set Sales Office
-                if(salesOfficeMap.containsKey(eventRecord.OwnerId)){
-                    User userRecord = salesOfficeMap.get(eventRecord.OwnerId);
-                    if(userRecord != null){
-                        eventRecord.NSP_Sales_Office__c = userRecord.NSP_Sales_Office__c;
-                        eventRecord.NSP_Sales_Division__c = userRecord.NSP_SalesDivision__c;
-                        eventRecord.NSP_Sales_Region__c = userRecord.NSP_SalesRegion__c;
-                        eventRecords.add( eventRecord );
+        if(( eventNewOwner != null ) && !eventNewOwner.isEmpty()){
+            //  Get new owner's Sales Office ADO-437605
+            Map<Id,User> salesOfficeMap = new Map<Id, User>([
+                SELECT
+                    Id ,
+                    NSP_SalesDivision__c ,
+                    NSP_Sales_Office__c ,
+                    NSP_SalesRegion__c
+                FROM User 
+                WHERE ( Id IN :eventNewOwner.values() )]);
+            if(( salesOfficeMap != null ) && !salesOfficeMap.isEmpty() ){
+                for ( Event eventRecord : [
+                        SELECT
+                            Id ,
+                            OwnerId ,
+                            NSP_Sales_Office__c ,
+                            NSP_Sales_Division__c ,
+                            NSP_Sales_Region__c
+                        FROM Event
+                        WHERE ( Id IN :eventNewOwner.keySet() )]){
+                    if ( eventNewOwner.containsKey( eventRecord.Id ) && ( eventNewOwner.get( eventRecord.Id ) != null ) ) {
+                        eventRecord.OwnerId = eventNewOwner.get( eventRecord.Id );
+                        //  set Sales Office
+                        if(salesOfficeMap.containsKey(eventRecord.OwnerId)){
+                            User userRecord = salesOfficeMap.get(eventRecord.OwnerId);
+                            if(userRecord != null){
+                                eventRecord.NSP_Sales_Office__c = userRecord.NSP_Sales_Office__c;
+                                eventRecord.NSP_Sales_Division__c = userRecord.NSP_SalesDivision__c;
+                                eventRecord.NSP_Sales_Region__c = userRecord.NSP_SalesRegion__c;
+                                eventRecords.add( eventRecord );
+                            }
+                        }
                     }
                 }
             }
