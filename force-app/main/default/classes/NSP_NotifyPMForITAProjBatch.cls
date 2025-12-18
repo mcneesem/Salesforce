@@ -9,7 +9,7 @@
 *
 **************************************************************************************************************************/
 public class NSP_NotifyPMForITAProjBatch implements Schedulable,Database.Batchable<SObject> {
-    // test w/ NSP_NotifyPMForITAProjTest (83%)
+    // test w/ NSP_NotifyPMForITAProjTest (77%)
 
     /**
      * methodName: start
