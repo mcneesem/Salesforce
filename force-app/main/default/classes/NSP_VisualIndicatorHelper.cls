@@ -138,7 +138,7 @@ public without sharing class NSP_VisualIndicatorHelper {
         if (expList != null && !expList.isEmpty() && accWrapper != null) {
             for (NSP_Service_Exception__c eachException : expList) {
                 if (eachException.NSP_End_Date__c == null || eachException.NSP_End_Date__c >= Date.today()) {
-                    accWrapper.serviceExceptionPresent = NSP_ServiceConstants.VALUE_TRUE;
+                    accWrapper.serviceExceptionPresent = true;
                 }
             }
         }
@@ -156,28 +156,28 @@ public without sharing class NSP_VisualIndicatorHelper {
         Id woAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'WO' );
         String wsProductLine = 'Workforce Synchronization';
         if (asset.RecordTypeId == woAssetRecordTypeId) {
-            if (asset.NSP_Paperless__c == NSP_ServiceConstants.VALUE_TRUE) {
-                accWrapper.assetPaperlessPresent = NSP_ServiceConstants.VALUE_TRUE;
+            if (asset.NSP_Paperless__c == true) {
+                accWrapper.assetPaperlessPresent = true;
             }
-            if (asset.NSP_National_Account__c == NSP_ServiceConstants.VALUE_TRUE) {
-                accWrapper.assetNationalAccount = NSP_ServiceConstants.VALUE_TRUE;
+            if (asset.NSP_National_Account__c == true) {
+                accWrapper.assetNationalAccount = true;
             }
             if (asset.NSP_Product_Line__c != null  && asset.NSP_Product_Line__c == wsProductLine) {
-                accWrapper.workSyncClientTrue = NSP_ServiceConstants.VALUE_TRUE;
+                accWrapper.workSyncClientTrue = true;
             }
             // HRScale Indicator
             if (asset.Is_HRScale__c == true) {
-                accWrapper.hrScale = NSP_ServiceConstants.VALUE_TRUE;
+                accWrapper.hrScale = true;
             }
         }
         if (asset.NSP_Client_Retained_Workers_Comp__c != null && asset.NSP_Client_Retained_Workers_Comp__c == '100% Client') {
-            accWrapper.client100True = NSP_ServiceConstants.VALUE_TRUE;
+            accWrapper.client100True = true;
         }
         if (asset.NSP_Client_Retained_Workers_Comp__c != null && asset.NSP_Client_Retained_Workers_Comp__c == 'Client & Insperity') {
-            accWrapper.clientAndInsperity = NSP_ServiceConstants.VALUE_TRUE;
+            accWrapper.clientAndInsperity = true;
         }
-        if (asset.NSP_Pending_Termination__c == NSP_ServiceConstants.VALUE_TRUE) {
-            accWrapper.pendingTermination = NSP_ServiceConstants.VALUE_TRUE;
+        if (asset.NSP_Pending_Termination__c == true) {
+            accWrapper.pendingTermination = true;
         }
     }
 
@@ -186,7 +186,7 @@ public without sharing class NSP_VisualIndicatorHelper {
         if (surveyList != null && !surveyList.isEmpty()) {
             Date surveyLimitDate = surveyList[0].Survey_End_Date__c.addDays(180);
             if (Date.today().daysBetween(surveyLimitDate) >= 0) {
-                accWrapper.vocSurveyIndicator = NSP_ServiceConstants.VALUE_TRUE;
+                accWrapper.vocSurveyIndicator = true;
             }
         }
     }
