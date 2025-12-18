@@ -4,6 +4,10 @@
         <apexClass>NSP_PayrollTriggerHelper</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Payroll_Data_Sheet_Contact_Components</name>
+    </customPermissions>
     <description>allows users to create/edit any field on a Payroll Data Sheet record IF the fields weren&apos;t created from integration</description>
     <fieldPermissions>
         <editable>true</editable>
@@ -58,6 +62,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Additional_Payroll_Contact__c.View_Payroll_Paperwork__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Payroll__c.ACR_Work_Phone__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -193,6 +202,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Payroll__c.NSP_Back_Up_Payroll_Contact__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Payroll__c.NSP_Backup_Payroll_Contact_SCC__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -377,6 +391,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>NSP_Payroll__c.NSP_HR_Contact_SCC__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>NSP_Payroll__c.NSP_HR_Contact__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -471,6 +490,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Payroll__c.NSP_OSS_SCC__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Payroll__c.NSP_On_site_Supervisor_Cell__c</field>
         <readable>true</readable>
@@ -558,6 +582,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Payroll__c.NSP_Payroll_ProcessingSpecialInstruction__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Payroll__c.NSP_Payroll_SCC__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -798,6 +827,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Payroll__c.XML_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Sub_Client_Contact__c.Contact_full_name__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
