@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Send_Email_to_401k</name>
         <label>Send Email to 401k</label>
-        <locationX>176</locationX>
-        <locationY>335</locationY>
+        <locationX>308</locationX>
+        <locationY>431</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
@@ -41,8 +41,35 @@
                 <stringValue>A New S2I record has been created</stringValue>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>55.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check</name>
+        <label>Outbound Email custom setting check</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <defaultConnector>
+            <targetReference>Send_Email_to_401k</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false</label>
+        </rules>
+    </decisions>
+    <description>Outbound Email bypass added.</description>
     <environments>Default</environments>
     <formulas>
         <name>linkToRecord</name>
@@ -73,8 +100,8 @@
     <recordCreates>
         <name>Create_Email_Message_to_record_email_sent</name>
         <label>Create Email Message to record email sent.</label>
-        <locationX>176</locationX>
-        <locationY>455</locationY>
+        <locationX>308</locationX>
+        <locationY>539</locationY>
         <inputAssignments>
             <field>FromAddress</field>
             <value>
@@ -124,13 +151,13 @@
         <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Send_Email_to_401k</targetReference>
+            <targetReference>Outbound_Email_custom_setting_check</targetReference>
         </connector>
         <object>NSP_Sales_to_Implementation__c</object>
         <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <textTemplates>
         <name>emailBody</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>

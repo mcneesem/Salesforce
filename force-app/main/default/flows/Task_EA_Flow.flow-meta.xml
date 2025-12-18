@@ -3,13 +3,16 @@
     <actionCalls>
         <name>Task_Assigned_Email</name>
         <label>Task Assigned Email</label>
-        <locationX>320</locationX>
-        <locationY>479</locationY>
+        <locationX>50</locationX>
+        <locationY>539</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
             <targetReference>Create_Email_Message_Records</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>emailBody</name>
@@ -35,13 +38,16 @@
                 <elementReference>$Record.Subject</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>55.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <decisions>
         <name>Check_Condition</name>
         <label>Check Condition</label>
-        <locationX>584</locationX>
-        <locationY>371</locationY>
+        <locationX>578</locationX>
+        <locationY>431</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Task_Assigned</name>
@@ -73,6 +79,31 @@
             <label>Task Assigned?</label>
         </rules>
     </decisions>
+    <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check</name>
+        <label>Outbound Email custom setting check</label>
+        <locationX>182</locationX>
+        <locationY>323</locationY>
+        <defaultConnector>
+            <targetReference>Check_Condition</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false</label>
+        </rules>
+    </decisions>
+    <description>Outbound Email bypass and Fault Handler subflow added.</description>
+    <environments>Default</environments>
     <formulas>
         <name>fxTaskURL</name>
         <dataType>String</dataType>
@@ -89,7 +120,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>FREE_FORM_CANVAS</stringValue>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -100,53 +131,16 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordCreates>
-        <name>Copy_1_of_Create_Error_Record</name>
-        <label>Copy 1 of Create_Error_Record</label>
-        <locationX>1024</locationX>
-        <locationY>1127</locationY>
-        <inputAssignments>
-            <field>NSP_Class__c</field>
-            <value>
-                <stringValue>Task EA Flow</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Description__c</field>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Method__c</field>
-            <value>
-                <stringValue>Update Record</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Object__c</field>
-            <value>
-                <stringValue>Task</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Record_Id__c</field>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <object>NSP_Error_Log__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
-    <recordCreates>
         <name>Create_Email_Message_Records</name>
         <label>Create_Email_Message_Records</label>
-        <locationX>320</locationX>
-        <locationY>587</locationY>
+        <locationX>50</locationX>
+        <locationY>647</locationY>
         <connector>
             <targetReference>Copy_to_Standard_subject_field</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Create_Error_Record</targetReference>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
         </faultConnector>
         <inputAssignments>
             <field>FromAddress</field>
@@ -193,51 +187,14 @@
         <object>EmailMessage</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
-    <recordCreates>
-        <name>Create_Error_Record</name>
-        <label>Create_Error_Record</label>
-        <locationX>584</locationX>
-        <locationY>695</locationY>
-        <inputAssignments>
-            <field>NSP_Class__c</field>
-            <value>
-                <stringValue>Task EA Flow</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Description__c</field>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Method__c</field>
-            <value>
-                <stringValue>Update Record</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Object__c</field>
-            <value>
-                <stringValue>Task</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Record_Id__c</field>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <object>NSP_Error_Log__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
     <recordUpdates>
         <name>Copy_to_Standard_subject_field</name>
         <label>Copy to Standard subject field</label>
-        <locationX>584</locationX>
-        <locationY>1019</locationY>
+        <locationX>50</locationX>
+        <locationY>755</locationY>
         <faultConnector>
-            <targetReference>Copy_1_of_Create_Error_Record</targetReference>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -256,16 +213,35 @@
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <start>
-        <locationX>458</locationX>
-        <locationY>48</locationY>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
         <connector>
-            <targetReference>Check_Condition</targetReference>
+            <targetReference>Outbound_Email_custom_setting_check</targetReference>
         </connector>
         <object>Task</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
+    <subflows>
+        <name>Fault_Handler_Subflow</name>
+        <label>Fault Handler Subflow</label>
+        <locationX>842</locationX>
+        <locationY>647</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Task_EA_Flow</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <textTemplates>
         <name>EmailBody</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
