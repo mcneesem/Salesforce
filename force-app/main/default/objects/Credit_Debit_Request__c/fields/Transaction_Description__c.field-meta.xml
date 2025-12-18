@@ -6,41 +6,51 @@
   OR(
     AND(
       ISPICKVAL( Fin_Category__c , &quot;Client Debit&quot; ) ,
-      ISPICKVAL( Fin_Subcategory__c , &quot;PR Funding Chargeback&quot; ) ) ,
+      ISPICKVAL( Fin_Subcategory__c , &quot;PR Funding Chargeback&quot; )
+    ) ,
     AND(
       ISPICKVAL( Fin_Category__c , &quot;EE Reversal&quot; ) ,
-      ISPICKVAL( Fin_Subcategory__c , &quot;EE Reversal Debit&quot; ) ) ,
+      ISPICKVAL( Fin_Subcategory__c , &quot;EE Reversal Debit&quot; )
+    ) ,
     AND(
       ISPICKVAL( Fin_Category__c , &quot;Client Tax Credit&quot; ) ,
-      ISPICKVAL( Fin_Subcategory__c , &quot;Tax Credit/Payroll&quot; ) ) ,
+      ISPICKVAL( Fin_Subcategory__c , &quot;Tax Credit/Payroll&quot; )
+    ) ,
     AND(
-      ISPICKVAL(Fin_Category__c, &quot;Client Tax Credit&quot;),
-      ISPICKVAL(Fin_Subcategory__c, &quot;Tax Credit/Tax Group&quot;) ),
-    AND(
-      ISPICKVAL( Fin_Category__c , &quot;Client Return&quot; ) ,
-      ISPICKVAL( Fin_Subcategory__c , &quot;Overfunding Return&quot; ) ) ,
-    AND(
-      ISPICKVAL( Fin_Category__c , &quot;Client Return&quot; ) ,
-      ISPICKVAL( Fin_Subcategory__c , &quot;401K Return&quot; ) ) ,
+      ISPICKVAL( Fin_Category__c , &quot;Client Tax Credit&quot; ) ,
+      ISPICKVAL( Fin_Subcategory__c , &quot;Tax Credit/Tax Group&quot; )
+    ) ,
     AND(
       ISPICKVAL( Fin_Category__c , &quot;Client Return&quot; ) ,
-      ISPICKVAL( Fin_Subcategory__c , &quot;Reversal Refund&quot; ) ) ,
+      ISPICKVAL( Fin_Subcategory__c , &quot;Overfunding Return&quot; )
+    ) ,
+    AND(
+      ISPICKVAL( Fin_Category__c , &quot;Client Return&quot; ) ,
+      ISPICKVAL( Fin_Subcategory__c , &quot;401K Return&quot; )
+    ) ,
+    AND(
+      ISPICKVAL( Fin_Category__c , &quot;Client Return&quot; ) ,
+      ISPICKVAL( Fin_Subcategory__c , &quot;Reversal Refund&quot; )
+    ) ,
     AND(
       ISPICKVAL( Fin_Category__c , &quot;EE Reversal&quot; ) ,
-      ISPICKVAL( Fin_Subcategory__c , &quot;Unsuccessful Reversal&quot; ) ) ,
+      ISPICKVAL( Fin_Subcategory__c , &quot;Unsuccessful Reversal&quot; )
+    ) ,
     AND(
       ISPICKVAL( Fin_Category__c , &quot;DD Chargeback Cure&quot; ) ,
-      ISPICKVAL( Fin_Subcategory__c , &quot;DD Chargeback Cure - EE&quot; ) ) ,
+      ISPICKVAL( Fin_Subcategory__c , &quot;DD Chargeback Cure - EE&quot; )
+    ) ,
     AND(
       ISPICKVAL( Fin_Category__c , &quot;DD Chargeback Cure&quot; ) ,
-      ISPICKVAL( Fin_Subcategory__c , &quot;DD Chargeback Cure - Client&quot; ) )
+      ISPICKVAL( Fin_Subcategory__c , &quot;DD Chargeback Cure - Client&quot; )
+    )
   ) ,
   ( iSolved_ID__c &amp; Payroll_Run__c ),
   /* Else if Category = Client Debit and Subcategory = Tax Debit */
   IF(
-      AND(
-        ISPICKVAL( Fin_Category__c , &quot;Client Debit&quot; ) ,
-        ISPICKVAL( Fin_Subcategory__c , &quot;Tax Debit&quot; )
+    AND(
+      ISPICKVAL( Fin_Category__c , &quot;Client Debit&quot; ) ,
+      ISPICKVAL( Fin_Subcategory__c , &quot;Tax Debit&quot; )
     ) ,
     iSolved_ID__c ,
     &quot;&quot;
