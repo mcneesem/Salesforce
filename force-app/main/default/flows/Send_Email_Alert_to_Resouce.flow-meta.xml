@@ -4,8 +4,8 @@
         <description>Send an Email to NBI IMPL Res for Assignment</description>
         <name>Send_Email_to_NBI_IMPL_Res_for_Assignment</name>
         <label>Send Email to NBI IMPL Res for Assignment</label>
-        <locationX>50</locationX>
-        <locationY>455</locationY>
+        <locationX>242</locationX>
+        <locationY>539</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
@@ -36,13 +36,15 @@
                 <stringValue>You Have a S2I Installation Assignment</stringValue>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <description>Send Email to NBI IMPL Res for QC Completion</description>
         <name>Send_Email_to_NBI_IMPL_Res_for_QC_Completion_0</name>
         <label>Send Email to NBI IMPL Res for QC Completion</label>
-        <locationX>50</locationX>
-        <locationY>1487</locationY>
+        <locationX>242</locationX>
+        <locationY>1463</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
@@ -73,13 +75,15 @@
                 <stringValue>S2I Installation QC Completed</stringValue>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <description>Send Email to NBI res and Sales consultant for S2I completion</description>
         <name>Send_Email_to_NBI_res_and_Sales_consultant_for_S2I_completion</name>
         <label>Send Email to NBI res and Sales consultant for S2I completion</label>
-        <locationX>50</locationX>
-        <locationY>2183</locationY>
+        <locationX>242</locationX>
+        <locationY>2087</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
@@ -110,13 +114,15 @@
                 <stringValue>S2I Installation completed</stringValue>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <description>Send an Email to QC Rep when assigned on S2I rec</description>
         <name>Send_Email_to_QC_Rep_Assignment_Mail</name>
         <label>Send Email to QC Rep Assignment Mail</label>
-        <locationX>50</locationX>
-        <locationY>911</locationY>
+        <locationX>242</locationX>
+        <locationY>947</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
@@ -147,14 +153,17 @@
                 <stringValue>S2I Installation Quality Review Assignment</stringValue>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>55.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <description>Email Address Assignmen To Collection</description>
         <name>EmailAddressAssignmenToCollection</name>
         <label>EmailAddressAssignmenToCollection</label>
-        <locationX>50</locationX>
-        <locationY>2063</locationY>
+        <locationX>242</locationX>
+        <locationY>1979</locationY>
         <assignmentItems>
             <assignToReference>EmailAddressCollectionOfNBIResAndSalesConsultanat</assignToReference>
             <operator>Add</operator>
@@ -184,8 +193,8 @@
         <description>Check if &quot;NBI IMPL Res&quot; is updated on S2I rec</description>
         <name>Check_if_NBI_IMPL_Res_is_updated</name>
         <label>Check if &quot;NBI IMPL Res&quot; is updated</label>
-        <locationX>182</locationX>
-        <locationY>335</locationY>
+        <locationX>374</locationX>
+        <locationY>431</locationY>
         <defaultConnector>
             <targetReference>Check_If_QC_Rep_Field_Is_updated</targetReference>
         </defaultConnector>
@@ -217,8 +226,8 @@
         <description>Check if NBI IMPL Res is updated along with QC Signoff Date</description>
         <name>Check_if_NBI_IMPL_Res_is_updated_along_with_QC_Signoff_Date_0</name>
         <label>Check if NBI IMPL Res is updated along with QC Signoff Date</label>
-        <locationX>182</locationX>
-        <locationY>1367</locationY>
+        <locationX>374</locationX>
+        <locationY>1355</locationY>
         <defaultConnector>
             <targetReference>Get_Email_Message_rec_for_S2I_completion</targetReference>
         </defaultConnector>
@@ -258,8 +267,8 @@
         <description>Check if QC Rep Field Is updated on S2I record</description>
         <name>Check_If_QC_Rep_Field_Is_updated</name>
         <label>Check If QC Rep Field Is updated</label>
-        <locationX>182</locationX>
-        <locationY>791</locationY>
+        <locationX>374</locationX>
+        <locationY>839</locationY>
         <defaultConnector>
             <targetReference>Get_Email_Message_Record_for_QC_completion</targetReference>
         </defaultConnector>
@@ -291,8 +300,8 @@
         <description>checks if &quot;Sign off&quot; Date is populated along with &quot;NBI Res&quot; and &quot;Sales Consultant&quot;</description>
         <name>Check_if_Sign_off_Date_is_populated_along_with_NBI_Res_and_Sales_Consultant</name>
         <label>Check if Sign off Date is populated along with NBI Res and Sales Consultant</label>
-        <locationX>182</locationX>
-        <locationY>1943</locationY>
+        <locationX>374</locationX>
+        <locationY>1871</locationY>
         <defaultConnectorLabel>SignOff date is not populated</defaultConnectorLabel>
         <rules>
             <name>isSignOffDatepoulated</name>
@@ -332,7 +341,30 @@
             <label>isSignOffDatepoulated?</label>
         </rules>
     </decisions>
-    <description>Send an Email Alert to assigned NBI IMPL Resource  or QC Rep on S2I for assignment or completion</description>
+    <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check</name>
+        <label>Outbound Email custom setting check</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <defaultConnector>
+            <targetReference>Check_if_NBI_IMPL_Res_is_updated</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false</label>
+        </rules>
+    </decisions>
+    <description>Outbound Email bypass added. Send an Email Alert to assigned NBI IMPL Resource  or QC Rep on S2I for assignment or completion</description>
     <environments>Default</environments>
     <formulas>
         <description>Url of S2I rec, triggering the flow</description>
@@ -365,8 +397,8 @@
         <description>Create Email Message Record for Email traceability</description>
         <name>Create_Email_Message_Record_0_0_0</name>
         <label>Create Email Message Record</label>
-        <locationX>50</locationX>
-        <locationY>575</locationY>
+        <locationX>242</locationX>
+        <locationY>647</locationY>
         <connector>
             <targetReference>Check_If_QC_Rep_Field_Is_updated</targetReference>
         </connector>
@@ -419,8 +451,8 @@
         <description>Create Email Message Record for Email traceability</description>
         <name>Create_Email_Message_Record_0_0_0_0</name>
         <label>Create Email Message Record</label>
-        <locationX>50</locationX>
-        <locationY>1031</locationY>
+        <locationX>242</locationX>
+        <locationY>1055</locationY>
         <connector>
             <targetReference>Get_Email_Message_Record_for_QC_completion</targetReference>
         </connector>
@@ -473,8 +505,8 @@
         <description>Create Email Message Record for Email traceability</description>
         <name>Create_Email_Message_Record_0_0_0_0_0_0</name>
         <label>Create Email Message Record</label>
-        <locationX>50</locationX>
-        <locationY>1607</locationY>
+        <locationX>242</locationX>
+        <locationY>1571</locationY>
         <connector>
             <targetReference>Get_Email_Message_rec_for_S2I_completion</targetReference>
         </connector>
@@ -527,8 +559,8 @@
         <description>Create Email Message Record for Email traceability for NBI Res</description>
         <name>Create_Email_Message_Record_0_0_0_0_0_0_0</name>
         <label>Create Email Message Record for NBI Res</label>
-        <locationX>50</locationX>
-        <locationY>2303</locationY>
+        <locationX>242</locationX>
+        <locationY>2195</locationY>
         <connector>
             <targetReference>Create_Email_Message_Record_0_0_0_0_0_0_0_0</targetReference>
         </connector>
@@ -581,8 +613,8 @@
         <description>Create Email Message Record for Email traceability for Sales Consultant</description>
         <name>Create_Email_Message_Record_0_0_0_0_0_0_0_0</name>
         <label>Create Email Message Record for Sales Consultant</label>
-        <locationX>50</locationX>
-        <locationY>2423</locationY>
+        <locationX>242</locationX>
+        <locationY>2303</locationY>
         <inputAssignments>
             <field>FromAddress</field>
             <value>
@@ -632,8 +664,8 @@
         <description>Get Email Message rec for S2I completion , Created when first time condition met</description>
         <name>Get_Email_Message_rec_for_S2I_completion</name>
         <label>Get Email Message rec for S2I completion</label>
-        <locationX>182</locationX>
-        <locationY>1823</locationY>
+        <locationX>374</locationX>
+        <locationY>1763</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_if_Sign_off_Date_is_populated_along_with_NBI_Res_and_Sales_Consultant</targetReference>
@@ -661,7 +693,7 @@
         <description>Get Email Message Record for QC completion</description>
         <name>Get_Email_Message_Record_for_QC_completion</name>
         <label>Get Email Message Record for QC completion</label>
-        <locationX>182</locationX>
+        <locationX>374</locationX>
         <locationY>1247</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -687,10 +719,10 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>56</locationX>
+        <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Check_if_NBI_IMPL_Res_is_updated</targetReference>
+            <targetReference>Outbound_Email_custom_setting_check</targetReference>
         </connector>
         <filterLogic>or</filterLogic>
         <filters>
@@ -711,7 +743,7 @@
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <textTemplates>
         <description>Body of the email template of NBI IMPL Res Assignment</description>
         <name>EmailbodyforNBIIMPLAssignment</name>
