@@ -1,23 +1,16 @@
-//
-// @description  : Batch Class to process lead parent info on plan subplan and asset for story STY-03796
-// @author Sumit
-// @date 23/12/2022
-// Name : NSP_ProcessClientSubPlanHistoryBatch
-//
-public class NSP_ProcessClientSubPlanHistoryBatch implements ISelfSchedulable , Schedulable , Database.Batchable<sObject> {
-    // test w/ NSP_ProcessClientSubPlanHistoryBatchTest (97%)
+public class NSP_ProcessClientSubPlanHistoryBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<sObject> {
+    // test w/ NSP_ProcessClientSubPlanHistoryBatchTest (98%)
 
     //
-    // Schedulable
+    // argument-free constructor is required to be "runnable"...
     //
-    public void execute( SchedulableContext sc ) {
-        if ( NSP_ProcessClientSubPlanHistoryBatch.isEnabled ) {
-            Database.executeBatch(
-                new NSP_ProcessClientSubPlanHistoryBatch() ,
-                NSP_ProcessClientSubPlanHistoryBatch.batchSize
-            );
-        }
+
+    public NSP_ProcessClientSubPlanHistoryBatch() {
     }
+
+    //
+    // ISelfSchedulable
+    //
 
     // runs M-F at 8pm central...
     public static String schedule() {
@@ -26,10 +19,45 @@ public class NSP_ProcessClientSubPlanHistoryBatch implements ISelfSchedulable , 
             suffix = ' ~ TEST';
         }
         return System.schedule(
-            'NSP_ProcessClientSubPlanHistoryBatch ~ M-F at 8 PM' + suffix ,
-            '0 0 20 ? * 1-5 *' ,
+            'NSP_ProcessClientSubPlanHistoryBatch ~ process lead parent info on plan subplan and asset ~ M-F at 8 PM' + suffix ,
+            '0 0 20 ? * 2-6 *' ,
             new NSP_ProcessClientSubPlanHistoryBatch()
         );
+    }
+
+    //
+    // Schedulable
+    //
+
+    public void execute( SchedulableContext sc ) {
+        this.call( 'run' , null );
+    }
+
+    //
+    // Callable
+    //
+
+    public Object call( String action , Map<String,Object> args ) {
+        Object response = null;
+        if ( action == 'run' ) {
+            response = this.run();
+        }
+        return response;
+    }
+
+    //
+    // IJobRunnable
+    //
+
+    public Id run() {
+        Id response = null;
+        if ( NSP_ProcessClientSubPlanHistoryBatch.isEnabled ) {
+            response = Database.executeBatch(
+                new NSP_ProcessClientSubPlanHistoryBatch() ,
+                NSP_ProcessClientSubPlanHistoryBatch.batchSize
+            );
+        }
+        return response;
     }
 
     //
@@ -47,7 +75,7 @@ public class NSP_ProcessClientSubPlanHistoryBatch implements ISelfSchedulable , 
                     NSP_Current_Subplan__c , NSP_Plan_Subplan_Relationship__c ,
                     NSP_Plan_Subplan_Relationship__r.NSP_Subplan_Lead_Parent__c ,
                     NSP_Asset__c , NSP_Asset__r.NSP_Client_is_Lead_Parent__c
-                FROM NSP_Client_Sub_Plan_History__c 
+                FROM NSP_Client_Sub_Plan_History__c
                 WHERE (
                     (
                         NSP_Future_Lead_Parent__c <= TODAY
@@ -71,7 +99,7 @@ public class NSP_ProcessClientSubPlanHistoryBatch implements ISelfSchedulable , 
                     eachCSH.Processed_Client_Subplan_History__c = true;
                     if ( !eachCSH.NSP_Current_Subplan__c ) {
                         // if CSH is not current subplan
-                        eachCSH.NSP_Current_Subplan__c = true; 
+                        eachCSH.NSP_Current_Subplan__c = true;
                     }
                     chsUpdateList.add( eachCSH );
                 }
@@ -79,7 +107,7 @@ public class NSP_ProcessClientSubPlanHistoryBatch implements ISelfSchedulable , 
                     && eachCSH.NSP_Future_Lead_Parent__c <= System.today()
                     )
                 {
-                    // asset added as lead parent 
+                    // asset added as lead parent
                     if ( eachCSH.NSP_Asset__r.NSP_Client_is_Lead_Parent__c ) {
                         // if asset is already marked as client is lead parent
                         assetIdset.add( eachCSH.NSP_Asset__c );
