@@ -2,16 +2,6 @@
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <name>HRScale Reporting &amp; Integrations</name>
-    <queueMembers>
-        <users>
-            <user>gaelle.sop@insperity.com</user>
-            <user>kamron.tanner@insperity.com</user>
-            <user>kevin.dietzel@insperity.com</user>
-            <user>mary.scheuller@insperity.com</user>
-            <user>shandell.zeh@insperity.com</user>
-            <user>tristan.graff@insperity.com</user>
-        </users>
-    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
