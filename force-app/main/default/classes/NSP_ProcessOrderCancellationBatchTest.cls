@@ -5,30 +5,26 @@ private class NSP_ProcessOrderCancellationBatchTest {
 
     @testSetup
     private static void setupTestData() {
+        ProcessOrderCancellationBatchSettings__c settings = ProcessOrderCancellationBatchSettings__c.getOrgDefaults();
+        settings.IsEnabled__c = true;
+        settings.BatchSize__c = 1;
+        upsert settings;
+
         NSP_OrderItemTriggerHandler.TriggerDisabled = true;
         NSP_QuoteTriggerHandler.TriggerDisabled = true;
         NSP_AccountTriggerHandler.TriggerDisabled = true;
         Pricebook2 priceBookRec = NSP_TestHelper.getStandardPriceBook2();
 
         Id stdPriceBookId = Test.getStandardPricebookId();
-        //   NSP_ProjectTasksTrigger.TriggerDisabled = true;
         Account objaccount = NSP_TestHelper.createAccount(false);
         objaccount.Name = 'Insperity WO Billing Account';
         insert objaccount;
 
         Contact objCon = NSP_TestHelper.createContact(objaccount.id, false);
-         objCon.NSP_Sales_Tax_Contact_Key__c = '123';
-         objCon.RecordTypeId = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Sales Tax').getRecordTypeId();
-         objCon.NSP_Sales_Tax_Contact_Counter__c = 2;
-         insert objCon;
-
-        /*pse__Proj__c hcmProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c());
-        hcmProject.Name = NSP_ServiceConstants.HCM_PROJECT_NAME;
-        hcmProject.pse__Start_Date__c = Date.Today();
-        hcmProject.pse__Account__c = objaccount.Id;
-        hcmProject.TemplateName__c = NSP_ServiceConstants.HCM_PROJECT_NAME;
-        hcmProject.Project_Implementer__c = UserInfo.getUserId();
-        insert hcmProject;*/
+        objCon.NSP_Sales_Tax_Contact_Key__c = '123';
+        objCon.RecordTypeId = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Sales Tax').getRecordTypeId();
+        objCon.NSP_Sales_Tax_Contact_Counter__c = 2;
+        insert objCon;
 
         Opportunity objOpportunity = NSP_TestHelper.createOpenOpportunity(objaccount.Id, 'New Product', false);
         insert objOpportunity;
@@ -85,13 +81,6 @@ private class NSP_ProcessOrderCancellationBatchTest {
 
         blng__GLRule__c taxGLRule = new blng__GLRule__c(blng__Active__c = true, blng__Notes__c = 'Created to record: Sales Tax Allocation', Name = 'Test GLRule');
         insert taxGLRule;
-
-
-        //blng__LegalEntity__c legalEntityRec = new blng__LegalEntity__c(blng__Active__c = true, NSP_Company_Name__c = 'Insperity Business Services', blng__City__c = 'KINGWOOD', blng__State__c = 'TX', blng__County__c = 'US', blng__Street1__c = '19001 CRESCENT SPRINGS DR', blng__ZipPostalCode__c = '77339-3802', Name = 'Test Legal Entity');
-        //insert legalEntityRec;
-
-        //blng__TaxTreatment__c texRuleRec = new blng__TaxTreatment__c(blng__TaxCode__c = 'SW052011', blng__TaxGLRule__c = taxTreatmentRec.Id, blng__TaxIntegration__c = taxIntegrationRec.Id, blng__TaxLegalEntity__c = legalEntityRec.Id, Name = 'TestTaxTreatment', blng__TaxRule__c = taxRuleObj.Id);
-        //insert texRuleRec;
 
         List<Product2> productList = new List<Product2>();
         Product2 objproduct = NSP_TestHelper.createProduct('Test Product', false);
@@ -242,7 +231,7 @@ private class NSP_ProcessOrderCancellationBatchTest {
         productList.add(objproduct8);
 
         insert productList;
-        
+
         List<Contract> allContract = new List<Contract>();
         Contract ct = new Contract();
         ct.AccountId = objaccount.Id;
@@ -254,7 +243,7 @@ private class NSP_ProcessOrderCancellationBatchTest {
         ct.Status = 'Draft';
         ct.NSP_Number_of_Employees__c = 86;
         allContract.add(ct);
-        
+
         Contract ct2 = new Contract();
         ct2.AccountId = objaccount.Id;
         ct2.SBQQ__Opportunity__c = objOpportunity.Id;
@@ -266,11 +255,7 @@ private class NSP_ProcessOrderCancellationBatchTest {
         allContract.add(ct2);
 
         insert allContract;
-        //PriceBookEntry pe1std = NSP_TestHelper.createPriceBookEntry(objproduct.Id,200.0,false);
-        //PriceBookEntry pe2std = NSP_TestHelper.createPriceBookEntry(objproduct2.Id,200.0,false);
-        //List<PriceBookEntry> allprices = new List<PriceBookEntry>{pe1std,pe2std};
-        //insert allprices;
-        
+
         List<PriceBookEntry> priceBookEntList = new List<PriceBookEntry>();
         PriceBookEntry objPriceBookEntry = NSP_TestHelper.createPriceBookEntry(objproduct.Id, 100, false);
         PriceBookEntry objPriceBookEntry1 = NSP_TestHelper.createPriceBookEntry(objInvproduct.Id, 100, false);
@@ -304,8 +289,8 @@ private class NSP_ProcessOrderCancellationBatchTest {
         objQuote.SBQQ__primary__c = true;
         objQuote.NSP_Billing_Address__c = nspAddress.Id;
         objQuote.SBQQ__ShippingStreet__c = 'Alondra Boulevard';
-        objQuote.SBQQ__ShippingCity__c = 'San Francisco';   
-        objQuote.SBQQ__StartDate__c = System.today().toStartOfMonth().addMonths(-3);    
+        objQuote.SBQQ__ShippingCity__c = 'San Francisco';
+        objQuote.SBQQ__StartDate__c = System.today().toStartOfMonth().addMonths(-3);
         objQuote.SBQQ__ShippingState__c = 'California';
         objQuote.SBQQ__ShippingCountry__c = 'United States';
         objQuote.SBQQ__ShippingPostalCode__c = '94103';
@@ -331,13 +316,13 @@ private class NSP_ProcessOrderCancellationBatchTest {
         objQuoteLine[1].NSP_Order_Activation_Trigger__c = NSP_CPQConstants.PROJGOLIVEDATE;
         objQuoteLine[2].NSP_ApplicableProduct_AmendDowngrade__c = NSP_CPQConstants.QUOTELINE_APPLICABLEPRODUCT;
         objQuoteLine[3].NSP_ApplicableProduct_AmendUpsell__c = NSP_CPQConstants.QUOTELINE_APPLICABLEPRODUCT;
-        objQuoteLine[1].NSP_Action_Type__c = NSP_CPQConstants.ACTION_NEW;  
+        objQuoteLine[1].NSP_Action_Type__c = NSP_CPQConstants.ACTION_NEW;
         objQuoteLine[2].NSP_Action_Type__c = NSP_CPQConstants.ACTION_DOWNGRADE;
-        objQuoteLine[2].NSP_Quoted_Quantity__c = 22;  
-        objQuoteLine[2].NSP_Previous_Quantity__c = 25;  
-        objQuoteLine[3].NSP_Action_Type__c = NSP_CPQConstants.ACTION_UPSELL; 
-        objQuoteLine[3].NSP_Quoted_Quantity__c = 25;  
-        objQuoteLine[3].NSP_Previous_Quantity__c = 22;  
+        objQuoteLine[2].NSP_Quoted_Quantity__c = 22;
+        objQuoteLine[2].NSP_Previous_Quantity__c = 25;
+        objQuoteLine[3].NSP_Action_Type__c = NSP_CPQConstants.ACTION_UPSELL;
+        objQuoteLine[3].NSP_Quoted_Quantity__c = 25;
+        objQuoteLine[3].NSP_Previous_Quantity__c = 22;
         objQuoteLine[0].NSP_Priority_Amendment__c = 11.0;
         objQuoteLine[1].NSP_Priority_Amendment__c = 12.0;
         objQuoteLine[2].NSP_Priority_Amendment__c = 13.0;
@@ -395,10 +380,9 @@ private class NSP_ProcessOrderCancellationBatchTest {
         objPaymntMethod.blng__PaymentType__c = 'ACH';
         objPaymntMethod.Payment_Method_Type__c = 'ACH';
         insert objPaymntMethod;
-        
+
         stdPriceBookId = Test.getStandardPricebookId();
-       // Order ord2 = new Order (AccountId=objaccount.Id,Status='Draft',EffectiveDate=Date.today(),Pricebook2Id= stdPriceBookId);
-        
+
         Order testOrder2 = new Order();
         testOrder2.Pricebook2Id = stdPriceBookId;
         testOrder2.AccountId = objQuote.SBQQ__Account__c;
@@ -414,24 +398,21 @@ private class NSP_ProcessOrderCancellationBatchTest {
         testOrder2.NSP_Project_Name__c = 'Test Project Name2';
         SBQQ.TriggerControl.disable();
         insert testOrder2;
-        
+
         OrderItem ordpr1 = new OrderItem (OrderId = testOrder2.Id, Product2Id=objproduct.Id, UnitPrice=10.0,Quantity=5,PricebookEntryId=objPriceBookEntry.Id);
-       // OrderItem ordpr2 = new OrderItem (OrderId = ord2.Id, Product2Id=objproduct2.Id, UnitPrice=20.0,Quantity=10,PricebookEntryId=objPriceBookEntry3.Id);
         ordpr1.blng__BillingRule__c=brObj.Id;
         ordpr1.blng__TaxRule__c=taxRuleObj.Id;
         ordpr1.blng__RevenueRecognitionRule__c=rrObj.Id;
         List<OrderItem> allorderprods = new List<OrderItem>{ordpr1};
         insert allorderprods;
-        
+
         List<SBQQ__Subscription__c> allSubscription = new List<SBQQ__Subscription__c>();
         SBQQ__Subscription__c sub1 = new SBQQ__Subscription__c(SBQQ__Product__c=objproduct.Id,SBQQ__Contract__c=ct.Id,SBQQ__Quantity__c=5,SBQQ__OrderProduct__c=ordpr1.Id);
-       // SBQQ__Subscription__c sub2 = new SBQQ__Subscription__c(SBQQ__Product__c=objproduct2.Id,SBQQ__Contract__c=ct2.Id,SBQQ__Quantity__c=10,SBQQ__OrderProduct__c=ordpr2.Id);
         allSubscription.add(sub1);
-        //allSubscription.add(sub2);
-        
+
         insert allSubscription;
         SBQQ.TriggerControl.enable();
-        
+
         test.stopTest();
     }
 
@@ -439,7 +420,7 @@ private class NSP_ProcessOrderCancellationBatchTest {
     private static void testProcessCancellation() {
         list<Order> orderList = [SELECT Id from Order where EffectiveDate != null];
         OrderItem ordProd = [SELECT Id, OrderId, Product2Id FROM OrderItem WHERE OrderId !=null LIMIT 1];
-        
+
         Test.startTest();
         //Creat a new Asset Record
         Asset newAsset = (Asset)NSP_TestExtendedDataFactory.createSObject(new Asset(), 'NSP_TestDataFactory.AssetDefaults', false);
@@ -447,7 +428,7 @@ private class NSP_ProcessOrderCancellationBatchTest {
         newAsset.NSP_Client_is_Lead_Parent__c = true;
         newAsset.NSP_Price_Level__c= 'RET - Bundled Plus #2';
         Database.insert(newAsset);
-        
+
         Asset newMemberAsset = (Asset)NSP_TestExtendedDataFactory.createSObject(new Asset(), 'NSP_TestDataFactory.AssetDefaults', false);
         newMemberAsset.RecordTypeId = RETSERVICESASSETRECORDTYPEID;
         newMemberAsset.NSP_Process_Order_Change__c = true;
@@ -471,7 +452,14 @@ private class NSP_ProcessOrderCancellationBatchTest {
 
         Test.stopTest();
         Asset newAsset1=[SELECT Id,NSP_Change_Order_Process_Contract_Status__c FROM Asset WHERE Id=:newMemberAsset.Id limit 1];
-       
+    }
+
+    @isTest
+    private static void testCodeCoverage() {
+        Test.startTest();
+        NSP_ProcessOrderCancellationBatch.testHandleException( null , null );
+        NSP_ProcessOrderCancellationBatch.schedule();
+        Test.stopTest();
     }
 
 }

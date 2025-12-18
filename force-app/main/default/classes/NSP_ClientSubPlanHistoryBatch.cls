@@ -1,9 +1,63 @@
-// 2022-11-04 ~ STY-03665 ~ Srushti ~ Batch Class to update Asset record fields from client sub plan history record.
-public class NSP_ClientSubPlanHistoryBatch implements Database.Batchable<sObject>, Schedulable {
-    // test w/ NSP_ClientSubPlanHistoryBatchTest (90%)
+public class NSP_ClientSubPlanHistoryBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<sObject> {
+    // test w/ NSP_ClientSubPlanHistoryBatchTest (84%)
+
+    //
+    // argument-free constructor is required to be "runnable"...
+    //
 
     public NSP_ClientSubPlanHistoryBatch() {
-        // intentionally blank...
+    }
+
+    //
+    // ISelfSchedulable
+    //
+
+    // runs everyday at 2am central...
+    public static String schedule() {
+        String suffix = '';
+        if ( Test.isRunningTest() ) {
+            suffix = ' ~ TEST';
+        }
+        return System.schedule(
+            'NSP_ClientSubPlanHistoryBatch ~ update the status of the Retirement Services Assets considering associated Client Subplan History records ~ everyday at 2 AM' + suffix ,
+            '0 0 2 * * ? *' ,
+            new NSP_ClientSubPlanHistoryBatch()
+        );
+    }
+
+    //
+    // Schedulable
+    //
+
+    public void execute( SchedulableContext sc ) {
+        this.call( 'run' , null );
+    }
+
+    //
+    // Callable
+    //
+
+    public Object call( String action , Map<String,Object> args ) {
+        Object response = null;
+        if ( action == 'run' ) {
+            response = this.run();
+        }
+        return response;
+    }
+
+    //
+    // IJobRunnable
+    //
+
+    public Id run() {
+        Id response = null;
+        if ( NSP_ClientSubPlanHistoryBatch.isEnabled ) {
+            response = Database.executeBatch(
+                new NSP_ClientSubPlanHistoryBatch() ,
+                NSP_ClientSubPlanHistoryBatch.batchSize
+            );
+        }
+        return response;
     }
 
     //
@@ -80,11 +134,11 @@ public class NSP_ClientSubPlanHistoryBatch implements Database.Batchable<sObject
                 AND ( NSP_End_Date__c <= TODAY )
             )
         ];
-        //Link the most recently created client sub plan history to the asset 
+        //link the most recently created client sub plan history to the asset
         Map<Id,NSP_Client_Sub_Plan_History__c> assetClientSubPlanHistoryMap = new Map<Id,NSP_Client_Sub_Plan_History__c>();
         for(NSP_Client_Sub_Plan_History__c clientSubPlanHistoryRec: clientSubPlanHistoryList){
             if(assetClientSubPlanHistoryMap.get(clientSubPlanHistoryRec.NSP_Asset__c) == NULL){
-                assetClientSubPlanHistoryMap.put(clientSubPlanHistoryRec.NSP_Asset__c, clientSubPlanHistoryRec);                
+                assetClientSubPlanHistoryMap.put(clientSubPlanHistoryRec.NSP_Asset__c, clientSubPlanHistoryRec);
             }
             else if(clientSubPlanHistoryRec.CreatedDate > assetClientSubPlanHistoryMap.get(clientSubPlanHistoryRec.NSP_Asset__c).CreatedDate){
                 assetClientSubPlanHistoryMap.put(clientSubPlanHistoryRec.NSP_Asset__c, clientSubPlanHistoryRec);
@@ -154,31 +208,6 @@ public class NSP_ClientSubPlanHistoryBatch implements Database.Batchable<sObject
     }
 
     public void finish( Database.BatchableContext bc ) {
-        // intentionally blank...
-    }
-
-    //
-    // Schedulable
-    //
-
-    public void execute( SchedulableContext sc ) {
-        if ( NSP_ClientSubPlanHistoryBatch.isEnabled ) {
-            Database.executeBatch(
-                new NSP_ClientSubPlanHistoryBatch() ,
-                NSP_ClientSubPlanHistoryBatch.batchSize
-            );
-        }
-    }
-
-    public static String schedule() {
-        return System.schedule(
-            NSP_ClientSubPlanHistoryBatch.class.getName()
-                + ' ~ Update the status of the Retirement Services assets considering associated client subplan history records'
-                + ' ~ Schedule to run everyday 2 AM'
-                + ( Test.isRunningTest() ? ' ~ TEST' : '' ) ,
-            '0 0 2 * * ? *' , // every day at 02:00 AM
-            new NSP_ClientSubPlanHistoryBatch()
-        );
     }
 
     //
