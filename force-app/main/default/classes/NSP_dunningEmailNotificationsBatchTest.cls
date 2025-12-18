@@ -9,18 +9,21 @@ Modification Log     :
 ***************************************************************************************************
 */
 @IsTest
-public class NSP_dunningEmailNotificationsBatchTest {
+private class NSP_dunningEmailNotificationsBatchTest {
 
     
     // test setup method
-   @testSetup
-    static void setupTestData(){
+    @testSetup
+    private static void setupTestData(){
+        Email_Deliverability_Settings__c emailSetting = Email_Deliverability_Settings__c.getOrgDefaults();
+        emailSetting.IsEnabledOutbound__c = true;
+        upsert emailSetting;
         
         Order_Settings__c sett = new Order_Settings__c();
         sett.EffectiveDateStartOfMonth__c = true;
         insert sett;
         
-       NSP_TestHelper.switchOffTriggers();
+        NSP_TestHelper.switchOffTriggers();
         Account objaccount = NSP_TestHelper.createAccount(true);
         //Contact objcontact = NSP_TestHelper.createContact(objaccount.id, true);
         Product2 objproduct = NSP_TestHelper.createProduct('Test Product',false);
@@ -85,7 +88,7 @@ public class NSP_dunningEmailNotificationsBatchTest {
      * Description : Test method to test emails for the dunning cases
      * Name : dunningCaseEmailsTest
      */
-    static testMethod void dunningCaseEmailsTest60Days(){
+    private static testMethod void dunningCaseEmailsTest60Days(){
         
 		Test.startTest();
         Account objaccount  = [Select Id, Name from Account WHERE Name =: NSP_TestHelper.DEFAULT_COMPANY_NAME LIMIT 1];
@@ -130,7 +133,7 @@ public class NSP_dunningEmailNotificationsBatchTest {
      * Description : Test method to test emails for the dunning cases
      * Name : dunningCaseEmailsTest
      */
-    static testMethod void dunningCaseEmailsTest90Days(){
+    private static testMethod void dunningCaseEmailsTest90Days(){
         
 		Test.startTest();
         Account objaccount  = [Select Id, Name from Account WHERE Name =: NSP_TestHelper.DEFAULT_COMPANY_NAME LIMIT 1];
@@ -175,7 +178,7 @@ public class NSP_dunningEmailNotificationsBatchTest {
      * Description : Test method to test emails for the dunning cases
      * Name : dunningCaseEmailsTest
      */
-    static testMethod void dunningCaseEmailsTest120Days(){
+    private static testMethod void dunningCaseEmailsTest120Days(){
         
 		Test.startTest();
         Account objaccount  = [Select Id, Name from Account WHERE Name =: NSP_TestHelper.DEFAULT_COMPANY_NAME LIMIT 1];
@@ -225,7 +228,7 @@ public class NSP_dunningEmailNotificationsBatchTest {
         System.assertNotEquals(null, ebatchprocessid);
     }
 
-    static testMethod void testdunningBatchScheduler() {  
+    private static testMethod void testdunningBatchScheduler() {  
         Test.startTest();  
         NSP_DunningEmailNotification_Scheduler dunEmailsBatch = new NSP_DunningEmailNotification_Scheduler();
         String sch = '0 0 2 * * ?';
@@ -240,7 +243,7 @@ public class NSP_dunningEmailNotificationsBatchTest {
      * Description : Test method to test emails for the dunning cases
      * Name : dunningCaseEmailsTest
      */
-    static testMethod void dunningCaseEmailsTest135Days(){
+    private static testMethod void dunningCaseEmailsTest135Days(){
         
 		Test.startTest();
         Account objaccount  = [Select Id, Name from Account WHERE Name =: NSP_TestHelper.DEFAULT_COMPANY_NAME LIMIT 1];
@@ -285,7 +288,7 @@ public class NSP_dunningEmailNotificationsBatchTest {
      * Description : Test method to test emails for the dunning cases
      * Name : dunningCaseEmailsTest
      */
-    static testMethod void testaccount30DayEmail(){
+    private static testMethod void testaccount30DayEmail(){
         Test.startTest();
         Account objaccount  = [Select Id, Name from Account WHERE Name =: NSP_TestHelper.DEFAULT_COMPANY_NAME LIMIT 1];
         Contact con = new Contact();

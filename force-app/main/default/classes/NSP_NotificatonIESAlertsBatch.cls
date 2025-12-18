@@ -71,7 +71,9 @@ public without sharing class NSP_NotificatonIESAlertsBatch implements Database.B
         try {
             checkforEligibityRecords(subClientContacts);
             PrepareEmailTemplates();
-            Messaging.sendEmail(lstEmailMessages);
+            if ( EmailDeliverabilityController.IsEnabledOutbound ) {
+                Messaging.sendEmail(lstEmailMessages);
+            }
             emailLimits = Limits.getEmailInvocations();
         } catch (Exception ex) {
             NSP_ErrorLogHandler.logSaveException(

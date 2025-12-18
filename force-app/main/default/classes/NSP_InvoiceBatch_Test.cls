@@ -1,6 +1,12 @@
-@isTest private class NSP_InvoiceBatch_Test {
+@isTest
+private class NSP_InvoiceBatch_Test {
 
-    @testSetup private static void createTestData() {
+    @testSetup
+    private static void createTestData() {
+        Email_Deliverability_Settings__c emailSetting = Email_Deliverability_Settings__c.getOrgDefaults();
+        emailSetting.IsEnabledOutbound__c = true;
+        upsert emailSetting;
+
         Order_Settings__c orderSetting = Order_Settings__c.getOrgDefaults();
         orderSetting.EffectiveDateStartOfMonth__c = true;
         upsert orderSetting;
@@ -28,7 +34,8 @@
         insert objproduct;
     }
 
-    @isTest private static void generateInvoice() {
+    @isTest
+    private static void generateInvoice() {
         // Query account and product
         Account objaccount  = [Select Id, Name from Account WHERE Name =: NSP_TestHelper.DEFAULT_COMPANY_NAME LIMIT 1];
         Product2 objproduct  = [Select Id, Name from Product2 WHERE Name = 'Test Product' LIMIT 1];
@@ -66,7 +73,8 @@
     }
 
     //this is to test the parameterized constructor in batch class
-    @isTest private static void parameterizedMethod() {
+    @isTest
+    private static void parameterizedMethod() {
         // Query account and product
         Account objaccount = [Select Id, Name from Account WHERE Name =: NSP_TestHelper.DEFAULT_COMPANY_NAME LIMIT 1];
         Product2 objproduct = [Select Id, Name from Product2 WHERE Name = 'Test Product' LIMIT 1];
@@ -107,7 +115,8 @@
         System.assert(orderList.size()==1,true);
     }
 
-    @isTest private static void testSchedulable() {
+    @isTest
+    private static void testSchedulable() {
         Test.startTest();
         System.schedule(
             'NSP_InvoiceBatch ~ everyday at midnight' ,

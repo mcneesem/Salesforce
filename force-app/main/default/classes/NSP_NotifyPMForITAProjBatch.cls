@@ -146,46 +146,48 @@ public class NSP_NotifyPMForITAProjBatch implements Schedulable,Database.Batchab
     // Method to send email to the list of users emailaddress present in SendTo list     
     public static void sendEmailToUsers(List<pse__Proj__c> projListToUpdate,  Map<Id, List<String>> accountIdEmailListMap){       
         try{
-            List<Messaging.SingleEmailMessage> lstEmailMessages = new List<Messaging.SingleEmailMessage>();
-            List<id> listWithMail = new List<id>();
-            // Send email to the PS to notify ITA proj creation 
-            List<String> emailTempFields = new List<String>{
-                    'ID',
-                    'BrandTemplateId',
-                    'Subject',
-                    'HTMLValue',
-                    'Body',
-                    'DeveloperName'    
-                    };                               
-                        EmailTemplate emailTemp = NSP_sObjectSelector.selectByDeveloperName(emailTempFields,NSP_ServiceConstants.ITA_Project_Creation_Email);
-            //  [SELECT Id, BrandTemplateId, Subject, HTMLValue, Body, DeveloperName FROM EmailTemplate WHERE DeveloperName = : NSP_ServiceConstants.ITA_Project_Creation_Email LIMIT 1];
-            // check if Email template exists and if we have any sender email 
-            // Added for 235192
-            if(!projListToUpdate.isEmpty()){
-                for(EmailMessage emailList : [SELECT RelatedToId FROM EmailMessage Where RelatedToId IN: projListToUpdate AND Subject LIKE : label.NotifyITAEmail ]){
-                    listWithMail.add(emailList.RelatedToId);
+            if ( EmailDeliverabilityController.IsEnabledOutbound ) {
+                List<Messaging.SingleEmailMessage> lstEmailMessages = new List<Messaging.SingleEmailMessage>();
+                List<id> listWithMail = new List<id>();
+                // Send email to the PS to notify ITA proj creation 
+                List<String> emailTempFields = new List<String>{
+                        'ID',
+                        'BrandTemplateId',
+                        'Subject',
+                        'HTMLValue',
+                        'Body',
+                        'DeveloperName'    
+                        };                               
+                            EmailTemplate emailTemp = NSP_sObjectSelector.selectByDeveloperName(emailTempFields,NSP_ServiceConstants.ITA_Project_Creation_Email);
+                //  [SELECT Id, BrandTemplateId, Subject, HTMLValue, Body, DeveloperName FROM EmailTemplate WHERE DeveloperName = : NSP_ServiceConstants.ITA_Project_Creation_Email LIMIT 1];
+                // check if Email template exists and if we have any sender email 
+                // Added for 235192
+                if(!projListToUpdate.isEmpty()){
+                    for(EmailMessage emailList : [SELECT RelatedToId FROM EmailMessage Where RelatedToId IN: projListToUpdate AND Subject LIKE : label.NotifyITAEmail ]){
+                        listWithMail.add(emailList.RelatedToId);
+                    }
+                }
+                
+                if(emailTemp!=null && !accountIdEmailListMap.isEmpty()){
+                    for(pse__Proj__c projId : [SELECT Id, pse__Account__c FROM pse__Proj__c WHERE Id IN: projListToUpdate]){
+                        if(accountIdEmailListMap.get(projId.pse__Account__c) != null && !listWithMail.contains(projId.Id) ){
+                            Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
+                            email= Messaging.renderStoredEmailTemplate(emailTemp.Id, null ,projId.Id);
+                            email.setTemplateId(emailTemp.Id);                    
+                            email.setToAddresses(accountIdEmailListMap.get(projId.pse__Account__c));
+                            email.setWhatId(projId.Id);    
+                            if(System.Label.NSP_OrgWideEmail_Insperity != null){
+                                email.setOrgWideEmailAddressId(System.Label.NSP_OrgWideEmail_Insperity);
+                            }
+                            lstEmailMessages.add(email);
+                        } 
+                    }
+                }                      
+                //Send email to notify PM and PS
+                if(!lstEmailMessages.isEmpty() && !Test.isRunningTest()){
+                    Messaging.sendEmail(lstEmailMessages);
                 }
             }
-            
-            if(emailTemp!=null && !accountIdEmailListMap.isEmpty()){
-                for(pse__Proj__c projId : [SELECT Id, pse__Account__c FROM pse__Proj__c WHERE Id IN: projListToUpdate]){
-                    if(accountIdEmailListMap.get(projId.pse__Account__c) != null && !listWithMail.contains(projId.Id) ){
-                        Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-                        email= Messaging.renderStoredEmailTemplate(emailTemp.Id, null ,projId.Id);
-                        email.setTemplateId(emailTemp.Id);                    
-                        email.setToAddresses(accountIdEmailListMap.get(projId.pse__Account__c));
-                        email.setWhatId(projId.Id);    
-                        if(System.Label.NSP_OrgWideEmail_Insperity != null){
-                            email.setOrgWideEmailAddressId(System.Label.NSP_OrgWideEmail_Insperity);
-                        }
-                        lstEmailMessages.add(email);
-                    } 
-                }
-            }                      
-            //Send email to notify PM and PS
-            if(!lstEmailMessages.isEmpty() && !Test.isRunningTest()){
-                Messaging.sendEmail(lstEmailMessages);
-            }    
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 NSP_NotifyPMForITAProjBatch.class.getName() ,

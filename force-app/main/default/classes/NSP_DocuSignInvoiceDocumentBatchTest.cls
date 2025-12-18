@@ -3,6 +3,10 @@ private class NSP_DocuSignInvoiceDocumentBatchTest {
 
     @TestSetup
     private static void createTestData() {
+        Email_Deliverability_Settings__c emailSetting = Email_Deliverability_Settings__c.getOrgDefaults();
+        emailSetting.IsEnabledOutbound__c = true;
+        upsert emailSetting;
+
         CLMDocumentTransferSettings__c restSettings = CLMDocumentTransferSettings__c.getOrgDefaults();
         restSettings.IsEnabledClmDocumentReceived__c = true;
         restSettings.IsEnabledRestToken__c = true;

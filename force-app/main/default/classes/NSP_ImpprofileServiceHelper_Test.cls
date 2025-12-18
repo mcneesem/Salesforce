@@ -3,7 +3,7 @@
 */
 
 @isTest(SeeAllData=false)
-public class NSP_ImpprofileServiceHelper_Test {
+private class NSP_ImpprofileServiceHelper_Test {
     private static final String TEST_NAME = 'test';
     private static final String ASSET_DEFAULT = 'NSP_TestDataFactory.AssetDefaults';
     private static final Id ipMMRecordTypeId = SObjectType.Implementation_Profile__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.MMProfile).getRecordTypeId();
@@ -16,8 +16,11 @@ public class NSP_ImpprofileServiceHelper_Test {
 * @return void                          
 */
     @testSetup 
-    public static void setUpData(){
-        
+    private static void setUpData(){
+        Email_Deliverability_Settings__c emailSetting = Email_Deliverability_Settings__c.getOrgDefaults();
+        emailSetting.IsEnabledOutbound__c = true;
+        upsert emailSetting;
+
         User userRec = (User)NSP_TestExtendedDataFactory.createSObject(new User(), 'NSP_TestDataFactory.UserDefaults', true);
         Account acc = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), 'NSP_TestDataFactory.AccountDefaults', false);
         insert acc;
@@ -42,6 +45,8 @@ public class NSP_ImpprofileServiceHelper_Test {
         impl.RecordTypeId = fsoRecordTypeId;
         impl.NSP_Form_Completed__c = True;
         impl.Client_Profile_Information__c = 'Related Clients';
+        impl.Select_BPSes__c = 'Employment Screening';
+        impl.NSP_CheckToSendTheClient_Summary_email__c = true;
         impl.NSP_Orientation_Coordinator__c=con.id;
         ipListFSA.add(impl);
         
@@ -62,6 +67,7 @@ public class NSP_ImpprofileServiceHelper_Test {
         impl4.NSP_HR_Specialist__c = con.id;
         impl4.NSP_Related_Clients__c = acc.Id;
         impl4.Who_should_the_FLSA_team_reach_out_to__c = 'Test, Test2';
+        impl4.NSP_CheckToSendTheClient_Summary_email__c = true;
         ipListFSA.add(impl4);
         
         Implementation_Profile__c impl7 = (Implementation_Profile__c) NSP_TestExtendedDataFactory.createSObject(new Implementation_Profile__c());
@@ -69,6 +75,7 @@ public class NSP_ImpprofileServiceHelper_Test {
         impl7.Is_client_s_current_HSA_with_Optum_Bank__c = NSP_ServiceConstants.YES;
         impl7.Does_client_have_their_code_group_ID__c = NSP_ServiceConstants.NO;
         impl7.NSP_Orientation_Coordinator__c=con.id;
+        impl7.NSP_CheckToSendTheClient_Summary_email__c = true;
         ipListFSA.add(impl7);
         
         //CHECK FOR EMAIL TRIGGER FOR FSO IP
@@ -103,6 +110,7 @@ public class NSP_ImpprofileServiceHelper_Test {
         fsoIp.NSP_Orientation_Coordinator__c=con.id;
         fsoIp.Does_this_client_have_an_AWW__c = 'Yes';
         fsoIp.Is_client_CA_docs_submitted_for_approval__c = 'Yes';
+        fsoIp.NSP_CheckToSendTheClient_Summary_email__c = true;
         
         ipListFSA.add(fsoIp);
         
@@ -132,7 +140,8 @@ public class NSP_ImpprofileServiceHelper_Test {
         fsoIp1.Would_the_client_like_a_FLSA_Exemption__c = NSP_ServiceConstants.YES;
         fsoIp1.Is_the_client_Emerging_Growth__c = NSP_ServiceConstants.No;
         fsoIp1.NSP_Related_Clients__c = acc.Id;
-        impl4.Who_should_the_FLSA_team_reach_out_to__c = 'Test';
+        fsoIp1.Who_should_the_FLSA_team_reach_out_to__c = 'Test';
+        fsoIp1.NSP_CheckToSendTheClient_Summary_email__c = true;
         ipListFSA.add(fsoIp1);
          
         Implementation_Profile__c fsoIpAutomationObj = (Implementation_Profile__c) NSP_TestExtendedDataFactory.createSObject(new Implementation_Profile__c());
@@ -156,7 +165,7 @@ public class NSP_ImpprofileServiceHelper_Test {
         fsoIpAutomationObj.NSP_Payroll_Specialist__c=con.id;
         fsoIpAutomationObj.NSP_Onboarding_Specialist_Coordinator__c=con.Id;
         fsoIpAutomationObj.NSP_Project_Manager__c=con.id;
-         fsoIpAutomationObj.NSP_Orientation_Coordinator__c=con.id;
+        fsoIpAutomationObj.NSP_Orientation_Coordinator__c=con.id;
         fsoIpAutomationObj.NSP_PC_Client_Email__c = 'Test@Testmail.com';
         fsoIpAutomationObj.NSP_PC_Client_Name__c = 'Test';
         fsoIpAutomationObj.Employees_work_in_the_following_states__c = 'NH';
@@ -205,7 +214,7 @@ public class NSP_ImpprofileServiceHelper_Test {
         fsoIpAutomationObj.Would_the_client_like_a_FLSA_Exemption__c = NSP_ServiceConstants.YES;
         fsoIpAutomationObj.Is_the_client_Emerging_Growth__c = NSP_ServiceConstants.YES;
         fsoIpAutomationObj.NSP_Related_Clients__c = acc.Id;
-        impl4.Who_should_the_FLSA_team_reach_out_to__c = 'Test';
+        fsoIpAutomationObj.Who_should_the_FLSA_team_reach_out_to__c = 'Test';
         ipListFSA.add(fsoIpAutomationObj);
         insert ipListFSA;
         
@@ -224,7 +233,7 @@ public class NSP_ImpprofileServiceHelper_Test {
     }
     
     @isTest
-    static void testPrivateMethodFSOEmails(){
+    private static void testPrivateMethodFSOEmails(){
         Test.StartTest();
         Map<Id,Implementation_Profile__c> ipRecordMap =new Map<Id,Implementation_Profile__c>([SELECT Id,NSP_COBRA_Takeover_Emp_Details__c,recordType.Name, OwnerId, Name,  RecordTypeId, Account__c, Addressee_for_each_worksite_location__c, All_EEs_paid_under_same_FEIN_currently__c, Allowances__c, Any_EEs_in_clients_waiting_period__c, Any_EEs_travel_internationally_for_work__c, Any_EEs_with_urgent_medical_needs__c, Any_employees_currently_enrolled__c, Any_employer_contributions_to_EE_HSA__c, Any_special_needs_for_EE_orientation__c, Any_users_who_cannot_see_salary__c, Arbitration_Agreement_been_discussed__c, Are_there_any_EEs_on_Leave_of_Absence__c, Are_there_any_non_paid_users__c, Are_there_multiple_worksite_locations__c, NSP_Documents_Collected_Leviesd__c,NSP_BPA_BPC__c,NSP_BPA_BPC_Ids__c,  NSP_Documents_garnishments__c, Benefit_effective_date_carry_from_tab_4__c, Benefits_Package__c, Brief_description_of_client__c, Business_Inception_Date__c, Can_client_show_EEO_filing_address__c, Carrier_notified_of_termination__c, Check_all_changes_that_apply__c, Check_all_sch_B_changes_that_apply__c, Check_all_tht_apply_ministers_teachers__c, Chngs_for_cafeteria_plan_questionnaire__c, Client_Address__c, Client_Contact_Notes__c, Client_FEIN__c, Client_Implementing_Premier_Performance__c, NSP_Client_Liaison__c, 
                                                                                               Client_Name_del__c, Client_Number__c, Client_Profile_Information__c, Client_does_business_in_MA_NY_or_VA__c, Client_entity_owned_or_a_non_profit__c, Client_expect_chnges_in_the_organization__c, Client_has_Service_Contract_Act_SCA_EEs__c, Client_has_any_post_tax_deductions__c, Client_has_any_special_payroll_needs__c, Client_has_existing_retirement_plan__c, Client_have_EEO_filing_under__c, Client_have_any_Commission_only_EEs__c, Client_have_any_EEs_on_F1_or_J1_Visa_s__c, Client_have_any_EEs_that_work_in_NY__c, Client_have_any_urgent_HR_needs__c, Client_have_will_have_any_Seasonal_EEs__c, Client_interested_in_NSP_tracking_PTO__c, Client_internal_deadline_for_OEE_OBE__c, Client_is_making_employer_contributions__c, Client_maintain_own_FSA__c, Client_maintaining_existing_EPLI_policy__c, Client_part_of_entity_w_o_NSP__c, Client_runs_expenses_or_payroll__c, Client_s_previous_payroll_provider__c, Client_s_previous_waiting_period__c, Client_union_EE_Check_all_that_Apply__c, Client_utilizing_Insperity_s_TimeStar__c, Client_want_to_begin_401k_w_NSP_setup__c, Client_working_with_an_NSP_RS_rep__c, Contact_Information__c, Current_hours_tracking_method_infolet__c, DBA__c, Date_and_Time__c, Day_one_start__c, Did_the_sch_B_change_at_the_SKO__c, Do_any_EEs_have_garnishments__c, Do_any_EEs_have_tax_levies__c,
@@ -269,7 +278,7 @@ public class NSP_ImpprofileServiceHelper_Test {
     
     
     @isTest
-    static void testMethodMiddleMarketEmails(){
+    private static void testMethodMiddleMarketEmails(){
         Test.StartTest();
         Map<Id,Implementation_Profile__c> ipRecordMap =new Map<Id,Implementation_Profile__c>([SELECT Id,NSP_COBRA_Takeover_Emp_Details__c,recordType.Name, OwnerId, Name,  RecordTypeId, Account__c, Addressee_for_each_worksite_location__c, All_EEs_paid_under_same_FEIN_currently__c, Allowances__c, Any_EEs_in_clients_waiting_period__c, Any_EEs_travel_internationally_for_work__c, Any_EEs_with_urgent_medical_needs__c, Any_employees_currently_enrolled__c, Any_employer_contributions_to_EE_HSA__c, Any_special_needs_for_EE_orientation__c, Any_users_who_cannot_see_salary__c, Arbitration_Agreement_been_discussed__c, Are_there_any_EEs_on_Leave_of_Absence__c, Are_there_any_non_paid_users__c, Are_there_multiple_worksite_locations__c, NSP_Documents_Collected_Leviesd__c,NSP_BPA_BPC__c,NSP_BPA_BPC_Ids__c,  NSP_Documents_garnishments__c, Benefit_effective_date_carry_from_tab_4__c, Benefits_Package__c, Brief_description_of_client__c, Business_Inception_Date__c, Can_client_show_EEO_filing_address__c, Carrier_notified_of_termination__c, Check_all_changes_that_apply__c, Check_all_sch_B_changes_that_apply__c, Check_all_tht_apply_ministers_teachers__c, Chngs_for_cafeteria_plan_questionnaire__c, Client_Address__c, Client_Contact_Notes__c, Client_FEIN__c, Client_Implementing_Premier_Performance__c, NSP_Client_Liaison__c, 
                                                                                               Client_Name_del__c, Client_Number__c, Client_Profile_Information__c, Client_does_business_in_MA_NY_or_VA__c, Client_entity_owned_or_a_non_profit__c, Client_expect_chnges_in_the_organization__c, Client_has_Service_Contract_Act_SCA_EEs__c, Client_has_any_post_tax_deductions__c, Client_has_any_special_payroll_needs__c, Client_has_existing_retirement_plan__c, Client_have_EEO_filing_under__c, Client_have_any_Commission_only_EEs__c, Client_have_any_EEs_on_F1_or_J1_Visa_s__c, Client_have_any_EEs_that_work_in_NY__c, Client_have_any_urgent_HR_needs__c, Client_have_will_have_any_Seasonal_EEs__c, Client_interested_in_NSP_tracking_PTO__c, Client_internal_deadline_for_OEE_OBE__c, Client_is_making_employer_contributions__c, Client_maintain_own_FSA__c, Client_maintaining_existing_EPLI_policy__c, Client_part_of_entity_w_o_NSP__c, Client_runs_expenses_or_payroll__c, Client_s_previous_payroll_provider__c, Client_s_previous_waiting_period__c, Client_union_EE_Check_all_that_Apply__c, Client_utilizing_Insperity_s_TimeStar__c, Client_want_to_begin_401k_w_NSP_setup__c, Client_working_with_an_NSP_RS_rep__c, Contact_Information__c, Current_hours_tracking_method_infolet__c, DBA__c, Date_and_Time__c, Day_one_start__c, Did_the_sch_B_change_at_the_SKO__c, Do_any_EEs_have_garnishments__c, Do_any_EEs_have_tax_levies__c,
@@ -315,7 +324,7 @@ public class NSP_ImpprofileServiceHelper_Test {
     }    
     
     @isTest
-    static void testMMRetirementServiceEmails(){
+    private static void testMMRetirementServiceEmails(){
         Test.StartTest();
         NSP_Regulated_Area__c regArea =  [SELECT Id, NSP_State__c,  NSP_Regulation_Type__c  FROM NSP_Regulated_Area__c  WHERE NSP_State__c != null  AND NSP_Regulation_Type__c =: NSP_ServiceConstants.STATE_RET_PLAN];
         
@@ -352,7 +361,7 @@ public class NSP_ImpprofileServiceHelper_Test {
     }  
     
     @isTest
-    static void testMMRetirementEmails(){
+    private static void testMMRetirementEmails(){
         Test.StartTest();
         NSP_Regulated_Area__c regArea =  [SELECT Id, NSP_State__c,  NSP_Regulation_Type__c  FROM NSP_Regulated_Area__c  WHERE NSP_State__c != null  AND NSP_Regulation_Type__c =: NSP_ServiceConstants.STATE_RET_PLAN];
         
@@ -389,7 +398,7 @@ public class NSP_ImpprofileServiceHelper_Test {
     }  
     
     @isTest
-    static void createCaseTest(){
+    private static void createCaseTest(){
         List <Implementation_Profile__c>updateIPList = new List<Implementation_Profile__c>();
         List<Implementation_Profile__c> getListFSA = [SELECT Id,Client_Profile_Information__c 
                                                       FROM Implementation_Profile__c 
@@ -431,7 +440,7 @@ public class NSP_ImpprofileServiceHelper_Test {
     * @return void             
     */ 
     @isTest
-    static void createCaseTest2() {
+    private static void createCaseTest2() {
         Test.startTest();
         List<Implementation_Profile__c> getListCompCerts = [SELECT Id,NSP_Immediate_need_for_Workers_Comp_Cert__c FROM Implementation_Profile__c WHERE Id != null LIMIT 1];
         getListCompCerts[0].NSP_Immediate_need_for_Workers_Comp_Cert__c = NSP_ServiceConstants.YES;
@@ -445,7 +454,7 @@ public class NSP_ImpprofileServiceHelper_Test {
     * @return void             
     */ 
     @isTest
-    static void createCaseTest3() {
+    private static void createCaseTest3() {
         Test.startTest();
         List<Implementation_Profile__c> getListSeasonal = [SELECT Id,Client_have_will_have_any_Seasonal_EEs__c FROM Implementation_Profile__c WHERE Id != null LIMIT 1];
         getListSeasonal[0].Client_have_will_have_any_Seasonal_EEs__c = NSP_ServiceConstants.YES;
@@ -465,7 +474,7 @@ public class NSP_ImpprofileServiceHelper_Test {
     * @return void             
     */ 
     @isTest
-    static void createCaseTest4() {
+    private static void createCaseTest4() {
         Test.startTest();
         List<Implementation_Profile__c> getListOptum = [SELECT Id,Does_client_have_their_code_group_ID__c FROM Implementation_Profile__c WHERE Does_client_have_their_code_group_ID__c=:NSP_ServiceConstants.NO];
         getListOptum[0].RecordTypeId = fsoRecordTypeId;
@@ -485,7 +494,7 @@ public class NSP_ImpprofileServiceHelper_Test {
     }
     
     @isTest
-    static void createEmailTest(){
+    private static void createEmailTest(){
         List<Implementation_Profile__c> getListIp = [SELECT Id,Form_8973_Contact__c 
                                                      FROM Implementation_Profile__c 
                                                      WHERE Form_8973_Contact__c = 'test' 
@@ -513,7 +522,7 @@ public class NSP_ImpprofileServiceHelper_Test {
     }
     
     @isTest
-    static void createEmailTestEECommission(){
+    private static void createEmailTestEECommission(){
         
         Contact con=[SELECT Id,pse__Salesforce_User__c FROM Contact WHERE Id != null LIMIT 1];
         Test.startTest();
@@ -536,7 +545,7 @@ public class NSP_ImpprofileServiceHelper_Test {
     }
     
     @isTest
-    static void createEmailTestStock(){
+    private static void createEmailTestStock(){
         
         Contact con=[SELECT Id,pse__Salesforce_User__c FROM Contact WHERE Id != null LIMIT 1];
         Test.startTest();
@@ -560,13 +569,13 @@ public class NSP_ImpprofileServiceHelper_Test {
         ip.Client_has_existing_retirement_plan__c = NSP_ServiceConstants.NO;
         ip.Client_want_to_begin_401k_w_NSP_setup__c = NSP_ServiceConstants.NO;
         insert ip;
-        Test.stopTest();
         NSP_Implementationprofile_ServiceHelper ipobject = new NSP_Implementationprofile_ServiceHelper(ip.Id,'NSP_New_401_k');
+        Test.stopTest();
         system.assertEquals(ip.NSP_Select_all_that_apply__c,'IRR');
     }
     
     @isTest
-    static void createEmailTestStock2(){
+    private static void createEmailTestStock2(){
         Contact con=[SELECT Id,pse__Salesforce_User__c FROM Contact WHERE Id != null LIMIT 1];
         Test.startTest();
         NSP_Regulated_Area__c regulatedArea = new NSP_Regulated_Area__c  ();
@@ -589,13 +598,13 @@ public class NSP_ImpprofileServiceHelper_Test {
         ip.Client_has_existing_retirement_plan__c = NSP_ServiceConstants.YES;
         ip.Type_of_retirement_plan_client_has_today__c = NSP_ServiceConstants.CSP401K;
         insert ip;
-        Test.stopTest();
         NSP_Implementationprofile_ServiceHelper ipObject = new NSP_Implementationprofile_ServiceHelper(ip.Id,'NSP_New_401_k');
+        Test.stopTest();
         system.assertEquals(ip.NSP_Select_all_that_apply__c,'IRR');
     }
     
     @isTest
-    static void createEmailTestStock3(){
+    private static void createEmailTestStock3(){
         Test.startTest();
         List<Asset> assetRecord = [SELECT Id, Status FROM Asset WHERE Status =: NSP_ServiceConstants.AIMS_STATUS];
         List<Implementation_Profile__c> getListMMIps = [SELECT Id,Does_the_client_offer_a_Stock_Purchase__c,remove_employee_directory_from_premier__c FROM Implementation_Profile__c WHERE RecordTypeId=:ipMMRecordTypeId];
@@ -608,7 +617,7 @@ public class NSP_ImpprofileServiceHelper_Test {
     }
     
     @isTest
-    static void createEmailTestStock4(){
+    private static void createEmailTestStock4(){
         List<Asset> assetRecord = [SELECT Id, Status FROM Asset WHERE Status =: NSP_ServiceConstants.AIMS_STATUS];
         Implementation_Profile__c ip = new Implementation_Profile__c();
         ip.RecordTypeId = ipMMRecordTypeId;
@@ -621,4 +630,5 @@ public class NSP_ImpprofileServiceHelper_Test {
         implService.executeAutomation();
         Test.stopTest();
     }
+
 }

@@ -428,7 +428,8 @@ public class NSP_Implementationprofile_ServiceHelper {
                 'finish:insert' ,
                 results
             );
-            if ( ( Limits.getEmailInvocations() + 2 ) < Limits.getLimitEmailInvocations() ) { // prevent LimitExceptions...
+            if ( ( Limits.getEmailInvocations() + 2 ) < Limits.getLimitEmailInvocations() // prevent LimitExceptions...
+               &&  EmailDeliverabilityController.IsEnabledOutbound ) {
                 Savepoint sp = Database.setSavepoint();
                 Messaging.sendEmail( lstEmailMessages );
                 Database.rollback( sp );
@@ -3019,7 +3020,8 @@ public class NSP_Implementationprofile_ServiceHelper {
         }
     }
     
-    private  void emailNotifyforClientSummary(){
+    @TestVisible
+    private void emailNotifyforClientSummary(){
         
         List<String> listoftoAddresses ; 
         List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
@@ -3088,7 +3090,8 @@ public class NSP_Implementationprofile_ServiceHelper {
                                                               }
     }
     
-    private  void emailNotifyforPayrollSpecialistSummary(){
+    @TestVisible
+    private void emailNotifyforPayrollSpecialistSummary(){
         List<String> listoftoAddresses;
         List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
         NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(PAYROLL_SPECIALIST_SUMMARY_FN);

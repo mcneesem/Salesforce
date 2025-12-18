@@ -3,10 +3,10 @@
 * Name : NSP_NotifyPMForITAProjTest
 */
 @isTest
-public class NSP_NotifyPMForITAProjTest {
+private class NSP_NotifyPMForITAProjTest {
     //test setup method
  @testSetup    
-    public static void setUpData(){       
+    private static void setUpData(){       
         
         //create Account Record
         Account accoutObject = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), 'NSP_TestDataFactory.AccountDefaults', false);
@@ -69,7 +69,7 @@ public class NSP_NotifyPMForITAProjTest {
     }
     
     @isTest
-    static void nspNotifyPMForITAProjTestmethod(){     
+    private static void nspNotifyPMForITAProjTestmethod(){     
         //when  
         Test.startTest();
          
