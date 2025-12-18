@@ -3020,7 +3020,6 @@ public class NSP_Implementationprofile_ServiceHelper {
         }
     }
     
-    @TestVisible
     private void emailNotifyforClientSummary(){
         
         List<String> listoftoAddresses ; 
@@ -3090,7 +3089,6 @@ public class NSP_Implementationprofile_ServiceHelper {
                                                               }
     }
     
-    @TestVisible
     private void emailNotifyforPayrollSpecialistSummary(){
         List<String> listoftoAddresses;
         List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
