@@ -1614,7 +1614,8 @@ public with sharing class NSP_LeadTriggerHelper {
                         WHERE ( Id IN :eventNewOwner.keySet() )]){
                     if ( eventNewOwner.containsKey( eventRecord.Id ) && ( eventNewOwner.get( eventRecord.Id ) != null ) ) {
                         eventRecord.OwnerId = eventNewOwner.get( eventRecord.Id );
-                        NSP_LeadTriggerHelper.setEventSalesOffice(eventRecord, salesOfficeMap, eventRecords);
+                        NSP_LeadTriggerHelper.setEventSalesOffice(eventRecord, salesOfficeMap);
+                        eventRecords.add( eventRecord );
                     }
                 }
             }
@@ -1623,15 +1624,14 @@ public with sharing class NSP_LeadTriggerHelper {
     }
 
     //  reducing cognitive complexity
-    private static void setEventSalesOffice(Event eventRecord,Map<Id,User> salesOfficeMap, List<Event> eventRecords){
+    private static void setEventSalesOffice(Event eventRecord, Map<Id,User> salesOfficeMap){
         //  set Sales Office
-        if(salesOfficeMap.containsKey(eventRecord.OwnerId)){
+        if(eventRecord !=null && salesOfficeMap.containsKey(eventRecord.OwnerId)){
             User userRecord = salesOfficeMap.get(eventRecord.OwnerId);
             if(userRecord != null){
                 eventRecord.NSP_Sales_Office__c = userRecord.NSP_Sales_Office__c;
                 eventRecord.NSP_Sales_Division__c = userRecord.NSP_SalesDivision__c;
                 eventRecord.NSP_Sales_Region__c = userRecord.NSP_SalesRegion__c;
-                eventRecords.add( eventRecord );
             }
         }
     }
