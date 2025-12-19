@@ -1,16 +1,13 @@
-/*This is the test class for NSP_TerminateHardwateAssetBatch:
- *This batch class gets all the subscriptions that are not renewed 
-and terminates it's corresponding Hardware assets
-*/
 @isTest
-public class NSP_TerminateHardwareAssetBatchTest {
-    //default constructor
-    public NSP_TerminateHardwareAssetBatchTest() {
+private class NSP_TerminateHardwareAssetBatchTest {
 
-    }
-    /*Set Up method to create test data*/
     @testSetup
-    static void setupTestData(){
+    private static void setupTestData() {
+        TerminateHardwareAssetBatchSettings__c settings = TerminateHardwareAssetBatchSettings__c.getOrgDefaults();
+        settings.IsEnabled__c = true;
+        settings.BatchSize__c = 200;
+        upsert settings;
+
         Account acc1 = NSP_TestHelper.createAccount(true);
         NSP_TestHelper.createContact(acc1.id, true);
         NSP_TestHelper.createProduct('Test Product',true);
@@ -32,10 +29,11 @@ public class NSP_TerminateHardwareAssetBatchTest {
         entitelment.NSP_Supported_Subscription__c = subscription.Id;
         entitelment.NSP_Support_Product__c  = 'PerformSmart Traditional';
         insert entitelment;
-               
+
     }
+
     @isTest
-    public static void testBatchExecution() {
+    private static void testBatchExecution() {
         Test.startTest();
         //execute the batch
         Database.executeBatch(new NSP_TerminateHardwateAssetBatch(), 1);
@@ -44,4 +42,12 @@ public class NSP_TerminateHardwareAssetBatchTest {
         System.assertEquals(NSP_CPQConstants.TERMINATED, assetsToTerminate[0].Status);
     }
 
+    @isTest
+    private static void testSceduleExecution() {
+        Test.startTest();
+        NSP_TerminateHardwateAssetBatch.schedule();
+        Test.stopTest();
+    }
+
 }
+//

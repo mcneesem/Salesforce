@@ -20,7 +20,7 @@ public class NSP_ProcessOrderCancellationBatch implements ISelfSchedulable , Sch
         }
         return System.schedule(
             'NSP_ProcessOrderCancellationBatch ~ process asset and create amendment on contract ~ M-F at 11 PM' + suffix ,
-            '0 0 23 ? * 2-6 *' ,
+            '0 0 23 ? * MON-FRI *' ,
             new NSP_ProcessOrderCancellationBatch()
         );
     }
