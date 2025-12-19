@@ -448,6 +448,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Case.Current_Case_Queue__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Case.Data_Lines__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -704,6 +709,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Contract.WX_Termination_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Event.Creator_Title__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1053,6 +1063,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_Account_Group__c.NSP_OneVoice_External_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Account_Team__c.NSP_Logged_in_User_check__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1139,6 +1154,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Amendment_Checklist__c.Plan_Subplan_Relationship_Form__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Case_Contacts__c.Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Case_Contacts__c.Workday_Employee_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1353,7 +1378,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>NSP_Sub_Client__c.Arbitration_Agreement__c</field>
+        <field>NSP_Sales_to_Implementation__c.ORK_Subplan__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
