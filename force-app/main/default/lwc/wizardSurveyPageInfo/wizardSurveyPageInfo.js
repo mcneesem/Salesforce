@@ -74,17 +74,17 @@ export default class WizardSurveyPageInfo extends LightningElement {
         fields: ['Asset.RecordTypeId','Asset.RecordType.DeveloperName', 'Asset.NSP_Client_Segment_type__c'] // Fields to retrieve
     })
     wiredAssetss({ error, data }) {
-        if ( data?.records ) {
+        if ( data?.records ) { 
             data.records.forEach(asset => {
                 if ( asset?.fields?.RecordType != null && asset?.fields?.NSP_Client_Segment_type__c != null ) {
                     const recordTypeName = asset.fields.RecordType.displayValue;
                     const clientSegmentType = asset.fields.NSP_Client_Segment_type__c.value;
-                    if (recordTypeName === 'WO' && clientSegmentType === 'Middle Market') {
+                    if (recordTypeName === 'WO' && clientSegmentType === 'Middle Market') {                                           
                         this.isWoMiddleMarketAsset=true;
-                    }
-                }
-            });
-        }
+                    }             
+                }                
+            });            
+        } 
     }
 
     updateReportRequest(accountID) {
@@ -129,7 +129,7 @@ export default class WizardSurveyPageInfo extends LightningElement {
                 this.enableContact= true
             });
         }
-
+        
     }
 
     get yesNoValues() {
@@ -188,7 +188,7 @@ export default class WizardSurveyPageInfo extends LightningElement {
     }
 
     connectedCallback() {
-        let today = new Date().toUTCString();
+        let today = new Date().toUTCString();  
         this.reportName ='Survey Request' + today.substring(today.indexOf(',')+2, today.indexOf(':')-2) ;
         if(this.recordObj != null && this.recordObj.RecordTypeId !=null){
             this.recordTypeId = this.recordObj.RecordTypeId;
@@ -198,7 +198,7 @@ export default class WizardSurveyPageInfo extends LightningElement {
     handleOnLoad(event) {
         this.isOnloadCalled=true;
         this.clientAccId = this.template.querySelector('lightning-input-field[data-fname="clientName"]').value ;
-        if(this.isOnloaded && this.recordObj != null && this.recordObj.NSP_ClientName__c != null &&
+        if(this.isOnloaded && this.recordObj != null && this.recordObj.NSP_ClientName__c != null && 
             this.clientId == null && this.recordObj.NSP_ClientName__c.value != null){
             this.clientId = this.recordObj.NSP_ClientName__c.value ;
             this.getContactRecord(this.recordObj.NSP_ClientName__c.value );
@@ -215,7 +215,7 @@ export default class WizardSurveyPageInfo extends LightningElement {
 
                     if( this.fieldsData.NSP_Survey_Type__c != null && this.fieldsData.NSP_Survey_Type__c.value != null ){
                         this.NSP_Survey_Type__c = this.fieldsData.NSP_Survey_Type__c.value ;
-                        if (this.NSP_Survey_Type__c === 'Exit' || this.NSP_Survey_Type__c === 'Onboarding - One-time' || this.NSP_Survey_Type__c === 'Onboarding - 30/60/90 Day') {
+                        if (this.NSP_Survey_Type__c === 'Exit' || this.NSP_Survey_Type__c === 'Onboarding - One-time' || this.NSP_Survey_Type__c === 'Onboarding - Week 2/Week 5') {
                             this.showEndDate = "display:none;";
                             this.endDateRequired= false;
                             this.NSP_End_Date__c =null;
@@ -256,9 +256,9 @@ export default class WizardSurveyPageInfo extends LightningElement {
             this.enableContact= true
     }
 
-    handleSuccess(event) {
+    handleSuccess(event) { 
         let fieldsData = JSON.parse(JSON.stringify(event.detail.fields));
-            fieldsData = { ...fieldsData, Id : event.detail.id };
+            fieldsData = { ...fieldsData, Id : event.detail.id }; 
             fieldsData = { ...fieldsData, isSubmit : true};
         if( this.isSubmitButton ){
             this.dispatchEvent(new CustomEvent('next', {detail: fieldsData}));
@@ -282,8 +282,8 @@ export default class WizardSurveyPageInfo extends LightningElement {
                 && row.name !== event.detail.row.name  //AND the name does NOT match the selected row's name
             );
         }
-    }
-
+    } 
+    
     handleContact(event) {
         // this.currentConactId = event.detail.value;
     }
@@ -298,7 +298,7 @@ export default class WizardSurveyPageInfo extends LightningElement {
             this.currentConactId = this.refs.NSP_Contact__c?.value;
             tempContact.name = this.accContacts.find(row => row.ContactId === this.currentConactId)?.Contact?.Name;
             tempContact.NSP_Work_email__c = this.refs.emailAddress.value;
-            this.mergeObjectList = [...this.mergeObjectList, tempContact];
+            this.mergeObjectList = [...this.mergeObjectList, tempContact]; 
             this.NSP_Contact__c = '';
             this.cemail = '';
             this.cname = '';
@@ -318,7 +318,7 @@ export default class WizardSurveyPageInfo extends LightningElement {
     handleChange(event) {
         if (event.currentTarget.name == 'NSP_Survey_Type__c') {
             this.NSP_Survey_Type__c = event.currentTarget.value;
-            if (this.NSP_Survey_Type__c === 'Exit' || this.NSP_Survey_Type__c === 'Onboarding - One-time' || this.NSP_Survey_Type__c === 'Onboarding - 30/60/90 Day') {
+            if (this.NSP_Survey_Type__c === 'Exit' || this.NSP_Survey_Type__c === 'Onboarding - One-time' || this.NSP_Survey_Type__c === 'Onboarding - Week 2/Week 5') {
                 this.showEndDate = "display:none;";
                 this.endDateRequired= false;
                 if(this.template.querySelector('lightning-input-field.NSP_End_Date__c') != null ){
@@ -372,7 +372,7 @@ export default class WizardSurveyPageInfo extends LightningElement {
             }
         }
     }
-
+    
     get arrayToTextArea(){
      let tempStr = '';
         for (let i in this.mergeObjectList) {
@@ -388,7 +388,7 @@ export default class WizardSurveyPageInfo extends LightningElement {
             }
             tempStr = tempStr + '\r\n';
         }
-        return tempStr;
+        return tempStr; 
      }
 
      textAreaToArray( textArea ){
@@ -414,7 +414,7 @@ export default class WizardSurveyPageInfo extends LightningElement {
         }
     }
 
-
+    
     handleSave(event) {
         this.isSaveClick=true;
         this.allowNext =false;
@@ -432,18 +432,18 @@ export default class WizardSurveyPageInfo extends LightningElement {
           }else{
             this.cname = '';
             this.cemail = null;
-            this.NSP_Contact__c='';
+            this.NSP_Contact__c=''; 
           }
     }
 
     handleSubmitWoAsset() {
         this.handleNext();
         this.allowNext =false;
-
+        
         if(this.NSP_Survey_Type__c != null
             && this.NSP_Begin_Date__c != null
             && this.NSP_BargainingUnitEmployeesComplete__c != ''
-            && (this.endDateRequired && this.NSP_End_Date__c != null
+            && (this.endDateRequired && this.NSP_End_Date__c != null 
                 || !this.endDateRequired && this.NSP_End_Date__c == null)
             && this.arrayToTextArea !=  null
             && this.arrayToTextArea != '') {
