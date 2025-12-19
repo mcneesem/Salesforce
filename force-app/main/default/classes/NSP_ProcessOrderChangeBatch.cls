@@ -53,7 +53,7 @@ public class NSP_ProcessOrderChangeBatch implements ISelfSchedulable , Schedulab
         Id response = null;
         if ( NSP_ProcessOrderChangeBatch.isEnabled ) {
             response = Database.executeBatch(
-                new NSP_ProcessOrderChangeBatch() , // PMCC 2026
+                new NSP_ProcessOrderChangeBatch() ,
                 NSP_ProcessOrderChangeBatch.batchSize
             );
         }
