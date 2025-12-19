@@ -3,10 +3,13 @@
     <actionCalls>
         <name>Expensable_Case_Closed_Email_Alert</name>
         <label>Expensable Case Closed Email Alert</label>
-        <locationX>308</locationX>
+        <locationX>110</locationX>
         <locationY>492</locationY>
         <actionName>Case.ExpensAble_Case_Closed</actionName>
         <actionType>emailAlert</actionType>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Expensable_Case_Closed_Email_Alert</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
@@ -20,10 +23,13 @@
     <actionCalls>
         <name>Integra_Case_closed_email_alert</name>
         <label>Integra Case closed email alert</label>
-        <locationX>572</locationX>
+        <locationX>638</locationX>
         <locationY>492</locationY>
         <actionName>Case.Integra_Case_Closed</actionName>
         <actionType>emailAlert</actionType>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Integra_Case_closed_email_alert</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
@@ -37,10 +43,13 @@
     <actionCalls>
         <name>OrgPlus_Case_Closed_Email_Alert</name>
         <label>OrgPlus – Case Closed Email Alert</label>
-        <locationX>836</locationX>
+        <locationX>1166</locationX>
         <locationY>492</locationY>
         <actionName>Case.OrgPlus_Case_Closed</actionName>
         <actionType>emailAlert</actionType>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_OrgPlus_Case_Closed_Email_Alert</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
@@ -54,10 +63,13 @@
     <actionCalls>
         <name>PerformSmart_Case_Closed_Email_Alert</name>
         <label>PerformSmart – Case Closed Email Alert</label>
-        <locationX>1100</locationX>
+        <locationX>1694</locationX>
         <locationY>492</locationY>
         <actionName>Case.PerformSmart_Case_Closed</actionName>
         <actionType>emailAlert</actionType>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_PerformSmart_Case_Closed_Email_Alert</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
@@ -71,10 +83,13 @@
     <actionCalls>
         <name>WX_Tax_Case_Closed_Email_Alert</name>
         <label>WX Tax – Case Closed Email Alert</label>
-        <locationX>1364</locationX>
+        <locationX>2222</locationX>
         <locationY>492</locationY>
         <actionName>Case.WX_Tax_Case_Closed</actionName>
         <actionType>emailAlert</actionType>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_WX_Tax_Case_Closed_Email_Alert</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
@@ -88,10 +103,13 @@
     <actionCalls>
         <name>XML_Case_Closed_Email_Alert</name>
         <label>XML – Case Closed Email Alert</label>
-        <locationX>1628</locationX>
+        <locationX>2750</locationX>
         <locationY>492</locationY>
         <actionName>Case.XML_Case_Closed</actionName>
         <actionType>emailAlert</actionType>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_XML_Case_Closed_Email_Alert</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
@@ -104,10 +122,111 @@
     </actionCalls>
     <apiVersion>60.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_varFaultElement_Expensable_Case_Closed_Email_Alert</name>
+        <label>Assign varFaultElement - Expensable_Case_Closed_Email_Alert</label>
+        <locationX>374</locationX>
+        <locationY>600</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Expensable_Case_Closed_Email_Alert</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Integra_Case_closed_email_alert</name>
+        <label>Assign varFaultElement - Integra_Case_closed_email_alert</label>
+        <locationX>902</locationX>
+        <locationY>600</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Integra_Case_closed_email_alert</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_OrgPlus_Case_Closed_Email_Alert</name>
+        <label>Assign varFaultElement - OrgPlus_Case_Closed_Email_Alert</label>
+        <locationX>1430</locationX>
+        <locationY>600</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>OrgPlus_Case_Closed_Email_Alert</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_PerformSmart_Case_Closed_Email_Alert</name>
+        <label>Assign varFaultElement - PerformSmart_Case_Closed_Email_Alert</label>
+        <locationX>1958</locationX>
+        <locationY>600</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>PerformSmart_Case_Closed_Email_Alert</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_WX_Tax_Case_Closed_Email_Alert</name>
+        <label>Assign varFaultElement - WX_Tax_Case_Closed_Email_Alert</label>
+        <locationX>2486</locationX>
+        <locationY>600</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>WX_Tax_Case_Closed_Email_Alert</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_XML_Case_Closed_Email_Alert</name>
+        <label>Assign varFaultElement - XML_Case_Closed_Email_Alert</label>
+        <locationX>3014</locationX>
+        <locationY>600</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>XML_Case_Closed_Email_Alert</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Original_Queue_Assigned_Check</name>
         <label>Original Queue Assigned Check</label>
-        <locationX>1100</locationX>
+        <locationX>1694</locationX>
         <locationY>384</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -205,7 +324,7 @@
         <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
         <name>Outbound_Email_custom_setting_check</name>
         <label>Outbound Email custom setting check</label>
-        <locationX>572</locationX>
+        <locationX>770</locationX>
         <locationY>276</locationY>
         <defaultConnector>
             <targetReference>Original_Queue_Assigned_Check</targetReference>
@@ -224,7 +343,7 @@
             <label>IsEnabledOutbound = false</label>
         </rules>
     </decisions>
-    <description>Outbound Email bypass added.</description>
+    <description>Added fault paths. Outbound Email bypass added.</description>
     <environments>Default</environments>
     <interviewLabel>Case Closed Automation Email Alerts {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Case Closed Automation Email Alerts</label>
@@ -332,4 +451,36 @@
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Draft</status>
+    <subflows>
+        <name>Fault_Handler_Subflow</name>
+        <label>Fault Handler Subflow</label>
+        <locationX>374</locationX>
+        <locationY>708</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>varFaultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Case_Closed_Automation_Email_Alerts</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
 </Flow>
