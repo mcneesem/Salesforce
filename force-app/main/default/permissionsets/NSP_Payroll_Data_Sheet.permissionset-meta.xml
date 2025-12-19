@@ -4,6 +4,10 @@
         <apexClass>NSP_PayrollTriggerHelper</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>PdsContactController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <customPermissions>
         <enabled>true</enabled>
         <name>Payroll_Data_Sheet_Contact_Components</name>
