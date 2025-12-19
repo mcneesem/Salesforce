@@ -551,7 +551,8 @@ public with sharing class NSP_TerminationFormTriggerHelper {
         }
     }
     private static void sendCustomBellNotification (Map<NSP_Termination_Form__c,Set<String>> termFormToSpecialistIdsMap){
-        if ( !termFormToSpecialistIdsMap.keySet().isEmpty() ) {
+        if ( NotificationDeliverabilityController.IsEnabledOutbound
+          && !termFormToSpecialistIdsMap.keySet().isEmpty() ) {
             List<CustomNotificationType> bellNotificationTermForms = [
                 SELECT Id , DeveloperName
                 FROM CustomNotificationType
