@@ -965,11 +965,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Climate</fullName>
+            <fullName>Climate %28Full%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Climate Plus</fullName>
+            <fullName>Climate %28Short%29</fullName>
             <default>false</default>
         </values>
         <values>
@@ -993,11 +993,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Onboarding - One-time</fullName>
+            <fullName>Onboarding - 30%2F60%2F90 Day</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Onboarding - Week 2%2FWeek 5</fullName>
+            <fullName>Onboarding - One-time</fullName>
             <default>false</default>
         </values>
         <values>
