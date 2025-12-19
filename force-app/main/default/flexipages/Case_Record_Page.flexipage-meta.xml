@@ -557,6 +557,16 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Project__c</fieldItem>
+                <identifier>RecordProject_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Comments</fieldItem>
@@ -751,10 +761,10 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>readonly</value>
+                    <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Project__c</fieldItem>
-                <identifier>RecordProject_cField</identifier>
+                <fieldItem>Record.NSP_Root_Cause__c</fieldItem>
+                <identifier>RecordNSP_Root_Cause_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -843,23 +853,6 @@
                         <leftValue>{!Record.Origin}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Chat</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Root_Cause__c</fieldItem>
-                <identifier>RecordNSP_Root_Cause_cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Category__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>WX/WA</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1004,16 +997,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_OrgPlus_M_A_Private__c</fieldItem>
                 <identifier>RecordNSP_OrgPlus_M_A_Private_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Root_Cause__c</fieldItem>
-                <identifier>RecordNSP_Root_Cause_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-a6a2b19a-4dff-4c11-9399-33439288affe</name>
