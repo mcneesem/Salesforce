@@ -382,6 +382,13 @@ Validation Rule - You cannot start a dependent task without completing the prece
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.pse__Parent_Task__r.pse__Status__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed - Moved</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Get_Parent_Task_Record</targetReference>
             </connector>
@@ -485,7 +492,8 @@ Validation Rule - You cannot start a dependent task without completing the prece
 
 1) When one of child task status = Complete  then Set Parent = In Progress , 2) When Mix of of child task status = Complete and Canceled then Set Parent = Complete ,3) When all child task status = Complete  then Set Parent = Complete 4) When all child task status = Canceled  then Set Parent = Canceled
 
-AZD-500937 : Added Validation logic for Task Dependency and Preceding Task.</description>
+AZD-500937 : Added Validation logic for Task Dependency and Preceding Task.
+12/6/2025 - Added Logic to Stop Updating the Parent Task When Status = Closed Moved</description>
     <environments>Default</environments>
     <interviewLabel>Project Task - Updated - Async - Update Parent Task Status {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Project Task - Updated - Async - Update Parent Task Status</label>
@@ -641,6 +649,13 @@ AZD-500937 : Added Validation logic for Task Dependency and Preceding Task.</des
             <operator>IsNull</operator>
             <value>
                 <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>pse__Hierarchy_Depth__c</field>
+            <operator>LessThan</operator>
+            <value>
+                <numberValue>2.0</numberValue>
             </value>
         </filters>
         <object>pse__Project_Task__c</object>
