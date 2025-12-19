@@ -156,19 +156,13 @@ public without sharing class NSP_VisualIndicatorHelper {
         Id woAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'WO' );
         String wsProductLine = 'Workforce Synchronization';
         if (asset.RecordTypeId == woAssetRecordTypeId) {
-            if (asset.NSP_Paperless__c == true) {
-                accWrapper.assetPaperlessPresent = true;
-            }
-            if (asset.NSP_National_Account__c == true) {
-                accWrapper.assetNationalAccount = true;
-            }
+            accWrapper.assetPaperlessPresent = asset.NSP_Paperless__c;
+            accWrapper.assetNationalAccount = asset.NSP_National_Account__c;
             if (asset.NSP_Product_Line__c != null  && asset.NSP_Product_Line__c == wsProductLine) {
                 accWrapper.workSyncClientTrue = true;
             }
             // HRScale Indicator
-            if (asset.Is_HRScale__c == true) {
-                accWrapper.hrScale = true;
-            }
+            accWrapper.hrScale = asset.Is_HRScale__c;
         }
         if (asset.NSP_Client_Retained_Workers_Comp__c != null && asset.NSP_Client_Retained_Workers_Comp__c == '100% Client') {
             accWrapper.client100True = true;
@@ -176,9 +170,7 @@ public without sharing class NSP_VisualIndicatorHelper {
         if (asset.NSP_Client_Retained_Workers_Comp__c != null && asset.NSP_Client_Retained_Workers_Comp__c == 'Client & Insperity') {
             accWrapper.clientAndInsperity = true;
         }
-        if (asset.NSP_Pending_Termination__c == true) {
-            accWrapper.pendingTermination = true;
-        }
+        accWrapper.pendingTermination = asset.NSP_Pending_Termination__c;
     }
 
     private static void checkSurveys( List<NSP_Survey__c> surveyList , VisualIndicatorWrapper accWrapper ) {
