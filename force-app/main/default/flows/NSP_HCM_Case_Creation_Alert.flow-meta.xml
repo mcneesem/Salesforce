@@ -4,8 +4,8 @@
         <description>Send Email to Owner of the Case when HCm case is created.</description>
         <name>Send_Email_to_Owner_of_the_Case</name>
         <label>Send Email to Owner of the Case</label>
-        <locationX>308</locationX>
-        <locationY>431</locationY>
+        <locationX>506</locationX>
+        <locationY>384</locationY>
         <actionName>Case.NSP_HCM_Case_Creation_Alert</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -27,8 +27,8 @@
         <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
         <name>Outbound_Email_custom_setting_check</name>
         <label>Outbound Email custom setting check</label>
-        <locationX>176</locationX>
-        <locationY>323</locationY>
+        <locationX>374</locationX>
+        <locationY>276</locationY>
         <defaultConnector>
             <targetReference>Send_Email_to_Owner_of_the_Case</targetReference>
         </defaultConnector>
@@ -46,7 +46,7 @@
             <label>IsEnabledOutbound = false</label>
         </rules>
     </decisions>
-    <description>Added fault paths. Outbound Email bypass added.</description>
+    <description>Made async. Added fault paths. Outbound Email bypass added.</description>
     <environments>Default</environments>
     <interviewLabel>NSP HCM Case Creation Alert {!$Flow.CurrentDateTime}</interviewLabel>
     <label>NSP HCM Case Creation Alert</label>
@@ -72,9 +72,6 @@
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
-        <connector>
-            <targetReference>Outbound_Email_custom_setting_check</targetReference>
-        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Subject</field>
@@ -99,14 +96,20 @@
         </filters>
         <object>Case</object>
         <recordTriggerType>Create</recordTriggerType>
+        <scheduledPaths>
+            <connector>
+                <targetReference>Outbound_Email_custom_setting_check</targetReference>
+            </connector>
+            <pathType>AsyncAfterCommit</pathType>
+        </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Draft</status>
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
-        <locationX>572</locationX>
-        <locationY>539</locationY>
+        <locationX>770</locationX>
+        <locationY>492</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
