@@ -20,7 +20,7 @@ public class NSP_ClientSubPlanHistoryBatch implements ISelfSchedulable , Schedul
         }
         return System.schedule(
             'NSP_ClientSubPlanHistoryBatch ~ update the status of the Retirement Services Assets considering associated Client Subplan History records ~ everyday at 2 AM' + suffix ,
-            '0 0 2 * * ? *' ,
+            '0 0 2 ? * * *' ,
             new NSP_ClientSubPlanHistoryBatch()
         );
     }
