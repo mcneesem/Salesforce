@@ -14,7 +14,7 @@
     <filters>
         <field>CASES.STATUS</field>
         <operation>equals</operation>
-        <value>Open</value>
+        <value>Open,ReOpened</value>
     </filters>
     <filters>
         <field>NSP_Owner__c</field>
