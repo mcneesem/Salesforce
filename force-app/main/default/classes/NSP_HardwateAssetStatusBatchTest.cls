@@ -1,16 +1,13 @@
-/**
-* Apex Class Name      :  NSP_HardwateAssetStatusBatch
-Version              :  1.0                                                                          
-Created Date         :  02/21/2023  
-Description:This is a test class for NSP_HardwateAssetStatusBatch:
-This batch class gets all the Hardware Assets where Terminated Date OR Activation Date is
-populated and Changes the Asset Status for different use cases
-*/
 @isTest
-public class NSP_HardwateAssetStatusBatchTest {
-    /*Set up method to create test data*/
+private class NSP_HardwateAssetStatusBatchTest {
+
     @testSetup
-    static void setupTestData(){
+    private static void setupTestData() {
+        HardwareAssetStatusBatchSettings__c settings = HardwareAssetStatusBatchSettings__c.getOrgDefaults();
+        settings.IsEnabled__c = true;
+        settings.BatchSize__c = 200;
+        upsert settings;
+
         //Get Hardware asset record type
         Id hardwareAssetRecordTypeId =NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE,NSP_CPQConstants.HARWARE_ASSET_RECORDTYPE);
         Account acc1 = NSP_TestHelper.createAccount(true);
@@ -25,7 +22,7 @@ public class NSP_HardwateAssetStatusBatchTest {
         newAsset.NSP_Termination_Date__c=System.today()-1;
         newAsset.RecordTypeId=hardwareAssetRecordTypeId;
         insert newAsset;
-        
+
         Asset newAsset1 = new Asset();
         newAsset1.AccountId = acc1.Id;
         newAsset1.Name = 'Test Asset1';
@@ -35,8 +32,9 @@ public class NSP_HardwateAssetStatusBatchTest {
         newAsset1.RecordTypeId=hardwareAssetRecordTypeId;
         insert newAsset1;
     }
+
     @isTest
-    public static void testBatchExecution() {
+    private static void testBatchExecution() {
         Test.startTest();
         //execute batch class
         Database.executeBatch(new NSP_HardwateAssetStatusBatch());
@@ -44,4 +42,13 @@ public class NSP_HardwateAssetStatusBatchTest {
         List<Asset> assetsToTerminate=[SELECT Id,Status FROM Asset WHERE Status=:NSP_CPQConstants.TERMINATED LIMIT 1];
         System.assertEquals(NSP_CPQConstants.TERMINATED, assetsToTerminate[0].Status);
     }
+
+    @isTest
+    private static void testSceduleExecution() {
+        Test.startTest();
+        NSP_HardwateAssetStatusBatch.schedule();
+        Test.stopTest();
+    }
+
 }
+//

@@ -20,7 +20,7 @@ public class NSP_ProcessClientSubPlanHistoryBatch implements ISelfSchedulable , 
         }
         return System.schedule(
             'NSP_ProcessClientSubPlanHistoryBatch ~ process lead parent info on plan subplan and asset ~ M-F at 8 PM' + suffix ,
-            '0 0 20 ? * 2-6 *' ,
+            '0 0 20 ? * MON-FRI *' ,
             new NSP_ProcessClientSubPlanHistoryBatch()
         );
     }
