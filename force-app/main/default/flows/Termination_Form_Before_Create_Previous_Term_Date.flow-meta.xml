@@ -142,4 +142,5 @@
         <triggerType>RecordBeforeSave</triggerType>
     </start>
     <status>Draft</status>
+    <triggerOrder>20</triggerOrder>
 </Flow>
