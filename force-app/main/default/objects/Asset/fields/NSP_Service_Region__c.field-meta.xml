@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Service_Region__c</fullName>
-    <externalId>false</externalId>
     <label>Service Region</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
@@ -78,28 +77,10 @@
                 <label>FSO - Houston</label>
             </value>
             <value>
-                <fullName>MMSO - East</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>MMSO - East</label>
-            </value>
-            <value>
-                <fullName>MMSO - Houston</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>MMSO - Houston</label>
-            </value>
-            <value>
                 <fullName>MMSO - MidMarket</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>MMSO - MidMarket</label>
-            </value>
-            <value>
-                <fullName>MMSO - Western</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>MMSO - Western</label>
             </value>
             <value>
                 <fullName>WO - WD Bundle Plus</fullName>
