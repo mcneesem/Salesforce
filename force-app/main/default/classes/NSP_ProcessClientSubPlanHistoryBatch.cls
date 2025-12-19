@@ -53,7 +53,7 @@ public class NSP_ProcessClientSubPlanHistoryBatch implements ISelfSchedulable , 
         Id response = null;
         if ( NSP_ProcessClientSubPlanHistoryBatch.isEnabled ) {
             response = Database.executeBatch(
-                new NSP_ProcessClientSubPlanHistoryBatch() , // PMCC 2026
+                new NSP_ProcessClientSubPlanHistoryBatch() ,
                 NSP_ProcessClientSubPlanHistoryBatch.batchSize
             );
         }
