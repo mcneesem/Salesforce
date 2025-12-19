@@ -215,7 +215,7 @@ export default class WizardSurveyPageInfo extends LightningElement {
 
                     if( this.fieldsData.NSP_Survey_Type__c != null && this.fieldsData.NSP_Survey_Type__c.value != null ){
                         this.NSP_Survey_Type__c = this.fieldsData.NSP_Survey_Type__c.value ;
-                        if (this.NSP_Survey_Type__c === 'Exit' || this.NSP_Survey_Type__c === 'Onboarding - One-time' || this.NSP_Survey_Type__c === 'Onboarding - Week 2/Week 5') {
+                        if (this.NSP_Survey_Type__c === 'Exit' || this.NSP_Survey_Type__c === 'Onboarding - One-time' || this.NSP_Survey_Type__c === 'Onboarding - 30/60/90 Day') {
                             this.showEndDate = "display:none;";
                             this.endDateRequired= false;
                             this.NSP_End_Date__c =null;
@@ -318,7 +318,7 @@ export default class WizardSurveyPageInfo extends LightningElement {
     handleChange(event) {
         if (event.currentTarget.name == 'NSP_Survey_Type__c') {
             this.NSP_Survey_Type__c = event.currentTarget.value;
-            if (this.NSP_Survey_Type__c === 'Exit' || this.NSP_Survey_Type__c === 'Onboarding - One-time' || this.NSP_Survey_Type__c === 'Onboarding - Week 2/Week 5') {
+            if (this.NSP_Survey_Type__c === 'Exit' || this.NSP_Survey_Type__c === 'Onboarding - One-time' || this.NSP_Survey_Type__c === 'Onboarding - 30/60/90 Day') {
                 this.showEndDate = "display:none;";
                 this.endDateRequired= false;
                 if(this.template.querySelector('lightning-input-field.NSP_End_Date__c') != null ){
