@@ -1174,13 +1174,26 @@ public with sharing class NSP_LeadTriggerHelper {
                     }
                 }
             } else if (accResult.isEmpty()) {
-                List < Lead > leadResult = [SELECT Id, OwnerId FROM Lead WHERE DNB_Connect_DUNS_Number__c != null AND DNB_Connect_DUNS_Number__c = : leadObject.DNB_Connect_DUNS_Number__c AND NSP_Parent_Lead__c = NULL AND id != : leadObject.id];
+                List < Lead > leadResult = [
+                    SELECT
+                        Id ,
+                        IsConverted ,
+                        OwnerId
+                    FROM Lead
+                    WHERE (
+                        ( DNB_Connect_DUNS_Number__c != null )
+                        AND ( DNB_Connect_DUNS_Number__c = : leadObject.DNB_Connect_DUNS_Number__c )
+                        AND ( NSP_Parent_Lead__c = NULL )
+                        AND ( Id != : leadObject.Id )
+                        AND ( IsConverted = false )
+                    )
+                ];
                 if (leadResult.size() == 1) {
                     for (Lead dunsLead: leadResult) {
                         leadObject.NSP_Parent_Lead__c = dunsLead.Id;
-                        leadObject.NSP_Skip_Validation__c= true;
+                        leadObject.NSP_Skip_Validation__c = true;
                         leadObject.OwnerId = dunsLead.OwnerId;
-                        leadObject.NSP_Lead_Routing__c = FALSE;
+                        leadObject.NSP_Lead_Routing__c = false;
                         isOwnerUpdated = true;
                     }
                 }
