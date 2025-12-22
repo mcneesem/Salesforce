@@ -6972,103 +6972,103 @@
         <editable>true</editable>
         <field>Case.NSP_Demo_Date__c</field>
         <readable>true</readable>
-</fieldPermissions>
-<fieldPermissions>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.NSP_Education_Activity__c</field>
         <readable>true</readable>
-</fieldPermissions>
-<fieldPermissions>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.NSP_RET_Process_Area__c</field>
         <readable>true</readable>
-</fieldPermissions>
-<fieldPermissions>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.NSP_Education_Date_Completed_Delivered__c</field>
         <readable>true</readable>
-</fieldPermissions>
-<fieldPermissions>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.NSP_Internal_Comments__c</field>
         <readable>true</readable>
-</fieldPermissions>
-<fieldPermissions>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.NSP_Request_Date__c</field>
         <readable>true</readable>
-</fieldPermissions>
-<fieldPermissions>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.NSP_RET_5500_Plan_Tracking__c</field>
         <readable>true</readable>
-</fieldPermissions>
-<fieldPermissions>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.NSP_RET_Amendment_Checklist__c</field>
         <readable>true</readable>
-</fieldPermissions>
-<fieldPermissions>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.NSP_RET_CGNDQ__c</field>
         <readable>true</readable>
-</fieldPermissions>
-<fieldPermissions>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.NSP_RET_Client_Change__c</field>
         <readable>true</readable>
-</fieldPermissions>
-<fieldPermissions>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.NSP_RET_Client_Sub_Plan_History__c</field>
         <readable>true</readable>
-</fieldPermissions>
-<fieldPermissions>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.NSP_RET_Compliance__c</field>
         <readable>true</readable>
-</fieldPermissions>
-<fieldPermissions>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.NSP_RET_Contribution__c</field>
         <readable>true</readable>
-</fieldPermissions>
-<fieldPermissions>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.NSP_RET_Deconversion__c</field>
         <readable>true</readable>
-</fieldPermissions>
-<fieldPermissions>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.NSP_RET_Education__c</field>
         <readable>true</readable>
-</fieldPermissions>
-<fieldPermissions>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.NSP_RET_Education_Comments__c</field>
         <readable>true</readable>
-</fieldPermissions>
-<fieldPermissions>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.NSP_RET_Eligibility__c</field>
         <readable>true</readable>
-</fieldPermissions>
-<fieldPermissions>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.NSP_RET_EOY_Amendments__c</field>
         <readable>true</readable>
-</fieldPermissions>
-<fieldPermissions>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.NSP_RET_Monthly_Participation__c</field>
         <readable>true</readable>
-</fieldPermissions>
-<fieldPermissions>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.NSP_RET_Plan__c</field>
         <readable>true</readable>
-</fieldPermissions>
-<fieldPermissions>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Case_Contacts__c.Contact_Name__c</field>
         <readable>true</readable>
