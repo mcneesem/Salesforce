@@ -37,7 +37,7 @@ public class NSP_DunningEmailNotificationsBatch implements Database.Batchable<sO
                 accountToCSSEmail.put(accTeamMember.NSP_Account__c, accTeamMember.NSP_Email__c);
                 }
             }
-            // looping through cases in batch scope 
+            // looping through cases in batch scope
             for(Case cs : scope ){
                 recordsProcessed +=1;
                 Boolean isCaseToUpdate = false;
@@ -103,40 +103,38 @@ public class NSP_DunningEmailNotificationsBatch implements Database.Batchable<sO
     }
 
     public void finish(Database.BatchableContext bc){
-        if ( EmailDeliverabilityController.IsEnabledOutbound ) {
-            System.debug('Mails Sent :'+totalMailsSent);
-            System.debug('Records Processed :'+recordsProcessed);
-            //THIS COMMENT IS INTENTIONAL. DO NOT DELETE.
-            // This sends an email to Operations team DL. 
-            // Get the ID of the AsyncApexJob representing this batch job
-            // from Database.BatchableContext.
-            // Query the AsyncApexJob object to retrieve the current job's information.
-            AsyncApexJob async = [
-                SELECT Id , Status , NumberOfErrors , JobItemsProcessed , TotalJobItems , CreatedBy.Email
-                FROM AsyncApexJob
-                WHERE Id = :bc.getJobId()
-            ];
-            // OPTIONAL: Send an email to the Apex job's submitter notifying of job completion.
-            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-            //String opsEmail = Label.NSP_Operations_Team_DL;
-            String[] toAddresses = new String[] {async.CreatedBy.Email};
-            mail.setToAddresses(toAddresses);
-            mail.setSubject('Dunning Email Notifications Batch ' + async.Status);
-            mail.setPlainTextBody(
-                'The batch Apex job processed ' + async.TotalJobItems +
-                ' batches with '+ async.NumberOfErrors + ' failures.' +
-                'Total Records :'+recordsProcessed +
-                'Total Emails Sent :'+totalMailsSent
+        System.debug('Mails Sent :'+totalMailsSent);
+        System.debug('Records Processed :'+recordsProcessed);
+        //THIS COMMENT IS INTENTIONAL. DO NOT DELETE.
+        // This sends an email to Operations team DL.
+        // Get the ID of the AsyncApexJob representing this batch job
+        // from Database.BatchableContext.
+        // Query the AsyncApexJob object to retrieve the current job's information.
+        AsyncApexJob async = [
+            SELECT Id , Status , NumberOfErrors , JobItemsProcessed , TotalJobItems , CreatedBy.Email
+            FROM AsyncApexJob
+            WHERE Id = :bc.getJobId()
+        ];
+        // OPTIONAL: Send an email to the Apex job's submitter notifying of job completion.
+        Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+        //String opsEmail = Label.NSP_Operations_Team_DL;
+        String[] toAddresses = new String[] {async.CreatedBy.Email};
+        mail.setToAddresses(toAddresses);
+        mail.setSubject('Dunning Email Notifications Batch ' + async.Status);
+        mail.setPlainTextBody(
+            'The batch Apex job processed ' + async.TotalJobItems +
+            ' batches with '+ async.NumberOfErrors + ' failures.' +
+            'Total Records :'+recordsProcessed +
+            'Total Emails Sent :'+totalMailsSent
+        );
+        try {
+            Messaging.sendEmail( new Messaging.SingleEmailMessage[]{mail} );
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_DunningEmailNotificationsBatch.class.getName() ,
+                'finish' ,
+                e
             );
-            try {
-                Messaging.sendEmail( new Messaging.SingleEmailMessage[]{mail} );
-            } catch ( Exception e ) {
-                NSP_ErrorLogHandler.logException(
-                    NSP_DunningEmailNotificationsBatch.class.getName() ,
-                    'finish' ,
-                    e
-                );
-            }
         }
     }
 
