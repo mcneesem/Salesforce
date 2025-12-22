@@ -73,7 +73,7 @@ public with sharing class NSP_ErrorLogHandler {
     //
 
     // DEPRECATED ~ see logException
-    // ~ 63 classes
+    // ~ 55 classes
     public static void logSaveException( String className , String methodName , String message ) {
         NSP_ErrorLogHandler.insertLog(
             className ,
@@ -84,7 +84,7 @@ public with sharing class NSP_ErrorLogHandler {
     }
 
     // DEPRECATED ~ see logResults
-    // ~ 9 classes
+    // ~ 7 classes
     public static void logSaveResult( String className , String methodName , List<Database.SaveResult> saveResultList ) {
         NSP_ErrorLogHandler.logResults(
             className ,
@@ -95,7 +95,7 @@ public with sharing class NSP_ErrorLogHandler {
 
     // DEPRECATED ~ see logResults
     // This method logs error for the failed results of Database.insert/update operation in DB.
-    // ~ 27 classes
+    // ~ 23 classes
     public static void logSaveResultsException( String className , String methodName , List<Database.SaveResult> results ) {
         NSP_ErrorLogHandler.logResults(
             className ,
@@ -106,7 +106,7 @@ public with sharing class NSP_ErrorLogHandler {
 
     // DEPRECATED ~ see logResults
     // This method logs error for the failed results of Database.delete operation in DB.
-    // ~ 4 classes
+    // ~ 3 classes
     public static void logDeleteResultsException( String className , String methodName , List<Database.DeleteResult> results ) {
         NSP_ErrorLogHandler.logResults(
             className ,
@@ -117,7 +117,7 @@ public with sharing class NSP_ErrorLogHandler {
 
     // DEPRECATED ~ see logResults
     // This method logs error for the failed results of Database.upsert operation in DB.
-    // ~ 7 classes
+    // ~ 6 classes
     public static void logUpsertResultsException( String className , String methodName , List<Database.UpsertResult> results ) {
         NSP_ErrorLogHandler.logResults(
             className ,
