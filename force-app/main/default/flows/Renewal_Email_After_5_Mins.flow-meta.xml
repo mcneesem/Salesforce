@@ -3,10 +3,13 @@
     <actionCalls>
         <name>Send_Renewal_Email</name>
         <label>Send Renewal Email</label>
-        <locationX>242</locationX>
+        <locationX>176</locationX>
         <locationY>384</locationY>
         <actionName>SBQQ__Quote__c.NSP_Email_Alert_to_Quote_Owner_on_Creation_of_Renewal_Quote</actionName>
         <actionType>emailAlert</actionType>
+        <faultConnector>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
@@ -23,7 +26,7 @@
         <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
         <name>Bypass_and_Outbound_Email_custom_setting_check</name>
         <label>Bypass and Outbound Email custom setting check</label>
-        <locationX>374</locationX>
+        <locationX>440</locationX>
         <locationY>276</locationY>
         <defaultConnectorLabel>Do not send email</defaultConnectorLabel>
         <rules>
@@ -49,7 +52,7 @@
             <label>Run</label>
         </rules>
     </decisions>
-    <description>Outbound Email bypass added.</description>
+    <description>Added fault path. Outbound Email bypass added.</description>
     <environments>Default</environments>
     <interviewLabel>Renewal Email After 5 Mins {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Renewal Email After 5 Mins</label>
@@ -106,4 +109,29 @@
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Draft</status>
+    <subflows>
+        <name>Fault_Handler_Subflow</name>
+        <label>Fault Handler Subflow</label>
+        <locationX>440</locationX>
+        <locationY>492</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <stringValue>Send_Renewal_Email</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Renewal_Email_After_5_Mins</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
 </Flow>
