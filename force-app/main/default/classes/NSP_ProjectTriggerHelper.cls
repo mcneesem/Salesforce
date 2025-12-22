@@ -504,7 +504,7 @@ public with sharing class NSP_ProjectTriggerHelper {
                 project.TemplateName__c = project.name;
             }else if ( !project.pse__Is_Template__c &&
                      ( project.RecordTypeId == bpsProjectRecordTypeId ||
-                     (project.TemplateName__c != null && project.TemplateName__c.startsWith('RET')) )
+                     ( String.isNotBlank( project.TemplateName__c ) && project.TemplateName__c.startsWith('RET') ) )
             ){
                 project.Name = String.isNotBlank(project.pse__Account__c) ?
                     projAccIdNameMap.get(project.pse__Account__c).Name + ': ' + project.TemplateName__c :
@@ -537,8 +537,8 @@ public with sharing class NSP_ProjectTriggerHelper {
 
     private String projectNameSafeText(String prjName){
         String newProjName = prjName;
-        if ( String.isNotBlank(prjName) && prjName.length() > 73 ) {
-            newProjName = prjName.substring( 0 , 73 );
+        if ( String.isNotBlank(newProjName) && newProjName.length() > 73 ) {
+            newProjName = newProjName.substring( 0 , 73 );
         }
         return newProjName;
     }
