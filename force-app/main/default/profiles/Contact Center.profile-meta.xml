@@ -15436,7 +15436,6 @@
         <field>NSP_ReportRequest__c.NSP_Phone_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
-
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_ReportRequest__c.NSP_Question10_MatrixSubCategories__c</field>
@@ -22597,15 +22596,11 @@
         <field>pse__Proj__c.NSP_NetSuite_External_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
-
-
-
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Proj__c.NSP_OneVoice_External_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
-
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Proj__c.NSP_RET_Client_ID__c</field>
@@ -22626,7 +22621,6 @@
         <field>pse__Proj__c.NSP_Sales_Rep__c</field>
         <readable>true</readable>
     </fieldPermissions>
-
     <fieldPermissions>
         <editable>true</editable>
         <field>pse__Proj__c.NSP_Template_Generated__c</field>
@@ -22637,7 +22631,6 @@
         <field>pse__Proj__c.NSP_Total_Projected_Employee_Enrollment__c</field>
         <readable>true</readable>
     </fieldPermissions>
-
     <fieldPermissions>
         <editable>true</editable>
         <field>pse__Proj__c.NSP_Visible_to_Client__c</field>
@@ -23693,7 +23686,6 @@
         <field>pse__Proj__c.NSP_Project_Quick_Rate_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
-
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Project_Task_Assignment__c.AccountID__c</field>
@@ -27364,7 +27356,6 @@
         <field>Implementation_Profile__c.NSP_collected_copies_of_state_WC_policy__c</field>
         <readable>true</readable>
     </fieldPermissions>
-
     <fieldPermissions>
         <editable>false</editable>
         <field>Implementation_Profile__c.NSP_current_waiting_period__c</field>
@@ -32175,7 +32166,6 @@
         <layout>pse__Proj__c-RET Deconversion 2020 Form</layout>
         <recordType>pse__Proj__c.RET_Deconversion_2020_Form</recordType>
     </layoutAssignments>
-
     <layoutAssignments>
         <layout>pse__Proj__c-TES%2BBPS</layout>
         <recordType>pse__Proj__c.TES_BPS</recordType>
@@ -32188,7 +32178,6 @@
         <layout>pse__Project_Task__c-PEO Project Task</layout>
         <recordType>pse__Project_Task__c.PEO_Project_Task</recordType>
     </layoutAssignments>
-
     <layoutAssignments>
         <layout>NSP_Focus_Item__c-Service User Focus Item Layout</layout>
         <recordType>NSP_Focus_Item__c.NSP_Service_User_Focus_item</recordType>
@@ -33763,7 +33752,6 @@
         <tab>bloomfirex__Linked_Content__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
-
     <tabVisibilities>
         <tab>NSP_Implementation_Profile_Automation__c</tab>
         <visibility>Hidden</visibility>
@@ -33776,7 +33764,6 @@
         <tab>pse__Grp__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
-
     <tabVisibilities>
         <tab>NSP_ReportRequest__c</tab>
         <visibility>Hidden</visibility>
@@ -34746,7 +34733,6 @@
         <enabled>true</enabled>
         <name>SubmitMacrosAllowed</name>
     </userPermissions>
-
     <userPermissions>
         <enabled>true</enabled>
         <name>TransactionalEmailSend</name>
