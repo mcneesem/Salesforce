@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Send_Email_to_NBI_Merger</name>
         <label>Send Email to NBI Merger</label>
-        <locationX>204</locationX>
-        <locationY>2639</locationY>
+        <locationX>303</locationX>
+        <locationY>2771</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
@@ -41,12 +41,14 @@
                 <stringValue>You Have a S2I Merger Assignment</stringValue>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>Send_Email_to_NBI_Resource</name>
         <label>Send Email to NBI Resource</label>
-        <locationX>50</locationX>
-        <locationY>2087</locationY>
+        <locationX>182</locationX>
+        <locationY>2195</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
@@ -83,12 +85,14 @@
                 <stringValue>S2I Installation – Quality Control Issue</stringValue>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <name>Send_Email_to_RET_401k_Queue</name>
         <label>Send Email to RET 401k Queue</label>
-        <locationX>50</locationX>
-        <locationY>1175</locationY>
+        <locationX>171</locationX>
+        <locationY>1187</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
@@ -125,8 +129,11 @@
                 <stringValue>S2I Installation – Quality Control Issue</stringValue>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>55.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <constants>
         <name>emailContatant</name>
         <dataType>String</dataType>
@@ -141,8 +148,8 @@
     <decisions>
         <name>NBI_Impl_Resource_Populated</name>
         <label>NBI Impl Resource Populated</label>
-        <locationX>336</locationX>
-        <locationY>1607</locationY>
+        <locationX>435</locationX>
+        <locationY>1655</locationY>
         <defaultConnector>
             <targetReference>NBI_Merger_Resource_Populated</targetReference>
         </defaultConnector>
@@ -173,8 +180,8 @@
     <decisions>
         <name>NBI_Merger_Resource_Populated</name>
         <label>NBI Merger Resource Populated</label>
-        <locationX>336</locationX>
-        <locationY>2519</locationY>
+        <locationX>435</locationX>
+        <locationY>2663</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>isNBIMergerPopulated</name>
@@ -202,8 +209,8 @@
     <decisions>
         <name>No_NBI_Impl_Resource_populated</name>
         <label>No NBI Impl Resource populated</label>
-        <locationX>336</locationX>
-        <locationY>575</locationY>
+        <locationX>435</locationX>
+        <locationY>539</locationY>
         <defaultConnector>
             <targetReference>NBI_Impl_Resource_Populated</targetReference>
         </defaultConnector>
@@ -232,10 +239,59 @@
         </rules>
     </decisions>
     <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check_401k_Queue</name>
+        <label>Outbound Email custom setting check - 401k Queue</label>
+        <locationX>83</locationX>
+        <locationY>971</locationY>
+        <defaultConnector>
+            <targetReference>Get_Task_just_created</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false_401k</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>NBI_Impl_Resource_Populated</targetReference>
+            </connector>
+            <label>IsEnabledOutbound = false - 401k</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check_NBI_Resource</name>
+        <label>Outbound Email custom setting check - NBI Resource</label>
+        <locationX>50</locationX>
+        <locationY>1979</locationY>
+        <defaultConnector>
+            <targetReference>Get_Task</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false_NBI</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false - NBI</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Task_already_exists</name>
         <label>Task already exists?</label>
-        <locationX>182</locationX>
-        <locationY>695</locationY>
+        <locationX>259</locationX>
+        <locationY>647</locationY>
         <defaultConnector>
             <targetReference>NBI_Impl_Resource_Populated</targetReference>
         </defaultConnector>
@@ -273,8 +329,8 @@
     <decisions>
         <name>Task_already_exists_for_NBI_Impl_Resource</name>
         <label>Task already exists for NBI Impl Resource?</label>
-        <locationX>182</locationX>
-        <locationY>1727</locationY>
+        <locationX>248</locationX>
+        <locationY>1763</locationY>
         <defaultConnector>
             <targetReference>NBI_Merger_Resource_Populated</targetReference>
         </defaultConnector>
@@ -309,6 +365,7 @@
             <label>ifTaskDoesntExist</label>
         </rules>
     </decisions>
+    <description>Outbound Email bypass added.</description>
     <environments>Default</environments>
     <formulas>
         <name>QualityReviewCheckBoxes</name>
@@ -356,9 +413,9 @@ if({!$Record.NSP_Subplan_Contribution_Rule__c}, &apos;DC-Subplan Contribution Ru
         <name>Create_a_Task</name>
         <label>Create a Task</label>
         <locationX>50</locationX>
-        <locationY>1847</locationY>
+        <locationY>1871</locationY>
         <connector>
-            <targetReference>Get_Task</targetReference>
+            <targetReference>Outbound_Email_custom_setting_check_NBI_Resource</targetReference>
         </connector>
         <inputAssignments>
             <field>ActivityDate</field>
@@ -420,10 +477,10 @@ if({!$Record.NSP_Subplan_Contribution_Rule__c}, &apos;DC-Subplan Contribution Ru
     <recordCreates>
         <name>Create_a_Task_for_401k</name>
         <label>Create a Task for 401k</label>
-        <locationX>50</locationX>
-        <locationY>935</locationY>
+        <locationX>83</locationX>
+        <locationY>863</locationY>
         <connector>
-            <targetReference>Get_Task_just_created</targetReference>
+            <targetReference>Outbound_Email_custom_setting_check_401k_Queue</targetReference>
         </connector>
         <inputAssignments>
             <field>ActivityDate</field>
@@ -485,8 +542,8 @@ if({!$Record.NSP_Subplan_Contribution_Rule__c}, &apos;DC-Subplan Contribution Ru
     <recordCreates>
         <name>Create_Email_Message_for_NBI_Resource_0</name>
         <label>Create Email Message for NBI Resource</label>
-        <locationX>50</locationX>
-        <locationY>2207</locationY>
+        <locationX>182</locationX>
+        <locationY>2303</locationY>
         <connector>
             <targetReference>NBI_Merger_Resource_Populated</targetReference>
         </connector>
@@ -538,8 +595,8 @@ if({!$Record.NSP_Subplan_Contribution_Rule__c}, &apos;DC-Subplan Contribution Ru
     <recordCreates>
         <name>Create_Email_Message_Record</name>
         <label>Create Email Message Record</label>
-        <locationX>204</locationX>
-        <locationY>2759</locationY>
+        <locationX>303</locationX>
+        <locationY>2879</locationY>
         <inputAssignments>
             <field>FromAddress</field>
             <value>
@@ -588,7 +645,7 @@ if({!$Record.NSP_Subplan_Contribution_Rule__c}, &apos;DC-Subplan Contribution Ru
     <recordCreates>
         <name>Create_Email_Message_Record_for_Queue</name>
         <label>Create Email Message Record for Queue</label>
-        <locationX>50</locationX>
+        <locationX>171</locationX>
         <locationY>1295</locationY>
         <connector>
             <targetReference>NBI_Impl_Resource_Populated</targetReference>
@@ -641,8 +698,8 @@ if({!$Record.NSP_Subplan_Contribution_Rule__c}, &apos;DC-Subplan Contribution Ru
     <recordLookups>
         <name>Get_All_Tasks_with_subject_S2I_Installation</name>
         <label>Get All Tasks with subject S2I Installation</label>
-        <locationX>336</locationX>
-        <locationY>455</locationY>
+        <locationX>435</locationX>
+        <locationY>431</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>No_NBI_Impl_Resource_populated</targetReference>
@@ -669,8 +726,8 @@ if({!$Record.NSP_Subplan_Contribution_Rule__c}, &apos;DC-Subplan Contribution Ru
     <recordLookups>
         <name>Get_BPS_Record_Type</name>
         <label>Get BPS Record Type</label>
-        <locationX>336</locationX>
-        <locationY>335</locationY>
+        <locationX>435</locationX>
+        <locationY>323</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_All_Tasks_with_subject_S2I_Installation</targetReference>
@@ -699,8 +756,8 @@ if({!$Record.NSP_Subplan_Contribution_Rule__c}, &apos;DC-Subplan Contribution Ru
     <recordLookups>
         <name>Get_RET_401k_Queue</name>
         <label>Get RET 401k Queue</label>
-        <locationX>50</locationX>
-        <locationY>815</locationY>
+        <locationX>83</locationX>
+        <locationY>755</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Create_a_Task_for_401k</targetReference>
@@ -729,8 +786,8 @@ if({!$Record.NSP_Subplan_Contribution_Rule__c}, &apos;DC-Subplan Contribution Ru
     <recordLookups>
         <name>Get_Task</name>
         <label>Get Task</label>
-        <locationX>50</locationX>
-        <locationY>1967</locationY>
+        <locationX>182</locationX>
+        <locationY>2087</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Send_Email_to_NBI_Resource</targetReference>
@@ -750,8 +807,8 @@ if({!$Record.NSP_Subplan_Contribution_Rule__c}, &apos;DC-Subplan Contribution Ru
     <recordLookups>
         <name>Get_Task_just_created</name>
         <label>Get Task just created</label>
-        <locationX>50</locationX>
-        <locationY>1055</locationY>
+        <locationX>171</locationX>
+        <locationY>1079</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Send_Email_to_RET_401k_Queue</targetReference>
@@ -769,7 +826,7 @@ if({!$Record.NSP_Subplan_Contribution_Rule__c}, &apos;DC-Subplan Contribution Ru
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>210</locationX>
+        <locationX>309</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_BPS_Record_Type</targetReference>
@@ -778,7 +835,7 @@ if({!$Record.NSP_Subplan_Contribution_Rule__c}, &apos;DC-Subplan Contribution Ru
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <textTemplates>
         <name>mailBodyForNBIMerger</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>

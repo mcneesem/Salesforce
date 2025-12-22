@@ -113,7 +113,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Get_Opty_Owner_in_BPA_Public_Group</targetReference>
+            <targetReference>Outbound_Email_custom_setting_check</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -178,7 +178,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Get_Opty_Owner_in_BPA_Public_Group</targetReference>
+            <targetReference>Outbound_Email_custom_setting_check</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -657,7 +657,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Get_Opty_Owner_in_BPA_Public_Group</targetReference>
+            <targetReference>Outbound_Email_custom_setting_check</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Not a Close Lost Opty</defaultConnectorLabel>
         <rules>
@@ -699,6 +699,32 @@
                 <targetReference>Get_the_Owners_District_Manager</targetReference>
             </connector>
             <label>Yes - Owner is in BPA group</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check</name>
+        <label>Outbound Email custom setting check</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Get_Opty_Owner_in_BPA_Public_Group</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Should_Opportunity_Discovery_Call_Completed_Date_be_updated</targetReference>
+            </connector>
+            <label>IsEnabledOutbound = false</label>
         </rules>
     </decisions>
     <decisions>
@@ -856,7 +882,7 @@
             <label>Yes - Nested Closed Lost process in place</label>
         </rules>
     </decisions>
-    <description>Updated to account for nested picklists possibly being passed in for Closed Lost process. Added logic to check for Customer Signer to prevent flow errors. Flipped back to use District Manager Id field (for now). Runs through logic when Discovery Call is completed to make updates on related Opportunity as needed.</description>
+    <description>Outbound Email bypass added. Updated to account for nested picklists possibly being passed in for Closed Lost process. Added logic to check for Customer Signer to prevent flow errors. Flipped back to use District Manager Id field (for now). Runs through logic when Discovery Call is completed to make updates on related Opportunity as needed.</description>
     <environments>Default</environments>
     <formulas>
         <name>eventCompletedDatePlus60Formula</name>
