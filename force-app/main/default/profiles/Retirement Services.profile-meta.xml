@@ -15909,7 +15909,6 @@
         <field>NSP_ReportRequest__c.NSP_Phone_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
-
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_ReportRequest__c.NSP_Question10_MatrixSubCategories__c</field>
@@ -23050,21 +23049,16 @@
         <field>pse__Proj__c.NSP_NetSuite_External_ID__c</field>
         <readable>false</readable>
     </fieldPermissions>
-
-
-
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Proj__c.NSP_OneVoice_External_ID__c</field>
         <readable>false</readable>
     </fieldPermissions>
-
     <fieldPermissions>
         <editable>true</editable>
         <field>pse__Proj__c.NSP_Plan__c</field>
         <readable>true</readable>
     </fieldPermissions>
-
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Proj__c.NSP_RET_Client_ID__c</field>
@@ -23085,7 +23079,6 @@
         <field>pse__Proj__c.NSP_Sales_Rep__c</field>
         <readable>true</readable>
     </fieldPermissions>
-
     <fieldPermissions>
         <editable>true</editable>
         <field>pse__Proj__c.NSP_Template_Generated__c</field>
@@ -24161,7 +24154,6 @@
         <field>pse__Proj__c.NSP_To_Emails__c</field>
         <readable>false</readable>
     </fieldPermissions>
-
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Project_Task_Assignment__c.AccountID__c</field>
@@ -28077,7 +28069,6 @@
         <field>Implementation_Profile__c.NSP_collected_copies_of_state_WC_policy__c</field>
         <readable>true</readable>
     </fieldPermissions>
-
     <fieldPermissions>
         <editable>false</editable>
         <field>Implementation_Profile__c.NSP_current_waiting_period__c</field>
@@ -31123,7 +31114,6 @@
         <field>ServiceAppointment.NSP_Project_Task_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
-
     <fieldPermissions>
         <editable>false</editable>
         <field>ServiceAppointment.NSP_Project_Attendance__c</field>
