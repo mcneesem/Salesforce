@@ -102,7 +102,7 @@ private with sharing class NSP_NotificatonIESAlertsBatch_Test {
     }
 
     @isTest
-    private static void terminatedEmailTemplateB()v{
+    private static void terminatedEmailTemplateB() {
         //GIVEN
         Asset asset = Database.Query(new NSP_QueryBuilder( 'Asset', new List<String>{'Id', 'NSP_Account_Status__c'}).addLimit(1).build());
 

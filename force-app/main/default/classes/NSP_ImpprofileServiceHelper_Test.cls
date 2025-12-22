@@ -82,7 +82,7 @@ private class NSP_ImpprofileServiceHelper_Test {
         fsoIp.NSP_Does_the_client_more_FEIN__c=NSP_ServiceConstants.YES;
         fsoIp.Is_there_a_need_for_a_subaccount__c=NSP_ServiceConstants.YES;
         fsoIp.classing_req_a_new_download_for_Subacc__c=NSP_ServiceConstants.YES;
-        fsoIp.Why_is_subaccount_needed__c=	'Multiple pay frequencies or pay dates';
+        fsoIp.Why_is_subaccount_needed__c= 'Multiple pay frequencies or pay dates';
         fsoIp.Insperity_pay_frequency__c='Weekly';
         fsoIp.remove_employee_directory_from_premier__c=NSP_ServiceConstants.YES;
         fsoIp.Client_has_Service_Contract_Act_SCA_EEs__c=NSP_ServiceConstants.YES;
