@@ -41,8 +41,8 @@ public class NSP_ContractRenewal_Batch implements ISelfSchedulable , Schedulable
                 this.userNameToIdMap.put( usr.Username , usr.Id );
             }
         }
-        String Days30ListasString = '(\'' + String.join( productsWith30DaysList , '\', \'' ) + '\')';
-        String Days60ListasString = '(\'' + String.join( productsWith60DaysList , '\', \'' ) + '\')';
+        String days30ListasString = '(\'' + String.join( productsWith30DaysList , '\', \'' ) + '\')';
+        String days60ListasString = '(\'' + String.join( productsWith60DaysList , '\', \'' ) + '\')';
         this.query = 'SELECT Id , SBQQ__RenewalForecast__c , SBQQ__RenewalQuoted__c , ContractTerm , NSP_Product_Type__c , SBQQ__ActiveContract__c ';
         this.query += 'FROM Contract ';
         this.query += 'WHERE ';
@@ -52,8 +52,8 @@ public class NSP_ContractRenewal_Batch implements ISelfSchedulable , Schedulable
         this.query += 'AND ( SBQQ__ActiveContract__c = 1 ) ';
         this.query += 'AND ( EndDate >= TODAY ) ';
         this.query += 'AND ( ';
-        this.query += '    ( NSP_Product_Type__c INCLUDES ' + Days30ListasString + ' AND EndDate <= NEXT_N_DAYS:30 ) ';
-        this.query += '    OR ( NSP_Product_Type__c INCLUDES ' + Days60ListasString + ' AND EndDate <= NEXT_N_DAYS:62 ) ';
+        this.query += '    ( NSP_Product_Type__c INCLUDES ' + days30ListasString + ' AND EndDate <= NEXT_N_DAYS:30 ) ';
+        this.query += '    OR ( NSP_Product_Type__c INCLUDES ' + days60ListasString + ' AND EndDate <= NEXT_N_DAYS:62 ) ';
         this.query += ')';
     }
 
