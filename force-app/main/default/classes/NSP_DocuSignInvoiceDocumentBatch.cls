@@ -145,7 +145,7 @@ public class NSP_DocuSignInvoiceDocumentBatch implements Schedulable , Database.
         resultMap.put('withAttachments', invWithAttachments);
         resultMap.put('withoutAttachments', invWithoutAttachments);
         return resultMap;
-	}
+    }
 
     private AsyncApexJob selectAsyncApexJob( String jobId ) {
         List<AsyncApexJob> jobs = null;
@@ -165,7 +165,7 @@ public class NSP_DocuSignInvoiceDocumentBatch implements Schedulable , Database.
 
     private void sendEmailNotification( AsyncApexJob job , String plainTextBody ) {
         try {
-            if ( EmailDeliverabilityController.IsEnabledOutbound ) {
+            if ( EmailDeliverabilityController.isEnabledOutbound ) {
                 Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
                 List<String> toAddresses = new List<String>();
                 if ( job != null ) {

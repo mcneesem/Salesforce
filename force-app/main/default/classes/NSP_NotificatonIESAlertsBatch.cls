@@ -1,16 +1,3 @@
-/**
-Apex Class Name      :  NSP_NotificatonIESAlertsBatch
-Version              :  1.0 
-Author               :  Anil                                                                          
-Created Date         :  12/01/22 
-Function             :  Sends email when Sub Client Contact meets the specified conditions on Employee Status
-Story                :  As part of STY-00542                                                                    
-Modification Log     :                                                                              
-*--------------------------------------------------------------------------------------------------  
-* Developer                   Date                   Description                                    
-* -------------------------------------------------------------------------------------------------  
-* Anil                      12/01/22                First Iteration
-*/
 public without sharing class NSP_NotificatonIESAlertsBatch implements Database.Batchable<sObject>, Schedulable  {
     // test w/ NSP_NotificatonIESAlertsBatch_Test (96%)
 
@@ -48,9 +35,9 @@ public without sharing class NSP_NotificatonIESAlertsBatch implements Database.B
     private static Set<String> accountIds = new Set<String>();
     @TestVisible static Integer emailLimits = 0;
     private static List<Messaging.SingleEmailMessage> lstEmailMessages = new List<Messaging.SingleEmailMessage>();
-    @TestVisible 
+    @TestVisible
     private static NSP_NotificatonIESAlertsBatch.CheckSubClientContactTemplateCondition templateCondtions = new NSP_NotificatonIESAlertsBatch.CheckSubClientContactTemplateCondition();
-    @TestVisible 
+    @TestVisible
     private static NSP_NotificatonIESAlertsBatch.BuildEmailTemplates buildEmails = new NSP_NotificatonIESAlertsBatch.BuildEmailTemplates();
 
 
@@ -71,7 +58,7 @@ public without sharing class NSP_NotificatonIESAlertsBatch implements Database.B
         try {
             checkforEligibityRecords(subClientContacts);
             PrepareEmailTemplates();
-            if ( EmailDeliverabilityController.IsEnabledOutbound ) {
+            if ( EmailDeliverabilityController.isEnabledOutbound ) {
                 Messaging.sendEmail(lstEmailMessages);
             }
             emailLimits = Limits.getEmailInvocations();
@@ -84,9 +71,7 @@ public without sharing class NSP_NotificatonIESAlertsBatch implements Database.B
         }
     }
 
-    /**
-     * @description check for the EligibityRecords that matches the conditions for SubClientContacts
-     */
+    // description check for the EligibityRecords that matches the conditions for SubClientContacts
     private static void checkforEligibityRecords(List<NSP_Sub_Client_Contact__c> subClientContacts) {
         for (NSP_Sub_Client_Contact__c subClientContact : subClientContacts) {
             //template condition A
@@ -120,9 +105,7 @@ public without sharing class NSP_NotificatonIESAlertsBatch implements Database.B
         }
     }
 
-    /**
-     * @description prepare records for eachTemplate to Process for the templates
-     */
+    // description prepare records for eachTemplate to Process for the templates
     private static void prepareEligibityRecordsMap(NSP_Sub_Client_Contact__c subClientContact,String emailAlertName) {
         String aimsSubClient = subClientContact.NSP_Sub_Client__r.NSP_Sub_Client__c != null ? subClientContact.NSP_Sub_Client__r.NSP_Sub_Client__c : '';
         List<String> lstSubClientContacts = new List<String>();
@@ -144,9 +127,7 @@ public without sharing class NSP_NotificatonIESAlertsBatch implements Database.B
         contactIdWithName.put(subClientContact.NSP_Contact__c, subClientContact.NSP_Contact__r.Name);
     }
 
-    /**
-     * @description prepare email templates for the Eligible Records
-     */
+    // description prepare email templates for the Eligible Records
     private static void prepareEmailTemplates(){
         //Template A
         if(templateWithContIdSubCC.containsKey(SUB_CLIENT_WO_ACTIVE)) {
@@ -178,30 +159,28 @@ public without sharing class NSP_NotificatonIESAlertsBatch implements Database.B
         }
     }
 
-    /**
-     * Build EmailTemplates for Notification email alerts for subclientcontact conditions
-     */
+    // Build EmailTemplates for Notification email alerts for subclientcontact conditions
     private without sharing class BuildEmailTemplates{
 
         //
-        // @description a.If the "Employee Status" for the Sub Client Contact (SCC) 
+        // @description a.If the "Employee Status" for the Sub Client Contact (SCC)
         // where the contact is identified as a Background Contact is updated from <>TERMINATED to TERMINATED and the WO AIMS status = Active
         //
         public void isTerminatedSubCientWoActiveEmail(Map<String, List<String>> contIdWithSubCC) {
             for(Id contactId :  contIdWithSubCC.keySet()) {
                 String body = contactIdWithName.get(contactId)+' has been terminated from '+ String.join(contIdWithSubCC.get(contactId), ', ')
                     +'. Please remove the contact as an authorized Background Screening recipient from your system.'
-                    +'<br/><br/>Regards,<br/>'+ 
+                    +'<br/><br/>Regards,<br/>'+
                     'Salesforce';
                 prepareEmailTemplate(
-                    'Background Screening Contact for '+String.join(contIdWithSubCC.get(contactId), ', ')+' has been Terminated', 
+                    'Background Screening Contact for '+String.join(contIdWithSubCC.get(contactId), ', ')+' has been Terminated',
                     body
                 );
             }
         }
 
         //
-        // @description b.If the "Employee Status" for the SCC where the contact is identified 
+        // @description b.If the "Employee Status" for the SCC where the contact is identified
         // as a Background Contact is updated from <>TERMINATED to TERMINATED and the WO AIMS status = TERMINATED
         //
         public void isTerminatedSubCientWoTerminatedEmail(Map<String, List<String>> contIdWithSubCC) {
@@ -214,7 +193,7 @@ public without sharing class NSP_NotificatonIESAlertsBatch implements Database.B
                     SUB_CLIENT_CONTACT_FIELDS
                 )
                 .addFilter('NSP_Background_Contact__c', TRUE)
-                .addFilter('NSP_Sub_Client__r.NSP_Account__c', new List<String>(accountIds) , NSP_QueryBuilder.Operator.INCLUDES)                
+                .addFilter('NSP_Sub_Client__r.NSP_Account__c', new List<String>(accountIds) , NSP_QueryBuilder.Operator.INCLUDES)
                 .build();
 
             for(NSP_Sub_Client_Contact__c subcc: Database.Query(query)){
@@ -224,37 +203,37 @@ public without sharing class NSP_NotificatonIESAlertsBatch implements Database.B
                         .add(subcc.NSP_Sub_Client__r.Name +' ('+aimsSubClient+')');
                 }else{
                     accountWithScc.put(subcc.NSP_Sub_Client__r.NSP_Asset__r.AccountId, new Set<String>{
-                        subcc.NSP_Sub_Client__r.Name +' ('+aimsSubClient+')' 
+                        subcc.NSP_Sub_Client__r.Name +' ('+aimsSubClient+')'
                     });
                 }
                 contactWithName.put(subcc.NSP_Sub_Client__r.NSP_Asset__r.AccountId, subcc.NSP_Contact__r.Name);
                 accountWithWOAsset.put(subcc.NSP_Sub_Client__r.NSP_Asset__r.AccountId, subcc.NSP_Sub_Client__r.NSP_Asset__r.Name+' '+subcc.NSP_Sub_Client__r.NSP_Sub_Client__c);
             }
-            
+
             for(Id accId :  accountWithScc.keySet()) {
                 List<String> subClients = new List<String>();
                 subClients.addAll(accountWithScc.get(accId) !=null ? accountWithScc.get(accId) : new Set<String>());
                 String body = accountWithWOAsset.get(accId)+' has terminated their Workforce Optimization or Workforce Synchronization relationship with Insperity.  The Background Screening contact(s) for this account is/are:'
                 +'<br/>'+contactWithName.get(accId)+' '+ String.join(subClients, ', ')+'<br/>'+
-                +'<br/>Please follow up with the Customer regarding their relationship with Insperity Employment Screening'+     
-                +'<br/><br/>Regards,<br/>'+ 
+                +'<br/>Please follow up with the Customer regarding their relationship with Insperity Employment Screening'+
+                +'<br/><br/>Regards,<br/>'+
                 'Salesforce';
                 prepareEmailTemplate(
-                    accountWithWOAsset.get(accId)+' has been Terminated', 
+                    accountWithWOAsset.get(accId)+' has been Terminated',
                     body
                 );
             }
         }
 
         //
-        // @description c. If the "Employee Status" for the SCC where the contact is 
+        // @description c. If the "Employee Status" for the SCC where the contact is
         // identified as a Background Contact is updated from <>(TERMINATED or FMLA or FMLA – WORKERS COMP) to L.O.A., L.O.A. – EDUCATION, OR L.O.A. - MILITARY and the WO AIMS status = Active
         //
         public void isSubCientLOAEmail(Map<String, List<String>> contIdWithSubCC) {
             for(Id contactId :  contIdWithSubCC.keySet()) {
                 String body = contactIdWithName.get(contactId)+' has been placed on L.O.A. from '+ String.join(contIdWithSubCC.get(contactId), ', ')
                 +'. Please contact the client to determine if the employee’s access to the IES site should be suspended.'
-                +'<br/><br/>Regards,<br/>'+ 
+                +'<br/><br/>Regards,<br/>'+
                 'Salesforce';
                 prepareEmailTemplate(
                     'Background Screening Contact for '+String.join(contIdWithSubCC.get(contactId), ', ')+' is on L.O.A',
@@ -264,14 +243,14 @@ public without sharing class NSP_NotificatonIESAlertsBatch implements Database.B
         }
 
         //
-        // @description d. If the "Employee Status" for the SCC where the contact is identified as a Background Contact is updated from 
+        // @description d. If the "Employee Status" for the SCC where the contact is identified as a Background Contact is updated from
         // L.O.A., L.O.A. – EDUCATION, OR L.O.A. - MILITARY  to <>TERMINATED excluding FMLA or FMLA – WORKERS COMP and the WO AIMS status = Active
         //
         public void isSubCientReturnedLOAEmail(Map<String, List<String>> contIdWithSubCC) {
             for(Id contactId :  contIdWithSubCC.keySet()) {
                 String body = contactIdWithName.get(contactId)+' has returned from L.O.A. from '+ String.join(contIdWithSubCC.get(contactId), ', ')
                     +'. If necessary, verify that the contact is still authorized to access the IES site.'
-                    +'<br/><br/>Regards,<br/>'+ 
+                    +'<br/><br/>Regards,<br/>'+
                     'Salesforce';
                 prepareEmailTemplate(
                     'Background Screening Contact for '+String.join(contIdWithSubCC.get(contactId), ', ')+' has returned from L.O.A.',
@@ -281,14 +260,14 @@ public without sharing class NSP_NotificatonIESAlertsBatch implements Database.B
         }
 
         //
-        // @description e. If the "Employee Status" for the SCC where the contact is identified 
+        // @description e. If the "Employee Status" for the SCC where the contact is identified
         // as a Background Contact is updated from <>(TERMINATED or L.O.A., L.O.A. – EDUCATION, OR L.O.A. – MILITARY)  to FMLA or FMLA – WORKERS COMP and the WO AIMS status = Active
         //
         public void isSubCientFLMAEmail(Map<String, List<String>> contIdWithSubCC) {
             for(Id contactId :  contIdWithSubCC.keySet()) {
                 String body = contactIdWithName.get(contactId)+' is on FMLA leave from '+ String.join(contIdWithSubCC.get(contactId), ', ')
                 +'. Please contact the client to determine if the employee’s access to the IES site should be suspended.'
-                +'<br/><br/>Regards,<br/>'+ 
+                +'<br/><br/>Regards,<br/>'+
                 'Salesforce';
                 prepareEmailTemplate(
                     'Background Screening Contact for '+ String.join(contIdWithSubCC.get(contactId), ', ')+' is on FMLA',
@@ -298,14 +277,14 @@ public without sharing class NSP_NotificatonIESAlertsBatch implements Database.B
         }
 
         //
-        // @description f.If the "Employee Status" for the SCC where the contact is identified as a 
+        // @description f.If the "Employee Status" for the SCC where the contact is identified as a
         // Background Contact is updated from FMLA or FMLA – WORKERS COMP to <>TERMINATED excluding L.O.A., L.O.A. – EDUCATION, OR L.O.A. - MILITARY  and the WO AIMS status = Active
         //
         public void isSubCientReturnedFLMAEmail(Map<String, List<String>> contIdWithSubCC) {
             for(Id contactId :  contIdWithSubCC.keySet()) {
                 String body = contactIdWithName.get(contactId)+' has returned from FMLA leave at '+ String.join(contIdWithSubCC.get(contactId), ', ')
                 +'. If necessary, verify that the contact is still authorized to access the IES site.'
-                +'<br/><br/>Regards,<br/>'+ 
+                +'<br/><br/>Regards,<br/>'+
                 'Salesforce';
                 prepareEmailTemplate(
                     'Background Screening Contact for '+String.join(contIdWithSubCC.get(contactId), ', ')+' has returned from FMLA',
@@ -319,7 +298,7 @@ public without sharing class NSP_NotificatonIESAlertsBatch implements Database.B
             for(Id contactId :  contIdWithSubCC.keySet()) {
                 String body = contactIdWithName.get(contactId)+' has been rehired to '+String.join(contIdWithSubCC.get(contactId), ', ')+ '.'
                     +' If this contact should not be an authorized recipient of background screening data, please go to OneVoice and remove the Background Contact flag from the Contact’s record.'
-                    +'<br/><br/>Regards,<br/>'+ 
+                    +'<br/><br/>Regards,<br/>'+
                     'Salesforce';
                 prepareEmailTemplate(
                     'Previous Background Screening Contact for '+String.join(contIdWithSubCC.get(contactId), ', ')+' has been Rehired',
@@ -328,9 +307,7 @@ public without sharing class NSP_NotificatonIESAlertsBatch implements Database.B
             }
         }
 
-        /**
-         * @description Perpare Email Templates and Add to the list to send Emails
-         */
+        // description Perpare Email Templates and Add to the list to send Emails
         public void prepareEmailTemplate(String subject, String mailBody){
             Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
             mail.setToAddresses(new List<String>{Label.NSP_IES_NotificationAlertEmail});
@@ -338,15 +315,13 @@ public without sharing class NSP_NotificatonIESAlertsBatch implements Database.B
                 mail.setOrgWideEmailAddressId(Label.NSP_OrgWideEmail_Insperity);
             }
             mail.setSubject(Subject);
-            mail.setHtmlBody(mailBody);               
+            mail.setHtmlBody(mailBody);
             lstEmailMessages.add(mail);
         }
     }
 
-    /**
-     * check for Notification email alerts for subclientcontact conditions to send an email
-     */
-    private without sharing class CheckSubClientContactTemplateCondition{ 
+    // check for Notification email alerts for subclientcontact conditions to send an email
+    private without sharing class CheckSubClientContactTemplateCondition{
         List<String> lstFMLA = new List<String>{
             NSP_ServiceConstants.TERMINATED_STATUS,
             NSP_ServiceConstants.FMLA_STATUS,
@@ -407,7 +382,7 @@ public without sharing class NSP_NotificatonIESAlertsBatch implements Database.B
         public Boolean isSubCientLOA(NSP_Sub_Client_Contact__c subClientContact) {
             return (subClientContact.NSP_Employee_Status__c != subClientContact.NSP_Old_Employee_Status__c &&
                 subClientContact.NSP_Sub_Client__r.NSP_Asset__r.NSP_Account_Status__c == NSP_ServiceConstants.AIMS_STATUS &&
-                !lstFMLA.contains(subClientContact.NSP_Old_Employee_Status__c) && 
+                !lstFMLA.contains(subClientContact.NSP_Old_Employee_Status__c) &&
                 lstLOA.contains(subClientContact.NSP_Employee_Status__c));
         }
 
@@ -418,7 +393,7 @@ public without sharing class NSP_NotificatonIESAlertsBatch implements Database.B
         public Boolean isSubCientReturnedLOA(NSP_Sub_Client_Contact__c subClientContact) {
             return (subClientContact.NSP_Employee_Status__c != subClientContact.NSP_Old_Employee_Status__c &&
                 subClientContact.NSP_Sub_Client__r.NSP_Asset__r.NSP_Account_Status__c == NSP_ServiceConstants.AIMS_STATUS &&
-                lstLOA.contains(subClientContact.NSP_Old_Employee_Status__c) && 
+                lstLOA.contains(subClientContact.NSP_Old_Employee_Status__c) &&
                 !lstFMLA.contains(subClientContact.NSP_Employee_Status__c));
         }
 
@@ -429,7 +404,7 @@ public without sharing class NSP_NotificatonIESAlertsBatch implements Database.B
         public Boolean isSubCientFLMA(NSP_Sub_Client_Contact__c subClientContact) {
             return (subClientContact.NSP_Employee_Status__c != subClientContact.NSP_Old_Employee_Status__c &&
                 subClientContact.NSP_Sub_Client__r.NSP_Asset__r.NSP_Account_Status__c == NSP_ServiceConstants.AIMS_STATUS &&
-                !oldListFLMA.contains(subClientContact.NSP_Old_Employee_Status__c) &&  
+                !oldListFLMA.contains(subClientContact.NSP_Old_Employee_Status__c) &&
                 newLstFLMA.contains(subClientContact.NSP_Employee_Status__c));
         }
 
@@ -440,7 +415,7 @@ public without sharing class NSP_NotificatonIESAlertsBatch implements Database.B
         public Boolean isSubCientReturnedFLMA(NSP_Sub_Client_Contact__c subClientContact) {
             return (subClientContact.NSP_Employee_Status__c != subClientContact.NSP_Old_Employee_Status__c &&
                 subClientContact.NSP_Sub_Client__r.NSP_Asset__r.NSP_Account_Status__c == NSP_ServiceConstants.AIMS_STATUS &&
-                oldReturnedFLMA.contains(subClientContact.NSP_Old_Employee_Status__c) && 
+                oldReturnedFLMA.contains(subClientContact.NSP_Old_Employee_Status__c) &&
                 !newReturnedFLMA.contains(subClientContact.NSP_Employee_Status__c));
         }
 
@@ -458,11 +433,10 @@ public without sharing class NSP_NotificatonIESAlertsBatch implements Database.B
     public void finish(Database.BatchableContext bc) {
     }
 
-    /**
-     * @description scheduling the batch class here
-     */
+    // description scheduling the batch class here
     public void execute(SchedulableContext sc) {
         Database.executeBatch(new NSP_NotificatonIESAlertsBatch());
     }
-    
+
 }
+//

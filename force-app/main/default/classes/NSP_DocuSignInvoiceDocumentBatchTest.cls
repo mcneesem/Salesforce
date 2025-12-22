@@ -1,7 +1,7 @@
 @isTest
 private class NSP_DocuSignInvoiceDocumentBatchTest {
 
-    @TestSetup
+    @testSetup
     private static void createTestData() {
         Email_Deliverability_Settings__c emailSetting = Email_Deliverability_Settings__c.getOrgDefaults();
         emailSetting.IsEnabledOutbound__c = true;

@@ -100,7 +100,7 @@ public class NSP_InvoiceBatch implements Database.Batchable<SObject> , Database.
 
     private void sendEmailNotification( AsyncApexJob job , String plainTextBody ) {
         try {
-            if ( EmailDeliverabilityController.IsEnabledOutbound ) {
+            if ( EmailDeliverabilityController.isEnabledOutbound ) {
                 Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
                 List<String> toAddresses = new List<String>();
                 if ( job != null ) {

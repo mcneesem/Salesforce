@@ -1,19 +1,16 @@
-/**
-* @description  : Test Class for NSP_NotifyPMForITAProj .
-* Name : NSP_NotifyPMForITAProjTest
-*/
 @isTest
 private class NSP_NotifyPMForITAProjTest {
+
     //test setup method
- @testSetup    
-    private static void setUpData(){       
-        
+    @testSetup
+    private static void setUpData() {
+
         //create Account Record
         Account accoutObject = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), 'NSP_TestDataFactory.AccountDefaults', false);
         insert accoutObject;
 
         //create Asset Record
-        Id woAssetRecordType = NSP_GenericRecordType.getRecordTypeId('Asset', NSP_ServiceConstants.WO_ASSET_RECORDTYPE);     
+        Id woAssetRecordType = NSP_GenericRecordType.getRecordTypeId('Asset', NSP_ServiceConstants.WO_ASSET_RECORDTYPE);
         Asset assetObj1 = (Asset) NSP_TestDataFactory.createSObject(new Asset(), 'NSP_TestDataFactory.AssetDefaults', false);
         assetObj1.NSP_Client__c = 'asset1';
         assetObj1.name = 'assetLinkedWithPlanSubPlan';
@@ -21,7 +18,7 @@ private class NSP_NotifyPMForITAProjTest {
         assetObj1.RecordTypeId = woAssetRecordType;
         assetObj1.accountID = accoutObject.ID;
         insert assetObj1;
-        
+
         //Create proj
         Id retProjectRecordTypeId = NSP_GenericRecordType.getRecordTypeId('pse__Proj__c', 'PEO_Project');
         pse__Proj__c newProj = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
@@ -46,7 +43,7 @@ private class NSP_NotifyPMForITAProjTest {
 
         List<Implementation_Profile__c> listIP = new List<Implementation_Profile__c>();
         Id ipFSORecordTypeId = NSP_GenericRecordType.getRecordTypeId('Implementation_Profile__c', NSP_ServiceConstants.FSOProfile);
-        for(integer i=0;i<2;i++){           
+        for(integer i=0;i<2;i++){
         //create Ip rec
         Implementation_Profile__c impl = new Implementation_Profile__c();
         impl.RecordTypeId = ipFSORecordTypeId;
@@ -60,8 +57,8 @@ private class NSP_NotifyPMForITAProjTest {
         impl.Client_working_with_an_NSP_RS_rep__c = NSP_ServiceConstants.YES;
         impl.Retirement_services_notes__c = 'TEST' + i;
         impl.Employees_work_in_the_following_states__c = 'AK';
-        impl.NSP_Project_Manager__c = con.ID;     
-        //insert Ip rec 
+        impl.NSP_Project_Manager__c = con.ID;
+        //insert Ip rec
         listIP.add(impl);
         }
         insert listIP;
@@ -80,22 +77,22 @@ private class NSP_NotifyPMForITAProjTest {
             Email_Deliverability_Settings__c emailSetting = Email_Deliverability_Settings__c.getOrgDefaults();
             emailSetting.IsEnabledOutbound__c = true;
             upsert emailSetting;
-        }        
+        }
     }
-    
+
     @isTest
-    private static void nspNotifyPMForITAProjTestmethod(){     
-        //when  
+    private static void nspNotifyPMForITAProjTestmethod() {
+        //when
         Test.startTest();
-         
+
         EmailTemplate template = new EmailTemplate ();
         template.developerName = NSP_ServiceConstants.ITA_Project_Creation_Email;
         template.FolderId=userInfo.getUserId();
         template.TemplateType='Text';
         template.Name='TestEmailTempalte_Unique';
         insert template;
-        
-       Database.executeBatch(new NSP_NotifyPMForITAProjBatch(),200);     
+
+       Database.executeBatch(new NSP_NotifyPMForITAProjBatch(),200);
         Test.stopTest();
         List<String> PROJECT_FIELDS = new List<String>{
             'Id',
@@ -106,11 +103,13 @@ private class NSP_NotifyPMForITAProjTest {
             'NSP_Is_ITA_Mail_Sent__c',
             'pse__Start_Date__c'
         };
-            
+
               String projQuery = new NSP_QueryBuilder(NSP_ServiceConstants.PROJECT_SOBJECT_NAME, PROJECT_FIELDS)
                                     .addFilter('TemplateName__c', NSP_ServiceConstants.ITA_IMPLEMENTATION)
                                     .addLimit(1).build();
             pse__Proj__c projTemplate = Database.query(projQuery);
-            system.assertEquals(projTemplate.NSP_Is_ITA_Mail_Sent__c , true);              
+            system.assertEquals(projTemplate.NSP_Is_ITA_Mail_Sent__c , true);
     }
+
 }
+//

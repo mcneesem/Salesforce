@@ -26,7 +26,7 @@ public class NSP_NotifyPMForITAProjBatch implements Schedulable,Database.Batchab
             .addFilter('NSP_Is_ITA_Mail_Sent__c', false)
             .addFilter('TemplateName__c', ITA_IMPLEMENTATION, NSP_QueryBuilder.Operator.LIKES,true)
             .setSecurityEnforce(false);
-        String query = queryBuilder.build();     
+        String query = queryBuilder.build();
         return Database.getQueryLocator(query);
     }
 
@@ -43,7 +43,7 @@ public class NSP_NotifyPMForITAProjBatch implements Schedulable,Database.Batchab
             Id ipFSORecordTypeId = NSP_GenericRecordType.getRecordTypeId('Implementation_Profile__c', NSP_ServiceConstants.FSOProfile);
             Id ipMMRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Implementation_Profile__c', NSP_ServiceConstants.MMProfile);
             // get account id set, create a map of proj id and account id from the project records
-            for( pse__Proj__c projId:projList ) {   
+            for( pse__Proj__c projId:projList ) {
                 if( projId.pse__Account__c != null ) {
                     accountIDs.add(projId.pse__Account__c);
                     projAcctIDMap.put(projId.ID,projId.pse__Account__c);
@@ -66,7 +66,7 @@ public class NSP_NotifyPMForITAProjBatch implements Schedulable,Database.Batchab
                 assetAccountIDs.add(asst.AccountId);
             }
             Map<Id, List<String>> accountIdEmailListMap = new Map<Id, List<String>>();
-            //Get proj manager email and payroll specialist emails from IP records (FSO/MM) under same accounts 
+            //Get proj manager email and payroll specialist emails from IP records (FSO/MM) under same accounts
             for( Implementation_Profile__c ip : [
                         SELECT
                             Id ,
@@ -95,26 +95,26 @@ public class NSP_NotifyPMForITAProjBatch implements Schedulable,Database.Batchab
                         accountIdEmailListMap.put(Ip.Account__c, emailIdList);
                     }
 
-                    if( ip.RecordTypeId==ipFSORecordTypeId && ip.NSP_Payroll_Specialist__c!=null && 
+                    if( ip.RecordTypeId==ipFSORecordTypeId && ip.NSP_Payroll_Specialist__c!=null &&
                         ip.NSP_Payroll_Specialist__r.NSP_Work_email__c!= null){
                             List<String> emailIdList = accountIdEmailListMap.get(Ip.Account__c);
                             emailIdList.add(ip.NSP_Payroll_Specialist__r.NSP_Work_email__c);
-                            accountIdEmailListMap.put(Ip.Account__c, emailIdList); 
+                            accountIdEmailListMap.put(Ip.Account__c, emailIdList);
                         }
 
-                    if(ip.RecordTypeId==ipMMRecordTypeId && ip.NSP_Payroll_Project_Manager__c!=null && 
+                    if(ip.RecordTypeId==ipMMRecordTypeId && ip.NSP_Payroll_Project_Manager__c!=null &&
                         ip.NSP_Payroll_Project_Manager__r.NSP_Work_email__c!= null){
                             List<String> emailIdList = accountIdEmailListMap.get(Ip.Account__c);
                             emailIdList.add(ip.NSP_Payroll_Project_Manager__r.NSP_Work_email__c);
-                            accountIdEmailListMap.put(Ip.Account__c, emailIdList); 
+                            accountIdEmailListMap.put(Ip.Account__c, emailIdList);
                         }
                 } else {
-                    acctIDsToupdate.add(ip.Account__c); 
+                    acctIDsToupdate.add(ip.Account__c);
                     if(ip.NSP_Project_Manager__c!=null && ip.NSP_Project_Manager__r.NSP_Work_email__c!= null){
                         accountIdEmailListMap.put(Ip.Account__c, new List<String> {ip.NSP_Project_Manager__r.NSP_Work_email__c});
                     }
 
-                    if(ip.RecordTypeId==ipFSORecordTypeId && ip.NSP_Payroll_Specialist__c!=null && 
+                    if(ip.RecordTypeId==ipFSORecordTypeId && ip.NSP_Payroll_Specialist__c!=null &&
                         ip.NSP_Payroll_Specialist__r.NSP_Work_email__c!= null){
                             if(accountIdEmailListMap.get(Ip.Account__c) == null){
                                 accountIdEmailListMap.put(Ip.Account__c, new List<String> {ip.NSP_Payroll_Specialist__r.NSP_Work_email__c});

@@ -1,5 +1,6 @@
-@IsTest
+@isTest
 private class NSP_EmailServiceTest {
+
     @testSetup
     private static void setupData() {
         // Minimal user to target emails to
@@ -57,7 +58,7 @@ private class NSP_EmailServiceTest {
         }
     }
 
-    @IsTest
+    @isTest
     private static void test_sendEmail_sends_messages_for_each_mapping_entry() {
         // Arrange
         EmailTemplate et = [SELECT Id, DeveloperName FROM EmailTemplate WHERE DeveloperName = 'NSP_EmailServiceTest_Template' LIMIT 1];
@@ -82,7 +83,7 @@ private class NSP_EmailServiceTest {
         System.assertNotEquals(null, et.Id, 'Email Template should exist and be queryable by DeveloperName');
     }
 
-    @IsTest
+    @isTest
     private static void test_sendEmail_skips_when_template_missing() {
         // Arrange: Map with a valid record-user mapping but pass a non-existent developer name
         User targetUser = [SELECT Id FROM User WHERE Email LIKE 'tuser%@example.com' LIMIT 1];
@@ -101,7 +102,7 @@ private class NSP_EmailServiceTest {
         System.assert(true, 'Method should return silently when template not found.');
     }
 
-    @IsTest
+    @isTest
     private static void test_sendEmail_no_messages_when_map_empty() {
         // Arrange
         EmailTemplate et = [SELECT DeveloperName FROM EmailTemplate WHERE DeveloperName = 'NSP_EmailServiceTest_Template' LIMIT 1];
@@ -114,4 +115,6 @@ private class NSP_EmailServiceTest {
 
         System.assert(true, 'Empty input should not throw exceptions.');
     }
+
 }
+//

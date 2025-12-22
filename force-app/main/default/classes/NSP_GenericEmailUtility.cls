@@ -1,9 +1,3 @@
-//
-// @description  : Generic EMail Utility Class. Contains methods to populate and send emails from Apex.
-// @author Rakesh Das
-// @date 09/20/2022
-// Name : NSP_GenericEmailUtility
-//
 public class NSP_GenericEmailUtility {
     // test w/ NSP_GenericEmailUtilityTest (86%)
 
@@ -17,7 +11,7 @@ public class NSP_GenericEmailUtility {
     public static Integer sendSingleEmailMessages ( Messaging.SingleEmailMessage[] emailMessages , Boolean allOrNone ) {
         Integer emailSentCount = 0;
         try {
-            if ( EmailDeliverabilityController.IsEnabledOutbound ) {
+            if ( EmailDeliverabilityController.isEnabledOutbound ) {
                 List<Messaging.SendEmailResult> results = Messaging.sendEmail( emailMessages , allOrNone );
                 List<String> errorMessages = new List<String>();
                 for ( Messaging.SendEmailResult res : results ) {
