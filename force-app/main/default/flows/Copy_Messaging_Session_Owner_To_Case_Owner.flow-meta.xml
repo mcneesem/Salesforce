@@ -252,7 +252,7 @@
             </conditions>
             <conditions>
                 <leftValueReference>messagingSessionRecord.Owner:User.UserRole.DeveloperName</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>StartsWith</operator>
                 <rightValue>
                     <stringValue>Contact_Center_</stringValue>
                 </rightValue>
