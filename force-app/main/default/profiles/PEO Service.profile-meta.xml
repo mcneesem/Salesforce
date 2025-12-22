@@ -23386,15 +23386,11 @@
         <field>pse__Proj__c.NSP_NetSuite_External_ID__c</field>
         <readable>false</readable>
     </fieldPermissions>
-
-
-
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Proj__c.NSP_OneVoice_External_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
-
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Proj__c.NSP_RET_Client_ID__c</field>
@@ -23420,7 +23416,6 @@
         <field>pse__Proj__c.NSP_Total_Projected_Employee_Enrollment__c</field>
         <readable>true</readable>
     </fieldPermissions>
-
     <fieldPermissions>
         <editable>true</editable>
         <field>pse__Proj__c.NSP_Visible_to_Client__c</field>
@@ -24936,7 +24931,6 @@
         <field>pse__Project_Task__c.NSP_Address__c</field>
         <readable>true</readable>
     </fieldPermissions>
-
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Project_Task__c.NSP_AIMS_Account__c</field>
@@ -28682,7 +28676,6 @@
         <field>Implementation_Profile__c.NSP_collected_copies_of_state_WC_policy__c</field>
         <readable>true</readable>
     </fieldPermissions>
-
     <fieldPermissions>
         <editable>false</editable>
         <field>Implementation_Profile__c.NSP_current_waiting_period__c</field>
@@ -31593,7 +31586,6 @@
         <field>ServiceAppointment.NSP_Project_Task_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
-
     <fieldPermissions>
         <editable>true</editable>
         <field>ServiceAppointment.NSP_Orientation_Address__c</field>
