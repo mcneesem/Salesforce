@@ -37,7 +37,7 @@ public class NSP_DunningEmailNotificationsBatch implements Database.Batchable<sO
                 accountToCSSEmail.put(accTeamMember.NSP_Account__c, accTeamMember.NSP_Email__c);
                 }
             }
-            // looping through cases in batch scope
+            // looping through cases in batch scope 
             for(Case cs : scope ){
                 recordsProcessed +=1;
                 Boolean isCaseToUpdate = false;
@@ -106,7 +106,7 @@ public class NSP_DunningEmailNotificationsBatch implements Database.Batchable<sO
         System.debug('Mails Sent :'+totalMailsSent);
         System.debug('Records Processed :'+recordsProcessed);
         //THIS COMMENT IS INTENTIONAL. DO NOT DELETE.
-        // This sends an email to Operations team DL.
+        // This sends an email to Operations team DL. 
         // Get the ID of the AsyncApexJob representing this batch job
         // from Database.BatchableContext.
         // Query the AsyncApexJob object to retrieve the current job's information.
