@@ -108,37 +108,42 @@ public with sharing class InsperityWOBillingAccountTransferBatch implements Data
 
     public void finish( Database.BatchableContext bc ) {
         try {
-            // Send an email to the Apex job's submitter notifying of job completion.
-            // Get the ID of the AsyncApexJob representing this batch job from Database.BatchableContext.
-            // Query the AsyncApexJob object to retrieve the current job's information.
-            AsyncApexJob async = [
-                SELECT Id , Status , NumberOfErrors , JobItemsProcessed , TotalJobItems , CreatedBy.Email
-                FROM AsyncApexJob
-                WHERE ( Id = :bc.getJobId() )
-            ];
-            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-            String[] toAddresses = new String[]{ async.CreatedBy.Email };
-            mail.setToAddresses( toAddresses );
-            mail.setSubject( 'Transfer Billing Account Batch: ' + async.Status );
-            String body = ''
-                + 'The batch Apex job processed ' + async.TotalJobItems + ' batches with '+ async.NumberOfErrors + ' failures.<br/>'
-                + 'Total order Records processed: ' + this.lstOrdProcessed.size() + '<br/>'
-                + 'Order records processed: ' + JSON.serialize( this.lstOrdProcessed ) + '<br/>'
-                + 'Total Order records failed: ' + this.lstOrdFailed.size() + '<br/>'
-                + 'Order records failed: ' + JSON.serialize( this.lstOrdFailed ) + '<br/>'
-                + 'Total OrderItem records processed: ' + this.lstOrditemProcessed.size() + '<br/>'
-                + 'OrderItem records processed: ' + JSON.serialize( this.lstOrditemProcessed ) + '<br/>'
-                + 'Total OrderItem records failed: ' + this.lstOrditemFailed.size() + '<br/>'
-                + 'OrderItem records failed: ' + JSON.serialize( this.lstOrditemFailed ) + '<br/>'
-                ;
-            mail.setHtmlBody( body );
-            Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ mail } );
+            if ( EmailDeliverabilityController.IsEnabledOutbound ) {
+                // Send an email to the Apex job's submitter notifying of job completion.
+                // Get the ID of the AsyncApexJob representing this batch job from Database.BatchableContext.
+                // Query the AsyncApexJob object to retrieve the current job's information.
+                AsyncApexJob async = [
+                    SELECT Id , Status , NumberOfErrors , JobItemsProcessed , TotalJobItems , CreatedBy.Email
+                    FROM AsyncApexJob
+                    WHERE ( Id = :bc.getJobId() )
+                ];
+
+                Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+                String[] toAddresses = new String[]{ async.CreatedBy.Email };
+                mail.setToAddresses( toAddresses );
+                mail.setSubject( 'Transfer Billing Account Batch: ' + async.Status );
+                String body = ''
+                    + 'The batch Apex job processed ' + async.TotalJobItems + ' batches with '+ async.NumberOfErrors + ' failures.<br/>'
+                    + 'Total order Records processed: ' + this.lstOrdProcessed.size() + '<br/>'
+                    + 'Order records processed: ' + JSON.serialize( this.lstOrdProcessed ) + '<br/>'
+                    + 'Total Order records failed: ' + this.lstOrdFailed.size() + '<br/>'
+                    + 'Order records failed: ' + JSON.serialize( this.lstOrdFailed ) + '<br/>'
+                    + 'Total OrderItem records processed: ' + this.lstOrditemProcessed.size() + '<br/>'
+                    + 'OrderItem records processed: ' + JSON.serialize( this.lstOrditemProcessed ) + '<br/>'
+                    + 'Total OrderItem records failed: ' + this.lstOrditemFailed.size() + '<br/>'
+                    + 'OrderItem records failed: ' + JSON.serialize( this.lstOrditemFailed ) + '<br/>'
+                    ;
+                mail.setHtmlBody( body );
+                Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ mail } );
+            }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 InsperityWOBillingAccountTransferBatch.class.getName() ,
                 'finish' ,
                 e
             );
-        }      
+        }
     }
+
 }
+//
