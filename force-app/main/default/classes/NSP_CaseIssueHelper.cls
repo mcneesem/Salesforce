@@ -120,7 +120,7 @@ public with sharing class NSP_CaseIssueHelper {
     // Params: Map<Id,String> closedIssueRatingMap
     //
     private static void sendEmailtoCaseContacts( Map<Id,String> closedIssueRatingMap ) {
-        if ( EmailDeliverabilityController.IsEnabledOutbound ) {
+        if ( EmailDeliverabilityController.isEnabledOutbound ) {
             Map<Id,EmailMessage> csIssueMessageMap = new  Map<Id,EmailMessage>();
             for ( EmailMessage emsg : [
                         SELECT

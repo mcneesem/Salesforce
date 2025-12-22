@@ -113,7 +113,7 @@ public class NSP_ContractRenewal_Batch implements Database.Batchable<SObject>, D
         // Get the ID of the AsyncApexJob representing this batch job
         // from Database.BatchableContext.
         // Query the AsyncApexJob object to retrieve the current job's information.
-        if ( EmailDeliverabilityController.IsEnabledOutbound ) {
+        if ( EmailDeliverabilityController.isEnabledOutbound ) {
             AsyncApexJob apexJob = [
                 SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email
                 FROM AsyncApexJob WHERE Id = :BC.getJobId()

@@ -1738,7 +1738,7 @@ Implementation profile related to the account of the created asset
     // Params : Map<Id, Asset> newMap, String templateName, List<String> sendToAddress
     //
     public void sendMail( Set<Id> assetIdSet , Set<Id> accountIdSet , String templateName , List<String> sendToAddress ) {
-        if ( EmailDeliverabilityController.IsEnabledOutbound ) {
+        if ( EmailDeliverabilityController.isEnabledOutbound ) {
             String mailBody;
             List<Messaging.SingleEmailMessage> emailList = new List<Messaging.SingleEmailMessage>();
 

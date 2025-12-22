@@ -1456,7 +1456,7 @@ created case will be updated to cancelled.
     }
 
     private static void sendSingleEmailMessages( List<Messaging.SingleEmailMessage> messages ) {
-        if ( EmailDeliverabilityController.IsEnabledOutbound
+        if ( EmailDeliverabilityController.isEnabledOutbound
             && ( messages != null )
             && !messages.isEmpty()
             )

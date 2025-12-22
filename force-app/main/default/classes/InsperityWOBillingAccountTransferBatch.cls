@@ -108,7 +108,7 @@ public with sharing class InsperityWOBillingAccountTransferBatch implements Data
 
     public void finish( Database.BatchableContext bc ) {
         try {
-            if ( EmailDeliverabilityController.IsEnabledOutbound ) {
+            if ( EmailDeliverabilityController.isEnabledOutbound ) {
                 // Send an email to the Apex job's submitter notifying of job completion.
                 // Get the ID of the AsyncApexJob representing this batch job from Database.BatchableContext.
                 // Query the AsyncApexJob object to retrieve the current job's information.

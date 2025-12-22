@@ -95,7 +95,7 @@ public with sharing class NSP_AssetBatch implements Database.Batchable<Sobject>,
     public void finish( Database.BatchableContext bc ) {
         // SEND EMAIL FOR FAILED RECORDS
         if ( String.isNotBlank( failure )
-            && ( EmailDeliverabilityController.IsEnabledOutbound )
+            && ( EmailDeliverabilityController.isEnabledOutbound )
             )
         {
             Messaging.SingleEmailMessage oEmail = new Messaging.SingleEmailMessage();

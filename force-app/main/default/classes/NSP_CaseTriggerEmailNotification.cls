@@ -197,7 +197,7 @@ public class NSP_CaseTriggerEmailNotification {
     // @Description : To send email with template structure
     //
     public static void sendMail( Id emailTemplateId , String htmlBody , List<Case> caseList , List<String> toAddresses ) {
-        if ( EmailDeliverabilityController.IsEnabledOutbound ) {
+        if ( EmailDeliverabilityController.isEnabledOutbound ) {
             //set template structure for the email template
             OrgWideEmailAddress orgWideAddress;
             List<String> ccAddresses = new List<String>{System.Label.NSP_Report_Dev_Team_CC_Address};

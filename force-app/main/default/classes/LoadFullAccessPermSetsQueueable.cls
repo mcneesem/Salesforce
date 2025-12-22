@@ -203,7 +203,7 @@ public class LoadFullAccessPermSetsQueueable implements Queueable {
 
     // ************************ Chain Completion Email ************************
     public static void sendCompletionEmail() {
-        if ( EmailDeliverabilityController.IsEnabledOutbound ) {
+        if ( EmailDeliverabilityController.isEnabledOutbound ) {
             Messaging.SingleEmailMessage oEmail = new Messaging.SingleEmailMessage();
             oEmail.setSubject(OrgSettings__c.getOrgDefaults().SandboxName__c + ': LoadFullAccessPermSets job finished');
             String[] sendingTo = new String[]{'sfconfig@insperity.com'};
