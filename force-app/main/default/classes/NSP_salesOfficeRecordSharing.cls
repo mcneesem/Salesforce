@@ -287,8 +287,8 @@ public class NSP_salesOfficeRecordSharing {
             List<AccountShare> deleteOldAccountShareList = new List<AccountShare>();
             if ( ( oldAccountTeamShareList != null ) && !oldAccountTeamShareList.isEmpty() ) {
                 for ( AccountShare acShare : oldAccountTeamShareList ) {
-                    if ( mapAccountIdSetAcTeamOwnerSalesOffice.get( acShare.AccountId ).contains( acShare.UserOrGroup.Name ) // Possible: Attempt to de-reference a null object
-                        && !mapAccountIdSetAccountOwnerSalesOffice.get( acShare.AccountId ).contains( acShare.UserOrGroup.Name ) // Possible: Attempt to de-reference a null object
+                    if ( NSP_salesOfficeRecordSharing.hasOfficeMembership( acShare , mapAccountIdSetAcTeamOwnerSalesOffice )
+                        && NSP_salesOfficeRecordSharing.hasOfficeMembership( acShare , mapAccountIdSetAccountOwnerSalesOffice )
                         )
                     {
                         deleteOldAccountShareList.add( acShare );
@@ -308,6 +308,26 @@ public class NSP_salesOfficeRecordSharing {
                 e
             );
         }
+    }
+
+    private static Boolean hasOfficeMembership( AccountShare record , Map<String,Set<String>> accountSalesOfficeMemberships ) {
+        Boolean response = false;
+        if ( ( record != null )
+            && ( record.AccountId != null )
+            && ( record.UserOrGroup != null )
+            && ( accountSalesOfficeMemberships != null )
+            && accountSalesOfficeMemberships.containsKey( record.AccountId )
+            )
+        {
+            Set<String> salesOfficeMemberships = accountSalesOfficeMemberships.get( record.AccountId );
+            if ( ( salesOfficeMemberships != null )
+                && ( record.UserOrGroup != null )
+                )
+            {
+                response = salesOfficeMemberships.contains( record.UserOrGroup.Name );
+            }
+        }
+        return response;
     }
 
     //
