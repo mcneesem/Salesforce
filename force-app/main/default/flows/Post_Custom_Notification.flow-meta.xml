@@ -3,8 +3,8 @@
     <actionCalls>
         <name>convert_to_collection</name>
         <label>convert to collection</label>
-        <locationX>50</locationX>
-        <locationY>434</locationY>
+        <locationX>242</locationX>
+        <locationY>494</locationY>
         <actionName>NSP_NotificationUtility</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -17,13 +17,15 @@
                 <elementReference>$Record.NSP_UserIdList__c</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>NSP_NotificationUtility</nameSegment>
+        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
         <name>Send_Notification</name>
         <label>Send Notification</label>
-        <locationX>50</locationX>
-        <locationY>674</locationY>
+        <locationX>242</locationX>
+        <locationY>710</locationY>
         <actionName>customNotificationAction</actionName>
         <actionType>customNotificationAction</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -63,13 +65,16 @@
                 <elementReference>$Record.NSP_Target_Id__c</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>customNotificationAction</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>55.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Add_to_Delivery_List</name>
         <label>Add to Delivery List</label>
-        <locationX>50</locationX>
-        <locationY>554</locationY>
+        <locationX>242</locationX>
+        <locationY>602</locationY>
         <assignmentItems>
             <assignToReference>DeliveryList</assignToReference>
             <operator>Add</operator>
@@ -84,8 +89,8 @@
     <decisions>
         <name>Custom_Type_Exists</name>
         <label>Custom Type Exists?</label>
-        <locationX>182</locationX>
-        <locationY>314</locationY>
+        <locationX>374</locationX>
+        <locationY>386</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Yes</name>
@@ -103,7 +108,31 @@
             <label>Yes</label>
         </rules>
     </decisions>
-    <description>Generic flow to send notifications based on event</description>
+    <decisions>
+        <description>Checks the value of the custom setting Notification_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Notification_custom_setting_check</name>
+        <label>Outbound Notification custom setting check</label>
+        <locationX>176</locationX>
+        <locationY>170</locationY>
+        <defaultConnector>
+            <targetReference>Get_Notification_Type</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound notification</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Notification_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false</label>
+        </rules>
+    </decisions>
+    <description>Outbound Notification bypass added. Generic flow to send notifications based on event</description>
+    <environments>Default</environments>
     <interviewLabel>Post Custom Notification {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Post Custom Notification</label>
     <processMetadataValues>
@@ -128,8 +157,8 @@
     <recordLookups>
         <name>Get_Notification_Type</name>
         <label>Get Notification Type</label>
-        <locationX>182</locationX>
-        <locationY>194</locationY>
+        <locationX>374</locationX>
+        <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Custom_Type_Exists</targetReference>
@@ -147,15 +176,16 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>56</locationX>
+        <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_Notification_Type</targetReference>
+            <targetReference>Outbound_Notification_custom_setting_check</targetReference>
         </connector>
+        <flowRunAsUser>TriggeringUser</flowRunAsUser>
         <object>NSP_Custom_Notification_Event__e</object>
         <triggerType>PlatformEvent</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>DeliveryList</name>
         <dataType>String</dataType>
