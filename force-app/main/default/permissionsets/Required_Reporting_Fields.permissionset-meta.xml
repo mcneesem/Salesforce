@@ -1383,11 +1383,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>NSP_Sub_Client__c.Arbitration_Agreement__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>NSP_Sales_to_Implementation__c.ORK_YTD_Entered__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1524,6 +1519,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Sub_Client__c.ABCP_Period__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Sub_Client__c.Arbitration_Agreement__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
