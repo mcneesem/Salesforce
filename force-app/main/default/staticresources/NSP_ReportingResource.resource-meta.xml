@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <StaticResource xmlns="http://soap.sforce.com/2006/04/metadata">
     <cacheControl>Public</cacheControl>
-    <contentType>image/png</contentType>
+    <contentType>application/x-zip-compressed</contentType>
     <description>Created for visual indicators for reporting STY-00909</description>
 </StaticResource>
