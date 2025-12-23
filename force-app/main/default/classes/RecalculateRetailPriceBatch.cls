@@ -15,14 +15,16 @@ public with sharing class RecalculateRetailPriceBatch implements ISelfSchedulabl
     //
     //schedulable
     //
+
+    // runs everyday at 1am central...
     public static String schedule() {
         String suffix = '';
         if ( Test.isRunningTest() ) {
             suffix = ' ~ TEST';
         }
         return System.schedule(
-            'RecalculateRetailPriceBatch ~ Recalculate Retail Price on Modified Purchased Products daily at 1 AM' + suffix ,
-            '0 0 1 * * ?' , // Everyday at 1 AM
+            'RecalculateRetailPriceBatch ~ Recalculate Retail Price on Modified Purchased Products ~ everyday at 1 AM' + suffix ,
+            '0 0 1 ? * * *' ,
             New RecalculateRetailPriceBatch()
         );
     }
