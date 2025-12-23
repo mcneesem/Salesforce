@@ -3,6 +3,11 @@ private class NSP_ContractRenewal_Batch_Test {
 
     @testSetup
     private static void setupTestData() {
+        ContractRenewalBatchSettings__c batchSetting = ContractRenewalBatchSettings__c.getOrgDefaults();
+        batchSetting.IsEnabled__c = true;
+        batchSetting.BatchSize__c = 1;
+        upsert batchSetting;
+
         Email_Deliverability_Settings__c emailSetting = Email_Deliverability_Settings__c.getOrgDefaults();
         emailSetting.IsEnabledOutbound__c = true;
         upsert emailSetting;
@@ -61,13 +66,19 @@ private class NSP_ContractRenewal_Batch_Test {
     private static void renewalbatchtestwithParams() {
 
         Test.startTest();
-        Contract cont = [SELECT Id, SBQQ__RenewalForecast__c, SBQQ__RenewalQuoted__c, ContractTerm,NSP_Product_Type__c,SBQQ__ActiveContract__c, SBQQ__Evergreen__c,EndDate from Contract WHERE ContractNumber !=null LIMIT 1];
-        NSP_ContractRenewal_Batch rcbatch= new NSP_ContractRenewal_Batch(cont.Id);
+        NSP_ContractRenewal_Batch rcbatch= new NSP_ContractRenewal_Batch();
         Database.executeBatch(rcbatch,1);
         Test.stopTest();
         Contract contChk = [SELECT Id, SBQQ__RenewalForecast__c, SBQQ__RenewalQuoted__c,Name from Contract WHERE ContractNumber !=null LIMIT 1];
         System.assertEquals(contChk.SBQQ__RenewalQuoted__c,true);
 
+    }
+
+    @isTest
+    private static void testSchedule() {
+        Test.startTest();
+        NSP_ContractRenewal_Batch.schedule();
+        Test.stopTest();
     }
 
 }
