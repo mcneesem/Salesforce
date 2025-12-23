@@ -11,6 +11,7 @@ public with sharing class UpdateRETClientSubplanHistoryBatch implements ISelfSch
         Database.executeBatch( new UpdateRETClientSubplanHistoryBatch(), 200 );
     }
 
+    // runs everyday at 1am central...
     public static String schedule() {
         String suffix = '';
         if ( Test.isRunningTest() ) {
@@ -18,7 +19,7 @@ public with sharing class UpdateRETClientSubplanHistoryBatch implements ISelfSch
         }
         return System.schedule(
             'UpdateRETClientSubplanHistoryBatch ~ everyday at 1 AM' + suffix ,
-            '0 0 1 * * ? *' ,
+            '0 0 1 ? * * *' ,
             new UpdateRETClientSubplanHistoryBatch()
         );
     }

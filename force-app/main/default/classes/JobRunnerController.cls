@@ -104,6 +104,60 @@ public with sharing class JobRunnerController {
         private set;
     }
 
+    private static List<ApexClass> runnableClasses {
+        private get {
+            if ( runnableClasses == null ) {
+                // find all Apex Classes that implement IJobRunnable and Callable...
+                runnableClasses = [
+                    SELECT Id , Name
+                    FROM ApexClass
+                    WHERE (
+                        ( NamespacePrefix = null )
+                        AND ( IsValid = true )
+                        AND (
+                            Id IN (
+                                SELECT ApexClassId
+                                FROM ApexTypeImplementor
+                                WHERE ( InterfaceName = 'IJobRunnable' )
+                            )
+                        )
+                        AND (
+                            Id IN (
+                                SELECT ApexClassId
+                                FROM ApexTypeImplementor
+                                WHERE ( InterfaceName = 'Callable' )
+                            )
+                        )
+                    )
+                    ORDER BY Name ASC
+                ];
+            }
+            return runnableClasses;
+        }
+        private set;
+    }
+
+    // build a Set of lower-case tokens for easy confirmation of existing runnable classes...
+    private static Set<String> runnableClassTokens {
+        private get {
+            if ( runnableClassTokens == null ) {
+                // ensure Set is never null...
+                Set<String> local = new Set<String>();
+                if ( ( JobRunnerController.runnableClasses != null )
+                    && !JobRunnerController.runnableClasses.isEmpty()
+                    )
+                {
+                    for ( ApexClass runnableClass : JobRunnerController.runnableClasses ) {
+                        local.add( runnableClass.Name.toLowerCase() );
+                    }
+                }
+                runnableClassTokens = local;
+            }
+            return runnableClassTokens;
+        }
+        private set;
+    }
+
     @AuraEnabled
     public static List<AsyncApexJob> getBatchJobStatuses( String batchClassName ) {
         List<AsyncApexJob> response = new List<AsyncApexJob>();
@@ -237,17 +291,25 @@ public with sharing class JobRunnerController {
                 // and ensure there are no waiting jobs...
                 Id processId = null;
                 if ( String.isNotBlank( requestedClassName )
-                    && JobRunnerController.batchableClassTokens.contains( requestedClassName.toLowerCase() )
                     && !JobRunnerController.checkWaitingJobs( requestedClassName )
                     )
                 {
-                    // execute batch class as Deployment Manager...
-                    Type requestedClassType = Type.forName( requestedClassName );
-                    if ( requestedClassType != null ) {
-                        processId = Database.executeBatch(
-                            (Database.Batchable<SObject>)requestedClassType.newInstance() ,
-                            JobRunnerController.batchSize
-                        );
+                    Boolean isRunnable = JobRunnerController.runnableClassTokens.contains( requestedClassName.toLowerCase() );
+                    Boolean isBatchable = JobRunnerController.batchableClassTokens.contains( requestedClassName.toLowerCase() );
+                    if ( isRunnable || isBatchable ) {
+                        // execute class as Deployment Manager...
+                        Type requestedClassType = Type.forName( requestedClassName );
+                        if ( requestedClassType != null ) {
+                            if ( isRunnable ) {
+                                Callable runner = (Callable)requestedClassType.newInstance();
+                                processId = (Id)runner.call( 'run' , null );
+                            } else if ( isBatchable ) {
+                                processId = Database.executeBatch(
+                                    (Database.Batchable<SObject>)requestedClassType.newInstance() ,
+                                    JobRunnerController.batchSize
+                                );
+                            }
+                        }
                     }
                 }
                 // log results...

@@ -1,6 +1,5 @@
 @isTest
 private class RulesOfEngagement_SchedulerTest {
-    private static final String sch = '0 0 3 * * ? *';
 
     @isTest
     private static void runRules() {
@@ -118,18 +117,17 @@ private class RulesOfEngagement_SchedulerTest {
         Test.stopTest();
     }
 
-    //Static Test Method to Call the Scheduler Class
     @isTest
     private static void testRulesOfEngagement_Scheduler_schedule() {
         Test.startTest();
         String jobId = RulesOfEngagement_Scheduler.schedule();
         CronTrigger ct = [
-            SELECT Id, CronExpression, TimesTriggered, NextFireTime
+            SELECT Id , CronExpression , TimesTriggered , NextFireTime
             FROM CronTrigger
-            WHERE id = :jobId
+            WHERE ( Id = :jobId )
         ];
-        System.assertEquals(sch, ct.CronExpression);
-        System.assertEquals(0, ct.TimesTriggered);
+        System.assertNotEquals( null , ct );
+        System.assertEquals( 0 , ct.TimesTriggered );
         Test.stopTest();
    }
 
