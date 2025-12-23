@@ -139,7 +139,6 @@ public with sharing class RulesOfEngagement_Scheduler implements ISelfSchedulabl
         }
     }
 
-    // runs everyday at 3am central...
     public static String schedule() {
         String suffix = '';
         if ( Test.isRunningTest() ) {
@@ -147,7 +146,7 @@ public with sharing class RulesOfEngagement_Scheduler implements ISelfSchedulabl
         }
         return System.schedule(
             'RulesOfEngagement_Scheduler ~ everyday at 3 AM' + suffix ,
-            '0 0 3 ? * * *' ,
+            '0 0 3 * * ? *' ,
             new RulesOfEngagement_Scheduler()
         );
     }
