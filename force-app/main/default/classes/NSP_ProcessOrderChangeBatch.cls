@@ -20,7 +20,7 @@ public class NSP_ProcessOrderChangeBatch implements ISelfSchedulable , Schedulab
         }
         return System.schedule(
             'NSP_ProcessOrderChangeBatch ~ process asset and create opportunity and quote ~ M-F at 9 PM' + suffix ,
-            '0 0 21 ? * 2-6 *' ,
+            '0 0 21 ? * MON-FRI *' ,
             new NSP_ProcessOrderChangeBatch()
         );
     }
