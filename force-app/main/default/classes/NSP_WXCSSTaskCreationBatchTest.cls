@@ -88,7 +88,6 @@ private class NSP_WXCSSTaskCreationBatchTest {
         ];
         System.assertNotEquals( null , ct );
         System.assertEquals( 0 , ct.TimesTriggered );
-        Test.stopTest();
     }
 
 }
