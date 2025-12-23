@@ -1,14 +1,11 @@
-//***Schedulable Apex Class***
-/**
-* @description  : Scheduler Class to schedule Renewal Batch job
-* @author Rakesh Das
-* @date 08/04/2021
-* Name : NSP_ContractRenewal_Scheduler
-*/
+public class NSP_ContractRenewal_Scheduler implements Schedulable {
+    // test w/ NSP_ContractRenewal_Scheduler_Test (100%)
 
-global class NSP_ContractRenewal_Scheduler implements Schedulable {
-    global void execute(SchedulableContext ctx) {
-        NSP_ContractRenewal_Batch batchObject = new NSP_ContractRenewal_Batch();
-        Database.executeBatch(batchObject, 1);
+    // DEPRECATED
+    public void execute( SchedulableContext sc ) {
+        NSP_ContractRenewal_Batch helper = new NSP_ContractRenewal_Batch();
+        helper.run();
     }
+
 }
+//
