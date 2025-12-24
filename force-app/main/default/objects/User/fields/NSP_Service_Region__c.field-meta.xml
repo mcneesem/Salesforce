@@ -71,24 +71,6 @@
                 <default>false</default>
                 <label>FSO - Southwest</label>
             </value>
-            <value>
-                <fullName>MMSO - East</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>MMSO - East</label>
-            </value>
-            <value>
-                <fullName>MMSO - Houston</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>MMSO - Houston</label>
-            </value>
-            <value>
-                <fullName>MMSO - Western</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>MMSO - Western</label>
-            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
