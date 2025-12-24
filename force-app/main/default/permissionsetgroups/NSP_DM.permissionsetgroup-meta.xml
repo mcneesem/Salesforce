@@ -39,7 +39,6 @@
     <permissionSets>Opportunity_Product_Offering_Fields_Edit_Access</permissionSets>
     <permissionSets>Opportunity_Splits_Elevated_Create_Read_Edit</permissionSets>
     <permissionSets>Report_export_and_print_access</permissionSets>
-    <permissionSets>Rules_Of_Engagement_Enabled</permissionSets>
     <permissionSets>Sales_Service_Object_Permission</permissionSets>
     <permissionSets>User_Share_SO_Update</permissionSets>
     <permissionSets>View_CRM_Analytics_Dashboard</permissionSets>

@@ -35,7 +35,6 @@
     <permissionSets>Opportunity_Product_Offering_Fields_Edit_Access</permissionSets>
     <permissionSets>Opportunity_Spits_Elevated_Read_Edit</permissionSets>
     <permissionSets>Partner_Access</permissionSets>
-    <permissionSets>Rules_Of_Engagement_Enabled</permissionSets>
     <permissionSets>Sales_Service_Object_Permission</permissionSets>
     <permissionSets>Task_Due_Date_Required</permissionSets>
     <permissionSets>User_Share_SO_Update</permissionSets>
