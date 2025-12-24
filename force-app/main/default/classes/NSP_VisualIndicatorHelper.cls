@@ -135,9 +135,16 @@ public without sharing class NSP_VisualIndicatorHelper {
         VisualIndicatorWrapper accWrapper
         )
     {
-        if (expList != null && !expList.isEmpty() && accWrapper != null) {
-            for (NSP_Service_Exception__c eachException : expList) {
-                if (eachException.NSP_End_Date__c == null || eachException.NSP_End_Date__c >= Date.today()) {
+        if ( ( expList != null )
+            && !expList.isEmpty()
+            && ( accWrapper != null )
+            )
+        {
+            for ( NSP_Service_Exception__c eachException : expList ) {
+                if ( ( eachException.NSP_End_Date__c == null )
+                    || ( eachException.NSP_End_Date__c >= Date.today() )
+                    )
+                {
                     accWrapper.serviceExceptionPresent = true;
                 }
             }
@@ -155,19 +162,28 @@ public without sharing class NSP_VisualIndicatorHelper {
     private static void getAssets( Asset asset , VisualIndicatorWrapper accWrapper ) {
         Id woAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'WO' );
         String wsProductLine = 'Workforce Synchronization';
-        if (asset.RecordTypeId == woAssetRecordTypeId) {
+        if ( asset.RecordTypeId == woAssetRecordTypeId ) {
             accWrapper.assetPaperlessPresent = asset.NSP_Paperless__c;
             accWrapper.assetNationalAccount = asset.NSP_National_Account__c;
-            if (asset.NSP_Product_Line__c != null  && asset.NSP_Product_Line__c == wsProductLine) {
+            if ( ( asset.NSP_Product_Line__c != null )
+                && ( asset.NSP_Product_Line__c == wsProductLine )
+                )
+            {
                 accWrapper.workSyncClientTrue = true;
             }
             // HRScale Indicator
             accWrapper.hrScale = asset.Is_HRScale__c;
         }
-        if (asset.NSP_Client_Retained_Workers_Comp__c != null && asset.NSP_Client_Retained_Workers_Comp__c == '100% Client') {
+        if ( ( asset.NSP_Client_Retained_Workers_Comp__c != null )
+            && ( asset.NSP_Client_Retained_Workers_Comp__c == '100% Client' )
+            )
+        {
             accWrapper.client100True = true;
         }
-        if (asset.NSP_Client_Retained_Workers_Comp__c != null && asset.NSP_Client_Retained_Workers_Comp__c == 'Client & Insperity') {
+        if ( ( asset.NSP_Client_Retained_Workers_Comp__c != null )
+            && ( asset.NSP_Client_Retained_Workers_Comp__c == 'Client & Insperity' )
+            )
+        {
             accWrapper.clientAndInsperity = true;
         }
         accWrapper.pendingTermination = asset.NSP_Pending_Termination__c;
@@ -175,9 +191,13 @@ public without sharing class NSP_VisualIndicatorHelper {
 
     private static void checkSurveys( List<NSP_Survey__c> surveyList , VisualIndicatorWrapper accWrapper ) {
         accWrapper.vocSurveyIndicator = false;
-        if (surveyList != null && !surveyList.isEmpty()) {
-            Date surveyLimitDate = surveyList[0].Survey_End_Date__c.addDays(180);
-            if (Date.today().daysBetween(surveyLimitDate) >= 0) {
+        if ( ( surveyList != null )
+            && !surveyList.isEmpty()
+            && ( surveyList[0].Survey_End_Date__c != null )
+            )
+        {
+            Date surveyLimitDate = surveyList[0].Survey_End_Date__c.addDays( 180 );
+            if ( Date.today().daysBetween( surveyLimitDate ) >= 0 ) {
                 accWrapper.vocSurveyIndicator = true;
             }
         }
