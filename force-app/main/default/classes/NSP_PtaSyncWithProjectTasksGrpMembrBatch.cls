@@ -12,6 +12,7 @@ public class NSP_PtaSyncWithProjectTasksGrpMembrBatch implements ISelfSchedulabl
     // ISelfSchedulable
     //
 
+    // runs everyday at 4am central...
     public static String schedule() {
         String suffix = '';
         if ( Test.isRunningTest() ) {
@@ -19,7 +20,7 @@ public class NSP_PtaSyncWithProjectTasksGrpMembrBatch implements ISelfSchedulabl
         }
         return System.schedule(
             'NSP_PtaSyncWithProjectTasksGrpMembrBatch ~ When new plan projects are created, all users/contacts with a matching "Group Member For Plan Projects" list value designation are added to the project for time tracking ~ everyday at 4 AM' + suffix ,
-            '0 0 4 * * ? *' ,
+            '0 0 4 ? * * *' ,
             new NSP_PtaSyncWithProjectTasksGrpMembrBatch()
         );
     }

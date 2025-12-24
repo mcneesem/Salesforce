@@ -19,6 +19,7 @@ public with sharing class NSP_RET_AssetSyncWithClientHistBatch implements ISelfS
         );
     }
 
+    // runs everyday at 12am central...
     public static String schedule() {
         String suffix = '';
         if ( Test.isRunningTest() ) {
@@ -26,7 +27,7 @@ public with sharing class NSP_RET_AssetSyncWithClientHistBatch implements ISelfS
         }
         return System.schedule(
             'NSP_RET_AssetSyncWithClientHistBatch ~ Update Asset Status based on Client Sub Plan History ~ everyday at 12 AM' + suffix ,
-            '0 0 0 * * ?', // this is for Every Day at 12:00 AM...
+            '0 0 0 ? * * *' ,
             new NSP_RET_AssetSyncWithClientHistBatch()
         );
     }
