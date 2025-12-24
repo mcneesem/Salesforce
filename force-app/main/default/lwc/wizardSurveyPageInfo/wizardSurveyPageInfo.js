@@ -282,9 +282,7 @@ export default class WizardSurveyPageInfo extends LightningElement {
                 && row.name !== event.detail.row.name  //AND the name does NOT match the selected row's name
             );
         }
-    } 
-    
-    handleContact(event) {}
+    }
 
     handleAddContact(event) {
         if(this.refs.NSP_Contact__c?.value == null || this.refs.NSP_Contact__c?.value.length <= 17){
