@@ -6,11 +6,11 @@ public with sharing class UserQueueMembershipService {
     // DTO exposed to UI for each queue membership row.
     // id = GroupMember.Id, groupId = Group.Id, queueDeveloperName = Group.DeveloperName, queueName = Group.Name
     // reasonForMembership is currently set to Queue Member as a placeholder.
-    public class QueueMembershipRow {
+    public class Member {
         @AuraEnabled public Id id; // GroupMember Id
         @AuraEnabled public Id groupId;
-        @AuraEnabled public String queueDeveloperName;
-        @AuraEnabled public String queueName;
+        @AuraEnabled public String groupDeveloperName;
+        @AuraEnabled public String groupName;
         @AuraEnabled public String reasonForMembership;
     }
     
@@ -18,8 +18,8 @@ public with sharing class UserQueueMembershipService {
     // Inputs: recordId = User Id. If null, returns an empty list.
     // Output: List<QueueMembershipRow> (never null). Cacheable for LWC.
     @AuraEnabled(cacheable=true)
-    public static List<QueueMembershipRow> getQueueMembershipsByUser( Id recordId ) {
-        List<QueueMembershipRow> retrunQueueMemberships = new List<QueueMembershipRow>();
+    public static List<Member> getQueueMembershipsByUser( Id recordId ) {
+        List<Member> retrunQueueMemberships = new List<Member>();
         
         Boolean hasAccess = schema.SObjectType.GroupMember.isAccessible();
         Boolean hasPermission = CustomPermissionController.checkUserPermission(
@@ -28,9 +28,9 @@ public with sharing class UserQueueMembershipService {
         );
         
         if ( recordId != null && hasAccess && hasPermission ) {
-            List<GroupMember> groupMembers = queryQueueMembershipsByUser( recordId );
+            List<GroupMember> groupMembers = selectGroupMemberships( recordId, 'Queue' );
             if ( groupMembers != null && !groupMembers.isEmpty() ) {
-                retrunQueueMemberships = setAndGetQueueMemberRecords( groupMembers );     
+                retrunQueueMemberships = buildMembers( groupMembers );     
             }
         }
         
@@ -41,7 +41,7 @@ public with sharing class UserQueueMembershipService {
     // Inputs: recordId = User Id. If null, returns empty list.
     // Output: List<GroupMember> of queue memberships (never null).
     @TestVisible
-    private static List<GroupMember> queryQueueMembershipsByUser( Id recordId ) {
+    private static List<GroupMember> selectGroupMemberships( Id recordId , String groupType ) {
         List<GroupMember> groupMembers = new List<GroupMember>();
         
         if( recordId != null ) {
@@ -56,7 +56,7 @@ public with sharing class UserQueueMembershipService {
                 UserOrGroup.ManagerId,
                 SystemModstamp
                 FROM GroupMember
-                WHERE Group.Type = 'Queue'
+                WHERE Group.Type = :groupType
                 AND UserOrGroupId = :recordId
                 ORDER BY Group.Name
             ];
@@ -71,8 +71,8 @@ public with sharing class UserQueueMembershipService {
     // Input: groupMembers from SOQL (may be null/empty).
     // Output: List<QueueMembershipRow> (never null).
     @TestVisible
-    private static List<QueueMembershipRow> setAndGetQueueMemberRecords( List<GroupMember> groupMembers ) {
-        List<QueueMembershipRow> returnQueueMembers = new List<QueueMembershipRow>();
+    private static List<Member> buildMembers( List<GroupMember> groupMembers ) {
+        List<Member> returnQueueMembers = new List<Member>();
         if ( groupMembers != null && !groupMembers.isEmpty() ) {
             
             for ( GroupMember groupMemberRec : groupMembers ) {
@@ -80,11 +80,11 @@ public with sharing class UserQueueMembershipService {
                    ( ( string.isNotBlank( groupMemberRec.Group.Name )) || (string.isNotBlank( groupMemberRec.Group.DeveloperName )) 
                    ) 
                   ) {
-                      QueueMembershipRow queueMembrRec = new QueueMembershipRow();
+                      Member queueMembrRec = new Member();
                       queueMembrRec.id = groupMemberRec.Id;
                       queueMembrRec.groupId = groupMemberRec.GroupId;
-                      queueMembrRec.queueDeveloperName = groupMemberRec.Group.DeveloperName;
-                      queueMembrRec.queueName = groupMemberRec.Group.Name;
+                      queueMembrRec.groupDeveloperName = groupMemberRec.Group.DeveloperName;
+                      queueMembrRec.groupName = groupMemberRec.Group.Name;
                       queueMembrRec.reasonForMembership = 'Queue Member'; // leave blank
                       returnQueueMembers.add( queueMembrRec );
                   }

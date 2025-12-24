@@ -44,7 +44,7 @@ private class UserQueueMembershipServiceTest {
     @IsTest
     private static void getQueueMembershipsByUser_whenRecordIdIsNull_returnsEmptyList() {
         Test.startTest();
-        List<UserQueueMembershipService.QueueMembershipRow> memberRows = UserQueueMembershipService.getQueueMembershipsByUser(Null);
+        List<UserQueueMembershipService.Member> memberRows = UserQueueMembershipService.getQueueMembershipsByUser(Null);
         Test.stopTest();
         
         System.Assert.areNotEqual(null, memberRows, 'Method should never return null');
@@ -63,20 +63,20 @@ private class UserQueueMembershipServiceTest {
         System.runAs(testUser){
             // Act
             Test.startTest();
-            List<UserQueueMembershipService.QueueMembershipRow> memberRows = UserQueueMembershipService.getQueueMembershipsByUser(testUser.Id);
+            List<UserQueueMembershipService.Member> memberRows = UserQueueMembershipService.getQueueMembershipsByUser(testUser.Id);
             Test.stopTest();
             
             // Assert
             System.Assert.areNotEqual(null, memberRows, 'Should not return null');
             System.Assert.areEqual(1, memberRows.size(), 'Expected exactly one membership row');
             
-            UserQueueMembershipService.QueueMembershipRow firstRow = memberRows[0];
+            UserQueueMembershipService.Member firstRow = memberRows[0];
             System.Assert.areEqual(createdMembership.Id, firstRow.id, 'GroupMember Id should map to DTO.id');
             System.Assert.areEqual(createdMembership.GroupId, firstRow.groupId, 'Group Id should map to DTO.groupId');
             
             Group relatedGroup = [SELECT Id, Name, DeveloperName FROM Group WHERE Id = :createdMembership.GroupId];
-            System.Assert.areEqual(relatedGroup.Name, firstRow.queueName, 'Group.Name should map to DTO.queueName');
-            System.Assert.areEqual(relatedGroup.DeveloperName, firstRow.queueDeveloperName, 'Group.DeveloperName should map to DTO.queueDeveloperName');
+            System.Assert.areEqual(relatedGroup.Name, firstRow.groupName, 'Group.Name should map to DTO.queueName');
+            System.Assert.areEqual(relatedGroup.DeveloperName, firstRow.groupDeveloperName, 'Group.DeveloperName should map to DTO.queueDeveloperName');
             System.Assert.areEqual('Queue Member', firstRow.reasonForMembership, 'Reason should map as implemented');
         }
     }
@@ -96,7 +96,7 @@ private class UserQueueMembershipServiceTest {
             
             // Act (private method is @TestVisible)
             Test.startTest();
-        List<UserQueueMembershipService.QueueMembershipRow> resultRows = UserQueueMembershipService.setAndGetQueueMemberRecords(new List<GroupMember>{
+        List<UserQueueMembershipService.Member> resultRows = UserQueueMembershipService.buildMembers(new List<GroupMember>{
                 validQueueMembership, nonQueueMembership
                     });
         Test.stopTest();
@@ -105,10 +105,10 @@ private class UserQueueMembershipServiceTest {
         System.Assert.areEqual(0, resultRows.size(), 'Only Queue type memberships with required fields should pass');
         
         Set<Id> returnedGroupMemberIds = new Set<Id>();
-        for (UserQueueMembershipService.QueueMembershipRow mappedRow : resultRows) {
+        for (UserQueueMembershipService.Member mappedRow : resultRows) {
             returnedGroupMemberIds.add(mappedRow.id);
             System.Assert.isTrue(mappedRow.groupId != null, 'GroupId should be populated');
-            System.Assert.isTrue(String.isNotBlank(mappedRow.queueName) || String.isNotBlank(mappedRow.queueDeveloperName),
+            System.Assert.isTrue(String.isNotBlank(mappedRow.groupName) || String.isNotBlank(mappedRow.groupDeveloperName),
                                  'At least one of Name or DeveloperName must be non-blank');
         }
     }
@@ -116,7 +116,7 @@ private class UserQueueMembershipServiceTest {
     @IsTest
     private static void queryQueueMembershipsByUser_whenRecordIdIsNull_returnsEmptyList() {
         Test.startTest();
-        List<GroupMember> queriedMemberships = UserQueueMembershipService.queryQueueMembershipsByUser(null);
+        List<GroupMember> queriedMemberships = UserQueueMembershipService.selectGroupMemberships(null, 'Queue');
         Test.stopTest();
         
         System.Assert.areNotEqual(null, queriedMemberships, 'Private method should return non-null list');
