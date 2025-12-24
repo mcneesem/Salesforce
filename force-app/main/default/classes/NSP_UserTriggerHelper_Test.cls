@@ -1,6 +1,6 @@
 @isTest
 private class NSP_UserTriggerHelper_Test {
-    public static final String ACCOUNTTEST1 = 'AccountTest';
+    private static final String ACCOUNTTEST1 = 'AccountTest';
     private static final List<String> USER_FIELDS = new List<String>{'Id', 'NSP_Profile_Name__c'};
     private static final String phonenumber = '(112)6475261 ext415';
 
@@ -13,7 +13,7 @@ private class NSP_UserTriggerHelper_Test {
         Email_Deliverability_Settings__c emailSetting = Email_Deliverability_Settings__c.getOrgDefaults();
         emailSetting.IsEnabledOutbound__c = true;
         upsert emailSetting;
-        
+
         Account acc = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), 'NSP_TestDataFactory.AccountDefaults', false);
         acc.Name = 'Test Acc';
         insert acc;
@@ -52,7 +52,8 @@ private class NSP_UserTriggerHelper_Test {
         Insert accTeam;
     }
 
-    private static testMethod void updatePhoneNumberTest() {
+    @isTest
+    private static void updatePhoneNumberTest() {
         Test.startTest();
         User users = [Select Id, Name,Phone from User WHERE Username =: NSP_TestHelper.DEFAULT_USERNAME LIMIT 1]; //Added WHERE Condition as part of code fix
         users.Phone = NSP_UserTriggerHelper_Test.phonenumber;
@@ -65,7 +66,8 @@ private class NSP_UserTriggerHelper_Test {
         system.assertEquals(users.Phone, '(122)6475261 x415');
     }
 
-    private static testMethod void updatePhoneNumberTest1() {
+    @isTest
+    private static void updatePhoneNumberTest1() {
         Test.startTest();
         User tUser =  NSP_TestHelper.createUser(false);
         tUser.Username = 'updatePTest39@user.com';
@@ -86,7 +88,7 @@ private class NSP_UserTriggerHelper_Test {
         officeMapping.NSP_End_Date__c = system.today()+100;
         insert officeMapping;
 
-       NSP_Sales_Office_Mapping__c office1Mapping = new NSP_Sales_Office_Mapping__c();
+        NSP_Sales_Office_Mapping__c office1Mapping = new NSP_Sales_Office_Mapping__c();
         office1Mapping.NSP_Sales_Office__c = '301';
         office1Mapping.NSP_Sales_Division__c = 'Central';
         office1Mapping.NSP_Sales_Region__c = 'Central 1';
@@ -104,12 +106,12 @@ private class NSP_UserTriggerHelper_Test {
         insert tUser;
 
         Account accoutObject = new Account();
-            Id partnerRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('NSP_Partner_Client').getRecordTypeId();
-            accoutObject.Name = ACCOUNTTEST1;
-            accoutObject.recordTypeId=partnerRecordTypeId;
-            accoutObject.DNB_Connect_DUNS_Number__c = '876543987';
-            accoutObject.OwnerId = tUser.Id;
-            insert accoutObject;
+        Id partnerRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('NSP_Partner_Client').getRecordTypeId();
+        accoutObject.Name = ACCOUNTTEST1;
+        accoutObject.recordTypeId=partnerRecordTypeId;
+        accoutObject.DNB_Connect_DUNS_Number__c = '876543987';
+        accoutObject.OwnerId = tUser.Id;
+        insert accoutObject;
 
         System.runAs (tUser) {
             List<PermissionSet> pSets = [Select Id FROM PermissionSet WHERE Name = 'User_Share_SO_Update' Limit 1];

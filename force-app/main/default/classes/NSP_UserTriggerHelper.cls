@@ -59,7 +59,7 @@ public with sharing class NSP_UserTriggerHelper {
             if ( ( NSP_UserTriggerHelper.bccAddresses != null )
                 && !NSP_UserTriggerHelper.bccAddresses.isEmpty()
                 && ( Limits.getFutureCalls() < Limits.getLimitFutureCalls() )
-                && EmailDeliverabilityController.IsEnabledOutbound
+                && EmailDeliverabilityController.isEnabledOutbound
                 )
             {
                 NSP_UserTriggerHelper.sendProfileNotification(
@@ -200,82 +200,81 @@ public with sharing class NSP_UserTriggerHelper {
     //
     //
 
-    /**
-* Iterates throught the list of new User and passes the required attributes to other methods.
-* @param newMap List of New User.
-* @param oldMap List of the User record after insert.
-* @return void
-*                
-*/
+    //
+    // Iterates throught the list of new User and passes the required attributes to other methods.
+    // @param newMap List of New User.
+    // @param oldMap List of the User record after insert.
+    // @return void
+    //
+    //
     public void afterInsertUser(List < User > newList) {
-        
+
         List<string> serviceProfiles = System.Label.NSP_ServiceProfiles.split(',');
         Set<Id> serviceProfileUserIdSet = new Set<Id>();
         Map<Id,Id> mapContactIdUserId = new Map<Id,Id>();
         List<User> lstUserToAssignFSLPermissions = new List<User>();
         Map<Id, User> userIdUserMap  = new Map<Id, User>();
-        
+
         for(User usr : newList){
             if(serviceProfiles.contains(usr.NSP_User_Profile_Name__c) && usr.IsActive){
-                serviceProfileUserIdSet.add(usr.id);  
+                serviceProfileUserIdSet.add(usr.id);
             }
-            
+
             if(usr.isActive && usr.ContactId !=null && usr.IsPortalEnabled){
                 mapContactIdUserId.put(usr.ContactId,usr.Id);
             }
- 
-             if(String.isNotBlank(usr.NSP_Salesforce_Field_service__c)){
-                 lstUserToAssignFSLPermissions.add(usr);
-             }
-             
-                if(usr.NSP_Financial_Force_User__c != null)
-                {
-                    userIdUserMap.put(usr.Id, usr);
-                }
+
+            if(String.isNotBlank(usr.NSP_Salesforce_Field_service__c)){
+                lstUserToAssignFSLPermissions.add(usr);
+            }
+
+            if(usr.NSP_Financial_Force_User__c != null)
+            {
+                userIdUserMap.put(usr.Id, usr);
+            }
         }
-        
+
         if(!userIdUserMap.isEmpty()){
            assignPSAPermission(userIdUserMap);
         }
-        
+
         // Adding Service user to Service Profile Group Members
         if(!serviceProfileUserIdSet.isEmpty()){
             addtoServiceProfilePublicGroup(serviceProfileUserIdSet);
         }
-        
+
         if(!mapContactIdUserId.isEmpty()){
             NSP_portalUserSharing queableObj = new NSP_portalUserSharing(mapContactIdUserId);
             if(Limits.getQueueableJobs() != Limits.getLimitQueueableJobs()) {
                 System.enqueueJob(queableObj);
-             }        
+             }
         }
-        
+
          if(!lstUserToAssignFSLPermissions.isEmpty()){
              //send it to queueable method to assign permissionset
              processUserPermissions(lstUserToAssignFSLPermissions, null);
          }
-         
+
     }
-    
-    /**
-* Iterates throught the list of new User and passes the required attributes to other methods.
-* @param newMap List of New User.
-* @param oldMap List of the User record before update.
-* @return void
-*                
-*/
+
+    //
+    // Iterates throught the list of new User and passes the required attributes to other methods.
+    // @param newMap List of New User.
+    // @param oldMap List of the User record before update.
+    // @return void
+    //
     public void afterUpdateUser(Map < Id, User > newMap, Map < Id, User > oldMap) {
         List<User> lstUserToAssignFSLPermissions = new List<User>();
-        List<string> serviceProfiles = System.Label.NSP_ServiceProfiles.split(','); 
+        List<string> serviceProfiles = System.Label.NSP_ServiceProfiles.split(',');
         Set<Id> serviceProfileUserIdSet = new Set<Id>();
-        Set<Id> nonserviceProfileUserIdSet = new Set<Id>(); 
+        Set<Id> nonserviceProfileUserIdSet = new Set<Id>();
         Set<Id> psaUserIdSet  = new Set<Id>();
         Map<Id,Id> mapContactIdUserId = new Map<Id,Id>();
         Map<Id, User> userIdUserMap  = new Map<Id, User>();
         Set<Id> userToremovePsSet  = new Set<Id>();
-        
+
         for(User usr : newMap.values()){
-            
+
             if(String.isNotBlank(usr.NSP_User_Profile_Name__c) && usr.NSP_User_Profile_Name__c != oldMap.get(usr.Id).NSP_User_Profile_Name__c && usr.IsActive){
                 if(serviceProfiles.contains(usr.NSP_User_Profile_Name__c) && !serviceProfiles.contains(oldMap.get(usr.Id).NSP_User_Profile_Name__c)){
                     serviceProfileUserIdSet.add(usr.id);
@@ -283,13 +282,13 @@ public with sharing class NSP_UserTriggerHelper {
                     nonserviceProfileUserIdSet.add(usr.id);
                 }
             }
-            
-             if((usr.NSP_Salesforce_Field_service__c != oldMap.get(usr.Id).NSP_Salesforce_Field_service__c) || 
-                                 usr.NSP_Dispatch_Region__c != oldMap.get(usr.Id).NSP_Dispatch_Region__c){
-                 lstUserToAssignFSLPermissions.add(usr);
-             }
-            
-             if(usr.NSP_Financial_Force_User__c != oldMap.get(usr.Id).NSP_Financial_Force_User__c ){
+
+            if((usr.NSP_Salesforce_Field_service__c != oldMap.get(usr.Id).NSP_Salesforce_Field_service__c) ||
+                                usr.NSP_Dispatch_Region__c != oldMap.get(usr.Id).NSP_Dispatch_Region__c){
+                lstUserToAssignFSLPermissions.add(usr);
+            }
+
+            if(usr.NSP_Financial_Force_User__c != oldMap.get(usr.Id).NSP_Financial_Force_User__c ){
                 //psaUserIdSet.add(usr.Id);
                 if(oldMap.get(usr.Id).NSP_Financial_Force_User__c != null)
                 {
@@ -299,57 +298,51 @@ public with sharing class NSP_UserTriggerHelper {
                 {
                     userIdUserMap.put(usr.Id, usr);
                 }
-             }
-             
-             if(usr.isActive && usr.ContactId !=null && usr.IsPortalEnabled && usr.NSP_User_Profile_Name__c==NSP_ServiceConstants.communityUserProfilePlus){
-                mapContactIdUserId.put(usr.ContactId,usr.Id);
-             } 
+            }
+
+            if(usr.isActive && usr.ContactId !=null && usr.IsPortalEnabled && usr.NSP_User_Profile_Name__c==NSP_ServiceConstants.communityUserProfilePlus){
+            mapContactIdUserId.put(usr.ContactId,usr.Id);
+            }
         }
-        
+
         // Adding Service user to Service Profile Group Members
         if(!serviceProfileUserIdSet.isEmpty()){
             addtoServiceProfilePublicGroup(serviceProfileUserIdSet);
         }
-        
+
         // Adding Service user to Service Profile Group Members
         if(!nonserviceProfileUserIdSet.isEmpty()){
             removeFromServiceProfilePublicGroup(nonserviceProfileUserIdSet);
         }
-        
+
         if(!lstUserToAssignFSLPermissions.isEmpty()){
              processUserPermissions(lstUserToAssignFSLPermissions, oldMap);
         }
-        
-        /*
-        if(!psaUserIdSet.isEmpty()){
-           assignPSAPermission(psaUserIdSet);
-        }
-        */
-        
+
         if(!userToremovePsSet.isEmpty()){
             removePSAPermission(userToremovePsSet);
         }
-        
+
         if(!userIdUserMap.isEmpty()){
            assignPSAPermission(userIdUserMap);
         }
-        
+
         if(!mapContactIdUserId.isEmpty()){
             NSP_portalUserSharing queableObj = new NSP_portalUserSharing(mapContactIdUserId);
             if(Limits.getQueueableJobs() != Limits.getLimitQueueableJobs()) {
                System.enqueueJob(queableObj);
             }
         }
-        
-        syncToAccount(newMap.Values(), oldMap); 
+
+        syncToAccount(newMap.Values(), oldMap);
     }
-    
-     /**
-      * @description: private method to process serviceResources records 
-      * @parameters: List of users
-      * @return: void
-     */
-     public void processUserPermissions(List<User> lstUser, Map<Id, User> mapOldUser){
+
+    //
+    // @description: private method to process serviceResources records
+    // @parameters: List of users
+    // @return: void
+    //
+    public void processUserPermissions(List<User> lstUser, Map<Id, User> mapOldUser){
         Map<Id, ServiceResource> mapUserServiceResource = new Map<Id, ServiceResource>();
         List<ServiceResource> lstServiceResource = new List<ServiceResource>();
         List<ServiceTerritoryMember> lstTerritoryMember =  new List<ServiceTerritoryMember>();
@@ -382,7 +375,7 @@ public with sharing class NSP_UserTriggerHelper {
         for(ServiceTerritoryMember terrMember: [SELECT Id, ServiceTerritory.Name, ServiceResourceId FROM  ServiceTerritoryMember WHERE ServiceResourceId IN :setServiceResourceId]){
             mapServiceResourceTerritoryMember.put(('' + terrMember.ServiceResourceId + terrMember.ServiceTerritory.Name), terrMember);
         }
-        
+
         for(ServiceTerritory servTerritory : [SELECT Id, Name FROM ServiceTerritory WHERE Name IN :setDispatachRegion]){
             mapTerritory.put(servTerritory.Name, servTerritory.Id);
         }
@@ -392,7 +385,7 @@ public with sharing class NSP_UserTriggerHelper {
 
         for(User usr: lstUser){
             ServiceResource servRes = mapUserServiceResource.get(usr.Id);
-            
+
             //When Salesforce Field Service is Dispatcher or Resource
             if(String.isNotBlank(usr.NSP_Salesforce_Field_Service__c) && usr.NSP_Salesforce_Field_Service__c != NSP_ServiceConstants.SALESFORCE_FIELD_SERVICE_SFS_READONLY){
                 //Check if ServiceResource exists or not
@@ -425,7 +418,7 @@ public with sharing class NSP_UserTriggerHelper {
         for(User usr: lstUser){
             ServiceResource servRes = mapUserServiceResource.get(usr.Id);
             if(servRes != null){
-                if(String.isNotBlank(usr.NSP_Salesforce_Field_Service__c) && 
+                if(String.isNotBlank(usr.NSP_Salesforce_Field_Service__c) &&
                         (usr.NSP_Salesforce_Field_Service__c == NSP_ServiceConstants.SALESFORCE_FIELD_SERVICE_RESOURCE ||
                         usr.NSP_Salesforce_Field_Service__c == NSP_ServiceConstants.SALESFORCE_FIELD_SERVICE_DISPATCHER_RESOURCE)){
                     String territoryMemberKey = '' + servRes.Id + usr.NSP_Dispatch_Region__c;
@@ -436,13 +429,13 @@ public with sharing class NSP_UserTriggerHelper {
                         }
                     }
                 }
-                
+
                 //Check for the dispatch region change
                 if(mapOldUser != null && mapOldUser.get(usr.Id) != null){
                     User oldUser = mapOldUser.get(usr.Id);
-                    if(((oldUser.NSP_Salesforce_Field_Service__c == NSP_ServiceConstants.SALESFORCE_FIELD_SERVICE_RESOURCE || 
-                                oldUser.NSP_Salesforce_Field_Service__c == NSP_ServiceConstants.SALESFORCE_FIELD_SERVICE_DISPATCHER_RESOURCE) &&  
-                                oldUser.NSP_Salesforce_Field_Service__c != usr.NSP_Salesforce_Field_Service__c) || 
+                    if(((oldUser.NSP_Salesforce_Field_Service__c == NSP_ServiceConstants.SALESFORCE_FIELD_SERVICE_RESOURCE ||
+                                oldUser.NSP_Salesforce_Field_Service__c == NSP_ServiceConstants.SALESFORCE_FIELD_SERVICE_DISPATCHER_RESOURCE) &&
+                                oldUser.NSP_Salesforce_Field_Service__c != usr.NSP_Salesforce_Field_Service__c) ||
                             (oldUser.NSP_Dispatch_Region__c != usr.NSP_Dispatch_Region__c && String.isNotBlank(oldUser.NSP_Dispatch_Region__c))){
                         String territoryMemberKey = '' + servRes.Id + oldUser.NSP_Dispatch_Region__c;
                         ServiceTerritoryMember servTerrMember = mapServiceResourceTerritoryMember.get(territoryMemberKey);
@@ -476,15 +469,15 @@ public with sharing class NSP_UserTriggerHelper {
         System.enqueueJob(new NSP_AssignFSLUserPermissions(lstUser, Trigger.isUpdate));
     }
 
-    /**
-     * @description: private method to create map of Service resource and its Territory Member record map 
-     * @parameters: serviceResource Id set, dispatch region string
-     * @return: map<String, TerritoryMember> where key is combination of serviceResource Id and territory Name
-    */
+    //
+    // @description: private method to create map of Service resource and its Territory Member record map
+    // @parameters: serviceResource Id set, dispatch region string
+    // @return: map<String, TerritoryMember> where key is combination of serviceResource Id and territory Name
+    //
     private Map<String, ServiceTerritoryMember> createServiceResourceTerritoryMemberMap(Set<Id> setServiceResourceId, Set<String> setDispatachRegion, Map<String, Id> mapTerritory){
         Map<String, ServiceTerritoryMember> mapServiceResourceTerritoryMember = new Map<String, ServiceTerritoryMember>();
-        
-        for(ServiceTerritory servTerritory : [SELECT Id, Name, (SELECT Id, ServiceTerritory.Name, ServiceResourceId FROM ServiceResources 
+
+        for(ServiceTerritory servTerritory : [SELECT Id, Name, (SELECT Id, ServiceTerritory.Name, ServiceResourceId FROM ServiceResources
                                     WHERE ServiceResourceId IN :setServiceResourceId) FROM ServiceTerritory WHERE Name IN :setDispatachRegion]){
             mapTerritory.put(servTerritory.Name, servTerritory.Id);
             if(servTerritory.ServiceResources != null && !servTerritory.serviceResources.isEmpty()){
@@ -496,30 +489,30 @@ public with sharing class NSP_UserTriggerHelper {
         return mapServiceResourceTerritoryMember;
     }
 
-    /**
-     * @description: private method to create Service Territory Member record 
-     * @parameters: permission set name, user Id
-     * @return: ServiceTerritoryMember
-    */
+    //
+    // @description: private method to create Service Territory Member record
+    // @parameters: permission set name, user Id
+    // @return: ServiceTerritoryMember
+    //
     private ServiceTerritoryMember createTerritoryMember(User usr, Id serviceResourceId, Map<String, Id> mapTerritory){
         ServiceTerritoryMember territoryMember;
         //get the territory Id
         String territoryId = mapTerritory.get(usr.NSP_Dispatch_Region__c);
         if(String.isNotBlank(territoryId) && String.isNotBlank(serviceResourceId)){
-            territoryMember = new ServiceTerritoryMember(TerritoryType = 'P', ServiceTerritoryId = territoryId, 
+            territoryMember = new ServiceTerritoryMember(TerritoryType = 'P', ServiceTerritoryId = territoryId,
                         EffectiveEndDate = null, EffectiveStartDate = System.now(), ServiceResourceId = serviceResourceId);
         }
         return territoryMember;
     }
-    
-     
-    /**
-* Method Name : updatePhoneNumber 
-* Description : Method to format Phone number on insert
-* Author : Raksha       Date : 22/02/2022
-* @param currentRecordsList List of New User.  
-* @return void  
-*/
+
+
+    //
+    // Method Name : updatePhoneNumber
+    // Description : Method to format Phone number on insert
+    // Author : Raksha       Date : 22/02/2022
+    // @param currentRecordsList List of New User.
+    // @return void
+    //
     public void updatePhoneNumber(List < User > currentRecordsList) {
         for (User contact: currentRecordsList) {
             if(contact.Phone != null) {
@@ -544,17 +537,17 @@ public with sharing class NSP_UserTriggerHelper {
             } else {
                 contact.NSP_Formatted_Phone_Num__c = contact.Phone;
             }
-         }  
+         }
         }
     }
-    
-    /**
-* Method Name : updatePhoneNum 
-* Description : Method to format Phone number on update
-* Author : Raksha       Date : 22/02/2022
-* @param currentRecordsList List of New User.  
-* @return void  
-*/
+
+    //
+    // Method Name : updatePhoneNum
+    // Description : Method to format Phone number on update
+    // Author : Raksha       Date : 22/02/2022
+    // @param currentRecordsList List of New User.
+    // @return void
+    //
     public void updatePhoneNum(List < User > newContactList, Map < Id, User > contactOldMap) {
         for (User newContact: newContactList) {
             User oldContact = contactOldMap != null ? contactOldMap.get(newContact.Id) : null;
@@ -586,14 +579,14 @@ public with sharing class NSP_UserTriggerHelper {
             }
         }
     }
-    
-    /**
-* Method Name : formatPhoneNumbers 
-* Description : Method to format Phone number
-* Author : Raksha       Date : 22/02/2022
-* @param String input called from updatePhoneNum.  
-* @return String  
-*/
+
+    //
+    // Method Name : formatPhoneNumbers
+    // Description : Method to format Phone number
+    // Author : Raksha       Date : 22/02/2022
+    // @param String input called from updatePhoneNum.
+    // @return String
+    //
     public String formatPhoneNumbers(String input) {
         String requiredOutput;
         input = input.replaceAll('\\(', '').replaceAll('\\)', '');
@@ -611,13 +604,14 @@ public with sharing class NSP_UserTriggerHelper {
         }
         return requiredOutput;
     }
-    /**
-* Method Name : formatCommonPattern 
-* Description : Method to construct common pattern and format Phone number
-* Author : Raksha       Date : 22/02/2022
-* @param String input called from formatPhoneNumbers.  
-* @return String  
-*/
+
+    //
+    // Method Name : formatCommonPattern
+    // Description : Method to construct common pattern and format Phone number
+    // Author : Raksha       Date : 22/02/2022
+    // @param String input called from formatPhoneNumbers.
+    // @return String
+    //
     public String formatCommonPattern(String input) {
         if (input.length() == 10) {
             String number1 = input.replaceFirst('(\\d{3})(\\d{3})(\\d+)', '($1) $2-$3');
@@ -628,81 +622,80 @@ public with sharing class NSP_UserTriggerHelper {
         return codeNumber;
     }
 
-     /**
-* Method Name : setSalesOfficeDetails 
-* Description : Method to set the sales office details from sales office mapping
-* @param currentRecordsList List of New User.  
-* @return void  
-*/
-  public  void setSalesOfficeDetails(List < User > newUserList, Map < Id, User > userOldMap)
-    {
+    //
+    // Method Name : setSalesOfficeDetails
+    // Description : Method to set the sales office details from sales office mapping
+    // @param currentRecordsList List of New User.
+    // @return void
+    //
+    public void setSalesOfficeDetails( List<User> newUserList , Map<Id,User> userOldMap ) {
         set<String> salesOfficeSet = new set<String>();
 
         for(User newUser : newUserList)
         {
-            User oldUser = userOldMap != null ? userOldMap.get(newUser.Id):null; 
+            User oldUser = userOldMap != null ? userOldMap.get(newUser.Id):null;
 
             if( !system.isBatch() && String.isNotBlank(newUser.NSP_Sales_Office__c) && (Trigger.isInsert || (newUser.NSP_Sales_Office__c != oldUser.NSP_Sales_Office__c || newUser.NSP_SalesRegion__c != oldUser.NSP_SalesRegion__c || newUser.NSP_SalesDivision__c != oldUser.NSP_SalesDivision__c )))
             {
-                
+
                 salesOfficeSet.add(newUser.NSP_Sales_Office__c);
             }
         }
 
         if(salesOfficeSet.Size() > 0)
-        {   
+        {
             map<String,NSP_Sales_Office_Mapping__c> salesOfficeToMappingMap =  new map<String,NSP_Sales_Office_Mapping__c>();
-            for(NSP_Sales_Office_Mapping__c eachMapping : [SELECT Id,NSP_Sales_Office__c,NSP_Sales_Division__c,NSP_Sales_Region__c 
-                                                            FROM NSP_Sales_Office_Mapping__c 
+            for(NSP_Sales_Office_Mapping__c eachMapping : [SELECT Id,NSP_Sales_Office__c,NSP_Sales_Division__c,NSP_Sales_Region__c
+                                                            FROM NSP_Sales_Office_Mapping__c
                                                            WHERE NSP_Sales_Office__c In : salesOfficeSet AND isActive__c = true])
             {
                 salesOfficeToMappingMap.put(eachMapping.NSP_Sales_Office__c,eachMapping);
             }
-            
-            
+
+
 
             for(User newUser : newUserList)
             {
-                User oldUser = userOldMap != null ? userOldMap.get(newUser.Id):null; 
+                User oldUser = userOldMap != null ? userOldMap.get(newUser.Id):null;
 
                 if(!system.isBatch() && String.isNotBlank(newUser.NSP_Sales_Office__c) && (Trigger.isInsert || (newUser.NSP_Sales_Office__c != oldUser.NSP_Sales_Office__c || newUser.NSP_SalesRegion__c != oldUser.NSP_SalesRegion__c || newUser.NSP_SalesDivision__c != oldUser.NSP_SalesDivision__c )))
                 {
                     if(salesOfficeToMappingMap.containsKey(newUser.NSP_Sales_Office__c))
                         {
                             NSP_Sales_Office_Mapping__c officeMapping = salesOfficeToMappingMap.get(newUser.NSP_Sales_Office__c);
-                            newUser.NSP_SalesDivision__c = officeMapping.NSP_Sales_Division__c; 
-                            newUser.NSP_SalesRegion__c = officeMapping.NSP_Sales_Region__c; 
+                            newUser.NSP_SalesDivision__c = officeMapping.NSP_Sales_Division__c;
+                            newUser.NSP_SalesRegion__c = officeMapping.NSP_Sales_Region__c;
                         }
                     else{
-                            newUser.NSP_SalesDivision__c = null; 
-                            newUser.NSP_SalesRegion__c = null; 
+                            newUser.NSP_SalesDivision__c = null;
+                            newUser.NSP_SalesRegion__c = null;
                     }
                 }
             }
-            
+
         }
     }
-    
-/**
-* Method Name : syncToAccount 
-* Description : Method to sync the sales office details from User to Account
-* @param currentRecordsList List of New User.  
-* @return void  
-*/    
+
+    //
+    // Method Name : syncToAccount
+    // Description : Method to sync the sales office details from User to Account
+    // @param currentRecordsList List of New User.
+    // @return void
+    //
     public void syncToAccount(List < User > newUserList, Map < Id, User > userOldMap)
     {
         set<Id> userIdSet = new set<Id>();
 
         for(User newUser : newUserList)
         {
-            User oldUser = userOldMap != null ? userOldMap.get(newUser.Id):null; 
+            User oldUser = userOldMap != null ? userOldMap.get(newUser.Id):null;
 
             if(String.isNotBlank(newUser.NSP_Sales_Office__c)  && (Trigger.isInsert || (newUser.NSP_Sales_Office__c != oldUser.NSP_Sales_Office__c || newUser.NSP_SalesRegion__c != oldUser.NSP_SalesRegion__c || newUser.NSP_SalesDivision__c != oldUser.NSP_SalesDivision__c )))
             {
                 userIdSet.add(newUser.Id);
             }
         }
-        
+
         if(userIdSet.Size() > 0 && !syncAccountQueueExecuted)
         {
             syncAccountQueueExecuted = true;
@@ -710,16 +703,14 @@ public with sharing class NSP_UserTriggerHelper {
         }
     }
 
-
-    /** 
-    * @MethodName: updateAccountTeamField
-    * @Description: This method is used to update Asset Fields on after Insert
-    * @param : Map<Id, User> newMap, Map<Id, User> oldMap
-    * @createdDate : 12/01/2022
-    * @Defect : STY-02108
-    * @return void                          
-    */ 
-
+    //
+    // @MethodName: updateAccountTeamField
+    // @Description: This method is used to update Asset Fields on after Insert
+    // @param : Map<Id, User> newMap, Map<Id, User> oldMap
+    // @createdDate : 12/01/2022
+    // @Defect : STY-02108
+    // @return void
+    //
     public static void updateAssetServiceRegion( Map<Id, User> newMap, Map<Id, User> oldMap ) {
 
         Id woRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.WO_ASSET_RECORDTYPE );
@@ -729,7 +720,7 @@ public with sharing class NSP_UserTriggerHelper {
 
         Map<Id, String> accountByRegion = new Map<Id, String>();
 
-        // get user id 
+        // get user id
         for (User user : newMap.values()) {
             if(user.NSP_Service_Region__c != oldMap.get(user.Id).NSP_Service_Region__c ) {
                 userIds.add(user.Id);
@@ -742,14 +733,14 @@ public with sharing class NSP_UserTriggerHelper {
             accountByRegion.put(accTeam.NSP_Account__c,  accTeam.NSP_User__r.NSP_Service_Region__c);
         }
 
-        // get exist Asset records with record type wo related this user 
+        // get exist Asset records with record type wo related this user
         for(Asset asset : [SELECT Id, RecordTypeId, NSP_Service_Region__c, AccountId From Asset WHERE RecordTypeId =:woRecordTypeId  AND AccountId =:accountByRegion.keyset() AND NSP_Account_Status__c = 'Active']){
             if(accountByRegion.containsKey(asset.AccountId)) {
                 asset.NSP_Service_Region__c = accountByRegion.get(asset.AccountId);
                 assetToBeUpdated.add(asset);
             }
-        }       
-        
+        }
+
         if(!assetToBeUpdated.isEmpty()) {
             update assetToBeUpdated;
         }
@@ -762,21 +753,21 @@ public with sharing class NSP_UserTriggerHelper {
     // @createdDate : 1/24/2023
     // @Story : STY-03841
     // @return void
-    // 
+    //
     public static void addtoServiceProfilePublicGroup( Set<Id> serviceProfileUserIdSet ) {
-        
-        List<GroupMember> grpMemList = new List<GroupMember>();       
+
+        List<GroupMember> grpMemList = new List<GroupMember>();
         List<String> grpFields = new List<String>{'Id', 'Type','DeveloperName'};
         GroupMember newGrpMem = null;
         Id serviceProfileGroupId = NSP_sObjectSelector.selectGroupByTypeAndApiName(NSP_ServiceConstants.TYPE_REGULAR, NSP_ServiceConstants.SERVICE_PROFILE_GROUP_MEMBERS, grpFields).Id;
-        
+
         for(Id usrId : serviceProfileUserIdSet){
             newGrpMem = new GroupMember();
             newGrpMem.GroupId = serviceProfileGroupId;
             newGrpMem.UserOrGroupId = usrId;
             grpMemList.add(newGrpMem);
         }
-        
+
         try {
             if ( !grpMemList.isEmpty() ) {
                 List<Database.SaveResult> results = Database.insert( grpMemList , false );
@@ -804,16 +795,16 @@ public with sharing class NSP_UserTriggerHelper {
     // @return void
     //
     public static void removeFromServiceProfilePublicGroup( Set<Id> nonserviceProfileUserIdSet ) {
-        
-        List<GroupMember> grpMemList = new List<GroupMember>();        
+
+        List<GroupMember> grpMemList = new List<GroupMember>();
         List<String> grpFields = new List<String>{'Id', 'Type','DeveloperName'};
-            
+
         Id serviceProfileGroupId = NSP_sObjectSelector.selectGroupByTypeAndApiName(NSP_ServiceConstants.TYPE_REGULAR, NSP_ServiceConstants.SERVICE_PROFILE_GROUP_MEMBERS, grpFields).Id;
-        
+
         for(GroupMember grpMem : [SELECT Id, GroupId, UserOrGroupId FROM GroupMember WHERE UserOrGroupId IN: nonserviceProfileUserIdSet AND GroupId =: serviceProfileGroupId]){
             grpMemList.add(grpMem);
         }
-        
+
         try {
             if ( !grpMemList.isEmpty() ) {
                 List<Database.DeleteResult> results = Database.delete( grpMemList , false );
@@ -841,11 +832,11 @@ public with sharing class NSP_UserTriggerHelper {
     public static void removePSAPermission( Set<Id> userToremovePsSet ) {
         List<PermissionSetAssignment> getPermList = new List<PermissionSetAssignment>();
         List<String> perSetNames = System.Label.NSP_FF_PerSet_Names.split(',');
-            
+
         for(PermissionSetAssignment permSetAssignment : [SELECT Id, PermissionSetId, PermissionSet.Name, AssigneeId FROM PermissionSetAssignment WHERE AssigneeId IN: userToremovePsSet AND PermissionSet.Name IN : perSetNames]){
                 getPermList.add(permSetAssignment);
         }
-        
+
         try {
             if ( !getPermList.isEmpty() ) {
                 List<Database.DeleteResult> results = Database.delete( getPermList , false );
@@ -889,14 +880,14 @@ public with sharing class NSP_UserTriggerHelper {
                         .build();
                 }
             }
-            
+
 
             if(!userIdUserMap.isEmpty()){
                 for(PermissionSet permSet : Database.query(queryPerm)){
                     permSetIds.add(permSet.Id);
                 }
                 assignUserPerm(userIdUserMap.keySet(), permSetIds);
-            } 
+            }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 NSP_UserTriggerHelper.class.getName() ,
@@ -906,21 +897,21 @@ public with sharing class NSP_UserTriggerHelper {
         }
     }
 
-    /** 
-    * @MethodName: assignUserPerm
-    * @Description: Assign PSA Adminstration Permission Set, PSAManageGanttAndProjectTasks
-    * @param : Set<Id> userIdSet, Set<Id> permSetIds
-    * @return void                          
-    */
+    //
+    // @MethodName: assignUserPerm
+    // @Description: Assign PSA Adminstration Permission Set, PSAManageGanttAndProjectTasks
+    // @param : Set<Id> userIdSet, Set<Id> permSetIds
+    // @return void
+    //
     @future
     public static void assignUserPerm(Set<Id> userIdSet, Set<Id> permSetIds){
         List<PermissionSetAssignment> permissionSetList = new List<PermissionSetAssignment>();
-        //for set of Users assigning set of Permissions 
+        //for set of Users assigning set of Permissions
         for(Id usrId: userIdSet){
             for(Id permSetId : permSetIds){
                 permissionSetList.add(
                     new PermissionSetAssignment(
-                        PermissionSetId = permSetId, 
+                        PermissionSetId = permSetId,
                         AssigneeId = usrId
                     )
                 );
@@ -931,4 +922,6 @@ public with sharing class NSP_UserTriggerHelper {
             Database.insert(permissionSetList, false);
         }
     }
+
 }
+//
