@@ -10,7 +10,10 @@ private class NSP_UserTriggerHelper_Test {
         settings.AllowedAdmins__c = UserInfo.getUserId();
         settings.BccAddresses__c = UserInfo.getUserEmail();
         upsert settings;
-
+        Email_Deliverability_Settings__c emailSetting = Email_Deliverability_Settings__c.getOrgDefaults();
+        emailSetting.IsEnabledOutbound__c = true;
+        upsert emailSetting;
+        
         Account acc = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), 'NSP_TestDataFactory.AccountDefaults', false);
         acc.Name = 'Test Acc';
         insert acc;

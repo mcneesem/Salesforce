@@ -18,7 +18,10 @@ public class NSP_SalesToImplementationHelperTest {
     * ********************************************************************************************/
     @testSetup
     public static void setUpData(){
-
+        Email_Deliverability_Settings__c emailSetting = Email_Deliverability_Settings__c.getOrgDefaults();
+        emailSetting.IsEnabledOutbound__c = true;
+        upsert emailSetting;
+        
         //Get Record type Id of Retirement_Services
         Id AssetRecordTypeId  = NSP_GenericRecordType.getRecordTypeId('Asset', NSP_ServiceConstants.RET_CHOICE_ASSET_RECORDTYPE);        
         

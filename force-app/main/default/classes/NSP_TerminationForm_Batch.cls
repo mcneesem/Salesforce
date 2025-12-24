@@ -1,4 +1,10 @@
-public class NSP_TerminationForm_Batch implements ISelfSchedulable , Schedulable , Database.Batchable<SObject> , Database.Stateful {
+//
+// @description : Batch Class to process the termination form for the email template.
+// @author : Shruti Patil
+// @date : 10/18/2021
+// Name : NSP_TerminationForm_Batch
+//
+global class NSP_TerminationForm_Batch implements ISelfSchedulable , Schedulable , Database.Batchable<SObject> , Database.Stateful {
     // test w/ NSP_TerminationForm_Batch_Test (88%)
 
     private List<String> ccEmailAddressList = new List<String>();
@@ -93,7 +99,7 @@ public class NSP_TerminationForm_Batch implements ISelfSchedulable , Schedulable
                 if ( NSP_TerminationForm_Batch.orgWideEmailAddressId != null) {
                     email.setOrgWideEmailAddressId( NSP_TerminationForm_Batch.orgWideEmailAddressId );
                 }
-                if ( !Test.isRunningTest() ) {
+                if ( !Test.isRunningTest() && EmailDeliverabilityController.IsEnabledOutbound) {
                     Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ email } );
                 }
             } catch ( Exception e ) {

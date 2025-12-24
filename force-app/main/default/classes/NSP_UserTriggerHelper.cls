@@ -1,5 +1,5 @@
 public with sharing class NSP_UserTriggerHelper {
-    // test w/ NSP_UserTriggerHelper_Test (82%)
+    // test w/ NSP_UserTriggerHelper_Test (81%)
 
     public static boolean syncAccountQueueExecuted = false;
 
@@ -59,6 +59,7 @@ public with sharing class NSP_UserTriggerHelper {
             if ( ( NSP_UserTriggerHelper.bccAddresses != null )
                 && !NSP_UserTriggerHelper.bccAddresses.isEmpty()
                 && ( Limits.getFutureCalls() < Limits.getLimitFutureCalls() )
+                && EmailDeliverabilityController.IsEnabledOutbound
                 )
             {
                 NSP_UserTriggerHelper.sendProfileNotification(

@@ -5,8 +5,8 @@
 */
 
 public class NSP_SalesToImplementationHelper {
-    // test w/ NSP_SalesToImplementationHelperTest (96%)
-
+    // test w/ NSP_SalesToImplementationHelperTest (97%)
+    
     /***********************************************************************************************
     * MethodName: afterInsert
     * Description : Iterates throught the list of new S2I
@@ -110,7 +110,7 @@ public class NSP_SalesToImplementationHelper {
                     }
                 }
             }
-        if ( !lstEmailMessages.isEmpty() ) {
+        if ( !lstEmailMessages.isEmpty() && EmailDeliverabilityController.IsEnabledOutbound) {
             try {
                 Messaging.sendEmail( lstEmailMessages );
             } catch ( Exception e ) {

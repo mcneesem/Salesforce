@@ -2,6 +2,9 @@
  private class NSP_TerminationForm_Batch_Test {
 
     @testSetup private static void testData(){
+        Email_Deliverability_Settings__c emailSetting = Email_Deliverability_Settings__c.getOrgDefaults();
+        emailSetting.IsEnabledOutbound__c = true;
+        upsert emailSetting;
         //inserting account
         Account acc1 = (Account)NSP_TestDataFactory.createSObject(new Account(),'NSP_TestDataFactory.AccountDefaults');
         acc1.Name = 'acc1';
