@@ -560,7 +560,7 @@ public class NSP_ProjectTaskTriggerEmailNotification {
               }
           }  
         
-        if(!System.Test.isRunningTest()){
+        if(!System.Test.isRunningTest() && EmailDeliverabilityController.IsEnabledOutbound){
             Messaging.sendEmail(new Messaging.SingleEmailMessage[] {email});
         }
         
@@ -589,7 +589,7 @@ public class NSP_ProjectTaskTriggerEmailNotification {
                        
                 
             }
-            if(!lstEmailMessage.isEmpty()){
+            if(!lstEmailMessage.isEmpty() && EmailDeliverabilityController.IsEnabledOutbound){
                 Messaging.sendEmail(lstEmailMessage,false);
                 
             }
@@ -871,8 +871,8 @@ public class NSP_ProjectTaskTriggerEmailNotification {
                     }
                 }
             }
-
-            if(!lstEmailMessages.isEmpty()){
+            
+            if(!lstEmailMessages.isEmpty() && EmailDeliverabilityController.IsEnabledOutbound){
                 //send email alert
                 Messaging.sendEmail(lstEmailMessages);
                 createEmailMessageRec(emailMessageToProjectTaskMap);
