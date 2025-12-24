@@ -414,6 +414,16 @@
                 <identifier>RecordABCP_Effective_Date_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Arbitration_Agreement__c</fieldItem>
+                <identifier>RecordArbitration_Agreement__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-8472e348-00d6-4dc2-83df-2fe243f37442</name>
         <type>Facet</type>
     </flexiPageRegions>
