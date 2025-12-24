@@ -1669,8 +1669,11 @@ public with sharing class NSP_ProjectTriggerHelper {
                 email.setOrgWideEmailAddressId(Label.NSP_OrgWideEmail_Insperity);
                 lstEmailMessages.add(email);
             }
-            if(!lstEmailMessages.isEmpty()  && EmailDeliverabilityController.IsEnabledOutbound){
-                Messaging.sendEmail(lstEmailMessages);
+            if ( !lstEmailMessages.isEmpty()
+                && EmailDeliverabilityController.isEnabledOutbound
+                )
+            {
+                Messaging.sendEmail( lstEmailMessages );
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
@@ -1823,8 +1826,8 @@ public with sharing class NSP_ProjectTriggerHelper {
         email.setTargetObjectId(UserInfo.getUserId());
         email.setTreatTargetObjectAsRecipient(false);
         try {
-            if( EmailDeliverabilityController.IsEnabledOutbound ){
-            	Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ email } );
+            if ( EmailDeliverabilityController.isEnabledOutbound ) {
+                Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ email } );
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
@@ -2006,12 +2009,15 @@ public with sharing class NSP_ProjectTriggerHelper {
                 }
             }
 
-            if(!emailMessageList.isEmpty()  && EmailDeliverabilityController.IsEnabledOutbound){
-                //Send mail
-                NSP_GenericEmailUtility.sendSingleEmailMessages(emailMessageList,false);
+            if ( !emailMessageList.isEmpty()
+                && EmailDeliverabilityController.isEnabledOutbound
+                )
+            {
+                NSP_GenericEmailUtility.sendSingleEmailMessages( emailMessageList , false );
             }
         }
     }
+
     /**********************************************************************************************
     * MethodName: createItaCqaCase
     * Description : This method describes about the creation of ITA CQA case record Instance

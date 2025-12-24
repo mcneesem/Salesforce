@@ -1,13 +1,6 @@
-//
-// @description  :  Helper class for ServiceAppointment trigger.
-// @date 14/11/2022
-// Author : Nischay Jindal
-// Name : NSP_ServiceAppointmentTriggerHelper
-//
 public with sharing class NSP_ServiceAppointmentTriggerHelper {
     // test w/ NSP_ServiceAppointmentTrigger_Test (89%)
-    // ~ Apex Test Requires: Permission Set: Field Service Admin Permissions
-    
+
     //map of service resource Id and operating hrs name
     public static Map<Id,String> mapServResOperHrs = new Map<Id,String>();
     //map of Service Appointment and service resource Ids
@@ -562,8 +555,11 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
         }
         email.setTargetObjectId(UserInfo.getUserId());
         email.setTreatTargetObjectAsRecipient(false);
-        if(!System.Test.isRunningTest() && EmailDeliverabilityController.IsEnabledOutbound){
-            Messaging.sendEmail(new Messaging.SingleEmailMessage[] {email});
+        if ( !System.Test.isRunningTest()
+            && EmailDeliverabilityController.isEnabledOutbound
+            )
+        {
+            Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ email } );
         }
     }
 
