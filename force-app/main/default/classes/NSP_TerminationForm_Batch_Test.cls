@@ -1,14 +1,18 @@
-@isTest(SeeAllData=false)
- private class NSP_TerminationForm_Batch_Test {
+@isTest
+private class NSP_TerminationForm_Batch_Test {
 
-    @testSetup private static void testData(){
+    @testSetup
+    private static void testData() {
+        Email_Deliverability_Settings__c emailSetting = Email_Deliverability_Settings__c.getOrgDefaults();
+        emailSetting.IsEnabledOutbound__c = true;
+        upsert emailSetting;
         //inserting account
         Account acc1 = (Account)NSP_TestDataFactory.createSObject(new Account(),'NSP_TestDataFactory.AccountDefaults');
         acc1.Name = 'acc1';
         acc1.NSP_AIMS_Client__c = 'client1';
         insert acc1;
         //inserting account team
-        NSP_Account_Team__c AccTeam = (NSP_Account_Team__c)NSP_TestDataFactory.createSObject(new NSP_Account_Team__c(), 'NSP_TestDataFactory.AccountTeamMemberDefaults');    
+        NSP_Account_Team__c AccTeam = (NSP_Account_Team__c)NSP_TestDataFactory.createSObject(new NSP_Account_Team__c(), 'NSP_TestDataFactory.AccountTeamMemberDefaults');
         AccTeam.NSP_Account__c = acc1.Id;
         AccTeam.NSP_Role__c = NSP_ServiceConstants.CLIENT_LIAISION;
         insert AccTeam;
@@ -23,7 +27,7 @@
         pse__Project_Task__c ProjectTask= (pse__Project_Task__c) NSP_TestDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults');
         ProjectTask.pse__Project__c = Project.Id;
         insert ProjectTask;
-        
+
         NSP_Termination_Form__c TF1 = (NSP_Termination_Form__c)NSP_TestDataFactory.createSObject(new NSP_Termination_Form__c(), 'NSP_TestDataFactory.TerminationFormDefaults');
         TF1.NSP_Status__c = 'Term Team Approved';
         TF1.NSP_Client_Term_Date__c = System.today()-21;
@@ -36,7 +40,8 @@
     }
 
     //Executes batch job for NSP_TerminationForm_Batch
-    @isTest private static void termination(){
+    @isTest
+    private static void termination() {
         try{
             Test.startTest();
             NSP_TerminationForm_Batch TFBatch = new NSP_TerminationForm_Batch();
@@ -48,7 +53,8 @@
         }
     }
 
-    @isTest private static void terminate(){
+    @isTest
+    private static void terminate() {
         try{
             test.startTest();
             NSP_TerminationForm_Batch.schedule();
