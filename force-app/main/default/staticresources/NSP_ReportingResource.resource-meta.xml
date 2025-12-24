@@ -2,5 +2,5 @@
 <StaticResource xmlns="http://soap.sforce.com/2006/04/metadata">
     <cacheControl>Public</cacheControl>
     <contentType>application/x-zip-compressed</contentType>
-    <description>Contains visual indicators for nsp_visualIndicator LWC.</description>
+    <description>Contains visual indicators for nsp_visualIndicator LWC and salesVisualIndicator LWC.</description>
 </StaticResource>
