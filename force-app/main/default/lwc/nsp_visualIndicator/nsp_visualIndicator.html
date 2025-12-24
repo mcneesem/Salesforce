@@ -103,8 +103,14 @@
             </template>
             <template if:true={showWorkSyncClientTrue}>
                 <div class="slds-col slds-size_1-of-3">
-                    <div class="slds-text-title slds-align_absolute-center">Workforce Sync Client</div>
+                    <div class="slds-text-title slds-align_absolute-center">HR360 SE</div>
                     <div class="slds-align_absolute-center"><img src={wf_sync} height="100%"></div>
+                </div>
+            </template>
+            <template lwc:if={showHRScale}>
+                <div class="slds-col slds-size_1-of-3">
+                    <div class="slds-text-title slds-align_absolute-center">HRScale</div>
+                    <div class="slds-align_absolute-center"><img src={hrScale} alt="" height="100%"></div>
                 </div>
             </template>
             <template if:true={whoClient100True}><!--CHANGE-->
