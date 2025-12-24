@@ -9,6 +9,9 @@ public class NSP_ProjectTaskTriggerEmailTest {
 
     @testSetup
     public static void setUpData(){
+        Email_Deliverability_Settings__c emailSetting = Email_Deliverability_Settings__c.getOrgDefaults();
+        emailSetting.IsEnabledOutbound__c = true;
+        upsert emailSetting;
         
         Account newAccount = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), 'NSP_TestDataFactory.AccountDefaults', false);
         insert newAccount;

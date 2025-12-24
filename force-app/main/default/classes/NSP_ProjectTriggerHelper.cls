@@ -1669,7 +1669,7 @@ public with sharing class NSP_ProjectTriggerHelper {
                 email.setOrgWideEmailAddressId(Label.NSP_OrgWideEmail_Insperity);
                 lstEmailMessages.add(email);
             }
-            if(!lstEmailMessages.isEmpty()){
+            if(!lstEmailMessages.isEmpty()  && EmailDeliverabilityController.IsEnabledOutbound){
                 Messaging.sendEmail(lstEmailMessages);
             }
         } catch ( Exception e ) {
@@ -1823,7 +1823,9 @@ public with sharing class NSP_ProjectTriggerHelper {
         email.setTargetObjectId(UserInfo.getUserId());
         email.setTreatTargetObjectAsRecipient(false);
         try {
-            Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ email } );
+            if( EmailDeliverabilityController.IsEnabledOutbound ){
+            	Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ email } );
+            }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 NSP_ProjectTriggerHelper.class.getName() ,
@@ -2004,7 +2006,7 @@ public with sharing class NSP_ProjectTriggerHelper {
                 }
             }
 
-            if(!emailMessageList.isEmpty()){
+            if(!emailMessageList.isEmpty()  && EmailDeliverabilityController.IsEnabledOutbound){
                 //Send mail
                 NSP_GenericEmailUtility.sendSingleEmailMessages(emailMessageList,false);
             }
