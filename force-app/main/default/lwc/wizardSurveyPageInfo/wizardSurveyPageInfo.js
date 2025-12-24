@@ -38,7 +38,6 @@ export default class WizardSurveyPageInfo extends LightningElement {
     reportName;
     @track showUnion = false;
     NSP_Contact__c='';
-    @track NSP_Survey_Type__c;
     @track mergeObjectList = [];
     @track accContacts =[ { ContactId:"00",Name:"None"}];
     showErroMsg = "display:none";
@@ -90,7 +89,6 @@ export default class WizardSurveyPageInfo extends LightningElement {
     updateReportRequest(accountID) {
      const fields = {};
     if(this.reReqId != null &&  this.reReqId.length > 17 && accountID !=null && accountID.length > 17 ){
-      //  fields[CONTACT.fieldApiName] = null;
         fields[ID_FIELD.fieldApiName] = this.reReqId;
         fields[ACC_FIELD.fieldApiName] = accountID;
         fields[CONTACT.fieldApiName] ='';
@@ -190,7 +188,7 @@ export default class WizardSurveyPageInfo extends LightningElement {
     connectedCallback() {
         let today = new Date().toUTCString();  
         this.reportName ='Survey Request' + today.substring(today.indexOf(',')+2, today.indexOf(':')-2) ;
-        if(this.recordObj != null && this.recordObj.RecordTypeId !=null){
+        if ( this.recordObj?.RecordTypeId != null ) {
             this.recordTypeId = this.recordObj.RecordTypeId;
         }
     }
@@ -198,8 +196,11 @@ export default class WizardSurveyPageInfo extends LightningElement {
     handleOnLoad(event) {
         this.isOnloadCalled=true;
         this.clientAccId = this.template.querySelector('lightning-input-field[data-fname="clientName"]').value ;
-        if(this.isOnloaded && this.recordObj != null && this.recordObj.NSP_ClientName__c != null && 
-            this.clientId == null && this.recordObj.NSP_ClientName__c.value != null){
+        if ( this.isOnloaded
+            && ( this.clientId == null )
+            && ( this.recordObj?.NSP_ClientName__c?.value != null )
+          )
+        {
             this.clientId = this.recordObj.NSP_ClientName__c.value ;
             this.getContactRecord(this.recordObj.NSP_ClientName__c.value );
             this.updateReportRequest(this.clientId);
@@ -207,13 +208,13 @@ export default class WizardSurveyPageInfo extends LightningElement {
             this.enableContact =true;
             this.disableContact =false;
         }
-        if(event.detail != null &&  event.detail.records != null){
+        if ( event?.detail?.records != null ) {
             if(this.isOnloaded){
                 this.fieldsData =Object.values(JSON.parse(JSON.stringify(event.detail.records)))[0].fields
                 this.recordTypeId =  Object.values(JSON.parse(JSON.stringify(event.detail.records)))[0].recordTypeId;
                 if(this.fieldsData != null &&  this.fieldsData != undefined && this.fieldsData !='' ){
 
-                    if( this.fieldsData.NSP_Survey_Type__c != null && this.fieldsData.NSP_Survey_Type__c.value != null ){
+                    if ( this.fieldsData?.NSP_Survey_Type__c?.value != null ) {
                         this.NSP_Survey_Type__c = this.fieldsData.NSP_Survey_Type__c.value ;
                         if (this.NSP_Survey_Type__c === 'Exit' || this.NSP_Survey_Type__c === 'Onboarding - One-time' || this.NSP_Survey_Type__c === 'Onboarding - 30/60/90 Day') {
                             this.showEndDate = "display:none;";
@@ -225,16 +226,15 @@ export default class WizardSurveyPageInfo extends LightningElement {
                         }
                     }
 
-                    if( this.fieldsData.NSP_BargainingUnitEmployeesComplete__c != null && this.fieldsData.NSP_BargainingUnitEmployeesComplete__c.value != null ){
+                    if ( this.fieldsData?.NSP_BargainingUnitEmployeesComplete__c?.value != null ) {
                         this.NSP_BargainingUnitEmployeesComplete__c = this.fieldsData.NSP_BargainingUnitEmployeesComplete__c.value ;
                     }
 
-                    if( this.fieldsData.NSP_WhoAtclientCccessToOnlineResul__c != null && this.fieldsData.NSP_WhoAtclientCccessToOnlineResul__c.value != null ){
+                    if ( this.fieldsData?.NSP_WhoAtclientCccessToOnlineResul__c?.value != null ) {
                         this.mergeObjectList =  this.textAreaToArray(this.fieldsData.NSP_WhoAtclientCccessToOnlineResul__c.value);
-                    // this.mergeObjectList = this.reArrangeOrder(this.mergeObjectList);
                     }
 
-                    if( this.fieldsData.NSP_ClientName__c != null && this.fieldsData.NSP_ClientName__c.value != null ){
+                    if ( this.fieldsData?.NSP_ClientName__c?.value != null ) {
                         this.getContactRecord(this.fieldsData.NSP_ClientName__c.value );
                         this.enableContact =true;
                         this.disableContact =false;
@@ -284,9 +284,7 @@ export default class WizardSurveyPageInfo extends LightningElement {
         }
     } 
     
-    handleContact(event) {
-        // this.currentConactId = event.detail.value;
-    }
+    handleContact(event) {}
 
     handleAddContact(event) {
         if(this.refs.NSP_Contact__c?.value == null || this.refs.NSP_Contact__c?.value.length <= 17){
@@ -294,7 +292,7 @@ export default class WizardSurveyPageInfo extends LightningElement {
         }else if(this.refs.emailAddress?.value ==null || !this.refs.emailAddress.checkValidity() ){
             this.handleAlert('Please enter valid Email');
         }else{
-            var tempContact = new Object();
+            let tempContact = new Object();
             this.currentConactId = this.refs.NSP_Contact__c?.value;
             tempContact.name = this.accContacts.find(row => row.ContactId === this.currentConactId)?.Contact?.Name;
             tempContact.NSP_Work_email__c = this.refs.emailAddress.value;
@@ -351,7 +349,6 @@ export default class WizardSurveyPageInfo extends LightningElement {
             this.cemail = null;
             this.enableContact =false;
             this.clientId = event.target.value;
-            // this.template.querySelector('lightning-record-edit-form.NSP_ClientName__c').submit(formObj);
             this.getContactRecord(this.clientId);
             this.getSurveyRegion(this.clientId);
 
@@ -360,7 +357,6 @@ export default class WizardSurveyPageInfo extends LightningElement {
             }else{
                 this.disableContact =true;
             }
-        //this.retrieveContactRecords(event);
     }
 
     handleError(event){
