@@ -83,32 +83,40 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
     }
 
     private static void insertGroupsAndMembers( Map<Id , List<NSP_Account_Group__c>> allGroupsToCreate ){
-        List<NSP_Account_Group__c> groups = new List<NSP_Account_Group__c>();
+        List<NSP_Account_Group__c> groups = new List<NSP_Account_Group__c>() ;
+        List<NSP_Account_Group_Member__c> members = new List<NSP_Account_Group_Member__c>() ;
         if( allGroupsToCreate != null && !allGroupsToCreate.isEmpty() ){
-            for( List<NSP_Account_Group__c> lst:allGroupsToCreate.values() ){
-                if( lst != null && !lst.isEmpty() ){
-                    groups.addAll( lst );
-                }
-            }
+            collectGroups( allGroupsToCreate , groups );
             if( !groups.isEmpty() ){
                 Database.insert( groups,false );
-                List<NSP_Account_Group_Member__c> members = new List<NSP_Account_Group_Member__c>();
-                for( Id accId:allGroupsToCreate.keySet() ){
-                    List<NSP_Account_Group__c> grpList = allGroupsToCreate.get( accId );
-                    if( grpList != null && !grpList.isEmpty() ){
-                        for( NSP_Account_Group__c grp : grpList ){
-                            if ( grp != null && grp.Id != null ){
-                                members.add( new NSP_Account_Group_Member__c(
-                                    NSP_Member_Account__c=accId ,
-                                    NSP_Group__c=grp.Id ,
-                                    NSP_Primary__c=true
-                                ) );
-                            }
-                        }
-                    }
-                }
+                collectMembers( allGroupsToCreate , members );
                 if( !members.isEmpty() ){
                     Database.insert( members , false );
+                }
+            }
+        }
+    }
+    
+    private static void collectGroups( Map<Id,List<NSP_Account_Group__c>> allGroupsToCreate , List<NSP_Account_Group__c> groups ){
+        for( List<NSP_Account_Group__c> lst : allGroupsToCreate.values() ){
+            if( lst != null && !lst.isEmpty() ){
+                groups.addAll( lst );
+            }
+        }
+    }
+    
+    private static void collectMembers( Map<Id , List<NSP_Account_Group__c>> allGroupsToCreate , List<NSP_Account_Group_Member__c> members ){
+        for( Id accId : allGroupsToCreate.keySet() ){
+            List<NSP_Account_Group__c> grpList = allGroupsToCreate.get( accId );
+            if( grpList != null && !grpList.isEmpty() ){
+                for( NSP_Account_Group__c grp : grpList ){
+                    if( grp != null && grp.Id != null ){
+                        members.add( new NSP_Account_Group_Member__c(
+                            NSP_Member_Account__c=accId ,
+                            NSP_Group__c=grp.Id ,
+                            NSP_Primary__c=true
+                        ) );
+                    }
                 }
             }
         }
