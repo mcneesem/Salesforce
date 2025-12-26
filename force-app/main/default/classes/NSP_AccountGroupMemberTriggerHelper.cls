@@ -47,106 +47,114 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
         }
     }
     
-    private static void createSelfGroupForAccount(List<NSP_Account_Group_Member__c> oldList){
-        if(oldList!=null&&!oldList.isEmpty()){
-            Set<Id> growthForecastAccountIds=getGrowthForecastAccountIds(oldList);
-            Map<Id,Boolean> accountHasWO=getAccountsWithWO(growthForecastAccountIds);
-            Map<Id,List<NSP_Account_Group__c>> groupsToCreate=collectGroups(oldList,accountHasWO);
-            insertGroupsAndMembers(groupsToCreate);
+    private static void createSelfGroupForAccount( List<NSP_Account_Group_Member__c> oldList ) {
+        if( oldList != null && !oldList.isEmpty() ) {
+            Set<Id> growthForecastAccountIds = getGrowthForecastAccountIds( oldList );
+            Map<Id, Boolean> accountHasWO = getAccountsWithWO( growthForecastAccountIds );
+            Map<Id, List<NSP_Account_Group__c>> groupsToCreate = collectGroups( oldList , accountHasWO );
+            insertGroupsAndMembers( groupsToCreate );
         }
-        return;
-}
-    private static Set<Id> getGrowthForecastAccountIds(List<NSP_Account_Group_Member__c> oldList){
-        Set<Id> result=new Set<Id>();
-        for(NSP_Account_Group_Member__c agm:oldList){
-            if(agm!=null&&agm.NSP_Type__c==NSP_ServiceConstants.GROWTH_FORECAST&&agm.NSP_Member_Account__c!=null){
-                result.add(agm.NSP_Member_Account__c);
+    }
+    private static Set<Id> getGrowthForecastAccountIds( List<NSP_Account_Group_Member__c> oldList ){
+        Set<Id> result = new Set<Id>() ;
+        if( oldList != null && !oldList.isEmpty() ){
+            for( NSP_Account_Group_Member__c agm : oldList ){
+                if( agm != null && agm.NSP_Type__c != null && agm.NSP_Member_Account__c != null && agm.NSP_Type__c == NSP_ServiceConstants.GROWTH_FORECAST ){
+                    result.add( agm.NSP_Member_Account__c );
+                }
             }
         }
         return result;
     }
-    private static Map<Id,List<NSP_Account_Group__c>> collectGroups(List<NSP_Account_Group_Member__c> oldList,Map<Id,Boolean> accountHasWO){
-        Map<Id,List<NSP_Account_Group__c>> result=new Map<Id,List<NSP_Account_Group__c>>();
-        for(NSP_Account_Group_Member__c agm:oldList){
-            if(agm!=null){
-                result.putAll(createSelfGroup(
-                    agm.Id,
-                    agm.NSP_Member_Account__c,
-                    agm.NSP_Type__c,
-                    agm.NSP_Account_Name__c,
-                    accountHasWO
-                ));
-            }
-        }
-        return result;
-    }
-    private static void insertGroupsAndMembers(Map<Id,List<NSP_Account_Group__c>> allGroupsToCreate){
-        if(allGroupsToCreate.isEmpty()){
-            return;
-        }
-        List<NSP_Account_Group__c> groups=new List<NSP_Account_Group__c>();
-        for(List<NSP_Account_Group__c> lst:allGroupsToCreate.values()){
-            groups.addAll(lst);
-        }
-        if(!groups.isEmpty()){
-            Database.insert(groups,false);
-            List<NSP_Account_Group_Member__c> members=new List<NSP_Account_Group_Member__c>();
-            for(Id accId:allGroupsToCreate.keySet()){
-                for(NSP_Account_Group__c grp:allGroupsToCreate.get(accId)){
-                    if(grp.Id!=null){
-                        members.add(new NSP_Account_Group_Member__c(
-                            NSP_Member_Account__c=accId,
-                            NSP_Group__c=grp.Id,
-                            NSP_Primary__c=true
-                        ));
+
+    private static Map<Id,List<NSP_Account_Group__c>> collectGroups( List<NSP_Account_Group_Member__c> oldList , Map<Id,Boolean> accountHasWO ){
+        Map<Id,List<NSP_Account_Group__c>> result = new Map<Id,List<NSP_Account_Group__c>>() ;
+        if( oldList != null ){
+            for( NSP_Account_Group_Member__c agm : oldList ){
+                if( agm != null ){
+                    Map<Id,List<NSP_Account_Group__c>> groupsForAccount = createSelfGroup( agm.Id,agm.NSP_Member_Account__c , agm.NSP_Type__c , agm.NSP_Account_Name__c , accountHasWO );
+                    if( groupsForAccount != null && !groupsForAccount.isEmpty() ){
+                        result.putAll( groupsForAccount );
                     }
                 }
             }
-            if(!members.isEmpty()){
-                Database.insert(members,false);
+        }
+        return result;
+    }
+
+    private static void insertGroupsAndMembers( Map<Id , List<NSP_Account_Group__c>> allGroupsToCreate ){
+        List<NSP_Account_Group__c> groups = new List<NSP_Account_Group__c>();
+        if( allGroupsToCreate != null && !allGroupsToCreate.isEmpty() ){
+            for( List<NSP_Account_Group__c> lst:allGroupsToCreate.values() ){
+                if( lst != null && !lst.isEmpty() ){
+                    groups.addAll( lst );
+                }
+            }
+            if( !groups.isEmpty() ){
+                Database.insert( groups,false );
+                List<NSP_Account_Group_Member__c> members = new List<NSP_Account_Group_Member__c>();
+                for( Id accId:allGroupsToCreate.keySet() ){
+                    List<NSP_Account_Group__c> grpList = allGroupsToCreate.get( accId );
+                    if( grpList != null && !grpList.isEmpty() ){
+                        for( NSP_Account_Group__c grp : grpList ){
+                            if ( grp != null && grp.Id != null ){
+                                members.add( new NSP_Account_Group_Member__c(
+                                    NSP_Member_Account__c=accId ,
+                                    NSP_Group__c=grp.Id ,
+                                    NSP_Primary__c=true
+                                ) );
+                            }
+                        }
+                    }
+                }
+                if( !members.isEmpty() ){
+                    Database.insert( members , false );
+                }
             }
         }
     }
-   private static Map<Id,Boolean> getAccountsWithWO(Set<Id> accountIds){
-    Map<Id,Boolean> result=new Map<Id,Boolean>();
-    if(accountIds.isEmpty()){
-        return result;
-    }
-    Id woRT=NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.WO_ASSET_RECORDTYPE);
-    for(Asset a:[SELECT AccountId FROM Asset WHERE AccountId IN :accountIds AND RecordTypeId=:woRT]){
-        result.put(a.AccountId,true);
-    }
-    return result;
-}
-    
-    public static Map<Id,List<NSP_Account_Group__c>> createSelfGroup(Id accountGrpMember,Id accountId,String nspType,String accName,Map<Id,Boolean> accountHasWO)
-    {
-        Map<Id,List<NSP_Account_Group__c>> result=new Map<Id,List<NSP_Account_Group__c>>();    
-        Boolean canCreate=true;     
-        if(accountGrpMember==null||accountId==null){    
-            canCreate=false;
-        }
-        if(canCreate&&nspType==NSP_ServiceConstants.GROWTH_FORECAST&&!accountHasWO.containsKey(accountId)){
-            canCreate=false;
-        }
-        if(canCreate){
-            Id rtId=NSP_GenericRecordType.getRecordTypeId('NSP_Account_Group__c',NSP_ServiceConstants.AUTOMATICALLY_CREATED);
-            NSP_Account_Group__c grp=new NSP_Account_Group__c(RecordTypeId=rtId,Name=nspType,NSP_Account__c=accName,NSP_Type__c=nspType);
-            addToMap(result,accountId,grp);
-        }
-        return result;
-}
 
-    private static void addToMap(
-            Map<Id, List<NSP_Account_Group__c>> accMap,
-            Id accId,
-            NSP_Account_Group__c accGroup
-        ) {
-            if (!accMap.containsKey(accId)) {
-                accMap.put(accId, new List<NSP_Account_Group__c>());
+    private static Map<Id,Boolean> getAccountsWithWO( Set<Id> accountIds ){
+        Map<Id,Boolean> result = new Map<Id,Boolean>() ;
+        if( accountIds != null && !accountIds.isEmpty() ){
+            Id woRT = NSP_GenericRecordType.getRecordTypeId( 'Asset' , NSP_ServiceConstants.WO_ASSET_RECORDTYPE );
+            for( Asset a:[
+                SELECT AccountId
+                FROM Asset
+                WHERE AccountId IN :accountIds
+                AND RecordTypeId=:woRT
+            ] ){
+                result.put( a.AccountId,true );
+            }
+        }
+        return result;
+    }
+    
+    public static Map<Id,List<NSP_Account_Group__c>> createSelfGroup( Id accountGrpMember , Id accountId , String nspType , String accName , Map<Id,Boolean> accountHasWO ){
+        Map<Id,List<NSP_Account_Group__c>> result = new Map<Id,List<NSP_Account_Group__c>>();
+        Boolean canCreate = true;
+        if( accountGrpMember == null || accountId == null ){
+            canCreate = false;
+        }
+        if( canCreate && nspType == NSP_ServiceConstants.GROWTH_FORECAST && ( accountHasWO == null || !accountHasWO.containsKey ( accountId ) ) ){
+            canCreate = false;
+        }
+        if( canCreate ){
+            Id rtId = NSP_GenericRecordType.getRecordTypeId( 'NSP_Account_Group__c' , NSP_ServiceConstants.AUTOMATICALLY_CREATED );
+            NSP_Account_Group__c grp = new NSP_Account_Group__c( RecordTypeId = rtId , Name=nspType , NSP_Account__c=accName , NSP_Type__c=nspType );
+            addToMap( result , accountId , grp );
+        }
+        return result;
+    }
+    private static void addToMap( Map<Id, List<NSP_Account_Group__c>> accMap, Id accId, NSP_Account_Group__c accGroup ) {
+        if ( accMap != null && accId != null && accGroup != null ) {
+            if ( !accMap.containsKey(accId) ) {
+                accMap.put( accId, new List<NSP_Account_Group__c>() );
             }
             accMap.get(accId).add(accGroup);
+        }
     }
+
 
     //
     // Iterates throught the list of new Account GroupMembers and old Account GroupMembers
