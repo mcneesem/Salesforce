@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Plan_of_Action__c</fullName>
     <encryptionScheme>None</encryptionScheme>
+    <externalId>false</externalId>
     <inlineHelpText>Plan of Action only needed for At Risk Reasons Associated with a Renewal Probability group.</inlineHelpText>
     <label>Plan of Action</label>
     <length>32768</length>
