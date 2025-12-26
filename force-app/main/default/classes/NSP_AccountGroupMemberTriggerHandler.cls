@@ -94,7 +94,8 @@ public class NSP_AccountGroupMemberTriggerHandler implements NSP_ITriggerHandler
 
     public void afterDelete(List<sObject> oldList , Map<Id, sObject> oldMap) {
         //Added as part of STY-03316
-    	NSP_AccountGroupMemberTriggerHelper.afterDeleteDirector((List<NSP_Account_Group_Member__c>) oldList, (Map<Id,NSP_Account_Group_Member__c>) oldMap);	   
+    	NSP_AccountGroupMemberTriggerHelper.afterDeleteDirector((List<NSP_Account_Group_Member__c>) oldList, (Map<Id,NSP_Account_Group_Member__c>) oldMap);
+        NSP_AccountGroupMemberTriggerHelper.afterDeleteCreateSelfGroup((List<NSP_Account_Group_Member__c>) oldList); 
     }
     
     /**
