@@ -48,43 +48,65 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
     }
     
     private static void createSelfGroupForAccount(List<NSP_Account_Group_Member__c> oldList){
-    if(oldList!=null&&!oldList.isEmpty()){
-        Set<Id> growthForecastAccountIds=new Set<Id>();
+        if(oldList!=null&&!oldList.isEmpty()){
+            Set<Id> growthForecastAccountIds=getGrowthForecastAccountIds(oldList);
+            Map<Id,Boolean> accountHasWO=getAccountsWithWO(growthForecastAccountIds);
+            Map<Id,List<NSP_Account_Group__c>> groupsToCreate=collectGroups(oldList,accountHasWO);
+            insertGroupsAndMembers(groupsToCreate);
+        }
+        return;
+}
+    private static Set<Id> getGrowthForecastAccountIds(List<NSP_Account_Group_Member__c> oldList){
+        Set<Id> result=new Set<Id>();
         for(NSP_Account_Group_Member__c agm:oldList){
             if(agm!=null&&agm.NSP_Type__c==NSP_ServiceConstants.GROWTH_FORECAST&&agm.NSP_Member_Account__c!=null){
-                growthForecastAccountIds.add(agm.NSP_Member_Account__c);
+                result.add(agm.NSP_Member_Account__c);
             }
         }
-        Map<Id,Boolean> accountHasWO=getAccountsWithWO(growthForecastAccountIds);
-        Map<Id,List<NSP_Account_Group__c>> allGroupsToCreate=new Map<Id,List<NSP_Account_Group__c>>();
+        return result;
+    }
+    private static Map<Id,List<NSP_Account_Group__c>> collectGroups(List<NSP_Account_Group_Member__c> oldList,Map<Id,Boolean> accountHasWO){
+        Map<Id,List<NSP_Account_Group__c>> result=new Map<Id,List<NSP_Account_Group__c>>();
         for(NSP_Account_Group_Member__c agm:oldList){
-            if(agm==null){
-                continue;
+            if(agm!=null){
+                result.putAll(createSelfGroup(
+                    agm.Id,
+                    agm.NSP_Member_Account__c,
+                    agm.NSP_Type__c,
+                    agm.NSP_Account_Name__c,
+                    accountHasWO
+                ));
             }
-            allGroupsToCreate.putAll(createSelfGroup(agm.Id,agm.NSP_Member_Account__c,agm.NSP_Type__c,agm.NSP_Account_Name__c,accountHasWO));
         }
-        List<NSP_Account_Group__c> accGroupsToInsert=new List<NSP_Account_Group__c>();
-        for(List<NSP_Account_Group__c> grpList:allGroupsToCreate.values()){
-            accGroupsToInsert.addAll(grpList);
+        return result;
+    }
+    private static void insertGroupsAndMembers(Map<Id,List<NSP_Account_Group__c>> allGroupsToCreate){
+        if(allGroupsToCreate.isEmpty()){
+            return;
         }
-        if(!accGroupsToInsert.isEmpty()){
-            Database.insert(accGroupsToInsert,false);
-            List<NSP_Account_Group_Member__c> lstAccGroupMembers=new List<NSP_Account_Group_Member__c>();
+        List<NSP_Account_Group__c> groups=new List<NSP_Account_Group__c>();
+        for(List<NSP_Account_Group__c> lst:allGroupsToCreate.values()){
+            groups.addAll(lst);
+        }
+        if(!groups.isEmpty()){
+            Database.insert(groups,false);
+            List<NSP_Account_Group_Member__c> members=new List<NSP_Account_Group_Member__c>();
             for(Id accId:allGroupsToCreate.keySet()){
                 for(NSP_Account_Group__c grp:allGroupsToCreate.get(accId)){
                     if(grp.Id!=null){
-                        lstAccGroupMembers.add(new NSP_Account_Group_Member__c(NSP_Member_Account__c=accId,NSP_Group__c=grp.Id,NSP_Primary__c=true));
+                        members.add(new NSP_Account_Group_Member__c(
+                            NSP_Member_Account__c=accId,
+                            NSP_Group__c=grp.Id,
+                            NSP_Primary__c=true
+                        ));
                     }
                 }
             }
-            if(!lstAccGroupMembers.isEmpty()){
-                Database.insert(lstAccGroupMembers,false);
+            if(!members.isEmpty()){
+                Database.insert(members,false);
             }
         }
     }
-    return;
-}
-
    private static Map<Id,Boolean> getAccountsWithWO(Set<Id> accountIds){
     Map<Id,Boolean> result=new Map<Id,Boolean>();
     if(accountIds.isEmpty()){
