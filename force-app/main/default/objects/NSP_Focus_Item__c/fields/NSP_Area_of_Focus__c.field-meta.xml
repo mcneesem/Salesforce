@@ -3,6 +3,7 @@
     <fullName>NSP_Area_of_Focus__c</fullName>
     <externalId>false</externalId>
     <formula>IF ( ISPICKVAL ( Focus_Item__c, &apos;Communication &amp; Engagement&apos; ), &apos;Customer Relationship&apos;,
+IF ( ISPICKVAL ( Focus_Item__c, &apos;Termination Save Attempt&apos; ), &apos;Customer Relationship&apos;,
 IF ( ISPICKVAL ( Focus_Item__c, &apos;Early Tenure&apos; ), &apos;Customer Relationship&apos;,
 IF ( ISPICKVAL ( Focus_Item__c, &apos;No Insperity 401k&apos; ), &apos;Customer Relationship&apos;,
 IF ( ISPICKVAL ( Focus_Item__c, &apos;Service Continuity&apos; ), &apos;Customer Relationship&apos;,
@@ -26,10 +27,11 @@ IF ( ISPICKVAL ( Focus_Item__c, &apos;Evaluating Alternative Solutions&apos;), &
 IF ( ISPICKVAL ( Focus_Item__c, &apos;Invoicing&apos;), &apos;Value&apos;,
 IF ( ISPICKVAL ( Focus_Item__c, &apos;Price Increase&apos;), &apos;Value&apos;,
 IF ( ISPICKVAL ( Focus_Item__c, &apos;Risk Mitigation&apos;), &apos;Value&apos;,null)
-)))))))))))))))))))))))</formula>
+))))))))))))))))))))))))</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Area of Focus</label>
     <required>false</required>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Text</type>
     <unique>false</unique>
