@@ -60,7 +60,7 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
         return result;
     }
 
-    private static Map<Id,List<NSP_Account_Group__c>> collectGroups( List<NSP_Account_Group_Member__c> oldList , Map<Id,Boolean> accountHasWO ){
+    private static Map<Id,List<NSP_Account_Group__c>> collectGroups( List<NSP_Account_Group_Member__c> oldList , Set<Id> accountHasWO ){
         Map<Id,List<NSP_Account_Group__c>> result = new Map<Id,List<NSP_Account_Group__c>>() ;
         if( oldList != null ){
             for( NSP_Account_Group_Member__c agm : oldList ){
@@ -130,13 +130,13 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
         return result;
     }
 
-    public static Map<Id,List<NSP_Account_Group__c>> createSelfGroup( Id accountGrpMember , Id accountId , String nspType , String accName , Map<Id,Boolean> accountHasWO ){
+    public static Map<Id,List<NSP_Account_Group__c>> createSelfGroup( Id accountGrpMember , Id accountId , String nspType , String accName , Set<Id> accountHasWO ){
         Map<Id,List<NSP_Account_Group__c>> result = new Map<Id,List<NSP_Account_Group__c>>();
         Boolean canCreate = true;
         if( accountGrpMember == null || accountId == null ){
             canCreate = false;
         }
-        if( canCreate && nspType == NSP_ServiceConstants.GROWTH_FORECAST && ( accountHasWO == null || !accountHasWO.containsKey ( accountId ) ) ){
+        if( canCreate && nspType == NSP_ServiceConstants.GROWTH_FORECAST && ( accountHasWO == null || !accountHasWO.contains ( accountId ) ) ){
             canCreate = false;
         }
         if( canCreate ){
