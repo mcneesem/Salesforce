@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <applicationVisibilities>
-        <application>DNBConnect__DNB_Connect_Classics</application>
-        <visible>true</visible>
-    </applicationVisibilities>
-    <applicationVisibilities>
         <application>Insperity_Service_Console</application>
-        <visible>true</visible>
-    </applicationVisibilities>
-    <applicationVisibilities>
-        <application>LID__LinkedIn_Sales_Navigator_Admin_Portal</application>
         <visible>true</visible>
     </applicationVisibilities>
     <applicationVisibilities>
