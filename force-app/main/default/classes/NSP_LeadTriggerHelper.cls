@@ -1173,8 +1173,8 @@ public with sharing class NSP_LeadTriggerHelper {
                         isOwnerUpdated = true;
                     }
                 }
-            } else if (accResult.isEmpty()) {
-                List < Lead > leadResult = [
+            } else if ( accResult.isEmpty() ) {
+                List<Lead> leadResult = [
                     SELECT
                         Id ,
                         IsConverted ,
@@ -1182,14 +1182,14 @@ public with sharing class NSP_LeadTriggerHelper {
                     FROM Lead
                     WHERE (
                         ( DNB_Connect_DUNS_Number__c != null )
-                        AND ( DNB_Connect_DUNS_Number__c = : leadObject.DNB_Connect_DUNS_Number__c )
-                        AND ( NSP_Parent_Lead__c = NULL )
-                        AND ( Id != : leadObject.Id )
+                        AND ( DNB_Connect_DUNS_Number__c = :leadObject.DNB_Connect_DUNS_Number__c )
+                        AND ( NSP_Parent_Lead__c = null )
+                        AND ( Id != :leadObject.Id )
                         AND ( IsConverted = false )
                     )
                 ];
-                if (leadResult.size() == 1) {
-                    for (Lead dunsLead: leadResult) {
+                if ( leadResult.size() == 1 ) {
+                    for ( Lead dunsLead : leadResult ) {
                         leadObject.NSP_Parent_Lead__c = dunsLead.Id;
                         leadObject.NSP_Skip_Validation__c = true;
                         leadObject.OwnerId = dunsLead.OwnerId;
