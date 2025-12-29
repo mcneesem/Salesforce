@@ -229,6 +229,11 @@
                 <label>Client Unresponsive</label>
             </value>
             <value>
+                <fullName>Configuration Complete</fullName>
+                <default>false</default>
+                <label>Configuration Complete</label>
+            </value>
+            <value>
                 <fullName>ABU - Pending ABU Contact</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -425,6 +430,11 @@
             <controllingFieldValue>Open</controllingFieldValue>
             <controllingFieldValue>ReOpened</controllingFieldValue>
             <valueName>SAT - Review Complete</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <controllingFieldValue>ReOpened</controllingFieldValue>
+            <valueName>Configuration Complete</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Cancelled</controllingFieldValue>

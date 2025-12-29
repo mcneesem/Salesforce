@@ -917,6 +917,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Configuration Complete</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Duplicate</fullName>
             <default>false</default>
         </values>
