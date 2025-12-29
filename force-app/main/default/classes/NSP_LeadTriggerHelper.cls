@@ -1619,21 +1619,38 @@ public with sharing class NSP_LeadTriggerHelper {
                     NSP_Sales_Region__c
                 FROM Event
                 WHERE ( Id IN :eventNewOwner.keySet() )]){
-                if ( eventNewOwner.containsKey( eventRecord.Id ) && ( eventNewOwner.get( eventRecord.Id ) != null ) ) {
-                    eventRecord.OwnerId = eventNewOwner.get( eventRecord.Id );
-                    if(salesOfficeMap != null && salesOfficeMap.containsKey(eventRecord.OwnerId)){
-                        User userRecord = salesOfficeMap.get(eventRecord.OwnerId);
-                        if(userRecord != null){
-                            eventRecord.NSP_Sales_Office__c = userRecord.NSP_Sales_Office__c;
-                            eventRecord.NSP_Sales_Division__c = userRecord.NSP_SalesDivision__c;
-                            eventRecord.NSP_Sales_Region__c = userRecord.NSP_SalesRegion__c;
-                        }
-                    }
+                eventRecord = NSP_LeadTriggerHelper.populateEventFields(
+                eventRecord,
+                eventNewOwner.get( eventRecord.Id ),
+                salesOfficeMap);
+                if ( eventRecord != null ) {
                     eventRecords.add( eventRecord );
                 }
             }
         }
         return eventRecords;
     }
+
+    private static Event populateEventFields( Event record , Id ownerId , Map<Id,User> salesOfficeMap ) {
+        if ( record != null ) {
+            if ( ownerId != null ) {
+                record.OwnerId = ownerId;
+            }
+            User salesUser = null;
+            if ( ( salesOfficeMap != null )
+                && salesOfficeMap.containsKey( record.OwnerId )
+                )
+            {
+                salesUser = salesOfficeMap.get( record.OwnerId );
+            }
+            if ( salesUser != null ) {
+                record.NSP_Sales_Office__c = salesUser.NSP_Sales_Office__c;
+                record.NSP_Sales_Division__c = salesUser.NSP_SalesDivision__c;
+                record.NSP_Sales_Region__c = salesUser.NSP_SalesRegion__c;
+            }
+        }
+        return record;
+    }
+
 }
 //
