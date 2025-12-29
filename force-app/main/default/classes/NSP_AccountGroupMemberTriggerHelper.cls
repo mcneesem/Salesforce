@@ -6,6 +6,9 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
     // @param        : List<NSP_Account_Group_Member__c> newList, Map<Id, NSP_Account_Group_Member__c> newMap
     // @return       : void
     //
+    private static final woAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'WO' );
+    private static final automaticallyCreatedAccountGroupRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'NSP_Account_Group__c' , 'Automatically_Created' );
+    private static final wxAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'NSP_Asset_Product' );
     public static void afterInsertDirector( List<NSP_Account_Group_Member__c> newList , Map<Id,NSP_Account_Group_Member__c> newMap ) {
         try {
             defaultPrimaryFirstAccountGroupMember( newList );
@@ -26,6 +29,7 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
     public static void afterDeleteDirector( List<NSP_Account_Group_Member__c> oldList , Map<Id,NSP_Account_Group_Member__c> oldMap ) {
         try {
             updatePrimaryForLastGroupMember( oldList , oldMap );
+            NSP_AccountGroupMemberTriggerHelper.createSelfGroupForAccount( oldList );
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 NSP_AccountGroupMemberTriggerHelper.class.getName() ,
@@ -34,25 +38,28 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
             );
         }
     }    
+
     private static void createSelfGroupForAccount( List<NSP_Account_Group_Member__c> oldList ) {
         if( oldList != null && !oldList.isEmpty() ) {
             Set<Id> growthForecastAccountIds = getGrowthForecastAccountIds( oldList );
-            Map<Id, Boolean> accountHasWO = getAccountsWithWO( growthForecastAccountIds );
+            Map<Id, Boolean> accountHasWO = getWoAssetAccountIds( growthForecastAccountIds );
             Map<Id, List<NSP_Account_Group__c>> groupsToCreate = collectGroups( oldList , accountHasWO );
             insertGroupsAndMembers( groupsToCreate );
         }
     }
+
     private static Set<Id> getGrowthForecastAccountIds( List<NSP_Account_Group_Member__c> oldList ){
         Set<Id> result = new Set<Id>() ;
         if( oldList != null && !oldList.isEmpty() ){
             for( NSP_Account_Group_Member__c agm : oldList ){
-                if( agm != null && agm.NSP_Type__c != null && agm.NSP_Member_Account__c != null && agm.NSP_Type__c == NSP_ServiceConstants.GROWTH_FORECAST ){
+                if( agm != null && agm.NSP_Type__c != null && agm.NSP_Member_Account__c != null ){
                     result.add( agm.NSP_Member_Account__c );
                 }
             }
         }
         return result;
     }
+
     private static Map<Id,List<NSP_Account_Group__c>> collectGroups( List<NSP_Account_Group_Member__c> oldList , Map<Id,Boolean> accountHasWO ){
         Map<Id,List<NSP_Account_Group__c>> result = new Map<Id,List<NSP_Account_Group__c>>() ;
         if( oldList != null ){
@@ -67,6 +74,7 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
         }
         return result;
     }
+
     private static void insertGroupsAndMembers( Map<Id , List<NSP_Account_Group__c>> allGroupsToCreate ){
         List<NSP_Account_Group__c> groups = new List<NSP_Account_Group__c>() ;
         List<NSP_Account_Group_Member__c> members = new List<NSP_Account_Group_Member__c>() ;
@@ -80,14 +88,16 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
                 }
             }
         }
-    }   
+    }
+
     private static void collectGroups( Map<Id,List<NSP_Account_Group__c>> allGroupsToCreate , List<NSP_Account_Group__c> groups ){
         for( List<NSP_Account_Group__c> lst : allGroupsToCreate.values() ){
             if( lst != null && !lst.isEmpty() ){
                 groups.addAll( lst );
             }
         }
-    }   
+    }
+
     private static void collectMembers( Map<Id , List<NSP_Account_Group__c>> allGroupsToCreate , List<NSP_Account_Group_Member__c> members ){
         for( Id accId : allGroupsToCreate.keySet() ){
             List<NSP_Account_Group__c> grpList = allGroupsToCreate.get( accId );
@@ -104,21 +114,22 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
             }
         }
     }
-    private static Map<Id,Boolean> getAccountsWithWO( Set<Id> accountIds ){
-        Map<Id,Boolean> result = new Map<Id,Boolean>() ;
+
+    private static Set<Id> getWoAssetAccountIds( Set<Id> accountIds ){
+        Set<Id> result = new Set<Id> ;
         if( accountIds != null && !accountIds.isEmpty() ){
-            Id woRT = NSP_GenericRecordType.getRecordTypeId( 'Asset' , NSP_ServiceConstants.WO_ASSET_RECORDTYPE );
             for( Asset a:[
                 SELECT AccountId
                 FROM Asset
                 WHERE AccountId IN :accountIds
-                AND RecordTypeId=:woRT
+                AND RecordTypeId=:NSP_AccountGroupMemberTriggerHelper.woAssetRecordTypeId
             ] ){
-                result.put( a.AccountId,true );
+                result.add( a.AccountId );
             }
         }
         return result;
-    }  
+    }
+
     public static Map<Id,List<NSP_Account_Group__c>> createSelfGroup( Id accountGrpMember , Id accountId , String nspType , String accName , Map<Id,Boolean> accountHasWO ){
         Map<Id,List<NSP_Account_Group__c>> result = new Map<Id,List<NSP_Account_Group__c>>();
         Boolean canCreate = true;
@@ -129,12 +140,12 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
             canCreate = false;
         }
         if( canCreate ){
-            Id rtId = NSP_GenericRecordType.getRecordTypeId( 'NSP_Account_Group__c' , NSP_ServiceConstants.AUTOMATICALLY_CREATED );
-            NSP_Account_Group__c grp = new NSP_Account_Group__c( RecordTypeId = rtId , Name=nspType , NSP_Account__c=accName , NSP_Type__c=nspType );
+            NSP_Account_Group__c grp = new NSP_Account_Group__c( RecordTypeId = NSP_AccountGroupMemberTriggerHelper.automaticallyCreatedAccountGroupRecordTypeId , Name=nspType , NSP_Account__c=accName , NSP_Type__c=nspType );
             addToMap( result , accountId , grp );
         }
         return result;
     }
+
     private static void addToMap( Map<Id, List<NSP_Account_Group__c>> accMap, Id accId, NSP_Account_Group__c accGroup ) {
         if ( accMap != null && accId != null && accGroup != null ) {
             if ( !accMap.containsKey(accId) ) {
@@ -489,7 +500,7 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
                                WHERE AccountId IN (SELECT NSP_Member_Account__c FROM NSP_Account_Group_Member__c WHERE NSP_Group__c IN: wxGrpIdWithAccountId.keySet())
                                AND NSP_WX_WA_Parent_ID__c != NULL 
                                AND NSP_WX_WA_CHILD_ID__c != NULL
-                               AND RecordTypeId =: NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.WX_WA)
+                               AND RecordTypeId =: NSP_AccountGroupMemberTriggerHelper.wxAssetRecordTypeId
                                AND AccountId NOT IN: wxGrpIdWithAccountId.values()
                                AND (status !=: NSP_ServiceConstants.ASSETBLACKOUT OR status !=: NSP_ServiceConstants.TERMINATED)
                                ORDER BY NSP_WX_WA_Parent_ID__c, NSP_WX_WA_CHILD_ID__c ASC NULLS LAST
