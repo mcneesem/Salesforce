@@ -116,7 +116,7 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
     }
 
     private static Set<Id> getWoAssetAccountIds( Set<Id> accountIds ){
-        Set<Id> result = new Set<Id> ;
+        Set<Id> result = new Set<Id>() ;
         if( accountIds != null && !accountIds.isEmpty() ){
             for( Asset a:[
                 SELECT AccountId
