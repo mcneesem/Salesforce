@@ -1,10 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
+        <name>Check_Owner_Permission</name>
+        <label>Check Owner Permission</label>
+        <locationX>266</locationX>
+        <locationY>600</locationY>
+        <actionName>CustomPermissionController</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Owner_Has_Permission</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Check_Owner_Permission</targetReference>
+        </faultConnector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>customPermissionName</name>
+            <value>
+                <stringValue>Opportunity_Booking_Stage_Change_Email_Notification</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>userId</name>
+            <value>
+                <elementReference>$Record.OwnerId</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>CustomPermissionController</nameSegment>
+        <offset>0</offset>
+        <outputParameters>
+            <assignToReference>hasPermission</assignToReference>
+            <name>hasPermission</name>
+        </outputParameters>
+    </actionCalls>
+    <actionCalls>
         <name>NCS_Notify</name>
         <label>NCS Notify</label>
-        <locationX>341</locationX>
-        <locationY>492</locationY>
+        <locationX>552</locationX>
+        <locationY>1092</locationY>
         <actionName>Opportunity.NSP_Opportunity_requires_assignment_to_New_Client_Sales_Specialist</actionName>
         <actionType>emailAlert</actionType>
         <faultConnector>
@@ -23,10 +56,27 @@
     <apiVersion>54.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
+        <name>Assign_varFaultElement_Check_Owner_Permission</name>
+        <label>Assign varFaultElement - Check_Owner_Permission</label>
+        <locationX>574</locationX>
+        <locationY>708</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Check_Owner_Permission</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_varFaultElement_NCS_Notify</name>
         <label>Assign varFaultElement - NCS_Notify</label>
-        <locationX>605</locationX>
-        <locationY>600</locationY>
+        <locationX>1014</locationX>
+        <locationY>1200</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -38,91 +88,37 @@
             <targetReference>Fault_Handler</targetReference>
         </connector>
     </assignments>
-    <constants>
-        <name>conABPA</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>Associate Business Performance Advisors</stringValue>
-        </value>
-    </constants>
-    <constants>
-        <name>conBPA</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>Business Performance Advisor</stringValue>
-        </value>
-    </constants>
-    <constants>
-        <name>conBPSAdministrator</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>BPS_Administrator</stringValue>
-        </value>
-    </constants>
-    <constants>
-        <name>conCoreSales</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>Core Sales</stringValue>
-        </value>
-    </constants>
-    <constants>
-        <name>conCustomerSuccessTeam</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>Customer_Success_Team</stringValue>
-        </value>
-    </constants>
-    <constants>
-        <name>conDA</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>District Administrator</stringValue>
-        </value>
-    </constants>
-    <constants>
-        <name>conDM</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>District Manager</stringValue>
-        </value>
-    </constants>
-    <constants>
-        <name>conMA</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>MidMarket Administrator</stringValue>
-        </value>
-    </constants>
-    <constants>
-        <name>conMSL</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>MidMarket Sales Leader</stringValue>
-        </value>
-    </constants>
-    <constants>
-        <name>conRegionalManager</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>Regional Manager</stringValue>
-        </value>
-    </constants>
-    <constants>
-        <name>conRegionalVP</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>Regional VP</stringValue>
-        </value>
-    </constants>
+    <decisions>
+        <description>Evaluates outbound email custom setting and checks if the opportunity owner has the required permission set.</description>
+        <name>Owner_Has_Permission</name>
+        <label>Check for Permission?</label>
+        <locationX>266</locationX>
+        <locationY>708</locationY>
+        <defaultConnector>
+            <targetReference>NCS_Notify</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Permission Assigned</defaultConnectorLabel>
+        <rules>
+            <name>Permission_Not_Assigned</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hasPermission</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Permission Not Assigned</label>
+        </rules>
+    </decisions>
     <decisions>
         <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
         <name>Outbound_Email_custom_setting_check</name>
         <label>Outbound Email custom setting check</label>
-        <locationX>209</locationX>
+        <locationX>211</locationX>
         <locationY>384</locationY>
         <defaultConnector>
-            <targetReference>NCS_Notify</targetReference>
+            <targetReference>Primary_product_check</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
         <rules>
@@ -141,7 +137,7 @@
     <decisions>
         <name>OwnerIDNullCheck</name>
         <label>OwnerIDNullCheck</label>
-        <locationX>539</locationX>
+        <locationX>745</locationX>
         <locationY>276</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -174,7 +170,33 @@
             <label>Notnull</label>
         </rules>
     </decisions>
-    <description>Outbound Email bypass added.</description>
+    <decisions>
+        <description>If time and attendance is primary product check for Owner Permissions</description>
+        <name>Primary_product_check</name>
+        <label>Primary Product Check</label>
+        <locationX>552</locationX>
+        <locationY>492</locationY>
+        <defaultConnector>
+            <targetReference>NCS_Notify</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>PrimaryProductIsTimeAttendance</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NSP_PrimaryProduct__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Time &amp; Attendance</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Owner_Permission</targetReference>
+            </connector>
+            <label>Is Primary Product TimeAttendance</label>
+        </rules>
+    </decisions>
+    <description>Primary product is Time &amp; Attendance needs Owner Permission Check</description>
     <environments>Default</environments>
     <interviewLabel>Opportunity - Updated - Async - Booking Notifications {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Opportunity - Updated - Async - Booking Notifications</label>
@@ -243,8 +265,8 @@
     <subflows>
         <name>Fault_Handler</name>
         <label>Fault Handler</label>
-        <locationX>605</locationX>
-        <locationY>708</locationY>
+        <locationX>1014</locationX>
+        <locationY>1308</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
@@ -265,6 +287,13 @@
             </value>
         </inputAssignments>
     </subflows>
+    <variables>
+        <name>hasPermission</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>varFaultElement</name>
         <dataType>String</dataType>
