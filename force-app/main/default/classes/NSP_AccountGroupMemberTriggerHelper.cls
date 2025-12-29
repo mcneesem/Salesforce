@@ -6,8 +6,8 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
     // @param        : List<NSP_Account_Group_Member__c> newList, Map<Id, NSP_Account_Group_Member__c> newMap
     // @return       : void
     //
-    private static final woAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'WO' );
-    private static final automaticallyCreatedAccountGroupRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'NSP_Account_Group__c' , 'Automatically_Created' );
+    private static final Id woAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'WO' );
+    private static final Id automaticallyCreatedAccountGroupRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'NSP_Account_Group__c' , 'Automatically_Created' );
     private static final Id wxAssetRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'NSP_Asset_Product' );
     public static void afterInsertDirector( List<NSP_Account_Group_Member__c> newList , Map<Id,NSP_Account_Group_Member__c> newMap ) {
         try {
