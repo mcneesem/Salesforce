@@ -1197,7 +1197,7 @@ createdDate : 6/13/2023
                                                                              }
 
             for(Asset asst :[select Id, AccountId, RecordTypeId, RecordType.Name, NSP_Account_Status__c from Asset
-                             WHERE AccountId IN: accIdSet and RecordType.Name IN: catsubCatAssetRecTypeSet and
+                             WHERE AccountId IN: accIdSet and Status = 'Active' and RecordType.Name IN: catsubCatAssetRecTypeSet and
                              NSP_Account_Status__c NOT IN :(listofValues) ]){
                                  assetRecTypeAssetIdMap.put(asst.RecordType.Name+'-'+ asst.AccountId, asst.Id);
                              }
