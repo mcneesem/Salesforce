@@ -1490,7 +1490,7 @@ public with sharing class NSP_LeadTriggerHelper {
     // @param: oldLeadOwner
     // @return: void
     //
-    public static void transferDiscoveryCall( Map<Id, sObject> recordNewMap , Map<Id,sObject> recordOldMap ) {
+    public static void transferDiscoveryCall( Map<Id,sObject> recordNewMap , Map<Id,sObject> recordOldMap ) {
         Map<Id,Id> recordOwnerTransfer = NSP_LeadTriggerHelper.calculateOwnerTransferMap( recordNewMap , recordOldMap );
         Map<Id,Id> eventNewOwner =  NSP_LeadTriggerHelper.calculateEventNewOwnerMap( recordOwnerTransfer );
         if ( ( eventNewOwner != null )
@@ -1509,13 +1509,16 @@ public with sharing class NSP_LeadTriggerHelper {
             && !recordNewMap.isEmpty()
             )
         {
-            for ( Id recordId: recordNewMap.keySet() ) {
+            for ( Id recordId : recordNewMap.keySet() ) {
                 if ( recordNewMap.containsKey( recordId )
                     && recordOldMap.containsKey( recordId )
-                    && ( recordNewMap.get(recordId).get('OwnerId') != recordOldMap.get(recordId).get('OwnerId') )
+                    && ( recordNewMap.get( recordId ).get( 'OwnerId' ) != recordOldMap.get( recordId ).get( 'OwnerId' ) )
                     )
                 {
-                    recordOwnerTransfer.put( recordId , (Id)recordNewMap.get( recordId ).get('OwnerId'));
+                    recordOwnerTransfer.put(
+                        recordId ,
+                        (Id)recordNewMap.get( recordId ).get( 'OwnerId' )
+                    );
                 }
             }
         }
@@ -1526,30 +1529,43 @@ public with sharing class NSP_LeadTriggerHelper {
         Map<Id,Id> eventNewOwner =  new Map<Id,Id>();
         if ( ( recordOwnerTransfer != null ) && !recordOwnerTransfer.isEmpty() ) {
             for ( Event eventRecord : [
-                        SELECT 
-                            Id, 
-                            WhoId,
+                        SELECT
+                            Id ,
+                            WhoId ,
                             WhatId
                         FROM Event
                         WHERE (
-                            ( ( WhoId IN :recordOwnerTransfer.keySet() ) OR ( WhatId IN :recordOwnerTransfer.keySet() ) )
+                            (
+                                ( WhoId IN :recordOwnerTransfer.keySet() )
+                                OR ( WhatId IN :recordOwnerTransfer.keySet() )
+                            )
                             AND ( NSP_Event_Subtype__c = 'Discovery Call' )
-                            AND ( ( NSP_Status__c = 'Open' ) OR ( NSP_Status__c = null ) )
+                            AND (
+                                ( NSP_Status__c = 'Open' )
+                                OR ( NSP_Status__c = null )
+                            )
                         )
                     ]
                 )
             {
-                if ( eventRecord.WhoId != null && recordOwnerTransfer.containsKey(eventRecord.WhoId )
+                if ( ( eventRecord.WhoId != null )
+                    && recordOwnerTransfer.containsKey( eventRecord.WhoId )
                     && ( recordOwnerTransfer.get( eventRecord.WhoId ) != null )
                     )
                 {
-                    eventNewOwner.put( eventRecord.Id, recordOwnerTransfer.get( eventRecord.WhoId ) );
-                }
-                else if ( eventRecord.WhatId != null && recordOwnerTransfer.containsKey(eventRecord.WhatId )
+                    eventNewOwner.put(
+                        eventRecord.Id ,
+                        recordOwnerTransfer.get( eventRecord.WhoId )
+                    );
+                } else if ( ( eventRecord.WhatId != null )
+                    && recordOwnerTransfer.containsKey( eventRecord.WhatId )
                     && ( recordOwnerTransfer.get( eventRecord.WhatId ) != null )
                     )
                 {
-                    eventNewOwner.put( eventRecord.Id, recordOwnerTransfer.get( eventRecord.WhatId ) );
+                    eventNewOwner.put(
+                        eventRecord.Id ,
+                        recordOwnerTransfer.get( eventRecord.WhatId )
+                    );
                 }
             }
         }
@@ -1571,7 +1587,7 @@ public with sharing class NSP_LeadTriggerHelper {
                     Map<Id,Id>.class
                 );
             }
-            List<Event> eventRecords =  NSP_LeadTriggerHelper.getEventsToUpdate(eventNewOwner);
+            List<Event> eventRecords =  NSP_LeadTriggerHelper.getEventsToUpdate( eventNewOwner );
             if ( ( eventRecords != null ) && !eventRecords.isEmpty() ) {
                 List<Database.SaveResult> results = Database.update( eventRecords , false );
                 NSP_ErrorLogHandler.logResults(
@@ -1580,7 +1596,6 @@ public with sharing class NSP_LeadTriggerHelper {
                     results
                 );
             }
-            
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 NSP_LeadTriggerHelper.class.getName() ,
@@ -1590,39 +1605,49 @@ public with sharing class NSP_LeadTriggerHelper {
         }
     }
 
-    private static List<Event> getEventsToUpdate(Map<Id,Id> eventNewOwner){
+    private static List<Event> getEventsToUpdate( Map<Id,Id> eventNewOwner ) {
         List<Event> eventRecords = null;
-        if(( eventNewOwner != null ) && !eventNewOwner.isEmpty()){
+        if ( ( eventNewOwner != null ) && !eventNewOwner.isEmpty() ) {
             //  Get new owner's Sales Office ADO-437605
-            Map<Id,User> salesOfficeMap = new Map<Id, User>([
-                SELECT
-                    Id ,
-                    NSP_SalesDivision__c ,
-                    NSP_Sales_Office__c ,
-                    NSP_SalesRegion__c
-                FROM User 
-                WHERE ( Id IN :eventNewOwner.values() )]);
-            eventRecords = NSP_LeadTriggerHelper.getEventRecords(salesOfficeMap, eventNewOwner);
+            Map<Id,User> salesOfficeMap = new Map<Id,User>(
+                [
+                    SELECT
+                        Id ,
+                        NSP_SalesDivision__c ,
+                        NSP_Sales_Office__c ,
+                        NSP_SalesRegion__c
+                    FROM User
+                    WHERE ( Id IN :eventNewOwner.values() )
+                ]
+            );
+            eventRecords = NSP_LeadTriggerHelper.getEventRecords(
+                salesOfficeMap ,
+                eventNewOwner
+            );
         }
         return eventRecords;
     }
 
-    private static List<Event> getEventRecords(Map<Id,User> salesOfficeMap, Map<Id,Id> eventNewOwner){
+    private static List<Event> getEventRecords( Map<Id,User> salesOfficeMap , Map<Id,Id> eventNewOwner ) {
         List<Event> eventRecords = new List<Event>();
         if ( ( eventNewOwner != null)  && !eventNewOwner.isEmpty() ) {
             for ( Event eventRecord : [
-                SELECT
-                    Id ,
-                    OwnerId ,
-                    NSP_Sales_Office__c ,
-                    NSP_Sales_Division__c ,
-                    NSP_Sales_Region__c
-                FROM Event
-                WHERE ( Id IN :eventNewOwner.keySet() )]){
+                        SELECT
+                            Id ,
+                            OwnerId ,
+                            NSP_Sales_Office__c ,
+                            NSP_Sales_Division__c ,
+                            NSP_Sales_Region__c
+                        FROM Event
+                        WHERE ( Id IN :eventNewOwner.keySet() )
+                    ]
+                )
+            {
                 eventRecord = NSP_LeadTriggerHelper.populateEventFields(
-                eventRecord,
-                eventNewOwner.get( eventRecord.Id ),
-                salesOfficeMap);
+                    eventRecord ,
+                    eventNewOwner.get( eventRecord.Id ) ,
+                    salesOfficeMap
+                );
                 if ( eventRecord != null ) {
                     eventRecords.add( eventRecord );
                 }
