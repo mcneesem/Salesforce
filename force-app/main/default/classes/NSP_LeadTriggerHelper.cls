@@ -1609,26 +1609,28 @@ public with sharing class NSP_LeadTriggerHelper {
 
     private static List<Event> getEventRecords(Map<Id,User> salesOfficeMap, Map<Id,Id> eventNewOwner){
         List<Event> eventRecords = new List<Event>();
-        for ( Event eventRecord : [
-            SELECT
-                Id ,
-                OwnerId ,
-                NSP_Sales_Office__c ,
-                NSP_Sales_Division__c ,
-                NSP_Sales_Region__c
-            FROM Event
-            WHERE ( Id IN :eventNewOwner.keySet() )]){
-            if ( eventNewOwner.containsKey( eventRecord.Id ) && ( eventNewOwner.get( eventRecord.Id ) != null ) ) {
-                eventRecord.OwnerId = eventNewOwner.get( eventRecord.Id );
-                if(salesOfficeMap != null && salesOfficeMap.containsKey(eventRecord.OwnerId)){
-                    User userRecord = salesOfficeMap.get(eventRecord.OwnerId);
-                    if(userRecord != null){
-                        eventRecord.NSP_Sales_Office__c = userRecord.NSP_Sales_Office__c;
-                        eventRecord.NSP_Sales_Division__c = userRecord.NSP_SalesDivision__c;
-                        eventRecord.NSP_Sales_Region__c = userRecord.NSP_SalesRegion__c;
+        if ( ( eventNewOwner != null)  && !eventNewOwner.isEmpty() ) {
+            for ( Event eventRecord : [
+                SELECT
+                    Id ,
+                    OwnerId ,
+                    NSP_Sales_Office__c ,
+                    NSP_Sales_Division__c ,
+                    NSP_Sales_Region__c
+                FROM Event
+                WHERE ( Id IN :eventNewOwner.keySet() )]){
+                if ( eventNewOwner.containsKey( eventRecord.Id ) && ( eventNewOwner.get( eventRecord.Id ) != null ) ) {
+                    eventRecord.OwnerId = eventNewOwner.get( eventRecord.Id );
+                    if(salesOfficeMap != null && salesOfficeMap.containsKey(eventRecord.OwnerId)){
+                        User userRecord = salesOfficeMap.get(eventRecord.OwnerId);
+                        if(userRecord != null){
+                            eventRecord.NSP_Sales_Office__c = userRecord.NSP_Sales_Office__c;
+                            eventRecord.NSP_Sales_Division__c = userRecord.NSP_SalesDivision__c;
+                            eventRecord.NSP_Sales_Region__c = userRecord.NSP_SalesRegion__c;
+                        }
                     }
+                    eventRecords.add( eventRecord );
                 }
-                eventRecords.add( eventRecord );
             }
         }
         return eventRecords;
