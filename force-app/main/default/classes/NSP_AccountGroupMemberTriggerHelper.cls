@@ -42,7 +42,7 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
     private static void createSelfGroupForAccount( List<NSP_Account_Group_Member__c> oldList ) {
         if( oldList != null && !oldList.isEmpty() ) {
             Set<Id> growthForecastAccountIds = getGrowthForecastAccountIds( oldList );
-            Map<Id, Boolean> accountHasWO = getWoAssetAccountIds( growthForecastAccountIds );
+            Set<Id> accountHasWO = getWoAssetAccountIds( growthForecastAccountIds );
             Map<Id, List<NSP_Account_Group__c>> groupsToCreate = collectGroups( oldList , accountHasWO );
             insertGroupsAndMembers( groupsToCreate );
         }
