@@ -497,9 +497,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
         }
         setPartnerAccount( partnerAccountOpportunityMap );
         NSP_EnrollmentFeePaymentSharing.onOppClose( opportunityNewMap );
-        if ( salesTaxChanged.size()>0 ) {
-            BudgetaryQuoteTaxControllerQueue.enqueueJob( salesTaxChanged );
-        }
+
         if ( backoutOptySet.size() > 0 ) {
             NSP_AssetUpdate.assetBackoutUpdate( backoutOptySet , NSP_SalesConstants.BACKOUT_STATUS );
         }
@@ -1972,9 +1970,9 @@ public with sharing class NSP_OpportunityTriggerHelper {
 
     //
     // Description : Set field "Is Service Opportunity" to true if Opportunity's owner has PS 'Services_Opportunity_Owner'
-    // @param: Old Opportunity owner 
-    // @param: New Opportunity owner 
-    // @param: Opportunity 
+    // @param: Old Opportunity owner
+    // @param: New Opportunity owner
+    // @param: Opportunity
     // @return void
     //
     private static void setServicesOpportunity( Id oldOwner , Id newOwner , Opportunity record ) {
