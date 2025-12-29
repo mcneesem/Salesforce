@@ -120,7 +120,7 @@ private class NSP_InvoiceBatch_Test {
         Test.startTest();
         System.schedule(
             'NSP_InvoiceBatch ~ everyday at midnight' ,
-            '0 0 0 * * ? *' ,
+            '0 0 0 ? * * *' ,
             new NSP_InvoiceBatch()
         );
         Test.stopTest();
