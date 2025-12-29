@@ -143,7 +143,7 @@ private class NSP_DocuSignInvoiceDocumentBatchTest {
         Test.startTest();
         System.schedule(
             'NSP_DocuSignInvoiceDocumentBatch ~ everyday at 3 AM' + ' ~ TEST' ,
-            '0 0 3 * * ? *' ,
+            '0 0 3 ? * * *' ,
             new NSP_DocuSignInvoiceDocumentBatch()
         );
         Test.stopTest();
