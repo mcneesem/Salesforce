@@ -11852,13 +11852,11 @@
   {
     "id": "01p4x00000NS3lNAAT",
     "name": "NSP_ContractRenewal_Scheduler",
-    "totalLines": 3,
+    "totalLines": 1,
     "lines": {
-      "10": 1,
-      "11": 1,
-      "12": 1
+      "10": 1
     },
-    "totalCovered": 3,
+    "totalCovered": 1,
     "coveredPercent": 100
   },
   {
@@ -40190,13 +40188,11 @@
   {
     "id": "01p4x00000VMCVfAAP",
     "name": "NSP_RetirementServiceActivationBatch_SCH",
-    "totalLines": 3,
+    "totalLines": 1,
     "lines": {
-      "14": 1,
-      "15": 1,
-      "16": 1
+      "6": 1
     },
-    "totalCovered": 3,
+    "totalCovered": 1,
     "coveredPercent": 100
   },
   {
