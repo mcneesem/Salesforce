@@ -1,9 +1,8 @@
-import { api, track, LightningElement, wire } from 'lwc';
+import { api , track , LightningElement , wire } from 'lwc';
 import nsp_ReportingResource from '@salesforce/resourceUrl/NSP_ReportingResource';
 import gethisAccount from '@salesforce/apex/NSP_VisualIndicatorHelper.gethisAccount';
 import getAccountId from '@salesforce/apex/NSP_VisualIndicatorHelper.getAccountId';
 import isCaseFromEmail from '@salesforce/apex/NSP_VisualIndicatorHelper.isCaseFromEmail';
-
 
 export default class vi2 extends LightningElement {
     @api recordId;
@@ -24,12 +23,13 @@ export default class vi2 extends LightningElement {
     @track showContractExempt = false;
     @track accountsDetails;
     @track showWorkSyncClientTrue = false;
-    @track whoClient100True = false; 
+    @track whoClient100True = false;
     @track showClientAndInsperity = false;
     @track showPendingTermination = false;
     @track vocSurveyIndicator = false;
     @track showEmailToCase = false;
-    
+    showHRScale = false;
+
     contract_exempt = nsp_ReportingResource + '/nsp_ReportingResource/images/contract_exempt.png';
     somewhat_fav = nsp_ReportingResource + '/nsp_ReportingResource/images/somewhat_fav.jfif';
     paperless = nsp_ReportingResource + '/nsp_ReportingResource/images/not_paperless.png';
@@ -43,6 +43,7 @@ export default class vi2 extends LightningElement {
     wf_sync = nsp_ReportingResource + '/nsp_ReportingResource/images/wf_sync.png';
     crwc = nsp_ReportingResource + '/nsp_ReportingResource/images/crwc.png';
     emailToCase = nsp_ReportingResource + '/nsp_ReportingResource/images/emailToCase.png';
+    hrScale = nsp_ReportingResource + '/nsp_ReportingResource/images/HRScale.png';
 
     @wire(isCaseFromEmail, { caseId: '$recordId' })
     wiredResult({ error, data }) {
@@ -55,82 +56,79 @@ export default class vi2 extends LightningElement {
 
     connectedCallback(){
         this.callGetAccountId();
-    }  
-    
+    }
+
     callGetThisAccount(){
         gethisAccount({accId: this.accountId})
             .then((data) =>{
                 this.accountsDetails = data;
                 //For Service Exemptions
                 if (this.accountsDetails[0].serviceExceptionPresent){
-                    this.showContractExempt = true; 
+                    this.showContractExempt = true;
                 }
-                //For Asset Paperless                
+                //For Asset Paperless
                 if (this.accountsDetails[0].assetPaperlessPresent){
-                    this.showPaperless = true; 
+                    this.showPaperless = true;
                 }
                 //For Asset National Account
                 if (this.accountsDetails[0].assetNationalAccount){
                     this.showNationalAccount = true;
                 }
-                //For workforce sync client                
+                //For workforce sync client
                 if (this.accountsDetails[0].workSyncClientTrue){
-                    this.showWorkSyncClientTrue = true; 
-                } 
-                //For client100True              
+                    this.showWorkSyncClientTrue = true;
+                }
+                // For HRScale
+                if ( this.accountsDetails[0].hrScale ) {
+                    this.showHRScale = true;
+                }
+                //For client100True
                 if (this.accountsDetails[0].client100True){
-                    this.whoClient100True = true; 
-                } 
-                //For clientAndInsperity              
+                    this.whoClient100True = true;
+                }
+                //For clientAndInsperity
                 if (this.accountsDetails[0].clientAndInsperity){
-                    this.showClientAndInsperity = true; 
-                }  
-                //For PendingTermination                 
+                    this.showClientAndInsperity = true;
+                }
+                //For PendingTermination
                 if (this.accountsDetails[0].pendingTermination){
-                    this.showPendingTermination = true; 
+                    this.showPendingTermination = true;
                 }
                 //For VOC indicator
                 if (this.accountsDetails[0].vocSurveyIndicator){
                     this.vocSurveyIndicator = true;
-                }                                                                              
+                }
                 //For Renewal Probability Indicator
-                if (this.accountsDetails[0].accRecord.NSP_Renewal_Probability__c == 'Neutral'){
-                    this.showNeutral = true;
-                }       
-                if (this.accountsDetails[0].accRecord.NSP_Renewal_Probability__c == 'Somewhat favorable'){
-                    this.showSomewhat_fav= true;
-                } 
-                if (this.accountsDetails[0].accRecord.NSP_Renewal_Probability__c == 'Somewhat unfavorable'){
-                    this.showSomewhat_unfav= true;
-                }
-                if (this.accountsDetails[0].accRecord.NSP_Renewal_Probability__c == 'Unfavorable'){
-                    this.showUnfav= true;
-                } 
-                if (this.accountsDetails[0].accRecord.NSP_Renewal_Probability__c == 'Favorable'){
-                    this.showFav= true;
-                }                          
+                this.handleRenewalProbabilityIndicator( this.accountsDetails[0].accRecord );
                 //For Account Health Indicator
-               
-                if (this.accountsDetails[0].accRecord.NSP_Account_Health__c == "Favorable"){
-                    this.showFav_AH = true;
-                }   
-                if (this.accountsDetails[0].accRecord.NSP_Account_Health__c == 'Neutral'){
-                    this.showNeutral_AH = true;
-                }       
-                if (this.accountsDetails[0].accRecord.NSP_Account_Health__c == 'Somewhat favorable'){
-                    this.showSomewhat_fav_AH = true;
-                } 
-                if (this.accountsDetails[0].accRecord.NSP_Account_Health__c == 'Somewhat unfavorable'){
-                    this.showSomewhat_unfav_AH = true;
-                }
-                if (this.accountsDetails[0].accRecord.NSP_Account_Health__c == 'Unfavorable'){
-                    this.showUnfav_AH = true;
-                } 
-
+                this.handleAccountHealthIndicator( this.accountsDetails[0].accRecord );
             })
             .catch((error)=>{
-            console.log('@@error: '+error);
-        });
+                console.log('@@error: '+error);
+            })
+            ;
+    }
+
+    handleRenewalProbabilityIndicator( accRecord ) {
+        if ( accRecord.NSP_Renewal_Probability__c != null ) {
+            const renewal = accRecord.NSP_Renewal_Probability__c;
+            this.showNeutral = renewal === 'Neutral';
+            this.showSomewhat_fav = renewal === 'Somewhat favorable';
+            this.showSomewhat_unfav = renewal === 'Somewhat unfavorable';
+            this.showUnfav = renewal === 'Unfavorable';
+            this.showFav = renewal === 'Favorable';
+        }
+    }
+
+    handleAccountHealthIndicator( accRecord ) {
+        if ( accRecord.NSP_Account_Health__c != null ) {
+            const health = accRecord.NSP_Account_Health__c;
+            this.showFav_AH = health === 'Favorable';
+            this.showNeutral_AH = health === 'Neutral';
+            this.showSomewhat_fav_AH = health === 'Somewhat favorable';
+            this.showSomewhat_unfav_AH = health === 'Somewhat unfavorable';
+            this.showUnfav_AH = health === 'Unfavorable';
+        }
     }
 
     callGetAccountId(){
@@ -142,5 +140,7 @@ export default class vi2 extends LightningElement {
         .catch((error)=>{
             console.log('@@error: '+error);
             });
-    }          
+    }
+
 }
+//
