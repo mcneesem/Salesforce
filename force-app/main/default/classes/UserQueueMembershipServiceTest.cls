@@ -55,8 +55,15 @@ private class UserQueueMembershipServiceTest {
     private static void getQueueMembershipsByUser_whenMembershipExists_returnsMappedRows() {
         // Arrange
         User testUser = createStandardTestUser();
-        
-        PermissionSet ps = [Select id from permissionSet where Name = 'Queue_Membership_View' limit 1];
+        List<PermissionSet> psets = [
+            SELECT Id
+            FROM PermissionSet
+            WHERE Name = 'Queue_Membership_View'
+            LIMIT 1
+        ];
+        System.Assert.areNotEqual( null , psets , 'Should not return null' );
+        System.Assert.areEqual( 1 , psets.size() , 'Expected exactly one PermissionSet row' );
+        PermissionSet ps = psets[0];
         PermissionSetAssignment psa = new PermissionsetAssignment( AssigneeId = testUser.Id, permissionSetId =ps.id);
         insert psa;
         GroupMember createdMembership = createQueueAndMembership(testUser, 'Test_Queue_Dev', 'Test Queue');
