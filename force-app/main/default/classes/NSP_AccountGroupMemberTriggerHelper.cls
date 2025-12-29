@@ -33,20 +33,7 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
                 e
             );
         }
-    }
-    
-    public static void afterDeleteCreateSelfGroup( List<NSP_Account_Group_Member__c> oldList ) {
-        try {
-            createSelfGroupForAccount( oldList );
-        } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
-                NSP_AccountGroupMemberTriggerHelper.class.getName() ,
-                'afterDeleteCreateSelfGroup' ,
-                e
-            );
-        }
-    }
-    
+    }    
     private static void createSelfGroupForAccount( List<NSP_Account_Group_Member__c> oldList ) {
         if( oldList != null && !oldList.isEmpty() ) {
             Set<Id> growthForecastAccountIds = getGrowthForecastAccountIds( oldList );
@@ -66,7 +53,6 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
         }
         return result;
     }
-
     private static Map<Id,List<NSP_Account_Group__c>> collectGroups( List<NSP_Account_Group_Member__c> oldList , Map<Id,Boolean> accountHasWO ){
         Map<Id,List<NSP_Account_Group__c>> result = new Map<Id,List<NSP_Account_Group__c>>() ;
         if( oldList != null ){
@@ -81,7 +67,6 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
         }
         return result;
     }
-
     private static void insertGroupsAndMembers( Map<Id , List<NSP_Account_Group__c>> allGroupsToCreate ){
         List<NSP_Account_Group__c> groups = new List<NSP_Account_Group__c>() ;
         List<NSP_Account_Group_Member__c> members = new List<NSP_Account_Group_Member__c>() ;
@@ -95,16 +80,14 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
                 }
             }
         }
-    }
-    
+    }   
     private static void collectGroups( Map<Id,List<NSP_Account_Group__c>> allGroupsToCreate , List<NSP_Account_Group__c> groups ){
         for( List<NSP_Account_Group__c> lst : allGroupsToCreate.values() ){
             if( lst != null && !lst.isEmpty() ){
                 groups.addAll( lst );
             }
         }
-    }
-    
+    }   
     private static void collectMembers( Map<Id , List<NSP_Account_Group__c>> allGroupsToCreate , List<NSP_Account_Group_Member__c> members ){
         for( Id accId : allGroupsToCreate.keySet() ){
             List<NSP_Account_Group__c> grpList = allGroupsToCreate.get( accId );
@@ -121,7 +104,6 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
             }
         }
     }
-
     private static Map<Id,Boolean> getAccountsWithWO( Set<Id> accountIds ){
         Map<Id,Boolean> result = new Map<Id,Boolean>() ;
         if( accountIds != null && !accountIds.isEmpty() ){
@@ -136,8 +118,7 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
             }
         }
         return result;
-    }
-    
+    }  
     public static Map<Id,List<NSP_Account_Group__c>> createSelfGroup( Id accountGrpMember , Id accountId , String nspType , String accName , Map<Id,Boolean> accountHasWO ){
         Map<Id,List<NSP_Account_Group__c>> result = new Map<Id,List<NSP_Account_Group__c>>();
         Boolean canCreate = true;
@@ -162,8 +143,6 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
             accMap.get(accId).add(accGroup);
         }
     }
-
-
     //
     // Iterates throught the list of new Account GroupMembers and old Account GroupMembers
     // @param newList List of New Account Group Members.
@@ -711,7 +690,7 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
             if ( lstGrpTypes.contains( accGroupMembr.NSP_Type__c )
                 && !isAdmin
                 && !accGroupMembr.NSP_ByPassValidation__c
-                && accGroupMembr.NSP_Primary__c // modified by sagar
+                && accGroupMembr.NSP_Primary__c
                 )
             {
                 accGroupMembr.addError( label.NSP_AccountCannotRemoveFromSelfGroup ); 
