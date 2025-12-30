@@ -1,8 +1,11 @@
 @isTest
 private class NSP_GenericEmailUtilityTest {
 
-    @IsTest
+    @isTest
     private static void testSendEmail() {
+        Email_Deliverability_Settings__c emailSetting = Email_Deliverability_Settings__c.getOrgDefaults();
+        emailSetting.IsEnabledOutbound__c = true;
+        upsert emailSetting;
         Messaging.SingleEmailMessage[] emails = new Messaging.SingleEmailMessage[1];
         Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
         email.setToAddresses(new List<String>{'test@example.com'});
@@ -14,9 +17,12 @@ private class NSP_GenericEmailUtilityTest {
         NSP_GenericEmailUtility.testHandleException(null,null);
         Test.stopTest();
     }
-    
-    @IsTest
+
+    @isTest
     private static void testNoSendEmail() {
+        Email_Deliverability_Settings__c emailSetting = Email_Deliverability_Settings__c.getOrgDefaults();
+        emailSetting.IsEnabledOutbound__c = true;
+        upsert emailSetting;
         Messaging.SingleEmailMessage[] emails = new Messaging.SingleEmailMessage[1];
         Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
         email.setToAddresses(new List<String>{''});
@@ -28,7 +34,7 @@ private class NSP_GenericEmailUtilityTest {
         Test.stopTest();
     }
 
-    @IsTest
+    @isTest
     private static void testGenerateSingleMessageWithTemplate() {
         Contact testContact = new Contact(FirstName = 'Test', LastName = 'Contact', Email = 'test@example.com');
         insert testContact;
@@ -60,7 +66,7 @@ private class NSP_GenericEmailUtilityTest {
         System.assertNotEquals(null, email, 'Email should not be null.');
     }
 
-    @IsTest(SeeAllData=true)
+    @isTest
     private static void testGetOrgWideAddress() {
         OrgWideEmailAddress owea = [SELECT Id,DisplayName FROM OrgWideEmailAddress LIMIT 1];
         Test.startTest();
@@ -70,3 +76,4 @@ private class NSP_GenericEmailUtilityTest {
     }
 
 }
+//
