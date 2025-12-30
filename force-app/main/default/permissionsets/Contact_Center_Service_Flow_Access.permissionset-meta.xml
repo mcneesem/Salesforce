@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>AZD-501759 : Profile to PS Migration</description>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Enter_Final_Employee_Orientation_Meeting_Information</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>NSP_Add_Multiple_Contacts_On_Case</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>NSP_Project_Merge</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>NSP_Update_Milestone_Status_to_InProgress</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>NSP_Update_Project_Status_Notes</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Request_Discover_SKO_Meeting</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Request_Employee_Orientation_Meeting</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Take_Final_OMR_Meeting_Information</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Update_Final_Employee_Orientation_Meeting_Information</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Update_Final_OMR_Meeting_Information</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Update_Rated_Review_Details_on_Account_Group</flow>
+    </flowAccesses>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Contact Center Service Flow Access</label>
+</PermissionSet>

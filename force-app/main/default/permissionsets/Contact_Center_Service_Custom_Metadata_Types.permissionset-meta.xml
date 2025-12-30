@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>DOZISF__JWT_Setting__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>FSL__O2_Settings__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>NSP_Segment_Role_Mapping__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>dfsle__AuthProvider__mdt</name>
+    </customMetadataTypeAccesses>
+    <description>AZD-501759 : Profile to PS Migration</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Contact Center Service Custom Metadata Types</label>
+</PermissionSet>
