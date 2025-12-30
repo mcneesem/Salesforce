@@ -22,14 +22,14 @@
                 <label>Engagement</label>
             </value>
             <value>
-                <fullName>Climate</fullName>
+                <fullName>Climate (Short)</fullName>
                 <default>false</default>
-                <label>Climate</label>
+                <label>Climate (Short)</label>
             </value>
             <value>
-                <fullName>Climate Plus</fullName>
+                <fullName>Climate (Full)</fullName>
                 <default>false</default>
-                <label>Climate Plus</label>
+                <label>Climate (Full)</label>
             </value>
             <value>
                 <fullName>Custom</fullName>
@@ -67,9 +67,9 @@
                 <label>Onboarding - One-time</label>
             </value>
             <value>
-                <fullName>Onboarding - Week 2/Week 5</fullName>
+                <fullName>Onboarding - 30/60/90 Day</fullName>
                 <default>false</default>
-                <label>Onboarding - Week 2/Week 5</label>
+                <label>Onboarding - 30/60/90 Day</label>
             </value>
             <value>
                 <fullName>Stay</fullName>
