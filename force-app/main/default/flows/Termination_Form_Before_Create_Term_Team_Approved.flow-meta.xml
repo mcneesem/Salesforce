@@ -131,6 +131,8 @@
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>NSP_Termination_Form__c</object>
+        <sortField>CreatedDate</sortField>
+        <sortOrder>Desc</sortOrder>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
@@ -139,7 +141,14 @@
         <connector>
             <targetReference>Get_existing_term_forms</targetReference>
         </connector>
-        <filterFormula>NOT(ISBLANK({!$Record.NSP_Project_Task__c}))</filterFormula>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>NSP_Project_Task__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
         <object>NSP_Termination_Form__c</object>
         <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
