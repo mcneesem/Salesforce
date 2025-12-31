@@ -49,9 +49,19 @@
                 <label>Client Terminated</label>
             </value>
             <value>
+                <fullName>Client Unresponsive</fullName>
+                <default>false</default>
+                <label>Client Unresponsive</label>
+            </value>
+            <value>
                 <fullName>Closed</fullName>
                 <default>false</default>
                 <label>Closed</label>
+            </value>
+            <value>
+                <fullName>Configuration Complete</fullName>
+                <default>false</default>
+                <label>Configuration Complete</label>
             </value>
             <value>
                 <fullName>Customer Update</fullName>
@@ -134,6 +144,21 @@
                 <label>Resolved by Client</label>
             </value>
             <value>
+                <fullName>SAT - Intake Complete</fullName>
+                <default>false</default>
+                <label>SAT - Intake Complete</label>
+            </value>
+            <value>
+                <fullName>SAT - Pending</fullName>
+                <default>false</default>
+                <label>SAT - Pending</label>
+            </value>
+            <value>
+                <fullName>SAT - Review Complete</fullName>
+                <default>false</default>
+                <label>SAT - Review Complete</label>
+            </value>
+            <value>
                 <fullName>Scheduled</fullName>
                 <default>false</default>
                 <label>Scheduled</label>
@@ -207,31 +232,6 @@
                 <fullName>WSEE Terminated</fullName>
                 <default>false</default>
                 <label>WSEE Terminated</label>
-            </value>
-            <value>
-                <fullName>SAT - Intake Complete</fullName>
-                <default>false</default>
-                <label>SAT - Intake Complete</label>
-            </value>
-            <value>
-                <fullName>SAT - Pending</fullName>
-                <default>false</default>
-                <label>SAT - Pending</label>
-            </value>
-            <value>
-                <fullName>SAT - Review Complete</fullName>
-                <default>false</default>
-                <label>SAT - Review Complete</label>
-            </value>
-            <value>
-                <fullName>Client Unresponsive</fullName>
-                <default>false</default>
-                <label>Client Unresponsive</label>
-            </value>
-            <value>
-                <fullName>Configuration Complete</fullName>
-                <default>false</default>
-                <label>Configuration Complete</label>
             </value>
             <value>
                 <fullName>ABU - Pending ABU Contact</fullName>
@@ -317,6 +317,11 @@
             <controllingFieldValue>Open</controllingFieldValue>
             <controllingFieldValue>ReOpened</controllingFieldValue>
             <valueName>Client Contacted</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <controllingFieldValue>ReOpened</controllingFieldValue>
+            <valueName>Configuration Complete</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Open</controllingFieldValue>
