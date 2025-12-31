@@ -8,11 +8,12 @@ private class NSP_LeadTriggerHelperTest {
     @testSetup
     private static void testData() {
         Lead_Trigger_Settings__c settings1 = Lead_Trigger_Settings__c.getOrgDefaults();
-        settings1.AllowStatusChangedToWorking__c = True;
+        settings1.AllowStatusChangedToWorking__c = true;
+        settings1.IsEnabledTransferDiscoveryCall__c = true;
         upsert settings1;
 
         Account_Segment_Threshold_Settings__c settings2 = Account_Segment_Threshold_Settings__c.getOrgDefaults();
-        settings2.Is_Enabled__c = True;
+        settings2.Is_Enabled__c = true;
         upsert settings2;
 
         //Create custom setting record for lead zip to city Mapping
@@ -38,7 +39,7 @@ private class NSP_LeadTriggerHelperTest {
             FROM User
             WHERE (
                 ( Profile.Name = 'System Administrator' )
-                AND ( IsActive = True )
+                AND ( IsActive = true )
             )
             ORDER BY CreatedDate ASC
             LIMIT 1
@@ -425,7 +426,7 @@ private class NSP_LeadTriggerHelperTest {
             FROM User
             WHERE (
                 ( Profile.Name = 'Sales Manager' )
-                AND ( IsActive = True )
+                AND ( IsActive = true )
             )
             ORDER BY CreatedDate ASC
             LIMIT 1
@@ -472,7 +473,7 @@ private class NSP_LeadTriggerHelperTest {
             SELECT Id
             FROM User
             WHERE (
-                ( IsActive = True )
+                ( IsActive = true )
                 AND ( ProfileId != null )
                 AND ( NOT Profile.Name LIKE 'System Admin%' )
                 AND ( Profile.Name != 'Integration User' )

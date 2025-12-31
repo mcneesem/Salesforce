@@ -1491,14 +1491,16 @@ public with sharing class NSP_LeadTriggerHelper {
     // @return: void
     //
     public static void transferDiscoveryCall( Map<Id,sObject> recordNewMap , Map<Id,sObject> recordOldMap ) {
-        Map<Id,Id> recordOwnerTransfer = NSP_LeadTriggerHelper.calculateOwnerTransferMap( recordNewMap , recordOldMap );
-        Map<Id,Id> eventNewOwner =  NSP_LeadTriggerHelper.calculateEventNewOwnerMap( recordOwnerTransfer );
-        if ( ( eventNewOwner != null )
-            && !eventNewOwner.isEmpty()
-            && ( Limits.getFutureCalls() < Limits.getLimitFutureCalls() )
-            )
-        {
-            NSP_LeadTriggerHelper.transferDiscoveryCallAsync( JSON.serialize( eventNewOwner ) );
+        if ( NSP_LeadTriggerHelper.settings.IsEnabledTransferDiscoveryCall__c ) {
+            Map<Id,Id> recordOwnerTransfer = NSP_LeadTriggerHelper.calculateOwnerTransferMap( recordNewMap , recordOldMap );
+            Map<Id,Id> eventNewOwner =  NSP_LeadTriggerHelper.calculateEventNewOwnerMap( recordOwnerTransfer );
+            if ( ( eventNewOwner != null )
+                && !eventNewOwner.isEmpty()
+                && ( Limits.getFutureCalls() < Limits.getLimitFutureCalls() )
+                )
+            {
+                NSP_LeadTriggerHelper.transferDiscoveryCallAsync( JSON.serialize( eventNewOwner ) );
+            }
         }
     }
 
