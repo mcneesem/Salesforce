@@ -264,6 +264,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Closed</controllingFieldValue>
+            <controllingFieldValue>Cancelled</controllingFieldValue>
+            <valueName>Client Unresponsive</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed</controllingFieldValue>
             <valueName>Closed</valueName>
         </valueSettings>
         <valueSettings>
@@ -287,11 +292,6 @@
             <controllingFieldValue>Closed</controllingFieldValue>
             <controllingFieldValue>Cancelled</controllingFieldValue>
             <valueName>Unresolved</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Closed</controllingFieldValue>
-            <controllingFieldValue>Cancelled</controllingFieldValue>
-            <valueName>Client Unresponsive</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Open</controllingFieldValue>
@@ -369,6 +369,21 @@
         <valueSettings>
             <controllingFieldValue>Open</controllingFieldValue>
             <controllingFieldValue>ReOpened</controllingFieldValue>
+            <valueName>SAT - Intake Complete</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <controllingFieldValue>ReOpened</controllingFieldValue>
+            <valueName>SAT - Pending</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <controllingFieldValue>ReOpened</controllingFieldValue>
+            <valueName>SAT - Review Complete</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <controllingFieldValue>ReOpened</controllingFieldValue>
             <valueName>Scheduled</valueName>
         </valueSettings>
         <valueSettings>
@@ -420,26 +435,6 @@
             <controllingFieldValue>Open</controllingFieldValue>
             <controllingFieldValue>ReOpened</controllingFieldValue>
             <valueName>With Internal/External Partner</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Open</controllingFieldValue>
-            <controllingFieldValue>ReOpened</controllingFieldValue>
-            <valueName>SAT - Intake Complete</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Open</controllingFieldValue>
-            <controllingFieldValue>ReOpened</controllingFieldValue>
-            <valueName>SAT - Pending</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Open</controllingFieldValue>
-            <controllingFieldValue>ReOpened</controllingFieldValue>
-            <valueName>SAT - Review Complete</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Open</controllingFieldValue>
-            <controllingFieldValue>ReOpened</controllingFieldValue>
-            <valueName>Configuration Complete</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Cancelled</controllingFieldValue>
