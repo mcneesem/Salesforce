@@ -5,7 +5,7 @@
     <errorConditionFormula>AND(
   NOT( $Permission.Termination_Admin_Access ) ,
   NOT( ISNEW() ) ,
-  ISPICKVAL( PRIORVALUE( NSP_Status__c ) , &quot;Term Team Approved&quot; ) ,
+  ISPICKVAL( PRIORVALUE( NSP_Status__c ) , &quot;Term Team Approved&quot; )
 )</errorConditionFormula>
     <errorMessage>You cannot modify this Term Form after Term Team approval.</errorMessage>
 </ValidationRule>
