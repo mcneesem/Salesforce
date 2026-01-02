@@ -1,6 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Create_Campaign_Member_Status</name>
+        <label>Create Campaign Member Status</label>
+        <locationX>1287</locationX>
+        <locationY>4772</locationY>
+        <actionName>DatabaseAction</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Are_there_statuses_to_delete</targetReference>
+        </connector>
+        <dataTypeMappings>
+            <typeName>T__records</typeName>
+            <typeValue>CampaignMemberStatus</typeValue>
+        </dataTypeMappings>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>flowApiName</name>
+            <value>
+                <stringValue>Campaign_Subflow_Create_Update_Delete_Campaign_Member_Statuses</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>operation</name>
+            <value>
+                <stringValue>INSERT</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>records</name>
+            <value>
+                <elementReference>collectionMemberStatuses_ToCreate</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>DatabaseAction</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <actionCalls>
+        <name>Delete_Campaign_Member_Status</name>
+        <label>Delete Campaign Member Status</label>
+        <locationX>1287</locationX>
+        <locationY>5072</locationY>
+        <actionName>DatabaseAction</actionName>
+        <actionType>apex</actionType>
+        <dataTypeMappings>
+            <typeName>T__records</typeName>
+            <typeValue>CampaignMemberStatus</typeValue>
+        </dataTypeMappings>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>flowApiName</name>
+            <value>
+                <stringValue>Campaign_Subflow_Create_Update_Delete_Campaign_Member_Statuses</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>operation</name>
+            <value>
+                <stringValue>DELETE</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>records</name>
+            <value>
+                <elementReference>collectionMemberStatuses_ToDelete</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>DatabaseAction</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <actionCalls>
+        <name>Update_Campaign_Member_Status</name>
+        <label>Update Campaign Member Status</label>
+        <locationX>1287</locationX>
+        <locationY>4472</locationY>
+        <actionName>DatabaseAction</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Are_there_statuses_to_create</targetReference>
+        </connector>
+        <dataTypeMappings>
+            <typeName>T__records</typeName>
+            <typeValue>CampaignMemberStatus</typeValue>
+        </dataTypeMappings>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>flowApiName</name>
+            <value>
+                <stringValue>Campaign_Subflow_Create_Update_Delete_Campaign_Member_Statuses</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>operation</name>
+            <value>
+                <stringValue>UPDATE</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>records</name>
+            <value>
+                <elementReference>collectionExistingStatuses_ToUpdate</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>DatabaseAction</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
     <apiVersion>61.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Add_Existing_and_New_Default_to_collections</name>
         <label>Add Existing and New Default to collections</label>
@@ -379,40 +485,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_varFaultElement_Create_Campaign_Member_Statuses</name>
-        <label>Assign varFaultElement - Create Campaign Member Statuses</label>
-        <locationX>1419</locationX>
-        <locationY>5078</locationY>
-        <assignmentItems>
-            <assignToReference>varFaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Create_Campaign_Member_Status_records</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_varFaultElement_Delete_statuses</name>
-        <label>Assign varFaultElement - Delete statuses</label>
-        <locationX>1419</locationX>
-        <locationY>5576</locationY>
-        <assignmentItems>
-            <assignToReference>varFaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Delete_statuses</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Assign_varFaultElement_Get_ALL_Existing_Status_records</name>
         <label>Assign varFaultElement - Get ALL Existing Status records</label>
         <locationX>1722</locationX>
@@ -523,23 +595,6 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>Get_the_rest_of_the_Existing_Status_records_other_than_new_default</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_varFaultElement_Update_Existing_Member_Statuses</name>
-        <label>Assign varFaultElement - Update Existing Member Statuses</label>
-        <locationX>1419</locationX>
-        <locationY>4580</locationY>
-        <assignmentItems>
-            <assignToReference>varFaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Update_Existing_Member_Statuses</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -661,7 +716,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Update_Existing_Member_Statuses</targetReference>
+                <targetReference>Update_Campaign_Member_Status</targetReference>
             </connector>
             <label>Yes - statuses need to be updated</label>
         </rules>
@@ -670,7 +725,7 @@
         <name>Are_there_statuses_to_create</name>
         <label>Are there statuses to create?</label>
         <locationX>1419</locationX>
-        <locationY>4862</locationY>
+        <locationY>4664</locationY>
         <defaultConnector>
             <targetReference>Are_there_statuses_to_delete</targetReference>
         </defaultConnector>
@@ -686,7 +741,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Create_Campaign_Member_Status_records</targetReference>
+                <targetReference>Create_Campaign_Member_Status</targetReference>
             </connector>
             <label>Yes - Statuses need to be created</label>
         </rules>
@@ -695,7 +750,7 @@
         <name>Are_there_statuses_to_delete</name>
         <label>Are there statuses to delete?</label>
         <locationX>1419</locationX>
-        <locationY>5360</locationY>
+        <locationY>4964</locationY>
         <defaultConnectorLabel>No statuses to delete</defaultConnectorLabel>
         <rules>
             <name>Yes_Statuses_need_to_be_deleted</name>
@@ -708,7 +763,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Delete_statuses</targetReference>
+                <targetReference>Delete_Campaign_Member_Status</targetReference>
             </connector>
             <label>Yes - Statuses need to be deleted</label>
         </rules>
@@ -1116,29 +1171,6 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordCreates>
-        <name>Create_Campaign_Member_Status_records</name>
-        <label>Create Campaign Member Status records</label>
-        <locationX>1155</locationX>
-        <locationY>4970</locationY>
-        <connector>
-            <targetReference>Are_there_statuses_to_delete</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Assign_varFaultElement_Create_Campaign_Member_Statuses</targetReference>
-        </faultConnector>
-        <inputReference>collectionMemberStatuses_ToCreate</inputReference>
-    </recordCreates>
-    <recordDeletes>
-        <name>Delete_statuses</name>
-        <label>Delete statuses</label>
-        <locationX>1155</locationX>
-        <locationY>5468</locationY>
-        <faultConnector>
-            <targetReference>Assign_varFaultElement_Delete_statuses</targetReference>
-        </faultConnector>
-        <inputReference>collectionMemberStatuses_ToDelete</inputReference>
-    </recordDeletes>
     <recordLookups>
         <name>Get_ALL_Existing_Status_records</name>
         <label>Get ALL Existing Status records</label>
@@ -1374,19 +1406,6 @@
         <queriedFields>HasResponded</queriedFields>
         <queriedFields>IsDefault</queriedFields>
     </recordLookups>
-    <recordUpdates>
-        <name>Update_Existing_Member_Statuses</name>
-        <label>Update Existing Member Statuses</label>
-        <locationX>1155</locationX>
-        <locationY>4472</locationY>
-        <connector>
-            <targetReference>Are_there_statuses_to_create</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Assign_varFaultElement_Update_Existing_Member_Statuses</targetReference>
-        </faultConnector>
-        <inputReference>collectionExistingStatuses_ToUpdate</inputReference>
-    </recordUpdates>
     <start>
         <locationX>2576</locationX>
         <locationY>0</locationY>
