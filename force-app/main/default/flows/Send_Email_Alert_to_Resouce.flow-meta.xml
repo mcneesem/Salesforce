@@ -4,13 +4,16 @@
         <description>Send an Email to NBI IMPL Res for Assignment</description>
         <name>Send_Email_to_NBI_IMPL_Res_for_Assignment</name>
         <label>Send Email to NBI IMPL Res for Assignment</label>
-        <locationX>242</locationX>
+        <locationX>182</locationX>
         <locationY>539</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
             <targetReference>Create_Email_Message_Record_0_0_0</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Send_Email_to_NBI_IMPL_Res_for_Assignment</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>emailBody</name>
@@ -43,13 +46,16 @@
         <description>Send Email to NBI IMPL Res for QC Completion</description>
         <name>Send_Email_to_NBI_IMPL_Res_for_QC_Completion_0</name>
         <label>Send Email to NBI IMPL Res for QC Completion</label>
-        <locationX>242</locationX>
-        <locationY>1463</locationY>
+        <locationX>182</locationX>
+        <locationY>1901</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
             <targetReference>Create_Email_Message_Record_0_0_0_0_0_0</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Send_Email_to_NBI_IMPL_Res_for_QC_Completion_0</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>emailBody</name>
@@ -82,13 +88,16 @@
         <description>Send Email to NBI res and Sales consultant for S2I completion</description>
         <name>Send_Email_to_NBI_res_and_Sales_consultant_for_S2I_completion</name>
         <label>Send Email to NBI res and Sales consultant for S2I completion</label>
-        <locationX>242</locationX>
-        <locationY>2087</locationY>
+        <locationX>50</locationX>
+        <locationY>2723</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
             <targetReference>Create_Email_Message_Record_0_0_0_0_0_0_0</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Send_Email_to_NBI_res_and_Sales_consultant_for_S2I_comple</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>emailBody</name>
@@ -121,13 +130,16 @@
         <description>Send an Email to QC Rep when assigned on S2I rec</description>
         <name>Send_Email_to_QC_Rep_Assignment_Mail</name>
         <label>Send Email to QC Rep Assignment Mail</label>
-        <locationX>242</locationX>
-        <locationY>947</locationY>
+        <locationX>182</locationX>
+        <locationY>1187</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
             <targetReference>Create_Email_Message_Record_0_0_0_0</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Send_Email_to_QC_Rep_Assignment_Mail</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>emailBody</name>
@@ -159,11 +171,197 @@
     <apiVersion>55.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
+        <name>Assign_varFaultElement_Create_Email_Message_Record_0_0_0</name>
+        <label>Assign varFaultElement - Create_Email_Message_Record_0_0_0</label>
+        <locationX>446</locationX>
+        <locationY>755</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_Email_Message_Record_0_0_0</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Create_Email_Message_Record_0_0_0_0</name>
+        <label>Assign varFaultElement - Create_Email_Message_Record_0_0_0_0</label>
+        <locationX>446</locationX>
+        <locationY>1403</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_Email_Message_Record_0_0_0_0</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Create_Email_Message_Record_0_0_0_0_0_0</name>
+        <label>Assign varFaultElement - Create_Email_Message_Record_0_0_0_0_0_0</label>
+        <locationX>446</locationX>
+        <locationY>2117</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_Email_Message_Record_0_0_0_0_0_0</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Create_Email_Message_Record_0_0_0_0_0_0_0</name>
+        <label>Assign varFaultElement - Create_Email_Message_Record_0_0_0_0_0_0_0</label>
+        <locationX>578</locationX>
+        <locationY>2939</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_Email_Message_Record_0_0_0_0_0_0_0</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Create_Email_Message_Record_0_0_0_0_0_0_0_0</name>
+        <label>Assign varFaultElement - Create_Email_Message_Record_0_0_0_0_0_0_0_0</label>
+        <locationX>314</locationX>
+        <locationY>3047</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_Email_Message_Record_0_0_0_0_0_0_0_0</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_Email_Message_rec_for_S2I_completion</name>
+        <label>Assign varFaultElement - Get_Email_Message_rec_for_S2I_completion</label>
+        <locationX>1370</locationX>
+        <locationY>2507</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Email_Message_rec_for_S2I_completion</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_Email_Message_Record_for_QC_completion</name>
+        <label>Assign varFaultElement - Get_Email_Message_Record_for_QC_completion</label>
+        <locationX>1634</locationX>
+        <locationY>1793</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Email_Message_Record_for_QC_completion</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Send_Email_to_NBI_IMPL_Res_for_Assignment</name>
+        <label>Assign varFaultElement - Send_Email_to_NBI_IMPL_Res_for_Assignment</label>
+        <locationX>710</locationX>
+        <locationY>647</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Send_Email_to_NBI_IMPL_Res_for_Assignment</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Send_Email_to_NBI_IMPL_Res_for_QC_Completion_0</name>
+        <label>Assign varFaultElement - Send_Email_to_NBI_IMPL_Res_for_QC_Completion_0</label>
+        <locationX>710</locationX>
+        <locationY>2009</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Send_Email_to_NBI_IMPL_Res_for_QC_Completion_0</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Send_Email_to_NBI_res_and_Sales_consultant_for_S2I_comple</name>
+        <label>Assign varFaultElement - Send_Email_to_NBI_res_and_Sales_consultant_for_S2I_completion</label>
+        <locationX>842</locationX>
+        <locationY>2831</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Send_Email_to_NBI_res_and_Sales_consultant_for_S2I_completion</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Send_Email_to_QC_Rep_Assignment_Mail</name>
+        <label>Assign varFaultElement - Send_Email_to_QC_Rep_Assignment_Mail</label>
+        <locationX>710</locationX>
+        <locationY>1295</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Send_Email_to_QC_Rep_Assignment_Mail</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <description>Email Address Assignmen To Collection</description>
         <name>EmailAddressAssignmenToCollection</name>
         <label>EmailAddressAssignmenToCollection</label>
-        <locationX>242</locationX>
-        <locationY>1979</locationY>
+        <locationX>50</locationX>
+        <locationY>2615</locationY>
         <assignmentItems>
             <assignToReference>EmailAddressCollectionOfNBIResAndSalesConsultanat</assignToReference>
             <operator>Add</operator>
@@ -193,7 +391,7 @@
         <description>Check if &quot;NBI IMPL Res&quot; is updated on S2I rec</description>
         <name>Check_if_NBI_IMPL_Res_is_updated</name>
         <label>Check if &quot;NBI IMPL Res&quot; is updated</label>
-        <locationX>374</locationX>
+        <locationX>578</locationX>
         <locationY>431</locationY>
         <defaultConnector>
             <targetReference>Check_If_QC_Rep_Field_Is_updated</targetReference>
@@ -226,8 +424,8 @@
         <description>Check if NBI IMPL Res is updated along with QC Signoff Date</description>
         <name>Check_if_NBI_IMPL_Res_is_updated_along_with_QC_Signoff_Date_0</name>
         <label>Check if NBI IMPL Res is updated along with QC Signoff Date</label>
-        <locationX>374</locationX>
-        <locationY>1355</locationY>
+        <locationX>578</locationX>
+        <locationY>1793</locationY>
         <defaultConnector>
             <targetReference>Get_Email_Message_rec_for_S2I_completion</targetReference>
         </defaultConnector>
@@ -267,8 +465,8 @@
         <description>Check if QC Rep Field Is updated on S2I record</description>
         <name>Check_If_QC_Rep_Field_Is_updated</name>
         <label>Check If QC Rep Field Is updated</label>
-        <locationX>374</locationX>
-        <locationY>839</locationY>
+        <locationX>578</locationX>
+        <locationY>1079</locationY>
         <defaultConnector>
             <targetReference>Get_Email_Message_Record_for_QC_completion</targetReference>
         </defaultConnector>
@@ -300,8 +498,8 @@
         <description>checks if &quot;Sign off&quot; Date is populated along with &quot;NBI Res&quot; and &quot;Sales Consultant&quot;</description>
         <name>Check_if_Sign_off_Date_is_populated_along_with_NBI_Res_and_Sales_Consultant</name>
         <label>Check if Sign off Date is populated along with NBI Res and Sales Consultant</label>
-        <locationX>374</locationX>
-        <locationY>1871</locationY>
+        <locationX>578</locationX>
+        <locationY>2507</locationY>
         <defaultConnectorLabel>SignOff date is not populated</defaultConnectorLabel>
         <rules>
             <name>isSignOffDatepoulated</name>
@@ -345,7 +543,7 @@
         <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
         <name>Outbound_Email_custom_setting_check</name>
         <label>Outbound Email custom setting check</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>323</locationY>
         <defaultConnector>
             <targetReference>Check_if_NBI_IMPL_Res_is_updated</targetReference>
@@ -364,7 +562,7 @@
             <label>IsEnabledOutbound = false</label>
         </rules>
     </decisions>
-    <description>Outbound Email bypass added. Send an Email Alert to assigned NBI IMPL Resource  or QC Rep on S2I for assignment or completion</description>
+    <description>Fault paths added. Outbound Email bypass added. Send an Email Alert to assigned NBI IMPL Resource  or QC Rep on S2I for assignment or completion</description>
     <environments>Default</environments>
     <formulas>
         <description>Url of S2I rec, triggering the flow</description>
@@ -397,11 +595,14 @@
         <description>Create Email Message Record for Email traceability</description>
         <name>Create_Email_Message_Record_0_0_0</name>
         <label>Create Email Message Record</label>
-        <locationX>242</locationX>
+        <locationX>182</locationX>
         <locationY>647</locationY>
         <connector>
             <targetReference>Check_If_QC_Rep_Field_Is_updated</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Create_Email_Message_Record_0_0_0</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>FromAddress</field>
             <value>
@@ -451,11 +652,14 @@
         <description>Create Email Message Record for Email traceability</description>
         <name>Create_Email_Message_Record_0_0_0_0</name>
         <label>Create Email Message Record</label>
-        <locationX>242</locationX>
-        <locationY>1055</locationY>
+        <locationX>182</locationX>
+        <locationY>1295</locationY>
         <connector>
             <targetReference>Get_Email_Message_Record_for_QC_completion</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Create_Email_Message_Record_0_0_0_0</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>FromAddress</field>
             <value>
@@ -505,11 +709,14 @@
         <description>Create Email Message Record for Email traceability</description>
         <name>Create_Email_Message_Record_0_0_0_0_0_0</name>
         <label>Create Email Message Record</label>
-        <locationX>242</locationX>
-        <locationY>1571</locationY>
+        <locationX>182</locationX>
+        <locationY>2009</locationY>
         <connector>
             <targetReference>Get_Email_Message_rec_for_S2I_completion</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Create_Email_Message_Record_0_0_0_0_0_0</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>FromAddress</field>
             <value>
@@ -559,11 +766,14 @@
         <description>Create Email Message Record for Email traceability for NBI Res</description>
         <name>Create_Email_Message_Record_0_0_0_0_0_0_0</name>
         <label>Create Email Message Record for NBI Res</label>
-        <locationX>242</locationX>
-        <locationY>2195</locationY>
+        <locationX>50</locationX>
+        <locationY>2831</locationY>
         <connector>
             <targetReference>Create_Email_Message_Record_0_0_0_0_0_0_0_0</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Create_Email_Message_Record_0_0_0_0_0_0_0</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>FromAddress</field>
             <value>
@@ -613,8 +823,11 @@
         <description>Create Email Message Record for Email traceability for Sales Consultant</description>
         <name>Create_Email_Message_Record_0_0_0_0_0_0_0_0</name>
         <label>Create Email Message Record for Sales Consultant</label>
-        <locationX>242</locationX>
-        <locationY>2303</locationY>
+        <locationX>50</locationX>
+        <locationY>2939</locationY>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Create_Email_Message_Record_0_0_0_0_0_0_0_0</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>FromAddress</field>
             <value>
@@ -664,12 +877,15 @@
         <description>Get Email Message rec for S2I completion , Created when first time condition met</description>
         <name>Get_Email_Message_rec_for_S2I_completion</name>
         <label>Get Email Message rec for S2I completion</label>
-        <locationX>374</locationX>
-        <locationY>1763</locationY>
+        <locationX>578</locationX>
+        <locationY>2399</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_if_Sign_off_Date_is_populated_along_with_NBI_Res_and_Sales_Consultant</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_Email_Message_rec_for_S2I_completion</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>RelatedToId</field>
@@ -693,12 +909,15 @@
         <description>Get Email Message Record for QC completion</description>
         <name>Get_Email_Message_Record_for_QC_completion</name>
         <label>Get Email Message Record for QC completion</label>
-        <locationX>374</locationX>
-        <locationY>1247</locationY>
+        <locationX>578</locationX>
+        <locationY>1685</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_if_NBI_IMPL_Res_is_updated_along_with_QC_Signoff_Date_0</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_Email_Message_Record_for_QC_completion</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>RelatedToId</field>
@@ -719,7 +938,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>50</locationX>
+        <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Outbound_Email_custom_setting_check</targetReference>
@@ -744,6 +963,31 @@
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Draft</status>
+    <subflows>
+        <name>Fault_Handler_Subflow</name>
+        <label>Fault Handler Subflow</label>
+        <locationX>710</locationX>
+        <locationY>755</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>varFaultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Send_Email_Alert_to_Resouce</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <textTemplates>
         <description>Body of the email template of NBI IMPL Res Assignment</description>
         <name>EmailbodyforNBIIMPLAssignment</name>
@@ -775,5 +1019,12 @@
         <isCollection>true</isCollection>
         <isInput>true</isInput>
         <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
 </Flow>

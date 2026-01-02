@@ -3,13 +3,16 @@
     <actionCalls>
         <name>Send_Email_to_NBI_Merger</name>
         <label>Send Email to NBI Merger</label>
-        <locationX>303</locationX>
-        <locationY>2771</locationY>
+        <locationX>996</locationX>
+        <locationY>3167</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
             <targetReference>Create_Email_Message_Record</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Send_Email_to_NBI_Merger</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>emailBody</name>
@@ -47,13 +50,16 @@
     <actionCalls>
         <name>Send_Email_to_NBI_Resource</name>
         <label>Send Email to NBI Resource</label>
-        <locationX>182</locationX>
-        <locationY>2195</locationY>
+        <locationX>347</locationX>
+        <locationY>2393</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
             <targetReference>Create_Email_Message_for_NBI_Resource_0</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Send_Email_to_NBI_Resource</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>emailBody</name>
@@ -91,13 +97,16 @@
     <actionCalls>
         <name>Send_Email_to_RET_401k_Queue</name>
         <label>Send Email to RET 401k Queue</label>
-        <locationX>171</locationX>
+        <locationX>138</locationX>
         <locationY>1187</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
             <targetReference>Create_Email_Message_Record_for_Queue</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Send_Email_to_RET_401k_Queue</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>emailBody</name>
@@ -134,6 +143,226 @@
     </actionCalls>
     <apiVersion>55.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_varFaultElement_Create_a_Task</name>
+        <label>Assign varFaultElement - Create_a_Task</label>
+        <locationX>1403</locationX>
+        <locationY>2177</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_a_Task</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Create_a_Task_for_401k</name>
+        <label>Assign varFaultElement - Create_a_Task_for_401k</label>
+        <locationX>1194</locationX>
+        <locationY>971</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_a_Task_for_401k</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Create_Email_Message_for_NBI_Resource_0</name>
+        <label>Assign varFaultElement - Create_Email_Message_for_NBI_Resource_0</label>
+        <locationX>611</locationX>
+        <locationY>2609</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_Email_Message_for_NBI_Resource_0</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Create_Email_Message_Record</name>
+        <label>Assign varFaultElement - Create_Email_Message_Record</label>
+        <locationX>1260</locationX>
+        <locationY>3383</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_Email_Message_Record</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Create_Email_Message_Record_for_Queue</name>
+        <label>Assign varFaultElement - Create_Email_Message_Record_for_Queue</label>
+        <locationX>402</locationX>
+        <locationY>1403</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_Email_Message_Record_for_Queue</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_All_Tasks_with_subject_S2I_Installation</name>
+        <label>Assign varFaultElement - Get_All_Tasks_with_subject_S2I_Installation</label>
+        <locationX>2074</locationX>
+        <locationY>539</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_All_Tasks_with_subject_S2I_Installation</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_BPS_Record_Type</name>
+        <label>Assign varFaultElement - Get_BPS_Record_Type</label>
+        <locationX>2338</locationX>
+        <locationY>431</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_BPS_Record_Type</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_RET_401k_Queue</name>
+        <label>Assign varFaultElement - Get_RET_401k_Queue</label>
+        <locationX>1458</locationX>
+        <locationY>863</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_RET_401k_Queue</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_Task</name>
+        <label>Assign varFaultElement - Get_Task</label>
+        <locationX>1139</locationX>
+        <locationY>2393</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Task</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_Task_just_created</name>
+        <label>Assign varFaultElement - Get_Task_just_created</label>
+        <locationX>930</locationX>
+        <locationY>1187</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Task_just_created</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Send_Email_to_NBI_Merger</name>
+        <label>Assign varFaultElement - Send_Email_to_NBI_Merger</label>
+        <locationX>1524</locationX>
+        <locationY>3275</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Send_Email_to_NBI_Merger</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Send_Email_to_NBI_Resource</name>
+        <label>Assign varFaultElement - Send_Email_to_NBI_Resource</label>
+        <locationX>875</locationX>
+        <locationY>2501</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Send_Email_to_NBI_Resource</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Send_Email_to_RET_401k_Queue</name>
+        <label>Assign varFaultElement - Send_Email_to_RET_401k_Queue</label>
+        <locationX>666</locationX>
+        <locationY>1295</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Send_Email_to_RET_401k_Queue</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
     <constants>
         <name>emailContatant</name>
         <dataType>String</dataType>
@@ -148,8 +377,8 @@
     <decisions>
         <name>NBI_Impl_Resource_Populated</name>
         <label>NBI Impl Resource Populated</label>
-        <locationX>435</locationX>
-        <locationY>1655</locationY>
+        <locationX>1392</locationX>
+        <locationY>1853</locationY>
         <defaultConnector>
             <targetReference>NBI_Merger_Resource_Populated</targetReference>
         </defaultConnector>
@@ -180,8 +409,8 @@
     <decisions>
         <name>NBI_Merger_Resource_Populated</name>
         <label>NBI Merger Resource Populated</label>
-        <locationX>435</locationX>
-        <locationY>2663</locationY>
+        <locationX>1392</locationX>
+        <locationY>3059</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>isNBIMergerPopulated</name>
@@ -209,7 +438,7 @@
     <decisions>
         <name>No_NBI_Impl_Resource_populated</name>
         <label>No NBI Impl Resource populated</label>
-        <locationX>435</locationX>
+        <locationX>1392</locationX>
         <locationY>539</locationY>
         <defaultConnector>
             <targetReference>NBI_Impl_Resource_Populated</targetReference>
@@ -242,7 +471,7 @@
         <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
         <name>Outbound_Email_custom_setting_check_401k_Queue</name>
         <label>Outbound Email custom setting check - 401k Queue</label>
-        <locationX>83</locationX>
+        <locationX>50</locationX>
         <locationY>971</locationY>
         <defaultConnector>
             <targetReference>Get_Task_just_created</targetReference>
@@ -268,8 +497,8 @@
         <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
         <name>Outbound_Email_custom_setting_check_NBI_Resource</name>
         <label>Outbound Email custom setting check - NBI Resource</label>
-        <locationX>50</locationX>
-        <locationY>1979</locationY>
+        <locationX>215</locationX>
+        <locationY>2177</locationY>
         <defaultConnector>
             <targetReference>Get_Task</targetReference>
         </defaultConnector>
@@ -290,7 +519,7 @@
     <decisions>
         <name>Task_already_exists</name>
         <label>Task already exists?</label>
-        <locationX>259</locationX>
+        <locationX>886</locationX>
         <locationY>647</locationY>
         <defaultConnector>
             <targetReference>NBI_Impl_Resource_Populated</targetReference>
@@ -329,8 +558,8 @@
     <decisions>
         <name>Task_already_exists_for_NBI_Impl_Resource</name>
         <label>Task already exists for NBI Impl Resource?</label>
-        <locationX>248</locationX>
-        <locationY>1763</locationY>
+        <locationX>941</locationX>
+        <locationY>1961</locationY>
         <defaultConnector>
             <targetReference>NBI_Merger_Resource_Populated</targetReference>
         </defaultConnector>
@@ -365,7 +594,7 @@
             <label>ifTaskDoesntExist</label>
         </rules>
     </decisions>
-    <description>Outbound Email bypass added.</description>
+    <description>Fault paths added. Outbound Email bypass added.</description>
     <environments>Default</environments>
     <formulas>
         <name>QualityReviewCheckBoxes</name>
@@ -412,11 +641,14 @@ if({!$Record.NSP_Subplan_Contribution_Rule__c}, &apos;DC-Subplan Contribution Ru
     <recordCreates>
         <name>Create_a_Task</name>
         <label>Create a Task</label>
-        <locationX>50</locationX>
-        <locationY>1871</locationY>
+        <locationX>215</locationX>
+        <locationY>2069</locationY>
         <connector>
             <targetReference>Outbound_Email_custom_setting_check_NBI_Resource</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Create_a_Task</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>ActivityDate</field>
             <value>
@@ -477,11 +709,14 @@ if({!$Record.NSP_Subplan_Contribution_Rule__c}, &apos;DC-Subplan Contribution Ru
     <recordCreates>
         <name>Create_a_Task_for_401k</name>
         <label>Create a Task for 401k</label>
-        <locationX>83</locationX>
+        <locationX>50</locationX>
         <locationY>863</locationY>
         <connector>
             <targetReference>Outbound_Email_custom_setting_check_401k_Queue</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Create_a_Task_for_401k</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>ActivityDate</field>
             <value>
@@ -542,11 +777,14 @@ if({!$Record.NSP_Subplan_Contribution_Rule__c}, &apos;DC-Subplan Contribution Ru
     <recordCreates>
         <name>Create_Email_Message_for_NBI_Resource_0</name>
         <label>Create Email Message for NBI Resource</label>
-        <locationX>182</locationX>
-        <locationY>2303</locationY>
+        <locationX>347</locationX>
+        <locationY>2501</locationY>
         <connector>
             <targetReference>NBI_Merger_Resource_Populated</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Create_Email_Message_for_NBI_Resource_0</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>FromAddress</field>
             <value>
@@ -595,8 +833,11 @@ if({!$Record.NSP_Subplan_Contribution_Rule__c}, &apos;DC-Subplan Contribution Ru
     <recordCreates>
         <name>Create_Email_Message_Record</name>
         <label>Create Email Message Record</label>
-        <locationX>303</locationX>
-        <locationY>2879</locationY>
+        <locationX>996</locationX>
+        <locationY>3275</locationY>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Create_Email_Message_Record</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>FromAddress</field>
             <value>
@@ -645,11 +886,14 @@ if({!$Record.NSP_Subplan_Contribution_Rule__c}, &apos;DC-Subplan Contribution Ru
     <recordCreates>
         <name>Create_Email_Message_Record_for_Queue</name>
         <label>Create Email Message Record for Queue</label>
-        <locationX>171</locationX>
+        <locationX>138</locationX>
         <locationY>1295</locationY>
         <connector>
             <targetReference>NBI_Impl_Resource_Populated</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Create_Email_Message_Record_for_Queue</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>FromAddress</field>
             <value>
@@ -698,12 +942,15 @@ if({!$Record.NSP_Subplan_Contribution_Rule__c}, &apos;DC-Subplan Contribution Ru
     <recordLookups>
         <name>Get_All_Tasks_with_subject_S2I_Installation</name>
         <label>Get All Tasks with subject S2I Installation</label>
-        <locationX>435</locationX>
+        <locationX>1392</locationX>
         <locationY>431</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>No_NBI_Impl_Resource_populated</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_All_Tasks_with_subject_S2I_Installation</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>WhatId</field>
@@ -726,12 +973,15 @@ if({!$Record.NSP_Subplan_Contribution_Rule__c}, &apos;DC-Subplan Contribution Ru
     <recordLookups>
         <name>Get_BPS_Record_Type</name>
         <label>Get BPS Record Type</label>
-        <locationX>435</locationX>
+        <locationX>1392</locationX>
         <locationY>323</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_All_Tasks_with_subject_S2I_Installation</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_BPS_Record_Type</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>DeveloperName</field>
@@ -756,12 +1006,15 @@ if({!$Record.NSP_Subplan_Contribution_Rule__c}, &apos;DC-Subplan Contribution Ru
     <recordLookups>
         <name>Get_RET_401k_Queue</name>
         <label>Get RET 401k Queue</label>
-        <locationX>83</locationX>
+        <locationX>50</locationX>
         <locationY>755</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Create_a_Task_for_401k</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_RET_401k_Queue</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Type</field>
@@ -786,12 +1039,15 @@ if({!$Record.NSP_Subplan_Contribution_Rule__c}, &apos;DC-Subplan Contribution Ru
     <recordLookups>
         <name>Get_Task</name>
         <label>Get Task</label>
-        <locationX>182</locationX>
-        <locationY>2087</locationY>
+        <locationX>347</locationX>
+        <locationY>2285</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Send_Email_to_NBI_Resource</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_Task</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -807,12 +1063,15 @@ if({!$Record.NSP_Subplan_Contribution_Rule__c}, &apos;DC-Subplan Contribution Ru
     <recordLookups>
         <name>Get_Task_just_created</name>
         <label>Get Task just created</label>
-        <locationX>171</locationX>
+        <locationX>138</locationX>
         <locationY>1079</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Send_Email_to_RET_401k_Queue</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_Task_just_created</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -826,7 +1085,7 @@ if({!$Record.NSP_Subplan_Contribution_Rule__c}, &apos;DC-Subplan Contribution Ru
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>309</locationX>
+        <locationX>1266</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_BPS_Record_Type</targetReference>
@@ -836,6 +1095,31 @@ if({!$Record.NSP_Subplan_Contribution_Rule__c}, &apos;DC-Subplan Contribution Ru
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Draft</status>
+    <subflows>
+        <name>Fault_Handler_Subflow</name>
+        <label>Fault Handler Subflow</label>
+        <locationX>2338</locationX>
+        <locationY>539</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>varFaultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>S2I_Automation</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <textTemplates>
         <name>mailBodyForNBIMerger</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
@@ -889,6 +1173,13 @@ if({!$Record.NSP_Subplan_Contribution_Rule__c}, &apos;DC-Subplan Contribution Ru
     </variables>
     <variables>
         <name>taskOf401k</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varFaultElement</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>

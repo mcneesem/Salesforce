@@ -10,6 +10,9 @@
         <connector>
             <targetReference>Create_Email_Message_to_record_email_sent</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Send_Email_to_401k</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>emailBody</name>
@@ -46,6 +49,39 @@
     </actionCalls>
     <apiVersion>55.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_varFaultElement_Create_Email_Message_to_record_email_sent</name>
+        <label>Assign varFaultElement - Create_Email_Message_to_record_email_sent</label>
+        <locationX>572</locationX>
+        <locationY>647</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_Email_Message_to_record_email_sent</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Send_Email_to_401k</name>
+        <label>Assign varFaultElement - Send_Email_to_401k</label>
+        <locationX>836</locationX>
+        <locationY>539</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Send_Email_to_401k</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
         <name>Outbound_Email_custom_setting_check</name>
@@ -69,7 +105,7 @@
             <label>IsEnabledOutbound = false</label>
         </rules>
     </decisions>
-    <description>Outbound Email bypass added.</description>
+    <description>Fault paths added. Outbound Email bypass added.</description>
     <environments>Default</environments>
     <formulas>
         <name>linkToRecord</name>
@@ -102,6 +138,9 @@
         <label>Create Email Message to record email sent.</label>
         <locationX>308</locationX>
         <locationY>539</locationY>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Create_Email_Message_to_record_email_sent</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>FromAddress</field>
             <value>
@@ -158,9 +197,41 @@
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Draft</status>
+    <subflows>
+        <name>Fault_Handler_Subflow</name>
+        <label>Fault Handler Subflow</label>
+        <locationX>836</locationX>
+        <locationY>647</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>varFaultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Send_Email_to_401k_after_creating_S2I_Record</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <textTemplates>
         <name>emailBody</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
         <text>&lt;p&gt;Assignments are needed for a new Sales-to-Implementation initiative&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;You may find the record via the following link.&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;{!linkToRecord}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;&lt;u&gt;View Record&lt;/u&gt;&lt;/a&gt;&lt;/p&gt;</text>
     </textTemplates>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
 </Flow>
