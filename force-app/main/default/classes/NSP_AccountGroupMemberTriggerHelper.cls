@@ -39,7 +39,7 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
     }
 
     private static void createSelfGroupForAccount( List<NSP_Account_Group_Member__c> oldList ) {
-        if( oldList != null && !oldList.isEmpty() ) {
+        if( AccountGroupMemberTriggerSettings__c.getInstance( UserInfo.getUserId() ).IsEnabled__c && oldList != null && !oldList.isEmpty() ) {
             Set<Id> growthForecastAccountIds = NSP_AccountGroupMemberTriggerHelper.getGrowthForecastAccountIds( oldList );
             Set<Id> accountHasWO = NSP_AccountGroupMemberTriggerHelper.getWoAssetAccountIds( growthForecastAccountIds );
             Map<Id, List<NSP_Account_Group__c>> groupsToCreate = NSP_AccountGroupMemberTriggerHelper.collectGroups( oldList , accountHasWO );
@@ -74,44 +74,76 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
         return result;
     }
 
-    private static void insertGroupsAndMembers( Map<Id , List<NSP_Account_Group__c>> allGroupsToCreate ){
-        List<NSP_Account_Group__c> groups = new List<NSP_Account_Group__c>() ;
-        List<NSP_Account_Group_Member__c> members = new List<NSP_Account_Group_Member__c>() ;
-        if( allGroupsToCreate != null && !allGroupsToCreate.isEmpty() ){
-            collectGroups( allGroupsToCreate , groups );
-            if( !groups.isEmpty() ){
-                Database.insert( groups,false );
-                collectMembers( allGroupsToCreate , members );
-                if( !members.isEmpty() ){
-                    Database.insert( members , false );
+    private static void insertGroupsAndMembers(Map<Id, List<NSP_Account_Group__c>> allGroupsToCreate) {
+        List<NSP_Account_Group__c> groups = new List<NSP_Account_Group__c>();
+        List<NSP_Account_Group_Member__c> members = new List<NSP_Account_Group_Member__c>();
+        if ( allGroupsToCreate != null && !allGroupsToCreate.isEmpty() ) {
+            groups = NSP_AccountGroupMemberTriggerHelper.collectGroups( allGroupsToCreate, groups );
+            if ( groups != null && !groups.isEmpty() ) {
+                try {
+                    List<Database.SaveResult> groupResults = Database.insert( groups, false );
+                    NSP_ErrorLogHandler.logResults( 'NSP_AccountGroupMemberTriggerHelper', 'insertGroupsAndMembers - Groups', groupResults );
+                } catch (Exception ex) {
+                    NSP_ErrorLogHandler.logException( 'NSP_AccountGroupMemberTriggerHelper', 'insertGroupsAndMembers - Groups', ex );
                 }
-            }
-        }
-    }
-
-    private static void collectGroups( Map<Id,List<NSP_Account_Group__c>> allGroupsToCreate , List<NSP_Account_Group__c> groups ){
-        for( List<NSP_Account_Group__c> lst : allGroupsToCreate.values() ){
-            if( lst != null && !lst.isEmpty() ){
-                groups.addAll( lst );
-            }
-        }
-    }
-
-    private static void collectMembers( Map<Id , List<NSP_Account_Group__c>> allGroupsToCreate , List<NSP_Account_Group_Member__c> members ){
-        for( Id accId : allGroupsToCreate.keySet() ){
-            List<NSP_Account_Group__c> grpList = allGroupsToCreate.get( accId );
-            if( grpList != null && !grpList.isEmpty() ){
-                for( NSP_Account_Group__c grp : grpList ){
-                    if( grp != null && grp.Id != null ){
-                        members.add( new NSP_Account_Group_Member__c(
-                            NSP_Member_Account__c=accId ,
-                            NSP_Group__c=grp.Id ,
-                            NSP_Primary__c=true
-                        ) );
+                members = NSP_AccountGroupMemberTriggerHelper.collectMembers( allGroupsToCreate, members );
+                if ( members != null && !members.isEmpty() ) {
+                    try {
+                        List<Database.SaveResult> memberResults = Database.insert( members, false );
+                        NSP_ErrorLogHandler.logResults( 'NSP_AccountGroupMemberTriggerHelper', 'insertGroupsAndMembers - Members', memberResults );
+                    } catch (Exception ex) {
+                        NSP_ErrorLogHandler.logException( 'NSP_AccountGroupMemberTriggerHelper', 'insertGroupsAndMembers - Members', ex );
                     }
                 }
             }
         }
+    }
+
+    private static List<NSP_Account_Group__c> collectGroups(
+        Map<Id,List<NSP_Account_Group__c>> allGroupsToCreate ,
+        List<NSP_Account_Group__c> groups
+        )
+    {
+        if ( groups == null ) {
+            groups = new List<NSP_Account_Group__c>();
+        }
+        if ( ( allGroupsToCreate != null ) && !allGroupsToCreate.isEmpty() ) {
+            for ( List<NSP_Account_Group__c> lst : allGroupsToCreate.values() ) {
+                if ( !lst.isEmpty() ){
+                    groups.addAll( lst );
+                }
+            }
+        }
+        return groups;
+    }
+
+    private static List<NSP_Account_Group_Member__c> collectMembers(
+        Map<Id,List<NSP_Account_Group__c>> allGroupsToCreate ,
+        List<NSP_Account_Group_Member__c> members
+        )
+    {
+        if ( members == null ) {
+            members = new List<NSP_Account_Group_Member__c>();
+        }
+        if ( ( allGroupsToCreate != null ) && !allGroupsToCreate.isEmpty() ) {
+            for ( Id accId : allGroupsToCreate.keySet() ){
+                List<NSP_Account_Group__c> grpList = allGroupsToCreate.get( accId );
+                if ( ( grpList != null ) && !grpList.isEmpty() ) {
+                    for ( NSP_Account_Group__c grp : grpList ) {
+                        if ( ( grp != null ) && grp.Id != null ) {
+                            members.add(
+                                new NSP_Account_Group_Member__c(
+                                    NSP_Member_Account__c=accId ,
+                                    NSP_Group__c=grp.Id ,
+                                    NSP_Primary__c=true
+                                )
+                            );
+                        }
+                    }
+                }
+            }
+        }
+        return members;
     }
 
     private static Set<Id> getWoAssetAccountIds( Set<Id> accountIds ){
