@@ -81,15 +81,24 @@ public class NSP_NotifyPMForITAProjBatch implements Schedulable,Database.Batchab
                             RecordTypeId
                         FROM Implementation_Profile__c
                         WHERE (
-                            ( Account__c IN : assetAccountIDs )
-                            AND ( ( RecordTypeId = :ipFSORecordTypeId ) OR ( RecordTypeId = :ipMMRecordTypeId ) )
-                            AND ( ( NSP_Project_Manager__c != NULL ) OR ( NSP_Payroll_Specialist__c != NULL ) OR ( NSP_Payroll_Project_Manager__c != NULL ) )
-                            AND NSP_Project__r.pse__Project_Status__c Not IN (
-                                'Complete',
-                                'Cancelled',
-                                'Close/Lost',
-                                'Quality Review',
-                                'Closed Prior to CQA'
+                            ( Account__c IN :assetAccountIDs )
+                            AND (
+                                ( RecordTypeId = :ipFSORecordTypeId )
+                                OR ( RecordTypeId = :ipMMRecordTypeId )
+                            )
+                            AND (
+                                ( NSP_Project_Manager__c != null )
+                                OR ( NSP_Payroll_Specialist__c != null )
+                                OR ( NSP_Payroll_Project_Manager__c != null )
+                            )
+                            AND (
+                                NSP_Project__r.pse__Project_Status__c NOT IN (
+                                    'Complete' ,
+                                    'Cancelled' ,
+                                    'Close/Lost' ,
+                                    'Quality Review' ,
+                                    'Closed Prior to CQA'
+                                )
                             )
                         )
                     ]
