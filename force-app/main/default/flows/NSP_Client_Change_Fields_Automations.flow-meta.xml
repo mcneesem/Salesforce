@@ -4,13 +4,16 @@
         <description>Aftd EEs field value is greater than two Alert</description>
         <name>Aftd_EEs_value_is_greater_than_2_Alert</name>
         <label>Aftd EEs value is greater than 2 Alert</label>
-        <locationX>182</locationX>
-        <locationY>2303</locationY>
+        <locationX>50</locationX>
+        <locationY>2897</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
             <targetReference>Create_Email_Message_Rec_0_0</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Aftd_EEs_value_is_greater_than_2_Alert</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>emailBody</name>
@@ -43,13 +46,16 @@
         <description>Aftd EEs field value is greater than two Alert</description>
         <name>Aftd_EEs_value_is_greater_than_2_Alert_0</name>
         <label>Aftd EEs value is greater than 2 Alert</label>
-        <locationX>446</locationX>
-        <locationY>2195</locationY>
+        <locationX>842</locationX>
+        <locationY>2789</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
             <targetReference>Create_Email_Message_Rec_0_0_0</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Aftd_EEs_value_is_greater_than_2_Alert_0</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>emailBody</name>
@@ -82,13 +88,16 @@
         <description>Email alert to CAM Resource for Assignment</description>
         <name>CAM_Resource_Assignment_Alert</name>
         <label>CAM Resource Assignment Alert</label>
-        <locationX>314</locationX>
-        <locationY>1163</locationY>
+        <locationX>446</locationX>
+        <locationY>1361</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
             <targetReference>Create_Email_Message_Rec</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_CAM_Resource_Assignment_Alert</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>emailBody</name>
@@ -121,13 +130,16 @@
         <description>Qc rep Assignment Email Alert</description>
         <name>Qc_rep_Assignment_Email_Alert</name>
         <label>Qc rep Assignment Email Alert</label>
-        <locationX>314</locationX>
-        <locationY>1571</locationY>
+        <locationX>446</locationX>
+        <locationY>1967</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
             <targetReference>Create_Email_Message_Rec_0</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Qc_rep_Assignment_Email_Alert</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>emailBody</name>
@@ -162,8 +174,8 @@
         <description>Assign Related Ret Ed Rec Url</description>
         <name>Assign_Ret_Ed_Rec_Url</name>
         <label>Assign Ret Ed Rec Url</label>
-        <locationX>182</locationX>
-        <locationY>2195</locationY>
+        <locationX>50</locationX>
+        <locationY>2789</locationY>
         <assignmentItems>
             <assignToReference>RetEdRelatedRecUrl</assignToReference>
             <operator>Assign</operator>
@@ -173,6 +185,243 @@
         </assignmentItems>
         <connector>
             <targetReference>Aftd_EEs_value_is_greater_than_2_Alert</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Aftd_EEs_value_is_greater_than_2_Alert</name>
+        <label>Assign varFaultElement - Aftd_EEs_value_is_greater_than_2_Alert</label>
+        <locationX>578</locationX>
+        <locationY>3005</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Aftd_EEs_value_is_greater_than_2_Alert</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Aftd_EEs_value_is_greater_than_2_Alert_0</name>
+        <label>Assign varFaultElement - Aftd_EEs_value_is_greater_than_2_Alert_0</label>
+        <locationX>1370</locationX>
+        <locationY>2897</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Aftd_EEs_value_is_greater_than_2_Alert_0</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_CAM_Resource_Assignment_Alert</name>
+        <label>Assign varFaultElement - CAM_Resource_Assignment_Alert</label>
+        <locationX>974</locationX>
+        <locationY>1469</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>CAM_Resource_Assignment_Alert</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Create_a_Task_and_assign_to_CAM_Resource</name>
+        <label>Assign varFaultElement - Create_a_Task_and_assign_to_CAM_Resource</label>
+        <locationX>314</locationX>
+        <locationY>863</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_a_Task_and_assign_to_CAM_Resource</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Create_Email_Message_Rec</name>
+        <label>Assign varFaultElement - Create_Email_Message_Rec</label>
+        <locationX>710</locationX>
+        <locationY>1577</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_Email_Message_Rec</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Create_Email_Message_Rec_0</name>
+        <label>Assign varFaultElement - Create_Email_Message_Rec_0</label>
+        <locationX>710</locationX>
+        <locationY>2183</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_Email_Message_Rec_0</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Create_Email_Message_Rec_0_0</name>
+        <label>Assign varFaultElement - Create_Email_Message_Rec_0_0</label>
+        <locationX>314</locationX>
+        <locationY>3113</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_Email_Message_Rec_0_0</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Create_Email_Message_Rec_0_0_0</name>
+        <label>Assign varFaultElement - Create_Email_Message_Rec_0_0_0</label>
+        <locationX>1106</locationX>
+        <locationY>3005</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_Email_Message_Rec_0_0_0</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_all_Client_Changes_Quality_Control_Issue_Tasks</name>
+        <label>Assign varFaultElement - Get_all_Client_Changes_Quality_Control_Issue_Tasks</label>
+        <locationX>2426</locationX>
+        <locationY>647</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_all_Client_Changes_Quality_Control_Issue_Tasks</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_BPS_Record_Type</name>
+        <label>Assign varFaultElement - Get_BPS_Record_Type</label>
+        <locationX>2690</locationX>
+        <locationY>539</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_BPS_Record_Type</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_Education_Rec_associated_with_Asset</name>
+        <label>Assign varFaultElement - Get_Education_Rec_associated_with_Asset</label>
+        <locationX>2162</locationX>
+        <locationY>2573</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Education_Rec_associated_with_Asset</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_Email_Message_Rec_with_same_Subject</name>
+        <label>Assign varFaultElement - Get_Email_Message_Rec_with_same_Subject</label>
+        <locationX>1898</locationX>
+        <locationY>2681</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Email_Message_Rec_with_same_Subject</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_RET_Service_Mdt_with_Email_address</name>
+        <label>Assign varFaultElement - Get_RET_Service_Mdt_with_Email_address</label>
+        <locationX>2954</locationX>
+        <locationY>431</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_RET_Service_Mdt_with_Email_address</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Qc_rep_Assignment_Email_Alert</name>
+        <label>Assign varFaultElement - Qc_rep_Assignment_Email_Alert</label>
+        <locationX>974</locationX>
+        <locationY>2075</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Qc_rep_Assignment_Email_Alert</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
     <constants>
@@ -203,8 +452,8 @@
         <description>Check if Aftd EEs field value is greater than two</description>
         <name>Check_if_Aftd_EEs_field_value_is_greater_than_two</name>
         <label>Check if Aftd EEs field value is greater than two</label>
-        <locationX>446</locationX>
-        <locationY>2087</locationY>
+        <locationX>842</locationX>
+        <locationY>2681</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>isAftdEEsGreaterThan2</name>
@@ -263,7 +512,7 @@
     <decisions>
         <name>Check_if_CAM_Resource_and_Error_Found_checked</name>
         <label>Check if CAM Resource and Error Found checked</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>647</locationY>
         <defaultConnector>
             <targetReference>Outbound_Email_custom_setting_check</targetReference>
@@ -303,8 +552,8 @@
         <description>Check if CAM Resource field is populated or updated</description>
         <name>Check_if_CAM_Resource_field_is_updated</name>
         <label>Check if CAM Resource field is updated</label>
-        <locationX>446</locationX>
-        <locationY>1055</locationY>
+        <locationX>842</locationX>
+        <locationY>1253</locationY>
         <defaultConnector>
             <targetReference>Check_if_Qc_Rep_is_updated</targetReference>
         </defaultConnector>
@@ -336,8 +585,8 @@
         <description>Check if Qc Rep is populated or updated</description>
         <name>Check_if_Qc_Rep_is_updated</name>
         <label>Check if Qc Rep is updated</label>
-        <locationX>446</locationX>
-        <locationY>1463</locationY>
+        <locationX>842</locationX>
+        <locationY>1859</locationY>
         <defaultConnector>
             <targetReference>Get_Education_Rec_associated_with_Asset</targetReference>
         </defaultConnector>
@@ -369,8 +618,8 @@
         <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
         <name>Outbound_Email_custom_setting_check</name>
         <label>Outbound Email custom setting check</label>
-        <locationX>182</locationX>
-        <locationY>947</locationY>
+        <locationX>314</locationX>
+        <locationY>1145</locationY>
         <defaultConnector>
             <targetReference>Check_if_CAM_Resource_field_is_updated</targetReference>
         </defaultConnector>
@@ -388,7 +637,7 @@
             <label>IsEnabledOutbound = false</label>
         </rules>
     </decisions>
-    <description>Outbound Email bypass added. Client Change Fields object email alert and task creation</description>
+    <description>Fault Paths added. Outbound Email bypass added. Client Change Fields object email alert and task creation</description>
     <environments>Default</environments>
     <formulas>
         <description>Client Change Field Record Url</description>
@@ -439,6 +688,9 @@ if({!$Record.NSP_Move_Deferrals__c}, &apos;Move Deferrals?, &apos;, &apos;&apos;
         <connector>
             <targetReference>Outbound_Email_custom_setting_check</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Create_a_Task_and_assign_to_CAM_Resource</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>ActivityDate</field>
             <value>
@@ -506,11 +758,14 @@ if({!$Record.NSP_Move_Deferrals__c}, &apos;Move Deferrals?, &apos;, &apos;&apos;
         <description>Create Email Message Records for tracebility</description>
         <name>Create_Email_Message_Rec</name>
         <label>Create Email Message Rec</label>
-        <locationX>314</locationX>
-        <locationY>1271</locationY>
+        <locationX>446</locationX>
+        <locationY>1469</locationY>
         <connector>
             <targetReference>Check_if_Qc_Rep_is_updated</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Create_Email_Message_Rec</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>FromAddress</field>
             <value>
@@ -560,11 +815,14 @@ if({!$Record.NSP_Move_Deferrals__c}, &apos;Move Deferrals?, &apos;, &apos;&apos;
         <description>Create Email Message Records for tracebility</description>
         <name>Create_Email_Message_Rec_0</name>
         <label>Create Email Message Rec</label>
-        <locationX>314</locationX>
-        <locationY>1679</locationY>
+        <locationX>446</locationX>
+        <locationY>2075</locationY>
         <connector>
             <targetReference>Get_Education_Rec_associated_with_Asset</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Create_Email_Message_Rec_0</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>FromAddress</field>
             <value>
@@ -614,8 +872,11 @@ if({!$Record.NSP_Move_Deferrals__c}, &apos;Move Deferrals?, &apos;, &apos;&apos;
         <description>Create Email Message Records for tracebility</description>
         <name>Create_Email_Message_Rec_0_0</name>
         <label>Create Email Message Rec</label>
-        <locationX>182</locationX>
-        <locationY>2411</locationY>
+        <locationX>50</locationX>
+        <locationY>3005</locationY>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Create_Email_Message_Rec_0_0</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>FromAddress</field>
             <value>
@@ -665,8 +926,11 @@ if({!$Record.NSP_Move_Deferrals__c}, &apos;Move Deferrals?, &apos;, &apos;&apos;
         <description>Create Email Message Records for tracebility</description>
         <name>Create_Email_Message_Rec_0_0_0</name>
         <label>Create Email Message Rec</label>
-        <locationX>446</locationX>
-        <locationY>2303</locationY>
+        <locationX>842</locationX>
+        <locationY>2897</locationY>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Create_Email_Message_Rec_0_0_0</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>FromAddress</field>
             <value>
@@ -715,12 +979,15 @@ if({!$Record.NSP_Move_Deferrals__c}, &apos;Move Deferrals?, &apos;, &apos;&apos;
     <recordLookups>
         <name>Get_all_Client_Changes_Quality_Control_Issue_Tasks</name>
         <label>Get all Client Changes - Quality Control Issue Tasks</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>539</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_if_CAM_Resource_and_Error_Found_checked</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_all_Client_Changes_Quality_Control_Issue_Tasks</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Subject</field>
@@ -743,12 +1010,15 @@ if({!$Record.NSP_Move_Deferrals__c}, &apos;Move Deferrals?, &apos;, &apos;&apos;
     <recordLookups>
         <name>Get_BPS_Record_Type</name>
         <label>Get BPS Record Type</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>431</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_all_Client_Changes_Quality_Control_Issue_Tasks</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_BPS_Record_Type</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>DeveloperName</field>
@@ -774,12 +1044,15 @@ if({!$Record.NSP_Move_Deferrals__c}, &apos;Move Deferrals?, &apos;, &apos;&apos;
         <description>Get Education Rec associated with Asset on client change</description>
         <name>Get_Education_Rec_associated_with_Asset</name>
         <label>Get Education Rec associated with Asset</label>
-        <locationX>446</locationX>
-        <locationY>1871</locationY>
+        <locationX>842</locationX>
+        <locationY>2465</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Email_Message_Rec_with_same_Subject</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_Education_Rec_associated_with_Asset</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>NSP_Education_Client__c</field>
@@ -803,12 +1076,15 @@ if({!$Record.NSP_Move_Deferrals__c}, &apos;Move Deferrals?, &apos;, &apos;&apos;
         <description>Get Email Message Rec with same Subject</description>
         <name>Get_Email_Message_Rec_with_same_Subject</name>
         <label>Get Email Message Rec with same Subject</label>
-        <locationX>446</locationX>
-        <locationY>1979</locationY>
+        <locationX>842</locationX>
+        <locationY>2573</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_if_Aftd_EEs_field_value_is_greater_than_two</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_Email_Message_Rec_with_same_Subject</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Subject</field>
@@ -832,12 +1108,15 @@ if({!$Record.NSP_Move_Deferrals__c}, &apos;Move Deferrals?, &apos;, &apos;&apos;
         <description>Get RET Service Mdt with Email address stored in it</description>
         <name>Get_RET_Service_Mdt_with_Email_address</name>
         <label>Get RET Service Mdt with Email address</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>323</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_BPS_Record_Type</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_RET_Service_Mdt_with_Email_address</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>NSP_Name__c</field>
@@ -851,7 +1130,7 @@ if({!$Record.NSP_Move_Deferrals__c}, &apos;Move Deferrals?, &apos;, &apos;&apos;
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>56</locationX>
+        <locationX>188</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_RET_Service_Mdt_with_Email_address</targetReference>
@@ -861,6 +1140,31 @@ if({!$Record.NSP_Move_Deferrals__c}, &apos;Move Deferrals?, &apos;, &apos;&apos;
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Draft</status>
+    <subflows>
+        <name>Fault_Handler_Subflow</name>
+        <label>Fault Handler Subflow</label>
+        <locationX>2954</locationX>
+        <locationY>539</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>varFaultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>NSP_Client_Change_Fields_Automations</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <textTemplates>
         <description>Aftd EEs Greater Than 2 Email Body</description>
         <name>AftdEEsGreaterThan2EmailBody</name>
@@ -899,5 +1203,12 @@ if({!$Record.NSP_Move_Deferrals__c}, &apos;Move Deferrals?, &apos;, &apos;&apos;
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
 </Flow>

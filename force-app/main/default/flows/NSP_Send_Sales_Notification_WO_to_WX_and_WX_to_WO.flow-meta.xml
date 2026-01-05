@@ -8,8 +8,7 @@
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_Subflow</targetReference>
+            <targetReference>Assign_varFaultElement_Copy_1_of_Send_Email</targetReference>
         </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -53,8 +52,7 @@
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_Subflow</targetReference>
+            <targetReference>Assign_varFaultElement_Copy_2_of_Send_Email</targetReference>
         </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -98,7 +96,7 @@
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <faultConnector>
-            <targetReference>Fault_Handler_Subflow</targetReference>
+            <targetReference>Assign_varFaultElement_Copy_3_of_Send_Email</targetReference>
         </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -142,8 +140,7 @@
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_Subflow</targetReference>
+            <targetReference>Assign_varFaultElement_Send_Email</targetReference>
         </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -221,6 +218,175 @@
         </assignmentItems>
         <connector>
             <targetReference>Loop_Account_Teams</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Copy_1_of_Get_Account_Teams</name>
+        <label>Assign varFaultElement - Copy_1_of_Get_Account_Teams</label>
+        <locationX>1986</locationX>
+        <locationY>647</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Copy_1_of_Get_Account_Teams</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Copy_1_of_Send_Email</name>
+        <label>Assign varFaultElement - Copy_1_of_Send_Email</label>
+        <locationX>1458</locationX>
+        <locationY>1271</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Copy_1_of_Send_Email</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Copy_2_of_Get_Account_Teams</name>
+        <label>Assign varFaultElement - Copy_2_of_Get_Account_Teams</label>
+        <locationX>3130</locationX>
+        <locationY>647</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Copy_2_of_Get_Account_Teams</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Copy_2_of_Send_Email</name>
+        <label>Assign varFaultElement - Copy_2_of_Send_Email</label>
+        <locationX>2602</locationX>
+        <locationY>1163</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Copy_2_of_Send_Email</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Copy_3_of_Get_Account_Teams</name>
+        <label>Assign varFaultElement - Copy_3_of_Get_Account_Teams</label>
+        <locationX>4802</locationX>
+        <locationY>647</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Copy_3_of_Get_Account_Teams</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Copy_3_of_Send_Email</name>
+        <label>Assign varFaultElement - Copy_3_of_Send_Email</label>
+        <locationX>3746</locationX>
+        <locationY>1487</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Copy_3_of_Send_Email</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_Account_Group</name>
+        <label>Assign varFaultElement - Get_Account_Group</label>
+        <locationX>4274</locationX>
+        <locationY>1271</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Account_Group</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_Account_Teams</name>
+        <label>Assign varFaultElement - Get_Account_Teams</label>
+        <locationX>842</locationX>
+        <locationY>647</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Account_Teams</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Send_Email</name>
+        <label>Assign varFaultElement - Send_Email</label>
+        <locationX>314</locationX>
+        <locationY>1163</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Send_Email</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Update_Renewal_Probability_Account_Group</name>
+        <label>Assign varFaultElement - Update_Renewal_Probability_Account_Group</label>
+        <locationX>4010</locationX>
+        <locationY>1379</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Renewal_Probability_Account_Group</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -549,7 +715,7 @@
             <label>IsEnabledOutbound = false</label>
         </rules>
     </decisions>
-    <description>Fault Handler Subflow added. Outbound Email bypass added.</description>
+    <description>varFaultElement added. Fault Handler Subflow added. Outbound Email bypass added.</description>
     <environments>Default</environments>
     <interviewLabel>Send Sales Notification {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Send Sales Notification WO to WX and WX to WO</label>
@@ -638,8 +804,7 @@
             <targetReference>Copy_1_of_Check_If_Account_Team_Exists</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_Subflow</targetReference>
+            <targetReference>Assign_varFaultElement_Copy_1_of_Get_Account_Teams</targetReference>
         </faultConnector>
         <filterLogic>1 AND (2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9)</filterLogic>
         <filters>
@@ -721,8 +886,7 @@
             <targetReference>Copy_2_of_Check_If_Account_Team_Exists</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_Subflow</targetReference>
+            <targetReference>Assign_varFaultElement_Copy_2_of_Get_Account_Teams</targetReference>
         </faultConnector>
         <filterLogic>1 AND (2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9)</filterLogic>
         <filters>
@@ -804,8 +968,7 @@
             <targetReference>Copy_3_of_Check_If_Account_Team_Exists</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_Subflow</targetReference>
+            <targetReference>Assign_varFaultElement_Copy_3_of_Get_Account_Teams</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -838,8 +1001,7 @@
             <targetReference>Update_Renewal_Probability_Account_Group</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_Subflow</targetReference>
+            <targetReference>Assign_varFaultElement_Get_Account_Group</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -870,8 +1032,7 @@
             <targetReference>Check_If_Account_Team_Exists</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_Subflow</targetReference>
+            <targetReference>Assign_varFaultElement_Get_Account_Teams</targetReference>
         </faultConnector>
         <filterLogic>1 AND (2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9)</filterLogic>
         <filters>
@@ -952,8 +1113,7 @@
             <targetReference>Copy_3_of_Send_Email</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_Subflow</targetReference>
+            <targetReference>Assign_varFaultElement_Update_Renewal_Probability_Account_Group</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -997,8 +1157,14 @@
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
         <locationX>3746</locationX>
-        <locationY>1487</locationY>
+        <locationY>1595</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>varFaultElement</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <name>faultFlow</name>
             <value>
@@ -1036,6 +1202,13 @@
         <name>toAddress</name>
         <dataType>String</dataType>
         <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>

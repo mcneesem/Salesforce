@@ -11,7 +11,7 @@
             <targetReference>Check_RenderEmailTemplate</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Fault_Element_for_Apex_action</targetReference>
+            <targetReference>Assign_varFaultElement_RenderEmailTemplate</targetReference>
         </faultConnector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
@@ -38,7 +38,7 @@
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <faultConnector>
-            <targetReference>Fault_Element_for_Send_Email_action</targetReference>
+            <targetReference>Assign_varFaultElement_Send_Term_form_Email</targetReference>
         </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -117,6 +117,9 @@
         <connector>
             <targetReference>Check_SplitRoles_action</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Split_Roles_on_custom_settings_for_role</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>inputSeparator</name>
@@ -144,6 +147,9 @@
         <connector>
             <targetReference>Check_Split_CCAddress_action</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_SplitCustomSettingsEmailCCaddress</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>inputSeparator</name>
@@ -196,6 +202,103 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_varFaultElement_Get_Account_Team</name>
+        <label>Assign varFaultElement - Get_Account_Team</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Account_Team</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_Existing_records</name>
+        <label>Assign varFaultElement - Get_Existing_records</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Existing_records</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_RenderEmailTemplate</name>
+        <label>Assign varFaultElement - RenderEmailTemplate</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>RenderEmailTemplate</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Send_Term_form_Email</name>
+        <label>Assign varFaultElement - Send_Term_form_Email</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Send_Term_form_Email</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Split_Roles_on_custom_settings_for_role</name>
+        <label>Assign varFaultElement - Split_Roles_on_custom_settings_for_role</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Split_Roles_on_custom_settings_for_role</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_SplitCustomSettingsEmailCCaddress</name>
+        <label>Assign varFaultElement - SplitCustomSettingsEmailCCaddress</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>SplitCustomSettingsEmailCCaddress</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>CC_Recipient_Address_Collection</name>
         <label>CC Recipient Address Collection</label>
         <locationX>0</locationX>
@@ -225,73 +328,6 @@
         </assignmentItems>
         <connector>
             <targetReference>Send_Term_form_Email</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Fault_Element_for_Apex_action</name>
-        <label>Fault Element for Apex action</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>fault_element</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>RenderEmailTemplate</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Fault_Element_for_get_cc_addresses</name>
-        <label>Fault Element for get cc addresses</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>fault_element</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Get_cc_address_from_custom_settings</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Fault_Element_for_Send_Email_action</name>
-        <label>Fault Element for Send Email action</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>fault_element</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Send_Term_form_Email</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Fault_element_forGetExistingTermRecords</name>
-        <label>Fault element forGetExistingTermRecords</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>fault_element</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Get_Existing_records</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -634,7 +670,7 @@
             <label>IsEnabledOutbound = false</label>
         </rules>
     </decisions>
-    <description>Outbound Email bypass added.</description>
+    <description>Fault paths and varFaultElement added. Outbound Email bypass added.</description>
     <environments>Default</environments>
     <formulas>
         <name>BatchRuns</name>
@@ -687,7 +723,7 @@
             <targetReference>Account_Team_Loop</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Fault_Element_for_get_cc_addresses</targetReference>
+            <targetReference>Assign_varFaultElement_Get_Account_Team</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -714,7 +750,7 @@
             <targetReference>Check_GetExistingRecords</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Fault_element_forGetExistingTermRecords</targetReference>
+            <targetReference>Assign_varFaultElement_Get_Existing_records</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -892,7 +928,7 @@
         <inputAssignments>
             <name>faultElement</name>
             <value>
-                <elementReference>fault_element</elementReference>
+                <elementReference>varFaultElement</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -937,20 +973,17 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>fault_element</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <stringValue></stringValue>
-        </value>
-    </variables>
-    <variables>
         <name>recordId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
 </Flow>

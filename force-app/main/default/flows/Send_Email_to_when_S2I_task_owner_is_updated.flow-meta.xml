@@ -3,13 +3,16 @@
     <actionCalls>
         <name>Send_Email_to_task_owner</name>
         <label>Send Email to task owner</label>
-        <locationX>242</locationX>
+        <locationX>110</locationX>
         <locationY>539</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
             <targetReference>Create_Email_Message_Record_to_trace_email_sent</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Send_Email_to_task_owner</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>emailBody</name>
@@ -46,10 +49,43 @@
     </actionCalls>
     <apiVersion>55.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_varFaultElement_Create_Email_Message_Record_to_trace_email_sent</name>
+        <label>Assign varFaultElement - Create_Email_Message_Record_to_trace_email_sent</label>
+        <locationX>374</locationX>
+        <locationY>755</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_Email_Message_Record_to_trace_email_sent</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Send_Email_to_task_owner</name>
+        <label>Assign varFaultElement - Send_Email_to_task_owner</label>
+        <locationX>638</locationX>
+        <locationY>647</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Send_Email_to_task_owner</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Check_if_owner_Id_is_changed</name>
         <label>Check if owner Id is changed</label>
-        <locationX>374</locationX>
+        <locationX>506</locationX>
         <locationY>431</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -105,7 +141,7 @@
             <label>IsEnabledOutbound = false</label>
         </rules>
     </decisions>
-    <description>Outbound Email bypass added.</description>
+    <description>Fault paths added. Outbound Email bypass added.</description>
     <environments>Default</environments>
     <formulas>
         <name>linkToTask</name>
@@ -136,8 +172,11 @@
     <recordCreates>
         <name>Create_Email_Message_Record_to_trace_email_sent</name>
         <label>Create Email Message Record to trace email sent.</label>
-        <locationX>242</locationX>
+        <locationX>110</locationX>
         <locationY>647</locationY>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Create_Email_Message_Record_to_trace_email_sent</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>FromAddress</field>
             <value>
@@ -194,9 +233,41 @@
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Draft</status>
+    <subflows>
+        <name>Fault_Handler_Subflow</name>
+        <label>Fault Handler Subflow</label>
+        <locationX>638</locationX>
+        <locationY>755</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>varFaultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Send_Email_to_when_S2I_task_owner_is_updated</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <textTemplates>
         <name>emailBody</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
         <text>&lt;p&gt;&lt;span style=&quot;font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;The following task has been assigned to you by {!$User.FirstName} {!$User.LastName}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;To view this record,&amp;nbsp;click the link: &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;{!linkToTask}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;&lt;u&gt;View Record&lt;/u&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;Task Name: {!$Record.Subject}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;Priority: {!$Record.Priority}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;Status: {!$Record.Status}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;Start Date: {!$Record.NSP_Start_Date__c}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;Due Date: {!$Record.ActivityDate}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;Comments: {!$Record.Description}&lt;/span&gt;&lt;/p&gt;</text>
     </textTemplates>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
 </Flow>

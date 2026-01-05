@@ -11,7 +11,7 @@
             <targetReference>Create_Email_Message_Records</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Fault_Handler_Subflow</targetReference>
+            <targetReference>Assign_varFaultElement_Task_Assigned_Email</targetReference>
         </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -43,6 +43,56 @@
     </actionCalls>
     <apiVersion>55.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_varFaultElement_Copy_to_Standard_subject_field</name>
+        <label>Assign varFaultElement - Copy_to_Standard_subject_field</label>
+        <locationX>314</locationX>
+        <locationY>863</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Copy_to_Standard_subject_field</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Create_Email_Message_Records</name>
+        <label>Assign varFaultElement - Create_Email_Message_Records</label>
+        <locationX>578</locationX>
+        <locationY>755</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_Email_Message_Records</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Task_Assigned_Email</name>
+        <label>Assign varFaultElement - Task_Assigned_Email</label>
+        <locationX>842</locationX>
+        <locationY>647</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Task_Assigned_Email</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Check_Condition</name>
         <label>Check Condition</label>
@@ -102,7 +152,7 @@
             <label>IsEnabledOutbound = false</label>
         </rules>
     </decisions>
-    <description>Outbound Email bypass and Fault Handler subflow added.</description>
+    <description>Added varFaultElement. Outbound Email bypass and Fault Handler subflow added.</description>
     <environments>Default</environments>
     <formulas>
         <name>fxTaskURL</name>
@@ -139,8 +189,7 @@
             <targetReference>Copy_to_Standard_subject_field</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_Subflow</targetReference>
+            <targetReference>Assign_varFaultElement_Create_Email_Message_Records</targetReference>
         </faultConnector>
         <inputAssignments>
             <field>FromAddress</field>
@@ -193,8 +242,7 @@
         <locationX>50</locationX>
         <locationY>755</locationY>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_Subflow</targetReference>
+            <targetReference>Assign_varFaultElement_Copy_to_Standard_subject_field</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -227,8 +275,14 @@
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
         <locationX>842</locationX>
-        <locationY>647</locationY>
+        <locationY>755</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>varFaultElement</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <name>faultFlow</name>
             <value>
@@ -247,4 +301,11 @@
         <isViewedAsPlainText>false</isViewedAsPlainText>
         <text>&lt;p&gt;The following task has been assigned to you by {!$Record.LastModifiedBy.Name}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Information regarding the task has been posted below&lt;/p&gt;&lt;p&gt;To view the task record, &lt;a href=&quot;{!fxTaskURL}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;click here&amp;nbsp;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Task: {!$Record.Subject}&lt;/p&gt;&lt;p&gt;Priority:&amp;nbsp;{!$Record.Priority}&lt;/p&gt;&lt;p&gt;Status:&lt;span style=&quot;color: rgb(247, 3, 3);&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!$Record.Status}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Start Date:&amp;nbsp;{!$Record.NSP_Start_Date__c}&lt;/p&gt;&lt;p&gt;Due Date:&amp;nbsp;{!$Record.ActivityDate}&lt;/p&gt;&lt;p&gt;Comments:&amp;nbsp;{!$Record.Description}&lt;/p&gt;</text>
     </textTemplates>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
 </Flow>
