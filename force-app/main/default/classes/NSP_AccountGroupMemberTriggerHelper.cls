@@ -74,30 +74,28 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
         return result;
     }
 
-    private static void insertGroupsAndMembers(Map<Id, List<NSP_Account_Group__c>> allGroupsToCreate) {
+    private static void insertGroupsAndMembers ( Map<Id,List<NSP_Account_Group__c>> allGroupsToCreate ) {
         List<NSP_Account_Group__c> groups = new List<NSP_Account_Group__c>();
         List<NSP_Account_Group_Member__c> members = new List<NSP_Account_Group_Member__c>();
-        if ( allGroupsToCreate != null && !allGroupsToCreate.isEmpty() ) {
-            groups = NSP_AccountGroupMemberTriggerHelper.collectGroups( allGroupsToCreate, groups );
-            if ( groups != null && !groups.isEmpty() ) {
-                try {
-                    List<Database.SaveResult> groupResults = Database.insert( groups, false );
-                    NSP_ErrorLogHandler.logResults( 'NSP_AccountGroupMemberTriggerHelper', 'insertGroupsAndMembers - Groups', groupResults );
-                } catch (Exception ex) {
-                    NSP_ErrorLogHandler.logException( 'NSP_AccountGroupMemberTriggerHelper', 'insertGroupsAndMembers - Groups', ex );
-                }
-                members = NSP_AccountGroupMemberTriggerHelper.collectMembers( allGroupsToCreate, members );
-                if ( members != null && !members.isEmpty() ) {
-                    try {
-                        List<Database.SaveResult> memberResults = Database.insert( members, false );
-                        NSP_ErrorLogHandler.logResults( 'NSP_AccountGroupMemberTriggerHelper', 'insertGroupsAndMembers - Members', memberResults );
-                    } catch (Exception ex) {
-                        NSP_ErrorLogHandler.logException( 'NSP_AccountGroupMemberTriggerHelper', 'insertGroupsAndMembers - Members', ex );
-                    }
+        if( allGroupsToCreate != null && !allGroupsToCreate.isEmpty() ) {
+            groups = NSP_AccountGroupMemberTriggerHelper.collectGroups( allGroupsToCreate,groups );
+            if( groups != null && !groups.isEmpty() ){
+                insertWithLogging( groups,'insertGroupsAndMembers-Groups' );
+                members = NSP_AccountGroupMemberTriggerHelper.collectMembers( allGroupsToCreate,members );
+                if( members != null && !members.isEmpty() ){
+                    insertWithLogging( members,'insertGroupsAndMembers-Members' );
                 }
             }
         }
     }
+    private static void insertWithLogging( List<SObject> records,String operation ) {
+        try{
+            List<Database.SaveResult> results = Database.insert( records,false );
+            NSP_ErrorLogHandler.logResults( 'NSP_AccountGroupMemberTriggerHelper',operation,results );
+        }catch( Exception ex ){
+            NSP_ErrorLogHandler.logException( 'NSP_AccountGroupMemberTriggerHelper',operation,ex );
+        }
+}
 
     private static List<NSP_Account_Group__c> collectGroups(
         Map<Id,List<NSP_Account_Group__c>> allGroupsToCreate ,
@@ -117,33 +115,30 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
         return groups;
     }
 
-    private static List<NSP_Account_Group_Member__c> collectMembers(
-        Map<Id,List<NSP_Account_Group__c>> allGroupsToCreate ,
-        List<NSP_Account_Group_Member__c> members
-        )
-    {
-        if ( members == null ) {
+    private static List<NSP_Account_Group_Member__c> collectMembers(Map<Id, List<NSP_Account_Group__c>> allGroupsToCreate, List<NSP_Account_Group_Member__c> members) {
+        if (members == null) {
             members = new List<NSP_Account_Group_Member__c>();
         }
-        if ( ( allGroupsToCreate != null ) && !allGroupsToCreate.isEmpty() ) {
-            for ( Id accId : allGroupsToCreate.keySet() ){
-                List<NSP_Account_Group__c> grpList = allGroupsToCreate.get( accId );
-                if ( ( grpList != null ) && !grpList.isEmpty() ) {
-                    for ( NSP_Account_Group__c grp : grpList ) {
-                        if ( ( grp != null ) && grp.Id != null ) {
-                            members.add(
-                                new NSP_Account_Group_Member__c(
-                                    NSP_Member_Account__c=accId ,
-                                    NSP_Group__c=grp.Id ,
-                                    NSP_Primary__c=true
-                                )
-                            );
-                        }
-                    }
-                }
+        if (allGroupsToCreate != null && !allGroupsToCreate.isEmpty()) {
+            for (Id accId : allGroupsToCreate.keySet()) {
+                addMembersForAccount(accId, allGroupsToCreate.get(accId), members);
             }
         }
         return members;
+    }
+
+    private static void addMembersForAccount(Id accId, List<NSP_Account_Group__c> grpList, List<NSP_Account_Group_Member__c> members) {
+        if (grpList != null && !grpList.isEmpty()) {
+            for (NSP_Account_Group__c grp : grpList) {
+                if (grp != null && grp.Id != null) {
+                    members.add(new NSP_Account_Group_Member__c(
+                        NSP_Member_Account__c = accId,
+                        NSP_Group__c = grp.Id,
+                        NSP_Primary__c = true
+                    ));
+                }
+            }
+        }
     }
 
     private static Set<Id> getWoAssetAccountIds( Set<Id> accountIds ){
