@@ -100,6 +100,58 @@ private class NSP_AccountGroupMemberTriggerHelperTest {
         
     }
     
+   @IsTest
+    static void testAfterDelete_CreatesSelfGroup_GrowthForecast() {
+        insert new AccountGroupMemberTriggerSettings__c(
+            IsEnabled__c = true
+        );
+        Account acc = new Account(
+            Name = 'GF Account',
+            NSP_AIMS_Client__c = 'AIMS123'
+        );
+        insert acc;
+        Id autoRtId = Schema.SObjectType.NSP_Account_Group__c
+            .getRecordTypeInfosByName()
+            .get('Automatically Created')
+            .getRecordTypeId();
+        NSP_Account_Group__c grp = new NSP_Account_Group__c(
+            Name = NSP_ServiceConstants.GROWTH_FORECAST,
+            NSP_Type__c = NSP_ServiceConstants.GROWTH_FORECAST,
+            RecordTypeId = autoRtId
+        );
+        insert grp;
+        NSP_Account_Group_Member__c gm = new NSP_Account_Group_Member__c(
+            NSP_Member_Account__c = acc.Id,
+            NSP_Group__c = grp.Id,
+            NSP_Primary__c = true
+        );
+        insert gm;
+    
+        Test.startTest();
+        delete gm;
+        Test.stopTest();
+        List<NSP_Account_Group__c> createdGroups = [
+            SELECT Id, NSP_Type__c
+            FROM NSP_Account_Group__c
+            WHERE NSP_Type__c = :NSP_ServiceConstants.GROWTH_FORECAST
+            AND RecordTypeId = :autoRtId
+        ];
+        System.assert(
+            createdGroups.size() > 0,
+            'Self Growth Forecast group should be created'
+        );
+    
+        List<NSP_Account_Group_Member__c> createdMembers = [
+            SELECT Id, NSP_Member_Account__c, NSP_Primary__c
+            FROM NSP_Account_Group_Member__c
+            WHERE NSP_Member_Account__c = :acc.Id
+        ];
+        System.assert(
+            createdMembers.size() > 0,
+            'Self group member should be created'
+        );
+    }
+    
     /* this method is for validate the duplicate entry on Account Group Member */
     @isTest
     static void groupDuplicateValidation() {
