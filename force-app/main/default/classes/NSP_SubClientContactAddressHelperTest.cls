@@ -70,7 +70,7 @@ public class NSP_SubClientContactAddressHelperTest {
         NSP_Sub_Client_Contact_Address__c subClientContactAddress =[SELECT Id, NSP_Address__r.NSP_Street__c, NSP_Label_Code__c, Name 
                                                                     FROM NSP_Sub_Client_Contact_Address__c WHERE Name = 'Test' LIMIT 1];
         
-        User usr = [SELECT Id, Name FROM User WHERE Profile.Name = 'Integration User' LIMIT 1];
+        User usr = [SELECT Id, Name FROM User WHERE Profile.Name = 'Integration User' AND IsActive = true LIMIT 1];
         System.runAs(usr) {
             subClientContactAddress.Name = 'Test 1';
             update subClientContactAddress;
