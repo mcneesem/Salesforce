@@ -812,7 +812,7 @@ public class NSP_ProjectTasksTriggerHelper {
                             );
                         }
                         listOfToAddresses.add( System.Label.NSP_Termination_Team );
-                        letterRecievedEmail(
+                        letterReceivedEmail(
                             pTask.Id ,
                             pTask.Name ,
                             projectTaskLetterMap.get( pTask.Id ).pse__Project__r.pse__Account__r.Name ,
@@ -836,7 +836,7 @@ public class NSP_ProjectTasksTriggerHelper {
     }
 
     //Letter Received email.
-    private void letterRecievedEmail(
+    private void letterReceivedEmail(
         Id pTask ,
         String pTaskName ,
         String accountName ,
@@ -892,13 +892,14 @@ public class NSP_ProjectTasksTriggerHelper {
             email.setHtmlBody(mailBody);
             email.setSaveAsActivity(false);
             email.setTargetObjectId(userinfo.getUserId());
-            if ( !Test.isRunningTest() && EmailDeliverabilityController.IsEnabledOutbound) {
+            if ( !Test.isRunningTest()
+              && EmailDeliverabilityController.IsEnabledOutbound ) {
                 NSP_ProjectTasksTriggerHelper.sendSingleEmailMessage( email );
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 NSP_ProjectTasksTriggerHelper.class.getName() ,
-                'letterRecievedEmail' ,
+                'letterReceivedEmail' ,
                 e
             );
         }
@@ -1473,35 +1474,37 @@ public class NSP_ProjectTasksTriggerHelper {
             lstTaskQueueEvent.add(new NSP_ProjectTaskQueueEvent__e(NSP_Input_Parameters__c = JSON.serialize(mapInputParams), NSP_MethodName__c = 'createPTAIfOwnerIsChanged', NSP_UserId__c = UserInfo.getUserId()));
             List<Database.SaveResult> saveResults = EventBus.publish(lstTaskQueueEvent);
         }
-        if ( !sProjectTasksIds.isEmpty() ) {
+        if ( !sProjectTasksIds.isEmpty()
+          && NotificationDeliverabilityController.IsEnabledOutbound ) {
             NSP_ProjectTasksTriggerHelper.sendNotificationToDependentResource( sProjectTasksIds );
-            if(NotificationDeliverabilityController.IsEnabledOutbound){
-                NSP_ProjectTasksTriggerHelper.sendBellNotificationToDependentResource( sProjectTasksIds );
-            }
+            NSP_ProjectTasksTriggerHelper.sendBellNotificationToDependentResource( sProjectTasksIds );
+        }
+        if ( !sProjectTasksIds.isEmpty()
+          && EmailDeliverabilityController.IsEnabledOutbound ) {
             NSP_ProjectTasksTriggerHelper.sendEmailToProjectResource( sProjectTasksIds ); // STY-02213
         }
-        if(!projectTaskIdSet.isEmpty()){
+        if( !projectTaskIdSet.isEmpty() ) {
             NSP_ProjectTaskTriggerEmailNotification.emailNotifyforFEIN(projectTaskIdSet,mapofProjecttasks);
         }
         if ( NSP_ProjectTasksTriggerHelper.isUpdateDocusignAsset && accountIdList.size() > 0){
             updateDocusignAsset(accountIdList);
         }
-        if(!fundingprojectTaskIdSet.isEmpty()){
+        if( !fundingprojectTaskIdSet.isEmpty() ) {
             NSP_ProjectTaskTriggerEmailNotification.emailNotifyforFundingDocuments(fundingprojectTaskIdSet,mapofFundingProjecttasks);
         }
-        if(!mapofFormProjecttasks.isEmpty()){
+        if( !mapofFormProjecttasks.isEmpty() ) {
             NSP_ProjectTasksTriggerHelper.ipYesFormCollected(mapofFormProjecttasks);
         }
-        if(!projectFsoIdset.isEmpty()){
+        if( !projectFsoIdset.isEmpty() ) {
             NSP_ProjectTaskTriggerEmailNotification.emailNotifyforFirstPayrollFSO(projectFsoIdset, accountIdFsoProjectTaskMap);
         }
-        if(!projectFsoIdset.isEmpty() && NSP_Trigger_Switch__c.getInstance(UserInfo.getUserId()).NSP_FP_MM_EmailNotification__c){
+        if( !projectFsoIdset.isEmpty() && NSP_Trigger_Switch__c.getInstance(UserInfo.getUserId()).NSP_FP_MM_EmailNotification__c ) {
             NSP_ProjectTaskTriggerEmailNotification.emailNotifyforFirstPayrollMM(projectFsoIdset, accountIdFsoProjectTaskMap);
         }
-        if(!projectTaskCobraIdSet.isEmpty()){
+        if( !projectTaskCobraIdSet.isEmpty() ) {
             NSP_ProjectTaskTriggerEmailNotification.emailNotifyforCobraFollowUp(projectTaskCobraIdSet, projectTaskList);
         }
-        if(mapofClientProjectTask.size()>0){
+        if( mapofClientProjectTask.size()>0 ) {
             NSP_ProjectTaskTriggerEmailNotification.emailNotifyClientTransition(mapofClientProjectTask, mapOfProjectTaskOwner);
         }
     }
@@ -2235,7 +2238,6 @@ public class NSP_ProjectTasksTriggerHelper {
                         WHERE NSP_Account__c IN:setAccountIds AND NSP_Role__c IN:lstAccTeamRoles];
     }
 
-
     /***********************************************************************************************
     * MethodName  : checkStatusComplete
     * Description : This Method updated the NSP_Is_Status_Completed__c checkbox on Project Task
@@ -2268,9 +2270,7 @@ public class NSP_ProjectTasksTriggerHelper {
     //
     public static void sendEmailToProjectResource( Set<Id> projectTaskIdSet ) {
         if ( NSP_ProjectTasksTriggerHelper.isEnabledFutureNotifications
-            && ( Limits.getFutureCalls() < Limits.getLimitFutureCalls() )
-            )
-        {
+          && ( Limits.getFutureCalls() < Limits.getLimitFutureCalls() ) ) {
             NSP_ProjectTasksTriggerHelper.sendEmailToProjectResourceFuture( projectTaskIdSet );
         } else {
             NSP_ProjectTasksTriggerHelper.sendEmailToProjectResourceStatic( projectTaskIdSet );
@@ -2367,7 +2367,9 @@ public class NSP_ProjectTasksTriggerHelper {
     }
 
     private static void sendSingleEmailMessages( List<Messaging.SingleEmailMessage> messages ) {
-        if ( ( messages != null ) && !messages.isEmpty() && EmailDeliverabilityController.IsEnabledOutbound) {
+        if ( EmailDeliverabilityController.IsEnabledOutbound
+          && ( messages != null )
+          && !messages.isEmpty() ) {
             try {
                 Messaging.sendEmail( messages );
             } catch ( Exception e ) {

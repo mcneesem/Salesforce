@@ -65,470 +65,459 @@ private class NSP_ProjectTasksTriggerHelperTest {
         insert oContact;
 
         Case oCase = (Case)NSP_TestExtendedDataFactory.createSObject(new Case(), 'NSP_TestDataFactory.CaseDefaults', true);
-        List<User> deploymentManagers = [
-            SELECT Id
-            FROM User
-            WHERE ( Id = '0054x0000056lRZAAY' )
-            LIMIT 1
-        ];
-        Assert.isNotNull( deploymentManagers , 'Null Deployment Manager query results.' );
-        Assert.isTrue( ( deploymentManagers.size() > 0 ) , 'No Deployment Manager query results.' );
-        Assert.isTrue( ( deploymentManagers.size() == 1 ) , 'Incorrect Deployment Manager query results.' );
-        User deploymentManager = deploymentManagers[0];
-        System.runAs( deploymentManager ) {
-            List<pse__Proj__c> nProjectList = new List<pse__Proj__c>();
-            pse__Proj__c oProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
-            oProject.pse__Start_Date__c = Date.Today();
-            oPRoject.Case__c = oCase.Id;
-            oProject.pse__End_Date__c = System.Today().addDays(100);
-            oProject.pse__Account__c= oAccount.Id;
-            oProject.TemplateName__c = label.Middle_Market_Implementation_Project;
-            oProject.pse__Project_Type__c=NSP_ServiceConstants.ImplementationProjectType;
-            oProject.NSP_Asset_Implementation_Project__c =True;
-            nProjectList.add(oProject);
 
-            pse__Proj__c peoTermProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
-            peoTermProject.Name = projectName;
-            peoTermProject.pse__Start_Date__c = Date.Today();
-            peoTermProject.pse__End_Date__c = System.Today().addDays(100);
-            peoTermProject.pse__Account__c= oAccount.Id;
-            nProjectList.add(peoTermProject);
-
-            pse__Proj__c oProject1 = (pse__Proj__c) NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults');
-            oProject1.Name = 'Proj2';
-            oProject1.pse__Start_Date__c = Date.Today();
-            oProject1.Case__c = oCase.Id;
-            oProject1.pse__End_Date__c = System.Today().addDays(100);
-            oProject1.pse__Account__c= acc2.Id;
-            nProjectList.add(oProject1);
-
-            pse__Proj__c oPeoProject = (pse__Proj__c) NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults');
-            oPeoProject.Name = 'PeoProject';
-            oPeoProject.pse__Start_Date__c = Date.Today();
-            oPeoProject.Case__c = oCase.Id;
-            oPeoProject.pse__End_Date__c = System.Today().addDays(100);
-            oPeoProject.pse__Account__c= acc2.Id;
-            nProjectList.add(oPeoProject);
-
-            pse__Proj__c hcmProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c());
-            hcmProject.Name = NSP_ServiceConstants.HCM_PROJECT_NAME;
-            hcmProject.pse__Start_Date__c = Date.Today();
-            hcmProject.pse__End_Date__c = System.Today().addDays(100);
-            hcmProject.pse__Account__c= oAccount.Id;
-            hcmProject.TemplateName__c = NSP_ServiceConstants.HCM_PROJECT_NAME;
-            hcmProject.Project_Implementer__c = UserInfo.getUserId();
-            nProjectList.add(hcmProject);
-
-            pse__Proj__c projTemplate = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
-            projTemplate.Name = 'Test Template';
-            projTemplate.pse__Project_Status__c = 'Active';
-            projTemplate.pse__Is_Active__c = true;
-            projTemplate.pse__Is_Template__c = true;
-            projTemplate.pse__Start_Date__c = System.today();
-            nProjectList.add(projTemplate);
-
-            pse__Proj__c retProj = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
-            retProj.pse__Account__c = oAccount.Id;
-            retProj.TemplateName__c = 'RET - CSP Startup Setup';
-            retProj.pse__Is_Template__c = false;
-            nProjectList.add(retProj);
-
-            test.startTest();
-            insert nProjectList;
-
-            Id ipMMRecordTypeId = NSP_GenericRecordType.getRecordTypeId(
-                'Implementation_Profile__c',
-                NSP_ServiceConstants.MMProfile
-            );
-            Id projectPEORecordTypeId = NSP_GenericRecordType.getRecordTypeId(
-                'pse__Proj__c',
-                'PEO_Project'
-            );
-            pse__Proj__c oProject2 = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
-            oProject2.Name='test project';
-            oProject2.pse__Start_Date__c = Date.Today();
-            oProject2.pse__Project_Type__c = NSP_ServiceConstants.ImplementationProjectType;
-            oProject2.pse__End_Date__c = System.Today().addDays(100);
-            oProject2.RecordTypeId = projectPEORecordTypeId;
-            oProject2.TemplateName__c=label.Middle_Market_Implementation_Project;
-            insert oProject2;
-
-            Implementation_Profile__c impProfile1 = new Implementation_Profile__c();
-            impProfile1.NSP_Project__c = oProject2.Id;
-            impProfile1.NSP_Form_Completed__c = true;
-            impProfile1.RecordTypeId=ipMMRecordTypeId;
-            impProfile1.Has_form_8973_been_discussed__c = 'No';
-            insert impProfile1;
-
-            List<pse__Project_Task__c> nProjectTaskList = new List<pse__Project_Task__c>();
-            pse__Project_Task__c discoveryProjectTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
-            discoveryProjectTask.Name = NSP_ServiceConstants.PROJECT_TASK_DISCOVERY;
-            discoveryProjectTask.pse__Project__c = hcmProject.Id;
-            discoveryProjectTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
-            discoveryProjectTask.NSP_Template_Generated__c = true;
-            discoveryProjectTask.RecordTypeId = bPS_ProjectTaskRecordTypeId;
-            nProjectTaskList.add(discoveryProjectTask);
-
-            pse__Project_Task__c configProjectTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
-            configProjectTask.Name = NSP_ServiceConstants.CONFIGURATION_TASK;
-            configProjectTask.pse__Project__c = hcmProject.Id;
-            configProjectTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
-            configProjectTask.NSP_Template_Generated__c = true;
-            configProjectTask.RecordTypeId = bPS_ProjectTaskRecordTypeId;
-            nProjectTaskList.add(configProjectTask);
-
-            pse__Project_Task__c goLiveProjectTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
-            goLiveProjectTask.Name = NSP_ServiceConstants.GO_LIVE;
-            goLiveProjectTask.pse__Project__c = hcmProject.Id;
-            goLiveProjectTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
-            goLiveProjectTask.NSP_Template_Generated__c = true;
-            goLiveProjectTask.RecordTypeId = bPS_ProjectTaskRecordTypeId;
-            nProjectTaskList.add(goLiveProjectTask);
-
-            List<string> peoTerminationTaskList = System.Label.PEO_Termination_Tasks.split(';');
-            String WRITTENTERMINATION = null;
-            if(peoTerminationTaskList != null && !peoTerminationTaskList.isEmpty() && peoTerminationTaskList.size() >= 1){
-                WRITTENTERMINATION = peoTerminationTaskList[0];
-            }
-            pse__Project_Task__c letterReceived = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
-            letterReceived.Name = WRITTENTERMINATION;
-            letterReceived.pse__Project__c = hcmProject.Id;
-            letterReceived.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
-            letterReceived.NSP_Template_Generated__c = true;
-            letterReceived.RecordTypeId = bPS_ProjectTaskRecordTypeId;
-            nProjectTaskList.add(letterReceived);
-
-            pse__Project_Task__c itaTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
-            itaTask.Name = 'Notify ITA if term date is today';
-            itaTask.pse__Project__c = hcmProject.Id;
-            itaTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
-            itaTask.NSP_Template_Generated__c = true;
-            itaTask.RecordTypeId = bPS_ProjectTaskRecordTypeId;
-            nProjectTaskList.add(itaTask);
-
-            pse__Project_Task__c oProjectTaskRec = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
-            oProjectTaskRec.pse__Project__c = projTemplate.Id;
-            oProjectTaskRec.Name = 'Project Task Template';
-            oProjectTaskRec.RecordTypeId = pEOProjectTaskRecordTypeId;
-            nProjectTaskList.add(oProjectTaskRec);
-
-            String TERMINATIONANALYSIS = null;
-            if(peoTerminationTaskList != null && !peoTerminationTaskList.isEmpty() && peoTerminationTaskList.size() >= 2){
-                TERMINATIONANALYSIS = peoTerminationTaskList[1];
-            }
-            pse__Project_Task__c dTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
-            dTask.Name = TERMINATIONANALYSIS;
-            dTask.pse__Project__c = hcmProject.Id;
-            dTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
-            dTask.RecordTypeId = pEOProjectTaskRecordTypeId;
-            nProjectTaskList.add(dTask);
-
-            pse__Project_Task__c pt1 = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
-            pt1.pse__Project__c = retProj.Id;
-            pt1.pse__Order__c = 1;
-            pt1.pse__Status__c = 'Active';
-            pt1.Responsible_Party__c = 'RET Ops - Processing';
-            nProjectTaskList.add(pt1);
-
-            pse__Project_Task__c pt2 = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
-            pt2.pse__Project__c = retProj.Id;
-            pt2.pse__Order__c = 2;
-            pt2.pse__Status__c = 'Active';
-            pt2.Responsible_Party__c = 'RET Plan Consulting';
-            nProjectTaskList.add(pt2);
-
-            pse__Project_Task__c feinProjectTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
-            feinProjectTask.Name = NSP_ServiceConstants.FEIN;
-            feinProjectTask.pse__Project__c = hcmProject.Id;
-            feinProjectTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
-            feinProjectTask.NSP_Template_Generated__c = true;
-            feinProjectTask.RecordTypeId = bPS_ProjectTaskRecordTypeId;
-            nProjectTaskList.add(feinProjectTask);
-
-            pse__Project_Task__c fundingDocProjTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
-            fundingDocProjTask.Name = NSP_ServiceConstants.FUNDINGDOCUMENTS;
-            fundingDocProjTask.pse__Project__c = hcmProject.Id;
-            fundingDocProjTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
-            fundingDocProjTask.NSP_Template_Generated__c = true;
-            fundingDocProjTask.RecordTypeId = bPS_ProjectTaskRecordTypeId;
-            nProjectTaskList.add(fundingDocProjTask);
-
-            pse__Project_Task__c formCollectedProjTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
-            formCollectedProjTask.Name = NSP_ServiceConstants.FORMCOLLECTED;
-            formCollectedProjTask.pse__Project__c = oProject2.Id;
-            formCollectedProjTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
-            formCollectedProjTask.NSP_Template_Generated__c = true;
-            formCollectedProjTask.RecordTypeId = bPS_ProjectTaskRecordTypeId;
-            nProjectTaskList.add(formCollectedProjTask);
-
-            pse__Project_Task__c clientTransitionProjTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
-            clientTransitionProjTask.Name = NSP_ServiceConstants.CLIENTTRANSITION;
-            clientTransitionProjTask.pse__Project__c = hcmProject.Id;
-            clientTransitionProjTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
-            clientTransitionProjTask.NSP_Template_Generated__c = true;
-            clientTransitionProjTask.RecordTypeId = bPS_ProjectTaskRecordTypeId;
-            nProjectTaskList.add(clientTransitionProjTask);
-
-            pse__Project_Task__c onSiteProjTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
-            onSiteProjTask.Name = NSP_ServiceConstants.ONSITEDISCOVERY;
-            onSiteProjTask.pse__Project__c = hcmProject.Id;
-            onSiteProjTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
-            onSiteProjTask.NSP_Template_Generated__c = true;
-            onSiteProjTask.RecordTypeId = bPS_ProjectTaskRecordTypeId;
-            nProjectTaskList.add(onSiteProjTask);
-
-            pse__Project_Task__c payrollProjTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
-            payrollProjTask.Name = NSP_ServiceConstants.PAYROLLAPPROVED;
-            payrollProjTask.pse__Project__c = hcmProject.Id;
-            payrollProjTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
-            payrollProjTask.NSP_Template_Generated__c = true;
-            payrollProjTask.RecordTypeId = bPS_ProjectTaskRecordTypeId;
-            nProjectTaskList.add(payrollProjTask);
-
-            pse__Project_Task__c cobraProjTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
-            // cobraProjTask.Name = 'COBRA Takeovers';
-            cobraProjTask.Name = NSP_ServiceConstants.COBRA_FORM_YES;
-            cobraProjTask.pse__Project__c = hcmProject.Id;
-            cobraProjTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
-            cobraProjTask.NSP_Template_Generated__c = true;
-            cobraProjTask.RecordTypeId = bPS_ProjectTaskRecordTypeId;
-            nProjectTaskList.add(cobraProjTask);
-
-            pse__Project_Task__c scheduledTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
-            scheduledTask.Name = 'Test SA';
-            scheduledTask.pse__Start_Date_Time__c = System.now();
-            scheduledTask.pse__End_Date_Time__c = System.now();
-            scheduledTask.NSP_Dispatch_Region__c = 'MM National';
-            scheduledTask.NSP_Create_Work_Order__c = true;
-            scheduledTask.pse__Project__c = oProject.Id;
-            scheduledTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
-            scheduledTask.NSP_Template_Generated__c = true;
-            scheduledTask.RecordTypeId = pEOProjectTaskRecordTypeId;
-            nProjectTaskList.add(scheduledTask);
-
-            pse__Project_Task__c submitProjTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
-            submitProjTask.Name =submitPtask;
-            submitProjTask.pse__Project__c = peoTermProject.Id;
-            submitProjTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
-            nProjectTaskList.add(submitProjTask);
-
-            pse__Project_Task__c optionalProjTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
-            optionalProjTask.Name =optionalPtask;
-            optionalProjTask.pse__Project__c = peoTermProject.Id;
-            optionalProjTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
-            nProjectTaskList.add(optionalProjTask);
-
-            insert nProjectTaskList;
-
-            WorkOrder relWo = new WorkOrder();
-            relWo.Status = 'Unscheduled';
-            relWo.NSP_Project_Task__c = scheduledTask.Id;
-            insert relWo;
-
-            ServiceAppointment saRec = new ServiceAppointment();
-            saRec.Subject = 'Subject Abc';
-            saRec.Status = 'None';
-            saRec.EarliestStartTime = Date.newInstance(2016, 12, 9);
-            saRec.DueDate = Date.newInstance(2024, 12, 9);
-            saRec.ParentRecordId = relWo.Id;
-            insert saRec;
-
-            pse__Milestone__c milestone = (pse__Milestone__c)NSP_TestExtendedDataFactory.createSObject(new pse__Milestone__c(), 'NSP_TestDataFactory.MileStoneDefaults', false);
-            milestone.pse__Project__c = oProject.id;
-            insert milestone;
-
-            pse__Project_Task__c oProjectTask1 = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
-            oProjectTask1.Name = 'pTask1';
-            oProjectTask1.pse__Project__c = oProject.Id;
-            oProjectTask1.pse__Milestone__c = milestone.id;
-            oProjectTask1.NSP_Account_Id__c = oAccount.Id;
-            oProjectTask1.NSP_Template_Generated__c = true;
-            oProjectTask1.pse__Start_Date_Time__c = System.now();
-            oProjectTask1.pse__End_Date_Time__c = System.now();
-            oProjectTask1.RecordTypeId = pEOProjectTaskRecordTypeId;
-
-            pse__Project_Task__c oProjectTask2 = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
-            oProjectTask2.Name = 'pTask2';
-            oProjectTask2.pse__Project__c = oProject.Id;
-            oProjectTask2.pse__Start_Date_Time__c = System.now();
-            oProjectTask2.pse__End_Date_Time__c = System.now();
-            oProjectTask2.NSP_of_Days_Offset__c = 10;
-            oProjectTask2.NSP_Offset_Date__c = 'Asset Renewal Date';
-            oProjectTask2.pse__Milestone__c = milestone.id;
-            oProjectTask2.NSP_Template_Generated__c = true;
-            oProjectTask2.NSP_Account_Id__c = oAccount.Id;
-            oProjectTask2.pse__Project__c = oProject.Id;
-            oProjectTask2.pse__Parent_Task__c = ItaTask.Id;
-            oProjectTask2.RecordTypeId = pEOProjectTaskRecordTypeId;
-
-            pse__Project_Task__c oProjectTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
-            oProjectTask.Name = 'Preceding Task';
-            oProjectTask.Responsible_Party__c = NSP_ServiceConstants.PROJECTTASKRETCOMPLIANCE;
-            oProjectTask.pse__Project__c = oProject.Id;
-            oProjectTask.NSP_Template_Generated__c = true;
-            oProjectTask.RecordTypeId = pEOProjectTaskRecordTypeId;
-
-            pse__Project_Task__c oBPSProjectTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
-            oBPSProjectTask.Name = 'BPS Preceding Task';
-            oBPSProjectTask.Responsible_Party__c = NSP_ServiceConstants.PROJECTTASKRETCOMPLIANCE;
-            oBPSProjectTask.pse__Project__c = oProject.Id;
-            oBPSProjectTask.NSP_Template_Generated__c = true;
-            oBPSProjectTask.RecordTypeId = bPS_ProjectTaskRecordTypeId;
-
-            pse__Project_Task__c oPEOProjectTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
-            oPEOProjectTask.Name = 'PEO Preceding Task';
-            oPEOProjectTask.pse__Project__c = oPeoProject.Id;
-            oPEOProjectTask.NSP_Template_Generated__c = true;
-            oPEOProjectTask.RecordTypeId = pEOProjectTaskRecordTypeId;
-
-            pse__Project_Task__c oPEODependingTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
-            oPEODependingTask.Name = 'PEO Depending Task';
-            oPEODependingTask.NSP_Template_Generated__c = true;
-            oPEODependingTask.pse__Project__c = oPeoProject.Id;
-            oPEODependingTask.RecordTypeId = pEOProjectTaskRecordTypeId;
-
-
-            pse__Project_Task__c oDependingTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
-            oDependingTask.Name = 'Depending Task';
-            oDependingTask.Responsible_Party__c = NSP_ServiceConstants.PROJECTTASKRETEXECUTIVE;
-            oDependingTask.NSP_Template_Generated__c = true;
-            oDependingTask.pse__Project__c = oProject.Id;
-
-            pse__Project_Task__c oBPSDependingTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
-            oBPSDependingTask.Name = 'BPS Depending Task';
-            oBPSDependingTask.Responsible_Party__c = NSP_ServiceConstants.PROJECTTASKRETEXECUTIVE;
-            oBPSDependingTask.pse__Project__c = oProject.Id;
-            oBPSDependingTask.NSP_Template_Generated__c = true;
-            oBPSDependingTask.RecordTypeId = BPS_ProjectTaskRecordTypeId;
-
-            pse__Project_Task__c oProjectTask9 = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
-            oProjectTask9.Name = NSP_ServiceConstants.PayCodeEmpTask;
-            oProjectTask9.pse__Project__c = oProject.Id;
-            oProjectTask9.pse__Milestone__c = milestone.id;
-            oProjectTask9.NSP_Template_Generated__c = true;
-            oProjectTask9.RecordTypeId = pEOProjectTaskRecordTypeId;
-
-            pse__Project_Task__c oProjectTask10 = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
-            oProjectTask10.Name = NSP_ServiceConstants.ClientOptumTask;
-            oProjectTask10.pse__Project__c = oProject.Id;
-            oProjectTask10.pse__Milestone__c = milestone.id;
-            oProjectTask10.NSP_Template_Generated__c = true;
-            oProjectTask10.RecordTypeId = pEOProjectTaskRecordTypeId;
-
-            pse__Project_Task__c oProjectTask11 = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
-            oProjectTask11.Name = NSP_ServiceConstants.PTOTask;
-            oProjectTask11.pse__Project__c = oProject.Id;
-            oProjectTask11.pse__Milestone__c = milestone.id;
-            oProjectTask11.NSP_Template_Generated__c = true;
-            oProjectTask11.RecordTypeId = pEOProjectTaskRecordTypeId;
-
-            pse__Project_Task__c oProjectTask12 = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
-            oProjectTask12.Name = 'projTask1';
-            oProjectTask12.pse__Project__c = oProject1.Id;
-            oProjectTask12.RecordTypeId = pEOProjectTaskRecordTypeId;
-            oProjectTask12.pse__Status__c = NSP_ServiceConstants.PROJECT_TASK_IN_PROGRESS;
-            oProjectTask12.NSP_Percentage_Complete__c = '50%';
-
-            pse__Project_Task__c oProjectTask13 = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
-            oProjectTask13.Name = 'projTask2';
-            oProjectTask13.pse__Project__c = oProject1.Id;
-            oProjectTask13.RecordTypeId = pEOProjectTaskRecordTypeId;
-            oProjectTask13.pse__Status__c = NSP_ServiceConstants.PROJECT_TASK_IN_PROGRESS;
-            oProjectTask13.NSP_Percentage_Complete__c = '75%';
-
-            pse__Project_Task__c oProjectTask14 = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
-            oProjectTask14.Name = 'projTask3';
-            oProjectTask14.pse__Project__c = oProject1.Id;
-            oProjectTask14.RecordTypeId = pEOProjectTaskRecordTypeId;
-            oProjectTask14.pse__Status__c = NSP_ServiceConstants.PROJECT_TASK_IN_PROGRESS;
-            oProjectTask14.NSP_Percentage_Complete__c = '25%';
-
-            pse__Project_Task__c oProjectTask15 = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
-            oProjectTask15.pse__Project__c = oProject.Id;
-            oProjectTask15.Name = 'NewPt';
-            oProjectTask15.RecordTypeId = pEOProjectTaskRecordTypeId;
-            oProjectTask15.NSP_Create_Work_Order__c = true;
-            oProjectTask15.NSP_Dispatch_Region__c = 'FSO Project Manager National';
-
-            pse__Project_Task__c oProjectTask16 = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
-            oProjectTask16.pse__Project__c = oProject.Id;
-            oProjectTask16.Name = 'DurationPt';
-            oProjectTask16.RecordTypeId = pEOProjectTaskRecordTypeId;
-            oProjectTask16.NSP_Create_Work_Order__c = true;
-            oProjectTask16.NSP_Dispatch_Region__c = 'FSO Project Manager National';
-            oProjectTask16.NSP_Duration_in_minutes__c = 60;
-            oProjectTask16.pse__Start_Date_Time__c = DateTime.now();
-            oProjectTask16.pse__End_Date_Time__c = DateTime.now().addMinutes(60);
-
-            pse__Project_Task__c oProjectTask17 = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
-            oProjectTask17.pse__Project__c = oProject.Id;
-            oProjectTask17.Name = 'Schedule deconversion date';
-            oProjectTask17.RecordTypeId = pEOProjectTaskRecordTypeId;
-            oProjectTask17.pse__Start_Date_Time__c = DateTime.now();
-            oProjectTask17.pse__End_Date_Time__c = DateTime.now().addMinutes(60);
-            insert new List<pse__Project_Task__c> {oProjectTask1, oProjectTask2, oProjectTask, oBPSProjectTask, oDependingTask, oBPSDependingTask,oProjectTask9,oProjectTask10,oProjectTask11, oProjectTask12, oProjectTask13, oProjectTask14,oProjectTask15,oProjectTask16,oProjectTask17,oPEOProjectTask,oPEODependingTask};
-
-            List<NSP_Termination_Form__c> terminationList = new List<NSP_Termination_Form__c>();
-            NSP_Termination_Form__c oTerminationForm = (NSP_Termination_Form__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Termination_Form__c(), 'NSP_TestDataFactory.TerminationFormDefaults', false);
-            oTerminationForm.NSP_Project_Task__c = oDependingTask.Id;
-            oTerminationForm.NSP_Client_Term_Date__c = System.today();
-            terminationList.add(oTerminationForm);
-
-            NSP_Termination_Form__c oTerminationForm1 = (NSP_Termination_Form__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Termination_Form__c(), 'NSP_TestDataFactory.TerminationFormDefaults', false);
-            oTerminationForm1.NSP_Project_Task__c = letterReceived.Id;
-            oTerminationForm1.NSP_Client_Term_Date__c = System.today();
-            oTerminationForm1.NSP_Notes_Comments__c = 'Test Comments';
-            terminationList.add(oTerminationForm1);
-
-            NSP_Termination_Form__c oTerminationForm2 = (NSP_Termination_Form__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Termination_Form__c(), 'NSP_TestDataFactory.TerminationFormDefaults', false);
-            oTerminationForm2.NSP_Project_Task__c = oPEOProjectTask.Id;
-            oTerminationForm2.NSP_Client_Term_Date__c = System.today();
-            oTerminationForm2.RecordTypeId = ClientRecordTypeId;
-            terminationList.add(oTerminationForm2);
-
-            insert terminationList;
-
-            List<pse__Project_Task__c> nProjectTaskListToUpdate = new List<pse__Project_Task__c>();
-            letterReceived.pse__Status__c = 'Complete';
-
-            itaTask.pse__Status__c = 'Complete';
-            nProjectTaskListToUpdate.add(itaTask);
-
-            Test.stopTest();
-
-            pse__Project_Task_Assignment__c oProjectTaskAssignment = (pse__Project_Task_Assignment__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task_Assignment__c(), 'NSP_TestDataFactory.ProjectTaskAssignmentDefaults', false);
-            oProjectTaskAssignment.pse__Resource__c = oContact.Id;
-            oProjectTaskAssignment.pse__Resource_Role__c = NSP_ServiceConstants.PTASSIGNMENTROLE;
-            oProjectTaskAssignment.NSP_Priority__c = 2;
-            oProjectTaskAssignment.pse__Project_Task__c = oDependingTask.Id;
-            insert oProjectTaskAssignment;
-
-            pse__Project_Task_Assignment__c oBPSProjectTaskAssignment = (pse__Project_Task_Assignment__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task_Assignment__c(), 'NSP_TestDataFactory.ProjectTaskAssignmentDefaults', false);
-            oBPSProjectTaskAssignment.pse__Resource__c = oContact.Id;
-            oBPSProjectTaskAssignment.pse__Resource_Role__c = NSP_ServiceConstants.PTASSIGNMENTROLE;
-            oBPSProjectTaskAssignment.NSP_Priority__c = 2;
-            oBPSProjectTaskAssignment.pse__Project_Task__c = oBPSDependingTask.Id;
-            insert oBPSProjectTaskAssignment;
-
-            pse__Project_Task_Dependency__c oProjectDependency  = new pse__Project_Task_Dependency__c();
-            oProjectDependency.pse__Dependent_Task__c = oDependingTask.Id;
-            oProjectDependency.pse__Preceding_Task__c = oProjectTask.Id;
-
-            pse__Project_Task_Dependency__c oBPSProjectDependency  = new pse__Project_Task_Dependency__c();
-            oBPSProjectDependency.pse__Dependent_Task__c = oBPSDependingTask.Id;
-            oBPSProjectDependency.pse__Preceding_Task__c = oBPSProjectTask.Id;
-
-            pse__Project_Task_Dependency__c oPeoProjectDependency  = new pse__Project_Task_Dependency__c();
-            oPeoProjectDependency.pse__Dependent_Task__c = oPEODependingTask.Id;
-            oPeoProjectDependency.pse__Preceding_Task__c = oPEOProjectTask.Id;
-
-            insert new List<pse__Project_Task_Dependency__c>{oProjectDependency, oBPSProjectDependency, oPeoProjectDependency};
-
-            ServiceResource sr = new ServiceResource();
-            sr.Name = 'Test';
-            sr.RelatedRecordId = UserInfo.getUserId();
-            insert sr;
+        List<pse__Proj__c> nProjectList = new List<pse__Proj__c>();
+        pse__Proj__c oProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+        oProject.pse__Start_Date__c = Date.Today();
+        oPRoject.Case__c = oCase.Id;
+        oProject.pse__End_Date__c = System.Today().addDays(100);
+        oProject.pse__Account__c= oAccount.Id;
+        oProject.TemplateName__c = label.Middle_Market_Implementation_Project;
+        oProject.pse__Project_Type__c=NSP_ServiceConstants.ImplementationProjectType;
+        oProject.NSP_Asset_Implementation_Project__c =True;
+        nProjectList.add(oProject);
+
+        pse__Proj__c peoTermProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+        peoTermProject.Name = projectName;
+        peoTermProject.pse__Start_Date__c = Date.Today();
+        peoTermProject.pse__End_Date__c = System.Today().addDays(100);
+        peoTermProject.pse__Account__c= oAccount.Id;
+        nProjectList.add(peoTermProject);
+
+        pse__Proj__c oProject1 = (pse__Proj__c) NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults');
+        oProject1.Name = 'Proj2';
+        oProject1.pse__Start_Date__c = Date.Today();
+        oProject1.Case__c = oCase.Id;
+        oProject1.pse__End_Date__c = System.Today().addDays(100);
+        oProject1.pse__Account__c= acc2.Id;
+        nProjectList.add(oProject1);
+
+        pse__Proj__c oPeoProject = (pse__Proj__c) NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults');
+        oPeoProject.Name = 'PeoProject';
+        oPeoProject.pse__Start_Date__c = Date.Today();
+        oPeoProject.Case__c = oCase.Id;
+        oPeoProject.pse__End_Date__c = System.Today().addDays(100);
+        oPeoProject.pse__Account__c= acc2.Id;
+        nProjectList.add(oPeoProject);
+
+        pse__Proj__c hcmProject = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c());
+        hcmProject.Name = NSP_ServiceConstants.HCM_PROJECT_NAME;
+        hcmProject.pse__Start_Date__c = Date.Today();
+        hcmProject.pse__End_Date__c = System.Today().addDays(100);
+        hcmProject.pse__Account__c= oAccount.Id;
+        hcmProject.TemplateName__c = NSP_ServiceConstants.HCM_PROJECT_NAME;
+        hcmProject.Project_Implementer__c = UserInfo.getUserId();
+        nProjectList.add(hcmProject);
+
+        pse__Proj__c projTemplate = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+        projTemplate.Name = 'Test Template';
+        projTemplate.pse__Project_Status__c = 'Active';
+        projTemplate.pse__Is_Active__c = true;
+        projTemplate.pse__Is_Template__c = true;
+        projTemplate.pse__Start_Date__c = System.today();
+        nProjectList.add(projTemplate);
+
+        pse__Proj__c retProj = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+        retProj.pse__Account__c = oAccount.Id;
+        retProj.TemplateName__c = 'RET - CSP Startup Setup';
+        retProj.pse__Is_Template__c = false;
+        nProjectList.add(retProj);
+
+        test.startTest();
+        insert nProjectList;
+
+        Id ipMMRecordTypeId = NSP_GenericRecordType.getRecordTypeId(
+            'Implementation_Profile__c',
+            NSP_ServiceConstants.MMProfile
+        );
+        Id projectPEORecordTypeId = NSP_GenericRecordType.getRecordTypeId(
+            'pse__Proj__c',
+            'PEO_Project'
+        );
+        pse__Proj__c oProject2 = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
+        oProject2.Name='test project';
+        oProject2.pse__Start_Date__c = Date.Today();
+        oProject2.pse__Project_Type__c = NSP_ServiceConstants.ImplementationProjectType;
+        oProject2.pse__End_Date__c = System.Today().addDays(100);
+        oProject2.RecordTypeId = projectPEORecordTypeId;
+        oProject2.TemplateName__c=label.Middle_Market_Implementation_Project;
+        insert oProject2;
+
+        Implementation_Profile__c impProfile1 = new Implementation_Profile__c();
+        impProfile1.NSP_Project__c = oProject2.Id;
+        impProfile1.NSP_Form_Completed__c = true;
+        impProfile1.RecordTypeId=ipMMRecordTypeId;
+        impProfile1.Has_form_8973_been_discussed__c = 'No';
+        insert impProfile1;
+
+        List<pse__Project_Task__c> nProjectTaskList = new List<pse__Project_Task__c>();
+        pse__Project_Task__c discoveryProjectTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
+        discoveryProjectTask.Name = NSP_ServiceConstants.PROJECT_TASK_DISCOVERY;
+        discoveryProjectTask.pse__Project__c = hcmProject.Id;
+        discoveryProjectTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
+        discoveryProjectTask.NSP_Template_Generated__c = true;
+        discoveryProjectTask.RecordTypeId = bPS_ProjectTaskRecordTypeId;
+        nProjectTaskList.add(discoveryProjectTask);
+
+        pse__Project_Task__c configProjectTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
+        configProjectTask.Name = NSP_ServiceConstants.CONFIGURATION_TASK;
+        configProjectTask.pse__Project__c = hcmProject.Id;
+        configProjectTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
+        configProjectTask.NSP_Template_Generated__c = true;
+        configProjectTask.RecordTypeId = bPS_ProjectTaskRecordTypeId;
+        nProjectTaskList.add(configProjectTask);
+
+        pse__Project_Task__c goLiveProjectTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
+        goLiveProjectTask.Name = NSP_ServiceConstants.GO_LIVE;
+        goLiveProjectTask.pse__Project__c = hcmProject.Id;
+        goLiveProjectTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
+        goLiveProjectTask.NSP_Template_Generated__c = true;
+        goLiveProjectTask.RecordTypeId = bPS_ProjectTaskRecordTypeId;
+        nProjectTaskList.add(goLiveProjectTask);
+
+        List<string> peoTerminationTaskList = System.Label.PEO_Termination_Tasks.split(';');
+        String WRITTENTERMINATION = null;
+        if(peoTerminationTaskList != null && !peoTerminationTaskList.isEmpty() && peoTerminationTaskList.size() >= 1){
+            WRITTENTERMINATION = peoTerminationTaskList[0];
         }
+        pse__Project_Task__c letterReceived = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
+        letterReceived.Name = WRITTENTERMINATION;
+        letterReceived.pse__Project__c = hcmProject.Id;
+        letterReceived.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
+        letterReceived.NSP_Template_Generated__c = true;
+        letterReceived.RecordTypeId = bPS_ProjectTaskRecordTypeId;
+        nProjectTaskList.add(letterReceived);
+
+        pse__Project_Task__c itaTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
+        itaTask.Name = 'Notify ITA if term date is today';
+        itaTask.pse__Project__c = hcmProject.Id;
+        itaTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
+        itaTask.NSP_Template_Generated__c = true;
+        itaTask.RecordTypeId = bPS_ProjectTaskRecordTypeId;
+        nProjectTaskList.add(itaTask);
+
+        pse__Project_Task__c oProjectTaskRec = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
+        oProjectTaskRec.pse__Project__c = projTemplate.Id;
+        oProjectTaskRec.Name = 'Project Task Template';
+        oProjectTaskRec.RecordTypeId = pEOProjectTaskRecordTypeId;
+        nProjectTaskList.add(oProjectTaskRec);
+
+        String TERMINATIONANALYSIS = null;
+        if(peoTerminationTaskList != null && !peoTerminationTaskList.isEmpty() && peoTerminationTaskList.size() >= 2){
+            TERMINATIONANALYSIS = peoTerminationTaskList[1];
+        }
+        pse__Project_Task__c dTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
+        dTask.Name = TERMINATIONANALYSIS;
+        dTask.pse__Project__c = hcmProject.Id;
+        dTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
+        dTask.RecordTypeId = pEOProjectTaskRecordTypeId;
+        nProjectTaskList.add(dTask);
+
+        pse__Project_Task__c pt1 = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
+        pt1.pse__Project__c = retProj.Id;
+        pt1.pse__Order__c = 1;
+        pt1.pse__Status__c = 'Active';
+        pt1.Responsible_Party__c = 'RET Ops - Processing';
+        nProjectTaskList.add(pt1);
+
+        pse__Project_Task__c pt2 = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
+        pt2.pse__Project__c = retProj.Id;
+        pt2.pse__Order__c = 2;
+        pt2.pse__Status__c = 'Active';
+        pt2.Responsible_Party__c = 'RET Plan Consulting';
+        nProjectTaskList.add(pt2);
+
+        pse__Project_Task__c feinProjectTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
+        feinProjectTask.Name = NSP_ServiceConstants.FEIN;
+        feinProjectTask.pse__Project__c = hcmProject.Id;
+        feinProjectTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
+        feinProjectTask.NSP_Template_Generated__c = true;
+        feinProjectTask.RecordTypeId = bPS_ProjectTaskRecordTypeId;
+        nProjectTaskList.add(feinProjectTask);
+
+        pse__Project_Task__c fundingDocProjTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
+        fundingDocProjTask.Name = NSP_ServiceConstants.FUNDINGDOCUMENTS;
+        fundingDocProjTask.pse__Project__c = hcmProject.Id;
+        fundingDocProjTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
+        fundingDocProjTask.NSP_Template_Generated__c = true;
+        fundingDocProjTask.RecordTypeId = bPS_ProjectTaskRecordTypeId;
+        nProjectTaskList.add(fundingDocProjTask);
+
+        pse__Project_Task__c formCollectedProjTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
+        formCollectedProjTask.Name = NSP_ServiceConstants.FORMCOLLECTED;
+        formCollectedProjTask.pse__Project__c = oProject2.Id;
+        formCollectedProjTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
+        formCollectedProjTask.NSP_Template_Generated__c = true;
+        formCollectedProjTask.RecordTypeId = bPS_ProjectTaskRecordTypeId;
+        nProjectTaskList.add(formCollectedProjTask);
+
+        pse__Project_Task__c clientTransitionProjTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
+        clientTransitionProjTask.Name = NSP_ServiceConstants.CLIENTTRANSITION;
+        clientTransitionProjTask.pse__Project__c = hcmProject.Id;
+        clientTransitionProjTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
+        clientTransitionProjTask.NSP_Template_Generated__c = true;
+        clientTransitionProjTask.RecordTypeId = bPS_ProjectTaskRecordTypeId;
+        nProjectTaskList.add(clientTransitionProjTask);
+
+        pse__Project_Task__c onSiteProjTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
+        onSiteProjTask.Name = NSP_ServiceConstants.ONSITEDISCOVERY;
+        onSiteProjTask.pse__Project__c = hcmProject.Id;
+        onSiteProjTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
+        onSiteProjTask.NSP_Template_Generated__c = true;
+        onSiteProjTask.RecordTypeId = bPS_ProjectTaskRecordTypeId;
+        nProjectTaskList.add(onSiteProjTask);
+
+        pse__Project_Task__c payrollProjTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
+        payrollProjTask.Name = NSP_ServiceConstants.PAYROLLAPPROVED;
+        payrollProjTask.pse__Project__c = hcmProject.Id;
+        payrollProjTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
+        payrollProjTask.NSP_Template_Generated__c = true;
+        payrollProjTask.RecordTypeId = bPS_ProjectTaskRecordTypeId;
+        nProjectTaskList.add(payrollProjTask);
+
+        pse__Project_Task__c cobraProjTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
+        // cobraProjTask.Name = 'COBRA Takeovers';
+        cobraProjTask.Name = NSP_ServiceConstants.COBRA_FORM_YES;
+        cobraProjTask.pse__Project__c = hcmProject.Id;
+        cobraProjTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
+        cobraProjTask.NSP_Template_Generated__c = true;
+        cobraProjTask.RecordTypeId = bPS_ProjectTaskRecordTypeId;
+        nProjectTaskList.add(cobraProjTask);
+
+        pse__Project_Task__c scheduledTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
+        scheduledTask.Name = 'Test SA';
+        scheduledTask.pse__Start_Date_Time__c = System.now();
+        scheduledTask.pse__End_Date_Time__c = System.now();
+        scheduledTask.NSP_Dispatch_Region__c = 'MM National';
+        scheduledTask.NSP_Create_Work_Order__c = true;
+        scheduledTask.pse__Project__c = oProject.Id;
+        scheduledTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
+        scheduledTask.NSP_Template_Generated__c = true;
+        scheduledTask.RecordTypeId = pEOProjectTaskRecordTypeId;
+        nProjectTaskList.add(scheduledTask);
+
+        pse__Project_Task__c submitProjTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
+        submitProjTask.Name =submitPtask;
+        submitProjTask.pse__Project__c = peoTermProject.Id;
+        submitProjTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
+        nProjectTaskList.add(submitProjTask);
+
+        pse__Project_Task__c optionalProjTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
+        optionalProjTask.Name =optionalPtask;
+        optionalProjTask.pse__Project__c = peoTermProject.Id;
+        optionalProjTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
+        nProjectTaskList.add(optionalProjTask);
+
+        insert nProjectTaskList;
+
+        WorkOrder relWo = new WorkOrder();
+        relWo.Status = 'Unscheduled';
+        relWo.NSP_Project_Task__c = scheduledTask.Id;
+        insert relWo;
+
+        ServiceAppointment saRec = new ServiceAppointment();
+        saRec.Subject = 'Subject Abc';
+        saRec.Status = 'None';
+        saRec.EarliestStartTime = Date.newInstance(2016, 12, 9);
+        saRec.DueDate = Date.newInstance(2024, 12, 9);
+        saRec.ParentRecordId = relWo.Id;
+        insert saRec;
+
+        pse__Milestone__c milestone = (pse__Milestone__c)NSP_TestExtendedDataFactory.createSObject(new pse__Milestone__c(), 'NSP_TestDataFactory.MileStoneDefaults', false);
+        milestone.pse__Project__c = oProject.id;
+        insert milestone;
+
+        pse__Project_Task__c oProjectTask1 = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
+        oProjectTask1.Name = 'pTask1';
+        oProjectTask1.pse__Project__c = oProject.Id;
+        oProjectTask1.pse__Milestone__c = milestone.id;
+        oProjectTask1.NSP_Account_Id__c = oAccount.Id;
+        oProjectTask1.NSP_Template_Generated__c = true;
+        oProjectTask1.pse__Start_Date_Time__c = System.now();
+        oProjectTask1.pse__End_Date_Time__c = System.now();
+        oProjectTask1.RecordTypeId = pEOProjectTaskRecordTypeId;
+
+        pse__Project_Task__c oProjectTask2 = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
+        oProjectTask2.Name = 'pTask2';
+        oProjectTask2.pse__Project__c = oProject.Id;
+        oProjectTask2.pse__Start_Date_Time__c = System.now();
+        oProjectTask2.pse__End_Date_Time__c = System.now();
+        oProjectTask2.NSP_of_Days_Offset__c = 10;
+        oProjectTask2.NSP_Offset_Date__c = 'Asset Renewal Date';
+        oProjectTask2.pse__Milestone__c = milestone.id;
+        oProjectTask2.NSP_Template_Generated__c = true;
+        oProjectTask2.NSP_Account_Id__c = oAccount.Id;
+        oProjectTask2.pse__Project__c = oProject.Id;
+        oProjectTask2.pse__Parent_Task__c = ItaTask.Id;
+        oProjectTask2.RecordTypeId = pEOProjectTaskRecordTypeId;
+
+        pse__Project_Task__c oProjectTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
+        oProjectTask.Name = 'Preceding Task';
+        oProjectTask.Responsible_Party__c = NSP_ServiceConstants.PROJECTTASKRETCOMPLIANCE;
+        oProjectTask.pse__Project__c = oProject.Id;
+        oProjectTask.NSP_Template_Generated__c = true;
+        oProjectTask.RecordTypeId = pEOProjectTaskRecordTypeId;
+
+        pse__Project_Task__c oBPSProjectTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
+        oBPSProjectTask.Name = 'BPS Preceding Task';
+        oBPSProjectTask.Responsible_Party__c = NSP_ServiceConstants.PROJECTTASKRETCOMPLIANCE;
+        oBPSProjectTask.pse__Project__c = oProject.Id;
+        oBPSProjectTask.NSP_Template_Generated__c = true;
+        oBPSProjectTask.RecordTypeId = bPS_ProjectTaskRecordTypeId;
+
+        pse__Project_Task__c oPEOProjectTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
+        oPEOProjectTask.Name = 'PEO Preceding Task';
+        oPEOProjectTask.pse__Project__c = oPeoProject.Id;
+        oPEOProjectTask.NSP_Template_Generated__c = true;
+        oPEOProjectTask.RecordTypeId = pEOProjectTaskRecordTypeId;
+
+        pse__Project_Task__c oPEODependingTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
+        oPEODependingTask.Name = 'PEO Depending Task';
+        oPEODependingTask.NSP_Template_Generated__c = true;
+        oPEODependingTask.pse__Project__c = oPeoProject.Id;
+        oPEODependingTask.RecordTypeId = pEOProjectTaskRecordTypeId;
+
+
+        pse__Project_Task__c oDependingTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
+        oDependingTask.Name = 'Depending Task';
+        oDependingTask.Responsible_Party__c = NSP_ServiceConstants.PROJECTTASKRETEXECUTIVE;
+        oDependingTask.NSP_Template_Generated__c = true;
+        oDependingTask.pse__Project__c = oProject.Id;
+
+        pse__Project_Task__c oBPSDependingTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
+        oBPSDependingTask.Name = 'BPS Depending Task';
+        oBPSDependingTask.Responsible_Party__c = NSP_ServiceConstants.PROJECTTASKRETEXECUTIVE;
+        oBPSDependingTask.pse__Project__c = oProject.Id;
+        oBPSDependingTask.NSP_Template_Generated__c = true;
+        oBPSDependingTask.RecordTypeId = BPS_ProjectTaskRecordTypeId;
+
+        pse__Project_Task__c oProjectTask9 = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
+        oProjectTask9.Name = NSP_ServiceConstants.PayCodeEmpTask;
+        oProjectTask9.pse__Project__c = oProject.Id;
+        oProjectTask9.pse__Milestone__c = milestone.id;
+        oProjectTask9.NSP_Template_Generated__c = true;
+        oProjectTask9.RecordTypeId = pEOProjectTaskRecordTypeId;
+
+        pse__Project_Task__c oProjectTask10 = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
+        oProjectTask10.Name = NSP_ServiceConstants.ClientOptumTask;
+        oProjectTask10.pse__Project__c = oProject.Id;
+        oProjectTask10.pse__Milestone__c = milestone.id;
+        oProjectTask10.NSP_Template_Generated__c = true;
+        oProjectTask10.RecordTypeId = pEOProjectTaskRecordTypeId;
+
+        pse__Project_Task__c oProjectTask11 = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
+        oProjectTask11.Name = NSP_ServiceConstants.PTOTask;
+        oProjectTask11.pse__Project__c = oProject.Id;
+        oProjectTask11.pse__Milestone__c = milestone.id;
+        oProjectTask11.NSP_Template_Generated__c = true;
+        oProjectTask11.RecordTypeId = pEOProjectTaskRecordTypeId;
+
+        pse__Project_Task__c oProjectTask12 = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
+        oProjectTask12.Name = 'projTask1';
+        oProjectTask12.pse__Project__c = oProject1.Id;
+        oProjectTask12.RecordTypeId = pEOProjectTaskRecordTypeId;
+        oProjectTask12.pse__Status__c = NSP_ServiceConstants.PROJECT_TASK_IN_PROGRESS;
+        oProjectTask12.NSP_Percentage_Complete__c = '50%';
+
+        pse__Project_Task__c oProjectTask13 = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
+        oProjectTask13.Name = 'projTask2';
+        oProjectTask13.pse__Project__c = oProject1.Id;
+        oProjectTask13.RecordTypeId = pEOProjectTaskRecordTypeId;
+        oProjectTask13.pse__Status__c = NSP_ServiceConstants.PROJECT_TASK_IN_PROGRESS;
+        oProjectTask13.NSP_Percentage_Complete__c = '75%';
+
+        pse__Project_Task__c oProjectTask14 = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
+        oProjectTask14.Name = 'projTask3';
+        oProjectTask14.pse__Project__c = oProject1.Id;
+        oProjectTask14.RecordTypeId = pEOProjectTaskRecordTypeId;
+        oProjectTask14.pse__Status__c = NSP_ServiceConstants.PROJECT_TASK_IN_PROGRESS;
+        oProjectTask14.NSP_Percentage_Complete__c = '25%';
+
+        pse__Project_Task__c oProjectTask15 = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
+        oProjectTask15.pse__Project__c = oProject.Id;
+        oProjectTask15.Name = 'NewPt';
+        oProjectTask15.RecordTypeId = pEOProjectTaskRecordTypeId;
+        oProjectTask15.NSP_Create_Work_Order__c = true;
+        oProjectTask15.NSP_Dispatch_Region__c = 'FSO Project Manager National';
+
+        pse__Project_Task__c oProjectTask16 = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
+        oProjectTask16.pse__Project__c = oProject.Id;
+        oProjectTask16.Name = 'DurationPt';
+        oProjectTask16.RecordTypeId = pEOProjectTaskRecordTypeId;
+        oProjectTask16.NSP_Create_Work_Order__c = true;
+        oProjectTask16.NSP_Dispatch_Region__c = 'FSO Project Manager National';
+        oProjectTask16.NSP_Duration_in_minutes__c = 60;
+        oProjectTask16.pse__Start_Date_Time__c = DateTime.now();
+        oProjectTask16.pse__End_Date_Time__c = DateTime.now().addMinutes(60);
+
+        pse__Project_Task__c oProjectTask17 = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c(), 'NSP_TestDataFactory.ProjectTaskDefaults', false);
+        oProjectTask17.pse__Project__c = oProject.Id;
+        oProjectTask17.Name = 'Schedule deconversion date';
+        oProjectTask17.RecordTypeId = pEOProjectTaskRecordTypeId;
+        oProjectTask17.pse__Start_Date_Time__c = DateTime.now();
+        oProjectTask17.pse__End_Date_Time__c = DateTime.now().addMinutes(60);
+        insert new List<pse__Project_Task__c> {oProjectTask1, oProjectTask2, oProjectTask, oBPSProjectTask, oDependingTask, oBPSDependingTask,oProjectTask9,oProjectTask10,oProjectTask11, oProjectTask12, oProjectTask13, oProjectTask14,oProjectTask15,oProjectTask16,oProjectTask17,oPEOProjectTask,oPEODependingTask};
+
+        List<NSP_Termination_Form__c> terminationList = new List<NSP_Termination_Form__c>();
+        NSP_Termination_Form__c oTerminationForm = (NSP_Termination_Form__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Termination_Form__c(), 'NSP_TestDataFactory.TerminationFormDefaults', false);
+        oTerminationForm.NSP_Project_Task__c = oDependingTask.Id;
+        oTerminationForm.NSP_Client_Term_Date__c = System.today();
+        terminationList.add(oTerminationForm);
+
+        NSP_Termination_Form__c oTerminationForm1 = (NSP_Termination_Form__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Termination_Form__c(), 'NSP_TestDataFactory.TerminationFormDefaults', false);
+        oTerminationForm1.NSP_Project_Task__c = letterReceived.Id;
+        oTerminationForm1.NSP_Client_Term_Date__c = System.today();
+        oTerminationForm1.NSP_Notes_Comments__c = 'Test Comments';
+        terminationList.add(oTerminationForm1);
+
+        NSP_Termination_Form__c oTerminationForm2 = (NSP_Termination_Form__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Termination_Form__c(), 'NSP_TestDataFactory.TerminationFormDefaults', false);
+        oTerminationForm2.NSP_Project_Task__c = oPEOProjectTask.Id;
+        oTerminationForm2.NSP_Client_Term_Date__c = System.today();
+        oTerminationForm2.RecordTypeId = ClientRecordTypeId;
+        terminationList.add(oTerminationForm2);
+
+        insert terminationList;
+
+        List<pse__Project_Task__c> nProjectTaskListToUpdate = new List<pse__Project_Task__c>();
+        letterReceived.pse__Status__c = 'Complete';
+
+        itaTask.pse__Status__c = 'Complete';
+        nProjectTaskListToUpdate.add(itaTask);
+
+        Test.stopTest();
+
+        pse__Project_Task_Assignment__c oProjectTaskAssignment = (pse__Project_Task_Assignment__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task_Assignment__c(), 'NSP_TestDataFactory.ProjectTaskAssignmentDefaults', false);
+        oProjectTaskAssignment.pse__Resource__c = oContact.Id;
+        oProjectTaskAssignment.pse__Resource_Role__c = NSP_ServiceConstants.PTASSIGNMENTROLE;
+        oProjectTaskAssignment.NSP_Priority__c = 2;
+        oProjectTaskAssignment.pse__Project_Task__c = oDependingTask.Id;
+        insert oProjectTaskAssignment;
+
+        pse__Project_Task_Assignment__c oBPSProjectTaskAssignment = (pse__Project_Task_Assignment__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task_Assignment__c(), 'NSP_TestDataFactory.ProjectTaskAssignmentDefaults', false);
+        oBPSProjectTaskAssignment.pse__Resource__c = oContact.Id;
+        oBPSProjectTaskAssignment.pse__Resource_Role__c = NSP_ServiceConstants.PTASSIGNMENTROLE;
+        oBPSProjectTaskAssignment.NSP_Priority__c = 2;
+        oBPSProjectTaskAssignment.pse__Project_Task__c = oBPSDependingTask.Id;
+        insert oBPSProjectTaskAssignment;
+
+        pse__Project_Task_Dependency__c oProjectDependency  = new pse__Project_Task_Dependency__c();
+        oProjectDependency.pse__Dependent_Task__c = oDependingTask.Id;
+        oProjectDependency.pse__Preceding_Task__c = oProjectTask.Id;
+
+        pse__Project_Task_Dependency__c oBPSProjectDependency  = new pse__Project_Task_Dependency__c();
+        oBPSProjectDependency.pse__Dependent_Task__c = oBPSDependingTask.Id;
+        oBPSProjectDependency.pse__Preceding_Task__c = oBPSProjectTask.Id;
+
+        pse__Project_Task_Dependency__c oPeoProjectDependency  = new pse__Project_Task_Dependency__c();
+        oPeoProjectDependency.pse__Dependent_Task__c = oPEODependingTask.Id;
+        oPeoProjectDependency.pse__Preceding_Task__c = oPEOProjectTask.Id;
+
+        insert new List<pse__Project_Task_Dependency__c>{oProjectDependency, oBPSProjectDependency, oPeoProjectDependency};
+
+        ServiceResource sr = new ServiceResource();
+        sr.Name = 'Test';
+        sr.RelatedRecordId = UserInfo.getUserId();
+        insert sr;
 
     }
     /**
