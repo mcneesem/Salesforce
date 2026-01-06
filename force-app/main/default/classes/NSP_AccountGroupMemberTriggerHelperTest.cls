@@ -99,8 +99,8 @@ private class NSP_AccountGroupMemberTriggerHelperTest {
         //delete accGrpMem;
         
     }
-    
-   @IsTest
+
+    @IsTest
     static void testAfterDelete_CreatesSelfGroup_GrowthForecast() {
         insert new AccountGroupMemberTriggerSettings__c(
             IsEnabled__c = true
@@ -126,7 +126,6 @@ private class NSP_AccountGroupMemberTriggerHelperTest {
             NSP_Primary__c = true
         );
         insert gm;
-    
         Test.startTest();
         delete gm;
         Test.stopTest();
@@ -140,7 +139,6 @@ private class NSP_AccountGroupMemberTriggerHelperTest {
             createdGroups.size() > 0,
             'Self Growth Forecast group should be created'
         );
-    
         List<NSP_Account_Group_Member__c> createdMembers = [
             SELECT Id, NSP_Member_Account__c, NSP_Primary__c
             FROM NSP_Account_Group_Member__c
@@ -151,7 +149,7 @@ private class NSP_AccountGroupMemberTriggerHelperTest {
             'Self group member should be created'
         );
     }
-    
+
     /* this method is for validate the duplicate entry on Account Group Member */
     @isTest
     static void groupDuplicateValidation() {
