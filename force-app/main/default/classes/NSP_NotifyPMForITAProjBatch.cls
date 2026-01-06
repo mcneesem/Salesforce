@@ -8,26 +8,79 @@
 // * Version : V1
 // *
 // **************************************************************************************************************************
-public class NSP_NotifyPMForITAProjBatch implements Schedulable,Database.Batchable<SObject> {
+public with sharing class NSP_NotifyPMForITAProjBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<sObject> {
     // test w/ NSP_NotifyPMForITAProjTest (83%)
+
+    //
+    // argument-free constructor is required to be "runnable"...
+    //
+
+    public NSP_NotifyPMForITAProjBatch() {
+    }
+
+    //
+    // ISelfSchedulable
+    //
+
+    public static String schedule() {
+        String suffix = '';
+        if ( Test.isRunningTest() ) {
+            suffix = ' ~ TEST';
+        }
+        return System.schedule(
+            'NSP_NotifyPMForITAProjBatch ~ every weekday at 5:00 PM CT' + suffix ,
+            '0 0 17 ? * MON-FRI' ,
+            new NSP_NotifyPMForITAProjBatch()
+        );
+    }
+
+    //
+    // Scheduleable
+    //
+
+    public void execute( SchedulableContext sc ) {
+        this.call( 'run' , null );
+    }
+
+    //
+    // Callable
+    //
+
+    public Object call( String action , Map<String,Object> args ) {
+        Object response = null;
+        if ( action == 'run' ) {
+            response = this.run();
+        }
+        return response;
+    }
+
+    //
+    // IJobRunnable
+    //
+
+    public Id run() {
+        return  Database.executeBatch(new NSP_NotifyPMForITAProjBatch(),200);
+    }
+
+    //
+    // Batchable
+    //
 
     // Start method to query project records
     public Database.QueryLocator start( Database.BatchableContext bc ) {
-        String ITA_IMPLEMENTATION = '%ITA%Implementation%';
-        List<String> ProjFields = new List<String>{
-                'ID' ,
-                'NSP_RET_Client_ID__c' ,
-                'NSP_Is_ITA_Mail_Sent__c' ,
-                'pse__Account__c'
-                };
-        String projObjectApiName = 'pse__Proj__c';
-        NSP_QueryBuilder queryBuilder = new NSP_QueryBuilder(projObjectApiName, ProjFields)
-            .addFilter('pse__Is_Template__c', false)
-            .addFilter('NSP_Is_ITA_Mail_Sent__c', false)
-            .addFilter('TemplateName__c', ITA_IMPLEMENTATION, NSP_QueryBuilder.Operator.LIKES,true)
-            .setSecurityEnforce(false);
-        String query = queryBuilder.build();
-        return Database.getQueryLocator(query);
+        return Database.getQueryLocator(
+            [ SELECT Id ,
+                NSP_RET_Client_ID__c ,
+                NSP_Is_ITA_Mail_Sent__c ,
+                pse__Account__c
+              FROM pse__Proj__c
+              WHERE (
+                ( pse__Is_Template__c = false )
+                    AND ( NSP_Is_ITA_Mail_Sent__c = false )
+                    AND ( TemplateName__c LIKE '%ITA%Implementation%' )
+                )
+            ]
+        );
     }
 
     // Execute method to send email alert when ITA project is created
@@ -81,24 +134,15 @@ public class NSP_NotifyPMForITAProjBatch implements Schedulable,Database.Batchab
                             RecordTypeId
                         FROM Implementation_Profile__c
                         WHERE (
-                            ( Account__c IN :assetAccountIDs )
-                            AND (
-                                ( RecordTypeId = :ipFSORecordTypeId )
-                                OR ( RecordTypeId = :ipMMRecordTypeId )
-                            )
-                            AND (
-                                ( NSP_Project_Manager__c != null )
-                                OR ( NSP_Payroll_Specialist__c != null )
-                                OR ( NSP_Payroll_Project_Manager__c != null )
-                            )
-                            AND (
-                                NSP_Project__r.pse__Project_Status__c NOT IN (
-                                    'Complete' ,
-                                    'Cancelled' ,
-                                    'Close/Lost' ,
-                                    'Quality Review' ,
-                                    'Closed Prior to CQA'
-                                )
+                            ( Account__c IN : assetAccountIDs )
+                            AND ( ( RecordTypeId = :ipFSORecordTypeId ) OR ( RecordTypeId = :ipMMRecordTypeId ) )
+                            AND ( ( NSP_Project_Manager__c != NULL ) OR ( NSP_Payroll_Specialist__c != NULL ) OR ( NSP_Payroll_Project_Manager__c != NULL ) )
+                            AND NSP_Project__r.pse__Project_Status__c Not IN (
+                                'Complete',
+                                'Cancelled',
+                                'Close/Lost',
+                                'Quality Review',
+                                'Closed Prior to CQA'
                             )
                         )
                     ]
@@ -158,7 +202,12 @@ public class NSP_NotifyPMForITAProjBatch implements Schedulable,Database.Batchab
                 sendEmailToUsers(projListToUpdate,accountIdEmailListMap);
             }
             if(!projListToUpdate.isEmpty()){
-                Database.update(projListToUpdate,false);
+                List<Database.SaveResult> results = Database.update( projListToUpdate , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_NotifyPMForITAProjBatch.class.getName() ,
+                    'execute' ,
+                    results
+                );
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
@@ -173,12 +222,7 @@ public class NSP_NotifyPMForITAProjBatch implements Schedulable,Database.Batchab
 
     }
 
-    public void execute(SchedulableContext scon){
-        //To fire the Batch class
-        Database.executeBatch(new NSP_NotifyPMForITAProjBatch(),200);
-    }
-
-    // Method to send email to the list of users emailaddress present in SendTo list
+   // Method to send email to the list of users emailaddress present in SendTo list
     public static void sendEmailToUsers(List<pse__Proj__c> projListToUpdate,  Map<Id, List<String>> accountIdEmailListMap){
         try{
             List<Messaging.SingleEmailMessage> lstEmailMessages = new List<Messaging.SingleEmailMessage>();
