@@ -1,13 +1,4 @@
-//**************************************************************************************************************************
-// *
-// * @description  :  Batch Class to send email alert when ITA project is created
-// * @date 12/05/2022
-// * Author : Ramya Ravi
-// * Name : NSP_NotifyPMForITAProjBatch
-// * Story : STY-03443 - Batch Class to send email alert when ITA project is created
-// * Version : V1
-// *
-// **************************************************************************************************************************
+// Batch Class to send email alert when ITA project is created
 public with sharing class NSP_NotifyPMForITAProjBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<sObject> {
     // test w/ NSP_NotifyPMForITAProjTest (80%)
 
@@ -22,14 +13,15 @@ public with sharing class NSP_NotifyPMForITAProjBatch implements ISelfSchedulabl
     // ISelfSchedulable
     //
 
+    // runs everyday at 1am central...
     public static String schedule() {
         String suffix = '';
         if ( Test.isRunningTest() ) {
             suffix = ' ~ TEST';
         }
         return System.schedule(
-            'NSP_NotifyPMForITAProjBatch ~ every weekday at 5:00 PM CT' + suffix ,
-            '0 0 17 ? * MON-FRI' ,
+            'NSP_NotifyPMForITAProjBatch ~ When a project with the ITA - Implementation template is created for an account AND there is a WO Asset AND the AIMS First Pay Date is Null, then send email to select individuals ~ everyday at 1 AM' + suffix ,
+            '0 0 1 ? * * *' ,
             new NSP_NotifyPMForITAProjBatch()
         );
     }
@@ -59,7 +51,7 @@ public with sharing class NSP_NotifyPMForITAProjBatch implements ISelfSchedulabl
     //
 
     public Id run() {
-        return  Database.executeBatch(new NSP_NotifyPMForITAProjBatch(),200);
+        return Database.executeBatch( new NSP_NotifyPMForITAProjBatch() , 200 );
     }
 
     //
@@ -137,12 +129,14 @@ public with sharing class NSP_NotifyPMForITAProjBatch implements ISelfSchedulabl
                             ( Account__c IN : assetAccountIDs )
                             AND ( ( RecordTypeId = :ipFSORecordTypeId ) OR ( RecordTypeId = :ipMMRecordTypeId ) )
                             AND ( ( NSP_Project_Manager__c != NULL ) OR ( NSP_Payroll_Specialist__c != NULL ) OR ( NSP_Payroll_Project_Manager__c != NULL ) )
-                            AND NSP_Project__r.pse__Project_Status__c Not IN (
-                                'Complete',
-                                'Cancelled',
-                                'Close/Lost',
-                                'Quality Review',
-                                'Closed Prior to CQA'
+                            AND (
+                                NSP_Project__r.pse__Project_Status__c NOT IN (
+                                    'Complete' ,
+                                    'Cancelled' ,
+                                    'Close/Lost' ,
+                                    'Quality Review' ,
+                                    'Closed Prior to CQA'
+                                )
                             )
                         )
                     ]
@@ -205,7 +199,7 @@ public with sharing class NSP_NotifyPMForITAProjBatch implements ISelfSchedulabl
                 List<Database.SaveResult> results = Database.update( projListToUpdate , false );
                 NSP_ErrorLogHandler.logResults(
                     NSP_NotifyPMForITAProjBatch.class.getName() ,
-                    'execute' ,
+                    'execute:update' ,
                     results
                 );
             }
@@ -236,7 +230,7 @@ public with sharing class NSP_NotifyPMForITAProjBatch implements ISelfSchedulabl
                     'Body',
                     'DeveloperName'
                     };
-                        EmailTemplate emailTemp = NSP_sObjectSelector.selectByDeveloperName(emailTempFields,NSP_ServiceConstants.ITA_Project_Creation_Email);
+            EmailTemplate emailTemp = NSP_sObjectSelector.selectByDeveloperName(emailTempFields,NSP_ServiceConstants.ITA_Project_Creation_Email);
             //  [SELECT Id, BrandTemplateId, Subject, HTMLValue, Body, DeveloperName FROM EmailTemplate WHERE DeveloperName = : NSP_ServiceConstants.ITA_Project_Creation_Email LIMIT 1];
             // check if Email template exists and if we have any sender email
             // Added for 235192
@@ -255,7 +249,6 @@ public with sharing class NSP_NotifyPMForITAProjBatch implements ISelfSchedulabl
                     listWithMail.add(emailList.RelatedToId);
                 }
             }
-
             if(emailTemp!=null && !accountIdEmailListMap.isEmpty()){
                 for(pse__Proj__c projId : [SELECT Id, pse__Account__c FROM pse__Proj__c WHERE Id IN: projListToUpdate]){
                     if(accountIdEmailListMap.get(projId.pse__Account__c) != null && !listWithMail.contains(projId.Id) ){
