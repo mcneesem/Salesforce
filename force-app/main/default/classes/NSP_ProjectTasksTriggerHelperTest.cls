@@ -148,6 +148,9 @@ private class NSP_ProjectTasksTriggerHelperTest {
         impProfile1.NSP_Form_Completed__c = true;
         impProfile1.RecordTypeId=ipMMRecordTypeId;
         impProfile1.Has_form_8973_been_discussed__c = 'No';
+        // Seed document fields to exercise createSubtask (Not Collected -> create child)
+        impProfile1.NSP_Documents_garnishments__c = 'John Doe~Not Collected, Jane Doe~Collected';
+        impProfile1.Document_Levies__c = 'Alice Smith~Not Collected, Bob Smith~Collected';
         insert impProfile1;
 
         List<pse__Project_Task__c> nProjectTaskList = new List<pse__Project_Task__c>();
@@ -250,6 +253,33 @@ private class NSP_ProjectTasksTriggerHelperTest {
         formCollectedProjTask.NSP_Template_Generated__c = true;
         formCollectedProjTask.RecordTypeId = bPS_ProjectTaskRecordTypeId;
         nProjectTaskList.add(formCollectedProjTask);
+
+        // Add parents that trigger createSubtask in afterInsertFilter
+        pse__Project_Task__c garnishmentsParent = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
+        garnishmentsParent.Name = NSP_ServiceConstants.GARNISHMENT;
+        garnishmentsParent.pse__Project__c = oProject2.Id;
+        garnishmentsParent.Implementation_Profile__c = impProfile1.Id;
+        garnishmentsParent.NSP_Category__c = 'Category A';
+        garnishmentsParent.NSP_Sub_Category__c = 'Sub A';
+        garnishmentsParent.pse__Start_Date_Time__c = System.now();
+        garnishmentsParent.pse__End_Date_Time__c = System.now().addDays(1);
+        garnishmentsParent.pse__Order__c = 10;
+        garnishmentsParent.Task_Order__c = 100;
+        garnishmentsParent.RecordTypeId = pEOProjectTaskRecordTypeId;
+        nProjectTaskList.add(garnishmentsParent);
+
+        pse__Project_Task__c leviesParent = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
+        leviesParent.Name = 'Employee Levies Provided';
+        leviesParent.pse__Project__c = oProject2.Id;
+        leviesParent.Implementation_Profile__c = impProfile1.Id;
+        leviesParent.NSP_Category__c = 'Category B';
+        leviesParent.NSP_Sub_Category__c = 'Sub B';
+        leviesParent.pse__Start_Date_Time__c = System.now();
+        leviesParent.pse__End_Date_Time__c = System.now().addDays(1);
+        leviesParent.pse__Order__c = 20;
+        leviesParent.Task_Order__c = 200;
+        leviesParent.RecordTypeId = pEOProjectTaskRecordTypeId;
+        nProjectTaskList.add(leviesParent);
 
         pse__Project_Task__c clientTransitionProjTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
         clientTransitionProjTask.Name = NSP_ServiceConstants.CLIENTTRANSITION;
