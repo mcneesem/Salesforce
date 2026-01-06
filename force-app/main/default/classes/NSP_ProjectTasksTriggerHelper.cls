@@ -892,7 +892,7 @@ public class NSP_ProjectTasksTriggerHelper {
             email.setHtmlBody(mailBody);
             email.setSaveAsActivity(false);
             email.setTargetObjectId(userinfo.getUserId());
-            if ( !Test.isRunningTest() ) {
+            if ( !Test.isRunningTest() && EmailDeliverabilityController.IsEnabledOutbound) {
                 NSP_ProjectTasksTriggerHelper.sendSingleEmailMessage( email );
             }
         } catch ( Exception e ) {
@@ -1475,7 +1475,9 @@ public class NSP_ProjectTasksTriggerHelper {
         }
         if ( !sProjectTasksIds.isEmpty() ) {
             NSP_ProjectTasksTriggerHelper.sendNotificationToDependentResource( sProjectTasksIds );
-            NSP_ProjectTasksTriggerHelper.sendBellNotificationToDependentResource( sProjectTasksIds );
+            if(NotificationDeliverabilityController.IsEnabledOutbound){
+                NSP_ProjectTasksTriggerHelper.sendBellNotificationToDependentResource( sProjectTasksIds );
+            }
             NSP_ProjectTasksTriggerHelper.sendEmailToProjectResource( sProjectTasksIds ); // STY-02213
         }
         if(!projectTaskIdSet.isEmpty()){
@@ -1800,53 +1802,53 @@ public class NSP_ProjectTasksTriggerHelper {
     * Method to Send Bell Notifications when a Client, Payroll Termination Form is Approved
     */
     @future
-    public static void sendBellNotificationToDependentResource(Set<Id> sProjectTasksIds){
+    private static void sendBellNotificationToDependentResource(Set<Id> sProjectTasksIds){        
         String PEOProjectTaskRecordTypeId = Schema.SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE).getRecordTypeId();
         String ClientRecordTypeId = Schema.SObjectType.NSP_Termination_Form__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.NSP_Client_Reinstatement).getRecordTypeId();
         String PayrollRecordTypeId = Schema.SObjectType.NSP_Termination_Form__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.NSP_Payroll_Specialist_Form).getRecordTypeId();
         String mPrecedingTaskId;
         Set<String> mDependentTaskOwnerIds = new Set<String>();
         Set<Id> termFormRecordList = new Set<Id>();
-
+        
         List<pse__Project_Task_Dependency__c> mDependentTasksOwner = new List<pse__Project_Task_Dependency__c>([SELECT Id,pse__Preceding_Task__c, pse__Dependent_Task__r.OwnerId FROM pse__Project_Task_Dependency__c WHERE pse__Preceding_Task__c in: sProjectTasksIds]);
         List<NSP_Termination_Form__c> termFormList = new List<NSP_Termination_Form__c>([SELECT Id,NSP_Project_Task__c,ownerId FROM NSP_Termination_Form__c WHERE NSP_Project_Task__c in: sProjectTasksIds AND NSP_Project_Task__r.RecordTypeId =: PEOProjectTaskRecordTypeId AND (Recordtypeid =: ClientRecordTypeId OR Recordtypeid =: PayrollRecordTypeId )]);
-
+        
         if(!mDependentTasksOwner.isEmpty()){
-        mPrecedingTaskId = mDependentTasksOwner.get(0).pse__Preceding_Task__c;
+            mPrecedingTaskId = mDependentTasksOwner.get(0).pse__Preceding_Task__c;
         }
-
+        
         if(mDependentTasksOwner.size() == 0){
             return;
         }
-
+        
         if(termFormList.size() > 0){
-        for(NSP_Termination_Form__c termFormTask : termFormList){
-            if(termFormTask.ownerId != null){
-                termFormRecordList.add(termFormTask.NSP_Project_Task__c);
+            for(NSP_Termination_Form__c termFormTask : termFormList){
+                if(termFormTask.ownerId != null){
+                    termFormRecordList.add(termFormTask.NSP_Project_Task__c);
                 }
             }
         }
-
+        
         for(pse__Project_Task_Dependency__c mOwnerDependentTask : mDependentTasksOwner){
             if(mOwnerDependentTask.pse__Dependent_Task__r.ownerId != null && termFormRecordList.contains(mOwnerDependentTask.pse__Preceding_Task__c)){
                 mDependentTaskOwnerIds.add(mOwnerDependentTask.pse__Dependent_Task__r.ownerId);
-
+                
             }
         }
-
+        
         if(mDependentTaskOwnerIds.size() == 0){
             return;
         }
-
+        
         if(mDependentTaskOwnerIds.size() > 0){
-        CustomNotificationType bellNotificationTermForm = [SELECT Id, DeveloperName FROM CustomNotificationType WHERE DeveloperName='NSP_Bell_Notification_Termination_Form' LIMIT 1];
-
-        Messaging.CustomNotification Notification = new Messaging.CustomNotification();
-        Notification.setNotificationTypeId(bellNotificationTermForm.id);
-        Notification.setTitle('Termination Form approval Completed');
-        Notification.setBody('You have task(s) to complete');
-        Notification.setTargetId(mPrecedingTaskId);
-        Notification.send(mDependentTaskOwnerIds);
+            CustomNotificationType bellNotificationTermForm = [SELECT Id, DeveloperName FROM CustomNotificationType WHERE DeveloperName='NSP_Bell_Notification_Termination_Form' LIMIT 1];
+            
+            Messaging.CustomNotification Notification = new Messaging.CustomNotification();
+            Notification.setNotificationTypeId(bellNotificationTermForm.id);
+            Notification.setTitle('Termination Form approval Completed');
+            Notification.setBody('You have task(s) to complete');
+            Notification.setTargetId(mPrecedingTaskId);
+            Notification.send(mDependentTaskOwnerIds);
         }
     }
 
@@ -2365,7 +2367,7 @@ public class NSP_ProjectTasksTriggerHelper {
     }
 
     private static void sendSingleEmailMessages( List<Messaging.SingleEmailMessage> messages ) {
-        if ( ( messages != null ) && !messages.isEmpty() ) {
+        if ( ( messages != null ) && !messages.isEmpty() && EmailDeliverabilityController.IsEnabledOutbound) {
             try {
                 Messaging.sendEmail( messages );
             } catch ( Exception e ) {

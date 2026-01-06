@@ -9,9 +9,9 @@ private class NSP_ProjectTasksTriggerHelperTest {
     @testSetup
     private static void setupProjectTaskdata(){
         //Test Setup
-        Notification_Deliverability_Settings__c notificationSetting = Notification_Deliverability_Settings__c.getOrgDefaults();
-        notificationSetting.IsEnabledOutbound__c = true;
-        upsert notificationSetting;
+        Email_Deliverability_Settings__c emailSetting = Email_Deliverability_Settings__c.getOrgDefaults();
+        emailSetting.IsEnabledOutbound__c = true;
+        upsert emailSetting;
 
         String projectName = 'PEO Termination';
         String submitPtask = 'Submit Termination Checklist';
@@ -65,7 +65,6 @@ private class NSP_ProjectTasksTriggerHelperTest {
         insert oContact;
 
         Case oCase = (Case)NSP_TestExtendedDataFactory.createSObject(new Case(), 'NSP_TestDataFactory.CaseDefaults', true);
-
         List<User> deploymentManagers = [
             SELECT Id
             FROM User
