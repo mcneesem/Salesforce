@@ -8,7 +8,6 @@ private class NSP_OpportunityTriggerHelperTest {
 
     @testSetup
     private static void testData() {
-
         NSP_hotfix_Switch__c setting = new NSP_hotfix_Switch__c();
         setting.Is_Edit_Closed_Won_Allowed__c = true;
         insert setting;
@@ -16,6 +15,10 @@ private class NSP_OpportunityTriggerHelperTest {
         OpportunityStageSettings__c optySettings = OpportunityStageSettings__c.getOrgDefaults();
         optySettings.Is_Enabled_WO_WS_Stage_Entry__c = true;
         upsert optySettings;
+
+        Lead_Trigger_Settings__c leadSettings = Lead_Trigger_Settings__c.getOrgDefaults();
+        leadSettings.IsEnabledTransferDiscoveryCall__c = true;
+        upsert leadSettings;
 
         PlatformEventSettings__c pESetting = new PlatformEventSettings__c();
         pESetting.IsEnabled_IntegrationAccountEvent__c = true;
