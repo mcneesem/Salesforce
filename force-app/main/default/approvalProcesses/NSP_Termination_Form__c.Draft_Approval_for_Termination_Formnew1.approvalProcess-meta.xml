@@ -178,7 +178,7 @@ NOT(ISBLANK(Name))
             <type>Alert</type>
         </action>
     </finalApprovalActions>
-    <finalApprovalRecordLock>true</finalApprovalRecordLock>
+    <finalApprovalRecordLock>false</finalApprovalRecordLock>
     <finalRejectionActions>
         <action>
             <name>Send_Email_to_Owner_and_Created_By_if_rejected</name>
