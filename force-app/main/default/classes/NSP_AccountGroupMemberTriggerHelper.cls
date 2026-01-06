@@ -39,9 +39,7 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
     }
 
     private static void createSelfGroupForAccount( List<NSP_Account_Group_Member__c> oldList ) {
-        AccountGroupMemberTriggerSettings__c cs = AccountGroupMemberTriggerSettings__c.getInstance( UserInfo.getUserId() );
-        Boolean isEnabled = (cs == null || cs.IsEnabled__c);
-        if( isEnabled && oldList != null && !oldList.isEmpty() ) {
+        if( AccountGroupMemberTriggerSettings__c.getInstance( UserInfo.getUserId() ).IsEnabled__c && oldList != null && !oldList.isEmpty() ) {
             Set<Id> growthForecastAccountIds = NSP_AccountGroupMemberTriggerHelper.getGrowthForecastAccountIds( oldList );
             Set<Id> accountHasWO = NSP_AccountGroupMemberTriggerHelper.getWoAssetAccountIds( growthForecastAccountIds );
             Map<Id, List<NSP_Account_Group__c>> groupsToCreate = NSP_AccountGroupMemberTriggerHelper.collectGroups( oldList , accountHasWO );
