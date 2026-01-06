@@ -9,7 +9,7 @@
 // *
 // **************************************************************************************************************************
 public with sharing class NSP_NotifyPMForITAProjBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<sObject> {
-    // test w/ NSP_NotifyPMForITAProjTest (83%)
+    // test w/ NSP_NotifyPMForITAProjTest (80%)
 
     //
     // argument-free constructor is required to be "runnable"...
