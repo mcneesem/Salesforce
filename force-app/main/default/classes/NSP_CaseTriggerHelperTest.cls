@@ -50,6 +50,7 @@ private class NSP_CaseTriggerHelperTest {
         woAssetRecord.NSP_Account_Status__c = NSP_ServiceConstants.AIMS_STATUS;
         woAssetRecord.RecordTypeId = WOAssetRecordTypeId;
         woAssetRecord.NSP_Client_Segment_type__c = NSP_ServiceConstants.CoreAssetSegment;
+        woAssetRecord.Status = 'Active';
         Database.insert(woAssetRecord, false);
 
         NSP_Category_Sub_Category_Mapping__c newCat = (NSP_Category_Sub_Category_Mapping__c)NSP_TestExtendedDataFactory.createSObject(new NSP_Category_Sub_Category_Mapping__c(), 'NSP_TestDataFactory.CatSubCatMappingDefaults', false);
@@ -1018,7 +1019,7 @@ private class NSP_CaseTriggerHelperTest {
         NSP_Category_Sub_Category_Mapping__c getCatSubCat =  Database.query(getCatSubCatQuery);
 
         //Query for Asset
-        String assertAssetQuery = new NSP_QueryBuilder('Asset', ASSET_FIELDS).addFilter('recordtypeId', WOAssetRecordTypeId).addLimit(1).setSecurityEnforce(false).build();
+        String assertAssetQuery = new NSP_QueryBuilder('Asset', ASSET_FIELDS).addFilter('recordtypeId', WOAssetRecordTypeId).addFilter('Status', 'Active').addLimit(1).setSecurityEnforce(false).build();
         Asset assertAsset =  Database.query(assertAssetQuery);
 
         //Query for Account
