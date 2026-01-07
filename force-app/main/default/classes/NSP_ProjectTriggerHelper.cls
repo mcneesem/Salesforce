@@ -503,16 +503,17 @@ public with sharing class NSP_ProjectTriggerHelper {
             if ( project.pse__Is_Template__c ) {
                 project.TemplateName__c = project.name;
             } else if ( !project.pse__Is_Template__c
-                && project.RecordTypeId == bpsProjectRecordTypeId
+                && ( ( project.RecordTypeId == bpsProjectRecordTypeId )
+                    || ( String.isNotBlank( project.TemplateName__c )
+                        && project.TemplateName__c.startsWith( 'RET' )
+                        )
+                    )
                 )
             {
-                String projectName = String.isNotBlank(project.pse__Account__c) ?
+                project.Name = String.isNotBlank(project.pse__Account__c) ?
                     projAccIdNameMap.get(project.pse__Account__c).Name + ': ' + project.TemplateName__c :
                     project.TemplateName__c
                     ;
-                if(String.isNotBlank(projectName)){
-                    project.Name = projectName.length() > 80 ? projectName.substring(0, 80) : projectName;
-                }
             } else if ( !project.pse__Is_Template__c
                 && project.pse__Start_Date__c == System.today()
                 && project.pse__Is_Active__c == true
@@ -533,15 +534,23 @@ public with sharing class NSP_ProjectTriggerHelper {
                     projectNameAsPerNamingConvention(project.TemplateName__c,project.pse__Start_Date__c, NSP_ServiceConstants.EMPTY_STRING)
                     ;
             }
+            project.Name = NSP_ProjectTriggerHelper.safeProjectName( project.Name );
         }
     }
 
-/***********************************************************************************************
-    * MethodName: getProjectAssetFromTemp
-    * Description : Method to get projecttemplate Asset Type
-    * Params:       String Template Name
-    *
-    * ********************************************************************************************/
+    private static String safeProjectName( String value ) {
+        String response = value;
+        if ( String.isNotBlank( response ) && ( response.length() > 73 ) ) {
+            response = response.substring( 0 , 73 );
+        }
+        return response;
+    }
+
+    //
+    // MethodName: getProjectAssetFromTemp
+    // Description : Method to get projecttemplate Asset Type
+    // Params: String Template Name
+    //
     public String getProjectAssetFromTemp(String templateName){
         List<String> projFields = new List<String>{'Id','NSP_Asset_Type__c','TemplateName__c'};
         String query = new NSP_QueryBuilder('pse__Proj__c', projFields)
@@ -1720,10 +1729,11 @@ public with sharing class NSP_ProjectTriggerHelper {
                 if(prj.pse__Account__c!=null){
                     wxProject.name = prj.pse__Account__r.Name + ': ' + NSP_ServiceConstants.WxCarrierConnectionProject;
                     wxProject.pse__Account__c = prj.pse__Account__c;
-                }else{
-                        wxProject.name = NSP_ServiceConstants.WxCarrierConnectionProject;
-                    }
-                wxPrjList.add(wxProject);
+                } else {
+                    wxProject.name = NSP_ServiceConstants.WxCarrierConnectionProject;
+                }
+                wxProject.Name = NSP_ProjectTriggerHelper.safeProjectName( wxProject.Name );
+                wxPrjList.add( wxProject );
             }
         }
             if ( !wxPrjList.isEmpty() ) {
@@ -1857,9 +1867,6 @@ public with sharing class NSP_ProjectTriggerHelper {
         }
         if ( String.isNotBlank( prjName ) && String.isNotBlank( accountName ) ) {
             prjName = prjName + ' - '+ accountName;
-        }
-        if ( prjName.length() > 73 ) {
-            prjName = prjName.substring( 0 , 73 );
         }
         return prjName;
     }
