@@ -26,6 +26,10 @@ private class NSP_ServiceAppointmentTrigger_Test {
         newUser.NSP_Salesforce_Field_Service__c = 'Dispatcher';
         Update newUser;
 
+        Email_Deliverability_Settings__c emailSetting = Email_Deliverability_Settings__c.getOrgDefaults();
+        emailSetting.IsEnabledOutbound__c = true;
+        upsert emailSetting;
+
         //Creating Account
         Account oAccount = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), 'NSP_TestDataFactory.AccountDefaults', true);
 

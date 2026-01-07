@@ -1,5 +1,5 @@
 public with sharing class NSP_ServiceAppointmentTriggerHelper {
-    // test w/ NSP_ServiceAppointmentTrigger_Test (83%)
+    // test w/ NSP_ServiceAppointmentTrigger_Test (89%)
 
     //map of service resource Id and operating hrs name
     public static Map<Id,String> mapServResOperHrs = new Map<Id,String>();
@@ -555,8 +555,11 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
         }
         email.setTargetObjectId(UserInfo.getUserId());
         email.setTreatTargetObjectAsRecipient(false);
-        if(!System.Test.isRunningTest()){
-            Messaging.sendEmail(new Messaging.SingleEmailMessage[] {email});
+        if ( !System.Test.isRunningTest()
+            && EmailDeliverabilityController.isEnabledOutbound
+            )
+        {
+            Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ email } );
         }
     }
 
