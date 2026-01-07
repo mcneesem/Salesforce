@@ -1,7 +1,7 @@
 public with sharing class NSP_OpportunityTriggerHelper {
     // test w/ NSP_OpportunityTriggerHelperTest, NSP_AccountTriggerHelperTest, OpportunityCloseWonTest (77%)
     // test w/ NSP_OpportunityTriggerHelperTest, OpportunityCloseWonTest (76%)
-    // test w/ NSP_OpportunityTriggerHelperTest (72%)
+    // test w/ NSP_OpportunityTriggerHelperTest (75%)
     // test w/ NSP_AccountTriggerHelperTest (42%)
     // test w/ OpportunityCloseWonTest (38%)
 
@@ -381,7 +381,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
         }
 
         setSalesOfficeDetails(opportunityNewMap.values(),opportunityOldMap); // added for STY-03154
-
+        NSP_LeadTriggerHelper.transferDiscoveryCall( opportunityNewMap , opportunityOldMap ); // ADO-437605
         // AZD-191924 AZD-232114
         if(!calculateFrees.isEmpty()){
             calculateEnrollmentFees(calculateFrees);
