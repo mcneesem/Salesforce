@@ -76,7 +76,10 @@ public class NSP_TerminationForm_Batch implements ISelfSchedulable , Schedulable
     }
 
     public void finish( Database.BatchableContext bc ) {
-        if ( String.isNotBlank( System.Label.NSP_TerminationFormBatchGenericToAddress ) ) {
+        if ( String.isNotBlank( System.Label.NSP_TerminationFormBatchGenericToAddress )
+            && EmailDeliverabilityController.isEnabledOutbound
+            )
+        {
             try {
                 EmailTemplate emailTemplate = [
                     SELECT Id , Body
