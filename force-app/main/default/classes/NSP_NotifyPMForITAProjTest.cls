@@ -91,7 +91,7 @@ private class NSP_NotifyPMForITAProjTest {
         template.TemplateType='Text';
         template.Name='TestEmailTempalte_Unique';
         insert template;
-
+        NSP_NotifyPMForITAProjBatch.schedule();
        Database.executeBatch(new NSP_NotifyPMForITAProjBatch(),200);
         Test.stopTest();
         List<String> PROJECT_FIELDS = new List<String>{
