@@ -167,7 +167,7 @@ public with sharing class UserOnboardingTriggerHelper {
         Boolean isUserEligible = false;
         if (oldMap != null && oldMap.containsKey(usr.Id)) {
             User oldUser = oldMap.get(usr.Id);
-            
+
             isUserEligible = usr.Run_Permission_Automation__c &&
                 String.isNotBlank(usr.Business_Title__c) &&
                 usr.IsActive &&
@@ -332,7 +332,7 @@ public with sharing class UserOnboardingTriggerHelper {
                         }
                         if ( mapOfUserTitleToDept.containsKey( eachUser.Business_Title__c ) ) {
                             eachUser.Department = mapOfUserTitleToDept.get( eachUser.Business_Title__c );
-                        }     
+                        }
                         if ( mapOfUserTitleToDiv.containsKey( eachUser.Business_Title__c ) ) {
                             eachUser.HR_Division__c = mapOfUserTitleToDiv.get( eachUser.Business_Title__c );
                         }
@@ -523,7 +523,7 @@ public with sharing class UserOnboardingTriggerHelper {
             && !names.isEmpty()
         );
     }
-    
+
     private Map<String, Id> fetchEntityData( Set<String> names , String entityType ) {
         Map<String,Id> nameToIdMap = new Map<String,Id>();
         if ( entityType == 'PermissionSet' ) {
@@ -651,13 +651,16 @@ public with sharing class UserOnboardingTriggerHelper {
     private void handleInsertOperation( List<sObject> records , String methodName ) {
         if ( !records.isEmpty() ) {
             List<Database.SaveResult> results = Database.insert( records , false );
-            UserOnboardingTriggerHelper.createErrorLog(
-                UserOnboardingTriggerHelper.class.getName() ,
-                methodName ,
-                UserOnboardingTriggerHelper.buildMessage(
-                    UserOnboardingTriggerHelper.summarizeDatabaseResults( results )
-                )
+            String message = UserOnboardingTriggerHelper.buildMessage(
+                UserOnboardingTriggerHelper.summarizeDatabaseResults( results )
             );
+            if ( message != UserOnboardingTriggerHelper.ERROR_MESSAGE ) {
+                UserOnboardingTriggerHelper.createErrorLog(
+                    UserOnboardingTriggerHelper.class.getName() ,
+                    methodName ,
+                    message
+                );
+            }
         }
     }
 
@@ -892,13 +895,16 @@ public with sharing class UserOnboardingTriggerHelper {
     private void handleDeleteOperation( List<sObject> records , String methodName ) {
         if ( !records.isEmpty() ) {
             List<Database.DeleteResult> results = Database.delete( records , false );
-            UserOnboardingTriggerHelper.createErrorLog(
-                UserOnboardingTriggerHelper.class.getName() ,
-                methodName ,
-                UserOnboardingTriggerHelper.buildMessage(
-                    UserOnboardingTriggerHelper.summarizeDatabaseResults( results )
-                )
+            String message = UserOnboardingTriggerHelper.buildMessage(
+                UserOnboardingTriggerHelper.summarizeDatabaseResults( results )
             );
+            if ( message != UserOnboardingTriggerHelper.ERROR_MESSAGE ) {
+                UserOnboardingTriggerHelper.createErrorLog(
+                    UserOnboardingTriggerHelper.class.getName() ,
+                    methodName ,
+                    message
+                );
+            }
         }
     }
 
@@ -909,11 +915,11 @@ public with sharing class UserOnboardingTriggerHelper {
     private Map<String,List<String>> createPermissionSetGroupMap( List<User_Onboarding_Detail__mdt> details ) {
         return this.createMap( details , 'Permission_Set_Group_Name__c' );
     }
-    
+
     private Map<String,List<String>> createGroupMap( List<User_Onboarding_Detail__mdt> details ) {
         return this.createMap( details , 'Queue_Name__c' );
     }
-    
+
     private Map<String,List<String>> createPermissionLicenceMap( List<User_Onboarding_Detail__mdt> details ) {
         return this.createMap( details , 'Permission_Set_License__c' );
     }
@@ -1056,11 +1062,13 @@ public with sharing class UserOnboardingTriggerHelper {
 
     @future
     private static void createErrorLog( String className , String methName , String descText ) {
-        NSP_Error_Log__c log = new NSP_Error_Log__c();
-        log.NSP_Class__c = className;
-        log.NSP_Method__c = methName;
-        log.NSP_Description__c = descText;
-        Insert log;
+        if ( descText != UserOnboardingTriggerHelper.ERROR_MESSAGE ) {
+            NSP_Error_Log__c log = new NSP_Error_Log__c();
+            log.NSP_Class__c = className;
+            log.NSP_Method__c = methName;
+            log.NSP_Description__c = descText;
+            insert log;
+        }
     }
 
 }
