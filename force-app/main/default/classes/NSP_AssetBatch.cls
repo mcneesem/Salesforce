@@ -1,4 +1,5 @@
 public with sharing class NSP_AssetBatch implements Database.Batchable<Sobject>, Database.Stateful {
+    // test w/ NSP_AssetBatchTest (80%)
 
     public final String PEORECORDTYPE = 'PEO';
     public final String HRSPECIALISTROLE = 'HR Specialist';

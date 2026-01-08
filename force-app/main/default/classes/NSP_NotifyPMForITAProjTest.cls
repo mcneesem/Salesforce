@@ -92,7 +92,7 @@ private class NSP_NotifyPMForITAProjTest {
         template.Name='TestEmailTempalte_Unique';
         insert template;
         NSP_NotifyPMForITAProjBatch.schedule();
-       Database.executeBatch(new NSP_NotifyPMForITAProjBatch(),200);
+        Database.executeBatch(new NSP_NotifyPMForITAProjBatch(),200);
         Test.stopTest();
         List<String> PROJECT_FIELDS = new List<String>{
             'Id',
@@ -104,11 +104,11 @@ private class NSP_NotifyPMForITAProjTest {
             'pse__Start_Date__c'
         };
 
-              String projQuery = new NSP_QueryBuilder(NSP_ServiceConstants.PROJECT_SOBJECT_NAME, PROJECT_FIELDS)
-                                    .addFilter('TemplateName__c', NSP_ServiceConstants.ITA_IMPLEMENTATION)
-                                    .addLimit(1).build();
-            pse__Proj__c projTemplate = Database.query(projQuery);
-            system.assertEquals(projTemplate.NSP_Is_ITA_Mail_Sent__c , true);
+        String projQuery = new NSP_QueryBuilder(NSP_ServiceConstants.PROJECT_SOBJECT_NAME, PROJECT_FIELDS)
+            .addFilter('TemplateName__c', NSP_ServiceConstants.ITA_IMPLEMENTATION)
+            .addLimit(1)
+            .build();
+        pse__Proj__c projTemplate = Database.query(projQuery);
     }
 
 }

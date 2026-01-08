@@ -1,5 +1,5 @@
 public with sharing class UserQueueMembershipService {
-    // test w/ UserGroupMembershipServiceTest (100%)
+    // test w/ UserQueueMembershipServiceTest (100%)
 
     //
     // Service: fetch a user's Queue memberships and return lightweight rows for LWC consumption.

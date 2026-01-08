@@ -515,13 +515,17 @@ public with sharing class NSP_TerminationFormTriggerHelper {
             NSP_TerminationFormTriggerHelper.updateProjectTaskStatus( setOfProjectTaskId );
         }
 
-        if( NotificationDeliverabilityController.IsEnabledOutbound
-          && terminationFormBellNotificationSet.size() > 0 ) {
-            sendBellNotificationToSpecialist(terminationFormBellNotificationSet);
+        if ( NotificationDeliverabilityController.isEnabledOutbound
+            && !terminationFormBellNotificationSet.isEmpty()
+            )
+        {
+            NSP_TerminationFormTriggerHelper.sendBellNotificationToSpecialist( terminationFormBellNotificationSet );
         }
-        if( EmailDeliverabilityController.IsEnabledOutbound
-          && termFormSet.size() > 0 ) {
-            sendEmailNotificationToSupervisor(termFormSet);
+        if ( EmailDeliverabilityController.isEnabledOutbound
+            && !termFormSet.isEmpty()
+            )
+        {
+            NSP_TerminationFormTriggerHelper.sendEmailNotificationToSupervisor( termFormSet );
         }
     }
 
@@ -552,7 +556,7 @@ public with sharing class NSP_TerminationFormTriggerHelper {
     }
 
     private static void sendCustomBellNotification (Map<NSP_Termination_Form__c,Set<String>> termFormToSpecialistIdsMap){
-        if ( NotificationDeliverabilityController.IsEnabledOutbound
+        if ( NotificationDeliverabilityController.isEnabledOutbound
           && !termFormToSpecialistIdsMap.keySet().isEmpty() ) {
             List<CustomNotificationType> bellNotificationTermForms = [
                 SELECT Id , DeveloperName

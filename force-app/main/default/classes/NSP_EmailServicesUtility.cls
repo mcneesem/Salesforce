@@ -1,5 +1,8 @@
 // This class is used as a generic class to send emails by passing specific parameters like toAddress, ccAddress, templateId, etc.
 public class NSP_EmailServicesUtility {
+    // test w/ NSP_EmailServicesUtilityTest, NSP_EmailServiceTest (??%)
+    // test w/ NSP_EmailServicesUtilityTest (36%)
+    // test w/ NSP_EmailServiceTest (??%)
 
     // Iterates through all ClosedWon Opportunities and fetches the right email template API, TOs, CCs from custom metadata to send emails to the service team.
     public static void sendEmailsTOService(List<Opportunity> closedWonOpptyList, Map<Id,Opportunity> newOpportunityMap, List<String> workforceProductsList) {

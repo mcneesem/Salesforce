@@ -1,5 +1,5 @@
 public with sharing class TerminationEmailBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<SObject> {
-    //test w/ TerminationEmailBatchTest (84%)
+    // test w/ TerminationEmailBatchTest (84%)
 
     //Constants for Email Template DeveloperNames
     private static final String TEMPLATE_INITIAL = 'Term_Letter_Initial';
