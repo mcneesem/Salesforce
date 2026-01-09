@@ -13,29 +13,24 @@
   /* Category: Compensation Services */
   AND(
     ( NSP_Category__c = &quot;Compensation Services&quot; ) ,
-    ( NSP_SubCategory__c = &quot;Salary Survey&quot; ) ,
-    ( ISPICKVAL( Required_Documentation_Attached__c , &quot;Yes&quot; ) ) ,
-    ( Requested_Jobs__c &gt; 0 )
+    ( NSP_SubCategory__c != &quot;Salary Survey&quot; ) ,
+    ( ISPICKVAL( Required_Documentation_Attached__c , &quot;Yes&quot; ) )
   ) ,
   AND(
     ( NSP_Category__c = &quot;Compensation Services&quot; ) ,
-    ( NSP_SubCategory__c != &quot;Salary Survey&quot; ) ,
-    ( ISPICKVAL( Required_Documentation_Attached__c , &quot;Yes&quot; ) )
+    ( NSP_SubCategory__c = &quot;Salary Survey&quot; ) ,
+    ( ISPICKVAL( Required_Documentation_Attached__c , &quot;Yes&quot; ) ) ,
+    ( Requested_Jobs__c &gt; 0 )
   ) ,
   /* Category: Contractor Management */
   AND(
     ( NSP_Category__c = &quot;Contractor Management&quot; ) ,
     NOT( ISBLANK( NSP_Detail__c ) )
   ) ,
-  /* Category: Payroll Shared Services */
+  /* Category: HR COE Escalation */
   AND(
-    ( NSP_Category__c = &quot;Payroll Shared Services&quot; ) ,
-    ( NSP_SubCategory__c != &quot;Docusign&quot; )
-  ) ,
-  AND(
-    ( NSP_Category__c = &quot;Payroll Shared Services&quot; ) ,
-    ( NSP_SubCategory__c = &quot;Docusign&quot; ) ,
-    NOT( ISBLANK( Docusign_Form_To_Send_Multi__c ) )
+    ( NSP_Category__c = &quot;HR COE Escalation&quot; ) ,
+    NOT( ISBLANK( NSP_Detail__c ) )
   ) ,
   /* Category: Payroll Services */
   AND(
@@ -63,10 +58,15 @@
     NOT( ISBLANK( Pay_Date__c ) ) ,
     NOT( ISBLANK( Payroll_Number__c ) )
   ) ,
-  /* Category: HR COE Escalation */
+  /* Category: Payroll Shared Services */
   AND(
-    ( NSP_Category__c = &quot;HR COE Escalation&quot; ) ,
-    NOT( ISBLANK( NSP_Detail__c  ) )
+    ( NSP_Category__c = &quot;Payroll Shared Services&quot; ) ,
+    ( NSP_SubCategory__c != &quot;Docusign&quot; )
+  ) ,
+  AND(
+    ( NSP_Category__c = &quot;Payroll Shared Services&quot; ) ,
+    ( NSP_SubCategory__c = &quot;Docusign&quot; ) ,
+    NOT( ISBLANK( Docusign_Form_To_Send_Multi__c ) )
   )
 )</formula>
     <label>Is Owner Editable</label>
