@@ -134,15 +134,6 @@ public class NSP_OrderItemTriggerHelper {
                 opIdMap.put(eachItem.Id,eachItem.NSP_ServiceAssetCategory__c);
             }
         }
-        if(cat1ListOrderItems.size () > 0 ) {
-            processConsumptionSchedule(cat1ListOrderItems, 1, null);
-        }
-        if(cat2ListOrderItems.size () > 0 ) {
-            processConsumptionSchedule(cat2ListOrderItems, 2, null);
-        }
-        if(cat4ListOrderItems.size () > 0 ) {
-            processConsumptionSchedule(cat4ListOrderItems, 4, null);
-        }
         //call asset mapping method
         if(opIdMap != null && opIdMap.size() >0){
             updateAsset(opIdMap);
