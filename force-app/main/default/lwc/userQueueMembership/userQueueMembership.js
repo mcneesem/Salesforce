@@ -7,10 +7,10 @@ const DEFAULT_PAGE_SIZE = 5;
 const COLUMNS = Object.freeze([
     {
         label: "Label",
-        fieldName: "queueDeveloperName",
+        fieldName: "groupDeveloperName",
         type: "button",
         typeAttributes: {
-            label: { fieldName: "queueDeveloperName" },
+            label: { fieldName: "groupDeveloperName" },
             name: "openQueue",
             variant: "base"
         },
@@ -18,10 +18,10 @@ const COLUMNS = Object.freeze([
     },
     {
         label: "Queue Name",
-        fieldName: "queueName",
+        fieldName: "groupName",
         type: "button",
         typeAttributes: {
-            label: { fieldName: "queueName" },
+            label: { fieldName: "groupName" },
             name: "openQueue",
            variant: "base"
         },
@@ -43,7 +43,7 @@ export default class UserQueueMembership extends NavigationMixin(LightningElemen
     totalRecords = 0;
 
     // sorting
-    sortedBy = "queueName";
+    sortedBy = "groupName";
     sortedDirection = "asc";
 
     // paging pattern aligned to userDefaultAccountTeam
@@ -97,8 +97,8 @@ export default class UserQueueMembership extends NavigationMixin(LightningElemen
                 const mapped = data.map((m) => ({
                     id: m.id,
                     groupId: m.groupId,
-                    queueDeveloperName: m.queueDeveloperName || "",
-                    queueName: m.queueName || "",
+                    groupDeveloperName: m.groupDeveloperName || "",
+                    groupName: m.groupName || "",
                     reasonForMembership: m.reasonForMembership || "—"
                 }));
                 this.totalRecords = mapped.length;
