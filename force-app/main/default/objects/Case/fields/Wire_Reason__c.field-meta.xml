@@ -8,6 +8,7 @@
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
+        <controllingField>Wire_Scenario__c</controllingField>
         <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
@@ -32,5 +33,23 @@
                 <label>Client Requested</label>
             </value>
         </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Credit requires wire, Client requests debit</controllingFieldValue>
+            <controllingFieldValue>Debit Client who needs to wire</controllingFieldValue>
+            <valueName>Additional/Bonus Payrolls Over Credit Limit</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Credit requires wire, Client requests debit</controllingFieldValue>
+            <valueName>Credit Requested</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Credit requires wire, Client requests debit</controllingFieldValue>
+            <valueName>Final Client Payroll</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Credit requires wire, Client requests debit</controllingFieldValue>
+            <controllingFieldValue>Debit Client who needs to wire</controllingFieldValue>
+            <valueName>Client Requested</valueName>
+        </valueSettings>
     </valueSet>
 </CustomField>
