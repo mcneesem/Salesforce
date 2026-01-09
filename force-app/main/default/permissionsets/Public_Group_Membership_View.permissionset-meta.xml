@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <classAccesses>
+        <apexClass>UserQueueMembershipService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Public_Group_Membership_View</name>
+    </customPermissions>
+    <description>Display the Public Group Membership on User record page</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Public Group Membership (View)</label>
+</PermissionSet>

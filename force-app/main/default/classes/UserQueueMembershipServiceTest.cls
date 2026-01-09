@@ -71,6 +71,7 @@ private class UserQueueMembershipServiceTest {
             // Act
             Test.startTest();
             List<UserQueueMembershipService.Member> memberRows = UserQueueMembershipService.getQueueMembershipsByUser(testUser.Id);
+            List<UserQueueMembershipService.Member> memberRows1 = UserQueueMembershipService.getPublicGroupMembershipsByUser(testUser.Id);
             Test.stopTest();
 
             // Assert
