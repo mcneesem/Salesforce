@@ -51,7 +51,7 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
         Set<Id> result = new Set<Id>() ;
         if( oldList != null && !oldList.isEmpty() ){
             for( NSP_Account_Group_Member__c agm : oldList ){
-                if( agm != null && agm.NSP_Type__c != null && agm.NSP_Member_Account__c != null ){
+                if( agm != null && agm.NSP_Type__c != NSP_ServiceConstants.GROWTH_FORECAST && agm.NSP_Member_Account__c != null ){
                     result.add( agm.NSP_Member_Account__c );
                 }
             }
@@ -156,28 +156,36 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
         return result;
     }
 
-    private static Map<Id,List<NSP_Account_Group__c>> createSelfGroup( Id accountGrpMember , Id accountId , String nspType , String accName , Set<Id> accountHasWO ){
-        Map<Id,List<NSP_Account_Group__c>> result = new Map<Id,List<NSP_Account_Group__c>>();
-        if ( ( accountGrpMember != null )
-            && ( accountId != null )
-            && ( nspType == NSP_ServiceConstants.GROWTH_FORECAST )
-            && ( ( accountHasWO == null ) || !accountHasWO.contains ( accountId ) )
-            )
-        {
-            NSP_Account_Group__c grp = new NSP_Account_Group__c(
-                RecordTypeId = NSP_AccountGroupMemberTriggerHelper.automaticallyCreatedAccountGroupRecordTypeId ,
-                Name=nspType ,
-                NSP_Account__c=accName ,
-                NSP_Type__c=nspType
-            );
-            result = NSP_AccountGroupMemberTriggerHelper.addToMap(
+    private static Map<Id,List<NSP_Account_Group__c>> createSelfGroup(
+    Id accountGrpMember,
+    Id accountId,
+    String nspType,
+    String accName,
+    Set<Id> accountHasWO
+){
+    Map<Id,List<NSP_Account_Group__c>> result=new Map<Id,List<NSP_Account_Group__c>>();
+    if(
+        accountGrpMember!=null
+        &&accountId!=null
+        &&(
+            nspType!=NSP_ServiceConstants.GROWTH_FORECAST
+            ||(accountHasWO!=null&&accountHasWO.contains(accountId))
+        )
+    ){
+        NSP_Account_Group__c grp=new NSP_Account_Group__c(
+            RecordTypeId=automaticallyCreatedAccountGroupRecordTypeId,
+            Name=nspType,
+            NSP_Account__c=accName,
+            NSP_Type__c=nspType
+        );
+        result = NSP_AccountGroupMemberTriggerHelper.addToMap(
                 result ,
                 accountId ,
                 grp
             );
-        }
-        return result;
     }
+    return result;
+}
 
     private static Map<Id,List<NSP_Account_Group__c>> addToMap(
         Map<Id,List<NSP_Account_Group__c>> accMap ,
