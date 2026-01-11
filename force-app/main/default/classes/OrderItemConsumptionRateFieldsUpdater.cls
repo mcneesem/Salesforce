@@ -3,6 +3,8 @@ public class OrderItemConsumptionRateFieldsUpdater {
 
     private static Map<Id, List<SBQQ__OrderItemConsumptionRate__c>> orderItemConsumptionRateMap = new Map<Id, List<SBQQ__OrderItemConsumptionRate__c>>();
     private static List<OrderItem> orderItemsToUpdate = new List<OrderItem>();
+    private static List<SBQQ__OrderItemConsumptionRate__c> scholarshipRates = new List<SBQQ__OrderItemConsumptionRate__c>();
+    private static List<SBQQ__OrderItemConsumptionRate__c> otherRates = new List<SBQQ__OrderItemConsumptionRate__c>();
 
     @InvocableMethod(label='Update Order Item Consumption Rates')
     public static void updateOrderItems(List<Id> orderIds) {
@@ -45,9 +47,17 @@ public class OrderItemConsumptionRateFieldsUpdater {
             allRates = orderItemConsumptionRateMap.get(oi.Id);
         }
 
-        List<SBQQ__OrderItemConsumptionRate__c> scholarshipRates = new List<SBQQ__OrderItemConsumptionRate__c>();
-        List<SBQQ__OrderItemConsumptionRate__c> otherRates = new List<SBQQ__OrderItemConsumptionRate__c>();
+        groupRates(allRates);
 
+        if(scholarshipRates != null && !scholarshipRates.isEmpty()){
+            csRates = scholarshipRates;
+        }else if (otherRates != null && !otherRates.isEmpty() ){
+            csRates = otherRates;
+        }
+        return csRates;
+    }
+
+    private static void groupRates(List<SBQQ__OrderItemConsumptionRate__c> allRates){
         if(allRates != null && !allRates.isEmpty()){
             for(SBQQ__OrderItemConsumptionRate__c cr: allRates){
                 String csName;
@@ -61,13 +71,6 @@ public class OrderItemConsumptionRateFieldsUpdater {
                 }
             }
         }
-
-        if(scholarshipRates != null && !scholarshipRates.isEmpty()){
-            csRates = scholarshipRates;
-        }else if (otherRates != null && !otherRates.isEmpty() ){
-            csRates = otherRates;
-        }
-        return csRates;
     }
 
     private static List<SBQQ__OrderItemConsumptionRate__c> fetchConsumptionRates(Set<Id> orderItemIds) {
@@ -121,19 +124,9 @@ public class OrderItemConsumptionRateFieldsUpdater {
                     csName = rate.SBQQ__OrderItemConsumptionSchedule__r.Name;
                 }
                 if(String.isNotBlank(csName) && csName.contains('Seasonal')){
-                    if(rate.SBQQ__ProcessingOrder__c == 1 && rate.SBQQ__PricingMethod__c == 'PerUnit' && oi.NSP_Consumption_Rate_Per_Unit__c != rate.SBQQ__Price__c){
-                        oi.NSP_Consumption_Rate_Per_Unit__c = rate.SBQQ__Price__c;
-                        hasUpdated = true;
-                    }
+                    hasUpdated = setSeasonalRates(rate,csName,oi);
                 }else{
-                    if(rate.SBQQ__PricingMethod__c == 'FlatFee' && oi.NSP_Consumption_Rate_Flat_Price__c != rate.SBQQ__Price__c){
-                        oi.NSP_Consumption_Rate_Flat_Price__c = rate.SBQQ__Price__c;
-                        hasUpdated = true;
-                    }
-                    if(rate.SBQQ__PricingMethod__c == 'PerUnit' && oi.NSP_Consumption_Rate_Per_Unit__c != rate.SBQQ__Price__c){
-                        oi.NSP_Consumption_Rate_Per_Unit__c = rate.SBQQ__Price__c;
-                        hasUpdated = true;
-                    }
+                    hasUpdated = setNonSeasonalRates(rate,csName,oi);
                 }
             }
 
@@ -143,7 +136,32 @@ public class OrderItemConsumptionRateFieldsUpdater {
         }
     }
 
-     // for test code coverage only...
+    private static boolean setNonSeasonalRates(SBQQ__OrderItemConsumptionRate__c rate, String csName, OrderItem oi){
+        boolean updated = false;
+
+        if(rate != null && rate.SBQQ__PricingMethod__c == 'FlatFee' && oi.NSP_Consumption_Rate_Flat_Price__c != rate.SBQQ__Price__c){
+            oi.NSP_Consumption_Rate_Flat_Price__c = rate.SBQQ__Price__c;
+            updated = true;
+        }
+        if(rate != null && rate.SBQQ__PricingMethod__c == 'PerUnit' && oi.NSP_Consumption_Rate_Per_Unit__c != rate.SBQQ__Price__c){
+            oi.NSP_Consumption_Rate_Per_Unit__c = rate.SBQQ__Price__c;
+            updated = true;
+        }
+
+        return updated;
+    }
+
+    private static boolean setSeasonalRates(SBQQ__OrderItemConsumptionRate__c rate, String csName, OrderItem oi){
+        boolean updated = false;
+        if(rate != null && rate.SBQQ__ProcessingOrder__c == 1 && rate.SBQQ__PricingMethod__c == 'PerUnit' &&
+           oi.NSP_Consumption_Rate_Per_Unit__c != rate.SBQQ__Price__c){
+            oi.NSP_Consumption_Rate_Per_Unit__c = rate.SBQQ__Price__c;
+            updated = true;
+        }
+        return updated;
+    }
+
+    // for test code coverage only...
     public static void testHandleException( Exception e , String methodName ) {
         if ( Test.isRunningTest() ) {
             OrderItemConsumptionRateFieldsUpdater.handleException( e , methodName );
