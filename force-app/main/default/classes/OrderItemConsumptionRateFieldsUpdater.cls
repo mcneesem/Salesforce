@@ -124,9 +124,9 @@ public class OrderItemConsumptionRateFieldsUpdater {
                     csName = rate.SBQQ__OrderItemConsumptionSchedule__r.Name;
                 }
                 if(String.isNotBlank(csName) && csName.contains('Seasonal')){
-                    hasUpdated = setSeasonalRates(rate,csName,oi);
+                    hasUpdated = setSeasonalRates(rate, oi);
                 }else{
-                    hasUpdated = setNonSeasonalRates(rate,csName,oi);
+                    hasUpdated = setNonSeasonalRates(rate, oi);
                 }
             }
 
@@ -136,7 +136,7 @@ public class OrderItemConsumptionRateFieldsUpdater {
         }
     }
 
-    private static boolean setNonSeasonalRates(SBQQ__OrderItemConsumptionRate__c rate, String csName, OrderItem oi){
+    private static boolean setNonSeasonalRates(SBQQ__OrderItemConsumptionRate__c rate, OrderItem oi){
         boolean updated = false;
 
         if(rate != null && rate.SBQQ__PricingMethod__c == 'FlatFee' && oi.NSP_Consumption_Rate_Flat_Price__c != rate.SBQQ__Price__c){
@@ -151,7 +151,7 @@ public class OrderItemConsumptionRateFieldsUpdater {
         return updated;
     }
 
-    private static boolean setSeasonalRates(SBQQ__OrderItemConsumptionRate__c rate, String csName, OrderItem oi){
+    private static boolean setSeasonalRates(SBQQ__OrderItemConsumptionRate__c rate, OrderItem oi){
         boolean updated = false;
         if(rate != null && rate.SBQQ__ProcessingOrder__c == 1 && rate.SBQQ__PricingMethod__c == 'PerUnit' &&
            oi.NSP_Consumption_Rate_Per_Unit__c != rate.SBQQ__Price__c){
