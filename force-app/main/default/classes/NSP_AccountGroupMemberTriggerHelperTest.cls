@@ -110,6 +110,14 @@ private class NSP_AccountGroupMemberTriggerHelperTest {
             NSP_AIMS_Client__c = 'AIMS123'
         );
         insert acc;
+        Id woRtId = NSP_GenericRecordType.getRecordTypeId('Asset', 'WO');
+        Asset woAsset = new Asset(
+            Name = 'WO Asset',
+            AccountId = acc.Id,
+            RecordTypeId = woRtId,
+            Status = 'Active'
+        );
+        insert woAsset;
         Id autoRtId = Schema.SObjectType.NSP_Account_Group__c
             .getRecordTypeInfosByName()
             .get('Automatically Created')
