@@ -1,6 +1,142 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>56.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_varFaultElement_Create_1st_CSS_TP_Assigned_by_Project_Manager_Task</name>
+        <label>Assign varFaultElement - Create_1st_CSS_TP_Assigned_by_Project_Manager_Task</label>
+        <locationX>1106</locationX>
+        <locationY>1403</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_1st_CSS_TP_Assigned_by_Project_Manager_Task</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Create_Quarterly_Client_Meeting_Task_180_Days</name>
+        <label>Assign varFaultElement - Create_Quarterly_Client_Meeting_Task_180_Days</label>
+        <locationX>578</locationX>
+        <locationY>1619</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_Quarterly_Client_Meeting_Task_180_Days</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Create_Quarterly_Client_Meeting_Task_270_Days</name>
+        <label>Assign varFaultElement - Create_Quarterly_Client_Meeting_Task_270_Days</label>
+        <locationX>314</locationX>
+        <locationY>1727</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_Quarterly_Client_Meeting_Task_270_Days</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Create_Quarterly_Client_Meeting_Task_90_Days</name>
+        <label>Assign varFaultElement - Create_Quarterly_Client_Meeting_Task_90_Days</label>
+        <locationX>842</locationX>
+        <locationY>1511</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_Quarterly_Client_Meeting_Task_90_Days</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Fetch_Active_WX_Asset</name>
+        <label>Assign varFaultElement - Fetch_Active_WX_Asset</label>
+        <locationX>2162</locationX>
+        <locationY>971</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Fetch_Active_WX_Asset</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Fetch_BPS_Record_Type_Id_of_Task_Object</name>
+        <label>Assign varFaultElement - Fetch_BPS_Record_Type_Id_of_Task_Object</label>
+        <locationX>1634</locationX>
+        <locationY>1187</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Fetch_BPS_Record_Type_Id_of_Task_Object</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Fetch_WX_Asset_Record_Type_Id</name>
+        <label>Assign varFaultElement - Fetch_WX_Asset_Record_Type_Id</label>
+        <locationX>2690</locationX>
+        <locationY>755</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Fetch_WX_Asset_Record_Type_Id</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_Account_Team_records</name>
+        <label>Assign varFaultElement - Get_Account_Team_records</label>
+        <locationX>3218</locationX>
+        <locationY>539</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Account_Team_records</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Validate_Account_Group</name>
         <label>Validate Account Group</label>
@@ -132,6 +268,7 @@
             <label>Asset RecordType Exists</label>
         </rules>
     </decisions>
+    <description>Added varFaultElement and removed triggeringFlow.</description>
     <environments>Default</environments>
     <formulas>
         <name>CSSStartDatePlus120</name>
@@ -204,7 +341,7 @@
             <targetReference>Create_Quarterly_Client_Meeting_Task_90_Days</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Create_Task_Fault</targetReference>
+            <targetReference>Assign_varFaultElement_Create_1st_CSS_TP_Assigned_by_Project_Manager_Task</targetReference>
         </faultConnector>
         <inputAssignments>
             <field>ActivityDate</field>
@@ -260,8 +397,7 @@
             <targetReference>Create_Quarterly_Client_Meeting_Task_270_Days</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Create_Task_Fault</targetReference>
+            <targetReference>Assign_varFaultElement_Create_Quarterly_Client_Meeting_Task_180_Days</targetReference>
         </faultConnector>
         <inputAssignments>
             <field>ActivityDate</field>
@@ -314,8 +450,7 @@
         <locationX>50</locationX>
         <locationY>1619</locationY>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Create_Task_Fault</targetReference>
+            <targetReference>Assign_varFaultElement_Create_Quarterly_Client_Meeting_Task_270_Days</targetReference>
         </faultConnector>
         <inputAssignments>
             <field>ActivityDate</field>
@@ -371,8 +506,7 @@
             <targetReference>Create_Quarterly_Client_Meeting_Task_180_Days</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Create_Task_Fault</targetReference>
+            <targetReference>Assign_varFaultElement_Create_Quarterly_Client_Meeting_Task_90_Days</targetReference>
         </faultConnector>
         <inputAssignments>
             <field>ActivityDate</field>
@@ -429,7 +563,7 @@
             <targetReference>Validate_WX_Asset</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Fetch_Asset_Fault</targetReference>
+            <targetReference>Assign_varFaultElement_Fetch_Active_WX_Asset</targetReference>
         </faultConnector>
         <filterLogic>1 AND 2 AND (3 OR 4)</filterLogic>
         <filters>
@@ -474,7 +608,7 @@
             <targetReference>Validate_BPS_Record_Type_Of_Task</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Fetch_BPS_Record_Type_of_Task_Fault</targetReference>
+            <targetReference>Assign_varFaultElement_Fetch_BPS_Record_Type_Id_of_Task_Object</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -505,7 +639,7 @@
             <targetReference>Validate_WX_Asset_Record_Type_Found</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Fetch_WX_Asset_Record_Type_Fault</targetReference>
+            <targetReference>Assign_varFaultElement_Fetch_WX_Asset_Record_Type_Id</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -537,7 +671,7 @@
             <targetReference>Validate_Account_Group</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Get_Account_Team_Fault</targetReference>
+            <targetReference>Assign_varFaultElement_Get_Account_Team_records</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -585,98 +719,35 @@
     </start>
     <status>Draft</status>
     <subflows>
-        <name>Create_Task_Fault</name>
-        <label>Create Task Fault</label>
-        <locationX>1106</locationX>
-        <locationY>1403</locationY>
-        <flowName>Insperity_Fault_Handler_Subflow</flowName>
-        <inputAssignments>
-            <name>faultMessage</name>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>triggeringFlow</name>
-            <value>
-                <stringValue>NSP_Create_CSS_Service_Plan_Task</stringValue>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <subflows>
-        <name>Fetch_Asset_Fault</name>
-        <label>Fetch Asset Fault</label>
-        <locationX>2162</locationX>
-        <locationY>971</locationY>
-        <flowName>Insperity_Fault_Handler_Subflow</flowName>
-        <inputAssignments>
-            <name>faultMessage</name>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>triggeringFlow</name>
-            <value>
-                <stringValue>NSP_Create_CSS_Service_Plan_Task</stringValue>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <subflows>
-        <name>Fetch_BPS_Record_Type_of_Task_Fault</name>
-        <label>Fetch BPS Record Type of Task Fault</label>
-        <locationX>1634</locationX>
-        <locationY>1187</locationY>
-        <flowName>Insperity_Fault_Handler_Subflow</flowName>
-        <inputAssignments>
-            <name>faultMessage</name>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>triggeringFlow</name>
-            <value>
-                <stringValue>NSP_Create_CSS_Service_Plan_Task</stringValue>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <subflows>
-        <name>Fetch_WX_Asset_Record_Type_Fault</name>
-        <label>Fetch WX Asset Record Type Fault</label>
-        <locationX>2690</locationX>
-        <locationY>755</locationY>
-        <flowName>Insperity_Fault_Handler_Subflow</flowName>
-        <inputAssignments>
-            <name>faultMessage</name>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>triggeringFlow</name>
-            <value>
-                <stringValue>NSP_Create_CSS_Service_Plan_Task</stringValue>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <subflows>
-        <name>Get_Account_Team_Fault</name>
-        <label>Get Account Team Fault</label>
+        <name>Fault_Handler_Subflow</name>
+        <label>Fault Handler Subflow</label>
         <locationX>3218</locationX>
-        <locationY>539</locationY>
+        <locationY>647</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>varFaultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>NSP_Create_CSS_Service_Plan_Task</stringValue>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <name>faultMessage</name>
             <value>
                 <elementReference>$Flow.FaultMessage</elementReference>
             </value>
         </inputAssignments>
-        <inputAssignments>
-            <name>triggeringFlow</name>
-            <value>
-                <stringValue>NSP_Create_CSS_Service_Plan_Task</stringValue>
-            </value>
-        </inputAssignments>
     </subflows>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
 </Flow>

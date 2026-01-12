@@ -8,7 +8,7 @@
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <faultConnector>
-            <targetReference>Fault_Flow_For_Email</targetReference>
+            <targetReference>Assign_varElement_ClientIntegraEmail</targetReference>
         </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -78,6 +78,73 @@
         </assignmentItems>
         <connector>
             <targetReference>CheckPayrollEmailId</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varElement_ClientIntegraEmail</name>
+        <label>Assign varElement - ClientIntegraEmail</label>
+        <locationX>556</locationX>
+        <locationY>2148</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>ClientIntegraEmail</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Flow_For_Metadata</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varElement_get_Content_Document</name>
+        <label>Assign varElement - get_Content_Document</label>
+        <locationX>820</locationX>
+        <locationY>1740</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>get_Content_Document</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Flow_For_Metadata</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varElement_GetIp</name>
+        <label>Assign varElement - GetIp</label>
+        <locationX>1084</locationX>
+        <locationY>1032</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>GetIp</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Flow_For_Metadata</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varElement_GetToaddressFromMetadata</name>
+        <label>Assign varElement - GetToaddressFromMetadata</label>
+        <locationX>1876</locationX>
+        <locationY>600</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>GetToaddressFromMetadata</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Flow_For_Metadata</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -316,7 +383,7 @@
             <label>IsEnabledOutbound = false</label>
         </rules>
     </decisions>
-    <description>Outbound Email bypass added.</description>
+    <description>Updated with varFaultElement and removed triggeringFlow. Outbound Email bypass added.</description>
     <environments>Default</environments>
     <formulas>
         <name>recordLinkCreation</name>
@@ -368,7 +435,7 @@
             <targetReference>loop_On_Content_Document</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Fault_Flow_For_Content_Document</targetReference>
+            <targetReference>Assign_varElement_get_Content_Document</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -401,7 +468,7 @@
             <targetReference>CheckManagerEmailId</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Fault_Flow_For_Ip</targetReference>
+            <targetReference>Assign_varElement_GetIp</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -428,7 +495,7 @@
             <targetReference>CheckClientIntegraPresent</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Fault_Flow_For_Metadata</targetReference>
+            <targetReference>Assign_varElement_GetToaddressFromMetadata</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -488,78 +555,27 @@
     </start>
     <status>Draft</status>
     <subflows>
-        <name>Fault_Flow_For_Content_Document</name>
-        <label>Fault Flow For Content Document</label>
-        <locationX>820</locationX>
-        <locationY>1740</locationY>
-        <flowName>Insperity_Fault_Handler_Subflow</flowName>
-        <inputAssignments>
-            <name>faultMessage</name>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>triggeringFlow</name>
-            <value>
-                <stringValue>Client_Integra_Project_Task_Email</stringValue>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <subflows>
-        <name>Fault_Flow_For_Email</name>
-        <label>Fault Flow For Email</label>
-        <locationX>556</locationX>
-        <locationY>2148</locationY>
-        <flowName>Insperity_Fault_Handler_Subflow</flowName>
-        <inputAssignments>
-            <name>faultMessage</name>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>triggeringFlow</name>
-            <value>
-                <stringValue>Client_Integra_Project_Task_Email</stringValue>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <subflows>
-        <name>Fault_Flow_For_Ip</name>
-        <label>Fault Flow For Ip</label>
-        <locationX>1084</locationX>
-        <locationY>1032</locationY>
-        <flowName>Insperity_Fault_Handler_Subflow</flowName>
-        <inputAssignments>
-            <name>faultMessage</name>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>triggeringFlow</name>
-            <value>
-                <stringValue>Client_Integra_Project_Task_Email</stringValue>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <subflows>
         <name>Fault_Flow_For_Metadata</name>
         <label>Fault Flow For Metadata</label>
         <locationX>1876</locationX>
-        <locationY>600</locationY>
+        <locationY>708</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>varFaultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Client_Integra_Project_Task_Email</stringValue>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <name>faultMessage</name>
             <value>
                 <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>triggeringFlow</name>
-            <value>
-                <stringValue>Client_Integra_Project_Task_Email</stringValue>
             </value>
         </inputAssignments>
     </subflows>
@@ -606,6 +622,13 @@
         <name>ToEmailAddress</name>
         <dataType>String</dataType>
         <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
