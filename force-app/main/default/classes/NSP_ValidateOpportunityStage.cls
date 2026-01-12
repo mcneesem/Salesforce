@@ -71,10 +71,7 @@ public with sharing class NSP_ValidateOpportunityStage {
                         (
                             SELECT Id , Status , NSP_Task_Type__c , Subject
                             FROM Tasks
-                            WHERE (
-                                ( CreatedBy.ProfileId = :NSP_ValidateOpportunityStage.integUserProfileId )
-                                AND ( NSP_Task_Type__c != null )
-                            )
+                            WHERE ( NSP_Task_Type__c != null )
                         ) ,
                         (
                             SELECT Id , NSP_Event_Subtype__c , NSP_Method__c , NSP_Status__c
@@ -1116,25 +1113,6 @@ public with sharing class NSP_ValidateOpportunityStage {
                 }
             }
             return userGroupMembership;
-        }
-        private set;
-    }
-
-    private static Id integUserProfileId {
-        private get {
-            if ( integUserProfileId == null ) {
-                List<NSP_Profile_Detail__mdt> profileDetailList = [
-                    SELECT Profile_ID__c , Profile_Name__c
-                    FROM NSP_Profile_Detail__mdt
-                    WHERE ( Profile_Name__c = :System.Label.NSP_Integration_User_Profile_Name )
-                    LIMIT 1
-                ];
-                integUserProfileId = NSP_SalesConstants.INTEGRATION_USER_PROFILE_ID;
-                if ( ( profileDetailList != null ) && !profileDetailList.isEmpty() ) {
-                    integUserProfileId = profileDetailList[0].Profile_ID__c;
-                }
-            }
-            return integUserProfileId;
         }
         private set;
     }
