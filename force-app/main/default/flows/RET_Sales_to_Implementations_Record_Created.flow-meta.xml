@@ -161,7 +161,7 @@
             <label>401k Plan Consultant Exists - Yes</label>
         </rules>
     </decisions>
-    <description>AZD-340788 - Update 401k Plan Consultant When S2I Record Created</description>
+    <description>Removed triggeringFlow. AZD-340788 - Update 401k Plan Consultant When S2I Record Created</description>
     <environments>Default</environments>
     <interviewLabel>RET Sales to Implementations Create Record {!$Flow.CurrentDateTime}</interviewLabel>
     <label>RET Sales to Implementations Record Created</label>
@@ -304,15 +304,15 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>faultMessage</name>
+            <name>faultFlow</name>
             <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
+                <stringValue>RET_Sales_to_Implementations_Record_Created</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>triggeringFlow</name>
+            <name>faultMessage</name>
             <value>
-                <stringValue>RET_Sales_to_Implementations_Record_Created</stringValue>
+                <elementReference>$Flow.FaultMessage</elementReference>
             </value>
         </inputAssignments>
     </subflows>

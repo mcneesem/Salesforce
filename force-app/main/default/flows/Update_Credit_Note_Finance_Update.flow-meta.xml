@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>60.0</apiVersion>
-    <description>update credit note lines udpate</description>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Removed triggeringFlow. update credit note lines udpate</description>
     <environments>Default</environments>
     <interviewLabel>Update Credit Note Finance Update {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Update Credit Note Finance Update</label>
@@ -25,7 +26,7 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordUpdates>
-        <name>Update_Records_1</name>
+        <name>Update_Credit_line_Records</name>
         <label>Update Credit line Records</label>
         <locationX>308</locationX>
         <locationY>276</locationY>
@@ -88,7 +89,7 @@
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Update_Records_1</targetReference>
+                <targetReference>Update_Credit_line_Records</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
@@ -102,15 +103,21 @@
         <locationY>384</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
-            <name>faultMessage</name>
+            <name>faultElement</name>
             <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
+                <stringValue>Update_Credit_line_Records</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>triggeringFlow</name>
+            <name>faultFlow</name>
             <value>
                 <stringValue>Update_Credit_Note_Finance_Update</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
             </value>
         </inputAssignments>
     </subflows>
