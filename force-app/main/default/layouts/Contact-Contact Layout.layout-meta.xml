@@ -267,6 +267,7 @@
         <fields>ACCOUNT.NAME</fields>
         <fields>NSP_Service_Roles__c</fields>
         <fields>NSP_Support_Role__c</fields>
+        <fields>HRScale_Client_Roles__c</fields>
         <fields>Client_Communication_Contact__c</fields>
         <fields>NSP_Job_Title__c</fields>
         <fields>NSP_Work_Phone__c</fields>
