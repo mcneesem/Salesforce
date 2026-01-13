@@ -267,19 +267,12 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>If_Wage_Claim_Record</name>
-            <conditionLogic>1 OR (2 AND 3)</conditionLogic>
+            <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>NSP_WageClaims</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>PEO</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -340,7 +333,8 @@
         </rules>
     </decisions>
     <description>This flow is created as part of STY-02154 
-Updated on 1/29/203 for STY-256456</description>
+Updated on 1/29/203 for STY-256456
+Updated Sprint 2 ADO-511131</description>
     <environments>Default</environments>
     <interviewLabel>Update Revisit Wage Claims, DOL Audit &amp; PEO prefilled values {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Update Revisit Wage Claims, DOL Audit &amp; PEO prefilled values</label>
