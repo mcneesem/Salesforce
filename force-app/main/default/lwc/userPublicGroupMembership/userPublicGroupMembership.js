@@ -1,6 +1,6 @@
 import { LightningElement, wire, api } from "lwc";
 import { NavigationMixin } from "lightning/navigation";
-import getPublicGroupMembershipsByUser from "@salesforce/apex/UserQueueMembershipService.getPublicGroupMembershipsByUser";
+import getPublicGroupMembershipsByUser from "@salesforce/apex/UserPublicGroupMembershipService.getPublicGroupMembershipsByUser";
 
 const DEFAULT_PAGE_SIZE = 5;
 

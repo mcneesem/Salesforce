@@ -9,5 +9,6 @@
     <permissionSets>Default_Opportunity_Team_View</permissionSets>
     <permissionSets>Queue_Membership_View</permissionSets>
     <permissionSets>Case_Account_Contact_Information</permissionSets>
+    <permissionSets>Public_Group_Membership_View</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

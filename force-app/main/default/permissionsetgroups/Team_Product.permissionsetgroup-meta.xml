@@ -10,5 +10,6 @@
     <permissionSets>Queue_Membership_View</permissionSets>
     <permissionSets>Run_Flows</permissionSets>
     <permissionSets>Case_Account_Contact_Information</permissionSets>
+    <permissionSets>Public_Group_Membership_View</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

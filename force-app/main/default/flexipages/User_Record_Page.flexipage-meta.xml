@@ -125,11 +125,11 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName>userQueueMembership</componentName>
-                <identifier>c_userQueueMembership</identifier>
+                <componentName>userPublicGroupMembership</componentName>
+                <identifier>c_userPublicGroupMembership</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$Permission.CustomPermission.Queue_Membership_View}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.Public_Group_Membership_View}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>
@@ -138,11 +138,11 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName>userPublicGroupMembership</componentName>
-                <identifier>c_userPublicGroupMembership</identifier>
+                <componentName>userQueueMembership</componentName>
+                <identifier>c_userQueueMembership</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$Permission.CustomPermission.Public_Group_Membership_View}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.Queue_Membership_View}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>
