@@ -4,9 +4,9 @@
     <description>Active Account link for WO Asset Notification Emails</description>
     <externalId>false</externalId>
     <formula>LEFT(
-    $Api.Enterprise_Server_URL_650 ,
-    ( FIND( '/services' , $Api.Enterprise_Server_URL_650 ) - 1 )
-    )</formula>
+  $Api.Enterprise_Server_URL_650 ,
+  ( FIND( '/services' , $Api.Enterprise_Server_URL_650 ) - 1 )
+)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Server URL</label>
     <required>false</required>
