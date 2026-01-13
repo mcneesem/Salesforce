@@ -13,11 +13,6 @@
         <name>Upload_Cases_via_CSV</name>
     </customPermissions>
     <description>Grants the Custom Permission: Upload Cases via CSV</description>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.Meeting_Duration__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Upload Cases via CSV</label>
 </PermissionSet>
