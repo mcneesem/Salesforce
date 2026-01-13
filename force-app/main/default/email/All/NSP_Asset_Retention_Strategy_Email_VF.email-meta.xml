@@ -4,7 +4,7 @@
     <available>true</available>
     <description>Notification to CL/BTHRS/AE/Manager, HR Services</description>
     <encodingKey>ISO-8859-1</encodingKey>
-    <name>NSP Asset Retention Strategy Email_VF</name>
+    <name>Asset Termination Other</name>
     <style>none</style>
     <subject>Pending Termination -  ()</subject>
     <type>visualforce</type>
