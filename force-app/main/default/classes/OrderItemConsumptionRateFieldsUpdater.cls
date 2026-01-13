@@ -137,10 +137,10 @@ public with sharing class OrderItemConsumptionRateFieldsUpdater {
 
     private static orderItem setNonSeasonalRates(SBQQ__OrderItemConsumptionRate__c rate, OrderItem oi){
         if(oi != null && rate != null){
-            if(rate != null && rate.SBQQ__PricingMethod__c == 'FlatFee' && oi.NSP_Consumption_Rate_Flat_Price__c != rate.SBQQ__Price__c){
+            if(rate.SBQQ__PricingMethod__c == 'FlatFee' && oi.NSP_Consumption_Rate_Flat_Price__c != rate.SBQQ__Price__c){
                 oi.NSP_Consumption_Rate_Flat_Price__c = rate.SBQQ__Price__c;
             }
-            if(rate != null && rate.SBQQ__PricingMethod__c == 'PerUnit' && oi.NSP_Consumption_Rate_Per_Unit__c != rate.SBQQ__Price__c){
+            if(rate.SBQQ__PricingMethod__c == 'PerUnit' && oi.NSP_Consumption_Rate_Per_Unit__c != rate.SBQQ__Price__c){
                 oi.NSP_Consumption_Rate_Per_Unit__c = rate.SBQQ__Price__c;
             }
         }
