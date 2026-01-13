@@ -3,7 +3,7 @@
     relatedToType="Asset">
     <messaging:htmlEmailBody >
         <p>
-            <a href="{!relatedTo.Account_Record_Link__c}">
+            <a href="{!relatedTo.Server_URL__c}/{!relatedTo.AccountId}">
                {!relatedTo.Account.Name} 
             </a>
         ({!relatedTo.NSP_Client__c}) has been flagged for Pending Termination.
