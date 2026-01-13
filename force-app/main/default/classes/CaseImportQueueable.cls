@@ -14,15 +14,6 @@ public class CaseImportQueueable implements Queueable {
         }
         private set;
     }
-    private static CaseFlowSettings__c flowSettings {
-        private get {
-            if ( flowSettings == null ) {
-                flowSettings = CaseFlowSettings__c.getInstance( UserInfo.getUserId() );
-            }
-            return flowSettings;
-        }
-        private set;
-    }
 	private static Notification_Deliverability_Settings__c emailSettings {
         private get {
             if ( emailSettings == null ) {
@@ -90,8 +81,7 @@ public class CaseImportQueueable implements Queueable {
         } else {
             CaseImportQueueable.settings.Bypass_Opened_Date__c = false;
             update CaseImportQueueable.settings;
-            CaseImportQueueable.flowSettings.IsEnabled__c = true;
-            update CaseImportQueueable.flowSettings;
+
             CaseImportQueueable.emailSettings.IsEnabledOutbound__c = true;
             update CaseImportQueueable.emailSettings;
             FileUploadController.sendEmail(caseSuccessList, failureMap);
