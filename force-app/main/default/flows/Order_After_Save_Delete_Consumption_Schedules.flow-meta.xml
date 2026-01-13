@@ -249,6 +249,13 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_CS_Cat1</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_CS_Cat1</leftValueReference>
                 <operator>IsEmpty</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -272,6 +279,13 @@
         <rules>
             <name>Cat2_exists</name>
             <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_CS_Cat2</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <conditions>
                 <leftValueReference>Get_CS_Cat2</leftValueReference>
                 <operator>IsEmpty</operator>
@@ -299,6 +313,13 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>CollectOrderItemIDsCat1</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>CollectOrderItemIDsCat1</leftValueReference>
                 <operator>IsEmpty</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -324,6 +345,13 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>CollectOrderItemIDsCat2</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>CollectOrderItemIDsCat2</leftValueReference>
                 <operator>IsEmpty</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -347,6 +375,13 @@
         <rules>
             <name>Cat3</name>
             <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CollectOrderItemIDsCat3</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <conditions>
                 <leftValueReference>CollectOrderItemIDsCat3</leftValueReference>
                 <operator>IsEmpty</operator>
@@ -424,6 +459,13 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>ConsumptionSchedulesList</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ConsumptionSchedulesList</leftValueReference>
                 <operator>IsEmpty</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -449,6 +491,13 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_CS_Cat3</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_CS_Cat3</leftValueReference>
                 <operator>IsEmpty</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -469,6 +518,13 @@
         <rules>
             <name>Order_Products_Exists</name>
             <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Order_Products</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <conditions>
                 <leftValueReference>Get_Order_Products</leftValueReference>
                 <operator>IsEmpty</operator>
