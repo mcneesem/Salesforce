@@ -6,8 +6,7 @@
     <formula>LEFT(
     $Api.Enterprise_Server_URL_650 ,
     ( FIND( '/services' , $Api.Enterprise_Server_URL_650 ) - 1 )
-    )
-    & '/lightning/r/Account/' & AccountId & '/view'</formula>
+    )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Server URL</label>
     <required>false</required>
