@@ -925,7 +925,7 @@
         <name>sidebar</name>
         <type>Region</type>
     </flexiPageRegions>
-    <masterLabel>Leave Record Page</masterLabel>
+    <masterLabel>Leave Record FlexiPage</masterLabel>
     <parentFlexiPage>flexipage__default_rec_L</parentFlexiPage>
     <sobjectType>Leave__c</sobjectType>
     <template>
