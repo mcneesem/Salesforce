@@ -4,6 +4,7 @@ Contact Center,test.contact_center.merge@insperity.com,test.contact_center@inspe
 Educational Assistance,test.edassist.merge@insperity.com,test.edassist@insperity.com,test.edassit_uat@insperity.com
 Employment Screening,test.customer.service.merge@insperity.com,test.customer.service@insperity.com,test.customer.service_uat@insperity.com
 Employment Screening (2nd),test.ies.drugscreen.merge@insperity.com,test.ies.drugscreen@insperity.com,test.drugscreen_uat@insperity.com
+HRScale COE Nexus, hrscalecoenexus.merge@insperity.com,hrscalecoenexus.test@insperity.com,hrscalecoenexus.stage@insperity.com
 Health & Welfare Section 125,test.section125.merge@insperity.com,test.section125@insperity.com,test.section125_uat@insperity.com
 IIS Changes Errors,iis_changes_errors_merge@insperity.com,iis_changes_errors_test@insperity.com,iis_changes_errors_stage@insperity.com
 IIS Changes Production,iis_changes_production_merge@insperity.com,iis_changes_production_test@insperity.com,iis_changes_production_stage@insperity.com
@@ -13,7 +14,6 @@ International Support Desk,internationalsupportdesk.merge@insperity.com,internat
 Learning Systems Team,learningandperformance.merge@insperity.com,learningandperformance.test@insperity.com,learningandperformance.stage@insperity.com
 My Hires,test.myhires.merge@insperity.com,test.myhires.test@insperity.com,test.myhires.stage@insperity.com
 National Business Team,nationalbusinessteam.merge@insperity.com,nationalbusinessteam.test@insperity.com,nationalbusinessteam.stage@insperity.com
-HRScale COE Nexus, hrscalecoenexus.merge@insperity.com,hrscalecoenexus.test@insperity.com,hrscalecoenexus.stage@insperity.com 
 OrgPlus,test.orgplussupport.merge@insperity.com,test.orgplussupport@insperity.com,test.orgplussupport_uat@insperity.com
 Payroll COE,paycoenexus.merge@insperity.com,paycoenexus.test@insperity.com,paycoenexus.stage@insperity.com
 PerformSmart,test.performsmartsupport.merge@insperity.com,test.performsmartsupport@insperity.com,test.performsmartsupport_uat@insperity.com
