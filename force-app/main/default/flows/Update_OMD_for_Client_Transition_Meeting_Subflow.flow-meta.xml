@@ -1153,7 +1153,7 @@ Added Time zone, updated display text, Search bar, Date Format</description>
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Create_OMD_for_Client_Transition_Meeting_Subflow</stringValue>
+                <stringValue>Update_OMD_for_Client_Transition_Meeting_Subflow</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>

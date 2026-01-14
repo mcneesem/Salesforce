@@ -2,10 +2,24 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>62.0</apiVersion>
     <assignments>
-        <name>AssignmentPreviousTermDate</name>
-        <label>AssignmentPreviousTermDate</label>
+        <name>Update_Revision_Fields</name>
+        <label>Update Revision Fields</label>
         <locationX>50</locationX>
         <locationY>503</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.NSP_Revision__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Yes</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Name</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>revisedTerminationFormName</elementReference>
+            </value>
+        </assignmentItems>
         <assignmentItems>
             <assignToReference>$Record.Previous_Term_Date__c</assignToReference>
             <operator>Assign</operator>
@@ -49,7 +63,7 @@
         <locationY>395</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>TermFormIsNotNull</name>
+            <name>IsRevision</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_existing_term_forms</leftValueReference>
@@ -59,14 +73,19 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>AssignmentPreviousTermDate</targetReference>
+                <targetReference>Update_Revision_Fields</targetReference>
             </connector>
-            <label>TermFormIsNotNull</label>
+            <label>IsRevision</label>
         </rules>
     </decisions>
     <environments>Default</environments>
-    <interviewLabel>Termination Form Before Create Previous Term_Date {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Termination Form Before Create Previous Term Date</label>
+    <formulas>
+        <name>revisedTerminationFormName</name>
+        <dataType>String</dataType>
+        <expression>LEFT( &quot;Revised &quot; &amp; {!$Record.Name} , 80 )</expression>
+    </formulas>
+    <interviewLabel>Termination Form - Before Create - Term Team Approved {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Termination Form - Before Create - Term Team Approved</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -128,13 +147,6 @@
             <operator>IsNull</operator>
             <value>
                 <booleanValue>false</booleanValue>
-            </value>
-        </filters>
-        <filters>
-            <field>NSP_Revision__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Yes</stringValue>
             </value>
         </filters>
         <object>NSP_Termination_Form__c</object>

@@ -5641,8 +5641,8 @@ Meeting - Project Related - Fiduciary,Mutual Fund Corrections - Pricing, Manual 
         <protected>false</protected>
         <shortDescription>Survey Revision Request  File Hyper Links</shortDescription>
         <value>Engagement: https://nexus.insperity.com/groups/38605/posts/3270509-engagement-survey-revision-request
-Climate: https://nexus.insperity.com/groups/38605/posts/3272610-climate-survey-revision-request
-Climate Plus: https://nexus.insperity.com/groups/38605/posts/3272612-climate-plus-survey-revision-request</value>
+Climate (Short): https://nexus.insperity.com/groups/38605/posts/3272610-climate-survey-revision-request
+Climate (Full): https://nexus.insperity.com/groups/38605/posts/3272612-climate-plus-survey-revision-request</value>
     </labels>
     <labels>
         <fullName>NSP_SurveyRevisionRequestFormPageNexus</fullName>

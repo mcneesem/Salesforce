@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Send_Notification</name>
         <label>Send Notification</label>
-        <locationX>182</locationX>
-        <locationY>900</locationY>
+        <locationX>500</locationX>
+        <locationY>1008</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <faultConnector>
@@ -66,14 +66,15 @@
             </value>
         </inputParameters>
         <nameSegment>emailSimple</nameSegment>
-        <versionSegment>1</versionSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>61.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Assign_Document_Id</name>
         <label>Assign Document Id</label>
-        <locationX>50</locationX>
-        <locationY>708</locationY>
+        <locationX>368</locationX>
+        <locationY>816</locationY>
         <assignmentItems>
             <assignToReference>documentId</assignToReference>
             <operator>Assign</operator>
@@ -88,8 +89,8 @@
     <assignments>
         <name>Set_Fault_Element_Get_Document_Record</name>
         <label>Set Fault Element: Get_Document_Record</label>
-        <locationX>754</locationX>
-        <locationY>600</locationY>
+        <locationX>1072</locationX>
+        <locationY>708</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -105,8 +106,8 @@
     <assignments>
         <name>Set_Fault_Element_Get_WX_Business_Queue</name>
         <label>Set Fault Element: Get_WX_Business_Queue</label>
-        <locationX>1282</locationX>
-        <locationY>384</locationY>
+        <locationX>1600</locationX>
+        <locationY>492</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -122,8 +123,8 @@
     <assignments>
         <name>Set_Fault_Element_Send_Notification</name>
         <label>Set Fault Element: Send_Notification</label>
-        <locationX>490</locationX>
-        <locationY>1008</locationY>
+        <locationX>808</locationX>
+        <locationY>1116</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
@@ -138,8 +139,8 @@
     <decisions>
         <name>Check_Document</name>
         <label>Check Document</label>
-        <locationX>182</locationX>
-        <locationY>600</locationY>
+        <locationX>500</locationX>
+        <locationY>708</locationY>
         <defaultConnector>
             <targetReference>Send_Notification</targetReference>
         </defaultConnector>
@@ -163,8 +164,8 @@
     <decisions>
         <name>Check_Queue</name>
         <label>Check Queue</label>
-        <locationX>600</locationX>
-        <locationY>384</locationY>
+        <locationX>918</locationX>
+        <locationY>492</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Found_Match</name>
@@ -189,6 +190,30 @@
             <label>Found Match</label>
         </rules>
     </decisions>
+    <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check</name>
+        <label>Outbound Email custom setting check</label>
+        <locationX>511</locationX>
+        <locationY>276</locationY>
+        <defaultConnector>
+            <targetReference>Get_WX_Business_Queue</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false</label>
+        </rules>
+    </decisions>
+    <description>Outbound Email bypass added.</description>
     <environments>Default</environments>
     <formulas>
         <name>emailSignatureLogo</name>
@@ -224,8 +249,8 @@
     <recordLookups>
         <name>Get_Document_Record</name>
         <label>Get Document Record</label>
-        <locationX>182</locationX>
-        <locationY>492</locationY>
+        <locationX>500</locationX>
+        <locationY>600</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Document</targetReference>
@@ -250,8 +275,8 @@
     <recordLookups>
         <name>Get_WX_Business_Queue</name>
         <label>Get WX Business Queue</label>
-        <locationX>600</locationX>
-        <locationY>276</locationY>
+        <locationX>918</locationX>
+        <locationY>384</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Queue</targetReference>
@@ -281,7 +306,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>67</locationX>
+        <locationX>50</locationX>
         <locationY>0</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -330,7 +355,7 @@
         <recordTriggerType>Create</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Get_WX_Business_Queue</targetReference>
+                <targetReference>Outbound_Email_custom_setting_check</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
@@ -340,8 +365,8 @@
     <subflows>
         <name>Handle_Fault</name>
         <label>Handle Fault</label>
-        <locationX>490</locationX>
-        <locationY>1116</locationY>
+        <locationX>808</locationX>
+        <locationY>1224</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
@@ -365,7 +390,7 @@
     <textTemplates>
         <name>emailBody</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>&lt;p&gt;Thank you for contacting the HRCore Business Team. Your email has been received, a case has been created for you, and the case number is {!$Record.CaseNumber}. A team member will respond to you shortly.You can also call us at 866-824-0939 and speak with a member of the team.&lt;/p&gt;&lt;p&gt;Thank you for allowing Insperity to serve your business!&lt;/p&gt;&lt;p&gt;HRCore Business Team&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://help.insperity.com/hcm/&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;HRCore Center Website&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;img src=&quot;{!emailSignatureLogo}&quot;&gt;&lt;/p&gt;</text>
+        <text>&lt;p&gt;Thank you for contacting the HRCore Business Team. Your email has been received, a case has been created for you, and the case number is {!$Record.CaseNumber}. A team member will respond to you shortly.&lt;/p&gt;&lt;p&gt;Thank you for allowing Insperity to serve your business!&lt;/p&gt;&lt;p&gt;HRCore Business Team&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://help.insperity.com/hcm/&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;HRCore Center Website&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;img src=&quot;{!emailSignatureLogo}&quot;&gt;&lt;/p&gt;</text>
     </textTemplates>
     <variables>
         <name>documentId</name>

@@ -515,11 +515,17 @@ public with sharing class NSP_TerminationFormTriggerHelper {
             NSP_TerminationFormTriggerHelper.updateProjectTaskStatus( setOfProjectTaskId );
         }
 
-        if(terminationFormBellNotificationSet.size() > 0){
-            sendBellNotificationToSpecialist(terminationFormBellNotificationSet);
+        if ( NotificationDeliverabilityController.isEnabledOutbound
+            && !terminationFormBellNotificationSet.isEmpty()
+            )
+        {
+            NSP_TerminationFormTriggerHelper.sendBellNotificationToSpecialist( terminationFormBellNotificationSet );
         }
-        if(termFormSet.size() > 0){
-            sendEmailNotificationToSupervisor(termFormSet);
+        if ( EmailDeliverabilityController.isEnabledOutbound
+            && !termFormSet.isEmpty()
+            )
+        {
+            NSP_TerminationFormTriggerHelper.sendEmailNotificationToSupervisor( termFormSet );
         }
     }
 
@@ -530,28 +536,28 @@ public with sharing class NSP_TerminationFormTriggerHelper {
         if(terminationFormSet != null && !terminationFormSet.isEmpty()) {
             terminationFormBellNotificationList = [
                 SELECT
-                Id , Name , RecordTypeId , NSP_Status__c ,
-                CreatedById , CreatedBy.IsActive ,
-                OwnerId , Owner.IsActive ,
-                Credit_Specialist__c , Credit_Specialist__r.pse__Salesforce_User__c , Credit_Specialist__r.pse__Salesforce_User__r.IsActive ,
-                NSP_Supervisor__c , NSP_Supervisor__r.IsActive ,
-                NSP_Payroll_Specialist__c , NSP_Payroll_Specialist__r.IsActive , NSP_Approver__c, NSP_Approver__r.IsActive
+                    Id , Name , RecordTypeId , NSP_Status__c ,
+                    CreatedById , CreatedBy.IsActive ,
+                    OwnerId , Owner.IsActive ,
+                    Credit_Specialist__c , Credit_Specialist__r.pse__Salesforce_User__c , Credit_Specialist__r.pse__Salesforce_User__r.IsActive ,
+                    NSP_Supervisor__c , NSP_Supervisor__r.IsActive ,
+                    NSP_Payroll_Specialist__c , NSP_Payroll_Specialist__r.IsActive , NSP_Approver__c, NSP_Approver__r.IsActive
                 FROM NSP_Termination_Form__c
                 WHERE ( Id IN :terminationFormSet )
             ];
         }
         Map<NSP_Termination_Form__c,Set<String>> termFormToSpecialistIdsMap = new Map<NSP_Termination_Form__c,Set<String>>();
         for ( NSP_Termination_Form__c term : terminationFormBellNotificationList ) {
-
             termFormToSpecialistIdsMap = getTermFormToSpecialistIdsMap(term);
-
         }
         if ( !termFormToSpecialistIdsMap.isEmpty() ) {
             sendCustomBellNotification(termFormToSpecialistIdsMap);
         }
     }
+
     private static void sendCustomBellNotification (Map<NSP_Termination_Form__c,Set<String>> termFormToSpecialistIdsMap){
-        if ( !termFormToSpecialistIdsMap.keySet().isEmpty() ) {
+        if ( NotificationDeliverabilityController.isEnabledOutbound
+          && !termFormToSpecialistIdsMap.keySet().isEmpty() ) {
             List<CustomNotificationType> bellNotificationTermForms = [
                 SELECT Id , DeveloperName
                 FROM CustomNotificationType

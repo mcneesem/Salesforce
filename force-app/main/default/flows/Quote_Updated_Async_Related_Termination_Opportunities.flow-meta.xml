@@ -19,6 +19,61 @@
         </connector>
     </assignments>
     <decisions>
+        <name>Check_Opportunity_Primary_Quote</name>
+        <label>Check Opportunity Primary Quote</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Update_Opp_To_Closed_Won</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Opportunity_Has_Primary_Quote</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Opportunity2__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Opportunity2__r.SBQQ__PrimaryQuote__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Opportunity_Primary_Quote_Status</targetReference>
+            </connector>
+            <label>Opportunity Has Primary Quote</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Prevent DmlExceptions: FIELD_CUSTOM_VALIDATION_EXCEPTION: Primary Quote status must be Approved or Submitted To Order to move opportunity to Proposal (Label.NSP_Approve_Primary_Quote)</description>
+        <name>Check_Opportunity_Primary_Quote_Status</name>
+        <label>Check Opportunity Primary Quote Status</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Update_Opp_To_Closed_Won</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Not_Approved</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SBQQ__Opportunity2__r.SBQQ__PrimaryQuote__r.SBQQ__Status__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Approved</stringValue>
+                </rightValue>
+            </conditions>
+            <label>Is Not Approved</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Extra_Condition_Check</name>
         <label>Extra Condition Check</label>
         <locationX>0</locationX>
@@ -79,7 +134,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Update_Opp_To_Closed_Won</targetReference>
+                <targetReference>Check_Opportunity_Primary_Quote</targetReference>
             </connector>
             <label>Is Validated</label>
         </rules>

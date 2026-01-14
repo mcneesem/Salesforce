@@ -243,6 +243,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Asset.Is_HRScale__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Asset.I_9_Availability__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -629,6 +634,21 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.Time_Processed__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Vendor_Case_Submission_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Vendor_Case__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Vendor_Issue__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1523,6 +1543,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_Sub_Client__c.Arbitration_Agreement__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Sub_Client__c.Contract_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2054,6 +2079,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Task.NSP_Activity_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>User.Bypass_Duplicate_Rules__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

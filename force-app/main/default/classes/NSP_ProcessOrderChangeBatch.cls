@@ -1,19 +1,16 @@
-// batch class to process asset and create opportunity and quote for story STY-02703
-global class NSP_ProcessOrderChangeBatch implements ISelfSchedulable , Schedulable , Database.Batchable<sObject> {
-    // test w/ NSP_ProcessOrderChangeBatchTest (92%)
+public class NSP_ProcessOrderChangeBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<sObject> {
+    // test w/ NSP_ProcessOrderChangeBatchTest (93%)
 
     //
-    // Schedulable
+    // argument-free constructor is required to be "runnable"...
     //
 
-    public void execute( SchedulableContext sc ) {
-        if ( NSP_ProcessOrderChangeBatch.isEnabled ) {
-            Database.executeBatch(
-                new NSP_ProcessOrderChangeBatch() ,
-                NSP_ProcessOrderChangeBatch.batchSize
-            );
-        }
+    public NSP_ProcessOrderChangeBatch() {
     }
+
+    //
+    // ISelfSchedulable
+    //
 
     // runs M-F at 9pm central...
     public static String schedule() {
@@ -22,10 +19,45 @@ global class NSP_ProcessOrderChangeBatch implements ISelfSchedulable , Schedulab
             suffix = ' ~ TEST';
         }
         return System.schedule(
-            'NSP_ProcessOrderChangeBatch ~ M-F at 9 PM' + suffix ,
-            '0 0 21 ? * 1-5 *' ,
+            'NSP_ProcessOrderChangeBatch ~ process asset and create opportunity and quote ~ M-F at 9 PM' + suffix ,
+            '0 0 21 ? * MON-FRI *' ,
             new NSP_ProcessOrderChangeBatch()
         );
+    }
+
+    //
+    // Schedulable
+    //
+
+    public void execute( SchedulableContext sc ) {
+        this.call( 'run' , null );
+    }
+
+    //
+    // Callable
+    //
+
+    public Object call( String action , Map<String,Object> args ) {
+        Object response = null;
+        if ( action == 'run' ) {
+            response = this.run();
+        }
+        return response;
+    }
+
+    //
+    // IJobRunnable
+    //
+
+    public Id run() {
+        Id response = null;
+        if ( NSP_ProcessOrderChangeBatch.isEnabled ) {
+            response = Database.executeBatch(
+                new NSP_ProcessOrderChangeBatch() ,
+                NSP_ProcessOrderChangeBatch.batchSize
+            );
+        }
+        return response;
     }
 
     //
@@ -47,7 +79,7 @@ global class NSP_ProcessOrderChangeBatch implements ISelfSchedulable , Schedulab
                     NSP_ReAssigned_Order_Quote_Id__c ,
                     NSP_OrderProduct__r.Order.OpportunityId ,
                     NSP_Change_Order_Process_Contract_Status__c ,
-                    NSP_OrderProduct__r.Order.NSP_Billing_Account__c 
+                    NSP_OrderProduct__r.Order.NSP_Billing_Account__c
                 FROM Asset
                 WHERE (
                     ( NSP_Process_Order_Change__c = true )
@@ -67,7 +99,7 @@ global class NSP_ProcessOrderChangeBatch implements ISelfSchedulable , Schedulab
             ]
         );
     }
-    
+
     public void execute( Database.BatchableContext bc , List<Asset> scope ) {
         if ( NSP_ProcessOrderChangeBatch.isEnabled ) {
             try {
@@ -97,7 +129,7 @@ global class NSP_ProcessOrderChangeBatch implements ISelfSchedulable , Schedulab
                     objNewQuote.NSP_Lead_Parent_Asset_Id__c = eachAsset.NSP_RET_lead_parent__c;
                     objNewQuote.NSP_Billing_Account__c = eachAsset.NSP_OrderProduct__r.Order.NSP_Billing_Account__c;
                     model = this.modelHelper( model );
-                    String quoteJSON = SBQQ.ServiceRouter.save( 'SBQQ.QuoteAPI.QuoteSaver' , JSON.serialize( model ) ); 
+                    String quoteJSON = SBQQ.ServiceRouter.save( 'SBQQ.QuoteAPI.QuoteSaver' , JSON.serialize( model ) );
                     JSON.deserialize( quoteJSON , QuoteModel.class );
                 }
                 List<Database.SaveResult> opptyResults = Database.update( assetIdToOpportunityMap.values() , false );

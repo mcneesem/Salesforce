@@ -117,6 +117,10 @@
             <fullName>Technology %26 Seamless Data Transfer</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Termination Save Attempt</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>NSP_Detail__c</picklist>
@@ -130,6 +134,10 @@
         </values>
         <values>
             <fullName>Acquired%2Facquiring%2Fmerged with another firm</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Active Save Attempt</fullName>
             <default>false</default>
         </values>
         <values>
@@ -270,6 +278,10 @@
         </values>
         <values>
             <fullName>Lack of autonomy or limited access due to PEO relationship</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No Active Save Attempt</fullName>
             <default>false</default>
         </values>
         <values>

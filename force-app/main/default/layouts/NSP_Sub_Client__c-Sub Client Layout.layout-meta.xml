@@ -23,6 +23,10 @@
                 <behavior>Required</behavior>
                 <field>NSP_Asset__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Arbitration_Agreement__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

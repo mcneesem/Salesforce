@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <apiVersion>56.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <decisions>
         <description>User role needs to be: L1, L2 or New Client Sales in order to continue</description>
         <name>Does_the_user_have_permission_to_run_this_flow</name>
@@ -27,7 +28,7 @@
             <label>Yes - User has permission to enter NonProfit Rewards Info</label>
         </rules>
     </decisions>
-    <description>Updated to be more efficient and contain a fault path on &quot;Update Record&quot; element, changed run mode back to &quot;Runs as System&quot;</description>
+    <description>Updated to remove faultedOrg from subflow. Updated to be more efficient and contain a fault path on &quot;Update Record&quot; element, changed run mode back to &quot;Runs as System&quot;</description>
     <dynamicChoiceSets>
         <description>picklist values NSP_Nonprofit__c</description>
         <name>referralBenefitsChoices</name>
@@ -109,6 +110,14 @@
             <name>errorMessageDisplay</name>
             <fieldText>&lt;p&gt;An error has occurred. Please reach out to &lt;a href=&quot;mailto:salestechnology@insperity.com&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;salestechnology@insperity.com&lt;/a&gt; will the following information:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Error: {!$Flow.FaultMessage}&lt;/p&gt;&lt;p&gt;Error Time: {!$Flow.CurrentDateTime}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
@@ -125,6 +134,14 @@
             <name>NoPermissionToEnterRewards</name>
             <fieldText>&lt;p&gt;You do not have permission to enter NonProfit Rewards information on this record. Please reach out to your System Administrator for help.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -149,6 +166,14 @@
             <fieldType>DropdownBox</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <fields>
             <name>Nonprofit_Name_Address</name>
@@ -156,6 +181,14 @@
             <fieldType>LargeTextArea</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <fields>
             <name>Nonprofit_Organization_Name</name>
@@ -164,6 +197,14 @@
             <fieldType>InputField</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -186,9 +227,15 @@
         </connector>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
-            <name>faultedOrg</name>
+            <name>faultElement</name>
             <value>
-                <elementReference>$Organization.Name</elementReference>
+                <stringValue>Update_opportunity_record</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Opportunity_Rewards_Info_Screen_Flow</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -197,23 +244,7 @@
                 <elementReference>$Flow.FaultMessage</elementReference>
             </value>
         </inputAssignments>
-        <inputAssignments>
-            <name>triggeringFlow</name>
-            <value>
-                <elementReference>flowName</elementReference>
-            </value>
-        </inputAssignments>
     </subflows>
-    <variables>
-        <name>flowName</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <stringValue>Opportunity - Rewards Info Screen Flow</stringValue>
-        </value>
-    </variables>
     <variables>
         <description>The originating Opportunity record ID</description>
         <name>recordId</name>

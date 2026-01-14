@@ -92,6 +92,11 @@
                 <default>false</default>
                 <label>NSP_Talent_Connect_Notes__c</label>
             </value>
+            <value>
+                <fullName>NSP_Has_Timestar_Hardware__c</fullName>
+                <default>false</default>
+                <label>NSP_Has_Timestar_Hardware__c</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

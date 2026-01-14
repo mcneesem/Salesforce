@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <available>true</available>
+    <description>When Term Form RT= Client Reinstatement and Revised = No</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Term Team Reinstate Letter-Initial</name>
+    <style>none</style>
+    <subject>INSPERITY/CLIENT TERMINATION LETTERl</subject>
+    <type>visualforce</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

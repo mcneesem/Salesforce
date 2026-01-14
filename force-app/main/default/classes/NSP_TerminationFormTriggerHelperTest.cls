@@ -21,6 +21,14 @@ public class NSP_TerminationFormTriggerHelperTest {
     public static final String Test2 = 'Test2';
     @TestSetup
     public static void setUpData(){
+        Email_Deliverability_Settings__c emailSetting = Email_Deliverability_Settings__c.getOrgDefaults();
+        emailSetting.IsEnabledOutbound__c = true;
+        upsert emailSetting;
+
+        Notification_Deliverability_Settings__c notificationSetting = Notification_Deliverability_Settings__c.getOrgDefaults();
+        notificationSetting.IsEnabledOutbound__c = true;
+        upsert notificationSetting;
+
         Id woAssetRecordTypeId =  Schema.SObjectType.Asset.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.WO_ASSET_RECORDTYPE)?.getRecordTypeId();
         Id PEOProjectTaskRecordTypeId = Schema.SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE).getRecordTypeId();
         List<Account> accList = new List<Account>();

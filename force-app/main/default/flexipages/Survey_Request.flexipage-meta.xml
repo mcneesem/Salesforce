@@ -1290,12 +1290,12 @@
                     <criteria>
                         <leftValue>{!Record.NSP_Survey_Type__c}</leftValue>
                         <operator>NE</operator>
-                        <rightValue>Climate</rightValue>
+                        <rightValue>Climate (Short)</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.NSP_Survey_Type__c}</leftValue>
                         <operator>NE</operator>
-                        <rightValue>Climate Plus</rightValue>
+                        <rightValue>Climate (Full)</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.NSP_Active_EEs__c}</leftValue>
@@ -1310,12 +1310,12 @@
                     <criteria>
                         <leftValue>{!Record.NSP_Survey_Type__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Climate</rightValue>
+                        <rightValue>Climate (Short)</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.NSP_Survey_Type__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Climate Plus</rightValue>
+                        <rightValue>Climate (Full)</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.NSP_Segment__c}</leftValue>
@@ -1347,12 +1347,12 @@
                     <criteria>
                         <leftValue>{!Record.NSP_Survey_Type__c}</leftValue>
                         <operator>NE</operator>
-                        <rightValue>Climate</rightValue>
+                        <rightValue>Climate (Short)</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.NSP_Survey_Type__c}</leftValue>
                         <operator>NE</operator>
-                        <rightValue>Climate Plus</rightValue>
+                        <rightValue>Climate (Full)</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.NSP_Active_EEs__c}</leftValue>
@@ -1367,12 +1367,12 @@
                     <criteria>
                         <leftValue>{!Record.NSP_Survey_Type__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Climate</rightValue>
+                        <rightValue>Climate (Short)</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.NSP_Survey_Type__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Climate Plus</rightValue>
+                        <rightValue>Climate (Full)</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.NSP_Segment__c}</leftValue>

@@ -1,20 +1,18 @@
-//***Test Class for Contract Renewal Batch***
-/**
-* @description  : Test Class for Contract Renewal Batch Class
-* @author Rakesh Das
-* @date 09/03/2021
-* Name : NSP_ContractRenewal_Batch_Test
-*/
-
 @isTest
-public class NSP_ContractRenewal_Batch_Test {
-    public NSP_ContractRenewal_Batch_Test() {
+private class NSP_ContractRenewal_Batch_Test {
 
-    }
-    //Test Setup Method to populate test data
     @testSetup
-    static void setupTestData(){
-       // NSP_TestHelper th = new NSP_TestHelper();
+    private static void setupTestData() {
+        ContractRenewalBatchSettings__c batchSetting = ContractRenewalBatchSettings__c.getOrgDefaults();
+        batchSetting.IsEnabled__c = true;
+        batchSetting.BatchSize__c = 1;
+        upsert batchSetting;
+
+        Email_Deliverability_Settings__c emailSetting = Email_Deliverability_Settings__c.getOrgDefaults();
+        emailSetting.IsEnabledOutbound__c = true;
+        upsert emailSetting;
+
+        // NSP_TestHelper th = new NSP_TestHelper();
         Account acc1 = NSP_TestHelper.createAccount(true);
         NSP_TestHelper.createContact(acc1.id, true);
         Opportunity opp1 = NSP_TestHelper.createOpenOpportunity(acc1.Id,'New Product',true);
@@ -38,7 +36,7 @@ public class NSP_ContractRenewal_Batch_Test {
         ct.EndDate = dt+365;
         ct.Status = 'Draft';
         ct.NSP_Number_of_Employees__c = 86;
-		ct.NSP_PrimaryProduct__c = 'Performance Management';
+        ct.NSP_PrimaryProduct__c = 'Performance Management';
         insert ct;
         //Activating the contract
         ct.NSP_Product_Type__c = 'Performance Management';
@@ -46,9 +44,11 @@ public class NSP_ContractRenewal_Batch_Test {
         update ct;
 
     }
+
     //Test method for contract renewal
     //Executes batch job for NSP_ContractRenewal_Batch
-    static testMethod void renewalbatchtest(){
+    @isTest
+    private static void renewalbatchtest() {
 
         Test.startTest();
         NSP_ContractRenewal_Batch rcbatch= new NSP_ContractRenewal_Batch();
@@ -59,18 +59,27 @@ public class NSP_ContractRenewal_Batch_Test {
         System.assertEquals(cont.SBQQ__RenewalQuoted__c,true);
 
     }
-    
-        //Test method for contract renewal
+
+    //Test method for contract renewal
     //Executes batch job for NSP_ContractRenewal_Batch
-    static testMethod void renewalbatchtestwithParams(){
+    @isTest
+    private static void renewalbatchtestwithParams() {
 
         Test.startTest();
-        Contract cont = [SELECT Id, SBQQ__RenewalForecast__c, SBQQ__RenewalQuoted__c, ContractTerm,NSP_Product_Type__c,SBQQ__ActiveContract__c, SBQQ__Evergreen__c,EndDate from Contract WHERE ContractNumber !=null LIMIT 1];
-		NSP_ContractRenewal_Batch rcbatch= new NSP_ContractRenewal_Batch(cont.Id);
+        NSP_ContractRenewal_Batch rcbatch= new NSP_ContractRenewal_Batch();
         Database.executeBatch(rcbatch,1);
         Test.stopTest();
-		Contract contChk = [SELECT Id, SBQQ__RenewalForecast__c, SBQQ__RenewalQuoted__c,Name from Contract WHERE ContractNumber !=null LIMIT 1];
+        Contract contChk = [SELECT Id, SBQQ__RenewalForecast__c, SBQQ__RenewalQuoted__c,Name from Contract WHERE ContractNumber !=null LIMIT 1];
         System.assertEquals(contChk.SBQQ__RenewalQuoted__c,true);
 
     }
+
+    @isTest
+    private static void testSchedule() {
+        Test.startTest();
+        NSP_ContractRenewal_Batch.schedule();
+        Test.stopTest();
+    }
+
 }
+//

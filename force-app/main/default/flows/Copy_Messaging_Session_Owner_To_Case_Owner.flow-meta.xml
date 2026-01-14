@@ -222,7 +222,7 @@
                 <leftValueReference>messagingSessionRecord.OwnerId</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>00GO300000ByHHNMA3</stringValue>
+                    <stringValue>00GOz00000BMZgkMAH</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -252,7 +252,7 @@
             </conditions>
             <conditions>
                 <leftValueReference>messagingSessionRecord.Owner:User.UserRole.DeveloperName</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>StartsWith</operator>
                 <rightValue>
                     <stringValue>Contact_Center_</stringValue>
                 </rightValue>

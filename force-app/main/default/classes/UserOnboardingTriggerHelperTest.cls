@@ -1,6 +1,8 @@
-@isTest private class UserOnboardingTriggerHelperTest {
+@isTest
+private class UserOnboardingTriggerHelperTest {
 
-    @testSetup private static void setupData() {
+    @testSetup
+    private static void setupData() {
         UserOnboardingToolSettings__c settings = UserOnboardingToolSettings__c.getOrgDefaults();
         settings.IsEnabled__c = true;
         settings.IsEnabledRemoval__c = true;
@@ -18,7 +20,7 @@
             EmailEncodingKey = 'UTF-8',
             LanguageLocaleKey = 'en_US',
             LocaleSidKey = 'en_US',
-            isActive = TRUE, 
+            isActive = TRUE,
             UserPermissionsKnowledgeUser = TRUE,
             UserPermissionsMarketingUser = TRUE,
             UserPermissionsSupportUser = TRUE,
@@ -28,7 +30,8 @@
         insert u;
     }
 
-    @isTest private static void beforeInsertUserTest() {
+    @isTest
+    private static void beforeInsertUserTest() {
         Test.startTest();
         User u = new User(
             ProfileId = [SELECT Id FROM Profile WHERE Name = 'Sales Manager'].Id,
@@ -42,7 +45,7 @@
             EmailEncodingKey = 'UTF-8',
             LanguageLocaleKey = 'en_US',
             LocaleSidKey = 'en_US',
-            isActive = TRUE, 
+            isActive = TRUE,
             UserPermissionsKnowledgeUser = TRUE,
             UserPermissionsMarketingUser = TRUE,
             UserPermissionsSupportUser = TRUE,
@@ -52,13 +55,15 @@
         insert u;
         Test.stopTest();
     }
-    
-    @isTest private static void beforeUpdateUserTest() {
+
+    @isTest
+    private static void beforeUpdateUserTest() {
         User userTest = [SELECT Id FROM User WHERE email = 'hackathon@insperity.com'];
         Test.startTest();
         userTest.Business_Title__c = 'Contact Center Manager';
         update userTest;
         Test.stopTest();
     }
+
 }
 //

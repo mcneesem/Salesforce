@@ -4,13 +4,16 @@
         <description>Action for Qc Rep Assignment Email Alert</description>
         <name>Qc_Rep_Assignment_Email_Alert</name>
         <label>Qc Rep Assignment Email Alert</label>
-        <locationX>50</locationX>
-        <locationY>455</locationY>
+        <locationX>110</locationX>
+        <locationY>539</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
             <targetReference>Create_Email_Message_Rec</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Qc_Rep_Assignment_Email_Alert</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>emailBody</name>
@@ -36,18 +39,23 @@
                 <elementReference>emailSubjectQcRepAssignment</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <actionCalls>
         <description>Action for Qc Rep Trailing Email Alert</description>
         <name>Qc_Rep_Trailing_Email_Alert</name>
         <label>Qc Rep Trailing Email Alert</label>
-        <locationX>50</locationX>
-        <locationY>911</locationY>
+        <locationX>110</locationX>
+        <locationY>1187</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
             <targetReference>Create_Email_Message_Record</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Qc_Rep_Trailing_Email_Alert</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>emailBody</name>
@@ -73,8 +81,78 @@
                 <elementReference>emailSubjectQcRepTrailing</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>56.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_varFaultElement_Create_Email_Message_Rec</name>
+        <label>Assign varFaultElement - Create_Email_Message_Rec</label>
+        <locationX>374</locationX>
+        <locationY>755</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_Email_Message_Rec</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Create_Email_Message_Record</name>
+        <label>Assign varFaultElement - Create_Email_Message_Record</label>
+        <locationX>374</locationX>
+        <locationY>1403</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_Email_Message_Record</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Qc_Rep_Assignment_Email_Alert</name>
+        <label>Assign varFaultElement - Qc_Rep_Assignment_Email_Alert</label>
+        <locationX>638</locationX>
+        <locationY>647</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Qc_Rep_Assignment_Email_Alert</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Qc_Rep_Trailing_Email_Alert</name>
+        <label>Assign varFaultElement - Qc_Rep_Trailing_Email_Alert</label>
+        <locationX>638</locationX>
+        <locationY>1295</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Qc_Rep_Trailing_Email_Alert</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
     <constants>
         <description>Email Subject for Qc rep Assignment alert</description>
         <name>emailSubjectQcRepAssignment</name>
@@ -94,8 +172,8 @@
         <description>Check if QC Rep is updated or populated</description>
         <name>Check_if_QC_Rep_is_updated</name>
         <label>Check if QC Rep is updated</label>
-        <locationX>182</locationX>
-        <locationY>335</locationY>
+        <locationX>506</locationX>
+        <locationY>431</locationY>
         <defaultConnector>
             <targetReference>QcRepTrailingUpdated</targetReference>
         </defaultConnector>
@@ -124,11 +202,34 @@
         </rules>
     </decisions>
     <decisions>
+        <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
+        <name>Outbound_Email_custom_setting_check</name>
+        <label>Outbound Email custom setting check</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <defaultConnector>
+            <targetReference>Check_if_QC_Rep_is_updated</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false</label>
+        </rules>
+    </decisions>
+    <decisions>
         <description>Check if QC Rep Trailing is updated or populated</description>
         <name>QcRepTrailingUpdated</name>
         <label>QcRepTrailingUpdated</label>
-        <locationX>182</locationX>
-        <locationY>791</locationY>
+        <locationX>506</locationX>
+        <locationY>1079</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>isQcRepTrailingUpdated</name>
@@ -153,7 +254,7 @@
             <label>isQcRepTrailingUpdated?</label>
         </rules>
     </decisions>
-    <description>Deconversion Email Alert Automation for Resource assignment</description>
+    <description>Fault paths added. Outbound Email bypass added. Deconversion Email Alert Automation for Resource assignment</description>
     <environments>Default</environments>
     <formulas>
         <description>Deconversion Record Url</description>
@@ -186,11 +287,14 @@
         <description>Create Email Message Records for traceability</description>
         <name>Create_Email_Message_Rec</name>
         <label>Create Email Message Rec</label>
-        <locationX>50</locationX>
-        <locationY>575</locationY>
+        <locationX>110</locationX>
+        <locationY>647</locationY>
         <connector>
             <targetReference>QcRepTrailingUpdated</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Create_Email_Message_Rec</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>FromAddress</field>
             <value>
@@ -240,8 +344,11 @@
         <description>Create Email Message Records for traceability</description>
         <name>Create_Email_Message_Record</name>
         <label>Create Email Message Record</label>
-        <locationX>50</locationX>
-        <locationY>1031</locationY>
+        <locationX>110</locationX>
+        <locationY>1295</locationY>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Create_Email_Message_Record</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>FromAddress</field>
             <value>
@@ -288,10 +395,10 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <start>
-        <locationX>56</locationX>
+        <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Check_if_QC_Rep_is_updated</targetReference>
+            <targetReference>Outbound_Email_custom_setting_check</targetReference>
         </connector>
         <filterLogic>or</filterLogic>
         <filters>
@@ -312,7 +419,32 @@
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
+    <subflows>
+        <name>Fault_Handler_Subflow</name>
+        <label>Fault Handler Subflow</label>
+        <locationX>638</locationX>
+        <locationY>755</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>varFaultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>NSP_Deconversion_Email_Alert_Automation</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <textTemplates>
         <description>Email body for Qc Rep Assignment Alert</description>
         <name>emailBodyQcRepAssignment</name>
@@ -324,4 +456,11 @@
         <isViewedAsPlainText>false</isViewedAsPlainText>
         <text>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;You have been assigned to QC the Trailing assets for a Deconversion record.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;You may find the record via the following link&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;{!DeconversionRecordsUrl}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;color: rgb(0, 0, 0);&quot;&gt;View Record&lt;/a&gt;&lt;/p&gt;</text>
     </textTemplates>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
 </Flow>

@@ -31,6 +31,10 @@
                 <field>NSP_FEIN__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Product_Solution__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NSP_Account_Status__c</field>
             </layoutItems>

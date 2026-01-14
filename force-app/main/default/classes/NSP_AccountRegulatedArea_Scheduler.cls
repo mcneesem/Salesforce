@@ -1,8 +1,3 @@
-//***Schedulable Apex Class***
-/**
-* @description  : Scheduler Class to schedule Renewal Batch job
-* Name : NSP_AccountRegulatedArea_Scheduler
-*/
 public without sharing class NSP_AccountRegulatedArea_Scheduler implements Schedulable {
     // test w/ NSP_AccountRegulatedArea_Scheduler_Test (100%)
 
@@ -13,6 +8,7 @@ public without sharing class NSP_AccountRegulatedArea_Scheduler implements Sched
         );
     }
 
+    // runs everyday at 12am central...
     public static String schedule() {
         String suffix = '';
         if ( Test.isRunningTest() ) {
@@ -20,7 +16,7 @@ public without sharing class NSP_AccountRegulatedArea_Scheduler implements Sched
         }
         return System.schedule(
             'NSP_AccountRegulatedArea_Scheduler ~ When SCC is added to the account and the zip code or city is present in regulated area it will create case and account regulated area ~ everyday at 12 AM' + suffix ,
-            '0 0 0 * * ? *' ,
+            '0 0 0 ? * * *' ,
             new NSP_AccountRegulatedArea_Scheduler()
         );
     }
