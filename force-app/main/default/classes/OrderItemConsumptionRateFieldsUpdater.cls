@@ -14,14 +14,19 @@ public with sharing class OrderItemConsumptionRateFieldsUpdater {
                 Set<Id> orderItemIds = OrderItemConsumptionRateFieldsUpdater.getOrderItemIds(orderItems);
 
                 if (!orderItemIds.isEmpty()) {
-                    List<SBQQ__OrderItemConsumptionRate__c> consumptionRates = OrderItemConsumptionRateFieldsUpdater.fetchConsumptionRates(orderItemIds);
-                    OrderItemConsumptionRateFieldsUpdater.groupRatesByOrderItemId(consumptionRates);
+                    orderItemConsumptionRateMap = OrderItemConsumptionRateFieldsUpdater.groupRatesByOrderItemId(
+                        OrderItemConsumptionRateFieldsUpdater.fetchConsumptionRates( orderItemIds )
+                    );
                 }
 
                 if(orderItems != null && !orderItems.isEmpty()){
                     for (OrderItem oi : orderItems) {
                         List<SBQQ__OrderItemConsumptionRate__c> csRates =  OrderItemConsumptionRateFieldsUpdater.classifyRates(oi);
-                        OrderItemConsumptionRateFieldsUpdater.applyRatesToOrderItem(oi,csRates);
+                        orderItemsToUpdate = OrderItemConsumptionRateFieldsUpdater.applyRatesToOrderItem(
+                            orderItemsToUpdate ,
+                            oi ,
+                            csRates
+                        );
                     }
                 }
 
@@ -94,29 +99,30 @@ public with sharing class OrderItemConsumptionRateFieldsUpdater {
         return orderItemResults;
     }
 
-    private static void groupRatesByOrderItemId(List<SBQQ__OrderItemConsumptionRate__c> consumptionRates) {
+    private static Map<Id,List<SBQQ__OrderItemConsumptionRate__c>> groupRatesByOrderItemId(List<SBQQ__OrderItemConsumptionRate__c> consumptionRates) {
+        Map<Id,List<SBQQ__OrderItemConsumptionRate__c>> rateMap = new Map<Id,List<SBQQ__OrderItemConsumptionRate__c>>();
         if(consumptionRates != null && !consumptionRates.isEmpty()){
             for (SBQQ__OrderItemConsumptionRate__c cr : consumptionRates) {
-                if (!orderItemConsumptionRateMap.containsKey(cr.OrderItemId__c)) {
-                    orderItemConsumptionRateMap.put(cr.OrderItemId__c, new List<SBQQ__OrderItemConsumptionRate__c>());
+                if (!rateMap.containsKey(cr.OrderItemId__c)) {
+                    rateMap.put(cr.OrderItemId__c, new List<SBQQ__OrderItemConsumptionRate__c>());
                 }
-                orderItemConsumptionRateMap.get(cr.OrderItemId__c).add(cr);
+                rateMap.get(cr.OrderItemId__c).add(cr);
             }
         }
+        return rateMap;
     }
 
     private static Set<Id> getOrderItemIds(List<OrderItem> orderItems){
         Set<Id> collectIds = new Set<Id>();
         if(orderItems != null && !orderItems.isEmpty()){
-            for (OrderItem oi : orderItems) {
-                collectIds.add(oi.Id);
-            }
+            Map<Id,OrderItem> recordMap = new Map<Id,OrderItem>( orderItems );
+			collectIds = recordMap.keySet();
         }
         return collectIds;
     }
 
-    private static void applyRatesToOrderItem(OrderItem oi, List<SBQQ__OrderItemConsumptionRate__c> csRates) {
-        if (oi != null && csRates != null && !csRates.isEmpty()) {
+    private static List<OrderItem> applyRatesToOrderItem(List<OrderItem> records, OrderItem oi, List<SBQQ__OrderItemConsumptionRate__c> csRates) {
+        if (oi != null && csRates != null && !csRates.isEmpty() && records != null) {
             for (SBQQ__OrderItemConsumptionRate__c rate : csRates) {
                 String csName;
                 if(rate.SBQQ__OrderItemConsumptionSchedule__r != null){
@@ -130,12 +136,13 @@ public with sharing class OrderItemConsumptionRateFieldsUpdater {
             }
 
             if(oi != null){
-                orderItemsToUpdate.add(oi);
+                records.add(oi);
             }
         }
+        return records;
     }
 
-    private static orderItem setNonSeasonalRates(SBQQ__OrderItemConsumptionRate__c rate, OrderItem oi){
+    private static OrderItem setNonSeasonalRates(SBQQ__OrderItemConsumptionRate__c rate, OrderItem oi){
         if(oi != null && rate != null){
             if(rate.SBQQ__PricingMethod__c == 'FlatFee' && oi.NSP_Consumption_Rate_Flat_Price__c != rate.SBQQ__Price__c){
                 oi.NSP_Consumption_Rate_Flat_Price__c = rate.SBQQ__Price__c;
