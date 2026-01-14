@@ -74,7 +74,7 @@ private class UserPublicGroupMembershipServiceTest {
             Group relatedGroup = [SELECT Id, Name, DeveloperName FROM Group WHERE Id = :createdMembership.GroupId];
             System.Assert.areEqual(relatedGroup.Name, firstRow.groupName, 'Group.Name should map to DTO.queueName');
             System.Assert.areEqual(relatedGroup.DeveloperName, firstRow.groupDeveloperName, 'Group.DeveloperName should map to DTO.queueDeveloperName');
-            System.Assert.areEqual('Public Group', firstRow.reasonForMembership, 'Reason should map as implemented');
+            System.Assert.areEqual('Group Member', firstRow.reasonForMembership, 'Reason should map as implemented');
         }
     }
 
