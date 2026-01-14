@@ -5,10 +5,10 @@
     <label>Team Mandalorians</label>
     <permissionSets>Assign_Connected_App_Data_Loader</permissionSets>
     <permissionSets>Assign_Connected_App_Workbench</permissionSets>
+    <permissionSets>Case_Account_Contact_Information</permissionSets>
     <permissionSets>Default_Account_Team_View</permissionSets>
     <permissionSets>Default_Opportunity_Team_View</permissionSets>
-    <permissionSets>Queue_Membership_View</permissionSets>
-    <permissionSets>Case_Account_Contact_Information</permissionSets>
     <permissionSets>Public_Group_Membership_View</permissionSets>
+    <permissionSets>Queue_Membership_View</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
