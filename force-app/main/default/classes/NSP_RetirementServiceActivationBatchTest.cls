@@ -1,7 +1,13 @@
-@IsTest
+@isTest
 private class NSP_RetirementServiceActivationBatchTest {
-    @TestSetup
+
+    @testSetup
     private static void setupTestData() {
+        RetirementServiceActivationBatchSettings__c batchSettings = RetirementServiceActivationBatchSettings__c.getOrgDefaults();
+        batchSettings.IsEnabled__c = true;
+        batchSettings.BatchSize__c = 200;
+        upsert batchSettings;
+
         Order_Settings__c settings = Order_Settings__c.getOrgDefaults();
         upsert settings;
         NSP_InvoiceTriggerHandler.TriggerDisabled = true;
@@ -155,7 +161,7 @@ private class NSP_RetirementServiceActivationBatchTest {
         insert clientSubPlanHistRec;
     }
 
-    @IsTest
+    @isTest
     private static void testBatchMethod() {
 
         Test.startTest();
@@ -172,7 +178,7 @@ private class NSP_RetirementServiceActivationBatchTest {
         System.assertEquals(1, resultOrderItem.size());
     }
 
-    @IsTest
+    @isTest
     private static void testScheduleBatchMethod() {
 
         Test.startTest();
@@ -186,4 +192,12 @@ private class NSP_RetirementServiceActivationBatchTest {
         System.assertEquals(0, ct.TimesTriggered);
     }
 
+    @isTest
+    private static void testSchedule() {
+        Test.startTest();
+        NSP_RetirementServiceActivationBatch.schedule();
+        Test.stopTest();
+    }
+
 }
+//

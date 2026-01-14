@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Detail__c</fullName>
     <description>Renamed Focus Item to Situation/Driver Fall 2025. API name unchanged.</description>
-    <externalId>false</externalId>
     <label>Situation/Driver</label>
     <required>false</required>
     <trackHistory>true</trackHistory>
@@ -283,6 +282,22 @@
                 <default>false</default>
                 <label>Voices concern that they are paying more than expected or agreed</label>
             </value>
+            <value>
+                <fullName>Active Save Attempt</fullName>
+                <default>false</default>
+                <label>Active Save Attempt</label>
+            </value>
+            <value>
+                <fullName>No Active Save Attempt</fullName>
+                <default>false</default>
+                <label>No Active Save Attempt</label>
+            </value>
+            <value>
+                <fullName>Client indicates they have outgrown the PEO/WX/WA</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Client indicates they have outgrown the PEO/WX/WA</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Financial Risk</controllingFieldValue>
@@ -307,6 +322,62 @@
         <valueSettings>
             <controllingFieldValue>Service Continuity</controllingFieldValue>
             <valueName>Transitioned to new segment/service team/platform</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Technology &amp; Seamless Data Transfer</controllingFieldValue>
+            <valueName>Client notes Insperity errors (data entry)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Technology &amp; Seamless Data Transfer</controllingFieldValue>
+            <valueName>Client raises Concerns about lack of seamless data transfer between Insperity systems</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Technology &amp; Seamless Data Transfer</controllingFieldValue>
+            <valueName>Client views Insperity technology as generally lacking or lagging alternative solutions in the market</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Technology &amp; Seamless Data Transfer</controllingFieldValue>
+            <valueName>Internal/External integrations unmet</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Termination Save Attempt</controllingFieldValue>
+            <valueName>Active Save Attempt</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Termination Save Attempt</controllingFieldValue>
+            <valueName>No Active Save Attempt</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Evaluating Alternative Solutions</controllingFieldValue>
+            <valueName>Client indicates they have outgrown HR360/HRCore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Evaluating Alternative Solutions</controllingFieldValue>
+            <valueName>Competitor or broker offers significant savings</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Evaluating Alternative Solutions</controllingFieldValue>
+            <valueName>Exploration of other Insperity models</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Evaluating Alternative Solutions</controllingFieldValue>
+            <valueName>Shopping a competitor for standard due diligence</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Evaluating Alternative Solutions</controllingFieldValue>
+            <valueName>Shopping a competitor with intent</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Financial Risk</controllingFieldValue>
+            <valueName>Client financial health decline</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Financial Risk</controllingFieldValue>
+            <valueName>Extensive Salary Reduction</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Financial Risk</controllingFieldValue>
+            <valueName>Potential bankruptcy, dissolution or other critical financial concerns</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>General Dissatisfaction</controllingFieldValue>

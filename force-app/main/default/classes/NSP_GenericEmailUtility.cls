@@ -1,9 +1,3 @@
-//
-// @description  : Generic EMail Utility Class. Contains methods to populate and send emails from Apex.
-// @author Rakesh Das
-// @date 09/20/2022
-// Name : NSP_GenericEmailUtility
-//
 public class NSP_GenericEmailUtility {
     // test w/ NSP_GenericEmailUtilityTest (86%)
 
@@ -17,33 +11,35 @@ public class NSP_GenericEmailUtility {
     public static Integer sendSingleEmailMessages ( Messaging.SingleEmailMessage[] emailMessages , Boolean allOrNone ) {
         Integer emailSentCount = 0;
         try {
-            List<Messaging.SendEmailResult> results = Messaging.sendEmail( emailMessages , allOrNone );
-            List<String> errorMessages = new List<String>();
-            for ( Messaging.SendEmailResult res : results ) {
-                if ( res.isSuccess() ) {
-                    emailSentCount += 1;
-                } else {
-                    for ( Messaging.SendEmailError error : res.getErrors() ) {
-                        errorMessages.add(
-                            error.getStatusCode()
-                            + ', '
-                            + error.getMessage()
-                            + ': ['
-                            + String.join( error.getFields() , ', ' )
-                            + ']'
-                            + ' ('
-                            + error.getTargetObjectId()
-                            + ')'
-                        );
+            if ( EmailDeliverabilityController.isEnabledOutbound ) {
+                List<Messaging.SendEmailResult> results = Messaging.sendEmail( emailMessages , allOrNone );
+                List<String> errorMessages = new List<String>();
+                for ( Messaging.SendEmailResult res : results ) {
+                    if ( res.isSuccess() ) {
+                        emailSentCount += 1;
+                    } else {
+                        for ( Messaging.SendEmailError error : res.getErrors() ) {
+                            errorMessages.add(
+                                error.getStatusCode()
+                                + ', '
+                                + error.getMessage()
+                                + ': ['
+                                + String.join( error.getFields() , ', ' )
+                                + ']'
+                                + ' ('
+                                + error.getTargetObjectId()
+                                + ')'
+                            );
+                        }
                     }
                 }
-            }
-            if ( !errorMessages.isEmpty() ) {
-                NSP_ErrorLogHandler.logInfo(
-                    NSP_GenericEmailUtility.class.getName() ,
-                    'sendSingleEmailMessages' ,
-                    String.join( errorMessages , '\r\n' )
-                );
+                if ( !errorMessages.isEmpty() ) {
+                    NSP_ErrorLogHandler.logInfo(
+                        NSP_GenericEmailUtility.class.getName() ,
+                        'sendSingleEmailMessages' ,
+                        String.join( errorMessages , '\r\n' )
+                    );
+                }
             }
         } catch( Exception e ) {
             NSP_GenericEmailUtility.handleException( e , 'sendSingleEmailMessages' );

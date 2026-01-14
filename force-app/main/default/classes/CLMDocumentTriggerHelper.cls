@@ -1,0 +1,68 @@
+public with sharing class CLMDocumentTriggerHelper {
+    // test w/ OnCLMDocumentCreateTest (96%)
+
+    public void afterInsertDocument( Map <Id,CLM_Document__c> newMap ) {
+        // List of related fields to check in priority order
+        List<String> relatedFieldNames = new List<String>{
+            'Opportunity__c' ,
+            'Account__c' ,
+            'NSP_Invoice__c' ,
+            'NSP_CreditNote__c' ,
+            'NSP_Service_Plan__c' ,
+            'NSP_Wizard_Output__c' ,
+            'pse_Project_Task__c' ,
+            'Termination_Form__c'
+        };
+        List<CLM_Document__c> clmDocList = new List<CLM_Document__c>();
+        if ( ( newMap != null )
+            && !newMap.isEmpty()
+            )
+        {
+            clmDocList = [
+                SELECT
+                    Id ,
+                    Name ,
+                    CLM_Document_Id__c ,
+                    pse_Project_Task__c ,
+                    Termination_Form__c ,
+                    Account__c ,
+                    Opportunity__c ,
+                    NSP_Invoice__c ,
+                    NSP_CreditNote__c ,
+                    NSP_Service_Plan__c ,
+                    NSP_Wizard_Output__c
+                FROM CLM_Document__c
+                WHERE ( Id IN :newMap.keySet() )
+                LIMIT 1
+            ];
+        }
+        if ( ( clmDocList != null )
+            && !clmDocList.isEmpty()
+            )
+        {
+            CLM_Document__c record = clmDocList[0];
+            for ( String fieldApiName : relatedFieldNames ) {
+                this.createDocument( record , fieldApiName );
+            }
+        }
+    }
+
+    private void createDocument( CLM_Document__c record, String fieldApiName ) {
+        if ( String.isNotBlank( fieldApiName )
+            && ( record != null )
+            && ( record.get( fieldApiName ) != null )
+            )
+        {
+            String value = (String)record.get( fieldApiName );
+            if ( ( Limits.getFutureCalls() < Limits.getLimitFutureCalls() )
+                && String.isNotBlank( value )
+                && !Test.isRunningTest()
+                )
+            {
+                CLMDocumentTransfer.downloadDocument( record.CLM_Document_Id__c , value );
+            }
+        }
+    }
+
+}
+//

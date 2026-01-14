@@ -4,7 +4,16 @@
     <actionOnUpdate>Block</actionOnUpdate>
     <alertText>Price Increase Record for the current year already exists.</alertText>
     <description>Prevents duplicate record creation based on Unique Id field on Price Increase</description>
-    <duplicateRuleFilter xsi:nil="true"/>
+    <duplicateRuleFilter>
+        <booleanFilter xsi:nil="true"/>
+        <duplicateRuleFilterItems>
+            <field>Bypass_Duplicate_Rules__c</field>
+            <operation>equals</operation>
+            <value>false</value>
+            <sortOrder>1</sortOrder>
+            <table>User</table>
+        </duplicateRuleFilterItems>
+    </duplicateRuleFilter>
     <duplicateRuleMatchRules>
         <matchRuleSObjectType>Price_Increase__c</matchRuleSObjectType>
         <matchingRule>Standard_Price_Increase_Matching_Rule</matchingRule>

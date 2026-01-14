@@ -5,7 +5,7 @@
 // Name : NSP_DocuSignInvoiceDocumentBatch
 //
 public class NSP_DocuSignInvoiceDocumentBatch implements Schedulable , Database.Batchable<SObject> , Database.Stateful , Database.AllowsCallouts {
-    // test w/ NSP_DocuSignInvoiceDocumentBatchTest (87%)
+    // test w/ NSP_DocuSignInvoiceDocumentBatchTest (90%)
 
     //
     // Schedulable
@@ -145,7 +145,7 @@ public class NSP_DocuSignInvoiceDocumentBatch implements Schedulable , Database.
         resultMap.put('withAttachments', invWithAttachments);
         resultMap.put('withoutAttachments', invWithoutAttachments);
         return resultMap;
-	}
+    }
 
     private AsyncApexJob selectAsyncApexJob( String jobId ) {
         List<AsyncApexJob> jobs = null;
@@ -165,27 +165,29 @@ public class NSP_DocuSignInvoiceDocumentBatch implements Schedulable , Database.
 
     private void sendEmailNotification( AsyncApexJob job , String plainTextBody ) {
         try {
-            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-            List<String> toAddresses = new List<String>();
-            if ( job != null ) {
-                toAddresses.add( job.CreatedBy.Email );
-            } else {
-                toAddresses.add( UserInfo.getUserEmail() );
+            if ( EmailDeliverabilityController.isEnabledOutbound ) {
+                Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+                List<String> toAddresses = new List<String>();
+                if ( job != null ) {
+                    toAddresses.add( job.CreatedBy.Email );
+                } else {
+                    toAddresses.add( UserInfo.getUserEmail() );
+                }
+                mail.setToAddresses( toAddresses );
+                if ( ( NSP_DocuSignInvoiceDocumentBatch.bccAddresses != null ) && !NSP_DocuSignInvoiceDocumentBatch.bccAddresses.isEmpty() ) {
+                    mail.setBccAddresses( NSP_DocuSignInvoiceDocumentBatch.bccAddresses );
+                }
+                String statusSuffix = '';
+                if ( job != null ) {
+                    statusSuffix = ': ' + job.Status;
+                }
+                mail.setSubject( 'Docusign Invoice Generation Batch Job' + statusSuffix );
+                if ( String.isBlank( plainTextBody ) ) {
+                    plainTextBody = '.';
+                }
+                mail.setPlainTextBody( plainTextBody );
+                Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ mail } );
             }
-            mail.setToAddresses( toAddresses );
-            if ( ( NSP_DocuSignInvoiceDocumentBatch.bccAddresses != null ) && !NSP_DocuSignInvoiceDocumentBatch.bccAddresses.isEmpty() ) {
-                mail.setBccAddresses( NSP_DocuSignInvoiceDocumentBatch.bccAddresses );
-            }
-            String statusSuffix = '';
-            if ( job != null ) {
-                statusSuffix = ': ' + job.Status;
-            }
-            mail.setSubject( 'Docusign Invoice Generation Batch Job' + statusSuffix );
-            if ( String.isBlank( plainTextBody ) ) {
-                plainTextBody = '.';
-            }
-            mail.setPlainTextBody( plainTextBody );
-            Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ mail } );
         } catch ( Exception e ) {
             NSP_DocuSignInvoiceDocumentBatch.handleException(e,'sendEmailNotification');
         }

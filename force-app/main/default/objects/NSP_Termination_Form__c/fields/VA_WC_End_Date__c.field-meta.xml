@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VA_WC_End_Date__c</fullName>
+    <formula>IF(
+  ( NSP_Last_Date_Wages_Paid_Through__c &lt;= ( TODAY() + 16 ) ) ,
+  ( TODAY() + 16 ) ,
+  NSP_Last_Date_Wages_Paid_Through__c
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>End date of Workers&apos; Compensation coverage for Virginia employees</inlineHelpText>
+    <label>VA WC End Date</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
+</CustomField>

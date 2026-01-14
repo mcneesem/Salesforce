@@ -1,12 +1,5 @@
-//
-// @description  :  Helper class for ServiceAppointment trigger.
-// @date 14/11/2022
-// Author : Nischay Jindal
-// Name : NSP_ServiceAppointmentTriggerHelper
-//
 public with sharing class NSP_ServiceAppointmentTriggerHelper {
-    // test w/ NSP_ServiceAppointmentTrigger_Test (85%)
-    // ~ Apex Test Requires: Permission Set: Field Service Admin Permissions
+    // test w/ NSP_ServiceAppointmentTrigger_Test (89%)
 
     //map of service resource Id and operating hrs name
     public static Map<Id,String> mapServResOperHrs = new Map<Id,String>();
@@ -25,7 +18,7 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
             Set<Id> saIdToDeletEvent = new Set<Id>();
             for ( ServiceAppointment serApp : newMap.values() ) {
                 // added as a part of STY-01091
-                // update the flag when the first time status is set to dispatched 
+                // update the flag when the first time status is set to dispatched
                 if ( ( serApp.Status != null )
                     && ( serApp.Status == NSP_ServiceConstants.dispatchStatus )
                     && ( oldMap.get( serApp.Id ).Status != NSP_ServiceConstants.dispatchStatus )
@@ -77,10 +70,36 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
-                NSP_ServiceAppointmentTriggerHelper.class.getName() , 
+                NSP_ServiceAppointmentTriggerHelper.class.getName() ,
                 'beforeUpdateDirector' ,
                 e
             );
+        }
+    }
+
+    //
+    //
+    //
+
+    private static void syncBackFieldsToProjectTask( Set<Id> serviceAppointmentIds ) {
+        if ( ( serviceAppointmentIds != null )
+            && !serviceAppointmentIds.isEmpty()
+            && !System.isBatch()
+            )
+        {
+            if ( NSP_ServiceAppointmentTriggerHelper.isEnabledQueueableSync
+                && ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() )
+                && !System.isQueueable()
+                )
+            {
+                ServiceAppointmentSyncQueueable.enqueueJob( serviceAppointmentIds );
+            } else if ( NSP_ServiceAppointmentTriggerHelper.isEnabledFutureSync
+                && ( Limits.getFutureCalls() < Limits.getLimitFutureCalls() )
+                && !System.isFuture()
+                )
+            {
+                NSP_ServiceAppointmentTriggerHelper.syncBackFieldsToProjectTaskFuture( serviceAppointmentIds );
+            }
         }
     }
 
@@ -90,83 +109,129 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
     // @param oldMap of Service Appointment from Trigger
     // @return void
     //
+    // DEPRECATED
     @future
-    public static void syncBackFieldsToProjectTask( Set<Id> serviceAppointmentIds ){
-        Map<Id,ServiceAppointment > workOrderIdServiceAppointment = new Map<Id,ServiceAppointment>();
+    private static void syncBackFieldsToProjectTaskFuture( Set<Id> serviceAppointmentIds ) {
+        Map<Id,ServiceAppointment> workOrderIdServiceAppointment = new Map<Id,ServiceAppointment>();
         Set<Id> serviceAppointmentIdSet = new Set<Id>();
         Map<Id,Id> serviceAppIdAssigResMap = new Map<Id,Id>();
         Map<Id,Id> assignResIdServiceResMap = new Map<Id,Id>();
-        List<WorkOrder> lstWorKOrderToUpdate = new List<WorkOrder>();     
+        List<WorkOrder> lstWorKOrderToUpdate = new List<WorkOrder>();
         List<pse__Project_Task__c> lstProjectTaskToUpdate = new List<pse__Project_Task__c>();
         Set<Id> serviceTerritoryId = new Set<Id>();
-        Map<Id,String> mapOfServiceTerritoryIdToName = new  Map<Id,String>();
+        Map<Id,String> mapOfServiceTerritoryIdToName = new Map<Id,String>();
         try {
-            for( ServiceAppointment eachSa : [ SELECT Id,Status,Description,Subject,NSP_Orientation_Address__c,ServiceTerritoryId,ParentRecordId,EarliestStartTime,OwnerId,Duration,SchedStartTime,SchedEndTime,NSP_Meeting_Type__c 
-                                               FROM ServiceAppointment 
-                                               WHERE Id IN:  serviceAppointmentIds]){ 
-                                                workOrderIdServiceAppointment.put(eachSa.ParentRecordId, eachSa);    
-                                                serviceAppointmentIdSet.add(eachSa.Id);
-                                                serviceTerritoryId.add(eachSa.ServiceTerritoryId);
-                                            }
-
-        if( !serviceTerritoryId.isEmpty() ){
-            for( ServiceTerritory eachTerritory : [ SELECT Id,Name FROM ServiceTerritory WHERE Id IN: serviceTerritoryId]){
-                mapOfServiceTerritoryIdToName.put(eachTerritory.Id, eachTerritory.Name);
+            for ( ServiceAppointment eachSa : [
+                        SELECT
+                            Id ,
+                            Status ,
+                            Description ,
+                            Subject ,
+                            NSP_Orientation_Address__c ,
+                            ServiceTerritoryId ,
+                            ParentRecordId ,
+                            EarliestStartTime ,
+                            OwnerId ,
+                            Duration ,
+                            SchedStartTime ,
+                            SchedEndTime,NSP_Meeting_Type__c
+                        FROM ServiceAppointment
+                        WHERE ( Id IN :serviceAppointmentIds )
+                    ]
+                )
+            {
+                workOrderIdServiceAppointment.put( eachSa.ParentRecordId , eachSa );
+                serviceAppointmentIdSet.add( eachSa.Id );
+                serviceTerritoryId.add( eachSa.ServiceTerritoryId );
             }
-        }
-
-        if (!workOrderIdServiceAppointment.isEmpty()) {
-            for (WorkOrder oWorkOrder: [SELECT
-                                        Id,
-                                        NSP_Project_Task__c
-                                        FROM WorkOrder
-                                        WHERE Id IN: workOrderIdServiceAppointment.keySet()
-                                        WITH SECURITY_ENFORCED
-                                       ]) {
-                                            ServiceAppointment serviceApp = workOrderIdServiceAppointment.get(oWorkOrder.Id);                                           
-
-                                            lstWorKOrderToUpdate.add(updateWorkOrderRec(oWorkOrder.Id , serviceApp));
-                                            lstProjectTaskToUpdate.add(updateProjectTaskRec(oWorkOrder.NSP_Project_Task__c, serviceApp, mapOfServiceTerritoryIdToName));
- 
-                                       }
-        }
+            if ( !serviceTerritoryId.isEmpty() ) {
+                for ( ServiceTerritory eachTerritory : [
+                            SELECT Id , Name
+                            FROM ServiceTerritory
+                            WHERE ( Id IN :serviceTerritoryId )
+                        ]
+                    )
+                {
+                    mapOfServiceTerritoryIdToName.put( eachTerritory.Id , eachTerritory.Name );
+                }
+            }
+            if ( !workOrderIdServiceAppointment.isEmpty() ) {
+                for ( WorkOrder oWorkOrder : [
+                            SELECT Id , NSP_Project_Task__c
+                            FROM WorkOrder
+                            WHERE ( Id IN :workOrderIdServiceAppointment.keySet() )
+                            WITH SECURITY_ENFORCED
+                        ]
+                    )
+                {
+                    ServiceAppointment serviceApp = workOrderIdServiceAppointment.get( oWorkOrder.Id );
+                    lstWorKOrderToUpdate.add(
+                        NSP_ServiceAppointmentTriggerHelper.updateWorkOrderRec(
+                            oWorkOrder.Id ,
+                            serviceApp
+                        )
+                    );
+                    lstProjectTaskToUpdate.add(
+                        NSP_ServiceAppointmentTriggerHelper.updateProjectTaskRec(
+                            oWorkOrder.NSP_Project_Task__c ,
+                            serviceApp ,
+                            mapOfServiceTerritoryIdToName
+                        )
+                    );
+                }
+            }
             //checking if the map is empty
-            if(!workOrderIdServiceAppointment.isEmpty()){
+            if ( !workOrderIdServiceAppointment.isEmpty() ) {
                 //querying assigned resource to get service resource
-                for(AssignedResource oAssigRes : [SELECT Id,ServiceAppointmentId, ServiceResourceId 
-                                                  FROM AssignedResource 
-                                                  WHERE ServiceAppointmentId IN: serviceAppointmentIdSet]){
+                for ( AssignedResource oAssigRes : [
+                            SELECT Id , ServiceAppointmentId , ServiceResourceId
+                            FROM AssignedResource
+                            WHERE ( ServiceAppointmentId IN :serviceAppointmentIdSet )
+                        ]
+                    )
+                {
                     //storing map service appointment id and assigned resource Id
-                    serviceAppIdAssigResMap.put(oAssigRes.ServiceAppointmentId ,oAssigRes.ServiceResourceId);
+                    serviceAppIdAssigResMap.put(
+                        oAssigRes.ServiceAppointmentId ,
+                        oAssigRes.ServiceResourceId
+                    );
                     //storing map assigned resource id and service resouce userId
-                    assignResIdServiceResMap.put(oAssigRes.ServiceResourceId, getAssignedResUser(oAssigRes.ServiceResourceId));
+                    assignResIdServiceResMap.put(
+                        oAssigRes.ServiceResourceId ,
+                        NSP_ServiceAppointmentTriggerHelper.getAssignedResUser( oAssigRes.ServiceResourceId )
+                    );
                 }
-                if(!serviceAppIdAssigResMap.isEmpty()){
+                if ( !serviceAppIdAssigResMap.isEmpty() ) {
                     //calling the method to syn the project task, workorder and service appointment ownerId
-                    syncProjTaskOwnerSA(workOrderIdServiceAppointment,  serviceAppIdAssigResMap, assignResIdServiceResMap);
+                    NSP_ServiceAppointmentTriggerHelper.syncProjTaskOwnerSA(
+                        workOrderIdServiceAppointment ,
+                        serviceAppIdAssigResMap ,
+                        assignResIdServiceResMap
+                    );
                 }
             }
-            if(!lstWorKOrderToUpdate.isEmpty() && Schema.sObjectType.WorkOrder.isUpdateable()){
-                Database.update(lstWorKOrderToUpdate,false);
+            if ( !lstWorKOrderToUpdate.isEmpty() && Schema.sObjectType.WorkOrder.isUpdateable() ) {
+                Database.update( lstWorKOrderToUpdate , false );
             }
-            if(!lstProjectTaskToUpdate.isEmpty() && Schema.sObjectType.pse__Project_Task__c.isUpdateable() ){
-                Database.update(lstProjectTaskToUpdate,false);
+            if ( !lstProjectTaskToUpdate.isEmpty() && Schema.sObjectType.pse__Project_Task__c.isUpdateable() ) {
+                Database.update( lstProjectTaskToUpdate , false );
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
-                NSP_ServiceAppointmentTriggerHelper.class.getName() , 
+                NSP_ServiceAppointmentTriggerHelper.class.getName() ,
                 'syncBackFieldsToProjectTask' ,
                 e
             );
         }
     }
 
-    /***********************************************************************************************
-    * MethodName: updateWorkOrderRec
-    * Description : Updating the Work Order Record 
-    * Params:  Id workOrderId, ServiceAppointment saRecord
-    * ********************************************************************************************/  
-    public static WorkOrder updateWorkOrderRec( Id workOrderId , ServiceAppointment saRecord ){
+    //
+    // MethodName: updateWorkOrderRec
+    // Description : Updating the Work Order Record
+    // Params:  Id workOrderId, ServiceAppointment saRecord
+    //
+    // DEPRECATED
+    private static WorkOrder updateWorkOrderRec( Id workOrderId , ServiceAppointment saRecord ) {
         //Updating the Work Order Record when Service Appointment is updated
         WorkOrder woOrderRecToUpdate = new WorkOrder();
         woOrderRecToUpdate.Id = workOrderId;
@@ -183,12 +248,13 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
         return woOrderRecToUpdate;
     }
 
-    /***********************************************************************************************
-    * MethodName: updateProjectTaskRec
-    * Description : Updating the Project Task Record
-    * Params: Id projectTaskId, ServiceAppointment saRecord,  Map<Id,String> mapOfServiceTerritoryIdToName 
-    * ********************************************************************************************/  
-    public static pse__Project_Task__c updateProjectTaskRec( Id projectTaskId , ServiceAppointment saRecord ,  Map<Id,String> mapOfServiceTerritoryIdToName ) {
+    //
+    // MethodName: updateProjectTaskRec
+    // Description : Updating the Project Task Record
+    // Params: Id projectTaskId, ServiceAppointment saRecord,  Map<Id,String> mapOfServiceTerritoryIdToName
+    //
+    // DEPRECATED
+    private static pse__Project_Task__c updateProjectTaskRec( Id projectTaskId , ServiceAppointment saRecord , Map<Id,String> mapOfServiceTerritoryIdToName ) {
         //Updating the Project Task Record when Service Appointment is updated
         pse__Project_Task__c projTaskRecToUpdate = new pse__Project_Task__c();
         projTaskRecToUpdate.Id = projectTaskId;
@@ -197,24 +263,23 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
         projTaskRecToUpdate.Name = saRecord.Subject;
         projTaskRecToUpdate.NSP_Meeting_Type__c = saRecord.NSP_Meeting_Type__c;
         projTaskRecToUpdate.NSP_Orientation_Address__c = saRecord.NSP_Orientation_Address__c;
-        projTaskRecToUpdate.NSP_Dispatch_Region__c = mapOfServiceTerritoryIdToName.get(saRecord.ServiceTerritoryId);
+        projTaskRecToUpdate.NSP_Dispatch_Region__c = mapOfServiceTerritoryIdToName.get( saRecord.ServiceTerritoryId );
         projTaskRecToUpdate.pse__Start_Date_Time__c = saRecord.SchedStartTime;
         projTaskRecToUpdate.pse__End_Date_Time__c = saRecord.SchedEndTime;
         return projTaskRecToUpdate;
     }
 
-    
-    /**
-    * Description: this will check whether the specified fields are updated to sync back to ProjectTask
-    * Author : Anil
-    * @param oServiceApp of Service Appointment from Trigger
-    * @param oldServiceApp of Service Appointment from Trigger
-    * @return Boolean             
-    */
+    //
+    // Description: this will check whether the specified fields are updated to sync back to ProjectTask
+    // Author : Anil
+    // @param oServiceApp of Service Appointment from Trigger
+    // @param oldServiceApp of Service Appointment from Trigger
+    // @return Boolean
+    //
     public static Boolean isfieldsUpdatedToSyncBackProjectTask( ServiceAppointment oServiceApp , ServiceAppointment oldServiceApp ) {
         return (
-            oServiceApp.Description != oldServiceApp.Description 
-            || oServiceApp.Status != oldServiceApp.Status 
+            oServiceApp.Description != oldServiceApp.Description
+            || oServiceApp.Status != oldServiceApp.Status
             || oServiceApp.OwnerId != oldServiceApp.OwnerId
             || oServiceApp.Subject != oldServiceApp.Subject
             || oServiceApp.NSP_Orientation_Address__c != oldServiceApp.NSP_Orientation_Address__c
@@ -234,13 +299,13 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
     //
     public static void checkStatusChange( List<ServiceAppointment> checkStatusChangeSaList ) {
         try {
-            for (ServiceAppointment serApp : checkStatusChangeSaList ) {
+            for ( ServiceAppointment serApp : checkStatusChangeSaList ) {
                 // update the flag when the first time status is set to dispatched
                 serApp.NSP_IsDispatched__c = true;
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
-                NSP_ServiceAppointmentTriggerHelper.class.getName() , 
+                NSP_ServiceAppointmentTriggerHelper.class.getName() ,
                 'checkStatusChange' ,
                 e
             );
@@ -313,7 +378,7 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
-                NSP_ServiceAppointmentTriggerHelper.class.getName() , 
+                NSP_ServiceAppointmentTriggerHelper.class.getName() ,
                 'sendEmailNotifications' ,
                 e
             );
@@ -445,7 +510,7 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
         if ( !lstWorKOrderToUpdate.isEmpty() && Schema.sObjectType.WorkOrder.isUpdateable() ) {
             List<Database.SaveResult> results = Database.update( lstWorKOrderToUpdate , false );
             NSP_ErrorLogHandler.logResults(
-                NSP_ServiceAppointmentTriggerHelper.class.getName() , 
+                NSP_ServiceAppointmentTriggerHelper.class.getName() ,
                 'syncProjTaskOwnerSA:WorkOrder' ,
                 results
             );
@@ -454,7 +519,7 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
         if ( !lstProjectTaskToUpdate.isEmpty() && Schema.sObjectType.pse__Project_Task__c.isUpdateable() ) {
             List<Database.SaveResult> results = Database.update( lstProjectTaskToUpdate , false );
             NSP_ErrorLogHandler.logResults(
-                NSP_ServiceAppointmentTriggerHelper.class.getName() , 
+                NSP_ServiceAppointmentTriggerHelper.class.getName() ,
                 'syncProjTaskOwnerSA:pse__Project_Task__c' ,
                 results
             );
@@ -463,24 +528,22 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
         if ( !serviceAppList.isEmpty() && Schema.sObjectType.ServiceAppointment.isUpdateable() ) {
             List<Database.SaveResult> results = Database.update( serviceAppList , false );
             NSP_ErrorLogHandler.logResults(
-                NSP_ServiceAppointmentTriggerHelper.class.getName() , 
+                NSP_ServiceAppointmentTriggerHelper.class.getName() ,
                 'syncProjTaskOwnerSA:ServiceAppointment' ,
                 results
             );
         }
     }
 
-    /***********************************************************************************************
-    * MethodName: sendMail
-    * Description : Helper method for email body 
-    * Params:       String subjectString, String mailBody, list<String> listOfTOAddresses, String fromAddress, Id targetId, Id templateId
-    * Author :      Nischay Jindal
-    * ********************************************************************************************/
-    private static void sendMail(list<String> listOfTOAddresses, Id targetId, Id templateId){
-        
-        //set template structure for the email template                            
+    //
+    // MethodName: sendMail
+    // Description : Helper method for email body
+    // Params:       String subjectString, String mailBody, list<String> listOfTOAddresses, String fromAddress, Id targetId, Id templateId
+    // Author :      Nischay Jindal
+    //
+    private static void sendMail( List<String> listOfTOAddresses , Id targetId , Id templateId ) {
+        //set template structure for the email template
         Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-        
         if(listOfTOAddresses!=null && listOfTOAddresses.size()>0){
             email.setToAddresses(listOfTOAddresses);
         }
@@ -492,91 +555,95 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
         }
         email.setTargetObjectId(UserInfo.getUserId());
         email.setTreatTargetObjectAsRecipient(false);
-        if(!System.Test.isRunningTest()){
-            Messaging.sendEmail(new Messaging.SingleEmailMessage[] {email});
+        if ( !System.Test.isRunningTest()
+            && EmailDeliverabilityController.isEnabledOutbound
+            )
+        {
+            Messaging.sendEmail( new Messaging.SingleEmailMessage[]{ email } );
         }
     }
-    
-    /***********************************************************************************************
-    * MethodName: getAssignedResources
-    * Description : Helper method to retrieve resourses 
-    * Params:   Set<Id>serAppIdSet
-    * Author :      Nischay Jindal
-    * ********************************************************************************************/
-    private static  Map<Id, List<String>> getAssignedResources(Set<Id>serAppIdSet){
-        Map<Id, List<String>> mapSerIdListEmailResources = new Map<Id, List<String>>();
-        
+
+    //
+    // MethodName: getAssignedResources
+    // Description : Helper method to retrieve resourses
+    // Params: Set<Id>serAppIdSet
+    // Author : Nischay Jindal
+    //
+    private static Map<Id,List<String>> getAssignedResources( Set<Id> serAppIdSet ) {
+        Map<Id,List<String>> mapSerIdListEmailResources = new Map<Id,List<String>>();
         for(ServiceAppointment serApp :[SELECT Id, Owner.Email FROM ServiceAppointment WHERE Id IN : serAppIdSet]){
             if(!mapSerIdListEmailResources.containsKey(serApp.Id)){
                 mapSerIdListEmailResources.put(serApp.Id, new List<String>());
             }
             mapSerIdListEmailResources.get(serApp.Id).add(serApp.Owner.Email);
         }
-        return mapSerIdListEmailResources;  
+        return mapSerIdListEmailResources;
     }
-    
-    /***********************************************************************************************
-    * MethodName: getWorkOrders
-    * Description : Helper method to retrieve workorder 
-    * Params:   Set<Id>workOrderIdSet
-    * Author :      Nischay Jindal
-    * ********************************************************************************************/
-    private static  Map<Id,WorkOrder> getWorkOrders(Set<Id>workOrderIdSet ){
+
+    //
+    // MethodName: getWorkOrders
+    // Description : Helper method to retrieve workorder
+    // Params:   Set<Id>workOrderIdSet
+    // Author :      Nischay Jindal
+    //
+    private static Map<Id,WorkOrder> getWorkOrders( Set<Id> workOrderIdSet ) {
         Map<Id,WorkOrder> workOrderMap = new Map<Id,WorkOrder>([Select Id , NSP_Project_Task__c from WorkOrder WHERE Id IN: workOrderIdSet ]);
         return workOrderMap;
     }
-    
-    /***********************************************************************************************
-    * MethodName: getPrjTaskAssignments
-    * Description : Helper method to retrieve PTA 
-    * Params:   Set<Id>taskIdSet
-    * Author :      Nischay Jindal
-    * ********************************************************************************************/
-    private static  Map<Id,List<String>> getPrjTaskAssignments(Set<Id>taskIdSet ){
+
+    //
+    // MethodName: getPrjTaskAssignments
+    // Description : Helper method to retrieve PTA
+    // Params:   Set<Id>taskIdSet
+    // Author :      Nischay Jindal
+    //
+    private static Map<Id,List<String>> getPrjTaskAssignments( Set<Id> taskIdSet ) {
          Map<Id,List<String>> maptaskIdListEmails = new   Map<Id,List<String>>();
         for(pse__Project_Task_Assignment__c pta:[SELECT Id , pse__Project_Task__c ,pse__Resource__r.NSP_Work_email__c, pse__Resource__c ,pse__Resource__r.pse__Salesforce_User__c , pse__Resource__r.pse__Salesforce_User__r.Email FROM pse__Project_Task_Assignment__c
                                                  WHERE pse__Resource__c !=null AND pse__Project_Task__c IN:taskIdSet AND pse__Resource__r.pse__Salesforce_User__c !=null]){
             if(!maptaskIdListEmails.containsKey(pta.pse__Project_Task__c)){
                 maptaskIdListEmails.put(pta.pse__Project_Task__c , new List<String>());
-            } 
+            }
             maptaskIdListEmails.get(pta.pse__Project_Task__c).add(pta.pse__Resource__r.pse__Salesforce_User__r.Email);
         }
         return maptaskIdListEmails;
     }
-    
-    /***********************************************************************************************
-    * MethodName: getEmailTemplates
-    * Description : Helper method to retrieve Email Templates  
-    * Author :      Nischay Jindal
-    * ********************************************************************************************/    
-     private static Map<String,EmailTemplate> getEmailTemplates(){    
-     Map<String,EmailTemplate> emailTempMap = new Map<String,EmailTemplate>();
-         List<String>templateNameList = new List<String>{NSP_ServiceConstants.SerAppReScheduleEmailTemplate,NSP_ServiceConstants.SerAppNoneEmailTemplate,
+
+    //
+    // MethodName: getEmailTemplates
+    // Description : Helper method to retrieve Email Templates
+    // Author :      Nischay Jindal
+    //
+    private static Map<String,EmailTemplate> getEmailTemplates() {
+        Map<String,EmailTemplate> emailTempMap = new Map<String,EmailTemplate>();
+        List<String>templateNameList = new List<String>{NSP_ServiceConstants.SerAppReScheduleEmailTemplate,NSP_ServiceConstants.SerAppNoneEmailTemplate,
                                                          NSP_ServiceConstants.SerAppRecordChangeEmailTemplate,NSP_ServiceConstants.SerAppDispatchedEmailTemplate};
-     List<EmailTemplate> emailTempList =[SELECT Id,Name, DeveloperName, HtmlValue, Subject, Body FROM EmailTemplate 
+        List<EmailTemplate> emailTempList =[SELECT Id,Name, DeveloperName, HtmlValue, Subject, Body FROM EmailTemplate
                                          WHERE DeveloperName IN:templateNameList ];
         for(EmailTemplate emp:emailTempList ){
             emailTempMap.put(emp.DeveloperName ,emp);
         }
         return emailTempMap;
     }
-    /***********************************************************************************************
-    * MethodName: isStatusChange
-    * Description : return true if status or fields changed on SA
-    * Author :      Nischay Jindal
-    * ********************************************************************************************/ 
-    private static Boolean isStatusChange(ServiceAppointment servApp, Map<Id,ServiceAppointment> oldmap){
-        return (servApp.NSP_IsDispatched__c || 
-                (servApp.Status !=null && 
+
+    //
+    // MethodName: isStatusChange
+    // Description : return true if status or fields changed on SA
+    // Author :      Nischay Jindal
+    //
+    private static Boolean isStatusChange( ServiceAppointment servApp , Map<Id,ServiceAppointment> oldmap ) {
+        return (servApp.NSP_IsDispatched__c ||
+                (servApp.Status !=null &&
                 (oldmap.get(servApp.Id).Status != NSP_ServiceConstants.dispatchStatus && servApp.Status == NSP_ServiceConstants.dispatchStatus)  ||
                 (oldmap.get(servApp.Id).Status != NSP_ServiceConstants.PROJECT_TASK_CANCELLED && servApp.Status == NSP_ServiceConstants.PROJECT_TASK_CANCELLED))  );
     }
-    /***********************************************************************************************
-    * MethodName: isRecordChanged
-    * Description : return true if record or fields changed on SA
-    * Author :      Nischay Jindal
-    * ********************************************************************************************/ 
-    private static Boolean isRecordChanged(ServiceAppointment servApp, ServiceAppointment oldSa){
+
+    //
+    // MethodName: isRecordChanged
+    // Description : return true if record or fields changed on SA
+    // Author :      Nischay Jindal
+    //
+    private static Boolean isRecordChanged( ServiceAppointment servApp , ServiceAppointment oldSa ) {
         return (
             (ServApp.Status == NSP_ServiceConstants.dispatchStatus)
             &&
@@ -585,34 +652,34 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
             || ( oldSa.Duration != servApp.Duration )
             || ( oldSa.SchedStartTime != servApp.SchedStartTime )
             || ( oldSa.SchedEndTime != servApp.SchedEndTime )
-            || ( oldSa.OwnerId != servApp.OwnerId ) 
-            ) 
+            || ( oldSa.OwnerId != servApp.OwnerId )
+            )
             );
     }
-    
-    /********************************************************************************************
-    * Description: this will return the service resource UserId
-    * @param Service Resource Id
-    * @return Id
-*********************************************************************************************/
-    private static Id getAssignedResUser(Id serviceResId){
+
+    //
+    // Description: this will return the service resource UserId
+    // @param Service Resource Id
+    // @return Id
+    //
+    private static Id getAssignedResUser( Id serviceResId ) {
         List<String> serviceResApp_Fields = new List<String>{'Id', 'RelatedRecordId'};
         String query = new NSP_QueryBuilder(NSP_ServiceConstants.SERVICERES_SOBJECT_NAME, serviceResApp_Fields)
                                 .addFilter('Id', serviceResId).build();
         List<ServiceResource> oserviceRes = (List<ServiceResource>) Database.query(query);
         return oserviceRes[0].RelatedRecordId;
     }
-    
-    /**********************************************************************************************
-    * Description: this method will update Service Appointment OwnerId and return the list of Service Appointment
-    * @param map of service appointment Id and Assigned resource Id
-    * @param map of Assigned resource Id and Resource Service User Id
-    * @return List of Service Appointment           
-    *********************************************************************************************/
-    private static List<ServiceAppointment> updateServiceAppointments(Map<Id, Id> serviceAppIdAssigResMap, Map<Id, Id> assignResIdServiceResMap){
+
+    //
+    // Description: this method will update Service Appointment OwnerId and return the list of Service Appointment
+    // @param map of service appointment Id and Assigned resource Id
+    // @param map of Assigned resource Id and Resource Service User Id
+    // @return List of Service Appointment
+    //
+    private static List<ServiceAppointment> updateServiceAppointments( Map<Id,Id> serviceAppIdAssigResMap , Map<Id,Id> assignResIdServiceResMap ) {
         List<ServiceAppointment> serviceAppList = new List<ServiceAppointment>();
-        for(ServiceAppointment oservice: [SELECT Id, OwnerId 
-                                          FROM ServiceAppointment 
+        for(ServiceAppointment oservice: [SELECT Id, OwnerId
+                                          FROM ServiceAppointment
                                           WHERE Id IN: serviceAppIdAssigResMap.keySet()]){
             oservice.OwnerId = assignResIdServiceResMap.get(serviceAppIdAssigResMap.get(oservice.Id));
             serviceAppList.add(oservice);
@@ -625,7 +692,7 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
     // @param WorkOrder record
     // @param map of service appointment Id and Assigned resource Id
     // @param map of Assigned resource Id and Resource Service User Id
-    // @return List of Service Appointment           
+    // @return List of Service Appointment
     //
     private static WorkOrder updateWorkOrder(
         WorkOrder oWorkOrder ,
@@ -654,7 +721,7 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
     // @param Service Appointment record
     // @param map of service appointment Id and Assigned resource Id
     // @param map of Assigned resource Id and Resource Service User Id
-    // @return List of Service Appointment           
+    // @return List of Service Appointment
     //
     private static pse__Project_Task__c updateProjectTask(
         WorkOrder oWorkOrder ,
@@ -694,18 +761,18 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
         for( ServiceResource eachServiceRes : [ SELECT Id,RelatedRecordId FROM ServiceResource WHERE Id IN: serResToSaIdMap.keySet()]){
             saToSerResUserIdMap.put( serResToSaIdMap.get(eachServiceRes.Id), eachServiceRes.RelatedRecordId );
         }
-        
-        //iterate over updated Service Appointment 
+
+        //iterate over updated Service Appointment
         for (ServiceAppointment eachNewSa : createOrDeletSaList ) {
                 //new event record
                 eventToInsert.add( createNewEventRec( eachNewSa, saToSerResUserIdMap ) );
         }
 
-        //insert free events 
+        //insert free events
         if ( !eventToInsert.isEmpty() ) {
             List<Database.SaveResult> results = Database.insert( eventToInsert , false );
             NSP_ErrorLogHandler.logResults(
-                NSP_ServiceAppointmentTriggerHelper.class.getName() , 
+                NSP_ServiceAppointmentTriggerHelper.class.getName() ,
                 'createOrDeleteFreeEvent' ,
                 results
             );
@@ -733,7 +800,7 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
             if ( !eventRecListDelete.isEmpty() ) {
                 List<Database.SaveResult> results = Database.update( eventRecListDelete , false );
                 NSP_ErrorLogHandler.logResults(
-                    NSP_ServiceAppointmentTriggerHelper.class.getName() , 
+                    NSP_ServiceAppointmentTriggerHelper.class.getName() ,
                     'changeFreeEventToBusy' ,
                     results
                 );
@@ -782,13 +849,11 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
         Set<Id> saIdToUpdateEvent = new Set<Id>();
         try {
             for(ServiceAppointment serApp : newMap.values() ){
-                
                 // added as a part of STY-03891
                 if(isfieldsUpdatedToSyncBackProjectTask(serApp, oldMap.get(serApp.Id))){
                     serviceAppintmentUpdatedIds.add(serApp.Id);
                 }
-                
-                if( serApp.Status != oldMap.get(serApp.Id).Status ){ 
+                if( serApp.Status != oldMap.get(serApp.Id).Status ){
                     if( serApp.Status == NSP_ServiceConstants.scheduleStatus){
                     //check if SA status is updated to Scheduled
                         createOrDeletSaList.add( serApp );
@@ -809,25 +874,21 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
             if(!mapOfSaIdToServAppRec.isEmpty()){
                 updateServiceTerritory(mapOfSaIdToServAppRec);
             }
-            if( !serviceAppintmentUpdatedIds.isEmpty() && !System.isFuture() && !System.isBatch() ){
-                syncBackFieldsToProjectTask(serviceAppintmentUpdatedIds);
-            }
+            NSP_ServiceAppointmentTriggerHelper.syncBackFieldsToProjectTask( serviceAppintmentUpdatedIds );
             //call createOrDeleteFreeEvent
             if(!createOrDeletSaList.isEmpty()){
                 createOrDeleteFreeEvent( createOrDeletSaList );
             }
-            
             //call changeFreeEventToBusy
             if(!saIdToUpdateEvent.isEmpty()){
-                changeFreeEventToBusy( saIdToUpdateEvent ); 
+                changeFreeEventToBusy( saIdToUpdateEvent );
             }
-            
             if ( !mapOfSaIdToRec.isEmpty() ) {
                 NSP_ServiceAppointmentTriggerHelper.updateSaRelatedEvent( mapOfSaIdToRec );
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
-                NSP_ServiceAppointmentTriggerHelper.class.getName() , 
+                NSP_ServiceAppointmentTriggerHelper.class.getName() ,
                 'afterUpdateDirector' ,
                 e
             );
@@ -880,42 +941,41 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
             if ( !updateServApp.isEmpty() ) {
                 List<Database.SaveResult> results =  Database.update( updateServApp , false );
                 NSP_ErrorLogHandler.logResults(
-                    NSP_ServiceAppointmentTriggerHelper.class.getName() , 
+                    NSP_ServiceAppointmentTriggerHelper.class.getName() ,
                     'updateServiceTerritory:update' ,
                     results
                 );
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
-                NSP_ServiceAppointmentTriggerHelper.class.getName() , 
+                NSP_ServiceAppointmentTriggerHelper.class.getName() ,
                 'updateServiceTerritory' ,
                 e
             );
         }
     }
 
-    /***********************************************************************************************
-            * MethodName: isSaUpdatedToUpdateEvent
-            * Description : return true if record or fields changed on SA
-            * Author :      Abhishek Kumar
-            * ********************************************************************************************/ 
-            private static Boolean isSaUpdatedToUpdateEvent(ServiceAppointment servApp, ServiceAppointment oldSa){
-                return (
-                    ( servApp.Status == oldSa.Status )
-                    && 
-                    (  ( servApp.Status == NSP_ServiceConstants.scheduleStatus ) 
-                        || ( servApp.Status == NSP_ServiceConstants.dispatchStatus ) 
-                    ) 
-                    && 
-                    ( ( oldSa.NSP_Orientation_Address__c != servApp.NSP_Orientation_Address__c )
-                        || ( oldSa.Description != servApp.Description )
-                        || ( oldSa.Subject != servApp.Subject )
-                        || ( oldSa.SchedStartTime != servApp.SchedStartTime )
-                        || ( oldSa.SchedEndTime != servApp.SchedEndTime )
-                        || ( oldSa.OwnerId != servApp.OwnerId )
-                    )
-                );
-            }
+    //
+    // MethodName: isSaUpdatedToUpdateEvent
+    // Description : return true if record or fields changed on SA
+    //
+    private static Boolean isSaUpdatedToUpdateEvent( ServiceAppointment servApp , ServiceAppointment oldSa ) {
+        return (
+            ( servApp.Status == oldSa.Status )
+            &&
+            (  ( servApp.Status == NSP_ServiceConstants.scheduleStatus )
+                || ( servApp.Status == NSP_ServiceConstants.dispatchStatus )
+            )
+            &&
+            ( ( oldSa.NSP_Orientation_Address__c != servApp.NSP_Orientation_Address__c )
+                || ( oldSa.Description != servApp.Description )
+                || ( oldSa.Subject != servApp.Subject )
+                || ( oldSa.SchedStartTime != servApp.SchedStartTime )
+                || ( oldSa.SchedEndTime != servApp.SchedEndTime )
+                || ( oldSa.OwnerId != servApp.OwnerId )
+            )
+        );
+    }
 
     //
     // MethodName : updateSaRelatedEvent
@@ -944,12 +1004,54 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
             if ( !eventListToUpdate.isEmpty() ) {
                 List<Database.SaveResult> results =  Database.update( eventListToUpdate , false );
                 NSP_ErrorLogHandler.logResults(
-                    NSP_ServiceAppointmentTriggerHelper.class.getName() , 
+                    NSP_ServiceAppointmentTriggerHelper.class.getName() ,
                     'updateSaRelatedEvent' ,
                     results
                 );
             }
         }
+    }
+
+    //
+    //
+    //
+
+    private static Service_Appointment_Settings__c settings {
+        private get {
+            if ( settings == null ) {
+                settings = Service_Appointment_Settings__c.getInstance( UserInfo.getUserId() );
+            }
+            return settings;
+        }
+        private set;
+    }
+
+    private static Boolean isEnabledQueueableSync {
+        private get {
+            if ( isEnabledQueueableSync == null ) {
+                Boolean local = False;
+                if ( settings != null ) {
+                    local = NSP_ServiceAppointmentTriggerHelper.settings.IsEnabledQueueableSync__c;
+                }
+                isEnabledQueueableSync = local;
+            }
+            return isEnabledQueueableSync;
+        }
+        private set;
+    }
+
+    private static Boolean isEnabledFutureSync {
+        private get {
+            if ( isEnabledFutureSync == null ) {
+                Boolean local = False;
+                if ( settings != null ) {
+                    local = NSP_ServiceAppointmentTriggerHelper.settings.IsEnabledFutureSync__c;
+                }
+                isEnabledFutureSync = local;
+            }
+            return isEnabledFutureSync;
+        }
+        private set;
     }
 
 }

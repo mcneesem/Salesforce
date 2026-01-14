@@ -13,6 +13,7 @@ public class NSP_AssetCreationBpsProjectBatch implements ISelfSchedulable , Sche
         Database.executeBatch( new NSP_AssetCreationBpsProjectBatch() , 200 );
     }
 
+    // runs everyday at 12am central...
     public static String schedule() {
         String suffix = '';
         if ( Test.isRunningTest() ) {
@@ -20,7 +21,7 @@ public class NSP_AssetCreationBpsProjectBatch implements ISelfSchedulable , Sche
         }
         return System.schedule(
             'NSP_AssetCreationBpsProjectBatch ~ When an active account is added to a BPS project AND it does not have an existing Asset that corresponds to the project template THEN an Asset will be created automatically ~ everyday at 12 AM' + suffix ,
-            '0 0 0 * * ? *' ,
+            '0 0 0 ? * * *' ,
             new NSP_AssetCreationBpsProjectBatch()
         );
     }

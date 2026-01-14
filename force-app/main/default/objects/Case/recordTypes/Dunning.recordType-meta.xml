@@ -934,6 +934,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Configuration Complete</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Customer Update</fullName>
             <default>false</default>
         </values>

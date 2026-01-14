@@ -3,10 +3,13 @@
     <actionCalls>
         <name>Send_email_for_subscriptions_expired_30_days_ago</name>
         <label>Send email for subscriptions expired 30 days ago</label>
-        <locationX>974</locationX>
+        <locationX>1502</locationX>
         <locationY>600</locationY>
         <actionName>SBQQ__Quote__c.Email_Alert_for_Renewal_Quote_Due_for_Order_30_days_ago</actionName>
         <actionType>emailAlert</actionType>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Send_email_for_subscriptions_expired_30_days_ago</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
@@ -24,6 +27,9 @@
         <locationY>600</locationY>
         <actionName>SBQQ__Quote__c.Email_Alert_for_Renewal_Quote_Due_for_Order_Yesterday</actionName>
         <actionType>emailAlert</actionType>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Send_email_for_subscriptions_expired_yesterday</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
@@ -36,10 +42,77 @@
     </actionCalls>
     <apiVersion>55.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_varFaultElement_Get_Quote_Details</name>
+        <label>Assign varFaultElement - Get_Quote_Details</label>
+        <locationX>2294</locationX>
+        <locationY>384</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Quote_Details</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_Quote_Record_which_triggered_the_flow</name>
+        <label>Assign varFaultElement - Get_Quote_Record_which_triggered_the_flow</label>
+        <locationX>974</locationX>
+        <locationY>384</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Quote_Record_which_triggered_the_flow</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Send_email_for_subscriptions_expired_30_days_ago</name>
+        <label>Assign varFaultElement - Send_email_for_subscriptions_expired_30_days_ago</label>
+        <locationX>1766</locationX>
+        <locationY>708</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Send_email_for_subscriptions_expired_30_days_ago</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Send_email_for_subscriptions_expired_yesterday</name>
+        <label>Assign varFaultElement - Send_email_for_subscriptions_expired_yesterday</label>
+        <locationX>446</locationX>
+        <locationY>708</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Send_email_for_subscriptions_expired_yesterday</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Is_Quote_not_Ordered</name>
         <label>Is Quote not Ordered?</label>
-        <locationX>248</locationX>
+        <locationX>380</locationX>
         <locationY>384</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -62,7 +135,7 @@
         <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
         <name>Outbound_Email_custom_setting_check_for_expired_30_days_ago</name>
         <label>Outbound Email custom setting check for expired 30 days ago</label>
-        <locationX>842</locationX>
+        <locationX>1370</locationX>
         <locationY>492</locationY>
         <defaultConnector>
             <targetReference>Send_email_for_subscriptions_expired_30_days_ago</targetReference>
@@ -107,7 +180,7 @@
     <decisions>
         <name>Quote_not_ordered</name>
         <label>Quote not ordered</label>
-        <locationX>1040</locationX>
+        <locationX>1700</locationX>
         <locationY>384</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -126,7 +199,7 @@
             <label>Check quote is ordered?</label>
         </rules>
     </decisions>
-    <description>Outbound Email bypass added.</description>
+    <description>Added fault paths. Outbound Email bypass added.</description>
     <environments>Default</environments>
     <interviewLabel>Renewal Quote Email Alerts {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Renewal Quote Email Alerts</label>
@@ -152,12 +225,15 @@
     <recordLookups>
         <name>Get_Quote_Details</name>
         <label>Get Quote Details</label>
-        <locationX>1040</locationX>
+        <locationX>1700</locationX>
         <locationY>276</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Quote_not_ordered</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_Quote_Details</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -173,12 +249,15 @@
     <recordLookups>
         <name>Get_Quote_Record_which_triggered_the_flow</name>
         <label>Get Quote Record which triggered the flow</label>
-        <locationX>248</locationX>
+        <locationX>380</locationX>
         <locationY>276</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Is_Quote_not_Ordered</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_Quote_Record_which_triggered_the_flow</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -192,7 +271,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>221</locationX>
+        <locationX>551</locationX>
         <locationY>0</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -236,4 +315,36 @@
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Draft</status>
+    <subflows>
+        <name>Fault_Handler_Subflow</name>
+        <label>Fault Handler Subflow</label>
+        <locationX>974</locationX>
+        <locationY>492</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>varFaultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Renewal_Quote_Email_Alerts</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
 </Flow>

@@ -1,8 +1,12 @@
 @isTest
 private class NSP_DocuSignInvoiceDocumentBatchTest {
 
-    @TestSetup
+    @testSetup
     private static void createTestData() {
+        Email_Deliverability_Settings__c emailSetting = Email_Deliverability_Settings__c.getOrgDefaults();
+        emailSetting.IsEnabledOutbound__c = true;
+        upsert emailSetting;
+
         CLMDocumentTransferSettings__c restSettings = CLMDocumentTransferSettings__c.getOrgDefaults();
         restSettings.IsEnabledClmDocumentReceived__c = true;
         restSettings.IsEnabledRestToken__c = true;
@@ -139,7 +143,7 @@ private class NSP_DocuSignInvoiceDocumentBatchTest {
         Test.startTest();
         System.schedule(
             'NSP_DocuSignInvoiceDocumentBatch ~ everyday at 3 AM' + ' ~ TEST' ,
-            '0 0 3 * * ? *' ,
+            '0 0 3 ? * * *' ,
             new NSP_DocuSignInvoiceDocumentBatch()
         );
         Test.stopTest();

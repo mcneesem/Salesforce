@@ -1,21 +1,18 @@
-//
-// @description  :  Batch Class to Syn PTA Rec with Project Task's group member field value populated
-// Story : STY-02215
-//
-public class NSP_PtaSyncWithProjectTasksGrpMembrBatch implements ISelfSchedulable , Schedulable , Database.Batchable<SObject> {
-    // test w/ NSP_PtaSyncPrjtTaskGrpMembrBatchTest (89%)
+public class NSP_PtaSyncWithProjectTasksGrpMembrBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<SObject> {
+    // test w/ NSP_PtaSyncPrjtTaskGrpMembrBatchTest (90%)
 
     //
-    // Scheduleable
+    // argument-free constructor is required to be "runnable"...
     //
 
-    public void execute( SchedulableContext sc ) {
-        Database.executeBatch(
-            new NSP_PtaSyncWithProjectTasksGrpMembrBatch() ,
-            NSP_PtaSyncWithProjectTasksGrpMembrBatch.batchSize
-        );
+    public NSP_PtaSyncWithProjectTasksGrpMembrBatch() {
     }
 
+    //
+    // ISelfSchedulable
+    //
+
+    // runs everyday at 4am central...
     public static String schedule() {
         String suffix = '';
         if ( Test.isRunningTest() ) {
@@ -23,8 +20,39 @@ public class NSP_PtaSyncWithProjectTasksGrpMembrBatch implements ISelfSchedulabl
         }
         return System.schedule(
             'NSP_PtaSyncWithProjectTasksGrpMembrBatch ~ When new plan projects are created, all users/contacts with a matching "Group Member For Plan Projects" list value designation are added to the project for time tracking ~ everyday at 4 AM' + suffix ,
-            '0 0 4 * * ? *' ,
+            '0 0 4 ? * * *' ,
             new NSP_PtaSyncWithProjectTasksGrpMembrBatch()
+        );
+    }
+
+    //
+    // Scheduleable
+    //
+
+    public void execute( SchedulableContext sc ) {
+        this.call( 'run' , null );
+    }
+
+    //
+    // Callable
+    //
+
+    public Object call( String action , Map<String,Object> args ) {
+        Object response = null;
+        if ( action == 'run' ) {
+            response = this.run();
+        }
+        return response;
+    }
+
+    //
+    // IJobRunnable
+    //
+
+    public Id run() {
+        return Database.executeBatch(
+            new NSP_PtaSyncWithProjectTasksGrpMembrBatch() ,
+            NSP_PtaSyncWithProjectTasksGrpMembrBatch.batchSize
         );
     }
 
@@ -136,11 +164,7 @@ public class NSP_PtaSyncWithProjectTasksGrpMembrBatch implements ISelfSchedulabl
                 );
             }
         } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
-                NSP_PtaSyncWithProjectTasksGrpMembrBatch.class.getName() ,
-                'execute' ,
-                e
-            );
+            NSP_PtaSyncWithProjectTasksGrpMembrBatch.handleException( e , 'execute' );
         }
     }
 
@@ -159,7 +183,7 @@ public class NSP_PtaSyncWithProjectTasksGrpMembrBatch implements ISelfSchedulabl
             methodName ,
             results
         );
-    } 
+    }
 
     //== Returns the list of pta records to create
     private static List<pse__Project_Task_Assignment__c> getListOfPtaRecordsToCreate(
@@ -196,7 +220,7 @@ public class NSP_PtaSyncWithProjectTasksGrpMembrBatch implements ISelfSchedulabl
                 Id ,
                 pse__Resource__c ,
                 pse__Project_Task__c
-            FROM pse__Project_Task_Assignment__c 
+            FROM pse__Project_Task_Assignment__c
             WHERE ( pse__Project_Task__c =: projectTaskIdSet )
         ];
         //iterating over PTs to map Project Task with PT Resource
@@ -256,8 +280,8 @@ public class NSP_PtaSyncWithProjectTasksGrpMembrBatch implements ISelfSchedulabl
             SELECT
                 Id ,
                 pse__Resource__c ,
-                pse__Project__c 
-            FROM pse__Assignment__c 
+                pse__Project__c
+            FROM pse__Assignment__c
             WHERE ( pse__Project__c = :projectIdSet )
         ];
         //iterating over Assignments to map Project with Resource
@@ -270,7 +294,7 @@ public class NSP_PtaSyncWithProjectTasksGrpMembrBatch implements ISelfSchedulabl
                 {
                     // ensure non-null mapped key-value pair...
                     mapOfProjectIdWithResource.put(
-                        eachAssignment.pse__Project__c , 
+                        eachAssignment.pse__Project__c ,
                         new List<Id>()
                     );
                 }
@@ -280,7 +304,7 @@ public class NSP_PtaSyncWithProjectTasksGrpMembrBatch implements ISelfSchedulabl
         }
 
         return mapOfProjectIdWithResource;
-    } 
+    }
 
     //== Returns the project task with related group members
     private static Map<String,Set<String>> getProjectTaskRelatedGroupMembers( List<pse__Project_Task__c> projectTaskList ) {
@@ -334,14 +358,8 @@ public class NSP_PtaSyncWithProjectTasksGrpMembrBatch implements ISelfSchedulabl
         return mapOfProjectIdWithGrpMemberVal;
     }
 
-    //
-    // MethodName: getUserContactWithSameGroupMemberValue
-    // Description : gets list of user contact mapped with group member value
-    // Story : STY-02215
-    // Author :Abhishek Kumar
-    // Params: List<pse__Project_Task__c> groupMemberValuesSet
-    //
-    public static Map<String,List<Id>> getUserContactWithSameGroupMemberValue( Set<String> groupMemberValuesSet ) {
+    // gets list of user contact mapped with group member value
+    private static Map<String,List<Id>> getUserContactWithSameGroupMemberValue( Set<String> groupMemberValuesSet ) {
         Map<String,List<Id>> mapOfGroupMemberValWithContactList = new Map<String,List<Id>>();
         try {
             //iterate over contact where grp member value is populated and in groupMemberValuesSet
@@ -371,23 +389,12 @@ public class NSP_PtaSyncWithProjectTasksGrpMembrBatch implements ISelfSchedulabl
                 }
             }
         } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
-                NSP_PtaSyncWithProjectTasksGrpMembrBatch.class.getName() ,
-                'getUserContactWithSameGroupMemberValue' ,
-                e
-            );
+            NSP_PtaSyncWithProjectTasksGrpMembrBatch.handleException( e , 'getUserContactWithSameGroupMemberValue' );
         }
         return mapOfGroupMemberValWithContactList;
     }
 
-    //
-    // MethodName: getListOfAssignmentToCreate
-    // Params: Map<Id,List<Id>> mapOfProjectIdWithGrpMemberVal
-    // Params: Map<String,List<Id>> mapOfGroupMemberValWithContactList
-    // Params: String groupMembershipVal
-    // Params: Id projectTaskId
-    //
-    public static List<pse__Assignment__c> getListOfAssignmentToCreate(
+    private static List<pse__Assignment__c> getListOfAssignmentToCreate(
         Map<Id,List<Id>> mapOfProjectIdWithResource ,
         Map<String,List<Id>> mapOfGroupMemberValWithContactList ,
         String groupMembershipVal ,
@@ -421,26 +428,13 @@ public class NSP_PtaSyncWithProjectTasksGrpMembrBatch implements ISelfSchedulabl
                 }
             }
         } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
-                NSP_PtaSyncWithProjectTasksGrpMembrBatch.class.getName() ,
-                'getListOfAssignmentToCreate' ,
-                e
-            );
+            NSP_PtaSyncWithProjectTasksGrpMembrBatch.handleException( e , 'getListOfAssignmentToCreate' );
         }
         return listOfAssignToBeCreated;
     }
 
-    //
-    // MethodName: getListOfPtaToCreate
-    // Description : returns list of PTAs to be created
-    // Story : STY-02215
-    // Author :Abhishek Kumar 
-    // Params: Map<Id,List<Id>> mapOfProjectTaskIdWithPtaResource
-    // Params: Map<String,List<Id>> mapOfGroupMemberValWithContactList
-    // Params: String groupMembershipVal
-    // Params: Id projectTaskId
-    //
-    public static List<pse__Project_Task_Assignment__c> getListOfPtaToCreate(
+    // returns list of PTAs to be created
+    private static List<pse__Project_Task_Assignment__c> getListOfPtaToCreate(
         Map<Id,List<Id>> mapOfProjectTaskIdWithPtaResource ,
         Map<String,List<Id>> mapOfGroupMemberValWithContactList ,
         String groupMembershipVal ,
@@ -471,32 +465,52 @@ public class NSP_PtaSyncWithProjectTasksGrpMembrBatch implements ISelfSchedulabl
                 }
             }
         } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
-                NSP_PtaSyncWithProjectTasksGrpMembrBatch.class.getName() ,
-                'getListOfPtaToCreate' ,
-                e
-            );
+            NSP_PtaSyncWithProjectTasksGrpMembrBatch.handleException( e , 'getListOfPtaToCreate' );
         }
         return listOfPtaToBeCreated;
     }
 
     //
     // method to create schedule for the assignments.
-    // @param Map<Id, Id> userWithContactMap, Map<Id, pse__Proj__c> projectNewMap
-    // @return Map<Id, pse__Schedule__c> projectWithScheduleMap
     //
-    public Map<Id,pse__Schedule__c> createSchedule( Map<Id,pse__Proj__c> projectNewMap ) {
+    private Map<Id,pse__Schedule__c> createSchedule( Map<Id,pse__Proj__c> projectNewMap ) {
         Map<Id,pse__Schedule__c> projectWithScheduleMap = new Map<Id,pse__Schedule__c>();
-        for ( pse__Proj__c project : projectNewMap.values() ) {
-            pse__Schedule__c sch = new pse__Schedule__c();
-            sch.pse__Start_Date__c = project.pse__Start_Date__c;
-            sch.pse__End_Date__c = project.pse__End_Date__c;
-            projectWithScheduleMap.put( project.Id , sch );
-        }
-        if ( !projectWithScheduleMap.isEmpty() ) {
-            insert projectWithScheduleMap.values();
+        try {
+            for ( pse__Proj__c project : projectNewMap.values() ) {
+                // Prevent NullPointerException: Attempt to de-reference a null object
+                // ~ manifests as "Insert failed" in pse.ScheduleTrigger: execution of BeforeInsert
+                if ( ( project.pse__Start_Date__c != null ) && ( project.pse__End_Date__c != null ) ) {
+                    pse__Schedule__c sch = new pse__Schedule__c();
+                    sch.pse__Start_Date__c = project.pse__Start_Date__c;
+                    sch.pse__End_Date__c = project.pse__End_Date__c;
+                    projectWithScheduleMap.put( project.Id , sch );
+                }
+            }
+            if ( !projectWithScheduleMap.isEmpty() ) {
+                this.handleDatabaseInsertOperation(
+                   projectWithScheduleMap.values() ,
+                   'createSchedule:insert'
+                );
+            }
+        } catch ( Exception e ) {
+            NSP_PtaSyncWithProjectTasksGrpMembrBatch.handleException( e , 'createSchedule' );
         }
         return projectWithScheduleMap;
+    }
+
+    // for test code coverage only...
+    public static void testHandleException( Exception e , String methodName ) {
+        if ( Test.isRunningTest() ) {
+            NSP_PtaSyncWithProjectTasksGrpMembrBatch.handleException( e , methodName );
+        }
+    }
+
+    private static void handleException( Exception e , String methodName ) {
+        NSP_ErrorLogHandler.logException(
+            NSP_PtaSyncWithProjectTasksGrpMembrBatch.class.getName() ,
+            methodName ,
+            e
+        );
     }
 
     //

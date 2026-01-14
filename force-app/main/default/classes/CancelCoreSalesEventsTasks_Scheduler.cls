@@ -8,6 +8,7 @@ public without sharing class CancelCoreSalesEventsTasks_Scheduler implements ISe
         );
     }
 
+    // runs everyday at 3am central...
     public static String schedule() {
         String suffix = '';
         if ( Test.isRunningTest() ) {
@@ -15,7 +16,7 @@ public without sharing class CancelCoreSalesEventsTasks_Scheduler implements ISe
         }
         return System.schedule(
             'CancelCoreSalesEventsTasks_Scheduler ~ everyday at 3 AM' + suffix ,
-            '0 0 3 * * ? *' ,
+            '0 0 3 ? * * *' ,
             new CancelCoreSalesEventsTasks_Scheduler()
         );
     }

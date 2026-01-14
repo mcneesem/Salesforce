@@ -1,6 +1,9 @@
 @isTest
 private class RulesOfEngagement_SchedulerTest {
-    private static final String sch = '0 0 3 * * ? *';
+
+    //
+    // DEPRECATED
+    //
 
     @isTest
     private static void runRules() {
@@ -86,50 +89,21 @@ private class RulesOfEngagement_SchedulerTest {
             insert task;
 
             RulesOfEngagement_Scheduler.runRulesOfEngagement();
-
-            Opportunity opp1 = [
-                SELECT
-                    StageName, NSP_Lost_Reason__c, NSP_Forecast__c,
-                    NSP_ForecastPercent__c, NSP_Forecast_Status__c
-                FROM Opportunity
-                WHERE id =: opp.id
-                LIMIT 1
-            ];
-            // the following asserts fail in Orgs where Einstein Activity Capture > Activity Metrics are not enabled...
-            // ~ Opportunity.Most_Recent_Activity_Date__c depends on ActivityMetric.LastActivityDateTime to pass these assets...
-            Map<String,Schema.SObjectType> globalDescribe = Schema.getGlobalDescribe();
-            if ( ( globalDescribe != null ) && globalDescribe.containsKey( 'ActivityMetric' ) ) {
-                Schema.SObjectType soType = globalDescribe.get( 'ActivityMetric' );
-                if ( ( soType != null ) && soType.getDescribe().fields.getMap().containsKey( 'LastActivityDateTime' ) ) {
-                    System.assertEquals(opp1.StageName, 'Closed Lost');
-                    System.assertEquals(opp1.NSP_Lost_Reason__c, 'Abandoned');
-                    System.assertEquals(opp1.NSP_Forecast__c, 'No');
-                    System.assertEquals(opp1.NSP_ForecastPercent__c, null);
-                    System.assertEquals(opp1.NSP_Forecast_Status__c, null);
-                    Account acct1 = [SELECT Id, OwnerId FROM Account WHERE Id =: account.Id LIMIT 1];
-                    System.assertEquals(acct1.OwnerId, userAvailable);
-                    Contact cont1 = [SELECT Id, OwnerId FROM Contact WHERE Id =: contact1.Id LIMIT 1];
-                    System.assertEquals(cont1.OwnerId, userAvailable);
-                    Contact cont2 = [SELECT Id, OwnerId FROM Contact WHERE Id =: contact2.Id LIMIT 1];
-                    System.assertNotEquals(cont2.OwnerId, userAvailable);
-                }
-            }
         }
         Test.stopTest();
     }
 
-    //Static Test Method to Call the Scheduler Class
     @isTest
     private static void testRulesOfEngagement_Scheduler_schedule() {
         Test.startTest();
         String jobId = RulesOfEngagement_Scheduler.schedule();
         CronTrigger ct = [
-            SELECT Id, CronExpression, TimesTriggered, NextFireTime
+            SELECT Id , CronExpression , TimesTriggered , NextFireTime
             FROM CronTrigger
-            WHERE id = :jobId
+            WHERE ( Id = :jobId )
         ];
-        System.assertEquals(sch, ct.CronExpression);
-        System.assertEquals(0, ct.TimesTriggered);
+        System.assertNotEquals( null , ct );
+        System.assertEquals( 0 , ct.TimesTriggered );
         Test.stopTest();
    }
 

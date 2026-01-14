@@ -1,4 +1,5 @@
 public with sharing class NSP_AssetBatch implements Database.Batchable<Sobject>, Database.Stateful {
+    // test w/ NSP_AssetBatchTest (80%)
 
     public final String PEORECORDTYPE = 'PEO';
     public final String HRSPECIALISTROLE = 'HR Specialist';
@@ -8,8 +9,8 @@ public with sharing class NSP_AssetBatch implements Database.Batchable<Sobject>,
     public final String VALIDATEBIOMETRICSUBJECT = 'Validate Biometric Consent form removed from OEE; Discuss removal of handbook policy w/ client';
     public final String HRSERVICECATEGORY = 'HR Services';
     public final String HRINFRASTRUCTURESUBCATEGORY = 'HR Infrastructure';
-    public final String CLIENTGUIDANCE = 'Client Guidance'; 
-    public final String AIMS = 'AIMS';    
+    public final String CLIENTGUIDANCE = 'Client Guidance';
+    public final String AIMS = 'AIMS';
     private String failure = '';
 
     public Database.QueryLocator start(Database.BatchableContext BC){
@@ -21,7 +22,7 @@ public with sharing class NSP_AssetBatch implements Database.Batchable<Sobject>,
             .addFilter('AccountId', NULL, NSP_QueryBuilder.Operator.NOT_EQUALS,false)
             .addFilter('RecordTypeId', woRecordTypeId)
             .setSecurityEnforce(false);
-        String queryString = queryBuilder.build(); 
+        String queryString = queryBuilder.build();
         queryString += ' AND NSP_Biometric_End_Date__c =: today';
         return Database.getQueryLocator(queryString);
     }
@@ -32,15 +33,15 @@ public with sharing class NSP_AssetBatch implements Database.Batchable<Sobject>,
             for(Asset oAsset : lAssets){
                 sAccountIds.add(oAsset.AccountId);
             }
-    
+
             Id peoRecordTypeId =  Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(PEORECORDTYPE)?.getRecordTypeId();
-    
+
             if(sAccountIds.size() == 0){
                 return;
             }
-    
+
             List<NSP_Account_Team__c> lAccountTeams = new List<NSP_Account_Team__c>([SELECT Id,NSP_Account__c,NSP_Role__c,NSP_User__c,NSP_Primary__c FROM NSP_Account_Team__c WHERE NSP_Account__c IN : sAccountIds AND NSP_Role__c IN : lAccountTeamRoles AND NSP_Integrated_With__c =: AIMS]);
-            
+
             Map<Id,Map<String,Id>> mAccountToUsers = new Map<ID,Map<String,Id>>();
             Map<Id,Map<String,Boolean>> mAccountToValues = new Map<ID,Map<String,Boolean>>();
             for(NSP_Account_Team__c oAccountTeam: lAccountTeams){
@@ -55,7 +56,7 @@ public with sharing class NSP_AssetBatch implements Database.Batchable<Sobject>,
                     mAccountToValues.put(oAccountTeam.NSP_Account__c,new Map<String,Boolean>{oAccountTeam.NSP_Role__c => oAccountTeam.NSP_Primary__c});
                 }
             }
-    
+
             List<Case> lCases = new List<Case>();
             for(Asset oAsset : lAssets){
                 oAsset.NSP_Biometric_Indicator_Expired__c = true;
@@ -73,7 +74,7 @@ public with sharing class NSP_AssetBatch implements Database.Batchable<Sobject>,
             failure += '\n' + ex.getMessage() + '' + ex.getStackTraceString();
         }
     }
-    
+
     public Id getCaseOwnerId(Map<String,Id> mAccountTeamUsers, Map<String, Boolean> mAccountTeamValues){
         Id caseOwnerId = UserInfo.getUserId();
         if(mAccountTeamUsers != null){
@@ -92,9 +93,12 @@ public with sharing class NSP_AssetBatch implements Database.Batchable<Sobject>,
         return caseOwnerId;
     }
 
-    public void finish(Database.BatchableContext BC){
+    public void finish( Database.BatchableContext bc ) {
         // SEND EMAIL FOR FAILED RECORDS
-        if(String.isNotBlank(failure)){
+        if ( String.isNotBlank( failure )
+            && ( EmailDeliverabilityController.isEnabledOutbound )
+            )
+        {
             Messaging.SingleEmailMessage oEmail = new Messaging.SingleEmailMessage();
             oEmail.setSubject('Asset Batch Failed');
             oEmail.setTargetObjectId(UserInfo.getUserId());
@@ -103,4 +107,6 @@ public with sharing class NSP_AssetBatch implements Database.Batchable<Sobject>,
             Messaging.SendEmailResult[] results = Messaging.sendEmail(new Messaging.SingleEmailMessage[]{oEmail});
         }
     }
+
 }
+//

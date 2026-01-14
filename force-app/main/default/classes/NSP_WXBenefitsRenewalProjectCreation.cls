@@ -1,10 +1,3 @@
-//
-// Apex Class Name      :  NSP_WXBenefitsRenewalProjectCreation
-// Version              :  1.0 
-// Author               :  Simran
-// Function             :  Creates Project with WX Rebewal Template
-// Story                :  As part of STY-02160
-//
 public class NSP_WXBenefitsRenewalProjectCreation implements ISelfSchedulable , Schedulable , Database.Batchable<sObject> {
     // test w/ NSP_WXBenefitsRenewalProjCreat_Test (91%)
 
@@ -37,14 +30,15 @@ public class NSP_WXBenefitsRenewalProjectCreation implements ISelfSchedulable , 
         }
     }
 
+    // runs everyday at 1am central...
     public static String schedule() {
         String suffix = '';
         if ( Test.isRunningTest() ) {
             suffix = ' ~ TEST';
         }
         return System.schedule(
-            'NSP_WXBenefitsRenewalProjectCreation ~ When a WX asset has a Benefits Renewal Date field populated, then create a WX Benefits Renewal project and related tasks linked to the WX asset record ~ Everyday 1 am' + suffix ,
-            '0 0 1 * * ?' ,
+            'NSP_WXBenefitsRenewalProjectCreation ~ When a WX asset has a Benefits Renewal Date field populated, then create a WX Benefits Renewal project and related tasks linked to the WX asset record ~ everyday at 1 AM' + suffix ,
+            '0 0 1 ? * * *' ,
             new NSP_WXBenefitsRenewalProjectCreation()
         );
     }

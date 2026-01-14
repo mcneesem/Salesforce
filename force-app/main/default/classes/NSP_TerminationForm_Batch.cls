@@ -1,10 +1,4 @@
-//
-// @description : Batch Class to process the termination form for the email template.
-// @author : Shruti Patil
-// @date : 10/18/2021
-// Name : NSP_TerminationForm_Batch
-//
-global class NSP_TerminationForm_Batch implements ISelfSchedulable , Schedulable , Database.Batchable<SObject> , Database.Stateful {
+public class NSP_TerminationForm_Batch implements ISelfSchedulable , Schedulable , Database.Batchable<SObject> , Database.Stateful {
     // test w/ NSP_TerminationForm_Batch_Test (88%)
 
     private List<String> ccEmailAddressList = new List<String>();
@@ -35,10 +29,10 @@ global class NSP_TerminationForm_Batch implements ISelfSchedulable , Schedulable
                     AND ( NSP_Project_Task__r.pse__Project__r.pse__Project_Status__c != 'Complete' )
                 )
             ]
-        );  
+        );
     }
 
-    global void execute( Database.BatchableContext bc , List<NSP_Termination_Form__c> terminationsList ) {
+    public void execute( Database.BatchableContext bc , List<NSP_Termination_Form__c> terminationsList ) {
         try {
             Set<Id> relatedAccoutIdSet = new Set<Id>();
             if ( ( terminationsList != null ) && !terminationsList.isEmpty() ) {
@@ -57,7 +51,7 @@ global class NSP_TerminationForm_Batch implements ISelfSchedulable , Schedulable
             if ( !relatedAccoutIdSet.isEmpty() ) {
                 for ( NSP_Account_Team__c AccTeamMember : [
                             SELECT Id, NSP_Role__c, NSP_Account__c, NSP_Email__c
-                            FROM NSP_Account_Team__c 
+                            FROM NSP_Account_Team__c
                             WHERE (
                                 NSP_Account__c IN :relatedAccoutIdSet
                                 AND NSP_Role__c IN :NSP_TerminationForm_Batch.accountTeamRoles
@@ -82,7 +76,10 @@ global class NSP_TerminationForm_Batch implements ISelfSchedulable , Schedulable
     }
 
     public void finish( Database.BatchableContext bc ) {
-        if ( String.isNotBlank( System.Label.NSP_TerminationFormBatchGenericToAddress ) ) {
+        if ( String.isNotBlank( System.Label.NSP_TerminationFormBatchGenericToAddress )
+            && EmailDeliverabilityController.isEnabledOutbound
+            )
+        {
             try {
                 EmailTemplate emailTemplate = [
                     SELECT Id , Body
@@ -112,18 +109,19 @@ global class NSP_TerminationForm_Batch implements ISelfSchedulable , Schedulable
         }
     }
 
-    global void execute( SchedulableContext scon ) {
+    public void execute( SchedulableContext sc ) {
         Database.executeBatch( new NSP_TerminationForm_Batch() , 100 );
     }
 
+    // runs M-F at 3:45pm central...
     public static String schedule() {
         String suffix = '';
         if ( Test.isRunningTest() ) {
             suffix = ' ~ TEST';
         }
         return System.schedule(
-            'NSP_TerminationForm_Batch ~ everyweekday at 3:45 PM' + suffix ,
-            '45 15 * * 1-5', // this is for Every week Day at 3:45 PM...
+            'NSP_TerminationForm_Batch ~ process the termination form records and send the notification email ~ M-F at 3:45 PM' + suffix ,
+            '0 45 15 ? * MON-FRI *' ,
             new NSP_TerminationForm_Batch()
         );
     }

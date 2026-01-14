@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Termination_Letter_Template__c</fullName>
+    <description>These picklist values represent a DocuSign form that will be generated when clicking on Generate Term Letter button.</description>
+    <label>Termination Letter Template</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>ApologyForTerm</fullName>
+                <default>false</default>
+                <label>Apology For Term</label>
+            </value>
+            <value>
+                <fullName>ChangeInFEIN</fullName>
+                <default>false</default>
+                <label>Change In FEIN</label>
+            </value>
+            <value>
+                <fullName>60DayNotification</fullName>
+                <default>false</default>
+                <label>60 Day Notification</label>
+            </value>
+            <value>
+                <fullName>ClientRequestWithFutureDate</fullName>
+                <default>false</default>
+                <label>Client Request With Future Date</label>
+            </value>
+            <value>
+                <fullName>ClientRequest</fullName>
+                <default>false</default>
+                <label>Client Request</label>
+            </value>
+            <value>
+                <fullName>ConfirmationOfReceipt</fullName>
+                <default>false</default>
+                <label>Confirmation Of Receipt</label>
+            </value>
+            <value>
+                <fullName>ConfirmationOfTermination</fullName>
+                <default>false</default>
+                <label>Confirmation Of Termination</label>
+            </value>
+            <value>
+                <fullName>FinancialDefaultTexasClientsBadFaithLang</fullName>
+                <default>false</default>
+                <label>Financial Default - Texas Clients - Bad Faith Lang</label>
+            </value>
+            <value>
+                <fullName>FinancialDefault</fullName>
+                <default>false</default>
+                <label>Financial Default</label>
+            </value>
+            <value>
+                <fullName>MutualAgreement</fullName>
+                <default>false</default>
+                <label>Mutual Agreement</label>
+            </value>
+            <value>
+                <fullName>NewYorkAndVirginia60Day</fullName>
+                <default>false</default>
+                <label>New York &amp; Virginia 60 Day</label>
+            </value>
+            <value>
+                <fullName>NewYorkAndVirginiaClientRequest</fullName>
+                <default>false</default>
+                <label>New York &amp; Virginia Client Request</label>
+            </value>
+            <value>
+                <fullName>NewYorkAndVirginiaFinancialDefault-BadFaithLetter</fullName>
+                <default>false</default>
+                <label>New York &amp; Virginia Financial Default - Bad Faith Letter</label>
+            </value>
+            <value>
+                <fullName>NewYorkAndVirginiaFinancialDefault</fullName>
+                <default>false</default>
+                <label>New York &amp; Virginia Financial Default</label>
+            </value>
+            <value>
+                <fullName>NewYorkAndVirginiaRevisedTermBenefitDate</fullName>
+                <default>false</default>
+                <label>New York &amp; Virginia Revised Term Benefit Date</label>
+            </value>
+            <value>
+                <fullName>NewYork60DayNotification</fullName>
+                <default>false</default>
+                <label>New York 60 Day Notification</label>
+            </value>
+            <value>
+                <fullName>NewYorkClientRequest</fullName>
+                <default>false</default>
+                <label>New York Client Request</label>
+            </value>
+            <value>
+                <fullName>NewYorkConfirmation</fullName>
+                <default>false</default>
+                <label>New York Confirmation</label>
+            </value>
+            <value>
+                <fullName>NewYorkFinanciaDefaultTXBadFaithLetter</fullName>
+                <default>false</default>
+                <label>New York Financial Default - TX Bad Faith Letter</label>
+            </value>
+            <value>
+                <fullName>NewYorkFinancialDefault</fullName>
+                <default>false</default>
+                <label>New York Financial Default</label>
+            </value>
+            <value>
+                <fullName>NewYorkMutualAgreement</fullName>
+                <default>false</default>
+                <label>New York Mutual Agreement</label>
+            </value>
+            <value>
+                <fullName>NewYorkRevisedTermBenefitDate</fullName>
+                <default>false</default>
+                <label>New York Revised Term Benefit Date</label>
+            </value>
+            <value>
+                <fullName>RENEWALSLetter</fullName>
+                <default>false</default>
+                <label>RENEWALS - Letter</label>
+            </value>
+            <value>
+                <fullName>RENEWALSNYAndVALTR</fullName>
+                <default>false</default>
+                <label>RENEWALS - NY &amp; VA LTR</label>
+            </value>
+            <value>
+                <fullName>RENEWALS-NYLTR</fullName>
+                <default>false</default>
+                <label>RENEWALS - NY LTR</label>
+            </value>
+            <value>
+                <fullName>RENEWALS-REINSTATE</fullName>
+                <default>false</default>
+                <label>RENEWALS - REINSTATE</label>
+            </value>
+            <value>
+                <fullName>RENEWALS-REVISED</fullName>
+                <default>false</default>
+                <label>RENEWALS - REVISED</label>
+            </value>
+            <value>
+                <fullName>RENEWALS-VALTR</fullName>
+                <default>false</default>
+                <label>RENEWALS - VA LTR</label>
+            </value>
+            <value>
+                <fullName>RevisedTermBenefitDate-JC</fullName>
+                <default>false</default>
+                <label>Revised Term Benefit Date - JC</label>
+            </value>
+            <value>
+                <fullName>RevisedTermBenefitDate-RS</fullName>
+                <default>false</default>
+                <label>Revised Term Benefit Date - RS</label>
+            </value>
+            <value>
+                <fullName>Virginia60DayNotification</fullName>
+                <default>false</default>
+                <label>Virginia 60 Day Notification</label>
+            </value>
+            <value>
+                <fullName>VirginiaClientRequest</fullName>
+                <default>false</default>
+                <label>Virginia Client Request</label>
+            </value>
+            <value>
+                <fullName>VirginiaConfirmationofTerm</fullName>
+                <default>false</default>
+                <label>Virginia Confirmation of Term</label>
+            </value>
+            <value>
+                <fullName>VirginiaFinancialDefault-BadFaithLetter</fullName>
+                <default>false</default>
+                <label>Virginia Financial Default - Bad Faith Letter</label>
+            </value>
+            <value>
+                <fullName>VirginiaFinancialDefault</fullName>
+                <default>false</default>
+                <label>Virginia Financial Default</label>
+            </value>
+            <value>
+                <fullName>VirginiaMutualAgreement</fullName>
+                <default>false</default>
+                <label>Virginia Mutual Agreement</label>
+            </value>
+            <value>
+                <fullName>VirginiaRevisedTermBeneDate</fullName>
+                <default>false</default>
+                <label>Virginia Revised Term Bene Date</label>
+            </value>
+            <value>
+                <fullName>VoidAgreement</fullName>
+                <default>false</default>
+                <label>Void Agreement</label>
+            </value>
+            <value>
+                <fullName>Reinstate1NSPRequestDefault</fullName>
+                <default>false</default>
+                <label>Reinstate (1) NSP Request Default</label>
+            </value>
+            <value>
+                <fullName>Reinstate1aDefaultwithAddendum</fullName>
+                <default>false</default>
+                <label>Reinstate (1a) Default with Addendum</label>
+            </value>
+            <value>
+                <fullName>Reinstate2ClientRequest</fullName>
+                <default>false</default>
+                <label>Reinstate (2) Client Request</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -185,6 +185,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Plan_of_Action__c</fieldItem>
+                <identifier>RecordPlan_of_Action_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_End_Date__c</fieldItem>
                 <identifier>RecordNSP_End_Date_cField</identifier>
             </fieldInstance>
@@ -197,23 +207,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Due_Date__c</fieldItem>
                 <identifier>RecordDue_Date_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Plan_of_Action__c</fieldItem>
-                <identifier>RecordPlan_of_Action_cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Account_Group__r.NSP_Type__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Renewal Probability</rightValue>
-                    </criteria>
-                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-ec4fd0b3-0c46-4c4d-8732-8bbb8e25a839</name>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lock_After_Term_Team_Approved</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+  NOT( $Permission.Termination_Admin_Access ) ,
+  NOT( ISNEW() ) ,
+  ISPICKVAL( PRIORVALUE( NSP_Status__c ) , &quot;Term Team Approved&quot; )
+)</errorConditionFormula>
+    <errorMessage>You cannot modify this Term Form after Term Team approval.</errorMessage>
+</ValidationRule>

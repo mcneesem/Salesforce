@@ -1,6 +1,10 @@
 public with sharing class RulesOfEngagement_Scheduler implements ISelfSchedulable , Schedulable {
     // test w/ RulesOfEngagement_SchedulerTest (93%)
 
+    //
+    // DEPRECATED
+    //
+
     public void execute( SchedulableContext context ) {
         runRulesOfEngagement();
     }
@@ -35,8 +39,7 @@ public with sharing class RulesOfEngagement_Scheduler implements ISelfSchedulabl
             FROM Opportunity
             WHERE (
                 Discovery_Call_Completed_Date__c < LAST_N_MONTHS:6
-                AND Most_Recent_Activity_Date__c < LAST_N_MONTHS:6
-                AND OwnerId IN :permittedUserMap.keySet() // only Opps owned by users w/ ROE custom permission
+                AND OwnerId IN :permittedUserMap.keySet() // only Opps owned by users with ROE custom permission
                 AND (
                     NSP_MidMarketNationalAccount__c = NULL
                     OR NSP_MidMarketNationalAccount__c = 'MidMarket'
@@ -139,6 +142,7 @@ public with sharing class RulesOfEngagement_Scheduler implements ISelfSchedulabl
         }
     }
 
+    // runs everyday at 3am central...
     public static String schedule() {
         String suffix = '';
         if ( Test.isRunningTest() ) {
@@ -146,7 +150,7 @@ public with sharing class RulesOfEngagement_Scheduler implements ISelfSchedulabl
         }
         return System.schedule(
             'RulesOfEngagement_Scheduler ~ everyday at 3 AM' + suffix ,
-            '0 0 3 * * ? *' ,
+            '0 0 3 ? * * *' ,
             new RulesOfEngagement_Scheduler()
         );
     }

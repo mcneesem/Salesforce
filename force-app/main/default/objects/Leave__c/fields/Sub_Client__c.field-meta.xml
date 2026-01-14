@@ -3,7 +3,7 @@
     <fullName>Sub_Client__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <description>Sub client or pay group employee is paid under.</description>
-    <label>Sub Client</label>
+    <label>Sub Client/Pay Group</label>
     <referenceTo>NSP_Sub_Client__c</referenceTo>
     <relationshipLabel>Leave</relationshipLabel>
     <relationshipName>Leaves</relationshipName>

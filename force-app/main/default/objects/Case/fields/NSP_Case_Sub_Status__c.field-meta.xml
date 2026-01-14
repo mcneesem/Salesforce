@@ -49,9 +49,19 @@
                 <label>Client Terminated</label>
             </value>
             <value>
+                <fullName>Client Unresponsive</fullName>
+                <default>false</default>
+                <label>Client Unresponsive</label>
+            </value>
+            <value>
                 <fullName>Closed</fullName>
                 <default>false</default>
                 <label>Closed</label>
+            </value>
+            <value>
+                <fullName>Configuration Complete</fullName>
+                <default>false</default>
+                <label>Configuration Complete</label>
             </value>
             <value>
                 <fullName>Customer Update</fullName>
@@ -134,6 +144,21 @@
                 <label>Resolved by Client</label>
             </value>
             <value>
+                <fullName>SAT - Intake Complete</fullName>
+                <default>false</default>
+                <label>SAT - Intake Complete</label>
+            </value>
+            <value>
+                <fullName>SAT - Pending</fullName>
+                <default>false</default>
+                <label>SAT - Pending</label>
+            </value>
+            <value>
+                <fullName>SAT - Review Complete</fullName>
+                <default>false</default>
+                <label>SAT - Review Complete</label>
+            </value>
+            <value>
                 <fullName>Scheduled</fullName>
                 <default>false</default>
                 <label>Scheduled</label>
@@ -209,26 +234,6 @@
                 <label>WSEE Terminated</label>
             </value>
             <value>
-                <fullName>SAT - Intake Complete</fullName>
-                <default>false</default>
-                <label>SAT - Intake Complete</label>
-            </value>
-            <value>
-                <fullName>SAT - Pending</fullName>
-                <default>false</default>
-                <label>SAT - Pending</label>
-            </value>
-            <value>
-                <fullName>SAT - Review Complete</fullName>
-                <default>false</default>
-                <label>SAT - Review Complete</label>
-            </value>
-            <value>
-                <fullName>Client Unresponsive</fullName>
-                <default>false</default>
-                <label>Client Unresponsive</label>
-            </value>
-            <value>
                 <fullName>ABU - Pending ABU Contact</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -259,6 +264,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Closed</controllingFieldValue>
+            <controllingFieldValue>Cancelled</controllingFieldValue>
+            <valueName>Client Unresponsive</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed</controllingFieldValue>
             <valueName>Closed</valueName>
         </valueSettings>
         <valueSettings>
@@ -284,11 +294,6 @@
             <valueName>Unresolved</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Closed</controllingFieldValue>
-            <controllingFieldValue>Cancelled</controllingFieldValue>
-            <valueName>Client Unresponsive</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Open</controllingFieldValue>
             <controllingFieldValue>ReOpened</controllingFieldValue>
             <valueName>Assigned</valueName>
@@ -312,6 +317,11 @@
             <controllingFieldValue>Open</controllingFieldValue>
             <controllingFieldValue>ReOpened</controllingFieldValue>
             <valueName>Client Contacted</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <controllingFieldValue>ReOpened</controllingFieldValue>
+            <valueName>Configuration Complete</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Open</controllingFieldValue>
@@ -355,6 +365,21 @@
         <valueSettings>
             <controllingFieldValue>Open</controllingFieldValue>
             <valueName>Re-Opened</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <controllingFieldValue>ReOpened</controllingFieldValue>
+            <valueName>SAT - Intake Complete</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <controllingFieldValue>ReOpened</controllingFieldValue>
+            <valueName>SAT - Pending</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <controllingFieldValue>ReOpened</controllingFieldValue>
+            <valueName>SAT - Review Complete</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Open</controllingFieldValue>
@@ -410,21 +435,6 @@
             <controllingFieldValue>Open</controllingFieldValue>
             <controllingFieldValue>ReOpened</controllingFieldValue>
             <valueName>With Internal/External Partner</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Open</controllingFieldValue>
-            <controllingFieldValue>ReOpened</controllingFieldValue>
-            <valueName>SAT - Intake Complete</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Open</controllingFieldValue>
-            <controllingFieldValue>ReOpened</controllingFieldValue>
-            <valueName>SAT - Pending</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Open</controllingFieldValue>
-            <controllingFieldValue>ReOpened</controllingFieldValue>
-            <valueName>SAT - Review Complete</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Cancelled</controllingFieldValue>

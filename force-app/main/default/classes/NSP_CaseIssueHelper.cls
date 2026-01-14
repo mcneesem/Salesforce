@@ -120,68 +120,70 @@ public with sharing class NSP_CaseIssueHelper {
     // Params: Map<Id,String> closedIssueRatingMap
     //
     private static void sendEmailtoCaseContacts( Map<Id,String> closedIssueRatingMap ) {
-        Map<Id,EmailMessage> csIssueMessageMap = new  Map<Id,EmailMessage>();
-        for ( EmailMessage emsg : [
-                    SELECT
-                        Id ,
-                        RelatedToId ,
-                        HtmlBody ,
-                        TextBody ,
-                        Subject ,
-                        Name ,
-                        FromName ,
-                        FromAddress ,
-                        ValidatedFromAddress ,
-                        ToAddress ,
-                        CcAddress ,
-                        BccAddress ,
-                        EmailTemplateId
-                    FROM EmailMessage
-                    WHERE ( RelatedToId IN :closedIssueRatingMap.keySet() )
-                    LIMIT 1
-                ]
-            )
-        {
-            String parentId = emsg.RelatedToId;
-            csIssueMessageMap.put( parentId , emsg );
-        }
-        //sending emails to the list of to addresses
-        List<String> listOfTOAddresses = new List<String>();
-        List<Messaging.SingleEmailMessage> emailMsgList = new List<Messaging.SingleEmailMessage>();
-        for ( Case cs : [
-                    SELECT
-                        Id ,
-                        Status ,
-                        ContactId ,
-                        Contact.NSP_Work_email__c ,
-                        NSP_Case_Issue__c
-                    FROM Case
-                    WHERE (
-                        NSP_Case_Issue__c IN :csIssueMessageMap.keyset()
-                        AND Status = :NSP_ServiceConstants.ClosedCaseIssue
-                        AND NSP_Case_Issue__r.NSP_Status__c = :NSP_ServiceConstants.ClosedCaseIssue
-                    )
-                ]
-            )
-        {
-            if ( csIssueMessageMap.containsKey( cs.NSP_Case_Issue__c ) ) {
-                if ( ( cs.Contact.NSP_Work_email__c != null )
-                    && !listOfTOAddresses.contains( csIssueMessageMap.get( cs.NSP_Case_Issue__c ).ToAddress )
-                    && !listOfTOAddresses.contains( csIssueMessageMap.get( cs.NSP_Case_Issue__c ).BccAddress )
-                    && !listOfTOAddresses.contains( csIssueMessageMap.get( cs.NSP_Case_Issue__c ).CcAddress )
-                    )
-                {
-                    listOfTOAddresses.add( cs.Contact.NSP_Work_email__c );
-                }
-                emailMsgList = NSP_CaseIssueHelper.generateSingleEmailMessages(
-                    cs.Contact.NSP_Work_email__c ,
-                    csIssueMessageMap.get( cs.NSP_Case_Issue__c ) ,
-                    listOfTOAddresses ,
-                    emailMsgList
-                );
+        if ( EmailDeliverabilityController.isEnabledOutbound ) {
+            Map<Id,EmailMessage> csIssueMessageMap = new  Map<Id,EmailMessage>();
+            for ( EmailMessage emsg : [
+                        SELECT
+                            Id ,
+                            RelatedToId ,
+                            HtmlBody ,
+                            TextBody ,
+                            Subject ,
+                            Name ,
+                            FromName ,
+                            FromAddress ,
+                            ValidatedFromAddress ,
+                            ToAddress ,
+                            CcAddress ,
+                            BccAddress ,
+                            EmailTemplateId
+                        FROM EmailMessage
+                        WHERE ( RelatedToId IN :closedIssueRatingMap.keySet() )
+                        LIMIT 1
+                    ]
+                )
+            {
+                String parentId = emsg.RelatedToId;
+                csIssueMessageMap.put( parentId , emsg );
             }
+            //sending emails to the list of to addresses
+            List<String> listOfTOAddresses = new List<String>();
+            List<Messaging.SingleEmailMessage> emailMsgList = new List<Messaging.SingleEmailMessage>();
+            for ( Case cs : [
+                        SELECT
+                            Id ,
+                            Status ,
+                            ContactId ,
+                            Contact.NSP_Work_email__c ,
+                            NSP_Case_Issue__c
+                        FROM Case
+                        WHERE (
+                            NSP_Case_Issue__c IN :csIssueMessageMap.keyset()
+                            AND Status = :NSP_ServiceConstants.ClosedCaseIssue
+                            AND NSP_Case_Issue__r.NSP_Status__c = :NSP_ServiceConstants.ClosedCaseIssue
+                        )
+                    ]
+                )
+            {
+                if ( csIssueMessageMap.containsKey( cs.NSP_Case_Issue__c ) ) {
+                    if ( ( cs.Contact.NSP_Work_email__c != null )
+                        && !listOfTOAddresses.contains( csIssueMessageMap.get( cs.NSP_Case_Issue__c ).ToAddress )
+                        && !listOfTOAddresses.contains( csIssueMessageMap.get( cs.NSP_Case_Issue__c ).BccAddress )
+                        && !listOfTOAddresses.contains( csIssueMessageMap.get( cs.NSP_Case_Issue__c ).CcAddress )
+                        )
+                    {
+                        listOfTOAddresses.add( cs.Contact.NSP_Work_email__c );
+                    }
+                    emailMsgList = NSP_CaseIssueHelper.generateSingleEmailMessages(
+                        cs.Contact.NSP_Work_email__c ,
+                        csIssueMessageMap.get( cs.NSP_Case_Issue__c ) ,
+                        listOfTOAddresses ,
+                        emailMsgList
+                    );
+                }
+            }
+            Messaging.sendEmail( emailMsgList );
         }
-        Messaging.sendEmail( emailMsgList );
     }
 
     private static List<Messaging.SingleEmailMessage> generateSingleEmailMessages(
