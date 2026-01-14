@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Grants the Email-to-Case Routing:HRScale COE Nexus</description>
+    <emailRoutingAddressAccesses>
+        <enabled>true</enabled>
+        <name>hrscalecoenexus.dev@insperity.com</name>
+    </emailRoutingAddressAccesses>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Email-to-Case Routing Address: HRScale COE Nexus</label>
+</PermissionSet>
