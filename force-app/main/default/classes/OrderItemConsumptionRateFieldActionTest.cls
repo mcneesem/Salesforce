@@ -1,9 +1,8 @@
 @isTest
-public class OrderItemConsumptionRateFieldActionTest {
-    //covers OrderItemConsumptionRateFieldAction.cls
+private class OrderItemConsumptionRateFieldActionTest {
 
     @testSetup
-    private static void setupTestData(){
+    private static void setupTestData() {
         NSP_InvoiceTriggerHandler.TriggerDisabled = true;
         NSP_AccountTriggerHandler.TriggerDisabled = true;
         NSP_OrderItemTriggerHandler.TriggerDisabled = true;
@@ -74,7 +73,7 @@ public class OrderItemConsumptionRateFieldActionTest {
         System.assertEquals('PerUnit', perUnitCrate.PricingMethod, 'Per-unit rate must persist');
     }
 
-    @IsTest
+    @isTest
     private static void updatesOrderItemRates_whenRatesExist() {
         List<Order> theOrder = [
             SELECT Id, NSP_Rev_Rec_Rules_Reviewed__c, AccountId
@@ -122,7 +121,6 @@ public class OrderItemConsumptionRateFieldActionTest {
 
         Test.startTest();
         OrderItemConsumptionRateFieldAction.updateOrderItems(new List<Id>{ theOrder[0].Id });
-        OrderItemConsumptionRateFieldAction.testHandleException(null,null);
         Test.stopTest();
 
         List<OrderItem> updated = [
@@ -133,7 +131,7 @@ public class OrderItemConsumptionRateFieldActionTest {
         System.assertEquals(25, updated[0].NSP_Consumption_Rate_Per_Unit__c, 'Per-unit price should be 25');
     }
 
-    @IsTest
+    @isTest
     private static void doesNotChangeRates_whenNoScheduleLinked() {
         List<Order> theOrder = [
             SELECT Id FROM Order ORDER BY CreatedDate DESC LIMIT 1
@@ -158,4 +156,6 @@ public class OrderItemConsumptionRateFieldActionTest {
         System.assertEquals(beforeFlat, after[0].NSP_Consumption_Rate_Flat_Price__c, 'Flat price should remain unchanged without OICS');
         System.assertEquals(beforePerUnit, after[0].NSP_Consumption_Rate_Per_Unit__c, 'Per-unit price should remain unchanged without OICS');
     }
+
 }
+//
