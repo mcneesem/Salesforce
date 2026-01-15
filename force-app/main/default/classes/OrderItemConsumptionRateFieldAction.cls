@@ -1,28 +1,28 @@
-public with sharing class OrderItemConsumptionRateFieldsUpdater {
-    // test w/ OrderItemConsumptionRateUpdaterTest (92%)
+public class OrderItemConsumptionRateFieldAction {
+    // test w/ OrderItemConsumptionRateFieldActionTest (92%)
 
     @InvocableMethod(label='Update Order Item Consumption Rates')
     public static void updateOrderItems(List<Id> orderIds) {
         try{
             if (orderIds != null && !orderIds.isEmpty()) {
-                List<OrderItem> orderItems = OrderItemConsumptionRateFieldsUpdater.fetchOrderItems(orderIds);
-                Set<Id> orderItemIds = OrderItemConsumptionRateFieldsUpdater.getOrderItemIds(orderItems);
+                List<OrderItem> orderItems = OrderItemConsumptionRateFieldAction.fetchOrderItems(orderIds);
+                Set<Id> orderItemIds = OrderItemConsumptionRateFieldAction.getOrderItemIds(orderItems);
 
                 Map<Id, List<SBQQ__OrderItemConsumptionRate__c>> orderItemConsumptionRateMap = new Map<Id, List<SBQQ__OrderItemConsumptionRate__c>>();
                 if (!orderItemIds.isEmpty()) {
-                    orderItemConsumptionRateMap = OrderItemConsumptionRateFieldsUpdater.groupRatesByOrderItemId(
-                        OrderItemConsumptionRateFieldsUpdater.fetchConsumptionRates( orderItemIds )
+                    orderItemConsumptionRateMap = OrderItemConsumptionRateFieldAction.groupRatesByOrderItemId(
+                        OrderItemConsumptionRateFieldAction.fetchConsumptionRates( orderItemIds )
                     );
                 }
 
                 List<OrderItem> orderItemsToUpdate = new List<OrderItem>();
                 if(orderItems != null && !orderItems.isEmpty()){
                     for (OrderItem oi : orderItems) {
-                        List<SBQQ__OrderItemConsumptionRate__c> csRates =  OrderItemConsumptionRateFieldsUpdater.classifyRates(
+                        List<SBQQ__OrderItemConsumptionRate__c> csRates =  OrderItemConsumptionRateFieldAction.classifyRates(
                             oi ,
                             orderItemConsumptionRateMap
                         );
-                        orderItemsToUpdate = OrderItemConsumptionRateFieldsUpdater.applyRatesToOrderItem(
+                        orderItemsToUpdate = OrderItemConsumptionRateFieldAction.applyRatesToOrderItem(
                             orderItemsToUpdate ,
                             oi ,
                             csRates
@@ -33,14 +33,14 @@ public with sharing class OrderItemConsumptionRateFieldsUpdater {
                 if (orderItemsToUpdate != null && !orderItemsToUpdate.isEmpty()) {
                     List<Database.SaveResult> results = Database.update( orderItemsToUpdate , false );
                     NSP_ErrorLogHandler.logResults(
-                        OrderItemConsumptionRateFieldsUpdater.class.getName() ,
+                        OrderItemConsumptionRateFieldAction.class.getName() ,
                         'OrderItem:Update' ,
                         results
                     );
                 }
             }
         }catch (Exception e ){
-            OrderItemConsumptionRateFieldsUpdater.handleException( e , 'updateOrderItems' );
+            OrderItemConsumptionRateFieldAction.handleException( e , 'updateOrderItems' );
         }
     }
 
@@ -53,8 +53,9 @@ public with sharing class OrderItemConsumptionRateFieldsUpdater {
             && ( oi.Id != null )
             && orderItemConsumptionRateMap != null
             && orderItemConsumptionRateMap.containsKey( oi.Id )
-        ){
-            response = OrderItemConsumptionRateFieldsUpdater.filterRates(
+            )
+        {
+            response = OrderItemConsumptionRateFieldAction.filterRates(
                 orderItemConsumptionRateMap.get( oi.Id )
             );
         }
@@ -67,7 +68,7 @@ public with sharing class OrderItemConsumptionRateFieldsUpdater {
             List<SBQQ__OrderItemConsumptionRate__c> scholarshipRates = new List<SBQQ__OrderItemConsumptionRate__c>();
             List<SBQQ__OrderItemConsumptionRate__c> otherRates = new List<SBQQ__OrderItemConsumptionRate__c>();
             for ( SBQQ__OrderItemConsumptionRate__c cr : allRates ) {
-                if ( OrderItemConsumptionRateFieldsUpdater.isScholarship( cr ) ) {
+                if ( OrderItemConsumptionRateFieldAction.isScholarship( cr ) ) {
                     scholarshipRates.add( cr );
                 } else {
                     otherRates.add( cr );
@@ -147,9 +148,9 @@ public with sharing class OrderItemConsumptionRateFieldsUpdater {
                     csName = rate.SBQQ__OrderItemConsumptionSchedule__r.Name;
                 }
                 if(String.isNotBlank(csName) && csName.contains('Seasonal')){
-                    oi = OrderItemConsumptionRateFieldsUpdater.setSeasonalRates(rate,oi);
+                    oi = OrderItemConsumptionRateFieldAction.setSeasonalRates(rate,oi);
                 }else{
-                    oi = OrderItemConsumptionRateFieldsUpdater.setNonSeasonalRates(rate,oi);
+                    oi = OrderItemConsumptionRateFieldAction.setNonSeasonalRates(rate,oi);
                 }
             }
 
@@ -199,13 +200,13 @@ public with sharing class OrderItemConsumptionRateFieldsUpdater {
     // for test code coverage only...
     public static void testHandleException( Exception e , String methodName ) {
         if ( Test.isRunningTest() ) {
-            OrderItemConsumptionRateFieldsUpdater.handleException( e , methodName );
+            OrderItemConsumptionRateFieldAction.handleException( e , methodName );
         }
     }
 
     private static void handleException( Exception e , String methodName ) {
         NSP_ErrorLogHandler.logException(
-            OrderItemConsumptionRateFieldsUpdater.class.getName() ,
+            OrderItemConsumptionRateFieldAction.class.getName() ,
             methodName ,
             e
         );

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Call_OrderItemConsumptionRateFieldsUpdater_Class</name>
-        <label>Call OrderItemConsumptionRateFieldsUpdater Class</label>
+        <name>Update_Consumption_Rate_Fields</name>
+        <label>Update Consumption Rate Fields</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <actionName>OrderItemConsumptionRateFieldsUpdater</actionName>
+        <actionName>OrderItemConsumptionRateFieldAction</actionName>
         <actionType>apex</actionType>
         <faultConnector>
-            <targetReference>Set_Fault_Element_Call_OrderItemConsumptionRateFieldsUpdater_Class</targetReference>
+            <targetReference>Set_Fault_Element_Update_Consumption_Rate_Fields</targetReference>
         </faultConnector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
@@ -17,7 +17,7 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>OrderItemConsumptionRateFieldsUpdater</nameSegment>
+        <nameSegment>OrderItemConsumptionRateFieldAction</nameSegment>
         <offset>0</offset>
     </actionCalls>
     <apiVersion>65.0</apiVersion>
@@ -135,23 +135,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Fault_Element_Call_OrderItemConsumptionRateFieldsUpdater_Class</name>
-        <label>Set Fault Element : Call_OrderItemConsumptionRateFieldsUpdater_Class</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>varFaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Call_OrderItemConsumptionRateFieldsUpdater_Class</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Path</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Set_Fault_Element_Delete_Consumption_Schedules</name>
         <label>Set Fault Element : Delete_Consumption_Schedules</label>
         <locationX>0</locationX>
@@ -232,6 +215,23 @@
             </value>
         </assignmentItems>
         <connector>
+            <targetReference>Fault_Path</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Update_Consumption_Rate_Fields</name>
+        <label>Set Fault Element : Update_Consumption_Rate_Fields</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Consumption_Rate_Fields</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Fault_Path</targetReference>
         </connector>
     </assignments>
@@ -451,7 +451,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Call_OrderItemConsumptionRateFieldsUpdater_Class</targetReference>
+            <targetReference>Update_Consumption_Rate_Fields</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -708,7 +708,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Call_OrderItemConsumptionRateFieldsUpdater_Class</targetReference>
+            <targetReference>Update_Consumption_Rate_Fields</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Set_Fault_Element_Delete_Consumption_Schedules</targetReference>
@@ -874,7 +874,7 @@
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Fault_Path</name>
         <label>Fault Path</label>

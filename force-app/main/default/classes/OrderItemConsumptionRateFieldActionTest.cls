@@ -1,6 +1,6 @@
 @isTest
-private class OrderItemConsumptionRateUpdaterTest {
-    //covers OrderItemConsumptionRateFieldsUpdater.cls
+public class OrderItemConsumptionRateFieldActionTest {
+    //covers OrderItemConsumptionRateFieldAction.cls
 
     @testSetup
     private static void setupTestData(){
@@ -121,8 +121,8 @@ private class OrderItemConsumptionRateUpdaterTest {
         System.assertEquals(2, rates.size(), 'Expected flat and per-unit rates');
 
         Test.startTest();
-        OrderItemConsumptionRateFieldsUpdater.updateOrderItems(new List<Id>{ theOrder[0].Id });
-        OrderItemConsumptionRateFieldsUpdater.testHandleException(null,null);
+        OrderItemConsumptionRateFieldAction.updateOrderItems(new List<Id>{ theOrder[0].Id });
+        OrderItemConsumptionRateFieldAction.testHandleException(null,null);
         Test.stopTest();
 
         List<OrderItem> updated = [
@@ -148,7 +148,7 @@ private class OrderItemConsumptionRateUpdaterTest {
         Decimal beforePerUnit = oi[0].NSP_Consumption_Rate_Per_Unit__c;
 
         Test.startTest();
-        OrderItemConsumptionRateFieldsUpdater.updateOrderItems(new List<Id>{ theOrder[0].Id });
+        OrderItemConsumptionRateFieldAction.updateOrderItems(new List<Id>{ theOrder[0].Id });
         Test.stopTest();
 
         List<OrderItem> after = [
