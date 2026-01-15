@@ -173,6 +173,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Asset.Server_URL__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Asset.Ancillary_Benefits_Renewal_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
