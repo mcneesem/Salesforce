@@ -840,7 +840,6 @@ Date        : 30/09/2021
         if(!migrationCompleteCaseList.isEmpty()){
             NSP_CaseTriggerEmailNotification.sendMigrationCompleteEmail(migrationCompleteCaseList);
         }
-
         // STY-01785. update parent NSP_CQA_Severity__c with the highest level of the child NSP_CQA_Severity__c
         if(!itaParentCaseIdSet.isEmpty()){
             updateParentItaCqaCase(itaParentCaseIdSet);
