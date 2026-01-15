@@ -1,4 +1,4 @@
-public class OrderItemConsumptionRateFieldAction {
+public with sharing class OrderItemConsumptionRateFieldAction {
     // test w/ OrderItemConsumptionRateFieldActionTest (92%)
 
     @InvocableMethod(label='Update Order Item Consumption Rates')
