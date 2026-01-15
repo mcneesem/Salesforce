@@ -99,7 +99,7 @@ public class NSP_OrderItemTriggerHelper {
         List<String> cat4ListOrderItems = new List<String>();
         List<String> orderItemPartnerAccounts = new List<String>();
         for ( OrderItem eachItem : newMap.values() ) {
-            Boolean seasonalApplied = True;
+            Boolean seasonalApplied = true;
             if ( ( eachItem.Seasonal_Pricing__c == 'Not Applicable' )
                 || String.isBlank( eachItem.Seasonal_Pricing__c )
                 )
@@ -117,26 +117,35 @@ public class NSP_OrderItemTriggerHelper {
                     && !seasonalApplied
                     )
                 {
-                    cat1ListOrderItems.add(eachItem.Id); // Category 1 - Delete Scholarship and Partner consumption schedules - Both not applicable
+                    // Category 1 - Delete Scholarship and Partner consumption schedules - Both not applicable
+                    cat1ListOrderItems.add( eachItem.Id );
                 }
                 if ( eachItem.NSP_Scholarship_Price__c
                     && !eachItem.NSP_Is_Partner_CS_Applicable__c
                     && !seasonalApplied
                     )
                 {
-                    cat2ListOrderItems.add(eachItem.Id); // Category 2 - Scholarship Applicable - Delete Partner consumption schedules
+                    // Category 2 - Scholarship Applicable - Delete Partner consumption schedules
+                    cat2ListOrderItems.add( eachItem.Id );
                 }
-                if(seasonalApplied){
-                    cat4ListOrderItems.add(eachItem.id);
+                if ( seasonalApplied ) {
+                    cat4ListOrderItems.add( eachItem.id );
                 }
             }
-            if(eachItem.NSP_ServiceAssetCategory__c != null && eachItem.NSP_ServiceAssetCategory__c != NSP_CPQConstants.HARDWARE_ASSET && eachItem.NSP_ServiceAsset__c == null){
-                opIdMap.put(eachItem.Id,eachItem.NSP_ServiceAssetCategory__c);
+            if ( ( eachItem.NSP_ServiceAssetCategory__c != null )
+                && ( eachItem.NSP_ServiceAssetCategory__c != NSP_CPQConstants.HARDWARE_ASSET )
+                && ( eachItem.NSP_ServiceAsset__c == null )
+                )
+            {
+                opIdMap.put(
+                    eachItem.Id ,
+                    eachItem.NSP_ServiceAssetCategory__c
+                );
             }
         }
         //call asset mapping method
-        if(opIdMap != null && opIdMap.size() >0){
-            updateAsset(opIdMap);
+        if ( ( opIdMap != null ) && !opIdMap.isEmpty() ) {
+            updateAsset( opIdMap );
         }
     }
 
