@@ -10,7 +10,7 @@ private class FileUploadControllerTest {
     private static final String userName = 'testimportcsv';
     private static final String userName2 = '@insperity.com';
     private static final String userEmail = 'testcase@insperity.com';
-    private static final String milliseconds = String.valueOf(DateTime.now().millisecond()); 
+    private static final String milliseconds = String.valueOf(DateTime.now().millisecond());
     private static final String groupName ='TestingImport';
     private static final String category = 'H&W Reporting & Compliance';
     private static final String subCat = 'Offer of Coverage letter';
@@ -46,29 +46,29 @@ private class FileUploadControllerTest {
         + '1,12367,123400,78668,H&W Reporting & Compliance,Offer of Coverage letter,Letters,TestingImport,Other,Medium,Closed,Resolved,Approved,TEST23,06/24/2023,06/24/2023,08/27/2023,TRUE,Neutral,BPS,Testing\n'
         + '1,8688,123400,123400,H&W Reporting & Compliance,Offer of Coverage letter,Letters,TestingImport,Other,Medium,Closed,Resolved,Approved,TEST24,06/24/2023,06/24/2023,08/27/2023,TRUE,Neutral,BPS,Testing\n'
         + '1,12367,123400,123400,H&W Reporting & Compliance,Offer of Coverage letter,Letters,TestingImport,Other,Medium,Closed,Resolved,Approved,TEST25,06/24/2023,06/24/2023,08/27/2023,TRUE,Neutral,BPS,Testing\n'
-        + '1,12367,,,H&W Reporting & Compliance,Offer of Coverage letter,Letters,TestingImport,Other,Medium,Closed,Resolved,Approved,TEST26,06/24/2023,06/24/2023,08/27/2023,TRUE,Neutral,NSP_WX_IMPL,Testing';  
-    @TestSetup
+        + '1,12367,,,H&W Reporting & Compliance,Offer of Coverage letter,Letters,TestingImport,Other,Medium,Closed,Resolved,Approved,TEST26,06/24/2023,06/24/2023,08/27/2023,TRUE,Neutral,NSP_WX_IMPL,Testing';
+    @testSetup
     private static void testData() {
         //Insert Account
         Account oAccount1 = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), 'NSP_TestDataFactory.AccountDefaults', false);
         oAccount1.Name = accName;
         oAccount1.NSP_AIMS_Client__c = accAIMS;
         insert oAccount1;
-        
+
         //Insert Contact
         Contact newContact = (Contact)NSP_TestExtendedDataFactory.createSObject(new Contact(), 'NSP_TestDataFactory.ContactDefaultsLight', false);
         newContact.AccountId = oAccount1.Id;
         newContact.NSP_Per_ID__c = contPER;
         insert newContact;
-        
+
         //Insert Asset
         Asset newAsset = (Asset)NSP_TestExtendedDataFactory.createSObject(new Asset(), 'NSP_TestDataFactory.AssetDefaults', false);
         newAsset.Name = assetName;
         newAsset.NSP_Client__c = accAIMS;
         newAsset.AccountId = oAccount1.Id;
         insert newAsset;
-        
-        
+
+
         Profile profileobj = [SELECT Id FROM Profile WHERE Name='System Administrator'];
         //Insert User
         String orgId = UserInfo.getOrganizationId();
@@ -81,9 +81,9 @@ private class FileUploadControllerTest {
         testUser.localesidkey= enUs;
         insert testUser;
         //Insert Category/SubCategory/Detail
-        List<NSP_Category_Sub_Category_Mapping__c> catSubcatRecords = new List<NSP_Category_Sub_Category_Mapping__c>{ 
-            new NSP_Category_Sub_Category_Mapping__c(NSP_Category__c = category, 
-                                                     NSP_Subcategory__c = subCat, 
+        List<NSP_Category_Sub_Category_Mapping__c> catSubcatRecords = new List<NSP_Category_Sub_Category_Mapping__c>{
+            new NSP_Category_Sub_Category_Mapping__c(NSP_Category__c = category,
+                                                     NSP_Subcategory__c = subCat,
                                                      NSP_Detail__c = detail,
                                                     NSP_Display_confidential_popup__c = true)};
         insert catSubcatRecords;
@@ -96,24 +96,24 @@ private class FileUploadControllerTest {
             IsMajorVersion = true
         );
         insert contentVersion;
-        
+
         //Insert ContentDocumentLink
         ContentDocumentLink contentDocumentLink = new ContentDocumentLink(
             LinkedEntityId = oAccount1.Id,
             ContentDocumentId = [SELECT ContentDocumentId FROM ContentVersion WHERE Id= :contentVersion.Id].ContentDocumentId,
             ShareType = 'V'
         );
-        
+
         insert contentDocumentLink;
     }
-    
-    @IsTest
+
+    @isTest
     private static void testLoadData() {
         ContentDocument contentDocument = [SELECT Id FROM ContentDocument WHERE Title =: csvTitle LIMIT 1];
         User user=[Select Id , Name , Email  from User WHERE Email =: userEmail Limit 1];
         Test.startTest();
-        PermissionSet ps = [SELECT Id 
-                            FROM PermissionSet 
+        PermissionSet ps = [SELECT Id
+                            FROM PermissionSet
                             WHERE Name =: permSetName];
         insert new PermissionSetAssignment(AssigneeId = user.id, PermissionSetId = ps.Id);
         List <PermissionSetAssignment> psa = [SELECT PermissionSetId FROM PermissionSetAssignment WHERE AssigneeId = :user.Id];
@@ -123,10 +123,10 @@ private class FileUploadControllerTest {
             newGroup.Name = groupName;
             newGroup.Type='Queue';
             insert newGroup;
-            
+
             QueuesObject testQueue = new QueueSObject(QueueID = newGroup.id, SObjectType = caseName);
             insert testQueue;
-            
+
             Case_Import_Tool_Settings__c settings =  Case_Import_Tool_Settings__c.getInstance( UserInfo.getUserId());
             settings.SetupOwnerId = user.id;
             settings.UploadViaCsvMaxSize__c = 500;
