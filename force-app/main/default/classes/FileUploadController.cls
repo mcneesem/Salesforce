@@ -213,18 +213,13 @@ public with sharing class FileUploadController {
                )
             {
                 bypassCustomSettings();
-                // Enqueue the Queueable job to process the records in batches
-                if ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
-                    System.enqueueJob(
-                        new CaseImportQueueable(
-                            caseList,
-                            allRowValue,
-                            rowCaseMap,
-                            null,
-                            createRecordMap
-                        )
-                    );
-                }
+                CaseImportQueueable.enqueueJob(
+                    caseList ,
+                    allRowValue ,
+                    rowCaseMap ,
+                    null ,
+                    createRecordMap
+                );
             }
 
             successMap.put( System.now().format(loadTime), 'Case Loaded. Please check email for success/failure count' );
@@ -358,7 +353,7 @@ public with sharing class FileUploadController {
              && !confidentialMap.get( csvCategory + csvSubCategory + csvDetail )
           )
         {
-         	returnValue = FALSE;
+             returnValue = FALSE;
         }
         else if ( String.isNotBlank( value )
                   && value.contains( 'T' )
@@ -419,7 +414,7 @@ public with sharing class FileUploadController {
         if( String.isNotBlank( value )
             && String.isBlank( status )
             && hours != null
-           	&& seconds != null
+               && seconds != null
             && datePattern.matcher( value ).matches()
           )
         {
@@ -800,7 +795,7 @@ public with sharing class FileUploadController {
            )
         {
             for( Asset assetRecord :[ Select id,
-                                      	AccountId,
+                                        AccountId,
                                         NSP_Client__c
                                       from Asset
                                       where NSP_Client__c IN :caseRecordList
@@ -1464,7 +1459,7 @@ public with sharing class FileUploadController {
             if( createRecordMap != null )
             {
                  for( list<String> eachRow : createRecordMap.keySet() )
-            		{
+                    {
                         Import_Error__c eachError = new Import_Error__c();
                         eachError.Contact__c = eachRow[1];
                         eachError.Account__c = eachRow[2];
@@ -1495,7 +1490,7 @@ public with sharing class FileUploadController {
                         }
 
                         importErrorList.add( eachError );
-            		}
+                    }
             }
 
 
@@ -1524,6 +1519,11 @@ public with sharing class FileUploadController {
         caseEmailSetting.SetupOwnerId = UserInfo.getUserId();
         caseEmailSetting.IsEnabledOutbound__c = false;
         upsert caseEmailSetting;
+
+        Email_Deliverability_Settings__c caseEmailDeliverability = Email_Deliverability_Settings__c.getInstance( UserInfo.getUserId() );
+        caseEmailDeliverability.SetupOwnerId = UserInfo.getUserId();
+        caseEmailDeliverability.IsEnabledOutbound__c = false;
+        upsert caseEmailDeliverability;
     }
 
     public static Boolean validateHeaderRow( String headers ) {
