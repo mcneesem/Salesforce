@@ -314,7 +314,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>NSP_Payroll__c.NSP_First_Pay_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -689,7 +689,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>NSP_Payroll__c.NSP_Seasonal_Employer__c</field>
         <readable>true</readable>
     </fieldPermissions>
