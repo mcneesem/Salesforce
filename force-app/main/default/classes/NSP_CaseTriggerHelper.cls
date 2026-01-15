@@ -82,9 +82,9 @@ public class NSP_CaseTriggerHelper {
             eachCase.NSP_SubCategory__c ==  NSP_ServiceConstants.CASE_SUB_CATEGORY_DOL_AUDITS ? dolAuditsRecordTypeId : eachCase.recordTypeId;
             Case_Import_Tool_Settings__c caseSettings =  Case_Import_Tool_Settings__c.getInstance(UserInfo.getUserId());
             if(caseSettings != null && !caseSettings.Bypass_Opened_Date__c) {
-                eachCase.NSP_Opened_Date__c = system.today(); //DF-02760
+                eachCase.NSP_Opened_Date__c = System.today(); //DF-02760
             }
-            eachCase.NSP_Opened_Date__c = system.today(); //DF-02760
+            eachCase.NSP_Opened_Date__c = System.today(); //DF-02760
 
             eachCase.NSP_Case_Sub_Status__c = (eachcase.recordTypeId == NSP_CaseTriggerHelper.peoRecordTypeId && eachCase.Status == NSP_ServiceConstants.CLOSED_STATUS) ? NSP_ServiceConstants.RESOLVED : eachCase.NSP_Case_Sub_Status__c;
 
@@ -828,21 +828,19 @@ Date        : 30/09/2021
             NSP_CaseRecordSharing.sharePrivateCases(privateCaseList);
         }
         /*Added as part of STY-00762*/
-        CaseFlowSettings__c caseFlowSettings =  CaseFlowSettings__c.getInstance(UserInfo.getUserId());
-        if(caseFlowSettings != null && !caseFlowSettings.IsEnabledNotifications__c) {
-            if(!reqNotCompleteCaseList.isEmpty()){
-                NSP_CaseTriggerEmailNotification.sendRequestNotCompleteMail(reqNotCompleteCaseList);
-            }
-            if(!referToExistingCaseList.isEmpty()){
-                NSP_CaseTriggerEmailNotification.sendReferredToExistingEmail(referToExistingCaseList);
-            }
-            if(!awaitingVerificationCaseList.isEmpty()){
-                NSP_CaseTriggerEmailNotification.sendAwaitingVerificationEmail(awaitingVerificationCaseList);
-            }
-            if(!migrationCompleteCaseList.isEmpty()){
-                NSP_CaseTriggerEmailNotification.sendMigrationCompleteEmail(migrationCompleteCaseList);
-            }
+        if(!reqNotCompleteCaseList.isEmpty()){
+            NSP_CaseTriggerEmailNotification.sendRequestNotCompleteMail(reqNotCompleteCaseList);
         }
+        if(!referToExistingCaseList.isEmpty()){
+            NSP_CaseTriggerEmailNotification.sendReferredToExistingEmail(referToExistingCaseList);
+        }
+        if(!awaitingVerificationCaseList.isEmpty()){
+            NSP_CaseTriggerEmailNotification.sendAwaitingVerificationEmail(awaitingVerificationCaseList);
+        }
+        if(!migrationCompleteCaseList.isEmpty()){
+            NSP_CaseTriggerEmailNotification.sendMigrationCompleteEmail(migrationCompleteCaseList);
+        }
+
         // STY-01785. update parent NSP_CQA_Severity__c with the highest level of the child NSP_CQA_Severity__c
         if(!itaParentCaseIdSet.isEmpty()){
             updateParentItaCqaCase(itaParentCaseIdSet);
@@ -1203,11 +1201,28 @@ createdDate : 6/13/2023
                                                                                  catsubCatAssetRecTypeSet.add(catSubCatMapping.NSP_Asset_Record_Types__c);
                                                                              }
 
-            for(Asset asst :[select Id, AccountId, RecordTypeId, RecordType.Name, NSP_Account_Status__c from Asset
-                             WHERE AccountId IN: accIdSet and RecordType.Name IN: catsubCatAssetRecTypeSet and
-                             NSP_Account_Status__c NOT IN :(listofValues) ]){
-                                 assetRecTypeAssetIdMap.put(asst.RecordType.Name+'-'+ asst.AccountId, asst.Id);
-                             }
+            for ( Asset asst : [
+                        SELECT
+                            Id ,
+                            AccountId ,
+                            RecordTypeId ,
+                            RecordType.Name ,
+                            NSP_Account_Status__c
+                        FROM Asset
+                        WHERE (
+                            ( AccountId IN :accIdSet )
+                            AND ( Status = 'Active' )
+                            AND ( RecordType.Name IN :catsubCatAssetRecTypeSet )
+                            AND ( NSP_Account_Status__c NOT IN :(listofValues) )
+                        )
+                    ]
+                )
+            {
+                assetRecTypeAssetIdMap.put(
+                    asst.RecordType.Name + '-' + asst.AccountId ,
+                    asst.Id
+                );
+            }
 
             for(Case cse : CaseList){
                 if(!catSubCatStringAssetRecTypeMap.isEmpty() && !assetRecTypeAssetIdMap.isEmpty()){
@@ -1463,7 +1478,11 @@ created case will be updated to cancelled.
     }
 
     private static void sendSingleEmailMessages( List<Messaging.SingleEmailMessage> messages ) {
-        if ( ( messages != null ) && !messages.isEmpty() ) {
+        if ( EmailDeliverabilityController.isEnabledOutbound
+            && ( messages != null )
+            && !messages.isEmpty()
+            )
+        {
             try {
                 Messaging.sendEmail( messages );
             } catch ( Exception e ) {
