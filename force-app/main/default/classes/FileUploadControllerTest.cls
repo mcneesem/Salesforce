@@ -130,7 +130,7 @@ private class FileUploadControllerTest {
             Case_Import_Tool_Settings__c settings =  Case_Import_Tool_Settings__c.getInstance( UserInfo.getUserId());
             settings.SetupOwnerId = user.id;
             settings.UploadViaCsvMaxSize__c = 500;
-            settings.Batch_Size_Case_Import__c = 50;
+            settings.BatchSize__c = 50;
             upsert settings;
             FileUploadController.hasPermission();
             FileUploadController.loadData(contentDocument.Id);
