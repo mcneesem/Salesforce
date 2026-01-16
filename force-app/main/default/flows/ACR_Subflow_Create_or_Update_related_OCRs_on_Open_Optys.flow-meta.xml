@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>55.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Add_Opty_Contact_Role_to_collections</name>
         <label>Add Opty Contact Role to collections</label>
@@ -38,6 +39,73 @@
         </assignmentItems>
         <connector>
             <targetReference>IfAllOpptsInsert</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_CreateOCRs</name>
+        <label>Assign varFaultElement - CreateOCRs</label>
+        <locationX>1100</locationX>
+        <locationY>2558</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>CreateOCRs</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>ErrorHandler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_Open_Opportunitites</name>
+        <label>Assign varFaultElement - Get_Open_Opportunitites</label>
+        <locationX>1628</locationX>
+        <locationY>242</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Open_Opportunitites</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ErrorHandler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_GetAllOCR</name>
+        <label>Assign varFaultElement - GetAllOCR</label>
+        <locationX>1364</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>GetAllOCR</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>ErrorHandler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_UpdateOCRRecord</name>
+        <label>Assign varFaultElement - UpdateOCRRecord</label>
+        <locationX>572</locationX>
+        <locationY>1382</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>UpdateOCRRecord</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>ErrorHandler</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -218,13 +286,6 @@
             <targetReference>Add_Opty_Contact_Role_to_collections</targetReference>
         </connector>
     </assignments>
-    <constants>
-        <name>FlowName</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>AccountContactRelationToInsertOpportunityContactRole</stringValue>
-        </value>
-    </constants>
     <decisions>
         <name>Do_OCRs_Exist</name>
         <label>Do OCRs Exist?</label>
@@ -322,7 +383,7 @@
             <label>No Open Optys</label>
         </rules>
     </decisions>
-    <description>Flipped &quot;recordId&quot; variable back to &quot;record&quot;</description>
+    <description>Updated with varFaultElement and removed triggeringFlow. Flipped &quot;recordId&quot; variable back to &quot;record&quot;</description>
     <environments>Default</environments>
     <interviewLabel>ACR Subflow - Create or Update related OCRs on Open Optys {!$Flow.CurrentDateTime}</interviewLabel>
     <label>ACR Subflow - Create or Update related OCRs on Open Optys</label>
@@ -421,8 +482,7 @@
         <locationX>572</locationX>
         <locationY>2450</locationY>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>ErrorHandler</targetReference>
+            <targetReference>Assign_varFaultElement_CreateOCRs</targetReference>
         </faultConnector>
         <inputReference>OCRInsertCollection</inputReference>
     </recordCreates>
@@ -436,7 +496,7 @@
             <targetReference>Open_Opportunities_Exist</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>ErrorHandler</targetReference>
+            <targetReference>Assign_varFaultElement_Get_Open_Opportunitites</targetReference>
         </faultConnector>
         <filterLogic>1 AND (2 AND 3)</filterLogic>
         <filters>
@@ -476,8 +536,7 @@
             <targetReference>Do_OCRs_Exist</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>ErrorHandler</targetReference>
+            <targetReference>Assign_varFaultElement_GetAllOCR</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -507,8 +566,7 @@
             <targetReference>OpptysThatDonthavethisACR</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>ErrorHandler</targetReference>
+            <targetReference>Assign_varFaultElement_UpdateOCRRecord</targetReference>
         </faultConnector>
         <inputReference>OCRCollection</inputReference>
     </recordUpdates>
@@ -519,23 +577,29 @@
             <targetReference>Get_Open_Opportunitites</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>ErrorHandler</name>
         <label>ErrorHandler</label>
         <locationX>1628</locationX>
-        <locationY>242</locationY>
+        <locationY>350</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>varFaultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>ACR_Subflow_Create_or_Update_related_OCRs_on_Open_Optys</stringValue>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <name>faultMessage</name>
             <value>
                 <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>triggeringFlow</name>
-            <value>
-                <elementReference>FlowName</elementReference>
             </value>
         </inputAssignments>
     </subflows>
@@ -611,5 +675,12 @@
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>AccountContactRelation</objectType>
+    </variables>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
 </Flow>

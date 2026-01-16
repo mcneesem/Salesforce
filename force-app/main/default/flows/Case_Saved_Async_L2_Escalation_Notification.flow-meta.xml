@@ -11,7 +11,7 @@
             <targetReference>Iterated_Over_Case_Contacts</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Unable_to_Send_Email_Notification</targetReference>
+            <targetReference>Set_Fault_Element_Email_Notification_To_Contacts</targetReference>
         </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -73,6 +73,23 @@
     </actionCalls>
     <apiVersion>62.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Set_Fault_Element_Email_Notification_To_Contacts</name>
+        <label>Set Fault Element : Email_Notification_To_Contacts</label>
+        <locationX>1204</locationX>
+        <locationY>1032</locationY>
+        <assignmentItems>
+            <assignToReference>FaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Email_Notification_To_Contacts</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
     <assignments>
         <name>Set_Fault_Element_Get_Case_Contacts</name>
         <label>Set Fault Element : Get_Case_Contacts</label>
@@ -195,7 +212,7 @@
             <label>Yes : Valid</label>
         </rules>
     </decisions>
-    <description>Outbound Email bypass added. Added email thread logging - updated to custom settings</description>
+    <description>Removed triggeringFlow. Outbound Email bypass added. Added email thread logging - updated to custom settings</description>
     <environments>Default</environments>
     <interviewLabel>Case - Saved - Async - L2 Escalation Notification {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Case - Saved - Async - L2 Escalation Notification</label>
@@ -320,31 +337,6 @@
             <name>faultElement</name>
             <value>
                 <elementReference>FaultElement</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>faultMessage</name>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>triggeringFlow</name>
-            <value>
-                <stringValue>Case_Saved_Async_L2_Escalation_Notification</stringValue>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <subflows>
-        <name>Unable_to_Send_Email_Notification</name>
-        <label>Unable to Send Email Notification</label>
-        <locationX>1204</locationX>
-        <locationY>1032</locationY>
-        <flowName>Insperity_Fault_Handler_Subflow</flowName>
-        <inputAssignments>
-            <name>faultElement</name>
-            <value>
-                <stringValue>Email_Notification_To_Contacts</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Add_1_to_Total_Asset_Counter</name>
         <label>Add 1 to Total Asset Counter</label>
@@ -15,6 +16,56 @@
         </assignmentItems>
         <connector>
             <targetReference>Loop_over_Assets_to_add_to_Total_Assets</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_Account_Info</name>
+        <label>Assign varFaultElement - Get_Account_Info</label>
+        <locationX>1018</locationX>
+        <locationY>242</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Account_Info</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_Related_non_Hardware_Assets</name>
+        <label>Assign varFaultElement - Get_Related_non_Hardware_Assets</label>
+        <locationX>754</locationX>
+        <locationY>350</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Related_non_Hardware_Assets</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Update_Account_Record</name>
+        <label>Assign varFaultElement - Update_Account_Record</label>
+        <locationX>490</locationX>
+        <locationY>1058</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Account_Record</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_subflow</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -65,7 +116,7 @@
             <label>Yes - a related Asset was deleted</label>
         </rules>
     </decisions>
-    <description>Updated to lock Account Name and FEIN. Autolaunched to loop over all non-Hardware_Asset records related to the Account, initially to update the &quot;Total Asset&quot; field as needed.</description>
+    <description>Removed triggeringFlow and added varFaultElement. Updated to lock Account Name and FEIN. Autolaunched to loop over all non-Hardware_Asset records related to the Account, initially to update the &quot;Total Asset&quot; field as needed.</description>
     <environments>Default</environments>
     <interviewLabel>Account - loop over related Assets subflow {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Account - loop over related Assets subflow</label>
@@ -112,7 +163,7 @@
             <targetReference>Get_Related_non_Hardware_Assets</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Fault_Handler_subflow</targetReference>
+            <targetReference>Assign_varFaultElement_Get_Account_Info</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -136,8 +187,7 @@
             <targetReference>Loop_over_Assets_to_add_to_Total_Assets</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_subflow</targetReference>
+            <targetReference>Assign_varFaultElement_Get_Related_non_Hardware_Assets</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -164,8 +214,7 @@
         <locationX>182</locationX>
         <locationY>950</locationY>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_subflow</targetReference>
+            <targetReference>Assign_varFaultElement_Update_Account_Record</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -197,23 +246,29 @@
             <targetReference>Get_Account_Info</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Fault_Handler_subflow</name>
         <label>Fault Handler subflow</label>
         <locationX>1018</locationX>
-        <locationY>242</locationY>
+        <locationY>350</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>varFaultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Account_loop_over_related_Assets_subflow</stringValue>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <name>faultMessage</name>
             <value>
                 <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>triggeringFlow</name>
-            <value>
-                <elementReference>flowName</elementReference>
             </value>
         </inputAssignments>
     </subflows>
@@ -259,5 +314,12 @@
         <value>
             <numberValue>0.0</numberValue>
         </value>
+    </variables>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
 </Flow>

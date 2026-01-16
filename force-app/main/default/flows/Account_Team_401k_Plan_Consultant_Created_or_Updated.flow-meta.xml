@@ -121,7 +121,7 @@
             <label>Valid Account : Yes</label>
         </rules>
     </decisions>
-    <description>AZD-340788 , Update RET S2I When Account Team 401k Plan Consultant Created or Updated</description>
+    <description>Removed triggeringFlow to subflow. AZD-340788 , Update RET S2I When Account Team 401k Plan Consultant Created or Updated</description>
     <environments>Default</environments>
     <interviewLabel>Account Team 401k Plan Consultant Created or Updated {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Account Team 401k Plan Consultant - Created or Updated</label>
@@ -275,15 +275,15 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>faultMessage</name>
+            <name>faultFlow</name>
             <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
+                <stringValue>Account_Team_401k_Plan_Consultant_Created_or_Updated</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>triggeringFlow</name>
+            <name>faultMessage</name>
             <value>
-                <stringValue>Account_Team_401k_Plan_Consultant_Created_or_Updated</stringValue>
+                <elementReference>$Flow.FaultMessage</elementReference>
             </value>
         </inputAssignments>
     </subflows>
