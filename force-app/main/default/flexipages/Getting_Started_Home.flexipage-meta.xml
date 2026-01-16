@@ -178,6 +178,12 @@
                 </visibilityRule>
             </componentInstance>
         </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>createRecordThroughCsv</componentName>
+                <identifier>c_createRecordThroughCsv</identifier>
+            </componentInstance>
+        </itemInstances>
         <name>sidebar</name>
         <type>Region</type>
     </flexiPageRegions>
