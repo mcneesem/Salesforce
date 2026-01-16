@@ -3,8 +3,10 @@
     <description>Grants the Permissions require to view Portal-related records, tabs, and components within the internal Org Pages.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Portal Visibility</label>
+    <permissionSets>Assign_App_Portal_Preview</permissionSets>
     <permissionSets>Portal_Client_Visibility</permissionSets>
     <permissionSets>Portal_Pay_Period_Visibility</permissionSets>
     <permissionSets>Portal_Team_Member_Visibility</permissionSets>
+    <permissionSets>View_Portal_Preview</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
