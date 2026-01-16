@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Route_to_Queue_401k</name>
         <label>Route to Queue (401k)</label>
-        <locationX>402</locationX>
+        <locationX>226</locationX>
         <locationY>4190</locationY>
         <actionName>routeWork</actionName>
         <actionType>routeWork</actionType>
@@ -101,7 +101,7 @@
     <actionCalls>
         <name>Route_to_Queue_Benefits</name>
         <label>Route to Queue (Benefits)</label>
-        <locationX>930</locationX>
+        <locationX>754</locationX>
         <locationY>4190</locationY>
         <actionName>routeWork</actionName>
         <actionType>routeWork</actionType>
@@ -199,8 +199,8 @@
     <actionCalls>
         <name>Route_to_Queue_Premier</name>
         <label>Route to Queue (Premier)</label>
-        <locationX>1106</locationX>
-        <locationY>5330</locationY>
+        <locationX>402</locationX>
+        <locationY>5162</locationY>
         <actionName>routeWork</actionName>
         <actionType>routeWork</actionType>
         <faultConnector>
@@ -297,8 +297,8 @@
     <actionCalls>
         <name>Route_to_Queue_Workday</name>
         <label>Route to Queue (Workday)</label>
-        <locationX>754</locationX>
-        <locationY>4940</locationY>
+        <locationX>50</locationX>
+        <locationY>4772</locationY>
         <actionName>routeWork</actionName>
         <actionType>routeWork</actionType>
         <faultConnector>
@@ -344,7 +344,7 @@
         <inputParameters>
             <name>queueId</name>
             <value>
-                <stringValue>00GOz00000BMZgkMAH</stringValue>
+                <stringValue>00GPb00000VFSBqMAP</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -397,8 +397,8 @@
     <assignments>
         <name>Populate_Contact_Id_Existing</name>
         <label>Populate Contact Id (Existing)</label>
-        <locationX>1150</locationX>
-        <locationY>2078</locationY>
+        <locationX>622</locationX>
+        <locationY>2186</locationY>
         <assignmentItems>
             <assignToReference>contactId</assignToReference>
             <operator>Assign</operator>
@@ -413,8 +413,8 @@
     <assignments>
         <name>Populate_Contact_Id_New</name>
         <label>Populate Contact Id (New)</label>
-        <locationX>1414</locationX>
-        <locationY>2186</locationY>
+        <locationX>886</locationX>
+        <locationY>2294</locationY>
         <assignmentItems>
             <assignToReference>contactId</assignToReference>
             <operator>Assign</operator>
@@ -429,8 +429,8 @@
     <assignments>
         <name>Populate_Messaging_Session_CaseId</name>
         <label>Populate Messaging Session (CaseId)</label>
-        <locationX>1282</locationX>
-        <locationY>3284</locationY>
+        <locationX>754</locationX>
+        <locationY>3392</locationY>
         <assignmentItems>
             <assignToReference>messagingSessionRecord.CaseId</assignToReference>
             <operator>Assign</operator>
@@ -445,8 +445,8 @@
     <assignments>
         <name>Populate_Messaging_Session_ContactId</name>
         <label>Populate Messaging Session (ContactId)</label>
-        <locationX>1282</locationX>
-        <locationY>2468</locationY>
+        <locationX>754</locationX>
+        <locationY>2576</locationY>
         <assignmentItems>
             <assignToReference>messagingSessionRecord.EndUserContactId</assignToReference>
             <operator>Assign</operator>
@@ -461,8 +461,8 @@
     <assignments>
         <name>Populate_Messaging_Session_Id</name>
         <label>Populate Messaging Session (Id)</label>
-        <locationX>1282</locationX>
-        <locationY>956</locationY>
+        <locationX>754</locationX>
+        <locationY>1472</locationY>
         <assignmentItems>
             <assignToReference>messagingSessionRecord.Id</assignToReference>
             <operator>Assign</operator>
@@ -471,14 +471,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Select_Messaging_Channel</targetReference>
+            <targetReference>Check_Inputs_Per_Id_Workday_Id</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Populate_Messaging_Session_Pre_Chat</name>
         <label>Populate Messaging Session (Pre-Chat)</label>
-        <locationX>1282</locationX>
-        <locationY>3500</locationY>
+        <locationX>754</locationX>
+        <locationY>3608</locationY>
         <assignmentItems>
             <assignToReference>messagingSessionRecord.ClientId__c</assignToReference>
             <operator>Assign</operator>
@@ -556,8 +556,8 @@
     <assignments>
         <name>Set_Fault_Element_Create_Case</name>
         <label>Set Fault Element: Create_Case</label>
-        <locationX>2514</locationX>
-        <locationY>3284</locationY>
+        <locationX>1986</locationX>
+        <locationY>3392</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -573,8 +573,8 @@
     <assignments>
         <name>Set_Fault_Element_Create_Contact</name>
         <label>Set Fault Element: Create_Contact</label>
-        <locationX>1678</locationX>
-        <locationY>2186</locationY>
+        <locationX>1150</locationX>
+        <locationY>2294</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -590,7 +590,7 @@
     <assignments>
         <name>Set_Fault_Element_Create_Debug_Log</name>
         <label>Set Fault Element: Create_Debug_Log</label>
-        <locationX>1106</locationX>
+        <locationX>2448</locationX>
         <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -607,7 +607,7 @@
     <assignments>
         <name>Set_Fault_Element_Route_to_Queue_401k</name>
         <label>Set Fault Element: Route_to_Queue_401k</label>
-        <locationX>666</locationX>
+        <locationX>490</locationX>
         <locationY>4298</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -624,7 +624,7 @@
     <assignments>
         <name>Set_Fault_Element_Route_to_Queue_Benefits</name>
         <label>Set Fault Element: Route_to_Queue_Benefits</label>
-        <locationX>1194</locationX>
+        <locationX>1018</locationX>
         <locationY>4298</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -641,8 +641,8 @@
     <assignments>
         <name>Set_Fault_Element_Route_to_Queue_Premier</name>
         <label>Set Fault Element: Route_to_Queue_Premier</label>
-        <locationX>3570</locationX>
-        <locationY>5438</locationY>
+        <locationX>2250</locationX>
+        <locationY>5270</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -658,8 +658,8 @@
     <assignments>
         <name>Set_Fault_Element_Route_to_Queue_Workday</name>
         <label>Set Fault Element: Route_to_Queue_Workday</label>
-        <locationX>1018</locationX>
-        <locationY>5048</locationY>
+        <locationX>314</locationX>
+        <locationY>4880</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -675,8 +675,8 @@
     <assignments>
         <name>Set_Fault_Element_Save_Messaging_Session</name>
         <label>Set Fault Element: Save_Messaging_Session</label>
-        <locationX>1986</locationX>
-        <locationY>3716</locationY>
+        <locationX>1458</locationX>
+        <locationY>3824</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -692,7 +692,7 @@
         <name>Set_Fault_Element_Select_Contact_Per_Id</name>
         <label>Set Fault Element: Select_Contact_Per_Id</label>
         <locationX>1018</locationX>
-        <locationY>1688</locationY>
+        <locationY>1796</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -708,8 +708,8 @@
     <assignments>
         <name>Set_Fault_Element_Select_Contact_Workday_Id</name>
         <label>Set Fault Element: Select_Contact_Workday_Id</label>
-        <locationX>1546</locationX>
-        <locationY>1688</locationY>
+        <locationX>490</locationX>
+        <locationY>1796</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -725,8 +725,8 @@
     <assignments>
         <name>Set_Fault_Element_Select_Messaging_Channel</name>
         <label>Set Fault Element: Select_Messaging_Channel</label>
-        <locationX>2778</locationX>
-        <locationY>1172</locationY>
+        <locationX>2514</locationX>
+        <locationY>1064</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -742,7 +742,7 @@
     <assignments>
         <name>Set_Fault_Element_Select_Messaging_Session</name>
         <label>Set Fault Element: Select_Messaging_Session</label>
-        <locationX>3306</locationX>
+        <locationX>3042</locationX>
         <locationY>848</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -759,8 +759,8 @@
     <assignments>
         <name>Set_Fault_Element_Update_Messaging_End_User</name>
         <label>Set Fault Element: Update_Messaging_End_User</label>
-        <locationX>2250</locationX>
-        <locationY>3500</locationY>
+        <locationX>1722</locationX>
+        <locationY>3608</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -776,8 +776,8 @@
     <assignments>
         <name>Store_Messaging_Channel_Developer_Name</name>
         <label>Store Messaging Channel Developer Name</label>
-        <locationX>1150</locationX>
-        <locationY>1280</locationY>
+        <locationX>270</locationX>
+        <locationY>1172</locationY>
         <assignmentItems>
             <assignToReference>messagingChannelDeveloperName</assignToReference>
             <operator>Assign</operator>
@@ -786,14 +786,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Check_Inputs_Per_Id_Workday_Id</targetReference>
+            <targetReference>Check_Input_Variables</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Translate_Benefits</name>
         <label>Translate: Benefits</label>
-        <locationX>1150</locationX>
-        <locationY>2684</locationY>
+        <locationX>622</locationX>
+        <locationY>2792</locationY>
         <assignmentItems>
             <assignToReference>input_Topic</assignToReference>
             <operator>Assign</operator>
@@ -808,8 +808,8 @@
     <assignments>
         <name>Translate_Rollover</name>
         <label>Translate: Rollover</label>
-        <locationX>1150</locationX>
-        <locationY>2984</locationY>
+        <locationX>622</locationX>
+        <locationY>3092</locationY>
         <assignmentItems>
             <assignToReference>input_Topic</assignToReference>
             <operator>Assign</operator>
@@ -831,8 +831,8 @@
     <decisions>
         <name>Check_Contact_Selection</name>
         <label>Check Contact Selection</label>
-        <locationX>1282</locationX>
-        <locationY>1970</locationY>
+        <locationX>754</locationX>
+        <locationY>2078</locationY>
         <defaultConnector>
             <targetReference>Create_Contact</targetReference>
         </defaultConnector>
@@ -863,10 +863,10 @@
     <decisions>
         <name>Check_Debug_Enabled</name>
         <label>Check Debug Enabled</label>
-        <locationX>1106</locationX>
+        <locationX>2448</locationX>
         <locationY>134</locationY>
         <defaultConnector>
-            <targetReference>Check_Input_Variables</targetReference>
+            <targetReference>Check_Record_Id</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -888,59 +888,45 @@
     <decisions>
         <name>Check_Input_Variables</name>
         <label>Check Input Variables</label>
-        <locationX>1106</locationX>
-        <locationY>632</locationY>
+        <locationX>402</locationX>
+        <locationY>1364</locationY>
         <defaultConnector>
-            <targetReference>Select_Messaging_Session</targetReference>
+            <targetReference>Populate_Messaging_Session_Id</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Chat_IS_Restarted</name>
-            <conditionLogic>(1 OR 2) AND (3 OR 4) AND (5 OR 6)</conditionLogic>
+            <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>input_FirstName</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue></stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>input_FirstName</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>input_LastName</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue></stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>input_LastName</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>input_perId</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
-                    <stringValue></stringValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>input_perId</leftValueReference>
-                <operator>IsNull</operator>
+                <leftValueReference>input_workdayId</leftValueReference>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Check_Record_Id_Restart</targetReference>
+                <targetReference>Check_Messaging_Channel_Routing</targetReference>
             </connector>
             <label>Chat IS Restarted</label>
         </rules>
@@ -948,27 +934,12 @@
     <decisions>
         <name>Check_Inputs_Per_Id_Workday_Id</name>
         <label>Check Inputs: Per Id / Workday Id</label>
-        <locationX>1282</locationX>
-        <locationY>1472</locationY>
+        <locationX>754</locationX>
+        <locationY>1580</locationY>
         <defaultConnector>
             <targetReference>Check_Contact_Selection</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Has_Input_Per_Id</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>input_perId</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Select_Contact_Per_Id</targetReference>
-            </connector>
-            <label>Has Input: Per Id</label>
-        </rules>
         <rules>
             <name>Has_Input_Workday_Id</name>
             <conditionLogic>and</conditionLogic>
@@ -984,14 +955,29 @@
             </connector>
             <label>Has Input: Workday Id</label>
         </rules>
+        <rules>
+            <name>Has_Input_Per_Id</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>input_perId</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Select_Contact_Per_Id</targetReference>
+            </connector>
+            <label>Has Input: Per Id</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Check_Messaging_Channel</name>
         <label>Check Messaging Channel</label>
-        <locationX>1282</locationX>
-        <locationY>1172</locationY>
+        <locationX>402</locationX>
+        <locationY>1064</locationY>
         <defaultConnector>
-            <targetReference>Check_Inputs_Per_Id_Workday_Id</targetReference>
+            <targetReference>Check_Input_Variables</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -1013,7 +999,7 @@
     <decisions>
         <name>Check_Messaging_Channel_Before_Sub_Topic</name>
         <label>Check Messaging Channel (Before Sub-Topic)</label>
-        <locationX>930</locationX>
+        <locationX>754</locationX>
         <locationY>3824</locationY>
         <defaultConnector>
             <targetReference>Check_Sub_Topic</targetReference>
@@ -1054,8 +1040,8 @@
     <decisions>
         <name>Check_Messaging_Channel_Routing</name>
         <label>Check Messaging Channel (Routing)</label>
-        <locationX>1106</locationX>
-        <locationY>4832</locationY>
+        <locationX>402</locationX>
+        <locationY>4664</locationY>
         <defaultConnector>
             <targetReference>Route_to_Queue_Premier</targetReference>
         </defaultConnector>
@@ -1094,7 +1080,7 @@
     <decisions>
         <name>Check_Messaging_Session</name>
         <label>Check Messaging Session</label>
-        <locationX>2162</locationX>
+        <locationX>1590</locationX>
         <locationY>848</locationY>
         <defaultConnector>
             <targetReference>Missing_Record_Fault_Handler</targetReference>
@@ -1111,7 +1097,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Populate_Messaging_Session_Id</targetReference>
+                <targetReference>Select_Messaging_Channel</targetReference>
             </connector>
             <label>Found Messaging Session</label>
         </rules>
@@ -1119,10 +1105,9 @@
     <decisions>
         <name>Check_Record_Id</name>
         <label>Check Record Id</label>
-        <locationX>1282</locationX>
-        <locationY>3716</locationY>
+        <locationX>2448</locationX>
+        <locationY>632</locationY>
         <defaultConnector>
-            <isGoTo>true</isGoTo>
             <targetReference>Missing_Record_Id_Fault_Handler</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
@@ -1131,52 +1116,13 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>recordId</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>recordId</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue></stringValue>
-                </rightValue>
-            </conditions>
             <connector>
-                <targetReference>Check_Messaging_Channel_Before_Sub_Topic</targetReference>
-            </connector>
-            <label>Has Record Id</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Check_Record_Id_Restart</name>
-        <label>Check Record Id (Restart)</label>
-        <locationX>50</locationX>
-        <locationY>740</locationY>
-        <defaultConnector>
-            <targetReference>Missing_Record_Id_Fault_Handler</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Has_Record_Id_2</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>recordId</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>recordId</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue></stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Check_Messaging_Channel_Routing</targetReference>
+                <targetReference>Select_Messaging_Session</targetReference>
             </connector>
             <label>Has Record Id</label>
         </rules>
@@ -1184,7 +1130,7 @@
     <decisions>
         <name>Check_Sub_Topic</name>
         <label>Check Sub-Topic</label>
-        <locationX>930</locationX>
+        <locationX>754</locationX>
         <locationY>4082</locationY>
         <defaultConnector>
             <targetReference>Check_Messaging_Channel_Routing</targetReference>
@@ -1406,8 +1352,8 @@
     <decisions>
         <name>Check_Sub_Topic_Translation</name>
         <label>Check Sub-Topic (Translation)</label>
-        <locationX>1282</locationX>
-        <locationY>2876</locationY>
+        <locationX>754</locationX>
+        <locationY>2984</locationY>
         <defaultConnector>
             <targetReference>Create_Case</targetReference>
         </defaultConnector>
@@ -1431,8 +1377,8 @@
     <decisions>
         <name>Check_Topic</name>
         <label>Check Topic</label>
-        <locationX>1282</locationX>
-        <locationY>2576</locationY>
+        <locationX>754</locationX>
+        <locationY>2684</locationY>
         <defaultConnector>
             <targetReference>Check_Sub_Topic_Translation</targetReference>
         </defaultConnector>
@@ -1453,7 +1399,6 @@
             <label>Beneficios</label>
         </rules>
     </decisions>
-    <description>5/21/2025 - Updated for Is_Contact_Center Field</description>
     <environments>Default</environments>
     <formulas>
         <description>Translates the &quot;First Name&quot; input into a non-blank schema-safe value.</description>
@@ -1508,8 +1453,8 @@
         <description>PEO Case Record Type (Id=0124x0000019l99AAA)</description>
         <name>Create_Case</name>
         <label>Create Case</label>
-        <locationX>1282</locationX>
-        <locationY>3176</locationY>
+        <locationX>754</locationX>
+        <locationY>3284</locationY>
         <connector>
             <targetReference>Populate_Messaging_Session_CaseId</targetReference>
         </connector>
@@ -1577,8 +1522,8 @@
         <description>Resource Contact Record Type (Id=0124x0000019l9BAAQ)</description>
         <name>Create_Contact</name>
         <label>Create Contact</label>
-        <locationX>1414</locationX>
-        <locationY>2078</locationY>
+        <locationX>886</locationX>
+        <locationY>2186</locationY>
         <connector>
             <targetReference>Populate_Contact_Id_New</targetReference>
         </connector>
@@ -1627,10 +1572,10 @@
     <recordCreates>
         <name>Create_Debug_Log</name>
         <label>Create Debug Log</label>
-        <locationX>842</locationX>
+        <locationX>2184</locationX>
         <locationY>242</locationY>
         <connector>
-            <targetReference>Check_Input_Variables</targetReference>
+            <targetReference>Check_Record_Id</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Set_Fault_Element_Create_Debug_Log</targetReference>
@@ -1660,7 +1605,7 @@
         <name>Select_Contact_Per_Id</name>
         <label>Select Contact (Per Id)</label>
         <locationX>754</locationX>
-        <locationY>1580</locationY>
+        <locationY>1688</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Contact_Selection</targetReference>
@@ -1685,8 +1630,8 @@
     <recordLookups>
         <name>Select_Contact_Workday_Id</name>
         <label>Select Contact (Workday Id)</label>
-        <locationX>1282</locationX>
-        <locationY>1580</locationY>
+        <locationX>226</locationX>
+        <locationY>1688</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Contact_Selection</targetReference>
@@ -1711,8 +1656,8 @@
     <recordLookups>
         <name>Select_Messaging_Channel</name>
         <label>Select Messaging Channel</label>
-        <locationX>1282</locationX>
-        <locationY>1064</locationY>
+        <locationX>402</locationX>
+        <locationY>956</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Messaging_Channel</targetReference>
@@ -1735,7 +1680,7 @@
     <recordLookups>
         <name>Select_Messaging_Session</name>
         <label>Select Messaging Session</label>
-        <locationX>2162</locationX>
+        <locationX>1590</locationX>
         <locationY>740</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1759,10 +1704,10 @@
     <recordUpdates>
         <name>Save_Messaging_Session</name>
         <label>Save Messaging Session</label>
-        <locationX>1282</locationX>
-        <locationY>3608</locationY>
+        <locationX>754</locationX>
+        <locationY>3716</locationY>
         <connector>
-            <targetReference>Check_Record_Id</targetReference>
+            <targetReference>Check_Messaging_Channel_Before_Sub_Topic</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Set_Fault_Element_Save_Messaging_Session</targetReference>
@@ -1772,8 +1717,8 @@
     <recordUpdates>
         <name>Update_Messaging_End_User</name>
         <label>Update Messaging End User</label>
-        <locationX>1282</locationX>
-        <locationY>3392</locationY>
+        <locationX>754</locationX>
+        <locationY>3500</locationY>
         <connector>
             <targetReference>Populate_Messaging_Session_Pre_Chat</targetReference>
         </connector>
@@ -1803,7 +1748,7 @@
         <object>MessagingEndUser</object>
     </recordUpdates>
     <start>
-        <locationX>980</locationX>
+        <locationX>2322</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Check_Debug_Enabled</targetReference>
@@ -1813,8 +1758,8 @@
     <subflows>
         <name>Insperity_Fault_Handler_Subflow</name>
         <label>Insperity Fault Handler Subflow</label>
-        <locationX>1986</locationX>
-        <locationY>3824</locationY>
+        <locationX>1458</locationX>
+        <locationY>3932</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
@@ -1838,7 +1783,7 @@
     <subflows>
         <name>Missing_Record_Fault_Handler</name>
         <label>Missing Record Fault Handler</label>
-        <locationX>3042</locationX>
+        <locationX>2778</locationX>
         <locationY>956</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
@@ -1863,8 +1808,8 @@
     <subflows>
         <name>Missing_Record_Id_Fault_Handler</name>
         <label>Missing Record Id Fault Handler</label>
-        <locationX>138</locationX>
-        <locationY>848</locationY>
+        <locationX>3306</locationX>
+        <locationY>740</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
@@ -1888,7 +1833,8 @@
     <textTemplates>
         <name>debugDescription</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>~ input_clientId: {!input_clientId}
+        <text>~ recordId: {!recordId}
+~ input_clientId: {!input_clientId}
 ~ input_Description: {!input_Description}
 ~ input_Email: {!input_Email}
 ~ input_FirstName: {!input_FirstName}
