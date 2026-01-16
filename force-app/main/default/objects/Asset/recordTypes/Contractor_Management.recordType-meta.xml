@@ -489,7 +489,7 @@
         </values>
         <values>
             <fullName>New Client</fullName>
-            <default>true</default>
+            <default>false</default>
         </values>
         <values>
             <fullName>Not Discussed</fullName>
