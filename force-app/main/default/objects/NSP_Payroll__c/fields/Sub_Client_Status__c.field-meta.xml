@@ -3,7 +3,7 @@
     <fullName>Sub_Client_Status__c</fullName>
     <description>Shows the Sub Client&apos;s AIMS Status as text</description>
     <externalId>false</externalId>
-    <formula>TEXT(NSP_Sub_Client_Name__r.NSP_Account_Status__c)</formula>
+    <formula>TEXT( NSP_Sub_Client_Name__r.NSP_Account_Status__c )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Sub Client / Pay Group Status</label>
     <required>false</required>
