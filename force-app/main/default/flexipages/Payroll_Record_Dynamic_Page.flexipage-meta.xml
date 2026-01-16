@@ -194,23 +194,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Sub_Client_Status__c</fieldItem>
-                <identifier>RecordSub_Client_Pay_Group_Status__cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Source__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>AIMS</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.Pay_Group_Full_Name__c</fieldItem>
                 <identifier>RecordPay_Group_Full_Name__cField</identifier>
                 <visibilityRule>
@@ -246,14 +229,7 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Sub_Client_Status__c</fieldItem>
-                <identifier>RecordSub_Client_Pay_Group_Status_cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Source__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Workday</rightValue>
-                    </criteria>
-                </visibilityRule>
+                <identifier>RecordSub_Client_Pay_Group_Status__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
