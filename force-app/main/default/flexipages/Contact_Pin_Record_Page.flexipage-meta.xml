@@ -735,6 +735,9 @@
                             <value>NSP_Support_Role__c</value>
                         </valueListItems>
                         <valueListItems>
+                            <value>HRScale_Client_Roles__c</value>
+                        </valueListItems>
+                        <valueListItems>
                             <value>Account.TracHier__Owner__c</value>
                         </valueListItems>
                         <valueListItems>
