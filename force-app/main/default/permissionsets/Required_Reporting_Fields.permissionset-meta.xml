@@ -1268,7 +1268,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>NSP_Payroll__c.Sub_Client_Pay_Group_Status__c</field>
+        <field>NSP_Payroll__c.Sub_Client_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

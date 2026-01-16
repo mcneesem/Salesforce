@@ -194,7 +194,7 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Sub_Client_Pay_Group_Status__c</fieldItem>
+                <fieldItem>Record.Sub_Client_Status__c</fieldItem>
                 <identifier>RecordSub_Client_Pay_Group_Status__cField</identifier>
                 <visibilityRule>
                     <criteria>
@@ -245,7 +245,7 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Sub_Client_Pay_Group_Status__c</fieldItem>
+                <fieldItem>Record.Sub_Client_Status__c</fieldItem>
                 <identifier>RecordSub_Client_Pay_Group_Status_cField</identifier>
                 <visibilityRule>
                     <criteria>
