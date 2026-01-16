@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Profile xmlns="http://soap.sforce.com/2006/04/metadata">
     <custom>true</custom>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Lead.Do_Not_Contact__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Contact.Due_to_OneTrust_Opt_Out_on_File__c</field>
@@ -50,7 +50,7 @@
         <editable>true</editable>
         <field>Contact.OneTrust_Opt_Out__c</field>
         <readable>true</readable>
-    </fieldPermissions> 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Contact.NSP_Do_Not_Contact__c</field>
@@ -117,40 +117,40 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-		<editable>false</editable>
-		<field>blng__Invoice__c.Invoice_ID_18__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>false</editable>
-		<field>blng__InvoiceLine__c.Invoice_Line_ID_18__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>false</editable>
-		<field>blng__CreditNote__c.Credit_Note_ID_18__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>false</editable>
-		<field>blng__CreditNoteLine__c.Credit_Note_Line_ID_18__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>false</editable>
-		<field>blng__DebitNote__c.Debit_Note_ID_18__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>false</editable>
-		<field>blng__DebitNoteLine__c.Debit_Note_Line_ID_18__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>false</editable>
-		<field>blng__Payment__c.Payment_ID_18__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
+        <editable>false</editable>
+        <field>blng__Invoice__c.Invoice_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__InvoiceLine__c.Invoice_Line_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__CreditNote__c.Credit_Note_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__CreditNoteLine__c.Credit_Note_Line_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__DebitNote__c.Debit_Note_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__DebitNoteLine__c.Debit_Note_Line_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__Payment__c.Payment_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <layoutAssignments>
         <layout>Contact-Sales_Contact Layout</layout>
     </layoutAssignments>
