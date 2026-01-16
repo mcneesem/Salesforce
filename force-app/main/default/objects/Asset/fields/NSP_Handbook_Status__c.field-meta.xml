@@ -24,7 +24,7 @@
             </value>
             <value>
                 <fullName>New Client</fullName>
-                <default>true</default>
+                <default>false</default>
                 <label>New Client</label>
             </value>
             <value>
@@ -36,6 +36,16 @@
                 <fullName>Work in Progress</fullName>
                 <default>false</default>
                 <label>Work in Progress</label>
+            </value>
+            <value>
+                <fullName>Client Prepared HB In Use</fullName>
+                <default>false</default>
+                <label>Client Prepared HB In Use</label>
+            </value>
+            <value>
+                <fullName>Completed - incl. Spanish Version</fullName>
+                <default>false</default>
+                <label>Completed - incl. Spanish Version</label>
             </value>
         </valueSetDefinition>
     </valueSet>

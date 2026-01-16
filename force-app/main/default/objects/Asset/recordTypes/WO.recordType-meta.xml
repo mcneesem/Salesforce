@@ -492,15 +492,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Client Prepared HB In Use</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Completed</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>New Client</fullName>
-            <default>true</default>
-        </values>
-        <values>
-            <fullName>Not Discussed</fullName>
+            <fullName>Completed - incl%2E Spanish Version</fullName>
             <default>false</default>
         </values>
         <values>
