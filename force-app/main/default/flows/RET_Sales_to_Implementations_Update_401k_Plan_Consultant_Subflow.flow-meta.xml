@@ -2,22 +2,6 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>63.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
-    <assignments>
-        <name>Set_Element_Update_S2I_Record</name>
-        <label>Set Element : Update_S2I_Record</label>
-        <locationX>314</locationX>
-        <locationY>350</locationY>
-        <assignmentItems>
-            <assignToReference>FaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Update_S2I_Record</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
     <decisions>
         <description>Check for valid input record collection</description>
         <name>Valid_Input</name>
@@ -48,7 +32,7 @@
             <label>Valid Input - Yes</label>
         </rules>
     </decisions>
-    <description>AZD-340788 : Update 401k Plan Consultant , 4/10/2025</description>
+    <description>Removed triggeringFlow. AZD-340788 : Update 401k Plan Consultant , 4/10/2025</description>
     <environments>Default</environments>
     <interviewLabel>RET Sales to Implementations Update 401k Plan Consultant Subflow {!$Flow.CurrentDateTime}</interviewLabel>
     <label>RET Sales to Implementations Update 401k Plan Consultant Subflow</label>
@@ -78,7 +62,7 @@
         <locationX>50</locationX>
         <locationY>242</locationY>
         <faultConnector>
-            <targetReference>Set_Element_Update_S2I_Record</targetReference>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
         </faultConnector>
         <inputReference>rc_RET_S2I_Records</inputReference>
     </recordUpdates>
@@ -94,12 +78,18 @@
         <name>Insperity_Fault_Handler_Subflow</name>
         <label>Insperity Fault Handler Subflow</label>
         <locationX>314</locationX>
-        <locationY>458</locationY>
+        <locationY>350</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
             <value>
-                <elementReference>FaultElement</elementReference>
+                <stringValue>Update_S2I_Record</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>RET_Sales_to_Implementations_Update_401k_Plan_Consultant_Subflow</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -108,20 +98,7 @@
                 <elementReference>$Flow.FaultMessage</elementReference>
             </value>
         </inputAssignments>
-        <inputAssignments>
-            <name>triggeringFlow</name>
-            <value>
-                <stringValue>RET_Sales_to_Implementations_Update_401k_Plan_Consultant_Subflow</stringValue>
-            </value>
-        </inputAssignments>
     </subflows>
-    <variables>
-        <name>FaultElement</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
     <variables>
         <description>collection of S2I Records as Input Variable for Subflow</description>
         <name>rc_RET_S2I_Records</name>

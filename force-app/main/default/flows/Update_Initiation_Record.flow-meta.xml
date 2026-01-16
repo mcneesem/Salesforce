@@ -1,17 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>60.0</apiVersion>
-    <constants>
-        <name>flowName</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>Update_Initiation_Record</stringValue>
-        </value>
-    </constants>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_varFaultElement_Get_Project_Task_Record</name>
+        <label>Assign varFaultElement - Get_Project_Task_Record</label>
+        <locationX>842</locationX>
+        <locationY>566</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Project_Task_Record</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_RSAP_Record</name>
+        <label>Assign varFaultElement - Get_RSAP_Record</label>
+        <locationX>1370</locationX>
+        <locationY>350</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_RSAP_Record</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Update_Project_Task_Record</name>
+        <label>Assign varFaultElement - Update_Project_Task_Record</label>
+        <locationX>314</locationX>
+        <locationY>782</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Project_Task_Record</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Is_Initiative_Record_Valid</name>
         <label>Is Initiative Record Valid</label>
-        <locationX>842</locationX>
+        <locationX>1172</locationX>
         <locationY>134</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -76,7 +120,7 @@
     <decisions>
         <name>RSAP_Exists</name>
         <label>RSAP Exists</label>
-        <locationX>578</locationX>
+        <locationX>710</locationX>
         <locationY>350</locationY>
         <defaultConnectorLabel>RSAP Not Valid</defaultConnectorLabel>
         <rules>
@@ -102,6 +146,7 @@
             <label>RSAP Valid</label>
         </rules>
     </decisions>
+    <description>Updated with fault paths and removed triggeringFlow.</description>
     <environments>Default</environments>
     <interviewLabel>Update Initiation Record {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Update Initiation Record</label>
@@ -133,6 +178,9 @@
         <connector>
             <targetReference>Is_Valid_Project_Task</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_Project_Task_Record</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Name</field>
@@ -167,12 +215,15 @@
     <recordLookups>
         <name>Get_RSAP_Record</name>
         <label>Get RSAP Record</label>
-        <locationX>578</locationX>
+        <locationX>710</locationX>
         <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>RSAP_Exists</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_RSAP_Record</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -195,7 +246,7 @@
         <locationX>50</locationX>
         <locationY>674</locationY>
         <faultConnector>
-            <targetReference>Fault_Handler_Subflow</targetReference>
+            <targetReference>Assign_varFaultElement_Update_Project_Task_Record</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -220,7 +271,7 @@
         <object>pse__Project_Task__c</object>
     </recordUpdates>
     <start>
-        <locationX>716</locationX>
+        <locationX>1046</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Is_Initiative_Record_Valid</targetReference>
@@ -231,18 +282,24 @@
         <name>Fault_Handler_Subflow</name>
         <label>Fault_Handler_Subflow</label>
         <locationX>314</locationX>
-        <locationY>782</locationY>
+        <locationY>890</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>varFaultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Update_Initiation_Record</stringValue>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <name>faultMessage</name>
             <value>
                 <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>triggeringFlow</name>
-            <value>
-                <elementReference>flowName</elementReference>
             </value>
         </inputAssignments>
     </subflows>
@@ -253,5 +310,12 @@
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>NSP_Initiative__c</objectType>
+    </variables>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
 </Flow>
