@@ -85,31 +85,28 @@ public class CaseImportQueueable implements Queueable {
 
     public void execute(QueueableContext context) {
         try{
-            String errorRowMessage = '.Error occurred at row number - ';
+            String errorRowMessage = '. Error occurred at row number - ';
             List<Case> batchList = this.dequeueNextBatch();
-
             Map<list<String>,String> createRecordMap = new Map<list<String>,String>();
-            Database.SaveResult[] srList = Database.insert(batchList, false);
-            // Defensive size check to avoid index mismatch issues
-            if(srList != null
-               && batchList
-               != null
-               && srList.size() == batchList.size()) {
-                for (Integer i = 0; i < batchList.size(); i++) {
-                    Case c = batchList[i];
-                    Database.SaveResult sr = srList[i];
-                    if (sr.isSuccess()) {
-                        caseSuccessList.add(sr.getId());
-                    } else {
-                        for (Database.Error err : sr.getErrors()) {
-                            if (rowCaseMap.containsKey(c) && allRowValue.contains(rowCaseMap.get(c))) {
-                                Integer rowNumber = allRowValue.indexOf(rowCaseMap.get(c)) + 2;
-                                createRecordMap.put(rowCaseMap.get(c), err.getMessage() + errorRowMessage + rowNumber);
-                                // Ensure failureMap is initialized defensively
-                                if (failureMap == null) {
-                                    failureMap = new Map<List<String>, String>();
+            Database.SaveResult[] srList = Database.insert( batchList , false );
+            Map<Id,Case> batchMap = new Map<Id,Case>( batchList );
+
+            if ( ( srList != null ) && ( batchMap != null ) ) {
+                for ( Database.SaveResult sr : srList ) {
+                    Case c = batchMap.get( sr.getId() );
+                    if ( c != null ) {
+                        if ( sr.isSuccess() ) {
+                            caseSuccessList.add( c.Id );
+                        } else {
+                            for (Database.Error err : sr.getErrors()) {
+                                if (rowCaseMap.containsKey(c) && allRowValue.contains(rowCaseMap.get(c))) {
+                                    Integer rowNumber = allRowValue.indexOf(rowCaseMap.get(c)) + 2;
+                                    createRecordMap.put(rowCaseMap.get(c), err.getMessage() + errorRowMessage + rowNumber);
+                                    if (failureMap == null) {
+                                        failureMap = new Map<List<String>, String>();
+                                    }
+                                    failureMap.put(rowCaseMap.get(c), err.getMessage() + errorRowMessage + rowNumber);
                                 }
-                                failureMap.put(rowCaseMap.get(c), err.getMessage() + errorRowMessage + rowNumber);
                             }
                         }
                     }
@@ -150,16 +147,15 @@ public class CaseImportQueueable implements Queueable {
     // Returns and removes the next batch of Case records from caseList
     private List<Case> dequeueNextBatch() {
         List<Case> batchList = new List<Case>();
-        if (this.caseList != null && this.caseList.size() > CaseImportQueueable.batchSize) {
+        if ( ( this.caseList != null ) && !this.caseList.isEmpty() ) {
             for (Integer i = 0; i < CaseImportQueueable.batchSize; i++) {
-                if(!this.caseList.isEmpty() && this.caseList[0]!=null){
-                    batchList.add(this.caseList[0]);
-                    this.caseList.remove(0);
+                if ( !this.caseList.isEmpty() ) {
+                    Case head = this.caseList.remove( 0 );
+                    if ( head != null ) {
+                        batchList.add( head );
+                    }
                 }
             }
-        } else {
-            batchList = this.caseList;
-            this.caseList = new List<Case>();
         }
         return batchList;
     }
