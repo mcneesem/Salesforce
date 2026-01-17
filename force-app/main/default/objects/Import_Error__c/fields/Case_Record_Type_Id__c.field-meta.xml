@@ -4,7 +4,7 @@
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <label>Case Record Type Id</label>
-    <length>20</length>
+    <length>50</length>
     <required>false</required>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
