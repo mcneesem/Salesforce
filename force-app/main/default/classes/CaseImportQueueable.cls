@@ -89,7 +89,13 @@ public class CaseImportQueueable implements Queueable {
             List<Case> batchList = this.dequeueNextBatch();
             Map<list<String>,String> createRecordMap = new Map<list<String>,String>();
             Database.SaveResult[] srList = Database.insert( batchList , false );
-            Map<Id,Case> batchMap = new Map<Id,Case>( batchList );
+            Map<Id,Case> batchMap = new Map<Id,Case>();
+            for( Case ids :batchList ) {
+                if( ids != null ) {
+                    batchMap.put( ids.Id, ids );
+                }
+            } 
+            
 
             if ( ( srList != null ) && ( batchMap != null ) ) {
                 for ( Database.SaveResult sr : srList ) {
