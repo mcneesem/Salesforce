@@ -2,16 +2,15 @@ public class NSP_TerminationForm_Batch implements ISelfSchedulable , Schedulable
     // test w/ NSP_TerminationForm_Batch_Test (88%)
 
     private List<String> ccEmailAddressList = new List<String>();
-    
     //
     // argument-free constructor is required to be "runnable"...
     //
     public NSP_TerminationForm_Batch() {
     }
-    
+
     //
     // ISelfSchedulable
-    //    
+    //
     public static String schedule() {
         String suffix = '';
         if ( Test.isRunningTest() ) {
@@ -23,7 +22,7 @@ public class NSP_TerminationForm_Batch implements ISelfSchedulable , Schedulable
             new NSP_TerminationForm_Batch()
         );
     }
-    
+
     //
     // Scheduleable
     //
@@ -48,7 +47,7 @@ public class NSP_TerminationForm_Batch implements ISelfSchedulable , Schedulable
     public Id run() {
         return Database.executeBatch( new NSP_TerminationForm_Batch() , 100 );
     }
-    
+
     //
     // Batchable
     //
@@ -156,7 +155,6 @@ public class NSP_TerminationForm_Batch implements ISelfSchedulable , Schedulable
             }
         }
     }
-   
 
     //
     // attributes controlled by Custom Settings...
