@@ -156,6 +156,10 @@
                 <behavior>Readonly</behavior>
                 <field>CreatedById</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Product_Solution__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -311,7 +315,7 @@
             <actionName>FSL__NewEvent</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>11</sortOrder>
-        </platformActionListItems> 
+        </platformActionListItems>
         <platformActionListItems>
             <actionName>NewTask</actionName>
             <actionType>QuickAction</actionType>

@@ -1004,6 +1004,16 @@
                 <identifier>RecordNSP_Assigned_Queue_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Product_Solution__c</fieldItem>
+                <identifier>RecordProduct_Solution_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-82d9a520-dd86-4e1f-b501-60f5956aeda5</name>
         <type>Facet</type>
     </flexiPageRegions>
