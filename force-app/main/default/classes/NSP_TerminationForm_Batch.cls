@@ -1,4 +1,4 @@
-public class NSP_TerminationForm_Batch implements ISelfSchedulable , Schedulable , Callable, IJobRunnable, Database.Batchable<SObject> , Database.Stateful {
+public class NSP_TerminationForm_Batch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<SObject> , Database.Stateful {
     // test w/ NSP_TerminationForm_Batch_Test (88%)
 
     private List<String> ccEmailAddressList = new List<String>();
