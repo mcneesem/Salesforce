@@ -90,8 +90,7 @@ public class CaseImportQueueable implements Queueable {
             Map<Id,Case> batchMap = new Map<Id,Case>();
             Map<list<String>,String> createRecordMap = new Map<list<String>,String>();
             if( batchList != null && !batchList.isEmpty() ) {
-
-                batchMap = new Map<Id,Case>();
+                srList = Database.insert( batchList , false );
                 for( Case ids :batchList ) {
                     if( ids != null ) {
                         batchMap.put( ids.Id, ids );
@@ -132,7 +131,6 @@ public class CaseImportQueueable implements Queueable {
         }
     }
 
-	
     private Map<list<String>,String> getError( Database.SaveResult[] srList,Map<Id,Case> batchMap ) {
         Map<list<String>,String> createRecordMap = new Map<list<String>,String>();
         if ( ( srList != null ) && ( batchMap != null ) ) {
