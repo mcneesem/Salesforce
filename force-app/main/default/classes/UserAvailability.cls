@@ -198,10 +198,6 @@ public class UserAvailability {
         return slots;
     }
 
-    private DateTime toDateTime( Long m ) {
-        return ( ( m != null ) ? DateTime.newInstance( m * 60000 ) : null );
-    }
-
     private List<String> toString( List<Event> records ) {
         List<String> response = new List<String>();
         if ( ( records != null ) && !records.isEmpty() ) {
