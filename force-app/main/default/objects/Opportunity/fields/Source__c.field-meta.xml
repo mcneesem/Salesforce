@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Source__c</fullName>
+    <label>Source</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>NSP_PrimaryProduct__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>BPA</fullName>
+                <default>false</default>
+                <label>BPA</label>
+            </value>
+            <value>
+                <fullName>Service</fullName>
+                <default>false</default>
+                <label>Service</label>
+            </value>
+            <value>
+                <fullName>Wingspan (Contractor Management only)</fullName>
+                <default>false</default>
+                <label>Wingspan (Contractor Management only)</label>
+            </value>
+            <value>
+                <fullName>Marketing</fullName>
+                <default>false</default>
+                <label>Marketing</label>
+            </value>
+            <value>
+                <fullName>Premier</fullName>
+                <default>false</default>
+                <label>Premier</label>
+            </value>
+            <value>
+                <fullName>Nurture Campaign</fullName>
+                <default>false</default>
+                <label>Nurture Campaign</label>
+            </value>
+            <value>
+                <fullName>Self-Generated</fullName>
+                <default>false</default>
+                <label>Self-Generated</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Retirement Services</controllingFieldValue>
+            <controllingFieldValue>Contractor Management</controllingFieldValue>
+            <valueName>BPA</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement Services</controllingFieldValue>
+            <controllingFieldValue>Contractor Management</controllingFieldValue>
+            <valueName>Service</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement Services</controllingFieldValue>
+            <controllingFieldValue>Contractor Management</controllingFieldValue>
+            <valueName>Wingspan (Contractor Management only)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement Services</controllingFieldValue>
+            <controllingFieldValue>Contractor Management</controllingFieldValue>
+            <valueName>Marketing</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement Services</controllingFieldValue>
+            <controllingFieldValue>Contractor Management</controllingFieldValue>
+            <valueName>Premier</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement Services</controllingFieldValue>
+            <controllingFieldValue>Contractor Management</controllingFieldValue>
+            <valueName>Nurture Campaign</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retirement Services</controllingFieldValue>
+            <controllingFieldValue>Contractor Management</controllingFieldValue>
+            <valueName>Self-Generated</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>
