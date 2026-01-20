@@ -5,6 +5,29 @@
     <businessProcess>Opportunity</businessProcess>
     <label>Opportunity</label>
     <picklistValues>
+        <picklist>AVA_SFCLOUD__Transport__c</picklist>
+        <values>
+            <fullName>Buyer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>None</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Seller</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ThirdPartyForBuyer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ThirdPartyForSeller</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Closed_Lost_Group__c</picklist>
         <values>
             <fullName>NCS</fullName>
@@ -4866,11 +4889,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>NCI-RS</fullName>
+            <fullName>2026 Quick Start</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>2026 Quick Start</fullName>
+            <fullName>NCI-RS</fullName>
             <default>false</default>
         </values>
     </picklistValues>

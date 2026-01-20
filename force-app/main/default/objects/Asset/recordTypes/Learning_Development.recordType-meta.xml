@@ -5,6 +5,21 @@
     <compactLayoutAssignment>NSP_Custom_Compact_Layout</compactLayoutAssignment>
     <label>Learning &amp; Development</label>
     <picklistValues>
+        <picklist>Component__c</picklist>
+        <values>
+            <fullName>Health %26 Welfare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Property %26 Casualty</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Revolution</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>ConsequenceOfFailure</picklist>
         <values>
             <fullName>Critical</fullName>
@@ -93,6 +108,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>E_Verify_Services__c</picklist>
+        <values>
+            <fullName>Client Managed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NSP Managed - All Employees</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NSP Managed - Required States</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>HRCore_Contract_Changes__c</picklist>
         <values>
             <fullName>Contract Term</fullName>
@@ -105,6 +135,59 @@
         <values>
             <fullName>Termination Clause</fullName>
             <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>HRCore_Region__c</picklist>
+        <values>
+            <fullName>Business Team</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Central</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>East</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Middle Market</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>West</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>HRRC_Access__c</picklist>
+        <values>
+            <fullName>Active</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inactive</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Optout</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>I_9_Availability__c</picklist>
+        <values>
+            <fullName>I-9 Exception</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Opt-Out</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Standard</fullName>
+            <default>true</default>
         </values>
     </picklistValues>
     <picklistValues>
