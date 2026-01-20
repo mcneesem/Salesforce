@@ -1,10 +1,10 @@
-public class UserAvailability2 {
+public class UserAvailability {
     private List<Long> busyStarts = new List<Long>();
     private List<Long> busyEnds = new List<Long>();
     private List<Long> mergedStarts = new List<Long>();
     private List<Long> mergedEnds = new List<Long>();
     public List<Event> busy = new List<Event>();
-	private List<Event> fused = new List<Event>();
+    private List<Event> fused = new List<Event>();
     private Integer slotSizeMinutes = 15;
      // find the available time slots within the window of time that do not conflict with the existing Event records...
     public List<String> getAvailableSlots(
@@ -88,7 +88,7 @@ public class UserAvailability2 {
                     // FUSED: [600----------720)
                     // set last fused busy end time to the max of current vs last fused...
                     if ( current.EndDateTime > lastFused.EndDateTime ) {
-                        lastFused.EndDateTime = current.EndDateTime;                        
+                        lastFused.EndDateTime = current.EndDateTime;
                     }
                     this.fused[lastIndex] = lastFused;
                 } else {
@@ -98,7 +98,7 @@ public class UserAvailability2 {
             }
         }
     }
-	
+
     private Boolean isOverlapping( Event a , Event b ) {
         return ( ( a != null )
             && ( b != null )
@@ -110,7 +110,7 @@ public class UserAvailability2 {
             && ( b.StartDateTime < a.EndDateTime )
         );
     }
-    
+
     private String toString( Event record ) {
         String response = null;
         if ( ( record != null )
@@ -135,7 +135,7 @@ public class UserAvailability2 {
         }
         if ( this.fused.isEmpty() ) {
             available = this.splitRange( window );
-            
+
         } else {
             DateTime pointer = window.StartDateTime;
             for ( Event compare : this.fused ) {
@@ -165,7 +165,7 @@ public class UserAvailability2 {
         }
         return available;
     }
-    
+
     // split range into discrete slots...
     private List<String> splitRange( Event range ) {
         return this.splitRange( null , range );
@@ -200,7 +200,7 @@ public class UserAvailability2 {
 
     private String formatRange(Long startMin, Long endMin) {
         Datetime ds = this.toDateTime( startMin );
-		Datetime de = this.toDateTime( endMin );
+        Datetime de = this.toDateTime( endMin );
 
         return ds.format('yyyy-MM-dd HH:mm') + ' - ' + de.format('HH:mm');
     }
