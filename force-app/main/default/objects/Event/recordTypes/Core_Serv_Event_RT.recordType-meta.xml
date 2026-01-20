@@ -666,7 +666,7 @@
         <values>
             <fullName>Core Service</fullName>
             <default>false</default>
-        </values>        
+        </values>
         <values>
             <fullName>Demo</fullName>
             <default>false</default>
