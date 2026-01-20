@@ -4190,6 +4190,19 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentName>support:emailSummaries</componentName>
+                <identifier>support_emailSummaries</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.StandardPermission.SummarizationUser}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>label</name>
                     <value>Tabs</value>
