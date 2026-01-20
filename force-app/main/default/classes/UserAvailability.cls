@@ -198,18 +198,8 @@ public class UserAvailability {
         return slots;
     }
 
-    private String formatRange(Long startMin, Long endMin) {
-        Datetime ds = this.toDateTime( startMin );
-        Datetime de = this.toDateTime( endMin );
-
-        return ds.format('yyyy-MM-dd HH:mm') + ' - ' + de.format('HH:mm');
-    }
     private DateTime toDateTime( Long m ) {
         return ( ( m != null ) ? DateTime.newInstance( m * 60000 ) : null );
-    }
-
-    private Long toMinutes( DateTime t ) {
-        return ( ( t != null ) ? ( t.getTime() / 60000 ) : null );
     }
 
     private List<String> toString( List<Event> records ) {
