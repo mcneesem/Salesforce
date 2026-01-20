@@ -1,23 +1,23 @@
-//- Does NOT modify UserAvailability2. It delegates to it.
+//- Does NOT modify UserAvailability. It delegates to it.
 //- Windows are constructed in the running user's timezone via Date.today().
 public with sharing class UserAvailabilityService {
-   
-	//Returns the 7 available days based on Business Hours
+
+    //Returns the 7 available days based on Business Hours
     @AuraEnabled(cacheable=true)
     public static List<Datetime> businessDays() {
         Date today = Date.today();
         Integer count = 0;
         List<Datetime> businessDaysLst = new List<Datetime>();
         BusinessHours bh = [SELECT Id FROM BusinessHours WHERE IsDefault = true LIMIT 1];
-        
+
         try {
             // Initialize next business start
             Datetime nextBusinessStart = BusinessHours.nextStartDate(bh.Id, System.now());
-            
+
             // Collect next 7 business days at 8 AM
             while (count < 7 && nextBusinessStart != null) {
                 Datetime businessDay = Datetime.newInstance(nextBusinessStart.year(), nextBusinessStart.month(), nextBusinessStart.day(), 8, 0, 0);
-                businessDaysLst.add(businessDay);                
+                businessDaysLst.add(businessDay);
                 nextBusinessStart = BusinessHours.nextStartDate(bh.Id, nextBusinessStart.addDays(1));
                 count++;
             }
@@ -26,13 +26,13 @@ public with sharing class UserAvailabilityService {
                 UserAvailabilityService.class.getName() ,
                 'businessDays' ,
                 e
-            );    
+            );
         }
-        
+
         return businessDaysLst;
     }
-	
-    //Creates the start and end dates that will be used as the windows 
+
+    //Creates the start and end dates that will be used as the windows
     //for availability calculation
     @AuraEnabled(cacheable=true)
     public static Map<List<List<Datetime>>,List<List<Datetime>>> getBusinessDaysMatrix() {
@@ -46,7 +46,7 @@ public with sharing class UserAvailabilityService {
         Map<Integer, Integer> startTimeSlotsMinutes = new Map<Integer, Integer>{1 => 0, 2 => 30, 3 => 0, 4 => 30, 5 => 0, 6 => 30};
         Map<Integer, Integer> endTimeSlots = new Map<Integer, Integer>{1 => 9,2 => 9, 3 => 10, 4 => 10, 5 => 11, 6 => 12};
         Map<Integer, Integer> endTimeSlotsMinutes = new Map<Integer, Integer>{1 => 0, 2 => 30, 3 => 0, 4 => 30, 5 => 0, 6 => 30};
-		
+
         //Loop matching the number of time slots
         for (Integer j = 0; j < 6; j++) {
             List<Datetime> startDays = new List<Datetime>();
@@ -62,7 +62,7 @@ public with sharing class UserAvailabilityService {
                 startDays.add(DateTime.newInstance(dayDatetime.year(), dayDatetime.month(), dayDatetime.day(), startTimeHour, startTimeMinute, 0));
                 endDays.add(DateTime.newInstance(dayDatetime.year(), dayDatetime.month(), dayDatetime.day(), endTimeHour, endTimeMinute, 0));
             }
-			//Organizing days in a separate list to effectively group them by time slots
+            //Organizing days in a separate list to effectively group them by time slots
             if (startDays.size() > 0) {
                 //startDaysList((2026-01-20 8:00),(2026-01-21 8:30),(2026-01-22 9:00)...)
                 startDaysList.add(startDays);
@@ -78,7 +78,7 @@ public with sharing class UserAvailabilityService {
         daysMap.put(startDaysList,endDaysList);
         return daysMap;
     }
-	
+
     //Calculates how many available slots the user has by creating events and leveraging existing existing calculation
     @AuraEnabled(cacheable=true)
     public static List<List<Integer>> getCountsMatrix(Id userId, Integer bufferMinutes, Integer stepMinutes) {
@@ -90,7 +90,7 @@ public with sharing class UserAvailabilityService {
         Map<List<List<Datetime>>,List<List<Datetime>>> daysOfWeek = getBusinessDaysMatrix();
         List<Datetime> startTimes = new List<Datetime>();
         List<Datetime> endTimes = new List<Datetime>();
-		// Extract start and end times properly maintaining the pairing
+        // Extract start and end times properly maintaining the pairing
         for(List<List<Datetime>> startTimeGroups : daysOfWeek.keySet()) {
             List<List<Datetime>> endTimeGroups = daysOfWeek.get(startTimeGroups);
             for(Integer i = 0; i < startTimeGroups.size(); i++) {
@@ -122,7 +122,7 @@ public with sharing class UserAvailabilityService {
             windows.add(new Event(StartDateTime = startTimes[i], EndDateTime = endTimes[i]));
         }
         // Delegate to existing algorithm
-        UserAvailability2 calc = new UserAvailability2();
+        UserAvailability calc = new UserAvailability();
         List<List<String>> availableSlotsList = new List<List<String>>();
         List<Integer> clearList = new List<Integer>();
         List<List<Integer>> listSizeMatrix = new List<List<Integer>>();
