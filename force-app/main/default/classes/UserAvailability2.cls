@@ -1,0 +1,224 @@
+public class UserAvailability2 {
+    private List<Long> busyStarts = new List<Long>();
+    private List<Long> busyEnds = new List<Long>();
+    private List<Long> mergedStarts = new List<Long>();
+    private List<Long> mergedEnds = new List<Long>();
+    public List<Event> busy = new List<Event>();
+	private List<Event> fused = new List<Event>();
+    private Integer slotSizeMinutes = 15;
+     // find the available time slots within the window of time that do not conflict with the existing Event records...
+    public List<String> getAvailableSlots(
+        List<Event> records ,
+        Event window ,
+        Integer buffer ,
+        Integer steps
+        )
+    {
+        // reset...
+        this.busy = new List<Event>();
+        this.fused = new List<Event>();
+        // initialize...
+        if ( records == null ) {
+            records = new List<Event>();
+        }
+        if ( buffer == null ) {
+            buffer = 0;
+        }
+        if ( steps == null ) {
+            steps = 1;
+        }
+        List<String> available = null;
+        if ( window != null ) {
+            for ( Event record : records ) {
+                if ( ( record.StartDateTime != null )
+                    && ( record.EndDateTime != null )
+                    )
+                {
+                    Datetime recordStart = record.StartDateTime.addMinutes( -1 * buffer );
+                    Datetime recordEnd = record.EndDateTime.addMinutes( 1 * buffer );
+                    if ( ( recordStart < window.EndDateTime )
+                        && ( recordEnd > window.StartDateTime )
+                       )
+                    {
+                        Event b = new Event(
+                            StartDateTime=recordStart ,
+                            EndDateTime=recordEnd
+                        );
+                        // floor the busy start time to match the window start time...
+                        if ( window.StartDateTime > b.StartDateTime ) {
+                            b.StartDateTime = window.StartDateTime;
+                        }
+                        // ceiling the busy end time to match the window end time...
+                        if ( window.EndDateTime < b.EndDateTime ) {
+                            b.EndDateTime = window.EndDateTime;
+                        }
+                        this.busy.add( b );
+                    }
+                }
+            }
+            this.fuseSlots();
+            this.slotSizeMinutes = steps;
+            available = this.availableSlots( window );
+        }
+        return available;
+    }
+
+    private void fuseSlots() {
+        if ( this.busy == null ) {
+            this.busy = new List<Event>();
+        }
+        if ( this.fused == null ) {
+            this.fused = new List<Event>();
+        }
+        for ( Event b : this.busy ) {
+            Event current = new Event(
+                StartDateTime=b.StartDateTime ,
+                EndDateTime=b.EndDateTime
+            );
+            if ( this.fused.isEmpty() ) {
+                // add the current busy slot when the fused busy list is empty...
+                this.fused.add( current );
+            } else {
+                // get the last fused busy slot...
+                Integer lastIndex = ( this.fused.size() - 1 );
+                Event lastFused = this.fused[lastIndex];
+                if ( this.isOverlapping( lastFused , current ) ) {
+                    //     A: [600-----660)
+                    //     B:     [630------720)
+                    // FUSED: [600----------720)
+                    // set last fused busy end time to the max of current vs last fused...
+                    if ( current.EndDateTime > lastFused.EndDateTime ) {
+                        lastFused.EndDateTime = current.EndDateTime;                        
+                    }
+                    this.fused[lastIndex] = lastFused;
+                } else {
+                    // add the current busy slot when the there is no overlap with the current fused busy list...
+                    this.fused.add( current );
+                }
+            }
+        }
+    }
+	
+    private Boolean isOverlapping( Event a , Event b ) {
+        return ( ( a != null )
+            && ( b != null )
+            && ( a.StartDateTime != null )
+            && ( a.EndDateTime != null )
+            && ( b.StartDateTime != null )
+            && ( b.EndDateTime != null )
+            && ( a.StartDateTime < b.EndDateTime )
+            && ( b.StartDateTime < a.EndDateTime )
+        );
+    }
+    
+    private String toString( Event record ) {
+        String response = null;
+        if ( ( record != null )
+            && ( record.StartDateTime != null )
+            && ( record.EndDateTime != null )
+            )
+        {
+            response = ''
+                + record.StartDateTime.format( 'yyyy-MM-dd HH:mm' )
+                + ' - '
+                + record.EndDateTime.format( 'HH:mm' )
+                ;
+        }
+        return response;
+    }
+
+    // compare the fuzed/merged busy slots to the window for all slots, returning only the available slots, split on the step size in minutes...
+    private List<String> availableSlots( Event window ) {
+        List<String> available = null;
+        if ( this.fused == null ) {
+            this.fused = new List<Event>();
+        }
+        if ( this.fused.isEmpty() ) {
+            available = this.splitRange( window );
+            
+        } else {
+            DateTime pointer = window.StartDateTime;
+            for ( Event compare : this.fused ) {
+                if ( pointer < compare.StartDateTime ) {
+                    available = this.splitRange(
+                        available ,
+                        new Event(
+                            StartDateTime=pointer ,
+                            EndDateTime=compare.StartDateTime
+                        )
+                    );
+                }
+                // set pointer to the max of pointer vs compare.End...
+                if ( compare.EndDateTime > pointer ) {
+                    pointer = compare.EndDateTime;
+                }
+            }
+            if ( pointer < window.EndDateTime ) {
+                available = this.splitRange(
+                    available ,
+                    new Event(
+                        StartDateTime=pointer ,
+                        EndDateTime=window.EndDateTime
+                    )
+                );
+            }
+        }
+        return available;
+    }
+    
+    // split range into discrete slots...
+    private List<String> splitRange( Event range ) {
+        return this.splitRange( null , range );
+    }
+    private List<String> splitRange( List<String> slots , Event range ) {
+        if ( slots == null ) {
+            slots = new List<String>();
+        }
+        if ( ( this.slotSizeMinutes == null ) || ( this.slotSizeMinutes < 1 ) ) {
+            this.slotSizeMinutes = 1;
+        }
+        if ( ( range != null )
+            && ( range.StartDateTime != null )
+            && ( range.EndDateTime != null )
+            )
+        {
+            DateTime temp = range.StartDateTime;
+            while ( temp.addMinutes( this.slotSizeMinutes ) <= range.EndDateTime ) {
+                slots.add(
+                    this.toString(
+                        new Event(
+                            StartDateTime=temp ,
+                            EndDateTime=temp.addMinutes( this.slotSizeMinutes )
+                        )
+                    )
+                );
+                temp = temp.addMinutes( this.slotSizeMinutes );
+            }
+        }
+        return slots;
+    }
+
+    private String formatRange(Long startMin, Long endMin) {
+        Datetime ds = this.toDateTime( startMin );
+		Datetime de = this.toDateTime( endMin );
+
+        return ds.format('yyyy-MM-dd HH:mm') + ' - ' + de.format('HH:mm');
+    }
+    private DateTime toDateTime( Long m ) {
+        return ( ( m != null ) ? DateTime.newInstance( m * 60000 ) : null );
+    }
+
+    private Long toMinutes( DateTime t ) {
+        return ( ( t != null ) ? ( t.getTime() / 60000 ) : null );
+    }
+
+    private List<String> toString( List<Event> records ) {
+        List<String> response = new List<String>();
+        if ( ( records != null ) && !records.isEmpty() ) {
+            for ( Event record : records ) {
+                response.add( this.toString( record ) );
+            }
+        }
+        return response;
+    }
+}
