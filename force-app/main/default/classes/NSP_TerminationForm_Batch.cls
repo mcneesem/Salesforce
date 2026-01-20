@@ -2,23 +2,27 @@ public class NSP_TerminationForm_Batch implements ISelfSchedulable , Schedulable
     // test w/ NSP_TerminationForm_Batch_Test (88%)
 
     private List<String> ccEmailAddressList = new List<String>();
+
     //
     // argument-free constructor is required to be "runnable"...
     //
+
     public NSP_TerminationForm_Batch() {
     }
 
     //
     // ISelfSchedulable
     //
+
+    // runs M-F at 3:45pm central...
     public static String schedule() {
         String suffix = '';
         if ( Test.isRunningTest() ) {
             suffix = ' ~ TEST';
         }
         return System.schedule(
-            'NSP_TerminationForm_Batch ~ everyweekday at 3:45 PM' + suffix ,
-            '45 15 * * 1-5', // this is for Every week Day at 3:45 PM...
+            'NSP_TerminationForm_Batch ~ process the termination form records and send the notification email ~ M-F at 3:45 PM' + suffix ,
+            '0 45 15 ? * MON-FRI *' ,
             new NSP_TerminationForm_Batch()
         );
     }
@@ -26,13 +30,15 @@ public class NSP_TerminationForm_Batch implements ISelfSchedulable , Schedulable
     //
     // Scheduleable
     //
-    public void execute( SchedulableContext scon ) {
+
+    public void execute( SchedulableContext sc ) {
         this.call( 'run' , null );
     }
 
     //
     // Callable
     //
+
     public Object call( String action , Map<String,Object> args ) {
         Object response = null;
         if ( action == 'run' ) {
@@ -44,6 +50,7 @@ public class NSP_TerminationForm_Batch implements ISelfSchedulable , Schedulable
     //
     // IJobRunnable
     //
+
     public Id run() {
         return Database.executeBatch( new NSP_TerminationForm_Batch() , 100 );
     }
