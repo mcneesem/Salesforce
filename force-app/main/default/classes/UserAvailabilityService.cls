@@ -1,6 +1,7 @@
+public with sharing class UserAvailabilityService {
 //- Does NOT modify UserAvailability. It delegates to it.
 //- Windows are constructed in the running user's timezone via Date.today().
-public with sharing class UserAvailabilityService {
+
 
     //Returns the 7 available days based on Business Hours
     @AuraEnabled(cacheable=true)
@@ -34,8 +35,7 @@ public with sharing class UserAvailabilityService {
 
     //Creates the start and end dates that will be used as the windows
     //for availability calculation
-    @AuraEnabled(cacheable=true)
-    public static Map<List<List<Datetime>>,List<List<Datetime>>> getBusinessDaysMatrix() {
+    private static Map<List<List<Datetime>>,List<List<Datetime>>> getBusinessDaysMatrix() {
         Map<List<List<Datetime>>,List<List<Datetime>>> daysMap = new Map<List<List<Datetime>>,List<List<Datetime>>>();
         List<List<Datetime>> startDaysList = new List<List<Datetime>>();
         List<List<Datetime>> endDaysList = new List<List<Datetime>>();
@@ -85,7 +85,7 @@ public with sharing class UserAvailabilityService {
         Id effectiveUserId = (userId == null) ? UserInfo.getUserId() : userId;
         Integer buffer = (bufferMinutes == null) ? 0 : bufferMinutes;
         Integer step = (stepMinutes == null) ? 30 : stepMinutes;
-
+        List<List<Integer>> listSizeMatrix = new List<List<Integer>>();
         // Get the business days matrix structure
         Map<List<List<Datetime>>,List<List<Datetime>>> daysOfWeek = getBusinessDaysMatrix();
         List<Datetime> startTimes = new List<Datetime>();
@@ -106,7 +106,7 @@ public with sharing class UserAvailabilityService {
         }
         // Query user events once for all windows
         List<Event> busy = [
-            SELECT Id, StartDateTime, EndDateTime, Subject
+            SELECT Id, StartDateTime, EndDateTime
             FROM Event
             WHERE OwnerId = :effectiveUserId
               AND StartDateTime < :endTimes[endTimes.size()-1]
@@ -124,13 +124,19 @@ public with sharing class UserAvailabilityService {
         // Delegate to existing algorithm
         UserAvailability calc = new UserAvailability();
         List<List<String>> availableSlotsList = new List<List<String>>();
-        List<Integer> clearList = new List<Integer>();
-        List<List<Integer>> listSizeMatrix = new List<List<Integer>>();
 
         for(Event slots: windows) {
             availableSlotsList.add(calc.getAvailableSlots(busy, slots, buffer, step));
         }
 
+        listSizeMatrix = getAvailabilityMatrix(availableSlotsList);
+        return listSizeMatrix;
+    }
+
+    //Returns availability Matrix for given time slots and 7 business days
+    private static List<List<Integer>> getAvailabilityMatrix(List<List<String>> availableSlotsList) {
+        List<List<Integer>> listSizeMatrix = new List<List<Integer>>();
+        List<Integer> clearList = new List<Integer>();
         // Process results into matrix format (6 rows × 7 columns)
         // Rows will be dynamic once we get the values from a custom metadata
         for (List<String> slots : availableSlotsList) {
