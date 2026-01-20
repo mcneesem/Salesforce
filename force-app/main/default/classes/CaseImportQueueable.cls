@@ -85,39 +85,21 @@ public class CaseImportQueueable implements Queueable {
 
     public void execute(QueueableContext context) {
         try{
-            String errorRowMessage = '. Error occurred at row number - ';
             List<Case> batchList = this.dequeueNextBatch();
-            Map<list<String>,String> createRecordMap = new Map<list<String>,String>();
-            Database.SaveResult[] srList = Database.insert( batchList , false );
+            Database.SaveResult[] srList = null;
             Map<Id,Case> batchMap = new Map<Id,Case>();
-            for( Case ids :batchList ) {
-                if( ids != null ) {
-                    batchMap.put( ids.Id, ids );
-                }
-            } 
-            
+            Map<list<String>,String> createRecordMap = new Map<list<String>,String>();
+            if( batchList != null && !batchList.isEmpty() ) {
 
-            if ( ( srList != null ) && ( batchMap != null ) ) {
-                for ( Database.SaveResult sr : srList ) {
-                    Case c = batchMap.get( sr.getId() );
-                    if ( c != null ) {
-                        if ( sr.isSuccess() ) {
-                            caseSuccessList.add( c.Id );
-                        } else {
-                            for (Database.Error err : sr.getErrors()) {
-                                if (rowCaseMap.containsKey(c) && allRowValue.contains(rowCaseMap.get(c))) {
-                                    Integer rowNumber = allRowValue.indexOf(rowCaseMap.get(c)) + 2;
-                                    createRecordMap.put(rowCaseMap.get(c), err.getMessage() + errorRowMessage + rowNumber);
-                                    if (failureMap == null) {
-                                        failureMap = new Map<List<String>, String>();
-                                    }
-                                    failureMap.put(rowCaseMap.get(c), err.getMessage() + errorRowMessage + rowNumber);
-                                }
-                            }
-                        }
+                batchMap = new Map<Id,Case>();
+                for( Case ids :batchList ) {
+                    if( ids != null ) {
+                        batchMap.put( ids.Id, ids );
                     }
                 }
             }
+            
+            createRecordMap = this.getError( srList,batchMap );
             if (createRecordMap.size() > 0) {
                 FileUploadController.createImportError(createRecordMap);
             }
@@ -150,6 +132,39 @@ public class CaseImportQueueable implements Queueable {
         }
     }
 
+	
+    private Map<list<String>,String> getError( Database.SaveResult[] srList,Map<Id,Case> batchMap ) {
+        Map<list<String>,String> createRecordMap = new Map<list<String>,String>();
+        if ( ( srList != null ) && ( batchMap != null ) ) {
+            for ( Database.SaveResult sr : srList ) {
+                Case c = batchMap.get( sr.getId() );
+                if ( c != null ) {
+                    if ( sr.isSuccess() ) {
+                        caseSuccessList.add( c.Id );
+                    } else {
+                        createRecordMap = this.getFailureMap( sr,c );
+                    }
+                }
+            }
+        }
+        return createRecordMap;
+    }
+    
+    private Map<list<String>,String> getFailureMap( Database.SaveResult sr, Case c ) {
+        String errorRowMessage = '. Error occurred at row number - ';
+        Map<list<String>,String> createRecordMap = new Map<list<String>,String>();
+        for (Database.Error err : sr.getErrors()) {
+            if (rowCaseMap.containsKey(c) && allRowValue.contains(rowCaseMap.get(c))) {
+                Integer rowNumber = allRowValue.indexOf(rowCaseMap.get(c)) + 2;
+                createRecordMap.put(rowCaseMap.get(c), err.getMessage() + errorRowMessage + rowNumber);
+                if (failureMap == null) {
+                    failureMap = new Map<List<String>, String>();
+                }
+                failureMap.put(rowCaseMap.get(c), err.getMessage() + errorRowMessage + rowNumber);
+            }
+        }
+        return createRecordMap;
+    }
     // Returns and removes the next batch of Case records from caseList
     private List<Case> dequeueNextBatch() {
         List<Case> batchList = new List<Case>();
