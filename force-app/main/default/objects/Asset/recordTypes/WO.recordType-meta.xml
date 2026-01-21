@@ -5,6 +5,21 @@
     <compactLayoutAssignment>WO_Asset_Compact_Layout</compactLayoutAssignment>
     <label>WO</label>
     <picklistValues>
+        <picklist>Component__c</picklist>
+        <values>
+            <fullName>Health %26 Welfare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Property %26 Casualty</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Revolution</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Credit__c</picklist>
         <values>
             <fullName>6301</fullName>
@@ -96,6 +111,44 @@
         </values>
         <values>
             <fullName>Termination Clause</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>HRCore_Region__c</picklist>
+        <values>
+            <fullName>Business Team</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Central</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>East</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Middle Market</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>West</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>HRRC_Access__c</picklist>
+        <values>
+            <fullName>Active</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inactive</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Optout</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2201,6 +2254,10 @@
         </values>
         <values>
             <fullName>4494</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4495</fullName>
             <default>false</default>
         </values>
         <values>

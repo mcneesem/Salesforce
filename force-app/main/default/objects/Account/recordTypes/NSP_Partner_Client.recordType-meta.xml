@@ -6,6 +6,29 @@
     <description>Partner- Client Record Type</description>
     <label>Partner/Client</label>
     <picklistValues>
+        <picklist>AVA_SFCLOUD__Transport__c</picklist>
+        <values>
+            <fullName>Buyer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>None</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Seller</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ThirdPartyForBuyer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ThirdPartyForSeller</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>AccountSource</picklist>
         <values>
             <fullName>Advertisement</fullName>
@@ -1170,6 +1193,10 @@
         </values>
         <values>
             <fullName>4494</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4495</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4975,6 +5002,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>4495</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>4499</fullName>
             <default>false</default>
         </values>
@@ -7777,6 +7808,17 @@
         </values>
         <values>
             <fullName>Subsidiary</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Private_Capital_Firm__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
             <default>false</default>
         </values>
     </picklistValues>
