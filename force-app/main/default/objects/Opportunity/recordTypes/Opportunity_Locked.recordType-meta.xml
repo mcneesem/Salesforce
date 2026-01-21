@@ -17,6 +17,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Client_Type__c</picklist>
+        <values>
+            <fullName>Client</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prospect</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Closed_Lost_Group__c</picklist>
         <values>
             <fullName>NCS</fullName>
@@ -4866,6 +4877,37 @@
         </values>
         <values>
             <fullName>2026 Quick Start</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Source__c</picklist>
+        <values>
+            <fullName>BPA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marketing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nurture Campaign</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Premier</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Self-Generated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wingspan %28Contractor Management only%29</fullName>
             <default>false</default>
         </values>
     </picklistValues>
