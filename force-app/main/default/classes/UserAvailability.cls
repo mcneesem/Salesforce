@@ -1,9 +1,6 @@
-public class UserAvailability {
-    private List<Long> busyStarts = new List<Long>();
-    private List<Long> busyEnds = new List<Long>();
-    private List<Long> mergedStarts = new List<Long>();
-    private List<Long> mergedEnds = new List<Long>();
-    public List<Event> busy = new List<Event>();
+public without sharing class UserAvailability2 {
+
+    private List<Event> busy = new List<Event>();
     private List<Event> fused = new List<Event>();
     private Integer slotSizeMinutes = 15;
      // find the available time slots within the window of time that do not conflict with the existing Event records...
@@ -40,19 +37,13 @@ public class UserAvailability {
                         && ( recordEnd > window.StartDateTime )
                        )
                     {
-                        Event b = new Event(
-                            StartDateTime=recordStart ,
-                            EndDateTime=recordEnd
+                        this.addBusyEvent(
+                            new Event(
+                                StartDateTime=recordStart ,
+                                EndDateTime=recordEnd
+                            ) ,
+                            window
                         );
-                        // floor the busy start time to match the window start time...
-                        if ( window.StartDateTime > b.StartDateTime ) {
-                            b.StartDateTime = window.StartDateTime;
-                        }
-                        // ceiling the busy end time to match the window end time...
-                        if ( window.EndDateTime < b.EndDateTime ) {
-                            b.EndDateTime = window.EndDateTime;
-                        }
-                        this.busy.add( b );
                     }
                 }
             }
@@ -61,6 +52,28 @@ public class UserAvailability {
             available = this.availableSlots( window );
         }
         return available;
+    }
+
+    private void addBusyEvent( Event b , Event window ) {
+        if ( ( this.busy != null )
+            && ( b != null )
+            && ( b.StartDateTime != null )
+            && ( b.EndDateTime != null )
+            && ( window != null )
+            && ( window.StartDateTime != null )
+            && ( window.EndDateTime != null )
+            )
+        {
+            // floor the busy start time to match the window start time...
+            if ( window.StartDateTime > b.StartDateTime ) {
+                b.StartDateTime = window.StartDateTime;
+            }
+            // ceiling the busy end time to match the window end time...
+            if ( window.EndDateTime < b.EndDateTime ) {
+                b.EndDateTime = window.EndDateTime;
+            }
+            this.busy.add( b );
+        }
     }
 
     private void fuseSlots() {
