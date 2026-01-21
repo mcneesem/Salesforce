@@ -48,6 +48,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.NSP_Affiliations__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.NSP_Client_have_the_Sedgwick_OSHA_300__c</field>
         <readable>true</readable>
     </fieldPermissions>
