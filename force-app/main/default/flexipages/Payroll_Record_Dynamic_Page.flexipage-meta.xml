@@ -1070,6 +1070,30 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_First_Pay_Date__c</fieldItem>
                 <identifier>RecordNSP_First_Pay_Date__cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Source__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Workday</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_First_Pay_Date__c</fieldItem>
+                <identifier>RecordNSP_First_Pay_Date_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Source__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>AIMS</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1184,6 +1208,30 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Seasonal_Employer__c</fieldItem>
                 <identifier>RecordNSP_Seasonal_Employer__cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Source__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Workday</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Seasonal_Employer__c</fieldItem>
+                <identifier>RecordNSP_Seasonal_Employer_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Source__c}</leftValue>
+                        <operator>CONTAINS</operator>
+                        <rightValue>AIMS</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-d4f00ac1-25f6-460b-b4f3-70dceae5bc0e</name>
