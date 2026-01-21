@@ -5,13 +5,25 @@
     <businessProcess>Opportunity</businessProcess>
     <label>Opportunity</label>
     <picklistValues>
-        <picklist>Client_Type__c</picklist>
+        <picklist>AVA_SFCLOUD__Transport__c</picklist>
         <values>
-            <fullName>Client</fullName>
+            <fullName>Buyer</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Prospect</fullName>
+            <fullName>None</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Seller</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ThirdPartyForBuyer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ThirdPartyForSeller</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2172,6 +2184,10 @@
         </values>
         <values>
             <fullName>4494</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4495</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4758,37 +4774,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Source__c</picklist>
-        <values>
-            <fullName>BPA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Marketing</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Nurture Campaign</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Premier</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Self-Generated</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Service</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Wingspan %28Contractor Management only%29</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>Oppy_Type_NSP__c</picklist>
         <values>
             <fullName>BPS</fullName>
@@ -4915,11 +4900,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>NCI-RS</fullName>
+            <fullName>2026 Quick Start</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>2026 Quick Start</fullName>
+            <fullName>NCI-RS</fullName>
             <default>false</default>
         </values>
     </picklistValues>
