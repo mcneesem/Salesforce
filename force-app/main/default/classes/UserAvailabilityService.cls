@@ -9,17 +9,24 @@ public with sharing class UserAvailabilityService {
         Date today = Date.today();
         Integer count = 0;
         List<Datetime> businessDaysLst = new List<Datetime>();
-        BusinessHours bh = [SELECT Id FROM BusinessHours WHERE IsDefault = true LIMIT 1];
+        List<BusinessHours> bh = [SELECT Id FROM BusinessHours WHERE IsDefault = true LIMIT 1];
 
         try {
             // Initialize next business start
-            Datetime nextBusinessStart = BusinessHours.nextStartDate(bh.Id, System.now());
+            Datetime nextBusinessStart = BusinessHours.nextStartDate(bh[0].Id, System.now());
 
             // Collect next 7 business days at 8 AM
             while (count < 7 && nextBusinessStart != null) {
-                Datetime businessDay = Datetime.newInstance(nextBusinessStart.year(), nextBusinessStart.month(), nextBusinessStart.day(), 8, 0, 0);
+                Datetime businessDay = Datetime.newInstance(
+                    nextBusinessStart.year() ,
+                    nextBusinessStart.month() ,
+                    nextBusinessStart.day() ,
+                    nextBusinessStart.hour() ,
+                    nextBusinessStart.minute() ,
+                    nextBusinessStart.second()
+                );
                 businessDaysLst.add(businessDay);
-                nextBusinessStart = BusinessHours.nextStartDate(bh.Id, nextBusinessStart.addDays(1));
+                nextBusinessStart = BusinessHours.nextStartDate(bh[0].Id, nextBusinessStart.addDays(1));
                 count++;
             }
         } catch (Exception e) {
