@@ -23,6 +23,11 @@
                 <label>Software</label>
             </value>
             <value>
+                <fullName>Clocks</fullName>
+                <default>false</default>
+                <label>Clocks</label>
+            </value>
+            <value>
                 <fullName>Ethernet</fullName>
                 <default>false</default>
                 <label>Ethernet</label>
