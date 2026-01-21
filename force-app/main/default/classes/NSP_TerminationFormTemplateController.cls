@@ -137,7 +137,6 @@ public with sharing class NSP_TerminationFormTemplateController {
                 ( Approval_Date__c > :NSP_TerminationForm_Batch.dateBefore )
                 AND ( Approval_Date__c < :NSP_TerminationForm_Batch.dateAfter )
                 AND ( NSP_Status__c = 'Term Team Approved' )
-                AND ( NSP_Project_Task__r.pse__Project__r.pse__Project_Status__c != 'Complete' )
                 AND ( NSP_Project_Task__r.Name = :NSP_ServiceConstants.REINSTATEMENT_REQUESTED_TASK )
             )
         ];
@@ -177,7 +176,6 @@ public with sharing class NSP_TerminationFormTemplateController {
                 ( Approval_Date__c > :NSP_TerminationForm_Batch.dateBefore )
                 AND ( Approval_Date__c < :NSP_TerminationForm_Batch.dateAfter )
                 AND ( NSP_Status__c = 'Term Team Approved' )
-                AND ( NSP_Project_Task__r.pse__Project__r.pse__Project_Status__c != 'Complete' )
                 AND ( NSP_Project_Task__r.Name = 'Submit Termination Checklist' )
             )
         ];
