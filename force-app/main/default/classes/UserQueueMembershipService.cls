@@ -41,8 +41,7 @@ public with sharing class UserQueueMembershipService {
     // Helper: SOQL to retrieve Queue GroupMember rows for the given User.
     // Inputs: recordId = User Id. If null, returns empty list.
     // Output: List<GroupMember> of queue memberships (never null).
-    @TestVisible
-    private static List<GroupMember> selectGroupMemberships( Id recordId , String groupType ) {
+    public static List<GroupMember> selectGroupMemberships( Id recordId , String groupType ) {
         List<GroupMember> records = new List<GroupMember>();
         if ( recordId != null ) {
             records = [
@@ -72,7 +71,7 @@ public with sharing class UserQueueMembershipService {
     // Input: records from SOQL (may be null/empty).
     // Output: List<QueueMembershipRow> (never null).
     @TestVisible
-    private static List<Member> buildMembers( List<GroupMember> records ) {
+    public static List<Member> buildMembers( List<GroupMember> records ) {
         List<Member> response = new List<Member>();
         if ( records != null && !records.isEmpty() ) {
             for ( GroupMember record : records ) {
@@ -91,6 +90,8 @@ public with sharing class UserQueueMembershipService {
                     wrapper.groupName = record.Group.Name;
                     if ( record.Group.Type == 'Queue' ) {
                         wrapper.reasonForMembership = 'Queue Member';
+                    } else if ( record.Group.Type == 'Regular' ) {
+                        wrapper.reasonForMembership = 'Group Member';
                     }
                     response.add( wrapper );
                 }
