@@ -228,6 +228,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Sub_Client_Status__c</fieldItem>
+                <identifier>RecordSub_Client_Pay_Group_Status__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.Payroll_Specialist__c</fieldItem>
                 <identifier>RecordPayroll_Specialist_cField</identifier>
             </fieldInstance>
@@ -244,16 +254,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Account__c</fieldItem>
                 <identifier>RecordAccount_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Payroll_Data_Sheet_Name__c</fieldItem>
-                <identifier>RecordNSP_Payroll_Data_Sheet_Name__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>

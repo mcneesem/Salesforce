@@ -2600,8 +2600,11 @@
         <excludeButtons>MassChangeOwner</excludeButtons>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
-        <fields>NSP_Payroll_Data_Sheet_Name__c</fields>
+        <fields>Sub_Client_Status__c</fields>
         <fields>NSP_Sub_Client_Number__c</fields>
+        <fields>NSP_Sub_Client_Name__c</fields>
+        <fields>Pay_Group_Full_Name__c</fields>
+        <fields>NSP_Next_Pay_Date__c</fields>
         <fields>UPDATEDBY_USER</fields>
         <fields>LAST_UPDATE</fields>
         <relatedList>NSP_Payroll__c.Account__c</relatedList>

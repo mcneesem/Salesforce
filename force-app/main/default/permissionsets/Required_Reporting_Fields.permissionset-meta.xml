@@ -1278,6 +1278,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_Payroll__c.Sub_Client_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Plan_SubPlan__c.Allows_LT_Employer_Contributions__c</field>
         <readable>true</readable>
     </fieldPermissions>
