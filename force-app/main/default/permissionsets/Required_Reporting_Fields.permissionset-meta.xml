@@ -1258,6 +1258,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_Note__c.Current_Case_Queue__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Payroll__c.DCAA_Detail_With_Job_Costing__c</field>
         <readable>true</readable>
     </fieldPermissions>
