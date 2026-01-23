@@ -1,17 +1,17 @@
 /**
 Apex Class Name      :  NSP_AssetTerminateBatch
-Version              :  1.0                                                                          
-Created Date         :  12/24/2021   
-Story                :  STY-03552                                                                    
-Modification Log     :                                                                              
-*--------------------------------------------------------------------------------------------------  
-*  Developer                   Date                   Description                                    
-* -------------------------------------------------------------------------------------------------  
-*  Virendra Kumar            11/24/2022           Update Asset Status and Termination Date 
+Version              :  1.0
+Created Date         :  12/24/2021
+Story                :  STY-03552
+Modification Log     :
+*--------------------------------------------------------------------------------------------------
+*  Developer                   Date                   Description
+* -------------------------------------------------------------------------------------------------
+*  Virendra Kumar            11/24/2022           Update Asset Status and Termination Date
 *  Ramya Ravi                02/08/2023           Add conditions to update the asset record  <STY-03867>
 */
 global class NSP_AssetTerminateBatch implements Schedulable, Database.Batchable<sObject> {
-    // test w/ NSP_AssetTerminateBatch_Test (89%)
+    // test w/ NSP_AssetTerminateBatch_Test (84%)
 
     private static final Id WO_ASSET_RECORDTYPE = NSP_GenericRecordType.getRecordTypeId(
         'Asset' ,
@@ -126,6 +126,8 @@ global class NSP_AssetTerminateBatch implements Schedulable, Database.Batchable<
 
     public static List<Id> getAssetRecordID() {
         List<Id> assetRecordIDList = new List<ID>();
+        //AZD-523518 : Killswitch for RET_WO Asset Record Type
+        Boolean isEnabledRecordTypeRetWo = AssetTerminateBatchSettings__c.getInstance(UserInfo.getUserId() ).IsEnabledRecordTypeRetWo__c;
         try {
             assetRecordIDList.add(NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.TIME_ATTENDANCE_ASSET ));
             assetRecordIDList.add(NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.PERFORMANCE_MANAGEMENT_ASSET ));
@@ -133,7 +135,9 @@ global class NSP_AssetTerminateBatch implements Schedulable, Database.Batchable<
             assetRecordIDList.add(NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.ASSET_RECRUITING_SERVICES ));
             assetRecordIDList.add(NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.XML_ASSET ));
             assetRecordIDList.add(NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.LEARNING_DEVELOPMENT ));
-            assetRecordIDList.add(NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.RET_WO_ASSET_RECORDTYPE ));
+            if(isEnabledRecordTypeRetWo){
+            	assetRecordIDList.add(NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.RET_WO_ASSET_RECORDTYPE ));
+            }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 NSP_AssetTerminateBatch.class.getName() ,
