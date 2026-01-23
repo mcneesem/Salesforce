@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>65.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Update_Wire_Scenario_Client_Requires_Wire</name>
+        <label>Update Wire Scenario - Client Requires Wire</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Wire_Scenario__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Credit requires wire, Client requests debit</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Update_Wire_Scenario_With_Debit_Client</name>
+        <label>Update Wire Scenario - With Debit Client</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Wire_Scenario__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Debit Client who needs to wire</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Verify_Sub_Category</name>
+        <label>Verify Sub Category</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Purge_Debit</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NSP_SubCategory__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Purge Debit</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Wire_Scenario_With_Debit_Client</targetReference>
+            </connector>
+            <label>Purge Debit</label>
+        </rules>
+        <rules>
+            <name>Wire</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NSP_SubCategory__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Wire</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Wire_Scenario_Client_Requires_Wire</targetReference>
+            </connector>
+            <label>Wire</label>
+        </rules>
+    </decisions>
+    <description>Flow which invokes, when Case record is created</description>
+    <environments>Default</environments>
+    <interviewLabel>Case - Before Create - Populate Wire Scenario {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Case - Before Create - Populate Wire Scenario</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Verify_Sub_Category</targetReference>
+        </connector>
+        <filterLogic>1 AND (2 OR 3)</filterLogic>
+        <filters>
+            <field>NSP_Category__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Payroll Services</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_SubCategory__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Purge Debit</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_SubCategory__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Wire</stringValue>
+            </value>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Draft</status>
+</Flow>
