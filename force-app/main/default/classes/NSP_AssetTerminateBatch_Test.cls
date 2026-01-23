@@ -56,5 +56,13 @@ private class NSP_AssetTerminateBatch_Test {
         System.assertEquals(assetobject.Status, 'Terminated');
     }
 
+    @isTest
+    private static void testISelfSchedulable() {
+        Test.startTest();
+        NSP_AssetTerminateBatch.schedule();
+        Test.stopTest();
+    }
+
 }
+
 //
