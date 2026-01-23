@@ -1,57 +1,83 @@
 import { LightningElement, wire, api } from 'lwc';
 import getACRDetails from '@salesforce/apex/CaseAccountContactRelationController.getACRDetails';
-import { refreshApex } from '@salesforce/apex';
+import { getRelatedListRecords, } from 'lightning/uiRelatedListApi';
 export default class CaseAccountContactRelationships extends LightningElement {
     @api recordId;
     acrDetailsData;
     acrPrimaryData;
     displayDataList;
+    relatedWireResult;
     wireData;
     lastUpdatedTimestamp;
     currentTimestamp;
     intervalId;
     acrDetailsError;
-    coulums =[{label: 'Name', fieldName: 'contactName', type: 'text'},
-        {label: 'Account', fieldName: 'accountName', type: 'text'},
-        {label: 'Work Phone', fieldName: 'workPhone', type: 'text'},
-        {label: 'Work Email', fieldName: 'workEmail', type: 'text'},
-        {label: 'Job Title', fieldName: 'jobTitle', type: 'text'},
-        {label: 'Status', fieldName: 'status', type: 'text'},
-        {label: 'Workday Employee Id', fieldName: 'workdayEmployeeId', type: 'text'}
+    sortedBy;
+    sortedDirection = 'asc';
+    
+    coulums =[{label: 'Name', fieldName: 'contactName', type: 'text', sortable: true},
+        {label: 'Account', fieldName: 'accountName', type: 'text', sortable: true},
+        {label: 'Work Phone', fieldName: 'workPhone', type: 'text', sortable: true},
+        {label: 'Work Email', fieldName: 'workEmail', type: 'text', sortable: true},
+        {label: 'Job Title', fieldName: 'jobTitle', type: 'text', sortable: true},
+        {label: 'Status', fieldName: 'status', type: 'text', sortable: true},
+        {label: 'Workday Employee Id', fieldName: 'workdayEmployeeId', type: 'text', sortable: true}
     ]
 
-    @wire(getACRDetails, { caseId: '$recordId' })
-    acrDetails(result){
-        this.wireData = result;
-        if (result.data) {
-            this.acrDetailsData = result.data;
-            this.lastUpdatedTimestamp = new Date();
-            this.displayDataList = this.acrDetailsData.filter(rec => rec.IsPrimary);
-            if(this.displayDataList == null || this.displayDataList.length == 0 ||this.displayDataList == undefined){
-                this.displayDataList = this.acrDetailsData;
+
+    @wire(getRelatedListRecords, {
+        parentRecordId: '$recordId',
+        relatedListId: 'Case_Contact_Roles__r',
+        fields: ['NSP_Case_Contacts__c.NSP_Case__c', 'NSP_Case_Contacts__c.Id']
+    })
+    listInfo( response ) {
+        this.relatedWireResult = response;
+        if ( response ) {
+            const { error, data } = response;
+            if ( data ) {
+                this.lastUpdatedTimestamp = new Date();
+                this.getACRDataDetails();
+            } else if ( error ) {
+                this.acrDetailsError = error;
+                this.lastUpdatedTimestamp = undefined;
             }
-        } else if (result.error) {
-            this.acrDetailsError = result.error;
-            this.lastUpdatedTimestamp = undefined;
+        }   
+    }
+    
+    getACRDataDetails() {
+        getACRDetails({ caseId: this.recordId })
+                    .then(result => {
+                        this.acrDetailsData = result;
+                        this.lastUpdatedTimestamp = new Date();
+                        this.filterData();
+                        this.handleLastUpdatedInterval();
+                    })
+                    .catch(err => {
+                        this.acrDetailsError = err;
+                        this.lastUpdatedTimestamp = undefined;
+                    });
+        
+    }
+
+    handleSort( event ) {
+        if ( event?.detail) {
+            this.sortedBy = event.detail.fieldName;
+            this.sortedDirection = event.detail.sortDirection;
+            this.sortData();
         }
-        if ( this.lastUpdatedTimestamp && this.hasData ) {
-            this.currentTimestamp = new Date();
-            this.intervalId = setInterval(
-                function() {
-                    this.currentTimestamp = new Date();
-                    if ( !this.hasData // stop summary refresh when data is missing...
-                        || !this.secondsSinceLastUpdate
-                        || ( this.secondsSinceLastUpdate > ( 2 * 60 * 60 ) ) // stop summary refresh after 2 hours...
-                        )
-                    {
-                        if ( this.intervalId ) {
-                            clearInterval( this.intervalId );
-                        }
-                        this.intervalId = undefined;
-                    }
-                }.bind( this ) ,
-                ( 60 * 1000 ) // refresh once per minute ( 1 minute == 60 seconds == 60000 milliseconds )
-            );
+    }
+
+    sortData() {
+        if ( this.acrDetailsData && this.sortedBy && this.sortedDirection ) {
+            const isReverse = ( ( this.sortedDirection === 'asc' ) ? 1 : -1 );
+            const cloneData = [...this.acrDetailsData];
+            cloneData.sort( ( a , b ) => {
+                const x = ( a[this.sortedBy] ? a[this.sortedBy] : '' );
+                const y = ( b[this.sortedBy] ? b[this.sortedBy] : '' );
+                return ( isReverse * ( ( x > y ) - ( y > x ) ) );
+            });
+            this.acrDetailsData = cloneData;
+            this.displayDataList = cloneData;
         }
     }
 
@@ -60,7 +86,8 @@ export default class CaseAccountContactRelationships extends LightningElement {
     }
 
     handleRefresh() {
-        refreshApex( this.wireData );
+        this.getACRDataDetails();
+        this.handleLastUpdatedInterval();
     }
 
     get hasData() {
@@ -153,5 +180,35 @@ export default class CaseAccountContactRelationships extends LightningElement {
         return ( "slds-p-left_small slds-p-right_small card-footer-background" );
     }
 
+    handleLastUpdatedInterval() {
+        if ( this.lastUpdatedTimestamp && this.hasData ) {
+            this.currentTimestamp = new Date();
+            this.intervalId = setInterval(
+                function() {
+                    this.currentTimestamp = new Date();
+                    if ( !this.hasData // stop summary refresh when data is missing...
+                        || !this.secondsSinceLastUpdate
+                        || ( this.secondsSinceLastUpdate > ( 2 * 60 * 60 ) ) // stop summary refresh after 2 hours...
+                        )
+                    {
+                        if ( this.intervalId ) {
+                            clearInterval( this.intervalId );
+                        }
+                        this.intervalId = undefined;
+                    }
+                }.bind( this ) ,
+                ( 60 * 1000 ) // refresh once per minute ( 1 minute == 60 seconds == 60000 milliseconds )
+            );
+        }
+    }
+
+    filterData() {
+        if ( this.acrDetailsData ) {
+            this.displayDataList = this.acrDetailsData.filter( rec => rec.isPrimary );
+            if ( !this.displayDataList || ( this.displayDataList.length === 0 ) ) {
+                this.displayDataList = this.acrDetailsData;
+            }
+        }
+    }
 }
 //

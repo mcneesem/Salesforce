@@ -3,7 +3,7 @@ public without sharing class CaseAccountContactRelationController {
     public CaseAccountContactRelationController() {
     }
 
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled(cacheable=false)
     public static List<Detail> getACRDetails(Id caseId) {
         try {
             List<Detail> acrcdList = new List<Detail>();
