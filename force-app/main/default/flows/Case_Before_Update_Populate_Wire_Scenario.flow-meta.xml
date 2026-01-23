@@ -94,7 +94,7 @@
         <connector>
             <targetReference>Verify_Sub_Category</targetReference>
         </connector>
-        <filterLogic>1 AND (2 OR 3) AND (4 OR 5)</filterLogic>
+        <filterLogic>( ( 1 AND ( 2 OR 3 ) ) AND ( 4 OR 5 ) )</filterLogic>
         <filters>
             <field>NSP_Category__c</field>
             <operator>EqualTo</operator>
