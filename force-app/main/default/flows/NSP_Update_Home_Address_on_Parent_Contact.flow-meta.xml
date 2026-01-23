@@ -73,6 +73,7 @@
         </connector>
     </assignments>
     <assignments>
+        <description>Prevent DmlExceptions: FIELD_INTEGRITY_EXCEPTION: A country/territory must be specified before specifying a state value for field.</description>
         <name>Set_State</name>
         <label>Set State</label>
         <locationX>50</locationX>
@@ -82,6 +83,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>$Record.NSP_State__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>parentContact.OtherCountryCode</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>US</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -103,9 +111,9 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.NSP_Country__c</leftValueReference>
-                <operator>IsBlank</operator>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <stringValue>United States</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -229,6 +237,7 @@
         <queriedFields>OtherState</queriedFields>
         <queriedFields>OtherStateCode</queriedFields>
         <queriedFields>OtherCountry</queriedFields>
+        <queriedFields>OtherCountryCode</queriedFields>
     </recordLookups>
     <recordUpdates>
         <name>Update_Parent_Contact</name>
