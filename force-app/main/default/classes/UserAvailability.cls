@@ -1,4 +1,4 @@
-public without sharing class UserAvailability2 {
+public without sharing class UserAvailability {
 
     private List<Event> busy = new List<Event>();
     private List<Event> fused = new List<Event>();
