@@ -1,5 +1,5 @@
-import { LightningElement, wire, track } from 'lwc';
-import businessDays from '@salesforce/apex/UserAvailabilityService.businessDays';
+import { LightningElement, wire } from 'lwc';
+import businessDays from '@salesforce/apex/UserAvailabilityService.getBusinessDates';
 import getCountsMatrix from '@salesforce/apex/UserAvailabilityService.getCountsMatrix';
 import USER_ID from '@salesforce/user/Id';
 
@@ -9,7 +9,7 @@ export default class Scheduler extends LightningElement {
     columns = [];
 
     // Use @track for proper reactivity
-    @track tableData = [
+    tableData = [
         { id: '1', name: '8:00-9:00', status: 'Pending', counts: [] },
         { id: '2', name: '8:30 - 9:30', counts: [] },
         { id: '3', name: '9:00 - 10:00', counts: [] },
@@ -28,12 +28,25 @@ export default class Scheduler extends LightningElement {
     }
 
     // Columns are now server-driven via Business Hours using Apex businessDays()
-    @wire(businessDays)
+    @wire(businessDays, {businessHoursId: '01m4x000001119T', daysLimit:7})
     wiredDays({ data, error }) {
         if (data) {
-            // data is List<Datetime> serialized as ISO strings
-            this.columns = data.map((iso, idx) => {
-                const d = new Date(iso);
+            // data is now List<Date> serialized as 'YYYY-MM-DD'
+            this.columns = data.map((yyyyMmDd, idx) => {
+                let d;
+                if (typeof yyyyMmDd === 'string') {
+                    const parts = yyyyMmDd.split('-'); // [YYYY, MM, DD]
+                    if (parts.length === 3) {
+                        const y = parseInt(parts[0], 10);
+                        const m = parseInt(parts[1], 10) - 1; // 0-based month
+                        const day = parseInt(parts[2], 10);
+                        d = new Date(y, m, day); // construct as local date to avoid TZ shift
+                    } else {
+                        d = new Date(yyyyMmDd);
+                    }
+                } else {
+                    d = new Date(yyyyMmDd);
+                }
                 return {
                     key: idx,
                     label: d.toLocaleDateString(undefined, { weekday: 'short' }),
@@ -91,5 +104,12 @@ export default class Scheduler extends LightningElement {
             ...row,
             counts: []
         }));
+    }
+
+    get isLoading() {
+        return !this.isReady();
+    }
+    get isReady() {
+        return ( this.columns && ( this.columns.length > 0 ) );
     }
 }
