@@ -272,10 +272,6 @@
             <outputField>GCLID__c</outputField>
         </mappingFields>
         <mappingFields>
-            <inputField>Interest_Product_Offering__c</inputField>
-            <outputField>Interest_Product_Offering__c</outputField>
-        </mappingFields>
-        <mappingFields>
             <inputField>NSP_Is_Lead__c</inputField>
             <outputField>NSP_Is_Originated_From_Lead_Conversion__c</outputField>
         </mappingFields>
