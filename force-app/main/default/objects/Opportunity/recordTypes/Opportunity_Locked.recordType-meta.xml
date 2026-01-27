@@ -140,10 +140,6 @@
             <fullName>HRScale</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>Unspecified</fullName>
-            <default>true</default>
-        </values>
     </picklistValues>
     <picklistValues>
         <picklist>LeadSource</picklist>
