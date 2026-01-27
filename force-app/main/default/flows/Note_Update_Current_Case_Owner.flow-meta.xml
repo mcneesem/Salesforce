@@ -3,22 +3,6 @@
     <apiVersion>65.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
-        <name>Assign_Group_Collection</name>
-        <label>Assign Group Collection</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>GroupCollection</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>varGroupName</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Loop_Thru_Case_History</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Assign_Queue_Id</name>
         <label>Assign Queue Id</label>
         <locationX>0</locationX>
@@ -31,167 +15,29 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Assign_varGroup</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_varFaultElement_Get_Case_History</name>
-        <label>Assign varFaultElement - Get_Case_History</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>varFaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Get_Case_History</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_varFaultElement_Get_Queue_Group</name>
-        <label>Assign varFaultElement - Get_Queue_Group</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>varFaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Get_Queue_Group</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_varFaultElement_Get_Related_Case</name>
-        <label>Assign varFaultElement - Get_Related_Case</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>varFaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Get_Related_Case</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_varFaultElement_Update_Note_Current_Case_Queue</name>
-        <label>Assign varFaultElement - Update_Note_Current_Case_Queue</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>varFaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Update_Note_Current_Case_Queue</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_varGroup</name>
-        <label>Assign varGroup</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>varGroupName.Name</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Loop_Thru_Case_History.NewValue</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varGroupName.LastModifiedDate</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Loop_Thru_Case_History.CreatedDate</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Check_varGroup</targetReference>
-        </connector>
-    </assignments>
-    <decisions>
-        <name>Check_varGroup</name>
-        <label>Check varGroup</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
             <targetReference>Loop_Thru_Case_History</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No</defaultConnectorLabel>
-        <rules>
-            <name>Yes</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>varGroupName</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>varGroupName.Name</leftValueReference>
-                <operator>StartsWith</operator>
-                <rightValue>
-                    <stringValue>00G</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Assign_Group_Collection</targetReference>
-            </connector>
-            <label>Yes</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Is_Current_Case_Queue_Populated_on_Note</name>
-        <label>Is Current Case Queue Populated on Note?</label>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Update_Note_Current_Case_Owner</name>
+        <label>Update Note Current Case Owner</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <defaultConnectorLabel>Current Case Queue is Populated</defaultConnectorLabel>
-        <rules>
-            <name>Current_Case_Queue_is_Blank</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.Current_Case_Queue__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Current_Case_Queue__c</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Update_Note_Current_Case_Queue</targetReference>
-            </connector>
-            <label>Current Case Queue is Blank</label>
-        </rules>
-    </decisions>
+        <assignmentItems>
+            <assignToReference>$Record.Current_Case_Queue__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Queue_Group.Name</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
     <decisions>
         <name>Is_QueueId_Blank</name>
         <label>Is QueueId Blank?</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Assign_varGroup</targetReference>
+            <targetReference>Loop_Thru_Case_History</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -220,14 +66,14 @@
             <name>Case_found</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>$Record</leftValueReference>
-                <operator>IsNull</operator>
+                <leftValueReference>$Record.Case__c</leftValueReference>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_Related_Case</targetReference>
+                <targetReference>Get_Case_History</targetReference>
             </connector>
             <label>Case found</label>
         </rules>
@@ -243,37 +89,15 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Queue_Group</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Is_Current_Case_Queue_Populated_on_Note</targetReference>
+                <targetReference>Update_Note_Current_Case_Owner</targetReference>
             </connector>
             <label>Case Queue Group Id found</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Was_Case_found</name>
-        <label>Was Case found?</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnectorLabel>No Case found</defaultConnectorLabel>
-        <rules>
-            <name>Related_Case_found</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Case</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_Case_History</targetReference>
-            </connector>
-            <label>Related Case found</label>
         </rules>
     </decisions>
     <decisions>
@@ -285,6 +109,13 @@
         <rules>
             <name>Case_History_was_found_for_Case_Owner</name>
             <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CaseHistoryCollection</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <conditions>
                 <leftValueReference>CaseHistoryCollection</leftValueReference>
                 <operator>IsEmpty</operator>
@@ -308,7 +139,7 @@
             <name>Case_Queue_found</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>GroupCollection</leftValueReference>
+                <leftValueReference>QueueId</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -326,7 +157,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Assign_varGroup</targetReference>
+            <targetReference>Loop_Thru_Case_History</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -390,9 +221,6 @@
         <connector>
             <targetReference>Was_Case_History_found_for_Case_Owner</targetReference>
         </connector>
-        <faultConnector>
-            <targetReference>Assign_varFaultElement_Get_Case_History</targetReference>
-        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>CaseId</field>
@@ -428,9 +256,6 @@
         <connector>
             <targetReference>Was_Case_ever_Queue_Group_Id_found</targetReference>
         </connector>
-        <faultConnector>
-            <targetReference>Assign_varFaultElement_Get_Queue_Group</targetReference>
-        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Type</field>
@@ -452,51 +277,12 @@
         <queriedFields>DeveloperName</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordLookups>
-        <name>Get_Related_Case</name>
-        <label>Get Related Case</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Was_Case_found</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Assign_varFaultElement_Get_Related_Case</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$Record.Case__c</elementReference>
-            </value>
-        </filters>
-        <object>Case</object>
-        <outputReference>Case</outputReference>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>OwnerId</queriedFields>
-        <queriedFields>Current_Case_Queue__c</queriedFields>
-    </recordLookups>
-    <recordUpdates>
-        <name>Update_Note_Current_Case_Queue</name>
-        <label>Update Note Current Case Queue</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <faultConnector>
-            <targetReference>Assign_varFaultElement_Update_Note_Current_Case_Queue</targetReference>
-        </faultConnector>
-        <inputAssignments>
-            <field>Current_Case_Queue__c</field>
-            <value>
-                <elementReference>Get_Queue_Group.Name</elementReference>
-            </value>
-        </inputAssignments>
-        <inputReference>$Record</inputReference>
-    </recordUpdates>
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <connector>
+            <targetReference>Is_there_a_Related_Case</targetReference>
+        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Case__c</field>
@@ -512,64 +298,11 @@
                 <stringValue></stringValue>
             </value>
         </filters>
-        <filters>
-            <field>Current_Case_Queue__c</field>
-            <operator>IsNull</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Current_Case_Queue__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue></stringValue>
-            </value>
-        </filters>
         <object>NSP_Note__c</object>
         <recordTriggerType>Create</recordTriggerType>
-        <scheduledPaths>
-            <connector>
-                <targetReference>Is_there_a_Related_Case</targetReference>
-            </connector>
-            <pathType>AsyncAfterCommit</pathType>
-        </scheduledPaths>
-        <triggerType>RecordAfterSave</triggerType>
+        <triggerType>RecordBeforeSave</triggerType>
     </start>
     <status>Draft</status>
-    <subflows>
-        <name>Fault_Handler_Subflow</name>
-        <label>Fault Handler Subflow</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <flowName>Insperity_Fault_Handler_Subflow</flowName>
-        <inputAssignments>
-            <name>faultElement</name>
-            <value>
-                <elementReference>varFaultElement</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>faultFlow</name>
-            <value>
-                <stringValue>Update_Note_Current_Case_Queue</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>faultMessage</name>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <variables>
-        <name>Case</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Case</objectType>
-    </variables>
     <variables>
         <name>CaseHistoryCollection</name>
         <dataType>SObject</dataType>
@@ -579,33 +312,10 @@
         <objectType>CaseHistory</objectType>
     </variables>
     <variables>
-        <name>GroupCollection</name>
-        <dataType>SObject</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Group</objectType>
-    </variables>
-    <variables>
         <name>QueueId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varFaultElement</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varGroupName</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Group</objectType>
     </variables>
 </Flow>
