@@ -1,16 +1,16 @@
 import { LightningElement, wire, api } from 'lwc';
 import getACRDetails from '@salesforce/apex/CaseAccountContactRelationController.getACRDetails';
-import { getRelatedListRecords, } from 'lightning/uiRelatedListApi';
+import { getRelatedListRecords } from 'lightning/uiRelatedListApi';
 export default class CaseAccountContactRelationships extends LightningElement {
     @api recordId;
     acrDetailsData;
     acrPrimaryData;
-    displayDataList;
+    isViewAll = false;
     relatedWireResult;
     wireData;
     lastUpdatedTimestamp;
     currentTimestamp;
-    intervalId;
+    intervalId = null;
     acrDetailsError;
     sortedBy;
     sortedDirection = 'asc';
@@ -49,7 +49,7 @@ export default class CaseAccountContactRelationships extends LightningElement {
                     .then(result => {
                         this.acrDetailsData = result;
                         this.lastUpdatedTimestamp = new Date();
-                        this.filterData();
+                        this.isViewAll = false;
                         this.handleLastUpdatedInterval();
                     })
                     .catch(err => {
@@ -77,17 +77,15 @@ export default class CaseAccountContactRelationships extends LightningElement {
                 return ( isReverse * ( ( x > y ) - ( y > x ) ) );
             });
             this.acrDetailsData = cloneData;
-            this.displayDataList = cloneData;
         }
     }
 
-    handleViewAll() {
-       this.displayDataList = this.acrDetailsData;
+    handleViewAll() { 
+       this.isViewAll = true;
     }
 
     handleRefresh() {
         this.getACRDataDetails();
-        this.handleLastUpdatedInterval();
     }
 
     get hasData() {
@@ -181,7 +179,7 @@ export default class CaseAccountContactRelationships extends LightningElement {
     }
 
     handleLastUpdatedInterval() {
-        if ( this.lastUpdatedTimestamp && this.hasData ) {
+        if ( !this.intervalId ) {
             this.currentTimestamp = new Date();
             this.intervalId = setInterval(
                 function() {
@@ -202,13 +200,15 @@ export default class CaseAccountContactRelationships extends LightningElement {
         }
     }
 
-    filterData() {
-        if ( this.acrDetailsData ) {
-            this.displayDataList = this.acrDetailsData.filter( rec => rec.isPrimary );
-            if ( !this.displayDataList || ( this.displayDataList.length === 0 ) ) {
-                this.displayDataList = this.acrDetailsData;
-            }
+      get displayDataList() {
+        let response = this.acrDetailsData;
+        if ( !this.isViewAll && this.acrDetailsData ) {
+            response = this.acrDetailsData.filter( rec => rec.isPrimary );
         }
+        if ( !response || ( response.length === 0 ) ) {
+            response = this.acrDetailsData;
+        }
+        return response;
     }
 }
 //
