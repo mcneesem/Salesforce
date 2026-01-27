@@ -25,6 +25,7 @@
     <tabs>Portal_Client__c</tabs>
     <tabs>Portal_Team_Member__c</tabs>
     <tabs>Portal_Pay_Period__c</tabs>
+    <tabs>Portal_Task__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Portal_Preview_UtilityBar</utilityBar>
 </CustomApplication>

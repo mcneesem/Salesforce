@@ -256,16 +256,8 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentInstanceProperties>
-                    <name>decorate</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>richTextValue</name>
-                    <value>&lt;p&gt;PENDING PREVIEW&lt;/p&gt;</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:richText</componentName>
-                <identifier>flexipage_richText</identifier>
+                <componentName>portalTaskPreview</componentName>
+                <identifier>c_portalTaskPreview</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-129c525e-be17-4d4b-93c0-6543e07f4ded</name>
