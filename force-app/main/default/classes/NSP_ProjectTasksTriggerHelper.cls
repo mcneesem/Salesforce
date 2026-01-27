@@ -1,6 +1,6 @@
 public class NSP_ProjectTasksTriggerHelper {
-    // test w/ NSP_ProjectTasksTriggerHelperTest, NSP_Implprofile_ServiceHelperUpdate_Test (78%)
-    // test w/ NSP_ProjectTasksTriggerHelperTest (73%)
+    // test w/ NSP_ProjectTasksTriggerHelperTest, NSP_Implprofile_ServiceHelperUpdate_Test (77%)
+    // test w/ NSP_ProjectTasksTriggerHelperTest (72%)
     // test w/ NSP_Implprofile_ServiceHelperUpdate_Test (34%)
 
     private static final String HUNDRED_PERCENT =  '100%';
@@ -173,6 +173,9 @@ public class NSP_ProjectTasksTriggerHelper {
         List<pse__Project_Task__c> hsaOptumMM = new List<pse__Project_Task__c>();
         List<pse__Project_Task__c> hsaOptumNoMM = new List<pse__Project_Task__c>();
         String hsaOptum = NSP_MMImplProfile_ServHelpUpdate.hsaOptumChildren();
+        if (test.isrunningtest()) {
+            hsaOptum = HSA_OPTUM_MM;
+        }
         if( pTask != null && String.isNotBlank(hsaOptum) ) {
             if(pTask.Name == NSP_ServiceConstants.HSA && hsaOptum == HSA_OPTUM_MM){
                 hsaOptumMM.add(pTask);
@@ -180,7 +183,7 @@ public class NSP_ProjectTasksTriggerHelper {
             if(pTask.Name == NSP_ServiceConstants.HSA && hsaOptum == HSA_OPTUM_NO_MM){
                 hsaOptumNoMM.add(pTask);
             }
-            
+
             if( hsaOptumMM != null && !hsaOptumMM.isEmpty() ){
                 createProjectTaskForHSAChildren(hsaOptumMM, HSA_OPTUM_MM);
             }
@@ -529,8 +532,8 @@ public class NSP_ProjectTasksTriggerHelper {
         }
         if ( ( ipId != null ) && ( ipa != null ) ) {
             ipRec = [
-                SELECT Id, RecordTypeId 
-                FROM Implementation_Profile__c 
+                SELECT Id, RecordTypeId
+                FROM Implementation_Profile__c
                 WHERE ( Id = :ipId )
                 LIMIT 1
             ];
@@ -812,7 +815,7 @@ public class NSP_ProjectTasksTriggerHelper {
                             );
                         }
                         listOfToAddresses.add( System.Label.NSP_Termination_Team );
-                        letterRecievedEmail(
+                        letterReceivedEmail(
                             pTask.Id ,
                             pTask.Name ,
                             projectTaskLetterMap.get( pTask.Id ).pse__Project__r.pse__Account__r.Name ,
@@ -836,7 +839,7 @@ public class NSP_ProjectTasksTriggerHelper {
     }
 
     //Letter Received email.
-    private void letterRecievedEmail(
+    private void letterReceivedEmail(
         Id pTask ,
         String pTaskName ,
         String accountName ,
@@ -892,13 +895,14 @@ public class NSP_ProjectTasksTriggerHelper {
             email.setHtmlBody(mailBody);
             email.setSaveAsActivity(false);
             email.setTargetObjectId(userinfo.getUserId());
-            if ( !Test.isRunningTest() ) {
+            if ( !Test.isRunningTest()
+              && EmailDeliverabilityController.IsEnabledOutbound ) {
                 NSP_ProjectTasksTriggerHelper.sendSingleEmailMessage( email );
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 NSP_ProjectTasksTriggerHelper.class.getName() ,
-                'letterRecievedEmail' ,
+                'letterReceivedEmail' ,
                 e
             );
         }
@@ -1473,33 +1477,37 @@ public class NSP_ProjectTasksTriggerHelper {
             lstTaskQueueEvent.add(new NSP_ProjectTaskQueueEvent__e(NSP_Input_Parameters__c = JSON.serialize(mapInputParams), NSP_MethodName__c = 'createPTAIfOwnerIsChanged', NSP_UserId__c = UserInfo.getUserId()));
             List<Database.SaveResult> saveResults = EventBus.publish(lstTaskQueueEvent);
         }
-        if ( !sProjectTasksIds.isEmpty() ) {
+        if ( !sProjectTasksIds.isEmpty()
+          && NotificationDeliverabilityController.IsEnabledOutbound ) {
             NSP_ProjectTasksTriggerHelper.sendNotificationToDependentResource( sProjectTasksIds );
             NSP_ProjectTasksTriggerHelper.sendBellNotificationToDependentResource( sProjectTasksIds );
+        }
+        if ( !sProjectTasksIds.isEmpty()
+          && EmailDeliverabilityController.IsEnabledOutbound ) {
             NSP_ProjectTasksTriggerHelper.sendEmailToProjectResource( sProjectTasksIds ); // STY-02213
         }
-        if(!projectTaskIdSet.isEmpty()){
+        if( !projectTaskIdSet.isEmpty() ) {
             NSP_ProjectTaskTriggerEmailNotification.emailNotifyforFEIN(projectTaskIdSet,mapofProjecttasks);
         }
         if ( NSP_ProjectTasksTriggerHelper.isUpdateDocusignAsset && accountIdList.size() > 0){
             updateDocusignAsset(accountIdList);
         }
-        if(!fundingprojectTaskIdSet.isEmpty()){
+        if( !fundingprojectTaskIdSet.isEmpty() ) {
             NSP_ProjectTaskTriggerEmailNotification.emailNotifyforFundingDocuments(fundingprojectTaskIdSet,mapofFundingProjecttasks);
         }
-        if(!mapofFormProjecttasks.isEmpty()){
+        if( !mapofFormProjecttasks.isEmpty() ) {
             NSP_ProjectTasksTriggerHelper.ipYesFormCollected(mapofFormProjecttasks);
         }
-        if(!projectFsoIdset.isEmpty()){
+        if( !projectFsoIdset.isEmpty() ) {
             NSP_ProjectTaskTriggerEmailNotification.emailNotifyforFirstPayrollFSO(projectFsoIdset, accountIdFsoProjectTaskMap);
         }
-        if(!projectFsoIdset.isEmpty() && NSP_Trigger_Switch__c.getInstance(UserInfo.getUserId()).NSP_FP_MM_EmailNotification__c){
+        if( !projectFsoIdset.isEmpty() && NSP_Trigger_Switch__c.getInstance(UserInfo.getUserId()).NSP_FP_MM_EmailNotification__c ) {
             NSP_ProjectTaskTriggerEmailNotification.emailNotifyforFirstPayrollMM(projectFsoIdset, accountIdFsoProjectTaskMap);
         }
-        if(!projectTaskCobraIdSet.isEmpty()){
+        if( !projectTaskCobraIdSet.isEmpty() ) {
             NSP_ProjectTaskTriggerEmailNotification.emailNotifyforCobraFollowUp(projectTaskCobraIdSet, projectTaskList);
         }
-        if(mapofClientProjectTask.size()>0){
+        if( mapofClientProjectTask.size()>0 ) {
             NSP_ProjectTaskTriggerEmailNotification.emailNotifyClientTransition(mapofClientProjectTask, mapOfProjectTaskOwner);
         }
     }
@@ -1800,7 +1808,7 @@ public class NSP_ProjectTasksTriggerHelper {
     * Method to Send Bell Notifications when a Client, Payroll Termination Form is Approved
     */
     @future
-    public static void sendBellNotificationToDependentResource(Set<Id> sProjectTasksIds){
+    private static void sendBellNotificationToDependentResource(Set<Id> sProjectTasksIds){
         String PEOProjectTaskRecordTypeId = Schema.SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE).getRecordTypeId();
         String ClientRecordTypeId = Schema.SObjectType.NSP_Termination_Form__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.NSP_Client_Reinstatement).getRecordTypeId();
         String PayrollRecordTypeId = Schema.SObjectType.NSP_Termination_Form__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.NSP_Payroll_Specialist_Form).getRecordTypeId();
@@ -1812,7 +1820,7 @@ public class NSP_ProjectTasksTriggerHelper {
         List<NSP_Termination_Form__c> termFormList = new List<NSP_Termination_Form__c>([SELECT Id,NSP_Project_Task__c,ownerId FROM NSP_Termination_Form__c WHERE NSP_Project_Task__c in: sProjectTasksIds AND NSP_Project_Task__r.RecordTypeId =: PEOProjectTaskRecordTypeId AND (Recordtypeid =: ClientRecordTypeId OR Recordtypeid =: PayrollRecordTypeId )]);
 
         if(!mDependentTasksOwner.isEmpty()){
-        mPrecedingTaskId = mDependentTasksOwner.get(0).pse__Preceding_Task__c;
+            mPrecedingTaskId = mDependentTasksOwner.get(0).pse__Preceding_Task__c;
         }
 
         if(mDependentTasksOwner.size() == 0){
@@ -1820,9 +1828,9 @@ public class NSP_ProjectTasksTriggerHelper {
         }
 
         if(termFormList.size() > 0){
-        for(NSP_Termination_Form__c termFormTask : termFormList){
-            if(termFormTask.ownerId != null){
-                termFormRecordList.add(termFormTask.NSP_Project_Task__c);
+            for(NSP_Termination_Form__c termFormTask : termFormList){
+                if(termFormTask.ownerId != null){
+                    termFormRecordList.add(termFormTask.NSP_Project_Task__c);
                 }
             }
         }
@@ -1839,14 +1847,14 @@ public class NSP_ProjectTasksTriggerHelper {
         }
 
         if(mDependentTaskOwnerIds.size() > 0){
-        CustomNotificationType bellNotificationTermForm = [SELECT Id, DeveloperName FROM CustomNotificationType WHERE DeveloperName='NSP_Bell_Notification_Termination_Form' LIMIT 1];
+            CustomNotificationType bellNotificationTermForm = [SELECT Id, DeveloperName FROM CustomNotificationType WHERE DeveloperName='NSP_Bell_Notification_Termination_Form' LIMIT 1];
 
-        Messaging.CustomNotification Notification = new Messaging.CustomNotification();
-        Notification.setNotificationTypeId(bellNotificationTermForm.id);
-        Notification.setTitle('Termination Form approval Completed');
-        Notification.setBody('You have task(s) to complete');
-        Notification.setTargetId(mPrecedingTaskId);
-        Notification.send(mDependentTaskOwnerIds);
+            Messaging.CustomNotification Notification = new Messaging.CustomNotification();
+            Notification.setNotificationTypeId(bellNotificationTermForm.id);
+            Notification.setTitle('Termination Form approval Completed');
+            Notification.setBody('You have task(s) to complete');
+            Notification.setTargetId(mPrecedingTaskId);
+            Notification.send(mDependentTaskOwnerIds);
         }
     }
 
@@ -2233,7 +2241,6 @@ public class NSP_ProjectTasksTriggerHelper {
                         WHERE NSP_Account__c IN:setAccountIds AND NSP_Role__c IN:lstAccTeamRoles];
     }
 
-
     /***********************************************************************************************
     * MethodName  : checkStatusComplete
     * Description : This Method updated the NSP_Is_Status_Completed__c checkbox on Project Task
@@ -2266,9 +2273,7 @@ public class NSP_ProjectTasksTriggerHelper {
     //
     public static void sendEmailToProjectResource( Set<Id> projectTaskIdSet ) {
         if ( NSP_ProjectTasksTriggerHelper.isEnabledFutureNotifications
-            && ( Limits.getFutureCalls() < Limits.getLimitFutureCalls() )
-            )
-        {
+          && ( Limits.getFutureCalls() < Limits.getLimitFutureCalls() ) ) {
             NSP_ProjectTasksTriggerHelper.sendEmailToProjectResourceFuture( projectTaskIdSet );
         } else {
             NSP_ProjectTasksTriggerHelper.sendEmailToProjectResourceStatic( projectTaskIdSet );
@@ -2365,7 +2370,9 @@ public class NSP_ProjectTasksTriggerHelper {
     }
 
     private static void sendSingleEmailMessages( List<Messaging.SingleEmailMessage> messages ) {
-        if ( ( messages != null ) && !messages.isEmpty() ) {
+        if ( EmailDeliverabilityController.IsEnabledOutbound
+          && ( messages != null )
+          && !messages.isEmpty() ) {
             try {
                 Messaging.sendEmail( messages );
             } catch ( Exception e ) {
