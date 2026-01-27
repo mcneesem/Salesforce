@@ -13,10 +13,11 @@ private class TerminationEmailBatchTest {
         form.Termination_Email_Status__c = 'Ready to be sent';
         form.NSP_Revision__c = 'Yes';
         form.Client_Owner_Email__c = 'owner@example.com';
+        form.NSP_Last_Date_Wages_Paid_Through__c = Date.newInstance(2025,12,31);
         form.RecordTypeId = Schema.getGlobalDescribe().get( 'NSP_Termination_Form__c' )
                                 .getDescribe()
                                 .getRecordTypeInfosByDeveloperName()
-                                .get( 'NSP_Client_Reinstatement' )
+                                .get( 'NSP_Credit_Specialist_Form' )
                                 .getRecordTypeId();
         insert form;
 
@@ -29,7 +30,7 @@ private class TerminationEmailBatchTest {
         insert cv;
 
         ContentVersion latest = [
-            SELECT Id, 
+            SELECT Id,
                 ContentDocumentId,
                 Title
             FROM ContentVersion
@@ -43,7 +44,7 @@ private class TerminationEmailBatchTest {
             Visibility = 'AllUsers'
         );
         insert cdl;
-        
+
         // Utility: ensure Custom Setting instance for this running user
         TerminationEmailBatchSettings__c cs = new TerminationEmailBatchSettings__c(
             SetupOwnerId = UserInfo.getUserId(),
