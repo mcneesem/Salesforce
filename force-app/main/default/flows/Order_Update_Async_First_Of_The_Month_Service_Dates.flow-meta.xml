@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>64.0</apiVersion>
-    <description>Updates the Start date on Order Products to first date of the month.</description>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Removed triggeringFlow. Updates the Start date on Order Products to first date of the month.</description>
     <environments>Default</environments>
     <formulas>
         <description>Gives 1st day of the month</description>
@@ -126,15 +127,15 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>faultMessage</name>
+            <name>faultFlow</name>
             <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
+                <stringValue>Order_Update_Async_First_Of_The_Month_Service_Dates</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>triggeringFlow</name>
+            <name>faultMessage</name>
             <value>
-                <stringValue>Order_Update_Async_First_Of_The_Month_Service_Dates</stringValue>
+                <elementReference>$Flow.FaultMessage</elementReference>
             </value>
         </inputAssignments>
     </subflows>

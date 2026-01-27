@@ -1047,7 +1047,7 @@
         <field>User.NSP_Running_Sales_Office__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>User.NSP_Running_Sales_Region__c</field>
         <readable>true</readable>
@@ -1062,7 +1062,7 @@
         <field>Lead.account6Sense_Account_6QA_Age__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Lead.Do_Not_Contact__c</field>
         <readable>true</readable>
@@ -5545,10 +5545,10 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-		<editable>true</editable>
-		<field>NSP_Checklist__c.Are_all_employees_paid_under_one_FEIN__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Checklist__c.Are_all_employees_paid_under_one_FEIN__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Checklist__c.NSP_AIMS_Client__c</field>
@@ -13730,40 +13730,40 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-		<editable>false</editable>
-		<field>blng__Invoice__c.Invoice_ID_18__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>false</editable>
-		<field>blng__InvoiceLine__c.Invoice_Line_ID_18__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>false</editable>
-		<field>blng__CreditNote__c.Credit_Note_ID_18__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>false</editable>
-		<field>blng__CreditNoteLine__c.Credit_Note_Line_ID_18__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>false</editable>
-		<field>blng__DebitNote__c.Debit_Note_ID_18__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>false</editable>
-		<field>blng__DebitNoteLine__c.Debit_Note_Line_ID_18__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>false</editable>
-		<field>blng__Payment__c.Payment_ID_18__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
+        <editable>false</editable>
+        <field>blng__Invoice__c.Invoice_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__InvoiceLine__c.Invoice_Line_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__CreditNote__c.Credit_Note_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__CreditNoteLine__c.Credit_Note_Line_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__DebitNote__c.Debit_Note_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__DebitNoteLine__c.Debit_Note_Line_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__Payment__c.Payment_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <flowAccesses>
         <enabled>false</enabled>
         <flow>Account_Contact_Relation_Process_Builder</flow>
@@ -13771,10 +13771,6 @@
     <flowAccesses>
         <enabled>false</enabled>
         <flow>Account_Team_Member_Creation</flow>
-    </flowAccesses>
-    <flowAccesses>
-        <enabled>false</enabled>
-        <flow>Checklist_Creation</flow>
     </flowAccesses>
     <flowAccesses>
         <enabled>false</enabled>

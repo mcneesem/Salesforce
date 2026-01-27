@@ -2310,8 +2310,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Showstopper__c</fieldItem>
-                <identifier>RecordNSP_Showstopper_cField2</identifier>
+                <fieldItem>Record.Showstopper_Reason__c</fieldItem>
+                <identifier>RecordShowstopper_Reason_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-24bd1cef-45b8-4c34-ac8d-39396c7fe2c5</name>

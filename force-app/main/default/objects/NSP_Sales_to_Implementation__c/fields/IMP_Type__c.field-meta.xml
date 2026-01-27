@@ -11,9 +11,9 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>&quot;Start Up</fullName>
+                <fullName>Start Up</fullName>
                 <default>false</default>
-                <label>&quot;Start Up</label>
+                <label>Start Up</label>
             </value>
             <value>
                 <fullName>Association</fullName>
@@ -26,9 +26,9 @@
                 <label>Association w/transfer</label>
             </value>
             <value>
-                <fullName>Trailing Conversion&quot;</fullName>
+                <fullName>Trailing Conversion</fullName>
                 <default>false</default>
-                <label>Trailing Conversion&quot;</label>
+                <label>Trailing Conversion</label>
             </value>
             <value>
                 <fullName>Transfer from - Choice</fullName>

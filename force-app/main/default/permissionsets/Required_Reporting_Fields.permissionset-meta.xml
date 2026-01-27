@@ -48,6 +48,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.NSP_Affiliations__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.NSP_Client_have_the_Sedgwick_OSHA_300__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -169,6 +174,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Asset.AccountId</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Asset.Server_URL__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -413,7 +423,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Case.Any_Other_Payrolls_On_Same_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Case.Billable__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Business_Reason_For_Exception_Request__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -573,6 +593,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Case.Other_Client_Info_Credit_Should_Know__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Case.Pay_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -634,6 +659,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.Time_Processed__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Total_Amount_of_Other_Payrolls__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Total_Bonus_Invoice_Amount__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1243,6 +1278,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_Payroll__c.Sub_Client_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Plan_SubPlan__c.Allows_LT_Employer_Contributions__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1673,6 +1713,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Opportunity.Client_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Opportunity.Closed_Lost_Group__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1839,6 +1884,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.Number_of_STP_Checklists__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+     <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Source__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

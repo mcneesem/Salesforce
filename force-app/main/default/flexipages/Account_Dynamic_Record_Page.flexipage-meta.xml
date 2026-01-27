@@ -698,6 +698,16 @@
             </fieldInstance>
         </itemInstances>
         <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Affiliations__c</fieldItem>
+                <identifier>RecordNSP_Affiliations_cField3</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
             <componentInstance>
                 <componentName>flexipage:blankSpace</componentName>
                 <identifier>flexipage_blankSpace</identifier>
@@ -1175,6 +1185,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Account_Assignment_Method__c</fieldItem>
                 <identifier>RecordAccount_Assignment_Method_cField3</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Affiliations__c</fieldItem>
+                <identifier>RecordNSP_Affiliations_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>

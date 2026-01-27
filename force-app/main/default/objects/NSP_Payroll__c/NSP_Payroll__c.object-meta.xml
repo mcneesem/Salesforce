@@ -169,6 +169,15 @@
     <pluralLabel>Payroll Data Sheets</pluralLabel>
     <searchLayouts>
         <excludedStandardButtons>New</excludedStandardButtons>
+        <searchResultsAdditionalFields>NSP_Sub_Client__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>NSP_Sub_Client_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Pay_Group_Full_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Sub_Client_Status__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Payroll_Specialist__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>NSP_Next_Pay_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Source__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>LAST_UPDATE</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CREATED_DATE</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>Read</sharingModel>
     <visibility>Public</visibility>

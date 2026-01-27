@@ -1,6 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_varFaultElement_Get_Relevant_Zip_to_Region_Mapping_based_on_Zip</name>
+        <label>Assign varFaultElement - Get_Relevant_Zip_to_Region_Mapping_based_on_Zip</label>
+        <locationX>968</locationX>
+        <locationY>384</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Relevant_Zip_to_Region_Mapping_based_on_Zip</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Populate_Zip_Based_Location_field</name>
+        <label>Assign varFaultElement - Populate_Zip_Based_Location_field</label>
+        <locationX>440</locationX>
+        <locationY>600</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Populate_Zip_Based_Location_field</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Is_Update_Required</name>
         <label>Is Update Required?</label>
@@ -23,7 +57,7 @@
             <label>Update IS Required</label>
         </rules>
     </decisions>
-    <description>Updated to account for 9-digit zip. When Account Billing Zip Code is updated/populated and Account is owned by &quot;Available&quot; then the &quot;Zip Based Location&quot; field should be populated based on relevant Zip to Region Mapping record with matching zip code</description>
+    <description>Updated with varFaultElement and removed triggeringFlow. Updated to account for 9-digit zip. When Account Billing Zip Code is updated/populated and Account is owned by &quot;Available&quot; then the &quot;Zip Based Location&quot; field should be populated based on relevant Zip to Region Mapping record with matching zip code</description>
     <environments>Default</environments>
     <formulas>
         <name>fiveDigitZipFormula</name>
@@ -62,7 +96,7 @@
             <targetReference>Is_Update_Required</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Fault_Handler_Subflow</targetReference>
+            <targetReference>Assign_varFaultElement_Get_Relevant_Zip_to_Region_Mapping_based_on_Zip</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -84,8 +118,7 @@
         <locationX>176</locationX>
         <locationY>492</locationY>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_Subflow</targetReference>
+            <targetReference>Assign_varFaultElement_Populate_Zip_Based_Location_field</targetReference>
         </faultConnector>
         <inputAssignments>
             <field>Zip_Based_Location__c</field>
@@ -142,19 +175,32 @@
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
         <locationX>968</locationX>
-        <locationY>384</locationY>
+        <locationY>492</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>varFaultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Account_Updated_Async_Zip_Based_Location</stringValue>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <name>faultMessage</name>
             <value>
                 <elementReference>$Flow.FaultMessage</elementReference>
             </value>
         </inputAssignments>
-        <inputAssignments>
-            <name>triggeringFlow</name>
-            <value>
-                <stringValue>Account - Created Async - Zip Based Location</stringValue>
-            </value>
-        </inputAssignments>
     </subflows>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
 </Flow>

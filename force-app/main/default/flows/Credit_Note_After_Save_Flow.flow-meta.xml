@@ -1,6 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>57.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_varFaultElement_Get_Accounting_Finance_Book</name>
+        <label>Assign varFaultElement - Get_Accounting_Finance_Book</label>
+        <locationX>968</locationX>
+        <locationY>431</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Accounting_Finance_Book</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Error_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_Finance_Period</name>
+        <label>Assign varFaultElement - Get_Finance_Period</label>
+        <locationX>704</locationX>
+        <locationY>539</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Finance_Period</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Error_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Update_fin_book_and_period_on_Credit_Note</name>
+        <label>Assign varFaultElement - Update_fin_book_and_period_on_Credit_Note</label>
+        <locationX>440</locationX>
+        <locationY>647</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_fin_book_and_period_on_Credit_Note</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Error_Handler</targetReference>
+        </connector>
+    </assignments>
+    <description>Updated to add fault paths, varFaultElement and remove triggeringFlow.</description>
     <environments>Default</environments>
     <interviewLabel>Credit Note: After Save Flow {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Credit Note: After Save Flow</label>
@@ -32,6 +84,9 @@
         <connector>
             <targetReference>Get_Finance_Period</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_Accounting_Finance_Book</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>blng__PeriodType__c</field>
@@ -53,6 +108,9 @@
         <connector>
             <targetReference>Update_fin_book_and_period_on_Credit_Note</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_Finance_Period</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>blng__FinanceBook__c</field>
@@ -85,7 +143,7 @@
         <locationX>176</locationX>
         <locationY>539</locationY>
         <faultConnector>
-            <targetReference>Error_Handler</targetReference>
+            <targetReference>Assign_varFaultElement_Update_fin_book_and_period_on_Credit_Note</targetReference>
         </faultConnector>
         <inputAssignments>
             <field>blng__BillingFinanceBook__c</field>
@@ -124,19 +182,32 @@
         <name>Error_Handler</name>
         <label>Error Handler</label>
         <locationX>440</locationX>
-        <locationY>647</locationY>
+        <locationY>755</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>varFaultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Credit_Note_After_Save_Flow</stringValue>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <name>faultMessage</name>
             <value>
                 <elementReference>$Flow.FaultMessage</elementReference>
             </value>
         </inputAssignments>
-        <inputAssignments>
-            <name>triggeringFlow</name>
-            <value>
-                <stringValue>Credit_Note_After_Save_Flow</stringValue>
-            </value>
-        </inputAssignments>
     </subflows>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
 </Flow>

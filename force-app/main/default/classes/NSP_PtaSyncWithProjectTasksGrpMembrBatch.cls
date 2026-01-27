@@ -404,6 +404,16 @@ public class NSP_PtaSyncWithProjectTasksGrpMembrBatch implements ISelfSchedulabl
     {
         List<pse__Assignment__c> listOfAssignToBeCreated = new List<pse__Assignment__c>();
         try {
+            Id scheduleId = null;
+            if ( ( projectId != null )
+                && ( projectWithScheduleMap != null )
+                && projectWithScheduleMap.containsKey( projectId )
+                && ( projectWithScheduleMap.get( projectId ) != null )
+                )
+            {
+                // ~ prevent System.NullPointerException: Attempt to de-reference a null object
+                scheduleId = projectWithScheduleMap.get( projectId ).Id;
+            }
             if ( ( mapOfProjectIdWithResource != null )
                 && ( mapOfGroupMemberValWithContactList != null )
                 && mapOfGroupMemberValWithContactList.containsKey( groupMembershipVal )
@@ -421,7 +431,7 @@ public class NSP_PtaSyncWithProjectTasksGrpMembrBatch implements ISelfSchedulabl
                         pse__Assignment__c newAssRec = new pse__Assignment__c();
                         newAssRec.pse__Resource__c = eachContactRec;
                         newAssRec.pse__Project__c = projectId;
-                        newAssRec.pse__Schedule__c = projectWithScheduleMap.get( projectId ).Id;
+                        newAssRec.pse__Schedule__c = scheduleId;
                         newAssRec.pse__Bill_Rate__c = 0.0000;
                         listOfAssignToBeCreated.add( newAssRec );
                     }

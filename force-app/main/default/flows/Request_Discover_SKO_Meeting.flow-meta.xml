@@ -255,13 +255,6 @@
             <sortOrder>Asc</sortOrder>
         </sortOptions>
     </collectionProcessors>
-    <constants>
-        <name>flowName</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>Request Client Transition Meeting</stringValue>
-        </value>
-    </constants>
     <decisions>
         <name>Does_Active_WO_Asset_exist</name>
         <label>Does Active WO Asset exist?</label>
@@ -302,7 +295,7 @@
             <label>OMR Discovery/SKO Task already exists</label>
         </rules>
     </decisions>
-    <description>Updated Medical plan to Checklist.WO Benefit Plan picklist vs hardcoded choices. Updated with Fault Handler subflow.</description>
+    <description>Removed triggeringFlow and added &quot;Deprecated&quot; tag to label. Updated Medical plan to Checklist.WO Benefit Plan picklist vs hardcoded choices. Updated with Fault Handler subflow.</description>
     <dynamicChoiceSets>
         <name>checklistWOBenefitPlanPicklist</name>
         <dataType>Picklist</dataType>
@@ -387,7 +380,7 @@
     </formulas>
     <interviewLabel>Request Discover/SKO Meeting {!$Flow.CurrentDateTime}</interviewLabel>
     <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
-    <label>Request Client Transition Meeting</label>
+    <label>DEPRECATED - Request Client Transition Meeting</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -1454,15 +1447,15 @@
         <locationY>2294</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
-            <name>faultMessage</name>
+            <name>faultFlow</name>
             <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
+                <stringValue>Request_Discover_SKO_Meeting</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>triggeringFlow</name>
+            <name>faultMessage</name>
             <value>
-                <elementReference>flowName</elementReference>
+                <elementReference>$Flow.FaultMessage</elementReference>
             </value>
         </inputAssignments>
     </subflows>

@@ -25,7 +25,7 @@
     <assignments>
         <name>Update_Asset_Fields_on_Case_Record_DOL</name>
         <label>Update Asset Fields on Case Record</label>
-        <locationX>578</locationX>
+        <locationX>50</locationX>
         <locationY>719</locationY>
         <assignmentItems>
             <assignToReference>$Record.AIMS_Client_Name__c</assignToReference>
@@ -59,8 +59,8 @@
     <assignments>
         <name>Update_Asset_Fields_on_Case_Record_Wage_Claim</name>
         <label>Update Asset Fields on Case Record</label>
-        <locationX>50</locationX>
-        <locationY>719</locationY>
+        <locationX>94</locationX>
+        <locationY>1211</locationY>
         <assignmentItems>
             <assignToReference>$Record.AIMS_Client_Name__c</assignToReference>
             <operator>Assign</operator>
@@ -96,7 +96,7 @@
     <decisions>
         <name>Check_Asse1</name>
         <label>Check Asset</label>
-        <locationX>710</locationX>
+        <locationX>182</locationX>
         <locationY>611</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -118,8 +118,8 @@
     <decisions>
         <name>Check_Asset</name>
         <label>Check Asset</label>
-        <locationX>182</locationX>
-        <locationY>611</locationY>
+        <locationX>226</locationX>
+        <locationY>1103</locationY>
         <defaultConnector>
             <targetReference>Check_for_Account</targetReference>
         </defaultConnector>
@@ -165,8 +165,8 @@
     <decisions>
         <name>Check_for_Account</name>
         <label>Check for Account</label>
-        <locationX>182</locationX>
-        <locationY>911</locationY>
+        <locationX>226</locationX>
+        <locationY>1403</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>If_Account_exists1</name>
@@ -187,8 +187,8 @@
     <decisions>
         <name>Check_for_HR_specialist</name>
         <label>Check for HR specialist</label>
-        <locationX>468</locationX>
-        <locationY>1235</locationY>
+        <locationX>512</locationX>
+        <locationY>1727</locationY>
         <defaultConnector>
             <targetReference>Check_for_Payroll_Specialist</targetReference>
         </defaultConnector>
@@ -212,8 +212,8 @@
     <decisions>
         <name>Check_for_Payroll_Specialist</name>
         <label>Check for Payroll Specialist</label>
-        <locationX>468</locationX>
-        <locationY>1727</locationY>
+        <locationX>512</locationX>
+        <locationY>2219</locationY>
         <defaultConnector>
             <targetReference>Iterate_Account_Team</targetReference>
         </defaultConnector>
@@ -237,8 +237,8 @@
     <decisions>
         <name>Check_for_Primary_field</name>
         <label>Check for Primary field</label>
-        <locationX>270</locationX>
-        <locationY>1343</locationY>
+        <locationX>314</locationX>
+        <locationY>1835</locationY>
         <defaultConnector>
             <targetReference>Update_HR_Specialist_on_case_if_not_already_updated</targetReference>
         </defaultConnector>
@@ -262,24 +262,20 @@
     <decisions>
         <name>Check_for_WageClaim_DOLAudits_PEO_Records</name>
         <label>Check for WageClaim / DOLAudits / PEO Records</label>
-        <locationX>908</locationX>
+        <locationX>226</locationX>
         <locationY>503</locationY>
+        <defaultConnector>
+            <targetReference>Check_Asset</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>If_Wage_Claim_Record</name>
-            <conditionLogic>1 OR (2 AND 3)</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>NSP_WageClaims</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>PEO</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -296,19 +292,12 @@
         </rules>
         <rules>
             <name>If_DOL_Audits_Record</name>
-            <conditionLogic>1 OR (2 AND 3)</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>NSP_DOLAudits</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>PEO</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -323,32 +312,18 @@
             </connector>
             <label>If DOL Audits Record</label>
         </rules>
-        <rules>
-            <name>If_PEO_Record</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>PEO</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Check_Asset2</targetReference>
-            </connector>
-            <label>If PEO Record</label>
-        </rules>
     </decisions>
     <description>This flow is created as part of STY-02154 
-Updated on 1/29/203 for STY-256456</description>
+Updated on 1/29/203 for STY-256456
+Updated Sprint 2 (2026) ADO-511131</description>
     <environments>Default</environments>
     <interviewLabel>Update Revisit Wage Claims, DOL Audit &amp; PEO prefilled values {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Update Revisit Wage Claims, DOL Audit &amp; PEO prefilled values</label>
     <loops>
         <name>Iterate_Account_Team</name>
         <label>Iterate Account Team</label>
-        <locationX>50</locationX>
-        <locationY>1127</locationY>
+        <locationX>94</locationX>
+        <locationY>1619</locationY>
         <collectionReference>Fetch_Account_Team_Records</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -377,8 +352,8 @@ Updated on 1/29/203 for STY-256456</description>
     <recordLookups>
         <name>Fetch_Account_Team_Records</name>
         <label>Fetch Account Team Records</label>
-        <locationX>50</locationX>
-        <locationY>1019</locationY>
+        <locationX>94</locationX>
+        <locationY>1511</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Iterate_Account_Team</targetReference>
@@ -412,7 +387,7 @@ Updated on 1/29/203 for STY-256456</description>
     <recordLookups>
         <name>Get_AssetRecords_WO</name>
         <label>Get AssetRecords WO</label>
-        <locationX>908</locationX>
+        <locationX>226</locationX>
         <locationY>395</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -454,7 +429,7 @@ Updated on 1/29/203 for STY-256456</description>
     <recordLookups>
         <name>Get_WO_RecordType_Id</name>
         <label>Get WO RecordType Id</label>
-        <locationX>908</locationX>
+        <locationX>226</locationX>
         <locationY>287</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -484,8 +459,8 @@ Updated on 1/29/203 for STY-256456</description>
     <recordUpdates>
         <name>Update_HR_Specialist_on_case</name>
         <label>Update HR Specialist on case</label>
-        <locationX>138</locationX>
-        <locationY>1451</locationY>
+        <locationX>182</locationX>
+        <locationY>1943</locationY>
         <connector>
             <targetReference>Check_for_Payroll_Specialist</targetReference>
         </connector>
@@ -500,8 +475,8 @@ Updated on 1/29/203 for STY-256456</description>
     <recordUpdates>
         <name>Update_HR_Specialist_on_case_if_not_already_updated</name>
         <label>Update HR Specialist on case if not already updated</label>
-        <locationX>402</locationX>
-        <locationY>1451</locationY>
+        <locationX>446</locationX>
+        <locationY>1943</locationY>
         <connector>
             <targetReference>Check_for_Payroll_Specialist</targetReference>
         </connector>
@@ -524,8 +499,8 @@ Updated on 1/29/203 for STY-256456</description>
     <recordUpdates>
         <name>Update_Payroll_Specialist_on_Case</name>
         <label>Update Payroll Specialist on Case</label>
-        <locationX>336</locationX>
-        <locationY>1835</locationY>
+        <locationX>380</locationX>
+        <locationY>2327</locationY>
         <connector>
             <targetReference>Iterate_Account_Team</targetReference>
         </connector>
@@ -538,7 +513,7 @@ Updated on 1/29/203 for STY-256456</description>
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <start>
-        <locationX>782</locationX>
+        <locationX>100</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_WO_RecordType_Id</targetReference>

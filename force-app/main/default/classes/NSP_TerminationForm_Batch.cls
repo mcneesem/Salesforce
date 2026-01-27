@@ -1,8 +1,63 @@
-public class NSP_TerminationForm_Batch implements ISelfSchedulable , Schedulable , Database.Batchable<SObject> , Database.Stateful {
+public class NSP_TerminationForm_Batch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<SObject> , Database.Stateful {
     // test w/ NSP_TerminationForm_Batch_Test (88%)
 
     private List<String> ccEmailAddressList = new List<String>();
 
+    //
+    // argument-free constructor is required to be "runnable"...
+    //
+
+    public NSP_TerminationForm_Batch() {
+    }
+
+    //
+    // ISelfSchedulable
+    //
+
+    // runs M-F at 3:45pm central...
+    public static String schedule() {
+        String suffix = '';
+        if ( Test.isRunningTest() ) {
+            suffix = ' ~ TEST';
+        }
+        return System.schedule(
+            'NSP_TerminationForm_Batch ~ process the termination form records and send the notification email ~ M-F at 3:45 PM' + suffix ,
+            '0 45 15 ? * MON-FRI *' ,
+            new NSP_TerminationForm_Batch()
+        );
+    }
+
+    //
+    // Scheduleable
+    //
+
+    public void execute( SchedulableContext sc ) {
+        this.call( 'run' , null );
+    }
+
+    //
+    // Callable
+    //
+
+    public Object call( String action , Map<String,Object> args ) {
+        Object response = null;
+        if ( action == 'run' ) {
+            response = this.run();
+        }
+        return response;
+    }
+
+    //
+    // IJobRunnable
+    //
+
+    public Id run() {
+        return Database.executeBatch( new NSP_TerminationForm_Batch() , 100 );
+    }
+
+    //
+    // Batchable
+    //
     public Database.QueryLocator start( Database.BatchableContext bc ) {
         return Database.getQueryLocator(
             [
@@ -26,7 +81,6 @@ public class NSP_TerminationForm_Batch implements ISelfSchedulable , Schedulable
                     ( Approval_Date__c > :NSP_TerminationForm_Batch.dateBefore )
                     AND ( Approval_Date__c < :NSP_TerminationForm_Batch.dateAfter )
                     AND ( NSP_Status__c = 'Term Team Approved' )
-                    AND ( NSP_Project_Task__r.pse__Project__r.pse__Project_Status__c != 'Complete' )
                 )
             ]
         );
@@ -107,23 +161,6 @@ public class NSP_TerminationForm_Batch implements ISelfSchedulable , Schedulable
                 );
             }
         }
-    }
-
-    public void execute( SchedulableContext sc ) {
-        Database.executeBatch( new NSP_TerminationForm_Batch() , 100 );
-    }
-
-    // runs M-F at 3:45pm central...
-    public static String schedule() {
-        String suffix = '';
-        if ( Test.isRunningTest() ) {
-            suffix = ' ~ TEST';
-        }
-        return System.schedule(
-            'NSP_TerminationForm_Batch ~ process the termination form records and send the notification email ~ M-F at 3:45 PM' + suffix ,
-            '0 45 15 ? * MON-FRI *' ,
-            new NSP_TerminationForm_Batch()
-        );
     }
 
     //

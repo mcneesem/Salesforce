@@ -41,7 +41,7 @@ export default class CaseAccountContactLookup extends LightningElement {
     }
 
     async handleAccountLookup(event) {
-        const newAccountId = event.detail.recId;
+        const newAccountId = event?.detail?.recId;
         this.selectedAccountId = newAccountId;
         this.contactFilterId = this.selectedAccountId || '';
         this.accountFilterId = this.contextContactId || this.selectedContactId || '';
@@ -98,12 +98,31 @@ export default class CaseAccountContactLookup extends LightningElement {
         }
     }
 
+    // response from getContactParent is a List<Contact>...
+    // response from getRelatedAccounts is a List<AccountContactRelation>...
+    // both sObjectTypes have the same AccountId field...
+    handleImperativeResponse( response ) {
+        let accountId = null;
+        if ( response
+            && Array.isArray( response )
+            && ( response.length > 0 )
+            && response[0]
+            )
+        {
+            accountId = response[0].AccountId;
+        }
+        return accountId;
+    }
+
     async setDefaultAccountFromContact() {
         if (!this.selectedContactId) return;
         try {
-            const primaryAccountId = await getContactParent({ contactId: this.selectedContactId });
-            const accounts = await getRelatedAccounts({ contactId: this.selectedContactId });
-            const defaultAccountId = primaryAccountId || (accounts.length > 0 ? accounts.find(acc => acc.AccountId === '001Oy00000rPx0AIAS')?.AccountId || accounts[0].AccountId : null);
+            const getContactParentResponse = await getContactParent({ contactId: this.selectedContactId });
+            let defaultAccountId = this.handleImperativeResponse( getContactParentResponse );
+            if ( !defaultAccountId ) {
+                const getRelatedAccountsResponse = await getRelatedAccounts({ contactId: this.selectedContactId });
+                defaultAccountId = this.handleImperativeResponse( getRelatedAccountsResponse );
+            }
             if (defaultAccountId && !this.selectedAccountId) {
                 this.selectedAccountId = defaultAccountId;
                 this.contactFilterId = this.selectedAccountId;

@@ -6,6 +6,15 @@ private class NSP_TerminationForm_Batch_Test {
         Email_Deliverability_Settings__c emailSetting = Email_Deliverability_Settings__c.getOrgDefaults();
         emailSetting.IsEnabledOutbound__c = true;
         upsert emailSetting;
+
+        TerminationFormBatchSettings__c terminationSetting = TerminationFormBatchSettings__c.getOrgDefaults();
+        terminationSetting.SoqlDaysBeforeLimit__c = 10;
+        terminationSetting.SoqlDaysAfterLimit__c = 10;
+        terminationSetting.Account_Team_Roles__c = NSP_ServiceConstants.CLIENT_LIAISION;
+        terminationSetting.CcAddresses__c = 'cc1@example.com' + '\r\n' + 'cc2@example.com';
+        terminationSetting.OrgWideEmailAddressId__c = null;
+        upsert terminationSetting;
+
         //inserting account
         Account acc1 = (Account)NSP_TestDataFactory.createSObject(new Account(),'NSP_TestDataFactory.AccountDefaults');
         acc1.Name = 'acc1';
@@ -62,6 +71,13 @@ private class NSP_TerminationForm_Batch_Test {
         } catch(Exception ex){
             System.debug( ' ~ ex=' + ex );
         }
+    }
+
+    @isTest
+    private static void testCallMethodRoutingOnly() {
+        NSP_TerminationForm_Batch batch = new NSP_TerminationForm_Batch();
+        Object result = batch.call('invalidAction', null);
+        System.assertEquals(null, result);
     }
 
 }

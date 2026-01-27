@@ -18,6 +18,7 @@
     <permissionSets>Opportunity_Allow_Closed_Lost_Insurance</permissionSets>
     <permissionSets>Opportunity_Allow_Closed_Lost_RET</permissionSets>
     <permissionSets>Opportunity_Allow_Closed_Lost_Technology</permissionSets>
+    <permissionSets>Opportunity_Edit_Source_Information</permissionSets>
     <permissionSets>Opportunity_Team_Team_Check</permissionSets>
     <permissionSets>Report_export_and_print_access</permissionSets>
     <permissionSets>Sales_Service_Object_Permission</permissionSets>
