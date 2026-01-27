@@ -12,7 +12,7 @@
         </p>
         <p>Regards,</p>
         <p><b>Termination Team</b></p>
-        <c:NSP_InsperityEmailLogo ></c:NSP_InsperityEmailLogo>
+        <c:InsperityTerminationEmailLogo ></c:InsperityTerminationEmailLogo>
         <p style="color:red; font-weight:bold;">**OUTGOING ONLY - NO REPLIES WILL BE SENT FROM THIS MAILBOX**</p>
     </messaging:htmlEmailBody>
 
