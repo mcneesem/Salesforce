@@ -1,6 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>57.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_varFaultElement_Related_Opportunity</name>
+        <label>Assign varFaultElement - Related_Opportunity</label>
+        <locationX>704</locationX>
+        <locationY>431</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Related_Opportunity</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>fault_handler_sub_flow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Save_Primary_Product_to_Oppty_Credit_Record</name>
+        <label>Assign varFaultElement - Save_Primary_Product_to_Oppty_Credit_Record</label>
+        <locationX>440</locationX>
+        <locationY>539</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Save_Primary_Product_to_Oppty_Credit_Record</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>fault_handler_sub_flow</targetReference>
+        </connector>
+    </assignments>
     <constants>
         <name>Product</name>
         <dataType>String</dataType>
@@ -10,6 +44,7 @@
         <name>Store_Primary_Product</name>
         <dataType>String</dataType>
     </constants>
+    <description>Added varFaultElement and removed triggeringFlow.</description>
     <environments>Default</environments>
     <interviewLabel>Opportunity Credit during Create / Edit {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Opportunity Credit during Create / Edit</label>
@@ -37,13 +72,13 @@
         <name>Related_Opportunity</name>
         <label>Related Opportunity</label>
         <locationX>176</locationX>
-        <locationY>335</locationY>
+        <locationY>323</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Save_Primary_Product_to_Oppty_Credit_Record</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>fault_handler_sub_flow</targetReference>
+            <targetReference>Assign_varFaultElement_Related_Opportunity</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -62,10 +97,9 @@
         <name>Save_Primary_Product_to_Oppty_Credit_Record</name>
         <label>Save Primary Product to Oppty Credit Record</label>
         <locationX>176</locationX>
-        <locationY>455</locationY>
+        <locationY>431</locationY>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>fault_handler_sub_flow</targetReference>
+            <targetReference>Assign_varFaultElement_Save_Primary_Product_to_Oppty_Credit_Record</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -101,28 +135,41 @@
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>fault_handler_sub_flow</name>
         <label>fault handler sub flow</label>
         <locationX>704</locationX>
-        <locationY>455</locationY>
+        <locationY>539</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>varFaultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Opportunity_Credit_during_Create_Edit</stringValue>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <name>faultMessage</name>
             <value>
                 <elementReference>$Flow.FaultMessage</elementReference>
             </value>
         </inputAssignments>
-        <inputAssignments>
-            <name>triggeringFlow</name>
-            <value>
-                <stringValue>Opportunity Credit - during create / edit</stringValue>
-            </value>
-        </inputAssignments>
     </subflows>
     <variables>
         <name>ProductonOppty</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varFaultElement</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>

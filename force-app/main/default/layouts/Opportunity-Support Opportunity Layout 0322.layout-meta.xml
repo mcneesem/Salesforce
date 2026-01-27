@@ -1379,24 +1379,19 @@
             <sortOrder>25</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Opportunity.NSP_Create_Checklist</actionName>
+            <actionName>NewLead</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>26</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>NewLead</actionName>
+            <actionName>Opportunity.NSP_CreateQuote</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>27</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Opportunity.NSP_CreateQuote</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>28</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>ChangeRecordType</actionName>
             <actionType>StandardButton</actionType>
-            <sortOrder>29</sortOrder>
+            <sortOrder>28</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <relatedLists>

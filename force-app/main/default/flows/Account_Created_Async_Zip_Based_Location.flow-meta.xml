@@ -1,7 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>60.0</apiVersion>
-    <description>Updated to account for 9 digit zip codes. When Account is created with a Billing Zip Code populated and Account is owned by &quot;Available&quot; then the &quot;Zip Based Location&quot; field should be populated based on relevant Zip to Region Mapping record with matching zip code</description>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_varFaultElement_Get_Relevant_Zip_to_Region_Mapping_based_on_Zip</name>
+        <label>Assign varFaultElement - Get_Relevant_Zip_to_Region_Mapping_based_on_Zip</label>
+        <locationX>968</locationX>
+        <locationY>384</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Relevant_Zip_to_Region_Mapping_based_on_Zip</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Populate_Zip_Based_Location_field</name>
+        <label>Assign varFaultElement - Populate_Zip_Based_Location_field</label>
+        <locationX>440</locationX>
+        <locationY>600</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Populate_Zip_Based_Location_field</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Was_a_zip_code_found</name>
+        <label>Was a zip code found?</label>
+        <locationX>440</locationX>
+        <locationY>384</locationY>
+        <defaultConnectorLabel>Zip to Region record not found</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Zip_to_Region_Mapping_found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Relevant_Zip_to_Region_Mapping_based_on_Zip</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Populate_Zip_Based_Location_field</targetReference>
+            </connector>
+            <label>Yes - Zip to Region Mapping found</label>
+        </rules>
+    </decisions>
+    <description>Removed triggeringFlow and added varFaultElement. Updated to account for 9 digit zip codes. When Account is created with a Billing Zip Code populated and Account is owned by &quot;Available&quot; then the &quot;Zip Based Location&quot; field should be populated based on relevant Zip to Region Mapping record with matching zip code</description>
     <environments>Default</environments>
     <formulas>
         <name>fiveDigitZipFormula</name>
@@ -33,14 +89,14 @@
         <description>Get the relevant Zip to Region Mapping record (NSP_Zip_To_City_Mapping__c) based on Account&apos;s Billing Zip Code</description>
         <name>Get_Relevant_Zip_to_Region_Mapping_based_on_Zip</name>
         <label>Get Relevant Zip to Region Mapping based on Zip</label>
-        <locationX>308</locationX>
+        <locationX>440</locationX>
         <locationY>276</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Populate_Zip_Based_Location_field</targetReference>
+            <targetReference>Was_a_zip_code_found</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Fault_Handler_Subflow</targetReference>
+            <targetReference>Assign_varFaultElement_Get_Relevant_Zip_to_Region_Mapping_based_on_Zip</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -57,11 +113,10 @@
     <recordUpdates>
         <name>Populate_Zip_Based_Location_field</name>
         <label>Populate Zip Based Location field</label>
-        <locationX>308</locationX>
-        <locationY>384</locationY>
+        <locationX>176</locationX>
+        <locationY>492</locationY>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_Subflow</targetReference>
+            <targetReference>Assign_varFaultElement_Populate_Zip_Based_Location_field</targetReference>
         </faultConnector>
         <inputAssignments>
             <field>Zip_Based_Location__c</field>
@@ -103,20 +158,33 @@
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
-        <locationX>836</locationX>
-        <locationY>384</locationY>
+        <locationX>968</locationX>
+        <locationY>492</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>varFaultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Account_Created_Async_Zip_Based_Location</stringValue>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <name>faultMessage</name>
             <value>
                 <elementReference>$Flow.FaultMessage</elementReference>
             </value>
         </inputAssignments>
-        <inputAssignments>
-            <name>triggeringFlow</name>
-            <value>
-                <stringValue>Account - Created Async - Zip Based Location</stringValue>
-            </value>
-        </inputAssignments>
     </subflows>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
 </Flow>

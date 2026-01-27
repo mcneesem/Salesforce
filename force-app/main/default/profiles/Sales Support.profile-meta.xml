@@ -1047,7 +1047,7 @@
         <field>User.NSP_Running_Sales_Office__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>User.NSP_Running_Sales_Region__c</field>
         <readable>true</readable>
@@ -1062,7 +1062,7 @@
         <field>Lead.account6Sense_Account_6QA_Age__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Lead.Do_Not_Contact__c</field>
         <readable>true</readable>
@@ -9234,7 +9234,7 @@
         <field>NSP_Checklist__c.NSP_Requested_1st_Pay_Period_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Checklist__c.NSP_Requested_First_Pay_Date__c</field>
         <readable>true</readable>
@@ -13785,61 +13785,61 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-		<editable>false</editable>
-		<field>blng__Invoice__c.Invoice_ID_18__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>false</editable>
-		<field>blng__InvoiceLine__c.Invoice_Line_ID_18__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>false</editable>
-		<field>blng__CreditNote__c.Credit_Note_ID_18__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>false</editable>
-		<field>blng__CreditNoteLine__c.Credit_Note_Line_ID_18__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>false</editable>
-		<field>blng__DebitNote__c.Debit_Note_ID_18__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>false</editable>
-		<field>blng__DebitNoteLine__c.Debit_Note_Line_ID_18__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>false</editable>
-		<field>blng__Payment__c.Payment_ID_18__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
+        <editable>false</editable>
+        <field>blng__Invoice__c.Invoice_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__InvoiceLine__c.Invoice_Line_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__CreditNote__c.Credit_Note_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__CreditNoteLine__c.Credit_Note_Line_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__DebitNote__c.Debit_Note_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__DebitNoteLine__c.Debit_Note_Line_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>blng__Payment__c.Payment_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <flowAccesses>
         <enabled>true</enabled>
         <flow>Enter_Final_Employee_Orientation_Meeting_Information</flow>
     </flowAccesses>
-	<flowAccesses>
+    <flowAccesses>
         <enabled>true</enabled>
         <flow>Request_Discover_SKO_Meeting</flow>
     </flowAccesses>
-	<flowAccesses>
+    <flowAccesses>
         <enabled>true</enabled>
         <flow>Request_Employee_Orientation_Meeting</flow>
     </flowAccesses>
-	<flowAccesses>
+    <flowAccesses>
         <enabled>true</enabled>
         <flow>Take_Final_OMR_Meeting_Information</flow>
     </flowAccesses>
-	<flowAccesses>
+    <flowAccesses>
         <enabled>true</enabled>
         <flow>Update_Final_Employee_Orientation_Meeting_Information</flow>
     </flowAccesses>
-	<flowAccesses>
+    <flowAccesses>
         <enabled>true</enabled>
         <flow>Update_Final_OMR_Meeting_Information</flow>
     </flowAccesses>
@@ -13850,10 +13850,6 @@
     <flowAccesses>
         <enabled>false</enabled>
         <flow>Account_Team_Member_Creation</flow>
-    </flowAccesses>
-    <flowAccesses>
-        <enabled>false</enabled>
-        <flow>Checklist_Creation</flow>
     </flowAccesses>
     <flowAccesses>
         <enabled>false</enabled>

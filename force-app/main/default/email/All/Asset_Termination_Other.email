@@ -1,0 +1,12 @@
+<messaging:emailTemplate
+    subject="Pending Termination - {!relatedTo.Account.Name} ({!relatedTo.NSP_Client__c})"
+    recipientType="User"
+    relatedToType="Asset"
+    >
+    <messaging:htmlEmailBody>
+        <p>
+            <a href="{!relatedTo.Server_URL__c}/{!relatedTo.AccountId}">{!relatedTo.Account.Name}</a>
+            ({!relatedTo.NSP_Client__c}) has been flagged for Pending Termination. Please update Renewal Probability information.
+        </p>
+    </messaging:htmlEmailBody>
+</messaging:emailTemplate>

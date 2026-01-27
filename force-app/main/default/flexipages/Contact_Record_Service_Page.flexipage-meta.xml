@@ -681,6 +681,9 @@
                             <value>NSP_Support_Role__c</value>
                         </valueListItems>
                         <valueListItems>
+                            <value>HRScale_Client_Roles__c</value>
+                        </valueListItems>
+                        <valueListItems>
                             <value>Client_Communication_Contact__c</value>
                         </valueListItems>
                         <valueListItems>

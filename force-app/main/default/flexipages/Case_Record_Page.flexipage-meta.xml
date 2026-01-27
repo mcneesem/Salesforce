@@ -1175,27 +1175,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Credit_Exception_Approved__c</fieldItem>
-                <identifier>RecordCredit_Exception_Approved_cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Wire_Scenario__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Credit requires wire, Client requests debit</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-3b2139f6-995b-4b31-868f-336168a1a8a6</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.Pay_Date__c</fieldItem>
                 <identifier>RecordPay_Date_cField2</identifier>
             </fieldInstance>
@@ -1218,6 +1197,118 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Ready_to_Process__c</fieldItem>
                 <identifier>RecordReady_to_Process_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-3b2139f6-995b-4b31-868f-336168a1a8a6</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Total_Bonus_Invoice_Amount__c</fieldItem>
+                <identifier>RecordTotal_Bonus_Invoice_Amount_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Wire</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Any_Other_Payrolls_On_Same_Date__c</fieldItem>
+                <identifier>RecordAny_other_payroll_s_on_same_date_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Wire</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>required</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Total_Amount_of_Other_Payrolls__c</fieldItem>
+                <identifier>RecordTotal_amount_of_other_payroll_s_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Any_Other_Payrolls_On_Same_Date__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Yes</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Business_Reason_For_Exception_Request__c</fieldItem>
+                <identifier>RecordBusiness_reason_for_exception_request_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Wire</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Other_Client_Info_Credit_Should_Know__c</fieldItem>
+                <identifier>RecordOther_client_info_credit_should_know_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Wire</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Credit_Exception_Approved__c</fieldItem>
+                <identifier>RecordCredit_Exception_Approved_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Wire_Scenario__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Credit requires wire, Client requests debit</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_SubCategory__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Wire</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-193a4eb0-6d56-49be-9c5d-79ca8dd3f036</name>

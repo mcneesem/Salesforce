@@ -13769,10 +13769,6 @@
     </flowAccesses>
     <flowAccesses>
         <enabled>false</enabled>
-        <flow>Checklist_Creation</flow>
-    </flowAccesses>
-    <flowAccesses>
-        <enabled>false</enabled>
         <flow>Contracts_By_ProductType_For_Subscriptions</flow>
     </flowAccesses>
     <flowAccesses>

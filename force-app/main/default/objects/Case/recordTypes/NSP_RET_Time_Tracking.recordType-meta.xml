@@ -5,6 +5,17 @@
     <businessProcess>Onboarding</businessProcess>
     <label>RET Time Tracking</label>
     <picklistValues>
+        <picklist>Any_Other_Payrolls_On_Same_Date__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Areas_of_Interest__c</picklist>
         <values>
             <fullName>401 %28K%29</fullName>

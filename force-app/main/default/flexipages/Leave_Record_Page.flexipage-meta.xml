@@ -237,7 +237,7 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.ABCP_Period__c</fieldItem>
-                <identifier>RecordABCP_Period_cField</identifier>
+                <identifier>RecordABCP_Period_Field</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>

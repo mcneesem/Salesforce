@@ -58,8 +58,8 @@ public class NSP_AssetServiceTriggerHelper {
     private static final Id CPQ_ASSET_RECORDTYPE_ID = NSP_GenericRecordType.getRecordTypeId(ASSET, 'NSP_CPQ_Asset');
     private static final Id PERFORM_SMART_ASSET = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE,NSP_ServiceConstants.PERFORMANCE_ASSET );
     private static final Id INTEGRA_ASSET = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE,NSP_ServiceConstants.INTEGRA );
-    private static final String ASSET_TERMINATION_PAYROLL_TEMPLATE = 'NSP_Retention_Strategy_Payroll_Email';
-    private static final String ASSET_TERMINATION_OTHER_ROLE_TEMPLATE = 'NSP_Asset_Retention_Strategy_Email';
+    private static final String ASSET_TERMINATION_PAYROLL_TEMPLATE = 'Asset_Termination_Payroll';
+    private static final String ASSET_TERMINATION_OTHER_ROLE_TEMPLATE = 'Asset_Termination_Other';
     private static final String RSAP = 'Relationship Strategy Action Plan';
     private static final Id hardWareRecordTypeId = NSP_GenericRecordType.getRecordTypeId(ASSET, 'Hardware_Asset');
     private static final String errorMessage = System.Label.NSP_Error_Message_Without_CreateAsset_PermSet_On_Asset;

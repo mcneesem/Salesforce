@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>59.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Removed triggeringFlow.</description>
     <environments>Default</environments>
     <interviewLabel>UpdateShippingOnOpportunity {!$Flow.CurrentDateTime}</interviewLabel>
     <label>UpdateShippingOnOpportunity</label>
@@ -83,15 +85,21 @@
         <locationY>384</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
-            <name>faultMessage</name>
+            <name>faultElement</name>
             <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
+                <stringValue>Update_Records</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>triggeringFlow</name>
+            <name>faultFlow</name>
             <value>
                 <stringValue>UpdateShippingOnOpportunity</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
             </value>
         </inputAssignments>
     </subflows>

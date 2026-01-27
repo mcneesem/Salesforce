@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Assign_Current_Tier_Level_Number</name>
         <label>Assign Current Tier Level Number</label>
@@ -15,6 +16,39 @@
         </assignmentItems>
         <connector>
             <targetReference>Update_User_Record</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_User_Record</name>
+        <label>Assign varFaultElement - Get_User_Record</label>
+        <locationX>842</locationX>
+        <locationY>350</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_User_Record</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Update_User_Record</name>
+        <label>Assign varFaultElement - Update_User_Record</label>
+        <locationX>314</locationX>
+        <locationY>674</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_User_Record</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -82,7 +116,7 @@
             <label>Yes - User is Active</label>
         </rules>
     </decisions>
-    <description>If Tier Tracking record is active, and user record is active, update &quot;Current Tier Level&quot; on user record</description>
+    <description>Added varFaultElement and removed triggeringFlow. If Tier Tracking record is active, and user record is active, update &quot;Current Tier Level&quot; on user record</description>
     <environments>Default</environments>
     <formulas>
         <name>tierNumberToTextFormula</name>
@@ -120,7 +154,7 @@
             <targetReference>Is_User_Active</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Fault_Handler_Subflow</targetReference>
+            <targetReference>Assign_varFaultElement_Get_User_Record</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -142,8 +176,7 @@
         <locationX>50</locationX>
         <locationY>566</locationY>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_Subflow</targetReference>
+            <targetReference>Assign_varFaultElement_Update_User_Record</targetReference>
         </faultConnector>
         <inputReference>varUser</inputReference>
     </recordUpdates>
@@ -159,18 +192,24 @@
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
         <locationX>842</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>varFaultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Tier_Tracking_Subflow_Update_Related_User_Record</stringValue>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <name>faultMessage</name>
             <value>
                 <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>triggeringFlow</name>
-            <value>
-                <stringValue>Tier Tracking - Subflow Update Related User Record</stringValue>
             </value>
         </inputAssignments>
     </subflows>
@@ -181,6 +220,13 @@
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>NSP_Tier_Tracking__c</objectType>
+    </variables>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>varUser</name>

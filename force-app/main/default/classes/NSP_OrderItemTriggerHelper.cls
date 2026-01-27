@@ -92,68 +92,26 @@ public class NSP_OrderItemTriggerHelper {
     // @return void
     //
     public void processOrderItemForScholarshipCS( Map<Id,OrderItem> newMap ) {
-        Map<Id,Boolean> orderItemIdToScholarShipFeeMap = new Map<Id,Boolean>();
         Map<Id,String> opIdMap = new Map<Id,String>();
-        List<String> cat1ListOrderItems = new List<String>();
-        List<String> cat2ListOrderItems = new List<String>();
-        List<String> cat4ListOrderItems = new List<String>();
-        List<String> orderItemPartnerAccounts = new List<String>();
         for ( OrderItem eachItem : newMap.values() ) {
-            Boolean seasonalApplied = True;
-            if ( ( eachItem.Seasonal_Pricing__c == 'Not Applicable' )
-                || String.isBlank( eachItem.Seasonal_Pricing__c )
+            if ( ( eachItem.NSP_ServiceAssetCategory__c != null )
+                && ( eachItem.NSP_ServiceAssetCategory__c != NSP_CPQConstants.HARDWARE_ASSET )
+                && ( eachItem.NSP_ServiceAsset__c == null )
                 )
             {
-                seasonalApplied = False;
+                opIdMap.put(
+                    eachItem.Id ,
+                    eachItem.NSP_ServiceAssetCategory__c
+                );
             }
-            if ( eachItem.NSP_IsScholarshipFee_Applicable__c
-                || eachItem.NSP_Is_Partner_CS_Applicable__c
-                || eachItem.NSP_OLI_CS_Applicable__c
-                || seasonalApplied
-                )
-            {
-                if ( !eachItem.NSP_Scholarship_Price__c
-                    && !eachItem.NSP_Is_Partner_CS_Applicable__c
-                    && !seasonalApplied
-                    )
-                {
-                    cat1ListOrderItems.add(eachItem.Id); // Category 1 - Delete Scholarship and Partner consumption schedules - Both not applicable
-                }
-                if ( eachItem.NSP_Scholarship_Price__c
-                    && !eachItem.NSP_Is_Partner_CS_Applicable__c
-                    && !seasonalApplied
-                    )
-                {
-                    cat2ListOrderItems.add(eachItem.Id); // Category 2 - Scholarship Applicable - Delete Partner consumption schedules
-                }
-                if(seasonalApplied){
-                    cat4ListOrderItems.add(eachItem.id);
-                }
-            }
-            if(eachItem.NSP_ServiceAssetCategory__c != null && eachItem.NSP_ServiceAssetCategory__c != NSP_CPQConstants.HARDWARE_ASSET && eachItem.NSP_ServiceAsset__c == null){
-                opIdMap.put(eachItem.Id,eachItem.NSP_ServiceAssetCategory__c);
-            }
-        }
-        if(cat1ListOrderItems.size () > 0 ) {
-            processConsumptionSchedule(cat1ListOrderItems, 1, null);
-        }
-        if(cat2ListOrderItems.size () > 0 ) {
-            processConsumptionSchedule(cat2ListOrderItems, 2, null);
-        }
-        if(cat4ListOrderItems.size () > 0 ) {
-            processConsumptionSchedule(cat4ListOrderItems, 4, null);
         }
         //call asset mapping method
-        if(opIdMap != null && opIdMap.size() >0){
-            updateAsset(opIdMap);
+        if ( ( opIdMap != null ) && !opIdMap.isEmpty() ) {
+            NSP_OrderItemTriggerHelper.updateAsset( opIdMap );
         }
     }
 
-    //
-    // Parse the string in to map and then process map to decide which recird to delete
-    // @param OrderItemMapStr string of serialize Map.
-    // @return void
-    //
+    // DEPRECATED
     @future
     public static void processConsumptionSchedule( List<String> orderItemIds , Integer category , List<String> partnerIds ) {
         Set<Id> usageSummaryDeleteSet = new Set<Id>();

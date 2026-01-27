@@ -127,13 +127,6 @@
         </value>
     </choices>
     <constants>
-        <name>flowName</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>Request_Additional_Employee_Orientation_Meeting</stringValue>
-        </value>
-    </constants>
-    <constants>
         <name>OMRTaskRecordTypeId</name>
         <dataType>String</dataType>
         <value>
@@ -236,6 +229,7 @@
             <label>No</label>
         </rules>
     </decisions>
+    <description>Removed triggeringFlow and updated label with &quot;DEPRECATED&quot; tag</description>
     <environments>Default</environments>
     <formulas>
         <name>ctm_date</name>
@@ -244,7 +238,7 @@
     </formulas>
     <interviewLabel>Request Additional Employee Orientation Meeting {!$Flow.CurrentDateTime}</interviewLabel>
     <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
-    <label>Request Additional Employee Orientation Meeting</label>
+    <label>DEPRECATED - Request Additional Employee Orientation Meeting</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -621,15 +615,15 @@
         <locationY>1214</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
-            <name>faultMessage</name>
+            <name>faultFlow</name>
             <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
+                <stringValue>Request_Additional_Employee_Orientation_Meeting</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>triggeringFlow</name>
+            <name>faultMessage</name>
             <value>
-                <elementReference>flowName</elementReference>
+                <elementReference>$Flow.FaultMessage</elementReference>
             </value>
         </inputAssignments>
     </subflows>
