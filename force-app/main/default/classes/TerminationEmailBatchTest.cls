@@ -36,7 +36,7 @@ private class TerminationEmailBatchTest {
             FROM ContentVersion
             WHERE Id =: cv.Id
         ];
-        
+
         ContentDocumentLink cdl = new ContentDocumentLink(
             LinkedEntityId = form.Id,
             ContentDocumentId = latest[0].ContentDocumentId,
