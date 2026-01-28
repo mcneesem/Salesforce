@@ -1843,14 +1843,21 @@ public class NSP_ProjectTasksTriggerHelper {
         }
 
         if(mDependentTaskOwnerIds.size() > 0){
-            CustomNotificationType bellNotificationTermForm = [SELECT Id, DeveloperName FROM CustomNotificationType WHERE DeveloperName='NSP_Bell_Notification_Termination_Form' LIMIT 1];
+            List<CustomNotificationType> bellNotificationTypes = [
+                SELECT Id, DeveloperName
+                FROM CustomNotificationType
+                WHERE DeveloperName = 'NSP_Bell_Notification_Termination_Form'
+                LIMIT 1
+            ];
 
-            Messaging.CustomNotification Notification = new Messaging.CustomNotification();
-            Notification.setNotificationTypeId(bellNotificationTermForm.id);
-            Notification.setTitle('Termination Form approval Completed');
-            Notification.setBody('You have task(s) to complete');
-            Notification.setTargetId(mPrecedingTaskId);
-            Notification.send(mDependentTaskOwnerIds);
+            if (!bellNotificationTypes.isEmpty()) {
+                Messaging.CustomNotification notification = new Messaging.CustomNotification();
+                notification.setNotificationTypeId(bellNotificationTypes[0].Id);
+                notification.setTitle('Termination Form approval Completed');
+                notification.setBody('You have task(s) to complete');
+                notification.setTargetId(mPrecedingTaskId);
+                notification.send(mDependentTaskOwnerIds);
+            }
         }
     }
 
@@ -2272,28 +2279,24 @@ public class NSP_ProjectTasksTriggerHelper {
             && !projectTaskIdSet.isEmpty()
             && EmailDeliverabilityController.IsEnabledOutbound) {
 
-            Boolean useFuture = false;
-
-            if (isEnabledFutureNotifications) {
-                if (Limits.getFutureCalls() < Limits.getLimitFutureCalls()) {
-                    useFuture = true;
-                }
-            }
+            Boolean useFuture = (
+                NSP_ProjectTasksTriggerHelper.isEnabledFutureNotifications && (Limits.getFutureCalls() < Limits.getLimitFutureCalls())
+            );
 
             if (useFuture) {
-                sendEmailToProjectResourceFuture(projectTaskIdSet);
+                NSP_ProjectTasksTriggerHelper.sendEmailToProjectResourceFuture(projectTaskIdSet);
             } else {
-                sendEmailToProjectResourceStatic(projectTaskIdSet);
+                NSP_ProjectTasksTriggerHelper.sendEmailToProjectResourceStatic(projectTaskIdSet);
             }
         }
     }
 
     @future
-    public static void sendEmailToProjectResourceFuture( Set<Id> projectTaskIdSet ) {
+    private static void sendEmailToProjectResourceFuture( Set<Id> projectTaskIdSet ) {
         NSP_ProjectTasksTriggerHelper.sendEmailToProjectResourceStatic( projectTaskIdSet );
     }
 
-    public static void sendEmailToProjectResourceStatic( Set<Id> projectTaskIdSet ) {
+    private static void sendEmailToProjectResourceStatic( Set<Id> projectTaskIdSet ) {
         //A list to store all RET Templates
         List<String> retTemplateNames = System.Label.NSP_RET_Project_Templates.split(',');
         //Map of project and current project task
