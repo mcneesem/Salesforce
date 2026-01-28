@@ -66,6 +66,16 @@
                 <identifier>RecordNameField3</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Client_Number__c</fieldItem>
+                <identifier>RecordClient_Number__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-c8c6d57b-5e8e-4fb8-aee3-3b79b1ba82bb</name>
         <type>Facet</type>
     </flexiPageRegions>

@@ -20,6 +20,10 @@
                 <behavior>Required</behavior>
                 <field>Name</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Client_Number__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -97,6 +101,9 @@
     <relatedLists>
         <excludeButtons>MassChangeOwner</excludeButtons>
         <fields>NAME</fields>
+        <fields>First_Pay_Period__c</fields>
+        <fields>First_Pay_Date__c</fields>
+        <fields>Pay_Frequency__c</fields>
         <relatedList>Portal_Pay_Period__c.Portal_Client__c</relatedList>
     </relatedLists>
     <relatedLists>
