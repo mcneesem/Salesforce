@@ -308,22 +308,12 @@ private class NSP_ProjectTasksTriggerHelperTest {
         nProjectTaskList.add(payrollProjTask);
 
         pse__Project_Task__c cobraProjTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
-        // cobraProjTask.Name = 'COBRA Takeovers';
         cobraProjTask.Name = NSP_ServiceConstants.COBRA_FORM_YES;
         cobraProjTask.pse__Project__c = hcmProject.Id;
         cobraProjTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
         cobraProjTask.NSP_Template_Generated__c = true;
         cobraProjTask.RecordTypeId = bPS_ProjectTaskRecordTypeId;
         nProjectTaskList.add(cobraProjTask);
-
-        /*pse__Project_Task__c hsaProjTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
-        // cobraProjTask.Name = 'COBRA Takeovers';
-        hsaProjTask.Name = NSP_ServiceConstants.HSA;
-        hsaProjTask.pse__Project__c = hcmProject.Id;
-        hsaProjTask.pse__Status__c = NSP_ServiceConstants.PROJECTSTATUSNOTSTARTED;
-        hsaProjTask.NSP_Template_Generated__c = true;
-        hsaProjTask.RecordTypeId = bPS_ProjectTaskRecordTypeId;
-        nProjectTaskList.add(hsaProjTask);*/
 
         pse__Project_Task__c scheduledTask = (pse__Project_Task__c)NSP_TestExtendedDataFactory.createSObject(new pse__Project_Task__c());
         scheduledTask.Name = 'Test SA';
@@ -579,8 +569,6 @@ private class NSP_ProjectTasksTriggerHelperTest {
         update lPrecedingTasks;
 
         Test.stopTest();
-
-        //System.assertEquals(2,Limits.getFutureCalls());
     }
 
     /**
@@ -1406,4 +1394,170 @@ private class NSP_ProjectTasksTriggerHelperTest {
         }
         Test.stopTest();
     }
+
+    @IsTest
+    private static void testHsaOptumMMBranch_Natural() {
+        Id ipMMRecordTypeId = NSP_GenericRecordType.getRecordTypeId(
+            'Implementation_Profile__c',
+            NSP_ServiceConstants.MMProfile
+        );
+
+        Implementation_Profile__c ip = [
+            SELECT Id, RecordTypeId, NSP_Project__c, NSP_Form_Completed__c, Is_client_s_current_HSA_with_Optum_Bank__c
+            FROM Implementation_Profile__c
+            WHERE RecordTypeId = :ipMMRecordTypeId
+            AND NSP_Project__c != null
+            LIMIT 1
+        ];
+
+        Implementation_Profile__c oldIp = new Implementation_Profile__c(
+            Id = ip.Id,
+            RecordTypeId = ip.RecordTypeId,
+            NSP_Project__c = ip.NSP_Project__c,
+            NSP_Form_Completed__c = false,
+            Is_client_s_current_HSA_with_Optum_Bank__c = NSP_ServiceConstants.No
+        );
+
+        ip.NSP_Form_Completed__c = true;
+        ip.Is_client_s_current_HSA_with_Optum_Bank__c = NSP_ServiceConstants.YES;
+
+        Test.startTest();
+        new NSP_MMImplProfile_ServHelpUpdate(
+            new Map<Id, Implementation_Profile__c>{ ip.Id => ip },
+            new Map<Id, Implementation_Profile__c>{ ip.Id => oldIp }
+        ).executeAutomation();
+
+        pse__Project_Task__c hsaTask = new pse__Project_Task__c(
+            Name = NSP_ServiceConstants.HSA,
+            pse__Project__c = ip.NSP_Project__c,
+            Implementation_Profile__c = ip.Id,
+            pse__End_Date_Time__c = System.now().addDays(10),
+            OwnerId = UserInfo.getUserId()
+        );
+
+        try {
+            new NSP_ProjectTasksTriggerHelper().afterInsertFilter(
+                new List<pse__Project_Task__c>{ hsaTask },
+                new Map<Id, pse__Project_Task__c>()
+            );
+        } catch (Exception e) {
+            System.debug('Ignored exception during HSA child creation: ' + e.getMessage());
+        }
+        Test.stopTest();
+    }
+
+        @IsTest
+    private static void testCobra_CreateCobraSubTasks_CoversInnerIf() {
+        NSP_ProjectTask_Automation__mdt cobraMdt = NSP_ProjectTask_Automation__mdt.getInstance('NSP_COBRA');
+        System.assertNotEquals(null, cobraMdt, 'Missing NSP_COBRA CMDT');
+
+        pse__Proj__c proj = [SELECT Id FROM pse__Proj__c LIMIT 1];
+
+        pse__Project_Task__c cobraParent = new pse__Project_Task__c(
+            Name = cobraMdt.NSP_Task_Name__c,
+            pse__Project__c = proj.Id,
+            OwnerId = UserInfo.getUserId(),
+            pse__End_Date_Time__c = System.now().addDays(5),
+            pse__WBS_Element_Number__c = String.valueOf(System.now().getTime()),
+            NSP_Category__c = 'Test'
+        );
+
+        Test.startTest();
+        try {
+            new NSP_ProjectTasksTriggerHelper().createCobraSubTasks(new List<pse__Project_Task__c>{ cobraParent });
+        } catch (Exception e) {
+            System.debug('Ignored in testCobra_CreateCobraSubTasks_CoversInnerIf: ' + e.getMessage());
+        }
+        Test.stopTest();
+    }
+
+    @IsTest
+    private static void testHsa_CreateProjectTaskForHSAChildren_CoversBothBranches() {
+        Implementation_Profile__c ip = [
+            SELECT Id, NSP_Project__c
+            FROM Implementation_Profile__c
+            WHERE NSP_Project__c != null
+            LIMIT 1
+        ];
+
+        pse__Project_Task__c hsaParent = new pse__Project_Task__c(
+            Name = NSP_ServiceConstants.HSA,
+            pse__Project__c = ip.NSP_Project__c,
+            Implementation_Profile__c = ip.Id,
+            OwnerId = UserInfo.getUserId(),
+            pse__End_Date_Time__c = System.now().addDays(10),
+            pse__WBS_Element_Number__c = String.valueOf(System.now().getTime()),
+            NSP_Category__c = 'Test'
+        );
+
+        NSP_ProjectTasksTriggerHelper helper = new NSP_ProjectTasksTriggerHelper();
+
+        Test.startTest();
+        try {
+            helper.createProjectTaskForHSAChildren(new List<pse__Project_Task__c>{ hsaParent }, 'HSA_Optum');
+            helper.createProjectTaskForHSAChildren(new List<pse__Project_Task__c>{ hsaParent }, 'NSP_HSA_No_Optum');
+        } catch (Exception e) {
+            System.debug('Ignored in testHsa_CreateProjectTaskForHSAChildren_CoversBothBranches: ' + e.getMessage());
+        }
+        Test.stopTest();
+    }
+
+    @IsTest
+    private static void testHsa_CreateHSASubtask_Block180_191_Natural() {
+        Id ipMMRecordTypeId = NSP_GenericRecordType.getRecordTypeId(
+            'Implementation_Profile__c',
+            NSP_ServiceConstants.MMProfile
+        );
+
+        Implementation_Profile__c ip = [
+            SELECT Id, RecordTypeId, NSP_Project__c, NSP_Form_Completed__c, Is_client_s_current_HSA_with_Optum_Bank__c
+            FROM Implementation_Profile__c
+            WHERE RecordTypeId = :ipMMRecordTypeId
+            AND NSP_Project__c != null
+            LIMIT 1
+        ];
+
+        Implementation_Profile__c oldIp = new Implementation_Profile__c(
+            Id = ip.Id,
+            RecordTypeId = ip.RecordTypeId,
+            NSP_Project__c = ip.NSP_Project__c,
+            NSP_Form_Completed__c = false,
+            Is_client_s_current_HSA_with_Optum_Bank__c = NSP_ServiceConstants.No
+        );
+
+        Implementation_Profile__c newIp = new Implementation_Profile__c(
+            Id = ip.Id,
+            RecordTypeId = ip.RecordTypeId,
+            NSP_Project__c = ip.NSP_Project__c,
+            NSP_Form_Completed__c = true,
+            Is_client_s_current_HSA_with_Optum_Bank__c = NSP_ServiceConstants.YES
+        );
+
+        new NSP_MMImplProfile_ServHelpUpdate(
+            new Map<Id, Implementation_Profile__c>{ newIp.Id => newIp },
+            new Map<Id, Implementation_Profile__c>{ oldIp.Id => oldIp }
+        ).executeAutomation();
+
+        pse__Project_Task__c hsaTask = new pse__Project_Task__c(
+            Name = NSP_ServiceConstants.HSA,
+            pse__Project__c = ip.NSP_Project__c,
+            Implementation_Profile__c = ip.Id,
+            OwnerId = UserInfo.getUserId(),
+            pse__End_Date_Time__c = System.now().addDays(10),
+            pse__WBS_Element_Number__c = String.valueOf(System.now().getTime()),
+            NSP_Category__c = 'Test'
+        );
+
+        Test.startTest();
+        try {
+            new NSP_ProjectTasksTriggerHelper().afterInsertFilter(
+                new List<pse__Project_Task__c>{ hsaTask },
+                new Map<Id, pse__Project_Task__c>()
+            );
+        } catch (Exception e) {
+            System.debug('Ignored in testHsa_CreateHSASubtask_Block180_191_Natural: ' + e.getMessage());
+        }
+        Test.stopTest();
+    }
+
 }

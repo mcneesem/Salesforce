@@ -1,6 +1,6 @@
 public class NSP_ProjectTasksTriggerHelper {
-    // test w/ NSP_ProjectTasksTriggerHelperTest, NSP_Implprofile_ServiceHelperUpdate_Test (77%)
-    // test w/ NSP_ProjectTasksTriggerHelperTest (72%)
+    // test w/ NSP_ProjectTasksTriggerHelperTest, NSP_Implprofile_ServiceHelperUpdate_Test (80%)
+    // test w/ NSP_ProjectTasksTriggerHelperTest (79%)
     // test w/ NSP_Implprofile_ServiceHelperUpdate_Test (34%)
 
     private static final String HUNDRED_PERCENT =  '100%';
@@ -173,9 +173,7 @@ public class NSP_ProjectTasksTriggerHelper {
         List<pse__Project_Task__c> hsaOptumMM = new List<pse__Project_Task__c>();
         List<pse__Project_Task__c> hsaOptumNoMM = new List<pse__Project_Task__c>();
         String hsaOptum = NSP_MMImplProfile_ServHelpUpdate.hsaOptumChildren();
-        if (test.isrunningtest()) {
-            hsaOptum = HSA_OPTUM_MM;
-        }
+
         if( pTask != null && String.isNotBlank(hsaOptum) ) {
             if(pTask.Name == NSP_ServiceConstants.HSA && hsaOptum == HSA_OPTUM_MM){
                 hsaOptumMM.add(pTask);
@@ -895,8 +893,7 @@ public class NSP_ProjectTasksTriggerHelper {
             email.setHtmlBody(mailBody);
             email.setSaveAsActivity(false);
             email.setTargetObjectId(userinfo.getUserId());
-            if ( !Test.isRunningTest()
-              && EmailDeliverabilityController.IsEnabledOutbound ) {
+            if (!Test.isRunningTest()) {
                 NSP_ProjectTasksTriggerHelper.sendSingleEmailMessage( email );
             }
         } catch ( Exception e ) {
@@ -1482,8 +1479,7 @@ public class NSP_ProjectTasksTriggerHelper {
             NSP_ProjectTasksTriggerHelper.sendNotificationToDependentResource( sProjectTasksIds );
             NSP_ProjectTasksTriggerHelper.sendBellNotificationToDependentResource( sProjectTasksIds );
         }
-        if ( !sProjectTasksIds.isEmpty()
-          && EmailDeliverabilityController.IsEnabledOutbound ) {
+        if ( !sProjectTasksIds.isEmpty()) {
             NSP_ProjectTasksTriggerHelper.sendEmailToProjectResource( sProjectTasksIds ); // STY-02213
         }
         if( !projectTaskIdSet.isEmpty() ) {
@@ -2271,12 +2267,24 @@ public class NSP_ProjectTasksTriggerHelper {
     // Params: List<pse__Project_Task__c> newProjectTaskList, Map<Id, pse__Project_Task__c> projectTaskOldMap
     // Story : STY-02213
     //
-    public static void sendEmailToProjectResource( Set<Id> projectTaskIdSet ) {
-        if ( NSP_ProjectTasksTriggerHelper.isEnabledFutureNotifications
-          && ( Limits.getFutureCalls() < Limits.getLimitFutureCalls() ) ) {
-            NSP_ProjectTasksTriggerHelper.sendEmailToProjectResourceFuture( projectTaskIdSet );
-        } else {
-            NSP_ProjectTasksTriggerHelper.sendEmailToProjectResourceStatic( projectTaskIdSet );
+    public static void sendEmailToProjectResource(Set<Id> projectTaskIdSet) {
+        if (projectTaskIdSet != null
+            && !projectTaskIdSet.isEmpty()
+            && EmailDeliverabilityController.IsEnabledOutbound) {
+
+            Boolean useFuture = false;
+
+            if (isEnabledFutureNotifications) {
+                if (Limits.getFutureCalls() < Limits.getLimitFutureCalls()) {
+                    useFuture = true;
+                }
+            }
+
+            if (useFuture) {
+                sendEmailToProjectResourceFuture(projectTaskIdSet);
+            } else {
+                sendEmailToProjectResourceStatic(projectTaskIdSet);
+            }
         }
     }
 
