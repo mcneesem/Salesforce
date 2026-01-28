@@ -23,12 +23,12 @@ public class CaseImportQueueable implements Queueable {
         }
         private set;
     }
-    private static Notification_Deliverability_Settings__c emailSettings {
+    private static Notification_Deliverability_Settings__c notificationDeliverability {
         private get {
-            if ( emailSettings == null ) {
-                emailSettings = Notification_Deliverability_Settings__c.getInstance( UserInfo.getUserId() );
+            if ( notificationDeliverability == null ) {
+                notificationDeliverability = Notification_Deliverability_Settings__c.getInstance( UserInfo.getUserId() );
             }
-            return emailSettings;
+            return notificationDeliverability;
         }
         private set;
     }
@@ -55,45 +55,52 @@ public class CaseImportQueueable implements Queueable {
     }
 
     public static void enqueueJob(
-        List<Case> caseList ,
-        List<list<String>> allRowValue ,
-        Map<Case,List<String>> rowCaseMap ,
-        List<Id> caseSuccessList ,
-        Map<list<String>,String> createRecordMap
+        List<Case> caseListLocal ,
+        List<List<String>> allRowValueLocal ,
+        Map<Case,List<String>> rowCaseMapLocal ,
+        List<Id> caseSuccessListLocal ,
+        Map<List<String>,String> createRecordMapLocal
     )
     {
         if ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
             System.enqueueJob(
                 new CaseImportQueueable(
-                    caseList ,
-                    allRowValue ,
-                    rowCaseMap ,
+                    caseListLocal ,
+                    allRowValueLocal ,
+                    rowCaseMapLocal ,
                     null ,
-                    createRecordMap
+                    createRecordMapLocal
                 )
             );
         }
     }
 
-    private CaseImportQueueable(List<Case> caseList,List<list<String>> allRowValue, Map<Case,list<String>> rowCaseMap,List<ID> caseSuccessList ,Map<list<String>,String> failureMap ) {
-        this.caseList = caseList;
-        this.allRowValue = allRowValue;
-        this.rowCaseMap = rowCaseMap;
-        this.caseSuccessList = caseSuccessList != null ? caseSuccessList : new List<ID>();
-        this.failureMap = failureMap != null ? failureMap : new Map<List<String>, String>();
+    private CaseImportQueueable(
+        List<Case> caseListLocal ,
+        List<List<String>> allRowValueLocal ,
+        Map<Case,List<String>> rowCaseMapLocal ,
+        List<Id> caseSuccessListLocal ,
+        Map<List<String>,String> failureMapLocal
+        )
+    {
+        this.caseList = caseListLocal;
+        this.allRowValue = allRowValueLocal;
+        this.rowCaseMap = rowCaseMapLocal;
+        this.caseSuccessList = caseSuccessListLocal != null ? caseSuccessListLocal : new List<ID>();
+        this.failureMap = failureMapLocal != null ? failureMapLocal : new Map<List<String>, String>();
     }
 
     public void execute(QueueableContext context) {
         try{
             List<Case> batchList = this.dequeueNextBatch();
-            Database.SaveResult[] srList = null;
+            List<Database.SaveResult> srList = null;
             Map<Id,Case> batchMap = new Map<Id,Case>();
             Map<list<String>,String> createRecordMap = new Map<list<String>,String>();
             if( batchList != null && !batchList.isEmpty() ) {
                 srList = Database.insert( batchList , false );
-                for( Case ids :batchList ) {
-                    if( ids != null ) {
-                        batchMap.put( ids.Id, ids );
+                for( Case recordIds :batchList ) {
+                    if( recordIds != null ) {
+                        batchMap.put( recordIds.Id, recordIds );
                     }
                 }
             }
@@ -103,13 +110,13 @@ public class CaseImportQueueable implements Queueable {
                 FileUploadController.createImportError(createRecordMap);
             }
 
-            if (caseList.size() > 0) {
+            if ( ( this.caseList != null ) && !this.caseList.isEmpty() ) {
                 CaseImportQueueable.enqueueJob(
-                    caseList ,
-                    allRowValue ,
-                    rowCaseMap ,
-                    caseSuccessList ,
-                    failureMap
+                    this.caseList ,
+                    this.allRowValue ,
+                    this.rowCaseMap ,
+                    this.caseSuccessList ,
+                    this.failureMap
                 );
             } else {
                 CaseImportQueueable.settings.Bypass_Opened_Date__c = false;
@@ -118,9 +125,9 @@ public class CaseImportQueueable implements Queueable {
                 CaseImportQueueable.emailDeliverability.IsEnabledOutbound__c = true;
                 update CaseImportQueueable.emailDeliverability;
 
-                CaseImportQueueable.emailSettings.IsEnabledOutbound__c = true;
-                update CaseImportQueueable.emailSettings;
-                FileUploadController.sendEmail(caseSuccessList, failureMap);
+                CaseImportQueueable.notificationDeliverability.IsEnabledOutbound__c = true;
+                update CaseImportQueueable.notificationDeliverability;
+                FileUploadController.sendEmail(this.caseSuccessList, this.failureMap);
             }
         } catch(Exception e ) {
             NSP_ErrorLogHandler.logException(
@@ -137,8 +144,8 @@ public class CaseImportQueueable implements Queueable {
             for ( Database.SaveResult sr : srList ) {
                 Case c = batchMap.get( sr.getId() );
                 if ( c != null ) {
-                    if ( sr.isSuccess() ) {
-                        caseSuccessList.add( c.Id );
+                    if ( sr.isSuccess() && ( this.caseSuccessList != null ) ) {
+                        this.caseSuccessList.add( c.Id );
                     } else {
                         createRecordMap = this.getFailureMap( sr,c );
                     }
@@ -151,16 +158,24 @@ public class CaseImportQueueable implements Queueable {
     private Map<list<String>,String> getFailureMap( Database.SaveResult sr, Case c ) {
         String errorRowMessage = '. Error occurred at row number - ';
         Map<list<String>,String> createRecordMap = new Map<list<String>,String>();
-        for (Database.Error err : sr.getErrors()) {
-            if (rowCaseMap.containsKey(c) && allRowValue.contains(rowCaseMap.get(c))) {
-                Integer rowNumber = allRowValue.indexOf(rowCaseMap.get(c)) + 2;
-                createRecordMap.put(rowCaseMap.get(c), err.getMessage() + errorRowMessage + rowNumber);
-                if (failureMap == null) {
-                    failureMap = new Map<List<String>, String>();
-                }
-                failureMap.put(rowCaseMap.get(c), err.getMessage() + errorRowMessage + rowNumber);
-            }
-        }
+        List<String> rowCase = new List<String>();
+        if( this.rowCaseMap != null
+           && this.rowCaseMap.get( c ) != null 
+           && this.rowCaseMap.containsKey(c) 
+           && sr != null 
+           && this.allRowValue != null) {
+               rowCase = this.rowCaseMap.get(c);
+               for (Database.Error err : sr.getErrors()) {
+                   if ( this.allRowValue.contains(rowCase) ) {
+                       Integer rowNumber = this.allRowValue.indexOf(rowCase) + 2;
+                       createRecordMap.put(rowCase, err.getMessage() + errorRowMessage + rowNumber);
+                       if (this.failureMap == null) {
+                           this.failureMap = new Map<List<String>, String>();
+                       }
+                       this.failureMap.put(rowCase, err.getMessage() + errorRowMessage + rowNumber);
+                   }
+               }
+           }
         return createRecordMap;
     }
     // Returns and removes the next batch of Case records from caseList
