@@ -1,7 +1,8 @@
 @isTest
 private class NSP_EmailImageControllerTest {
 
-    @testSetup private static void testData() { 
+    @testSetup
+    private static void testData() {
         List<Document> docList = new List<Document>();
         Document doc1 = (Document)NSP_TestExtendedDataFactory.createSObject(new Document(), 'NSP_TestDataFactory.DocumentDefaults', false);
         doc1.DeveloperName = 'Insperity_Footer_Logo';
@@ -38,7 +39,8 @@ private class NSP_EmailImageControllerTest {
         }
     }
 
-    @isTest private static void getURLsTest(){
+    @isTest
+    private static void getURLsTest() {
         Test.startTest();
         NSP_EmailImageController emailController = new NSP_EmailImageController();
         String footLogoUrl = emailController.getFooterLogoUrl();
