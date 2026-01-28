@@ -1,5 +1,5 @@
-<messaging:emailTemplate Subject="INSPERITY/CLIENT REVISED REINSTATEMENT LETTER" 
-    recipientType="Contact" 
+<messaging:emailTemplate Subject="INSPERITY/CLIENT REVISED REINSTATEMENT LETTER"
+    recipientType="Contact"
     relatedToType="NSP_Termination_Form__c">
 
     <messaging:htmlEmailBody >
@@ -12,7 +12,7 @@
         </p>
         <p>Regards,</p>
         <p><b>Termination Team</b></p>
-        <c:InsperityTerminationEmailLogo ></c:InsperityTerminationEmailLogo>
+        <c:InsperityEmailSignature/>
         <p style="color:red; font-weight:bold;">**OUTGOING ONLY - NO REPLIES WILL BE SENT FROM THIS MAILBOX**</p>
     </messaging:htmlEmailBody>
 

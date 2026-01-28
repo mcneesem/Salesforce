@@ -46,11 +46,13 @@ private class NSP_EmailImageControllerTest {
         String servicelogoUrl = emailController.getServiceOperationsLogoUrl();
         String copywriteUrl = emailController.getCopyWriteLogoUrl();
         String hrLogoUrl = emailController.getHRLogoLogoUrl();
+        String signatureLogoUrl = emailController.getSignatureLogoUrl();
         System.assert(footLogoUrl != '');
         System.assert(headLogoUrl != '');
         System.assert(servicelogoUrl != '');
         System.assert(copywriteUrl != '');
         System.assert(hrLogoUrl != '');
+        System.assert(signatureLogoUrl != '');
         Test.stopTest();
     }
 
