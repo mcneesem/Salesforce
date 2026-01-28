@@ -46,16 +46,16 @@ export default class CaseAccountContactRelationships extends LightningElement {
     
     getACRDataDetails() {
         getACRDetails({ caseId: this.recordId })
-                    .then(result => {
-                        this.acrDetailsData = result;
-                        this.lastUpdatedTimestamp = new Date();
-                        this.isViewAll = false;
-                        this.handleLastUpdatedInterval();
-                    })
-                    .catch(err => {
-                        this.acrDetailsError = err;
-                        this.lastUpdatedTimestamp = undefined;
-                    });
+            .then(result => {
+                this.acrDetailsData = result;
+                this.lastUpdatedTimestamp = new Date();
+                this.isViewAll = false;
+                this.handleLastUpdatedInterval();
+            })
+            .catch(err => {
+                this.acrDetailsError = err;
+                this.lastUpdatedTimestamp = undefined;
+            });
         
     }
 
