@@ -1,7 +1,7 @@
 @isTest
 private class TerminationEmailBatchTest {
 
-    @TestSetup
+    @testSetup
     private static void createTestData() {
 
         String title = 'LTR-Default_Termination_Attachment';
@@ -29,17 +29,17 @@ private class TerminationEmailBatchTest {
         );
         insert cv;
 
-        ContentVersion latest = [
+        List<ContentVersion> latest = [
             SELECT Id,
                 ContentDocumentId,
                 Title
             FROM ContentVersion
             WHERE Id =: cv.Id
         ];
-
+        
         ContentDocumentLink cdl = new ContentDocumentLink(
             LinkedEntityId = form.Id,
-            ContentDocumentId = latest.ContentDocumentId,
+            ContentDocumentId = latest[0].ContentDocumentId,
             ShareType = 'V',
             Visibility = 'AllUsers'
         );

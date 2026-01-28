@@ -467,8 +467,8 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable , Sc
                         if ( checkId.getSObjectType() == ContentVersion.getSObjectType() ) {
                             documentIdMap.put(
                                 record.Year__c.intValue() ,
-                                record.Document_Id__c
-                            );    
+                                checkId
+                            );
                         }
                     }
                 }
