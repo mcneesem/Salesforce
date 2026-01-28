@@ -128,7 +128,7 @@ private class UserAvailabilityServiceTest {
         }
 
         Test.startTest();
-        List<List<Integer>> aggregate = UserAvailabilityService.getAggregateCountsMatrix(30);
+        List<List<Integer>> aggregate = UserAvailabilityService.getAggregateCountsMatrix(30,'HR360');
         Test.stopTest();
 
         System.assertNotEquals(null, aggregate, 'Aggregate matrix should not be null');
@@ -153,7 +153,7 @@ private class UserAvailabilityServiceTest {
 
         if (sePs == null) {
             Test.startTest();
-            List<List<Integer>> aggregate = UserAvailabilityService.getAggregateCountsMatrix(15);
+            List<List<Integer>> aggregate = UserAvailabilityService.getAggregateCountsMatrix(15,'HR360');
             Test.stopTest();
 
             System.assertNotEquals(null, aggregate, 'Aggregate matrix should not be null even when no users match the permission set');
