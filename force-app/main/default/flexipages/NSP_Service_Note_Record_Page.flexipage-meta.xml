@@ -208,8 +208,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Current_Case_Queue__c</fieldItem>
-                <identifier>RecordCurrent_Case_Queue_cField</identifier>
+                <fieldItem>Record.Most_Recent_Case_Queue__c</fieldItem>
+                <identifier>RecordMost_Recent_Case_Queue_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-1a5b3307-ccc9-4821-8a1b-c46e88c43ff1</name>

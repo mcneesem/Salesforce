@@ -24,7 +24,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>$Record.Current_Case_Queue__c</assignToReference>
+            <assignToReference>$Record.Most_Recent_Case_Queue__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Get_Queue_Group.Name</elementReference>
@@ -176,9 +176,10 @@
             <label>Queue was found</label>
         </rules>
     </decisions>
+    <description>This flow updates Note field - Most Recent Queue Owner</description>
     <environments>Default</environments>
-    <interviewLabel>Note - Update Current Case Owner {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Note - Update Current Case Owner</label>
+    <interviewLabel>Note - Before Create - Populate Most Recent Case Owner {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Note - Before Create - Populate Most Recent Case Owner</label>
     <loops>
         <name>Loop_Thru_Case_History</name>
         <label>Loop Thru Case History</label>
