@@ -155,7 +155,121 @@ public with sharing class UserAvailabilityService {
         listSizeMatrix = getAvailabilityMatrix(availableSlotsList);
         return listSizeMatrix;
     }
+    // Helper: convert a flat list of integer counts into a matrix of rows with up to 7 columns
+    private static List<List<Integer>> convertToMatrix(List<Integer> counts) {
+        List<List<Integer>> matrix = new List<List<Integer>>();
+        if (counts != null && !counts.isEmpty()) {
+            List<Integer> row = new List<Integer>();
+            for (Integer c : counts) {
+                row.add((c == null) ? 0 : c);
+                if (row.size() == 7) {
+                    matrix.add(new List<Integer>(row));
+                    row.clear();
+                }
+            }
+            if ( !row.isEmpty() ) {
+                matrix.add(new List<Integer>(row));
+            }
+        }
+        return matrix;
+    }
+    
+    //Get total availability of users that are added to the Schedule Seller Permission Set
+    @AuraEnabled(cacheable=true)
+    public static List<List<Integer>> getAggregateCountsMatrix( Integer stepMinutes ) {
+        List<List<Integer>> listSizeMatrix = new List<List<Integer>>();
+        List<Integer> countsPerWindow = new List<Integer>();
+        // Build business day/time windows
+        DaysMatrix daysOfWeek = UserAvailabilityService.getBusinessDaysMatrix();
+        List<Datetime> startDays = new List<Datetime>();
+        List<Datetime> endDays = new List<Datetime>();
 
+        Integer groupCount = Math.min( daysOfWeek.startDays.size(), daysOfWeek.endDays.size() );
+        for (Integer i = 0; i < groupCount; i++) {
+            startDays.addAll(daysOfWeek.startDays[i]);
+            endDays.addAll(daysOfWeek.endDays[i]);
+        }
+        Datetime windowStart = startDays[0];
+        Datetime windowEnd   = endDays[endDays.size() - 1];
+ 
+        // Identify users with Schedule Seller Permission Set
+        Set<Id> userIds = new Set<Id>();
+        List<PermissionSetAssignment> permSet = [
+            SELECT AssigneeId
+            FROM PermissionSetAssignment
+            WHERE PermissionSet.Name = 'Sales_Engineer_WO'
+        ];
+        if( !permSet.isEmpty() ){
+            for (PermissionSetAssignment psa : permSet) {
+                userIds.add(psa.AssigneeId);
+            }
+        }
+        // Query all events for those users within the union window (bulkified)
+        Map<Id, List<Event>> busyByUser = new Map<Id, List<Event>>();
+        List<Event> events = [
+            SELECT Id, OwnerId, StartDateTime, EndDateTime
+            FROM Event
+            WHERE OwnerId IN :userIds
+            AND StartDateTime < :windowEnd
+            AND EndDateTime   > :windowStart
+            WITH SECURITY_ENFORCED
+        ];
+        if( !events.isEmpty() ) {
+            for (Event e : events) {
+                if (!busyByUser.containsKey(e.OwnerId)) {
+                    busyByUser.put(e.OwnerId, new List<Event>());
+                }
+                busyByUser.get(e.OwnerId).add(e);
+            }
+        }
+        if( !userIds.isEmpty() ) {
+            for (Id uid : userIds) {
+                if (!busyByUser.containsKey(uid)) {
+                    busyByUser.put(uid, new List<Event>());
+                }
+            }
+        }
+        
+        // Build windows for each slot
+        Integer n = Math.min(startDays.size(), endDays.size());
+        List<Event> windows = new List<Event>();
+        for (Integer i = 0; i < n; i++) {
+            windows.add(new Event(StartDateTime = startDays[i], EndDateTime = endDays[i]));
+        }
+        countsPerWindow = getAggregateAvailableSlots( windows, userIds, busyByUser, stepMinutes );
+        listSizeMatrix = convertToMatrix(countsPerWindow);
+        return listSizeMatrix;
+    }
+
+    private static List<Integer> getAggregateAvailableSlots( 
+        List<Event> windows, 
+        Set<Id> userIds, 
+        Map<Id, List<Event>> busyByUser,
+        Integer stepMinutes 
+    )
+    {
+        // Use existing availability algorithm, summing per-user counts per window
+        UserAvailability calc = new UserAvailability();
+        // Collect integer counts per window
+        List<Integer> countsPerWindow = new List<Integer>();
+        Integer step = (stepMinutes == null) ? 30 : stepMinutes;
+        
+        if( !windows.isEmpty() && !userIds.isEmpty() ) {
+            for (Event windowEvt : windows) {
+                Integer totalForWindow = 0;
+                for (Id uid : userIds) {
+                    if(busyByUser.containsKey(uid) && busyByUser.get(uid) != null) {
+                        List<Event> userBusy = busyByUser.get(uid);
+                        
+                        List<String> slots = calc.getAvailableSlots(userBusy, windowEvt, step);
+                        totalForWindow += (slots == null) ? 0 : slots.size();
+                    }
+                }
+                countsPerWindow.add(totalForWindow);
+            }
+        }
+        return countsPerWindow;
+    }
     //Returns availability Matrix for given time slots and 7 business days
     private static List<List<Integer>> getAvailabilityMatrix(List<List<String>> availableSlotsList) {
         List<List<Integer>> listSizeMatrix = new List<List<Integer>>();
