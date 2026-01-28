@@ -222,7 +222,7 @@
                 <leftValueReference>messagingSessionRecord.OwnerId</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>00GOz00000BMZgkMAH</stringValue>
+                    <stringValue>00GPb00000VFSBqMAP</stringValue>
                 </rightValue>
             </conditions>
             <connector>
