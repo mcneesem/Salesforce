@@ -353,7 +353,7 @@
                 <fieldItem>Record.AssetId</fieldItem>
                 <identifier>RecordAssetIdField2</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR ( 2 AND 3 )</booleanFilter>
+                    <booleanFilter>1 OR ( 2 AND 3 ) OR 4</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_Category__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -368,6 +368,11 @@
                         <leftValue>{!Record.NSP_Category__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Compensation Services</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
