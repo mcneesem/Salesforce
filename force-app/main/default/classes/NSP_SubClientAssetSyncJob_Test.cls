@@ -75,6 +75,33 @@ private class NSP_SubClientAssetSyncJob_Test {
 
         insert subClientContacts;
 
+        //NSP_Address__c creation
+        NSP_Address__c address = new NSP_Address__c();
+        address.Name = 'Test Add';
+        address.NSP_Related_Site__c = acc.Id;
+        address.NSP_Legal_Name__c = 'Billing';
+        address.NSP_Street__c = 'Test Address AZ';
+        address.NSP_Country__c = 'United States';
+        address.NSP_State__c = 'AZ';
+        address.NSP_Postal_Code__c = '12345';
+        address.NSP_Source__c = 'AIMS';
+        address.NSP_Address_Type__c = 'Worksite';
+        insert address;
+
+        //NSP_Sub_Client_Contact_Address__c creation
+        NSP_Sub_Client_Contact_Address__c subClientConAdd = New NSP_Sub_Client_Contact_Address__c();
+        subClientConAdd.Name = 'Test';
+        subClientConAdd.NSP_Address__c = address.Id;
+        subClientConAdd.NSP_Sub_Client_Contact__c = subClientCon.Id;
+        insert subClientConAdd ;
+
+        //NSP_Sub_Client_Contact_Address__c creation
+        NSP_Sub_Client_Contact_Address__c subClientConAdd1 = New NSP_Sub_Client_Contact_Address__c();
+        subClientConAdd1.Name = 'Test';
+        subClientConAdd1.NSP_Address__c = address.Id;
+        subClientConAdd1.NSP_Sub_Client_Contact__c = subClientCon.Id;
+        insert subClientConAdd1 ;
+
         //NSP_Sub_Client_Contact__History creation
         List<NSP_Sub_Client_Contact__History> histories = new List<NSP_Sub_Client_Contact__History>();
         NSP_Sub_Client_Contact__History instSCCH = New NSP_Sub_Client_Contact__History();
@@ -96,15 +123,22 @@ private class NSP_SubClientAssetSyncJob_Test {
         histories.add( instSCCH2 );
 
         insert histories;
+
+        //NSP_Sub_Client_Contact__History creation
+        NSP_Sub_Client_Contact_Address__History instSCCAH = New NSP_Sub_Client_Contact_Address__History();
+        instSCCAH.ParentId = subClientConAdd1.Id;
+        instSCCAH.Field = 'NSP_Address_State_Changed_Date__c';
+        insert instSCCAH;
     }
 
-    @IsTest
+    @isTest
     private static void testBatchProcess() {
         Test.startTest();
         Database.executeBatch( new NSP_SubClientAssetSyncJob(), 200 );
         Test.stopTest();
     }
-    @IsTest
+
+    @isTest
     private static void testBatchScheduler_SchedulesAndRuns() {
         // Arrange
         String cronExp = '0 0 */4 * * ?'; // Every 4 hours
@@ -128,7 +162,7 @@ private class NSP_SubClientAssetSyncJob_Test {
         Assert.isTrue(triggers[0].NextFireTime != null, 'Next fire time should be set');
     }
 
-    @IsTest
+    @isTest
     private static void testISelfSchedulable() {
         Test.startTest();
         string jobId = NSP_SubClientAssetSyncJob.schedule();
@@ -140,6 +174,76 @@ private class NSP_SubClientAssetSyncJob_Test {
         ];
         Assert.areEqual(1, triggers.size(), 'Expected one scheduled job for batch');
         Test.stopTest();
+    }
+
+
+    @isTest
+    private static void testSchedule() {
+        Test.startTest();
+        NSP_SubClientAssetStateSyncJob.schedule();
+        Test.stopTest();
+    }
+
+    @isTest
+    private static void shouldTestSubClientAssetSyncJob() {
+        Test.startTest();
+        //Update NSP_Sub_Client_Contact__c
+        List<NSP_Sub_Client_Contact__c> subClientConRecords =[
+            SELECT Id , NSP_Sub_Client__c , NSP_Employee_Status__c , NSP_Paid_Non_Paid__c , NSP_Union_Employee__c
+            FROM NSP_Sub_Client_Contact__c
+            WHERE ( Id != null )
+            LIMIT 1
+        ];
+        System.assert( subClientConRecords != null );
+        System.assert( !subClientConRecords.isEmpty() );
+        NSP_Sub_Client_Contact__c subClientCon = subClientConRecords[0];
+        subClientCon.NSP_Paid_Non_Paid__c = 'Paid WSEE';
+        subClientCon.NSP_Employee_Status__c = 'HIRED';
+        subClientCon.NSP_Union_Employee__c = true;
+        update subClientCon;
+
+        List<NSP_Sub_Client_Contact_Address__c> subClientConAddressRecords =[
+            SELECT Id , NSP_Address_State_Changed_Date__c
+            FROM NSP_Sub_Client_Contact_Address__c
+            WHERE ( Id != null )
+            LIMIT 1
+        ];
+        System.assert( subClientConAddressRecords != null );
+        System.assert( !subClientConAddressRecords.isEmpty() );
+        NSP_Sub_Client_Contact_Address__c subClientConA = subClientConAddressRecords[0];
+        subClientConA.NSP_Address_State_Changed_Date__c = System.today();
+        update subClientConA;
+
+        // Call Batch Class
+        NSP_SubClientAssetSyncJob subClientCont = new NSP_SubClientAssetSyncJob();
+        DataBase.executeBatch(subClientCont);
+
+        // Call Batch Class
+        NSP_SubClientAssetStateSyncJob subClientContA = new NSP_SubClientAssetStateSyncJob();
+        DataBase.executeBatch(subClientContA);
+        Test.stopTest();
+
+        List<NSP_Sub_Client_Contact__History> scchUpdatedRecords = [
+            SELECT Id , OldValue , NewValue , Field , ParentId , Parent.NSP_Sub_Client__r.NSP_Union_Employees__c , DataType
+            FROM NSP_Sub_Client_Contact__History
+            WHERE ( Id != null )
+            LIMIT 1
+        ];
+        System.assert( scchUpdatedRecords != null );
+        System.assert( !scchUpdatedRecords.isEmpty() );
+        NSP_Sub_Client_Contact__History scchUpdated = scchUpdatedRecords[0];
+        System.assert(scchUpdated.Parent.NSP_Sub_Client__r.NSP_Union_Employees__c = true);
+
+        // added for code coverage in 09-Aug RC2 release...
+        List<NSP_Sub_Client__c> records = [
+            SELECT Id , NSP_Asset__c
+            FROM NSP_Sub_Client__c
+            WHERE ( Id = :subClientCon.NSP_Sub_Client__c )
+        ];
+        Set<Id> assetIds = new Set<Id>();
+        for ( NSP_Sub_Client__c record : records ) {
+            assetIds.add( record.NSP_Asset__c );
+        }
     }
 
 }
