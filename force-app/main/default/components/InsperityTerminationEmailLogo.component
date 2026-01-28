@@ -1,3 +1,0 @@
-<apex:component access="global" controller="NSP_dunningInvoicesListController">
-   <apex:image id="header" url="{!LogoUrl}" width="200" height="56"/>
-</apex:component>
