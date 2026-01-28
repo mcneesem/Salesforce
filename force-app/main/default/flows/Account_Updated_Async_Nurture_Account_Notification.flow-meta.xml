@@ -519,7 +519,7 @@
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Account_Updated_to_MidMarket_Async</stringValue>
+            <stringValue>Account_Updated_Async_Nurture_Account_Notification</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
