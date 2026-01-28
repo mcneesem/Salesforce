@@ -1,14 +1,14 @@
-import { LightningElement, wire } from 'lwc';
+import { LightningElement, wire, api } from 'lwc';
 import businessDays from '@salesforce/apex/UserAvailabilityService.getBusinessDates';
-import getCountsMatrix from '@salesforce/apex/UserAvailabilityService.getCountsMatrix';
+import getCountsMatrix from '@salesforce/apex/UserAvailabilityService.getAggregateCountsMatrix';
 import USER_ID from '@salesforce/user/Id';
 
 export default class Scheduler extends LightningElement {
     userId = USER_ID;
     error;
     columns = [];
+    @api product;
 
-    // Use @track for proper reactivity
     tableData = [
         { id: '1', name: '8:00-9:00', status: 'Pending', counts: [] },
         { id: '2', name: '8:30 - 9:30', counts: [] },
@@ -23,8 +23,15 @@ export default class Scheduler extends LightningElement {
      * Returns a copy of tableData with explicit count values for template
      */
     get processedTableData() {
-        // Return a shallow copy to ensure reactivity
-        return this.tableData.map(row => ({...row}));
+        const cols = Array.isArray(this.columns) ? this.columns : [];
+        return this.tableData.map((row) => {
+            const counts = Array.isArray(row.counts) ? row.counts : [];
+            const cells = cols.map((c, idx) => ({
+                key: c.dateValue,
+                value: counts[idx] != null ? counts[idx] : 0
+            }));
+            return { ...row, cells };
+        });
     }
 
     // Columns are now server-driven via Business Hours using Apex businessDays()
@@ -62,9 +69,8 @@ export default class Scheduler extends LightningElement {
 
     // Matrix data for the 6 time slots × 7 business days
     @wire(getCountsMatrix, {
-        userId: '$userId',
-        bufferMinutes: 0,
-        stepMinutes: 30
+        stepMinutes: 30,
+        product: '$product'
     })
     wiredMatrix({ data, error }) {
         if (data) {
