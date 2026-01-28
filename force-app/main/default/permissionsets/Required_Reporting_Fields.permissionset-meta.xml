@@ -473,11 +473,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Case.Current_Case_Queue__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Case.Data_Lines__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1258,7 +1253,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>NSP_Note__c.Current_Case_Queue__c</field>
+        <field>NSP_Note__c.Most_Recent_Case_Queue__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
