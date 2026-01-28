@@ -179,7 +179,8 @@ export default class CaseAccountContactRelationships extends LightningElement {
     }
 
     handleLastUpdatedInterval() {
-        if (  this.lastUpdatedTimestamp && this.hasData ) {
+        this.currentTimestamp = new Date();
+        if ( !this.intervalId ) {
             this.currentTimestamp = new Date();
             this.intervalId = setInterval(
                 function() {
