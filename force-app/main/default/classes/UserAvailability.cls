@@ -1,4 +1,5 @@
 public without sharing class UserAvailability {
+    // test w/ UserAvailabilityTest (91%)
 
     private List<Event> busy = new List<Event>();
     private List<Event> fused = new List<Event>();
@@ -7,7 +8,6 @@ public without sharing class UserAvailability {
     public List<String> getAvailableSlots(
         List<Event> records ,
         Event window ,
-        Integer buffer ,
         Integer steps
         )
     {
@@ -18,9 +18,6 @@ public without sharing class UserAvailability {
         if ( records == null ) {
             records = new List<Event>();
         }
-        if ( buffer == null ) {
-            buffer = 0;
-        }
         if ( steps == null ) {
             steps = 1;
         }
@@ -29,10 +26,10 @@ public without sharing class UserAvailability {
             for ( Event record : records ) {
                 if ( ( record.StartDateTime != null )
                     && ( record.EndDateTime != null )
-                    )
+                   )
                 {
-                    Datetime recordStart = record.StartDateTime.addMinutes( -1 * buffer );
-                    Datetime recordEnd = record.EndDateTime.addMinutes( 1 * buffer );
+                    Datetime recordStart = record.StartDateTime;
+                    Datetime recordEnd = record.EndDateTime;
                     if ( ( recordStart < window.EndDateTime )
                         && ( recordEnd > window.StartDateTime )
                        )
