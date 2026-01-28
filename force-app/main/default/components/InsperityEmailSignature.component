@@ -1,3 +1,3 @@
 <apex:component access="global" controller="NSP_EmailImageController">
-   <apex:image id="header" url="{!SignatureLogoUrl}" height="56"/>
+   <apex:image id="header" url="{!SignatureLogoUrl}" width="200"/>
 </apex:component>
