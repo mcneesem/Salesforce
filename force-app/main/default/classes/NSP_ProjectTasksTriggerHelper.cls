@@ -169,11 +169,10 @@ public class NSP_ProjectTasksTriggerHelper {
         }
     }
 
-    private void createHSASubtask(pse__Project_Task__c pTask){
+    private void createHSASubtask( pse__Project_Task__c pTask ) {
         List<pse__Project_Task__c> hsaOptumMM = new List<pse__Project_Task__c>();
         List<pse__Project_Task__c> hsaOptumNoMM = new List<pse__Project_Task__c>();
         String hsaOptum = NSP_MMImplProfile_ServHelpUpdate.hsaOptumChildren();
-
         if( pTask != null && String.isNotBlank(hsaOptum) ) {
             if(pTask.Name == NSP_ServiceConstants.HSA && hsaOptum == HSA_OPTUM_MM){
                 hsaOptumMM.add(pTask);
@@ -181,7 +180,6 @@ public class NSP_ProjectTasksTriggerHelper {
             if(pTask.Name == NSP_ServiceConstants.HSA && hsaOptum == HSA_OPTUM_NO_MM){
                 hsaOptumNoMM.add(pTask);
             }
-
             if( hsaOptumMM != null && !hsaOptumMM.isEmpty() ){
                 createProjectTaskForHSAChildren(hsaOptumMM, HSA_OPTUM_MM);
             }
@@ -190,7 +188,8 @@ public class NSP_ProjectTasksTriggerHelper {
             }
         }
     }
-     /***********************************************************************************************
+
+    /***********************************************************************************************
     * MethodName:  createSubtask
     * Description : Create sub tasks for garnishments and levies
     * Params: List<pse__Project_Task__c> projectTasks, String taskType
@@ -530,7 +529,7 @@ public class NSP_ProjectTasksTriggerHelper {
         }
         if ( ( ipId != null ) && ( ipa != null ) ) {
             ipRec = [
-                SELECT Id, RecordTypeId
+                SELECT Id , RecordTypeId
                 FROM Implementation_Profile__c
                 WHERE ( Id = :ipId )
                 LIMIT 1
@@ -813,7 +812,7 @@ public class NSP_ProjectTasksTriggerHelper {
                             );
                         }
                         listOfToAddresses.add( System.Label.NSP_Termination_Team );
-                        letterReceivedEmail(
+                        this.letterReceivedEmail(
                             pTask.Id ,
                             pTask.Name ,
                             projectTaskLetterMap.get( pTask.Id ).pse__Project__r.pse__Account__r.Name ,
@@ -893,7 +892,7 @@ public class NSP_ProjectTasksTriggerHelper {
             email.setHtmlBody(mailBody);
             email.setSaveAsActivity(false);
             email.setTargetObjectId(userinfo.getUserId());
-            if (!Test.isRunningTest()) {
+            if ( !Test.isRunningTest() ) {
                 NSP_ProjectTasksTriggerHelper.sendSingleEmailMessage( email );
             }
         } catch ( Exception e ) {
@@ -1475,36 +1474,62 @@ public class NSP_ProjectTasksTriggerHelper {
             List<Database.SaveResult> saveResults = EventBus.publish(lstTaskQueueEvent);
         }
         if ( !sProjectTasksIds.isEmpty()
-          && NotificationDeliverabilityController.IsEnabledOutbound ) {
+            && NotificationDeliverabilityController.IsEnabledOutbound
+            )
+        {
             NSP_ProjectTasksTriggerHelper.sendNotificationToDependentResource( sProjectTasksIds );
             NSP_ProjectTasksTriggerHelper.sendBellNotificationToDependentResource( sProjectTasksIds );
         }
-        if ( !sProjectTasksIds.isEmpty()) {
+        if ( !sProjectTasksIds.isEmpty() ) {
             NSP_ProjectTasksTriggerHelper.sendEmailToProjectResource( sProjectTasksIds ); // STY-02213
         }
-        if( !projectTaskIdSet.isEmpty() ) {
-            NSP_ProjectTaskTriggerEmailNotification.emailNotifyforFEIN(projectTaskIdSet,mapofProjecttasks);
+        if ( !projectTaskIdSet.isEmpty() ) {
+            NSP_ProjectTaskTriggerEmailNotification.emailNotifyforFEIN(
+                projectTaskIdSet ,
+                mapofProjecttasks
+            );
         }
-        if ( NSP_ProjectTasksTriggerHelper.isUpdateDocusignAsset && accountIdList.size() > 0){
-            updateDocusignAsset(accountIdList);
+        if ( NSP_ProjectTasksTriggerHelper.isUpdateDocusignAsset
+            && !accountIdList.isEmpty()
+            )
+        {
+            NSP_ProjectTasksTriggerHelper.updateDocusignAsset( accountIdList );
         }
-        if( !fundingprojectTaskIdSet.isEmpty() ) {
-            NSP_ProjectTaskTriggerEmailNotification.emailNotifyforFundingDocuments(fundingprojectTaskIdSet,mapofFundingProjecttasks);
+        if ( !fundingprojectTaskIdSet.isEmpty() ) {
+            NSP_ProjectTaskTriggerEmailNotification.emailNotifyforFundingDocuments(
+                fundingprojectTaskIdSet ,
+                mapofFundingProjecttasks
+            );
         }
-        if( !mapofFormProjecttasks.isEmpty() ) {
-            NSP_ProjectTasksTriggerHelper.ipYesFormCollected(mapofFormProjecttasks);
+        if ( !mapofFormProjecttasks.isEmpty() ) {
+            NSP_ProjectTasksTriggerHelper.ipYesFormCollected( mapofFormProjecttasks );
         }
-        if( !projectFsoIdset.isEmpty() ) {
-            NSP_ProjectTaskTriggerEmailNotification.emailNotifyforFirstPayrollFSO(projectFsoIdset, accountIdFsoProjectTaskMap);
+        if ( !projectFsoIdset.isEmpty() ) {
+            NSP_ProjectTaskTriggerEmailNotification.emailNotifyforFirstPayrollFSO(
+                projectFsoIdset ,
+                accountIdFsoProjectTaskMap
+            );
         }
-        if( !projectFsoIdset.isEmpty() && NSP_Trigger_Switch__c.getInstance(UserInfo.getUserId()).NSP_FP_MM_EmailNotification__c ) {
-            NSP_ProjectTaskTriggerEmailNotification.emailNotifyforFirstPayrollMM(projectFsoIdset, accountIdFsoProjectTaskMap);
+        if ( !projectFsoIdset.isEmpty()
+            && NSP_Trigger_Switch__c.getInstance( UserInfo.getUserId() ).NSP_FP_MM_EmailNotification__c
+            )
+        {
+            NSP_ProjectTaskTriggerEmailNotification.emailNotifyforFirstPayrollMM(
+                projectFsoIdset ,
+                accountIdFsoProjectTaskMap
+            );
         }
-        if( !projectTaskCobraIdSet.isEmpty() ) {
-            NSP_ProjectTaskTriggerEmailNotification.emailNotifyforCobraFollowUp(projectTaskCobraIdSet, projectTaskList);
+        if ( !projectTaskCobraIdSet.isEmpty() ) {
+            NSP_ProjectTaskTriggerEmailNotification.emailNotifyforCobraFollowUp(
+                projectTaskCobraIdSet ,
+                projectTaskList
+            );
         }
-        if( mapofClientProjectTask.size()>0 ) {
-            NSP_ProjectTaskTriggerEmailNotification.emailNotifyClientTransition(mapofClientProjectTask, mapOfProjectTaskOwner);
+        if ( !mapofClientProjectTask.isEmpty() ) {
+            NSP_ProjectTaskTriggerEmailNotification.emailNotifyClientTransition(
+                mapofClientProjectTask ,
+                mapOfProjectTaskOwner
+            );
         }
     }
 
@@ -1800,65 +1825,91 @@ public class NSP_ProjectTasksTriggerHelper {
         }
     }
 
-    /**
-    * Method to Send Bell Notifications when a Client, Payroll Termination Form is Approved
-    */
+    // Method to Send Bell Notifications when a Client, Payroll Termination Form is Approved
     @future
-    private static void sendBellNotificationToDependentResource(Set<Id> sProjectTasksIds){
-        String PEOProjectTaskRecordTypeId = Schema.SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE).getRecordTypeId();
-        String ClientRecordTypeId = Schema.SObjectType.NSP_Termination_Form__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.NSP_Client_Reinstatement).getRecordTypeId();
-        String PayrollRecordTypeId = Schema.SObjectType.NSP_Termination_Form__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.NSP_Payroll_Specialist_Form).getRecordTypeId();
+    private static void sendBellNotificationToDependentResource( Set<Id> sProjectTasksIds ) {
+        String peoProjectTaskRecordTypeId = Schema.SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE).getRecordTypeId();
+        String clientRecordTypeId = Schema.SObjectType.NSP_Termination_Form__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.NSP_Client_Reinstatement).getRecordTypeId();
+        String payrollRecordTypeId = Schema.SObjectType.NSP_Termination_Form__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.NSP_Payroll_Specialist_Form).getRecordTypeId();
         String mPrecedingTaskId;
         Set<String> mDependentTaskOwnerIds = new Set<String>();
-        Set<Id> termFormRecordList = new Set<Id>();
 
-        List<pse__Project_Task_Dependency__c> mDependentTasksOwner = new List<pse__Project_Task_Dependency__c>([SELECT Id,pse__Preceding_Task__c, pse__Dependent_Task__r.OwnerId FROM pse__Project_Task_Dependency__c WHERE pse__Preceding_Task__c in: sProjectTasksIds]);
-        List<NSP_Termination_Form__c> termFormList = new List<NSP_Termination_Form__c>([SELECT Id,NSP_Project_Task__c,ownerId FROM NSP_Termination_Form__c WHERE NSP_Project_Task__c in: sProjectTasksIds AND NSP_Project_Task__r.RecordTypeId =: PEOProjectTaskRecordTypeId AND (Recordtypeid =: ClientRecordTypeId OR Recordtypeid =: PayrollRecordTypeId )]);
+        List<pse__Project_Task_Dependency__c> mDependentTasksOwner = new List<pse__Project_Task_Dependency__c>(
+            [
+                SELECT
+                    Id ,
+                    pse__Preceding_Task__c ,
+                    pse__Dependent_Task__r.OwnerId
+                FROM pse__Project_Task_Dependency__c
+                WHERE ( pse__Preceding_Task__c IN :sProjectTasksIds )
+            ]
+        );
+        List<NSP_Termination_Form__c> termFormList = new List<NSP_Termination_Form__c>(
+            [
+                SELECT
+                    Id ,
+                    NSP_Project_Task__c ,
+                    OwnerId
+                FROM NSP_Termination_Form__c
+                WHERE (
+                    ( NSP_Project_Task__c IN :sProjectTasksIds )
+                    AND ( NSP_Project_Task__r.RecordTypeId = :peoProjectTaskRecordTypeId )
+                    AND (
+                        ( RecordTypeId = :clientRecordTypeId )
+                        OR ( RecordTypeId = :payrollRecordTypeId )
+                    )
+                )
+            ]
+        );
 
-        if(!mDependentTasksOwner.isEmpty()){
+        if ( !mDependentTasksOwner.isEmpty() ) {
             mPrecedingTaskId = mDependentTasksOwner.get(0).pse__Preceding_Task__c;
-        }
-
-        if(mDependentTasksOwner.size() == 0){
+        } else {
             return;
         }
 
-        if(termFormList.size() > 0){
-            for(NSP_Termination_Form__c termFormTask : termFormList){
-                if(termFormTask.ownerId != null){
-                    termFormRecordList.add(termFormTask.NSP_Project_Task__c);
+        Set<Id> termFormRecordList = NSP_ProjectTasksTriggerHelper.collectProjectTaskIds( termFormList );
+
+        for ( pse__Project_Task_Dependency__c mOwnerDependentTask : mDependentTasksOwner ) {
+            if ( mOwnerDependentTask.pse__Dependent_Task__r.OwnerId != null
+                && termFormRecordList.contains( mOwnerDependentTask.pse__Preceding_Task__c )
+                )
+            {
+                mDependentTaskOwnerIds.add( mOwnerDependentTask.pse__Dependent_Task__r.OwnerId );
+            }
+        }
+
+        if ( mDependentTaskOwnerIds.isEmpty() ) {
+            return;
+        } else {
+            List<CustomNotificationType> bellNotificationTypes = [
+                SELECT Id , DeveloperName
+                FROM CustomNotificationType
+                WHERE ( DeveloperName = 'NSP_Bell_Notification_Termination_Form' )
+                LIMIT 1
+            ];
+            if ( !bellNotificationTypes.isEmpty() ) {
+                Messaging.CustomNotification notification = new Messaging.CustomNotification();
+                notification.setNotificationTypeId( bellNotificationTypes[0].Id );
+                notification.setTitle( 'Termination Form approval Completed' );
+                notification.setBody( 'You have task(s) to complete' );
+                notification.setTargetId( mPrecedingTaskId );
+                notification.send( mDependentTaskOwnerIds );
+            }
+        }
+    }
+
+    // reduce sonar cognitive complexity...
+    private static void collectProjectTaskIds( List<NSP_Termination_Form__c> records ) {
+        Set<Id> projectTaskIds = new Set<Id>();
+        if ( ( records != null ) && !records.isEmpty() ) {
+            for ( NSP_Termination_Form__c record : records ) {
+                if ( record.OwnerId != null ) {
+                    projectTaskIds.add( record.NSP_Project_Task__c );
                 }
             }
         }
-
-        for(pse__Project_Task_Dependency__c mOwnerDependentTask : mDependentTasksOwner){
-            if(mOwnerDependentTask.pse__Dependent_Task__r.ownerId != null && termFormRecordList.contains(mOwnerDependentTask.pse__Preceding_Task__c)){
-                mDependentTaskOwnerIds.add(mOwnerDependentTask.pse__Dependent_Task__r.ownerId);
-
-            }
-        }
-
-        if(mDependentTaskOwnerIds.size() == 0){
-            return;
-        }
-
-        if(mDependentTaskOwnerIds.size() > 0){
-            List<CustomNotificationType> bellNotificationTypes = [
-                SELECT Id, DeveloperName
-                FROM CustomNotificationType
-                WHERE DeveloperName = 'NSP_Bell_Notification_Termination_Form'
-                LIMIT 1
-            ];
-
-            if (!bellNotificationTypes.isEmpty()) {
-                Messaging.CustomNotification notification = new Messaging.CustomNotification();
-                notification.setNotificationTypeId(bellNotificationTypes[0].Id);
-                notification.setTitle('Termination Form approval Completed');
-                notification.setBody('You have task(s) to complete');
-                notification.setTargetId(mPrecedingTaskId);
-                notification.send(mDependentTaskOwnerIds);
-            }
-        }
+        return projectTaskIds;
     }
 
     /**
@@ -2244,20 +2295,20 @@ public class NSP_ProjectTasksTriggerHelper {
                         WHERE NSP_Account__c IN:setAccountIds AND NSP_Role__c IN:lstAccTeamRoles];
     }
 
-    /***********************************************************************************************
-    * MethodName  : checkStatusComplete
-    * Description : This Method updated the NSP_Is_Status_Completed__c checkbox on Project Task
-    * Params:     : Map<Id, pse__Project_Task__c> newMap,Map<Id, pse__Project_Task__c> oldMap
-    * ********************************************************************************************/
-
-    public static void checkStatusComplete(Map<Id, pse__Project_Task__c> newMap,Map<Id, pse__Project_Task__c> oldMap){
-        try{
-            for(pse__Project_Task__c projTask :newMap.values() ){
-                // update the flag when first time the NSP_Is_Status_Completed__c is set to Complete
-                if(projTask.pse__Status__c !=null &&
-                    oldMap.get(projTask.Id).pse__Status__c != NSP_ServiceConstants.PROJECTSTATUSCOMPLETED &&
-                    projTask.pse__Status__c == NSP_ServiceConstants.PROJECTSTATUSCOMPLETED && !oldMap.get(projTask.Id).NSP_Is_Status_Completed__c){
+    public static void checkStatusComplete( Map<Id,pse__Project_Task__c> newMap , Map<Id,pse__Project_Task__c> oldMap ) {
+        try {
+            if ( ( newMap != null ) && ( oldMap != null ) ) {
+                for ( pse__Project_Task__c projTask : newMap.values() ) {
+                    // update the flag when first time the NSP_Is_Status_Completed__c is set to Complete
+                    if ( ( projTask.pse__Status__c != null )
+                        && oldMap.containsKey( projTask.Id )
+                        && ( oldMap.get( projTask.Id ).pse__Status__c != NSP_ServiceConstants.PROJECTSTATUSCOMPLETED )
+                        && ( projTask.pse__Status__c == NSP_ServiceConstants.PROJECTSTATUSCOMPLETED )
+                        && !oldMap.get( projTask.Id ).NSP_Is_Status_Completed__c
+                        )
+                    {
                         projTask.NSP_Is_Status_Completed__c = true;
+                    }
                 }
             }
         } catch ( Exception e ) {
@@ -2274,19 +2325,19 @@ public class NSP_ProjectTasksTriggerHelper {
     // Params: List<pse__Project_Task__c> newProjectTaskList, Map<Id, pse__Project_Task__c> projectTaskOldMap
     // Story : STY-02213
     //
-    public static void sendEmailToProjectResource(Set<Id> projectTaskIdSet) {
-        if (projectTaskIdSet != null
+    public static void sendEmailToProjectResource( Set<Id> projectTaskIdSet ) {
+        if ( ( projectTaskIdSet != null )
             && !projectTaskIdSet.isEmpty()
-            && EmailDeliverabilityController.IsEnabledOutbound) {
-
-            Boolean useFuture = (
-                NSP_ProjectTasksTriggerHelper.isEnabledFutureNotifications && (Limits.getFutureCalls() < Limits.getLimitFutureCalls())
-            );
-
-            if (useFuture) {
-                NSP_ProjectTasksTriggerHelper.sendEmailToProjectResourceFuture(projectTaskIdSet);
+            && EmailDeliverabilityController.IsEnabledOutbound
+            )
+        {
+            if ( NSP_ProjectTasksTriggerHelper.isEnabledFutureNotifications
+                && ( Limits.getFutureCalls() < Limits.getLimitFutureCalls() )
+                )
+            {
+                NSP_ProjectTasksTriggerHelper.sendEmailToProjectResourceFuture( projectTaskIdSet );
             } else {
-                NSP_ProjectTasksTriggerHelper.sendEmailToProjectResourceStatic(projectTaskIdSet);
+                NSP_ProjectTasksTriggerHelper.sendEmailToProjectResourceStatic( projectTaskIdSet );
             }
         }
     }
@@ -2382,8 +2433,10 @@ public class NSP_ProjectTasksTriggerHelper {
 
     private static void sendSingleEmailMessages( List<Messaging.SingleEmailMessage> messages ) {
         if ( EmailDeliverabilityController.IsEnabledOutbound
-          && ( messages != null )
-          && !messages.isEmpty() ) {
+            && ( messages != null )
+            && !messages.isEmpty()
+            )
+        {
             try {
                 Messaging.sendEmail( messages );
             } catch ( Exception e ) {
