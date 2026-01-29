@@ -883,6 +883,8 @@ public with sharing class NSP_ProjectTriggerHelper {
         Set<Id> accountIdSet = new Set<Id>();
         Set<Id> mmProjectIds = new Set<Id>();
         Set<Id> fsoProjectIds = new Set<Id>();
+        Set<Id> itaProjectIds = new Set<Id>();			//442892 created for ITA impl project teams createion
+        Set<Id> hrScaleProjectIds = new Set<Id>();      //AZD-513688
         Set<Id> shareProjAccIdSet = new Set<Id>();
         Map<Id,pse__Proj__c > mapOfProjectToShare = new Map<Id,pse__Proj__c>();
         List<pse__Proj__c> ipProjectList = new List<pse__Proj__c>();
@@ -920,6 +922,9 @@ public with sharing class NSP_ProjectTriggerHelper {
                         fsoProjectIds.add(project.Id);
                     }
             }
+            //442892, AZD-513688
+            getITAProjectId( project , itaProjectIds , hrScaleProjectIds );
+            
             //STY-02159
             if(!dupPreventionSet.contains(project.Id) && !project.pse__Is_Template__c && project.TemplateName__c == 'iSolved Benefits'){
                 dupPreventionSet.add(project.Id);
@@ -964,8 +969,9 @@ public with sharing class NSP_ProjectTriggerHelper {
         if(projectAccountMap.size()>0){
             createPEOCase(projectAccountMap);
         }
-        if(!ipProjectList.isEmpty()){
-            createProjectTeamRoles(mmProjectIds, fsoProjectIds);
+        //442892, AZD-513688
+        if(!ipProjectList.isEmpty() || !itaProjectIds.isEmpty() || !hrScaleProjectIds.isEmpty()){
+            createProjectTeamRoles(mmProjectIds, fsoProjectIds, itaProjectIds, hrScaleProjectIds);
         }
         //STY-04100 - To share project records in community
         if(!shareProjAccIdSet.isEmpty() && mapOfProjectToShare != null){
@@ -1129,8 +1135,9 @@ public with sharing class NSP_ProjectTriggerHelper {
     // Description: This Method will create Project Team records for MM and FSO projects
     // Params: List< pse__Proj__c> projectList
     // Author: Nischay
+    // Updates : Story 442892, AZD-513688: By Tanay : modified method to include ITA,HRscale team creation
     //
-    private static void createProjectTeamRoles( Set<Id> mapMMProjectListMMROles , Set<Id> mapFSOProjectListFSOROles ) {
+    private static void createProjectTeamRoles( Set<Id> mapMMProjectListMMROles , Set<Id> mapFSOProjectListFSOROles, Set<Id> mapITAProjectListITAROles , Set<Id> mapHRScaleProjectListFSOROles ) {//442892
         List<NSP_Project_Team__c> projectTeamList = new List<NSP_Project_Team__c>();
         try {
             Set<String> fsoProjectTeamRolesList = new Set<String>{
@@ -1178,6 +1185,10 @@ public with sharing class NSP_ProjectTriggerHelper {
                     }
                 }
             }
+            
+            // 442892 get list of ITA Project Team records, AZD-513688
+            getITAProjectTeamList( mapITAProjectListITAROles, mapHRScaleProjectListFSOROles, projectTeamList );
+            
             // Inserting a list of  Project Team records
             if ( !projectTeamList.isEmpty() ) {
                 insert projectTeamList;
@@ -1194,11 +1205,12 @@ public with sharing class NSP_ProjectTriggerHelper {
     public static void createProjectTeamRoles(List< pse__Proj__c> projectList){
         Set<Id> mmProjectIds = new Set<Id>();
         Set<Id> fsoProjectIds = new Set<Id>();
+        Set<Id> hrScaleProjectIds = new Set<Id>();
 
         for(pse__Proj__c project:projectList){
             // checking for MM and FSO Projects
             if(project.pse__Project_Type__c == NSP_ServiceConstants.ImplementationProjectType && !project.pse__Is_Template__c && project.recordTypeId == peoProjectRecordTypeId
-                && (project.TemplateName__c == label.Middle_Market_Implementation_Project || project.TemplateName__c == label.FSOImplementationProject)){
+                && (project.TemplateName__c == label.Middle_Market_Implementation_Project || project.TemplateName__c == label.FSOImplementationProject || project.TemplateName__c == NSP_ServiceConstants.HRSCALE_PROJECT_TEMPLATE_KEY )){
                     // creating Map of MM Project Id and List of MM Project Team roles
                     if(project.TemplateName__c == label.Middle_Market_Implementation_Project){
                         mmProjectIds.add(project.Id);
@@ -1207,10 +1219,19 @@ public with sharing class NSP_ProjectTriggerHelper {
                     else if( project.TemplateName__c == label.FSOImplementationProject){
                         fsoProjectIds.add(project.Id);
                     }
+                    // AZD-513688 : creating Map of HRScale Project Id
+                    else if( project.TemplateName__c == NSP_ServiceConstants.HRSCALE_PROJECT_TEMPLATE_KEY){
+                        hrScaleProjectIds.add(project.Id);
+                    }
                 }
         }
-        if(!mmProjectIds.isEmpty() || !fsoProjectIds.isEmpty()){
-            createProjectTeamRoles(mmProjectIds, fsoProjectIds);
+        if(!mmProjectIds.isEmpty() || !fsoProjectIds.isEmpty() || !hrScaleProjectIds.isEmpty()){
+            NSP_ProjectTriggerHelper.createProjectTeamRoles(
+                mmProjectIds,
+                fsoProjectIds,
+                null,                         //ITA project not created by WO Asset creation
+                hrScaleProjectIds
+            );
         }
     }
 
@@ -2158,6 +2179,96 @@ public with sharing class NSP_ProjectTriggerHelper {
                 project.OwnerId = accountWithTeamMemberId.get(project.pse__Account__c);
             }else{
                 project.OwnerId = UserInfo.getUserId();
+            }
+        }
+    }
+
+        /**********************************************************************************************
+    * MethodName  : getITAProjectId
+    * Description : Collect ITA Implementation and HRScale project Ids
+    * Params      : pse__Proj__c projectRecord,
+    *               Set<Id> itaProjectIds,
+    *               Set<Id> hrScaleProjectIds
+    * Story       : 442892
+    **********************************************************************************************/
+    private static void getITAProjectId(
+        pse__Proj__c projectRecord,
+        Set<Id> itaProjectIds,
+        Set<Id> hrScaleProjectIds
+    ) {
+        if (projectRecord != null) {
+            if (projectRecord.TemplateName__c == NSP_ServiceConstants.ITA_Prj_Temp) {
+                itaProjectIds.add(projectRecord.Id);
+            } else if (
+                projectRecord.TemplateName__c ==
+                NSP_ServiceConstants.HRSCALE_PROJECT_TEMPLATE_KEY
+            ) {
+                hrScaleProjectIds.add(projectRecord.Id);
+            }
+        }
+    }
+
+
+    /**********************************************************************************************
+    * MethodName  : getITAProjectTeamList
+    * Description : Build Project Team records for ITA implementation and HRScale projects
+    * Params      : Set<Id> mapITAProjectListITAROles,
+    *               Set<Id> mapHRScaleProjectListFSOROles,
+    *               List<NSP_Project_Team__c> projectTeamList
+    * Story       : 442892, 
+    **********************************************************************************************/
+    private static void getITAProjectTeamList(
+        Set<Id> mapITAProjectListITAROles,
+        Set<Id> mapHRScaleProjectListFSOROles,
+        List<NSP_Project_Team__c> projectTeamList
+    ) {
+        Id fsoProjectTeamRecordTypeId =
+                NSP_GenericRecordType.getRecordTypeId(
+                    'NSP_Project_Team__c',
+                    'NSP_FSO_Project_Team'
+                );
+
+        if (mapITAProjectListITAROles != null && !mapITAProjectListITAROles.isEmpty()) {
+
+                Set<String> itaProjectTeamRolesList = new Set<String>{
+                NSP_ServiceConstants.SoftwareAnalyst,
+                NSP_ServiceConstants.IntakeSpecialist
+            };
+
+            for (Id projectId : mapITAProjectListITAROles) {
+                for (String itaPrjRole : itaProjectTeamRolesList) {
+                    NSP_Project_Team__c itaPrjTeam = new NSP_Project_Team__c();
+                    itaPrjTeam.RecordTypeId = fsoProjectTeamRecordTypeId;
+                    itaPrjTeam.NSP_Project__c = projectId;
+                    itaPrjTeam.NSP_Role__c = itaPrjRole;
+                    projectTeamList.add(itaPrjTeam);
+                }
+            }
+        }
+
+        if (
+            mapHRScaleProjectListFSOROles != null &&
+            !mapHRScaleProjectListFSOROles.isEmpty()
+        ) {
+            Set<String> hrScaleProjectTeamRolesList = new Set<String>{
+                NSP_ServiceConstants.ProjectManager,
+                NSP_ServiceConstants.HCMAnalyst,
+                NSP_ServiceConstants.FCPayroll,
+                NSP_ServiceConstants.TimeAnalyst,
+                NSP_ServiceConstants.SrBenefitRep,
+                NSP_ServiceConstants.HCMPayrollAnalyst,
+                NSP_ServiceConstants.FCTalent,
+                NSP_ServiceConstants.CompAnalyst
+            };
+
+            for (Id projectId : mapHRScaleProjectListFSOROles) {
+                for (String hrScalePrjRole : hrScaleProjectTeamRolesList) {
+                    NSP_Project_Team__c hrScalePrjTeam = new NSP_Project_Team__c();
+                    hrScalePrjTeam.RecordTypeId = fsoProjectTeamRecordTypeId;
+                    hrScalePrjTeam.NSP_Project__c = projectId;
+                    hrScalePrjTeam.NSP_Role__c = hrScalePrjRole;
+                    projectTeamList.add(hrScalePrjTeam);
+                }
             }
         }
     }
