@@ -34,6 +34,7 @@
     <permissionSets>NSP_Template_Field_permission</permissionSets>
     <permissionSets>OpportunityTeamMember_Elevated_Access</permissionSets>
     <permissionSets>Opportunity_Allow_Closed_Lost_MM</permissionSets>
+    <permissionSets>Opportunity_Booking_Stage_Change_Email_Notification</permissionSets>
     <permissionSets>Opportunity_Closed_Lost_Fields_Edit_Access</permissionSets>
     <permissionSets>Opportunity_Closed_Lost_SO_Opp_Owner</permissionSets>
     <permissionSets>Opportunity_Closed_Won_Edit_Not_Allowed</permissionSets>
