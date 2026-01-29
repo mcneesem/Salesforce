@@ -2231,8 +2231,8 @@ public with sharing class NSP_ProjectTriggerHelper {
         if (mapITAProjectListITAROles != null && !mapITAProjectListITAROles.isEmpty()) {
 
                 Set<String> itaProjectTeamRolesList = new Set<String>{
-                NSP_ServiceConstants.SoftwareAnalyst,
-                NSP_ServiceConstants.IntakeSpecialist
+                NSP_ServiceConstants.IntakeSpecialist,
+                NSP_ServiceConstants.SoftwareAnalyst
             };
 
             for (Id projectId : mapITAProjectListITAROles) {
