@@ -411,6 +411,7 @@ public with sharing class NSP_AssetTriggerHelper {
                 assetEventToBeCreated.NSP_Minor_Job_Position__c = record.NSP_Minor_Job_Position__c;
                 assetEventToBeCreated.I_9_Availability__c = record.I_9_Availability__c;
                 assetEventToBeCreated.E_Verify_Services__c = record.E_Verify_Services__c;
+                assetEventToBeCreated.I_9_Assist__c = record.I_9_Assist__c;
                 assetEventToBeInserted.add( assetEventToBeCreated );
             }
         }
