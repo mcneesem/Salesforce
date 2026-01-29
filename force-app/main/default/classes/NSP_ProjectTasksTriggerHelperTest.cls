@@ -7,7 +7,7 @@ private class NSP_ProjectTasksTriggerHelperTest {
     private static final String ClientRecordTypeId = Schema.SObjectType.NSP_Termination_Form__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.NSP_Client_Reinstatement).getRecordTypeId();
 
     @testSetup
-    private static void setupProjectTaskdata(){
+    private static void setupProjectTaskdata() {
         //Test Setup
         Email_Deliverability_Settings__c emailSetting = Email_Deliverability_Settings__c.getOrgDefaults();
         emailSetting.IsEnabledOutbound__c = true;
@@ -551,14 +551,8 @@ private class NSP_ProjectTasksTriggerHelperTest {
 
     }
 
-    /**
-    * Classes Covered
-    * NSP_ProjectTasksTriggerHandler.afterUpdate
-    * NSP_ProjectTasksTriggerHelper.notifyDependentTaskResources
-    * NSP_ProjectTasksTriggerHelper.sendNotificationToDependentResource
-    */
     @isTest
-    private static void handleMilestoneCompletion(){
+    private static void handleMilestoneCompletion() {
         List<pse__Project_Task__c> lPrecedingTasks = new List<pse__Project_Task__c>([SELECT Id,pse__Status__c FROM pse__Project_Task__c WHERE Name = 'Preceding Task']);
         Test.startTest();
         lPrecedingTasks[0].pse__Status__c = NSP_ServiceConstants.TASKCOMPLETE;
@@ -570,14 +564,8 @@ private class NSP_ProjectTasksTriggerHelperTest {
         Test.stopTest();
     }
 
-    /**
-    * Classes Covered
-    * NSP_ProjectTasksTriggerHandler.afterUpdate
-    * NSP_ProjectTasksTriggerHelper.bellNotification
-    *
-    */
     @isTest
-    private static void testBellNotification(){
+    private static void testBellNotification() {
         String PEOProjectTaskRecordTypeIds = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT_TASK_SOBJECT_TYPE,NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE);
 
         Test.startTest();
@@ -595,14 +583,8 @@ private class NSP_ProjectTasksTriggerHelperTest {
 
     }
 
-    /**
-    * Classes Covered
-    * NSP_ProjectTasksTriggerHandler.afterUpdate
-    * NSP_ProjectTasksTriggerHelper.onSubmitTaskCompletion
-    *
-    */
     @isTest
-    private static void submitTaskCompletion(){
+    private static void submitTaskCompletion() {
         Test.startTest();
         Id timeRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE,NSP_ServiceConstants.TIME_ATTENDANCE_ASSET);
         Account[] accountId = [SELECT Id  FROM Account WHERE NSP_AIMS_Client__c = '8900' Limit 1];
@@ -621,7 +603,7 @@ private class NSP_ProjectTasksTriggerHelperTest {
     }
 
     @isTest
-    private static void cobraTest(){
+    private static void cobraTest() {
         Test.startTest();
         Account accCobra = new Account();
         accCobra.Name = 'Test Account 2_test';
@@ -636,12 +618,8 @@ private class NSP_ProjectTasksTriggerHelperTest {
         Test.stopTest();
     }
 
-    /**
-    * Classes Covered
-    * NSP_ProjectTasksTriggerHelper.checkRelatedTerminationsFormStatus
-    */
     @isTest
-    private static void testcheckRelatedTerminationsFormStatus(){
+    private static void testcheckRelatedTerminationsFormStatus() {
         List<pse__Project_Task__c> lProjectTasks = new List<pse__Project_Task__c>([SELECT Id FROM pse__Project_Task__c WHERE Name = 'Depending Task']);
         Test.startTest();
        try{
@@ -656,13 +634,8 @@ private class NSP_ProjectTasksTriggerHelperTest {
         Test.stopTest();
     }
 
-    /**
-    * Classes Covered
-    * NSP_ProjectTasksTriggerHandler.afterUpdate
-    * NSP_ProjectTasksTriggerHelper.calculateNumberOfCompletedAndCancelledProjectTask
-    */
     @isTest
-    private static void populateNumberOfCompletedProjectTask(){
+    private static void populateNumberOfCompletedProjectTask() {
          String PEOProjectTaskRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT_TASK_SOBJECT_TYPE,NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE);
         List<pse__Project_Task__c> projectTasks = [SELECT Id, pse__Status__c FROM pse__Project_Task__c WHERE pse__Milestone__r.Name = 'PMilestone1' AND Name IN ('pTask1', 'pTask2')];
         Test.startTest();
@@ -679,7 +652,7 @@ private class NSP_ProjectTasksTriggerHelperTest {
     }
 
     @isTest
-    private static void markParentProjectCancelled(){
+    private static void markParentProjectCancelled() {
         test.startTest();
         pse__Proj__c project1 = (pse__Proj__c)NSP_TestExtendedDataFactory.createSObject(new pse__Proj__c(), 'NSP_TestDataFactory.ProjectDefaults', false);
         project1.pse__Start_Date__c = Date.Today();
@@ -698,7 +671,7 @@ private class NSP_ProjectTasksTriggerHelperTest {
     }
 
     @isTest
-    private static void calculatePercentageCompleteTest(){
+    private static void calculatePercentageCompleteTest() {
         test.startTest();
         List<pse__Project_Task__c> projectTasks = [SELECT NSP_PercentageCompleteFormula__c,pse__Status__c FROM pse__Project_Task__c WHERE Name = 'pTask2'];
         for(pse__Project_Task__c pTask : projectTasks){
@@ -711,13 +684,10 @@ private class NSP_ProjectTasksTriggerHelperTest {
 
         pse__Project_Task__c updatedProjectTasks = [SELECT NSP_PercentageCompleteFormula__c,pse__Milestone__r.NSP_Milestone_Complete__c from pse__Project_Task__c WHERE Id = : projectTasks[0].id];
         System.assertEquals(25, updatedProjectTasks.NSP_PercentageCompleteFormula__c);
-  }
- /***********************************************************************************************
-    * MethodName: calculateProjectPercentageCompleteTest
-    * Description : This Method calculate Project Percentage complete on project
- *********************************************************************************************/
-     @isTest
-    private static void caluclateProjectPercentageCompleteTestonUpdatingProjectTask(){
+    }
+
+    @isTest
+    private static void caluclateProjectPercentageCompleteTestonUpdatingProjectTask() {
         test.startTest();
         pse__Project_Task__c updatingValuesProjectTasks = [SELECT Name, NSP_PercentageCompleteFormula__c, pse__Status__c,pse__Project__c, pse__Project__r.NSP_Project_Complete__c FROM pse__Project_Task__c WHERE Name = 'projTask1' LIMIT 1];
         //updating percentage complete to different value
@@ -732,7 +702,7 @@ private class NSP_ProjectTasksTriggerHelperTest {
     }
 
     @isTest
-    private static void calculateProjectPercentageCompleteTestOnDeleteProjectTask(){
+    private static void calculateProjectPercentageCompleteTestOnDeleteProjectTask() {
         test.startTest();
         pse__Project_Task__c deletingProjectTasks = [SELECT Name, NSP_PercentageCompleteFormula__c, pse__Status__c FROM pse__Project_Task__c WHERE Name IN ('projTask1')];
         //deleting a project tasks record
@@ -746,7 +716,7 @@ private class NSP_ProjectTasksTriggerHelperTest {
         System.assertEquals(50.0, proj.NSP_Project_Complete__c.setScale(1));
     }
     @isTest
-    private static void updatingProjectStatusToCancelled(){
+    private static void updatingProjectStatusToCancelled() {
         //negative scenerio
         test.startTest();
         pse__Project_Task__c updatingStatusProjectTasks = [SELECT Name, NSP_PercentageCompleteFormula__c, pse__Status__c FROM pse__Project_Task__c WHERE Name= 'projTask2'];
@@ -761,27 +731,18 @@ private class NSP_ProjectTasksTriggerHelperTest {
         System.assertNotEquals(25.0, proj.NSP_Project_Complete__c.setScale(1));
     }
 
-    /***********************************************************************************************
-    * MethodName: startDateEndDateUpdateTest
-    * Description : This Method will update start and end Date on Projects Tasks
-    * ********************************************************************************************/
     @isTest
-    private static void startDateEndDateUpdateTest(){
+    private static void startDateEndDateUpdateTest() {
        Test.startTest();
         pse__Project_Task__c pTasks= [Select Id , pse__Start_Date_Time__c, NSP_Account_Id__c ,pse__End_Date_Time__c, NSP_of_Days_Offset__c ,pse__Project__c From pse__Project_Task__c
                                     WHERE  Name ='pTask2' limit 1];
         List<NSP_Sub_Client__c> lSubClients = new List<NSP_Sub_Client__c>([SELECT Id, NSP_Sub_Client__c, NSP_Renewal_Date__c FROM NSP_Sub_Client__c WHERE NSP_Account__c =:pTasks.NSP_Account_Id__c  LIMIT 1]);
        Test.stopTest();
        system.assertEquals(true,pTasks.pse__Start_Date_Time__c!=null);
+    }
 
-   }
-
-    /************************************************************************************************************************
-    * MethodName  : schedulePtWithNonServiceResOwnerTest
-    * Description  : Schedule PT with Owner not having Service Resource Rec
-    * ************************************************************************************************************************/
     @isTest
-    private static void schedulePtWithNonServiceResOwnerTest(){
+    private static void schedulePtWithNonServiceResOwnerTest() {
         try{
         List<String> projTaskFields = new List<String>{'Id','Name', 'pse__Status__c'};
         String query = new NSP_QueryBuilder('pse__Project_Task__c', projTaskFields)
@@ -796,12 +757,9 @@ private class NSP_ProjectTasksTriggerHelperTest {
             System.assertEquals('FIELD_CUSTOM_VALIDATION_EXCEPTION',ex.getDmlStatusCode(0),'Owner is not a dispatcher erro');
         }
     }
-    /************************************************************************************************************************
-    * MethodName  : schedulePtWithoutStartDateTest
-    * Description  : Schedule PT with Start date null
-    * ************************************************************************************************************************/
+
     @isTest
-    private static void schedulePtWithoutStartDateTest(){
+    private static void schedulePtWithoutStartDateTest() {
         try{
         Test.startTest();
         List<String> projTaskFields = new List<String>{'Id','Name', 'pse__Status__c'};
@@ -820,14 +778,8 @@ private class NSP_ProjectTasksTriggerHelperTest {
         }
     }
 
-
-
-    /************************************************************************************************************************
-    * MethodName  : serviceAppointmentSchedulingTest
-    * Description  : test SA scheduling FROM project Task
-    * ************************************************************************************************************************/
     @isTest
-    private static void serviceAppointmentSchedulingTest(){
+    private static void serviceAppointmentSchedulingTest() {
         Test.startTest();
         List<String> projTaskFields = new List<String>{'Id','Name', 'pse__Status__c'};
         String query = new NSP_QueryBuilder('pse__Project_Task__c', projTaskFields)
@@ -856,12 +808,8 @@ private class NSP_ProjectTasksTriggerHelperTest {
 
     }
 
-    /************************************************************************************************************************
-    * MethodName  : durationStartEndDateTest
-    * Description  : checking for the updation of duration, start date and end date
-    * ************************************************************************************************************************/
     @isTest
-    private static void durationStartEndDateTest(){
+    private static void durationStartEndDateTest() {
         Test.startTest();
         List<String> projTaskFields = new List<String>{'Id','Name', 'NSP_Duration_in_minutes__c','pse__Start_Date_Time__c','pse__End_Date_Time__c'};
         List<String> workOrderFields = new List<String>{'Id','NSP_Project_Task__c', 'Duration','StartDate','EndDate'};
@@ -885,13 +833,8 @@ private class NSP_ProjectTasksTriggerHelperTest {
         Test.stopTest();
     }
 
-     /***********************************************************************************************
-    * MethodName: testCreateCasesOnProjectTasksUpdate
-    * Description : Test creation of First Live Payroll Case when Go Live Project Task
-    *         status is Complete on iSolved HCM Implementation project
-    * ********************************************************************************************/
     @isTest
-    private static void testCreateCasesOnProjectTasksUpdate(){
+    private static void testCreateCasesOnProjectTasksUpdate() {
       Test.startTest();
         Group wxImplqueue = (Group)NSP_TestExtendedDataFactory.createSObject(new Group(), 'NSP_TestDataFactory.GroupDefaults', false);
         wxImplqueue.Name = NSP_ServiceConstants.CASE_ASIGNED_QUEUE_WX_IMPL_SUPPORT;
@@ -908,9 +851,9 @@ private class NSP_ProjectTasksTriggerHelperTest {
         NSP_ProjectTasksTriggerHelper.createPTAIfOwnerIsChanged(prjctTaskId);
         Test.stopTest();
     }
-    //Method Name:sendEmailToAccountTeamMembersIfTaskIsLetterReceived -STY-04147
+
     @isTest
-    private static void testsendEmailToAccountTeamMembersIfTaskIsLetterReceived(){
+    private static void testsendEmailToAccountTeamMembersIfTaskIsLetterReceived() {
         Id new_Asset_RT_ID = Schema.SObjectType.Asset.RecordTypeInfosByName.get('WO').getRecordTypeId();
         List<string> peoTerminationTaskList = System.Label.PEO_Termination_Tasks.split(';');
         String WRITTENTERMINATION = null;
@@ -977,7 +920,7 @@ private class NSP_ProjectTasksTriggerHelperTest {
     }
 
     @isTest
-    private static void onChangeOfProjectTemplateTest(){
+    private static void onChangeOfProjectTemplateTest() {
        Test.startTest();
         Account acc = [SELECT ID, NSP_AIMS_Client__c FROM Account WHERE NSP_AIMS_Client__c = '8900' LIMIT 1];
         List<ID> accList = new List <ID>();
@@ -991,7 +934,7 @@ private class NSP_ProjectTasksTriggerHelperTest {
     }
 
     @isTest
-    private static void testnotifysendEmailToAccountTeamMembersIfTaskIsLetterReceived(){
+    private static void testnotifysendEmailToAccountTeamMembersIfTaskIsLetterReceived() {
         Id new_Asset_RT_ID = Schema.SObjectType.Asset.RecordTypeInfosByName.get('WO').getRecordTypeId();
         Test.startTest();
         pse__Project_Task__c letterrcvdTask = [SELECT Id, Name, pse__Status__c,NSP_AccountId__c,pse__Started__c,pse__Completed__c  FROM pse__Project_Task__c WHERE Name ='Notify ITA if term date is today' Limit 1];
@@ -1017,10 +960,6 @@ private class NSP_ProjectTasksTriggerHelperTest {
         Test.stopTest();
     }
 
-    /***********************************************************************************************
-    * MethodName: testHandleBeforeDeleteOfProjTaskTemp
-    * Description : To test handleBeforeDeleteOfProjTemp() method
-    * ********************************************************************************************/
     @isTest
     private static void testHandleBeforeDeleteOfProjTaskTemp() {
         Boolean exceptionThrown = false;
@@ -1049,10 +988,6 @@ private class NSP_ProjectTasksTriggerHelperTest {
                     }
     }
 
-    /***********************************************************************************************
-    * MethodName: sendEmailToProjectResourceTest
-    * Description : To test sendEmailToProjectResource() method
-    * ********************************************************************************************/
     @isTest
     private static void sendEmailToProjectResourceTest() {
         // Create a test set of project task Ids
@@ -1114,12 +1049,8 @@ private class NSP_ProjectTasksTriggerHelperTest {
         Test.stopTest();
     }
 
-    /***********************************************************************************************
-    * MethodName: sendEmailOnProjTaskComplete
-    * Description : To test custom email alerts sent out when a project task is set to complete.
-    * ********************************************************************************************/
     @isTest
-    private static void sendEmailOnProjTaskComplete(){
+    private static void sendEmailOnProjTaskComplete() {
         List<pse__Project_Task__c> ptToUpdateList = new List<pse__Project_Task__c>();
         List<String> projTaskFields = new List<String>{'Id', 'pse__Status__c'};
         Test.startTest();
@@ -1180,11 +1111,8 @@ private class NSP_ProjectTasksTriggerHelperTest {
         Test.stopTest();
     }
 
-    /***********************************************************************************************
-    * MethodName: docusignAssetTest
-    * Description : To test docusignAsset
-    * ********************************************************************************************/
-    @isTest private static void docusignAssetTest(){
+    @isTest
+    private static void docusignAssetTest() {
         Test.startTest();
         List<string> peoTerminationTaskList = System.Label.PEO_Termination_Tasks.split(';');
         String TERMINATIONANALYSIS = null;
@@ -1203,13 +1131,9 @@ private class NSP_ProjectTasksTriggerHelperTest {
         update pTask;
         Test.stopTest();
     }
-    /***********************************************************************************************
-    * MethodName: serviceAppointmentTest
-    * Description : To test assignResourceToServiceAppointment and scheduleWorkOrderAndSA methods.
-    * ********************************************************************************************/
 
     @isTest
-    private static void serviceAppointmentTest(){
+    private static void serviceAppointmentTest() {
         List<String> projTaskFields = new List<String>{'Id', 'pse__Status__c'};
         User currentUser = (User)NSP_TestExtendedDataFactory.createSObject(new User(), false);
         currentUser.NSP_Salesforce_Field_Service__c = 'Dispatcher';
@@ -1227,8 +1151,7 @@ private class NSP_ProjectTasksTriggerHelperTest {
     }
 
     @isTest
-    private static void testSendNotificationToDependentResource()
-    {
+    private static void testSendNotificationToDependentResource() {
         system.test.starttest();
         List<pse__Project_Task__c> preceedingTasks = [Select Id from pse__Project_Task__c Where Name = 'Preceding Task'];
         set<Id> pTaskIds = new Set<Id>();
@@ -1607,4 +1530,6 @@ private class NSP_ProjectTasksTriggerHelperTest {
             System.assert(true, 'Skipping: no MM Implementation Profile found.');
         }
     }
+
 }
+//
