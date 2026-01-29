@@ -242,7 +242,7 @@ public class NSP_ProjectTeamTriggerHelper {
             //query for all the implementation project which present in the mapOfProjectManager
             List<pse__Proj__c> implProjectList = new List<pse__Proj__c>([Select Id ,pse__Project_Type__c ,TemplateName__c,RecordTypeId ,OwnerId
                                                                               From pse__Proj__c WHERE  pse__Project_Type__c=:NSP_ServiceConstants.ImplementationProjectType AND 
-                                                                              (TemplateName__c = :label.Middle_Market_Implementation_Project OR TemplateName__c = :label.FSOImplementationProject) 
+                                                                              (TemplateName__c = :label.Middle_Market_Implementation_Project OR TemplateName__c = :label.FSOImplementationProject OR TemplateName__c = :NSP_ServiceConstants.HRSCALE_PROJECT_TEMPLATE_KEY) 
                                                                               AND RecordTypeId=:PEORecordTypeId AND Id IN :mapOfProjectManager.keyset()]);
             
             List<pse__Proj__c> updateProjList = new List<pse__Proj__c>();

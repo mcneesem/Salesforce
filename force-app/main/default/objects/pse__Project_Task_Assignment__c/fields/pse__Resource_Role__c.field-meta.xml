@@ -195,6 +195,31 @@
                 <default>false</default>
                 <label>HRCore Acct. Mgmt</label>
             </value>
+            <value>
+                <fullName>HCM Analyst</fullName>
+                <default>false</default>
+                <label>HCM Analyst</label>
+            </value>
+            <value>
+                <fullName>Functional Consultant Payroll</fullName>
+                <default>false</default>
+                <label>Functional Consultant Payroll</label>
+            </value>
+            <value>
+                <fullName>HCM Payroll Analyst</fullName>
+                <default>false</default>
+                <label>HCM Payroll Analyst</label>
+            </value>
+            <value>
+                <fullName>Functional Consultant Talent</fullName>
+                <default>false</default>
+                <label>Functional Consultant Talent</label>
+            </value>
+            <value>
+                <fullName>Compensation Analyst</fullName>
+                <default>false</default>
+                <label>Compensation Analyst</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

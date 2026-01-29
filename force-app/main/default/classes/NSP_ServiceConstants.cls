@@ -283,6 +283,7 @@ public class NSP_ServiceConstants {
     //Project Constants
     public final static String MM_PROJECT_TEMPLATE_KEY = 'MM - Implementation';
     public final static String FSO_PROJECT_TEMPLATE_KEY = 'FSO - Implementation';
+    public final static String HRSCALE_PROJECT_TEMPLATE_KEY = 'HRScale - Implementation';// AZD-513688
     public final static String ImplementationProjectType = 'Implementation';
     public final static String PEOProject = 'PEO_Project';
     public final static String FSOProfile = 'FSO';
@@ -296,6 +297,12 @@ public class NSP_ServiceConstants {
     public final static String OrientationRep = 'Orientation Rep';
     public final static String OSCoordinator = 'OS Coordinator';
     public final static String OTCoordinator = 'OT Coordinator';
+    public final static String HCMAnalyst = 'HCM Analyst';
+    public final static String FCPayroll = 'Functional Consultant Payroll';
+    public final static String TimeAnalyst = 'Time Analyst';
+    public final static String HCMPayrollAnalyst = 'HCM Payroll Analyst';
+    public final static String FCTalent = 'Functional Consultant Talent';
+    public final static String CompAnalyst = 'Compensation Analyst';
     public final static String OTPlanner = 'OT Planner';
     public final static String LostProject = 'Close/Lost';
     public final static String ProjectStatus = 'Not Yet Active';
@@ -304,6 +311,9 @@ public class NSP_ServiceConstants {
     public final static String NEW_TAX_IMPL_PROJECT = 'WX/WA New Tax IMPL';
     public final static String WX_WA_DATA_MIGRATION_PROJECT = 'WX/WA Data Migration';
     public final static String PSE_MILESTONE = 'pse__Milestone__c';
+    public final static String SoftwareAnalyst = 'Software Analyst';
+    public final static String IntakeSpecialist = 'Intake Specialist';
+
     // Asset Constants
     public final static String MMAssetSegment = 'Middle Market';
     public final static String MMEAssetSegment = 'Middle Market Enterprise';
