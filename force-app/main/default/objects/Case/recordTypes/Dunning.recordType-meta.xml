@@ -397,6 +397,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Manual Direct Debit%2FCredit Adjustment</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Student Worker Declaration</fullName>
             <default>false</default>
         </values>

@@ -197,6 +197,11 @@
                 <label>IRS Form W-2 Duplicate Request (ES)</label>
             </value>
             <value>
+                <fullName>Manual Direct Debit/Credit Adjustment</fullName>
+                <default>false</default>
+                <label>Manual Direct Debit/Credit Adjustment</label>
+            </value>
+            <value>
                 <fullName>Student Worker Declaration</fullName>
                 <default>false</default>
                 <label>Student Worker Declaration</label>
