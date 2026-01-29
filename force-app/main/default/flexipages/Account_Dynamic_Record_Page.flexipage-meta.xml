@@ -708,16 +708,6 @@
             </fieldInstance>
         </itemInstances>
         <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_State_of_Incorporation_Formation__c</fieldItem>
-                <identifier>RecordNSP_State_of_Incorporation_Formation_cField2</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
             <componentInstance>
                 <componentName>flexipage:blankSpace</componentName>
                 <identifier>flexipage_blankSpace</identifier>
