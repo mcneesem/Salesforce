@@ -198,6 +198,23 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_Fault_Element_Update_Voice_Call</name>
+        <label>Assign Fault Element : Update_Voice_Call</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Voice_Call</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Create_Case_Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_Selected_Record_Type</name>
         <label>Assign Selected Record Type</label>
         <locationX>0</locationX>
@@ -643,7 +660,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Is_Case_Created_by_Messaging_Session</targetReference>
+                <targetReference>Is_Case_Created_by_Messaging_Session_or_Voice_Call</targetReference>
             </connector>
             <label>Case Created</label>
         </rules>
@@ -958,8 +975,8 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Is_Case_Created_by_Messaging_Session</name>
-        <label>Is Case Created by Messaging Session</label>
+        <name>Is_Case_Created_by_Messaging_Session_or_Voice_Call</name>
+        <label>Is Case Created by Messaging Session or Voice Call</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
@@ -980,6 +997,21 @@
                 <targetReference>Update_Messaging_Session</targetReference>
             </connector>
             <label>Case Created by Messaging Session</label>
+        </rules>
+        <rules>
+            <name>Case_Created_by_Voice_Call</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>recordId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>0LQ</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Voice_Call</targetReference>
+            </connector>
+            <label>Case Created by Voice Call</label>
         </rules>
     </decisions>
     <decisions>
@@ -1343,6 +1375,33 @@
             </value>
         </inputAssignments>
         <object>MessagingSession</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Voice_Call</name>
+        <label>Update Voice Call</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Navigate_To_Record</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_Fault_Element_Update_Voice_Call</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>CaseId__c</field>
+            <value>
+                <elementReference>caseRecord.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>VoiceCall</object>
     </recordUpdates>
     <runInMode>DefaultMode</runInMode>
     <screens>
