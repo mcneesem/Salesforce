@@ -14,13 +14,13 @@
                             <visibilityRule>
                                 <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
-                                    <leftValue>{!Record.CaseId__r.CaseNumber}</leftValue>
-                                    <operator>EQUAL</operator>
-                                </criteria>
-                                <criteria>
                                     <leftValue>{!$Permission.CustomPermission.Case_Creation_Screen_Flow}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.CaseId__r.CaseNumber}</leftValue>
+                                    <operator>EQUAL</operator>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
