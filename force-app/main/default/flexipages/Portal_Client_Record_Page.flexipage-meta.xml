@@ -66,6 +66,10 @@
                 <identifier>RecordNameField3</identifier>
             </fieldInstance>
         </itemInstances>
+        <name>Facet-c8c6d57b-5e8e-4fb8-aee3-3b79b1ba82bb</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
@@ -76,10 +80,6 @@
                 <identifier>RecordClient_Number__cField</identifier>
             </fieldInstance>
         </itemInstances>
-        <name>Facet-c8c6d57b-5e8e-4fb8-aee3-3b79b1ba82bb</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
@@ -126,6 +126,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Effective_Date__c</fieldItem>
                 <identifier>RecordEffective_Date__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.TimeZoneSidKey__c</fieldItem>
+                <identifier>RecordTimeZoneSidKey__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-a2625a5a-6020-41de-aa70-76d209102d2b</name>
@@ -177,6 +187,58 @@
             </componentInstance>
         </itemInstances>
         <name>Facet-76ce538d-90a4-4917-98c9-c7f940c673ad</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Completed_Portal_Tasks__c</fieldItem>
+                <identifier>RecordCompleted_Portal_Tasks_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-2ca4cf6d-4396-47cc-8fe2-7b3dd5212667</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Total_Portal_Tasks__c</fieldItem>
+                <identifier>RecordTotal_Portal_Tasks__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-704d7ee5-2604-485b-84e2-cd4c7c21e029</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-2ca4cf6d-4396-47cc-8fe2-7b3dd5212667</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column7</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-704d7ee5-2604-485b-84e2-cd4c7c21e029</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column8</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-3e9696e0-d59b-4827-bf1c-50d9ebfcf495</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -266,6 +328,24 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
+                    <value>Facet-3e9696e0-d59b-4827-bf1c-50d9ebfcf495</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Progress</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection4</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>

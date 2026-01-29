@@ -76,16 +76,6 @@
                 <identifier>RecordPortal_Client_cField</identifier>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Rank__c</fieldItem>
-                <identifier>RecordRank__cField</identifier>
-            </fieldInstance>
-        </itemInstances>
         <name>Facet-72ff4a2b-d6de-488e-b910-c8b54713a294</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -118,6 +108,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Position__c</fieldItem>
                 <identifier>RecordPosition_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Rank__c</fieldItem>
+                <identifier>RecordRank__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-44506a19-326f-482b-a8fe-184a9b86038c</name>

@@ -32,7 +32,20 @@
                         </lightning-layout-item>
                     </template>
                     <lightning-layout-item size="3">
-                        &nbsp;
+                        <template lwc:if={showFileUpload}>
+                            <lightning-file-upload
+                                label={record.fields.Action__c.value}
+                                name="fileUploader"
+                                record-id={record.fields.Id.value}
+                                onuploadfinished={handleUploadFinished}
+                                multiple
+                                variant="label-hidden"
+                                >
+                            </lightning-file-upload>
+                        </template>
+                        <template lwc:else>
+                            {record.fields.Action__c.value}
+                        </template>
                     </lightning-layout-item>
                     <lightning-layout-item size="1">
                         <lightning-icon icon-name="utility:form" size="xx-small" alternative-text="Uploaded Files"></lightning-icon>&nbsp;({totalRelatedFiles})
@@ -50,8 +63,11 @@
             <template lwc:if={hasBody}>
                 <template lwc:if={showBody}>
                     <lightning-layout-item size="12" padding="around-medium">
+                        <template lwc:if={hasGuidance}>
+                            PENDING GUIDANCE
+                        </template>
                         <template lwc:if={isParent}>
-                            &nbsp;
+                            <c-portal-task-list variant="child" record-id={record.fields.Id.value}></c-portal-task-list>
                         </template>
                     </lightning-layout-item>
                 </template>
