@@ -813,14 +813,10 @@ public class NSP_ProjectTasksTriggerHelper {
                         }
                         listOfToAddresses.add( System.Label.NSP_Termination_Team );
                         this.letterReceivedEmail(
-                            pTask.Id ,
-                            pTask.Name ,
-                            projectTaskLetterMap.get( pTask.Id ).pse__Project__r.pse__Account__r.Name ,
-                            projectTaskLetterMap.get( pTask.Id ).pse__Project__r.pse__Account__r.NSP_AIMS_Client__c ,
+                            pTask ,
+                            projectTaskLetterMap.get( pTask.Id ).pse__Project__r.pse__Account__r ,
                             listOfToAddresses ,
-                            woActiveList.get( pTask.NSP_AccountId__c ).NSP_Reason_for_Term__c ,
-                            woActiveList.get( pTask.NSP_AccountId__c ).NSP_Anticipated_Date_Of_Termination__c ,
-                            woActiveList.get( pTask.NSP_AccountId__c ).Id ,
+                            woActiveList.get( pTask.NSP_AccountId__c ) ,
                             mapOfAccountAndListOfAccountTeamMember.get( pTask.NSP_AccountId__c )
                         );
                     }
@@ -837,34 +833,30 @@ public class NSP_ProjectTasksTriggerHelper {
 
     //Letter Received email.
     private void letterReceivedEmail(
-        Id pTask ,
-        String pTaskName ,
-        String accountName ,
-        String accountAIMS ,
+        pse__Project_Task__c pTask ,
+        Account pTaskAccount ,
         List<String> listOfToAddresses ,
-        String reasonForTerm ,
-        Date termDate ,
-        Id woAssetId ,
+        Asset pTaskAsset ,
         List<NSP_Account_Team__c> accountTeamList
         )
     {
         try {
             String dtStr;
-            if( termDate != null ) {
-                dtStr = termDate.format();
+            if ( pTaskAsset.NSP_Anticipated_Date_Of_Termination__c != null ) {
+                dtStr = pTaskAsset.NSP_Anticipated_Date_Of_Termination__c.format();
             }
-            String accName = accountName+'('+accountAIMS+')';
-            String customUrl = URL.getOrgDomainURL().toExternalForm()+ '/'+woAssetId;
-            String projectTaskUrl = URL.getOrgDomainURL().toExternalForm()+ '/'+pTask;
-            String subjectString = 'Termination letter received for '+accountName+'('+accountAIMS+')';
+            String accName = pTaskAccount.Name + '(' + pTaskAccount.NSP_AIMS_Client__c + ')';
+            String customUrl = URL.getOrgDomainURL().toExternalForm() + '/' + pTaskAccount.Id;
+            String projectTaskUrl = URL.getOrgDomainURL().toExternalForm() + '/' + pTask.Id;
+            String subjectString = 'Termination letter received for ' + pTaskAccount.Name + '(' + pTaskAccount.NSP_AIMS_Client__c + ')';
             String mailBody = 'Hello Team,'+ NSP_ProjectTasksTriggerHelper.LINE_BREAK;
             mailBody += NSP_ProjectTasksTriggerHelper.buildAnchorElement( customUrl , accName );
             mailBody += ' submitted written notification of their intent to terminate their contract with Insperity.';
-            mailBody += ' Below are the details of the termination:'+ NSP_ProjectTasksTriggerHelper.LINE_BREAK;
+            mailBody += ' Below are the details of the termination:' + NSP_ProjectTasksTriggerHelper.LINE_BREAK;
             mailBody += 'Intended effective termination date: ' + dtStr + '<br/>';
-            mailBody += 'Termination reason: '+ reasonForTerm +'<br/>';
+            mailBody += 'Termination reason: ' + pTaskAsset.NSP_Reason_for_Term__c + '<br/>';
             mailBody += 'Project Task: '
-                + NSP_ProjectTasksTriggerHelper.buildAnchorElement( projectTaskUrl , pTaskName )
+                + NSP_ProjectTasksTriggerHelper.buildAnchorElement( projectTaskUrl , pTask.Name )
                 + NSP_ProjectTasksTriggerHelper.LINE_BREAK;
             if(!accountTeamList.isEmpty()) {
                 for(NSP_Account_Team__c accTeam : accountTeamList){
