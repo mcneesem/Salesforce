@@ -497,7 +497,7 @@
             <assignToReference>contextAccountId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Voice_Call_Messaging_User.Account.Id</elementReference>
+                <elementReference>Get_Voice_Call_Messaging_User.AccountId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -660,7 +660,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Is_Case_Created_by_Messaging_Session_or_Voice_Call</targetReference>
+                <targetReference>Check_Record_Id_After_Case_Creation</targetReference>
             </connector>
             <label>Case Created</label>
         </rules>
@@ -789,6 +789,46 @@
                 <targetReference>Get_Voice_Call</targetReference>
             </connector>
             <label>Is Voice Call</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Record_Id_After_Case_Creation</name>
+        <label>Check Record Id (After-Case-Creation)</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Navigate_To_Record</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Case_Created_by_Messaging_Session</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>recordId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>0Mw</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Messaging_Session</targetReference>
+            </connector>
+            <label>Case Created by Messaging Session</label>
+        </rules>
+        <rules>
+            <name>Case_Created_by_Voice_Call</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>recordId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>0LQ</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Voice_Call</targetReference>
+            </connector>
+            <label>Case Created by Voice Call</label>
         </rules>
     </decisions>
     <decisions>
@@ -972,46 +1012,6 @@
                 <targetReference>Store_Messaging_User_Attributes</targetReference>
             </connector>
             <label>Messaging User exist</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Is_Case_Created_by_Messaging_Session_or_Voice_Call</name>
-        <label>Is Case Created by Messaging Session or Voice Call</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Navigate_To_Record</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Case_Created_by_Messaging_Session</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>recordId</leftValueReference>
-                <operator>StartsWith</operator>
-                <rightValue>
-                    <stringValue>0Mw</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Update_Messaging_Session</targetReference>
-            </connector>
-            <label>Case Created by Messaging Session</label>
-        </rules>
-        <rules>
-            <name>Case_Created_by_Voice_Call</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>recordId</leftValueReference>
-                <operator>StartsWith</operator>
-                <rightValue>
-                    <stringValue>0LQ</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Update_Voice_Call</targetReference>
-            </connector>
-            <label>Case Created by Voice Call</label>
         </rules>
     </decisions>
     <decisions>
