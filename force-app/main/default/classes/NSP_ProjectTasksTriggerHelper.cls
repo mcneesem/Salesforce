@@ -1892,7 +1892,7 @@ public class NSP_ProjectTasksTriggerHelper {
     }
 
     // reduce sonar cognitive complexity...
-    private static void collectProjectTaskIds( List<NSP_Termination_Form__c> records ) {
+    private static Set<Id> collectProjectTaskIds( List<NSP_Termination_Form__c> records ) {
         Set<Id> projectTaskIds = new Set<Id>();
         if ( ( records != null ) && !records.isEmpty() ) {
             for ( NSP_Termination_Form__c record : records ) {
