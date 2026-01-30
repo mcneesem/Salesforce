@@ -1,0 +1,65 @@
+<template>
+    <template lwc:if={fields}>
+        <template lwc:if={record}>
+            <ul>
+                <li>
+                    <lightning-layout>
+                        <lightning-layout-item size={leftColumnSize} padding="around-small">
+                            Insperity 1st Pay Period&nbsp;
+                            <c-helptext content={fields.First_Pay_Period_Start__c.inlineHelpText}></c-helptext>
+                        </lightning-layout-item>
+                        <lightning-layout-item size={rightColumnSize} padding="around-small">
+                            <lightning-formatted-date-time
+                                value={record.fields.First_Pay_Period_Start__c.value}
+                                month="long"
+                                day="2-digit"
+                                time-zone="UTC"
+                                >
+                            </lightning-formatted-date-time>&nbsp;-&nbsp;
+                            <lightning-formatted-date-time
+                                value={record.fields.First_Pay_Period_End__c.value}
+                                day="2-digit"
+                                time-zone="UTC"
+                                >
+                            </lightning-formatted-date-time>,&nbsp;
+                            <lightning-formatted-date-time
+                                value={record.fields.First_Pay_Period_End__c.value}
+                                year="numeric"
+                                time-zone="UTC"
+                                >
+                            </lightning-formatted-date-time>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </li>
+                <li>
+                    <lightning-layout>
+                        <lightning-layout-item size={leftColumnSize} padding="around-small">
+                            Insperity 1st Pay Date&nbsp;
+                            <c-helptext content={fields.First_Pay_Date__c.inlineHelpText}></c-helptext>
+                        </lightning-layout-item>
+                        <lightning-layout-item size={rightColumnSize} padding="around-small">
+                            <lightning-formatted-date-time
+                                value={record.fields.First_Pay_Date__c.value}
+                                month="long"
+                                day="2-digit"
+                                year="numeric"
+                                time-zone="UTC"
+                                >
+                            </lightning-formatted-date-time>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </li>
+                <li>
+                    <lightning-layout>
+                        <lightning-layout-item size={leftColumnSize} padding="around-small">
+                            Insperity Pay Frequency
+                        </lightning-layout-item>
+                        <lightning-layout-item size={rightColumnSize} padding="around-small">
+                            {record.fields.Pay_Frequency__c.value}
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </li>
+            </ul>
+        </template>
+    </template>
+</template>

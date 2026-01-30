@@ -1,0 +1,13 @@
+<template>
+    <template lwc:if={error}>
+        error: {error}<br/>
+    </template>
+    <template lwc:if={record}>
+        <c-portal-pay-period record={record}></c-portal-pay-period>
+    </template>
+    <template lwc:else>
+        <template lwc:if={recordId}>
+            recordId: {recordId}<br/>
+        </template>
+    </template>
+</template>

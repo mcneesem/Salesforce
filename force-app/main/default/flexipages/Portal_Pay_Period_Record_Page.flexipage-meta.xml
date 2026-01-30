@@ -92,24 +92,14 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.First_Pay_Date__c</fieldItem>
-                <identifier>RecordFirst_Pay_Date__cField</identifier>
+                <fieldItem>Record.Pay_Frequency__c</fieldItem>
+                <identifier>RecordFrequency__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-d11d37a3-249d-414b-b678-267193ea0098</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Pay_Frequency__c</fieldItem>
-                <identifier>RecordFrequency__cField</identifier>
-            </fieldInstance>
-        </itemInstances>
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
@@ -138,6 +128,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.First_Pay_Period_End__c</fieldItem>
                 <identifier>RecordFirst_Pay_Period_End__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.First_Pay_Date__c</fieldItem>
+                <identifier>RecordFirst_Pay_Date__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-b5b86e5e-f067-44cb-9fed-c4b6be2d0464</name>
@@ -286,16 +286,8 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentInstanceProperties>
-                    <name>decorate</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>richTextValue</name>
-                    <value>&lt;p&gt;PENDING PREVIEW&lt;/p&gt;</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:richText</componentName>
-                <identifier>flexipage_richText</identifier>
+                <componentName>portalPayPeriodPreview</componentName>
+                <identifier>c_portalPayPeriodPreview</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-564e918c-5696-4c5e-b4db-e80a3a6b1614</name>

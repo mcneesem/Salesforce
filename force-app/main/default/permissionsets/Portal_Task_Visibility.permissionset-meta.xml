@@ -3,7 +3,17 @@
     <description>Grants Tab Visibility, View All Object Permissions, and Read Field Permissions for Portal Task (Portal_Task__c).</description>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Portal_Task__c.Action__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Portal_Task__c.Due_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Portal_Task__c.Parent_Portal_Task__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

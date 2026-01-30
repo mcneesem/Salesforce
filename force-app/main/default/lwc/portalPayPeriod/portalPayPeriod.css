@@ -1,0 +1,8 @@
+ul > li:first-child {
+  border-top: 0.0625rem solid rgb(201, 201, 201);
+  margin-top: 0.125rem;
+}
+
+ul > li {
+  border-bottom: 0.0625rem solid rgb(201, 201, 201);
+}

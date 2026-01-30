@@ -1,0 +1,14 @@
+<template>
+    <template lwc:if={record}>
+        <lightning-layout>
+            <lightning-layout-item size="6" padding="around-small">
+                {record.fields.Position__c.value}
+            </lightning-layout-item>
+            <lightning-layout-item size="6" padding="around-small">
+                <div class="slds-text-align_right">
+                    {record.fields.Contact_Name__c.value}
+                </div>
+            </lightning-layout-item>
+        </lightning-layout>
+    </template>
+</template>
