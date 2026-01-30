@@ -3,15 +3,15 @@
         <lightning-card title="Onboarding Tracker">
             <lightning-layout multiple-rows>
                 <lightning-layout-item size="12" padding="around-small">
-                    PENDING PROGRESS BAR
+                    <c-portal-client-progress-bar record-id={recordId}></c-portal-client-progress-bar>
                 </lightning-layout-item>
                 <lightning-layout-item size="12" padding="horizontal-small">
                     <lightning-tabset>
                         <lightning-tab label="Home">
-                            PENDING TAB HOME
+                            <c-portal-client-tab-home record-id={recordId}></c-portal-client-tab-home>
                         </lightning-tab>
                         <lightning-tab label="Progress">
-                            PENDING TAB PROGRESS
+                            <c-portal-client-tab-progress record-id={recordId}></c-portal-client-tab-progress>
                         </lightning-tab>
                     </lightning-tabset>
                 </lightning-layout-item>
