@@ -3,7 +3,7 @@
         error: {error}<br/>
     </template>
     <template lwc:if={record}>
-        PENDING PREVIEW
+        <c-portal-pay-period record={record}></c-portal-pay-period>
     </template>
     <template lwc:else>
         <template lwc:if={recordId}>

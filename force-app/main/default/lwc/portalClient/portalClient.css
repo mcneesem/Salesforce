@@ -1,0 +1,8 @@
+:host {
+    --dxp-c-link-text-color: currentColor;
+    --dxp-c-link-text-color-hover: currentColor;
+    --dxp-c-link-text-color-focus: currentColor;
+    --dxp-c-link-text-decoration: none;
+    --dxp-s-link-text-decoration-hover: none;
+    --dxp-s-link-text-decoration-focus: none;
+}
