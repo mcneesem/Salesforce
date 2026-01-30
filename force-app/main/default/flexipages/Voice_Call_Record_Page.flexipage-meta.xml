@@ -7,9 +7,6 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
-                            <value>ShareVoiceCall</value>
-                        </valueListItems>
-                        <valueListItems>
                             <value>VoiceCall.New_Case</value>
                             <visibilityRule>
                                 <booleanFilter>1 AND 2</booleanFilter>
@@ -23,9 +20,6 @@
                                     <operator>EQUAL</operator>
                                 </criteria>
                             </visibilityRule>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>AddToCollection</value>
                         </valueListItems>
                         <valueListItems>
                             <value>Edit</value>
