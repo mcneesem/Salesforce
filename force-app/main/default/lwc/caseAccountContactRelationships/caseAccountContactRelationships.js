@@ -14,7 +14,7 @@ export default class CaseAccountContactRelationships extends LightningElement {
     acrDetailsError;
     sortedBy;
     sortedDirection = 'asc';
-    
+
     coulums =[{label: 'Name', fieldName: 'contactName', type: 'text', sortable: true},
         {label: 'Account', fieldName: 'accountName', type: 'text', sortable: true},
         {label: 'Work Phone', fieldName: 'workPhone', type: 'text', sortable: true},
@@ -109,7 +109,7 @@ export default class CaseAccountContactRelationships extends LightningElement {
     }
 
     get lastUpdatedSummary() {
-        return ( this.hasSummaryTimestamps ? " • Updated " + this.lastUpdatedFriendly + " ago" : "" );
+        return ( this.secondsSinceLastUpdate >= 0 ? " • Updated " + this.lastUpdatedFriendly + " ago" : "" );
     }
 
     get lastUpdatedFriendly() {
@@ -181,7 +181,6 @@ export default class CaseAccountContactRelationships extends LightningElement {
     handleLastUpdatedInterval() {
         this.currentTimestamp = new Date();
         if ( !this.intervalId ) {
-            this.currentTimestamp = new Date();
             this.intervalId = setInterval(
                 function() {
                     this.currentTimestamp = new Date();
