@@ -64,7 +64,13 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
         if( oldList != null ){
             for( NSP_Account_Group_Member__c agm : oldList ){
                 if( agm != null ){
-                    Map<Id,List<NSP_Account_Group__c>> groupsForAccount = createSelfGroup( agm.Id,agm.NSP_Member_Account__c , agm.NSP_Type__c , agm.NSP_Account_Name__c , accountHasWO );
+                    Map<Id,List<NSP_Account_Group__c>> groupsForAccount = NSP_AccountGroupMemberTriggerHelper.createSelfGroup(
+                        agm.Id ,
+                        agm.NSP_Member_Account__c ,
+                        agm.NSP_Type__c ,
+                        agm.NSP_Account_Name__c ,
+                        accountHasWO
+                    );
                     if( groupsForAccount != null && !groupsForAccount.isEmpty() ){
                         result.putAll( groupsForAccount );
                     }
@@ -80,10 +86,10 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
         if( allGroupsToCreate != null && !allGroupsToCreate.isEmpty() ) {
             groups = NSP_AccountGroupMemberTriggerHelper.collectGroups( allGroupsToCreate,groups );
             if( groups != null && !groups.isEmpty() ){
-                insertWithLogging( groups,'insertGroupsAndMembers-Groups' );
+                NSP_AccountGroupMemberTriggerHelper.insertWithLogging( groups,'NSP_Account_Group__c' );
                 members = NSP_AccountGroupMemberTriggerHelper.collectMembers( allGroupsToCreate,members );
                 if( members != null && !members.isEmpty() ){
-                    insertWithLogging( members,'insertGroupsAndMembers-Members' );
+                    NSP_AccountGroupMemberTriggerHelper.insertWithLogging( members,'NSP_Account_Group_Member__c' );
                 }
             }
         }
@@ -91,9 +97,9 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
     private static void insertWithLogging( List<SObject> records,String operation ) {
         try{
             List<Database.SaveResult> results = Database.insert( records,false );
-            NSP_ErrorLogHandler.logResults( 'NSP_AccountGroupMemberTriggerHelper',operation,results );
+            NSP_ErrorLogHandler.logResults( 'NSP_AccountGroupMemberTriggerHelper','insertWithLogging:insert:' + operation,results );
         }catch( Exception ex ){
-            NSP_ErrorLogHandler.logException( 'NSP_AccountGroupMemberTriggerHelper',operation,ex );
+            NSP_ErrorLogHandler.logException( 'NSP_AccountGroupMemberTriggerHelper','insertWithLogging:' + operation,ex );
         }
 }
 
@@ -121,16 +127,25 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
         }
         if (allGroupsToCreate != null && !allGroupsToCreate.isEmpty()) {
             for (Id accId : allGroupsToCreate.keySet()) {
-                addMembersForAccount(accId, allGroupsToCreate.get(accId), members);
+                members = NSP_AccountGroupMemberTriggerHelper.addMembersForAccount(
+                    accId ,
+                    allGroupsToCreate.get( accId ) ,
+                    members
+                );
             }
         }
         return members;
     }
 
-    private static void addMembersForAccount(Id accId, List<NSP_Account_Group__c> grpList, List<NSP_Account_Group_Member__c> members) {
+    private static List<NSP_Account_Group_Member__c> addMembersForAccount(
+        Id accId ,
+        List<NSP_Account_Group__c> grpList ,
+        List<NSP_Account_Group_Member__c> members
+        )
+    {
         if (grpList != null && !grpList.isEmpty()) {
             for (NSP_Account_Group__c grp : grpList) {
-                if (grp != null && grp.Id != null) {
+                if (accId != null && grp != null && grp.Id != null) {
                     members.add(new NSP_Account_Group_Member__c(
                         NSP_Member_Account__c = accId,
                         NSP_Group__c = grp.Id,
@@ -139,6 +154,7 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
                 }
             }
         }
+        return members;
     }
 
     private static Set<Id> getWoAssetAccountIds( Set<Id> accountIds ){
