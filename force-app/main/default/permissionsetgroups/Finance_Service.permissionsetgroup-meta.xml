@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Group of Permission Sets to be granted to Finance Service Users.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Finance Service</label>
+    <permissionSets>Finance_Service_Apex_Access</permissionSets>
+    <permissionSets>Finance_Service_Assigned_Apps</permissionSets>
+    <permissionSets>Finance_Service_Custom_Metadata_Types</permissionSets>
+    <permissionSets>Finance_Service_Field_Permissions</permissionSets>
+    <permissionSets>Finance_Service_Flow_Access</permissionSets>
+    <permissionSets>Finance_Service_Object_Permissions</permissionSets>
+    <permissionSets>Finance_Service_Record_Type_Assignments</permissionSets>
+    <permissionSets>Finance_Service_System_Permissions</permissionSets>
+    <permissionSets>Finance_Service_Visualforce_Page_Access</permissionSets>
+    <status>Updating</status>
+</PermissionSetGroup>
