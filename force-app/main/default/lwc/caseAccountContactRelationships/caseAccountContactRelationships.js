@@ -15,21 +15,28 @@ export default class CaseAccountContactRelationships extends LightningElement {
     sortedBy;
     sortedDirection = 'asc';
 
-    coulums =[{label: 'Name', fieldName: 'contactName', type: 'text', sortable: true},
-        {label: 'Account', fieldName: 'accountName', type: 'text', sortable: true},
-        {label: 'Work Phone', fieldName: 'workPhone', type: 'text', sortable: true},
-        {label: 'Work Email', fieldName: 'workEmail', type: 'text', sortable: true},
-        {label: 'Job Title', fieldName: 'jobTitle', type: 'text', sortable: true},
-        {label: 'Status', fieldName: 'status', type: 'text', sortable: true},
-        {label: 'Workday Employee Id', fieldName: 'workdayEmployeeId', type: 'text', sortable: true}
+    columns =[
+        { label: 'Name' , fieldName: 'contactName' , type: 'text' , sortable: true } ,
+        { label: 'Account' , fieldName: 'accountName' , type: 'text' , sortable: true } ,
+        { label: 'Work Phone' , fieldName: 'workPhone' , type: 'text' , sortable: true } ,
+        { label: 'Work Email' , fieldName: 'workEmail' , type: 'text' , sortable: true } ,
+        { label: 'Job Title' , fieldName: 'jobTitle' , type: 'text' , sortable: true } ,
+        { label: 'Status' , fieldName: 'status' , type: 'text' , sortable: true } ,
+        { label: 'Workday Employee Id' , fieldName: 'workdayEmployeeId' , type: 'text' , sortable: true }
     ]
 
 
-    @wire(getRelatedListRecords, {
-        parentRecordId: '$recordId',
-        relatedListId: 'Case_Contact_Roles__r',
-        fields: ['NSP_Case_Contacts__c.NSP_Case__c', 'NSP_Case_Contacts__c.Id']
-    })
+    @wire(
+        getRelatedListRecords ,
+        {
+            parentRecordId: '$recordId' ,
+            relatedListId: 'Case_Contact_Roles__r' ,
+            fields: [
+                'NSP_Case_Contacts__c.NSP_Case__c' ,
+                'NSP_Case_Contacts__c.Id' ,
+            ]
+        }
+    )
     listInfo( response ) {
         this.relatedWireResult = response;
         if ( response ) {
@@ -41,9 +48,9 @@ export default class CaseAccountContactRelationships extends LightningElement {
                 this.acrDetailsError = error;
                 this.lastUpdatedTimestamp = undefined;
             }
-        }   
+        }
     }
-    
+
     getACRDataDetails() {
         getACRDetails({ caseId: this.recordId })
             .then(result => {
@@ -56,7 +63,29 @@ export default class CaseAccountContactRelationships extends LightningElement {
                 this.acrDetailsError = err;
                 this.lastUpdatedTimestamp = undefined;
             });
-        
+
+    }
+
+    handleLastUpdatedInterval() {
+        this.currentTimestamp = new Date();
+        if ( !this.intervalId ) {
+            this.intervalId = setInterval(
+                function() {
+                    this.currentTimestamp = new Date();
+                    if ( !this.hasData // stop summary refresh when data is missing...
+                        || !this.secondsSinceLastUpdate
+                        || ( this.secondsSinceLastUpdate > ( 2 * 60 * 60 ) ) // stop summary refresh after 2 hours...
+                        )
+                    {
+                        if ( this.intervalId ) {
+                            clearInterval( this.intervalId );
+                        }
+                        this.intervalId = undefined;
+                    }
+                }.bind( this ) ,
+                ( 60 * 1000 ) // refresh once per minute ( 1 minute == 60 seconds == 60000 milliseconds )
+            );
+        }
     }
 
     handleSort( event ) {
@@ -80,7 +109,7 @@ export default class CaseAccountContactRelationships extends LightningElement {
         }
     }
 
-    handleViewAll() { 
+    handleViewAll() {
        this.isViewAll = true;
     }
 
@@ -148,6 +177,19 @@ export default class CaseAccountContactRelationships extends LightningElement {
         return ( this.currentTimestamp && this.lastUpdatedTimestamp );
     }
 
+    // data table helpers...
+
+    get displayDataList() {
+        let response = this.acrDetailsData;
+        if ( !this.isViewAll && this.acrDetailsData ) {
+            response = this.acrDetailsData.filter( rec => rec.isPrimary );
+        }
+        if ( !response || ( response.length === 0 ) ) {
+            response = this.acrDetailsData;
+        }
+        return response;
+    }
+
     // dynamic style class helpers...
 
     get containerClass() {
@@ -178,37 +220,5 @@ export default class CaseAccountContactRelationships extends LightningElement {
         return ( "slds-p-left_small slds-p-right_small card-footer-background" );
     }
 
-    handleLastUpdatedInterval() {
-        this.currentTimestamp = new Date();
-        if ( !this.intervalId ) {
-            this.intervalId = setInterval(
-                function() {
-                    this.currentTimestamp = new Date();
-                    if ( !this.hasData // stop summary refresh when data is missing...
-                        || !this.secondsSinceLastUpdate
-                        || ( this.secondsSinceLastUpdate > ( 2 * 60 * 60 ) ) // stop summary refresh after 2 hours...
-                        )
-                    {
-                        if ( this.intervalId ) {
-                            clearInterval( this.intervalId );
-                        }
-                        this.intervalId = undefined;
-                    }
-                }.bind( this ) ,
-                ( 60 * 1000 ) // refresh once per minute ( 1 minute == 60 seconds == 60000 milliseconds )
-            );
-        }
-    }
-
-      get displayDataList() {
-        let response = this.acrDetailsData;
-        if ( !this.isViewAll && this.acrDetailsData ) {
-            response = this.acrDetailsData.filter( rec => rec.isPrimary );
-        }
-        if ( !response || ( response.length === 0 ) ) {
-            response = this.acrDetailsData;
-        }
-        return response;
-    }
 }
 //
