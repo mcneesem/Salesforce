@@ -76,6 +76,16 @@
                 <identifier>RecordPortal_Client_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Parent_Portal_Task__c</fieldItem>
+                <identifier>RecordParent_Portal_Task__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-23bc2364-0daa-4de7-b7c1-f83ebe2e4f6e</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -108,6 +118,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Due_Date__c</fieldItem>
                 <identifier>RecordDue_Date_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Action__c</fieldItem>
+                <identifier>RecordAction__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-a27920b9-ff79-493f-8899-c267e0d1434d</name>
