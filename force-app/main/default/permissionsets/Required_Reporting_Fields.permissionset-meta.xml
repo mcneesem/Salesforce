@@ -256,6 +256,11 @@
         <field>Asset.HRRC_Access__c</field>
         <readable>true</readable>
     </fieldPermissions>
+        <fieldPermissions>
+        <editable>false</editable>
+        <field>Asset.Is_HRScale__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Asset.I_9_Assist__c</field>
