@@ -164,7 +164,7 @@ public with sharing class NSP_ProjectTriggerHelper {
                 oProject.TemplateName__c = oProject.Name;
             }
             // checking for MM and FSO Projects
-            if(!oProject.pse__Is_Template__c && oProject.TemplateName__c != null && (oProject.TemplateName__c==label.Middle_Market_Implementation_Project || oProject.TemplateName__c==label.FSOImplementationProject)
+            if(!oProject.pse__Is_Template__c && oProject.TemplateName__c != null && (oProject.TemplateName__c==NSP_ServiceConstants.MM_PROJECT_TEMPLATE_KEY || oProject.TemplateName__c==NSP_ServiceConstants.FSO_PROJECT_TEMPLATE_KEY)
                 && oProject.pse__Project_Manager__c!=null){
                     // creating a Set of Project Manager(Contact) Id
                     contactIdSet.add(oProject.pse__Project_Manager__c);
@@ -172,7 +172,7 @@ public with sharing class NSP_ProjectTriggerHelper {
             //updateProjectName
             //added as a part of STY-03216
             if(oProject.pse__Account__c!=null && oProject.recordTypeId == peoProjectRecordTypeId && oProject.pse__Project_Type__c == NSP_ServiceConstants.ImplementationProjectType && !oProject.pse__Is_Template__c
-                && (oProject.TemplateName__c == label.Middle_Market_Implementation_Project || oProject.TemplateName__c ==label.FSOImplementationProject)){
+                && (oProject.TemplateName__c == NSP_ServiceConstants.MM_PROJECT_TEMPLATE_KEY || oProject.TemplateName__c ==NSP_ServiceConstants.FSO_PROJECT_TEMPLATE_KEY)){
                 updateProjectIdNameSet.add(oProject.Id);
             }
             // checkBankAuditTask
@@ -883,7 +883,7 @@ public with sharing class NSP_ProjectTriggerHelper {
         Set<Id> accountIdSet = new Set<Id>();
         Set<Id> mmProjectIds = new Set<Id>();
         Set<Id> fsoProjectIds = new Set<Id>();
-        Set<Id> itaProjectIds = new Set<Id>();			//442892 created for ITA impl project teams createion
+        Set<Id> itaProjectIds = new Set<Id>();          //442892 created for ITA impl project teams createion
         Set<Id> hrScaleProjectIds = new Set<Id>();      //AZD-513688
         Set<Id> shareProjAccIdSet = new Set<Id>();
         Map<Id,pse__Proj__c > mapOfProjectToShare = new Map<Id,pse__Proj__c>();
@@ -913,18 +913,18 @@ public with sharing class NSP_ProjectTriggerHelper {
             }
             //STY-01671
             if(project.pse__Project_Type__c == NSP_ServiceConstants.ImplementationProjectType && !project.pse__Is_Template__c && project.recordTypeId == peoProjectRecordTypeId
-                && (project.TemplateName__c == label.Middle_Market_Implementation_Project || project.TemplateName__c == label.FSOImplementationProject)){
+                && (project.TemplateName__c == NSP_ServiceConstants.MM_PROJECT_TEMPLATE_KEY || project.TemplateName__c == NSP_ServiceConstants.FSO_PROJECT_TEMPLATE_KEY)){
                     ipProjectList.add(project);
-                    if(project.TemplateName__c == label.Middle_Market_Implementation_Project){
+                    if(project.TemplateName__c == NSP_ServiceConstants.MM_PROJECT_TEMPLATE_KEY){
                         mmProjectIds.add(project.Id);
                     }
-                    else if( project.TemplateName__c == label.FSOImplementationProject){
+                    else if( project.TemplateName__c == NSP_ServiceConstants.FSO_PROJECT_TEMPLATE_KEY){
                         fsoProjectIds.add(project.Id);
                     }
             }
             //442892, AZD-513688
             getITAProjectId( project , itaProjectIds , hrScaleProjectIds );
-            
+
             //STY-02159
             if(!dupPreventionSet.contains(project.Id) && !project.pse__Is_Template__c && project.TemplateName__c == 'iSolved Benefits'){
                 dupPreventionSet.add(project.Id);
@@ -1080,7 +1080,7 @@ public with sharing class NSP_ProjectTriggerHelper {
             for(pse__Proj__c project:projectList){
                         Implementation_Profile__c imProfile = new Implementation_Profile__c();
                         imProfile.NSP_Project__c = project.Id;
-                        imProfile.recordTypeId = project.TemplateName__c == label.Middle_Market_Implementation_Project ? recordTypeMMImpProfileID : recordTypeFSOImpProfileID;
+                        imProfile.recordTypeId = project.TemplateName__c == NSP_ServiceConstants.MM_PROJECT_TEMPLATE_KEY ? recordTypeMMImpProfileID : recordTypeFSOImpProfileID;
                         if(project.pse__Account__c!=null){
                         imProfile.Account__c = project.pse__Account__c;
                         }
@@ -1162,7 +1162,7 @@ public with sharing class NSP_ProjectTriggerHelper {
             Id mmProjectTeamRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'NSP_Project_Team__c' , 'NSP_Middle_Market_Project_Team' );
             Id fsoProjectTeamRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'NSP_Project_Team__c' , 'NSP_FSO_Project_Team' );
             // creating a list of MM Project Team records
-            if ( !mapMMProjectListMMROles.isEmpty() ) {
+            if ( mapMMProjectListMMROles!= null && !mapMMProjectListMMROles.isEmpty() ) {
                 for( Id projectId : mapMMProjectListMMROles ) {
                     for ( String mmPrjRole : mmProjectTeamRolesList ) {
                         NSP_Project_Team__c mmPrjTeam = new NSP_Project_Team__c();
@@ -1174,7 +1174,7 @@ public with sharing class NSP_ProjectTriggerHelper {
                 }
             }
             // creating a list of FSO Project Team records
-            if ( !mapFSOProjectListFSOROles.isEmpty() ) {
+            if ( mapFSOProjectListFSOROles!=null && !mapFSOProjectListFSOROles.isEmpty() ) {
                 for ( Id projectId : mapFSOProjectListFSOROles ) {
                     for ( String fsoPrjRole : fsoProjectTeamRolesList ) {
                         NSP_Project_Team__c fsoPrjTeam = new NSP_Project_Team__c();
@@ -1185,10 +1185,10 @@ public with sharing class NSP_ProjectTriggerHelper {
                     }
                 }
             }
-            
+
             // 442892 get list of ITA Project Team records, AZD-513688
             getITAProjectTeamList( mapITAProjectListITAROles, mapHRScaleProjectListFSOROles, projectTeamList );
-            
+
             // Inserting a list of  Project Team records
             if ( !projectTeamList.isEmpty() ) {
                 insert projectTeamList;
@@ -1210,13 +1210,13 @@ public with sharing class NSP_ProjectTriggerHelper {
         for(pse__Proj__c project:projectList){
             // checking for MM and FSO Projects
             if(project.pse__Project_Type__c == NSP_ServiceConstants.ImplementationProjectType && !project.pse__Is_Template__c && project.recordTypeId == peoProjectRecordTypeId
-                && (project.TemplateName__c == label.Middle_Market_Implementation_Project || project.TemplateName__c == label.FSOImplementationProject || project.TemplateName__c == NSP_ServiceConstants.HRSCALE_PROJECT_TEMPLATE_KEY )){
+                && (project.TemplateName__c == NSP_ServiceConstants.MM_PROJECT_TEMPLATE_KEY || project.TemplateName__c == NSP_ServiceConstants.FSO_PROJECT_TEMPLATE_KEY || project.TemplateName__c == NSP_ServiceConstants.HRSCALE_PROJECT_TEMPLATE_KEY )){
                     // creating Map of MM Project Id and List of MM Project Team roles
-                    if(project.TemplateName__c == label.Middle_Market_Implementation_Project){
+                    if(project.TemplateName__c == NSP_ServiceConstants.MM_PROJECT_TEMPLATE_KEY){
                         mmProjectIds.add(project.Id);
                     }
                     // creating Map of MM Project Id and List of MM Project Team roles
-                    else if( project.TemplateName__c == label.FSOImplementationProject){
+                    else if( project.TemplateName__c == NSP_ServiceConstants.FSO_PROJECT_TEMPLATE_KEY){
                         fsoProjectIds.add(project.Id);
                     }
                     // AZD-513688 : creating Map of HRScale Project Id
@@ -1268,8 +1268,8 @@ public with sharing class NSP_ProjectTriggerHelper {
                     && ( project.recordTypeId == NSP_ProjectTriggerHelper.peoProjectRecordTypeId )
                     )
                 {
-                    if ( ( project.TemplateName__c == label.Middle_Market_Implementation_Project )
-                        || ( project.TemplateName__c == label.FSOImplementationProject )
+                    if ( ( project.TemplateName__c == NSP_ServiceConstants.MM_PROJECT_TEMPLATE_KEY )
+                        || ( project.TemplateName__c == NSP_ServiceConstants.FSO_PROJECT_TEMPLATE_KEY )
                         )
                     {
                         if ( projectAccountMap.containsKey( project.pse__Account__c )
@@ -1311,7 +1311,7 @@ public with sharing class NSP_ProjectTriggerHelper {
                                                     pse__Project__r.pse__Parent_Project__c,pse__Status__c
                                                     FROM pse__Project_Task__c WHERE pse__Project__c In: prjctIdSet
                                                     AND pse__Project__r.pse__Project_Type__c =: NEWPROJECTTYPE
-                                                    AND pse__Project__r.TemplateName__c =: label.FSOImplementationProject
+                                                    AND pse__Project__r.TemplateName__c =: NSP_ServiceConstants.FSO_PROJECT_TEMPLATE_KEY
                                                     AND pse__Project__r.recordTypeId =: PEOPROJECTTECORDTYPEID
                                                     AND Name IN: PROJECTTASKNAMES
                                                     AND pse__Status__c !=: PROJECTTASKSTATUSCOMPLETE
@@ -1882,7 +1882,7 @@ public with sharing class NSP_ProjectTriggerHelper {
     private String projectNameAsPerNamingConvention( String projectName , Date startDate , String accountName ) {
         String prjName = '';
         if ( String.isNotBlank( projectName ) ) {
-            if ( projectName == Label.Middle_Market_Implementation_Project ) {
+            if ( projectName == NSP_ServiceConstants.MM_PROJECT_TEMPLATE_KEY ) {
                 prjName = projectName;
             } else if ( startDate != null ) {
                 prjName = projectName + ' - ' + startDate.month() + '.' + startDate.day() + '.' + startDate.year();
@@ -2215,7 +2215,7 @@ public with sharing class NSP_ProjectTriggerHelper {
     * Params      : Set<Id> mapITAProjectListITAROles,
     *               Set<Id> mapHRScaleProjectListFSOROles,
     *               List<NSP_Project_Team__c> projectTeamList
-    * Story       : 442892, 
+    * Story       : 442892,
     **********************************************************************************************/
     private static void getITAProjectTeamList(
         Set<Id> mapITAProjectListITAROles,
