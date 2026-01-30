@@ -4,7 +4,7 @@
 * Author : Nischay Jindal
 * Name : NSP_ProjectTeamTriggerHelper
 */
-public class NSP_ProjectTeamTriggerHelper {
+public with sharing class NSP_ProjectTeamTriggerHelper {
     // test w/ NSP_ProjectTeamTriggerHelperTest (88%)
 
     /***********************************************************************************************
