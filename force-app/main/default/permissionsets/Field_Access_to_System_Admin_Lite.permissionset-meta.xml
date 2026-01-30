@@ -87,6 +87,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>NSP_Note__c.Most_Recent_Case_Queue__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>NSP_ReportRequest__c.Are_additional_language_options_required__c</field>
         <readable>true</readable>
     </fieldPermissions>
