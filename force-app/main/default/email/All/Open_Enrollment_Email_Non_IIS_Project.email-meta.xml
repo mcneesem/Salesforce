@@ -3,7 +3,7 @@
     <available>true</available>
     <encodingKey>ISO-8859-1</encodingKey>
     <letterhead>Insperity_HR</letterhead>
-    <name>Open Enrollment Email – Non IIS Project</name>
+    <name>Open Enrollment Email - Non IIS Project</name>
     <style>freeForm</style>
     <subject>{!pse__Proj__c.NSP_Account__c} - isolved Benefits Renewal Approaching</subject>
     <type>html</type>
