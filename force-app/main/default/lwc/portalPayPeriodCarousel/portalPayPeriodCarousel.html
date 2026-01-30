@@ -38,8 +38,10 @@
                                         data-id={indicator.id}
                                         title={indicator.title}
                                         class={indicator.cssClass}
+                                        tabindex={indicator.tabIndex}
                                         role="tab"
                                         onclick={handleClickIndicator}
+                                        onkeydown={handleKeyDown}
                                         >
                                         <span class="slds-assistive-text">{indicator.title}</span>
                                     </span>

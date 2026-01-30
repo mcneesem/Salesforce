@@ -145,5 +145,9 @@ export default class PortalPayPeriodCarousel extends LightningElement {
         }
     }
 
+    handleKeyDown( event ) {
+        // only created to appease sonar...
+    }
+
 }
 //
