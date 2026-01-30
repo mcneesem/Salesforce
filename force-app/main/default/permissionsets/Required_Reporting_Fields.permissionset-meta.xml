@@ -256,7 +256,7 @@
         <field>Asset.HRRC_Access__c</field>
         <readable>true</readable>
     </fieldPermissions>
-        <fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Asset.Is_HRScale__c</field>
         <readable>true</readable>
