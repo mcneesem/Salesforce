@@ -238,7 +238,7 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
             )
         {
             NSP_Account_Group__c grp = new NSP_Account_Group__c(
-                RecordTypeId = automaticallyCreatedAccountGroupRecordTypeId ,
+                RecordTypeId = NSP_AccountGroupMemberTriggerHelper.automaticallyCreatedAccountGroupRecordTypeId ,
                 Name = nspType ,
                 NSP_Account__c = accName ,
                 NSP_Type__c = nspType
