@@ -405,13 +405,13 @@ public with sharing class NSP_AssetTriggerHelper {
                 assetEventToBeCreated.AssetStatus__c = record.Status;
                 assetEventToBeCreated.AssetRecordTypeId__c = record.RecordTypeId;
                 assetEventToBeCreated.RecordTypeName__c = record.RecordTypeName__c;
-                assetEventToBeCreated.NSP_Substance_Abuse_Policy__c = record.NSP_Substance_Abuse_Policy__c;
-                assetEventToBeCreated.NSP_ES_e_Verify_Client__c = record.NSP_IES_e_Verify_Client__c;
-                assetEventToBeCreated.NSP_AIMS_Client__c = aimsClient;
-                assetEventToBeCreated.NSP_Minor_Job_Position__c = record.NSP_Minor_Job_Position__c;
-                assetEventToBeCreated.I_9_Availability__c = record.I_9_Availability__c;
                 assetEventToBeCreated.E_Verify_Services__c = record.E_Verify_Services__c;
+                assetEventToBeCreated.I_9_Availability__c = record.I_9_Availability__c;
                 assetEventToBeCreated.I_9_Assist__c = record.I_9_Assist__c;
+                assetEventToBeCreated.NSP_AIMS_Client__c = aimsClient;
+                assetEventToBeCreated.NSP_ES_e_Verify_Client__c = record.NSP_IES_e_Verify_Client__c;
+                assetEventToBeCreated.NSP_Minor_Job_Position__c = record.NSP_Minor_Job_Position__c;
+                assetEventToBeCreated.NSP_Substance_Abuse_Policy__c = record.NSP_Substance_Abuse_Policy__c;
                 assetEventToBeInserted.add( assetEventToBeCreated );
             }
         }
