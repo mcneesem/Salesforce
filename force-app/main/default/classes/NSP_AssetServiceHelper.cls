@@ -9,7 +9,7 @@ public class NSP_AssetServiceHelper {
     public static final Id XML_ASSET = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE,NSP_ServiceConstants.XML_ASSET );
     public static final Id WO_ASSET = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE,NSP_ServiceConstants.WO_ASSET_RECORDTYPE );
     public static final Id BPSRECORDTYPE = NSP_GenericRecordType.getRecordTypeId('pse__Proj__c',NSP_ServiceConstants.PROJECT_BPS_RECORDTYPE);
-    
+
     // This method will create the BPS Project for integra, xml, time and attendance, performsmart asset
     public void createBPSProject( List<Asset> assetList ) {
         Set<Id>accountIdSet = new Set<Id>();
@@ -23,7 +23,7 @@ public class NSP_AssetServiceHelper {
         List<Project_Asset__c> projectAssetMapping = new List<Project_Asset__c>();
         Map<Id, Account> mapOfAccount = new Map<Id, Account>();
         Id BPSRECORDTYPE = NSP_GenericRecordType.getRecordTypeId('pse__Proj__c',NSP_ServiceConstants.PROJECT_BPS_RECORDTYPE);
-        try{
+        try {
             List<String> assetRecordTypeList = new List<String>{INTEGRA_ASSET, PERFORM_SMART_ASSET, TIME_ATTENDANCE_ASSET, XML_ASSET};
             if ( assetList != null ){
                 for ( Asset asset : assetList ) {
@@ -33,7 +33,6 @@ public class NSP_AssetServiceHelper {
                     {
                         mapOfAssetOppty.put(asset.id,asset.Opportunity__c);
                     }
-                    
                 }
                 if ( !mapOfAssetOppty.values().isEmpty() ){
                     List<Opportunity> opptyList = [
@@ -156,39 +155,37 @@ public class NSP_AssetServiceHelper {
             for(Template_Key_and_Id_Mapping__mdt template :templateList){
                 templateMap.put(template.Key__c, template);
             }
-            
             //create project based on active account asset record type
             NSP_AssetServiceTriggerHelper assetServiceHelper = new NSP_AssetServiceTriggerHelper();
             for(Asset asset:AssetList){
                 String templateType;
-                Id projectId; 
+                Id projectId;
                 Template_Key_and_Id_Mapping__mdt projectTemplateType = new Template_Key_and_Id_Mapping__mdt();
-                
                 //create integra implementation project
-                if(integraAssetSet.contains(asset.Id) && mapOfAccount.get(asset.AccountId)!=null 
-                   && !hasMoreThanOneAsset(mapOfAccount.get(asset.AccountId), INTEGRA_ASSET )){
-                       
-                       templateType=NSP_ServiceConstants.INTEGRA_IMPLEMENTATION;
-                       projectTemplateType = templateMap.get(NSP_ServiceConstants.INTEGRA);
-                       projectId = assetServiceHelper.createProjectWithTemplateFromAsset(projectTemplateType, asset.Id );  
-                   }
-                
+                if(integraAssetSet.contains(asset.Id) && mapOfAccount.get(asset.AccountId)!=null
+                    && !hasMoreThanOneAsset(mapOfAccount.get(asset.AccountId), INTEGRA_ASSET )
+                    )
+                {
+
+                    templateType=NSP_ServiceConstants.INTEGRA_IMPLEMENTATION;
+                    projectTemplateType = templateMap.get(NSP_ServiceConstants.INTEGRA);
+                    projectId = assetServiceHelper.createProjectWithTemplateFromAsset(projectTemplateType, asset.Id );
+                }
                 //create perform smart implementation project
                 if(performSmartAssetSet.contains(asset.Id) && mapOfAccount.get(asset.AccountId)!=null ){
-                       templateType=NSP_ServiceConstants.PERFORMSMART_IMPLEMENTATION;
-                       projectTemplateType = templateMap.get(NSP_ServiceConstants.PERFORMANCE);
-                       projectId = assetServiceHelper.createProjectWithTemplateFromAsset(projectTemplateType, asset.Id );  
-                   }
-                
+                    templateType=NSP_ServiceConstants.PERFORMSMART_IMPLEMENTATION;
+                    projectTemplateType = templateMap.get(NSP_ServiceConstants.PERFORMANCE);
+                    projectId = assetServiceHelper.createProjectWithTemplateFromAsset(projectTemplateType, asset.Id );
+                }
                 //create xml implementation project
-                if(xmlAssetSet.contains(asset.Id) && mapOfAccount.get(asset.AccountId)!=null 
-                   && !hasMoreThanOneAsset(mapOfAccount.get(asset.AccountId), XML_ASSET )){
-                       
-                       templateType=NSP_ServiceConstants.XML_IMPLEMENTATION;
-                       projectTemplateType = templateMap.get(NSP_ServiceConstants.XML_ASSET);
-                       projectId = assetServiceHelper.createProjectWithTemplateFromAsset(projectTemplateType, asset.Id );  
-                   }
-                
+                if(xmlAssetSet.contains(asset.Id) && mapOfAccount.get(asset.AccountId)!=null
+                    && !hasMoreThanOneAsset(mapOfAccount.get(asset.AccountId), XML_ASSET )
+                    )
+                {
+                    templateType=NSP_ServiceConstants.XML_IMPLEMENTATION;
+                    projectTemplateType = templateMap.get(NSP_ServiceConstants.XML_ASSET);
+                    projectId = assetServiceHelper.createProjectWithTemplateFromAsset(projectTemplateType, asset.Id );
+                }
                 //create ITA implementation project
                 if ( timeAttendanceAssetSet.contains(asset.Id)
                     && ( mapOfAccount.get(asset.AccountId) != null )
@@ -204,13 +201,11 @@ public class NSP_AssetServiceHelper {
                     updatedProjectList.add(createProjectObject(projectId, BPSRECORDTYPE, asset, mapOfAccount.get(asset.AccountId).Name,templateType));
                     //Update the project with its related entity.
                     projectAssetMapping.add(NSP_AssetServiceTriggerHelper.linkProjectWithAsset(projectId, asset.Id));
-                }  
+                }
             }
-            
             if(!updatedProjectList.isEmpty()){
                 update updatedProjectList;
             }
-            
             if(!projectAssetMapping.isEmpty()){
                 insert projectAssetMapping;
             }
@@ -223,38 +218,29 @@ public class NSP_AssetServiceHelper {
         }
     }
 
-    /***********************************************************************************************
-* MethodName: updateTerminationInformation
-* Description :  This method will update the asset termination information section
-* Params:   List<Asset> NewList   Map<Id, Asset> oldMapAsset  
-* Added as part of STY-03529 
-* Author: Bindushree R
-* ********************************************************************************************/
-    
-    public static void updateTerminationInformation(List<Asset> NewList, Map<Id, Asset> oldMapAsset){
-        
-        
+    // This method will update the asset termination information section
+    public static void updateTerminationInformation( List<Asset> newList , Map<Id,Asset> oldMapAsset ) {
         User userRecord=[SELECT Id, Name FROM User WHERE Id=:UserInfo.getUserId()];
-        
         try{
-            for(Asset asset: NewList){
+            for(Asset asset: newList){
                 //when the verbal termination received is checked
-                if( asset.recordTypeId == WO_ASSET && 
-                   asset.NSP_Verbal_Term_recd__c ==true && (oldMapAsset==null || (oldMapAsset!=null && oldMapAsset.get(asset.Id).NSP_Verbal_Term_recd__c!=true))){
-                       asset.NSP_Verbal_Term_Date__c= asset.NSP_Verbal_Term_Date__c == null ? System.Today() : asset.NSP_Verbal_Term_Date__c;
-                       asset.NSP_Verbal_Term_Updatedby__c=UserInfo.getUserId();
-                       
-                   }
+                if( asset.recordTypeId == WO_ASSET &&
+                    asset.NSP_Verbal_Term_recd__c ==true && (oldMapAsset==null || (oldMapAsset!=null && oldMapAsset.get(asset.Id).NSP_Verbal_Term_recd__c!=true))
+                    )
+                {
+                    asset.NSP_Verbal_Term_Date__c= asset.NSP_Verbal_Term_Date__c == null ? System.Today() : asset.NSP_Verbal_Term_Date__c;
+                    asset.NSP_Verbal_Term_Updatedby__c=UserInfo.getUserId();
+                }
                 //when Written Termination Notice Received is checked
-                if( asset.recordTypeId == WO_ASSET && 
-                   asset.NSP_Written_Term_recd__c ==true && (oldMapAsset==null ||
-                                                             (oldMapAsset!=null && oldMapAsset.get(asset.Id).NSP_Written_Term_recd__c!=true))){
-                                                                 asset.NSP_Written_Term_Date__c= asset.NSP_Written_Term_Date__c == null ? System.Today(): asset.NSP_Written_Term_Date__c;
-                                                                 asset.NSP_Written_Termination_Updated_By__c = userRecord.Id;
-                                                                 asset.NSP_Pending_Termination__c = true;
-                                                                 
-                                                             }
-                
+                if( asset.recordTypeId == WO_ASSET &&
+                    asset.NSP_Written_Term_recd__c ==true && (oldMapAsset==null ||
+                    (oldMapAsset!=null && oldMapAsset.get(asset.Id).NSP_Written_Term_recd__c!=true))
+                    )
+                {
+                    asset.NSP_Written_Term_Date__c= asset.NSP_Written_Term_Date__c == null ? System.Today(): asset.NSP_Written_Term_Date__c;
+                    asset.NSP_Written_Termination_Updated_By__c = userRecord.Id;
+                    asset.NSP_Pending_Termination__c = true;
+                }
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
@@ -265,69 +251,57 @@ public class NSP_AssetServiceHelper {
         }
     }
 
-    /***********************************************************************************************
-* MethodName: clearAssetTerminationSection
-* Description :  This method will clear the asset termination information section
-* Params:   List<Asset> NewList   Map<Id, Asset> oldMapAsset  
-* Added as part of STY-03529
-* Author: Bindushree R
-* ********************************************************************************************/
-    
-    public void clearAssetTerminationSection(List<Asset> NewList, Map<Id, Asset> oldMapAsset){
-        
+    // This method will clear the asset termination information section
+    public void clearAssetTerminationSection( List<Asset> newList , Map<Id,Asset> oldMapAsset ) {
         Set<Id> accountIdSet = new Set<Id> ();
         Map<Id, NSP_Sub_Client__c> mapOfSubAccount = new Map<Id,NSP_Sub_Client__c> ();
         List<Asset> updatedAssetList = new List<Asset>();
-        
         try{
-            for(Asset asset: NewList){
+            for(Asset asset: newList){
                 if(asset.recordTypeId == WO_ASSET && !String.isBlank(asset.AccountId)
-                   && asset.NSP_Anticipated_Date_Of_Termination__c!=NULL && asset.NSP_Anticipated_Date_Of_Termination__c != oldMapAsset.get(asset.Id).NSP_Anticipated_Date_Of_Termination__c){
-                       accountIdSet.add(asset.AccountId);
-                       
-                   }
+                   && asset.NSP_Anticipated_Date_Of_Termination__c!=NULL && asset.NSP_Anticipated_Date_Of_Termination__c != oldMapAsset.get(asset.Id).NSP_Anticipated_Date_Of_Termination__c
+                   )
+                {
+                    accountIdSet.add(asset.AccountId);
+                }
             }
             //GET Sub client of asset account where sub client number ending with 00
             if(!accountIdSet.isEmpty()){
                 for(NSP_Sub_Client__c subClient: [SELECT NSP_Sub_Client__c,NSP_Account__c,NSP_Renewal_Date__c FROM NSP_Sub_Client__c WHERE NSP_Sub_Client__c!=NULL AND
-                                                  NSP_Sub_Client__c LIKE '%00' AND NSP_Renewal_Date__c!=null 
-                                                  AND NSP_Account__c IN :accountIdSet]){
-                                                      mapOfSubAccount.put(subClient.NSP_Account__c,subClient);
-                                                      
-                                                      
-                                                      
-                                                      
-                                                  }
+                    NSP_Sub_Client__c LIKE '%00' AND NSP_Renewal_Date__c!=null
+                    AND NSP_Account__c IN :accountIdSet]
+                    )
+                {
+                    mapOfSubAccount.put(subClient.NSP_Account__c,subClient);
+                }
             }
             //clear asset termination form section values
             if(!mapOfSubAccount.isEmpty()){
                 for(Asset asset: [SELECT AccountId,NSP_Renewal_Date__c,NSP_Client__c, NSP_Verbal_Term_recd__c,NSP_Verbal_Term_Date__c,NSP_Verbal_Term_Updatedby__c,
                                   NSP_Written_Term_recd__c,NSP_Written_Term_Date__c,NSP_Written_Termination_Updated_By__c,
-                                  NSP_Anticipated_Date_Of_Termination__c,NSP_Reason_for_Term__c,NSP_Pending_Termination__c FROM Asset WHERE AccountId IN:mapOfSubAccount.keyset()  ]){
-                                      
-                                      if(mapOfSubAccount.get(asset.AccountId).NSP_Renewal_Date__c>= asset.NSP_Anticipated_Date_Of_Termination__c){
-                                          
-                                          if(asset.NSP_Verbal_Term_recd__c==true){
-                                              asset.NSP_Verbal_Term_recd__c =false;
-                                              asset.NSP_Verbal_Term_Date__c=null;
-                                              asset.NSP_Verbal_Term_Updatedby__c=Label.NSP_Deployment_Manager;
-                                              asset.NSP_Anticipated_Date_Of_Termination__c=null;
-                                              asset.NSP_Reason_for_Term__c=null;
-                                              asset.NSP_Pending_Termination__c=false;
-                                          }
-                                          if(asset.NSP_Written_Term_recd__c==true){
-                                              asset.NSP_Written_Term_recd__c =false;
-                                              asset.NSP_Written_Term_Date__c=null;
-                                              asset.NSP_Written_Termination_Updated_By__c=Label.NSP_Deployment_Manager;
-                                              asset.NSP_Anticipated_Date_Of_Termination__c=null;
-                                              asset.NSP_Reason_for_Term__c=null;
-                                              asset.NSP_Pending_Termination__c=false;
-                                          }
-                                          
-                                          updatedAssetList.add(asset);
-                                          
-                                      }
-                                  }
+                                  NSP_Anticipated_Date_Of_Termination__c,NSP_Reason_for_Term__c,NSP_Pending_Termination__c FROM Asset WHERE AccountId IN:mapOfSubAccount.keyset()  ]
+                    )
+                {
+                    if(mapOfSubAccount.get(asset.AccountId).NSP_Renewal_Date__c>= asset.NSP_Anticipated_Date_Of_Termination__c){
+                        if(asset.NSP_Verbal_Term_recd__c==true){
+                            asset.NSP_Verbal_Term_recd__c =false;
+                            asset.NSP_Verbal_Term_Date__c=null;
+                            asset.NSP_Verbal_Term_Updatedby__c=Label.NSP_Deployment_Manager;
+                            asset.NSP_Anticipated_Date_Of_Termination__c=null;
+                            asset.NSP_Reason_for_Term__c=null;
+                            asset.NSP_Pending_Termination__c=false;
+                        }
+                        if(asset.NSP_Written_Term_recd__c==true){
+                            asset.NSP_Written_Term_recd__c =false;
+                            asset.NSP_Written_Term_Date__c=null;
+                            asset.NSP_Written_Termination_Updated_By__c=Label.NSP_Deployment_Manager;
+                            asset.NSP_Anticipated_Date_Of_Termination__c=null;
+                            asset.NSP_Reason_for_Term__c=null;
+                            asset.NSP_Pending_Termination__c=false;
+                        }
+                        updatedAssetList.add(asset);
+                    }
+                }
             }
             if(!updatedAssetList.isEmpty()){
                 database.update(updatedAssetList);
@@ -341,14 +315,8 @@ public class NSP_AssetServiceHelper {
         }
     }
 
-    /***********************************************************************************************
-        * MethodName: hasMoreThanOneAsset
-    * Description :  This method checks if more than one asset is present of same record Type
-    * Added as part of STY-03289    
-    * Author: Bindushree R
-    * ********************************************************************************************/
-    
-    private static boolean hasMoreThanOneAsset(Account acc,Id recordTypeId){
+    // This method checks if more than one asset is present of same record Type
+    private static boolean hasMoreThanOneAsset( Account acc , Id recordTypeId ) {
         integer count=0;
         if(acc!=null && acc.assets!=null){
             for(Asset asset :acc.assets){
@@ -360,16 +328,11 @@ public class NSP_AssetServiceHelper {
                 }
             }
         }
-        return false;        
+        return false;
     }
-    
-    /***********************************************************************************************
-    * MethodName: createProjectObject
-    * Description :  This method will return project with standard prefilled fields values
-    * Added as part of STY-03289    
-    * Author: Bindushree R
-    * ********************************************************************************************/
-    private static pse__Proj__c createProjectObject(Id projId, Id recordTypeId, Asset asset, String accountName, String segmentType ){
+
+    //This method will return project with standard prefilled fields values
+    private static pse__Proj__c createProjectObject( Id projId , Id recordTypeId , Asset asset , String accountName , String segmentType ) {
         pse__Proj__c project = new pse__Proj__c();
         project.Id= projId;
         project.Name=accountName+' : '+segmentType ;
@@ -379,9 +342,7 @@ public class NSP_AssetServiceHelper {
         project.OwnerId=asset.ownerId;
         project.pse__Start_Date__c=System.Today();
         project.NSP_Asset_Implementation_Project__c= True;
-        
         return project;
-    
     }
 
 }
