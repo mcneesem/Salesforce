@@ -1,0 +1,13 @@
+<template>
+    <template if:true={loading}>
+        <lightning-spinner alternative-text="Loading"></lightning-spinner>
+    </template>
+    <template if:true={showFlow}>
+        <lightning-flow
+            flow-api-name={flowApiName}
+            flow-input-variables={flowInputs}
+            onstatuschange={handleFlowStatusChange}
+        >
+        </lightning-flow>
+    </template>
+</template>
