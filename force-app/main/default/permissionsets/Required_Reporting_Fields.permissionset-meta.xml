@@ -1896,7 +1896,7 @@
         <field>Opportunity.Number_of_STP_Checklists__c</field>
         <readable>true</readable>
     </fieldPermissions>
-     <fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.Source__c</field>
         <readable>true</readable>
@@ -2023,6 +2023,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Product2.Family</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Product2.Flat_Fee_Reference_Price__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2123,7 +2128,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SBQQ__QuoteLine__c.SBQQ__ProductFamily__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SBQQ__Quote__c.Auto_Termination__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__Quote__c.NSP_Has_Timestar_Hardware__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
