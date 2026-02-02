@@ -224,6 +224,10 @@
                 <behavior>Edit</behavior>
                 <field>NSP_Assigned_Queue__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Product_Solution__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
