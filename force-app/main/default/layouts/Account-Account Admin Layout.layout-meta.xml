@@ -1880,6 +1880,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Transitioning_Client__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>NSP_Number_of_Users__c</field>
             </layoutItems>
             <layoutItems>

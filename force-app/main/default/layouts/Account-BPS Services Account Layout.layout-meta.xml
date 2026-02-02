@@ -120,6 +120,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Transitioning_Client__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>NSP_Sales_Office__c</field>
             </layoutItems>
             <layoutItems>
