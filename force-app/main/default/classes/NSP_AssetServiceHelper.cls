@@ -1,9 +1,7 @@
-/**
-* Represents the Asset Service helper which handles the logic for BPS project creation through automation.
-*/
+// Represents the Asset Service helper which handles the logic for BPS project creation through automation.
 public class NSP_AssetServiceHelper {
     // test w/ NSP_AssetServiceHelperTest (88%)
-    
+
     public static final Id PEO_PROJECT = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT,NSP_ServiceConstants.PEOProject );
     public static final Id INTEGRA_ASSET = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE,NSP_ServiceConstants.INTEGRA );
     public static final Id PERFORM_SMART_ASSET = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE,NSP_ServiceConstants.PERFORMANCE_ASSET );
@@ -12,16 +10,8 @@ public class NSP_AssetServiceHelper {
     public static final Id WO_ASSET = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE,NSP_ServiceConstants.WO_ASSET_RECORDTYPE );
     public static final Id BPSRECORDTYPE = NSP_GenericRecordType.getRecordTypeId('pse__Proj__c',NSP_ServiceConstants.PROJECT_BPS_RECORDTYPE);
     
-    /***********************************************************************************************
-* MethodName: createBPSProject
-* Description :  This method will create the BPS Project for integra, xml, time and attendance, performsmart asset
-* Params:   List<Asset> assetList 
-* Added as part of STY-03289   
-* Author: Bindushree R
-* ********************************************************************************************/
-    
-    
-    public  void createBPSProject(List<Asset> assetList ){
+    // This method will create the BPS Project for integra, xml, time and attendance, performsmart asset
+    public void createBPSProject( List<Asset> assetList ) {
         Set<Id>accountIdSet = new Set<Id>();
         Set<Id> integraAssetSet = new Set<Id>();
         Set<Id> performSmartAssetSet = new Set<Id>();
@@ -30,8 +20,7 @@ public class NSP_AssetServiceHelper {
         Map<Id, Opportunity> mapOfOpportunity = new Map<Id, Opportunity>();
         Map<Id, Id> mapOfAssetOppty = new Map<Id, Id>();
         List<pse__Proj__c> updatedProjectList = new List<pse__Proj__c>();
-        List<Project_Asset__c> projectAssetMapping = new List<Project_Asset__c>(); 
-        List<Account> accounts = null; // azd-516451		
+        List<Project_Asset__c> projectAssetMapping = new List<Project_Asset__c>();
         Map<Id, Account> mapOfAccount = new Map<Id, Account>();
         Id BPSRECORDTYPE = NSP_GenericRecordType.getRecordTypeId('pse__Proj__c',NSP_ServiceConstants.PROJECT_BPS_RECORDTYPE);
         try{
@@ -109,34 +98,50 @@ public class NSP_AssetServiceHelper {
                     }
                 }
             }
-            
-            //check if asset has active account            
-            //  using KillSwitch__c by bypass the Account Status Filter -- AZD-516451
-           Boolean isEnabledCreateBpsProjectStatusFilter = AssetTriggerSettings__c.getInstance(UserInfo.getUserId()).IsEnabledCreateBpsProjectStatusFilter__c;          
-            if (isEnabledCreateBpsProjectStatusFilter) {   
-    			accounts = [
-                            SELECT Id, NSP_Sales_Service_Account_Status__c, Name,
-                                   (SELECT Id, RecordTypeId FROM Assets WHERE RecordTypeId IN :assetRecordTypeList)
-                            			FROM Account
-                            			WHERE (NSP_Sales_Service_Account_Status__c = :NSP_ServiceConstants.STATUS_ACTIVE
-                                   		OR NSP_Sales_Service_Account_Status__c = :NSP_ServiceConstants.ASSET_ONBOARDING_STATUS)
-                             			AND Id IN :accountIdSet
-                        	];
-                } else {                   
-               accounts = [
-                        SELECT Id, NSP_Sales_Service_Account_Status__c, Name,
-                               	(SELECT Id, RecordTypeId FROM Assets WHERE RecordTypeId IN :assetRecordTypeList)
-                        			FROM Account
-                        			WHERE Id IN :accountIdSet
-                    		];
+            // check if asset has active account
+            // using KillSwitch__c by bypass the Account Status Filter -- AZD-516451
+            Boolean isEnabledCreateBpsProjectStatusFilter = AssetTriggerSettings__c.getInstance( UserInfo.getUserId() ).IsEnabledCreateBpsProjectStatusFilter__c;
+            List<Account> accounts = null;
+            if ( isEnabledCreateBpsProjectStatusFilter ) {
+                accounts = [
+                    SELECT
+                        Id ,
+                        Name ,
+                        NSP_Sales_Service_Account_Status__c ,
+                        (
+                            SELECT Id , RecordTypeId
+                            FROM Assets
+                            WHERE ( RecordTypeId IN :assetRecordTypeList )
+                        )
+                    FROM Account
+                    WHERE (
+                        ( Id IN :accountIdSet )
+                        AND (
+                            ( NSP_Sales_Service_Account_Status__c = :NSP_ServiceConstants.STATUS_ACTIVE )
+                            OR ( NSP_Sales_Service_Account_Status__c = :NSP_ServiceConstants.ASSET_ONBOARDING_STATUS )
+                        )
+                    )
+                    ];
+            } else {
+                accounts = [
+                    SELECT
+                        Id ,
+                        Name ,
+                        NSP_Sales_Service_Account_Status__c ,
+                        (
+                            SELECT Id , RecordTypeId
+                            FROM Assets
+                            WHERE ( RecordTypeId IN :assetRecordTypeList )
+                        )
+                    FROM Account
+                    WHERE ( Id IN :accountIdSet )
+                ];
+            }
+            if ( ( accounts != null ) && !accounts.isEmpty() ) {
+                for ( Account acc : accounts ) {
+                    mapOfAccount.put( acc.Id , acc );
                 }
-            
-            	if ((accounts != null) && !accounts.isEmpty()) {
-   				 for (Account acc : accounts) {
-       				 mapOfAccount.put(acc.Id, acc);
-    				}
-				}                        
-            
+            }
             // getting template from metadata
             Map<String, Template_Key_and_Id_Mapping__mdt> templateMap = new Map<String, Template_Key_and_Id_Mapping__mdt>();
             Set<String> templateKeySet = new Set<String>{
@@ -378,4 +383,6 @@ public class NSP_AssetServiceHelper {
         return project;
     
     }
+
 }
+//
