@@ -108,6 +108,7 @@
     &apos;134&apos; , &apos;2M&apos; ,
     &apos;135&apos; , &apos;Sundance Bay Holdings&apos; ,
     &apos;136&apos; , &apos;Impact Theory&apos; ,
+    &apos;138&apos; , &apos;Lawrence, Evans &amp; Co&apos; ,  
     TEXT( Account.WO_Asset__r.NSP_National_Account_Group__c )
   )
 )</formula>

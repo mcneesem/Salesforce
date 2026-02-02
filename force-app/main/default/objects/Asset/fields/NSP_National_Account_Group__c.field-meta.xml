@@ -512,6 +512,11 @@
                 <default>false</default>
                 <label>Impact Theory</label>
             </value>
+            <value>
+                <fullName>138</fullName>
+                <default>false</default>
+                <label>Lawrence, Evans &amp; Co</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
