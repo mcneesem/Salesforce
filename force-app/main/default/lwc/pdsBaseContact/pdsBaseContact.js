@@ -8,7 +8,6 @@
    *  - flowApiName: Flow API name to render
    *  - apexMethodApiName: use to select Apex count method from getSCCHRCount or getSCCPCCount
    *  - recordId: the recordId of the context record
-   *
    */
   export default class PdsBaseContact extends LightningElement {
     // Public API
