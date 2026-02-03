@@ -20,9 +20,12 @@
                     <lightning-datatable
                         key-field="Id"
                         data={displayDataList}
-                        columns={coulums}
+                        columns={columns}
                         hide-checkbox-column="true"
                         show-row-number-column="true"
+                        sorted-by={sortedBy}
+                        sorted-direction={sortedDirection}
+                        onsort={handleSort}
                         >
                     </lightning-datatable>
                 </div>
