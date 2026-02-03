@@ -138,7 +138,7 @@ public class CaseImportQueueable implements Queueable {
         }
     }
 
-    private Map<list<String>,String> getError( Database.SaveResult[] srList,Map<Id,Case> batchMap ) {
+    private Map<list<String>,String> getError( List<Database.SaveResult> srList,Map<Id,Case> batchMap ) {
         Map<list<String>,String> createRecordMap = new Map<list<String>,String>();
         if ( ( srList != null ) && ( batchMap != null ) ) {
             for ( Database.SaveResult sr : srList ) {
@@ -158,13 +158,13 @@ public class CaseImportQueueable implements Queueable {
     private Map<list<String>,String> getFailureMap( Database.SaveResult sr, Case c ) {
         String errorRowMessage = '. Error occurred at row number - ';
         Map<list<String>,String> createRecordMap = new Map<list<String>,String>();
-        List<String> rowCase = new List<String>();
-        if( this.rowCaseMap != null
+        if( this.rowCaseMap != null 
+           && c != null
            && this.rowCaseMap.get( c ) != null 
            && this.rowCaseMap.containsKey(c) 
            && sr != null 
            && this.allRowValue != null) {
-               rowCase = this.rowCaseMap.get(c);
+               List<String> rowCase = this.rowCaseMap.get( c );
                for (Database.Error err : sr.getErrors()) {
                    if ( this.allRowValue.contains(rowCase) ) {
                        Integer rowNumber = this.allRowValue.indexOf(rowCase) + 2;
