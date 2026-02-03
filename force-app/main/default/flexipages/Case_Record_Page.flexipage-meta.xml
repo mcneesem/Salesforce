@@ -330,30 +330,7 @@
                 <fieldItem>Record.AssetId</fieldItem>
                 <identifier>RecordAssetIdField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Category__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>WX/WA</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!$Permission.CustomPermission.View_Case_Compensation_section}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>false</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.AssetId</fieldItem>
-                <identifier>RecordAssetIdField2</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 OR ( 2 AND 3 )</booleanFilter>
+                    <booleanFilter>NOT ( 1 OR ( 2 AND 3 ) OR 4 )</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_Category__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -368,6 +345,44 @@
                         <leftValue>{!Record.NSP_Category__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Compensation Services</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.AssetId</fieldItem>
+                <identifier>RecordAssetIdField2</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 OR ( 2 AND 3 ) OR 4</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>WX/WA</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.View_Case_Compensation_section}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Compensation Services</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
