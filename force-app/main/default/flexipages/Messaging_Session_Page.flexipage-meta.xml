@@ -9,7 +9,7 @@
                         <valueListItems>
                             <value>MessagingSession.New_Case</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2 AND 3</booleanFilter>
+                                <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!$Permission.CustomPermission.Case_Creation_Screen_Flow}</leftValue>
                                     <operator>EQUAL</operator>
@@ -19,17 +19,10 @@
                                     <leftValue>{!Record.Case.CaseNumber}</leftValue>
                                     <operator>EQUAL</operator>
                                 </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Case.CaseNumber}</leftValue>
-                                    <operator>NE</operator>
-                                </criteria>
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>Edit</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Delete</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
