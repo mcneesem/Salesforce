@@ -1,4 +1,4 @@
-import { LightningElement, wire, api } from 'lwc';
+import { LightningElement , wire , api } from 'lwc';
 import getACRDetails from '@salesforce/apex/CaseAccountContactRelationController.getACRDetails';
 import { getRelatedListRecords } from 'lightning/uiRelatedListApi';
 export default class CaseAccountContactRelationships extends LightningElement {
