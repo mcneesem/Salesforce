@@ -1,39 +1,39 @@
 public with sharing class FileUploadController {
     // test w/ FileUploadControllerTest (95%)
 
-    private static final string loadTime = 'HH:mm:ss';
-    private static final string DOL_AUDITS = 'DOL Audits';
-    private static final string WAGE_CLAIMS = 'Wage Claims';
-    private static final string dunningRecordType = 'Dunning';
-    private static final string retRecordType = 'NSP_RET_Time_Tracking';
-    private static final string wxRecordType = 'NSP_WX_IMPL';
-    private static final string dunningCase = 'Dunning Case';
-    private static final string rETTimeTracking = 'RET Time Tracking';
-    private static final string wXIMPL = 'WX IMPL';
-    private static final string catSubcatError = 'Please check category,subcategory and detail combination';
-    private static final string reasonError = 'Please check resolution picklist value';
-    private static final string originError = 'Please check case origin picklist value';
-    private static final string statusError = 'Please check status picklist value';
-    private static final string priorityError = 'Please check priority picklist value';
-    private static final string dueDateError = 'Please check due date format';
-    private static final string openedDateError = 'Please check opened date format or subject contains comma(,)';
-    private static final string closedDateError = 'Please check closed date format';
-    private static final string contactError = 'Please check the PerID of contact';
-    private static final string aimsError = 'Please check the account or asset value';
-    private static final string userError = 'Please check owner';
-    private static final string recordTypeError = 'Please check record type';
-    private static final string closed = 'Closed';
-    private static final string errorRowNum = '.Error occurred at row number - ';
-    private static final string objectApiName = NSP_ServiceConstants.CASE_OBJECT_NAME ;
+    private static final String  loadTime = 'HH:mm:ss';
+    private static final String  DOL_AUDITS = 'DOL Audits';
+    private static final String  WAGE_CLAIMS = 'Wage Claims';
+    private static final String  dunningRecordType = 'Dunning';
+    private static final String  retRecordType = 'NSP_RET_Time_Tracking';
+    private static final String  wxRecordType = 'NSP_WX_IMPL';
+    private static final String  dunningCase = 'Dunning Case';
+    private static final String  rETTimeTracking = 'RET Time Tracking';
+    private static final String  wXIMPL = 'WX IMPL';
+    private static final String  catSubcatError = 'Please check category,subcategory and detail combination';
+    private static final String  reasonError = 'Please check resolution picklist value';
+    private static final String  originError = 'Please check case origin picklist value';
+    private static final String  statusError = 'Please check status picklist value';
+    private static final String  priorityError = 'Please check priority picklist value';
+    private static final String  dueDateError = 'Please check due date format';
+    private static final String  openedDateError = 'Please check opened date format or subject contains comma(,)';
+    private static final String  closedDateError = 'Please check closed date format';
+    private static final String  contactError = 'Please check the PerID of contact';
+    private static final String  aimsError = 'Please check the account or asset value';
+    private static final String  userError = 'Please check owner';
+    private static final String  recordTypeError = 'Please check record type';
+    private static final String  closed = 'Closed';
+    private static final String  errorRowNum = '.Error occurred at row number - ';
+    private static final String  objectApiName = NSP_ServiceConstants.CASE_OBJECT_NAME ;
 
-    private static final Id dolAuditRecordTypeId  = getRecordTypeId( objectApiName, NSP_ServiceConstants.DO_AUDITS_RECORDTYPE );
-    private static final Id wageClaimRecordTypeId = getRecordTypeId( objectApiName, NSP_ServiceConstants.WAGE_CLAIMS_RECORDTYPE );
-    private static final Id peoRecordTypeId       = getRecordTypeId( objectApiName, NSP_ServiceConstants.PEO );
-    private static final Id bpsRecordTypeId       = getRecordTypeId( objectApiName, NSP_ServiceConstants.BPS );
-    private static final Id itaRecordTypeId       = getRecordTypeId( objectApiName, NSP_ServiceConstants.NSP_ITA_CQA );
-    private static final Id dunningRecordTypeId   = getRecordTypeId( objectApiName, dunningRecordType );
-    private static final Id retRecordTypeId       = getRecordTypeId( objectApiName, retRecordType );
-    private static final Id wxRecordTypeId        = getRecordTypeId( objectApiName, wxRecordType );
+    private static final Id dolAuditRecordTypeId  = NSP_GenericRecordType.getRecordTypeId( objectApiName, NSP_ServiceConstants.DO_AUDITS_RECORDTYPE );
+    private static final Id wageClaimRecordTypeId = NSP_GenericRecordType.getRecordTypeId( objectApiName, NSP_ServiceConstants.WAGE_CLAIMS_RECORDTYPE );
+    private static final Id peoRecordTypeId       = NSP_GenericRecordType.getRecordTypeId( objectApiName, NSP_ServiceConstants.PEO );
+    private static final Id bpsRecordTypeId       = NSP_GenericRecordType.getRecordTypeId( objectApiName, NSP_ServiceConstants.BPS );
+    private static final Id itaRecordTypeId       = NSP_GenericRecordType.getRecordTypeId( objectApiName, NSP_ServiceConstants.NSP_ITA_CQA );
+    private static final Id dunningRecordTypeId   = NSP_GenericRecordType.getRecordTypeId( objectApiName, dunningRecordType );
+    private static final Id retRecordTypeId       = NSP_GenericRecordType.getRecordTypeId( objectApiName, retRecordType );
+    private static final Id wxRecordTypeId        = NSP_GenericRecordType.getRecordTypeId( objectApiName, wxRecordType );
 
     private static List<String> reasonPicklistValues = getPicklistValues(objectApiName, 'Reason');
     private static List<String> originPicklistValues = getPicklistValues(objectApiName, 'Origin');
@@ -1278,34 +1278,6 @@ public with sharing class FileUploadController {
         return processedFields;
     }
 
-    private static Id getRecordTypeId( String objectApiName, String developerName ) {
-
-        Id recordTypeId = null;
-
-        if( String.isNotBlank( objectApiName )
-           && String.isNotBlank( developerName )
-           && Schema.getGlobalDescribe().containsKey( objectApiName )
-           && Schema.getGlobalDescribe().get( objectApiName ) != null
-          )
-        {
-
-            Map<String, Schema.RecordTypeInfo> recordTypeMap =  Schema.getGlobalDescribe().get( objectApiName )
-                .getDescribe()
-                .getRecordTypeInfosByDeveloperName();
-            if( recordTypeMap != null
-               && recordTypeMap.containsKey( developerName )
-               && recordTypeMap.get(developerName) != null
-               && recordTypeMap.get(developerName).getRecordTypeId() != null
-              )
-            {
-                recordTypeId = recordTypeMap.get(developerName).getRecordTypeId();
-            }
-
-        }
-
-        return recordTypeId;
-    }
-
     private static List<String> getCsvRowsFromContentDocument( Id contentDocumentId ) {
 
         List<String> rows = new List<String>();
@@ -1360,12 +1332,12 @@ public with sharing class FileUploadController {
 
         if ( String.isNotBlank( objectApiName )
             && String.isNotBlank( fieldApiName )
-            && Schema.getGlobalDescribe().containsKey( objectApiName )
-            && Schema.getGlobalDescribe().get( objectApiName ) != null
+            && FileUploadController.globalDescribe.containsKey( objectApiName )
+            && FileUploadController.globalDescribe.get( objectApiName ) != null
 
            )
         {
-            Map<String, Schema.SObjectField> fields = Schema.getGlobalDescribe().get( objectApiName ).getDescribe().fields.getMap();
+            Map<String, Schema.SObjectField> fields = FileUploadController.globalDescribe.get( objectApiName ).getDescribe().fields.getMap();
 
             if( fields != null
                && fields.containsKey( fieldApiName )
@@ -1611,6 +1583,15 @@ public with sharing class FileUploadController {
         return returnValue;
     }
 
+    private static Map<String,Schema.SObjectType> globalDescribe {
+        private get {
+            if ( globalDescribe == null ) {
+                globalDescribe = Schema.getGlobalDescribe();
+            }
+            return globalDescribe;
+        }
+        private set;
+    }
 
     public class CsvRowWrapper{
 
