@@ -1,5 +1,5 @@
 public with sharing class TerminationEmailBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<SObject> {
-    // test w/ TerminationEmailBatchTest (84%)
+    //test w/ TerminationEmailBatchTest (81%)
 
     //Constants for Email Template DeveloperNames
     private static final String TEMPLATE_INITIAL = 'Term_Letter_Initial';
@@ -11,7 +11,6 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable , Sc
     private static final String CREDIT_SPECIALIST = 'NSP_Credit_Specialist_Form';
 
     //Constants for Email Status Field Values
-    private static final String EMAIL_STATUS_READY = 'Ready to be sent';
     private static final String EMAIL_STATUS_SENT = 'Email Sent';
 
     //
@@ -86,11 +85,12 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable , Sc
                     RecordType.DeveloperName ,
                     RecordTypeId ,
                     NSP_Status__c ,
-                    Termination_Email_Status__c
+                    Termination_Email_Status__c ,
+                    NSP_Last_Date_Wages_Paid_Through__c
                 FROM NSP_Termination_Form__c
                 WHERE (
                     ( NSP_Status__c = :NSP_ServiceConstants.TERM_TEAM_APPROVED )
-                    AND ( Termination_Email_Status__c = :EMAIL_STATUS_READY )
+                    AND ( Termination_Email_Status__c = 'Ready to be sent' )
                     AND ( Client_Owner_Email__c != null )
                     AND ( NSP_Revision__c != null )
                     AND ( RecordType.DeveloperName IN :recordTypeApiNames )
@@ -176,6 +176,7 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable , Sc
             && ( form.Id != null )
             && ( templateId != null )
             && String.isNotBlank( form.Client_Owner_Email__c )
+            && ( form.RecordType != null )
             && String.isNotBlank( TerminationEmailBatch.orgWideEmailAddressId )
             )
         {
@@ -188,9 +189,10 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable , Sc
             email.setOrgWideEmailAddressId( TerminationEmailBatch.orgWideEmailAddressId );
             email.setSaveAsActivity( true );
             email.setWhatId( form.Id );
-            if ( TerminationEmailBatch.defaultTemplateAttachmentId != null ) {
-               attachmentIds.add( TerminationEmailBatch.defaultTemplateAttachmentId );
-            }
+            attachmentIds = this.getDefaultAttachments(
+                form.NSP_Last_Date_Wages_Paid_Through__c ,
+                form.RecordType.DeveloperName
+            );
             if ( ( docLink != null )
                 && ( docLink.ContentDocument != null )
                 && ( docLink.ContentDocument.LatestPublishedVersionId != null )
@@ -205,6 +207,30 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable , Sc
         if ( email != null ) {
             emails.add( email );
         }
+    }
+
+    private  List<Id> getDefaultAttachments( Date lastWagesPaidDate , String recordTypeDeveloperName ) {
+        List<Id> attachmentIds = new List<Id>();
+        if ( String.isNotBlank( recordTypeDeveloperName )
+            && ( recordTypeDeveloperName != NSP_ServiceConstants.NSP_Client_Reinstatement )
+            )
+        {
+            if ( lastWagesPaidDate != null ) {
+                Integer year = lastWagesPaidDate.year();
+                if ( ( year != null )
+                    && ( TerminationEmailBatch.fileYearMap != null )
+                    && TerminationEmailBatch.fileYearMap.containsKey( year )
+                    && String.isNotBlank( TerminationEmailBatch.fileYearMap.get( year ) )
+                    )
+                {
+                    attachmentIds.add( TerminationEmailBatch.fileYearMap.get( year ) );
+                }
+            }
+            if ( TerminationEmailBatch.defaultTemplateAttachmentId != null ) {
+                attachmentIds.add( TerminationEmailBatch.defaultTemplateAttachmentId );
+            }
+        }
+        return attachmentIds;
     }
 
     private String getTemplateName( NSP_Termination_Form__c form ) {
@@ -408,6 +434,43 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable , Sc
                 templateMap = temMap;
             }
             return templateMap;
+        }
+        private set;
+    }
+
+    private static Map<Integer,Id> fileYearMap  {
+        private get {
+            if ( fileYearMap == null ) {
+                Map<Integer,Id> documentIdMap = new Map<Integer,Id>();
+                for ( Termination_Email_Attachment__mdt record : [
+                            SELECT
+                                DeveloperName ,
+                                MasterLabel ,
+                                Active__c ,
+                                Document_Id__c ,
+                                Year__c
+                            FROM Termination_Email_Attachment__mdt 
+                            WHERE ( Active__c = true )
+                        ]
+                    )
+                {
+                    if ( ( record.Year__c != null )
+                        && String.isNotBlank( record.Document_Id__c )
+                        && ( record.Document_Id__c InstanceOf Id )
+                       )
+                    {
+                        Id checkId = Id.valueOf( record.Document_Id__c );
+                        if ( checkId.getSObjectType() == ContentVersion.getSObjectType() ) {
+                            documentIdMap.put(
+                                record.Year__c.intValue() ,
+                                checkId
+                            );
+                        }
+                    }
+                }
+                fileYearMap = documentIdMap;
+            }
+            return fileYearMap;
         }
         private set;
     }
