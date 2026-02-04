@@ -1,7 +1,8 @@
-  import { LightningElement, api } from 'lwc';
+import { LightningElement, api, wire } from 'lwc';
   import { RefreshEvent } from 'lightning/refresh';
   import getSCCHRCount from '@salesforce/apex/PdsContactController.getSCCHRCount';
   import getSCCPCCount from '@salesforce/apex/PdsContactController.getSCCPCCount';
+
 
   /**
    * Base LWC to Apex wire result. Accepts two inputs:
@@ -17,48 +18,52 @@
     // Record context provided by the page
     @api recordId;
 
-    wiredResult;
     showFlow = false;
-    loading = true;
+    loading = false;
 
     // standard flow input variables (recordId only)
     get flowInputs() {
       return [{ name: 'recordId', type: 'String', value: this.recordId }];
     }
 
-    connectedCallback() {
-      // Automatically evaluate count when component is initialized
-      if (this.apexMethodApiName && this.recordId) {
-        this.evaluateCount();
-      }
-    }
+    // Wire to SCCHR count; only act when this.apexMethodApiName selects it
+    @wire(getSCCHRCount, { recordId: '$recordId' })
+    wiredGetSCCHR(result) {
 
-    // Call this to load and compute showFlow
-    @api
-    async evaluateCount() {
-      if (!this.apexMethodApiName || !this.recordId) {
+      if (this.apexMethodApiName !== 'getSCCHRCount') {
         return;
       }
+      const { data, error } = result;
       this.loading = true;
-      try {
-        let count;
-        if (this.apexMethodApiName === 'getSCCHRCount') {
-          count = await getSCCHRCount({ recordId: this.recordId });
-        } else if (this.apexMethodApiName === 'getSCCPCCount') {
-          count = await getSCCPCCount({ recordId: this.recordId });
-        }
-        if (count !== undefined && count !== null) {
-          this.showFlow = count > 1;
-        } else {
-          this.showFlow = false;
-        }
-      } catch (e) {
-        console.error('Error fetching count:', e);
+      if (data !== undefined && data !== null) {
+        this.showFlow = data > 1;
+        this.loading = false;
+      } else if (error) {
+        // console.error('getSCCHRCount error', error);
         this.showFlow = false;
-      } finally {
         this.loading = false;
       }
     }
+
+    // Wire to SCCPC count; only act when this.apexMethodApiName selects it
+    @wire(getSCCPCCount, { recordId: '$recordId' })
+    wiredGetSCCPC(result) {
+
+     if (this.apexMethodApiName !== 'getSCCPCCount') {
+        return;
+      }
+      const { data, error } = result;
+      this.loading = true;
+      if (data !== undefined && data !== null) {
+        this.showFlow = data > 1;
+        this.loading = false;
+      } else if (error) {
+        // console.error('getSCCPCCount error', error);
+        this.showFlow = false;
+        this.loading = false;
+      }
+    }
+
 
     handleFlowStatusChange(event) {
       const status = event?.detail?.status;
