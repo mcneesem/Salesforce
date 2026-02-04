@@ -7483,11 +7483,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.NSP_Case_Created_From_Email_To_Case__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>false</editable>
         <field>Case.NSP_Case_Quick_Rate_Number__c</field>
         <readable>false</readable>
