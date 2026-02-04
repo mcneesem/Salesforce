@@ -11,7 +11,6 @@
     <permissionSets>Convert_Leads</permissionSets>
     <permissionSets>Core_Sales</permissionSets>
     <permissionSets>Lead_Create</permissionSets>
-    <permissionSets>Lead_Product_Offering_Fields_Edit_Access</permissionSets>
     <permissionSets>Lead_View_All</permissionSets>
     <permissionSets>List_View_Enhanced_Access</permissionSets>
     <permissionSets>NSP_Billing_View_All</permissionSets>
