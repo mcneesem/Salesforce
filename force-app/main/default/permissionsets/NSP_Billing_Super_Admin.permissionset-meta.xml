@@ -3651,6 +3651,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>NSP_Pricing_Table__c.Setup_Price__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>NSP_Revenue_Distribution_Scenario__c.NSP_Immediate_Rule_Cred__c</field>
         <readable>true</readable>
     </fieldPermissions>
