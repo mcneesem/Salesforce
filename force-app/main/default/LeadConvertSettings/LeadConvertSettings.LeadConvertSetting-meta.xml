@@ -320,10 +320,6 @@
             <outputField>NSP_Producer__c</outputField>
         </mappingFields>
         <mappingFields>
-            <inputField>Product_Offering__c</inputField>
-            <outputField>Product_Offering__c</outputField>
-        </mappingFields>
-        <mappingFields>
             <inputField>NSP_Product_Interest__c</inputField>
             <outputField>NSP_Product_Interest__c</outputField>
         </mappingFields>
