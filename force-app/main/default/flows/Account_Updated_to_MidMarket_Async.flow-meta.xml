@@ -67,7 +67,7 @@
         <scale>0</scale>
     </formulas>
     <interviewLabel>Account - Updated to MidMarket Async {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Account - Updated to MidMarket Async</label>
+    <label>DEPRECATED - Account - Updated to MidMarket Async</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
