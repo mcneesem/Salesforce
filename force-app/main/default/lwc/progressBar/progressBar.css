@@ -5,5 +5,5 @@
     min-width: 40rem;
 }
 .SMALL {
-    min-width: 15rem;
+    min-width: var(--slds-g-sizing-14, 15rem);
 }
