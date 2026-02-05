@@ -215,10 +215,6 @@
                     <name>newLineOnEnter</name>
                     <value>false</value>
                 </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>showEndOrLeaveChatConfirmation</name>
-                    <value>false</value>
-                </componentInstanceProperties>
                 <componentName>scrt:conversationBody</componentName>
                 <identifier>scrt_conversationBody</identifier>
             </componentInstance>

@@ -97,10 +97,6 @@
         <visible>true</visible>
     </applicationVisibilities>
     <applicationVisibilities>
-        <application>standard__DigitalWallet</application>
-        <visible>true</visible>
-    </applicationVisibilities>
-    <applicationVisibilities>
         <application>standard__ExpressionSetConsole</application>
         <visible>true</visible>
     </applicationVisibilities>
