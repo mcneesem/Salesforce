@@ -11,10 +11,10 @@
 
             <!-- INPUTS -->
             <property
-                name="product"
+                name="skill"
                 type="String"
-                label="Product"
-                description="Selected product for availability check" />
+                label="Skill"
+                description="Selected skill for availability check" />
 
             <!-- OUTPUTS -->
             <property
