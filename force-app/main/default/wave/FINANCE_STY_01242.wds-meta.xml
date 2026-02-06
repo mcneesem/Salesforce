@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<WaveDataset xmlns="http://soap.sforce.com/2006/04/metadata">
-    <application>Finance_Roger</application>
-    <description>Created from the Subscription_Product_Recipe recipe.</description>
-    <masterLabel>Subscription, Account, Product, Order Item DS</masterLabel>
-    <type>default</type>
-</WaveDataset>

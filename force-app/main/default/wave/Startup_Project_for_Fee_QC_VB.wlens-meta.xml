@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<WaveLens xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <content xsi:nil="true"/>
-    <application>RET</application>
-    <datasets>Project_with_Project_Task_and_Asset_and_Resource_Request</datasets>
-    <dateVersion>1</dateVersion>
-    <masterLabel>Startup Project for Fee QC - VB</masterLabel>
-    <visualizationType>valuestable</visualizationType>
-</WaveLens>

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<WaveDataset xmlns="http://soap.sforce.com/2006/04/metadata">
-    <application>PEO</application>
-    <description>Created from the Case History By Individual recipe.</description>
-    <masterLabel>Case History, User, Case, Asset, Group DS</masterLabel>
-    <type>default</type>
-</WaveDataset>

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<WaveDataset xmlns="http://soap.sforce.com/2006/04/metadata">
-    <application>TES</application>
-    <description>Created from the TES - Accounts With Account Team and Account Contact recipe.</description>
-    <masterLabel>Accounts With Account Team and Account Contact</masterLabel>
-    <type>default</type>
-</WaveDataset>

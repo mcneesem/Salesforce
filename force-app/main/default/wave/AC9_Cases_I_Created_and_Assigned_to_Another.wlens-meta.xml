@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<WaveLens xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <content xsi:nil="true"/>
-    <application>PEO</application>
-    <datasets>AC9_Cases_I_Created_and_Assigned_to_Another</datasets>
-    <masterLabel>AC9 - Cases I Created and Assigned to Another</masterLabel>
-    <visualizationType>valuestable</visualizationType>
-</WaveLens>

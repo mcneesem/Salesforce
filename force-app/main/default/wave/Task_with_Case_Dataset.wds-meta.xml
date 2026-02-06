@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<WaveDataset xmlns="http://soap.sforce.com/2006/04/metadata">
-    <application>Benefits</application>
-    <description>Created from the PEO Task with Case recipe.</description>
-    <masterLabel>Task with Case Dataset</masterLabel>
-    <type>default</type>
-</WaveDataset>
