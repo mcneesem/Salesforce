@@ -20,7 +20,10 @@ public with sharing class UserAvailabilityService {
 
         try {
             // Initialize next business start
-            Datetime nextBusinessStart = BusinessHours.nextStartDate(open.Id, System.now());
+            Datetime nextBusinessStart = null;
+            if( open != null ) {
+                nextBusinessStart = BusinessHours.nextStartDate(open.Id, System.now());
+            }
 
             // Collect next 7 business days
             while((nextBusinessStart != null) && (response.size() < daysLimit)) {
