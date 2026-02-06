@@ -1,21 +1,35 @@
 import { LightningElement, wire, api } from 'lwc';
-import businessDays from '@salesforce/apex/UserAvailabilityService.getBusinessDates';
-import getCountsMatrix from '@salesforce/apex/UserAvailabilityService.getAggregateCountsMatrix';
+import getBusinessDates from '@salesforce/apex/UserAvailabilityService.getBusinessDates';
+import userIds from '@salesforce/apex/UserAvailabilityService.getAvailableUsersForWindow';
+import getAggregateCountsMatrix from '@salesforce/apex/UserAvailabilityService.getAggregateCountsMatrix';
 import USER_ID from '@salesforce/user/Id';
+import { NavigationMixin } from 'lightning/navigation';
+import {
+    FlowAttributeChangeEvent,
+    FlowNavigationNextEvent
+} from 'lightning/flowSupport';
 
-export default class Scheduler extends LightningElement {
+export default class Scheduler2 extends NavigationMixin(LightningElement) {
     userId = USER_ID;
     error;
     columns = [];
     @api product;
+    @api startDT;
+    @api endDT;
+    @api stepMinutes;
+    isCreatingEvent = false;
 
-    tableData = [
-        { id: '1', name: '8:00-9:00', status: 'Pending', counts: [] },
-        { id: '2', name: '8:30 - 9:30', counts: [] },
-        { id: '3', name: '9:00 - 10:00', counts: [] },
-        { id: '4', name: '9:30 - 10:30', counts: [] },
-        { id: '5', name: '10:00 - 11:00', counts: [] },
-        { id: '6', name: '11:30 - 12:30', counts: [] }
+    // Store raw matrix from Apex directly (6 rows × N columns)
+    matrix = [];
+
+    // Static labels for time blocks, aligned by row index
+    timeBlockLabels = [
+        '8:00 - 9:00',
+        '8:30 - 9:30',
+        '9:00 - 10:00',
+        '9:30 - 10:30',
+        '10:00 - 11:00',
+        '11:30 - 12:30'
     ];
 
     /**
@@ -24,77 +38,66 @@ export default class Scheduler extends LightningElement {
      */
     get processedTableData() {
         const cols = Array.isArray(this.columns) ? this.columns : [];
-        return this.tableData.map((row) => {
-            const counts = Array.isArray(row.counts) ? row.counts : [];
-            const cells = cols.map((c, idx) => ({
-                key: c.dateValue,
-                value: counts[idx] != null ? counts[idx] : 0
+        const matrix = Array.isArray(this.matrix) ? this.matrix : [];
+
+        // Ensure we always have 6 rows for display; pad with empty arrays if needed
+        const rowCount = Math.max(6, matrix.length);
+
+        return Array.from({ length: rowCount }, (_v, rowIndex) => {
+            const counts = Array.isArray(matrix[rowIndex]) ? matrix[rowIndex] : [];
+            const name = this.timeBlockLabels[rowIndex] || `Slot ${rowIndex + 1}`;
+            const id = String(rowIndex + 1);
+
+            const cells = cols.map((c, colIndex) => ({
+                key: `${id}-${c.fullDate}`,
+                value: counts[colIndex] != null ? counts[colIndex] : 0,
+                timeBlock: name,          // e.g., "8:00 - 9:00"
+                fullDate: c.fullDate      // e.g., "2026-01-28"
             }));
-            return { ...row, cells };
+
+            return { id, name, counts, cells };
         });
     }
 
-    // Columns are now server-driven via Business Hours using Apex businessDays()
-    @wire(businessDays, {businessHoursId: '01m4x000001119T', daysLimit:7})
+
+    // Columns are server-driven via Business Hours using Apex getBusinessDates()
+    @wire(getBusinessDates, { businessHoursId: '01m4x000001119T', daysLimit: 7 })
     wiredDays({ data, error }) {
-        if (data) {
-            // data is now List<Date> serialized as 'YYYY-MM-DD'
-            this.columns = data.map((yyyyMmDd, idx) => {
-                let d;
-                if (typeof yyyyMmDd === 'string') {
-                    const parts = yyyyMmDd.split('-'); // [YYYY, MM, DD]
-                    if (parts.length === 3) {
-                        const y = parseInt(parts[0], 10);
-                        const m = parseInt(parts[1], 10) - 1; // 0-based month
-                        const day = parseInt(parts[2], 10);
-                        d = new Date(y, m, day); // construct as local date to avoid TZ shift
-                    } else {
-                        d = new Date(yyyyMmDd);
-                    }
-                } else {
-                    d = new Date(yyyyMmDd);
-                }
-                return {
-                    key: idx,
-                    label: d.toLocaleDateString(undefined, { weekday: 'short' }),
-                    dateValue: d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })
-                };
-            });
-            this.error = undefined;
-        } else if (error) {
-            this.error = error;
-            this.columns = [];
-        }
+    if (data) {
+        this.columns = data.map((yyyyMmDd, idx) => {
+            // yyyyMmDd is already "YYYY-MM-DD"
+            const d = new Date(`${yyyyMmDd}T00:00:00`);
+
+            return {
+                key: idx,
+                label: d.toLocaleDateString(undefined, { weekday: 'short' }),
+                dateValue: d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }),
+
+                // ✅ THIS is what you must pass to cells
+                fullDate: yyyyMmDd
+            };
+        });
+
+        this.error = undefined;
+    } else if (error) {
+        this.error = error;
+        this.columns = [];
     }
+}
 
     // Matrix data for the 6 time slots × 7 business days
-    @wire(getCountsMatrix, {
+    @wire(getAggregateCountsMatrix, {
         stepMinutes: 30,
         product: '$product'
     })
     wiredMatrix({ data, error }) {
         if (data) {
-            // data is List<List<Integer>> - 6 rows × 7 columns
-            // Populate each row's counts array with the corresponding row from the matrix
-
-            // Create a new array to ensure proper reactivity
-            const updatedTableData = this.tableData.map((row, rowIndex) => {
-                if (rowIndex < data.length) {
-                    // Make sure we have a proper array and handle potential undefined values
-                    const countsArray = Array.isArray(data[rowIndex]) ? data[rowIndex] : [];
-                    return {
-                        ...row,
-                        counts: [...countsArray]
-                    };
-                }
-                return row;
-            });
-
-            // Update the tracked property
-            this.tableData = updatedTableData;
+            // Assign Apex matrix directly; no re-mapping
+            this.matrix = Array.isArray(data) ? data : [];
             this.error = undefined;
         } else if (error) {
             this.error = error;
+            this.matrix = [];
         }
     }
 
@@ -106,10 +109,8 @@ export default class Scheduler extends LightningElement {
         // This will trigger the wire adapters to reload data
         // We can force a refresh by resetting the columns (which will trigger the business days reload)
         this.columns = [];
-        this.tableData = this.tableData.map(row => ({
-            ...row,
-            counts: []
-        }));
+        this.matrix = [];
+        // processedTableData getter will regenerate rows/cells on next render
     }
 
     get isLoading() {
@@ -118,4 +119,71 @@ export default class Scheduler extends LightningElement {
     get isReady() {
         return ( this.columns && ( this.columns.length > 0 ) );
     }
+
+   async handleCellClick(event) {
+        event.preventDefault();
+
+        const timeBlock = event.currentTarget.dataset.timeblock;
+        const date = event.currentTarget.dataset.date;
+
+        if (!timeBlock || !date) return;
+
+        const [rawStart, rawEnd] = timeBlock.split('-');
+        const startTime = rawStart.trim();
+        const endTime = rawEnd.trim();
+
+        /* this.startDT = `${date}T${startTime}:00`;
+        this.endDT = `${date}T${endTime}:00`; */
+        this.startDT = "2026-02-04T15:00:00.000Z";
+        this.endDT = "2026-02-04T16:00:00.000Z";
+        console.log('startDT: ', this.startDT);
+        console.log('endDT: ', this.endDT);
+
+        // ✅ Set loading flag
+        this.isCreatingEvent = true;
+        try {
+        const data = await userIds({
+            startDT: this.startDT,
+            endDT: this.endDT,
+            product: this.product,
+            stepMinutes: this.stepMinutes
+        });
+
+        console.log('userIds: ', data);
+        this.singleUserIds = data.join(','); // Store userIds in the exposed property
+        this.error = undefined;
+
+    } catch (error) {
+        this.error = error;
+        console.error(error);
+    }
+    this.dispatchEvent(
+            new FlowAttributeChangeEvent('selectedStartDateTime', this.startDT)
+        );
+        this.dispatchEvent(
+            new FlowAttributeChangeEvent('selectedEndDateTime', this.endDT)
+        );
+        this.dispatchEvent(
+            new FlowAttributeChangeEvent('singleUserIds', this.singleUserIds)
+        );
+
+        // Move Flow to next screen
+        this.dispatchEvent(new FlowNavigationNextEvent());
+        /*this[NavigationMixin.Navigate](
+            {
+                type: 'standard__objectPage',
+                attributes: { objectApiName: 'Event', actionName: 'new' },
+                state: {
+                    defaultFieldValues: `StartDateTime=${this.startDT},EndDateTime=${this.endDT}`
+                }
+            },
+            true
+        );*/
+
+        // Optionally, reset after small delay (since navigation opens a new tab)
+        setTimeout(() => {
+            this.isCreatingEvent = false;
+        }, 2000);
+    }
+
 }
