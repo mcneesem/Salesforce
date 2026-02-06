@@ -111,7 +111,7 @@
     <environments>Default</environments>
     <interviewLabel>Schedule Seller {!$Flow.CurrentDateTime}</interviewLabel>
     <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
-    <label>User - Get Scheduling Seller Users in LWC</label>
+    <label>Schedule Seller</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -168,7 +168,7 @@
         </connector>
         <fields>
             <name>Seller</name>
-            <extensionName>c:scheduler</extensionName>
+            <extensionName>c:scheduleSeller</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>product</name>
@@ -259,7 +259,7 @@
             <targetReference>Select_Solution</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
