@@ -7,6 +7,9 @@
         <locationY>0</locationY>
         <actionName>OrderItemConsumptionRateFieldAction</actionName>
         <actionType>apex</actionType>
+        <connector>
+            <targetReference>Check_for_Amendment</targetReference>
+        </connector>
         <faultConnector>
             <targetReference>Set_Fault_Element_Update_Consumption_Rate_Fields</targetReference>
         </faultConnector>
@@ -235,6 +238,23 @@
             <targetReference>Fault_Path</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Update_Order_Products_Start_Date</name>
+        <label>Set Fault Element : Update_Order_Products_Start_Date</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Order_Products_Start_Date</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Path</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Cat1_Null_Check</name>
         <label>Cat1 Null Check</label>
@@ -446,6 +466,35 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_for_Amendment</name>
+        <label>Check for Amendment</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Amendment</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Amendment</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_Transaction_Type__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Termination</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Order_Products_Start_Date</targetReference>
+            </connector>
+            <label>Amendment</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>CS_Delete_List_Check</name>
         <label>CS Delete List Check ?</label>
         <locationX>0</locationX>
@@ -625,6 +674,12 @@
         </rules>
     </decisions>
     <environments>Default</environments>
+    <formulas>
+        <description>Gives 1st day of the month</description>
+        <name>FirstDateOfTheMonth</name>
+        <dataType>Date</dataType>
+        <expression>DATE(YEAR(TODAY()),MONTH(TODAY()),1)</expression>
+    </formulas>
     <interviewLabel>Order - After Save - Delete Consumption Schedules {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Order - After Save - Delete Consumption Schedules</label>
     <loops>
@@ -846,6 +901,44 @@
         <object>OrderItem</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordUpdates>
+        <name>Update_Order_Products_Start_Date</name>
+        <label>Update Order Products Start Date</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Update_Order_Products_Start_Date</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>SBQQ__SubscriptionType__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Evergreen</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_OrderProductStartDate__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>1st of the month</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>ServiceDate</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>FirstDateOfTheMonth</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>ServiceDate</field>
+            <value>
+                <elementReference>FirstDateOfTheMonth</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record.OrderItems</inputReference>
+    </recordUpdates>
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
