@@ -3,6 +3,7 @@
 
 public with sharing class UserAvailabilityService {
     // test w/ UserAvailabilityServiceTest (96%)
+    private static final Integer DAYS_LIMIT = 7;
     //Returns the 7 available days based on Business Hours
     @AuraEnabled(cacheable=true)
     public static List<Date> getBusinessDates(Id businessHoursId, Integer daysLimit) {
@@ -47,7 +48,7 @@ public with sharing class UserAvailabilityService {
         List<List<Datetime>> startDaysList = new List<List<Datetime>>();
         List<List<Datetime>> endDaysList = new List<List<Datetime>>();
         //Get real days based on Business Hours
-        List<Date> businessDates = UserAvailabilityService.getBusinessDates('01m4x000001119T',7);
+        List<Date> businessDates = UserAvailabilityService.getBusinessDates('01m4x000001119T',DAYS_LIMIT);
         //For now, hardcoding the start and end time slots
         Map<Integer, Integer> startTimeSlots = new Map<Integer, Integer>{1 => 8,2 => 8, 3 => 9, 4 => 9, 5 => 10, 6 => 11};
             Map<Integer, Integer> startTimeSlotsMinutes = new Map<Integer, Integer>{1 => 0, 2 => 30, 3 => 0, 4 => 30, 5 => 0, 6 => 30};
@@ -64,8 +65,6 @@ public with sharing class UserAvailabilityService {
                                 Integer startTimeMinute = startTimeSlotsMinutes.get(j+1);
                                 Integer endTimeHour = endTimeSlots.get(j+1);
                                 Integer endTimeMinute = endTimeSlotsMinutes.get(j+1);
-                                Time startT = Time.newInstance(startTimeHour, startTimeMinute, 0, 0);
-                                Time endT   = Time.newInstance(endTimeHour, endTimeMinute, 0, 0);
                                 // Add the calculated datetime to the startDays and endDays lists
                                 startDays.add(
                                     DateTime.newInstance(
@@ -162,7 +161,7 @@ public with sharing class UserAvailabilityService {
             List<Integer> row = new List<Integer>();
             for (Integer c : counts) {
                 row.add((c == null) ? 0 : c);
-                if (row.size() == 7) {
+                if (row.size() == DAYS_LIMIT) {
                     matrix.add(new List<Integer>(row));
                     row.clear();
                 }
@@ -177,47 +176,33 @@ public with sharing class UserAvailabilityService {
     @AuraEnabled(cacheable=true)
     public static List<List<Integer>> getAggregateCountsMatrix( Integer stepMinutes, String product ) {
         List<List<Integer>> listSizeMatrix = new List<List<Integer>>();
- 		List<Integer> countsPerWindow = new List<Integer>();
-        String typeOfProduct = null;
-        if( product != null ) {
-            typeOfProduct = 'Schedule_Seller_' + product;
-        } else {
-            typeOfProduct = 'Schedule_Seller_HR360';
-        }
+        List<Integer> countsPerWindow = new List<Integer>();
         // Build business day/time windows
         DaysMatrix daysOfWeek = UserAvailabilityService.getBusinessDaysMatrix();
         List<Datetime> startDays = new List<Datetime>();
         List<Datetime> endDays = new List<Datetime>();
-
-        Integer groupCount = Math.min( daysOfWeek.startDays.size(), daysOfWeek.endDays.size() );
-        for (Integer i = 0; i < groupCount; i++) {
-            startDays.addAll(daysOfWeek.startDays[i]);
-            endDays.addAll(daysOfWeek.endDays[i]);
+        if ( ( daysOfWeek != null )
+            && ( daysOfWeek.startDays != null )
+            && ( daysOfWeek.endDays != null )
+            && ( daysOfWeek.startDays.size() == daysOfWeek.endDays.size() )
+           )
+        {
+            if ( startDays.size() == endDays.size() ) {
+                for ( Integer i = 0 ; i < daysOfWeek.startDays.size() ; i++ ) {
+                    startDays.addAll( daysOfWeek.startDays[i] );
+                    endDays.addAll( daysOfWeek.endDays[i] );
+                }
+            }
         }
         Datetime windowStart = startDays[0];
         Datetime windowEnd   = endDays[endDays.size() - 1];
-        // Identify users with Schedule Seller Permission Set
-        Set<Id> userIds = new Set<Id>();
-        List<PermissionSetAssignment> permSet = [
-            SELECT AssigneeId
-            FROM PermissionSetAssignment
-            WHERE PermissionSet.Name = : typeOfProduct
-        ];
-        if( !permSet.isEmpty() ){
-            for (PermissionSetAssignment psa : permSet) {
-                userIds.add(psa.AssigneeId);
-            }
-        }
+        // Identify users with Schedule Seller Custom Permission
+        Map<Id,User> skilledUsers = CustomPermissionController.getPermittedUsersMap( product );
+        Set<Id> userIds = ( ( skilledUsers != null ) ? skilledUsers.keySet() : new Set<Id>() );
         // Query all events for those users within the union window (bulkified)
         Map<Id, List<Event>> busyByUser = new Map<Id, List<Event>>();
-        List<Event> events = [
-            SELECT Id, OwnerId, StartDateTime, EndDateTime
-            FROM Event
-            WHERE OwnerId IN :userIds
-            AND StartDateTime < :windowEnd
-            AND EndDateTime   > :windowStart
-            WITH SECURITY_ENFORCED
-        ];
+        List<Event> events = new List<Event>();
+        events = getEventsForUser(userIds, windowStart, windowEnd);
         if( !events.isEmpty() ) {
             for (Event e : events) {
                 if (!busyByUser.containsKey(e.OwnerId)) {
@@ -237,7 +222,9 @@ public with sharing class UserAvailabilityService {
         Integer n = Math.min(startDays.size(), endDays.size());
         List<Event> windows = new List<Event>();
         for (Integer i = 0; i < n; i++) {
-            windows.add(new Event(StartDateTime = startDays[i], EndDateTime = endDays[i]));
+            if ( startDays.size() == endDays.size() ) {
+                windows.add(new Event(StartDateTime = startDays[i], EndDateTime = endDays[i]));
+            }
         }
         countsPerWindow = getAggregateAvailableSlots( windows, userIds, busyByUser, stepMinutes );
         listSizeMatrix = convertToMatrix(countsPerWindow);
@@ -282,7 +269,7 @@ public with sharing class UserAvailabilityService {
             clearList.add(size);
 
             // When we have 7 elements (one for each day), create a new row
-            if (clearList.size() == 7) {
+            if (clearList.size() == DAYS_LIMIT) {
                 listSizeMatrix.add(new List<Integer>(clearList)); // Clone to persist state
                 clearList.clear(); // Reset for the next batch
             }
@@ -293,5 +280,80 @@ public with sharing class UserAvailabilityService {
             listSizeMatrix.add(new List<Integer>(clearList));
         }
         return listSizeMatrix;
+    }
+    @AuraEnabled(cacheable=true)
+    public static List<Id> getAvailableUsersForWindow(
+        Datetime startDT,
+        Datetime endDT,
+        String product,
+        Integer stepMinutes
+    ) {
+        List<Id> availableUsers = new List<Id>();
+        //Set<Id> userIds = new Set<Id>();
+        Map<Id, List<Event>> busyByUser = new Map<Id, List<Event>>();
+
+        // Basic input validation (single return rule: just avoid doing work if invalid)
+        Boolean validWindow = (startDT != null && endDT != null && endDT > startDT);
+
+        // Resolve permission set name
+        Map<Id,User> skilledUsers = CustomPermissionController.getPermittedUsersMap( product );
+        Set<Id> userIds = ( ( skilledUsers != null ) ? skilledUsers.keySet() : new Set<Id>() );
+        // Load overlapping events once for all eligible users (only if inputs are valid)
+        List<Event> overlapping = new List<Event>();
+        //Get overlapping events
+        overlapping = getEventsForUser(userIds, startDT, endDT);
+
+        if (overlapping != null && !overlapping.isEmpty()) {
+            for (Event e : overlapping) {
+                if (!busyByUser.containsKey(e.OwnerId)) {
+                    busyByUser.put(e.OwnerId, new List<Event>());
+                }
+                busyByUser.get(e.OwnerId).add(e);
+            }
+        }
+
+        // Ensure every user exists in the map (so busyByUser.get(uid) isn't null)
+        if (userIds != null && !userIds.isEmpty()) {
+            for (Id uid : userIds) {
+                if (uid != null && !busyByUser.containsKey(uid)) {
+                    busyByUser.put(uid, new List<Event>());
+                }
+            }
+        }
+
+        // Only compute availability if we have a valid window and eligible users
+        if (validWindow && userIds != null && !userIds.isEmpty()) {
+            Integer step = (stepMinutes == null || stepMinutes <= 0) ? 30 : stepMinutes;
+
+            UserAvailability calc = new UserAvailability();
+            Event windowEvt = new Event(StartDateTime = startDT, EndDateTime = endDT);
+
+            for (Id uid : userIds) {
+                List<Event> userBusy = new List<Event>();
+                if( busyByUser.containsKey(uid) && busyByUser.get(uid) != null) {
+                    userBusy = busyByUser.get(uid);
+                }
+                List<String> slots = calc.getAvailableSlots(userBusy, windowEvt, step);
+                if (slots != null && !slots.isEmpty()) {
+                    availableUsers.add(uid);
+                }
+            }
+        }
+        return availableUsers;
+    }
+
+    private static List<Event> getEventsForUser(Set<Id> userIds, Datetime startDT, Datetime endDT) {
+        List<Event> events = new List<Event>();
+        if (userIds != null && startDT != null && endDT != null) {
+            events = [
+                SELECT Id, OwnerId, StartDateTime, EndDateTime
+                FROM Event
+                WHERE OwnerId IN :userIds
+                AND StartDateTime < :endDT
+                AND EndDateTime   > :startDT
+                WITH SECURITY_ENFORCED
+            ];
+        }
+        return events;
     }
 }
