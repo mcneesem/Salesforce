@@ -10,7 +10,7 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
     userId = USER_ID;
     error;
     columns = [];
-    @api product;
+    @api skill;
     @api startDT;
     @api endDT;
     @api stepMinutes;
@@ -84,7 +84,7 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
     // Matrix data for the 6 time slots × 7 business days
     @wire(getAggregateCountsMatrix, {
         stepMinutes: 30,
-        product: '$product'
+        skill: '$skill'
     })
     wiredMatrix({ data, error }) {
         if (data) {
@@ -140,7 +140,7 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
         const data = await userIds({
             startDT: this.startDT,
             endDT: this.endDT,
-            product: this.product,
+            skill: this.skill,
             stepMinutes: this.stepMinutes
         });
 
