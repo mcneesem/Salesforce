@@ -6,7 +6,7 @@ import USER_ID from '@salesforce/user/Id';
 import { NavigationMixin } from 'lightning/navigation';
 import {FlowNavigationNextEvent} from 'lightning/flowSupport';
 
-export default class Scheduler extends NavigationMixin(LightningElement) {
+export default class ScheduleSeller extends NavigationMixin(LightningElement) {
     userId = USER_ID;
     error;
     columns = [];
