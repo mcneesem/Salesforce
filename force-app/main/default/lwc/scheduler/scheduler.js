@@ -4,12 +4,9 @@ import userIds from '@salesforce/apex/UserAvailabilityService.getAvailableUsersF
 import getAggregateCountsMatrix from '@salesforce/apex/UserAvailabilityService.getAggregateCountsMatrix';
 import USER_ID from '@salesforce/user/Id';
 import { NavigationMixin } from 'lightning/navigation';
-import {
-    FlowAttributeChangeEvent,
-    FlowNavigationNextEvent
-} from 'lightning/flowSupport';
+import {FlowNavigationNextEvent} from 'lightning/flowSupport';
 
-export default class Scheduler2 extends NavigationMixin(LightningElement) {
+export default class Scheduler extends NavigationMixin(LightningElement) {
     userId = USER_ID;
     error;
     columns = [];
@@ -51,8 +48,8 @@ export default class Scheduler2 extends NavigationMixin(LightningElement) {
             const cells = cols.map((c, colIndex) => ({
                 key: `${id}-${c.fullDate}`,
                 value: counts[colIndex] != null ? counts[colIndex] : 0,
-                timeBlock: name,          // e.g., "8:00 - 9:00"
-                fullDate: c.fullDate      // e.g., "2026-01-28"
+                timeBlock: name,          // "8:00 - 9:00"
+                fullDate: c.fullDate      // "2026-01-28"
             }));
 
             return { id, name, counts, cells };
@@ -73,7 +70,6 @@ export default class Scheduler2 extends NavigationMixin(LightningElement) {
                 label: d.toLocaleDateString(undefined, { weekday: 'short' }),
                 dateValue: d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }),
 
-                // ✅ THIS is what you must pass to cells
                 fullDate: yyyyMmDd
             };
         });
@@ -139,7 +135,6 @@ export default class Scheduler2 extends NavigationMixin(LightningElement) {
         console.log('startDT: ', this.startDT);
         console.log('endDT: ', this.endDT);
 
-        // ✅ Set loading flag
         this.isCreatingEvent = true;
         try {
         const data = await userIds({
@@ -157,33 +152,8 @@ export default class Scheduler2 extends NavigationMixin(LightningElement) {
         this.error = error;
         console.error(error);
     }
-    this.dispatchEvent(
-            new FlowAttributeChangeEvent('selectedStartDateTime', this.startDT)
-        );
-        this.dispatchEvent(
-            new FlowAttributeChangeEvent('selectedEndDateTime', this.endDT)
-        );
-        this.dispatchEvent(
-            new FlowAttributeChangeEvent('singleUserIds', this.singleUserIds)
-        );
-
         // Move Flow to next screen
         this.dispatchEvent(new FlowNavigationNextEvent());
-        /*this[NavigationMixin.Navigate](
-            {
-                type: 'standard__objectPage',
-                attributes: { objectApiName: 'Event', actionName: 'new' },
-                state: {
-                    defaultFieldValues: `StartDateTime=${this.startDT},EndDateTime=${this.endDT}`
-                }
-            },
-            true
-        );*/
-
-        // Optionally, reset after small delay (since navigation opens a new tab)
-        setTimeout(() => {
-            this.isCreatingEvent = false;
-        }, 2000);
     }
 
 }
