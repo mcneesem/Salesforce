@@ -994,23 +994,11 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
                 )
             {
                 if ( mapSaIdToRec.containsKey( eachEvent.WhatId ) ) {
-                    ServiceAppointment relatedSa = mapSaIdToRec.get( eachEvent.WhatId );
-                    if ( relatedSa != null ) {
-                        eachEvent.Subject = '[SF] ' + relatedSa.Subject;
-                        eachEvent.Description = relatedSa.Description;
-                        eachEvent.Location = relatedSa.NSP_Orientation_Address__c;
-                        eachEvent.StartDateTime = relatedSa.SchedStartTime;
-                        // Prevent DmlExceptions: FIELD_INTEGRITY_EXCEPTION, An event can't last longer than 14 days.: [EndDateTime]
-                        DateTime endDateTime = relatedSa.SchedEndTime;
-                        if ( ( relatedSa.SchedStartTime != null )
-                            && ( endDateTime != null )
-                            && ( ( endDateTime.getTime() - relatedSa.SchedStartTime.getTime() ) > ( 14 * 24 * 60 * 60 * 1000 ) )
-                            )
-                        {
-                            endDateTime = relatedSa.SchedStartTime.addDays( 14 );
-                        }
-                        eachEvent.EndDateTime = endDateTime;
-                        eachEvent.OwnerId =  relatedSa.OwnerId;
+                    Event record = NSP_ServiceAppointmentTriggerHelper.populateEventFromServiceAppointment(
+                        eachEvent ,
+                        mapSaIdToRec.get( eachEvent.WhatId )
+                    );
+                    if ( record != null ) {
                         eventListToUpdate.add( eachEvent );
                     }
                 }
@@ -1024,6 +1012,28 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
                 );
             }
         }
+    }
+
+    // helper method to defeat sonar cognitive complexity...
+    private static Event populateEventFromServiceAppointment( Event record , ServiceAppointment related ) {
+        if ( ( record != null ) && ( related != null ) ) {
+            record.Subject = '[SF] ' + related.Subject;
+            record.Description = related.Description;
+            record.Location = related.NSP_Orientation_Address__c;
+            record.StartDateTime = related.SchedStartTime;
+            // Prevent DmlExceptions: FIELD_INTEGRITY_EXCEPTION, An event can't last longer than 14 days.: [EndDateTime]
+            DateTime endDateTime = related.SchedEndTime;
+            if ( ( related.SchedStartTime != null )
+                && ( endDateTime != null )
+                && ( ( endDateTime.getTime() - related.SchedStartTime.getTime() ) > ( 14 * 24 * 60 * 60 * 1000 ) )
+                )
+            {
+                endDateTime = related.SchedStartTime.addDays( 14 );
+            }
+            record.EndDateTime = endDateTime;
+            record.OwnerId =  related.OwnerId;
+        }
+        return record;
     }
 
     private static Id coreServiceEventRecordType {
