@@ -167,7 +167,7 @@
         </connector>
         <fields>
             <name>Seller</name>
-            <extensionName>c:scheduler2</extensionName>
+            <extensionName>c:scheduler</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>product</name>
