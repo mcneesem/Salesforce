@@ -110,7 +110,6 @@ public with sharing class UserAvailabilityService {
     }
 
     //Calculates how many available slots the user has by creating events and leveraging existing existing calculation
-    @AuraEnabled(cacheable=true)
     public static List<List<Integer>> getCountsMatrix(Id userId, Integer stepMinutes) {
         Id effectiveUserId = (userId == null) ? UserInfo.getUserId() : userId;
         Integer step = (stepMinutes == null) ? 30 : stepMinutes;
@@ -177,7 +176,7 @@ public with sharing class UserAvailabilityService {
     }
     //Get total availability of users that are added to the Schedule Seller Permission Set
     @AuraEnabled(cacheable=true)
-    public static List<List<Integer>> getAggregateCountsMatrix( Integer stepMinutes, String product ) {
+    public static List<List<Integer>> getAggregateCountsMatrix( Integer stepMinutes, String skill ) {
         List<List<Integer>> listSizeMatrix = new List<List<Integer>>();
         List<Integer> countsPerWindow = new List<Integer>();
         // Build business day/time windows
@@ -200,7 +199,7 @@ public with sharing class UserAvailabilityService {
         Datetime windowStart = startDays[0];
         Datetime windowEnd   = endDays[endDays.size() - 1];
         // Identify users with Schedule Seller Custom Permission
-        Map<Id,User> skilledUsers = CustomPermissionController.getPermittedUsersMap( product );
+        Map<Id,User> skilledUsers = CustomPermissionController.getPermittedUsersMap( skill );
         Set<Id> userIds = ( ( skilledUsers != null ) ? skilledUsers.keySet() : new Set<Id>() );
         // Query all events for those users within the union window (bulkified)
         Map<Id, List<Event>> busyByUser = new Map<Id, List<Event>>();
@@ -288,7 +287,7 @@ public with sharing class UserAvailabilityService {
     public static List<Id> getAvailableUsersForWindow(
         Datetime startDT,
         Datetime endDT,
-        String product,
+        String skill,
         Integer stepMinutes
     ) {
         List<Id> availableUsers = new List<Id>();
@@ -299,7 +298,7 @@ public with sharing class UserAvailabilityService {
         Boolean validWindow = (startDT != null && endDT != null && endDT > startDT);
 
         // Resolve permission set name
-        Map<Id,User> skilledUsers = CustomPermissionController.getPermittedUsersMap( product );
+        Map<Id,User> skilledUsers = CustomPermissionController.getPermittedUsersMap( skill );
         Set<Id> userIds = ( ( skilledUsers != null ) ? skilledUsers.keySet() : new Set<Id>() );
         // Load overlapping events once for all eligible users (only if inputs are valid)
         List<Event> overlapping = new List<Event>();
