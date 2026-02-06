@@ -34,7 +34,7 @@
     </customProperties>
     <description>Seller Screen</description>
     <environments>Default</environments>
-    <interviewLabel>Scheduling Tool Seller {!$Flow.CurrentDateTime}</interviewLabel>
+    <interviewLabel>Schedule Seller {!$Flow.CurrentDateTime}</interviewLabel>
     <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Scheduling Tool Seller</label>
     <processMetadataValues>
