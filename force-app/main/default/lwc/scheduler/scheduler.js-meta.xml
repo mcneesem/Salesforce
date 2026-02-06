@@ -9,11 +9,33 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
+
+            <!-- INPUTS -->
             <property
-            name="product"
-            type="String"
-            label="Product"
-            description="Type of product"/>
+                name="product"
+                type="String"
+                label="Product"
+                description="Selected product for availability check" />
+
+            <!-- OUTPUTS -->
+            <property
+                name="startDT"
+                type="DateTime"
+                label="Selected Start DateTime"
+                role="outputOnly" />
+
+            <property
+                name="endDT"
+                type="DateTime"
+                label="Selected End DateTime"
+                role="outputOnly" />
+
+            <property
+                name="stepMinutes"
+                type="Integer"
+                label="Step Minutes"
+                role="outputOnly" />
+
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
