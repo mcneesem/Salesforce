@@ -51,7 +51,7 @@ public with sharing class UserAvailabilityService {
         List<List<Datetime>> startDaysList = new List<List<Datetime>>();
         List<List<Datetime>> endDaysList = new List<List<Datetime>>();
         //Get real days based on Business Hours
-        List<Date> businessDates = UserAvailabilityService.getBusinessDates('01m4x000001119T',DAYS_LIMIT);
+        List<Date> businessDates = UserAvailabilityService.getBusinessDates('01m4x000001119T',UserAvailabilityService.DAYS_LIMIT);
         //For now, hardcoding the start and end time slots
         Map<Integer, Integer> startTimeSlots = new Map<Integer, Integer>{1 => 8,2 => 8, 3 => 9, 4 => 9, 5 => 10, 6 => 11};
             Map<Integer, Integer> startTimeSlotsMinutes = new Map<Integer, Integer>{1 => 0, 2 => 30, 3 => 0, 4 => 30, 5 => 0, 6 => 30};
@@ -163,7 +163,7 @@ public with sharing class UserAvailabilityService {
             List<Integer> row = new List<Integer>();
             for (Integer c : counts) {
                 row.add((c == null) ? 0 : c);
-                if (row.size() == DAYS_LIMIT) {
+                if (row.size() == UserAvailabilityService.DAYS_LIMIT) {
                     matrix.add(new List<Integer>(row));
                     row.clear();
                 }
@@ -189,11 +189,9 @@ public with sharing class UserAvailabilityService {
             && ( daysOfWeek.startDays.size() == daysOfWeek.endDays.size() )
            )
         {
-            if ( startDays.size() == endDays.size() ) {
-                for ( Integer i = 0 ; i < daysOfWeek.startDays.size() ; i++ ) {
-                    startDays.addAll( daysOfWeek.startDays[i] );
-                    endDays.addAll( daysOfWeek.endDays[i] );
-                }
+            for ( Integer i = 0 ; i < daysOfWeek.startDays.size() ; i++ ) {
+                startDays.addAll( daysOfWeek.startDays[i] );
+                endDays.addAll( daysOfWeek.endDays[i] );
             }
         }
         Datetime windowStart = startDays[0];
@@ -271,7 +269,7 @@ public with sharing class UserAvailabilityService {
             clearList.add(size);
 
             // When we have 7 elements (one for each day), create a new row
-            if (clearList.size() == DAYS_LIMIT) {
+            if (clearList.size() == UserAvailabilityService.DAYS_LIMIT) {
                 listSizeMatrix.add(new List<Integer>(clearList)); // Clone to persist state
                 clearList.clear(); // Reset for the next batch
             }
@@ -291,7 +289,6 @@ public with sharing class UserAvailabilityService {
         Integer stepMinutes
     ) {
         List<Id> availableUsers = new List<Id>();
-        //Set<Id> userIds = new Set<Id>();
         Map<Id, List<Event>> busyByUser = new Map<Id, List<Event>>();
 
         // Basic input validation (single return rule: just avoid doing work if invalid)
