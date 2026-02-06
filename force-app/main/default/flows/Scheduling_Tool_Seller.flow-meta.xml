@@ -130,7 +130,7 @@
             <targetReference>Select_Solution</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>selectedSolution</name>
         <dataType>String</dataType>
