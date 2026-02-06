@@ -109,7 +109,8 @@
         <valueField>Id</valueField>
     </dynamicChoiceSets>
     <environments>Default</environments>
-    <interviewLabel>Scheduling Tool Seller {!$Flow.CurrentDateTime}</interviewLabel>
+    <interviewLabel>Schedule Seller {!$Flow.CurrentDateTime}</interviewLabel>
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>User - Get Scheduling Seller Users in LWC</label>
     <processMetadataValues>
         <name>BuilderType</name>
