@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<WaveDataset xmlns="http://soap.sforce.com/2006/04/metadata">
-    <application>PEO</application>
-    <description>Created from the STY-02693_Standard List View Reports recipe.</description>
-    <masterLabel>Asset,Account,Account Group,Account Group Member,Account Team,Product,User DS</masterLabel>
-    <type>default</type>
-</WaveDataset>
