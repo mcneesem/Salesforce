@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<WaveDataset xmlns="http://soap.sforce.com/2006/04/metadata">
-    <application>HR_COE</application>
-    <description>Created from the Cases with Content Version recipe.</description>
-    <masterLabel>Cases with Content Version Dataset</masterLabel>
-    <type>default</type>
-</WaveDataset>

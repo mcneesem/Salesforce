@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<WaveRecipe xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <content xsi:nil="true"/>
-    <dataflow>SubClient_User_AccountTeamMember_Payroll</dataflow>
-    <format>R3</format>
-    <masterLabel>Payroll with User, Account Team Member, Sub Client</masterLabel>
-</WaveRecipe>

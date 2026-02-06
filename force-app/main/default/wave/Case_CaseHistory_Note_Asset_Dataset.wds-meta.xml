@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<WaveDataset xmlns="http://soap.sforce.com/2006/04/metadata">
-    <application>PEO</application>
-    <description>Created from the Case_Asset_CaseHistory_Note_AccountTeam_Attachment_Account_User Recipe recipe.</description>
-    <masterLabel>Case, Case History, Note, Asset DS</masterLabel>
-    <type>default</type>
-</WaveDataset>

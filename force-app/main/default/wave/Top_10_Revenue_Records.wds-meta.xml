@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<WaveDataset xmlns="http://soap.sforce.com/2006/04/metadata">
-    <application>BPS</application>
-    <description>Created from the Service Ops Home Page1 ( Top 10 Revenue Records ) recipe.</description>
-    <masterLabel>Top 10 Revenue Records</masterLabel>
-    <type>default</type>
-</WaveDataset>
