@@ -183,19 +183,23 @@ public with sharing class UserAvailabilityService {
         DaysMatrix daysOfWeek = UserAvailabilityService.getBusinessDaysMatrix();
         List<Datetime> startDays = new List<Datetime>();
         List<Datetime> endDays = new List<Datetime>();
+        Datetime windowStart = null;
+        Datetime windowEnd   = null;
         if ( ( daysOfWeek != null )
             && ( daysOfWeek.startDays != null )
             && ( daysOfWeek.endDays != null )
             && ( daysOfWeek.startDays.size() == daysOfWeek.endDays.size() )
            )
         {
-            for ( Integer i = 0 ; i < daysOfWeek.startDays.size() ; i++ ) {
-                startDays.addAll( daysOfWeek.startDays[i] );
-                endDays.addAll( daysOfWeek.endDays[i] );
-            }
+            if ( startDays.size() == endDays.size() ) {
+                for ( Integer i = 0 ; i < daysOfWeek.startDays.size() ; i++ ) {
+                    startDays.addAll( daysOfWeek.startDays[i] );
+                    endDays.addAll( daysOfWeek.endDays[i] );
+                }
+                windowStart = startDays[0];
+                windowEnd   = endDays[endDays.size() - 1];
+            } 
         }
-        Datetime windowStart = startDays[0];
-        Datetime windowEnd   = endDays[endDays.size() - 1];
         // Identify users with Schedule Seller Custom Permission
         Map<Id,User> skilledUsers = CustomPermissionController.getPermittedUsersMap( skill );
         Set<Id> userIds = ( ( skilledUsers != null ) ? skilledUsers.keySet() : new Set<Id>() );
@@ -219,11 +223,13 @@ public with sharing class UserAvailabilityService {
             }
         }
         // Build windows for each slot
-        Integer n = Math.min(startDays.size(), endDays.size());
         List<Event> windows = new List<Event>();
-        for (Integer i = 0; i < n; i++) {
-            if ( startDays.size() == endDays.size() ) {
-                windows.add(new Event(StartDateTime = startDays[i], EndDateTime = endDays[i]));
+        if ( startDays.size() == endDays.size() ) {
+            Integer n = Math.min(startDays.size(), endDays.size());
+            for (Integer i = 0; i < n; i++) {
+                if ( startDays.size() == endDays.size() ) {
+                    windows.add(new Event(StartDateTime = startDays[i], EndDateTime = endDays[i]));
+                }
             }
         }
         countsPerWindow = getAggregateAvailableSlots( windows, userIds, busyByUser, stepMinutes );
