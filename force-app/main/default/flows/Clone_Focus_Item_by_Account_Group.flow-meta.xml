@@ -17,6 +17,128 @@
             <targetReference>Iterate_Account_Healths</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Focus_Item_Assignment</name>
+        <label>Focus Item Assignment</label>
+        <locationX>402</locationX>
+        <locationY>1092</locationY>
+        <assignmentItems>
+            <assignToReference>FocusItem.Focus_Item__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Focus_Item__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FocusItem.NSP_Account_Group__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Iterate_Account_Group</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FocusItem.NSP_Asset__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.NSP_Asset__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FocusItem.NSP_Comments__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.NSP_Comments__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FocusItem.NSP_Detail__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.NSP_Detail__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FocusItem.NSP_End_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.NSP_End_Date__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FocusItem.NSP_Estimated_Impact__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.NSP_Estimated_Impact__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FocusItem.NSP_Is_Duplicate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FocusItem.NSP_Start_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.NSP_Start_Date__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FocusItem.NSP_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.NSP_Status__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FocusItem.NSP_System_Generated__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.NSP_System_Generated__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FocusItem.Name</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FocusItemList</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>FocusItem</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Iterate_Account_Group</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Check_Account_Group</name>
+        <label>Check Account Group</label>
+        <locationX>314</locationX>
+        <locationY>1284</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Account_Group_Null_Check</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>FocusItem.NSP_Account_Group__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Focus_Item_Record</targetReference>
+            </connector>
+            <label>Account Group Null Check</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Check_for_Account_Health_Group_Renewal_Probability</name>
         <label>Check for Account Health Group/ Renewal Probability</label>
@@ -112,11 +234,6 @@
         <dataType>String</dataType>
         <expression>IF(ISPICKVAL({!$Record.NSP_Account_Group__r.NSP_Type__c}, &apos;Account Health&apos;), &apos;Renewal Probability&apos;, &apos;Account Health&apos;)</expression>
     </formulas>
-    <formulas>
-        <name>TODAY</name>
-        <dataType>Date</dataType>
-        <expression>TODAY()</expression>
-    </formulas>
     <interviewLabel>Clone Focus Item by Account Group {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Clone Focus Item by Account Group</label>
     <loops>
@@ -127,8 +244,11 @@
         <collectionReference>AccountGroupSet</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>Create_Focus_Item_Record</targetReference>
+            <targetReference>Focus_Item_Assignment</targetReference>
         </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Check_Account_Group</targetReference>
+        </noMoreValuesConnector>
     </loops>
     <loops>
         <name>Iterate_Account_Healths</name>
@@ -166,86 +286,12 @@
     <recordCreates>
         <name>Create_Focus_Item_Record</name>
         <label>Create Focus Item Record</label>
-        <locationX>138</locationX>
-        <locationY>1247</locationY>
-        <connector>
-            <targetReference>Iterate_Account_Group</targetReference>
-        </connector>
-        <inputAssignments>
-           
-            <field>Focus_Item__c</field>
-            <value>
-                <elementReference>$Record.Focus_Item__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Account_Group__c</field>
-            <value>
-                <elementReference>Iterate_Account_Group</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Asset__c</field>
-            <value>
-                <elementReference>$Record.NSP_Asset__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Comments__c</field>
-            <value>
-                <elementReference>$Record.NSP_Comments__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Detail__c</field>
-            <value>
-                <elementReference>$Record.NSP_Detail__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_End_Date__c</field>
-            <value>
-                <elementReference>$Record.NSP_End_Date__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Estimated_Impact__c</field>
-            <value>
-                <elementReference>$Record.NSP_Estimated_Impact__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Is_Duplicate__c</field>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Start_Date__c</field>
-            <value>
-                <elementReference>$Record.NSP_Start_Date__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Status__c</field>
-            <value>
-                <elementReference>$Record.NSP_Status__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_System_Generated__c</field>
-            <value>
-                <elementReference>$Record.NSP_System_Generated__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Name</field>
-            <value>
-                <elementReference>$Record.Name</elementReference>
-            </value>
-        </inputAssignments>
-        <object>NSP_Focus_Item__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <locationX>50</locationX>
+        <locationY>1392</locationY>
+        <faultConnector>
+            <targetReference>Fault_Handler_subflow</targetReference>
+        </faultConnector>
+        <inputReference>FocusItemList</inputReference>
     </recordCreates>
     <recordLookups>
         <name>Get_Account_Health_Group_Members_by_Account</name>
@@ -264,44 +310,49 @@
                 <elementReference>$Record.NSP_Asset__r.AccountId</elementReference>
             </value>
         </filters>
-        <filters>
-            <field>NSP_Type__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>OtherGroupType</elementReference>
-            </value>
-        </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
         <object>NSP_Account_Group_Member__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordUpdates>
-        <name>Update_Start_Date</name>
-        <label>Update Start Date</label>
-        <locationX>182</locationX>
-        <locationY>335</locationY>
-        <connector>
-            <targetReference>Check_for_Account_Health_Group_Renewal_Probability</targetReference>
-        </connector>
-        <inputAssignments>
-            <field>NSP_Start_Date__c</field>
-            <value>
-                <elementReference>TODAY</elementReference>
-            </value>
-        </inputAssignments>
-        <inputReference>$Record</inputReference>
-    </recordUpdates>
     <start>
         <locationX>56</locationX>
         <locationY>0</locationY>
-        <connector>
-            <targetReference>Update_Start_Date</targetReference>
-        </connector>
         <object>NSP_Focus_Item__c</object>
         <recordTriggerType>Create</recordTriggerType>
+        <scheduledPaths>
+            <connector>
+                <targetReference>Check_for_Account_Health_Group_Renewal_Probability</targetReference>
+            </connector>
+            <pathType>AsyncAfterCommit</pathType>
+        </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
+    <subflows>
+        <name>Fault_Handler_subflow</name>
+        <label>Fault Handler subflow</label>
+        <locationX>314</locationX>
+        <locationY>1500</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>varFaultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Clone_Focus_Item_by_Account_Group</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>AccountGroupSet</name>
         <dataType>String</dataType>
@@ -330,6 +381,14 @@
         </value>
     </variables>
     <variables>
+        <name>FocusItem</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>NSP_Focus_Item__c</objectType>
+    </variables>
+    <variables>
         <name>Focusitem_ET</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -348,5 +407,28 @@
         <value>
             <stringValue>No Insperity 401k</stringValue>
         </value>
+    </variables>
+    <variables>
+        <name>FocusItemList</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>NSP_Focus_Item__c</objectType>
+    </variables>
+    <variables>
+        <name>focusItems</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>NSP_Focus_Item__c</objectType>
+    </variables>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
 </Flow>
