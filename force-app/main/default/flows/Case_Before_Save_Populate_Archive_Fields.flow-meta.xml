@@ -20,6 +20,20 @@
                 <elementReference>$Record.Account.Name</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Contact_Id__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.ContactId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Contact_Name__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Contact.Name</elementReference>
+            </value>
+        </assignmentItems>
     </assignments>
     <environments>Default</environments>
     <interviewLabel>Case - Before Save - Populate Archive Fields {!$Flow.CurrentDateTime}</interviewLabel>
