@@ -1,4 +1,4 @@
-public class NSP_AssetCreationBpsProjectBatch implements ISelfSchedulable , Schedulable , Database.Batchable<sObject> {
+public class NSP_AssetCreationBpsProjectBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<sObject> {
     // test w/ NSP_AssetCreationBpsProjectBatch_Test (85%)
 
     private static final Map<Id,Project_Account__c> accIdWithProject = new Map<Id,Project_Account__c>();
@@ -6,12 +6,15 @@ public class NSP_AssetCreationBpsProjectBatch implements ISelfSchedulable , Sche
     private static final Map<Id,Set<String>> mapAcctIdwithAssetRecType = new Map<Id,Set<String>>();
 
     //
-    // Schedulable
+    // argument-free constructor is required to be "runnable"...
     //
 
-    public void execute( SchedulableContext sc ) {
-        Database.executeBatch( new NSP_AssetCreationBpsProjectBatch() , 200 );
+    public NSP_AssetCreationBpsProjectBatch() {
     }
+
+    //
+    // ISelfSchedulable
+    //
 
     // runs everyday at 12am central...
     public static String schedule() {
@@ -24,6 +27,38 @@ public class NSP_AssetCreationBpsProjectBatch implements ISelfSchedulable , Sche
             '0 0 0 ? * * *' ,
             new NSP_AssetCreationBpsProjectBatch()
         );
+    }
+
+    //
+    // Schedulable
+    //
+
+    public void execute( SchedulableContext sc ) {
+        this.call( 'run' , null );
+    }
+
+    //
+    // Callable
+    //
+
+    public Object call( String action , Map<String,Object> args ) {
+        Object response = null;
+        if ( action == 'run' ) {
+            response = this.run();
+        }
+        return response;
+    }
+
+    //
+    // IJobRunnable
+    //
+
+    public Id run() {
+        Id response = Database.executeBatch(
+            new NSP_AssetCreationBpsProjectBatch() ,
+            200
+        );
+        return response;
     }
 
     //
@@ -101,6 +136,13 @@ public class NSP_AssetCreationBpsProjectBatch implements ISelfSchedulable , Sche
         }
     }
 
+    public void finish( Database.BatchableContext bc ) {
+    }
+
+    //
+    //
+    //
+
     // insert Asset Records and ProjectAsset into the database
     private void creatingAssetRecords() {
         Map<String,String> mapOfAcctIdRecordType = new Map<String,String>();
@@ -166,9 +208,6 @@ public class NSP_AssetCreationBpsProjectBatch implements ISelfSchedulable , Sche
                 results
             );
         }
-    }
-
-    public void finish( Database.BatchableContext bc ) {
     }
 
 }
