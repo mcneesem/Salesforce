@@ -401,11 +401,11 @@
     </relatedLists>
     <relatedLists>
         <fields>CONTACT.FULL_NAME</fields>
-        <fields>NSP_Preferred_First_Name__c</fields>
+        <fields>Contact.NSP_Preferred_First_Name__c</fields>
         <fields>CONTACT.LAST_NAME</fields>
         <fields>NSP_Job_Title__c</fields>
         <fields>NSP_Employee_Status__c</fields>
-        <fields>NSP_Per_ID__c</fields>
+        <fields>Contact.NSP_Per_ID__c</fields>
         <fields>NSP_Work_Email__c</fields>
         <fields>NSP_Work_Phone__c</fields>
         <relatedList>RelatedAccountContactRelationList</relatedList>
