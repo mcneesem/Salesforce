@@ -3813,6 +3813,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Case.NSP_RET_Sales_to_Implementation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Case.NSP_RET_Subplan_Form__c</field>
         <readable>true</readable>
     </fieldPermissions>
