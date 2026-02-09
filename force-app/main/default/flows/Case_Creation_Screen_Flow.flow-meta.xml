@@ -198,6 +198,23 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_Fault_Element_Update_Messaging_Session</name>
+        <label>Assign Fault Element: Update_Messaging_Session</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Messaging_Session</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Create_Case_Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_Fault_Element_Update_Voice_Call</name>
         <label>Assign Fault Element : Update_Voice_Call</label>
         <locationX>0</locationX>
@@ -1482,6 +1499,9 @@
         <connector>
             <targetReference>Navigate_To_Record</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_Fault_Element_Update_Messaging_Session</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
