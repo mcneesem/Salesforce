@@ -133,17 +133,20 @@ public class NSP_AssetCreationBpsProjectBatch implements ISelfSchedulable , Sche
         }
         List<Project_Asset__c> lstProjAssetToInsert = new List<Project_Asset__c>();
         if ( !lstAssetToInsert.isEmpty() ) {
-            List<Database.SaveResult> results = Database.insert( lstAssetToInsert , false );
+            List<Database.SaveResult> results = Database.insert( lstAssetToInsert , false ); // throws ~ DUPLICATE_VALUE, duplicate value found: NSP_Client__c duplicates value on record with id: 02iXXXXXXXXXXXXXXX
             NSP_ErrorLogHandler.logResults(
                 NSP_AssetCreationBpsProjectBatch.class.getName() ,
                 'creatingAssetRecords:Asset' ,
                 results
             );
             for ( Asset asst : lstAssetToInsert ) {
-                Project_Asset__c newProjAsset = new Project_Asset__c();
-                newProjAsset.Asset__c = asst.Id;
-                newProjAsset.Project__c = mapOfAcctIdRecordType.get( asst.AccountId + '_' + asst.RecordTypeId );
-                lstProjAssetToInsert.add( newProjAsset );
+                // Prevent DmlExceptions: REQUIRED_FIELD_MISSING, Required fields are missing: [Asset__c]
+                if ( asst.Id != null ) {
+                    Project_Asset__c newProjAsset = new Project_Asset__c();
+                    newProjAsset.Asset__c = asst.Id;
+                    newProjAsset.Project__c = mapOfAcctIdRecordType.get( asst.AccountId + '_' + asst.RecordTypeId );
+                    lstProjAssetToInsert.add( newProjAsset );
+                }
             }
         }
         if ( !lstProjAssetToInsert.isEmpty() ) {
