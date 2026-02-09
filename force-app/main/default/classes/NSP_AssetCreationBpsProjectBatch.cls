@@ -91,7 +91,7 @@ public class NSP_AssetCreationBpsProjectBatch implements ISelfSchedulable , Sche
                 }
                 mapAcctIdwithAssetRecType.get( ast.AccountId ).add( ast.RecordType.DeveloperName );
             }
-            creatingAssetRecords();
+            this.creatingAssetRecords();
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 NSP_AssetCreationBpsProjectBatch.class.getName() ,
@@ -131,12 +131,21 @@ public class NSP_AssetCreationBpsProjectBatch implements ISelfSchedulable , Sche
                 }
             }
         }
+        this.handleDmlOperations( lstAssetToInsert , mapOfAcctIdRecordType );
+    }
+
+    // helper method to defeat sonar cognitive complexity...
+    private void handleDmlOperations( List<Asset> lstAssetToInsert , Map<String,String> mapOfAcctIdRecordType ) {
         List<Project_Asset__c> lstProjAssetToInsert = new List<Project_Asset__c>();
-        if ( !lstAssetToInsert.isEmpty() ) {
+        if ( ( mapOfAcctIdRecordType != null )
+            && ( lstAssetToInsert != null )
+            && !lstAssetToInsert.isEmpty()
+            )
+        {
             List<Database.SaveResult> results = Database.insert( lstAssetToInsert , false ); // throws ~ DUPLICATE_VALUE, duplicate value found: NSP_Client__c duplicates value on record with id: 02iXXXXXXXXXXXXXXX
             NSP_ErrorLogHandler.logResults(
                 NSP_AssetCreationBpsProjectBatch.class.getName() ,
-                'creatingAssetRecords:Asset' ,
+                'handleDmlOperations:Asset' ,
                 results
             );
             for ( Asset asst : lstAssetToInsert ) {
@@ -153,7 +162,7 @@ public class NSP_AssetCreationBpsProjectBatch implements ISelfSchedulable , Sche
             List<Database.SaveResult> results = Database.insert( lstProjAssetToInsert , false );
             NSP_ErrorLogHandler.logResults(
                 NSP_AssetCreationBpsProjectBatch.class.getName() ,
-                'creatingAssetRecords:Project_Asset__c' ,
+                'handleDmlOperations:Project_Asset__c' ,
                 results
             );
         }
