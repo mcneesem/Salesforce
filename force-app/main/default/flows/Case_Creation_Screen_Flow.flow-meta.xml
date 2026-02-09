@@ -147,6 +147,23 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_Fault_Element_Get_RET_Sales_to_Implementation</name>
+        <label>Assign Fault Element : Get_RET_Sales_to_Implementation</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_RET_Sales_to_Implementation</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Create_Case_Fault_Handler</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_Fault_Element_Get_Voice_Call</name>
         <label>Assign Fault Element : Get_Voice_Call</label>
         <locationX>0</locationX>
@@ -173,23 +190,6 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>Get_Voice_Call_Messaging_User</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Create_Case_Fault_Handler</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_Fault_Element_Update_Messaging_Session</name>
-        <label>Assign Fault Element : Update Messaging Session</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>faultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Update_Messaging_Session</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -369,6 +369,13 @@
                 <elementReference>selectedConfidential</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>caseRecord.NSP_RET_Sales_to_Implementation__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>contextRETSalestoImplementationId</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Create_Case</targetReference>
         </connector>
@@ -403,6 +410,22 @@
         </assignmentItems>
         <connector>
             <targetReference>Store_Project_Account_Id</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>RET_Sales_to_Implementation_Path</name>
+        <label>RET-Sales-to-Implementation Path</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>contextRETSalestoImplementationId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Category_Sub_Category</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -482,6 +505,22 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Get_Project.pse__Account__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Accessible_Record_Types</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Store_RET_Sales_to_Implementation</name>
+        <label>Store RET-Sales-to-Implementation</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>contextAccountId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_RET_Sales_to_Implementation.NSP_Client__r.Id</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -790,6 +829,21 @@
             </connector>
             <label>Is Voice Call</label>
         </rules>
+        <rules>
+            <name>Is_RET_Sales_to_Implementation</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>recordId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>aCz</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_RET_Sales_to_Implementation</targetReference>
+            </connector>
+            <label>Is  RET-Sales-to-Implementation</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Check_Record_Id_After_Case_Creation</name>
@@ -930,6 +984,21 @@
                 <targetReference>Category_Sub_Category</targetReference>
             </connector>
             <label>From Voice Call</label>
+        </rules>
+        <rules>
+            <name>From_RET_Sales_to_Implementation</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>recordId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>aCz</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>RET_Sales_to_Implementation_Path</targetReference>
+            </connector>
+            <label>From RET-Sales-to-Implementation</label>
         </rules>
     </decisions>
     <decisions>
@@ -1095,6 +1164,38 @@
                 <targetReference>Populate_Case_Fields_Project</targetReference>
             </connector>
             <label>Project Exists</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Verify_RET_Sales_to_Implementation_Exists</name>
+        <label>Verify RET-Sales-to-Implementation Exists</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Get_Accessible_Record_Types</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>RET_Sales_to_Implementation_Exists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_RET_Sales_to_Implementation</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_RET_Sales_to_Implementation</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Store_RET_Sales_to_Implementation</targetReference>
+            </connector>
+            <label>RET-Sales-to-Implementation Exists</label>
         </rules>
     </decisions>
     <decisions>
@@ -1302,6 +1403,30 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_RET_Sales_to_Implementation</name>
+        <label>Get RET-Sales-to-Implementation</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Verify_RET_Sales_to_Implementation_Exists</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_Fault_Element_Get_RET_Sales_to_Implementation</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>NSP_Sales_to_Implementation__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Voice_Call</name>
         <label>Get Voice Call</label>
         <locationX>0</locationX>
@@ -1357,9 +1482,6 @@
         <connector>
             <targetReference>Navigate_To_Record</targetReference>
         </connector>
-        <faultConnector>
-            <targetReference>Assign_Fault_Element_Update_Messaging_Session</targetReference>
-        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -2017,6 +2139,13 @@
         <value>
             <stringValue></stringValue>
         </value>
+    </variables>
+    <variables>
+        <name>contextRETSalestoImplementationId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>countAccessibleRecordTypes</name>
