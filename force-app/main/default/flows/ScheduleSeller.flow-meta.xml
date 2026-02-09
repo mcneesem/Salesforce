@@ -18,9 +18,9 @@
             </value>
         </inputParameters>
         <inputParameters>
-            <name>product</name>
+            <name>skill</name>
             <value>
-                <elementReference>Seller.product</elementReference>
+                <elementReference>Seller.skill</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -171,9 +171,9 @@
             <extensionName>c:scheduleSeller</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
-                <name>product</name>
+                <name>skill</name>
                 <value>
-                    <elementReference>Select_a_Product</elementReference>
+                    <elementReference>Select_a_Skillt</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>
@@ -230,13 +230,13 @@
             <targetReference>Availability_Matrix</targetReference>
         </connector>
         <fields>
-            <name>Select_a_Product</name>
+            <name>Select_a_Skill</name>
             <choiceReferences>HR360_Solution</choiceReferences>
             <choiceReferences>HRCore_Solution</choiceReferences>
             <choiceReferences>HR_Scale</choiceReferences>
             <dataType>String</dataType>
             <defaultSelectedChoiceReference>HR360_Solution</defaultSelectedChoiceReference>
-            <fieldText>Select a Product</fieldText>
+            <fieldText>Select a Skill</fieldText>
             <fieldType>RadioButtons</fieldType>
             <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>
             <isRequired>false</isRequired>
