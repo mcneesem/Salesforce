@@ -173,7 +173,7 @@
             <inputParameters>
                 <name>skill</name>
                 <value>
-                    <elementReference>Select_a_Skillt</elementReference>
+                    <elementReference>Select_a_Skill</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>
