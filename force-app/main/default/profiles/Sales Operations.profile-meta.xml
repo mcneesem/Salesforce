@@ -13872,10 +13872,6 @@
     </flowAccesses>
     <flowAccesses>
         <enabled>false</enabled>
-        <flow>NSP_Update_Discovery_Call_Status_on_Opportunity</flow>
-    </flowAccesses>
-    <flowAccesses>
-        <enabled>false</enabled>
         <flow>NSP_Update_Lead_Stage_based_on_Activity</flow>
     </flowAccesses>
     <flowAccesses>
