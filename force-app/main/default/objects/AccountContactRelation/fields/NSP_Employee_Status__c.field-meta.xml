@@ -64,6 +64,21 @@
                 <default>false</default>
                 <label>WORKER&apos;S COMP</label>
             </value>
+            <value>
+                <fullName>TLO Leave</fullName>
+                <default>false</default>
+                <label>TLO Leave</label>
+            </value>
+            <value>
+                <fullName>Intermittent Leave</fullName>
+                <default>false</default>
+                <label>Intermittent Leave</label>
+            </value>
+            <value>
+                <fullName>State Leave</fullName>
+                <default>false</default>
+                <label>State Leave</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
