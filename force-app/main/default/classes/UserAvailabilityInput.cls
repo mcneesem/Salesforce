@@ -6,7 +6,7 @@ public class UserAvailabilityInput {
     public Datetime endDT;
     
     @InvocableVariable
-    public String product;
+    public String skill;
     
     @InvocableVariable
     public Integer stepMinutes;
