@@ -4821,46 +4821,6 @@
     <picklistValues>
         <picklist>Promotion_Code__c</picklist>
         <values>
-            <fullName>2024 2-year Admin Cap</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>2024 2-year Agreement</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>2024 August Credit Promotion</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>2024 Credit Promotion</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>2024 Enrollment Fee Promotion</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>2024 Fall Campaign Kicker</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>2024 Fall Credit Promotion</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>2024 Inc 5000 Promotion</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>2024 Recruiting Promotion</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>2024 WX Free Months</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>2025 2-year Agreement</fullName>
             <default>false</default>
         </values>
@@ -4882,6 +4842,18 @@
         </values>
         <values>
             <fullName>2025 WX Free Months</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2026 2-Year Agreement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2026 Admin Cap</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2026 Promotional Credit</fullName>
             <default>false</default>
         </values>
         <values>
