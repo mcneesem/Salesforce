@@ -29,7 +29,7 @@
    <p>• The client has special pay codes and/or relabeling.  Please review the following <br /> notes for details:
   {!relatedTo.NSP_Any_special_pay_code_Provide_Details__c} </p>
   </apex:outputPanel>
-  <apex:outputPanel rendered="{!CONTAINS(relatedTo.NSP_Select_all_that_apply__c ,'Integra')}">
+  <apex:outputPanel rendered="{!OR(CONTAINS(relatedTo.NSP_Select_all_that_apply__c ,'Integra'))}">
    <p>• Integra / Quick Books integration has been requested – complete “forms online” request.</p>
    <p>   Please see the Implementation Profile in Salesforce if you have any questions </p>
   </apex:outputPanel>
