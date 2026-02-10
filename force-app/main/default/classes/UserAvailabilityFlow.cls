@@ -9,7 +9,7 @@ public with sharing class UserAvailabilityFlow {
         List<Id> userIds = UserAvailabilityService.getAvailableUsersForWindow(
             i.startDT,
             i.endDT,
-            i.product,
+            i.skill,
             i.stepMinutes
         );
         System.debug('userIds: '+userIds);
