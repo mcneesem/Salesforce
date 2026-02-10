@@ -386,13 +386,6 @@
                 <elementReference>selectedConfidential</elementReference>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>caseRecord.NSP_RET_Sales_to_Implementation__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>contextRETSalestoImplementationId</elementReference>
-            </value>
-        </assignmentItems>
         <connector>
             <targetReference>Create_Case</targetReference>
         </connector>
@@ -430,19 +423,19 @@
         </connector>
     </assignments>
     <assignments>
-        <name>RET_Sales_to_Implementation_Path</name>
-        <label>RET-Sales-to-Implementation Path</label>
+        <name>Populate_Case_Fields_RET_Sales_to_Implementation</name>
+        <label>Populate Case Fields: RET-Sales-to-Implementation</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>contextRETSalestoImplementationId</assignToReference>
+            <assignToReference>caseRecord.NSP_RET_Sales_to_Implementation__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>recordId</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Category_Sub_Category</targetReference>
+            <targetReference>Store_RET_Sales_to_Implementation_Account_Id</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -529,15 +522,15 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Store_RET_Sales_to_Implementation</name>
-        <label>Store RET-Sales-to-Implementation</label>
+        <name>Store_RET_Sales_to_Implementation_Account_Id</name>
+        <label>Store RET-Sales-to-Implementation Account Id</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>contextAccountId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_RET_Sales_to_Implementation.NSP_Client__r.Id</elementReference>
+                <elementReference>Get_RET_Sales_to_Implementation.NSP_Client__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -1013,7 +1006,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>RET_Sales_to_Implementation_Path</targetReference>
+                <targetReference>Category_Sub_Category</targetReference>
             </connector>
             <label>From RET-Sales-to-Implementation</label>
         </rules>
@@ -1210,7 +1203,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Store_RET_Sales_to_Implementation</targetReference>
+                <targetReference>Populate_Case_Fields_RET_Sales_to_Implementation</targetReference>
             </connector>
             <label>RET-Sales-to-Implementation Exists</label>
         </rules>
@@ -2159,13 +2152,6 @@
         <value>
             <stringValue></stringValue>
         </value>
-    </variables>
-    <variables>
-        <name>contextRETSalestoImplementationId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>countAccessibleRecordTypes</name>
