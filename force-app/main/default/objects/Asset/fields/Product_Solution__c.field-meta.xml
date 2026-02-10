@@ -5,7 +5,7 @@
     <formula>IF(
   AND(
     ( RecordTypeName__c = &quot;WO&quot; ) ,
-    ISPICKVAL( NSP_Service_Package__c , &quot;WO - WD Bundle Plus&quot; )
+    ISPICKVAL( NSP_Service_Package__c , &quot;HRScale&quot; )
   ) ,
   &quot;HRScale&quot; ,
   IF(

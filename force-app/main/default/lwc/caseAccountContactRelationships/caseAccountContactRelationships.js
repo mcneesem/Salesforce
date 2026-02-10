@@ -1,41 +1,74 @@
-import { LightningElement, wire, api } from 'lwc';
+import { LightningElement , wire , api } from 'lwc';
 import getACRDetails from '@salesforce/apex/CaseAccountContactRelationController.getACRDetails';
-import { refreshApex } from '@salesforce/apex';
+import { getRelatedListRecords } from 'lightning/uiRelatedListApi';
 export default class CaseAccountContactRelationships extends LightningElement {
     @api recordId;
     acrDetailsData;
     acrPrimaryData;
-    displayDataList;
+    isViewAll = false;
+    relatedWireResult;
     wireData;
     lastUpdatedTimestamp;
     currentTimestamp;
-    intervalId;
+    intervalId = null;
     acrDetailsError;
-    coulums =[{label: 'Name', fieldName: 'contactName', type: 'text'},
-        {label: 'Account', fieldName: 'accountName', type: 'text'},
-        {label: 'Work Phone', fieldName: 'workPhone', type: 'text'},
-        {label: 'Work Email', fieldName: 'workEmail', type: 'text'},
-        {label: 'Job Title', fieldName: 'jobTitle', type: 'text'},
-        {label: 'Status', fieldName: 'status', type: 'text'},
-        {label: 'Workday Employee Id', fieldName: 'workdayEmployeeId', type: 'text'}
+    sortedBy;
+    sortedDirection = 'asc';
+
+    columns =[
+        { label: 'Name' , fieldName: 'contactName' , type: 'text' , sortable: true } ,
+        { label: 'Account' , fieldName: 'accountName' , type: 'text' , sortable: true } ,
+        { label: 'Work Phone' , fieldName: 'workPhone' , type: 'text' , sortable: true } ,
+        { label: 'Work Email' , fieldName: 'workEmail' , type: 'text' , sortable: true } ,
+        { label: 'Job Title' , fieldName: 'jobTitle' , type: 'text' , sortable: true } ,
+        { label: 'Status' , fieldName: 'status' , type: 'text' , sortable: true } ,
+        { label: 'Workday Employee Id' , fieldName: 'workdayEmployeeId' , type: 'text' , sortable: true }
     ]
 
-    @wire(getACRDetails, { caseId: '$recordId' })
-    acrDetails(result){
-        this.wireData = result;
-        if (result.data) {
-            this.acrDetailsData = result.data;
-            this.lastUpdatedTimestamp = new Date();
-            this.displayDataList = this.acrDetailsData.filter(rec => rec.IsPrimary);
-            if(this.displayDataList == null || this.displayDataList.length == 0 ||this.displayDataList == undefined){
-                this.displayDataList = this.acrDetailsData;
-            }
-        } else if (result.error) {
-            this.acrDetailsError = result.error;
-            this.lastUpdatedTimestamp = undefined;
+
+    @wire(
+        getRelatedListRecords ,
+        {
+            parentRecordId: '$recordId' ,
+            relatedListId: 'Case_Contact_Roles__r' ,
+            fields: [
+                'NSP_Case_Contacts__c.NSP_Case__c' ,
+                'NSP_Case_Contacts__c.Id' ,
+            ]
         }
-        if ( this.lastUpdatedTimestamp && this.hasData ) {
-            this.currentTimestamp = new Date();
+    )
+    listInfo( response ) {
+        this.relatedWireResult = response;
+        if ( response ) {
+            const { error, data } = response;
+            if ( data ) {
+                this.lastUpdatedTimestamp = new Date();
+                this.getACRDataDetails();
+            } else if ( error ) {
+                this.acrDetailsError = error;
+                this.lastUpdatedTimestamp = undefined;
+            }
+        }
+    }
+
+    getACRDataDetails() {
+        getACRDetails({ caseId: this.recordId })
+            .then(result => {
+                this.acrDetailsData = result;
+                this.lastUpdatedTimestamp = new Date();
+                this.isViewAll = false;
+                this.handleLastUpdatedInterval();
+            })
+            .catch(err => {
+                this.acrDetailsError = err;
+                this.lastUpdatedTimestamp = undefined;
+            });
+
+    }
+
+    handleLastUpdatedInterval() {
+        this.currentTimestamp = new Date();
+        if ( !this.intervalId ) {
             this.intervalId = setInterval(
                 function() {
                     this.currentTimestamp = new Date();
@@ -55,12 +88,33 @@ export default class CaseAccountContactRelationships extends LightningElement {
         }
     }
 
+    handleSort( event ) {
+        if ( event?.detail) {
+            this.sortedBy = event.detail.fieldName;
+            this.sortedDirection = event.detail.sortDirection;
+            this.sortData();
+        }
+    }
+
+    sortData() {
+        if ( this.acrDetailsData && this.sortedBy && this.sortedDirection ) {
+            const isReverse = ( ( this.sortedDirection === 'asc' ) ? 1 : -1 );
+            const cloneData = [...this.acrDetailsData];
+            cloneData.sort( ( a , b ) => {
+                const x = ( a[this.sortedBy] ? a[this.sortedBy] : '' );
+                const y = ( b[this.sortedBy] ? b[this.sortedBy] : '' );
+                return ( isReverse * ( ( x > y ) - ( y > x ) ) );
+            });
+            this.acrDetailsData = cloneData;
+        }
+    }
+
     handleViewAll() {
-       this.displayDataList = this.acrDetailsData;
+       this.isViewAll = true;
     }
 
     handleRefresh() {
-        refreshApex( this.wireData );
+        this.getACRDataDetails();
     }
 
     get hasData() {
@@ -84,7 +138,7 @@ export default class CaseAccountContactRelationships extends LightningElement {
     }
 
     get lastUpdatedSummary() {
-        return ( this.hasSummaryTimestamps ? " • Updated " + this.lastUpdatedFriendly + " ago" : "" );
+        return ( this.secondsSinceLastUpdate >= 0 ? " • Updated " + this.lastUpdatedFriendly + " ago" : "" );
     }
 
     get lastUpdatedFriendly() {
@@ -121,6 +175,19 @@ export default class CaseAccountContactRelationships extends LightningElement {
 
     get hasSummaryTimestamps() {
         return ( this.currentTimestamp && this.lastUpdatedTimestamp );
+    }
+
+    // data table helpers...
+
+    get displayDataList() {
+        let response = this.acrDetailsData;
+        if ( !this.isViewAll && this.acrDetailsData ) {
+            response = this.acrDetailsData.filter( rec => rec.isPrimary );
+        }
+        if ( !response || ( response.length === 0 ) ) {
+            response = this.acrDetailsData;
+        }
+        return response;
     }
 
     // dynamic style class helpers...

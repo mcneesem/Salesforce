@@ -1,0 +1,94 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400">
+    <tr valign="top" height="400">
+        <td tEditID="c1r1" style="background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0">
+            <![CDATA[
+            <p class="MsoNormal" style="">
+                <font face="Arial, sans-serif" size="4">
+                    <span style="line-height: 18.4px;">Hi&nbsp;</span>
+                    <span style="line-height: 18.4px;">{!Contact.NSP_Preferred_First_Name__c},</span>
+                </font>
+            </p>
+            <p class="MsoNormal" style="">
+                <font face="Arial, sans-serif" size="4"><br>
+                    The annual benefits open enrollment is upon us.<br><br>
+                    To properly configure the isolved system, we need to partner with you to gather specific information after you approve the renewal from your broker. Most of this information is contained in the Benefit Summary Plan document.<br><br>
+                    Based on our records, your benefits plan year begins on <span style="color: red;">{Benefits Renewal Date}</span>. Please advise whether the isolved open enrollment portal is needed or if an admin will enter the benefits.<br><br>
+                </font>
+            </p>
+            <div style="">
+                <p class="MsoNormal" style="">
+                    <span style="line-height: 115%;">
+                        <font face="Arial, sans-serif" size="4">
+                            Below is the information that I will need from you as soon as possible but no later than 14 days before your open enrollment period; a delay in receiving this information in full can shorten the amount of time isolved can be used for Open Enrollment:&nbsp;
+                        </font>
+                    </span>
+                </p>
+            </div>
+            <div style="color: rgb(0, 0, 0);">
+                <ul type="disc">
+                    <li class="MsoNormal" style="line-height:normal;">
+                        <font face="Arial, sans-serif" size="4">
+                            Most importantly, Preferred Start and Stop dates for your open enrollment portal
+                        </font>
+                    </li>
+                    <li class="MsoNormal" style="line-height:normal;">
+                        <font face="Arial, sans-serif" size="4">
+                            Rates - We need the rates associated with each plan and coverage level
+                        </font>
+                    </li>
+                    <li class="MsoNormal" style="line-height:normal;">
+                        <font face="Arial, sans-serif" size="4">
+                            Contribution Strategy - percent or flat rate employer is offering towards Employee Only monthly coverage and contribution strategy for all dependent cost
+                        </font>
+                    </li>
+                    <li class="MsoNormal" style="line-height:normal;">
+                        <font face="Arial, sans-serif" size="4">
+                            For new offerings: Plan Type - (Medical, Dental, Vision, Employee Life… etc.), new Eligibility Rule criteria - (FT, Active, Salary, Hourly… etc.)
+                        </font>
+                    </li>
+                    <li class="MsoNormal" style="line-height:normal;">
+                        <font face="Arial, sans-serif" size="4">
+                            Correspondence - Documents, forms, links, or summary of benefits for employees to access as they navigate through the portal
+                        </font>
+                    </li>
+                    <li class="MsoNormal" style="line-height:normal;">
+                        <font face="Arial, sans-serif" size="4">
+                            Preferred Plan Name(s) - Employees will see this and need to understand what it is
+                        </font>
+                    </li>
+                    <li class="MsoNormal" style="line-height:normal;">
+                        <font face="Arial, sans-serif" size="4">
+                            Updated group structures for EDI file feed mapping if applicable
+                        </font>
+                    </li>
+                </ul>
+            </div>
+            <font face="Arial, sans-serif" size="4">
+                I would be happy to schedule a call and answer any questions about the open enrollment checklist. Please let me know your availability, and I will schedule a time for us.<br><br>Thanks for your attention.
+            </font>
+            <div style="">
+                <font face="Arial, sans-serif" size="4">
+                    <br><span style="line-height: 115%;">&nbsp;</span><b>Note:</b><br>
+                    <p class="MsoNormal" style="">
+                        <span style="line-height: 115%;">
+                            <font size="4" face="Arial, sans-serif">
+                                If you have monthly rate overrides, these must be manually adjusted before the first paycheck of the new plan year.
+                            </font>
+                        </span>
+                    </p>
+                </font>
+                <div style="color: rgb(0, 0, 0);">
+                    <ul>
+                        <li>
+                            <font face="Arial, sans-serif" size="4">
+                                The weekly carrier feeds will be paused beginning with the start of your open enrollment period through the remainder of the plan year. Please update all non-open enrollment eligibility changes that are entered into isolved directly with your broker or carrier.
+                            </font>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <p style="font-size: 12pt; font-family: arial; color: rgb(0, 0, 0);"></p>
+            ]]>
+        </td>
+    </tr>
+</table>

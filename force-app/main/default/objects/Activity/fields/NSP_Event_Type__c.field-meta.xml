@@ -29,6 +29,11 @@
                 <default>false</default>
                 <label>Demo</label>
             </value>
+            <value>
+                <fullName>Core Service</fullName>
+                <default>false</default>
+                <label>Core Service</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

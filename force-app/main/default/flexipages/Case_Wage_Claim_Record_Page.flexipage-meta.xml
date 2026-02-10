@@ -1109,6 +1109,16 @@
                 <identifier>RecordSuppliedEmailField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Product_Solution__c</fieldItem>
+                <identifier>RecordProduct_Solution_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-a411c097-a200-4cdc-97f6-49c46b3996ad</name>
         <type>Facet</type>
     </flexiPageRegions>

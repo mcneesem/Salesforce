@@ -1,0 +1,77 @@
+<template>
+    <template lwc:if={record}>
+        <lightning-layout multiple-rows>
+            <lightning-layout-item size="12" padding="around-small">
+                <lightning-layout onclick={handleClick} onkeydown={handleKeyDown}>
+                    <lightning-layout-item size={titleSize}>
+                        <template lwc:if={isParent}>
+                            <template lwc:if={hasBody}>
+                                <template lwc:if={showBody}>
+                                    <lightning-icon icon-name="utility:chevrondown" size="xx-small" alternative-text="Indicates Guidance"></lightning-icon>&nbsp;
+                                </template>
+                                <template lwc:else>
+                                    <lightning-icon icon-name="utility:chevronright" size="xx-small" alternative-text="Indicates Guidance"></lightning-icon>&nbsp;
+                                </template>
+                            </template>
+                            <template lwc:else>
+                                <lightning-icon icon-name="utility:chevronright" size="xx-small" alternative-text="Indicates Guidance"></lightning-icon>&nbsp;
+                            </template>
+                        </template>
+                        {record.fields.Name.value}
+                    </lightning-layout-item>
+                    <template lwc:if={isParent}>
+                        <lightning-layout-item size="2">
+                            <lightning-formatted-date-time
+                                value={record.fields.Due_Date__c.value}
+                                month="2-digit"
+                                day="2-digit"
+                                year="numeric"
+                                time-zone="UTC"
+                                >
+                            </lightning-formatted-date-time>
+                        </lightning-layout-item>
+                    </template>
+                    <lightning-layout-item size="3">
+                        <template lwc:if={showFileUpload}>
+                            <lightning-file-upload
+                                label={record.fields.Action__c.value}
+                                name="fileUploader"
+                                record-id={record.fields.Id.value}
+                                onuploadfinished={handleUploadFinished}
+                                multiple
+                                variant="label-hidden"
+                                >
+                            </lightning-file-upload>
+                        </template>
+                        <template lwc:else>
+                            {record.fields.Action__c.value}
+                        </template>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="1">
+                        <lightning-icon icon-name="utility:form" size="xx-small" alternative-text="Uploaded Files"></lightning-icon>&nbsp;({totalRelatedFiles})
+                    </lightning-layout-item>
+                    <lightning-layout-item size="1">
+                        <template lwc:if={isCompleted}>
+                            <lightning-icon icon-name="utility:check" size="xx-small" variant="success" alternative-text="Indicates Completed"></lightning-icon>
+                        </template>
+                        <template lwc:else>
+                            <lightning-icon icon-name="utility:clock" size="xx-small" alternative-text="Indicates Pending"></lightning-icon>
+                        </template>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+            <template lwc:if={hasBody}>
+                <template lwc:if={showBody}>
+                    <lightning-layout-item size="12" padding="around-medium">
+                        <template lwc:if={hasGuidance}>
+                            PENDING GUIDANCE
+                        </template>
+                        <template lwc:if={isParent}>
+                            <c-portal-task-list variant="child" record-id={record.fields.Id.value}></c-portal-task-list>
+                        </template>
+                    </lightning-layout-item>
+                </template>
+            </template>
+        </lightning-layout>
+    </template>
+</template>

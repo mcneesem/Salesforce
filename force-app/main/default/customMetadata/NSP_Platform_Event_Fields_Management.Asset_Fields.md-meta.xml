@@ -8,6 +8,6 @@
     </values>
     <values>
         <field>NSP_Fields__c</field>
-        <value xsi:type="xsd:string">NSP_Substance_Abuse_Policy__c;NSP_IES_e_Verify_Client__c;NSP_Minor_Job_Position__c;NSP_Client__c;RecordTypeId;Status;I_9_Availability__c;E_Verify_Services__c</value>
+        <value xsi:type="xsd:string">NSP_Substance_Abuse_Policy__c;NSP_IES_e_Verify_Client__c;NSP_Minor_Job_Position__c;NSP_Client__c;RecordTypeId;Status;I_9_Availability__c;E_Verify_Services__c;I_9_Assist__c</value>
     </values>
 </CustomMetadata>

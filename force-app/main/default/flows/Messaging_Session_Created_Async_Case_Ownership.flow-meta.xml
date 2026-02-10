@@ -74,7 +74,7 @@
             <field>OwnerId</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>00GOz00000BMZgkMAH</stringValue>
+                <stringValue>00GPb00000VFSBqMAP</stringValue>
             </value>
         </filters>
         <object>MessagingSession</object>

@@ -1,77 +1,28 @@
-// 2022-10-20 ~ Virendra Kumar
-global class NSP_SubClientAssetStateSyncJob implements Database.Batchable<sObject>, Schedulable {
-    // test w/ NSP_SubClientAssetSyncJob_Test (93%)
+public with sharing class NSP_SubClientAssetStateSyncJob implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<sObject> {
+    // test w/ NSP_SubClientAssetSyncJob_Test (90%)
 
-    global NSP_SubClientAssetStateSyncJob() {
-        // intentionally blank...
+    //
+    // argument-free constructor is required to be "runnable"...
+    //
+
+    public NSP_SubClientAssetStateSyncJob() {
     }
 
     //
-    // Batchable
+    // ISelfSchedulable
     //
 
-    global Database.QueryLocator start( Database.BatchableContext bc ) {
-        DateTime last4Hours = system.now().addHours( -4 );
-        //Get sub client contact history records
-        return Database.getqueryLocator(
-            [
-                SELECT Id , OldValue , NewValue , Field , DataType ,
-                ParentId , Parent.NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Asset__c
-                FROM NSP_Sub_Client_Contact_Address__History
-                WHERE (
-                    ( CreatedDate >= :last4Hours )
-                    AND ( Field = 'NSP_Address_State_Changed_Date__c' )
-                )
-            ]
+    // runs M-F every 4 hours...
+    public static String schedule() {
+        String suffix = '';
+        if ( Test.isRunningTest() ) {
+            suffix = ' ~ TEST';
+        }
+        return System.schedule(
+            'NSP_SubClientAssetStateSyncJob ~ When Paid/NonPaid, Employee Status and State fields in sub client contact Address are updated, then it will rollup updated values in Sub Client and Asset level ~ M-F every 4 hours' + suffix ,
+            '0 0 0,4,8,12,16,20 ? * MON-FRI *' ,
+            new NSP_SubClientAssetStateSyncJob()
         );
-    }
-
-    global void execute( Database.BatchableContext bc , List<NSP_Sub_Client_Contact_Address__History> scope ) {
-        Set<Id> setOfParentIds = New Set<Id>();
-        Set<Id> setSubClient = new Set<Id>();
-        Map<Id, Boolean> ismapSubClientUnionStatus = new Map<Id, Boolean>();        
-        List<NSP_Sub_Client__c> subClientHasUnionToBeUpdated = new List<NSP_Sub_Client__c>();
-        List<Asset> assetHasUnionToBeUpdated = new List<Asset>();
-        //collect all sub client Contact where NSP_Employee_Status__c Or NSP_Paid_Non_Paid__c or NSP_Union_Employee__c is changed
-        for(NSP_Sub_Client_Contact_Address__History existingSubClientConAddress : scope ) {  
-            If(String.valueof(existingSubClientConAddress.ParentId).startsWith(Label.NSP_Sub_Client_Contact_Address_Initial)) {
-                setOfParentIds.Add(existingSubClientConAddress.Parent.NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Asset__c);
-            }
-        }
-        if(!setOfParentIds.isEmpty()) {
-            system.debug('setOfParentIds' + setOfParentIds);
-            Map<Id,NSP_Sub_Client__c> existingSubClients = new Map<Id,NSP_Sub_Client__c>(
-                [
-                    SELECT Id
-                    FROM NSP_Sub_Client__c
-                    WHERE ( NSP_Asset__c = :setOfParentIds )
-                ]
-            );
-            if(!existingSubClients.isEmpty()) {
-                //Get details for sub client contact where sub client != null
-                List<NSP_Sub_Client_Contact__c> subClientContact = [
-                    SELECT Id , NSP_Sub_Client__c , NSP_Paid_Non_Paid__c , NSP_Employee_Status__c , NSP_Union_Employee__c
-                    FROM NSP_Sub_Client_Contact__c
-                    WHERE ( NSP_Sub_Client__c = :existingSubClients.keyset() )
-                ];
-                system.debug('subClientContact' + subClientContact);
-                try {            
-                    if(subClientContact.size() > 0){
-                        updateStateOfOperation(subClientContact, existingSubClients, setOfParentIds);
-                    }
-                } catch ( Exception e ) {
-                    NSP_ErrorLogHandler.logException(
-                        NSP_SubClientAssetStateSyncJob.class.getName() ,
-                        'execute' ,
-                        e
-                    );
-                }
-            }
-        }
-    }
-
-    global void finish( Database.BatchableContext bc ) {
-        // intentionally blank...
     }
 
     //
@@ -79,23 +30,126 @@ global class NSP_SubClientAssetStateSyncJob implements Database.Batchable<sObjec
     //
 
     public void execute( SchedulableContext sc ) {
+        this.call( 'run' , null );
+    }
+
+    //
+    // Callable
+    //
+
+    public Object call( String action , Map<String,Object> args ) {
+        Object response = null;
+        if ( action == 'run' ) {
+            response = this.run();
+        }
+        return response;
+    }
+
+    //
+    // IJobRunnable
+    //
+
+    public Id run() {
+        Id response = null;
         if ( NSP_SubClientAssetStateSyncJob.isEnabled ) {
-            Database.executeBatch(
+            response = Database.executeBatch(
                 new NSP_SubClientAssetStateSyncJob() ,
                 NSP_SubClientAssetStateSyncJob.batchSize
             );
         }
+        return response;
     }
 
-    public static String schedule() {
-        return System.schedule(
-            NSP_SubClientAssetStateSyncJob.class.getName()
-                + ' ~ When Paid/NonPaid, Employee Status and State fields in sub client contact Address are updated, then it will rollup updated values in Sub Client and Asset level'
-                + ' ~ Schedule to run weekdays every 4 hours'
-                + ( Test.isRunningTest() ? ' ~ TEST' : '' ) ,
-            '0 0 0,4,8,12,16,20 ? * MON-FRI' , // weekdays every 4 hours...
-            new NSP_SubClientAssetStateSyncJob()
+    //
+    // Batchable
+    //
+
+    public Database.QueryLocator start( Database.BatchableContext bc ) {
+        Set<Id> assetIds = new Set<Id>();
+        DateTime last4Hours = System.now().addHours( -4 );
+        List<NSP_Sub_Client_Contact_Address__History> changes = [
+            SELECT
+                Id ,
+                OldValue ,
+                NewValue ,
+                Field ,
+                DataType ,
+                ParentId ,
+                Parent.NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Asset__c
+            FROM NSP_Sub_Client_Contact_Address__History
+            WHERE (
+                ( CreatedDate >= :last4Hours )
+                AND ( Field = 'NSP_Address_State_Changed_Date__c' )
+                AND ( ParentId != null )
+                AND ( Parent.NSP_Sub_Client_Contact__c != null )
+                AND ( Parent.NSP_Sub_Client_Contact__r.NSP_Sub_Client__c != null )
+                AND ( Parent.NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Asset__c != null )
+            )
+        ];
+        // collect all Assets with modififed related NSP_Sub_Client_Contact_Address__c records...
+        for ( NSP_Sub_Client_Contact_Address__History existingSubClientConAddress : changes ) {
+            assetIds.add( existingSubClientConAddress.Parent.NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Asset__c );
+        }
+        // start the batch with the Assets that need to be re-evaluated...
+        return Database.getqueryLocator(
+            [
+                SELECT Id
+                FROM Asset
+                WHERE ( Id IN :assetIds )
+            ]
         );
+    }
+
+    public void execute( Database.BatchableContext bc , List<Asset> scope ) {
+        try {
+            Set<Id> assetIds = new Set<Id>();
+            for ( Asset record : scope ) {
+                assetIds.add( record.Id );
+            }
+            this.handleAssets( assetIds );
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_SubClientAssetStateSyncJob.class.getName() ,
+                'execute' ,
+                e
+            );
+        }
+    }
+
+    private void handleAssets( Set<Id> assetIds ) {
+        if ( ( assetIds != null ) && !assetIds.isEmpty() ) {
+            Map<Id,NSP_Sub_Client__c> existingSubClients = new Map<Id,NSP_Sub_Client__c>(
+                [
+                    SELECT Id
+                    FROM NSP_Sub_Client__c
+                    WHERE ( NSP_Asset__c = :assetIds )
+                ]
+            );
+            if ( !existingSubClients.isEmpty() ) {
+                //Get details for sub client contact where sub client != null
+                List<NSP_Sub_Client_Contact__c> subClientContact = [
+                    SELECT
+                        Id ,
+                        NSP_Sub_Client__c ,
+                        NSP_Paid_Non_Paid__c ,
+                        NSP_Employee_Status__c ,
+                        NSP_Union_Employee__c
+                    FROM NSP_Sub_Client_Contact__c
+                    WHERE ( NSP_Sub_Client__c = :existingSubClients.keyset() )
+                ];
+                if ( !subClientContact.isEmpty() ) {
+                    NSP_SubClientAssetStateSyncJob.updateStateOfOperation(
+                        subClientContact ,
+                        existingSubClients ,
+                        assetIds
+                    );
+                }
+            }
+        }
+    }
+
+    public void finish( Database.BatchableContext bc ) {
+        // intentionally blank...
     }
 
     //
@@ -183,18 +237,7 @@ global class NSP_SubClientAssetStateSyncJob implements Database.Batchable<sObjec
     // Description : This method is used to Update State of Operation field on Asset and Sub Client based on State under SCCA.
     // Params:       List<NSP_Sub_Client_Contact__c> subClientContact
     // ********************************************************************************************
-    public static void testUpdateStateOfOperation(
-        List<NSP_Sub_Client_Contact__c> subClientContact ,
-        Map<Id,NSP_Sub_Client__c> existingSubClients ,
-        Set<Id> setOfParentIds
-    )
-    {
-        // added for code coverage in 09-Aug RC2 release...
-        if ( Test.isRunningTest() ) {
-            updateStateOfOperation( subClientContact, existingSubClients, setOfParentIds );
-        }
-    }
-    public static void updateStateOfOperation(
+    private static void updateStateOfOperation(
         List<NSP_Sub_Client_Contact__c> subClientContact ,
         Map<Id,NSP_Sub_Client__c> existingSubClients ,
         Set<Id> setOfParentIds
@@ -209,7 +252,7 @@ global class NSP_SubClientAssetStateSyncJob implements Database.Batchable<sObjec
             SELECT
             Id , NSP_Sub_Client_Contact__r.NSP_Sub_Client__r.NSP_Asset__c , NSP_Address_Type__c ,
             NSP_State__c , NSP_Sub_Client_Contact__c , NSP_Sub_Client_Contact__r.NSP_Sub_Client__c
-            FROM NSP_Sub_Client_Contact_Address__c 
+            FROM NSP_Sub_Client_Contact_Address__c
             WHERE (
                 NSP_Sub_Client_Contact__c = :subClientContact
                 AND NSP_Sub_Client_Contact__r.NSP_Sub_Client__c != null
@@ -219,7 +262,6 @@ global class NSP_SubClientAssetStateSyncJob implements Database.Batchable<sObjec
             )
             LIMIT :NSP_SubClientAssetStateSyncJob.soqlAddressLimit
         ];
-        
         for(NSP_Sub_Client_Contact_Address__c subClientConAddress : subClientConAddresses ) {
             if(subClientByStates.containsKey(subClientConAddress.NSP_Sub_Client_Contact__r.NSP_Sub_Client__c)) {
                 String states = subClientByStates.get(subClientConAddress.NSP_Sub_Client_Contact__r.NSP_Sub_Client__c);

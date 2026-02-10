@@ -23,6 +23,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Portal_Pay_Period__c.Implementation_Pay_Period__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Portal_Pay_Period__c.Pay_Frequency__c</field>
         <readable>true</readable>
     </fieldPermissions>

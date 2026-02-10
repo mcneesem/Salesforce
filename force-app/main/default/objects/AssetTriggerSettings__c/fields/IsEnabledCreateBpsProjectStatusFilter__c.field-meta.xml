@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsEnabledCreateBpsProjectStatusFilter__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>AZD-516451 , Kill Switch to bypass the Account Status when Creating Project. ref Class ~ NSP_AssetServiceHelper</description>
+    <inlineHelpText>Kill Switch to bypass the Account Status when Creating Project</inlineHelpText>
+    <label>IsEnabledCreateBpsProjectStatusFilter</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

@@ -1,0 +1,47 @@
+<template>
+    <template lwc:if={recordId}>
+        <lightning-layout multiple-rows>
+            <lightning-layout-item size="12" medium-device-size="8">
+                <lightning-layout multiple-rows>
+                    <lightning-layout-item size="12" padding="around-small">
+                        <lightning-card title="Pre-Transition Setup">
+                            <c-portal-task-list type="Pre-Transition Setup" record-id={recordId}></c-portal-task-list>
+                        </lightning-card>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="around-small">
+                        <lightning-card title="Company Setup">
+                            <c-portal-task-list type="Company Setup" record-id={recordId}></c-portal-task-list>
+                        </lightning-card>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="around-small">
+                        <lightning-card title="Employee Setup">
+                            <c-portal-task-list type="Employee Setup" record-id={recordId}></c-portal-task-list>
+                        </lightning-card>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="around-small">
+                        <lightning-card title="System Setup">
+                            <c-portal-task-list type="System Setup" record-id={recordId}></c-portal-task-list>
+                        </lightning-card>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" medium-device-size="4">
+                <lightning-layout multiple-rows>
+                    <template lwc:if={showMeetingCalendar}>
+                        <lightning-layout-item size="12" padding="around-small">
+                            PENDING MEETING CALENDAR
+                        </lightning-layout-item>
+                    </template>
+                    <template lwc:if={showMeetingList}>
+                        <lightning-layout-item size="12" padding="around-small">
+                            PENDING MEETING LIST
+                        </lightning-layout-item>
+                    </template>
+                    <lightning-layout-item size="12" padding="around-small">
+                        PENDING RESOURCES
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+        </lightning-layout>
+    </template>
+</template>

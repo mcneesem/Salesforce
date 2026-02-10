@@ -693,8 +693,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_State_of_Incorporation_Formation__c</fieldItem>
-                <identifier>RecordNSP_State_of_Incorporation_Formation_cField2</identifier>
+                <fieldItem>Record.Transitioning_Client__c</fieldItem>
+                <identifier>RecordTransitioning_Client_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>

@@ -847,6 +847,16 @@
                 <identifier>RecordNSP_SR_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Product_Solution__c</fieldItem>
+                <identifier>RecordProduct_Solution_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-92c0324c-02d1-400a-a2eb-87e257873fc0</name>
         <type>Facet</type>
     </flexiPageRegions>
