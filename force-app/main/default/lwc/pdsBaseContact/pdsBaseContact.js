@@ -25,39 +25,31 @@ export default class PdsBaseContact extends LightningElement {
         return [{ name: 'recordId', type: 'String', value: this.recordId }];
     }
 
+    // helper to normalize wire responses for count wires
+    applyCountWireResult({ data, error }) {
+        this.loading = true;
+        if (data !== undefined && data !== null) {
+            this.showFlow = (data) > 1;
+            this.loading = false;
+        } else if (error) {
+            this.showFlow = false;
+            this.loading = false;
+        }
+    }
+
     // Wire to SCCHR count; only act when this.apexMethodApiName selects it
     @wire(getSCCHRCount, { recordId: '$recordId' })
     wiredGetSCCHR(result) {
-        if (this.apexMethodApiName !== 'getSCCHRCount') {
-            return;
-        }
-        const { data, error } = result;
-        this.loading = true;
-        if (data !== undefined && data !== null) {
-            this.showFlow = data > 1;
-            this.loading = false;
-        } else if (error) {
-            // console.error('getSCCHRCount error', error);
-            this.showFlow = false;
-            this.loading = false;
+        if (this.apexMethodApiName === 'getSCCHRCount') {
+           this.applyCountWireResult(result);
         }
     }
 
     // Wire to SCCPC count; only act when this.apexMethodApiName selects it
     @wire(getSCCPCCount, { recordId: '$recordId' })
     wiredGetSCCPC(result) {
-        if (this.apexMethodApiName !== 'getSCCPCCount') {
-            return;
-        }
-        const { data, error } = result;
-        this.loading = true;
-        if (data !== undefined && data !== null) {
-            this.showFlow = data > 1;
-            this.loading = false;
-        } else if (error) {
-            // console.error('getSCCPCCount error', error);
-            this.showFlow = false;
-            this.loading = false;
+        if (this.apexMethodApiName === 'getSCCPCCount') {
+            this.applyCountWireResult(result);
         }
     }
 
