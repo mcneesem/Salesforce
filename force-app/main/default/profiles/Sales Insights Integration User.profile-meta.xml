@@ -13678,10 +13678,6 @@
     </flowAccesses>
     <flowAccesses>
         <enabled>false</enabled>
-        <flow>Update_Account_Description_on_Lead_Conversion</flow>
-    </flowAccesses>
-    <flowAccesses>
-        <enabled>false</enabled>
         <flow>Update_Account_on_Child_Opportunities</flow>
     </flowAccesses>
     <flowAccesses>
