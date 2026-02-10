@@ -29,12 +29,6 @@
                 label="Selected End DateTime"
                 role="outputOnly" />
 
-            <property
-                name="stepMinutes"
-                type="Integer"
-                label="Step Minutes"
-                role="outputOnly" />
-
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

@@ -13,7 +13,6 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
     @api skill;
     @api startDT;
     @api endDT;
-    @api stepMinutes;
     isCreatingEvent = false;
 
     // Store raw matrix from Apex directly (6 rows × N columns)
@@ -83,7 +82,6 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
 
     // Matrix data for the 6 time slots × 7 business days
     @wire(getAggregateCountsMatrix, {
-        stepMinutes: 30,
         skill: '$skill'
     })
     wiredMatrix({ data, error }) {
@@ -140,11 +138,9 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
         const data = await userIds({
             startDT: this.startDT,
             endDT: this.endDT,
-            skill: this.skill,
-            stepMinutes: this.stepMinutes
+            skill: this.skill
         });
 
-        console.log('userIds: ', data);
         this.singleUserIds = data.join(','); // Store userIds in the exposed property
         this.error = undefined;
 

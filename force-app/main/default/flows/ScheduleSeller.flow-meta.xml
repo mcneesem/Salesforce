@@ -29,12 +29,6 @@
                 <elementReference>Seller.startDT</elementReference>
             </value>
         </inputParameters>
-        <inputParameters>
-            <name>stepMinutes</name>
-            <value>
-                <elementReference>Seller.stepMinutes</elementReference>
-            </value>
-        </inputParameters>
         <nameSegment>UserAvailabilityFlow</nameSegment>
         <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>

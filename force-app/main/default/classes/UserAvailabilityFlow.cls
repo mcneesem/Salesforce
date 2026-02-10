@@ -1,4 +1,5 @@
 public with sharing class UserAvailabilityFlow {
+
     @InvocableMethod(label='Get Available Users')
     public static List<List<Id>> getUsers(List<UserAvailabilityInput> inputs) {
         UserAvailabilityInput i = null;
@@ -9,10 +10,8 @@ public with sharing class UserAvailabilityFlow {
         List<Id> userIds = UserAvailabilityService.getAvailableUsersForWindow(
             i.startDT,
             i.endDT,
-            i.skill,
-            i.stepMinutes
+            i.skill
         );
-        System.debug('userIds: '+userIds);
         return new List<List<Id>>{userIds};
     }
 }

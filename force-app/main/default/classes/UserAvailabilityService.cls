@@ -110,9 +110,9 @@ public with sharing class UserAvailabilityService {
     }
 
     //Calculates how many available slots the user has by creating events and leveraging existing existing calculation
-    public static List<List<Integer>> getCountsMatrix(Id userId, Integer stepMinutes) {
+    public static List<List<Integer>> getCountsMatrix( Id userId ) {
         Id effectiveUserId = (userId == null) ? UserInfo.getUserId() : userId;
-        Integer step = (stepMinutes == null) ? 30 : stepMinutes;
+        Integer step = 30;
         List<List<Integer>> listSizeMatrix = new List<List<Integer>>();
         // Get the business days matrix structure
         DaysMatrix daysOfWeek = UserAvailabilityService.getBusinessDaysMatrix();
@@ -176,7 +176,7 @@ public with sharing class UserAvailabilityService {
     }
     //Get total availability of users that are added to the Schedule Seller Permission Set
     @AuraEnabled(cacheable=true)
-    public static List<List<Integer>> getAggregateCountsMatrix( Integer stepMinutes, String skill ) {
+    public static List<List<Integer>> getAggregateCountsMatrix( String skill ) {
         List<List<Integer>> listSizeMatrix = new List<List<Integer>>();
         List<Integer> countsPerWindow = new List<Integer>();
         // Build business day/time windows
@@ -198,7 +198,7 @@ public with sharing class UserAvailabilityService {
                 }
                 windowStart = startDays[0];
                 windowEnd   = endDays[endDays.size() - 1];
-            } 
+            }
         }
         // Identify users with Schedule Seller Custom Permission
         Map<Id,User> skilledUsers = CustomPermissionController.getPermittedUsersMap( skill );
@@ -232,7 +232,7 @@ public with sharing class UserAvailabilityService {
                 }
             }
         }
-        countsPerWindow = getAggregateAvailableSlots( windows, userIds, busyByUser, stepMinutes );
+        countsPerWindow = getAggregateAvailableSlots( windows, userIds, busyByUser );
         listSizeMatrix = convertToMatrix(countsPerWindow);
         return listSizeMatrix;
     }
@@ -240,15 +240,14 @@ public with sharing class UserAvailabilityService {
     private static List<Integer> getAggregateAvailableSlots(
         List<Event> windows,
         Set<Id> userIds,
-        Map<Id, List<Event>> busyByUser,
-        Integer stepMinutes
+        Map<Id, List<Event>> busyByUser
     )
     {
         // Use existing availability algorithm, summing per-user counts per window
         UserAvailability calc = new UserAvailability();
         // Collect integer counts per window
         List<Integer> countsPerWindow = new List<Integer>();
-        Integer step = (stepMinutes == null) ? 30 : stepMinutes;
+        Integer step = 30;
         if( !windows.isEmpty() && !userIds.isEmpty() ) {
             for (Event windowEvt : windows) {
                 Integer totalForWindow = 0;
@@ -291,8 +290,7 @@ public with sharing class UserAvailabilityService {
     public static List<Id> getAvailableUsersForWindow(
         Datetime startDT,
         Datetime endDT,
-        String skill,
-        Integer stepMinutes
+        String skill
     ) {
         List<Id> availableUsers = new List<Id>();
         Map<Id, List<Event>> busyByUser = new Map<Id, List<Event>>();
@@ -328,7 +326,7 @@ public with sharing class UserAvailabilityService {
 
         // Only compute availability if we have a valid window and eligible users
         if (validWindow && userIds != null && !userIds.isEmpty()) {
-            Integer step = (stepMinutes == null || stepMinutes <= 0) ? 30 : stepMinutes;
+            Integer step = 30;
 
             UserAvailability calc = new UserAvailability();
             Event windowEvt = new Event(StartDateTime = startDT, EndDateTime = endDT);
