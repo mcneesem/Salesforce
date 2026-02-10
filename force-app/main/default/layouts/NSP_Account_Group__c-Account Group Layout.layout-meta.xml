@@ -115,12 +115,9 @@
         <fields>NAME</fields>
         <fields>Account.NAME</fields>
         <fields>NSP_AIMS_Client_ID__c</fields>
-        <fields>NSP_Insperity_Client__c</fields>
         <fields>NSP_Primary__c</fields>
         <fields>NSP_Type__c</fields>
         <fields>NSP_Enter_Date__c</fields>
-        <fields>NSP_Hicomp_EEs__c</fields>
-        <fields>NSP_Total_EEs__c</fields>
         <fields>NSP_Payroll_Employees__c</fields>
         <relatedList>NSP_Account_Group_Member__c.NSP_Group__c</relatedList>
     </relatedLists>

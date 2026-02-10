@@ -1175,6 +1175,16 @@
                 <identifier>RecordI_9_Availability_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.I_9_Assist__c</fieldItem>
+                <identifier>RecordI_9_Assist__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-d1feaae4-31b2-4172-9cab-8ba7abdab35e</name>
         <type>Facet</type>
     </flexiPageRegions>

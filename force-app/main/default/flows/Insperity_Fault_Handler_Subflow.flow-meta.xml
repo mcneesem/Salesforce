@@ -5,7 +5,7 @@
         <name>Send_Email</name>
         <label>Send Email</label>
         <locationX>50</locationX>
-        <locationY>758</locationY>
+        <locationY>458</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <faultConnector>
@@ -37,30 +37,15 @@
             </value>
         </inputParameters>
         <nameSegment>emailSimple</nameSegment>
-        <versionSegment>1</versionSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>56.0</apiVersion>
-    <assignments>
-        <name>Copy_Triggering_Flow_Input</name>
-        <label>Copy Triggering Flow Input</label>
-        <locationX>182</locationX>
-        <locationY>242</locationY>
-        <assignmentItems>
-            <assignToReference>faultFlow</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>triggeringFlow</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Set_Log_Attributes</targetReference>
-        </connector>
-    </assignments>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Set_Log_Attributes</name>
         <label>Set Log Attributes</label>
         <locationX>314</locationX>
-        <locationY>434</locationY>
+        <locationY>134</locationY>
         <assignmentItems>
             <assignToReference>faultLog.FaultElement__c</assignToReference>
             <operator>Assign</operator>
@@ -126,7 +111,7 @@
         <name>Set_Self_Faulted</name>
         <label>Set Self-Faulted</label>
         <locationX>314</locationX>
-        <locationY>866</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>isSelfFaulted</assignToReference>
             <operator>Assign</operator>
@@ -140,7 +125,7 @@
         <name>Set_Self_Faulted_2</name>
         <label>Set Self-Faulted</label>
         <locationX>842</locationX>
-        <locationY>650</locationY>
+        <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>isSelfFaulted</assignToReference>
             <operator>Assign</operator>
@@ -154,43 +139,10 @@
         </connector>
     </assignments>
     <decisions>
-        <description>Temporary decision path until {!triggeringFlow} is fully deprecated and removed.</description>
-        <name>Check_Inputs</name>
-        <label>Check Inputs</label>
-        <locationX>314</locationX>
-        <locationY>134</locationY>
-        <defaultConnector>
-            <targetReference>Set_Log_Attributes</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Update_Fault_Flow_Input</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>faultFlow</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue></stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>triggeringFlow</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue></stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Copy_Triggering_Flow_Input</targetReference>
-            </connector>
-            <label>Update Fault Flow Input</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Check_Recipients</name>
         <label>Check Recipients</label>
         <locationX>314</locationX>
-        <locationY>650</locationY>
+        <locationY>350</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Has_Recipients</name>
@@ -310,7 +262,7 @@ Sends an email containing fault information.</description>
         <name>Save_Log</name>
         <label>Save Log</label>
         <locationX>314</locationX>
-        <locationY>542</locationY>
+        <locationY>242</locationY>
         <connector>
             <targetReference>Check_Recipients</targetReference>
         </connector>
@@ -324,7 +276,7 @@ Sends an email containing fault information.</description>
         <locationX>188</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Check_Inputs</targetReference>
+            <targetReference>Set_Log_Attributes</targetReference>
         </connector>
     </start>
     <status>Draft</status>
@@ -346,17 +298,6 @@ Sends an email containing fault information.</description>
         <isViewedAsPlainText>true</isViewedAsPlainText>
         <text>{!orgApiName}: Fault Handler: {!faultFlow}</text>
     </textTemplates>
-    <variables>
-        <description>DEPRECATED ~ replaced by Custom Settings</description>
-        <name>faultedOrg</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <stringValue></stringValue>
-        </value>
-    </variables>
     <variables>
         <description>API Name of the Flow Element that hit a Fault Path.</description>
         <name>faultElement</name>
@@ -406,17 +347,6 @@ Sends an email containing fault information.</description>
         <isOutput>false</isOutput>
         <value>
             <booleanValue>false</booleanValue>
-        </value>
-    </variables>
-    <variables>
-        <description>DEPRECATED ~ replaced by faultFlow</description>
-        <name>triggeringFlow</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <stringValue></stringValue>
         </value>
     </variables>
 </Flow>

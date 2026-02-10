@@ -26,6 +26,11 @@ public class NSP_EmailImageController {
         return getDocumentUrl( 'Insperity_HR_Logo' );
     }
 
+    // referenced by InsperityEmailSignature.component...
+    public String getSignatureLogoUrl() {
+        return getDocumentUrl( 'Insperity_HR_Logo' );
+    }
+
     // build the Document Url....
     private String getDocumentUrl( String documentName ) {
         return System.URL.getSalesforceBaseUrl().toExternalForm()

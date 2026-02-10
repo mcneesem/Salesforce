@@ -12,7 +12,7 @@ public with sharing class NSP_EventTriggerHelper {
     private static final String WS_PROPOSAL = 'WS Proposal';
     private static final String EMPTY_STRING = '';
     private static final String WORD_SEPARATOR =  ' : ';
-    private static Id coreSalesEventRecordType = NSP_GenericRecordType.getRecordTypeId( 'Event' , 'Core_Sales_Event_RT' );
+    private static final String RESOURCE_ABSENCE = 'Resource Absence';
 
     // Iterates throught the list of new Event and passes the required attributes to other methods.
     // @param newList List of New Event.
@@ -22,10 +22,19 @@ public with sharing class NSP_EventTriggerHelper {
         if ( ( newList != null ) && !newList.isEmpty() ) {
             for ( Event evt : newList ) {
                 evt.NSP_Last_Assigned_Owner__c = evt.OwnerId; // STY-01774
-                if ( ( evt.WhatId != null ) || ( evt.WhoId != null ) ) {
+                if ( ( evt.WhatId != null )
+                    || ( evt.WhoId != null )
+                    || ( evt.FSL__Event_Type__c == NSP_EventTriggerHelper.RESOURCE_ABSENCE )
+                    )
+                {
                     eventList.add( evt ); // STY-03437
                 }
                 evt.Creator_Title__c = NSP_EventTriggerHelper.userTitle; // ADO-504540
+                Id eventRecordTypeId = NSP_EventTriggerHelper.coreSalesEventRecordType;
+                if ( NSP_EventTriggerHelper.isServiceEvent( evt ) ) {
+                    eventRecordTypeId = NSP_EventTriggerHelper.coreServiceEventRecordType;
+                }
+                evt.RecordTypeId = eventRecordTypeId;
             }
             this.updateEventSales( newList , null );
         }
@@ -120,7 +129,7 @@ public with sharing class NSP_EventTriggerHelper {
     private Set<String> processSubjectSet( Event newEventRecord , Event oldEventRecord , Set<String> subjectSet ) {
         if ( ( subjectSet != null )
             && ( newEventRecord != null )
-            && ( newEventRecord.RecordTypeId == NSP_EventTriggerHelper.eventRecordType )
+            && ( NSP_EventTriggerHelper.isSalesEvent( newEventRecord ) || NSP_EventTriggerHelper.isServiceEvent( newEventRecord ) )
             && ( oldEventRecord != null )
             && ( oldEventRecord.StartDateTime != newEventRecord.StartDateTime || oldEventRecord.EndDateTime != newEventRecord.EndDateTime )
             && ( newEventRecord.WhatId == null && newEventRecord.Type == null )
@@ -135,10 +144,10 @@ public with sharing class NSP_EventTriggerHelper {
     private Map<Id,Event> processRescheduledEventsMap( Event newEventRecord , Event oldEventRecord , Map<Id,Event> rescheduledEventsMap ) {
         if ( ( rescheduledEventsMap != null )
             && ( newEventRecord != null )
-            && ( newEventRecord.RecordTypeId == NSP_EventTriggerHelper.eventRecordType )
+            && ( NSP_EventTriggerHelper.isSalesEvent( newEventRecord ) || NSP_EventTriggerHelper.isServiceEvent( newEventRecord ) )
             && ( oldEventRecord != null )
             && ( oldEventRecord.StartDateTime != newEventRecord.StartDateTime || oldEventRecord.EndDateTime != newEventRecord.EndDateTime )
-            && ( ( newEventRecord.WhatId != null && newEventRecord.FSL__Event_Type__c == 'Resource Absence' )
+            && ( ( newEventRecord.FSL__Event_Type__c == NSP_EventTriggerHelper.RESOURCE_ABSENCE )
                 || ( ( newEventRecord.WhatId == null && newEventRecord.Type == null )
                     && ( newEventRecord.IsRecurrence2 == true || newEventRecord.IsRecurrence == true )
                     )
@@ -148,6 +157,29 @@ public with sharing class NSP_EventTriggerHelper {
             rescheduledEventsMap.put(newEventRecord.Id, newEventRecord);
         }
         return rescheduledEventsMap;
+    }
+
+    private static Boolean isSalesEvent( Event record ) {
+        return (
+            ( record != null )
+            && ( record.RecordTypeId == NSP_EventTriggerHelper.coreSalesEventRecordType )
+        );
+    }
+
+    private static Boolean isServiceEvent( Event record ) {
+        return (
+            ( record != null )
+            && (
+                ( record.FSL__Event_Type__c == NSP_EventTriggerHelper.RESOURCE_ABSENCE )
+                || (
+                    ( record.WhatId != null )
+                    && ( record.WhatId.getSObjectType() == ServiceAppointment.getSObjectType() )
+                )
+                || ( record.RecordTypeId == NSP_EventTriggerHelper.coreServiceEventRecordType )
+                || ( record.IsRecurrence == true )
+                || ( record.IsRecurrence2 == true )
+            )
+        );
     }
 
     private List<DiscoveryCallCompletedEvent__e> processDCCompleted( Event newEventRecord , Event oldEventRecord , List<DiscoveryCallCompletedEvent__e> dcCompletedEventList ) {
@@ -219,7 +251,7 @@ public with sharing class NSP_EventTriggerHelper {
         try {
             if ( eventOldMap != null ) {
                 for ( Event eachEvent : eventOldMap.values() ) {
-                    if ( ( eachEvent.RecordTypeId == NSP_EventTriggerHelper.coreSalesEventRecordType )
+                    if ( ( NSP_EventTriggerHelper.isSalesEvent( eachEvent ) || NSP_EventTriggerHelper.isServiceEvent( eachEvent ) )
                         && ( eachEvent.WhatId == null )
                         && ( eachEvent.Type == null )
                         && ( eachEvent.IsRecurrence2 == true || eachEvent.IsRecurrence == true )
@@ -249,7 +281,15 @@ public with sharing class NSP_EventTriggerHelper {
         List<Event> eventWithSameSubject = new List<Event>();
         if ( ( subjectSet != null ) && !subjectSet.isEmpty() ) {
             eventWithSameSubject = [
-                SELECT Id , Subject , StartDateTime , EndDateTime , ShowAs , Description , CreatedById , Location
+                SELECT
+                    Id ,
+                    Subject ,
+                    StartDateTime ,
+                    EndDateTime ,
+                    ShowAs ,
+                    Description ,
+                    CreatedById ,
+                    Location
                 FROM Event
                 WHERE (
                     ( Subject IN :subjectSet )
@@ -258,7 +298,12 @@ public with sharing class NSP_EventTriggerHelper {
                         ( CreatedBy.NSP_Salesforce_Field_Service__c = 'Dispatcher + Resource' )
                         OR ( CreatedBy.NSP_Salesforce_Field_Service__c = 'Resource' )
                     )
-                    AND ( RecordTypeId = :NSP_EventTriggerHelper.coreSalesEventRecordType )
+                    AND (
+                        RecordTypeId IN (
+                            :NSP_EventTriggerHelper.coreSalesEventRecordType ,
+                            :NSP_EventTriggerHelper.coreServiceEventRecordType
+                        )
+                    )
                     AND ( WhatId = null )
                     AND ( Type = null )
                     AND (
@@ -414,29 +459,52 @@ public with sharing class NSP_EventTriggerHelper {
     // Description : Method to update sales region, sales devison and sales office.
     // Date : 08/12/2022
     // @param newList List of New Event.
-    // @param OldEventMap Map of Old Event.
+    // @param oldEventMap Map of Old Event.
     // @return void
-    public void updateEventSales(List<Event> newList,Map<Id,Event> OldEventMap){
-    set<Id> ownerIdSet = new set<Id>();
-    for(Event newEvent : newList){
-        Event oldEvent = OldEventMap != null ? OldEventMap.get(newEvent.Id):null;
-        if(Trigger.isInsert || newEvent.OwnerId != oldEvent.OwnerId ){
-            ownerIdSet.add(newEvent.ownerId);
-        }
-    }
-    if(ownerIdSet.Size() > 0){
-        Map<Id,User> userIdMap = new Map<Id,User>([SELECT Id,NSP_SalesDivision__c,NSP_Sales_Office__c,NSP_SalesRegion__c from user WHERE Id In :ownerIdSet AND NSP_Sales_Office__c != null ]);
-        for(Event newEvent : newList){
-            Event oldEvent = OldEventMap != null ? OldEventMap.get(newEvent.Id):null;
-            if((Trigger.isInsert || newEvent.OwnerId != oldEvent.OwnerId) && userIdMap.containsKey(newEvent.ownerId) ){
-                user eachUser = userIdMap.get(newEvent.OwnerId);
-                newEvent.NSP_Sales_Region__c = eachUser.NSP_SalesRegion__c;  // sales region
-                newEvent.NSP_Sales_Division__c = eachUser.NSP_SalesDivision__c; // sales division
-                newEvent.NSP_Sales_Office__c = eachUser.NSP_Sales_Office__c; // sales office
+    public void updateEventSales( List<Event> newList , Map<Id,Event> oldEventMap ) {
+        Set<Id> ownerIdSet = NSP_EventTriggerHelper.collectNewEventOwnerIds( newList , oldEventMap );
+        if ( ( ownerIdSet != null ) && !ownerIdSet.isEmpty() ) {
+            Map<Id,User> userIdMap = new Map<Id,User>(
+                [
+                    SELECT
+                        Id ,
+                        NSP_SalesDivision__c ,
+                        NSP_Sales_Office__c ,
+                        NSP_SalesRegion__c
+                    FROM User
+                    WHERE (
+                        ( Id IN :ownerIdSet )
+                        AND ( NSP_Sales_Office__c != null )
+                    )
+                ]
+            );
+            for ( Event newEvent : newList ) {
+                Event oldEvent = ( oldEventMap != null ) ? oldEventMap.get( newEvent.Id ) : null;
+                if ( ( Trigger.isInsert || ( newEvent.OwnerId != oldEvent.OwnerId ) )
+                    && userIdMap.containsKey( newEvent.ownerId )
+                    )
+                {
+                    User eachUser = userIdMap.get( newEvent.OwnerId );
+                    newEvent.NSP_Sales_Region__c = eachUser.NSP_SalesRegion__c; // sales region
+                    newEvent.NSP_Sales_Division__c = eachUser.NSP_SalesDivision__c; // sales division
+                    newEvent.NSP_Sales_Office__c = eachUser.NSP_Sales_Office__c; // sales office
+                }
             }
         }
     }
-  }
+
+    private static Set<Id> collectNewEventOwnerIds( List<Event> newList , Map<Id,Event> oldEventMap ) {
+        Set<Id> ownerIdSet = new Set<Id>();
+        if ( ( newList != null ) && !newList.isEmpty() ) {
+            for ( Event newEvent : newList ) {
+                Event oldEvent = ( oldEventMap != null ) ? oldEventMap.get( newEvent.Id ) : null;
+                if ( ( oldEvent == null ) || ( newEvent.OwnerId != oldEvent.OwnerId  ) ) {
+                    ownerIdSet.add( newEvent.ownerId );
+                }
+            }
+        }
+        return ownerIdSet;
+    }
 
     // Method Name : populateWhatAndWhoNamesEvent
     // Description : Method to update NSP_What_Name__c and/or NSP_Who_Name__c on Event Object
@@ -536,20 +604,27 @@ public with sharing class NSP_EventTriggerHelper {
         private set;
     }
 
-    private static Id eventRecordType {
+    private static Id coreSalesEventRecordType {
         private get {
-            if ( eventRecordType == null ) {
-                eventRecordType = NSP_GenericRecordType.getRecordTypeId( 'Event' , 'Core_Sales_Event_RT' );
+            if ( coreSalesEventRecordType == null ) {
+                coreSalesEventRecordType = NSP_GenericRecordType.getRecordTypeId( 'Event' , 'Core_Sales_Event_RT' );
             }
-            return eventRecordType;
+            return coreSalesEventRecordType;
         }
         private set;
     }
 
-    //
-    // Method : getUserTitle
-    // Description : Get the current user's job title
-    //
+    private static Id coreServiceEventRecordType {
+        private get {
+            if ( coreServiceEventRecordType == null ) {
+                coreServiceEventRecordType = NSP_GenericRecordType.getRecordTypeId( 'Event' , 'Core_Serv_Event_RT' );
+            }
+            return coreServiceEventRecordType;
+        }
+        private set;
+    }
+
+    // store the current user's job title
     private static String userTitle {
         private get {
             if ( userTitle == null ) {
@@ -574,6 +649,5 @@ public with sharing class NSP_EventTriggerHelper {
         }
         private set;
     }
-
 }
 //

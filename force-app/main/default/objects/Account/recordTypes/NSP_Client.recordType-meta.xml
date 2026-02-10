@@ -7897,6 +7897,13 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Transitioning_Client__c</picklist>
+        <values>
+            <fullName>HR360 to HRScale</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Type</picklist>
         <values>
             <fullName>Center of Influence</fullName>

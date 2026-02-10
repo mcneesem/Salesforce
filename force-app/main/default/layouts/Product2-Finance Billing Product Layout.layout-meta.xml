@@ -744,6 +744,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Roll_Up_bundle__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Legacy_Net_Suite_ID__c</field>
             </layoutItems>
             <layoutItems>

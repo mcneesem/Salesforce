@@ -882,7 +882,7 @@
             <label>Yes - Nested Closed Lost process in place</label>
         </rules>
     </decisions>
-    <description>Outbound Email bypass added. Updated to account for nested picklists possibly being passed in for Closed Lost process. Added logic to check for Customer Signer to prevent flow errors. Flipped back to use District Manager Id field (for now). Runs through logic when Discovery Call is completed to make updates on related Opportunity as needed.</description>
+    <description>Switched to System with Sharing context. Outbound Email bypass added. Updated to account for nested picklists possibly being passed in for Closed Lost process. Added logic to check for Customer Signer to prevent flow errors. Flipped back to use District Manager Id field (for now). Runs through logic when Discovery Call is completed to make updates on related Opportunity as needed.</description>
     <environments>Default</environments>
     <formulas>
         <name>eventCompletedDatePlus60Formula</name>
@@ -1034,7 +1034,7 @@
         </faultConnector>
         <inputReference>varOpportunityToUpdate</inputReference>
     </recordUpdates>
-    <runInMode>DefaultMode</runInMode>
+    <runInMode>SystemModeWithSharing</runInMode>
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>

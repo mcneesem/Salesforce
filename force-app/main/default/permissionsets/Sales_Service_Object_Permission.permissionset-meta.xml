@@ -12144,10 +12144,6 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <recordType>NSP_Focus_Item__c.NSP_System_Generated_Focus_Item</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
         <recordType>NSP_Participation_SaaS_Activity__c.ITA_Activity</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>

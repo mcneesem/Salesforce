@@ -6579,11 +6579,6 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.NSP_Case_Created_From_Email_To_Case__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>false</editable>
         <field>Case.NSP_CQA_Imp_Notes__c</field>
         <readable>false</readable>

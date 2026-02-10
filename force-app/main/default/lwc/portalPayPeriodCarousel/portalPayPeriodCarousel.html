@@ -1,0 +1,69 @@
+<template>
+    <div class="slds-is-relative">
+        <template lwc:if={records}>
+            <template lwc:if={hasCarouselData}>
+                <div class="slds-carousel">
+                    <div class="slds-carousel__stage">
+                        <!-- AUTOPLAY -->
+                        <span class="slds-carousel__autoplay">
+                            <lightning-button-icon
+                                icon-name={iconPlayPause}
+                                size="x-small"
+                                title={titlePlayPause}
+                                onclick={handleClickPlayPause}
+                                variant="container"
+                                >
+                            </lightning-button-icon>
+                        </span>
+                        <!-- PANELS -->
+                        <div class="slds-carousel__panels" style={panelCssStyle}>
+                            <template for:each={records} for:item="record">
+                                <div key={record.fields.Id.value}
+                                    id={record.fields.Id.value}
+                                    class="slds-carousel__panel"
+                                    role="tabpanel"
+                                    >
+                                    <c-portal-pay-period record={record}></c-portal-pay-period>
+                                </div>
+                            </template>
+                        </div>
+                        <!-- INDICATORS -->
+                        <ul class="slds-carousel__indicators" role="tablist">
+                            <template for:each={indicators} for:item="indicator">
+                                <li key={indicator.id}
+                                    class="slds-carousel__indicator"
+                                    role="presentation"
+                                    >
+                                    <span id={indicator.id}
+                                        data-id={indicator.id}
+                                        title={indicator.title}
+                                        class={indicator.cssClass}
+                                        tabindex={indicator.tabIndex}
+                                        role="tab"
+                                        onclick={handleClickIndicator}
+                                        onkeydown={handleKeyDown}
+                                        >
+                                        <span class="slds-assistive-text">{indicator.title}</span>
+                                    </span>
+                                </li>
+                            </template>
+                        </ul>
+                    </div>
+                </div>
+            </template>
+            <template lwc:else>
+                <!-- SINGLE -->
+                <template for:each={records} for:item="record">
+                    <c-portal-pay-period
+                        key={record.fields.Id.value}
+                        record={record}
+                        >
+                    </c-portal-pay-period>
+                </template>
+            </template>
+        </template>
+        <template lwc:else>
+            <lightning-spinner alternative-text="Loading" size="x-small"></lightning-spinner>
+        </template>
+    </div>
+</template>

@@ -677,6 +677,16 @@
                 <identifier>RecordCreatedByIdField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Product_Solution__c</fieldItem>
+                <identifier>RecordProduct_Solution__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-95d30e29-5e05-4660-8a18-b094c4052200</name>
         <type>Facet</type>
     </flexiPageRegions>

@@ -7697,11 +7697,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.NSP_Case_Created_From_Email_To_Case__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Case.NSP_Case_In_Progress_Modified_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>

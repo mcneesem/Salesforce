@@ -310,6 +310,14 @@
             <type>email</type>
         </recipients>
         <recipients>
+            <recipient>Business Performance Advisor</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Business Performance Consultant</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
             <recipient>District Administrator</recipient>
             <type>opportunityTeam</type>
         </recipients>
@@ -318,7 +326,39 @@
             <type>opportunityTeam</type>
         </recipients>
         <recipients>
+            <recipient>HCM Sales Consultant</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>HCM Sales Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>MM Area Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>MM National Sales Director</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>MMNA Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>MMNA Solutions Specialist</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>MidMarket Administrator</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
             <recipient>Regional Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sales Support Specialist</recipient>
             <type>opportunityTeam</type>
         </recipients>
         <recipients>

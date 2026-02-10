@@ -5,7 +5,7 @@
     <formula>IF(
   AND(
     ( WO_Asset__c != null ) ,
-    ISPICKVAL( WO_Asset__r.NSP_Service_Package__c , &quot;WO - WD Bundle Plus&quot; ) ,
+    ISPICKVAL( WO_Asset__r.NSP_Service_Package__c , &quot;HRScale&quot; ) ,
     OR(
       ISPICKVAL( WO_Asset__r.Status , &quot;Active&quot; ) ,
       ISPICKVAL( WO_Asset__r.Status , &quot;Onboarding&quot; )

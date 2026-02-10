@@ -1,11 +1,6 @@
 public with sharing class NSP_ServiceAppointmentTriggerHelper {
     // test w/ NSP_ServiceAppointmentTrigger_Test (89%)
 
-    //map of service resource Id and operating hrs name
-    public static Map<Id,String> mapServResOperHrs = new Map<Id,String>();
-    //map of Service Appointment and service resource Ids
-    public static Map<Id,Id> mapSAIdServResId = new Map<Id,Id>();
-
     //
     // MethodName : beforeUpdateDirector
     // Description : This Method updated the status checkbox on Service Appointments
@@ -812,11 +807,13 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
     // Description : return new related Event record
     // Params: ServiceAppointment relatedSa
     //
-    private static Event createNewEventRec( ServiceAppointment relatedSa  , Map<Id,Id> saToSerResUserIdMap ) {
+    private static Event createNewEventRec( ServiceAppointment relatedSa , Map<Id,Id> saToSerResUserIdMap ) {
         // create new event record when a Service Appointment is scheduled...
         Event newFreeEvent = new Event();
         if ( relatedSa != null ) {
             newFreeEvent.WhatId = relatedSa.id;
+            newFreeEvent.RecordTypeId = NSP_ServiceAppointmentTriggerHelper.coreServiceEventRecordType;
+            newFreeEvent.NSP_Event_Type__c = 'Core Service';
             newFreeEvent.FSL__Event_Type__c = 'Service Appointment';
             newFreeEvent.ShowAs = 'Free';
             newFreeEvent.Subject = relatedSa.Subject;
@@ -1010,6 +1007,16 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
                 );
             }
         }
+    }
+
+    private static Id coreServiceEventRecordType {
+        private get {
+            if ( coreServiceEventRecordType == null ) {
+                coreServiceEventRecordType = NSP_GenericRecordType.getRecordTypeId( 'Event' , 'Core_Serv_Event_RT' );
+            }
+            return coreServiceEventRecordType;
+        }
+        private set;
     }
 
     //

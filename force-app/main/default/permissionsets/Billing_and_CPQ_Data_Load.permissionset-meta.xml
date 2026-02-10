@@ -3,6 +3,11 @@
     <description>FLS for Billing and CPQ objects to complete related data loads</description>
     <fieldPermissions>
         <editable>false</editable>
+        <field>AVA_SFCLOUD__AvaTax_Tax_Code__c.NSP_External_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>ConsumptionRate.Description</field>
         <readable>true</readable>
     </fieldPermissions>

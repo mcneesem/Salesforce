@@ -584,23 +584,36 @@ export function calculateWXSetupFee(quoteModel, quoteLines) {
                 iwxSetupFeeNetSum+=lineWXSetupNetFee;
             }
             });
-        quoteLines.forEach(function(line) {
+
+    quoteLines.forEach(
+        function( line ) {
             let productId = line.record["SBQQ__ProductCode__c"];
             let stopAutoPricing =  line.record["NSP_Stop_Auto_Pricing__c"];
-                if(productId == 'IWXSU' && !stopAutoPricing){
-                    line.record["SBQQ__ListPrice__c"] = iwxSetupFeeSum;
-                }
-                if(productId == 'IWXSU' && wxScholarshipChecked){
-                    line.record["SBQQ__ListPrice__c"] = iwxSetupFeeSum;
-                    line.record["SBQQ__AdditionalDiscountAmount__c"] = iwxSetupFeeSum-iwxSetupFeeNetSum;
-                    line.record["SBQQ__Discount__c"] = null;
-                    line.record["NSP_IsScholarshipApplied__c"] = true;
-                }
-            if(productId == 'IWXSU' && terminatingWoWs && !stopAutoPricing)
-                {
-                    line.record["SBQQ__ListPrice__c"] = 0;
-                }
-        });
+            if ( ( productId == 'IWXSU' )
+                && !stopAutoPricing
+                )
+            {
+                const feeBase = Number( iwxSetupFeeSum || 0 );
+                line.record["SBQQ__ListPrice__c"] = ( feeBase * 2 );
+            }
+            if ( ( productId == 'IWXSU' )
+                && wxScholarshipChecked
+                )
+            {
+                line.record["SBQQ__ListPrice__c"] = iwxSetupFeeSum;
+                line.record["SBQQ__AdditionalDiscountAmount__c"] = ( iwxSetupFeeSum - iwxSetupFeeNetSum );
+                line.record["SBQQ__Discount__c"] = null;
+                line.record["NSP_IsScholarshipApplied__c"] = true;
+            }
+            if ( ( productId == 'IWXSU' )
+                && terminatingWoWs
+                && !stopAutoPricing
+                )
+            {
+                line.record["SBQQ__ListPrice__c"] = 0;
+            }
+        }
+    );
 }
 
 export function processQuotelines(quote, lines){

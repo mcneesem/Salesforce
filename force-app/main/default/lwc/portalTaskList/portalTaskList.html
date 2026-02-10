@@ -1,0 +1,43 @@
+<template>
+    <div class="slds-is-relative">
+        <template lwc:if={records}>
+            <template lwc:if={hasRecords}>
+                <lightning-layout multiple-rows class={layoutClass}>
+                    <lightning-layout-item size="12" padding="around-small">
+                        <lightning-layout>
+                            <lightning-layout-item size={titleSize}>
+                                &nbsp;
+                            </lightning-layout-item>
+                            <template lwc:if={isParent}>
+                                <lightning-layout-item size="2">
+                                    Due Date
+                                </lightning-layout-item>
+                            </template>
+                            <lightning-layout-item size="3">
+                                Action
+                            </lightning-layout-item>
+                            <lightning-layout-item size="1">
+                                Uploads
+                            </lightning-layout-item>
+                            <lightning-layout-item size="1">
+                                Status
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12">
+                        <ul>
+                            <template for:each={records} for:item="record">
+                                <li key={record.fields.Id.value}>
+                                    <c-portal-task record={record} variant={variant}></c-portal-task>
+                                </li>
+                            </template>
+                        </ul>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </template>
+        </template>
+        <template lwc:else>
+            <lightning-spinner alternative-text="Loading" size="x-small"></lightning-spinner>
+        </template>
+    </div>
+</template>

@@ -1,0 +1,8 @@
+<template>
+    <template lwc:if={recordId}>
+        <template lwc:if={record}>
+            <lightning-progress-bar value={progress} size="medium" variant="circular"></lightning-progress-bar>
+            {record.fields.Completed_Portal_Tasks__c.value} out of {record.fields.Total_Portal_Tasks__c.value} items completed
+        </template>
+    </template>
+</template>

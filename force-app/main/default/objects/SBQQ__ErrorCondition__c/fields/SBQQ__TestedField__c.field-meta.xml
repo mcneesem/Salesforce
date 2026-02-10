@@ -283,6 +283,11 @@
                 <default>false</default>
                 <label>NSP_Support_ProductCode__c</label>
             </value>
+            <value>
+                <fullName>NSP_Product_Type__c</fullName>
+                <default>false</default>
+                <label>NSP_Product_Type__c</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Quote</controllingFieldValue>
@@ -414,6 +419,10 @@
         <valueSettings>
             <controllingFieldValue>Quote Line</controllingFieldValue>
             <valueName>NSP_Discount_Internal__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <valueName>NSP_Product_Type__c</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Product Option</controllingFieldValue>

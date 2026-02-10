@@ -330,30 +330,7 @@
                 <fieldItem>Record.AssetId</fieldItem>
                 <identifier>RecordAssetIdField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Category__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>WX/WA</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!$Permission.CustomPermission.View_Case_Compensation_section}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>false</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.AssetId</fieldItem>
-                <identifier>RecordAssetIdField2</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 OR ( 2 AND 3 )</booleanFilter>
+                    <booleanFilter>NOT ( 1 OR ( 2 AND 3 ) OR 4 )</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_Category__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -368,6 +345,44 @@
                         <leftValue>{!Record.NSP_Category__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Compensation Services</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.AssetId</fieldItem>
+                <identifier>RecordAssetIdField2</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 OR ( 2 AND 3 ) OR 4</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>WX/WA</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.View_Case_Compensation_section}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Category__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Compensation Services</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -923,16 +938,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Preferred_method_of_contact__c</fieldItem>
                 <identifier>RecordNSP_Preferred_method_of_contact_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Due_Date__c</fieldItem>
-                <identifier>RecordNSP_Due_Date_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2160,6 +2165,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_IsJunkMail__c</fieldItem>
                 <identifier>RecordNSP_IsJunkMail__c</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Product_Solution__c</fieldItem>
+                <identifier>RecordProduct_Solution_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>

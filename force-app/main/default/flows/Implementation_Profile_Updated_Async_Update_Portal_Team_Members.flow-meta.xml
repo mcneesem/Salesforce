@@ -506,20 +506,6 @@
             <name>Yes_IP_Record_Modified</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>rc_all_team_members</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>rc_all_team_members</leftValueReference>
-                <operator>IsEmpty</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
                 <leftValueReference>Get_IP_History_Records</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
@@ -694,40 +680,34 @@ if Source has Set Value to null and Target has valid record then delete</descrip
             <label>Yes : Update Team Members</label>
         </rules>
     </decisions>
-    <decisions>
-        <name>Valid_f_history_field_ip_value</name>
-        <label>Valid  f_history_field_ip_value?</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Yes_Valid_f_history_field_ip_value</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>f_history_field_ip_value</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Team_Member_Exist_Target</targetReference>
-            </connector>
-            <label>Yes : Valid f_history_field_ip_value</label>
-        </rules>
-    </decisions>
     <description>11/4/2025 Update</description>
     <environments>Default</environments>
     <formulas>
         <name>f_filter_teammember_position</name>
         <dataType>String</dataType>
-        <expression>CASE({!history_field_api}, &quot;NSP_Project_Manager__c&quot;, {!Project_Manager_Main_POC}, &quot;NSP_Payroll_Specialist__c&quot;, {!Payroll_Implementation},&quot;NSP_Orientation_Rep__c&quot;,{!Orientation_Representative},&quot;NSP_ITA_Analyst__c&quot;,{!Time_and_Attendance} , &quot;NSP_HR_Quality_Support_Team_Member__c&quot;, {!HR_Implementation},null)</expression>
+        <expression>CASE(
+  {!history_field_api} ,
+  &quot;NSP_Project_Manager__c&quot; , {!Project_Manager_Main_POC} ,
+  &quot;NSP_Payroll_Specialist__c&quot; , {!Payroll_Implementation} ,
+  &quot;NSP_Orientation_Rep__c&quot; , {!Orientation_Representative} ,
+  &quot;NSP_ITA_Analyst__c&quot; , {!Time_and_Attendance} ,
+  &quot;NSP_HR_Quality_Support_Team_Member__c&quot; , {!HR_Implementation} ,
+  null
+)</expression>
     </formulas>
     <formulas>
         <description>evaluate value of changed field from IP Record</description>
         <name>f_history_field_ip_value</name>
         <dataType>String</dataType>
-        <expression>CASE({!history_field_api}, &quot;NSP_Project_Manager__c&quot;, {!$Record.NSP_Project_Manager__c}, &quot;NSP_Payroll_Specialist__c&quot;, {!$Record.NSP_Payroll_Specialist__c},&quot;NSP_Orientation_Rep__c&quot;,{!$Record.NSP_Orientation_Rep__c},&quot;NSP_ITA_Analyst__c&quot;,{!$Record.NSP_ITA_Analyst__c} , &quot;NSP_HR_Quality_Support_Team_Member__c&quot;, {!$Record.NSP_HR_Quality_Support_Team_Member__c},null)</expression>
+        <expression>CASE(
+  {!history_field_api} ,
+  &quot;NSP_Project_Manager__c&quot; , {!$Record.NSP_Project_Manager__c} ,
+  &quot;NSP_Payroll_Specialist__c&quot; , {!$Record.NSP_Payroll_Specialist__c} ,
+  &quot;NSP_Orientation_Rep__c&quot; , {!$Record.NSP_Orientation_Rep__c} ,
+  &quot;NSP_ITA_Analyst__c&quot; , {!$Record.NSP_ITA_Analyst__c} ,
+  &quot;NSP_HR_Quality_Support_Team_Member__c&quot; , {!$Record.NSP_HR_Quality_Support_Team_Member__c} ,
+  null
+)</expression>
     </formulas>
     <formulas>
         <name>ModifiedDate_formula</name>
@@ -748,7 +728,7 @@ if Source has Set Value to null and Target has valid record then delete</descrip
             <targetReference>Assign_Team_member_Id</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Valid_f_history_field_ip_value</targetReference>
+            <targetReference>Team_Member_Exist_Target</targetReference>
         </noMoreValuesConnector>
     </loops>
     <loops>
@@ -1011,7 +991,7 @@ if Source has Set Value to null and Target has valid record then delete</descrip
             </value>
         </filters>
         <object>Implementation_Profile__c</object>
-        <recordTriggerType>Update</recordTriggerType>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <scheduledPaths>
             <connector>
                 <targetReference>Assign_IP_Record</targetReference>

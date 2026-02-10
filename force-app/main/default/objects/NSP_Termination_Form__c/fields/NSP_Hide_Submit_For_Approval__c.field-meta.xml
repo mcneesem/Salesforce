@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Hide_Submit_For_Approval__c</fullName>
     <description>Hide Submit for Approval Button On Page Layout STY-01956</description>
-    <externalId>false</externalId>
     <formula>AND(
 OR(
 ISPICKVAL(NSP_Status__c, &quot;Term Team Denied&quot;),
@@ -16,7 +15,7 @@ Total_Number_of_Files__c &gt;= Number_of_required_checkboxes__c,
 NOT(ISBLANK(NSP_Approver__c)),
 NOT(ISBLANK(NSP_CSA_Effective_Date__c)),
 NSP_CSA__c,
-NSP_NY_VA_Report__c, 
+NSP_NY_VA_Report__c,
 NOT(ISBLANK(NSP_Payroll_Specialist__c)),
 NOT(ISBLANK(NSP_Supervisor__c)),
 NOT(ISBLANK(NSP_Manager_HR_Services__c)),
@@ -34,6 +33,7 @@ NOT(ISBLANK(NSP_Renewal_Date__c)),
 NOT(ISBLANK(NSP_Segment_Type__c)),
 NOT(ISBLANK(TEXT(NSP_Status__c))),
 NOT(ISBLANK(TEXT(NSP_Term_Code__c))),
+NOT(ISBLANK(TEXT(NSP_Term_Reason__c))),
 NOT(ISBLANK(Name)),
 NOT(ISBLANK(NSP_Client_Street__c)),
 NOT(ISBLANK(NSP_Client_City__c)),

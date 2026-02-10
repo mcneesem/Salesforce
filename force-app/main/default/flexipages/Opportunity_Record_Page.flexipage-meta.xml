@@ -411,16 +411,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Interest_Product_Offering__c</fieldItem>
-                <identifier>RecordInterest_Product_Offering_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.Product_Offering__c</fieldItem>
                 <identifier>RecordProduct_Offering_cField</identifier>
             </fieldInstance>
@@ -841,16 +831,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Account_Segment__c</fieldItem>
                 <identifier>RecordNSP_Account_Segment_cField2</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Interest_Product_Offering__c</fieldItem>
-                <identifier>RecordInterest_Product_Offering_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1373,16 +1353,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Referred_By_COI__c</fieldItem>
                 <identifier>RecordNSP_Referred_By_COI_cField2</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Interest_Product_Offering__c</fieldItem>
-                <identifier>RecordInterest_Product_Offering_cField3</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>

@@ -31,6 +31,7 @@
     <permissionSets>NSP_Main_Service_Contacts</permissionSets>
     <permissionSets>NSP_Order_ViewAll</permissionSets>
     <permissionSets>NSP_Template_Field_permission</permissionSets>
+    <permissionSets>Opportunity_Booking_Stage_Change_Email_Notification</permissionSets>
     <permissionSets>Opportunity_Closed_Lost_Fields_Edit_Access</permissionSets>
     <permissionSets>Opportunity_Closed_Lost_SO_Opp</permissionSets>
     <permissionSets>Opportunity_Closed_Lost_SO_Opp_Owner</permissionSets>
