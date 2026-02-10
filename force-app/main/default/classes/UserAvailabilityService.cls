@@ -26,14 +26,16 @@ public with sharing class UserAvailabilityService {
             }
 
             // Collect next 7 business days
-            while((nextBusinessStart != null) && (response.size() < daysLimit)) {
-                response.add(Date.newInstance(
-                    nextBusinessStart.year() ,
-                    nextBusinessStart.month() ,
-                    nextBusinessStart.day()
-                )
-                            );
-                nextBusinessStart = BusinessHours.nextStartDate(open.Id, nextBusinessStart.addDays(1));
+            if(open != null){
+                while((nextBusinessStart != null) && (response.size() < daysLimit)) {
+                    response.add(Date.newInstance(
+                        nextBusinessStart.year() ,
+                        nextBusinessStart.month() ,
+                        nextBusinessStart.day()
+                    )
+                                );
+                    nextBusinessStart = BusinessHours.nextStartDate(open.Id, nextBusinessStart.addDays(1));
+                }
             }
         } catch (Exception e) {
             NSP_ErrorLogHandler.logException( UserAvailabilityService.class.getName() , 'businessDays' , e );
@@ -191,14 +193,13 @@ public with sharing class UserAvailabilityService {
             && ( daysOfWeek.startDays.size() == daysOfWeek.endDays.size() )
            )
         {
-            if ( startDays.size() == endDays.size() ) {
                 for ( Integer i = 0 ; i < daysOfWeek.startDays.size() ; i++ ) {
                     startDays.addAll( daysOfWeek.startDays[i] );
                     endDays.addAll( daysOfWeek.endDays[i] );
                 }
                 windowStart = startDays[0];
                 windowEnd   = endDays[endDays.size() - 1];
-            }
+
         }
         // Identify users with Schedule Seller Custom Permission
         Map<Id,User> skilledUsers = CustomPermissionController.getPermittedUsersMap( skill );
@@ -302,9 +303,11 @@ public with sharing class UserAvailabilityService {
         Map<Id,User> skilledUsers = CustomPermissionController.getPermittedUsersMap( skill );
         Set<Id> userIds = ( ( skilledUsers != null ) ? skilledUsers.keySet() : new Set<Id>() );
         // Load overlapping events once for all eligible users (only if inputs are valid)
-        List<Event> overlapping = new List<Event>();
-        //Get overlapping events
-        overlapping = getEventsForUser(userIds, startDT, endDT);
+        List<Event> overlapping = UserAvailabilityService.getEventsForUser(
+            userIds ,
+            start ,
+            end
+        );
 
         if (overlapping != null && !overlapping.isEmpty()) {
             for (Event e : overlapping) {
@@ -336,7 +339,11 @@ public with sharing class UserAvailabilityService {
                 if( busyByUser.containsKey(uid) && busyByUser.get(uid) != null) {
                     userBusy = busyByUser.get(uid);
                 }
-                List<String> slots = calc.getAvailableSlots(userBusy, windowEvt, step);
+                List<String> slots = calc.getAvailableSlots(
+                    userBusy,
+                    windowEvt,
+                    step
+                );
                 if (slots != null && !slots.isEmpty()) {
                     availableUsers.add(uid);
                 }
@@ -354,7 +361,7 @@ public with sharing class UserAvailabilityService {
                 WHERE OwnerId IN :userIds
                 AND StartDateTime < :endDT
                 AND EndDateTime   > :startDT
-                WITH SECURITY_ENFORCED
+
             ];
         }
         return events;
