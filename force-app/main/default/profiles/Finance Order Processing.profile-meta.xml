@@ -13640,10 +13640,6 @@
     </flowAccesses>
     <flowAccesses>
         <enabled>false</enabled>
-        <flow>Lead_Conversion_Update_Fields_on_Account</flow>
-    </flowAccesses>
-    <flowAccesses>
-        <enabled>false</enabled>
         <flow>NSP_Notify_Lead_Owner_of_Assignment</flow>
     </flowAccesses>
     <flowAccesses>

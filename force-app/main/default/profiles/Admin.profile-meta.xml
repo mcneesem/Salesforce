@@ -36881,10 +36881,6 @@
         <flow>Invoke_Primary_Opportunity_fields_on_click_of_New_button</flow>
     </flowAccesses>
     <flowAccesses>
-        <enabled>false</enabled>
-        <flow>Lead_Conversion_Update_Fields_on_Account</flow>
-    </flowAccesses>
-    <flowAccesses>
         <enabled>true</enabled>
         <flow>NSP_Add_Multiple_Contacts_On_Case</flow>
     </flowAccesses>
