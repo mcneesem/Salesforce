@@ -1,0 +1,9 @@
+<template>
+    <section class="slds-card">
+        <div class="slds-card__body slds-p-around_small">
+            <template if:true={hasValue}>
+                <p class="banner-text" data-testid="bannerText">Transition in Progress : {value}</p>
+            </template>
+        </div>
+    </section>
+</template>
