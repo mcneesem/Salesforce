@@ -37034,10 +37034,6 @@
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
-        <name>ForceTwoFactor</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
         <name>GiveRecognitionBadge</name>
     </userPermissions>
     <userPermissions>
