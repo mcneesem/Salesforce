@@ -45172,7 +45172,7 @@
   {
     "id": "01p4x00000VMCR6AAP",
     "name": "NSP_AssetServiceTriggerHelper",
-    "totalLines": 1189,
+    "totalLines": 1186,
     "lines": {
       "23": 1,
       "24": 1,
@@ -46359,12 +46359,9 @@
       "2211": 1,
       "2217": 1,
       "2218": 1,
-      "2219": 1,
-      "2220": 1,
-      "2241": 1,
-      "2244": 1
+      "2219": 1
     },
-    "totalCovered": 941,
+    "totalCovered": 938,
     "coveredPercent": 79
   },
   {
