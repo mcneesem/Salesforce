@@ -181,7 +181,7 @@
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Event_Updated_Async_Discovery_Call_or_Demo_Completed</stringValue>
+                <stringValue>Event_Updated_Async_Discovery_Call_Completed</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
