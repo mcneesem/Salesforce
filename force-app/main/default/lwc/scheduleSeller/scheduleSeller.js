@@ -108,7 +108,7 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
     }
 
     get isLoading() {
-        return !this.isReady();
+        return !this.isReady;
     }
     get isReady() {
         return ( this.columns && ( this.columns.length > 0 ) );
