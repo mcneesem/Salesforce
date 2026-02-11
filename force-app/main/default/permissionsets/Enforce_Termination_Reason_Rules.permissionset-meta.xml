@@ -5,26 +5,6 @@
         <name>Enforce_Termination_Reason_Rules</name>
     </customPermissions>
     <description>Grants the Custom Permission to Enforce Termination Revision Rules on NSP_Account_Group__c.</description>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>NSP_Focus_Item__c.Due_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>NSP_Focus_Item__c.NSP_End_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>NSP_Focus_Item__c.NSP_Start_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>NSP_Focus_Item__c.Plan_of_Action__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Enforce Termination Reason Rules</label>
 </PermissionSet>
