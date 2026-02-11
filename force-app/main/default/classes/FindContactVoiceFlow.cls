@@ -1,3 +1,4 @@
+// intentionally `without sharing` to ensure that Find_Related_Contact_Screen_Flow has access to all Contact records...
 public without sharing class FindContactVoiceFlow {
     // test w/ FindContactVoiceFlowTest (95%)
 
