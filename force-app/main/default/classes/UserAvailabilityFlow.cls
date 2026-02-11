@@ -1,5 +1,5 @@
 public with sharing class UserAvailabilityFlow {
-
+    // test w/ UserAvailabilityFlowTest (91%)
     @InvocableMethod(label='Get Available Users')
     public static List<List<Id>> getUsers( List<UserAvailabilityFlow.UserAvailabilityInput> inputs ) {
         List<List<Id>> response = new List<List<Id>>();
