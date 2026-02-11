@@ -14421,7 +14421,7 @@
         <name>EditTopics</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>ForceTwoFactor</name>
     </userPermissions>
     <userPermissions>
