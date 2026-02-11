@@ -4950,7 +4950,6 @@
         <field>Asset.NSP_Signed_Grosvenor_Cloud_Terms__c</field>
         <readable>true</readable>
     </fieldPermissions>
-
     <fieldPermissions>
         <editable>false</editable>
         <field>Asset.NSP_Start_Date__c</field>

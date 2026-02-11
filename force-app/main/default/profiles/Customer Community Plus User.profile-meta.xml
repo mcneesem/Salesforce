@@ -10476,7 +10476,6 @@
         <field>pse__Proj__c.NSP_NetSuite_External_ID__c</field>
         <readable>false</readable>
     </fieldPermissions>
-
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Proj__c.NSP_OneVoice_External_ID__c</field>
