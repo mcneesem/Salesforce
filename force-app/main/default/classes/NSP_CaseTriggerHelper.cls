@@ -1206,7 +1206,7 @@ createdDate : 6/13/2023
                         FROM Asset
                         WHERE (
                             ( AccountId IN :accIdSet )
-                            AND ( Status = 'Active' )
+                            AND ( Status IN ('Active', 'Onboarding', 'On Demand') )
                             AND ( RecordType.Name IN :catsubCatAssetRecTypeSet )
                             AND ( NSP_Account_Status__c NOT IN :(listofValues) )
                         )
