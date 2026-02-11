@@ -26,6 +26,21 @@
                 <default>false</default>
                 <label>Unknown</label>
             </value>
+            <value>
+                <fullName>Non-Binary</fullName>
+                <default>false</default>
+                <label>Non-Binary</label>
+            </value>
+            <value>
+                <fullName>Not Declared</fullName>
+                <default>false</default>
+                <label>Not Declared</label>
+            </value>
+            <value>
+                <fullName>No Response</fullName>
+                <default>false</default>
+                <label>No Response</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
