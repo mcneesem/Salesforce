@@ -1295,21 +1295,7 @@
                 </width>
             </styleProperties>
             <visibilityRule>
-                <conditionLogic>( (1 OR 2) AND 3 AND 4 AND ( 5 OR 6 ) )</conditionLogic>
-                <conditions>
-                    <leftValueReference>recordOpportunity.NSP_PrimaryProduct__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>WS</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>recordOpportunity.NSP_PrimaryProduct__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>HRScale</stringValue>
-                    </rightValue>
-                </conditions>
+                <conditionLogic>1 AND 2 AND (3 OR 4) AND 5</conditionLogic>
                 <conditions>
                     <leftValueReference>recordOpportunity.NSP_Account_Segment__c</leftValueReference>
                     <operator>NotEqualTo</operator>
@@ -1338,6 +1324,13 @@
                         <stringValue>Closing</stringValue>
                     </rightValue>
                 </conditions>
+                <conditions>
+                    <leftValueReference>recordOpportunity.Checklist_User_Check_Formula__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>STP</stringValue>
+                    </rightValue>
+                </conditions>
             </visibilityRule>
         </fields>
         <fields>
@@ -1357,7 +1350,7 @@
                 </width>
             </styleProperties>
             <visibilityRule>
-                <conditionLogic>1 AND (2 OR 3) AND (4 OR 5 OR 6)</conditionLogic>
+                <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>recordOpportunity.StageName</leftValueReference>
                     <operator>EqualTo</operator>
@@ -1366,38 +1359,10 @@
                     </rightValue>
                 </conditions>
                 <conditions>
-                    <leftValueReference>recordOpportunity.NSP_Account_Segment__c</leftValueReference>
+                    <leftValueReference>recordOpportunity.Checklist_User_Check_Formula__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>MidMarket</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>recordOpportunity.NSP_Account_Segment__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Enterprise</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>recordOpportunity.NSP_PrimaryProduct__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>WX</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>recordOpportunity.NSP_PrimaryProduct__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>WO</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>recordOpportunity.NSP_PrimaryProduct__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>WS</stringValue>
+                        <stringValue>MMC</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1450,17 +1415,17 @@
                     </rightValue>
                 </conditions>
                 <conditions>
-                    <leftValueReference>recordOpportunity.NSP_PrimaryProduct__c</leftValueReference>
+                    <leftValueReference>recordOpportunity.Checklist_User_Check_Formula__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>WX</stringValue>
+                        <stringValue>STP</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
-                    <leftValueReference>recordOpportunity.NSP_PrimaryProduct__c</leftValueReference>
+                    <leftValueReference>recordOpportunity.Checklist_User_Check_Formula__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>WO</stringValue>
+                        <stringValue>MMC</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1475,7 +1440,7 @@
             <targetReference>Check_for_recordId</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Create_Checklist_Subflow</name>
         <label>Create Checklist Subflow</label>
