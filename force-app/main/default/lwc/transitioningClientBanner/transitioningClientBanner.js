@@ -1,18 +1,17 @@
 import { LightningElement, api, wire } from 'lwc';
 import { getRecord, getFieldValue, getRecordUi } from 'lightning/uiRecordApi';
-import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 import TRANSITIONING_CLIENT from '@salesforce/schema/Account.Transitioning_Client__c';
 import CASE_ACCOUNT from '@salesforce/schema/Case.AccountId';
 import ASSET_ACCOUNT from '@salesforce/schema/Asset.AccountId';
 
-export default class transitioningClientBannerr extends LightningElement {
+export default class TransitioningClientBanner extends LightningElement {
     @api recordId;
-    objectApiName;
+    @api objectApiName;
 
     // Get objectApiName from getRecordUi
     @wire(getRecordUi, { recordIds: '$recordId'})
     wiredUi({ data, error }) {
-        if (data && data.records && this.recordId) {
+        if ( data?.records && this.recordId ) {
             const rec = data.records[this.recordId];
             this.objectApiName = rec?.apiName;
         } else {
@@ -49,16 +48,18 @@ export default class transitioningClientBannerr extends LightningElement {
 
     // Value based on context
     get value() {
-        let tc;
-        if (this.objectApiName === 'Account') {
-            tc = getFieldValue(this.record?.data, TRANSITIONING_CLIENT);
+        let tc = '';
+        // Prefer Account wire data when present, even if objectApiName isn't set yet
+        if (this.objectApiName === 'Account' || this.record?.data) {
+            tc = getFieldValue(this.record?.data, TRANSITIONING_CLIENT) || '';
         } else if (this.objectApiName === 'Case' || this.objectApiName === 'Asset') {
-            tc = getFieldValue(this.parentAccount?.data, TRANSITIONING_CLIENT);
+            const pid = this.parentAccountId;
+            tc = pid ? (getFieldValue(this.parentAccount?.data, TRANSITIONING_CLIENT) || '') : '';
         }
         return tc;
     }
 
     get hasValue() {
-        return this.value ? true : false;
+        return ( this.value && ( this.value.length > 0 ) );
     }
 }
