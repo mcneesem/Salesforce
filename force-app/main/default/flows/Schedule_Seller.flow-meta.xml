@@ -8,7 +8,7 @@
         <actionName>UserAvailabilityFlow</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Get_Records_Null_Check</targetReference>
+            <targetReference>Assignment</targetReference>
         </connector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
@@ -35,6 +35,45 @@
     </actionCalls>
     <apiVersion>65.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assignment</name>
+        <label>Assignment</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>startDT</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Seller.startDT</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>endDT</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Seller.endDT</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Records_Null_Check</targetReference>
+        </connector>
+    </assignments>
+    <choices>
+        <name>Central</name>
+        <choiceText>Central</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Central</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Eastern</name>
+        <choiceText>Eastern</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Eastern</stringValue>
+        </value>
+    </choices>
     <choices>
         <name>HR360_Solution</name>
         <choiceText>HR360 Solution</choiceText>
@@ -57,6 +96,22 @@
         <dataType>String</dataType>
         <value>
             <stringValue>Schedule_Seller_HRCore</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Mountain</name>
+        <choiceText>Mountain</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Mountain</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Pacific</name>
+        <choiceText>Pacific</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Pacific</stringValue>
         </value>
     </choices>
     <customProperties>
@@ -125,6 +180,41 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordCreates>
+        <name>Create_Event</name>
+        <label>Create Event</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>RedirectToEventRecord</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>EndDateTime</field>
+            <value>
+                <elementReference>endDT</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>Userchoices</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>StartDateTime</field>
+            <value>
+                <elementReference>startDT</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Subject</field>
+            <value>
+                <stringValue>Created from Flow</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Event</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
     <recordLookups>
         <name>Get_User_Records</name>
         <label>Get User Records</label>
@@ -182,7 +272,7 @@
                 </width>
             </styleProperties>
         </fields>
-        <showFooter>true</showFooter>
+        <showFooter>false</showFooter>
         <showHeader>true</showHeader>
     </screens>
     <screens>
@@ -193,6 +283,9 @@
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Create_Event</targetReference>
+        </connector>
         <fields>
             <name>Userchoices</name>
             <choiceReferences>ccsAvailableUsers</choiceReferences>
@@ -209,8 +302,54 @@
                 </width>
             </styleProperties>
         </fields>
+        <fields>
+            <name>StartTime</name>
+            <fieldText>&lt;p&gt;{!startDT}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>RedirectToEventRecord</name>
+        <label>RedirectToEventRecord</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>RedirectToEvent</name>
+            <extensionName>c:navigateToRecord</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Create_Event.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Select_Solution</name>
@@ -224,16 +363,72 @@
             <targetReference>Availability_Matrix</targetReference>
         </connector>
         <fields>
-            <name>Select_a_Skill</name>
-            <choiceReferences>HR360_Solution</choiceReferences>
-            <choiceReferences>HRCore_Solution</choiceReferences>
-            <choiceReferences>HR_Scale</choiceReferences>
-            <dataType>String</dataType>
-            <defaultSelectedChoiceReference>HR360_Solution</defaultSelectedChoiceReference>
-            <fieldText>Select a Skill</fieldText>
-            <fieldType>RadioButtons</fieldType>
-            <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>
+            <name>Select_Solution_Section1</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Select_Solution_Section1_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Select_a_Skill</name>
+                    <choiceReferences>HR360_Solution</choiceReferences>
+                    <choiceReferences>HRCore_Solution</choiceReferences>
+                    <choiceReferences>HR_Scale</choiceReferences>
+                    <dataType>String</dataType>
+                    <defaultSelectedChoiceReference>HR360_Solution</defaultSelectedChoiceReference>
+                    <fieldText>Select a Skill</fieldText>
+                    <fieldType>RadioButtons</fieldType>
+                    <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                    <styleProperties>
+                        <verticalAlignment>
+                            <stringValue>top</stringValue>
+                        </verticalAlignment>
+                        <width>
+                            <stringValue>12</stringValue>
+                        </width>
+                    </styleProperties>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Select_Solution_Section1_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Time</name>
+                    <choiceReferences>Central</choiceReferences>
+                    <choiceReferences>Mountain</choiceReferences>
+                    <choiceReferences>Pacific</choiceReferences>
+                    <choiceReferences>Eastern</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Time zone</fieldText>
+                    <fieldType>RadioButtons</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <styleProperties>
+                        <verticalAlignment>
+                            <stringValue>top</stringValue>
+                        </verticalAlignment>
+                        <width>
+                            <stringValue>12</stringValue>
+                        </width>
+                    </styleProperties>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
             <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
             <styleProperties>
                 <verticalAlignment>
                     <stringValue>top</stringValue>
@@ -279,4 +474,18 @@
             </value>
         </inputAssignments>
     </subflows>
+    <variables>
+        <name>endDT</name>
+        <dataType>DateTime</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>startDT</name>
+        <dataType>DateTime</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
 </Flow>
