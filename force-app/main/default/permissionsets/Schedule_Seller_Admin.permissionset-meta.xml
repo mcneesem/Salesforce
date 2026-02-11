@@ -7,7 +7,7 @@
     <description>Scheduling tool permission set for Schedule Seller Admins</description>
     <flowAccesses>
         <enabled>true</enabled>
-        <flow>ScheduleSeller</flow>
+        <flow>Schedule_Seller</flow>
     </flowAccesses>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Schedule Seller Admin</label>
