@@ -974,29 +974,34 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
         );
     }
 
-    //
-    // MethodName : updateSaRelatedEvent
-    // Description : Update Related Event If SA is updated
-    // Author : Abhishek Kumar
-    //
+    // update related Event when ServiceAppointment is updated...
     private static void updateSaRelatedEvent( Map<Id,ServiceAppointment> mapSaIdToRec ) {
         if ( ( mapSaIdToRec != null ) && !mapSaIdToRec.isEmpty() ) {
             List<Event> eventListToUpdate = new List<Event>();
             for ( Event eachEvent : [
-                        SELECT Id , Subject , Description , Location , StartDateTime , EndDateTime , OwnerId , WhatId
+                        SELECT
+                            Id ,
+                            Subject ,
+                            Description ,
+                            Location ,
+                            StartDateTime ,
+                            EndDateTime ,
+                            OwnerId ,
+                            WhatId
                         FROM Event
                         WHERE ( WhatId IN :mapSaIdToRec.keySet() )
                     ]
                 )
             {
-                ServiceAppointment relatedSa = mapSaIdToRec.get( eachEvent.WhatId );
-                eachEvent.Subject = '[SF] '+relatedSa.Subject;
-                eachEvent.Description = relatedSa.Description;
-                eachEvent.Location = relatedSa.NSP_Orientation_Address__c;
-                eachEvent.StartDateTime = relatedSa.SchedStartTime;
-                eachEvent.EndDateTime = relatedSa.SchedEndTime;
-                eachEvent.OwnerId =  relatedSa.OwnerId;
-                eventListToUpdate.add( eachEvent );
+                if ( mapSaIdToRec.containsKey( eachEvent.WhatId ) ) {
+                    Event record = NSP_ServiceAppointmentTriggerHelper.populateEventFromServiceAppointment(
+                        eachEvent ,
+                        mapSaIdToRec.get( eachEvent.WhatId )
+                    );
+                    if ( record != null ) {
+                        eventListToUpdate.add( eachEvent );
+                    }
+                }
             }
             if ( !eventListToUpdate.isEmpty() ) {
                 List<Database.SaveResult> results =  Database.update( eventListToUpdate , false );
@@ -1007,6 +1012,28 @@ public with sharing class NSP_ServiceAppointmentTriggerHelper {
                 );
             }
         }
+    }
+
+    // helper method to defeat sonar cognitive complexity...
+    private static Event populateEventFromServiceAppointment( Event record , ServiceAppointment related ) {
+        if ( ( record != null ) && ( related != null ) ) {
+            record.Subject = '[SF] ' + related.Subject;
+            record.Description = related.Description;
+            record.Location = related.NSP_Orientation_Address__c;
+            record.StartDateTime = related.SchedStartTime;
+            // Prevent DmlExceptions: FIELD_INTEGRITY_EXCEPTION, An event can't last longer than 14 days.: [EndDateTime]
+            DateTime endDateTime = related.SchedEndTime;
+            if ( ( related.SchedStartTime != null )
+                && ( endDateTime != null )
+                && ( ( endDateTime.getTime() - related.SchedStartTime.getTime() ) > ( 14 * 24 * 60 * 60 * 1000 ) )
+                )
+            {
+                endDateTime = related.SchedStartTime.addDays( 14 );
+            }
+            record.EndDateTime = endDateTime;
+            record.OwnerId =  related.OwnerId;
+        }
+        return record;
     }
 
     private static Id coreServiceEventRecordType {
