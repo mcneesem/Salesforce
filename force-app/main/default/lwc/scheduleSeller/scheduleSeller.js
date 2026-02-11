@@ -1,6 +1,6 @@
 import { LightningElement, wire, api } from 'lwc';
 import getBusinessDates from '@salesforce/apex/UserAvailabilityService.getBusinessDates';
-import userIds from '@salesforce/apex/UserAvailabilityService.getAvailableUsersForWindow';
+import getAvailableUsersForWindow from '@salesforce/apex/UserAvailabilityService.getAvailableUsersForWindow';
 import getAggregateCountsMatrix from '@salesforce/apex/UserAvailabilityService.getAggregateCountsMatrix';
 import USER_ID from '@salesforce/user/Id';
 import { NavigationMixin } from 'lightning/navigation';
@@ -59,26 +59,26 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
     // Columns are server-driven via Business Hours using Apex getBusinessDates()
     @wire(getBusinessDates, { businessHoursId: '01m4x000001119T', daysLimit: 7 })
     wiredDays({ data, error }) {
-    if (data) {
-        this.columns = data.map((yyyyMmDd, idx) => {
-            // yyyyMmDd is already "YYYY-MM-DD"
-            const d = new Date(`${yyyyMmDd}T00:00:00`);
+        if (data) {
+            this.columns = data.map((yyyyMmDd, idx) => {
+                // yyyyMmDd is already "YYYY-MM-DD"
+                const d = new Date(`${yyyyMmDd}T00:00:00`);
 
-            return {
-                key: idx,
-                label: d.toLocaleDateString(undefined, { weekday: 'short' }),
-                dateValue: d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }),
+                return {
+                    key: idx,
+                    label: d.toLocaleDateString(undefined, { weekday: 'short' }),
+                    dateValue: d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }),
 
-                fullDate: yyyyMmDd
-            };
-        });
+                    fullDate: yyyyMmDd
+                };
+            });
 
-        this.error = undefined;
-    } else if (error) {
-        this.error = error;
-        this.columns = [];
+            this.error = undefined;
+        } else if (error) {
+            this.error = error;
+            this.columns = [];
+        }
     }
-}
 
     // Matrix data for the 6 time slots × 7 business days
     @wire(getAggregateCountsMatrix, {
@@ -114,7 +114,7 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
         return ( this.columns && ( this.columns.length > 0 ) );
     }
 
-   async handleCellClick(event) {
+    async handleCellClick(event) {
         event.preventDefault();
 
         const timeBlock = event.currentTarget.dataset.timeblock;
@@ -130,24 +130,21 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
         this.endDT = `${date}T${endTime}:00`; */
         this.startDT = "2026-02-04T15:00:00.000Z";
         this.endDT = "2026-02-04T16:00:00.000Z";
-        console.log('startDT: ', this.startDT);
-        console.log('endDT: ', this.endDT);
 
         this.isCreatingEvent = true;
         try {
-        const data = await userIds({
-            startDT: this.startDT,
-            endDT: this.endDT,
-            skill: this.skill
-        });
+            const data = await getAvailableUsersForWindow({
+                startDT: this.startDT,
+                endDT: this.endDT,
+                skill: this.skill
+            });
 
-        this.singleUserIds = data.join(','); // Store userIds in the exposed property
-        this.error = undefined;
+            this.singleUserIds = data.join(','); // Store userIds in the exposed property
+            this.error = undefined;
 
-    } catch (error) {
-        this.error = error;
-        console.error(error);
-    }
+        } catch (error) {
+            this.error = error;
+        }
         // Move Flow to next screen
         this.dispatchEvent(new FlowNavigationNextEvent());
     }
