@@ -229,7 +229,7 @@
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>closingOpptyNotifications</stringValue>
+                <stringValue>Opportunity_Updated_Async_Closing_Notifications</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
