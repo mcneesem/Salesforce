@@ -220,8 +220,12 @@ export default class CaseCatSubcatDetail extends LightningElement {
 
     handleCategoryChange(value) {
         this.selectedCategory = value;
-        if(this.categoryWrapper != null && this.categoryWrapper.mCatToSubCatogories!= null && value != null){
-            this.subCategoryOptions = this.createOptions(this.categoryWrapper.mCatToSubCatogories[value]);
+         if ( this.categoryWrapper?.mCatToSubCatogories
+            && value
+            && ( value in this.categoryWrapper.mCatToSubCatogories )
+            )
+        {
+            this.subCategoryOptions = this.createOptions( this.categoryWrapper.mCatToSubCatogories[value] );
         }
         this.resetSelection( [ 'SubCategory' , 'Detail' , 'Version' ] );
         this.showAllSubCategoryButton = !this.isBPSUser && this.subCategoryOptions.length > 0;
