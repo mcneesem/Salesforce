@@ -186,7 +186,9 @@ public without sharing class NSP_VisualIndicatorHelper {
         {
             accWrapper.clientAndInsperity = true;
         }
-        accWrapper.pendingTermination = asset.NSP_Pending_Termination__c;
+        if ( asset.NSP_Pending_Termination__c) {
+            accWrapper.pendingTermination = true;
+        }
     }
 
     private static void checkSurveys( List<NSP_Survey__c> surveyList , VisualIndicatorWrapper accWrapper ) {
