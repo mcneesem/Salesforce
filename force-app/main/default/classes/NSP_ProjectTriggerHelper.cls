@@ -22,23 +22,15 @@ public with sharing class NSP_ProjectTriggerHelper {
     private static final Id bpsProjectRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT, NSP_ServiceConstants.PROJECT_BPS_RECORDTYPE);
     private static final String SERVICEPLANPROJECTTYPE = 'Service Plan';
 
-    /*****************************************************************
-    * Creating Constructor to call FF API's
-    * Creating Mock records of FF Api's Using interfaces
-    */
     public NSP_FF_APIs implInstance = new NSP_FF_APIImpl();
-        public NSP_ProjectTriggerHelper(){
-            if(Test.isRunningTest()){
-                this.implInstance = new Nsp_FFApiMock();
-            }
-        }
 
-        /**
-    * Iterates throught the list of new Projects and passes the required attributes to other methods.
-    * @param newList List of New Projects.
-    * @return void
-    */
-    public void beforeInsertDirector(List<pse__Proj__c> newProjectsList){
+    public NSP_ProjectTriggerHelper() {
+        if ( Test.isRunningTest() ) {
+            this.implInstance = new Nsp_FFApiMock();
+        }
+    }
+
+    public void beforeInsertDirector( List<pse__Proj__c> newProjectsList ) {
         Set<Id> accIdSet = new Set<Id>();
         Map<Id, Account> projAccIdNameMap;
         //getting PEO Billable Project Record Id
@@ -94,7 +86,7 @@ public with sharing class NSP_ProjectTriggerHelper {
 
         //Update ProjectName
         //update Asset Type --DF_04021
-        updateAssetTypeProject(newProjectsList);
+        this.updateAssetTypeProject( newProjectsList );
 
         // Added this condition as part of STY-02092
         if(!projectNameList.isEmpty()){
@@ -551,15 +543,25 @@ public with sharing class NSP_ProjectTriggerHelper {
     // Description : Method to get projecttemplate Asset Type
     // Params: String Template Name
     //
-    public String getProjectAssetFromTemp(String templateName){
-        List<String> projFields = new List<String>{'Id','NSP_Asset_Type__c','TemplateName__c'};
-        String query = new NSP_QueryBuilder('pse__Proj__c', projFields)
-                              .addFilter('TemplateName__c', templateName)
-                                .addFilter('pse__Is_Template__c', true)
-                              .addFilter('pse__Is_Active__c', true).build();
-
-        List<pse__Proj__c> projectTemplate = Database.query(query);
-        return projectTemplate.isEmpty() ? null : projectTemplate[0].NSP_Asset_Type__c;
+    private String getProjectAssetFromTemp( String templateName ) {
+        List<pse__Proj__c> projectTemplate = null;
+        if ( String.isNotBlank( templateName ) ) {
+            projectTemplate = [
+                SELECT Id , NSP_Asset_Type__c
+                FROM pse__Proj__c
+                WHERE (
+                    ( TemplateName__c = :templateName )
+                    AND ( pse__Is_Template__c = true )
+                    AND ( pse__Is_Active__c = true )
+                )
+                LIMIT 1
+            ];
+        }
+        String response = null;
+        if ( ( projectTemplate != null ) && !projectTemplate.isEmpty() ) {
+            response = projectTemplate[0].NSP_Asset_Type__c;
+        }
+        return response;
     }
 
     //
@@ -567,10 +569,10 @@ public with sharing class NSP_ProjectTriggerHelper {
     // Description : update project Asset Type name with project template Asset Type
     // Params: List<pse__Proj__c> newProjectsList
     //
-    public void updateAssetTypeProject( List<pse__Proj__c> newProjectsList ) {
-        if ( !newProjectsList?.isEmpty() ) {
+    private void updateAssetTypeProject( List<pse__Proj__c> newProjectsList ) {
+        if ( ( newProjectsList != null ) && !newProjectsList.isEmpty() ) {
             for ( pse__Proj__c project : newProjectsList ) {
-                project.NSP_Asset_Type__c = getProjectAssetFromTemp( project.TemplateName__c );
+                project.NSP_Asset_Type__c = this.getProjectAssetFromTemp( project.TemplateName__c );
             }
         }
     }

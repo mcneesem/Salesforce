@@ -227,7 +227,7 @@ public with sharing class OrderItemPriceUpdateBatch implements Database.Batchabl
                 List<Database.SaveResult> results = Database.update( records , false );
                 NSP_ErrorLogHandler.logResults(
                     OrderItemPriceUpdateBatch.class.getName() ,
-                    'performDML: ' + sObjectAPIName + ' Updates.' ,
+                    'performDML:update:' + sObjectAPIName ,
                     results
                 );
                 //update count of records processed
@@ -235,7 +235,7 @@ public with sharing class OrderItemPriceUpdateBatch implements Database.Batchabl
             } catch( Exception e ) {
                 NSP_ErrorLogHandler.logException(
                     OrderItemPriceUpdateBatch.class.getName() ,
-                    'performDML: ' + sObjectAPIName + ' Updates.' ,
+                    'performDML:' + sObjectAPIName ,
                     e
                 );
             } finally {
