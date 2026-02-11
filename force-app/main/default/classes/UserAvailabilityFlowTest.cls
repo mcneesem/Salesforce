@@ -5,8 +5,7 @@ public class UserAvailabilityFlowTest {
         public  List<Id> getAvailableUsersForWindow(
             Datetime startDT,
             Datetime endDT,
-            String product,
-            Integer stepMinutes
+            String skill
         ) {
             return new List<Id>{UserInfo.getUserId()};
         }
@@ -15,14 +14,13 @@ public class UserAvailabilityFlowTest {
     @IsTest
     static void testGetUsers_withValidInput() {
         // Prepare input
-        UserAvailabilityInput input = new UserAvailabilityInput();
+        UserAvailabilityFlow.UserAvailabilityInput input = new UserAvailabilityFlow.UserAvailabilityInput();
         input.startDT = Datetime.now();
         input.endDT = Datetime.now().addHours(1);
-        input.product = 'TestProduct';
-        input.stepMinutes = 30;
+        input.skill = 'TestProduct';
         
         Test.startTest();
-        List<List<Id>> results = UserAvailabilityFlow.getUsers(new List<UserAvailabilityInput>{input});
+        List<List<Id>> results = UserAvailabilityFlow.getUsers(new List<UserAvailabilityFlow.UserAvailabilityInput>{input});
         Test.stopTest();
         
         System.assertNotEquals(null, results, 'Results should not be null');
