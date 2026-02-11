@@ -10981,19 +10981,6 @@
         <field>blng__Payment__c.Payment_ID_18__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <userLicense>Customer Community Plus</userLicense>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>EnableNotifications</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>SelectFilesFromSalesforce</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>ShareFilesWithNetworks</name>
-    </userPermissions>
     <layoutAssignments>
         <layout>pse__Proj__c-PEO Project Billable</layout>
         <recordType>pse__Proj__c.PEO_Project_Billable</recordType>
@@ -11052,4 +11039,17 @@
     <layoutAssignments>
         <layout>NSP_Note__c-Note Community Layout</layout>
     </layoutAssignments>
+    <userLicense>Customer Community Plus</userLicense>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>EnableNotifications</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>SelectFilesFromSalesforce</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ShareFilesWithNetworks</name>
+    </userPermissions>
 </Profile>
