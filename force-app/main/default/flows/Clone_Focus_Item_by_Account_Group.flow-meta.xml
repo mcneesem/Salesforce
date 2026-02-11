@@ -5,7 +5,7 @@
         <name>Assignment_to_Create_Focus_Items</name>
         <label>Assignment to Create Focus Items</label>
         <locationX>314</locationX>
-        <locationY>815</locationY>
+        <locationY>1308</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -20,8 +20,8 @@
     <assignments>
         <name>Focus_Item_Assignment</name>
         <label>Focus Item Assignment</label>
-        <locationX>402</locationX>
-        <locationY>1092</locationY>
+        <locationX>578</locationX>
+        <locationY>816</locationY>
         <assignmentItems>
             <assignToReference>FocusItem.Focus_Item__c</assignToReference>
             <operator>Assign</operator>
@@ -145,7 +145,7 @@
         <name>Check_Account_Group</name>
         <label>Check Account Group</label>
         <locationX>314</locationX>
-        <locationY>1284</locationY>
+        <locationY>1092</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Account_Group_Null_Check</name>
@@ -173,12 +173,12 @@
     <decisions>
         <name>Check_for_Account_Health_Group_Renewal_Probability</name>
         <label>Check for Account Health Group/ Renewal Probability</label>
-        <locationX>182</locationX>
-        <locationY>335</locationY>
+        <locationX>974</locationX>
+        <locationY>276</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Is_Account_Health_Group_Renewal_Probability</name>
-            <conditionLogic>(1 OR 2) AND 3 AND NOT( 4 AND 5 AND 6) AND NOT(4 AND 7)</conditionLogic>
+            <conditionLogic>(1 OR 2) AND NOT(3 AND 4 AND 5)</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.NSP_Account_Group__r.NSP_Type__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -191,20 +191,6 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Renewal Probability</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_Is_Duplicate__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Area_of_Focus__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Customer Relationship</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -266,8 +252,8 @@
     <decisions>
         <name>Check_if_Account_Group_Already_Exists</name>
         <label>Check if Account Group Already Exists</label>
-        <locationX>226</locationX>
-        <locationY>695</locationY>
+        <locationX>490</locationX>
+        <locationY>708</locationY>
         <defaultConnector>
             <targetReference>Focus_Item_Assignment</targetReference>
         </defaultConnector>
@@ -299,8 +285,8 @@
     <loops>
         <name>Iterate_Account_Healths</name>
         <label>Iterate Account Healths</label>
-        <locationX>50</locationX>
-        <locationY>575</locationY>
+        <locationX>314</locationX>
+        <locationY>600</locationY>
         <collectionReference>Get_Account_Health_Group_Members_by_Account</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -333,7 +319,7 @@
         <name>Create_Focus_Item_Record</name>
         <label>Create Focus Item Record</label>
         <locationX>50</locationX>
-        <locationY>1392</locationY>
+        <locationY>1200</locationY>
         <faultConnector>
             <targetReference>Assignment_to_Create_Focus_Items</targetReference>
         </faultConnector>
@@ -342,8 +328,8 @@
     <recordLookups>
         <name>Get_Account_Health_Group_Members_by_Account</name>
         <label>Get Account Health Group Members by Account</label>
-        <locationX>50</locationX>
-        <locationY>455</locationY>
+        <locationX>578</locationX>
+        <locationY>384</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Get_Account_Health_group_Members_by_Account</targetReference>
@@ -371,7 +357,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>56</locationX>
+        <locationX>254</locationX>
         <locationY>0</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -403,7 +389,7 @@
         <name>Fault_Handler_subflow</name>
         <label>Fault Handler subflow</label>
         <locationX>314</locationX>
-        <locationY>1500</locationY>
+        <locationY>1416</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
