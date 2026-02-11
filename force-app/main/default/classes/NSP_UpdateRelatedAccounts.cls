@@ -17,27 +17,26 @@ public without sharing class NSP_UpdateRelatedAccounts {
     }
 
     private static void updateRelatedAccountsInternal( Set<String> accountIdSet ) {
-        List<Account> accountTobeUpdatedList = new List<Account>();
-        for ( Account accountObj : [
-                    SELECT Id , NSP_Last_Updated__c
-                    FROM Account
-                    WHERE (
-                        ( Id IN :accountIdSet )
-                        AND ( NSP_Last_Updated__c != TODAY )
-                    )
-                ]
-            )
-        {
-            //Stamping last updated date on the account records
-            accountObj.NSP_Last_Updated__c = Date.today(); // DEPRECATED
-            accountTobeUpdatedList.add( accountObj );
-        }
-        if ( !accountTobeUpdatedList.isEmpty() ) {
-            try {
-                update accountTobeUpdatedList;
-            } catch( Exception e ) {
-                NSP_UpdateRelatedAccounts.handleException( e , 'updateRelatedAccounts' );
+        try {
+            List<Account> accountTobeUpdatedList = new List<Account>();
+            for ( Account accountObj : [
+                        SELECT Id , NSP_Last_Updated__c
+                        FROM Account
+                        WHERE (
+                            ( Id IN :accountIdSet )
+                            AND ( NSP_Last_Updated__c != TODAY )
+                        )
+                    ]
+                )
+            {
+                accountObj.NSP_Last_Updated__c = Date.today(); // DEPRECATED
+                accountTobeUpdatedList.add( accountObj );
             }
+            if ( !accountTobeUpdatedList.isEmpty() ) {
+                update accountTobeUpdatedList;
+            }
+        } catch( Exception e ) {
+            NSP_UpdateRelatedAccounts.handleException( e , 'updateRelatedAccountsInternal' );
         }
     }
 
@@ -87,7 +86,7 @@ public without sharing class NSP_UpdateRelatedAccounts {
                 update accountTobeUpdatedList;
             }
         } catch ( Exception e ) {
-            NSP_UpdateRelatedAccounts.handleException( e , 'updateAccountStatus' );
+            NSP_UpdateRelatedAccounts.handleException( e , 'updateAccountStatusInternal' );
         }
     }
 
