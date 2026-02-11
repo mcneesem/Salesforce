@@ -1085,7 +1085,7 @@ public with sharing class NSP_ProjectTriggerHelper {
         }
     }
 
-    // This Method will create Implementation Profile when a Project is Created
+    // create Implementation Profile when a Project is Created
     public static void createImplementationProfile( List< pse__Proj__c> projectList , Set<Id> accountIdSet ) {
         Id recordTypeFSOImpProfileID = NSP_GenericRecordType.getRecordTypeId( 'Implementation_Profile__c' , 'FSO' );
         Id recordTypeMMImpProfileID = NSP_GenericRecordType.getRecordTypeId( 'Implementation_Profile__c' , 'Middle_Market' );
@@ -1160,13 +1160,7 @@ public with sharing class NSP_ProjectTriggerHelper {
         }
     }
 
-    //
-    // MethodName: createProjectTeamRoles
-    // Description: This Method will create Project Team records for MM and FSO projects
-    // Params: List< pse__Proj__c> projectList
-    // Author: Nischay
-    // Updates : Story 442892, AZD-513688: By Tanay : modified method to include ITA,HRscale team creation
-    //
+    // create Project Team records for MM and FSO projects
     private static void createProjectTeamRoles(
         Set<Id> mapMMProjectListMMRoles ,
         Set<Id> mapFSOProjectListFSORoles ,
@@ -1312,12 +1306,7 @@ public with sharing class NSP_ProjectTriggerHelper {
         }
     }
 
-    //
-    // MethodName: updateProjectName
-    // Description: This Method will update the project name for FSO and MM Projects
-    // Params: List< pse__Proj__c> projectList ,  Map<Id,pse__Proj__c> oldProjectMap
-    // Author: Nischay Jindal
-    //
+    // update the project name for FSO and MM Projects
     public void updateProjectName(
         Map<Id,pse__Proj__c> newProjectMap ,
         Map<Id,pse__Proj__c> oldProjectMap ,
@@ -1371,6 +1360,7 @@ public with sharing class NSP_ProjectTriggerHelper {
         }
     }
 
+    // check whether the project is completed or not
     public void cloneTheOpenProjectTasks( Set<Id> prjctIdSet ) {
         try {
             Set<Id> completedPrjctList = new Set<Id>();
