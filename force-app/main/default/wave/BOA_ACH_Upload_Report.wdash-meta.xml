@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<WaveDashboard xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <content xsi:nil="true"/>
-    <application>Finance_Roger</application>
-    <description>Built for STY-03773, to pull Invoice records and Credit Note records in one report</description>
-    <masterLabel>BOA ACH Upload Report</masterLabel>
-</WaveDashboard>

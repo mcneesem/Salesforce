@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<WaveDataset xmlns="http://soap.sforce.com/2006/04/metadata">
-    <application>PEO</application>
-    <description>Created from the National Monthly Performance_Cases_With_User_Asset_Account_Details_STY_02827 recipe.</description>
-    <masterLabel>Case, User, Asset, Account DS</masterLabel>
-    <type>default</type>
-</WaveDataset>

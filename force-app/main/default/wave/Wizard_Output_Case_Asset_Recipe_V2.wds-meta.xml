@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<WaveDataset xmlns="http://soap.sforce.com/2006/04/metadata">
-    <application>PEO</application>
-    <description>Created from the Wizard Output-Case-Asset recipe.</description>
-    <masterLabel>User,  User, Contact, Account, Case, Asset, Report Request DS</masterLabel>
-    <type>default</type>
-</WaveDataset>

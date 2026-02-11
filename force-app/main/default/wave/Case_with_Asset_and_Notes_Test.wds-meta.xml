@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<WaveDataset xmlns="http://soap.sforce.com/2006/04/metadata">
-    <application>Health_Welfare</application>
-    <description>Created from the Asset with Cases and Notes recipe.</description>
-    <masterLabel>Case, Asset, Notes DS</masterLabel>
-    <type>default</type>
-</WaveDataset>

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<WaveDataset xmlns="http://soap.sforce.com/2006/04/metadata">
-    <application>RET</application>
-    <description>Created from the Timecard With Project Task and PlanSubplan Recipe recipe.</description>
-    <masterLabel>Timecard, Project Task, Plan Subplan DS</masterLabel>
-    <type>default</type>
-</WaveDataset>

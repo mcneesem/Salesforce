@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<WaveDataset xmlns="http://soap.sforce.com/2006/04/metadata">
-    <application>BPS</application>
-    <description>Created from the Project with Project Task and Asset and Resource Request recipe.</description>
-    <masterLabel>Project, Project Asset, Asset, Account DS</masterLabel>
-    <type>default</type>
-</WaveDataset>
