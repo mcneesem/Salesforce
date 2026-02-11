@@ -316,6 +316,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Intermittent Leave</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>L%2EO%2EA%2E</fullName>
             <default>false</default>
         </values>
@@ -336,7 +340,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>State Leave</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>TERMINATED</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TLO Leave</fullName>
             <default>false</default>
         </values>
         <values>
@@ -352,6 +364,18 @@
         </values>
         <values>
             <fullName>Male</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No Response</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non-Binary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Declared</fullName>
             <default>false</default>
         </values>
         <values>
