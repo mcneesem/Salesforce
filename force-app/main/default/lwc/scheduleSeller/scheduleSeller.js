@@ -18,15 +18,67 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
     // Store raw matrix from Apex directly (6 rows × N columns)
     matrix = [];
 
-    // Static labels for time blocks, aligned by row index
-    timeBlockLabels = [
-        '8:00 - 9:00',
-        '8:30 - 9:30',
-        '9:00 - 10:00',
-        '9:30 - 10:30',
-        '10:00 - 11:00',
-        '11:30 - 12:30'
-    ];
+    // Dynamic labels: pick one of several hardcoded sets based on Flow input timeZone
+    get timeBlockLabels() {
+        const central = [
+            '8:00 - 9:00',
+            '8:30 - 9:30',
+            '9:00 - 10:00',
+            '9:30 - 10:30',
+            '10:00 - 11:00',
+            '11:30 - 12:30'
+        ];
+        const mountain = [
+            '8:00 - 9:00',
+            '9:00 - 10:00',
+            '9:30 - 10:30',
+            '10:00 - 11:00',
+            '10:30 - 11:30',
+            '12:00 - 1:00'
+        ];
+        const eastern = [
+            '8:00 - 9:00',
+            '8:30 - 9:30',
+            '9:00 - 10:00',
+            '9:30 - 10:30',
+            '10:00 - 11:00',
+            '11:30 - 12:30'
+        ];
+        const pacific = [
+            '8:00 - 9:00',
+            '9:00 - 10:00',
+            '9:30 - 10:30',
+            '10:00 - 11:00',
+            '10:30 - 11:30',
+            '12:00 - 1:00'
+        ];
+
+        const tz = (this.timeZone || '').toLowerCase().trim();
+        switch (tz) {
+            case 'central':
+            case 'ct':
+            case 'cst':
+            case 'cdt':
+                return central;
+            case 'mountain':
+            case 'mt':
+            case 'mst':
+            case 'mdt':
+                return mountain;
+            case 'eastern':
+            case 'et':
+            case 'est':
+            case 'edt':
+                return eastern;
+            case 'pacific':
+            case 'pt':
+            case 'pst':
+            case 'pdt':
+                return pacific;
+            default:
+                return central; // fallback
+        }
+    }
 
     /**
      * Computed property to help with template rendering
@@ -59,26 +111,26 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
     // Columns are server-driven via Business Hours using Apex getBusinessDates()
     @wire(getBusinessDates, { businessHoursId: '01m4x000001119T', daysLimit: 7 })
     wiredDays({ data, error }) {
-        if (data) {
-            this.columns = data.map((yyyyMmDd, idx) => {
-                // yyyyMmDd is already "YYYY-MM-DD"
-                const d = new Date(`${yyyyMmDd}T00:00:00`);
+    if (data) {
+        this.columns = data.map((yyyyMmDd, idx) => {
+            // yyyyMmDd is already "YYYY-MM-DD"
+            const d = new Date(`${yyyyMmDd}T00:00:00`);
 
-                return {
-                    key: idx,
-                    label: d.toLocaleDateString(undefined, { weekday: 'short' }),
-                    dateValue: d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }),
+            return {
+                key: idx,
+                label: d.toLocaleDateString(undefined, { weekday: 'short' }),
+                dateValue: d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }),
 
-                    fullDate: yyyyMmDd
-                };
-            });
+                fullDate: yyyyMmDd
+            };
+        });
 
-            this.error = undefined;
-        } else if (error) {
-            this.error = error;
-            this.columns = [];
-        }
+        this.error = undefined;
+    } else if (error) {
+        this.error = error;
+        this.columns = [];
     }
+}
 
     // Matrix data for the 6 time slots × 7 business days
     @wire(getAggregateCountsMatrix, {
@@ -114,7 +166,7 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
         return ( this.columns && ( this.columns.length > 0 ) );
     }
 
-    async handleCellClick(event) {
+   async handleCellClick(event) {
         event.preventDefault();
 
         const timeBlock = event.currentTarget.dataset.timeblock;
@@ -126,25 +178,32 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
         const startTime = rawStart.trim();
         const endTime = rawEnd.trim();
 
-        /* this.startDT = `${date}T${startTime}:00`;
-        this.endDT = `${date}T${endTime}:00`; */
-        this.startDT = "2026-02-04T15:00:00.000Z";
-        this.endDT = "2026-02-04T16:00:00.000Z";
+        // Build ISO 8601 strings anchored to GMT/UTC (Zulu) time
+        function buildGmtIso(dateStr, timeStr) {
+            const [year, month, day] = dateStr.split('-').map(Number);
+            const [h, m] = timeStr.split(':').map(Number);
+            // Construct the instant at that GMT wall time using Date.UTC (no local offset applied)
+            const dt = new Date(year, month - 1, day, h, m, 0, 0);
+            // Standardize milliseconds to .000Z
+            return dt.toISOString();
+        }
 
+        this.startDT = buildGmtIso(date, startTime);
+        this.endDT = buildGmtIso(date, endTime);
         this.isCreatingEvent = true;
         try {
-            const data = await getAvailableUsersForWindow({
-                startDT: this.startDT,
-                endDT: this.endDT,
-                skill: this.skill
-            });
+        const data = await getAvailableUsersForWindow({
+            startDT: this.startDT,
+            endDT: this.endDT,
+            skill: this.skill
+        });
 
-            this.singleUserIds = data.join(','); // Store userIds in the exposed property
-            this.error = undefined;
+        this.singleUserIds = data.join(','); // Store userIds in the exposed property
+        this.error = undefined;
 
-        } catch (error) {
-            this.error = error;
-        }
+    } catch (error) {
+        this.error = error;
+    }
         // Move Flow to next screen
         this.dispatchEvent(new FlowNavigationNextEvent());
     }
