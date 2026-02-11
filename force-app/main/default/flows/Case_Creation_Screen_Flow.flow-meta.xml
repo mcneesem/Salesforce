@@ -182,7 +182,7 @@
     </assignments>
     <assignments>
         <name>Assign_Fault_Element_Get_Voice_Call_Messaging_User</name>
-        <label>Assign Fault Element: Get_Voice_Call_Messaging_User</label>
+        <label>Assign Fault Element : Get_Voice_Call_Messaging_User</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
@@ -199,7 +199,7 @@
     </assignments>
     <assignments>
         <name>Assign_Fault_Element_Update_Messaging_Session</name>
-        <label>Assign Fault Element: Update_Messaging_Session</label>
+        <label>Assign Fault Element : Update Messaging Session</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
