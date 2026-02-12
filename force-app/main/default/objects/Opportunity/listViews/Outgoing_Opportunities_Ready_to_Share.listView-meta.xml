@@ -18,5 +18,6 @@
     <label>Outgoing Opportunities - Ready to Share</label>
     <sharedTo>
         <group>MidMarket_Administrator</group>
+        <group>Strategic_Sales_Leaders</group>
     </sharedTo>
 </ListView>
