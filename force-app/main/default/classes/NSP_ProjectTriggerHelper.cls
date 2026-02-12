@@ -1332,23 +1332,18 @@ public with sharing class NSP_ProjectTriggerHelper {
                     && ( project.pse__Project_Type__c == NSP_ServiceConstants.ImplementationProjectType )
                     && !project.pse__Is_Template__c
                     && ( project.recordTypeId == NSP_ProjectTriggerHelper.peoProjectRecordTypeId )
-                    )
-                {
-                    if ( ( project.TemplateName__c == NSP_ServiceConstants.MM_PROJECT_TEMPLATE_KEY )
+                    && projectAccountMap.containsKey( project.pse__Account__c )
+                    && ( projectAccountMap.get( project.pse__Account__c ) != null )
+                    && ( ( project.TemplateName__c == NSP_ServiceConstants.MM_PROJECT_TEMPLATE_KEY )
                         || ( project.TemplateName__c == NSP_ServiceConstants.FSO_PROJECT_TEMPLATE_KEY )
                         )
-                    {
-                        if ( projectAccountMap.containsKey( project.pse__Account__c )
-                            && ( projectAccountMap.get( project.pse__Account__c ) != null )
-                            )
-                        {
-                            project.Name = projectNameAsPerNamingConvention(
-                                project.TemplateName__c ,
-                                project.pse__Start_Date__c ,
-                                projectAccountMap.get( project.pse__Account__c ).Name
-                            );
-                        }
-                    }
+                    )
+                {
+                    project.Name = projectNameAsPerNamingConvention(
+                        project.TemplateName__c ,
+                        project.pse__Start_Date__c ,
+                        projectAccountMap.get( project.pse__Account__c ).Name
+                    );
                 }
             }
         } catch ( Exception e ) {
