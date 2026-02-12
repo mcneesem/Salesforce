@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>65.0</apiVersion>
+    <assignments>
+        <name>Fiduciary_Assignement</name>
+        <label>Fiduciary Assignement</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Time_Category_Text__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Fiduciary</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>General_Business</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>General_Business_Assignment</name>
+        <label>General Business Assignment</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Time_Category_Text__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>General Business</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Settlor</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Non_Reimbursable_Assignment</name>
+        <label>Non Reimbursable Assignment</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Time_Category_Text__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Non Reimbursable</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fiduciary_Time_Entry_Decision</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>PTO_Assignment</name>
+        <label>PTO Assignment</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Time_Category_Text__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>PTO</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Settlor_Assignment</name>
+        <label>Settlor Assignment</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Time_Category_Text__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Settlor</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>PTO</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Fiduciary_Time_Entry_Decision</name>
+        <label>Fiduciary Time Entry Decision</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>General_Business</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Fiduciary_Time_Entry</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Time_Entry__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Secure 2.0 - ER Roth Contribs</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Time_Entry__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Secure 2.0 - Emerg Savings Acct</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Time_Entry__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Secure 2.0 - Auto enroll</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Time_Entry__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Secure 2.0 - Student Loan Matching Contribs</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Time_Entry__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Secure 2.0 - Catch Up Limits by Age</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Time_Entry__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Secure 2.0 - RMD Changes</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Time_Entry__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Secure 2.0 - LTPT EE Period from 3 to 2 yrs</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Time_Entry__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Secure 2.0 - Expanded Distributions</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Time_Entry__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Secure 2.0 - Relaxed Disclosure for Unrolled ppts</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Time_Entry__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <elementReference>$Label.NSP_Fiduciary_Time_Category_Values</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Time_Entry__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <elementReference>$Label.NSP_Fiduciary_Time_Category_Values_2</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Time_Entry__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <elementReference>$Label.NSP_Fiduciary_Time_Category_Values_3</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Time_Entry__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Secure 2.0 - Roth Catchup</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Fiduciary_Assignement</targetReference>
+            </connector>
+            <label>Fiduciary Time Entry</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>General_Business</name>
+        <label>General Business</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Settlor</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>General_Business_Time_Entry</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Time_Entry__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <elementReference>$Label.NSP_General_Business_Time_Category_Values</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>General_Business_Assignment</targetReference>
+            </connector>
+            <label>General Business Time Entry</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>PTO</name>
+        <label>PTO</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>PTO_Time_Entry</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Time_Entry__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <elementReference>$Label.NSP_PTO_Time_Category_Values</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>PTO_Assignment</targetReference>
+            </connector>
+            <label>PTO Time Entry</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Settlor</name>
+        <label>Settlor</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>PTO</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Settlor_Time_Entry</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Time_Entry__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <elementReference>$Label.NSP_Settlor_Time_Category_Values</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Settlor_Assignment</targetReference>
+            </connector>
+            <label>Settlor Time Entry</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Time_Entry_Database</name>
+        <label>Time Entry Database</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Fiduciary_Time_Entry_Decision</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Client_Management_Database</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Time_Entry__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Secure 2.0 - Starter 401(k)</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Time_Entry__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Secure 2.0 - SIMPLE IRA/401(k) Limits</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Time_Entry__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <elementReference>$Label.NSP_Non_Reimbursable_Time_Category_Values</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Time_Entry__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <elementReference>$Label.NSP_Non_Reimbursable_Time_Category_Values_2</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Time_Entry__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Client Management Database</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Non_Reimbursable_Assignment</targetReference>
+            </connector>
+            <label>Yes Client Management</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>Project Task - Before Save - Populate Time Category {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Project Task - Before Save - Populate Time Category</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Time_Entry_Database</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Time_Entry__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>pse__Project_Task__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Draft</status>
+</Flow>
