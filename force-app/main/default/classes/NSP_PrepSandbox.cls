@@ -838,7 +838,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                     siteUpd.fullName = site.fullName;
                     siteUpd.description = site.description;
                     siteUpd.isActive = site.isActive;
-                    siteUpd.endpointUrl = mapSites.get(siteName);
+                    siteUpd.endpointUrl = mapSites.get(site.fullName);
 
                     if (allMetadataList[batch].size() >= 10) {
                         batch++;
