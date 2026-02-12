@@ -185,6 +185,10 @@
     </userPermissions>
     <userPermissions>
         <enabled>false</enabled>
+        <name>PasswordNeverExpires</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>false</enabled>
         <name>PublishPackaging</name>
     </userPermissions>
     <userPermissions>
