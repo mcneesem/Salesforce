@@ -17,6 +17,21 @@
                 <label>NCI-RS</label>
             </value>
             <value>
+                <fullName>2026 2-Year Agreement</fullName>
+                <default>false</default>
+                <label>2026 2-Year Agreement</label>
+            </value>
+            <value>
+                <fullName>2026 Admin Cap</fullName>
+                <default>false</default>
+                <label>2026 Admin Cap</label>
+            </value>
+            <value>
+                <fullName>2026 Promotional Credit</fullName>
+                <default>false</default>
+                <label>2026 Promotional Credit</label>
+            </value>
+            <value>
                 <fullName>2026 Quick Start</fullName>
                 <default>false</default>
                 <label>2026 Quick Start</label>
@@ -54,58 +69,68 @@
             <value>
                 <fullName>2024 2-year Admin Cap</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>2024 2-year Admin Cap</label>
             </value>
             <value>
                 <fullName>2024 2-year Agreement</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>2024 2-year Agreement</label>
             </value>
             <value>
                 <fullName>2024 August Credit Promotion</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>2024 August Credit Promotion</label>
             </value>
             <value>
                 <fullName>2024 Credit Promotion</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>2024 Credit Promotion</label>
             </value>
             <value>
                 <fullName>2024 Enrollment Fee Promotion</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>2024 Enrollment Fee Promotion</label>
             </value>
             <value>
                 <fullName>2024 Fall Campaign Kicker</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>2024 Fall Campaign Kicker</label>
             </value>
             <value>
                 <fullName>2024 Fall Credit Promotion</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>2024 Fall Credit Promotion</label>
             </value>
             <value>
                 <fullName>2024 Inc 5000 Promotion</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>2024 Inc 5000 Promotion</label>
             </value>
             <value>
                 <fullName>2024 Recruiting Promotion</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>2024 Recruiting Promotion</label>
-            </value>
-            <value>
-                <fullName>2024 WX Free Months</fullName>
-                <default>false</default>
-                <label>2024 WX Free Months</label>
             </value>
             <value>
                 <fullName>2024 September Credit Promotion</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>2024 September Credit Promotion</label>
+            </value>
+            <value>
+                <fullName>2024 WX Free Months</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>2024 WX Free Months</label>
             </value>
         </valueSetDefinition>
     </valueSet>
