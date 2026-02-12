@@ -30,7 +30,7 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
         const matrix = Array.isArray(this.matrix) ? this.matrix : [];
 
         // Ensure we always have 6 rows for display; pad with empty arrays if needed
-        const rowCount = Math.max(6, matrix.length);
+        const rowCount = this.timeBlocks.length;
 
         return Array.from({ length: rowCount }, (_v, rowIndex) => {
             const counts = Array.isArray(matrix[rowIndex]) ? matrix[rowIndex] : [];
@@ -50,7 +50,7 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
 
 
     // Columns are server-driven via Business Hours using Apex getBusinessDates()
-    @wire(getBusinessDates, { businessHoursId: '01m4x000001119T', daysLimit: 7 })
+    @wire(getBusinessDates, { businessHoursId: '01m4x000001119T', daysLimit: 10 })
     wiredDays({ data, error }) {
     if (data) {
         this.columns = data.map((yyyyMmDd, idx) => {
