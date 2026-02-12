@@ -80,7 +80,7 @@ public class UserAvailabilityServiceTest {
 
         Test.startTest();
         List<List<Integer>> matrix =
-            UserAvailabilityService.getCountsMatrix(u.Id, 30);
+            UserAvailabilityService.getCountsMatrix(u.Id);
         Test.stopTest();
 
         System.assert(matrix.size() > 0);
