@@ -5,7 +5,7 @@
         <name>Assignment_to_Create_Focus_Items</name>
         <label>Assignment to Create Focus Items</label>
         <locationX>314</locationX>
-        <locationY>1308</locationY>
+        <locationY>1416</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -107,17 +107,26 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>FocusItemList</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>FocusItem</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>AccountGroupSet</assignToReference>
             <operator>Add</operator>
             <value>
                 <elementReference>Iterate_Account_Healths.NSP_Group__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Focus_Item_List_Assignment</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Focus_Item_List_Assignment</name>
+        <label>Focus Item List Assignment</label>
+        <locationX>578</locationX>
+        <locationY>924</locationY>
+        <assignmentItems>
+            <assignToReference>FocusItemList</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>FocusItem</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -145,7 +154,7 @@
         <name>Check_Account_Group</name>
         <label>Check Account Group</label>
         <locationX>314</locationX>
-        <locationY>1092</locationY>
+        <locationY>1200</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Account_Group_Null_Check</name>
@@ -319,7 +328,7 @@
         <name>Create_Focus_Item_Record</name>
         <label>Create Focus Item Record</label>
         <locationX>50</locationX>
-        <locationY>1200</locationY>
+        <locationY>1308</locationY>
         <faultConnector>
             <targetReference>Assignment_to_Create_Focus_Items</targetReference>
         </faultConnector>
@@ -374,6 +383,13 @@
                 <stringValue>Customer Relationship</stringValue>
             </value>
         </filters>
+        <filters>
+            <field>NSP_Account_Group__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
         <object>NSP_Focus_Item__c</object>
         <recordTriggerType>Create</recordTriggerType>
         <scheduledPaths>
@@ -389,7 +405,7 @@
         <name>Fault_Handler_subflow</name>
         <label>Fault Handler subflow</label>
         <locationX>314</locationX>
-        <locationY>1416</locationY>
+        <locationY>1524</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
