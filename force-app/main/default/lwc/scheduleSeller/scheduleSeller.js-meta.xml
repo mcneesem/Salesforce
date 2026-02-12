@@ -15,16 +15,21 @@
                 type="String"
                 label="Skill"
                 description="Selected skill for availability check" />
+            <property
+                name="timeZone"
+                type="String"
+                label="Time Zone"
+                description="Selected time zone" />
 
             <!-- OUTPUTS -->
             <property
-                name="startDT"
+                name="startDateTime"
                 type="DateTime"
                 label="Selected Start DateTime"
                 role="outputOnly" />
 
             <property
-                name="endDT"
+                name="endDateTime"
                 type="DateTime"
                 label="Selected End DateTime"
                 role="outputOnly" />
