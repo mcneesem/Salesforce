@@ -3,8 +3,8 @@ public class UserAvailabilityFlowTest {
     
     public class MockUserAvailabilityService {
         public  List<Id> getAvailableUsersForWindow(
-            Datetime startDT,
-            Datetime endDT,
+            Datetime startDateTime,
+            Datetime endDateTime,
             String skill
         ) {
             return new List<Id>{UserInfo.getUserId()};
@@ -15,8 +15,8 @@ public class UserAvailabilityFlowTest {
     static void testGetUsers_withValidInput() {
         // Prepare input
         UserAvailabilityFlow.UserAvailabilityInput input = new UserAvailabilityFlow.UserAvailabilityInput();
-        input.startDT = Datetime.now();
-        input.endDT = Datetime.now().addHours(1);
+        input.startDateTime = Datetime.now();
+        input.endDateTime = Datetime.now().addHours(1);
         input.skill = 'TestProduct';
         
         Test.startTest();

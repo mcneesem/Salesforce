@@ -12,9 +12,9 @@
         </connector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
-            <name>endDT</name>
+            <name>endDateTime</name>
             <value>
-                <elementReference>Seller.endDT</elementReference>
+                <elementReference>Seller.endDateTime</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -24,9 +24,9 @@
             </value>
         </inputParameters>
         <inputParameters>
-            <name>startDT</name>
+            <name>startDateTime</name>
             <value>
-                <elementReference>Seller.startDT</elementReference>
+                <elementReference>Seller.startDateTime</elementReference>
             </value>
         </inputParameters>
         <nameSegment>UserAvailabilityFlow</nameSegment>
@@ -41,17 +41,17 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>startDT</assignToReference>
+            <assignToReference>startDateTime</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Seller.startDT</elementReference>
+                <elementReference>Seller.startDateTime</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>endDT</assignToReference>
+            <assignToReference>endDateTime</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Seller.endDT</elementReference>
+                <elementReference>Seller.endDateTime</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -191,7 +191,7 @@
         <inputAssignments>
             <field>EndDateTime</field>
             <value>
-                <elementReference>endDT</elementReference>
+                <elementReference>endDateTime</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -203,7 +203,7 @@
         <inputAssignments>
             <field>StartDateTime</field>
             <value>
-                <elementReference>startDT</elementReference>
+                <elementReference>startDateTime</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -260,6 +260,12 @@
                     <elementReference>Select_a_Skill</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>timeZone</name>
+                <value>
+                    <elementReference>Time</elementReference>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -272,7 +278,7 @@
                 </width>
             </styleProperties>
         </fields>
-        <showFooter>false</showFooter>
+        <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
     <screens>
@@ -304,7 +310,7 @@
         </fields>
         <fields>
             <name>StartTime</name>
-            <fieldText>&lt;p&gt;{!startDT}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;{!startDateTime}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -475,14 +481,14 @@
         </inputAssignments>
     </subflows>
     <variables>
-        <name>endDT</name>
+        <name>endDateTime</name>
         <dataType>DateTime</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>startDT</name>
+        <name>startDateTime</name>
         <dataType>DateTime</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>

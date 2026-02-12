@@ -6,8 +6,8 @@ public with sharing class UserAvailabilityFlow {
         if ( ( inputs != null ) && !inputs.isEmpty() ) {
             for ( UserAvailabilityFlow.UserAvailabilityInput i : inputs ) {
                 List<Id> userIds = UserAvailabilityService.getAvailableUsersForWindow(
-                    i.startDT,
-                    i.endDT,
+                    i.startDateTime,
+                    i.endDateTime,
                     i.skill
                 );
                 if ( userIds == null ) {
@@ -21,9 +21,9 @@ public with sharing class UserAvailabilityFlow {
 
     public class UserAvailabilityInput {
         @InvocableVariable(required=true)
-        public Datetime startDT;
+        public Datetime startDateTime;
         @InvocableVariable(required=true)
-        public Datetime endDT;
+        public Datetime endDateTime;
         @InvocableVariable
         public String skill;
     }

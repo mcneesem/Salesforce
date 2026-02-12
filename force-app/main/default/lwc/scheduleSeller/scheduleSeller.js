@@ -1,5 +1,6 @@
 import { LightningElement, wire, api } from 'lwc';
 import getBusinessDates from '@salesforce/apex/UserAvailabilityService.getBusinessDates';
+import getTimeBlocks from '@salesforce/apex/UserAvailabilityService.getTimeBlocks';
 import getAvailableUsersForWindow from '@salesforce/apex/UserAvailabilityService.getAvailableUsersForWindow';
 import getAggregateCountsMatrix from '@salesforce/apex/UserAvailabilityService.getAggregateCountsMatrix';
 import USER_ID from '@salesforce/user/Id';
@@ -11,74 +12,14 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
     error;
     columns = [];
     @api skill;
-    @api startDT;
-    @api endDT;
+    @api timeZone;
+    @api startDateTime;
+    @api endDateTime;
+    timeBlocks = [];
     isCreatingEvent = false;
 
     // Store raw matrix from Apex directly (6 rows × N columns)
     matrix = [];
-
-    // Dynamic labels: pick one of several hardcoded sets based on Flow input timeZone
-    get timeBlockLabels() {
-        const central = [
-            '8:00 - 9:00',
-            '8:30 - 9:30',
-            '9:00 - 10:00',
-            '9:30 - 10:30',
-            '10:00 - 11:00',
-            '11:30 - 12:30'
-        ];
-        const mountain = [
-            '8:00 - 9:00',
-            '9:00 - 10:00',
-            '9:30 - 10:30',
-            '10:00 - 11:00',
-            '10:30 - 11:30',
-            '12:00 - 1:00'
-        ];
-        const eastern = [
-            '8:00 - 9:00',
-            '8:30 - 9:30',
-            '9:00 - 10:00',
-            '9:30 - 10:30',
-            '10:00 - 11:00',
-            '11:30 - 12:30'
-        ];
-        const pacific = [
-            '8:00 - 9:00',
-            '9:00 - 10:00',
-            '9:30 - 10:30',
-            '10:00 - 11:00',
-            '10:30 - 11:30',
-            '12:00 - 1:00'
-        ];
-
-        const tz = (this.timeZone || '').toLowerCase().trim();
-        switch (tz) {
-            case 'central':
-            case 'ct':
-            case 'cst':
-            case 'cdt':
-                return central;
-            case 'mountain':
-            case 'mt':
-            case 'mst':
-            case 'mdt':
-                return mountain;
-            case 'eastern':
-            case 'et':
-            case 'est':
-            case 'edt':
-                return eastern;
-            case 'pacific':
-            case 'pt':
-            case 'pst':
-            case 'pdt':
-                return pacific;
-            default:
-                return central; // fallback
-        }
-    }
 
     /**
      * Computed property to help with template rendering
@@ -93,7 +34,7 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
 
         return Array.from({ length: rowCount }, (_v, rowIndex) => {
             const counts = Array.isArray(matrix[rowIndex]) ? matrix[rowIndex] : [];
-            const name = this.timeBlockLabels[rowIndex] || `Slot ${rowIndex + 1}`;
+            const name = this.timeBlocks[rowIndex] || `Slot ${rowIndex + 1}`;
             const id = String(rowIndex + 1);
 
             const cells = cols.map((c, colIndex) => ({
@@ -125,12 +66,23 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
             };
         });
 
-        this.error = undefined;
-    } else if (error) {
-        this.error = error;
-        this.columns = [];
+            this.error = undefined;
+        } else if (error) {
+            this.error = error;
+            this.columns = [];
+        }
     }
-}
+
+    @wire(getTimeBlocks, { timeZone: '$timeZone'})
+        wiredTimeBlocks({ data, error }) {
+        if (data) {
+            this.timeBlocks = data;
+            this.error = undefined;
+        } else if (error) {
+            this.error = error;
+            this.timeBlocks = [];
+        }
+    }
 
     // Matrix data for the 6 time slots × 7 business days
     @wire(getAggregateCountsMatrix, {
@@ -188,13 +140,13 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
             return dt.toISOString();
         }
 
-        this.startDT = buildGmtIso(date, startTime);
-        this.endDT = buildGmtIso(date, endTime);
+        this.startDateTime = buildGmtIso(date, startTime);
+        this.endDateTime = buildGmtIso(date, endTime);
         this.isCreatingEvent = true;
         try {
         const data = await getAvailableUsersForWindow({
-            startDT: this.startDT,
-            endDT: this.endDT,
+            startDateTime: this.startDateTime,
+            endDateTime: this.endDateTime,
             skill: this.skill
         });
 
