@@ -121,6 +121,38 @@
         </value>
     </customProperties>
     <decisions>
+        <name>Availability_Matrix_Null_Check</name>
+        <label>Availability Matrix Null Check</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Get_Users</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_null</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Seller.endDateTime</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Seller.startDateTime</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Go_back</targetReference>
+            </connector>
+            <label>Is null</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Get_Records_Null_Check</name>
         <label>Get Records Null Check</label>
         <locationX>0</locationX>
@@ -246,9 +278,9 @@
         <locationY>0</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
+        <allowPause>false</allowPause>
         <connector>
-            <targetReference>Get_Users</targetReference>
+            <targetReference>Availability_Matrix_Null_Check</targetReference>
         </connector>
         <fields>
             <name>Seller</name>
@@ -279,7 +311,7 @@
             </styleProperties>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Choose_Demo_Owner</name>
@@ -308,9 +340,23 @@
                 </width>
             </styleProperties>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Go_back</name>
+        <label>Go back</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>false</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Get_Users</targetReference>
+        </connector>
         <fields>
-            <name>StartTime</name>
-            <fieldText>&lt;p&gt;{!startDateTime}&lt;/p&gt;</fieldText>
+            <name>Select_slot</name>
+            <fieldText>&lt;p&gt;Please go to previous window and click on an available slot.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -322,7 +368,7 @@
             </styleProperties>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>RedirectToEventRecord</name>
@@ -354,7 +400,7 @@
                 </width>
             </styleProperties>
         </fields>
-        <showFooter>true</showFooter>
+        <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>
@@ -445,7 +491,7 @@
             </styleProperties>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <start>
         <locationX>0</locationX>
