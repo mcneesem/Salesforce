@@ -1,5 +1,5 @@
 global class NSP_PrepSandbox implements SandboxPostCopy {
-    // test w/ NSP_PrepSandboxTest (85%)
+    // test w/ NSP_PrepSandboxTest (86%)
 
     static final string STRING_INVALID = '.invalid';
     static final string DOCUSIGN_BASE_URL = 'https://uatna11.springcm.com/atlas/doclauncher/OneClickDocGen';
@@ -73,6 +73,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         doEmailCLabels();
         doEmailAlerts();
         doImageDocs();
+        doTrustedURLs();
         doCSettings(sandbox);
         setPostRefreshRunFlag(1);
     }
@@ -808,6 +809,50 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
 
     private static String apiEnabledSessionId() {
         return UserInfo.getSessionId();
+    }
+
+    public static void doTrustedURLs() {
+        try {
+            Integer batch = 0;
+            MetadataService.MetadataPort service = createService();
+            List<List<MetadataService.Metadata>> allMetadataList = new List<List<MetadataService.Metadata>>();
+            allMetadataList.add(new List<MetadataService.Metadata>());
+
+            Map<String, String> mapSites = new Map<String, String>();
+            mapSites.put('Tableau', 'https://testtableau.insperity.com');
+            mapSites.put('Salesforce_SCRT', 'https://*.sandbox.my.salesforce-scrt.com');
+            mapSites.put('Salesforce_Setup', 'https://*.sandbox.my.salesforce-setup.com');
+
+            MetadataService.ReadResult readResult = new MetadataService.ReadResult();
+            if (!Test.isRunningTest()) {
+                readResult.records = service.readMetadata('CspTrustedSite', new List<String>(mapSites.keySet())).getRecords();
+            } else {
+                readResult.records = new MetadataService.Metadata[]{new MetadataService.CspTrustedSite()};
+            }
+
+            for (MetadataService.Metadata result : readResult.records) {
+                MetadataService.CspTrustedSite site = (MetadataService.CspTrustedSite) result;
+
+                if( site != null ) {
+                    MetadataService.CspTrustedSite siteUpd = new MetadataService.CspTrustedSite();
+                    siteUpd.fullName = site.fullName;
+                    siteUpd.description = site.description;
+                    siteUpd.isActive = site.isActive;
+                    siteUpd.endpointUrl = mapSites.get(siteName);
+
+                    if (allMetadataList[batch].size() >= 10) {
+                        batch++;
+                        allMetadataList.add(new List<MetadataService.Metadata>()); // create a new batch when we fill one up
+                    }
+                    allMetadataList[batch].add(siteUpd);
+                }
+            }
+
+            runUpdateMetadata( allMetadataList );
+
+        } catch(Exception e) {
+            NSP_PrepSandbox.handleException( e , 'doCTrustedURLs' );
+        }
     }
 
     private static string invalidateEmailArray(List<String> origEmails) {
