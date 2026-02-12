@@ -90,7 +90,7 @@ public class UserAvailabilityServiceTest {
     static void testGetAggregateCountsMatrix() {
         Test.startTest();
         List<List<Integer>> matrix =
-            UserAvailabilityService.getAggregateCountsMatrix(30, 'TEST_PRODUCT');
+            UserAvailabilityService.getAggregateCountsMatrix('Schedule_Seller_HR360');
         Test.stopTest();
 
         System.assertNotEquals(null, matrix);
@@ -104,7 +104,7 @@ public class UserAvailabilityServiceTest {
         Test.startTest();
         List<Id> users =
             UserAvailabilityService.getAvailableUsersForWindow(
-                startDT, endDT, 'TEST_PRODUCT', 30
+                startDT, endDT, 'Schedule_Seller_HR360'
             );
         Test.stopTest();
 
