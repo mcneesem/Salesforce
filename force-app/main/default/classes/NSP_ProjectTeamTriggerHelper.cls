@@ -3,16 +3,15 @@ public class NSP_ProjectTeamTriggerHelper {
 
     // Restrict Duplicate record creation on Project Team
     public static void restrictDuplicateProjectTeamRecords( List<NSP_Project_Team__c> newProjectTeamList ) {
-        Set<Id> projIdset = new Set<Id>();
-        Map<String,Id> mapRoleProjectId = new Map<String,Id>();
         try {
             // Search for PEO Project record Id
-            Id peoRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'pse__Proj__c' , 'PEO_Project' );
             // creating a set of Project Id
+            Set<Id> projIdset = new Set<Id>();
             for ( NSP_Project_Team__c projTeam : newProjectTeamList ) {
                 projIdset.add( projTeam.NSP_Project__c );
             }
             // searching for ProjectTeams related to Project
+            Id peoRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'pse__Proj__c' , 'PEO_Project' );
             List<NSP_Project_Team__c> projTeamList =  [
                 SELECT
                     Id ,
@@ -30,6 +29,7 @@ public class NSP_ProjectTeamTriggerHelper {
                 )
             ];
             // creating a map of Role and Project Id
+            Map<String,Id> mapRoleProjectId = new Map<String,Id>();
             for ( NSP_Project_Team__c prjTeam : projTeamList ) {
                 mapRoleProjectId.put( prjTeam.NSP_Role__c , prjTeam.NSP_Project__c );
             }
@@ -54,12 +54,9 @@ public class NSP_ProjectTeamTriggerHelper {
 
     // update Imp Profile Roles from the Project
     public static void updateImplementationProfileRoles( Map<Id,NSP_Project_Team__c> newPrjTeamMap , Map<Id,NSP_Project_Team__c> oldPrjTeamMap ) {
-        Map<String,Map<String,String>> mapProjectIdMapRoleContactId = new Map<String,Map<String,String>>();
-        List<Implementation_Profile__c> updateImpProfileList = new List<Implementation_Profile__c>();
-        Map<Id,List<Implementation_Profile__c>> mapAccountIdListImpProfile = new Map<Id,List<Implementation_Profile__c>>();
         try {
             // store PEO Project Record Id
-            Id peoRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'pse__Proj__c' , 'PEO_Project' );
+            Map<String,Map<String,String>> mapProjectIdMapRoleContactId = new Map<String,Map<String,String>>();
             for ( NSP_Project_Team__c prjTeam : newPrjTeamMap.values() ) {
                 if ( ( prjTeam.NSP_Assignee__c != oldPrjTeamMap.get( prjTeam.Id ).NSP_Assignee__c )
                     && ( prjTeam.NSP_Role__c != null )
@@ -79,6 +76,7 @@ public class NSP_ProjectTeamTriggerHelper {
                 }
             }
             // searching for PEO Projects
+            Id peoRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'pse__Proj__c' , 'PEO_Project' );
             Map<Id,pse__Proj__c> implProjectMap = new Map<Id,pse__Proj__c>(
                 [
                     SELECT
@@ -131,6 +129,7 @@ public class NSP_ProjectTeamTriggerHelper {
                 ORDER BY CreatedDate DESC
                 LIMIT 1
             ];
+            Map<Id,List<Implementation_Profile__c>> mapAccountIdListImpProfile = new Map<Id,List<Implementation_Profile__c>>();
             for ( Implementation_Profile__c impPrf : impProfileList ) {
                 // creating map of Imp Profile Account Id and IMP Profile
                 if ( !mapAccountIdListImpProfile.containsKey( impPrf.Account__c ) ) {
@@ -141,6 +140,7 @@ public class NSP_ProjectTeamTriggerHelper {
                 }
                 mapAccountIdListImpProfile.get( impPrf.Account__c ).add( impPrf );
             }
+            List<Implementation_Profile__c> updateImpProfileList = new List<Implementation_Profile__c>();
             for ( pse__Proj__c project : implProjectMap.values() ) {
                 // Updating roles on Imp Profile and creating list of Imp Profiles to be updated
                 if ( mapAccountIdListImpProfile.containsKey( project.pse__Account__c )
@@ -176,80 +176,89 @@ public class NSP_ProjectTeamTriggerHelper {
         Id impProfileId
         )
     {
+        Map<String,String> mapRoleContactId = null;
+        if ( ( project != null )
+            && ( mapProjectIdMapRoleContactId != null )
+            && mapProjectIdMapRoleContactId.containsKey( project.Id )
+            )
+        {
+            mapRoleContactId = mapProjectIdMapRoleContactId.get( project.Id );
+        }
         Implementation_Profile__c impProfile = new Implementation_Profile__c();
-        // updating Project Manager on Imp Profile
-        if(mapProjectIdMapRoleContactId.get(project.Id).containsKey(NSP_ServiceConstants.ProjectManager)){
-            impProfile.Id= impProfileId;
-            impProfile.NSP_Project_Manager__c = mapProjectIdMapRoleContactId.get(project.Id).get(NSP_ServiceConstants.ProjectManager);
-        }
-        // updating Orientation Rep on Imp Profile
-        if(mapProjectIdMapRoleContactId.get(project.Id).containsKey(NSP_ServiceConstants.OrientationRep)){
-            impProfile.Id= impProfileId;
-            impProfile.NSP_Orientation_Rep__c = mapProjectIdMapRoleContactId.get(project.Id).get(NSP_ServiceConstants.OrientationRep);
-        }
-        // updating Orientation Rep on Imp Profile
-        if(mapProjectIdMapRoleContactId.get(project.Id).containsKey(NSP_ServiceConstants.OrientationRep)){
-            impProfile.Id= impProfileId;
-            impProfile.NSP_OT_Representative__c = mapProjectIdMapRoleContactId.get(project.Id).get(NSP_ServiceConstants.OrientationRep);
-        }
-        // updating Os Coordinator on Imp Profile
-        if(mapProjectIdMapRoleContactId.get(project.Id).containsKey(NSP_ServiceConstants.OSCoordinator)){
-            impProfile.Id= impProfileId;
-            impProfile.NSP_Onboarding_Specialist_Coordinator__c = mapProjectIdMapRoleContactId.get(project.Id).get(NSP_ServiceConstants.OSCoordinator);
-        }
-        // updating Ot Coordinator on Imp Profile
-        if(mapProjectIdMapRoleContactId.get(project.Id).containsKey(NSP_ServiceConstants.OTCoordinator)){
-            impProfile.Id= impProfileId;
-            impProfile.NSP_Orientation_Coordinator__c = mapProjectIdMapRoleContactId.get(project.Id).get(NSP_ServiceConstants.OTCoordinator);
-        }
-        // updating OT Planner on Imp Profile
-        if(mapProjectIdMapRoleContactId.get(project.Id).containsKey(NSP_ServiceConstants.OTPlanner)){
-            impProfile.Id= impProfileId;
-            impProfile.NSP_Orientation_Planner__c = mapProjectIdMapRoleContactId.get(project.Id).get(NSP_ServiceConstants.OTPlanner);
-        }
-        // updating Payroll Specialist on Imp Profile
-        if(mapProjectIdMapRoleContactId.get(project.Id).containsKey(NSP_ServiceConstants.PayrollSpecialist)){
-            impProfile.Id= impProfileId;
-            impProfile.NSP_Payroll_Specialist__c = mapProjectIdMapRoleContactId.get(project.Id).get(NSP_ServiceConstants.PayrollSpecialist);
-        }
-        // updating Transition Specialist on Imp Profile
-        if(mapProjectIdMapRoleContactId.get(project.Id).containsKey(NSP_ServiceConstants.TransitionSpecialist)){
-            impProfile.Id= impProfileId;
-            impProfile.NSP_Transition_Specialist__c = mapProjectIdMapRoleContactId.get(project.Id).get(NSP_ServiceConstants.TransitionSpecialist);
-        }
-        // updating Sr Benefit Rep on Imp Profile
-        if(mapProjectIdMapRoleContactId.get(project.Id).containsKey(NSP_ServiceConstants.SrBenefitRep)){
-            impProfile.Id= impProfileId;
-            impProfile.NSP_Sr_Onboarding_Benefit_Rep__c = mapProjectIdMapRoleContactId.get(project.Id).get(NSP_ServiceConstants.SrBenefitRep);
-        }
-        // updating Payroll Project Manager on Imp Profile
-        if(mapProjectIdMapRoleContactId.get(project.Id).containsKey(NSP_ServiceConstants.PayrollProjectManager)){
-            impProfile.Id= impProfileId;
-            impProfile.NSP_Payroll_Project_Manager__c = mapProjectIdMapRoleContactId.get(project.Id).get(NSP_ServiceConstants.PayrollProjectManager);
-        }
-        // updating Sr HR Specialist on Imp Profile
-        if(mapProjectIdMapRoleContactId.get(project.Id).containsKey(NSP_ServiceConstants.SrHrSpecialist)){
-            impProfile.Id= impProfileId;
-            impProfile.NSP_HR_Specialist__c = mapProjectIdMapRoleContactId.get(project.Id).get(NSP_ServiceConstants.SrHrSpecialist);
-        }
-        // updating Account Executive on Imp Profile
-        if(mapProjectIdMapRoleContactId.get(project.Id).containsKey(NSP_ServiceConstants.AccountExecutive)){
-            impProfile.Id= impProfileId;
-            impProfile.NSP_Account_Executive__c = mapProjectIdMapRoleContactId.get(project.Id).get(NSP_ServiceConstants.AccountExecutive);
-        }
-        // updating HR Quality Support Team Member on Imp Profile
-        if ( mapProjectIdMapRoleContactId.get(project.Id).containsKey( 'HR Client Implementation Team Member' ) ) {
-            impProfile.Id= impProfileId;
-            impProfile.NSP_HR_Quality_Support_Team_Member__c = mapProjectIdMapRoleContactId.get(project.Id).get( 'HR Client Implementation Team Member' );
+        if ( mapRoleContactId != null ) {
+            // updating Project Manager on Imp Profile
+            if ( mapRoleContactId.containsKey( NSP_ServiceConstants.ProjectManager ) ) {
+                impProfile.Id = impProfileId;
+                impProfile.NSP_Project_Manager__c = mapRoleContactId.get( NSP_ServiceConstants.ProjectManager );
+            }
+            // updating Orientation Rep on Imp Profile
+            if ( mapRoleContactId.containsKey( NSP_ServiceConstants.OrientationRep ) ) {
+                impProfile.Id = impProfileId;
+                impProfile.NSP_Orientation_Rep__c = mapRoleContactId.get( NSP_ServiceConstants.OrientationRep );
+            }
+            // updating Orientation Rep on Imp Profile
+            if ( mapRoleContactId.containsKey( NSP_ServiceConstants.OrientationRep ) ) {
+                impProfile.Id = impProfileId;
+                impProfile.NSP_OT_Representative__c = mapRoleContactId.get( NSP_ServiceConstants.OrientationRep );
+            }
+            // updating Os Coordinator on Imp Profile
+            if ( mapRoleContactId.containsKey( NSP_ServiceConstants.OSCoordinator ) ) {
+                impProfile.Id = impProfileId;
+                impProfile.NSP_Onboarding_Specialist_Coordinator__c = mapRoleContactId.get( NSP_ServiceConstants.OSCoordinator );
+            }
+            // updating Ot Coordinator on Imp Profile
+            if ( mapRoleContactId.containsKey( NSP_ServiceConstants.OTCoordinator ) ) {
+                impProfile.Id = impProfileId;
+                impProfile.NSP_Orientation_Coordinator__c = mapRoleContactId.get( NSP_ServiceConstants.OTCoordinator );
+            }
+            // updating OT Planner on Imp Profile
+            if ( mapRoleContactId.containsKey( NSP_ServiceConstants.OTPlanner ) ) {
+                impProfile.Id = impProfileId;
+                impProfile.NSP_Orientation_Planner__c = mapRoleContactId.get( NSP_ServiceConstants.OTPlanner );
+            }
+            // updating Payroll Specialist on Imp Profile
+            if ( mapRoleContactId.containsKey( NSP_ServiceConstants.PayrollSpecialist ) ) {
+                impProfile.Id = impProfileId;
+                impProfile.NSP_Payroll_Specialist__c = mapRoleContactId.get( NSP_ServiceConstants.PayrollSpecialist );
+            }
+            // updating Transition Specialist on Imp Profile
+            if ( mapRoleContactId.containsKey( NSP_ServiceConstants.TransitionSpecialist ) ) {
+                impProfile.Id = impProfileId;
+                impProfile.NSP_Transition_Specialist__c = mapRoleContactId.get( NSP_ServiceConstants.TransitionSpecialist );
+            }
+            // updating Sr Benefit Rep on Imp Profile
+            if ( mapRoleContactId.containsKey( NSP_ServiceConstants.SrBenefitRep ) ) {
+                impProfile.Id = impProfileId;
+                impProfile.NSP_Sr_Onboarding_Benefit_Rep__c = mapRoleContactId.get( NSP_ServiceConstants.SrBenefitRep );
+            }
+            // updating Payroll Project Manager on Imp Profile
+            if ( mapRoleContactId.containsKey( NSP_ServiceConstants.PayrollProjectManager ) ) {
+                impProfile.Id = impProfileId;
+                impProfile.NSP_Payroll_Project_Manager__c = mapRoleContactId.get( NSP_ServiceConstants.PayrollProjectManager );
+            }
+            // updating Sr HR Specialist on Imp Profile
+            if ( mapRoleContactId.containsKey( NSP_ServiceConstants.SrHrSpecialist ) ) {
+                impProfile.Id = impProfileId;
+                impProfile.NSP_HR_Specialist__c = mapRoleContactId.get( NSP_ServiceConstants.SrHrSpecialist );
+            }
+            // updating Account Executive on Imp Profile
+            if ( mapRoleContactId.containsKey( NSP_ServiceConstants.AccountExecutive ) ) {
+                impProfile.Id = impProfileId;
+                impProfile.NSP_Account_Executive__c = mapRoleContactId.get( NSP_ServiceConstants.AccountExecutive );
+            }
+            // updating HR Quality Support Team Member on Imp Profile
+            if ( mapRoleContactId.containsKey( 'HR Client Implementation Team Member' ) ) {
+                impProfile.Id = impProfileId;
+                impProfile.NSP_HR_Quality_Support_Team_Member__c = mapRoleContactId.get( 'HR Client Implementation Team Member' );
+            }
         }
         return impProfile;
     }
 
     // update owner field on project when project manager role is assigned on project team object
     public static void updateProjectOwner( Map<Id,NSP_Project_Team__c> newProjTeamMap , Map<Id,NSP_Project_Team__c> oldProjTeamMap ) {
-        Map<Id,Id> mapOfProjectManager = new Map<Id,Id>();
-        Id peoRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'pse__Proj__c' , 'PEO_Project' );
         try {
+            Map<Id,Id> mapOfProjectManager = new Map<Id,Id>();
             for ( NSP_Project_Team__c projTeam : newProjTeamMap.values() ) {
                 //fetch project team assignee who has project manager role and put it in map of project, project manager
                 if ( ( projTeam.NSP_Assignee__c != null )
@@ -278,6 +287,7 @@ public class NSP_ProjectTeamTriggerHelper {
                 ]
             );
             //query for all the implementation project which present in the mapOfProjectManager
+            Id peoRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'pse__Proj__c' , 'PEO_Project' );
             List<pse__Proj__c> implProjectList = new List<pse__Proj__c>(
                 [
                     SELECT
@@ -323,10 +333,9 @@ public class NSP_ProjectTeamTriggerHelper {
 
     // update owner field on project when project manager role is assigned on project team object
     public static void updatePayrollSpecialistonProject( Map<Id,NSP_Project_Team__c> newProjTeamMap , Map<Id,NSP_Project_Team__c> oldProjTeamMap ) {
-        Map<Id,Id> mapOfPayrollSpecialist = new Map<Id,Id>();
-        Id peoRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'pse__Proj__c' , 'PEO_Project' );
-        Set<Id> projectIdSet = new Set<Id>();
-         try {
+        try {
+            Map<Id,Id> mapOfPayrollSpecialist = new Map<Id,Id>();
+            Set<Id> projectIdSet = new Set<Id>();
             for ( NSP_Project_Team__c projTeam : newProjTeamMap.values() ) {
                 //fetch project team assignee who has project manager role and put it in map of project, project manager
                 if ( ( projTeam.NSP_Assignee__c != null )
@@ -360,6 +369,7 @@ public class NSP_ProjectTeamTriggerHelper {
                 ]
             );
             //query for all the implementation project which present in the mapOfProjectManager
+            Id peoRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'pse__Proj__c' , 'PEO_Project' );
             List<pse__Proj__c> implProjectList = new List<pse__Proj__c>(
                 [
                     SELECT
