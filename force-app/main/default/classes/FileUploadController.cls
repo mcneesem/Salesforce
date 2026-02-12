@@ -1,15 +1,12 @@
 public with sharing class FileUploadController {
-    // test w/ FileUploadControllerTest (95%)
+    // test w/ FileUploadControllerTest (93%)
 
     private static final String  loadTime = 'HH:mm:ss';
     private static final String  DOL_AUDITS = 'DOL Audits';
     private static final String  WAGE_CLAIMS = 'Wage Claims';
-    private static final String  dunningRecordType = 'Dunning';
-    private static final String  retRecordType = 'NSP_RET_Time_Tracking';
-    private static final String  wxRecordType = 'NSP_WX_IMPL';
-    private static final String  dunningCase = 'Dunning Case';
-    private static final String  rETTimeTracking = 'RET Time Tracking';
-    private static final String  wXIMPL = 'WX IMPL';
+    private static final String  DUNNING_CASE = 'Dunning Case';
+    private static final String  RET_TIME_TRACKING = 'RET Time Tracking';
+    private static final String  WX_IMPL = 'WX IMPL';
     private static final String  catSubcatError = 'Please check category,subcategory and detail combination';
     private static final String  reasonError = 'Please check resolution picklist value';
     private static final String  originError = 'Please check case origin picklist value';
@@ -24,21 +21,20 @@ public with sharing class FileUploadController {
     private static final String  recordTypeError = 'Please check record type';
     private static final String  closed = 'Closed';
     private static final String  errorRowNum = '.Error occurred at row number - ';
-    private static final String  objectApiName = NSP_ServiceConstants.CASE_OBJECT_NAME ;
 
-    private static final Id dolAuditRecordTypeId  = NSP_GenericRecordType.getRecordTypeId( objectApiName, NSP_ServiceConstants.DO_AUDITS_RECORDTYPE );
-    private static final Id wageClaimRecordTypeId = NSP_GenericRecordType.getRecordTypeId( objectApiName, NSP_ServiceConstants.WAGE_CLAIMS_RECORDTYPE );
-    private static final Id peoRecordTypeId       = NSP_GenericRecordType.getRecordTypeId( objectApiName, NSP_ServiceConstants.PEO );
-    private static final Id bpsRecordTypeId       = NSP_GenericRecordType.getRecordTypeId( objectApiName, NSP_ServiceConstants.BPS );
-    private static final Id itaRecordTypeId       = NSP_GenericRecordType.getRecordTypeId( objectApiName, NSP_ServiceConstants.NSP_ITA_CQA );
-    private static final Id dunningRecordTypeId   = NSP_GenericRecordType.getRecordTypeId( objectApiName, dunningRecordType );
-    private static final Id retRecordTypeId       = NSP_GenericRecordType.getRecordTypeId( objectApiName, retRecordType );
-    private static final Id wxRecordTypeId        = NSP_GenericRecordType.getRecordTypeId( objectApiName, wxRecordType );
+    private static final Id dolAuditRecordTypeId  = NSP_GenericRecordType.getRecordTypeId( 'Case', NSP_ServiceConstants.DO_AUDITS_RECORDTYPE );
+    private static final Id wageClaimRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Case', NSP_ServiceConstants.WAGE_CLAIMS_RECORDTYPE );
+    private static final Id peoRecordTypeId       = NSP_GenericRecordType.getRecordTypeId( 'Case', NSP_ServiceConstants.PEO );
+    private static final Id bpsRecordTypeId       = NSP_GenericRecordType.getRecordTypeId( 'Case', NSP_ServiceConstants.BPS );
+    private static final Id itaRecordTypeId       = NSP_GenericRecordType.getRecordTypeId( 'Case', NSP_ServiceConstants.NSP_ITA_CQA );
+    private static final Id dunningRecordTypeId   = NSP_GenericRecordType.getRecordTypeId( 'Case', 'Dunning' );
+    private static final Id retRecordTypeId       = NSP_GenericRecordType.getRecordTypeId( 'Case', 'NSP_RET_Time_Tracking' );
+    private static final Id wxRecordTypeId        = NSP_GenericRecordType.getRecordTypeId( 'Case', 'NSP_WX_IMPL' );
 
-    private static List<String> reasonPicklistValues = getPicklistValues(objectApiName, 'Reason');
-    private static List<String> originPicklistValues = getPicklistValues(objectApiName, 'Origin');
-    private static List<String> statusPicklistValues = getPicklistValues(objectApiName, 'Status');
-    private static List<String> priorityPicklistValues = getPicklistValues(objectApiName, 'Priority');
+    private static List<String> reasonPicklistValues = FileUploadController.getPicklistValues( 'Case', 'Reason');
+    private static List<String> originPicklistValues = FileUploadController.getPicklistValues( 'Case', 'Origin');
+    private static List<String> statusPicklistValues = FileUploadController.getPicklistValues( 'Case', 'Status');
+    private static List<String> priorityPicklistValues = FileUploadController.getPicklistValues( 'Case', 'Priority');
 
     private static Pattern datePattern = Pattern.compile('^(0?[1-9]|1[0-2])/(0?[1-9]|[12][0-9]|3[01])/\\d{4}$');
 
@@ -66,8 +62,11 @@ public with sharing class FileUploadController {
                  && !nspCatRecords.isEmpty()
                )
             {
-                successMap = processCsvFile( getCsvRowsFromContentDocument( contentDocumentId ), nspCatRecords );
-                performDeleteDML(contentDocumentId);
+                successMap = FileUploadController.processCsvFile( 
+                    FileUploadController.getCsvRowsFromContentDocument( contentDocumentId ),
+                    nspCatRecords
+                );
+                FileUploadController.performDeleteDML(contentDocumentId);
 
             } else {
                 successMap.put( System.NOW().format( loadTime ),'CSV file incorrect');
@@ -204,7 +203,7 @@ public with sharing class FileUploadController {
                 createImportError( createRecordMap );
                 if ( caseList.isEmpty() )
                 {
-                    sendEmail( null, createRecordMap );
+                    FileUploadController.sendEmail( null, createRecordMap );
                 }
             }
 
@@ -559,12 +558,12 @@ public with sharing class FileUploadController {
         List<String> recordTypeValues = new List<String>{
             NSP_ServiceConstants.PEO,
             NSP_ServiceConstants.BPS,
-            DOL_AUDITS,
-            WAGE_CLAIMS,
-            dunningCase,
+            FileUploadController.DOL_AUDITS,
+            FileUploadController.WAGE_CLAIMS,
+            FileUploadController.DUNNING_CASE,
             NSP_ServiceConstants.SUB_CATEGORY_ITA_CQA,
-            rETTimeTracking,
-            wXIMPL
+            FileUploadController.RET_TIME_TRACKING,
+            FileUploadController.WX_IMPL
          };
 
         if ( !recordTypeValues.contains( csvRecordType ) )
@@ -1205,7 +1204,7 @@ public with sharing class FileUploadController {
                 {
                     errorMessage = failureMap.get( failureKey );
                 }
-                String rowContent = processFailureRow( failureKey, errorMessage );
+                String rowContent = FileUploadController.processFailureRow( failureKey, errorMessage );
                 failureCsvContent += rowContent + '\n';
             }
         }
@@ -1238,7 +1237,7 @@ public with sharing class FileUploadController {
             }
 
             //process Description
-            processedFields.addAll( processDescription( failureKey ) );
+            processedFields.addAll( FileUploadController.processDescription( failureKey ) );
 
             // Quote error message
             if( String.isNotBlank( errorMessage ) )
@@ -1257,7 +1256,7 @@ public with sharing class FileUploadController {
 
             String finalDescription = '';
             String appendDescription = '';
-            String description = concatenateDescription( failureKey, 20 );
+            String description = FileUploadController.concatenateDescription( failureKey, 20 );
 
             if( String.isNotBlank( description ) )
             {
@@ -1318,7 +1317,7 @@ public with sharing class FileUploadController {
             } catch( Exception e ) {
                 NSP_ErrorLogHandler.logException(
                     FileUploadController.class.getName() ,
-                    'createImportError' ,
+                    'performDeleteDML' ,
                     e
                 );
             }
@@ -1358,7 +1357,6 @@ public with sharing class FileUploadController {
 
     public static void sendEmail( List<ID> successList, Map<List<String>, String> failureMap) {
 
-        User user = [ SELECT Email FROM User WHERE Id = :UserInfo.getUserId() LIMIT 1 ];
         NSP_Trigger_Switch__c triggerSwitch = NSP_Trigger_Switch__c.getInstance( UserInfo.getUserId() );
 
         if ( triggerSwitch != null
@@ -1374,7 +1372,7 @@ public with sharing class FileUploadController {
             }
 
             // Create CSV for failures
-            String failureCsvContent = processFailureMap( failureMap );
+            String failureCsvContent = FileUploadController.processFailureMap( failureMap );
             // Create email attachments
             Messaging.EmailFileAttachment successAttachment = new Messaging.EmailFileAttachment();
             successAttachment.setFileName( 'SuccessList.csv' );
@@ -1392,7 +1390,7 @@ public with sharing class FileUploadController {
 
             // Set email parameters
             Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-            email.setToAddresses(new String[] { user.Email } );
+            email.setToAddresses(new String[] { UserInfo.getUserEmail() } );
             email.setSubject( 'Case Import Summary' );
             email.setHtmlBody( mailBody );
             email.setFileAttachments( new Messaging.EmailFileAttachment[] { successAttachment, failureAttachment } );
@@ -1466,7 +1464,7 @@ public with sharing class FileUploadController {
             }
 
 
-            if( importErrorList.size() > 0 )
+            if ( !importErrorList.isEmpty() )
             {
                 insert importErrorList;
             }
@@ -1498,7 +1496,7 @@ public with sharing class FileUploadController {
         upsert caseEmailDeliverability;
     }
 
-    public static Boolean validateHeaderRow( String headers ) {
+    private static Boolean validateHeaderRow( String headers ) {
 
         Boolean allConditionsMet = true;
         List<String> expectedValues = new List<String>{
@@ -1529,7 +1527,7 @@ public with sharing class FileUploadController {
                  List<String> headerRow = headers.split(',');
                  if( headerRow != null && !headerRow.isEmpty() )
                  {
-                     for ( Integer i = 1; i < 21; i++ ) {
+                     for ( Integer i = 1; i < ( expectedValues.size() + 1 ); i++ ) {
                          if ( String.isBlank( headerRow[i] )
                               || !headerRow[i].contains( expectedValues[ i - 1 ] )
                             )
@@ -1545,39 +1543,39 @@ public with sharing class FileUploadController {
 
     private static Id checkRecordTypeId( String value ) {
         Id returnValue = null;
-        if( String.isBlank(value) || value == null ){
+        if ( String.isBlank( value ) ){
             returnValue = null;
         }
         else if( value.contains(NSP_ServiceConstants.PEO) )
         {
-            returnValue = peoRecordTypeId;
+            returnValue = FileUploadController.peoRecordTypeId;
         }
-        else if( value.contains( DOL_AUDITS ) )
+        else if( value.contains( FileUploadController.DOL_AUDITS ) )
         {
-            returnValue = dolAuditRecordTypeId;
+            returnValue = FileUploadController.dolAuditRecordTypeId;
         }
-        else if( value.contains( WAGE_CLAIMS ) )
+        else if( value.contains( FileUploadController.WAGE_CLAIMS ) )
         {
-            returnValue = wageClaimRecordTypeId;
+            returnValue = FileUploadController.wageClaimRecordTypeId;
         }
         else if( value.contains( NSP_ServiceConstants.BPS ) ){
-            returnValue = bpsRecordTypeId;
+            returnValue = FileUploadController.bpsRecordTypeId;
         }
-        else if( value.contains( dunningCase ) )
+        else if( value.contains( FileUploadController.DUNNING_CASE ) )
         {
-            returnValue = dunningRecordTypeId;
+            returnValue = FileUploadController.dunningRecordTypeId;
         }
         else if( value.contains( NSP_ServiceConstants.SUB_CATEGORY_ITA_CQA ) )
         {
-            returnValue = itaRecordTypeId;
+            returnValue = FileUploadController.itaRecordTypeId;
         }
-        else if( value.contains( rETTimeTracking ) )
+        else if( value.contains( FileUploadController.RET_TIME_TRACKING ) )
         {
-            returnValue = retRecordTypeId;
+            returnValue = FileUploadController.retRecordTypeId;
         }
-        else if( value.contains( wXIMPL ) )
+        else if( value.contains( FileUploadController.WX_IMPL ) )
         {
-            returnValue = wxRecordTypeId;
+            returnValue = FileUploadController.wxRecordTypeId;
         }
 
         return returnValue;
