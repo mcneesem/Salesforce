@@ -2,8 +2,8 @@
 //- Windows are constructed in the running user's timezone via Date.today().
 
 public with sharing class UserAvailabilityService {
-    // test w/ UserAvailabilityServiceTest (96%)
-    private static final Integer DAYS_LIMIT = 7;
+    // test w/ UserAvailabilityServiceTest (84%)
+    private static final Integer DAYS_LIMIT = 10;
     //Returns the 7 available days based on Business Hours
     @AuraEnabled(cacheable=true)
     public static List<Date> getBusinessDates(Id businessHoursId, Integer daysLimit) {
@@ -48,47 +48,51 @@ public with sharing class UserAvailabilityService {
     private class DaysMatrix{
         List<List<DateTime>> startDays;
         List<List<DateTime>> endDays;
+        List<List<Event>> slots;
     }
     private static DaysMatrix getBusinessDaysMatrix() {
         List<List<Datetime>> startDaysList = new List<List<Datetime>>();
         List<List<Datetime>> endDaysList = new List<List<Datetime>>();
+        List<List<Event>> slotsList = new List<List<Event>>();
         //Get real days based on Business Hours
         List<Date> businessDates = UserAvailabilityService.getBusinessDates('01m4x000001119T',UserAvailabilityService.DAYS_LIMIT);
         //For now, hardcoding the start and end time slots
         Map<Integer, Integer> startTimeSlots = new Map<Integer, Integer>{
-            1 => 8,
-            2 => 8,
-            3 => 9,
-            4 => 9,
-            5 => 10,
-            6 => 10,
-            7 => 11,
-            8 => 11,
-            9 => 12,
-            10 => 1,
-            11 => 1,
-            12 => 2,
-            13 => 3,
-            14 => 3,
-            15 => 4};
-            Map<Integer, Integer> startTimeSlotsMinutes = new Map<Integer, Integer>{
-                1 => 00,
-                    2 => 30,
-                    3 => 00,
-                    4 => 30,
-                    5 => 00,
-                    6 => 30,
-                    7 => 00,
-                    8 => 30,
-                    9 => 30,
-                    10 => 00,
-                    11 => 30,
-                    12 => 00,
-                    13 => 00,
-                    14 => 30,
-                    15 => 00};
-                Map<Integer, Integer> endTimeSlots = new Map<Integer, Integer>{
-                    1 => 9,
+            1 => 8 ,
+            2 => 8 ,
+            3 => 9 ,
+            4 => 9 ,
+            5 => 10 ,
+            6 => 10 ,
+            7 => 11 ,
+            8 => 11 ,
+            9 => 12 ,
+            10 => 13 ,
+            11 => 13 ,
+            12 => 14 ,
+            13 => 15 ,
+            14 => 15 ,
+            15 => 16
+        };
+        Map<Integer, Integer> startTimeSlotsMinutes = new Map<Integer, Integer>{
+            1 => 00 ,
+            2 => 30 ,
+            3 => 00 ,
+            4 => 30 ,
+            5 => 00 ,
+            6 => 30 ,
+            7 => 00 ,
+            8 => 30 ,
+            9 => 30 ,
+            10 => 00 ,
+            11 => 30 ,
+            12 => 00 ,
+            13 => 00 ,
+            14 => 30 ,
+            15 => 00
+        };
+        Map<Integer, Integer> endTimeSlots = new Map<Integer, Integer>{
+            1 => 9,
             2 => 9,
             3 => 10,
             4 => 10,
@@ -96,78 +100,89 @@ public with sharing class UserAvailabilityService {
             6 => 11,
             7 => 12,
             8 => 12,
-            9 => 1,
-            10 => 2,
-            11 => 2,
-            12 => 3,
-            13 => 4,
-            14 => 4,
-            15 => 5};
-            Map<Integer, Integer> endTimeSlotsMinutes = new Map<Integer, Integer>{
-            1 => 00,
-            2 => 30,
-            3 => 00,
-            4 => 30,
-            5 => 00,
-            6 => 30,
-            7 => 00,
-            8 => 30,
-            9 => 30,
-            10 =>00,
-            11 => 30,
-            12 => 00,
-            13 => 00,
-            14 => 30,
-            15 => 00};
+            9 => 13,
+            10 => 14,
+            11 => 14,
+            12 => 15,
+            13 => 16,
+            14 => 16,
+            15 => 17
+        };
+        Map<Integer, Integer> endTimeSlotsMinutes = new Map<Integer, Integer>{
+            1 => 00 ,
+            2 => 30 ,
+            3 => 00 ,
+            4 => 30 ,
+            5 => 00 ,
+            6 => 30 ,
+            7 => 00 ,
+            8 => 30 ,
+            9 => 30 ,
+            10 =>00 ,
+            11 => 30 ,
+            12 => 00 ,
+            13 => 00 ,
+            14 => 30 ,
+            15 => 00
+       };
 
-                        //Loop matching the number of time slots
-                        for (Integer j = 0; j < 15; j++) {
-                            List<Datetime> startDays = new List<Datetime>();
-                            List<Datetime> endDays = new List<Datetime>();
-                            //Iterating through the 7 days to create the datetimes for each
-                            for (Date businessDate : businessDates) {
-                                Integer startTimeHour = startTimeSlots.get(j+1);
-                                Integer startTimeMinute = startTimeSlotsMinutes.get(j+1);
-                                Integer endTimeHour = endTimeSlots.get(j+1);
-                                Integer endTimeMinute = endTimeSlotsMinutes.get(j+1);
-                                // Add the calculated datetime to the startDays and endDays lists
-                                startDays.add(
-                                    DateTime.newInstance(
-                                        businessDate.year() ,
-                                        businessDate.month() ,
-                                        businessDate.day() ,
-                                        startTimeHour ,
-                                        startTimeMinute ,
-                                        0
-                                    )
-                                );
-                                endDays.add(
-                                    DateTime.newInstance(
-                                        businessDate.year() ,
-                                        businessDate.month() ,
-                                        businessDate.day() ,
-                                        endTimeHour ,
-                                        endTimeMinute ,
-                                        0
-                                    )
-                                );
-                            }
-                            //Organizing days in a separate list to effectively group them by time slots
-                            if (startDays.size() > 0) {
-                                //startDaysList((2026-01-20 8:00),(2026-01-21 8:30),(2026-01-22 9:00)...)
-                                startDaysList.add(startDays);
-                            }
-                            if (endDays.size() > 0) {
-                                //endDaysList((2026-01-20 9:00),(2026-01-21 9:30),(2026-01-22 10:00)...)
-                                endDaysList.add(endDays);
-                            }
-                        }
+        //Loop matching the number of time slots
+        for (Integer j = 0; j < 15; j++) {
+            List<Datetime> startDays = new List<Datetime>();
+            List<Datetime> endDays = new List<Datetime>();
+            List<Event> slots = new List<Event>();
+            //Iterating through the 7 days to create the datetimes for each
+            for (Date businessDate : businessDates) {
+                Integer startTimeHour = startTimeSlots.get(j+1);
+                Integer startTimeMinute = startTimeSlotsMinutes.get(j+1);
+                Integer endTimeHour = endTimeSlots.get(j+1);
+                Integer endTimeMinute = endTimeSlotsMinutes.get(j+1);
+                // Add the calculated datetime to the startDays and endDays lists
+                DateTime startDay = DateTime.newInstance(
+                    businessDate.year() ,
+                    businessDate.month() ,
+                    businessDate.day() ,
+                    startTimeHour ,
+                    startTimeMinute ,
+                    0
+                );
+                startDays.add( startDay );
+                DateTime endDay = DateTime.newInstance(
+                    businessDate.year() ,
+                    businessDate.month() ,
+                    businessDate.day() ,
+                    endTimeHour ,
+                    endTimeMinute ,
+                    0
+                );
+                endDays.add( endDay );
+                slots.add(
+                    new Event(
+                        StartDateTime=startDay ,
+                        EndDateTime=endDay
+                    )
+                );
+            }
+            //Organizing days in a separate list to effectively group them by time slots
+            if (startDays.size() > 0) {
+                //startDaysList((2026-01-20 8:00),(2026-01-21 8:30),(2026-01-22 9:00)...)
+                startDaysList.add(startDays);
+            }
+            if (endDays.size() > 0) {
+                //endDaysList((2026-01-20 9:00),(2026-01-21 9:30),(2026-01-22 10:00)...)
+                endDaysList.add(endDays);
+            }
+            if ( !slots.isEmpty() ) {
+                slotsList.add( slots );
+            }
+        }
         //Matrix of start and end days grouped by time slots
         //[2026-01-20 8:00,2026-01-21 8:30,2026-01-22 9:00]
         //[2026-01-20 9:00,2026-01-21 9:30,2026-01-22 10:00]
         DaysMatrix response = new DaysMatrix();
         response.startDays = startDaysList;
         response.endDays = endDaysList;
+        response.slots = slotsList;
         return response;
     }
 
@@ -275,14 +290,11 @@ public with sharing class UserAvailabilityService {
     //Get total availability of users that are added to the Schedule Seller Permission Set
     @AuraEnabled(cacheable=true)
     public static List<List<Integer>> getAggregateCountsMatrix( String skill ) {
-        List<List<Integer>> listSizeMatrix = new List<List<Integer>>();
-        List<Integer> countsPerWindow = new List<Integer>();
         // Build business day/time windows
         DaysMatrix daysOfWeek = UserAvailabilityService.getBusinessDaysMatrix();
         List<Datetime> startDays = new List<Datetime>();
         List<Datetime> endDays = new List<Datetime>();
-        Datetime windowStart = null;
-        Datetime windowEnd   = null;
+        Event window = null;
         if ( ( daysOfWeek != null )
             && ( daysOfWeek.startDays != null )
             && ( daysOfWeek.endDays != null )
@@ -293,8 +305,10 @@ public with sharing class UserAvailabilityService {
                     startDays.addAll( daysOfWeek.startDays[i] );
                     endDays.addAll( daysOfWeek.endDays[i] );
                 }
-                windowStart = startDays[0];
-                windowEnd   = endDays[endDays.size() - 1];
+            window = new Event(
+                StartDateTime=startDays[0] ,
+                EndDateTime=endDays[endDays.size() - 1]
+            );
 
         }
         // Identify users with Schedule Seller Custom Permission
@@ -302,9 +316,11 @@ public with sharing class UserAvailabilityService {
         Set<Id> userIds = ( ( skilledUsers != null ) ? skilledUsers.keySet() : new Set<Id>() );
         // Query all events for those users within the union window (bulkified)
         Map<Id, List<Event>> busyByUser = new Map<Id, List<Event>>();
-        List<Event> events = new List<Event>();
-        events = getEventsForUser(userIds, windowStart, windowEnd);
-        if( !events.isEmpty() ) {
+        List<Event> events = UserAvailabilityService.getEventsForUser(
+            userIds ,
+            window
+        );
+        if ( ( events != null ) && !events.isEmpty() ) {
             for (Event e : events) {
                 if (!busyByUser.containsKey(e.OwnerId)) {
                     busyByUser.put(e.OwnerId, new List<Event>());
@@ -322,16 +338,17 @@ public with sharing class UserAvailabilityService {
         // Build windows for each slot
         List<Event> windows = new List<Event>();
         if ( startDays.size() == endDays.size() ) {
-            Integer n = Math.min(startDays.size(), endDays.size());
-            for (Integer i = 0; i < n; i++) {
-                if ( startDays.size() == endDays.size() ) {
-                    windows.add(new Event(StartDateTime = startDays[i], EndDateTime = endDays[i]));
-                }
+            for ( Integer i = 0 ; i < startDays.size() ; i++ ) {
+                windows.add(new Event(StartDateTime = startDays[i], EndDateTime = endDays[i]));
             }
         }
-        countsPerWindow = getAggregateAvailableSlots( windows, userIds, busyByUser );
-        listSizeMatrix = convertToMatrix(countsPerWindow);
-        return listSizeMatrix;
+        return UserAvailabilityService.convertToMatrix(
+            UserAvailabilityService.getAggregateAvailableSlots(
+                windows ,
+                userIds ,
+                busyByUser
+            )
+        );
     }
 
     private static List<Integer> getAggregateAvailableSlots(
@@ -345,7 +362,7 @@ public with sharing class UserAvailabilityService {
         // Collect integer counts per window
         List<Integer> countsPerWindow = new List<Integer>();
         Integer step = 30;
-        if( !windows.isEmpty() && !userIds.isEmpty() ) {
+        if( windows != null && userIds != null && busyByUser != null && !windows.isEmpty() && !userIds.isEmpty() ) {
             for (Event windowEvt : windows) {
                 Integer totalForWindow = 0;
                 for (Id uid : userIds) {
@@ -385,10 +402,11 @@ public with sharing class UserAvailabilityService {
     }
     @AuraEnabled(cacheable=true)
     public static List<Id> getAvailableUsersForWindow(
-        Datetime startDateTime,
-        Datetime endDateTime,
+        Datetime startDateTime ,
+        Datetime endDateTime ,
         String skill
-    ) {
+        )
+    {
         List<Id> availableUsers = new List<Id>();
         Map<Id, List<Event>> busyByUser = new Map<Id, List<Event>>();
 
@@ -428,7 +446,10 @@ public with sharing class UserAvailabilityService {
             Integer step = 30;
 
             UserAvailability calc = new UserAvailability();
-            Event windowEvt = new Event(StartDateTime = startDateTime, EndDateTime = endDateTime);
+            Event windowEvt = new Event(
+                StartDateTime=startDateTime ,
+                EndDateTime=endDateTime
+            );
 
             for (Id uid : userIds) {
                 List<Event> userBusy = new List<Event>();
@@ -448,18 +469,35 @@ public with sharing class UserAvailabilityService {
         return availableUsers;
     }
 
-    private static List<Event> getEventsForUser(Set<Id> userIds, Datetime startDT, Datetime endDT) {
+    private static List<Event> getEventsForUser(
+        Set<Id> userIds ,
+        Datetime startDateTime ,
+        Datetime endDateTime
+        )
+    {
         List<Event> events = new List<Event>();
-        if (userIds != null && startDT != null && endDT != null) {
+        if (userIds != null && startDateTime != null && endDateTime != null) {
             events = [
                 SELECT Id, OwnerId, StartDateTime, EndDateTime
                 FROM Event
                 WHERE OwnerId IN :userIds
-                AND StartDateTime < :endDT
-                AND EndDateTime   > :startDT
+                AND StartDateTime < :endDateTime
+                AND EndDateTime   > :startDateTime
 
             ];
         }
         return events;
+    }
+
+    private static List<Event> getEventsForUser( Set<Id> userIds , Event window ) {
+        List<Event> records = new List<Event>();
+        if ( window != null ) {
+            records = UserAvailabilityService.getEventsForUser(
+                userIds ,
+                window.StartDateTime ,
+                window.EndDateTime
+            );
+        }
+        return records;
     }
 }
