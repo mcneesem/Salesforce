@@ -111,6 +111,78 @@ public with sharing class UserAvailabilityService {
         return response;
     }
 
+     @AuraEnabled(cacheable=true)
+    public static List<String> getTimeBlocks(String timeZone) {
+        List<String> value = new List<String>();
+        Map<String, List<String>> timeZoneBlocks = new Map<String, List<String>>{
+            'Central' => new List<String>{
+                '8:00 - 9:00',
+                    '8:30 - 9:30',
+                    '9:00 - 10:00',
+                    '9:30 - 10:30',
+                    '10:00 - 11:00',
+                    '10:30 - 11:30',
+                    '11:00 - 12:00',
+                    '11:30 - 12:30',
+                    '12:30 - 1:30',
+                    '1:00 - 2:00',
+                    '1:30 - 2:30',
+                    '2:00 - 3:00',
+                    '3:00 - 4:00',
+                    '3:30 - 4:30',
+                    '4:00 - 5:00'
+                    },
+                        'Mountain'=> new List<String>{
+                            '1:00 - 2:00',
+                                '2:00 - 3:00',
+                                '3:30 - 4:30',
+                                '4:00 - 5:00',
+                                '5:30 - 6:30',
+                                '6:00 - 7:00'
+                                }
+            ,
+                'Pacific'=> new List<String>{
+                    '8:00 - 9:00',
+                        '8:30 - 9:30',
+                        '9:00 - 10:00',
+                        '9:30 - 10:30',
+                        '10:00 - 11:00',
+                        '10:30 - 11:30',
+                        '11:00 - 12:00',
+                        '11:30 - 12:30',
+                        '12:30 - 1:30',
+                        '1:00 - 2:00',
+                        '1:30 - 2:30',
+                        '2:00 - 3:00',
+                        '3:00 - 4:00',
+                        '3:30 - 4:30',
+                        '4:00 - 5:00'
+                        }
+            ,
+                'Eastern'=> new List<String>{
+                    '8:00 - 9:00',
+                        '8:30 - 9:30',
+                        '9:00 - 10:00',
+                        '9:30 - 10:30',
+                        '10:00 - 11:00',
+                        '10:30 - 11:30',
+                        '11:00 - 12:00',
+                        '11:30 - 12:30',
+                        '12:30 - 1:30',
+                        '1:00 - 2:00',
+                        '1:30 - 2:30',
+                        '2:00 - 3:00',
+                        '3:00 - 4:00',
+                        '3:30 - 4:30',
+                        '4:00 - 5:00'
+                        }
+        };
+            if(timeZone != null && timeZoneBlocks.containsKey(timeZone) && timeZoneBlocks.get(timeZone) != null) {
+                value = timeZoneBlocks.get(timeZone);
+            }
+        return value;
+    }
+
     //Calculates how many available slots the user has by creating events and leveraging existing existing calculation
     public static List<List<Integer>> getCountsMatrix( Id userId ) {
         Id effectiveUserId = (userId == null) ? UserInfo.getUserId() : userId;
@@ -289,15 +361,15 @@ public with sharing class UserAvailabilityService {
     }
     @AuraEnabled(cacheable=true)
     public static List<Id> getAvailableUsersForWindow(
-        Datetime startDT,
-        Datetime endDT,
+        Datetime startDateTime,
+        Datetime endDateTime,
         String skill
     ) {
         List<Id> availableUsers = new List<Id>();
         Map<Id, List<Event>> busyByUser = new Map<Id, List<Event>>();
 
         // Basic input validation (single return rule: just avoid doing work if invalid)
-        Boolean validWindow = (startDT != null && endDT != null && endDT > startDT);
+        Boolean validWindow = (startDateTime != null && endDateTime != null && endDateTime > startDateTime);
 
         // Resolve permission set name
         Map<Id,User> skilledUsers = CustomPermissionController.getPermittedUsersMap( skill );
@@ -305,8 +377,8 @@ public with sharing class UserAvailabilityService {
         // Load overlapping events once for all eligible users (only if inputs are valid)
         List<Event> overlapping = UserAvailabilityService.getEventsForUser(
             userIds ,
-            start ,
-            end
+            startDateTime ,
+            endDateTime
         );
 
         if (overlapping != null && !overlapping.isEmpty()) {
@@ -332,7 +404,7 @@ public with sharing class UserAvailabilityService {
             Integer step = 30;
 
             UserAvailability calc = new UserAvailability();
-            Event windowEvt = new Event(StartDateTime = startDT, EndDateTime = endDT);
+            Event windowEvt = new Event(StartDateTime = startDateTime, EndDateTime = endDateTime);
 
             for (Id uid : userIds) {
                 List<Event> userBusy = new List<Event>();
