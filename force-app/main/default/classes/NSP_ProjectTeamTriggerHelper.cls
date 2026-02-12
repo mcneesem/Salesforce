@@ -255,15 +255,13 @@ public class NSP_ProjectTeamTriggerHelper {
                 if ( ( projTeam.NSP_Assignee__c != null )
                     && ( projTeam.NSP_Project__c != null )
                     && ( projTeam.NSP_Role__c == NSP_ServiceConstants.ProjectManager )
-                    )
-                {
-                    if ( ( oldProjTeamMap == null )
+                    && ( ( oldProjTeamMap == null )
                         || ( projTeam.NSP_Assignee__c != oldProjTeamMap.get( projTeam.id ).NSP_Assignee__c )
                         || ( projTeam.NSP_Role__c != oldProjTeamMap.get( projTeam.id ).NSP_Role__c )
                         )
-                    {
-                        mapOfProjectManager.put( projTeam.NSP_Project__c , projTeam.NSP_Assignee__c );
-                    }
+                    )
+                {
+                    mapOfProjectManager.put( projTeam.NSP_Project__c , projTeam.NSP_Assignee__c );
                 }
             }
             //get map of all salesforce user for the project manager role contact
@@ -334,14 +332,12 @@ public class NSP_ProjectTeamTriggerHelper {
                 if ( ( projTeam.NSP_Assignee__c != null )
                     && ( projTeam.NSP_Project__c != null )
                     && ( projTeam.NSP_Role__c == NSP_ServiceConstants.PayrollSpecialist )
-                    )
-                {
-                    if ( oldProjTeamMap == null
+                    && ( oldProjTeamMap == null
                         || projTeam.NSP_Assignee__c != oldProjTeamMap.get( projTeam.Id ).NSP_Assignee__c
                         )
-                    {
-                        mapOfPayrollSpecialist.put( projTeam.NSP_Project__c , projTeam.NSP_Assignee__c );
-                    }
+                    )
+                {
+                    mapOfPayrollSpecialist.put( projTeam.NSP_Project__c , projTeam.NSP_Assignee__c );
                 }
                 if ( String.isBlank( projTeam.NSP_Assignee__c )
                     && ( projTeam.NSP_Role__c==NSP_ServiceConstants.PayrollSpecialist )
