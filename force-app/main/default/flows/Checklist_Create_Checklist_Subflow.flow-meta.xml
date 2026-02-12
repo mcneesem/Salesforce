@@ -2618,8 +2618,8 @@
             <label>Sold to Paid - WO, WS or HRScale</label>
         </rules>
         <rules>
-            <name>MidMarket_Closing_WO_or_WX</name>
-            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
+            <name>MidMarket_Closing_WO_or_WX_or_WS</name>
+            <conditionLogic>(1 OR 2 OR 3) AND 4</conditionLogic>
             <conditions>
                 <leftValueReference>recordOpportunity.NSP_PrimaryProduct__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -2635,6 +2635,13 @@
                 </rightValue>
             </conditions>
             <conditions>
+                <leftValueReference>recordOpportunity.NSP_PrimaryProduct__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>WS</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
                 <leftValueReference>recordChecklist.Checklist_Type__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
@@ -2644,7 +2651,7 @@
             <connector>
                 <targetReference>MMC_WoWx_Screen</targetReference>
             </connector>
-            <label>MidMarket Closing - WO or WX</label>
+            <label>MidMarket Closing - WO or WX or WS</label>
         </rules>
         <rules>
             <name>Booking_WX</name>
@@ -2691,7 +2698,7 @@
             <label>Booking - WO</label>
         </rules>
     </decisions>
-    <description>Updated for &quot;HRScale&quot; product to act like WS. In-flow validation for &quot; Existing Payroll Provider&quot;. Additional in-flow validations and changed &quot;Update Opty&quot; to only update &quot;Number of ___ Checklist&quot; fields. MidMarket Closing added. &quot;Additional Notes&quot; long text and &quot;Gov&apos;t Contract Approval Email&quot; added to SEQ - WX</description>
+    <description>Screen flow that follows a flow that checks user permissions then allows users to populate the correct/corresponding checklist type according to Opportunity Product.</description>
     <dynamicChoiceSets>
         <name>activeBenefitContinuationPeriodPicklist</name>
         <dataType>Picklist</dataType>
