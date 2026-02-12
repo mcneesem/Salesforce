@@ -85,6 +85,19 @@
                 <identifier>runtime_sales_pathassistant_pathAssistant</identifier>
             </componentInstance>
         </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>transitioningClientBanner</componentName>
+                <identifier>c_transitioningClientBanner</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Account.Is_Transitioning_Client__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
         <name>header</name>
         <type>Region</type>
     </flexiPageRegions>
@@ -1393,6 +1406,10 @@
                     <value>Facet-78d35f01-d2a6-432c-be9b-272202e62a2c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Fields</value>
                 </componentInstanceProperties>
@@ -1471,6 +1488,10 @@
                     <value>Facet-df7018b6-2b83-4a0c-ae79-273ad04eaeee</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Description</value>
                 </componentInstanceProperties>
@@ -1483,6 +1504,10 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-02106332-1868-4a58-bcc1-eb6cd947d6ec</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -1506,6 +1531,10 @@
                     <value>Facet-277fb4e3-34df-4afc-841b-f1021ef00917</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Client Information</value>
                 </componentInstanceProperties>
@@ -1527,6 +1556,10 @@
                     <value>Facet-a448e1a1-d7f8-4b8d-925a-088f50efe833</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Employee Information</value>
                 </componentInstanceProperties>
@@ -1546,6 +1579,10 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-389b481a-5aa2-48d0-878a-bd7fc79e0d09</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -1590,6 +1627,10 @@
                     <value>Facet-31c5bf44-90ec-45b1-becf-3b8d1d332e37</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Amounts Paid by Insperity</value>
                 </componentInstanceProperties>
@@ -1609,6 +1650,10 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-6ef1a1cd-7777-4a71-a281-b667e754b02d</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -1632,6 +1677,10 @@
                     <value>Facet-f88d7c9c-6bae-412e-be12-7da10abd2332</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Amounts saved</value>
                 </componentInstanceProperties>
@@ -1653,6 +1702,10 @@
                     <value>Facet-29be74e2-ec11-4327-9922-0e89be25265b</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>System Information</value>
                 </componentInstanceProperties>
@@ -1665,6 +1718,10 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-3a1f36d0-499b-45b3-ac13-8811d1dc9571</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -1798,6 +1855,10 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Tabs</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>tabs</name>
                     <value>tabs</value>
                 </componentInstanceProperties>
@@ -1861,6 +1922,10 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Tabs</value>
+                </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>tabs</name>
                     <value>Facet-6b1f9dcb-41fa-4f82-a79b-77355514e188</value>
