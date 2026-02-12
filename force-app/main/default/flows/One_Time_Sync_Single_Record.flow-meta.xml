@@ -56,7 +56,7 @@
             <assignToReference>SyncIds</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Contacts.NSP_Per_ID__c</elementReference>
+                <elementReference>Get_Contacts.Middleware_Id__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -452,7 +452,7 @@
             <targetReference>Validate_Record_Id</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Publish_One_Time_Sync_Event</name>
         <label>Publish One Time Sync Event</label>
