@@ -107,7 +107,6 @@ public with sharing class NSP_OpportunityTriggerHelper {
         NSP_OpportunityTriggerHelperFunctions oppHelperFuncObj = new NSP_OpportunityTriggerHelperFunctions();
         //Setting direct assignments to opportunity records
         oppHelperFuncObj.setDirectOpptyFieldsAssignments(newList);
-        this.assignReadyForIntegrationSync( newList ); // DEPRECATED
 
         if(!opportunityWoWxList.isEmpty()){
             //Calling method to stamp WO/WX emails on oprty record
@@ -143,10 +142,8 @@ public with sharing class NSP_OpportunityTriggerHelper {
         //Opportunity list to capture opportunities created with HSA contribution data
         List<Opportunity> newTaskOpportunityList = new List<Opportunity>();
         Set<Id> opportunityAccountIds = new Set<Id>();
-        Set<Id> integrationSyncIds = new Set<Id>();
         for ( Id opportunityId : opportunityNewMap.keySet() ) {
             Opportunity newOpportunity = opportunityNewMap.get( opportunityId );
-            integrationSyncIds = this.collectIntegrationSyncIds( newOpportunity , integrationSyncIds , true ); // DEPRECATED
             accountIdSet.add( newOpportunity.AccountId );
             if ( String.isNotBlank( newOpportunity.NSP_Contribution_Level__c )
                 && String.isNotBlank( newOpportunity.NSP_Frequency_of_Distribution__c )
@@ -172,11 +169,6 @@ public with sharing class NSP_OpportunityTriggerHelper {
         }
         // added as a part of DF-01497
         getRelatedACR( opportunityAccountIds , opportunityNewMap.keySet() );
-        // Send the list to publish event bus
-        this.publishIntegrationSyncEvents( // DEPRECATED
-            integrationSyncIds ,
-            NSP_OpportunityTriggerHelper.isEnabledIntegrationOpportunityEvent
-        );
         // publish sync events for all new opportunies...
         this.publishNewRecords( newList );
     }
@@ -369,7 +361,6 @@ public with sharing class NSP_OpportunityTriggerHelper {
         changeOpportunityRecordType(lockOpportunitiesList);
         NSP_ChildOpportunitiesHelperFunctions childOpptyHlprObj = new NSP_ChildOpportunitiesHelperFunctions();
         childOpptyHlprObj.updateChildOpportunityOnProductChange(primaryProductChanged);
-        this.assignReadyForIntegrationSync( opportunityNewMap , opportunityOldMap ); // DEPRECATED
 
         if(ownerChangedOpptyList.size()>0){
             NSP_OpportunityTriggerHelperFunctions.populateServiceEmail(ownerChangedOpptyList, ownerIdSet);
@@ -417,14 +408,10 @@ public with sharing class NSP_OpportunityTriggerHelper {
         //List of string to store opportunity id fro changed sales tax records
         List<String> salesTaxChanged = new List<String>();
 
-        Set<Id> integrationSyncIdsAnalysis = new Set<Id>();
-        Set<Id> integrationSyncIds = new Set<Id>();
         //Iterating over the opportunity new map
-        for(Id opportunityId : opportunityNewMap.keySet()){
-
-            Opportunity newOpportunity = opportunityNewMap.get(opportunityId);
-            Opportunity oldOpportunity = opportunityOldMap.get(opportunityId);
-
+        for ( Id opportunityId : opportunityNewMap.keySet() ) {
+            Opportunity newOpportunity = opportunityNewMap.get( opportunityId );
+            Opportunity oldOpportunity = opportunityOldMap.get( opportunityId );
             accountIdSet.add( newOpportunity.AccountId );
             stageAutoOpportunityIds = optyStageAutomationCheck( newOpportunity , oldOpportunity , stageAutoOpportunityIds );
             partnerAccountOpportunityMap = optyPartnerCheck( newOpportunity , oldOpportunity , partnerAccountOpportunityMap );
@@ -434,43 +421,9 @@ public with sharing class NSP_OpportunityTriggerHelper {
             closedWonOpportunityIdList = optyClosedWonParentCheck( newOpportunity , oldOpportunity , closedWonOpportunityIdList );
             closedOpptyList = optyClosedWonProductCheck( newOpportunity , oldOpportunity , productCodeList , closedOpptyList );
             newTaskOpportunityList = optyNewTaskCheck( newOpportunity , oldOpportunity , newTaskOpportunityList );
-            Boolean isNewStageAnalysis = ( // DEPRECATED
-                ( newOpportunity.StageName != oldOpportunity.StageName )
-                && 'Analysis'.equalsIgnoreCase( newOpportunity.StageName )
-            );
-            integrationSyncIdsAnalysis = this.collectIntegrationSyncIds( // DEPRECATED
-                newOpportunity ,
-                integrationSyncIdsAnalysis ,
-                isNewStageAnalysis
-            );
-            integrationSyncIds = this.collectIntegrationSyncIds( // DEPRECATED
-                newOpportunity ,
-                integrationSyncIds ,
-                !isNewStageAnalysis
-            );
             backoutOptySet = optyBackoutCheck( newOpportunity , oldOpportunity , backoutOptySet );
             salesTaxChanged = optyTaxCheck( newOpportunity , oldOpportunity , salesTaxChanged );
         }
-        if ( !Test.isRunningTest()
-            && ( opportunityNewMap != null )
-            && ( opportunityNewMap.size() > 0 )
-            )
-        {
-            NSP_SObjectHistoryTrackingHelper.enqueueJob(
-                (Map<Id,sObject>)opportunityNewMap ,
-                (Map<Id,sObject>)opportunityOldMap
-            );
-        }
-        this.publishIntegrationSyncEvents( // DEPRECATED
-            integrationSyncIds ,
-            NSP_OpportunityTriggerHelper.isEnabledIntegrationOpportunityEvent
-        );
-        this.publishIntegrationSyncEvents( // DEPRECATED
-            integrationSyncIdsAnalysis ,
-            ( NSP_OpportunityTriggerHelper.isEnabledIntegrationOpportunityEvent
-                || NSP_OpportunityTriggerHelper.isEnabledOpportunityStageChangeEvent
-                )
-        );
         // publish sync events for critically modified opportunies...
         this.publishCriticalRecords( opportunityNewMap , opportunityOldMap );
         if ( !closedOpportunityIdList.isEmpty() ) {
@@ -489,9 +442,6 @@ public with sharing class NSP_OpportunityTriggerHelper {
         NSP_UpdateRelatedAccounts.updateRelatedAccounts( accountIdSet );
         recordTypeSet = optyGetRecTypeList( closedOpptyList , recordTypeSet );
         optyCreateAssets( closedWonOpptyList , closedOpptyList , accountIdSet , recordTypeSet );
-        //Calling Quote to Order method for generating order from Opportunity via a Quote update @utpal Utkalit
-        // Moving to NSP_UpdateRelatedAccounts class as part of DF-01058
-        NSP_UpdateRelatedAccounts.updateRelatedAccounts(accountIdSet);
         if ( newTaskOpportunityList.size() > 0 ) {
             NSP_EventAndTaskHelperFunctions.createTaskRecordsForNCSQueue( newTaskOpportunityList , null );
         }
@@ -836,53 +786,6 @@ public with sharing class NSP_OpportunityTriggerHelper {
     // Integration Sync Methods
     //
 
-    // DEPRECATED
-    // Opportunity-before-insert
-    private void assignReadyForIntegrationSync( List<Opportunity> records ) {
-        // sync cloned opportunities...
-        if ( NSP_OpportunityTriggerHelper.isEnabledDmlOpportunities
-            && ( records != null )
-            && !records.isEmpty()
-            )
-        {
-            for ( Opportunity record : records ) {
-                if ( record.isClone() ) {
-                    record.NSP_Ready_for_Integration_Sync__c = true;
-                }
-            }
-        }
-    }
-
-    // DEPRECATED
-    // Opportunity-before-update
-    private void assignReadyForIntegrationSync( Map<Id,Opportunity> opportunityNewMap , Map<Id,Opportunity> opportunityOldMap ) {
-        if ( NSP_OpportunityTriggerHelper.isEnabledDmlOpportunities ) {
-            // sync opportunities with critical field changes...
-            Set<Id> opportunityIdSetToUpdateResyncFlag = this.identifyCriticalRecordIds( opportunityNewMap , opportunityOldMap );
-            if ( !opportunityIdSetToUpdateResyncFlag.isEmpty() ){
-                for ( Id recordId : opportunityIdSetToUpdateResyncFlag ) {
-                    opportunityNewMap.get( recordId ).NSP_Ready_for_Integration_Sync__c = true;
-                }
-            }
-        }
-    }
-
-    // DEPRECATED
-    // Opportunity-after-insert
-    // Opportunity-after-update
-    private Set<Id> collectIntegrationSyncIds( Opportunity record , Set<Id> syncIds , Boolean isValid ) {
-        if ( NSP_OpportunityTriggerHelper.isEnabledDmlOpportunities
-            && isValid
-            && ( syncIds != null )
-            && ( record != null )
-            && record.NSP_Ready_for_Integration_Sync__c
-            )
-        {
-            syncIds.add( record.Id );
-        }
-        return syncIds;
-    }
-
     // Opportunity-after-insert
     private void publishNewRecords( List<Opportunity> records ) {
         // publish sync events for all new opportunies...
@@ -1001,19 +904,6 @@ public with sharing class NSP_OpportunityTriggerHelper {
                 recordMap.keySet() ,
                 NSP_OpportunityTriggerHelper.isEnabledIntegrationOpportunityEvent ,
                 false
-            );
-        }
-    }
-
-    // DEPRECATED
-    // Opportunity-after-insert
-    // Opportunity-after-update
-    private void publishIntegrationSyncEvents( Set<Id> syncIds , Boolean isEnabled ) {
-        if ( NSP_OpportunityTriggerHelper.isEnabledDmlOpportunities ) {
-            this.publishIntegrationSyncEvents(
-                syncIds ,
-                isEnabled ,
-                true
             );
         }
     }
