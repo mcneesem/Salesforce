@@ -1543,7 +1543,7 @@ public with sharing class FileUploadController {
 
     private static Id checkRecordTypeId( String value ) {
         Id returnValue = null;
-        if ( String.isBlank( value ) ){
+        if ( String.isBlank( value ) ) {
             returnValue = null;
         }
         else if( value.contains(NSP_ServiceConstants.PEO) )
