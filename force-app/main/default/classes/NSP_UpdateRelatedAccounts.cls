@@ -1,64 +1,58 @@
-//
-// @Description: This class is created to update nsp_last_updated__c on Account
-// When ever Opportunity is updated. And this is running in without sharing
-// context because while creating quote, Sales Engineering will not have access
-// to Account. So to update NSP_Last_Updated__c on Account, this class is
-// running in Without Sharing Context and is referred in
-// NSP_OpportunityTriggerHelper class
-//
-// @CreatedDate: 1/25/2022
-// @Story/Defect: DF-01058
-//
+// intentionally `without sharing` to prevent ~ INSUFFICIENT_ACCESS_OR_READONLY, insufficient access rights on object id
+// ~ Sales Engineers updating Opportunity records do not neccessariy have access to the associated Account record...
 public without sharing class NSP_UpdateRelatedAccounts {
     // test w/ NSP_UpdateRelatedAccountsTest (90%)
     // test w/ NSP_OpportunityTriggerHelperTest (64%)
 
     // Updates the last updated date on the related accounts(this helps in identifying the account that can be set as inactive).
-    // @param accountIdSet Set of account ids related to opportunity.
-    // @return void
     public static void updateRelatedAccounts( Set<String> accountIdSet ) {
-        List<Account> accountTobeUpdatedList = new List<Account>();
-        for ( Account accountObj : [
-                    SELECT Id , NSP_Last_Updated__c
-                    FROM Account
-                    WHERE (
-                        ( Id IN :accountIdSet )
-                        AND ( NSP_Last_Updated__c != TODAY )
-                    )
-                ]
-            )
-        {
-            //Stamping last updated date on the account records
-            accountObj.NSP_Last_Updated__c = Date.today();
-            accountTobeUpdatedList.add( accountObj );
-        }
-        if ( !accountTobeUpdatedList.isEmpty() ) {
-            try {
-                update accountTobeUpdatedList;
-            } catch( Exception e ) {
-                NSP_UpdateRelatedAccounts.handleException( e , 'updateRelatedAccounts' );
-            }
+        if ( Limits.getFutureCalls() < Limits.getLimitFutureCalls() ) { // prevent LimitExceptions...
+            NSP_UpdateRelatedAccounts.updateRelatedAccountsFuture( accountIdSet );
         }
     }
 
+    @future
+    private static void updateRelatedAccountsFuture( Set<String> accountIdSet ) {
+        NSP_UpdateRelatedAccounts.updateRelatedAccountsInternal( accountIdSet );
+    }
+
+    private static void updateRelatedAccountsInternal( Set<String> accountIdSet ) {
+        try {
+            List<Account> accountTobeUpdatedList = new List<Account>();
+            for ( Account accountObj : [
+                        SELECT Id , NSP_Last_Updated__c
+                        FROM Account
+                        WHERE (
+                            ( Id IN :accountIdSet )
+                            AND ( NSP_Last_Updated__c != TODAY )
+                        )
+                    ]
+                )
+            {
+                accountObj.NSP_Last_Updated__c = Date.today(); // DEPRECATED
+                accountTobeUpdatedList.add( accountObj );
+            }
+            if ( !accountTobeUpdatedList.isEmpty() ) {
+                update accountTobeUpdatedList;
+            }
+        } catch( Exception e ) {
+            NSP_UpdateRelatedAccounts.handleException( e , 'updateRelatedAccountsInternal' );
+        }
+    }
+
+    // Update Account status to 'Prospecting' once opportunity is added and there are no assets
     public static void updateAccountStatus( Set<String> accountIdSet ) {
         if ( Limits.getFutureCalls() < Limits.getLimitFutureCalls() ) { // prevent LimitExceptions...
             NSP_UpdateRelatedAccounts.updateAccountStatusFuture( accountIdSet );
         }
     }
 
-    // Update Account status to 'Prospecting' once opportunity is added and there are no assets
-    // @param accountIdSet Set of account ids related to opportunity.
-    // @return void
     @future
-    public static void updateAccountStatusFuture( Set<String> accountIdSet ) {
-        updateAccountStatusInternal(accountIdSet);
+    private static void updateAccountStatusFuture( Set<String> accountIdSet ) {
+        NSP_UpdateRelatedAccounts.updateAccountStatusInternal( accountIdSet );
     }
 
-    // Update Account status to 'Prospecting' once opportunity is added and there are no assets
-    // @param accountIdSet Set of account ids related to opportunity.
-    // @return void
-    private static void updateAccountStatusInternal( Set<String> accountIdSet ){
+    private static void updateAccountStatusInternal( Set<String> accountIdSet ) {
         try {
             List<Account> accountTobeUpdatedList = new List<Account>();
             for ( Account accountObj : [
@@ -91,8 +85,8 @@ public without sharing class NSP_UpdateRelatedAccounts {
             if ( !accountTobeUpdatedList.isEmpty() ) {
                 update accountTobeUpdatedList;
             }
-        } catch( Exception e ) {
-            NSP_UpdateRelatedAccounts.handleException( e , 'updateAccountStatus' );
+        } catch ( Exception e ) {
+            NSP_UpdateRelatedAccounts.handleException( e , 'updateAccountStatusInternal' );
         }
     }
 
