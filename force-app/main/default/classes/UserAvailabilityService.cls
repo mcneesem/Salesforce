@@ -55,13 +55,73 @@ public with sharing class UserAvailabilityService {
         //Get real days based on Business Hours
         List<Date> businessDates = UserAvailabilityService.getBusinessDates('01m4x000001119T',UserAvailabilityService.DAYS_LIMIT);
         //For now, hardcoding the start and end time slots
-        Map<Integer, Integer> startTimeSlots = new Map<Integer, Integer>{1 => 8,2 => 8, 3 => 9, 4 => 9, 5 => 10, 6 => 11};
-            Map<Integer, Integer> startTimeSlotsMinutes = new Map<Integer, Integer>{1 => 0, 2 => 30, 3 => 0, 4 => 30, 5 => 0, 6 => 30};
-                Map<Integer, Integer> endTimeSlots = new Map<Integer, Integer>{1 => 9,2 => 9, 3 => 10, 4 => 10, 5 => 11, 6 => 12};
-                    Map<Integer, Integer> endTimeSlotsMinutes = new Map<Integer, Integer>{1 => 0, 2 => 30, 3 => 0, 4 => 30, 5 => 0, 6 => 30};
+        Map<Integer, Integer> startTimeSlots = new Map<Integer, Integer>{
+            1 => 8,
+            2 => 8,
+            3 => 9,
+            4 => 9,
+            5 => 10,
+            6 => 10,
+            7 => 11,
+            8 => 11,
+            9 => 12,
+            10 => 1,
+            11 => 1,
+            12 => 2,
+            13 => 3,
+            14 => 3,
+            15 => 4};
+            Map<Integer, Integer> startTimeSlotsMinutes = new Map<Integer, Integer>{
+                1 => 00,
+                    2 => 30,
+                    3 => 00,
+                    4 => 30,
+                    5 => 00,
+                    6 => 30,
+                    7 => 00,
+                    8 => 30,
+                    9 => 30,
+                    10 => 00,
+                    11 => 30,
+                    12 => 00,
+                    13 => 00,
+                    14 => 30,
+                    15 => 00};
+                Map<Integer, Integer> endTimeSlots = new Map<Integer, Integer>{
+                    1 => 9,
+            2 => 9,
+            3 => 10,
+            4 => 10,
+            5 => 11,
+            6 => 11,
+            7 => 12,
+            8 => 12,
+            9 => 1,
+            10 => 2,
+            11 => 2,
+            12 => 3,
+            13 => 4,
+            14 => 4,
+            15 => 5};
+            Map<Integer, Integer> endTimeSlotsMinutes = new Map<Integer, Integer>{
+            1 => 00,
+            2 => 30,
+            3 => 00,
+            4 => 30,
+            5 => 00,
+            6 => 30,
+            7 => 00,
+            8 => 30,
+            9 => 30,
+            10 =>00,
+            11 => 30,
+            12 => 00,
+            13 => 00,
+            14 => 30,
+            15 => 00};
 
                         //Loop matching the number of time slots
-                        for (Integer j = 0; j < 6; j++) {
+                        for (Integer j = 0; j < 15; j++) {
                             List<Datetime> startDays = new List<Datetime>();
                             List<Datetime> endDays = new List<Datetime>();
                             //Iterating through the 7 days to create the datetimes for each
@@ -111,75 +171,39 @@ public with sharing class UserAvailabilityService {
         return response;
     }
 
-     @AuraEnabled(cacheable=true)
+    @AuraEnabled(cacheable=true)
     public static List<String> getTimeBlocks(String timeZone) {
         List<String> value = new List<String>();
-        Map<String, List<String>> timeZoneBlocks = new Map<String, List<String>>{
-            'Central' => new List<String>{
-                '8:00 - 9:00',
-                    '8:30 - 9:30',
-                    '9:00 - 10:00',
-                    '9:30 - 10:30',
-                    '10:00 - 11:00',
-                    '10:30 - 11:30',
-                    '11:00 - 12:00',
-                    '11:30 - 12:30',
-                    '12:30 - 1:30',
-                    '1:00 - 2:00',
-                    '1:30 - 2:30',
-                    '2:00 - 3:00',
-                    '3:00 - 4:00',
-                    '3:30 - 4:30',
-                    '4:00 - 5:00'
-                    },
-                        'Mountain'=> new List<String>{
-                            '1:00 - 2:00',
-                                '2:00 - 3:00',
-                                '3:30 - 4:30',
-                                '4:00 - 5:00',
-                                '5:30 - 6:30',
-                                '6:00 - 7:00'
-                                }
-            ,
-                'Pacific'=> new List<String>{
-                    '8:00 - 9:00',
-                        '8:30 - 9:30',
-                        '9:00 - 10:00',
-                        '9:30 - 10:30',
-                        '10:00 - 11:00',
-                        '10:30 - 11:30',
-                        '11:00 - 12:00',
-                        '11:30 - 12:30',
-                        '12:30 - 1:30',
-                        '1:00 - 2:00',
-                        '1:30 - 2:30',
-                        '2:00 - 3:00',
-                        '3:00 - 4:00',
-                        '3:30 - 4:30',
-                        '4:00 - 5:00'
-                        }
-            ,
-                'Eastern'=> new List<String>{
-                    '8:00 - 9:00',
-                        '8:30 - 9:30',
-                        '9:00 - 10:00',
-                        '9:30 - 10:30',
-                        '10:00 - 11:00',
-                        '10:30 - 11:30',
-                        '11:00 - 12:00',
-                        '11:30 - 12:30',
-                        '12:30 - 1:30',
-                        '1:00 - 2:00',
-                        '1:30 - 2:30',
-                        '2:00 - 3:00',
-                        '3:00 - 4:00',
-                        '3:30 - 4:30',
-                        '4:00 - 5:00'
-                        }
-        };
-            if(timeZone != null && timeZoneBlocks.containsKey(timeZone) && timeZoneBlocks.get(timeZone) != null) {
-                value = timeZoneBlocks.get(timeZone);
-            }
+        List<String> timeBlocks = new List<String>{
+            '8:00 - 9:00',
+                '8:30 - 9:30',
+                '9:00 - 10:00',
+                '9:30 - 10:30',
+                '10:00 - 11:00',
+                '10:30 - 11:30',
+                '11:00 - 12:00',
+                '11:30 - 12:30',
+                '12:30 - 1:30',
+                '1:00 - 2:00',
+                '1:30 - 2:30',
+                '2:00 - 3:00',
+                '3:00 - 4:00',
+                '3:30 - 4:30',
+                '4:00 - 5:00'};
+                    Map<String, List<String>> timeZoneBlocks = new Map<String, List<String>>{
+                        'Central' => timeBlocks,
+                            'Mountain'=> new List<String>{
+                                '1:00 - 2:00',
+                                    '2:00 - 3:00',
+                                    '3:30 - 4:30',
+                                    '4:00 - 5:00',
+                                    '5:30 - 6:30',
+                                    '6:00 - 7:00'},
+                                        'Pacific'=> timeBlocks,
+                                                    'Eastern'=> timeBlocks};
+                                                        if(timeZone != null && timeZoneBlocks.containsKey(timeZone) && timeZoneBlocks.get(timeZone) != null) {
+                                                            value = timeZoneBlocks.get(timeZone);
+                                                        }
         return value;
     }
 
