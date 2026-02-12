@@ -1173,29 +1173,46 @@ Date        : 30/09/2021
 
     }
 
-    /**********************************************************************************************
-MethodName: autoPopulateAsset
-Description : This method describes about the auto population of Asset on Case based on Category subcategory Mapping sheet
-Params:       List<Case> caseList, Set<String> categorySet, Set<String> subCategorySet, Set<Id> accIdSet
-Defect:        DF-04796
-createdDate : 6/13/2023
-********************************************************************************************/
-    public void autoPopulateAsset(List<Case> caseList, Set<String> categorySet, Set<String> subCategorySet, Set<Id> accIdSet, Boolean isInsert){
-        try{
+    // This method describes about the auto population of Asset on Case based on Category subcategory Mapping sheet
+    public void autoPopulateAsset(
+        List<Case> caseList ,
+        Set<String> categorySet ,
+        Set<String> subCategorySet ,
+        Set<Id> accIdSet ,
+        Boolean isInsert
+        )
+    {
+        try {
             Set<String> catsubCatAssetRecTypeSet = new Set<String>();
-            Map<string, String> catSubCatStringAssetRecTypeMap = new Map<string, String>();
-            Map<String, Id> assetRecTypeAssetIdMap = new Map<String, Id>();
-            String [] listofValues = new String[]{NSP_ServiceConstants.TERMINATED, NSP_ServiceConstants.BACKOUT };
-                for(NSP_Category_Sub_Category_Mapping__c catSubCatMapping : [SELECT Id, Name, NSP_Category__c,
-                                                                             NSP_Subcategory__c,NSP_Asset_Record_Types__c,
-                                                                             NSP_UserTitle__c, NSP_RecordType__c
-                                                                             FROM NSP_Category_Sub_Category_Mapping__c
-                                                                             WHERE NSP_Category__c  IN: categorySet  AND
-                                                                             NSP_Subcategory__c IN: subCategorySet]){
-                                                                                 catSubCatStringAssetRecTypeMap.put(catSubCatMapping.NSP_Category__c+';'+catSubCatMapping.NSP_Subcategory__c, catSubCatMapping.NSP_Asset_Record_Types__c);
-                                                                                 catsubCatAssetRecTypeSet.add(catSubCatMapping.NSP_Asset_Record_Types__c);
-                                                                             }
-
+            Map<String,String> catSubCatStringAssetRecTypeMap = new Map<String,String>();
+            Map<String,Id> assetRecTypeAssetIdMap = new Map<String,Id>();
+            List<String> listofValues = new List<String>{
+                NSP_ServiceConstants.TERMINATED ,
+                NSP_ServiceConstants.BACKOUT
+            };
+            for ( NSP_Category_Sub_Category_Mapping__c catSubCatMapping : [
+                        SELECT
+                            Id ,
+                            Name ,
+                            NSP_Category__c ,
+                            NSP_Subcategory__c ,
+                            NSP_Asset_Record_Types__c ,
+                            NSP_UserTitle__c ,
+                            NSP_RecordType__c
+                        FROM NSP_Category_Sub_Category_Mapping__c
+                        WHERE (
+                            ( NSP_Category__c IN :categorySet )
+                            AND ( NSP_Subcategory__c IN :subCategorySet )
+                        )
+                    ]
+                )
+            {
+                catSubCatStringAssetRecTypeMap.put(
+                    catSubCatMapping.NSP_Category__c + ';' + catSubCatMapping.NSP_Subcategory__c ,
+                    catSubCatMapping.NSP_Asset_Record_Types__c
+                );
+                catsubCatAssetRecTypeSet.add( catSubCatMapping.NSP_Asset_Record_Types__c );
+            }
             for ( Asset asst : [
                         SELECT
                             Id ,
@@ -1206,7 +1223,13 @@ createdDate : 6/13/2023
                         FROM Asset
                         WHERE (
                             ( AccountId IN :accIdSet )
-                            AND ( Status = 'Active' )
+                            AND (
+                                Status IN (
+                                    'Active' ,
+                                    'Onboarding' ,
+                                    'On Demand'
+                                )
+                            )
                             AND ( RecordType.Name IN :catsubCatAssetRecTypeSet )
                             AND ( NSP_Account_Status__c NOT IN :(listofValues) )
                         )
@@ -1218,17 +1241,28 @@ createdDate : 6/13/2023
                     asst.Id
                 );
             }
-
-            for(Case cse : CaseList){
-                if(!catSubCatStringAssetRecTypeMap.isEmpty() && !assetRecTypeAssetIdMap.isEmpty()){
-                    cse.AssetId = assetRecTypeAssetIdMap.get(catSubCatStringAssetRecTypeMap.get(cse.NSP_Category__c+';'+cse.NSP_SubCategory__c) + '-' + cse.AccountId);
-                }else{
+            for ( Case cse : CaseList ) {
+                if ( !catSubCatStringAssetRecTypeMap.isEmpty()
+                    && !assetRecTypeAssetIdMap.isEmpty()
+                    )
+                {
+                    cse.AssetId = assetRecTypeAssetIdMap.get(
+                        catSubCatStringAssetRecTypeMap.get(
+                            cse.NSP_Category__c + ';' + cse.NSP_SubCategory__c
+                        ) + '-' + cse.AccountId
+                    );
+                } else {
                     cse.AssetId = null;
                 }
-
-            cse.NSP_SubCategory__c = isInsert && cse.NSP_Category__c == NSP_ServiceConstants.FLSA_CATEGORY && cse.NSP_SubCategory__c == NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI ? '' : cse.NSP_SubCategory__c;
+                if ( isInsert
+                    && ( cse.NSP_Category__c == NSP_ServiceConstants.FLSA_CATEGORY )
+                    && ( cse.NSP_SubCategory__c == NSP_ServiceConstants.SUBCATEGORY_NOT_ON_UI )
+                    )
+                {
+                    cse.NSP_SubCategory__c = '';
+                }
             }
-        } catch( Exception e ) {
+        } catch ( Exception e ) {
             NSP_CaseTriggerHelper.handleException(
                 e ,
                 'autoPopulateAsset'
