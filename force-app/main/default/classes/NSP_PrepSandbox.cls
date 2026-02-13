@@ -74,6 +74,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         doEmailAlerts();
         doImageDocs();
         doCSettings(sandbox);
+        doCSettings2(sandbox);
         setPostRefreshRunFlag(1);
     }
 
