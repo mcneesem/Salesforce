@@ -29,16 +29,16 @@
                 <lightning-layout multiple-rows>
                     <template lwc:if={showMeetingCalendar}>
                         <lightning-layout-item size="12" padding="around-small">
-                            PENDING MEETING CALENDAR
+                            <c-portal-event-calendar record-id={recordId}></c-portal-event-calendar>
                         </lightning-layout-item>
                     </template>
                     <template lwc:if={showMeetingList}>
                         <lightning-layout-item size="12" padding="around-small">
-                            PENDING MEETING LIST
+                            <c-portal-event-list record-id={recordId}></c-portal-event-list>
                         </lightning-layout-item>
                     </template>
                     <lightning-layout-item size="12" padding="around-small">
-                        PENDING RESOURCES
+                        <c-portal-client-resources></c-portal-client-resources>
                     </lightning-layout-item>
                 </lightning-layout>
             </lightning-layout-item>
