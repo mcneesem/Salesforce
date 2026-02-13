@@ -75,7 +75,6 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         doImageDocs();
         doTrustedURLs();
         doCSettings(sandbox);
-        doCSettings2(sandbox);
         setPostRefreshRunFlag(1);
     }
 
@@ -650,15 +649,13 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         } catch(Exception e) {
             NSP_PrepSandbox.handleException( e , 'doCSettings:NSP_Environment_Details__c' );
         }
-    }
 
-    public static void doCSettings2(String sandboxName) {
         try {
             BoxFileRequest__c cS5 = BoxFileRequest__c.getOrgDefaults();
             cS5.BoxTemplateFolderId__c = '225207143235';
             upsert cS5;
         } catch(Exception e) {
-            NSP_PrepSandbox.handleException( e , 'doCSettings2:BoxFileRequest__c' );
+            NSP_PrepSandbox.handleException( e , 'doCSettings:BoxFileRequest__c' );
         }
 
         try {
@@ -667,7 +664,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             cS6.BccAddresses__c = null;
             upsert cS6;
         } catch(Exception e) {
-            NSP_PrepSandbox.handleException( e , 'doCSettings2:UserTriggerSettings__c' );
+            NSP_PrepSandbox.handleException( e , 'doCSettings:UserTriggerSettings__c' );
         }
 
         try {
@@ -675,7 +672,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             cS7.AutoTerminationEmailAddresses__c = null;
             upsert cS7;
         } catch(Exception e) {
-            NSP_PrepSandbox.handleException( e , 'doCSettings2:Contract_Termination_Settings__c' );
+            NSP_PrepSandbox.handleException( e , 'doCSettings:Contract_Termination_Settings__c' );
         }
 
         try {
@@ -693,8 +690,9 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             }
             upsert cS8;
         } catch(Exception e) {
-            NSP_PrepSandbox.handleException( e , 'doCSettings2:NVMContactWorld__Settings__c' );
+            NSP_PrepSandbox.handleException( e , 'doCSettings:NVMContactWorld__Settings__c' );
         }
+
     }
 
     public static void doE2CAddresses(String sandboxName) {
