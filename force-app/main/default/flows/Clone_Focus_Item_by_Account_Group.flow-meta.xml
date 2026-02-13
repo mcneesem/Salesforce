@@ -117,8 +117,8 @@
         <dataType>Date</dataType>
         <expression>TODAY()</expression>
     </formulas>
-    <interviewLabel>Clone Focus Item by Account Group {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Clone Focus Item by Account Group</label>
+    <interviewLabel>DEPRECATED - Clone Focus Item by Account Group {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>DEPRECATED - Clone Focus Item by Account Group</label>
     <loops>
         <name>Iterate_Account_Group</name>
         <label>Iterate Account Group</label>
@@ -172,7 +172,6 @@
             <targetReference>Iterate_Account_Group</targetReference>
         </connector>
         <inputAssignments>
-           
             <field>Focus_Item__c</field>
             <value>
                 <elementReference>$Record.Focus_Item__c</elementReference>
