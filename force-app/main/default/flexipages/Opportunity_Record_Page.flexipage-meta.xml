@@ -256,6 +256,13 @@
                         </valueListItems>
                         <valueListItems>
                             <value>Opportunity.Schedule_Seller</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Schedule_Seller_Admin}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
