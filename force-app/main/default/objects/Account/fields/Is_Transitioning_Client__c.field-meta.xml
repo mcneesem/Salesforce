@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_Transitioning_Client__c</fullName>
+    <description>Show/Hide Workday banner</description>
+    <formula>NOT(ISPICKVAL( Transitioning_Client__c , &quot;&quot;) )</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Is Transitioning Client</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>
