@@ -8,8 +8,11 @@
         <actionName>UserAvailabilityFlow</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Assignment</targetReference>
+            <targetReference>Assign_start_and_end_datetimes</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Fault_Element_Assignment_Get_Users</targetReference>
+        </faultConnector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>endDateTime</name>
@@ -36,8 +39,24 @@
     <apiVersion>65.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
-        <name>Assignment</name>
-        <label>Assignment</label>
+        <name>Admin_Choose_Owner</name>
+        <label>Admin Choose Owner</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>chooseDemoOwner</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Userchoices</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>User_Id_null_check</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_start_and_end_datetimes</name>
+        <label>Assign start and end datetimes</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
@@ -56,6 +75,72 @@
         </assignmentItems>
         <connector>
             <targetReference>Get_Records_Null_Check</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Demo_Owner_Automatically_Assigned</name>
+        <label>Demo Owner Automatically Assigned</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>chooseDemoOwner</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Loop_Users.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_Users</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Fault_Element_AssignMent_Create_Event</name>
+        <label>Fault Element AssignMent Create Event</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_Event</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Fault_Element_Assignment_Get_User_Records</name>
+        <label>Fault Element Assignment Get_User_Records</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_User_Records</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Fault_Element_Assignment_Get_Users</name>
+        <label>Fault Element Assignment Get Users</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Users</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
     <choices>
@@ -181,8 +266,55 @@
             <label>Not null</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>User_Id_null_check</name>
+        <label>User Id null check</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>User_Id_not_null</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>chooseDemoOwner</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Event</targetReference>
+            </connector>
+            <label>User Id not null</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>User_is_admin</name>
+        <label>User is admin</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Loop_Users</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No admin</defaultConnectorLabel>
+        <rules>
+            <name>Admin</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Permission.Schedule_Seller_Admin</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Choose_Demo_Owner</targetReference>
+            </connector>
+            <label>Admin</label>
+        </rules>
+    </decisions>
     <dynamicChoiceSets>
-        <name>ccsAvailableUsers</name>
+        <name>AvailableUsers</name>
         <collectionReference>Get_User_Records</collectionReference>
         <dataType>String</dataType>
         <displayField>Name</displayField>
@@ -193,6 +325,20 @@
     <interviewLabel>Schedule Seller {!$Flow.CurrentDateTime}</interviewLabel>
     <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Schedule Seller</label>
+    <loops>
+        <name>Loop_Users</name>
+        <label>Loop Users</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <collectionReference>Get_User_Records</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Demo_Owner_Automatically_Assigned</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>User_Id_null_check</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -220,6 +366,9 @@
         <connector>
             <targetReference>RedirectToEventRecord</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Fault_Element_AssignMent_Create_Event</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>EndDateTime</field>
             <value>
@@ -229,7 +378,7 @@
         <inputAssignments>
             <field>OwnerId</field>
             <value>
-                <elementReference>Userchoices</elementReference>
+                <elementReference>chooseDemoOwner</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -254,10 +403,10 @@
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Choose_Demo_Owner</targetReference>
+            <targetReference>User_is_admin</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Fault_Handler_Subflow</targetReference>
+            <targetReference>Fault_Element_Assignment_Get_User_Records</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -322,15 +471,16 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Create_Event</targetReference>
+            <targetReference>Admin_Choose_Owner</targetReference>
         </connector>
         <fields>
             <name>Userchoices</name>
-            <choiceReferences>ccsAvailableUsers</choiceReferences>
+            <choiceReferences>AvailableUsers</choiceReferences>
             <dataType>String</dataType>
+            <fieldText>Choose Demo Owner</fieldText>
             <fieldType>RadioButtons</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>false</isRequired>
+            <isRequired>true</isRequired>
             <styleProperties>
                 <verticalAlignment>
                     <stringValue>top</stringValue>
@@ -430,7 +580,7 @@
                     <fieldText>Select a Skill</fieldText>
                     <fieldType>RadioButtons</fieldType>
                     <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>false</isRequired>
+                    <isRequired>true</isRequired>
                     <styleProperties>
                         <verticalAlignment>
                             <stringValue>top</stringValue>
@@ -510,7 +660,7 @@
         <inputAssignments>
             <name>faultElement</name>
             <value>
-                <stringValue>Get_User_Records</stringValue>
+                <elementReference>faultElement</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -527,8 +677,25 @@
         </inputAssignments>
     </subflows>
     <variables>
+        <name>chooseDemoOwner</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <elementReference>Userchoices</elementReference>
+        </value>
+    </variables>
+    <variables>
         <name>endDateTime</name>
         <dataType>DateTime</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>faultElement</name>
+        <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
