@@ -675,24 +675,6 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             NSP_PrepSandbox.handleException( e , 'doCSettings:Contract_Termination_Settings__c' );
         }
 
-        try {
-            NVMContactWorld__Settings__c cS8 = NVMContactWorld__Settings__c.getOrgDefaults();
-            switch on sandboxName {
-                when 'merge' {
-                    cS8.NVMContactWorld__clientId__c = 'dz02lkbjl01';
-                }
-                when 'test' {
-                    cS8.NVMContactWorld__clientId__c = 'mfb4hpckwhw';
-                }
-                when else {
-                    cS8.NVMContactWorld__clientId__c = '';
-                }
-            }
-            upsert cS8;
-        } catch(Exception e) {
-            NSP_PrepSandbox.handleException( e , 'doCSettings:NVMContactWorld__Settings__c' );
-        }
-
     }
 
     public static void doE2CAddresses(String sandboxName) {
