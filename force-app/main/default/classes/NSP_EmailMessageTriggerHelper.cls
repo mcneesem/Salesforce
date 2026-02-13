@@ -146,6 +146,7 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                         if ( ( currentCase != null )
                             && ( currentCase.ClosedDate != null )
                             && ( eMessage.MessageDate != null )
+                            && eMessage.Source != 'Email Integration App Manual'//Bug 510646
                             )
                         {
                             List<String> toAddressList = NSP_EmailMessageTriggerHelper.getAddressList( eMessage );
