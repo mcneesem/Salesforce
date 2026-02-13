@@ -1,0 +1,24 @@
+<template>
+    <div class="slds-is-relative">
+        <template lwc:if={records}>
+            <template lwc:if={hasData}>
+                <lightning-card title={title}>
+                    <lightning-layout>
+                        <lightning-layout-item size="12" padding="around-small">
+                            <ul>
+                                <template for:each={records} for:item="record">
+                                    <li key={record.fields.Id.value}>
+                                        <c-portal-team-member record={record}></c-portal-team-member>
+                                    </li>
+                                </template>
+                            </ul>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-card>
+            </template>
+        </template>
+        <template lwc:else>
+            <lightning-spinner alternative-text="Loading" size="x-small"></lightning-spinner>
+        </template>
+    </div>
+</template>
