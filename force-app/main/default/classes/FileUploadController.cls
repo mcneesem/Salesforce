@@ -38,6 +38,29 @@ public with sharing class FileUploadController {
 
     private static Pattern datePattern = Pattern.compile('^(0?[1-9]|1[0-2])/(0?[1-9]|[12][0-9]|3[01])/\\d{4}$');
 
+    private static final List<String> requiredHeaders = new List<String>{
+        'Contact',
+        'Account',
+        'Asset',
+        'Category',
+        'Sub Category',
+        'Detail',
+        'Owner',
+        'Origin',
+        'Priority',
+        'Status',
+        'Substatus',
+        'Resolution',
+        'Subject',
+        'Date Opened',
+        'Due Date',
+        'Closed Date',
+        'Confidential',
+        'Quick Rate',
+        'Record Type',
+        'Description'
+    };
+
     @AuraEnabled(cacheable =true)
     public static Boolean hasPermission() {
         return CustomPermissionController.checkUserPermission( 'Upload_Cases_via_CSV',UserInfo.getUserId() );
@@ -184,7 +207,7 @@ public with sharing class FileUploadController {
             cpw.rowCaseMap = rowCaseMap;
             cpw.accountToClientMap = accountToClientMap;
             cpw.assetToClientMap = assetToClientMap;
-        processCases( cpw );
+        FileUploadController.processCases( cpw );
         return cpw;
     }
 
@@ -239,7 +262,7 @@ public with sharing class FileUploadController {
         if ( rowNum !=null
              && row !=null
              && !row.isEmpty()
-             && row.size()>20
+             && row.size() > FileUploadController.requiredHeaders.size()
            )
         {
             string errorMessage = '';
@@ -300,12 +323,12 @@ public with sharing class FileUploadController {
                 objCase.ClosedDate = checkValueDateTime( csvClosedDate, csvStatus,12 , rowNum );
                 objCase.NSP_Rating__c = csvQuickRate;
                 objCase.RecordTypeId = checkRecordTypeId( csvRecordType );
-                objCase.Description = concatenateDescription( row, 20 );
+                objCase.Description = concatenateDescription( row, FileUploadController.requiredHeaders.size() );
                 csvRow.caseRecord = objCase;
-                csvRow.assestLink = csvNotValueId( csvAsset );
-                csvRow.contactLink = csvNotValueId( csvContact );
-                csvRow.ownerLink = csvNotValueId( csvOwner );
-                csvRow.confidentialRecordOwner = checkConfidentialRecordOwner( csvCategory, csvSubCategory, csvOwner );
+                csvRow.assestLink = FileUploadController.csvNotValueId( csvAsset );
+                csvRow.contactLink = FileUploadController.csvNotValueId( csvContact );
+                csvRow.ownerLink = FileUploadController.csvNotValueId( csvOwner );
+                csvRow.confidentialRecordOwner = FileUploadController.checkConfidentialRecordOwner( csvCategory, csvSubCategory, csvOwner );
             }else{
                 csvRow.errorMessage = errorMessage;
             }
@@ -631,9 +654,9 @@ public with sharing class FileUploadController {
             }
         }
 
-        buildUserEmailRecordList( userEmailRecordList, clientEmailtoUserMap );
-        buildGroupToUserMap( queueRecordList, clientToUserMap );
-        buildClientToUserMap( userRecordList, clientToUserMap );
+        FileUploadController.buildUserEmailRecordList( userEmailRecordList, clientEmailtoUserMap );
+        FileUploadController.buildGroupToUserMap( queueRecordList, clientToUserMap );
+        FileUploadController.buildClientToUserMap( userRecordList, clientToUserMap );
 
     }
 
@@ -650,7 +673,7 @@ public with sharing class FileUploadController {
                      && String.isBlank( obj.errorMessage )
                    )
                 {
-                    String value = getFieldValue( obj, fieldName );
+                    String value = FileUploadController.getFieldValue( obj, fieldName );
                     if ( String.isNotBlank( value ) )
                     {
                         linkMap.put(obj.rowNum, value);
@@ -814,7 +837,7 @@ public with sharing class FileUploadController {
 
     private static void processCases( CaseProcessWrapper cpw ){
         List<Integer> indicesToRemove = new List<Integer>();
-        if( processCasesIfCheck( cpw ) ){
+        if( FileUploadController.processCasesIfCheck( cpw ) ){
             for ( Case caseToLoad : cpw.rowCaseMap.keySet() ) {
                 Boolean shouldContinue  = true;
                 if( cpw.rowCaseMap.containsKey(caseToLoad)
@@ -822,14 +845,14 @@ public with sharing class FileUploadController {
                     && cpw.allRowValue.indexof( cpw.rowCaseMap.get(caseToLoad) ) != null
                   ){
                        Integer rowNumber = cpw.allRowValue.indexof( cpw.rowCaseMap.get(caseToLoad) ) + 2;
-                        shouldContinue  = processAccountAssest( shouldContinue, rowNumber, indicesToRemove, caseToLoad, cpw );
-                        shouldContinue  = processContact( shouldContinue, rowNumber, indicesToRemove, caseToLoad, cpw );
-                        processOwner( shouldContinue, rowNumber, indicesToRemove, caseToLoad, cpw );
+                        shouldContinue  = FileUploadController.processAccountAssest( shouldContinue, rowNumber, indicesToRemove, caseToLoad, cpw );
+                        shouldContinue  = FileUploadController.processContact( shouldContinue, rowNumber, indicesToRemove, caseToLoad, cpw );
+                        FileUploadController.processOwner( shouldContinue, rowNumber, indicesToRemove, caseToLoad, cpw );
                   }
 
             }
         }
-        if( processCasesIfCheckToIndicatorRemove( cpw, indicesToRemove ) )
+        if( FileUploadController.processCasesIfCheckToIndicatorRemove( cpw, indicesToRemove ) )
         {
             indicesToRemove.sort();
             for ( Integer i = indicesToRemove.size() - 1; i >= 0; i-- ) {
@@ -885,7 +908,7 @@ public with sharing class FileUploadController {
                                                  CaseProcessWrapper cpw
                                                )
     {
-        if ( accountUpdateIfCheck( rowNumber, caseToLoad, cpw )
+        if ( FileUploadController.accountUpdateIfCheck( rowNumber, caseToLoad, cpw )
              && shouldContinue
            )
         {
@@ -894,7 +917,7 @@ public with sharing class FileUploadController {
             caseToLoad.AccountId = cpw.accountToClientMap.get( cpw.caseRecord.get( rowNumber ) );
             cpw.rowCaseMap.put(caseToLoad, row);
 
-        } else if( accountUpdateIfElseCheck( rowNumber, caseToLoad, cpw )
+        } else if( FileUploadController.accountUpdateIfElseCheck( rowNumber, caseToLoad, cpw )
                    && shouldContinue
                  )
         {
@@ -905,7 +928,7 @@ public with sharing class FileUploadController {
             );
             shouldContinue  = false;
         }
-        if ( assetUpdateIfCheck( rowNumber, caseToLoad, cpw )
+        if ( FileUploadController.assetUpdateIfCheck( rowNumber, caseToLoad, cpw )
             && shouldContinue
            )
         {
@@ -995,14 +1018,14 @@ public with sharing class FileUploadController {
                                            Case caseToLoad, CaseProcessWrapper cpw
                                          )
     {
-        if ( contactUpdateIfCheck( rowNumber, caseToLoad, cpw )
+        if ( FileUploadController.contactUpdateIfCheck( rowNumber, caseToLoad, cpw )
              && shouldContinue )
         {
             List<String> row = cpw.rowCaseMap.get( caseToLoad );
             cpw.rowCaseMap.remove( caseToLoad );
             caseToLoad.ContactId = cpw.contactToPerIdMap.get( cpw.contactRecord.get( rowNumber ) );
             cpw.rowCaseMap.put( caseToLoad, row );
-        } else if( contactUpdateIfElseCheck( rowNumber, caseToLoad, cpw ) && shouldContinue ) {
+        } else if( FileUploadController.contactUpdateIfElseCheck( rowNumber, caseToLoad, cpw ) && shouldContinue ) {
             indicesToRemove.add( cpw.caseList.indexOf( caseToLoad ) );
             cpw.createRecordMap.put(
                 cpw.rowCaseMap.get( caseToLoad ),
@@ -1069,7 +1092,7 @@ public with sharing class FileUploadController {
                                          CaseProcessWrapper cpw
                                        )
     {
-        if ( ownerUpdateIfCheck( rowNumber, caseToLoad, cpw )
+        if ( FileUploadController.ownerUpdateIfCheck( rowNumber, caseToLoad, cpw )
              && shouldContinue
            )
         {
@@ -1084,7 +1107,7 @@ public with sharing class FileUploadController {
             }
             cpw.rowCaseMap.put( caseToLoad, row );
         }
-        else if ( emailUpdateIfCheck (rowNumber, caseToLoad, cpw )
+        else if ( FileUploadController.emailUpdateIfCheck (rowNumber, caseToLoad, cpw )
                   && shouldContinue
                 )
         {
@@ -1099,7 +1122,7 @@ public with sharing class FileUploadController {
             }
 
             cpw.rowCaseMap.put( caseToLoad, row );
-        } else if ( ownerUpdateIfElseCheck( rowNumber, caseToLoad, cpw )
+        } else if ( FileUploadController.ownerUpdateIfElseCheck( rowNumber, caseToLoad, cpw )
                     && shouldContinue
                   )
         {
@@ -1221,7 +1244,7 @@ public with sharing class FileUploadController {
             && !failureKey.isEmpty()
           )
         {
-            for ( Integer i = 0; i <= 19 && i < failureKey.size(); i++ ) {
+            for ( Integer i = 0 ; ( ( i < FileUploadController.requiredHeaders.size() ) && ( i < failureKey.size() ) ); i++ ) {
 
                 String field = failureKey[ i ];
 
@@ -1256,7 +1279,10 @@ public with sharing class FileUploadController {
 
             String finalDescription = '';
             String appendDescription = '';
-            String description = FileUploadController.concatenateDescription( failureKey, 20 );
+            String description = FileUploadController.concatenateDescription(
+                failureKey,
+                FileUploadController.requiredHeaders.size()
+            );
 
             if( String.isNotBlank( description ) )
             {
@@ -1406,7 +1432,7 @@ public with sharing class FileUploadController {
 
         if( row != null
             && !row.isEmpty()
-            && row.size() > 20
+            && row.size() > FileUploadController.requiredHeaders.size()
             && startIndex != null
           ){
              for (Integer i = startIndex; i < row.size(); i++) {
@@ -1430,39 +1456,41 @@ public with sharing class FileUploadController {
             {
                  for( list<String> eachRow : createRecordMap.keySet() )
                     {
-                        Import_Error__c eachError = new Import_Error__c();
-                        eachError.Contact__c = eachRow[1];
-                        eachError.Account__c = eachRow[2];
-                        eachError.Asset__c = eachRow[3];
-                        eachError.Category__c = eachRow[4];
-                        eachError.SubCategory__c = eachRow[5];
-                        eachError.Detail__c = eachRow[6];
-                        eachError.Case_Owner__c = eachRow[7];
-                        eachError.Origin__c = eachRow[8];
-                        eachError.Priority__c = eachRow[9];
-                        eachError.Status__c = eachRow[10];
-                        eachError.Case_Sub_Status__c = eachRow[11];
-                        eachError.Reason__c = eachRow[12];
-                        eachError.Subject__c = eachRow[13];
-                        eachError.Due_Date__c = eachRow[14];
-                        eachError.Date_Time_Opened__c = eachRow[15];
-                        eachError.Date_Closed__c = eachRow[16];
-                        eachError.Confidential__c = eachRow[17];
-                        eachError.Quick_Rate__c = eachRow[18];
-                        eachError.Case_Record_Type_Id__c = eachRow[19];
-                        eachError.Description__c = eachRow[20];
+                        if ( ( eachRow.size() > FileUploadController.requiredHeaders.size() ) ){
+                            Import_Error__c eachError = new Import_Error__c();
+                            eachError.Contact__c = eachRow[1];
+                            eachError.Account__c = eachRow[2];
+                            eachError.Asset__c = eachRow[3];
+                            eachError.Category__c = eachRow[4];
+                            eachError.SubCategory__c = eachRow[5];
+                            eachError.Detail__c = eachRow[6];
+                            eachError.Case_Owner__c = eachRow[7];
+                            eachError.Origin__c = eachRow[8];
+                            eachError.Priority__c = eachRow[9];
+                            eachError.Status__c = eachRow[10];
+                            eachError.Case_Sub_Status__c = eachRow[11];
+                            eachError.Reason__c = eachRow[12];
+                            eachError.Subject__c = eachRow[13];
+                            eachError.Due_Date__c = eachRow[14];
+                            eachError.Date_Time_Opened__c = eachRow[15];
+                            eachError.Date_Closed__c = eachRow[16];
+                            eachError.Confidential__c = eachRow[17];
+                            eachError.Quick_Rate__c = eachRow[18];
+                            eachError.Case_Record_Type_Id__c = eachRow[19];
+                            eachError.Description__c = eachRow[20];
 
-                        if( createRecordMap.containsKey( eachRow )
-                            && String.isNotBlank( createRecordMap.get( eachRow ) )
-                          )
-                        {
-                            eachError.Error_Message__c = createRecordMap.get( eachRow );
+                            if ( createRecordMap.containsKey( eachRow )
+                                 && String.isNotBlank( createRecordMap.get( eachRow ) )
+                               )
+                            {
+                                eachError.Error_Message__c = createRecordMap.get( eachRow );
+                            }
+
+                            importErrorList.add( eachError );
                         }
 
-                        importErrorList.add( eachError );
                     }
             }
-
 
             if ( !importErrorList.isEmpty() )
             {
@@ -1499,28 +1527,7 @@ public with sharing class FileUploadController {
     private static Boolean validateHeaderRow( String headers ) {
 
         Boolean allConditionsMet = true;
-        List<String> expectedValues = new List<String>{
-                'Contact',
-                'Account',
-                'Asset',
-                'Category',
-                'Sub Category',
-                'Detail',
-                'Owner',
-                'Origin',
-                'Priority',
-                'Status',
-                'Substatus',
-                'Resolution',
-                'Subject',
-                'Date Opened',
-                'Due Date',
-                'Closed Date',
-                'Confidential',
-                'Quick Rate',
-                'Record Type',
-                'Description'
-             };
+        List<String> expectedValues = FileUploadController.requiredHeaders;
 
              if ( String.isNotBlank( headers ) ) {
 
@@ -1542,42 +1549,26 @@ public with sharing class FileUploadController {
     }
 
     private static Id checkRecordTypeId( String value ) {
-        Id returnValue = null;
-        if ( String.isBlank( value ) ) {
-            returnValue = null;
+         Id returnValue = null;
+        if ( String.isNotBlank( value ) ) {
+            if ( value.contains( NSP_ServiceConstants.PEO ) ) {
+                returnValue = FileUploadController.peoRecordTypeId;
+            } else if ( value.contains( FileUploadController.DOL_AUDITS ) ) {
+                returnValue = FileUploadController.dolAuditRecordTypeId;
+            } else if ( value.contains( FileUploadController.WAGE_CLAIMS ) ) {
+                returnValue = FileUploadController.wageClaimRecordTypeId;
+            } else if ( value.contains( NSP_ServiceConstants.BPS ) ) {
+                returnValue = FileUploadController.bpsRecordTypeId;
+            } else if ( value.contains( FileUploadController.DUNNING_CASE ) ) {
+                returnValue = FileUploadController.dunningRecordTypeId;
+            } else if ( value.contains( NSP_ServiceConstants.SUB_CATEGORY_ITA_CQA ) ) {
+                returnValue = FileUploadController.itaRecordTypeId;
+            } else if ( value.contains( FileUploadController.RET_TIME_TRACKING ) ) {
+                returnValue = FileUploadController.retRecordTypeId;
+            } else if ( value.contains( FileUploadController.WX_IMPL ) ) {
+                returnValue = FileUploadController.wxRecordTypeId;
+            }
         }
-        else if( value.contains(NSP_ServiceConstants.PEO) )
-        {
-            returnValue = FileUploadController.peoRecordTypeId;
-        }
-        else if( value.contains( FileUploadController.DOL_AUDITS ) )
-        {
-            returnValue = FileUploadController.dolAuditRecordTypeId;
-        }
-        else if( value.contains( FileUploadController.WAGE_CLAIMS ) )
-        {
-            returnValue = FileUploadController.wageClaimRecordTypeId;
-        }
-        else if( value.contains( NSP_ServiceConstants.BPS ) ){
-            returnValue = FileUploadController.bpsRecordTypeId;
-        }
-        else if( value.contains( FileUploadController.DUNNING_CASE ) )
-        {
-            returnValue = FileUploadController.dunningRecordTypeId;
-        }
-        else if( value.contains( NSP_ServiceConstants.SUB_CATEGORY_ITA_CQA ) )
-        {
-            returnValue = FileUploadController.itaRecordTypeId;
-        }
-        else if( value.contains( FileUploadController.RET_TIME_TRACKING ) )
-        {
-            returnValue = FileUploadController.retRecordTypeId;
-        }
-        else if( value.contains( FileUploadController.WX_IMPL ) )
-        {
-            returnValue = FileUploadController.wxRecordTypeId;
-        }
-
         return returnValue;
     }
 
