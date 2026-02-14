@@ -46,7 +46,9 @@ private class FileUploadControllerTest {
         + '1,12367,123400,78668,H&W Reporting & Compliance,Offer of Coverage letter,Letters,TestingImport,Other,Medium,Closed,Resolved,Approved,TEST23,06/24/2023,06/24/2023,08/27/2023,TRUE,Neutral,BPS,Testing\n'
         + '1,8688,123400,123400,H&W Reporting & Compliance,Offer of Coverage letter,Letters,TestingImport,Other,Medium,Closed,Resolved,Approved,TEST24,06/24/2023,06/24/2023,08/27/2023,TRUE,Neutral,BPS,Testing\n'
         + '1,12367,123400,123400,H&W Reporting & Compliance,Offer of Coverage letter,Letters,TestingImport,Other,Medium,Closed,Resolved,Approved,TEST25,06/24/2023,06/24/2023,08/27/2023,TRUE,Neutral,BPS,Testing\n'
-        + '1,12367,,,H&W Reporting & Compliance,Offer of Coverage letter,Letters,TestingImport,Other,Medium,Closed,Resolved,Approved,TEST26,06/24/2023,06/24/2023,08/27/2023,TRUE,Neutral,NSP_WX_IMPL,Testing';
+        + '1,12367,,,H&W Reporting & Compliance,Offer of Coverage letter,Letters,TestingImport,Other,Medium,Closed,Resolved,Approved,TEST26,06/24/2023,06/24/2023,08/27/2023,TRUE,Neutral,NSP_WX_IMPL,Testing'
+        ;
+
     @testSetup
     private static void testData() {
         //Insert Account
@@ -68,7 +70,6 @@ private class FileUploadControllerTest {
         newAsset.AccountId = oAccount1.Id;
         insert newAsset;
 
-
         Profile profileobj = [SELECT Id FROM Profile WHERE Name='System Administrator'];
         //Insert User
         String orgId = UserInfo.getOrganizationId();
@@ -82,10 +83,13 @@ private class FileUploadControllerTest {
         insert testUser;
         //Insert Category/SubCategory/Detail
         List<NSP_Category_Sub_Category_Mapping__c> catSubcatRecords = new List<NSP_Category_Sub_Category_Mapping__c>{
-            new NSP_Category_Sub_Category_Mapping__c(NSP_Category__c = category,
-                                                     NSP_Subcategory__c = subCat,
-                                                     NSP_Detail__c = detail,
-                                                    NSP_Display_confidential_popup__c = true)};
+            new NSP_Category_Sub_Category_Mapping__c(
+                NSP_Category__c = category,
+                NSP_Subcategory__c = subCat,
+                NSP_Detail__c = detail,
+                NSP_Display_confidential_popup__c = true
+            )
+        };
         insert catSubcatRecords;
         //Insert ContentVersion
         Blob csvBlob = Blob.valueOf(csvContent);
@@ -139,4 +143,6 @@ private class FileUploadControllerTest {
         List<Case> cases = [SELECT Id FROM Case WHERE subject =: testsubject ];
         System.AssertEquals(1, cases.size());
     }
+
 }
+//
