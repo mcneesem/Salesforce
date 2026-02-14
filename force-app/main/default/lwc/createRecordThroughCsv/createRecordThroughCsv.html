@@ -1,0 +1,38 @@
+<template>
+    <template lwc:if={hasPermission.data}>
+        <template lwc:if={isLoaded}>
+            <lightning-spinner
+                alternative-text="Loading"
+                size="large"
+                >
+            </lightning-spinner>
+        </template>
+        <lightning-card variant="Narrow" icon-name="standard:file" title="File Upload">
+            <p class="slds-var-p-horizontal_small">
+                <lightning-file-upload
+                    accept={acceptedFormats}
+                    label="Attach CSV File"
+                    multiple="multiple"
+                    onuploadfinished={uploadFileHandler}
+                    >
+                </lightning-file-upload>
+            </p>
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th class="slds-text-title_caps">Timestamp</th>
+                        <th class="slds-text-title_caps">Results</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={mapData} for:item="item">
+                        <tr key={item.key}>
+                            <td class="slds-cell-wrap">{item.key}</td>
+                            <td class="slds-cell-wrap">{item.value}</td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </lightning-card>
+    </template>
+</template>
