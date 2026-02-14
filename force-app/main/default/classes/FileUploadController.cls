@@ -318,7 +318,7 @@ public with sharing class FileUploadController {
                 objCase.ContactId = FileUploadController.csvValueId( csvContact );
                 objCase.AccountId = FileUploadController.csvValueId( csvAccount );
                 objCase.AssetId = FileUploadController.csvValueId( csvAsset );
-                objCase.NSP_Category__c = FileUploadController.( checkKey , csvCategory , catSubcatKey );
+                objCase.NSP_Category__c = FileUploadController.checkCatSubCatDetail( checkKey , csvCategory , catSubcatKey );
                 objCase.NSP_SubCategory__c = FileUploadController.checkCatSubCatDetail( checkKey , csvSubCategory , catSubcatKey );
                 objCase.NSP_Detail__c = FileUploadController.checkCatSubCatDetail( checkKey , csvDetail , catSubcatKey );
                 objCase.OwnerId = FileUploadController.checkOwnerId( csvOwner );
