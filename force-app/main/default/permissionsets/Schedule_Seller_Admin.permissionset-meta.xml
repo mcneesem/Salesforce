@@ -5,10 +5,6 @@
         <name>Schedule_Seller_Admin</name>
     </customPermissions>
     <description>Scheduling tool permission set for Schedule Seller Admins</description>
-    <flowAccesses>
-        <enabled>true</enabled>
-        <flow>Schedule_Seller</flow>
-    </flowAccesses>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Schedule Seller Admin</label>
 </PermissionSet>
