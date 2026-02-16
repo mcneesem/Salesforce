@@ -367,10 +367,10 @@ public with sharing class UserAvailabilityService {
     }
 
     // helper method to defeat sonar cognitive complexity...
-    private static Integer getAvailableSlots( List<Event> records , Event window ) {
+    private static List<String> getAvailableSlots( List<Event> records , Event window ) {
         // Use existing availability algorithm, summing per-user counts per window
-        UserAvailability calc = new UserAvailability();
-        return calc.getAvailableSlots(
+        UserAvailability helper = new UserAvailability();
+        return helper.getAvailableSlots(
             records ,
             window ,
             UserAvailabilityService.STEP_MINUTES
@@ -426,7 +426,6 @@ public with sharing class UserAvailabilityService {
             && !userIds.isEmpty()
             )
         {
-            UserAvailability calc = new UserAvailability();
             Event windowEvt = new Event(
                 StartDateTime=startDateTime ,
                 EndDateTime=endDateTime
