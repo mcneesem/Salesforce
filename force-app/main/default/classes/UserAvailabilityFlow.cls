@@ -24,7 +24,7 @@ public with sharing class UserAvailabilityFlow {
         public Datetime startDateTime;
         @InvocableVariable(required=true)
         public Datetime endDateTime;
-        @InvocableVariable
+        @InvocableVariable(required=true)
         public String skill;
     }
 }
