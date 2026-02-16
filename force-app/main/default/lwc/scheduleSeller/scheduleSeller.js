@@ -50,7 +50,7 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
 
 
     // Columns are server-driven via Business Hours using Apex getBusinessDates()
-    @wire(getBusinessDates, { businessHoursId: '01m4x000001119T', daysLimit: 10 })
+    @wire( getBusinessDates , { skill: '$skill' } )
     wiredDays({ data, error }) {
     if (data) {
         this.columns = data.map((yyyyMmDd, idx) => {
@@ -73,7 +73,7 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
         }
     }
 
-    @wire(getTimeBlocks, { timeZone: '$timeZone'})
+    @wire( getTimeBlocks , { skill: '$skill' , timeZone: '$timeZone' } )
         wiredTimeBlocks({ data, error }) {
         if (data) {
             this.timeBlocks = data;
