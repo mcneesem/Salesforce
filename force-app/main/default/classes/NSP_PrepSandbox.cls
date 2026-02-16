@@ -816,11 +816,9 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             //  Get "United States" region ID a3Fbf000000YLhxEAG
             List<pse__Region__c> regionRecord = [SELECT Id FROM pse__Region__c WHERE Name = 'United States' LIMIT 1];
             if(regionRecord != null && regionRecord.size() == 1){
-                List<ProjectCreationSettings__c> customSettings  = [SELECT DefaultRegionId__c FROM ProjectCreationSettings__c];
-                if(customSettings != null && customSettings.size() == 1){
-                    customSettings[0].DefaultRegionId__c = regionRecord[0].id;
-                    update customSettings;
-                }
+                ProjectCreationSettings__c projectCreationSettings = ProjectCreationSettings__c.getOrgDefaults();
+                projectCreationSettings.DefaultRegionId__c = regionRecord[0].id;
+                update projectCreationSettings;
             }
         }
         catch(Exception e) {
