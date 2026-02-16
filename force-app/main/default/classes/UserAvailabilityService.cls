@@ -329,8 +329,6 @@ public with sharing class UserAvailabilityService {
         Map<Id,List<Event>> busyByUser
         )
     {
-        // Use existing availability algorithm, summing per-user counts per window
-        UserAvailability calc = new UserAvailability();
         // Collect integer counts per window
         List<Integer> countsPerWindow = new List<Integer>();
         if ( ( windows != null )
@@ -361,12 +359,22 @@ public with sharing class UserAvailabilityService {
 
     // helper method to defeat sonar cognitive complexity...
     private static Integer countAvailableSlots( List<Event> records , Event window ) {
-        List<String> available = calc.getAvailableSlots(
+        List<String> available = UserAvailabilityService.getAvailableSlots(
+            records ,
+            window
+        );
+        return ( ( available == null ) ? 0 : available.size() );
+    }
+
+    // helper method to defeat sonar cognitive complexity...
+    private static Integer getAvailableSlots( List<Event> records , Event window ) {
+        // Use existing availability algorithm, summing per-user counts per window
+        UserAvailability calc = new UserAvailability();
+        return calc.getAvailableSlots(
             records ,
             window ,
             UserAvailabilityService.STEP_MINUTES
         );
-        return ( ( available == null ) ? 0 : available.size() );
     }
 
     @AuraEnabled(cacheable=true)
@@ -431,10 +439,9 @@ public with sharing class UserAvailabilityService {
                 {
                     userBusy = busyByUser.get( uid );
                 }
-                List<String> slots = calc.getAvailableSlots(
+                List<String> slots = UserAvailabilityService.getAvailableSlots(
                     userBusy ,
-                    windowEvt ,
-                    UserAvailabilityService.STEP_MINUTES
+                    windowEvt
                 );
                 if ( ( slots != null ) && !slots.isEmpty() ) {
                     availableUsers.add( uid );
