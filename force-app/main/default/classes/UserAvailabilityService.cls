@@ -377,7 +377,6 @@ public with sharing class UserAvailabilityService {
         );
     }
 
-    @AuraEnabled(cacheable=true)
     public static List<Id> getAvailableUsersForWindow(
         Datetime startDateTime ,
         Datetime endDateTime ,

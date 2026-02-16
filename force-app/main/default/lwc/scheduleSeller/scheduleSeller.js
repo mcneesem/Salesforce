@@ -1,6 +1,5 @@
 import { LightningElement , api , wire } from 'lwc';
 import getAggregateCountsMatrix from '@salesforce/apex/UserAvailabilityService.getAggregateCountsMatrix';
-import getAvailableUsersForWindow from '@salesforce/apex/UserAvailabilityService.getAvailableUsersForWindow';
 import getBusinessDates from '@salesforce/apex/UserAvailabilityService.getBusinessDates';
 import getTimeBlocks from '@salesforce/apex/UserAvailabilityService.getTimeBlocks';
 import { NavigationMixin } from 'lightning/navigation';
@@ -15,7 +14,6 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
     error;
     columns = [];
     timeBlocks = [];
-    isCreatingEvent = false;
 
     // Store raw matrix from Apex directly (M rows × N columns)
     matrix = [];
@@ -132,42 +130,37 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
     //
     //
 
-    async handleCellClick( event ) {
+    handleCellClick( event ) {
         event.preventDefault();
         const timeBlock = event.currentTarget.dataset.timeblock;
         const date = event.currentTarget.dataset.date;
-        if ( timeBlock && data ) {
+        if ( timeBlock && date ) {
             const [ rawStart , rawEnd ] = timeBlock.split( '-' );
             const startTime = rawStart.trim();
             const endTime = rawEnd.trim();
-            // Build ISO 8601 strings anchored to GMT/UTC (Zulu) time
-            function buildGmtIso( dateStr , timeStr ) {
-                const [ year , month , day ] = dateStr.split( '-' ).map( Number );
-                const [ h , m ] = timeStr.split( ':' ).map( Number );
-                // Construct the instant at that GMT wall time using Date.UTC (no local offset applied)
-                const dt = new Date( year , ( month - 1 ) , day , h , m , 0 , 0 );
-                // Standardize milliseconds to .000Z
-                return dt.toISOString();
-            }
-            this.startDateTime = buildGmtIso( date , startTime );
-            this.endDateTime = buildGmtIso( date , endTime );
-            this.isCreatingEvent = true;
-            try {
-                const data = await getAvailableUsersForWindow(
-                    {
-                        startDateTime: this.startDateTime ,
-                        endDateTime: this.endDateTime ,
-                        skill: this.skill
-                    }
-                );
-                this.singleUserIds = data.join( ',' ); // Store userIds in the exposed property
-                this.error = undefined;
-            } catch ( error ) {
-                this.error = error;
-            }
+            this.startDateTime = this.buildGmtIso( date , startTime );
+            this.endDateTime = this.buildGmtIso( date , endTime );
             // Move Flow to next screen
             this.dispatchEvent( new FlowNavigationNextEvent() );
         }
+    }
+
+    // Build ISO 8601 strings anchored to GMT/UTC (Zulu) time
+    buildGmtIso( dateStr , timeStr ) {
+        const [ year , month , day ] = dateStr.split( '-' ).map( Number );
+        const [ h , m ] = timeStr.split( ':' ).map( Number );
+        // Construct the instant at that GMT wall time using Date.UTC (no local offset applied)
+        const dt = new Date(
+            year ,
+            ( month - 1 ) ,
+            day ,
+            h ,
+            m ,
+            0 ,
+            0
+        );
+        // Standardize milliseconds to .000Z
+        return dt.toISOString();
     }
 
 }
