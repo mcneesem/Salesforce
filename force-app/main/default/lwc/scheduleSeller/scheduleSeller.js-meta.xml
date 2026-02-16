@@ -8,32 +8,32 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
-
             <!-- INPUTS -->
             <property
                 name="skill"
                 type="String"
                 label="Skill"
-                description="Selected skill for availability check" />
+                description="Selected skill for availability check"
+                />
             <property
                 name="timeZone"
                 type="String"
                 label="Time Zone"
-                description="Selected time zone" />
-
+                description="Selected time zone"
+                />
             <!-- OUTPUTS -->
             <property
                 name="startDateTime"
                 type="DateTime"
                 label="Selected Start DateTime"
-                role="outputOnly" />
-
+                role="outputOnly"
+                />
             <property
                 name="endDateTime"
                 type="DateTime"
                 label="Selected End DateTime"
-                role="outputOnly" />
-
+                role="outputOnly"
+                />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

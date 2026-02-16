@@ -3,14 +3,21 @@
 private class UserAvailabilityTest {
 
     // Utility to build a DateTime on a given day with hour/minute (24h)
-    private static Datetime dt(Integer year, Integer month, Integer day, Integer hour, Integer minute) {
+    private static Datetime dt(
+        Integer year ,
+        Integer month ,
+        Integer day ,
+        Integer hour ,
+        Integer minute
+        )
+    {
         Date d = Date.newInstance(year, month, day);
         Time t = Time.newInstance(hour, minute, 0, 0);
         return Datetime.newInstance(d, t);
     }
 
     // Format helper to mirror UserAvailability.toString(Event)
-    private static String fmt(Datetime startDt, Integer minutes) {
+    private static String fmt( Datetime startDt , Integer minutes ) {
         Datetime endDt = startDt.addMinutes(minutes);
         return startDt.format('yyyy-MM-dd HH:mm') + ' - ' + endDt.format('HH:mm');
     }
@@ -181,4 +188,6 @@ private class UserAvailabilityTest {
         System.assert(!result.contains(fmt(dt(2025, 1, 1, 9, 11), 1)), '9:11-9:12 should be excluded.');
         System.assert(result.contains(fmt(dt(2025, 1, 1, 9, 30), 1)), '9:30-9:31 should be available.');
     }
+
 }
+//

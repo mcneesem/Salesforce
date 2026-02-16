@@ -243,7 +243,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>GetRecords</targetReference>
+            <targetReference>Get_Records_Error</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -275,7 +275,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Demo_Owner_is_Blank</targetReference>
+            <targetReference>Demo_Owner_Error</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -500,8 +500,8 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>Demo_Owner_is_Blank</name>
-        <label>Demo Owner is Blank</label>
+        <name>Demo_Owner_Error</name>
+        <label>Demo Owner Error</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <allowBack>true</allowBack>
@@ -524,8 +524,8 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
-        <name>Error_Display</name>
-        <label>Error Display</label>
+        <name>Fault_Error</name>
+        <label>Fault Error</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <allowBack>true</allowBack>
@@ -533,7 +533,7 @@
         <allowPause>true</allowPause>
         <fields>
             <name>ErrorMessage</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -548,8 +548,8 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
-        <name>GetRecords</name>
-        <label>GetRecords Null</label>
+        <name>Get_Records_Error</name>
+        <label>Get Records Error</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <allowBack>true</allowBack>
@@ -557,7 +557,7 @@
         <allowPause>true</allowPause>
         <fields>
             <name>GetUsersErrorDisplay</name>
-            <fieldText>&lt;p&gt;There are not available users to display.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;There are no available users to display.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -735,7 +735,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Error_Display</targetReference>
+            <targetReference>Fault_Error</targetReference>
         </connector>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>

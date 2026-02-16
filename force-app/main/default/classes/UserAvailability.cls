@@ -1,10 +1,12 @@
+// intentionally `without sharing` to ensure that LWC/scheduleSelle has access to all Event records...
 public without sharing class UserAvailability {
     // test w/ UserAvailabilityTest (91%)
 
     private List<Event> busy = new List<Event>();
     private List<Event> fused = new List<Event>();
     private Integer slotSizeMinutes = 15;
-     // find the available time slots within the window of time that do not conflict with the existing Event records...
+
+    // find the available time slots within the window of time that do not conflict with the existing Event records...
     public List<String> getAvailableSlots(
         List<Event> records ,
         Event window ,
@@ -145,7 +147,6 @@ public without sharing class UserAvailability {
         }
         if ( this.fused.isEmpty() ) {
             available = this.splitRange( window );
-
         } else {
             DateTime pointer = window.StartDateTime;
             for ( Event compare : this.fused ) {
@@ -180,6 +181,7 @@ public without sharing class UserAvailability {
     private List<String> splitRange( Event range ) {
         return this.splitRange( null , range );
     }
+
     private List<String> splitRange( List<String> slots , Event range ) {
         if ( slots == null ) {
             slots = new List<String>();
@@ -217,4 +219,6 @@ public without sharing class UserAvailability {
         }
         return response;
     }
+
 }
+//

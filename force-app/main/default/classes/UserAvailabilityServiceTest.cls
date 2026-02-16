@@ -138,4 +138,6 @@ private class UserAvailabilityServiceTest {
 
         System.assertNotEquals(null, available, 'Should execute without error using private helper');
     }
+
 }
+//
