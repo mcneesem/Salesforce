@@ -1,5 +1,5 @@
 
-@IsTest
+@isTest
 private class UserAvailabilityTest {
 
     // Utility to build a DateTime on a given day with hour/minute (24h)
@@ -15,8 +15,8 @@ private class UserAvailabilityTest {
         return startDt.format('yyyy-MM-dd HH:mm') + ' - ' + endDt.format('HH:mm');
     }
 
-    @IsTest
-    static void returnsNullWhenWindowIsNull() {
+    @isTest
+    private static void returnsNullWhenWindowIsNull() {
         Test.startTest();
         UserAvailability svc = new UserAvailability();
         List<String> result = svc.getAvailableSlots(new List<Event>(), null, 15);
@@ -25,8 +25,8 @@ private class UserAvailabilityTest {
         System.assertEquals(null, result, 'When window is null, should return null.');
     }
 
-    @IsTest
-    static void emptyRecordsReturnsFullWindowSplitByStep() {
+    @isTest
+    private static void emptyRecordsReturnsFullWindowSplitByStep() {
         Datetime start = dt(2025, 1, 1, 9, 0);
         Datetime endTime = dt(2025, 1, 1, 10, 0);
 
@@ -50,8 +50,8 @@ private class UserAvailabilityTest {
         System.assertEquals(expected, result, 'Slots should match full window in 15-minute increments.');
     }
 
-    @IsTest
-    static void singleBusyInsideWindowNoBuffer() {
+    @isTest
+    private static void singleBusyInsideWindowNoBuffer() {
         // Window: 9:00 - 10:00
         Datetime winStart = dt(2025, 1, 1, 9, 0);
         Datetime winEnd = dt(2025, 1, 1, 10, 0);
@@ -80,8 +80,8 @@ private class UserAvailabilityTest {
         System.assertEquals(expected, result, 'Available slots should exclude only the actual busy range.');
     }
 
-    @IsTest
-    static void busyOverlappingWindowEdgesAreClamped() {
+    @isTest
+    private static void busyOverlappingWindowEdgesAreClamped() {
         // Window: 9:00 - 10:00
         Datetime winStart = dt(2025, 1, 1, 9, 0);
         Datetime winEnd = dt(2025, 1, 1, 10, 0);
@@ -108,8 +108,8 @@ private class UserAvailabilityTest {
         System.assertEquals(expected, result, 'Slots overlapping window edges should be removed after clamping.');
     }
 
-    @IsTest
-    static void overlappingBusyEventsAreFused() {
+    @isTest
+    private static void overlappingBusyEventsAreFused() {
         // Window: 9:00 - 10:00
         Datetime winStart = dt(2025, 1, 1, 9, 0);
         Datetime winEnd = dt(2025, 1, 1, 10, 0);
@@ -135,8 +135,8 @@ private class UserAvailabilityTest {
         System.assertEquals(expected, result, 'Overlapping busy events must be merged before availability computation.');
     }
 
-    @IsTest
-    static void stepSizeRespectedThirtyMinutes() {
+    @isTest
+    private static void stepSizeRespectedThirtyMinutes() {
         // Window: 9:00 - 10:00, step = 30 -> [9:00-9:30], [9:30-10:00]
         Event window = new Event(
             StartDateTime = dt(2025, 1, 1, 9, 0),
@@ -156,8 +156,8 @@ private class UserAvailabilityTest {
         System.assertEquals(expected, result, 'Step size of 30 minutes should split the window accordingly.');
     }
 
-    @IsTest
-    static void nullBufferAndNullStepsDefaulting() {
+    @isTest
+    private static void nullBufferAndNullStepsDefaulting() {
         // Window: 9:00 - 9:31, null steps => defaults to 1 minute
         Event window = new Event(
             StartDateTime = dt(2025, 1, 1, 9, 0),
