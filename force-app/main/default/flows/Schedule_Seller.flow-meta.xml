@@ -747,7 +747,7 @@
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>User_Get_Scheduling_Seller_Users_in_LWC</stringValue>
+                <stringValue>Schedule_Seller</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
