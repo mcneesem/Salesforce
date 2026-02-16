@@ -1,18 +1,8 @@
-@IsTest
-public class UserAvailabilityFlowTest {
+@isTest
+private class UserAvailabilityFlowTest {
     
-    public class MockUserAvailabilityService {
-        public  List<Id> getAvailableUsersForWindow(
-            Datetime startDateTime,
-            Datetime endDateTime,
-            String skill
-        ) {
-            return new List<Id>{UserInfo.getUserId()};
-        }
-    }
-    
-    @IsTest
-    static void testGetUsers_withValidInput() {
+    @isTest
+    private static void testGetUsers_withValidInput() {
         // Prepare input
         UserAvailabilityFlow.UserAvailabilityInput input = new UserAvailabilityFlow.UserAvailabilityInput();
         input.startDateTime = Datetime.now();
