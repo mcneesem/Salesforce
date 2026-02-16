@@ -2,11 +2,16 @@
 //- Windows are constructed in the running user's timezone via Date.today().
 
 public with sharing class UserAvailabilityService {
-    // test w/ UserAvailabilityServiceTest (84%)
+    // test w/ UserAvailabilityServiceTest (80%)
+
+    private static final Id BUSINESS_HOURS_ID = '01m4x000001119TAAQ';
     private static final Integer DAYS_LIMIT = 10;
-    //Returns the 7 available days based on Business Hours
+
+    //Returns the available days based on Business Hours for the given skill...
     @AuraEnabled(cacheable=true)
-    public static List<Date> getBusinessDates(Id businessHoursId, Integer daysLimit) {
+    public static List<Date> getBusinessDates( String skill ) {
+        Id businessHoursId = UserAvailabilityService.BUSINESS_HOURS_ID;
+        Integer daysLimit = UserAvailabilityService.DAYS_LIMIT;
         List<Date> response = new List<Date>();
         List<BusinessHours> hours = [
             SELECT Id
@@ -50,12 +55,12 @@ public with sharing class UserAvailabilityService {
         List<List<DateTime>> endDays;
         List<List<Event>> slots;
     }
-    private static DaysMatrix getBusinessDaysMatrix() {
+    private static DaysMatrix getBusinessDaysMatrix( String skill ) {
         List<List<Datetime>> startDaysList = new List<List<Datetime>>();
         List<List<Datetime>> endDaysList = new List<List<Datetime>>();
         List<List<Event>> slotsList = new List<List<Event>>();
         //Get real days based on Business Hours
-        List<Date> businessDates = UserAvailabilityService.getBusinessDates('01m4x000001119T',UserAvailabilityService.DAYS_LIMIT);
+        List<Date> businessDates = UserAvailabilityService.getBusinessDates( skill );
         //For now, hardcoding the start and end time slots
         Map<Integer, Integer> startTimeSlots = new Map<Integer, Integer>{
             1 => 8 ,
@@ -187,7 +192,7 @@ public with sharing class UserAvailabilityService {
     }
 
     @AuraEnabled(cacheable=true)
-    public static List<String> getTimeBlocks(String timeZone) {
+    public static List<String> getTimeBlocks( String skill , String timeZone ) {
         List<String> value = new List<String>();
         List<String> timeBlocks = new List<String>{
             '8:00 - 9:00',
@@ -222,53 +227,6 @@ public with sharing class UserAvailabilityService {
         return value;
     }
 
-    //Calculates how many available slots the user has by creating events and leveraging existing existing calculation
-    public static List<List<Integer>> getCountsMatrix( Id userId ) {
-        Id effectiveUserId = (userId == null) ? UserInfo.getUserId() : userId;
-        Integer step = 30;
-        List<List<Integer>> listSizeMatrix = new List<List<Integer>>();
-        // Get the business days matrix structure
-        DaysMatrix daysOfWeek = UserAvailabilityService.getBusinessDaysMatrix();
-        List<Datetime> startDays = new List<Datetime>();
-        List<Datetime> endDays = new List<Datetime>();
-        Integer groupCount = Math.min( daysOfWeek.startDays.size(), daysOfWeek.endDays.size() );
-        // Extract start and end times properly maintaining the pairing
-        for (Integer i = 0; i < groupCount; i++) {
-            startDays.addAll(daysOfWeek.startDays[i]);
-            endDays.addAll(daysOfWeek.endDays[i]);
-        }
-        if (startDays.isEmpty() || endDays.isEmpty()) {
-            return listSizeMatrix;
-        }
-
-        Datetime windowStart = startDays[0];
-        Datetime windowEnd   = endDays[endDays.size() - 1];
-        // Query user events once for all windows
-        List<Event> busy = [ SELECT Id, StartDateTime, EndDateTime
-                            FROM Event
-                            WHERE OwnerId = :effectiveUserId
-                            AND StartDateTime < :windowEnd
-                            AND EndDateTime > :windowStart
-                            WITH SECURITY_ENFORCED ];
-
-        // Create windows for each time slot
-        Integer n = Math.min(startDays.size(), endDays.size());
-        List<Event> windows = new List<Event>();
-        for (Integer i = 0; i < n; i++) {
-            // Prepare windows
-            windows.add(new Event(StartDateTime = startDays[i], EndDateTime = endDays[i]));
-        }
-        // Delegate to existing algorithm
-        UserAvailability calc = new UserAvailability();
-        List<List<String>> availableSlotsList = new List<List<String>>();
-
-        for(Event slots: windows) {
-            availableSlotsList.add(calc.getAvailableSlots(busy, slots, step));
-        }
-
-        listSizeMatrix = getAvailabilityMatrix(availableSlotsList);
-        return listSizeMatrix;
-    }
     // Helper: convert a flat list of integer counts into a matrix of rows with up to 7 columns
     private static List<List<Integer>> convertToMatrix(List<Integer> counts) {
         List<List<Integer>> matrix = new List<List<Integer>>();
@@ -291,7 +249,7 @@ public with sharing class UserAvailabilityService {
     @AuraEnabled(cacheable=true)
     public static List<List<Integer>> getAggregateCountsMatrix( String skill ) {
         // Build business day/time windows
-        DaysMatrix daysOfWeek = UserAvailabilityService.getBusinessDaysMatrix();
+        DaysMatrix daysOfWeek = UserAvailabilityService.getBusinessDaysMatrix( skill );
         List<Datetime> startDays = new List<Datetime>();
         List<Datetime> endDays = new List<Datetime>();
         Event window = null;

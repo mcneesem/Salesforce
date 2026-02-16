@@ -1,8 +1,8 @@
-@IsTest
+@isTest
 private class UserAvailabilityServiceTest {
 
-    @TestSetup
-    static void setupData() {
+    @testSetup
+    private static void setupData() {
         // Create two active users to act as "skilled" users
         Profile p = [SELECT Id FROM Profile WHERE Name = 'Standard User' LIMIT 1];
 
@@ -52,14 +52,14 @@ private class UserAvailabilityServiceTest {
         return [SELECT Id FROM User WHERE Username LIKE 'tuser%' ORDER BY CreatedDate ASC LIMIT 2];
     }
 
-    @IsTest
-    static void testGetTimeBlocks() {
+    @isTest
+    private static void testGetTimeBlocks() {
         Test.startTest();
-        List<String> central = UserAvailabilityService.getTimeBlocks('Central');
-        List<String> mountain = UserAvailabilityService.getTimeBlocks('Mountain');
-        List<String> pacific = UserAvailabilityService.getTimeBlocks('Pacific');
-        List<String> eastern = UserAvailabilityService.getTimeBlocks('Eastern');
-        List<String> unknown = UserAvailabilityService.getTimeBlocks('Unknown');
+        List<String> central = UserAvailabilityService.getTimeBlocks( 'Schedule_Seller_HR360' , 'Central' );
+        List<String> mountain = UserAvailabilityService.getTimeBlocks( 'Schedule_Seller_HR360' , 'Mountain' );
+        List<String> pacific = UserAvailabilityService.getTimeBlocks( 'Schedule_Seller_HR360' , 'Pacific' );
+        List<String> eastern = UserAvailabilityService.getTimeBlocks( 'Schedule_Seller_HR360' , 'Eastern' );
+        List<String> unknown = UserAvailabilityService.getTimeBlocks( 'Schedule_Seller_HR360' , 'Unknown' );
         Test.stopTest();
 
         System.assertNotEquals(0, central.size(), 'Central should return default time blocks');
@@ -69,8 +69,8 @@ private class UserAvailabilityServiceTest {
         System.assertEquals(0, unknown.size(), 'Unknown timezone should return empty');
     }
 
-    @IsTest
-    static void testGetAvailableUsersForWindow_validWindow() {
+    @isTest
+    private static void testGetAvailableUsersForWindow_validWindow() {
         List<User> users = getTestUsers();
         System.assertEquals(2, users.size(), 'Expect two test users');
 
@@ -89,8 +89,8 @@ private class UserAvailabilityServiceTest {
         System.assertNotEquals(null, available, 'Method should return a non-null list');
     }
 
-    @IsTest
-    static void testGetAvailableUsersForWindow_invalidWindowAndNoSkillUsers() {
+    @isTest
+    private static void testGetAvailableUsersForWindow_invalidWindowAndNoSkillUsers() {
         // invalid window (end before start) yields empty
         Datetime startDT = Datetime.newInstance(Date.today(), Time.newInstance(10, 0, 0, 0));
         Datetime endDT = startDT.addHours(-1);
@@ -102,20 +102,8 @@ private class UserAvailabilityServiceTest {
         System.assertEquals(0, available.size(), 'Invalid window or no skilled users should return empty list');
     }
 
-    @IsTest
-    static void testGetCountsMatrix_currentUserContext() {
-        // getCountsMatrix flattens windows from BusinessDaysMatrix and queries Events by OwnerId
-        Test.startTest();
-        List<List<Integer>> matrix = UserAvailabilityService.getCountsMatrix(null);
-        Test.stopTest();
-
-        System.assertNotEquals(null, matrix, 'Matrix should not be null');
-        // Size depends on BusinessHours and current date; allow zero
-        System.assert(matrix.size() >= 0, 'Matrix size should be >= 0');
-    }
-
-    @IsTest
-    static void testGetAggregateCountsMatrix_withTwoUsers() {
+    @isTest
+    private static void testGetAggregateCountsMatrix_withTwoUsers() {
         Test.startTest();
         List<List<Integer>> matrix = UserAvailabilityService.getAggregateCountsMatrix('Schedule_Seller');
         Test.stopTest();
@@ -124,20 +112,18 @@ private class UserAvailabilityServiceTest {
         System.assert(matrix.size() >= 0, 'Aggregate matrix should have 0 or more rows');
     }
 
-    @IsTest
-    static void testGetBusinessDates_handlesNoBH() {
-        // Pass a random Id that won't match BH in most orgs; expect empty or limited list
-        Id bogusBhId = '01m000000000000'; // BusinessHours Id prefix is 01m; using non-existent value
+    @isTest
+    private static void testGetBusinessDates_handlesNoBH() {
         Test.startTest();
-        List<Date> dates = UserAvailabilityService.getBusinessDates(bogusBhId, 7);
+        List<Date> dates = UserAvailabilityService.getBusinessDates( 'Schedule_Seller_HR360' );
         Test.stopTest();
 
         System.assertNotEquals(null, dates, 'Dates list should not be null');
         System.assertEquals(true, dates.isEmpty() || dates.size() <= 10, 'Dates should be empty or limited');
     }
 
-    @IsTest
-    static void testGetEventsForUser_privateHelpers_viaPublicPaths() {
+    @isTest
+    private static void testGetEventsForUser_privateHelpers_viaPublicPaths() {
         // Indirectly exercise helper by calling public methods that use it with a tight window
         List<User> users = getTestUsers();
         System.assertEquals(2, users.size(), 'Expect two test users');
