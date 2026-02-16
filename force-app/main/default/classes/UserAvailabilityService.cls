@@ -3,7 +3,7 @@ public with sharing class UserAvailabilityService {
 
     private static final Id BUSINESS_HOURS_ID = '01m4x000001119TAAQ';
     private static final Integer DAYS_LIMIT = 10;
-    private static final Integer STEP_SIZE = 30;
+    private static final Integer STEP_MINUTES = 30;
 
     //Returns the available days based on Business Hours for the given skill...
     @AuraEnabled(cacheable=true)
@@ -335,7 +335,6 @@ public with sharing class UserAvailabilityService {
         UserAvailability calc = new UserAvailability();
         // Collect integer counts per window
         List<Integer> countsPerWindow = new List<Integer>();
-        Integer step = UserAvailabilityService.STEP_SIZE;
         if ( ( windows != null )
             && ( userIds != null )
             && ( busyByUser != null )
@@ -350,15 +349,26 @@ public with sharing class UserAvailabilityService {
                         && ( busyByUser.get( uid ) != null )
                         )
                     {
-                        List<Event> userBusy = busyByUser.get( uid );
-                        List<String> slots = calc.getAvailableSlots( userBusy , windowEvt , step );
-                        totalForWindow += ( ( slots == null ) ? 0 : slots.size() );
+                        totalForWindow += UserAvailabilityService.countAvailableSlots(
+                            busyByUser.get( uid ) ,
+                            windowEvt
+                        );
                     }
                 }
                 countsPerWindow.add( totalForWindow );
             }
         }
         return countsPerWindow;
+    }
+
+    // helper method to defeat sonar cognitive complexity...
+    private static Integer countAvailableSlots( List<Event> records , Event window ) {
+        List<String> available = calc.getAvailableSlots(
+            records ,
+            window ,
+            UserAvailabilityService.STEP_MINUTES
+        );
+        return ( ( available == null ) ? 0 : available.size() );
     }
 
     //Returns availability Matrix for given time slots and N business days
@@ -432,7 +442,6 @@ public with sharing class UserAvailabilityService {
             && !userIds.isEmpty()
             )
         {
-            Integer step = UserAvailabilityService.STEP_SIZE;
             UserAvailability calc = new UserAvailability();
             Event windowEvt = new Event(
                 StartDateTime=startDateTime ,
@@ -449,7 +458,7 @@ public with sharing class UserAvailabilityService {
                 List<String> slots = calc.getAvailableSlots(
                     userBusy ,
                     windowEvt ,
-                    step
+                    UserAvailabilityService.STEP_MINUTES
                 );
                 if ( ( slots != null ) && !slots.isEmpty() ) {
                     availableUsers.add( uid );
