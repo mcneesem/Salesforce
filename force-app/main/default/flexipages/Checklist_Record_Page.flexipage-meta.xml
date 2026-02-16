@@ -4240,7 +4240,7 @@
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection8</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND (2 OR 3 OR 4 OR 5)</booleanFilter>
+                    <booleanFilter>1 AND (2 OR 3 OR 4 OR 5 OR 6 OR 7)</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Checklist_Type__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -4265,6 +4265,16 @@
                         <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>HR360 Solution</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity__r.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>WS</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity_Primary_Product__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>WS</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>

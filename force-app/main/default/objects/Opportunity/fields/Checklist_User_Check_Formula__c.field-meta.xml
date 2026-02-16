@@ -41,7 +41,8 @@ ISPICKVAL(StageName, &quot;Proposal&quot;),
 ISPICKVAL(StageName, &quot;Closing&quot;)),
 OR(
 ISPICKVAL(NSP_PrimaryProduct__c,&quot;WX&quot;),
-ISPICKVAL(NSP_PrimaryProduct__c,&quot;WO&quot;))),&quot;MMC&quot;,
+ISPICKVAL(NSP_PrimaryProduct__c,&quot;WO&quot;),
+ISPICKVAL(NSP_PrimaryProduct__c,&quot;WS&quot;))),&quot;MMC&quot;,
 
 IF(
 AND( 
