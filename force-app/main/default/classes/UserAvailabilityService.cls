@@ -384,7 +384,6 @@ public with sharing class UserAvailabilityService {
         String skill
         )
     {
-        Map<Id,List<Event>> busyByUser = new Map<Id,List<Event>>();
         // Basic input validation (single return rule: just avoid doing work if invalid)
         Boolean validWindow = (
             ( startDateTime != null )
@@ -394,6 +393,8 @@ public with sharing class UserAvailabilityService {
         // Resolve permission set name
         Map<Id,User> skilledUsers = CustomPermissionController.getPermittedUsersMap( skill );
         Set<Id> userIds = ( ( skilledUsers != null ) ? skilledUsers.keySet() : new Set<Id>() );
+        // Ensure every user exists in the map (so busyByUser.get(uid) isn't null)
+        Map<Id,List<Event>> busyByUser = UserAvailabilityService.initializeBusyUserMap( userIds );
         // Load overlapping events once for all eligible users (only if inputs are valid)
         List<Event> overlapping = UserAvailabilityService.getEventsForUser(
             userIds ,
@@ -411,14 +412,6 @@ public with sharing class UserAvailabilityService {
                 busyByUser.get( e.OwnerId ).add( e );
             }
         }
-        // Ensure every user exists in the map (so busyByUser.get(uid) isn't null)
-        if ( ( userIds != null ) && !userIds.isEmpty() ) {
-            for ( Id uid : userIds ) {
-                if ( ( uid != null ) && !busyByUser.containsKey( uid ) ) {
-                    busyByUser.put( uid , new List<Event>() );
-                }
-            }
-        }
         // Only compute availability if we have a valid window and eligible users
         List<Id> availableUsers = new List<Id>();
         if ( validWindow ) {
@@ -432,6 +425,19 @@ public with sharing class UserAvailabilityService {
             );
         }
         return availableUsers;
+    }
+
+    // Ensure every user exists in the map (so busyByUser.get(uid) isn't null)
+    private static Map<Id,List<Event>> initializeBusyUserMap( Set<Id> userIds ) {
+        Map<Id,List<Event>> busyByUser = new Map<Id,List<Event>>();
+        if ( ( userIds != null ) && !userIds.isEmpty() ) {
+            for ( Id uid : userIds ) {
+                if ( ( uid != null ) && !busyByUser.containsKey( uid ) ) {
+                    busyByUser.put( uid , new List<Event>() );
+                }
+            }
+        }
+        return busyByUser;
     }
 
     // helper method to defeat sonar cognitive complexity...
