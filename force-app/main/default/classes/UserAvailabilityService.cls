@@ -384,7 +384,6 @@ public with sharing class UserAvailabilityService {
         String skill
         )
     {
-        List<Id> availableUsers = new List<Id>();
         Map<Id,List<Event>> busyByUser = new Map<Id,List<Event>>();
         // Basic input validation (single return rule: just avoid doing work if invalid)
         Boolean validWindow = (
@@ -421,15 +420,34 @@ public with sharing class UserAvailabilityService {
             }
         }
         // Only compute availability if we have a valid window and eligible users
-        if ( validWindow
+        List<Id> availableUsers = new List<Id>();
+        if ( validWindow ) {
+            availableUsers = UserAvailabilityService.getAvailableUsersForWindowHelper(
+                busyByUser ,
+                userIds ,
+                new Event(
+                    StartDateTime=startDateTime ,
+                    EndDateTime=endDateTime
+                )
+            );
+        }
+        return availableUsers;
+    }
+
+    // helper method to defeat sonar cognitive complexity...
+    private static List<Id> getAvailableUsersForWindowHelper(
+        Map<Id,List<Event>> busyByUser ,
+        Set<Id> userIds ,
+        Event window
+        )
+    {
+        List<Id> availableUsers = new List<Id>();
+        if ( ( busyByUser != null )
             && ( userIds != null )
             && !userIds.isEmpty()
+            && ( window != null )
             )
         {
-            Event windowEvt = new Event(
-                StartDateTime=startDateTime ,
-                EndDateTime=endDateTime
-            );
             for ( Id uid : userIds ) {
                 List<Event> userBusy = new List<Event>();
                 if ( busyByUser.containsKey( uid )
@@ -440,7 +458,7 @@ public with sharing class UserAvailabilityService {
                 }
                 List<String> slots = UserAvailabilityService.getAvailableSlots(
                     userBusy ,
-                    windowEvt
+                    window
                 );
                 if ( ( slots != null ) && !slots.isEmpty() ) {
                     availableUsers.add( uid );
