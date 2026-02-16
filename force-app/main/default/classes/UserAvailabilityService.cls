@@ -1,25 +1,23 @@
 public with sharing class UserAvailabilityService {
     // test w/ UserAvailabilityServiceTest (80%)
 
-    private static final Id BUSINESS_HOURS_ID = '01m4x000001119TAAQ';
     private static final Integer DAYS_LIMIT = 10;
     private static final Integer STEP_MINUTES = 30;
 
     //Returns the available days based on Business Hours for the given skill...
     @AuraEnabled(cacheable=true)
     public static List<Date> getBusinessDates( String skill ) {
-        Id businessHoursId = UserAvailabilityService.BUSINESS_HOURS_ID;
-        Integer daysLimit = UserAvailabilityService.DAYS_LIMIT;
-        List<Date> response = new List<Date>();
         List<BusinessHours> hours = [
             SELECT Id
             FROM BusinessHours
-            WHERE ( Id = :businessHoursId )
+            WHERE ( Id = :UserAvailabilityService.defaultBusinessHoursId )
+            LIMIT 1
         ];
         BusinessHours open = null;
         if ( ( hours != null ) && !hours.isEmpty() ) {
             open = hours[0];
         }
+        List<Date> response = new List<Date>();
         if ( open != null ) {
             try {
                 // Initialize next business start
@@ -28,7 +26,7 @@ public with sharing class UserAvailabilityService {
                     System.now()
                 );
                 // Collect next business days
-                while( (nextBusinessStart != null ) && ( response.size() < daysLimit ) ) {
+                while( (nextBusinessStart != null ) && ( response.size() < UserAvailabilityService.DAYS_LIMIT ) ) {
                     response.add(
                         Date.newInstance(
                             nextBusinessStart.year() ,
@@ -485,6 +483,30 @@ public with sharing class UserAvailabilityService {
             );
         }
         return records;
+    }
+
+    //
+    //
+    //
+
+    // identify the default Business Hours for current Org...
+    private static Id defaultBusinessHoursId {
+        private get {
+            if ( defaultBusinessHoursId == null ) {
+                List<BusinessHours> defaultBusinessHours = [
+                    SELECT Id
+                    FROM BusinessHours
+                    WHERE ( IsDefault = true )
+                    ORDER BY CreatedDate ASC
+                    LIMIT 1
+                ];
+                if ( ( defaultBusinessHours != null ) && ( defaultBusinessHours.size() > 0 ) ) {
+                    defaultBusinessHoursId = defaultBusinessHours[0].Id;
+                }
+            }
+            return defaultBusinessHoursId;
+        }
+        private set;
     }
 
 }
