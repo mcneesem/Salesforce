@@ -371,28 +371,6 @@ public with sharing class UserAvailabilityService {
         return ( ( available == null ) ? 0 : available.size() );
     }
 
-    //Returns availability Matrix for given time slots and N business days
-    private static List<List<Integer>> getAvailabilityMatrix( List<List<String>> availableSlotsList ) {
-        List<List<Integer>> listSizeMatrix = new List<List<Integer>>();
-        List<Integer> clearList = new List<Integer>();
-        // Process results into matrix format (M rows × N columns)
-        // Rows will be dynamic once we get the values from a custom metadata
-        for ( List<String> slots : availableSlotsList ) {
-            Integer size = ( ( slots == null ) ? 0 : slots.size() );
-            clearList.add( size );
-            // When we have N elements (one for each day), create a new row
-            if ( clearList.size() == UserAvailabilityService.DAYS_LIMIT ) {
-                listSizeMatrix.add( new List<Integer>( clearList ) ); // Clone to persist state
-                clearList.clear(); // Reset for the next batch
-            }
-        }
-        // Add any remaining elements if clearList is not empty
-        if ( !clearList.isEmpty() ) {
-            listSizeMatrix.add( new List<Integer>( clearList ) );
-        }
-        return listSizeMatrix;
-    }
-
     @AuraEnabled(cacheable=true)
     public static List<Id> getAvailableUsersForWindow(
         Datetime startDateTime ,
