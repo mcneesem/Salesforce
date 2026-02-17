@@ -289,7 +289,7 @@
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Opportunity_Outgoing_Stage_Changed_to_Closed_Won_Outgoing</stringValue>
+                <stringValue>Opportunity_Outgoing_Stage_Changed_to_Closed_Won_or_Lost</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
