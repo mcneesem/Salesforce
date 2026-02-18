@@ -88,6 +88,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     @AuraEnabled
     public static void runManualSteps2() {
         doCMetadataSvc(System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName());
+        runPostSeeding();
         setPostRefreshRunFlag(3);
     }
 
@@ -346,9 +347,6 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
 
     public static void doCLabels(String sandboxName) {
         try {
-            MetadataService.MetadataPort service = createService();
-            List<MetadataService.Metadata> allMetadataList = new List<MetadataService.Metadata>();
-            MetadataService.CustomLabel cL = new MetadataService.CustomLabel();
             Map<String, String> refreshValMap = new Map<String, String>();
             switch on sandboxName {
                 when 'stage' {
@@ -378,13 +376,9 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                     refreshValMap.put('NSP_Docusign_Base_URL', DOCUSIGN_BASE_URL);
                 }
             }
-            for (String cLName : refreshValMap.keySet()) {
-                setCLabelData(service, cL, allMetadataList, cLName, refreshValMap);
-            }
 
-            if(allMetadataList.size() > 0 && !Test.isRunningTest()){
-                service.updateMetadata(allMetadataList);
-            }
+            updateLabelsValues(refreshValMap);
+
         } catch(Exception e) {
             NSP_PrepSandbox.handleException( e , 'doCLabels' );
         }
@@ -452,6 +446,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
 
     public static void runUpdateMetadata( List<List<MetadataService.Metadata>> allMetadataList ) {
         MetadataService.MetadataPort service = createService();
+
         if ( allMetadataList.size() > 0 && allMetadataList[0].size() > 0 && !Test.isRunningTest() ) {
             for (Integer i = 0; i < allMetadataList.size(); i ++) {
                 service.updateMetadata(allMetadataList[i]);
@@ -825,6 +820,46 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         service.SessionHeader = new MetadataService.SessionHeader_element();
         service.SessionHeader.sessionId = apiEnabledSessionId();
         return service;
+    }
+
+    private static void runPostSeeding(){
+        try {
+            //  Upadate labels
+            //  Get Insperity Account by AIMS 001bf00000VQF4oAAH
+            List<Account> accountRecord = [SELECT id FROM Account WHERE NSP_AIMS_Client__c = '500' LIMIT 1];
+            if(accountRecord != null && accountRecord.size() == 1){
+                Map<String, String> refreshValMap = new Map<String, String>();
+                refreshValMap.put('NSP_Insperity_Account', accountRecord[0].id);
+                updateLabelsValues(refreshValMap);
+            }
+
+            //  Update custom settings
+            //  Get "United States" region ID a3Fbf000000YLhxEAG
+            List<pse__Region__c> regionRecord = [SELECT Id FROM pse__Region__c WHERE Name = 'United States' LIMIT 1];
+            if(regionRecord != null && regionRecord.size() == 1){
+                ProjectCreationSettings__c projectCreationSettings = ProjectCreationSettings__c.getOrgDefaults();
+                projectCreationSettings.DefaultRegionId__c = regionRecord[0].id;
+                update projectCreationSettings;
+            }
+        }
+        catch(Exception e) {
+            NSP_PrepSandbox.handleException( e , 'runPostSeeding' );
+        }
+    }
+
+    private static void updateLabelsValues(Map<String, String> refreshValMap){
+
+        MetadataService.MetadataPort service = createService();
+        List<MetadataService.Metadata> allMetadataList = new List<MetadataService.Metadata>();
+        MetadataService.CustomLabel cL = new MetadataService.CustomLabel();
+
+        for (String cLName : refreshValMap.keySet()) {
+            setCLabelData(service, cL, allMetadataList, cLName, refreshValMap);
+        }
+
+        if(allMetadataList.size() > 0 && !Test.isRunningTest()){
+            service.updateMetadata(allMetadataList);
+        }
     }
 
     private static String apiEnabledSessionId() {
