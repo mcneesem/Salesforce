@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>64.0</apiVersion>
+    <apiVersion>65.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Assign_Event_Info_to_varEvent</name>
@@ -35,30 +35,37 @@
                 <elementReference>$Record.NSP_Status__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varEvent.NSP_Start_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.NSP_Start_Date__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Event_Subflow_Update_Related_to_Account_Opportunity_or_Lead</targetReference>
         </connector>
     </assignments>
     <decisions>
-        <name>Check_Autolaunched_Flow_Bypass</name>
-        <label>Check Autolaunched Flow Bypass</label>
+        <name>Bypass_Trigger</name>
+        <label>Bypass Trigger?</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Assign_Event_Info_to_varEvent</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No Bypass</defaultConnectorLabel>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Is_Bypassed</name>
+            <name>Bypass_Trigger_is_False</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Setup.NSP_Trigger_Switch__c.AutoLaunchedFlows__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
-            <label>Is Bypassed</label>
+            <connector>
+                <targetReference>Assign_Event_Info_to_varEvent</targetReference>
+            </connector>
+            <label>Bypass Trigger is False</label>
         </rules>
     </decisions>
     <description>Reworked to run through Event_Subflow_Update_Related_to_Account_Opportunity_or_Lead flow</description>
@@ -87,7 +94,7 @@
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <filterLogic>(1 OR 2) AND 3 AND 4 AND (5 OR 6)</filterLogic>
+        <filterLogic>(1 OR 2) AND 3 AND 4 AND 5</filterLogic>
         <filters>
             <field>NSP_Event_Type__c</field>
             <operator>EqualTo</operator>
@@ -123,18 +130,11 @@
                 <stringValue>006</stringValue>
             </value>
         </filters>
-        <filters>
-            <field>WhatId</field>
-            <operator>StartsWith</operator>
-            <value>
-                <stringValue>001</stringValue>
-            </value>
-        </filters>
         <object>Event</object>
         <recordTriggerType>Create</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Check_Autolaunched_Flow_Bypass</targetReference>
+                <targetReference>Bypass_Trigger</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
@@ -142,10 +142,32 @@
     </start>
     <status>Draft</status>
     <subflows>
+        <name>Event_Subflow_Send_Discovery_Call_Email</name>
+        <label>Event - Subflow - Send Discovery Call Email</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <flowName>Event_Subflow_Send_Discovery_Call_Email</flowName>
+        <inputAssignments>
+            <name>varEventStartDateTime</name>
+            <value>
+                <elementReference>$Record.StartDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>varOpportunityId</name>
+            <value>
+                <elementReference>$Record.WhatId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
         <name>Event_Subflow_Update_Related_to_Account_Opportunity_or_Lead</name>
         <label>Event - Subflow - Update Related to Account Opportunity or Lead</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <connector>
+            <targetReference>Event_Subflow_Send_Discovery_Call_Email</targetReference>
+        </connector>
         <flowName>Event_Subflow_Update_Related_to_Account_Opportunity_or_Lead</flowName>
         <inputAssignments>
             <name>isDiscoveryCallCreated</name>
