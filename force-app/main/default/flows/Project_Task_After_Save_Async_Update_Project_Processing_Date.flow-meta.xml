@@ -68,7 +68,7 @@
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <filterLogic>( 1 OR 2 ) AND ( 3 AND 4 AND 5 AND 6 AND 7 )</filterLogic>
+        <filterLogic>( ( 1 OR 2 ) AND 3 AND 4 AND 5 AND 6 AND 7 )</filterLogic>
         <filters>
             <field>pse__Status__c</field>
             <operator>IsChanged</operator>
