@@ -1,8 +1,8 @@
-public with sharing class UserAvailabilityService {
+public without sharing class UserAvailabilityService {
     // test w/ UserAvailabilityServiceTest (80%)
 
     private static final Integer DAYS_LIMIT = 10;
-    private static final Integer STEP_MINUTES = 30;
+    private static final Integer STEP_MINUTES = 60;
 
     //Returns the available days based on Business Hours for the given skill...
     @AuraEnabled(cacheable=true)
