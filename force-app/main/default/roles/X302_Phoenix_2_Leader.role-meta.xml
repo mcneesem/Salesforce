@@ -5,5 +5,5 @@
     <mayForecastManagerShare>false</mayForecastManagerShare>
     <name>302 Phoenix 2 Leader</name>
     <opportunityAccessLevel>Edit</opportunityAccessLevel>
-    <parentRole>Western_1_Leader</parentRole>
+    <parentRole>Western_3_Leader</parentRole>
 </Role>
