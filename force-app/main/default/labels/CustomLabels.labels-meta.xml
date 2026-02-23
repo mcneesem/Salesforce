@@ -648,13 +648,6 @@
         <value>National Account Type</value>
     </labels>
     <labels>
-        <fullName>NCS_ClosedWonAllowedProducts</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>NCS_ClosedWonAllowedProducts</shortDescription>
-        <value>Contractor Management</value>
-    </labels>
-    <labels>
         <fullName>NSP_12_hours_Milliseconds</fullName>
         <categories>12 hours, Milliseconds</categories>
         <language>en_US</language>
