@@ -47,8 +47,8 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
         Set<Id> setProjectTaskId = new Set<Id>();
         Set<Id> updateProjectTaskIdSet = new Set<Id>();
         Set<Id> deleteProjTaskIdSet = new Set<Id>();
-        Id peoRecordTypeId = Schema.SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE).getRecordTypeId();
-        Id bpsRecordTypeId = Schema.SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_TASK_BPS_RECORDTYPE).getRecordTypeId();
+        Id peoRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'pse__Project_Task__c' , 'PEO_Project_Task' );
+        Id bpsRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'pse__Project_Task__c' , 'BPS_Project_Task' );
 
         for(pse__Project_Task__c pTask : projectTaskList){
             if(pTask.OwnerId != projectTaskOldMap.get(pTask.id).OwnerId && (pTask.RecordTypeId == peoRecordTypeId || pTask.RecordTypeId == bpsRecordTypeId)){
@@ -59,17 +59,21 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
 
 
             // STY-02085  checking for checkBox(Create Work Order) on projectTask Object is checked and Disptach region field is not null
-            if(pTask.NSP_Create_Work_Order__c == true &&
-               pTask.NSP_Create_Work_Order__c != projectTaskOldMap.get(pTask.id).NSP_Create_Work_Order__c &&
-               String.isNotBlank(pTask.NSP_Dispatch_Region__c)){
-                   mapOfProjectTaskIdAndProjecTask.put(pTask.Id, pTask);
-               }
-            else if(pTask.NSP_Create_Work_Order__c
-                    && pTask.NSP_Dispatch_Region__c != null
-                    && isFieldUpdatedOnPt(projectTaskOldMap.get(pTask.id), pTask) ){
-                        dispatchRegionList.add(pTask.NSP_Dispatch_Region__c);
-                        mapOfProjectTaskIdAndProjecTask1.put(pTask.Id, pTask);
-                    }
+            if ( ( pTask.NSP_Create_Work_Order__c == true )
+                && ( pTask.NSP_Create_Work_Order__c != projectTaskOldMap.get( pTask.Id ).NSP_Create_Work_Order__c )
+                && String.isNotBlank( pTask.NSP_Dispatch_Region__c )
+                )
+            {
+                mapOfProjectTaskIdAndProjecTask.put( pTask.Id , pTask );
+            } else if ( pTask.NSP_Create_Work_Order__c
+                && ( pTask.NSP_Dispatch_Region__c != null )
+                && this.isFieldUpdatedOnPt( projectTaskOldMap.get( pTask.Id ) , pTask )
+                )
+            {
+                dispatchRegionList.add( pTask.NSP_Dispatch_Region__c );
+                mapOfProjectTaskIdAndProjecTask1.put( pTask.Id , pTask );
+            }
+
             // added as a part of STY-02138
             if(pTask.pse__Project__c != null && pTask.NSP_Account_Id__c != null &&
                projectTaskOldMap.get(pTask.Id).NSP_Account_Id__c != pTask.NSP_Account_Id__c ){
@@ -87,10 +91,19 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
         }
         //STY-03817
         //Getting service territory recs Id from List of regions
-        if(!dispatchRegionList.isEmpty()){
-        for(ServiceTerritory eachServiceTerritory : [SELECT Id,Name FROM ServiceTerritory WHERE Name IN: dispatchRegionList]){
-            mapDispatchRegionToServiceTerritory.put(eachServiceTerritory.Name, eachServiceTerritory.Id);
-        }
+        if ( !dispatchRegionList.isEmpty() ) {
+            for ( ServiceTerritory eachServiceTerritory : [
+                        SELECT Id , Name
+                        FROM ServiceTerritory
+                        WHERE ( Name IN :dispatchRegionList )
+                    ]
+                )
+            {
+                mapDispatchRegionToServiceTerritory.put(
+                    eachServiceTerritory.Name ,
+                    eachServiceTerritory.Id
+                );
+            }
         }
         // This will update Resource field on PTA if it is PEO
         if(!setProjectId.isEmpty()){
@@ -114,8 +127,15 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
             createWorkOrderTask(mapOfProjectTaskIdAndProjecTask);
         }
         //updating Service Appointment
-        if(!mapOfProjectTaskIdAndProjecTask1.keySet().isEmpty() && !System.isFuture() ){
-            updateServiceAppointment(mapOfProjectTaskIdAndProjecTask1,mapDispatchRegionToServiceTerritory);
+        if ( !mapOfProjectTaskIdAndProjecTask1.keySet().isEmpty()
+            && !System.isFuture()
+            && !System.isQueueable()
+            )
+        {
+            this.updateServiceAppointment(
+                mapOfProjectTaskIdAndProjecTask1 ,
+                mapDispatchRegionToServiceTerritory
+            );
         }
         // added as a part of STY-02138
         if(!projectIdSet.isEmpty() && !accountIdProjectIdMap.isEmpty()){
