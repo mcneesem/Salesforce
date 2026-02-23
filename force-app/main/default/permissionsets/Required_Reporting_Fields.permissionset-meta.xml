@@ -1283,6 +1283,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_Focus_Item__c.Item_Owner__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Focus_Item__c.Details__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Engagement_Path__c.Action_info__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2548,4 +2558,8 @@
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Required Reporting Fields</label>
+    <tabSettings>
+        <tab>NSP_Focus_Item__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
 </PermissionSet>
