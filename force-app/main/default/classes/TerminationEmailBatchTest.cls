@@ -19,7 +19,7 @@ private class TerminationEmailBatchTest {
                                 .getRecordTypeInfosByDeveloperName()
                                 .get( 'NSP_Credit_Specialist_Form' )
                                 .getRecordTypeId();
-        insert form;        
+        insert form;
 
         // Utility: ensure Custom Setting instance for this running user
         TerminationEmailBatchSettings__c cs = new TerminationEmailBatchSettings__c(
