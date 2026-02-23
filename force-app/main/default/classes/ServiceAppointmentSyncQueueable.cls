@@ -139,7 +139,8 @@ public with sharing class ServiceAppointmentSyncQueueable implements Queueable {
                         OwnerId ,
                         Duration ,
                         SchedStartTime ,
-                        SchedEndTime,NSP_Meeting_Type__c
+                        SchedEndTime ,
+                        NSP_Meeting_Type__c
                     FROM ServiceAppointment
                     WHERE ( Id = :recordId )
                 ];
