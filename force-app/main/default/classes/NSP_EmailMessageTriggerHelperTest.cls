@@ -626,5 +626,45 @@
         test.stopTest();
 
     }
+    
+    /***********************************************************************************************
+    * MethodName : markResponseAfterCloseWithSourceOutlook
+    * Description : This method is used to test if Mark Response field and reopen case based on Source
+    * ********************************************************************************************/ 
+    @isTest private static void markResponseAfterCloseWithSourceOutlook() {
+        test.startTest();
+        Id casePEORecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('PEO').getRecordTypeId();
+
+        EmailMessageTriggerSettings__c asyncSwitchSetting = EmailMessageTriggerSettings__c.getOrgDefaults();
+        asyncSwitchSetting.IsAfterInsertQueueableEnabled__c = true;
+        upsert asyncSwitchSetting;
+        
+        Case caseRecord = [SELECT id, Status FROM  Case WHERE Status = 'Open' LIMIT 1];
+        caseRecord.NSP_Rating__c = 'Neutral';
+        caseRecord.Status = 'Closed';
+        caseRecord.RecordTypeId = casePEORecordTypeId;
+        caseRecord.NSP_Category__c = 'Adaption';
+        caseRecord.NSP_SubCategory__c = 'Claim';
+        caseRecord.NSP_Date_Closed__c = Date.Today();
+        update caseRecord;
+        //Email message creation
+        EmailMessage eMsg = new EmailMessage ();
+        eMsg.FromAddress = 'test@test.com';
+        eMsg.Incoming = True;
+        eMsg.ToAddress= CONTACTCENTER;
+        eMsg.Subject = 'Test email Subject';
+        eMsg.HtmlBody = 'Test email body';
+        eMsg.ParentId = caseRecord.id;
+        eMsg.Source = 'Email Integration App Manual';
+        
+        //inserting Email message
+        insert eMsg;
+        
+        Case updatedCase = [SELECT Status FROM Case WHERE ID = : caseRecord.id];
+        System.assertEquals('Closed', updatedCase.Status);
+        
+        test.stopTest();
+
+    }
 
 }
