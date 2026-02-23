@@ -25,7 +25,7 @@ public with sharing class NSP_ValidateOpportunityStage {
     public static Set<String> validHRProducts = new Set<String>{NSP_SalesConstants.WO, NSP_SalesConstants.WS, NSP_SalesConstants.HRScale};
     private static Set<String> validHR360Products = new Set<String>{NSP_SalesConstants.WO, NSP_SalesConstants.WS, NSP_SalesConstants.HRScale};
     private static Boolean checkOnly = false;
-    private static final Set<String> ncsClosedWonAllowedProductsSet = new Set<String>(System.Label.NCS_ClosedWonAllowedProducts.split(','));
+    private static final Set<String> ncsClosedWonAllowedProductsSet = new Set<String>(NSP_SalesConstants.CONTRACTOR_MANAGEMENT);
     public static List<String> analysisStageCriteraTypes = System.Label.NSP_AnalysisStageCriteria.split(',');
     public static List<String> proposeStageCriteraTypes = System.Label.NSP_ProposeStageCriteria.split(',');
     public static List<String> exitCriteriaProductException = System.Label.NSP_ExitCriteriaProductException.split(',');
