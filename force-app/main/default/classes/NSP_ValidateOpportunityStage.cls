@@ -22,10 +22,10 @@ public with sharing class NSP_ValidateOpportunityStage {
     //                         required and the validation passes.
     // ***************************************************************************************************************************
 
-    public static Set<String> validHRProducts = new Set<String>{NSP_SalesConstants.WO, NSP_SalesConstants.WS, NSP_SalesConstants.HRScale};
-    private static Set<String> validHR360Products = new Set<String>{NSP_SalesConstants.WO, NSP_SalesConstants.WS, NSP_SalesConstants.HRScale};
+    public static final Set<String> validHRProducts = new Set<String>{NSP_SalesConstants.WO, NSP_SalesConstants.WS, NSP_SalesConstants.HRScale};
+    private static final Set<String> validHR360Products = new Set<String>{NSP_SalesConstants.WO, NSP_SalesConstants.WS, NSP_SalesConstants.HRScale};
+    private static final Set<String> validWingspanProducts = new Set<String>{NSP_SalesConstants.CONTRACTOR_MANAGEMENT};
     private static Boolean checkOnly = false;
-    private static final Set<String> ncsClosedWonAllowedProductsSet = new Set<String>(NSP_SalesConstants.CONTRACTOR_MANAGEMENT);
     public static List<String> analysisStageCriteraTypes = System.Label.NSP_AnalysisStageCriteria.split(',');
     public static List<String> proposeStageCriteraTypes = System.Label.NSP_ProposeStageCriteria.split(',');
     public static List<String> exitCriteriaProductException = System.Label.NSP_ExitCriteriaProductException.split(',');
@@ -629,7 +629,9 @@ public with sharing class NSP_ValidateOpportunityStage {
         {
             canClosedWon++;
         } else if ( !hasAllowCWNCSUserPerm
-            && (validHR360Products.contains( opp.NSP_PrimaryProduct__c ) || ncsClosedWonAllowedProductsSet.contains( opp.NSP_PrimaryProduct__c ))
+            && ( validHR360Products.contains( opp.NSP_PrimaryProduct__c )
+                || validWingspanProducts.contains( opp.NSP_PrimaryProduct__c )
+                )
             )
         {
             canClosedWon++;
