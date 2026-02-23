@@ -292,34 +292,37 @@ public with sharing class NSP_ValidateOpportunityStage {
             Boolean passCheckDNE = true;
             String groupRelObjName = NSP_ValidateOpportunityStage.getGroupRelObjName( groupName , groupedStageValMap );
             Integer i = 0;
-            if ( ( groupedStageValMap != null ) && ( valObjectMap != null ) ) {
-                List<SObject> valObjectList = valObjectMap.get(groupRelObjName);
-                do {
-                    SObject valObject = ( ( valObjectList != null ) && ( valObjectList.size() > i ) ) ? valObjectList[i] : null;
-                    Integer passCheckCount = NSP_ValidateOpportunityStage.evaluateOneCriteriaGroup(
+            if ( ( groupedStageValMap != null )
+                && ( valObjectMap != null )
+                && valObjectMap.containsKey( groupRelObjName )
+                )
+            {
+                List<SObject> valObjectList = valObjectMap.get( groupRelObjName );
+                if ( ( valObjectList != null ) && !valObjectList.isEmpty() ) {
+                    do {
+                        SObject valObject = ( ( valObjectList.size() > i ) ? valObjectList[i] : null );
+                        Integer passCheckCount = NSP_ValidateOpportunityStage.evaluateOneCriteriaGroup(
+                            opp ,
+                            groupName ,
+                            valObject , // must run even if valObject is null
+                            valObjectAgs ,
+                            groupedStageValMap
+                        );
+                        if ( passCheckCount >= groupedStageValMap.get( groupName ).size() ) {
+                            passCheck = true;
+                        }
+                        if ( passCheckCount == NSP_ValidateOpportunityStage.ERROR_DOES_NOT_EXIST ) { // when any record violates DOES NOT EXIST case
+                            passCheckDNE = false;
+                        }
+                        i++;
+                    } while ( i < valObjectList.size() );
+                    NSP_ValidateOpportunityStage.addValError(
                         opp ,
-                        groupName ,
-                        valObject , // must run even if valObject is null
-                        valObjectAgs ,
-                        groupedStageValMap
+                        passCheck ,
+                        passCheckDNE ,
+                        groupedStageValMap.get( groupName )[0].Error_Message__c
                     );
-
-                    if( passCheckCount >= groupedStageValMap.get(groupName).size() ) {
-                        passCheck = true;
-                    }
-
-                    if( passCheckCount == NSP_ValidateOpportunityStage.ERROR_DOES_NOT_EXIST ) { // when any record violates DOES NOT EXIST case
-                        passCheckDNE = false;
-                    }
-
-                    i++;
-                } while ( i < valObjectList.size() );
-                NSP_ValidateOpportunityStage.addValError(
-                    opp ,
-                    passCheck ,
-                    passCheckDNE ,
-                    groupedStageValMap.get( groupName )[0].Error_Message__c
-                );
+                }
             }
         }
     }
