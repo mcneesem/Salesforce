@@ -1,5 +1,5 @@
 public with sharing class TerminationEmailBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<SObject> {
-    // test w/ TerminationEmailBatchTest (81%)
+    // test w/ TerminationEmailBatchTest (77%)
 
     //Constants for Email Template DeveloperNames
     private static final String TEMPLATE_INITIAL = 'Term_Letter_Initial';
@@ -393,19 +393,29 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable , Sc
         private set;
     }
 
-    private static Id defaultTemplateAttachmentId {
-        private get {
-            if ( ( defaultTemplateAttachmentId == null )
-                && ( TerminationEmailBatch.settings != null )
-                && String.isNotBlank( TerminationEmailBatch.settings.DefaultTemplateAttachmentId__c )
-                && ( TerminationEmailBatch.settings.DefaultTemplateAttachmentId__c InstanceOf Id )
-                )
-            {
-                Id checkId = Id.valueOf( TerminationEmailBatch.settings.DefaultTemplateAttachmentId__c );
-                if ( checkId.getSObjectType() == ContentVersion.getSObjectType() ) {
-                    defaultTemplateAttachmentId = checkId;
+    private static String defaultTemplateAttachmentId {
+        get {
+            if (defaultTemplateAttachmentId == null) {
+
+                // Directly get metadata by record Id
+                Termination_Default_Email_Attachment__mdt md = Termination_Default_Email_Attachment__mdt.getInstance('Nondiscrim_Cover_Letter');
+
+                if ( md != null 
+                    && String.isNotBlank(md.Content_Document_Id__c)
+                    && Id.valueOf( md.Content_Document_Id__c ).getSObjectType() == ContentDocument.getSObjectType()
+                   )
+                {                 
+                    List<ContentDocument> records = [
+                        SELECT LatestPublishedVersionId
+                        FROM ContentDocument
+                        WHERE Id = :md.Content_Document_Id__c
+                        LIMIT 1
+                    ];
+
+                    if ( records != null && !records.isEmpty() ) {
+                        defaultTemplateAttachmentId = records[0].LatestPublishedVersionId;
+                    }
                 }
-                defaultTemplateAttachmentId = TerminationEmailBatch.settings.DefaultTemplateAttachmentId__c;
             }
             return defaultTemplateAttachmentId;
         }
