@@ -404,7 +404,7 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable , Sc
                     && String.isNotBlank(md.Content_Document_Id__c)
                     && Id.valueOf( md.Content_Document_Id__c ).getSObjectType() == ContentDocument.getSObjectType()
                    )
-                {                 
+                {
                     List<ContentDocument> records = [
                         SELECT LatestPublishedVersionId
                         FROM ContentDocument
