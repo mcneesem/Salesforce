@@ -1717,7 +1717,6 @@ Implementation profile related to the account of the created asset
         List<String> fields = new List<String>{'Id'};
         Id emailTemplateId = NSP_sObjectSelector.selectByDeveloperName(fields, templateName).Id;
 
-        
         if(emailTemplateId != null){
             for(Id assetId : assetIdSet){
                 Messaging.SingleEmailMessage email = Messaging.renderStoredEmailTemplate(emailTemplateId, UserInfo.getUserId(), assetId);
