@@ -2,6 +2,23 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>65.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Set_Fault_Element_Update_Project_Processing_Date</name>
+        <label>Set Fault Element : Update Project Processing Date</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>FaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Project_Processing_Date</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <description>Modify entry conditions</description>
     <environments>Default</environments>
     <interviewLabel>Project Task - After Save - Async - Update Project Processing Date {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Project Task - After Save - Async - Update Project Processing Date</label>
@@ -30,7 +47,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <faultConnector>
-            <targetReference>Fault_Handler_Subflow</targetReference>
+            <targetReference>Set_Fault_Element_Update_Project_Processing_Date</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -51,7 +68,7 @@
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <filterLogic>( ( 1 OR 2 ) AND 3 AND 4 AND 5 )</filterLogic>
+        <filterLogic>( ( 1 OR 2 ) AND 3 AND 4 AND 5 AND 6 AND 7 )</filterLogic>
         <filters>
             <field>pse__Status__c</field>
             <operator>IsChanged</operator>
@@ -66,7 +83,6 @@
                 <booleanValue>true</booleanValue>
             </value>
         </filters>
-
         <filters>
             <field>pse__Status__c</field>
             <operator>EqualTo</operator>
@@ -86,6 +102,20 @@
             <operator>IsNull</operator>
             <value>
                 <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Template_Name_Formula__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>iSolved HCM Implementation</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>1st Payroll Processing</stringValue>
             </value>
         </filters>
         <object>pse__Project_Task__c</object>
@@ -108,7 +138,7 @@
         <inputAssignments>
             <name>faultElement</name>
             <value>
-                <stringValue>Update_Project_Processing_Date</stringValue>
+                <elementReference>FaultElement</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -124,4 +154,11 @@
             </value>
         </inputAssignments>
     </subflows>
+    <variables>
+        <name>FaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
 </Flow>
