@@ -1,32 +1,6 @@
 <template>
-    <lightning-card title={title} icon-name="standard:user">
-        <div class="slds-p-horizontal_medium slds-p-vertical_small">
-            <template if:true={errorMessage}>
-                <div class="slds-text-color_error slds-m-bottom_small">
-                    {errorMessage}
-                </div>
-            </template>
-            <lightning-datatable
-                key-field="id"
-                data={pagedRows}
-                columns={columns}
-                hide-checkbox-column
-                show-row-number-column
-                onsort={handleSort}
-                sorted-by={sortedBy}
-                sorted-direction={sortedDirection}
-            >
-            </lightning-datatable>
-        </div>
-        <div slot="footer">
-            <lightning-button
-                variant="base"
-                label="View All"
-                title="View all team members"
-                onclick={handleViewAll}
-                disabled={isViewAllDisabled}
-            >
-            </lightning-button>
-        </div>
-    </lightning-card>
+    <c-user-default-team-member-base
+        title-prefix="Default Opportunity Team"
+        columns={columns}
+    ></c-user-default-team-member-base>
 </template>
