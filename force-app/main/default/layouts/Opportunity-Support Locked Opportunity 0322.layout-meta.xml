@@ -117,6 +117,10 @@
                 <behavior>Readonly</behavior>
                 <field>NSP_Running_Owner__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Product_Solution__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
