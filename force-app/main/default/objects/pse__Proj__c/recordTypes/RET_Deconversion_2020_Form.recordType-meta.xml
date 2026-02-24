@@ -386,6 +386,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>HRCore - Module Termination</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HRCore Amendment Parent</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HRCore Performance Management - Small Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Handbook</fullName>
             <default>false</default>
         </values>
