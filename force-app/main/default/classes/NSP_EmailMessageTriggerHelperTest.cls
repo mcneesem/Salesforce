@@ -632,14 +632,15 @@
     * Description : This method is used to test if Mark Response field and reopen case based on Source
     * ********************************************************************************************/ 
     @isTest private static void markResponseAfterCloseWithSourceOutlook() {
-        test.startTest();
-        Id casePEORecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('PEO').getRecordTypeId();
+        Test.startTest();
+        Id casePEORecordTypeId = NSP_GenericRecordType.getRecordTypeId('Case', 'PEO');
 
         EmailMessageTriggerSettings__c asyncSwitchSetting = EmailMessageTriggerSettings__c.getOrgDefaults();
         asyncSwitchSetting.IsAfterInsertQueueableEnabled__c = true;
         upsert asyncSwitchSetting;
         
-        Case caseRecord = [SELECT id, Status FROM  Case WHERE Status = 'Open' LIMIT 1];
+        List<Case> caseRecordList = [SELECT id, Status FROM  Case WHERE Status = 'Open' LIMIT 1];
+        Case caseRecord = caseRecordList[0];
         caseRecord.NSP_Rating__c = 'Neutral';
         caseRecord.Status = 'Closed';
         caseRecord.RecordTypeId = casePEORecordTypeId;
@@ -660,10 +661,10 @@
         //inserting Email message
         insert eMsg;
         
-        Case updatedCase = [SELECT Status FROM Case WHERE ID = : caseRecord.id];
-        System.assertEquals('Closed', updatedCase.Status);
+        List<Case> updatedCase = [SELECT Status FROM Case WHERE ID = : caseRecord.id LIMIT 1];
+        System.assertEquals('Closed', updatedCase[0].Status);
         
-        test.stopTest();
+        Test.stopTest();
 
     }
 
