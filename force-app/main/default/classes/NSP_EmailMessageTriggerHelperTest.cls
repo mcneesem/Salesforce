@@ -638,8 +638,11 @@
         EmailMessageTriggerSettings__c asyncSwitchSetting = EmailMessageTriggerSettings__c.getOrgDefaults();
         asyncSwitchSetting.IsAfterInsertQueueableEnabled__c = true;
         upsert asyncSwitchSetting;
-        
+
         List<Case> caseRecordList = [SELECT id, Status FROM  Case WHERE Status = 'Open' LIMIT 1];
+        System.assertNotEquals(null, caseRecordList);
+        System.assertNotEquals(true, caseRecordList.isEmpty());
+
         Case caseRecord = caseRecordList[0];
         caseRecord.NSP_Rating__c = 'Neutral';
         caseRecord.Status = 'Closed';
@@ -660,8 +663,11 @@
         
         //inserting Email message
         insert eMsg;
-        
+
         List<Case> updatedCase = [SELECT Status FROM Case WHERE ID = : caseRecord.id LIMIT 1];
+
+        System.assertNotEquals(null, updatedCase);
+        System.assertNotEquals(true, updatedCase.isEmpty());
         System.assertEquals('Closed', updatedCase[0].Status);
         
         Test.stopTest();
