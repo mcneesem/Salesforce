@@ -5514,7 +5514,7 @@ Meeting - Project Related - Fiduciary,Mutual Fund Corrections - Pricing, Manual 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ServiceProfiles</shortDescription>
-        <value>BPS Service,Contact Center,PEO Service,Retirement Services</value>
+        <value>BPS Service,Contact Center,PEO Service,Retirement Services,Finance Service,Finance Order Processing</value>
     </labels>
     <labels>
         <fullName>NSP_Service_Kick_Off_Meettings</fullName>
