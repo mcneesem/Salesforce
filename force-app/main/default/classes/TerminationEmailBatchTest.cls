@@ -21,12 +21,37 @@ private class TerminationEmailBatchTest {
                                 .getRecordTypeId();
         insert form;
 
+        // Attach an optional doc to one of the records
+        ContentVersion cv = new ContentVersion(
+            Title = title,
+            PathOnClient = title + '.pdf',
+            VersionData = Blob.valueOf('PDF bytes')
+        );
+        insert cv;
+
+        List<ContentVersion> latest = [
+            SELECT Id,
+                ContentDocumentId,
+                Title
+            FROM ContentVersion
+            WHERE Id =: cv.Id
+        ];
+
+        ContentDocumentLink cdl = new ContentDocumentLink(
+            LinkedEntityId = form.Id,
+            ContentDocumentId = latest[0].ContentDocumentId,
+            ShareType = 'V',
+            Visibility = 'AllUsers'
+        );
+        insert cdl;
+
         // Utility: ensure Custom Setting instance for this running user
         TerminationEmailBatchSettings__c cs = new TerminationEmailBatchSettings__c(
             SetupOwnerId = UserInfo.getUserId(),
             BatchSize__c = 10,
             isEnabled__c = true,
-            OrgWideEmailAddressId__c =  UserInfo.getUserId()
+            OrgWideEmailAddressId__c =  UserInfo.getUserId(),
+            DefaultTemplateAttachmentId__c = cdl.Id
         );
         insert cs;
     }

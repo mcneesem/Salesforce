@@ -1,5 +1,5 @@
 public with sharing class TerminationEmailBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<SObject> {
-    // test w/ TerminationEmailBatchTest (77%)
+    // test w/ TerminationEmailBatchTest (81%)
 
     //Constants for Email Template DeveloperNames
     private static final String TEMPLATE_INITIAL = 'Term_Letter_Initial';
@@ -226,8 +226,11 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable , Sc
                     attachmentIds.add( TerminationEmailBatch.fileYearMap.get( year ) );
                 }
             }
-            if ( TerminationEmailBatch.defaultTemplateAttachmentId != null ) {
-                attachmentIds.add( TerminationEmailBatch.defaultTemplateAttachmentId );
+            if ( TerminationEmailBatch.defaultTemplateAttachmentIds != null 
+                && !( TerminationEmailBatch.defaultTemplateAttachmentIds.isEmpty() )
+               )
+            {
+                attachmentIds.addAll( TerminationEmailBatch.defaultTemplateAttachmentIds );
             }
         }
         return attachmentIds;
@@ -317,6 +320,55 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable , Sc
             }
         }
     }
+    
+    // Returns a map of ContentDocumentId to LatestPublishedVersionId
+    private static Map<Id, Id> getLatestVersionIdsByDocumentId( Set<Id> contentDocumentIds ) {
+        // Map of ContentDocument.Id -> LatestPublishedVersionId
+        Map<Id, Id> documentIdToLatestVersionId = new Map<Id, Id>();
+
+        if ( contentDocumentIds != null
+            && !contentDocumentIds.isEmpty()
+           )
+        {
+            for ( ContentDocument cd : [
+                         SELECT LatestPublishedVersionId 
+                         FROM ContentDocument
+                         WHERE Id = :contentDocumentIds
+                    ]    
+                )
+            {
+                If( cd !=null && cd.LatestPublishedVersionId !=null ) {
+                    documentIdToLatestVersionId.put( cd.Id, cd.LatestPublishedVersionId );
+                }
+            }
+        }
+        return documentIdToLatestVersionId;
+    }
+    
+    // Creates a map of Year to LatestVersionId for matching document
+    private static Map<Integer, Id> buildYearToLatestVersionId( 
+        Map<Id, Id> docIdToLatestVersionId,
+        Map<Id, Integer> docIdToYear
+    ){
+        Map<Integer, Id> result = new Map<Integer, Id>();
+        if ( docIdToLatestVersionId != null 
+            && docIdToYear != null 
+            && docIdToYear.keySet() != null 
+            && !docIdToYear.keySet().isEmpty()
+           )
+        {
+            for( Id documentId : docIdToYear.keySet() ){
+                if ( docIdToLatestVersionId.containsKey( documentId ) 
+                   && docIdToLatestVersionId.get( documentId ) != null
+                   && docIdToYear.containsKey( documentId )
+                   && docIdToYear.get( documentId ) != null )
+                {
+                    result.put( docIdToYear.get( documentId ), docIdToLatestVersionId.get( documentId ) );
+                }
+            }
+        }
+        return result;
+    }
 
     //
     // attributes controlled by Custom Settings...
@@ -393,31 +445,39 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable , Sc
         private set;
     }
 
-    private static String defaultTemplateAttachmentId {
-        get {
-            if (defaultTemplateAttachmentId == null) {
-
-                // Directly get metadata by record Id
-                Termination_Default_Email_Attachment__mdt md = Termination_Default_Email_Attachment__mdt.getInstance('Nondiscrim_Cover_Letter');
-
-                if ( md != null 
-                    && String.isNotBlank(md.Content_Document_Id__c)
-                    && Id.valueOf( md.Content_Document_Id__c ).getSObjectType() == ContentDocument.getSObjectType()
-                   )
+    private static List<Id> defaultTemplateAttachmentIds {
+        private get {
+            if ( defaultTemplateAttachmentIds == null ) {
+                
+                List<Id> contentVersionIds = new List<Id>();
+                Set<Id> contentDocumentIds = new Set<Id>();
+                
+                for ( Termination_Email_Attachment__mdt record : [
+                            SELECT
+                                Document_Id__c,
+                                Year__c
+                            FROM Termination_Email_Attachment__mdt 
+                            WHERE ( Active__c = true 
+                                   AND Is_Always_Attached__c = true
+                                   AND Year__c = null
+                                  )
+                        ]
+                    )
                 {
-                    List<ContentDocument> records = [
-                        SELECT LatestPublishedVersionId
-                        FROM ContentDocument
-                        WHERE Id = :md.Content_Document_Id__c
-                        LIMIT 1
-                    ];
-
-                    if ( records != null && !records.isEmpty() ) {
-                        defaultTemplateAttachmentId = records[0].LatestPublishedVersionId;
+                    if ( String.isNotBlank( record.Document_Id__c )
+                        && ( record.Document_Id__c InstanceOf Id )
+                       )
+                    {
+                        contentDocumentIds.add(record.Document_Id__c);
                     }
                 }
+                contentVersionIds = TerminationEmailBatch.getLatestVersionIdsByDocumentId(contentDocumentIds).values();
+                if ( contentVersionIds != null && !contentVersionIds.isEmpty() ) {
+                    defaultTemplateAttachmentIds = contentVersionIds;
+                }
+            	
             }
-            return defaultTemplateAttachmentId;
+            return defaultTemplateAttachmentIds;
         }
         private set;
     }
@@ -433,10 +493,10 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable , Sc
                     TerminationEmailBatch.TEMPLATE_REINSTATE_REVISED
                 };
                 for ( EmailTemplate template : [
-                            SELECT DeveloperName
-                            FROM EmailTemplate
-                            WHERE ( DeveloperName IN :templateApiNames )
-                        ]
+                             SELECT DeveloperName
+                             FROM EmailTemplate
+                             WHERE ( DeveloperName IN :templateApiNames )
+                        ]    
                     )
                 {
                     temMap.put( template.DeveloperName , template.Id );
@@ -451,7 +511,7 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable , Sc
     private static Map<Integer,Id> fileYearMap  {
         private get {
             if ( fileYearMap == null ) {
-                Map<Integer,Id> documentIdMap = new Map<Integer,Id>();
+                Map<Id, Integer> docIdToYear = new Map<Id, Integer>();
                 for ( Termination_Email_Attachment__mdt record : [
                             SELECT
                                 DeveloperName ,
@@ -469,16 +529,14 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable , Sc
                         && ( record.Document_Id__c InstanceOf Id )
                        )
                     {
-                        Id checkId = Id.valueOf( record.Document_Id__c );
-                        if ( checkId.getSObjectType() == ContentVersion.getSObjectType() ) {
-                            documentIdMap.put(
-                                record.Year__c.intValue() ,
-                                checkId
-                            );
-                        }
+                        docIdToYear.put(record.Document_Id__c,record.Year__c.intValue());
                     }
                 }
-                fileYearMap = documentIdMap;
+                
+                fileYearMap = TerminationEmailBatch.buildYearToLatestVersionId(
+                    TerminationEmailBatch.getLatestVersionIdsByDocumentId(docIdToYear.keySet()),
+                    docIdToYear
+                );
             }
             return fileYearMap;
         }
