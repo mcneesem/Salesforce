@@ -421,8 +421,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Product_Offering__c</fieldItem>
-                <identifier>RecordProduct_Offering_cField</identifier>
+                <fieldItem>Record.Product_Solution__c</fieldItem>
+                <identifier>RecordProduct_Solution__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -849,8 +849,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Product_Offering__c</fieldItem>
-                <identifier>RecordProduct_Offering_cField2</identifier>
+                <fieldItem>Record.Product_Solution__c</fieldItem>
+                <identifier>RecordProduct_Solution__cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1371,8 +1371,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Product_Offering__c</fieldItem>
-                <identifier>RecordProduct_Offering_cField3</identifier>
+                <fieldItem>Record.Product_Solution__c</fieldItem>
+                <identifier>RecordProduct_Solution__cField3</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>

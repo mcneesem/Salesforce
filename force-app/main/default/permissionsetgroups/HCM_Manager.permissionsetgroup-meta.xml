@@ -40,7 +40,6 @@
     <permissionSets>Opportunity_Closed_Won_Edit_Not_Allowed</permissionSets>
     <permissionSets>Opportunity_Forecast_Category_Edit_Allowed</permissionSets>
     <permissionSets>Opportunity_NCS_Email_Core_MidMarket</permissionSets>
-    <permissionSets>Opportunity_Product_Offering_Fields_Edit_Access</permissionSets>
     <permissionSets>Opportunity_Spits_Elevated_Read_Edit</permissionSets>
     <permissionSets>Opportunity_Team_Team_Check</permissionSets>
     <permissionSets>Opportunity_WX_Product_Only</permissionSets>

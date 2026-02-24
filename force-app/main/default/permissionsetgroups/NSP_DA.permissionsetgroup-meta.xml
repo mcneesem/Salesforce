@@ -38,7 +38,6 @@
     <permissionSets>Opportunity_Discovery_Call_Completed_Access</permissionSets>
     <permissionSets>Opportunity_NCS_Email_Core_MidMarket</permissionSets>
     <permissionSets>Opportunity_Outgoing_Create_and_Edit</permissionSets>
-    <permissionSets>Opportunity_Product_Offering_Fields_Edit_Access</permissionSets>
     <permissionSets>Opportunity_Splits_Elevated_Create_Read_Edit</permissionSets>
     <permissionSets>Opportunity_Team_Group_Check</permissionSets>
     <permissionSets>Partner_Access</permissionSets>
