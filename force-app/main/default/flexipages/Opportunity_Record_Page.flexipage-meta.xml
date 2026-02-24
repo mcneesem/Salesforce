@@ -1099,7 +1099,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Product_Interest__c</fieldItem>
                 <identifier>RecordNSP_Product_Interest_cField</identifier>
