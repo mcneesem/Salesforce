@@ -1712,49 +1712,34 @@ Implementation profile related to the account of the created asset
     //
     public void sendMail( Set<Id> assetIdSet , Set<Id> accountIdSet , String templateName , List<String> sendToAddress ) {
         if ( EmailDeliverabilityController.isEnabledOutbound ) {
-            String mailBody;
-            List<Messaging.SingleEmailMessage> emailList = new List<Messaging.SingleEmailMessage>();
+        List<Messaging.SingleEmailMessage> emailList = new List<Messaging.SingleEmailMessage>();
 
-            List<String> fields = new List<String>{'Id'};
-            Id emailTemplateId = NSP_sObjectSelector.selectByDeveloperName(fields, templateName).Id;
+        List<String> fields = new List<String>{'Id'};
+        Id emailTemplateId = NSP_sObjectSelector.selectByDeveloperName(fields, templateName).Id;
 
-            List<String> rsvpFields = new List<String>{'Id'};
-            String query = new NSP_QueryBuilder('NSP_Relationship_Strategy_Action_Plan__c', rsvpFields)
-                .addFilter('NSP_Account__c', new List<Id>(accountIdSet), NSP_QueryBuilder.Operator.INCLUDES)
-                .orderBy('createdDate', 'DESC', false).addLimit(1).build()
-                ;
-            List<NSP_Relationship_Strategy_Action_Plan__c> rsvp = (List<NSP_Relationship_Strategy_Action_Plan__c>)Database.query(query);
-
-            if(!rsvp.isEmpty()){
-                String rsvpURL = URL.getSalesforceBaseUrl().toExternalForm() + '/' +rsvp[0].Id;
-
-                if(emailTemplateId != null){
-                    for(Id assetId : assetIdSet){
-                        Messaging.SingleEmailMessage email = Messaging.renderStoredEmailTemplate(emailTemplateId, UserInfo.getUserId(), assetId);
-                        if(email.htmlbody.contains(RSAP)){
-                            mailBody = email.getHtmlBody()+NSP_ServiceConstants.BLANK_SPACE+'<a href="'+rsvpURL+'"'+'>'+rsvpURL+'</a>';
-                            email.setHtmlBody(mailBody);
-                        }
-                        email.setTemplateId(emailTemplateId);
-                        email.setToAddresses(sendToAddress);
-                        email.setSaveAsActivity(false);
-                        emailList.add(email);
-                    }
+        
+        if(emailTemplateId != null){
+            for(Id assetId : assetIdSet){
+                Messaging.SingleEmailMessage email = Messaging.renderStoredEmailTemplate(emailTemplateId, UserInfo.getUserId(), assetId);
+                email.setTemplateId(emailTemplateId);
+                email.setToAddresses(sendToAddress);
+                email.setSaveAsActivity(false);
+                emailList.add(email);
+            }
 
                     if ( emailList.size() > 0 ) {
-                        try {
+                try {
                             Messaging.sendEmail( emailList );
-                        } catch ( Exception e ) {
-                            NSP_AssetServiceTriggerHelper.handleException(
-                                e ,
-                                'sendMail'
-                            );
-                        }
-                    }
+                } catch ( Exception e ) {
+                    NSP_AssetServiceTriggerHelper.handleException(
+                        e ,
+                        'sendMail'
+                    );
                 }
             }
         }
     }
+}
 
     private static void handleException( Exception e , String methodName ) {
         if ( e != null ) {
