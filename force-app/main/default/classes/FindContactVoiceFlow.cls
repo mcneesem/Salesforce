@@ -1,3 +1,4 @@
+// intentionally `without sharing` to ensure that Find_Related_Contact_Screen_Flow has access to all Contact records...
 public without sharing class FindContactVoiceFlow {
     // test w/ FindContactVoiceFlowTest (95%)
 
@@ -26,6 +27,7 @@ public without sharing class FindContactVoiceFlow {
                                 NSP_Date_of_Birth__c ,
                                 NSP_Last_4Digit_Of_SSN__c ,
                                 NSP_Per_ID__c ,
+                                Workday_Employee_ID__c ,
                                 NSP_Work_Phone__c ,
                                 Contact_Center_Email__c
                             WHERE ( CreatedDate >= :(limitDate) )

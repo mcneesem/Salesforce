@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
-    <help>Marque se o recurso deve ser tratado como Recursos ’Globais’. Os recursos ’globais’ podem inserir o tempo para qualquer projeto, mesmo se esse projeto normalmente exigir atribuições para entrada de tempo.</help>
-    <label></label>
-    <name>pse__Allow_Timecards_Without_Assignment__c</name>
-</CustomFieldTranslation>

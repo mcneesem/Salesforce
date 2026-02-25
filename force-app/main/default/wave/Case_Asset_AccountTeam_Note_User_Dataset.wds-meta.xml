@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<WaveDataset xmlns="http://soap.sforce.com/2006/04/metadata">
-    <application>Payroll</application>
-    <description>Created from the Trail recipe.</description>
-    <masterLabel>Case, Asset, Account Team, Note, User DS</masterLabel>
-    <type>default</type>
-</WaveDataset>

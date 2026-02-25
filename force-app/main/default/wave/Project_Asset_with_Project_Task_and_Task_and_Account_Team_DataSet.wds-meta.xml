@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<WaveDataset xmlns="http://soap.sforce.com/2006/04/metadata">
-    <application>TES</application>
-    <description>Created from the Project Asset with Project Task and Task and Account Team recipe.</description>
-    <masterLabel>Project, Asset, Project Task, Task, Account Team DS</masterLabel>
-    <type>default</type>
-</WaveDataset>

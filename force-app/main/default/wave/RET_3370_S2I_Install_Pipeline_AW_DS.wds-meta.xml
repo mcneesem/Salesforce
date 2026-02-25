@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<WaveDataset xmlns="http://soap.sforce.com/2006/04/metadata">
-    <application>RET</application>
-    <description>Created from the RET - Service Consultant by Plan recipe.</description>
-    <masterLabel>Asset, S2I, Plan Subplan, Subplan History, Account DS</masterLabel>
-    <type>default</type>
-</WaveDataset>

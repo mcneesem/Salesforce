@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<WaveDataset xmlns="http://soap.sforce.com/2006/04/metadata">
-    <application>Report_Development_Team</application>
-    <description>Created from the Wizard Output-Case-Asset Recipe recipe.</description>
-    <masterLabel>Case, Asset, User, Case History, Report Request DS</masterLabel>
-    <type>default</type>
-</WaveDataset>

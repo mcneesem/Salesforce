@@ -1,4 +1,4 @@
-public class NSP_AssetCreationBpsProjectBatch implements ISelfSchedulable , Schedulable , Database.Batchable<sObject> {
+public class NSP_AssetCreationBpsProjectBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<sObject> {
     // test w/ NSP_AssetCreationBpsProjectBatch_Test (85%)
 
     private static final Map<Id,Project_Account__c> accIdWithProject = new Map<Id,Project_Account__c>();
@@ -6,12 +6,15 @@ public class NSP_AssetCreationBpsProjectBatch implements ISelfSchedulable , Sche
     private static final Map<Id,Set<String>> mapAcctIdwithAssetRecType = new Map<Id,Set<String>>();
 
     //
-    // Schedulable
+    // argument-free constructor is required to be "runnable"...
     //
 
-    public void execute( SchedulableContext sc ) {
-        Database.executeBatch( new NSP_AssetCreationBpsProjectBatch() , 200 );
+    public NSP_AssetCreationBpsProjectBatch() {
     }
+
+    //
+    // ISelfSchedulable
+    //
 
     // runs everyday at 12am central...
     public static String schedule() {
@@ -24,6 +27,38 @@ public class NSP_AssetCreationBpsProjectBatch implements ISelfSchedulable , Sche
             '0 0 0 ? * * *' ,
             new NSP_AssetCreationBpsProjectBatch()
         );
+    }
+
+    //
+    // Schedulable
+    //
+
+    public void execute( SchedulableContext sc ) {
+        this.call( 'run' , null );
+    }
+
+    //
+    // Callable
+    //
+
+    public Object call( String action , Map<String,Object> args ) {
+        Object response = null;
+        if ( action == 'run' ) {
+            response = this.run();
+        }
+        return response;
+    }
+
+    //
+    // IJobRunnable
+    //
+
+    public Id run() {
+        Id response = Database.executeBatch(
+            new NSP_AssetCreationBpsProjectBatch() ,
+            200
+        );
+        return response;
     }
 
     //
@@ -91,7 +126,7 @@ public class NSP_AssetCreationBpsProjectBatch implements ISelfSchedulable , Sche
                 }
                 mapAcctIdwithAssetRecType.get( ast.AccountId ).add( ast.RecordType.DeveloperName );
             }
-            creatingAssetRecords();
+            this.creatingAssetRecords();
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 NSP_AssetCreationBpsProjectBatch.class.getName() ,
@@ -100,6 +135,13 @@ public class NSP_AssetCreationBpsProjectBatch implements ISelfSchedulable , Sche
             );
         }
     }
+
+    public void finish( Database.BatchableContext bc ) {
+    }
+
+    //
+    //
+    //
 
     // insert Asset Records and ProjectAsset into the database
     private void creatingAssetRecords() {
@@ -131,32 +173,41 @@ public class NSP_AssetCreationBpsProjectBatch implements ISelfSchedulable , Sche
                 }
             }
         }
+        this.handleDmlOperations( lstAssetToInsert , mapOfAcctIdRecordType );
+    }
+
+    // helper method to defeat sonar cognitive complexity...
+    private void handleDmlOperations( List<Asset> lstAssetToInsert , Map<String,String> mapOfAcctIdRecordType ) {
         List<Project_Asset__c> lstProjAssetToInsert = new List<Project_Asset__c>();
-        if ( !lstAssetToInsert.isEmpty() ) {
-            List<Database.SaveResult> results = Database.insert( lstAssetToInsert , false );
+        if ( ( mapOfAcctIdRecordType != null )
+            && ( lstAssetToInsert != null )
+            && !lstAssetToInsert.isEmpty()
+            )
+        {
+            List<Database.SaveResult> results = Database.insert( lstAssetToInsert , false ); // throws ~ DUPLICATE_VALUE, duplicate value found: NSP_Client__c duplicates value on record with id: 02iXXXXXXXXXXXXXXX
             NSP_ErrorLogHandler.logResults(
                 NSP_AssetCreationBpsProjectBatch.class.getName() ,
-                'creatingAssetRecords:Asset' ,
+                'handleDmlOperations:Asset' ,
                 results
             );
             for ( Asset asst : lstAssetToInsert ) {
-                Project_Asset__c newProjAsset = new Project_Asset__c();
-                newProjAsset.Asset__c = asst.Id;
-                newProjAsset.Project__c = mapOfAcctIdRecordType.get( asst.AccountId + '_' + asst.RecordTypeId );
-                lstProjAssetToInsert.add( newProjAsset );
+                // Prevent DmlExceptions: REQUIRED_FIELD_MISSING, Required fields are missing: [Asset__c]
+                if ( asst.Id != null ) {
+                    Project_Asset__c newProjAsset = new Project_Asset__c();
+                    newProjAsset.Asset__c = asst.Id;
+                    newProjAsset.Project__c = mapOfAcctIdRecordType.get( asst.AccountId + '_' + asst.RecordTypeId );
+                    lstProjAssetToInsert.add( newProjAsset );
+                }
             }
         }
         if ( !lstProjAssetToInsert.isEmpty() ) {
             List<Database.SaveResult> results = Database.insert( lstProjAssetToInsert , false );
             NSP_ErrorLogHandler.logResults(
                 NSP_AssetCreationBpsProjectBatch.class.getName() ,
-                'creatingAssetRecords:Project_Asset__c' ,
+                'handleDmlOperations:Project_Asset__c' ,
                 results
             );
         }
-    }
-
-    public void finish( Database.BatchableContext bc ) {
     }
 
 }

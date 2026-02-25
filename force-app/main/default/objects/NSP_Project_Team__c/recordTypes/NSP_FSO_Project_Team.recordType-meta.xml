@@ -7,7 +7,31 @@
     <picklistValues>
         <picklist>NSP_Role__c</picklist>
         <values>
+            <fullName>Compensation Analyst</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Functional Consultant Payroll</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Functional Consultant Talent</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM Analyst</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM Payroll Analyst</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>HR Client Implementation Team Member</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Intake Specialist</fullName>
             <default>false</default>
         </values>
         <values>
@@ -32,6 +56,18 @@
         </values>
         <values>
             <fullName>Project Manager</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Software Analyst</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sr Benefit Rep</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Time Analyst</fullName>
             <default>false</default>
         </values>
     </picklistValues>

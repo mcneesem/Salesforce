@@ -22,23 +22,15 @@ public with sharing class NSP_ProjectTriggerHelper {
     private static final Id bpsProjectRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT, NSP_ServiceConstants.PROJECT_BPS_RECORDTYPE);
     private static final String SERVICEPLANPROJECTTYPE = 'Service Plan';
 
-    /*****************************************************************
-    * Creating Constructor to call FF API's
-    * Creating Mock records of FF Api's Using interfaces
-    */
     public NSP_FF_APIs implInstance = new NSP_FF_APIImpl();
-        public NSP_ProjectTriggerHelper(){
-            if(Test.isRunningTest()){
-                this.implInstance = new Nsp_FFApiMock();
-            }
-        }
 
-        /**
-    * Iterates throught the list of new Projects and passes the required attributes to other methods.
-    * @param newList List of New Projects.
-    * @return void
-    */
-    public void beforeInsertDirector(List<pse__Proj__c> newProjectsList){
+    public NSP_ProjectTriggerHelper() {
+        if ( Test.isRunningTest() ) {
+            this.implInstance = new Nsp_FFApiMock();
+        }
+    }
+
+    public void beforeInsertDirector( List<pse__Proj__c> newProjectsList ) {
         Set<Id> accIdSet = new Set<Id>();
         Map<Id, Account> projAccIdNameMap;
         //getting PEO Billable Project Record Id
@@ -94,7 +86,7 @@ public with sharing class NSP_ProjectTriggerHelper {
 
         //Update ProjectName
         //update Asset Type --DF_04021
-        updateAssetTypeProject(newProjectsList);
+        this.updateAssetTypeProject( newProjectsList );
 
         // Added this condition as part of STY-02092
         if(!projectNameList.isEmpty()){
@@ -124,12 +116,7 @@ public with sharing class NSP_ProjectTriggerHelper {
         return project;
     }
 
-    /**
-    * Iterates throught the list of new Projects and passes the required attributes to other methods.
-    * @param newList List of New Projects.
-    * @return void
-    */
-    public void beforeUpdateDirector(Map<Id,pse__Proj__c> newProjectsMap ,Map<Id,pse__Proj__c> mOldProjects){
+    public void beforeUpdateDirector( Map<Id,pse__Proj__c> newProjectsMap , Map<Id,pse__Proj__c> mOldProjects ) {
         Set<Id> sProjectIds = new Set<Id>();
         Set<Id> contactIdSet = new Set<Id>();
         Set<Id> accountIdSet = new Set<Id>();
@@ -138,13 +125,11 @@ public with sharing class NSP_ProjectTriggerHelper {
         Set<Id> accIdSet = new Set<Id>();
         List<Asset> assetList;
         List<pse__Proj__c> newProjectsList = new List<pse__Proj__c>();
-        Map<Id, Account> projAccIdNameMap;
-        Map<String,Schema.RecordTypeInfo> mProjectRecordTypes =  Schema.SObjectType.pse__Proj__c.getRecordTypeInfosByDeveloperName();
-        Id servicePlan3RecordTypeId = mProjectRecordTypes.get(PROJECTSERVICEPLAN3)?.getRecordTypeId();
-        Id servicePlan4RecordTypeId = mProjectRecordTypes.get(PROJECTSERVICEPLAN4)?.getRecordTypeId();
-        Id peoProjectRecordTypeId = mProjectRecordTypes.get(NSP_ServiceConstants.PEOProject)?.getRecordTypeId();
-        Id woAssetRecordtypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE, NSP_ServiceConstants.WO_ASSET_RECORDTYPE);
-
+        Map<Id,Account> projAccIdNameMap;
+        Id servicePlan3RecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'pse__Proj__c' , 'Service_Plan_Level_3' );
+        Id servicePlan4RecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'pse__Proj__c' , 'Service_Plan_Level_4' );
+        Id peoProjectRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'pse__Proj__c' , 'PEO_Project' );
+        Id woAssetRecordtypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'WO' );
         Set<Id> mRecordTypeIds = new Set<Id>();
         List<String> projectTypeCompletionValues = label.NSP_Project_Type_Completion_Values.Split(','); // Added as part of DF-03778
         if(servicePlan3RecordTypeId != null){
@@ -172,29 +157,46 @@ public with sharing class NSP_ProjectTriggerHelper {
                 oProject.TemplateName__c = oProject.Name;
             }
             // checking for MM and FSO Projects
-            if(!oProject.pse__Is_Template__c && oProject.TemplateName__c != null && (oProject.TemplateName__c==label.Middle_Market_Implementation_Project || oProject.TemplateName__c==label.FSOImplementationProject)
-                && oProject.pse__Project_Manager__c!=null){
-                    // creating a Set of Project Manager(Contact) Id
-                    contactIdSet.add(oProject.pse__Project_Manager__c);
-                }
+            if ( !oProject.pse__Is_Template__c
+                && ( oProject.TemplateName__c != null )
+                && ( ( oProject.TemplateName__c == NSP_ServiceConstants.MM_PROJECT_TEMPLATE_KEY )
+                    || ( oProject.TemplateName__c == NSP_ServiceConstants.FSO_PROJECT_TEMPLATE_KEY )
+                    )
+                && ( oProject.pse__Project_Manager__c != null )
+                )
+            {
+                // creating a Set of Project Manager(Contact) Id
+                contactIdSet.add( oProject.pse__Project_Manager__c );
+            }
             //updateProjectName
             //added as a part of STY-03216
-            if(oProject.pse__Account__c!=null && oProject.recordTypeId == peoProjectRecordTypeId && oProject.pse__Project_Type__c == NSP_ServiceConstants.ImplementationProjectType && !oProject.pse__Is_Template__c
-                && (oProject.TemplateName__c == label.Middle_Market_Implementation_Project || oProject.TemplateName__c ==label.FSOImplementationProject)){
-                updateProjectIdNameSet.add(oProject.Id);
+            if ( ( oProject.pse__Account__c != null )
+                && ( oProject.recordTypeId == peoProjectRecordTypeId )
+                && ( oProject.pse__Project_Type__c == NSP_ServiceConstants.ImplementationProjectType )
+                && !oProject.pse__Is_Template__c
+                && ( ( oProject.TemplateName__c == NSP_ServiceConstants.MM_PROJECT_TEMPLATE_KEY )
+                    || ( oProject.TemplateName__c == NSP_ServiceConstants.FSO_PROJECT_TEMPLATE_KEY )
+                    )
+                )
+            {
+                updateProjectIdNameSet.add( oProject.Id );
             }
             // checkBankAuditTask
-            if(oProject.TES_HCM_Implementation_Support_Tasks__c !=null &&
-                    mOldProjects.get(oProject.Id).TES_HCM_Implementation_Support_Tasks__c != NSP_ServiceConstants.TES_HCM_BANK_AUDIT &&
-                    oProject.TES_HCM_Implementation_Support_Tasks__c == NSP_ServiceConstants.TES_HCM_BANK_AUDIT &&
-                    !mOldProjects.get(oProject.Id).NSP_Is_Bank_Audit_Task__c){
-                        oProject.NSP_Is_Bank_Audit_Task__c = true;
-                    }
-
-            if(String.isNotBlank(oProject.pse__Account__c) && oProject.pse__Account__c != mOldProjects.get(oProject.Id).pse__Account__c){
+            if ( ( oProject.TES_HCM_Implementation_Support_Tasks__c != null )
+                && ( mOldProjects.get( oProject.Id ).TES_HCM_Implementation_Support_Tasks__c != NSP_ServiceConstants.TES_HCM_BANK_AUDIT )
+                && ( oProject.TES_HCM_Implementation_Support_Tasks__c == NSP_ServiceConstants.TES_HCM_BANK_AUDIT )
+                && !mOldProjects.get( oProject.Id ).NSP_Is_Bank_Audit_Task__c
+                )
+            {
+                oProject.NSP_Is_Bank_Audit_Task__c = true;
+            }
+            if ( String.isNotBlank( oProject.pse__Account__c )
+                && ( oProject.pse__Account__c != mOldProjects.get( oProject.Id ).pse__Account__c )
+                )
+            {
                 oProject.Name = '';
-                newProjectsList.add(oProject);
-                accIdSet.add(oproject.pse__Account__c);
+                newProjectsList.add( oProject );
+                accIdSet.add( oproject.pse__Account__c );
             }
         }
         if ( !accountIdSet.isEmpty() ) {
@@ -551,15 +553,25 @@ public with sharing class NSP_ProjectTriggerHelper {
     // Description : Method to get projecttemplate Asset Type
     // Params: String Template Name
     //
-    public String getProjectAssetFromTemp(String templateName){
-        List<String> projFields = new List<String>{'Id','NSP_Asset_Type__c','TemplateName__c'};
-        String query = new NSP_QueryBuilder('pse__Proj__c', projFields)
-                              .addFilter('TemplateName__c', templateName)
-                                .addFilter('pse__Is_Template__c', true)
-                              .addFilter('pse__Is_Active__c', true).build();
-
-        List<pse__Proj__c> projectTemplate = Database.query(query);
-        return projectTemplate.isEmpty() ? null : projectTemplate[0].NSP_Asset_Type__c;
+    private String getProjectAssetFromTemp( String templateName ) {
+        List<pse__Proj__c> projectTemplate = null;
+        if ( String.isNotBlank( templateName ) ) {
+            projectTemplate = [
+                SELECT Id , NSP_Asset_Type__c
+                FROM pse__Proj__c
+                WHERE (
+                    ( TemplateName__c = :templateName )
+                    AND ( pse__Is_Template__c = true )
+                    AND ( pse__Is_Active__c = true )
+                )
+                LIMIT 1
+            ];
+        }
+        String response = null;
+        if ( ( projectTemplate != null ) && !projectTemplate.isEmpty() ) {
+            response = projectTemplate[0].NSP_Asset_Type__c;
+        }
+        return response;
     }
 
     //
@@ -567,10 +579,10 @@ public with sharing class NSP_ProjectTriggerHelper {
     // Description : update project Asset Type name with project template Asset Type
     // Params: List<pse__Proj__c> newProjectsList
     //
-    public void updateAssetTypeProject( List<pse__Proj__c> newProjectsList ) {
-        if ( !newProjectsList?.isEmpty() ) {
+    private void updateAssetTypeProject( List<pse__Proj__c> newProjectsList ) {
+        if ( ( newProjectsList != null ) && !newProjectsList.isEmpty() ) {
             for ( pse__Proj__c project : newProjectsList ) {
-                project.NSP_Asset_Type__c = getProjectAssetFromTemp( project.TemplateName__c );
+                project.NSP_Asset_Type__c = this.getProjectAssetFromTemp( project.TemplateName__c );
             }
         }
     }
@@ -868,19 +880,16 @@ public with sharing class NSP_ProjectTriggerHelper {
         }
     }
 
-    /* Description : Below method will run after Project is inserted.
-                        Use the below method i.e. afterProjectInsertion to implement
-                        any functionality that need to run after Project insertion
-        * Date        : 30/09/2021 */
-
-    public void afterInsertDirector( list<pse__Proj__c> newProjectList, Map<Id, pse__Proj__c> oldMap ){
-        map<Id, ID> mapOfAccountIdAndProjectId         = new map<Id, ID>();
-        Map<Id, pse__Proj__c> mapOfProjectIdAndProject = new Map<Id, pse__Proj__c> ();
-        Set<Id> setOfAccountId                         = new Set<Id> ();
-        Set<Id> setOfProjectId                         = new Set<Id> ();
+    public void afterInsertDirector( List<pse__Proj__c> newProjectList , Map<Id,pse__Proj__c> oldMap ) {
+        Map<Id,Id> mapOfAccountIdAndProjectId = new Map<Id,Id>();
+        Map<Id,pse__Proj__c> mapOfProjectIdAndProject = new Map<Id,pse__Proj__c>();
+        Set<Id> setOfAccountId = new Set<Id> ();
+        Set<Id> setOfProjectId = new Set<Id> ();
         Set<Id> accountIdSet = new Set<Id>();
         Set<Id> mmProjectIds = new Set<Id>();
         Set<Id> fsoProjectIds = new Set<Id>();
+        Set<Id> itaProjectIds = new Set<Id>();
+        Set<Id> hrScaleProjectIds = new Set<Id>();
         Set<Id> shareProjAccIdSet = new Set<Id>();
         Map<Id,pse__Proj__c > mapOfProjectToShare = new Map<Id,pse__Proj__c>();
         List<pse__Proj__c> ipProjectList = new List<pse__Proj__c>();
@@ -907,17 +916,32 @@ public with sharing class NSP_ProjectTriggerHelper {
             if(project.pse__Account__c!=null){
                 accountIdSet.add(project.pse__Account__c);
             }
-            //STY-01671
-            if(project.pse__Project_Type__c == NSP_ServiceConstants.ImplementationProjectType && !project.pse__Is_Template__c && project.recordTypeId == peoProjectRecordTypeId
-                && (project.TemplateName__c == label.Middle_Market_Implementation_Project || project.TemplateName__c == label.FSOImplementationProject)){
-                    ipProjectList.add(project);
-                    if(project.TemplateName__c == label.Middle_Market_Implementation_Project){
-                        mmProjectIds.add(project.Id);
-                    }
-                    else if( project.TemplateName__c == label.FSOImplementationProject){
-                        fsoProjectIds.add(project.Id);
-                    }
+            if ( ( project.pse__Project_Type__c == NSP_ServiceConstants.ImplementationProjectType )
+                && !project.pse__Is_Template__c
+                && project.RecordTypeId == NSP_ProjectTriggerHelper.peoProjectRecordTypeId
+                && ( ( project.TemplateName__c == NSP_ServiceConstants.MM_PROJECT_TEMPLATE_KEY )
+                    || ( project.TemplateName__c == NSP_ServiceConstants.FSO_PROJECT_TEMPLATE_KEY )
+                    || ( project.TemplateName__c == NSP_ServiceConstants.HRSCALE_PROJECT_TEMPLATE_KEY )
+                    )
+                )
+            {
+                if ( project.TemplateName__c == NSP_ServiceConstants.MM_PROJECT_TEMPLATE_KEY ) {
+                    ipProjectList.add( project );
+                    mmProjectIds.add( project.Id );
+                } else if ( project.TemplateName__c == NSP_ServiceConstants.FSO_PROJECT_TEMPLATE_KEY ) {
+                    ipProjectList.add( project );
+                    fsoProjectIds.add( project.Id );
+                } else if ( project.TemplateName__c == NSP_ServiceConstants.HRSCALE_PROJECT_TEMPLATE_KEY ) {
+                    hrScaleProjectIds.add( project.Id );
+                }
+            } else if ( ( project.pse__Project_Type__c == 'New' )
+                && project.RecordTypeId == NSP_ProjectTriggerHelper.bpsProjectRecordTypeId
+                && ( project.TemplateName__c == NSP_ServiceConstants.ITA_Prj_Temp )
+                )
+            {
+                itaProjectIds.add( project.Id );
             }
+
             //STY-02159
             if(!dupPreventionSet.contains(project.Id) && !project.pse__Is_Template__c && project.TemplateName__c == 'iSolved Benefits'){
                 dupPreventionSet.add(project.Id);
@@ -962,8 +986,18 @@ public with sharing class NSP_ProjectTriggerHelper {
         if(projectAccountMap.size()>0){
             createPEOCase(projectAccountMap);
         }
-        if(!ipProjectList.isEmpty()){
-            createProjectTeamRoles(mmProjectIds, fsoProjectIds);
+        if ( !mmProjectIds.isEmpty()
+            || !fsoProjectIds.isEmpty()
+            || !hrScaleProjectIds.isEmpty()
+            || !itaProjectIds.isEmpty()
+            )
+        {
+            NSP_ProjectTriggerHelper.createProjectTeamRoles(
+                mmProjectIds ,
+                fsoProjectIds ,
+                hrScaleProjectIds ,
+                itaProjectIds
+            );
         }
         //STY-04100 - To share project records in community
         if(!shareProjAccIdSet.isEmpty() && mapOfProjectToShare != null){
@@ -1051,42 +1085,46 @@ public with sharing class NSP_ProjectTriggerHelper {
         }
     }
 
-
-
-    /***********************************************************************************************
-    * MethodName: createImplementationProfile
-    * Description : This Method will create Implementation Profile when a Project is Created
-    * Params:       List< pse__Proj__c> projectList
-    * ********************************************************************************************/
-    public static void createImplementationProfile(List< pse__Proj__c> projectList, Set<Id> accountIdSet){
-        Id recordTypeFSOImpProfileID = SObjectType.Implementation_Profile__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.FSOProfile).getRecordTypeId();
-        Id recordTypeMMImpProfileID = SObjectType.Implementation_Profile__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.MMProfile).getRecordTypeId();
-        Id assetWoRecordTypeId = SObjectType.Asset.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.WO_ASSET_RECORDTYPE).getRecordTypeId();
-        Map<Id,Id>  mapAccountIdAssetId = new Map<Id,Id>();
+    // create Implementation Profile when a Project is Created
+    public static void createImplementationProfile( List< pse__Proj__c> projectList , Set<Id> accountIdSet ) {
+        Id recordTypeFSOImpProfileID = NSP_GenericRecordType.getRecordTypeId( 'Implementation_Profile__c' , 'FSO' );
+        Id recordTypeMMImpProfileID = NSP_GenericRecordType.getRecordTypeId( 'Implementation_Profile__c' , 'Middle_Market' );
+        Id assetWoRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Asset' , 'WO' );
+        Map<Id,Id> mapAccountIdAssetId = new Map<Id,Id>();
         List<Implementation_Profile__c> implementationProfiles = new List<Implementation_Profile__c>();
-        try{
-            for(Asset asset: [Select Id, AccountId from Asset WHERE AccountId IN:accountIdSet AND RecordTypeId =:assetWoRecordTypeId Order By CreatedDate DESC LIMIT 1]){
-                mapAccountIdAssetId.put(asset.AccountId,asset.Id);
+        try {
+            for ( Asset asset : [
+                        SELECT Id , AccountId
+                        FROM Asset
+                        WHERE (
+                            ( AccountId IN :accountIdSet )
+                            AND ( RecordTypeId = :assetWoRecordTypeId )
+                        )
+                        ORDER BY CreatedDate DESC
+                        LIMIT 1
+                    ]
+                )
+            {
+                mapAccountIdAssetId.put( asset.AccountId , asset.Id );
             }
             // creating Implementation Profile Record for MM & FSO Projects
-            for(pse__Proj__c project:projectList){
-                        Implementation_Profile__c imProfile = new Implementation_Profile__c();
-                        imProfile.NSP_Project__c = project.Id;
-                        imProfile.recordTypeId = project.TemplateName__c == label.Middle_Market_Implementation_Project ? recordTypeMMImpProfileID : recordTypeFSOImpProfileID;
-                        if(project.pse__Account__c!=null){
-                        imProfile.Account__c = project.pse__Account__c;
-                        }
-                        // Mapping Account Asset Id on Imp Profile
-                        if(project.pse__Account__c!=null && mapAccountIdAssetId.containsKey(project.pse__Account__c)){
-                            imProfile.NSP_Asset__c = mapAccountIdAssetId.get(project.pse__Account__c);
-                        }
-                        imProfile= NSP_ImplementationHelper.prepopulateIPData(imProfile.Account__c, imProfile);
-                        implementationProfiles.add(imProfile);
-
+            for ( pse__Proj__c project : projectList ) {
+                Implementation_Profile__c imProfile = new Implementation_Profile__c();
+                imProfile.NSP_Project__c = project.Id;
+                imProfile.recordTypeId = ( ( project.TemplateName__c == NSP_ServiceConstants.MM_PROJECT_TEMPLATE_KEY ) ? recordTypeMMImpProfileID : recordTypeFSOImpProfileID );
+                if ( project.pse__Account__c != null ) {
+                    imProfile.Account__c = project.pse__Account__c;
+                }
+                // Mapping Account Asset Id on Imp Profile
+                if ( project.pse__Account__c != null && mapAccountIdAssetId.containsKey( project.pse__Account__c ) ) {
+                    imProfile.NSP_Asset__c = mapAccountIdAssetId.get( project.pse__Account__c );
+                }
+                imProfile = NSP_ImplementationHelper.prepopulateIPData( imProfile.Account__c , imProfile );
+                implementationProfiles.add( imProfile );
             }
             // Inserting Implementation Profile Records
-            if(!implementationProfiles.isEmpty()){
-                Database.insert(implementationProfiles);
+            if ( !implementationProfiles.isEmpty() ) {
+                Database.insert( implementationProfiles );
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
@@ -1122,13 +1160,14 @@ public with sharing class NSP_ProjectTriggerHelper {
         }
     }
 
-    //
-    // MethodName: createProjectTeamRoles
-    // Description: This Method will create Project Team records for MM and FSO projects
-    // Params: List< pse__Proj__c> projectList
-    // Author: Nischay
-    //
-    private static void createProjectTeamRoles( Set<Id> mapMMProjectListMMROles , Set<Id> mapFSOProjectListFSOROles ) {
+    // create Project Team records for MM and FSO projects
+    private static void createProjectTeamRoles(
+        Set<Id> mapMMProjectListMMRoles ,
+        Set<Id> mapFSOProjectListFSORoles ,
+        Set<Id> mapHRScaleProjectListHRScaleRoles ,
+        Set<Id> mapITAProjectListITARoles
+        )
+    {
         List<NSP_Project_Team__c> projectTeamList = new List<NSP_Project_Team__c>();
         try {
             Set<String> fsoProjectTeamRolesList = new Set<String>{
@@ -1150,10 +1189,24 @@ public with sharing class NSP_ProjectTriggerHelper {
                 NSP_ServiceConstants.AccountExecutive ,
                 'HR Client Implementation Team Member'
             };
+            Set<String> hrScaleProjectTeamRolesList = new Set<String>{
+                NSP_ServiceConstants.ProjectManager ,
+                NSP_ServiceConstants.HCMAnalyst ,
+                NSP_ServiceConstants.FCPayroll ,
+                NSP_ServiceConstants.TimeAnalyst ,
+                NSP_ServiceConstants.SrBenefitRep ,
+                NSP_ServiceConstants.HCMPayrollAnalyst ,
+                NSP_ServiceConstants.FCTalent ,
+                NSP_ServiceConstants.CompAnalyst
+            };
+            Set<String> itaProjectTeamRolesList = new Set<String>{
+                NSP_ServiceConstants.IntakeSpecialist ,
+                NSP_ServiceConstants.SoftwareAnalyst
+            };
             Id mmProjectTeamRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'NSP_Project_Team__c' , 'NSP_Middle_Market_Project_Team' );
             Id fsoProjectTeamRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'NSP_Project_Team__c' , 'NSP_FSO_Project_Team' );
             // creating a list of MM Project Team records
-            if ( !mapMMProjectListMMROles.isEmpty() ) {
+            if ( mapMMProjectListMMROles!= null && !mapMMProjectListMMROles.isEmpty() ) {
                 for( Id projectId : mapMMProjectListMMROles ) {
                     for ( String mmPrjRole : mmProjectTeamRolesList ) {
                         NSP_Project_Team__c mmPrjTeam = new NSP_Project_Team__c();
@@ -1165,7 +1218,7 @@ public with sharing class NSP_ProjectTriggerHelper {
                 }
             }
             // creating a list of FSO Project Team records
-            if ( !mapFSOProjectListFSOROles.isEmpty() ) {
+            if ( mapFSOProjectListFSOROles!=null && !mapFSOProjectListFSOROles.isEmpty() ) {
                 for ( Id projectId : mapFSOProjectListFSOROles ) {
                     for ( String fsoPrjRole : fsoProjectTeamRolesList ) {
                         NSP_Project_Team__c fsoPrjTeam = new NSP_Project_Team__c();
@@ -1173,6 +1226,31 @@ public with sharing class NSP_ProjectTriggerHelper {
                         fsoPrjTeam.NSP_Project__c = projectId;
                         fsoPrjTeam.NSP_Role__c = fsoPrjRole;
                         projectTeamList.add( fsoPrjTeam );
+                    }
+                }
+            }
+
+            // creating a list of HRScale Project Team records
+            if ( ( mapHRScaleProjectListHRScaleRoles != null ) && !mapHRScaleProjectListHRScaleRoles.isEmpty() ) {
+                for ( Id projectId : mapHRScaleProjectListHRScaleRoles ) {
+                    for ( String hrScalePrjRole : hrScaleProjectTeamRolesList ) {
+                        NSP_Project_Team__c hrScalePrjTeam = new NSP_Project_Team__c();
+                        hrScalePrjTeam.RecordTypeId = fsoProjectTeamRecordTypeId;
+                        hrScalePrjTeam.NSP_Project__c = projectId;
+                        hrScalePrjTeam.NSP_Role__c = hrScalePrjRole;
+                        projectTeamList.add( hrScalePrjTeam );
+                    }
+                }
+            }
+            // creating a list of ITA Project Team records
+            if ( ( mapITAProjectListITARoles != null ) && !mapITAProjectListITARoles.isEmpty() ) {
+                for ( Id projectId : mapITAProjectListITARoles ) {
+                    for ( String itaPrjRole : itaProjectTeamRolesList ) {
+                        NSP_Project_Team__c itaPrjTeam = new NSP_Project_Team__c();
+                        itaPrjTeam.RecordTypeId = fsoProjectTeamRecordTypeId;
+                        itaPrjTeam.NSP_Project__c = projectId;
+                        itaPrjTeam.NSP_Role__c = itaPrjRole;
+                        projectTeamList.add( itaPrjTeam );
                     }
                 }
             }
@@ -1189,35 +1267,46 @@ public with sharing class NSP_ProjectTriggerHelper {
         }
     }
 
-    public static void createProjectTeamRoles(List< pse__Proj__c> projectList){
+    public static void createProjectTeamRoles( List< pse__Proj__c> projectList ) {
         Set<Id> mmProjectIds = new Set<Id>();
         Set<Id> fsoProjectIds = new Set<Id>();
-
-        for(pse__Proj__c project:projectList){
+        Set<Id> hrScaleProjectIds = new Set<Id>();
+        for ( pse__Proj__c project : projectList ) {
             // checking for MM and FSO Projects
-            if(project.pse__Project_Type__c == NSP_ServiceConstants.ImplementationProjectType && !project.pse__Is_Template__c && project.recordTypeId == peoProjectRecordTypeId
-                && (project.TemplateName__c == label.Middle_Market_Implementation_Project || project.TemplateName__c == label.FSOImplementationProject)){
-                    // creating Map of MM Project Id and List of MM Project Team roles
-                    if(project.TemplateName__c == label.Middle_Market_Implementation_Project){
-                        mmProjectIds.add(project.Id);
-                    }
-                    // creating Map of MM Project Id and List of MM Project Team roles
-                    else if( project.TemplateName__c == label.FSOImplementationProject){
-                        fsoProjectIds.add(project.Id);
-                    }
+            if ( ( project.pse__Project_Type__c == NSP_ServiceConstants.ImplementationProjectType )
+                && !project.pse__Is_Template__c
+                && ( project.recordTypeId == peoProjectRecordTypeId )
+                && ( ( project.TemplateName__c == NSP_ServiceConstants.MM_PROJECT_TEMPLATE_KEY )
+                    || ( project.TemplateName__c == NSP_ServiceConstants.FSO_PROJECT_TEMPLATE_KEY )
+                    || ( project.TemplateName__c == NSP_ServiceConstants.HRSCALE_PROJECT_TEMPLATE_KEY )
+                    )
+                )
+            {
+                // creating maps from Project Id to List of Project Team Roles...
+                if ( project.TemplateName__c == NSP_ServiceConstants.MM_PROJECT_TEMPLATE_KEY ) {
+                    mmProjectIds.add( project.Id );
+                } else if ( project.TemplateName__c == NSP_ServiceConstants.FSO_PROJECT_TEMPLATE_KEY ) {
+                    fsoProjectIds.add( project.Id );
+                } else if ( project.TemplateName__c == NSP_ServiceConstants.HRSCALE_PROJECT_TEMPLATE_KEY ) {
+                    hrScaleProjectIds.add( project.Id );
                 }
+            }
         }
-        if(!mmProjectIds.isEmpty() || !fsoProjectIds.isEmpty()){
-            createProjectTeamRoles(mmProjectIds, fsoProjectIds);
+        if ( !mmProjectIds.isEmpty()
+            || !fsoProjectIds.isEmpty()
+            || !hrScaleProjectIds.isEmpty()
+            )
+        {
+            NSP_ProjectTriggerHelper.createProjectTeamRoles(
+                mmProjectIds ,
+                fsoProjectIds ,
+                hrScaleProjectIds ,
+                null
+            );
         }
     }
 
-    //
-    // MethodName: updateProjectName
-    // Description: This Method will update the project name for FSO and MM Projects
-    // Params: List< pse__Proj__c> projectList ,  Map<Id,pse__Proj__c> oldProjectMap
-    // Author: Nischay Jindal
-    //
+    // update the project name for FSO and MM Projects
     public void updateProjectName(
         Map<Id,pse__Proj__c> newProjectMap ,
         Map<Id,pse__Proj__c> oldProjectMap ,
@@ -1243,23 +1332,18 @@ public with sharing class NSP_ProjectTriggerHelper {
                     && ( project.pse__Project_Type__c == NSP_ServiceConstants.ImplementationProjectType )
                     && !project.pse__Is_Template__c
                     && ( project.recordTypeId == NSP_ProjectTriggerHelper.peoProjectRecordTypeId )
+                    && projectAccountMap.containsKey( project.pse__Account__c )
+                    && ( projectAccountMap.get( project.pse__Account__c ) != null )
+                    && ( ( project.TemplateName__c == NSP_ServiceConstants.MM_PROJECT_TEMPLATE_KEY )
+                        || ( project.TemplateName__c == NSP_ServiceConstants.FSO_PROJECT_TEMPLATE_KEY )
+                        )
                     )
                 {
-                    if ( ( project.TemplateName__c == label.Middle_Market_Implementation_Project )
-                        || ( project.TemplateName__c == label.FSOImplementationProject )
-                        )
-                    {
-                        if ( projectAccountMap.containsKey( project.pse__Account__c )
-                            && ( projectAccountMap.get( project.pse__Account__c ) != null )
-                            )
-                        {
-                            project.Name = projectNameAsPerNamingConvention(
-                                project.TemplateName__c ,
-                                project.pse__Start_Date__c ,
-                                projectAccountMap.get( project.pse__Account__c ).Name
-                            );
-                        }
-                    }
+                    project.Name = projectNameAsPerNamingConvention(
+                        project.TemplateName__c ,
+                        project.pse__Start_Date__c ,
+                        projectAccountMap.get( project.pse__Account__c ).Name
+                    );
                 }
             }
         } catch ( Exception e ) {
@@ -1271,33 +1355,41 @@ public with sharing class NSP_ProjectTriggerHelper {
         }
     }
 
-    /***********************************************************************************************
-    * MethodName: cloneTheOpenProjectTasks
-    * Description : This Method will check whether the project is completed or not
-    * Story : STY-02092
-    * Params: List< pse__Proj__c> projectList ,  Map<Id,pse__Proj__c> oldProjectMap
-    * ********************************************************************************************/
-    public void cloneTheOpenProjectTasks(Set<Id> prjctIdSet){
-        Set<Id> completedPrjctList = new Set<Id>();
-        try{
-            if(!prjctIdSet.isEmpty()){
-                for(pse__Project_Task__c prjTask : [SELECT Id,Name,NSP_Account__c,pse__Project__c,pse__Project__r.pse__Project_Status__c,
-                                                    pse__Project__r.pse__Project_Type__c,pse__Project__r.TemplateName__c,
-                                                    pse__Project__r.recordTypeId,pse__Project__r.pse__Account__c,
-                                                    pse__Project__r.OwnerId,
-                                                    pse__Project__r.pse__Parent_Project__c,pse__Status__c
-                                                    FROM pse__Project_Task__c WHERE pse__Project__c In: prjctIdSet
-                                                    AND pse__Project__r.pse__Project_Type__c =: NEWPROJECTTYPE
-                                                    AND pse__Project__r.TemplateName__c =: label.FSOImplementationProject
-                                                    AND pse__Project__r.recordTypeId =: PEOPROJECTTECORDTYPEID
-                                                    AND Name IN: PROJECTTASKNAMES
-                                                    AND pse__Status__c !=: PROJECTTASKSTATUSCOMPLETE
-                                                    AND pse__Status__c !=: PROJECTTASKSTATUSCANCELLED ]){
-                                                        completedPrjctList.add(prjTask.pse__Project__c);
-                                                    }
+    // check whether the project is completed or not
+    public void cloneTheOpenProjectTasks( Set<Id> prjctIdSet ) {
+        try {
+            Set<Id> completedPrjctList = new Set<Id>();
+            if ( !prjctIdSet.isEmpty() ) {
+                for ( pse__Project_Task__c prjTask : [
+                            SELECT
+                                Id ,
+                                Name ,
+                                NSP_Account__c ,
+                                pse__Project__c ,
+                                pse__Project__r.pse__Project_Status__c ,
+                                pse__Project__r.pse__Project_Type__c,pse__Project__r.TemplateName__c,
+                                pse__Project__r.recordTypeId,pse__Project__r.pse__Account__c ,
+                                pse__Project__r.OwnerId ,
+                                pse__Project__r.pse__Parent_Project__c ,
+                                pse__Status__c
+                            FROM pse__Project_Task__c
+                            WHERE (
+                                ( pse__Project__c IN :prjctIdSet )
+                                AND ( pse__Project__r.pse__Project_Type__c = :NEWPROJECTTYPE )
+                                AND ( pse__Project__r.TemplateName__c = :NSP_ServiceConstants.FSO_PROJECT_TEMPLATE_KEY )
+                                AND ( pse__Project__r.recordTypeId = :PEOPROJECTTECORDTYPEID )
+                                AND ( Name IN :PROJECTTASKNAMES )
+                                AND ( pse__Status__c != :PROJECTTASKSTATUSCOMPLETE )
+                                AND ( pse__Status__c != :PROJECTTASKSTATUSCANCELLED )
+                            )
+                        ]
+                    )
+                {
+                    completedPrjctList.add( prjTask.pse__Project__c );
+                }
             }
-            if(!completedPrjctList.isEmpty() && !System.isFuture() && !System.isBatch()){
-                createProjectAndProjectTasks(completedPrjctList);
+            if ( !completedPrjctList.isEmpty() && !System.isFuture() && !System.isBatch() ) {
+                NSP_ProjectTriggerHelper.createProjectAndProjectTasks( completedPrjctList );
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
@@ -1848,18 +1940,11 @@ public with sharing class NSP_ProjectTriggerHelper {
         }
     }
 
-        /***********************************************************************************************
-    * MethodName: projectNameAsPerNamingConvention
-    * Description : method to return project name as per naming convention
-    * Params:       String projectName
-    * Params:       Date startDate
-    * Params:       Id accountId
-    * Author :      Abhishek Kumar
-    * ********************************************************************************************/
+    // method to return project name as per naming convention
     private String projectNameAsPerNamingConvention( String projectName , Date startDate , String accountName ) {
         String prjName = '';
         if ( String.isNotBlank( projectName ) ) {
-            if ( projectName == Label.Middle_Market_Implementation_Project ) {
+            if ( projectName == NSP_ServiceConstants.MM_PROJECT_TEMPLATE_KEY ) {
                 prjName = projectName;
             } else if ( startDate != null ) {
                 prjName = projectName + ' - ' + startDate.month() + '.' + startDate.day() + '.' + startDate.year();
@@ -2159,4 +2244,5 @@ public with sharing class NSP_ProjectTriggerHelper {
             }
         }
     }
+
 }

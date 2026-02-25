@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<WaveDataset xmlns="http://soap.sforce.com/2006/04/metadata">
-    <application>PEO</application>
-    <description>Created from the SubClient_User_AccountTeamMember_Payroll recipe.</description>
-    <masterLabel>Sub Client, User, Account Team Member, Payroll DS</masterLabel>
-    <type>default</type>
-</WaveDataset>

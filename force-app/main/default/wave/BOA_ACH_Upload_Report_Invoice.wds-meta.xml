@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<WaveDataset xmlns="http://soap.sforce.com/2006/04/metadata">
-    <application>Finance_Roger</application>
-    <description>Created from the Account_CreditNote_Invoice_CreditNoteLine_InvoiceLine_Payment_recipe recipe.</description>
-    <masterLabel>BOA_ACH_Upload_Report_Invoice</masterLabel>
-    <type>default</type>
-</WaveDataset>

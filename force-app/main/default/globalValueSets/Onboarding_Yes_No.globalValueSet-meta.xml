@@ -10,6 +10,11 @@
         <default>false</default>
         <label>No</label>
     </customValue>
+    <customValue>
+        <fullName>N/A</fullName>
+        <default>false</default>
+        <label>N/A</label>
+    </customValue>
     <masterLabel>Onboarding Yes/No</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

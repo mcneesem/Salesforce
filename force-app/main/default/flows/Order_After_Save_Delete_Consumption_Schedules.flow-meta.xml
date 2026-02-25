@@ -625,8 +625,8 @@
         </rules>
     </decisions>
     <environments>Default</environments>
-    <interviewLabel>Order - After Save - Delete Consumption Schedules {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Order - After Save - Delete Consumption Schedules</label>
+    <interviewLabel>DEPRECATED - Order - After Save - Delete Consumption Schedules {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>DEPRECATED - Order - After Save - Delete Consumption Schedules</label>
     <loops>
         <name>Cat1_Loop</name>
         <label>Cat1 Loop</label>

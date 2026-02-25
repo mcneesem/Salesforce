@@ -7903,6 +7903,10 @@
     <picklistValues>
         <picklist>Transitioning_Client__c</picklist>
         <values>
+            <fullName>HR360 to HRCore</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>HR360 to HRScale</fullName>
             <default>false</default>
         </values>

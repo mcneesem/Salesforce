@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<WaveDashboard xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <content xsi:nil="true"/>
-    <application>Opportunity_App_NSP</application>
-    <description>EAP-006 Opportunity Inactivity Dashboard- TA - 17Jul2021</description>
-    <masterLabel>EAP-006 Opportunity Inactivity Dashboard</masterLabel>
-</WaveDashboard>

@@ -692,6 +692,10 @@ AZD-509188 - Show Blocks where Slots Offered &gt; 0</description>
                     <stringValue>12</stringValue>
                 </width>
             </styleProperties>
+            <validationRule>
+                <errorMessage>&lt;p&gt;Meeting Participant Count must be less than 1000000.&lt;/p&gt;</errorMessage>
+                <formulaExpression>( {!Meeting_Participant_Count} &lt; 1000000 )</formulaExpression>
+            </validationRule>
         </fields>
         <fields>
             <name>Meeting_Type</name>
