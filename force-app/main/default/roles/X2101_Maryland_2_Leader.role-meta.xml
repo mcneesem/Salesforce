@@ -5,5 +5,5 @@
     <mayForecastManagerShare>false</mayForecastManagerShare>
     <name>2101 Maryland 2 Leader</name>
     <opportunityAccessLevel>Edit</opportunityAccessLevel>
-    <parentRole>Northeast_3_Leader</parentRole>
+    <parentRole>Central_5_Leader</parentRole>
 </Role>
