@@ -2558,8 +2558,4 @@
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Required Reporting Fields</label>
-    <tabSettings>
-        <tab>NSP_Focus_Item__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
 </PermissionSet>
