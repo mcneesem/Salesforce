@@ -226,8 +226,11 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable , Sc
                     attachmentIds.add( TerminationEmailBatch.fileYearMap.get( year ) );
                 }
             }
-            if ( TerminationEmailBatch.defaultTemplateAttachmentId != null ) {
-                attachmentIds.add( TerminationEmailBatch.defaultTemplateAttachmentId );
+            if ( TerminationEmailBatch.alwaysAttachedIds != null 
+                && !( TerminationEmailBatch.alwaysAttachedIds.isEmpty() )
+               )
+            {
+                attachmentIds.addAll( TerminationEmailBatch.alwaysAttachedIds );
             }
         }
         return attachmentIds;
@@ -393,21 +396,45 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable , Sc
         private set;
     }
 
-    private static Id defaultTemplateAttachmentId {
+    private static List<Id> alwaysAttachedIds {
         private get {
-            if ( ( defaultTemplateAttachmentId == null )
-                && ( TerminationEmailBatch.settings != null )
-                && String.isNotBlank( TerminationEmailBatch.settings.DefaultTemplateAttachmentId__c )
-                && ( TerminationEmailBatch.settings.DefaultTemplateAttachmentId__c InstanceOf Id )
-                )
-            {
-                Id checkId = Id.valueOf( TerminationEmailBatch.settings.DefaultTemplateAttachmentId__c );
-                if ( checkId.getSObjectType() == ContentVersion.getSObjectType() ) {
-                    defaultTemplateAttachmentId = checkId;
+            if ( alwaysAttachedIds == null ) {
+                List<Id> local = new List<Id>();
+                if ( ( TerminationEmailBatch.activeAttachments != null )
+                    && !TerminationEmailBatch.activeAttachments.isEmpty()
+                    )
+                {
+                    Set<Id> documentIds = new Set<Id>();
+                    for ( Termination_Email_Attachment__mdt record : TerminationEmailBatch.activeAttachments ) {
+                        if ( record.Is_Always_Attached__c
+                            && String.isNotBlank( record.Document_Id__c )
+                            && ( record.Document_Id__c InstanceOf Id )
+                           )
+                        {
+                            Id checkId = Id.valueOf( record.Document_Id__c );
+                            if ( checkId.getSObjectType() == ContentDocument.getSObjectType() ) {
+                                documentIds.add( checkId );
+                            }
+                        }
+                    }
+                    if ( !documentIds.isEmpty() ) {
+                        for ( ContentDocument file : [
+                                    SELECT LatestPublishedVersionId
+                                    FROM ContentDocument
+                                    WHERE (
+                                        ( Id = :documentIds )
+                                        AND ( LatestPublishedVersionId != null )
+                                    )
+                                ]
+                            )
+                        {
+                            local.add( file.LatestPublishedVersionId );
+                        }
+                    }
                 }
-                defaultTemplateAttachmentId = TerminationEmailBatch.settings.DefaultTemplateAttachmentId__c;
+                alwaysAttachedIds = local;
             }
-            return defaultTemplateAttachmentId;
+            return alwaysAttachedIds;
         }
         private set;
     }
@@ -438,37 +465,116 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable , Sc
         private set;
     }
 
-    private static Map<Integer,Id> fileYearMap  {
+    // Selection of all active Termination_Email_Attachment__mdt records...
+    private static List<Termination_Email_Attachment__mdt> activeAttachments {
         private get {
-            if ( fileYearMap == null ) {
-                Map<Integer,Id> documentIdMap = new Map<Integer,Id>();
-                for ( Termination_Email_Attachment__mdt record : [
-                            SELECT
-                                DeveloperName ,
-                                MasterLabel ,
-                                Active__c ,
-                                Document_Id__c ,
-                                Year__c
-                            FROM Termination_Email_Attachment__mdt 
-                            WHERE ( Active__c = true )
-                        ]
+            if ( activeAttachments == null ) {
+                activeAttachments = [
+                    SELECT
+                        DeveloperName ,
+                        MasterLabel ,
+                        Active__c ,
+                        Document_Id__c ,
+                        Is_Always_Attached__c ,
+                        Year__c
+                    FROM Termination_Email_Attachment__mdt 
+                    WHERE (
+                        ( Active__c = true )
+                        AND ( Document_Id__c != null )
+                    )
+                ];
+            }
+            return activeAttachments;
+        }
+        private set;
+    }
+
+    // Map from Year, as Integer, to ContentDocument.Id...
+    private static Map<Integer,Id> documentYearMap {
+        private get {
+            if ( documentYearMap == null ) {
+                Map<Integer,Id> local = new Map<Integer,Id>();
+                if ( ( TerminationEmailBatch.activeAttachments != null )
+                    && !TerminationEmailBatch.activeAttachments.isEmpty()
                     )
                 {
-                    if ( ( record.Year__c != null )
-                        && String.isNotBlank( record.Document_Id__c )
-                        && ( record.Document_Id__c InstanceOf Id )
-                       )
-                    {
-                        Id checkId = Id.valueOf( record.Document_Id__c );
-                        if ( checkId.getSObjectType() == ContentVersion.getSObjectType() ) {
-                            documentIdMap.put(
-                                record.Year__c.intValue() ,
-                                checkId
-                            );
+                    for ( Termination_Email_Attachment__mdt record : TerminationEmailBatch.activeAttachments ) {
+                        if ( ( record.Year__c != null )
+                            && String.isNotBlank( record.Document_Id__c )
+                            && ( record.Document_Id__c InstanceOf Id )
+                           )
+                        {
+                            Id checkId = Id.valueOf( record.Document_Id__c );
+                            if ( checkId.getSObjectType() == ContentDocument.getSObjectType() ) {
+                                local.put(
+                                    record.Year__c.intValue() ,
+                                    checkId
+                                );
+                            }
                         }
                     }
                 }
-                fileYearMap = documentIdMap;
+                documentYearMap = local;
+            }
+            return documentYearMap;
+        }
+        private set;
+    }
+
+    // Map from ContentDocument.Id to ContentDocument.LatestPublishedVersionId, which is-a ContentVersion.Id...
+    private static Map<Id,Id> latestVersionMap {
+        private get {
+            if ( latestVersionMap == null ) {
+                Map<Id,Id> local = new Map<Id,Id>();
+                if ( ( TerminationEmailBatch.documentYearMap != null )
+                    && !TerminationEmailBatch.documentYearMap.isEmpty()
+                    )
+                {
+                    for ( ContentDocument file : [
+                                SELECT LatestPublishedVersionId
+                                FROM ContentDocument
+                                WHERE (
+                                    ( Id = :TerminationEmailBatch.documentYearMap.values() )
+                                    AND ( LatestPublishedVersionId != null )
+                                )
+                            ]
+                        )
+                    {
+                        local.put( file.Id , file.LatestPublishedVersionId );
+                    }
+                }
+                latestVersionMap = local;
+            }
+            return latestVersionMap;
+        }
+        private set;
+    }
+
+    // Map from Year, as Integer, to ContentDocument.LatestPublishedVersionId, which is-a ContentVersion.Id...
+    private static Map<Integer,Id> fileYearMap {
+        private get {
+            if ( fileYearMap == null ) {
+                Map<Integer,Id> local = new Map<Integer,Id>();
+                if ( ( TerminationEmailBatch.documentYearMap != null )
+                    && !TerminationEmailBatch.documentYearMap.isEmpty()
+                    && ( TerminationEmailBatch.latestVersionMap != null )
+                    && !TerminationEmailBatch.latestVersionMap.isEmpty()
+                    )
+                {
+                    for ( Integer year : TerminationEmailBatch.documentYearMap.keySet() ) {
+                        Id documentId = TerminationEmailBatch.documentYearMap.get( year );
+                        if ( ( documentId != null )
+                            && TerminationEmailBatch.latestVersionMap.containsKey( documentId )
+                            )
+                        {
+                            Id versionId = TerminationEmailBatch.latestVersionMap.get( documentId );
+                            if ( versionId != null ) {
+                                local.put( year , versionId );
+                            }
+                        }
+                    }
+                }
+                fileYearMap = local;
             }
             return fileYearMap;
         }
