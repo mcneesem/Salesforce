@@ -390,7 +390,7 @@ export default class CaseCatSubcatDetail extends LightningElement {
         if (event.currentTarget.name == 'Sub Category') {
             this.selectedSubCategory = event.target.value;
             let options = [];
-            let localKey = this.selectedCategory;
+            let localKey = this.selectedCategory + '-' + event.target.value;
             if ( this.categoryWrapper?.mCatToSubCatogories
                 && localKey
                 && ( localKey in this.categoryWrapper.mCatToSubCatogories )
