@@ -279,8 +279,6 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable , Sc
         {
             try{
                 Messaging.SendEmailResult[] results = Messaging.sendEmail( emailMessages , false );
-                system.debug('default attachments>>>>>>>>>>>>>>'+alwaysAttachedIds);
-                system.debug('fileYearMap>>>>>>>>>>>>>>'+fileYearMap);
                 for ( Integer i = 0; i < results.size(); i++ ) {
                     if ( results[i].isSuccess() ) {
                         NSP_Termination_Form__c form = originalForms[i];
