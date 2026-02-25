@@ -2,7 +2,7 @@ import { LightningElement, api } from "lwc";
 
 const DEFAULT_PAGE_SIZE = 5;
 
-export default class UserDefaultTeamMemberBase extends LightningElement {
+export default class UserDefaultTeam extends LightningElement {
     // Public API
     @api titlePrefix = "Team";
     @api columns = [];
