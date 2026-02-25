@@ -5,5 +5,5 @@
     <mayForecastManagerShare>false</mayForecastManagerShare>
     <name>1401 Chicago 1 Leader</name>
     <opportunityAccessLevel>Edit</opportunityAccessLevel>
-    <parentRole>Eastern_3_Leader</parentRole>
+    <parentRole>Northeast_3_Leader</parentRole>
 </Role>
