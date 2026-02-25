@@ -6737,6 +6737,7 @@
     <tabs>NSP_Amendment_Checklist__c</tabs>
     <tabs>NSP_Sales_to_Implementation__c</tabs>
     <tabs>standard-report</tabs>
+    <tabs>NSP_Focus_Item__c</tabs>
     <tabs>standard-Dashboard</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Insperity_UtilityBar</utilityBar>
