@@ -30,6 +30,11 @@
                 <label>HIRED</label>
             </value>
             <value>
+                <fullName>Intermittent Leave</fullName>
+                <default>false</default>
+                <label>Intermittent Leave</label>
+            </value>
+            <value>
                 <fullName>L.O.A.</fullName>
                 <default>false</default>
                 <label>L.O.A.</label>
@@ -55,9 +60,19 @@
                 <label>REHIRED</label>
             </value>
             <value>
+                <fullName>State Leave</fullName>
+                <default>false</default>
+                <label>State Leave</label>
+            </value>
+            <value>
                 <fullName>TERMINATED</fullName>
                 <default>false</default>
                 <label>TERMINATED</label>
+            </value>
+            <value>
+                <fullName>TLO Leave</fullName>
+                <default>false</default>
+                <label>TLO Leave</label>
             </value>
             <value>
                 <fullName>WORKER&apos;S COMP</fullName>

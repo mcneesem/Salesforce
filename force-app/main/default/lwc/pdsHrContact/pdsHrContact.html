@@ -1,13 +1,8 @@
 <template>
-        <template if:true={loading}>
-            <lightning-spinner alternative-text="Loading"></lightning-spinner>
-        </template>
-        <!-- Only render the Flow when showFlow is true; otherwise render nothing -->
-        <template if:true={showFlow}>
-            <lightning-flow
-                flow-api-name="PDS_HR_Contact_Screen_Flow"
-                flow-input-variables={flowInputs}
-                onstatuschange={handleFlowStatusChange}>
-            </lightning-flow>
-        </template>
+    <c-pds-base-contact
+        flow-api-name="PDS_HR_Contact_Screen_Flow"
+        apex-method-api-name="getSCCHRCount"
+        record-id={recordId}
+        >
+    </c-pds-base-contact>
 </template>

@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
-    <help>Un valor que no está en blanco designa que este producto se vende por lotes. Ingrese la cantidad en cada lote. La cantidad ingresada en el presupuesto se dividirá por este valor y se redondeará al entero más cercano.</help>
-    <label></label>
-    <name>SBQQ__BatchQuantity__c</name>
-</CustomFieldTranslation>

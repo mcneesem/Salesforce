@@ -3,7 +3,7 @@
     <fullName>NSP_Brightmove_Accnt__c</fullName>
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
-    <label>Aveture Account #</label>
+    <label>BrightMove Account #</label>
     <length>250</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

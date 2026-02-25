@@ -1,22 +1,3 @@
-/**
-Apex Class Name      :  NSP_AssetServiceTriggerHelper
-Test Class Name      :  NSP_AssetServiceTriggerHelperTest
-Version              :  1.0
-Created Date         :  6/1/2022
-Author               :  Jatin
-Function             :  Represents the Asset trigger helper which handles all the logic.
-Story                :
-Modification Log     :  11/09/2023-Suhas : Added RET Client Id for Sync WO Asset.
-*--------------------------------------------------------------------------------------------------
-* Developer                   Date                   Description
-* -------------------------------------------------------------------------------------------------
-* Virendra Kumar               9/30/2022           First Iteration
-* Ramya Ravi                   10/28/2022          V2.0- RET - Automation - Subplan Lead Parent Sync to Associated Assets  <STY-02671>
-* Ramya Ravi                   11/02/2022          V3.0 - TES Asset & RET Asset - AIMS Information - <STY-02841>
-* Ramya Ravi                   11/04/2022          V4.0 - RET Asset - Sync WO Asset data to RET Asset  <STY-03527>
-* Abhishek Kumar               12/26/2022          v5.0 - Account - Product First Pay Date <STY-03597>
-* Ramya Ravi                   01/16/2022          v6.0 - Create project from asset <STY-02234>
-*/
 public class NSP_AssetServiceTriggerHelper {
     // test w/ NSP_AssetServiceTriggerHelperTest (78%)
 
@@ -238,12 +219,7 @@ public class NSP_AssetServiceTriggerHelper {
 
     }
 
-    /* Iterates throught the list of new Assets and passes the required attributes to other methods.
-* @param newMap List of Assets.
-* @return void
-* //Added as a part of <STY-02841>
-*/
-    public void afterInsertAsset(List<Asset> newList, Map<Id,Asset> newMap){
+    public void afterInsertAsset( List<Asset> newList , Map<Id,Asset> newMap ) {
         //As a part ofSTY-02819
         Set<Id> updateServiceSegmentAssetIdSet = new Set<Id>();
         List<Asset> assetToUpdate = new List<Asset>();
@@ -335,8 +311,8 @@ public class NSP_AssetServiceTriggerHelper {
                 }
             }
             //Update the assets
-            if(!assetToUpdate.isEmpty()){
-                UpdateLstAssets(assetToUpdate);
+            if ( !assetToUpdate.isEmpty() ) {
+                this.updateLstAssets( assetToUpdate );
             }
         }
         //As a part ofSTY-02819
@@ -357,12 +333,8 @@ public class NSP_AssetServiceTriggerHelper {
         }
 
     }
-    /* Iterates throught the list of new Assets and passes the required attributes to other methods.
-* @param newMap, oldMap List of Assets.
-* @return void
-* //Added as a part of <STY-02841>
-*/
-    public void afterUpdateAsset( List<Asset> newList,Map<Id, Asset> oldMap){
+
+    public void afterUpdateAsset( List<Asset> newList , Map<Id,Asset> oldMap ) {
         List<Asset> assetToUpdate = new List<Asset>();
         List<Asset> assetToUpdateNull = new List<Asset>();
         List<Id> accountID = new List<Id>();
@@ -439,7 +411,7 @@ public class NSP_AssetServiceTriggerHelper {
                     assetToUpdate.add(updateAssets(getAsst,WOAsset)) ;
                 }
             }
-            UpdateLstAssets(assetToUpdate);
+            this.updateLstAssets( assetToUpdate );
         }
         if(isNull){
             RETBPSassets = returnRETBPSassets(accountID);
@@ -457,7 +429,7 @@ public class NSP_AssetServiceTriggerHelper {
                             assetToUpdateNull.add(getAsst) ;
                         }
                     }
-            UpdateLstAssets(assetToUpdateNull);
+            this.updateLstAssets( assetToUpdateNull );
         }
         // added as a part of DF-03798
         if(!assetPayrollSet.isEmpty()){
@@ -469,7 +441,7 @@ public class NSP_AssetServiceTriggerHelper {
     // updateAssets()
     // ReturnRETBPSassets()
     // ReturnAssetRecordtypes()
-    // UpdateLstAssets()
+    // updateLstAssets()
     private Asset updateAssets( Asset getAsst , Asset assLst ) {
         Asset returnAsset = getAsst;
         getAsst.NSP_WO_AIMS_Client_Number__c = assLst.NSP_Client__c;
@@ -828,7 +800,7 @@ public class NSP_AssetServiceTriggerHelper {
             && ( recordOld != null )
             && ( ( record.NSP_WO_AIMS_Client_Number__c != recordOld.NSP_WO_AIMS_Client_Number__c )
                 || ( record.Disable_Sync_RET_Client_ID__c != recordOld.Disable_Sync_RET_Client_ID__c )
-                || ( record.NSP_RET_Client_ID__c != recordOld.NSP_RET_Client_ID__c )     
+                || ( record.NSP_RET_Client_ID__c != recordOld.NSP_RET_Client_ID__c )
                 )
             )
         {
@@ -1491,15 +1463,15 @@ Implementation profile related to the account of the created asset
         }
     }
 
-    public void UpdateLstAssets( List<Asset> assetToUpdate ) {
+    private void updateLstAssets( List<Asset> assetToUpdate ) {
         try {
-            if ( !assetToUpdate.isEmpty() ) {
+            if ( ( assetToUpdate != null ) && !assetToUpdate.isEmpty() ) {
                 Database.update( assetToUpdate );
             }
         } catch ( Exception e ) {
             NSP_AssetServiceTriggerHelper.handleException(
                 e ,
-                'UpdateLstAssets'
+                'updateLstAssets'
             );
         }
     }
@@ -1575,8 +1547,8 @@ Implementation profile related to the account of the created asset
             PSPToUpdate.add(PSPRec);
         }
         // Update related assets
-        if(!assetToUpdate.isEmpty()){
-            UpdateLstAssets(assetToUpdate);
+        if ( !assetToUpdate.isEmpty() ) {
+            this.updateLstAssets( assetToUpdate );
         }
         //Update plan subplan records
         if(!PSPToUpdate.isEmpty()){

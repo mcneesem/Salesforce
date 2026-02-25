@@ -37,7 +37,7 @@ IF(CONTAINS($Label.NSP_PTO_Time_Category_Values, TEXT(Time_Entry__c)),
             <name>Set_Project_Task_Time_Category</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <formula>TRUE</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>

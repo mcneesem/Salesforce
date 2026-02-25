@@ -1,5 +1,5 @@
 global class NSP_PrepSandbox implements SandboxPostCopy {
-    // test w/ NSP_PrepSandboxTest (85%)
+    // test w/ NSP_PrepSandboxTest (86%)
 
     static final string STRING_INVALID = '.invalid';
     static final string DOCUSIGN_BASE_URL = 'https://uatna11.springcm.com/atlas/doclauncher/OneClickDocGen';
@@ -73,7 +73,9 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         doEmailCLabels();
         doEmailAlerts();
         doImageDocs();
+        doTrustedURLs();
         doCSettings(sandbox);
+        doCSettings2(sandbox);
         setPostRefreshRunFlag(1);
     }
 
@@ -86,6 +88,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     @AuraEnabled
     public static void runManualSteps2() {
         doCMetadataSvc(System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName());
+        runPostSeeding();
         setPostRefreshRunFlag(3);
     }
 
@@ -344,9 +347,6 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
 
     public static void doCLabels(String sandboxName) {
         try {
-            MetadataService.MetadataPort service = createService();
-            List<MetadataService.Metadata> allMetadataList = new List<MetadataService.Metadata>();
-            MetadataService.CustomLabel cL = new MetadataService.CustomLabel();
             Map<String, String> refreshValMap = new Map<String, String>();
             switch on sandboxName {
                 when 'stage' {
@@ -376,13 +376,9 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                     refreshValMap.put('NSP_Docusign_Base_URL', DOCUSIGN_BASE_URL);
                 }
             }
-            for (String cLName : refreshValMap.keySet()) {
-                setCLabelData(service, cL, allMetadataList, cLName, refreshValMap);
-            }
 
-            if(allMetadataList.size() > 0 && !Test.isRunningTest()){
-                service.updateMetadata(allMetadataList);
-            }
+            updateLabelsValues(refreshValMap);
+
         } catch(Exception e) {
             NSP_PrepSandbox.handleException( e , 'doCLabels' );
         }
@@ -450,6 +446,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
 
     public static void runUpdateMetadata( List<List<MetadataService.Metadata>> allMetadataList ) {
         MetadataService.MetadataPort service = createService();
+
         if ( allMetadataList.size() > 0 && allMetadataList[0].size() > 0 && !Test.isRunningTest() ) {
             for (Integer i = 0; i < allMetadataList.size(); i ++) {
                 service.updateMetadata(allMetadataList[i]);
@@ -648,13 +645,15 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         } catch(Exception e) {
             NSP_PrepSandbox.handleException( e , 'doCSettings:NSP_Environment_Details__c' );
         }
+    }
 
+    public static void doCSettings2(String sandboxName) {
         try {
             BoxFileRequest__c cS5 = BoxFileRequest__c.getOrgDefaults();
             cS5.BoxTemplateFolderId__c = '225207143235';
             upsert cS5;
         } catch(Exception e) {
-            NSP_PrepSandbox.handleException( e , 'doCSettings:BoxFileRequest__c' );
+            NSP_PrepSandbox.handleException( e , 'doCSettings2:BoxFileRequest__c' );
         }
 
         try {
@@ -663,7 +662,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             cS6.BccAddresses__c = null;
             upsert cS6;
         } catch(Exception e) {
-            NSP_PrepSandbox.handleException( e , 'doCSettings:UserTriggerSettings__c' );
+            NSP_PrepSandbox.handleException( e , 'doCSettings2:UserTriggerSettings__c' );
         }
 
         try {
@@ -671,9 +670,26 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             cS7.AutoTerminationEmailAddresses__c = null;
             upsert cS7;
         } catch(Exception e) {
-            NSP_PrepSandbox.handleException( e , 'doCSettings:Contract_Termination_Settings__c' );
+            NSP_PrepSandbox.handleException( e , 'doCSettings2:Contract_Termination_Settings__c' );
         }
 
+        try {
+            NVMContactWorld__Settings__c cS8 = NVMContactWorld__Settings__c.getOrgDefaults();
+            switch on sandboxName {
+                when 'merge' {
+                    cS8.NVMContactWorld__clientId__c = 'dz02lkbjl01';
+                }
+                when 'test' {
+                    cS8.NVMContactWorld__clientId__c = 'mfb4hpckwhw';
+                }
+                when else {
+                    cS8.NVMContactWorld__clientId__c = '';
+                }
+            }
+            upsert cS8;
+        } catch(Exception e) {
+            NSP_PrepSandbox.handleException( e , 'doCSettings2:NVMContactWorld__Settings__c' );
+        }
     }
 
     public static void doE2CAddresses(String sandboxName) {
@@ -806,8 +822,92 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         return service;
     }
 
+    private static void runPostSeeding(){
+        try {
+            //  Upadate labels
+            //  Get Insperity Account by AIMS 001bf00000VQF4oAAH
+            List<Account> accountRecord = [SELECT id FROM Account WHERE NSP_AIMS_Client__c = '500' LIMIT 1];
+            if(accountRecord != null && accountRecord.size() == 1){
+                Map<String, String> refreshValMap = new Map<String, String>();
+                refreshValMap.put('NSP_Insperity_Account', accountRecord[0].id);
+                updateLabelsValues(refreshValMap);
+            }
+
+            //  Update custom settings
+            //  Get "United States" region ID a3Fbf000000YLhxEAG
+            List<pse__Region__c> regionRecord = [SELECT Id FROM pse__Region__c WHERE Name = 'United States' LIMIT 1];
+            if(regionRecord != null && regionRecord.size() == 1){
+                ProjectCreationSettings__c projectCreationSettings = ProjectCreationSettings__c.getOrgDefaults();
+                projectCreationSettings.DefaultRegionId__c = regionRecord[0].id;
+                update projectCreationSettings;
+            }
+        }
+        catch(Exception e) {
+            NSP_PrepSandbox.handleException( e , 'runPostSeeding' );
+        }
+    }
+
+    private static void updateLabelsValues(Map<String, String> refreshValMap){
+
+        MetadataService.MetadataPort service = createService();
+        List<MetadataService.Metadata> allMetadataList = new List<MetadataService.Metadata>();
+        MetadataService.CustomLabel cL = new MetadataService.CustomLabel();
+
+        for (String cLName : refreshValMap.keySet()) {
+            setCLabelData(service, cL, allMetadataList, cLName, refreshValMap);
+        }
+
+        if(allMetadataList.size() > 0 && !Test.isRunningTest()){
+            service.updateMetadata(allMetadataList);
+        }
+    }
+
     private static String apiEnabledSessionId() {
         return UserInfo.getSessionId();
+    }
+
+    public static void doTrustedURLs() {
+        try {
+            Integer batch = 0;
+            MetadataService.MetadataPort service = createService();
+            List<List<MetadataService.Metadata>> allMetadataList = new List<List<MetadataService.Metadata>>();
+            allMetadataList.add(new List<MetadataService.Metadata>());
+
+            Map<String, String> mapSites = new Map<String, String>();
+            mapSites.put('Tableau', 'https://testtableau.insperity.com');
+            mapSites.put('Salesforce_SCRT', 'https://*.sandbox.my.salesforce-scrt.com');
+            mapSites.put('Salesforce_Setup', 'https://*.sandbox.my.salesforce-setup.com');
+
+            MetadataService.ReadResult readResult = new MetadataService.ReadResult();
+            if (!Test.isRunningTest()) {
+                readResult.records = service.readMetadata('CspTrustedSite', new List<String>(mapSites.keySet())).getRecords();
+            } else {
+                readResult.records = new MetadataService.Metadata[]{new MetadataService.CspTrustedSite()};
+            }
+
+            for (MetadataService.Metadata result : readResult.records) {
+                MetadataService.CspTrustedSite site = (MetadataService.CspTrustedSite) result;
+
+                if( site != null ) {
+                    MetadataService.CspTrustedSite siteUpd = new MetadataService.CspTrustedSite();
+                    siteUpd.fullName = site.fullName;
+                    siteUpd.description = site.description;
+                    siteUpd.isActive = site.isActive;
+                    siteUpd.endpointUrl = mapSites.get(site.fullName);
+
+                    if (allMetadataList[batch].size() >= 10) {
+                        batch++;
+                        allMetadataList.add(new List<MetadataService.Metadata>()); // create a new batch when we fill one up
+                    }
+                    allMetadataList[batch].add(siteUpd);
+                }
+            }
+
+            runUpdateMetadata( allMetadataList );
+
+        } catch(Exception e) {
+            NSP_PrepSandbox.handleException( e , 'doCTrustedURLs' );
+        }
     }
 
     private static string invalidateEmailArray(List<String> origEmails) {

@@ -36881,10 +36881,6 @@
         <flow>Invoke_Primary_Opportunity_fields_on_click_of_New_button</flow>
     </flowAccesses>
     <flowAccesses>
-        <enabled>false</enabled>
-        <flow>Lead_Conversion_Update_Fields_on_Account</flow>
-    </flowAccesses>
-    <flowAccesses>
         <enabled>true</enabled>
         <flow>NSP_Add_Multiple_Contacts_On_Case</flow>
     </flowAccesses>
@@ -36914,10 +36910,6 @@
     </flowAccesses>
     <flowAccesses>
         <enabled>false</enabled>
-        <flow>NSP_Update_Discovery_Call_Status_on_Opportunity</flow>
-    </flowAccesses>
-    <flowAccesses>
-        <enabled>false</enabled>
         <flow>NSP_Update_Lead_Stage_based_on_Activity</flow>
     </flowAccesses>
     <flowAccesses>
@@ -36939,10 +36931,6 @@
     <flowAccesses>
         <enabled>false</enabled>
         <flow>Renewal_Email_After_5_Mins</flow>
-    </flowAccesses>
-    <flowAccesses>
-        <enabled>false</enabled>
-        <flow>Update_Account_Description_on_Lead_Conversion</flow>
     </flowAccesses>
     <flowAccesses>
         <enabled>false</enabled>

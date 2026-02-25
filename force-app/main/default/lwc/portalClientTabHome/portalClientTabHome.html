@@ -2,15 +2,15 @@
     <template lwc:if={recordId}>
         <lightning-layout multiple-rows>
             <lightning-layout-item size="12" padding="around-small">
-                PENDING WELCOME PORTAL CLIENT
+                <c-portal-client-welcome></c-portal-client-welcome>
             </lightning-layout-item>
             <lightning-layout-item size="12">
                 <lightning-layout multiple-rows>
                     <lightning-layout-item size="12" medium-device-size="7" padding="around-small">
-                        PENDING TEAM MEMBERS
+                        <c-portal-team-member-list record-id={recordId}></c-portal-team-member-list>
                     </lightning-layout-item>
                     <lightning-layout-item size="12" medium-device-size="5" padding="around-small">
-                        PENDING IMPORTANT DATES
+                        <c-portal-client-important-dates record-id={recordId}></c-portal-client-important-dates>
                     </lightning-layout-item>
                 </lightning-layout>
             </lightning-layout-item>

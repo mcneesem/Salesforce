@@ -172,6 +172,19 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentName>transitioningClientBanner</componentName>
+                <identifier>c_transitioningClientBanner</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Is_Transitioning_Client__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentName>nsp_implementationGetParentRecord</componentName>
                 <identifier>c_nsp_implementationGetParentRecord</identifier>
             </componentInstance>
@@ -694,6 +707,10 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Tabs</value>
+                </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>tabs</name>
                     <value>Facet-ccc6d014-c886-4611-8065-41df8b9fe3b9</value>
@@ -2172,6 +2189,10 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Tabs</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>tabs</name>
                     <value>Facet-eeb00fe7-bbc7-4930-b78d-71b5b0088f7c</value>
                 </componentInstanceProperties>
@@ -2265,6 +2286,10 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Tabs</value>
+                </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>tabs</name>
                     <value>sidebartabs</value>

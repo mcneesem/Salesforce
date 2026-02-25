@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<WaveDataset xmlns="http://soap.sforce.com/2006/04/metadata">
-    <application>RET</application>
-    <description>Created from the Project with Project Task and Asset and Resource Request recipe.</description>
-    <masterLabel>Project,Account,Asset,ProjectAsset,Contact,ResrouceRequest,User,AT DS</masterLabel>
-    <type>default</type>
-</WaveDataset>

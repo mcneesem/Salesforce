@@ -1,0 +1,71 @@
+<template>
+    <lightning-card title="Important Dates">
+        <div class="slds-is-relative">
+            <template lwc:if={fields}>
+                <template lwc:if={record}>
+                    <lightning-layout multiple-rows>
+                        <lightning-layout-item size="12" padding="around-small">
+                            <ul>
+                                <li>
+                                    <lightning-layout>
+                                        <lightning-layout-item size={leftColumnSize} padding="around-small">
+                                            Insperity Effective Date&nbsp;*&nbsp;
+                                            <c-helptext content={fields.Effective_Date__c.inlineHelpText}></c-helptext>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item size={rightColumnSize} padding="around-small">
+                                            <lightning-formatted-date-time
+                                                value={record.fields.Effective_Date__c.value}
+                                                month="long"
+                                                day="2-digit"
+                                                year="numeric"
+                                                time-zone="UTC"
+                                                >
+                                            </lightning-formatted-date-time>
+                                        </lightning-layout-item>
+                                    </lightning-layout>
+                                </li>
+                                <li>
+                                    <lightning-layout>
+                                        <lightning-layout-item size={leftColumnSize} padding="around-small">
+                                            Insperity Benefits Effective Date&nbsp;*
+                                        </lightning-layout-item>
+                                        <lightning-layout-item size={rightColumnSize} padding="around-small">
+                                            <lightning-formatted-date-time
+                                                value={record.fields.Benefits_Effective_Date__c.value}
+                                                month="long"
+                                                day="2-digit"
+                                                year="numeric"
+                                                time-zone="UTC"
+                                                >
+                                            </lightning-formatted-date-time>
+                                        </lightning-layout-item>
+                                    </lightning-layout>
+                                </li>
+                                <li>
+                                    <lightning-layout>
+                                        <lightning-layout-item size={leftColumnSize} padding="around-small">
+                                            Insperity Benefits Waiting Period
+                                        </lightning-layout-item>
+                                        <lightning-layout-item size={rightColumnSize} padding="around-small">
+                                            {record.fields.Benefits_Waiting_Period__c.value}&nbsp;Days
+                                        </lightning-layout-item>
+                                    </lightning-layout>
+                                </li>
+                                <c-portal-pay-period-carousel record-id={recordId}></c-portal-pay-period-carousel>
+                            </ul>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="around-medium">
+                            * If applicable: To ensure no overlap in coverage, remember to terminate current payroll or benefits services prior to your Insperity effective dates.
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </template>
+                <template lwc:else>
+                    <lightning-spinner alternative-text="Loading" size="x-small"></lightning-spinner>
+                </template>
+            </template>
+            <template lwc:else>
+                <lightning-spinner alternative-text="Loading" size="x-small"></lightning-spinner>
+            </template>
+        </div>
+    </lightning-card>
+</template>

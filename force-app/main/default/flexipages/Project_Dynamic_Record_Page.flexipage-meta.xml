@@ -397,7 +397,7 @@
                         <valueListItems>
                             <value>pse__Proj__c.Assign_Task</value>
                             <visibilityRule>
-                                <booleanFilter>1 OR 2</booleanFilter>
+                                <booleanFilter>1 OR 2 OR 3</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Layout_BOB__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -407,6 +407,11 @@
                                     <leftValue>{!Record.Layout_BOB__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>PEO FSO Impl</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>ITA Impl</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -2022,6 +2027,52 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>columns</name>
+                    <value>Facet-4982d62c-74f0-461c-b02a-a87bc7651eaa</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>CPQ/Billing Information</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection4</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>BPS Generic</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>RET</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>TalentConnect</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>ITA Impl</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>PEO Billable</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
@@ -2078,7 +2129,7 @@
                 <componentName>lst:dynamicRelatedList</componentName>
                 <identifier>lst_dynamicRelatedList</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2</booleanFilter>
+                    <booleanFilter>1 OR 2 OR 3</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -2089,51 +2140,10 @@
                         <operator>EQUAL</operator>
                         <rightValue>PEO MM Impl</rightValue>
                     </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>columns</name>
-                    <value>Facet-4982d62c-74f0-461c-b02a-a87bc7651eaa</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>horizontalAlignment</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>label</name>
-                    <value>CPQ/Billing Information</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:fieldSection</componentName>
-                <identifier>flexipage_fieldSection4</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>BPS Generic</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>RET</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>TalentConnect</rightValue>
-                    </criteria>
                     <criteria>
                         <leftValue>{!Record.Layout_BOB__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>ITA Impl</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Layout_BOB__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>PEO Billable</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>

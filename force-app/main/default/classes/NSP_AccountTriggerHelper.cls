@@ -67,7 +67,7 @@ public class NSP_AccountTriggerHelper {
                 }
                 // update ready to sync to true whenever Account is cloned
                 if ( accountObj.isClone() ) {
-                    accountObj.NSP_Ready_for_Integration_Sync__c = true;
+                    accountObj.NSP_Ready_for_Integration_Sync__c = true; // DEPRECATED
                 }
             }
             if ( !bpaAccountList.isEmpty() ) {
@@ -663,10 +663,11 @@ public class NSP_AccountTriggerHelper {
         )
     {
         Boolean isAllowed = isAllowedBypass;
-        if ( isAvailablePreviousOwner ) {
-            if ( isAllowAssignAvailable ) {
-                isAllowed = isAllowAssignAvailable;
-            }
+        if ( isAvailablePreviousOwner
+            && isAllowAssignAvailable
+            )
+        {
+            isAllowed = true;
         } else if (
             ( isEmptyAccountOwnerSalesOfficeMap )
             || ( isValidCurrentUserRole )

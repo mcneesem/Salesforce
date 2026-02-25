@@ -449,6 +449,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <description>Prevent DmlExceptions: FIELD_CUSTOM_VALIDATION_EXCEPTION: New opportunities cannot be created on accounts owned by &quot;Available&quot; (User.Id=0054x000008PgqNAAS)</description>
         <name>Get_Account_Owner_Record</name>
         <label>Get Account Owner Record</label>
         <locationX>0</locationX>
@@ -466,6 +467,13 @@
             <operator>EqualTo</operator>
             <value>
                 <elementReference>Get_Account_Name.OwnerId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Id</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>0054x000008PgqNAAS</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
