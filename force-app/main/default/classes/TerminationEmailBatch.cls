@@ -452,9 +452,9 @@ public with sharing class TerminationEmailBatch implements ISelfSchedulable , Sc
                     TerminationEmailBatch.TEMPLATE_REINSTATE_REVISED
                 };
                 for ( EmailTemplate template : [
-                             SELECT DeveloperName
-                             FROM EmailTemplate
-                             WHERE ( DeveloperName IN :templateApiNames )
+                            SELECT DeveloperName
+                            FROM EmailTemplate
+                            WHERE ( DeveloperName IN :templateApiNames )
                         ]
                     )
                 {
