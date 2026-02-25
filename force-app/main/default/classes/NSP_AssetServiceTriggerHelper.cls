@@ -1710,49 +1710,48 @@ Implementation profile related to the account of the created asset
     // Description : This method is used to send email
     // Params : Map<Id, Asset> newMap, String templateName, List<String> sendToAddress
     //
-    public void sendMail( Set<Id> assetIdSet , Set<Id> accountIdSet , String templateName , List<String> sendToAddress ) {
-        if ( EmailDeliverabilityController.isEnabledOutbound ) {
-            String mailBody;
-            List<Messaging.SingleEmailMessage> emailList = new List<Messaging.SingleEmailMessage>();
-
-            List<String> fields = new List<String>{'Id'};
-            Id emailTemplateId = NSP_sObjectSelector.selectByDeveloperName(fields, templateName).Id;
-
-            List<String> rsvpFields = new List<String>{'Id'};
-            String query = new NSP_QueryBuilder('NSP_Relationship_Strategy_Action_Plan__c', rsvpFields)
-                .addFilter('NSP_Account__c', new List<Id>(accountIdSet), NSP_QueryBuilder.Operator.INCLUDES)
-                .orderBy('createdDate', 'DESC', false).addLimit(1).build()
-                ;
-            List<NSP_Relationship_Strategy_Action_Plan__c> rsvp = (List<NSP_Relationship_Strategy_Action_Plan__c>)Database.query(query);
-
-            if(!rsvp.isEmpty()){
-                String rsvpURL = URL.getSalesforceBaseUrl().toExternalForm() + '/' +rsvp[0].Id;
-
-                if(emailTemplateId != null){
-                    for(Id assetId : assetIdSet){
-                        Messaging.SingleEmailMessage email = Messaging.renderStoredEmailTemplate(emailTemplateId, UserInfo.getUserId(), assetId);
-                        if(email.htmlbody.contains(RSAP)){
-                            mailBody = email.getHtmlBody()+NSP_ServiceConstants.BLANK_SPACE+'<a href="'+rsvpURL+'"'+'>'+rsvpURL+'</a>';
-                            email.setHtmlBody(mailBody);
-                        }
-                        email.setTemplateId(emailTemplateId);
-                        email.setToAddresses(sendToAddress);
-                        email.setSaveAsActivity(false);
-                        emailList.add(email);
+    public void sendMail(
+        Set<Id> assetIdSet ,
+        Set<Id> accountIdSet ,
+        String templateName ,
+        List<String> sendToAddress
+        )
+    {
+        try {
+            if ( EmailDeliverabilityController.isEnabledOutbound ) {
+                List<EmailTemplate> templates = [
+                    SELECT Id
+                    FROM EmailTemplate
+                    WHERE ( DeveloperName = :templateName )
+                    LIMIT 1
+                ];
+                Id emailTemplateId = null;
+                if ( ( templates != null ) && !templates.isEmpty() ) {
+                    emailTemplateId = templates[0].Id;
+                }
+                if ( emailTemplateId != null ) {
+                    List<Messaging.SingleEmailMessage> emailList = new List<Messaging.SingleEmailMessage>();
+                    for ( Id assetId : assetIdSet ) {
+                        Messaging.SingleEmailMessage email = Messaging.renderStoredEmailTemplate(
+                            emailTemplateId ,
+                            UserInfo.getUserId() ,
+                            assetId
+                        );
+                        email.setTemplateId( emailTemplateId );
+                        email.setToAddresses( sendToAddress );
+                        email.setSaveAsActivity( false );
+                        emailList.add( email );
                     }
-
-                    if ( emailList.size() > 0 ) {
-                        try {
-                            Messaging.sendEmail( emailList );
-                        } catch ( Exception e ) {
-                            NSP_AssetServiceTriggerHelper.handleException(
-                                e ,
-                                'sendMail'
-                            );
-                        }
+                    if ( !emailList.isEmpty() ) {
+                        Messaging.sendEmail( emailList );
                     }
                 }
             }
+        } catch ( Exception e ) {
+            NSP_AssetServiceTriggerHelper.handleException(
+                e ,
+                'sendMail'
+            );
         }
     }
 
