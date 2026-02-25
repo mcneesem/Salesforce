@@ -3,7 +3,6 @@
     <description>Group of Permission Sets to be granted to Integration Users.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Integration User</label>
-    <permissionSets>Integration_Team</permissionSets>
     <permissionSets>Legacy_Integration_User_Object_Permissions</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
