@@ -398,16 +398,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Last_Work_Date__c</fieldItem>
-                <identifier>RecordLast_Work_Date_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.Start_Date__c</fieldItem>
                 <identifier>RecordStart_Date_cField</identifier>
             </fieldInstance>
@@ -452,28 +442,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Processed_Date__c</fieldItem>
-                <identifier>RecordProcessed_Date_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.Last_Pay_Date__c</fieldItem>
                 <identifier>RecordLast_Pay_Date_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Benefit_Term_Date__c</fieldItem>
-                <identifier>RecordBenefit_Term_Date_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
