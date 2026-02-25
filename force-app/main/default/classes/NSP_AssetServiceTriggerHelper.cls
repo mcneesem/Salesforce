@@ -1710,34 +1710,49 @@ Implementation profile related to the account of the created asset
     // Description : This method is used to send email
     // Params : Map<Id, Asset> newMap, String templateName, List<String> sendToAddress
     //
-    public void sendMail( Set<Id> assetIdSet , Set<Id> accountIdSet , String templateName , List<String> sendToAddress ) {
-        if ( EmailDeliverabilityController.isEnabledOutbound ) {
-            List<Messaging.SingleEmailMessage> emailList = new List<Messaging.SingleEmailMessage>();
-
-            List<String> fields = new List<String>{'Id'};
-            Id emailTemplateId = NSP_sObjectSelector.selectByDeveloperName(fields, templateName).Id;
-
-                if(emailTemplateId != null){
-                    for(Id assetId : assetIdSet){
-                        Messaging.SingleEmailMessage email = Messaging.renderStoredEmailTemplate(emailTemplateId, UserInfo.getUserId(), assetId);
-                        email.setTemplateId(emailTemplateId);
-                        email.setToAddresses(sendToAddress);
-                        email.setSaveAsActivity(false);
-                        emailList.add(email);
+    public void sendMail(
+        Set<Id> assetIdSet ,
+        Set<Id> accountIdSet ,
+        String templateName ,
+        List<String> sendToAddress
+        )
+    {
+        try {
+            if ( EmailDeliverabilityController.isEnabledOutbound ) {
+                List<EmailTemplate> templates = [
+                    SELECT Id
+                    FROM EmailTemplate
+                    WHERE ( DeveloperName = :templateName )
+                    LIMIT 1
+                ];
+                Id emailTemplateId = null;
+                if ( ( templates != null ) && !templates.isEmpty() ) {
+                    emailTemplateId = templates[0].Id;
+                }
+                if ( emailTemplateId != null ) {
+                    List<Messaging.SingleEmailMessage> emailList = new List<Messaging.SingleEmailMessage>();
+                    for ( Id assetId : assetIdSet ) {
+                        Messaging.SingleEmailMessage email = Messaging.renderStoredEmailTemplate(
+                            emailTemplateId ,
+                            UserInfo.getUserId() ,
+                            assetId
+                        );
+                        email.setTemplateId( emailTemplateId );
+                        email.setToAddresses( sendToAddress );
+                        email.setSaveAsActivity( false );
+                        emailList.add( email );
                     }
-
-                    if ( emailList.size() > 0 ) {
-                        try {
-                            Messaging.sendEmail( emailList );
-                        } catch ( Exception e ) {
-                            NSP_AssetServiceTriggerHelper.handleException(
-                                e ,
-                                'sendMail'
-                            );
-                        }
+                    if ( !emailList.isEmpty() ) {
+                        Messaging.sendEmail( emailList );
                     }
                 }
             }
+        } catch ( Exception e ) {
+            NSP_AssetServiceTriggerHelper.handleException(
+                e ,
+                'sendMail'
+            );
+        }
     }
 
     private static void handleException( Exception e , String methodName ) {
