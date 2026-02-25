@@ -17,7 +17,7 @@ export default class UserDefaultOpportunityTeam extends LightningElement {
     // load page size once and push to base
     @wire(getPageSize)
     wiredPageSize({ data, error }) {
-        const base = this.template.querySelector('c-user-default-team-member-base');
+        const base = this.template.querySelector('c-user-default-team');
         if (data != null && base) {
             const n = Number(data);
             base.setPageSize(Number.isFinite(n) && n > 0 ? n : undefined);
@@ -29,7 +29,7 @@ export default class UserDefaultOpportunityTeam extends LightningElement {
     // wire data and push to base
     @wire(getTeamMembersByOwner, { ownerId: "$recordId" })
     wiredTeam({ data, error }) {
-        const base = this.template.querySelector('c-user-default-team-member-base');
+        const base = this.template.querySelector('c-user-default-team');
         if (Array.isArray(data) && base) {
             const teamRows = data.map((member) => ({
                 id: member.id,
