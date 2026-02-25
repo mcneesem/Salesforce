@@ -1,6 +1,6 @@
 import { LightningElement, wire, api } from "lwc";
-import getTeamMembersByOwner from "@salesforce/apex/UserOpportunityTeamService.getTeamMembersByOwner";
-import getPageSize from "@salesforce/apex/UserOpportunityTeamService.getPageSize";
+import getOpportunityMembers from "@salesforce/apex/UserOpportunityTeamService.getTeamMembersByOwner";
+import getDefaultOppPageSize from "@salesforce/apex/UserOpportunityTeamService.getPageSize";
 
 const COLUMNS = Object.freeze([
     { label: "User", fieldName: "userName", type: "text", sortable: true },
@@ -15,8 +15,8 @@ export default class UserDefaultOpportunityTeam extends LightningElement {
     columns = COLUMNS;
 
     // load page size once and push to base
-    @wire(getPageSize)
-    wiredPageSize({ data, error }) {
+    @wire(getDefaultOppPageSize)
+    wiredOppPageSize({ data, error }) {
         const base = this.template.querySelector('c-user-default-team');
         if (data != null && base) {
             const n = Number(data);
@@ -27,8 +27,8 @@ export default class UserDefaultOpportunityTeam extends LightningElement {
     }
 
     // wire data and push to base
-    @wire(getTeamMembersByOwner, { ownerId: "$recordId" })
-    wiredTeam({ data, error }) {
+    @wire(getOpportunityMembers, { ownerId: "$recordId" })
+    wiredOppTeam({ data, error }) {
         const base = this.template.querySelector('c-user-default-team');
         if (Array.isArray(data) && base) {
             const teamRows = data.map((member) => ({
