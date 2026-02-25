@@ -1712,33 +1712,33 @@ Implementation profile related to the account of the created asset
     //
     public void sendMail( Set<Id> assetIdSet , Set<Id> accountIdSet , String templateName , List<String> sendToAddress ) {
         if ( EmailDeliverabilityController.isEnabledOutbound ) {
-        List<Messaging.SingleEmailMessage> emailList = new List<Messaging.SingleEmailMessage>();
+            List<Messaging.SingleEmailMessage> emailList = new List<Messaging.SingleEmailMessage>();
 
-        List<String> fields = new List<String>{'Id'};
-        Id emailTemplateId = NSP_sObjectSelector.selectByDeveloperName(fields, templateName).Id;
+            List<String> fields = new List<String>{'Id'};
+            Id emailTemplateId = NSP_sObjectSelector.selectByDeveloperName(fields, templateName).Id;
 
-        if(emailTemplateId != null){
-            for(Id assetId : assetIdSet){
-                Messaging.SingleEmailMessage email = Messaging.renderStoredEmailTemplate(emailTemplateId, UserInfo.getUserId(), assetId);
-                email.setTemplateId(emailTemplateId);
-                email.setToAddresses(sendToAddress);
-                email.setSaveAsActivity(false);
-                emailList.add(email);
-            }
+                if(emailTemplateId != null){
+                    for(Id assetId : assetIdSet){
+                        Messaging.SingleEmailMessage email = Messaging.renderStoredEmailTemplate(emailTemplateId, UserInfo.getUserId(), assetId);
+                        email.setTemplateId(emailTemplateId);
+                        email.setToAddresses(sendToAddress);
+                        email.setSaveAsActivity(false);
+                        emailList.add(email);
+                    }
 
                     if ( emailList.size() > 0 ) {
-                try {
+                        try {
                             Messaging.sendEmail( emailList );
-                } catch ( Exception e ) {
-                    NSP_AssetServiceTriggerHelper.handleException(
-                        e ,
-                        'sendMail'
-                    );
+                        } catch ( Exception e ) {
+                            NSP_AssetServiceTriggerHelper.handleException(
+                                e ,
+                                'sendMail'
+                            );
+                        }
+                    }
                 }
             }
-        }
     }
-}
 
     private static void handleException( Exception e , String methodName ) {
         if ( e != null ) {
