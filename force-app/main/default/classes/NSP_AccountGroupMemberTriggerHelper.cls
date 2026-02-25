@@ -76,7 +76,7 @@ public with sharing class NSP_AccountGroupMemberTriggerHelper {
         Map<Id,List<NSP_Account_Group__c>> result = new Map<Id,List<NSP_Account_Group__c>>() ;
         if ( oldList != null ){
             for ( NSP_Account_Group_Member__c agm : oldList ) {
-                if ( agm != null ) {
+                if ( agm != null && !agm.Bypass_Self_Group_Creation__c) {
                     Map<Id,List<NSP_Account_Group__c>> groupsForAccount = NSP_AccountGroupMemberTriggerHelper.createSelfGroup(
                         agm.Id ,
                         agm.NSP_Member_Account__c ,
