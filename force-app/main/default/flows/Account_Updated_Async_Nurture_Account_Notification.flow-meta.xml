@@ -45,7 +45,6 @@
             <name>emailBody</name>
             <value>
                 <elementReference>MidMarketSized150PlusEmployeeEmail</elementReference>
-                <inputConfiguratorMode>Resource</inputConfiguratorMode>
             </value>
         </inputParameters>
         <inputParameters>
@@ -387,6 +386,11 @@
     <description>This sends email when Number of Employees is greater than MidMarket threshold or Account Segment is MidMarket or Enterprise</description>
     <environments>Default</environments>
     <formulas>
+        <name>AccountURL</name>
+        <dataType>String</dataType>
+        <expression>LEFT($Api.Partner_Server_URL_260,FIND(&apos;/services&apos;, $Api.Partner_Server_URL_260)-1 )&amp; &apos;/lightning/r/Account/&apos; &amp; {!$Record.Id} &amp; &apos;/view&apos;</expression>
+    </formulas>
+    <formulas>
         <name>midMarketThresholdFormula</name>
         <dataType>Number</dataType>
         <expression>VALUE({!$Label.NSP_MidMarket_Threshold})</expression>
@@ -519,7 +523,7 @@
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-            <stringValue>Account_Updated_Async_Nurture_Account_Notification</stringValue>
+                <stringValue>Account_Updated_Async_Nurture_Account_Notification</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -537,7 +541,7 @@
     <textTemplates>
         <name>MidMarketSized150PlusEmployeeEmail</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-family: verdana; font-size: 14px;&quot;&gt;Hello!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-family: verdana; font-size: 14px;&quot;&gt;We are excited to announce that &lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); font-family: verdana; font-size: 14px;&quot;&gt;{!$Record.Name}&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-family: verdana; font-size: 14px;&quot;&gt;&amp;nbsp;is now {!$Record.NSP_Account_Segment__c} with &lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); font-family: verdana; font-size: 14px;&quot;&gt;{!$Record.NumberOfEmployees}&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-family: verdana; font-size: 14px;&quot;&gt; employees.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-family: verdana; font-size: 14px;&quot;&gt;Please take appropriate actions to ensure the account receives the necessary attention.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-family: verdana; font-size: 14px;&quot;&gt;Let&apos;s go win!&lt;/span&gt;&lt;/p&gt;</text>
+        <text>&lt;p&gt;&lt;span style=&quot;font-size: 14px; font-family: verdana; color: rgb(0, 0, 0);&quot;&gt;Hello!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; font-family: verdana; color: rgb(0, 0, 0);&quot;&gt;We are excited to announce that &lt;/span&gt;&lt;a href=&quot;{!AccountURL}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-size: 14px; font-family: verdana; color: rgb(0, 0, 0);&quot;&gt;{!$Record.Name}&lt;/a&gt; &lt;span style=&quot;font-size: 14px; font-family: verdana; color: rgb(0, 0, 0);&quot;&gt;is now {!$Record.NSP_Account_Segment__c} with &lt;/span&gt;&lt;span style=&quot;font-size: 14px; font-family: verdana; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;{!$Record.NumberOfEmployees}&lt;/span&gt;&lt;span style=&quot;font-size: 14px; font-family: verdana; color: rgb(0, 0, 0);&quot;&gt; employees.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; font-family: verdana; color: rgb(0, 0, 0);&quot;&gt;Please take appropriate actions to ensure the account receives the necessary attention.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; font-family: verdana; color: rgb(0, 0, 0);&quot;&gt;Let&apos;s go win!&lt;/span&gt;&lt;/p&gt;</text>
     </textTemplates>
     <variables>
         <name>BccAddresses</name>
