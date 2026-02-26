@@ -15,9 +15,6 @@ export default class UserDefaultTeam extends LightningElement {
     // sorting (read-only table; no selection or row actions)
     sortedBy = "userName";
     sortedDirection = "asc";
-
-    // derived, initial render size
-    pageSize = DEFAULT_PAGE_SIZE;
     showAll = false;
 
     // Title getter
