@@ -8,7 +8,6 @@ export default class UserDefaultTeam extends LightningElement {
     @api columns = [];
 
     // Internal state
-    rows = [];
     errorMessage;
     totalRecords = 0;
 
@@ -55,29 +54,33 @@ export default class UserDefaultTeam extends LightningElement {
 
         this._pageSize = parsed;
     }
+    
+    // private rows attribute...
+    _rows = [];
 
-    /**
-     * @param {Array<object>} rows
-     */
+    // public (api) rows accessors...
     @api
-    setData(rows) {
+    get rows() {
+        return this._rows;
+    }
+    set rows(value) {
         try {
-            const valid = Array.isArray(rows);
-            if (!valid || rows.length === 0) {
-                this.resetState();
+            if (Array.isArray(value) && (value.length > 0)) {
+                // Ensure objects and defensive defaults
+                const sanitized = value.map((dataRow) => ({ ...dataRow }));
+                this.totalRecords = sanitized.length;
+                this._rows = this.sortData(sanitized, this.sortedBy, this.sortedDirection);
                 this.errorMessage = undefined;
-                return;
+                this.showAll = false;
+            } else {
+                this.errorMessage = undefined;
+                this.resetState();
             }
-            // Ensure objects and defensive defaults
-            const sanitized = rows.map((dataRow) => ({ ...dataRow }));
-            this.totalRecords = sanitized.length;
-            this.rows = this.sortData(sanitized, this.sortedBy, this.sortedDirection);
-            this.errorMessage = undefined;
-            this.showAll = false;
         } catch (ex) {
-            this.setError(ex?.message || "Unknown error");
+            this.error = ex?.message;
         }
     }
+
 
     @api
     get error() {
