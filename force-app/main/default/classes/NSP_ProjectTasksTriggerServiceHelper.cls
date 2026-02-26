@@ -128,8 +128,8 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
         }
         //updating Service Appointment
         if ( !mapOfProjectTaskIdAndProjecTask1.keySet().isEmpty()
-            && !System.isFuture()
             && !System.isQueueable()
+            && !System.isFuture()
             )
         {
             this.updateServiceAppointment(
