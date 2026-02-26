@@ -1078,6 +1078,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_Account_Group_Member__c.Bypass_Self_Group_Creation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Account_Group__c.Account_Group_ID_18__c</field>
         <readable>true</readable>
     </fieldPermissions>
