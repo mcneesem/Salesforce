@@ -83,7 +83,7 @@
         <actionName>StringSplitterAction</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Get_DC_Event</targetReference>
+            <targetReference>Send_Email_MM_sized_150_Employee</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Assign_varFaultElement_Split_String_Bcc_Email_Addresses</targetReference>
@@ -190,7 +190,6 @@
             </value>
         </assignmentItems>
         <connector>
-            <isGoTo>true</isGoTo>
             <targetReference>Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
@@ -224,31 +223,10 @@
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
-    <decisions>
-        <name>Bypass_Trigger</name>
-        <label>Bypass Trigger?</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Bypass_Trigger_is_False</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Setup.NSP_Trigger_Switch__c.AutoLaunchedFlows__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Update_Related_Account</targetReference>
-            </connector>
-            <label>Bypass Trigger is False</label>
-        </rules>
-    </decisions>
     <decisions>
         <name>Discovery_Call_Found</name>
         <label>Discovery Call Found?</label>
@@ -266,7 +244,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Send_Email_MM_sized_150_Employee</targetReference>
+                <targetReference>Send_Opportunity_Email</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
@@ -316,28 +294,6 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Outbound_Email_custom_setting_check</name>
-        <label>Outbound Email custom setting check</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Bypass_Trigger</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
-        <rules>
-            <name>IsEnabledOutbound_false</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <label>IsEnabledOutbound = false</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Send_Opportunity_Email</name>
         <label>Send Opportunity Email ?</label>
         <locationX>0</locationX>
@@ -347,10 +303,10 @@
             <name>Yes_Email_Alert</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>$Permission.Bypass_Opportunity_Email_Alerts</leftValueReference>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -492,7 +448,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Send_Opportunity_Email</targetReference>
+            <targetReference>Get_DC_Event</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Assign_varFaultElement_Update_Num_EEs_on_Acct</targetReference>
@@ -598,7 +554,7 @@
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Outbound_Email_custom_setting_check</targetReference>
+                <targetReference>Update_Related_Account</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>

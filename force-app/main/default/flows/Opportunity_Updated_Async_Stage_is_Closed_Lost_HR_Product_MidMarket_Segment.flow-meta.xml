@@ -119,7 +119,7 @@
         <actionName>StringSplitterAction</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Outbound_Email_custom_setting_check</targetReference>
+            <targetReference>Recipient_Is_Populated</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Assign_varFaultElement_Split_String_Raw_Email_Address</targetReference>
@@ -158,6 +158,10 @@
                 <stringValue>Send_Email_Opportunity_Closed_Lost</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Assign_varFaultElement_Split_String_Bcc_Email_Addresses</name>
@@ -171,6 +175,9 @@
                 <stringValue>Split_String_Bcc_Email_Addresses</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Assign_varFaultElement_Split_String_Raw_Email_Address</name>
@@ -184,6 +191,10 @@
                 <stringValue>Split_String_Raw_Email_Address</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Set_National_Account</name>
@@ -234,35 +245,13 @@
         </connector>
     </assignments>
     <decisions>
-        <name>Bypass_Trigger</name>
-        <label>Bypass Trigger?</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Bypass_Trigger_is_False</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Setup.NSP_Trigger_Switch__c.AutoLaunchedFlows__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Does_BccEmailAddress_Exist</targetReference>
-            </connector>
-            <label>Bypass Trigger is False</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Check_which_Email_should_receive_Notification</name>
         <label>Check which Email should receive Notification</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Opp_Close_No_PCM_No_Midmarket_No_MM_Segment</name>
+            <name>Oppty_Closed_Lost_National_Account_is_populated_and_not_PCM_or_MidMarket</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.NSP_Account_Segment__c</leftValueReference>
@@ -292,13 +281,20 @@
                     <stringValue>MidMarket</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.MidMarket_National_Account__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Set_National_Account</targetReference>
             </connector>
-            <label>Opp_Close_No_PCM_No_Midmarket_No_MM_Segment</label>
+            <label>Oppty Closed Lost - National Account is populated and not PCM or MidMarket</label>
         </rules>
         <rules>
-            <name>Opp_Close_PCM_But_No_MM_Segment</name>
+            <name>Oppty_Closed_Lost_National_Account_is_populated_and_is_PCM</name>
             <conditionLogic>1 AND (2 OR 3)</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.NSP_Account_Segment__c</leftValueReference>
@@ -324,10 +320,10 @@
             <connector>
                 <targetReference>Set_Private_Capital_Market</targetReference>
             </connector>
-            <label>Opp_Close_PCM_But_No_MM_Segment</label>
+            <label>Oppty Closed Lost - National Account is populated and is PCM</label>
         </rules>
         <rules>
-            <name>Opp_Close_OnlyAccountSegment</name>
+            <name>Oppty_Closed_Lost_Account_Segment_is_MidMarket_or_National_Account_is_MidMarket</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.NSP_Account_Segment__c</leftValueReference>
@@ -346,7 +342,7 @@
             <connector>
                 <targetReference>Set_Strategic_Sales</targetReference>
             </connector>
-            <label>Opp_Close_OnlyAccountSegment</label>
+            <label>Oppty Closed Lost - Account Segment is MidMarket or National Account is MidMarket</label>
         </rules>
     </decisions>
     <decisions>
@@ -380,7 +376,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Send_Email_Opportunity_Closed_Lost</targetReference>
+            <targetReference>Does_BccEmailAddress_Exist</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
         <rules>
@@ -397,6 +393,28 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Recipient_Is_Populated</name>
+        <label>Recipient Is Populated?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Recipient_Populated</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>RecipientAddresses</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_Email_Opportunity_Closed_Lost</targetReference>
+            </connector>
+            <label>Recipient Populated?</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Recipients_Check</name>
         <label>Recipients Check</label>
         <locationX>0</locationX>
@@ -404,31 +422,10 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Recipients_Exist</name>
-            <conditionLogic>(1 AND 2) OR (3 AND 4)</conditionLogic>
-            <conditions>
-                <leftValueReference>varEmailRaw</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
+            <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>varEmailRaw</leftValueReference>
                 <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>BccAddresses</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>BccAddresses</leftValueReference>
-                <operator>IsEmpty</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -517,13 +514,38 @@
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Bypass_Trigger</targetReference>
+                <targetReference>Outbound_Email_custom_setting_check</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Draft</status>
+    <subflows>
+        <name>Fault_Handler_Subflow</name>
+        <label>Fault Handler Subflow</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>varFaultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Opportunity - Updated - Async Stage is Closed Lost HR Product MidMarket Segment</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <textTemplates>
         <name>EmailBody</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>

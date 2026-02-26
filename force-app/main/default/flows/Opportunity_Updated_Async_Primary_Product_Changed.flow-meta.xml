@@ -261,50 +261,6 @@
         </connector>
     </assignments>
     <decisions>
-        <name>Bypass_Opportunity_Email_Alerts_Custom_Permission_check</name>
-        <label>Bypass Opportunity Email Alerts Custom Permission check</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>MidMarket_Email_Alert_Check</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No Bypass</defaultConnectorLabel>
-        <rules>
-            <name>User_has_bypass_permission</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Permission.Bypass_Opportunity_Email_Alerts</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <label>User has bypass permission</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Bypass_Trigger</name>
-        <label>Bypass Trigger?</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Bypass_Trigger_is_False</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Setup.NSP_Trigger_Switch__c.AutoLaunchedFlows__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Bypass_Opportunity_Email_Alerts_Custom_Permission_check</targetReference>
-            </connector>
-            <label>Bypass Trigger is False</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Does_BccEmailAddress_Exist</name>
         <label>Does BccEmailAddress Exist ?</label>
         <locationX>0</locationX>
@@ -447,13 +403,32 @@
         <label>MidMarket Email Alert Check</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Is_this_possibly_an_HCM_Lead_Specialist_Opty</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>N/A</defaultConnectorLabel>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Send_MidMarket_Email</name>
-            <conditionLogic>(1 AND 2 AND 3 AND 4 AND 5 AND 6) OR ( (1 AND 2 AND 3 AND 4 AND 5 AND 6) AND (7 OR 8 ))</conditionLogic>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NSP_PrimaryProduct__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>WX</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_PrimaryProduct__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>WA</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Does_StrategicSales_Email_Exist</targetReference>
+            </connector>
+            <label>Send MidMarket Email</label>
+        </rules>
+        <rules>
+            <name>Send_HCM_Email</name>
+            <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.Opty_NumOfEmp_more_than_MM_Threshold__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -496,24 +471,10 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_PrimaryProduct__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>WX</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_PrimaryProduct__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>WA</stringValue>
-                </rightValue>
-            </conditions>
             <connector>
-                <targetReference>Does_StrategicSales_Email_Exist</targetReference>
+                <targetReference>Is_this_possibly_an_HCM_Lead_Specialist_Opty</targetReference>
             </connector>
-            <label>Send MidMarket Email</label>
+            <label>Send HCM Email</label>
         </rules>
     </decisions>
     <decisions>
@@ -522,7 +483,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Bypass_Trigger</targetReference>
+            <targetReference>MidMarket_Email_Alert_Check</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
         <rules>
