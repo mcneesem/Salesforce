@@ -321,7 +321,7 @@
         <field>Asset.Renewal_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
-        <fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Asset.Shipping_Address__c</field>
         <readable>true</readable>
@@ -1078,11 +1078,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>NSP_Account_Group_Member__c.Bypass_Self_Group_Creation__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>NSP_Account_Group__c.Account_Group_ID_18__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1106,7 +1101,7 @@
         <field>NSP_Account_Group__c.Eligible_To_Return_To_Insperity_At_Time__c</field>
         <readable>true</readable>
     </fieldPermissions>
-        <fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Account_Group__c.Other_Competitor__c</field>
         <readable>true</readable>
@@ -1144,6 +1139,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Account_Group__c.Why_Why_Not__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Account_Group__c.NSP_OneVoice_External_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
