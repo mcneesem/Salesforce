@@ -173,7 +173,7 @@
     <!-- Reinstatement Section -->
     <apex:outputPanel rendered="{!NOT(ISBLANK(wrapReinstatementList))}">
         <div style="padding-left:2%; text-align:left;">
-            <b>REINSTATEMENTS</b>
+            <b>REINSTATEMENTS</b> 
         </div>
     </apex:outputPanel>
     <apex:dataTable value="{!wrapReinstatementList}" var="reinstatement" width="100%">
@@ -203,24 +203,49 @@
                     <td style="width: 10%; margin: 0; padding: 0;">CSA Term:</td>
                     <td style="margin: 0; padding: 0 0 0 12.5px;vertical-align: top;">
                         <apex:outputText value="{!IF(
-                            reinstatement.clientermdate == Null,
-                            'NA',
-                            IF(reinstatement.revision == 'Yes','REVISED ' & TEXT(MONTH(reinstatement.clientermdate)) & '/' & TEXT(DAY(reinstatement.clientermdate)) & '/' &
-                            TEXT(YEAR(reinstatement.clientermdate)) &
-                            ' (Previous Term Date: ' &
-                            TEXT(MONTH(reinstatement.previousClientTermdate)) & '/' &
-                            TEXT(DAY(reinstatement.previousClientTermdate)) & '/' &
-                            TEXT(YEAR(reinstatement.previousClientTermdate)) & ')',
-                            TEXT(MONTH(reinstatement.clientermdate)) & '/' &
-                            TEXT(DAY(reinstatement.clientermdate)) & '/' &
-                            TEXT(YEAR(reinstatement.clientermdate))
-                            ))}">
-                        </apex:outputText>
+                                                ISBLANK(reinstatement.clientermdate),
+                                                'NA',
+                                                IF(
+                                                AND(
+                                                reinstatement.revision="Yes",
+                                                reinstatement.previousClientTermdate <> reinstatement.clientermdate
+                                                ),
+                                                'REVISED ' &
+                                                TEXT(MONTH(reinstatement.clientermdate)) & '/' &
+                                                TEXT(DAY(reinstatement.clientermdate)) & '/' &
+                                                TEXT(YEAR(reinstatement.clientermdate)) &
+                                                ' (Previous Term Date: ' &
+                                                TEXT(MONTH(reinstatement.previousClientTermdate)) & '/' &
+                                                TEXT(DAY(reinstatement.previousClientTermdate)) & '/' &
+                                                TEXT(YEAR(reinstatement.previousClientTermdate)) &
+                                                ')',
+                                                TEXT(MONTH(reinstatement.clientermdate)) & '/' &
+                                                TEXT(DAY(reinstatement.clientermdate)) & '/' &
+                                                TEXT(YEAR(reinstatement.clientermdate))
+                                                )
+                                                )}"/>
+                        
                     </td>
                 </tr>
                 <tr>
                     <td style="width: 10%; margin: 0; padding: 0;">Reason:</td>
-                    <td style="margin: 0; padding: 0 0 0 12.5px;vertical-align: top;">{!reinstatement.reason}</td>
+                    <td style="margin: 0; padding: 0 0 0 12.5px;vertical-align: top;">
+                        <apex:outputText value="{!IF(
+                                                reinstatement.revision="Yes",
+                                                IF(
+                                                reinstatement.previousReason <> reinstatement.reason,
+                                                'REVISED ' &
+                                                reinstatement.reason &
+                                                ' (Previous Reason : ' &
+                                                reinstatement.previousReason &
+                                                ')',
+                                                reinstatement.reason
+                                                ),
+                                                reinstatement.reason
+                                                )}"/>
+                    </td>
+                    
+                    <!--td style="margin: 0; padding: 0 0 0 12.5px;vertical-align: top;">REVISION: {!reinstatement.reason}/{!reinstatement.previousReason}</td-->
                 </tr>
             </table>
         </apex:column>
