@@ -1,11 +1,11 @@
 <template>
     <lightning-card title={title} icon-name="standard:user">
         <div class="slds-p-horizontal_medium slds-p-vertical_small">
-            <template if:true={errorMessage}>
+            <template if:true={error}>
                 <div class="slds-text-color_error slds-m-bottom_small">
-                    {errorMessage}
+                    {error}
                 </div>
-            </template>
+            </template>>
 
             <lightning-datatable
                 key-field="id"
