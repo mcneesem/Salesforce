@@ -8,38 +8,10 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>varEvent.Id</assignToReference>
+            <assignToReference>varEvent</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varEvent.WhoId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$Record.WhoId</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varEvent.WhatId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$Record.WhatId</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varEvent.NSP_Status__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$Record.NSP_Status__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varEvent.NSP_Start_Date__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$Record.NSP_Start_Date__c</elementReference>
+                <elementReference>GetEvent</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -63,7 +35,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assign_Event_Info_to_varEvent</targetReference>
+                <targetReference>GetEvent</targetReference>
             </connector>
             <label>Bypass Trigger is False</label>
         </rules>
@@ -91,10 +63,31 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>GetEvent</name>
+        <label>GetEvent</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assign_Event_Info_to_varEvent</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Event</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <filterLogic>(1 OR 2) AND 3 AND 4 AND 5</filterLogic>
+        <filterLogic>(1 OR 2) AND 3 AND 4 AND (5 OR 6)</filterLogic>
         <filters>
             <field>NSP_Event_Type__c</field>
             <operator>EqualTo</operator>
@@ -130,6 +123,13 @@
                 <stringValue>006</stringValue>
             </value>
         </filters>
+        <filters>
+            <field>WhatId</field>
+            <operator>StartsWith</operator>
+            <value>
+                <stringValue>001</stringValue>
+            </value>
+        </filters>
         <object>Event</object>
         <recordTriggerType>Create</recordTriggerType>
         <scheduledPaths>
@@ -148,15 +148,9 @@
         <locationY>0</locationY>
         <flowName>Event_Subflow_Send_Discovery_Call_Email</flowName>
         <inputAssignments>
-            <name>varEventStartDateTime</name>
+            <name>varEvent</name>
             <value>
-                <elementReference>$Record.StartDateTime</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>varOpportunityId</name>
-            <value>
-                <elementReference>$Record.WhatId</elementReference>
+                <elementReference>varEvent</elementReference>
             </value>
         </inputAssignments>
     </subflows>
