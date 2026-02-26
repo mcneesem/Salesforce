@@ -53,7 +53,7 @@ public with sharing class NSP_EmailMessageTriggerHelper {
         }
         List<Case> caseToUpdate = new List<Case>();
         if ( !validatedParentIds.isEmpty() ) {
-            //Added as a part of STY-04132 
+            //Added as a part of STY-04132
             for ( Id caseId : validatedParentIds ) {
                 Case caseRecord = new Case();
                 caseRecord.Id = caseId;
@@ -73,7 +73,7 @@ public with sharing class NSP_EmailMessageTriggerHelper {
         if ( !switchEnabled && !healthWelfareInternalExternalCaseIdFromAddMap.isEmpty() ) {
             sendEmailToHealthWelfareInternalExternal( healthWelfareInternalExternalCaseIdFromAddMap );
         }
-        // Added as a part of STY-04132 
+        // Added as a part of STY-04132
         if ( !caseToUpdate.isEmpty() ) {
             List<Database.SaveResult> results = Database.update( caseToUpdate , false );
             NSP_ErrorLogHandler.logResults(
@@ -84,20 +84,20 @@ public with sharing class NSP_EmailMessageTriggerHelper {
         }
     }
 
-    /***********************************************************************************************
-    * MethodName: beforeInsertionEmailMessage
-    * Description: This method will be called before insert of EmailMessage
-    * Story : STY-03643
-    * Params: List<EmailMessage> listOfEmailMessage
-    * ********************************************************************************************/
-    public void beforeInsertionEmailMessage(List<EmailMessage> newList){
-        restrictEmailFromRestrictedSenders(newList); 
+    //
+    // MethodName: beforeInsertionEmailMessage
+    // Description: This method will be called before insert of EmailMessage
+    // Story : STY-03643
+    // Params: List<EmailMessage> listOfEmailMessage
+    //
+    public void beforeInsertionEmailMessage( List<EmailMessage> newList ) {
+        restrictEmailFromRestrictedSenders( newList );
     }
-    
+
     // ***********************************************************************************************
     // Description: This method will reOpen an existing case if days between closing of (BPS) Case
     // and EmailMessage date is less than 90 days,else, it will mark Response After Close to True
-    // Date       : 17/11/2021 
+    // Date : 17/11/2021
     // Modified Date : 20/09/2021
     // Update- This Method will also will reOpen an existing case if days between closing of
     // case (PEO) and EmailMessage date is within 5 days,else, it will create a new Case
@@ -146,6 +146,7 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                         if ( ( currentCase != null )
                             && ( currentCase.ClosedDate != null )
                             && ( eMessage.MessageDate != null )
+                            && ( eMessage.Source != 'Email Integration App Manual' )
                             )
                         {
                             List<String> toAddressList = NSP_EmailMessageTriggerHelper.getAddressList( eMessage );
@@ -153,7 +154,7 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                             if ( ( currentCase.RecordTypeId == BPS_RECORDTYPEID )
                                 || (
                                     ( currentCase.RecordTypeId == NSP_EmailMessageTriggerHelper.PEO_RECORDTYPEID )
-                                    && !isContactCenterToAddress 
+                                    && !isContactCenterToAddress
                                     )
                                 )
                             {
@@ -464,23 +465,19 @@ public with sharing class NSP_EmailMessageTriggerHelper {
     }
 
     //Method to get queue name from email address.
-    private static String getQueueNameFromEmail(Map<String, String> mapOfEmailAddressToQueueName, EmailMessage record ) {
+    private static String getQueueNameFromEmail( Map<String,String> mapOfEmailAddressToQueueName , EmailMessage record ) {
         List<String> queueNames = new List<String>();
         String queueName = null;
-        
         if (record != null && mapOfEmailAddressToQueueName != null) {
             // Split 'To' and 'Cc' addresses
-            List<String> toAddressList = String.isNotBlank(record.ToAddress) 
-                ? record.ToAddress.split(';\\s*') 
+            List<String> toAddressList = String.isNotBlank(record.ToAddress)
+                ? record.ToAddress.split(';\\s*')
                 : new List<String>();
-            
-            List<String> ccAddressList = String.isNotBlank(record.CcAddress) 
-                ? record.CcAddress.split(';\\s*') 
+            List<String> ccAddressList = String.isNotBlank(record.CcAddress)
+                ? record.CcAddress.split(';\\s*')
                 : new List<String>();
-            
             // Combine both address lists
             toAddressList.addAll(ccAddressList);
-            
             // Check and collect queue names from map
             for (String emailAddress : toAddressList) {
                 queueName = mapOfEmailAddressToQueueName.get(emailAddress);
@@ -601,7 +598,7 @@ public with sharing class NSP_EmailMessageTriggerHelper {
     // MethodName: deleteEmailMessages
     // Description: Method to delete cloned Email Message record.
     // Story: AZD-320679
-    // Params: Set<Id> recordIds 
+    // Params: Set<Id> recordIds
     private static void deleteEmailMessages( Set<Id> recordIds ) {
         try {
             if ( ( recordIds != null ) && !recordIds.isEmpty() ) {
@@ -732,7 +729,7 @@ public with sharing class NSP_EmailMessageTriggerHelper {
     //
     // MethodName : updateConfidentialCheckBoxForEmpScreening
     // Story : STY-03671
-    // Description : This method will update the case fields if an email is sent to 
+    // Description : This method will update the case fields if an email is sent to
     // 'test.customer.service@insperity.com' or 'test.lesdrugscreening.service@insperity.com
     // Params : Set<Id> caseIdSet
     //
@@ -740,7 +737,7 @@ public with sharing class NSP_EmailMessageTriggerHelper {
         List<Case> caseListToUpdate = new List<Case>();
         try {
             for ( Case caseRec: [
-                        SELECT Id, NSP_Confidential__c, NSP_Category__c 
+                        SELECT Id , NSP_Confidential__c , NSP_Category__c
                         FROM Case
                         WHERE Id IN: caseIdSet
                     ]
@@ -767,33 +764,45 @@ public with sharing class NSP_EmailMessageTriggerHelper {
         }
     }
 
-    /***********************************************************************************************
-    * MethodName : sendEmailToHealthWelfareInternalExternal
-    * Story  : STY-03531
-    * Description   : This method will send auto-response mail based on internal/external sender email
-    * Params : Map<Id, EmailMessage> healthWelfareInternalExternalCaseIdFromAddMap
-    * ********************************************************************************************/     
-    public static void sendEmailToHealthWelfareInternalExternal(Map<Id, EmailMessage> healthWelfareInternalExternalCaseIdFromAddMap){
-        try{
+    //
+    // MethodName : sendEmailToHealthWelfareInternalExternal
+    // Story  : STY-03531
+    // Description   : This method will send auto-response mail based on internal/external sender email
+    // Params : Map<Id, EmailMessage> healthWelfareInternalExternalCaseIdFromAddMap
+    //
+    public static void sendEmailToHealthWelfareInternalExternal( Map<Id,EmailMessage> healthWelfareInternalExternalCaseIdFromAddMap ) {
+        try {
             //get all the cases created from email-to-case if anybody sends email to Health & Welfare email ID
             //send auto response email with internal email template if the from address has an '@insperity.com' domain
-            for(Case caseRec : [SELECT Id, NSP_Case_Created_From_Email_To_Case__c FROM Case WHERE Id IN: healthWelfareInternalExternalCaseIdFromAddMap.keySet()]){
-                
+            for ( Case caseRec : [
+                        SELECT Id , NSP_Case_Created_From_Email_To_Case__c
+                        FROM Case
+                        WHERE ( Id IN :healthWelfareInternalExternalCaseIdFromAddMap.keySet() )
+                    ]
+                )
+            {
                 //DF-03783 - email should be triggered only when case is created
-                if(caseRec.NSP_Case_Created_From_Email_To_Case__c) {
+                if ( caseRec.NSP_Case_Created_From_Email_To_Case__c ) {
                     continue;
                 }
-                
-                if(healthWelfareInternalExternalCaseIdFromAddMap.get(caseRec.Id).FromAddress.contains(NSP_ServiceConstants.INTERNAL_EMAIL_ADD) &&
-                  healthWelfareInternalExternalCaseIdFromAddMap.get(caseRec.Id).ToAddress.equals(System.Label.NSP_Health_Welfare_Section_125)){
-                    sendEmailToInternalExternal('NSP_Health_Welfare_Internal_Email_Template', healthWelfareInternalExternalCaseIdFromAddMap.get(caseRec.Id).FromAddress, caseRec.Id);
-                }
-                
-                else {
-                    if(healthWelfareInternalExternalCaseIdFromAddMap.get(caseRec.Id).ToAddress.equals(System.Label.NSP_Health_Welfare_Section_125)){
-                    sendEmailToInternalExternal('NSP_Health_Welfare_External_Email_Template', healthWelfareInternalExternalCaseIdFromAddMap.get(caseRec.Id).FromAddress, caseRec.Id);
+                if ( healthWelfareInternalExternalCaseIdFromAddMap.get(caseRec.Id).FromAddress.contains(NSP_ServiceConstants.INTERNAL_EMAIL_ADD)
+                    && healthWelfareInternalExternalCaseIdFromAddMap.get(caseRec.Id).ToAddress.equals(System.Label.NSP_Health_Welfare_Section_125)
+                    )
+                {
+                    sendEmailToInternalExternal(
+                        'NSP_Health_Welfare_Internal_Email_Template' ,
+                        healthWelfareInternalExternalCaseIdFromAddMap.get( caseRec.Id ).FromAddress ,
+                        caseRec.Id
+                    );
+                } else {
+                    if ( healthWelfareInternalExternalCaseIdFromAddMap.get( caseRec.Id ).ToAddress.equals( System.Label.NSP_Health_Welfare_Section_125 ) ) {
+                        sendEmailToInternalExternal(
+                            'NSP_Health_Welfare_External_Email_Template' ,
+                            healthWelfareInternalExternalCaseIdFromAddMap.get( caseRec.Id ).FromAddress ,
+                            caseRec.Id
+                        );
                     }
-                 }
+                }
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
@@ -804,33 +813,33 @@ public with sharing class NSP_EmailMessageTriggerHelper {
         }
     }
 
-    /***********************************************************************************************
-    * MethodName : sendEmailToInternalExternal
-    * Story  : STY-03531
-    * Description   : Helper method for sendEmailToHealthWelfareInternalExternal
-    * Params : String emailTemplateName, String ToAddress, Id caseRecId
-    * ********************************************************************************************/ 
-    private static void sendEmailToInternalExternal(String emailTemplateName, String ToAddress, Id caseRecId){
-        try{
-            List<Messaging.SingleEmailMessage> lstEmailMessages = new List<Messaging.SingleEmailMessage>(); 
+    //
+    // MethodName : sendEmailToInternalExternal
+    // Story  : STY-03531
+    // Description   : Helper method for sendEmailToHealthWelfareInternalExternal
+    // Params : String emailTemplateName, String ToAddress, Id caseRecId
+    //
+    private static void sendEmailToInternalExternal( String emailTemplateName , String ToAddress , Id caseRecId ) {
+        try {
+            List<Messaging.SingleEmailMessage> lstEmailMessages = new List<Messaging.SingleEmailMessage>();
             List<String> sendToList = new List<String>();
             sendToList.add(ToAddress);
             List<String> emailTempFields = new List<String>{'ID'};
             EmailTemplate emailTemplate = NSP_sObjectSelector.selectByDeveloperName(emailTempFields, emailTemplateName);
             Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
             email= Messaging.renderStoredEmailTemplate(emailTemplate.Id, null, caseRecId);
-            email.setTemplateId(emailTemplate.Id); 
+            email.setTemplateId(emailTemplate.Id);
             email.setToAddresses(sendToList);
             OrgWideEmailAddress orgWidAddress = NSP_GenericEmailUtility.getOrgWideAddress( System.label.NSP_no_reply );
             if ( orgWidAddress != null ) {
                 email.setOrgWideEmailAddressId( orgWidAddress.Id );
             }
-            email.setWhatId(caseRecId); 
+            email.setWhatId(caseRecId);
             email.setSaveAsActivity(false);
             lstEmailMessages.add(email);
             if(!lstEmailMessages.isEmpty()){
                 NSP_GenericEmailUtility.sendSingleEmailMessages(lstEmailMessages,false);
-            }  
+            }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 NSP_EmailMessageTriggerHelper.class.getName() ,
@@ -840,14 +849,13 @@ public with sharing class NSP_EmailMessageTriggerHelper {
         }
     }
 
-     /***********************************************************************************************
-    * MethodName : UpdateEmailMessageFields
-    * Story  : STY-03853
-    * Description   : This method will update EmailMessage ParentId Based on Case External Id
-    * Params : List<EmailMessage> newList
-    * ********************************************************************************************/
-   
-    public static void updateEmailMessageFields(List<EmailMessage> newList) {
+    //
+    // MethodName : UpdateEmailMessageFields
+    // Story  : STY-03853
+    // Description   : This method will update EmailMessage ParentId Based on Case External Id
+    // Params : List<EmailMessage> newList
+    //
+    public static void updateEmailMessageFields( List<EmailMessage> newList ) {
         if(!isFirst) {
             isFirst = true;
             //List to store case Ids
@@ -858,7 +866,6 @@ public with sharing class NSP_EmailMessageTriggerHelper {
             Set<Id> emailMessageTobeDeleted = new Set<Id>();
             //To Keep external id with its related case Id
             Map<String, String> caseExtrnlIdsByCaseIds = new Map<String, String>();
-            
             for(EmailMessage emailMessage : newList) {
                 //To Filter netsuote cases only
                 if(emailMessage.FromName != null && emailMessage.FromName.Contains('netsuite')){
@@ -876,36 +883,29 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                     }
                 }
             }
-
             if(!caseExternalId.isEmpty()) {
                 //Get cases for External Case
                 for(Case cases : [SELECT Id, ParentId, NSP_Case_External_Id__c FROM Case WHERE NSP_Case_External_Id__c =: caseExternalId]) {
                     caseExtrnlIdsByCaseIds.put(cases.NSP_Case_External_Id__c, cases.Id);
                 }
-
-                
                 //insert updated cases
                 if(!emailMessageClonedList.isEmpty() && !caseExtrnlIdsByCaseIds.isEmpty()) {
                     updateParentIdOnEmailMessage(emailMessageClonedList, caseExtrnlIdsByCaseIds);
                 }
-
                 //Finally after process, delete all the Email Message Records which are cloned.
-               if(!emailMessageTobeDeleted.isEmpty()) {
+                if(!emailMessageTobeDeleted.isEmpty()) {
                     deleteEmailMessages( emailMessageTobeDeleted );
                 }
             }
-            
         }
     }
-    
-    //Method to insert updated Email Message record.
-    private static void updateParentIdOnEmailMessage(List<EmailMessage> emailMessageClonedList, Map<String, String> caseExtrnlIdsByCaseIds) {
-        List<EmailMessage> emailMessageToBeInserted = New List<EmailMessage>();
 
+    //Method to insert updated Email Message record.
+    private static void updateParentIdOnEmailMessage( List<EmailMessage> emailMessageClonedList , Map<String,String> caseExtrnlIdsByCaseIds ) {
+        List<EmailMessage> emailMessageToBeInserted = New List<EmailMessage>();
         for(EmailMessage eMessage : emailMessageClonedList) {
             string[] caseExtDetails = eMessage.FromName.split('\\.');
             string[] caseExtIds = caseExtDetails[2].split('_');
-
             //Case number should be there
             if(!caseExtIds.isEmpty()) {
                 if(caseExtrnlIdsByCaseIds.containskey(caseExtIds[0])){
@@ -913,11 +913,11 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                     eMessage.ParentId = caseExtrnlIdsByCaseIds.get(caseExtIds[0]);
                     emailMessageToBeInserted.add(eMessage);
                 }
-            }            
+            }
         }
         //Insert Updated Email Messages
         if(!emailMessageToBeInserted.isEmpty()) {
-            insert emailMessageToBeInserted; 
+            insert emailMessageToBeInserted;
         }
     }
 
