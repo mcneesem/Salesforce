@@ -236,7 +236,7 @@
                                                 reinstatement.previousReason <> reinstatement.reason,
                                                 'REVISED ' &
                                                 reinstatement.reason &
-                                                ' (Previous Reason : ' &
+                                                ' (Previous Reason:' &
                                                 reinstatement.previousReason &
                                                 ')',
                                                 reinstatement.reason
