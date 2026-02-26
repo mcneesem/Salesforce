@@ -42,18 +42,21 @@ export default class UserDefaultTeam extends LightningElement {
     }
 
     // Public API methods for children to drive data/pageSize/errors
-
-    /**
-     * @param {number} n
-     */
+    _pageSize = DEFAULT_PAGE_SIZE;
     @api
-    setPageSize(n) {
-        const parsed = Number(n);
-        if (Number.isFinite(parsed) && parsed > 0) {
-            this.pageSize = parsed;
-        } else {
-            this.pageSize = DEFAULT_PAGE_SIZE;
+    get pageSize() {
+        return this._pageSize;
+    }
+    set pageSize(value) {
+        let parsed = DEFAULT_PAGE_SIZE;
+        if (value) {
+            parsed = number(value);
         }
+        if (!parsed || !Number.isFinite(parsed) || (parsed < 1)) {
+            parsed = DEFAULT_PAGE_SIZE;
+        }
+
+        this._pageSize = DEFAULT_PAGE_SIZE;
     }
 
     /**
@@ -79,12 +82,15 @@ export default class UserDefaultTeam extends LightningElement {
         }
     }
 
-    /**
-     * @param {string} message
-     */
     @api
-    setError(message) {
-        const msg = typeof message === "string" && message.trim().length > 0 ? message : "Unknown error";
+    get error() {
+        return this.errorMessage;
+    }
+    set error(message) {
+        let msg = "UNKNOWN ERROR";
+        if (typeof message === 'string' && message.length > 0) {
+            msg = message;
+        }
         this.errorMessage = msg;
         this.resetState();
     }

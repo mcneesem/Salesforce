@@ -13,20 +13,20 @@ const COLUMNS = Object.freeze([
 export default class UserDefaultAccountTeam extends LightningElement {
     @api recordId;
 
+    errorMessage;
     // expose columns for base
     columns = COLUMNS;
-
+    pageSize;
     // wire page size and push to base
     @wire(getPageSize)
     wiredPageSize({ data, error }) {
-        const base = this.template.querySelector('c-user-default-team');
-        if (data != null && base) {
-            const n = Number(data);
-            base.setPageSize(Number.isFinite(n) && n > 0 ? n : undefined);
-        } else if (error && base) {
-            // ignore and use default in base
-            base.setPageSize(undefined);
+        if (data) {
+            this.pageSize = data;
         }
+        else if (error) {
+            this.pageSize = undefined;
+        }
+
     }
 
     // wire data and push to base
@@ -50,7 +50,7 @@ export default class UserDefaultAccountTeam extends LightningElement {
             const errorText = Array.isArray(error?.body)
                 ? error.body.map((e) => e.message).join(", ")
                 : error?.body?.message || error?.message || "Unknown error";
-            base.setError(errorText);
+           this.errorMessage = errorText;
         }
     }
 }
