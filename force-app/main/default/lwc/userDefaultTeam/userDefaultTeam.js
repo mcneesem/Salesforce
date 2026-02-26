@@ -50,13 +50,13 @@ export default class UserDefaultTeam extends LightningElement {
     set pageSize(value) {
         let parsed = DEFAULT_PAGE_SIZE;
         if (value) {
-            parsed = number(value);
+            parsed = Number(value);
         }
         if (!parsed || !Number.isFinite(parsed) || (parsed < 1)) {
             parsed = DEFAULT_PAGE_SIZE;
         }
 
-        this._pageSize = DEFAULT_PAGE_SIZE;
+        this._pageSize = parsed;
     }
 
     /**
