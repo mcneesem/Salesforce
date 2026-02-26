@@ -98,33 +98,6 @@
                 <identifier>RecordDetails_cField</identifier>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Start_Date__c</fieldItem>
-                <identifier>RecordNSP_Start_Date_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Comments__c</fieldItem>
-                <identifier>RecordNSP_Comments_cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!$Permission.CustomPermission.Termination_Revision_Access}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>false</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
         <name>Facet-867cf431-c21c-46e2-8b6c-db478a765ffd</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -177,6 +150,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Estimated_Impact__c</fieldItem>
                 <identifier>RecordNSP_Estimated_Impact_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Start_Date__c</fieldItem>
+                <identifier>RecordNSP_Start_Date_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
