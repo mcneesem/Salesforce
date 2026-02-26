@@ -29,12 +29,12 @@ export default class UserDefaultAccountTeam extends LightningElement {
 
     }
 
-    // wire data and push to base
+    // wire data and set rows...
+    rows;
     @wire(getTeamMembersByOwner, { ownerId: "$recordId" })
     wiredTeam({ data, error }) {
-        const base = this.template.querySelector('c-user-default-team');
-        if (Array.isArray(data) && base) {
-            const teamRows = data.map((member) => ({
+        if (Array.isArray(data)) {
+            this.rows = data.map((member) => ({
                 id: member.id,
                 ownerId: member.ownerId,
                 userId: member.userId,
@@ -45,12 +45,11 @@ export default class UserDefaultAccountTeam extends LightningElement {
                 caseAccessLevel: member.caseAccessLevel || "",
                 contactAccessLevel: member.contactAccessLevel || ""
             }));
-            base.setData(teamRows);
-        } else if (error && base) {
+        } else if (error) {
             const errorText = Array.isArray(error?.body)
                 ? error.body.map((e) => e.message).join(", ")
                 : error?.body?.message || error?.message || "Unknown error";
-           this.errorMessage = errorText;
+            this.errorMessage = errorText;
         }
     }
 }
