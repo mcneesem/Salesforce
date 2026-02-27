@@ -874,16 +874,6 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Product_Offering__c</fieldItem>
-                <identifier>RecordProduct_Offering_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.DNB_Connect_DUNS_Number__c</fieldItem>
@@ -1318,16 +1308,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Regen_Date__c</fieldItem>
                 <identifier>RecordNSP_Regen_Date_cField2</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Product_Offering__c</fieldItem>
-                <identifier>RecordProduct_Offering_cField3</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
