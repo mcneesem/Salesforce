@@ -45,6 +45,7 @@ public with sharing class CaseImportQueueable implements Queueable {
 
     public void execute( QueueableContext context ) {
         try {
+            System.attachFinalizer(new CaseImportFinalizer());
             List<Case> batchList = this.dequeueNextBatch();
             List<Database.SaveResult> srList = null;
             Map<Id,Case> batchMap = new Map<Id,Case>();
@@ -69,12 +70,6 @@ public with sharing class CaseImportQueueable implements Queueable {
                     this.failureMap
                 );
             } else {
-                CaseImportQueueable.settings.Bypass_Opened_Date__c = false;
-                update CaseImportQueueable.settings;
-                CaseImportQueueable.emailDeliverability.IsEnabledOutbound__c = true;
-                update CaseImportQueueable.emailDeliverability;
-                CaseImportQueueable.notificationDeliverability.IsEnabledOutbound__c = true;
-                update CaseImportQueueable.notificationDeliverability;
                 FileUploadController.sendEmail( this.caseSuccessList , this.failureMap );
             }
         } catch ( Exception e ) {
@@ -158,26 +153,6 @@ public with sharing class CaseImportQueueable implements Queueable {
                 settings = Case_Import_Tool_Settings__c.getInstance( UserInfo.getUserId() );
             }
             return settings;
-        }
-        private set;
-    }
-
-    private static Email_Deliverability_Settings__c emailDeliverability {
-        private get {
-            if ( emailDeliverability == null ) {
-                emailDeliverability = Email_Deliverability_Settings__c.getInstance( UserInfo.getUserId() );
-            }
-            return emailDeliverability;
-        }
-        private set;
-    }
-
-    private static Notification_Deliverability_Settings__c notificationDeliverability {
-        private get {
-            if ( notificationDeliverability == null ) {
-                notificationDeliverability = Notification_Deliverability_Settings__c.getInstance( UserInfo.getUserId() );
-            }
-            return notificationDeliverability;
         }
         private set;
     }
