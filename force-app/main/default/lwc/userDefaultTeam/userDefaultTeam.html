@@ -1,12 +1,11 @@
 <template>
     <lightning-card title={title} icon-name="standard:user">
         <div class="slds-p-horizontal_medium slds-p-vertical_small">
-            <template if:true={error}>
+            <template lwc:if={error}>
                 <div class="slds-text-color_error slds-m-bottom_small">
                     {error}
                 </div>
             </template>
-
             <lightning-datatable
                 key-field="id"
                 data={pagedRows}
@@ -16,10 +15,9 @@
                 onsort={handleSort}
                 sorted-by={sortedBy}
                 sorted-direction={sortedDirection}
-            >
+                >
             </lightning-datatable>
         </div>
-
         <div slot="footer">
             <lightning-button
                 variant="base"
@@ -27,7 +25,7 @@
                 title="View all team members"
                 onclick={handleViewAll}
                 disabled={isViewAllDisabled}
-            >
+                >
             </lightning-button>
         </div>
     </lightning-card>
