@@ -8282,7 +8282,12 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
+        <field>SBQQ__OrderItemConsumptionRate__c.Is_Price_Updated__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__OrderItemConsumptionRate__c.OrderItem_Consumption_Rate_External_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -8297,7 +8302,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>SBQQ__OrderItemConsumptionSchedule__c.NSP_OrderItem_Consumption_External_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -8327,57 +8332,57 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>SBQQ__OrderItemConsumptionSchedule__c.blng__BillingGLRule__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>SBQQ__OrderItemConsumptionSchedule__c.blng__BillingGLTreatment__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>SBQQ__OrderItemConsumptionSchedule__c.blng__BillingRule__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>SBQQ__OrderItemConsumptionSchedule__c.blng__BillingTreatment__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>SBQQ__OrderItemConsumptionSchedule__c.blng__FinanceBookAccounting__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>SBQQ__OrderItemConsumptionSchedule__c.blng__LegalEntity__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>SBQQ__OrderItemConsumptionSchedule__c.blng__RevenueRecognitionRule__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>SBQQ__OrderItemConsumptionSchedule__c.blng__TaxGLRule__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>SBQQ__OrderItemConsumptionSchedule__c.blng__TaxGLTreatment__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>SBQQ__OrderItemConsumptionSchedule__c.blng__TaxRule__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>SBQQ__OrderItemConsumptionSchedule__c.blng__TaxTreatment__c</field>
         <readable>true</readable>
     </fieldPermissions>
