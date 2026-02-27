@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>My_Open_Project_TasksHomepageListView</fullName>
+    <columns>pse__Project__c</columns>
+    <columns>NSP_Account_Id__c</columns>
+    <columns>Template_Name__c</columns>
+    <columns>NAME</columns>
+    <columns>pse__Status__c</columns>
+    <columns>pse__Start_Date__c</columns>
+    <columns>pse__End_Date__c</columns>
+    <columns>NSP_Template__c</columns>
+    <filterScope>Mine</filterScope>
+    <filters>
+        <field>pse__Status__c</field>
+        <operation>notEqual</operation>
+        <value>Complete,Canceled</value>
+    </filters>
+    <label>My Open Project Tasks</label>
+    <sharedTo>
+        <allInternalUsers></allInternalUsers>
+    </sharedTo>
+</ListView>
