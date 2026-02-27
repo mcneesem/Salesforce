@@ -45,7 +45,6 @@ public with sharing class CaseImportQueueable implements Queueable , Finalizer {
 
     public void execute( QueueableContext context ) {
         try {
-            System.attachFinalizer(new CaseImportFinalizer());
             List<Case> batchList = this.dequeueNextBatch();
             List<Database.SaveResult> srList = null;
             Map<Id,Case> batchMap = new Map<Id,Case>();
