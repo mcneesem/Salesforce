@@ -11,6 +11,10 @@
         <value xsi:nil="true"/>
     </values>
     <values>
+        <field>Is_Always_Attached__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
         <field>Year__c</field>
         <value xsi:type="xsd:double">2027.0</value>
     </values>
