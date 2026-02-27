@@ -83,7 +83,7 @@
         <actionName>StringSplitterAction</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Send_Email_MM_sized_150_Employee</targetReference>
+            <targetReference>Does_StrategicSales_Email_Exist</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Assign_varFaultElement_Split_String_Bcc_Email_Addresses</targetReference>
@@ -116,7 +116,7 @@
         <actionName>StringSplitterAction</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Does_BccEmailAddress_Exist</targetReference>
+            <targetReference>Recipient_Is_Populated</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Assign_varFault_Element_Split_String_Strategic_Sales_Email_Address</targetReference>
@@ -238,7 +238,7 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>varDiscoveryCallEvent</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -254,6 +254,9 @@
         <label>Does BccEmailAddress Exist ?</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Does_StrategicSales_Email_Exist</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Bcc_Email_Exists</name>
@@ -276,6 +279,10 @@
         <label>Does StrategicSales Email Exist ?</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Does_BccEmailAddress_Exist</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Email_Exists_StrategicSales</name>
@@ -291,6 +298,35 @@
                 <targetReference>Split_String_Strategic_Sales_Email_Address</targetReference>
             </connector>
             <label>Email Exists StrategicSales</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Recipient_Is_Populated</name>
+        <label>Recipient Is Populated?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Recipient_Populated</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>RecipientAddresses</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>RecipientAddresses</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_Email_MM_sized_150_Employee</targetReference>
+            </connector>
+            <label>Recipient Populated?</label>
         </rules>
     </decisions>
     <decisions>
@@ -323,15 +359,8 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>$Record.NSP_Mid_Market_Sales_Email__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
             <connector>
-                <targetReference>Does_StrategicSales_Email_Exist</targetReference>
+                <targetReference>Does_BccEmailAddress_Exist</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
@@ -342,7 +371,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Send_Opportunity_Email</targetReference>
+            <targetReference>Get_DC_Event</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
@@ -373,7 +402,7 @@
     <formulas>
         <name>OpportunityURL</name>
         <dataType>String</dataType>
-        <expression>LEFT($Api.Partner_Server_URL_260,FIND(&apos;/services&apos;, $Api.Partner_Server_URL_260)-1 )&amp; &apos;/lightning/r/Opportunity/&apos; &amp; {!$Record.Id} &amp; &apos;/view&apos;</expression>
+        <expression>{!$User.Server_URL__c}&amp;&apos;/lightning/r/Opportunity/&apos; &amp; {!$Record.Id} &amp; &apos;/view&apos;</expression>
     </formulas>
     <interviewLabel>Opportunity - Updated - Async - Number of Employees Changed Related To MidMarket {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Opportunity - Updated - Async - Number of Employees Changed Related to MidMarket</label>
