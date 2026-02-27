@@ -142,6 +142,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Transitioning_Client__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>NSP_State_of_Incorporation_Formation__c</field>
             </layoutItems>
             <layoutItems>
