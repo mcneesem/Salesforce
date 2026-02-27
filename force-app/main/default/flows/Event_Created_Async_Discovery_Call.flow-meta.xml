@@ -8,10 +8,38 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>varEvent</assignToReference>
+            <assignToReference>varEvent.WhoId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>GetEvent</elementReference>
+                <elementReference>$Record.WhoId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varEvent.WhatId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.WhatId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varEvent.NSP_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.NSP_Status__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varEvent.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varEvent.StartDateTime</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.StartDateTime</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -35,7 +63,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>GetEvent</targetReference>
+                <targetReference>Assign_Event_Info_to_varEvent</targetReference>
             </connector>
             <label>Bypass Trigger is False</label>
         </rules>
@@ -63,27 +91,6 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordLookups>
-        <name>GetEvent</name>
-        <label>GetEvent</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Assign_Event_Info_to_varEvent</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Event</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
