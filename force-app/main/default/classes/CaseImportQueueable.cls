@@ -80,7 +80,8 @@ public with sharing class CaseImportQueueable implements Queueable , Finalizer {
             );
         }
     }
-    public void execute(FinalizerContext ctx) {
+
+    public void execute( FinalizerContext context ) {
         try {
             CaseImportQueueable.settings.Bypass_Opened_Date__c = false;
             update CaseImportQueueable.settings;
@@ -91,7 +92,7 @@ public with sharing class CaseImportQueueable implements Queueable , Finalizer {
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 CaseImportQueueable.class.getName() ,
-                'execute' ,
+                'execute:FinalizerContext' ,
                 e
             );
         }
@@ -182,7 +183,7 @@ public with sharing class CaseImportQueueable implements Queueable , Finalizer {
         }
         private set;
     }
-    
+
     private static Notification_Deliverability_Settings__c notificationDeliverability {
         private get {
             if ( notificationDeliverability == null ) {
