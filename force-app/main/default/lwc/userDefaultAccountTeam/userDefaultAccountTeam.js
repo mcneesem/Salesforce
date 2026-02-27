@@ -1,6 +1,6 @@
-import { LightningElement, wire, api } from "lwc";
-import getTeamMembersByOwner from "@salesforce/apex/UserAccountTeamService.getTeamMembersByOwner";
-import getPageSize from "@salesforce/apex/UserAccountTeamService.getPageSize";
+import { LightningElement , wire , api } from "lwc";
+import getAccountPageSize from "@salesforce/apex/UserAccountTeamService.getPageSize";
+import getAccountTeamMembers from "@salesforce/apex/UserAccountTeamService.getTeamMembersByOwner";
 
 const COLUMNS = Object.freeze([
     { label: "User", fieldName: "userName", type: "text", sortable: true },
@@ -13,17 +13,16 @@ const COLUMNS = Object.freeze([
 export default class UserDefaultAccountTeam extends LightningElement {
     @api recordId;
 
-    errorMessage;
-    // expose columns for base
+    // expose columns...
     columns = COLUMNS;
+
+    // wire page size...
     pageSize;
-    // wire page size and push to base
-    @wire(getPageSize)
-    wiredPageSize({ data, error }) {
-        if (data) {
+    @wire( getAccountPageSize )
+    wiredAccountPageSize( { data , error } ) {
+        if ( data ) {
             this.pageSize = data;
-        }
-        else if (error) {
+        } else if ( error ) {
             this.pageSize = undefined;
         }
 
@@ -31,9 +30,10 @@ export default class UserDefaultAccountTeam extends LightningElement {
 
     // wire data and set rows...
     rows;
-    @wire(getTeamMembersByOwner, { ownerId: "$recordId" })
-    wiredTeam({ data, error }) {
-        if (Array.isArray(data)) {
+    errorMessage;
+    @wire( getAccountTeamMembers , { ownerId: "$recordId" } )
+    wiredAccountTeamMembers( { data , error } ) {
+        if ( Array.isArray( data ) ) {
             this.rows = data.map((member) => ({
                 id: member.id,
                 ownerId: member.ownerId,
@@ -45,11 +45,13 @@ export default class UserDefaultAccountTeam extends LightningElement {
                 caseAccessLevel: member.caseAccessLevel || "",
                 contactAccessLevel: member.contactAccessLevel || ""
             }));
-        } else if (error) {
+        } else if ( error ) {
             const errorText = Array.isArray(error?.body)
                 ? error.body.map((e) => e.message).join(", ")
                 : error?.body?.message || error?.message || "Unknown error";
             this.errorMessage = errorText;
         }
     }
+
 }
+//

@@ -1,6 +1,6 @@
-import { LightningElement, wire, api } from "lwc";
-import getOpportunityMembers from "@salesforce/apex/UserOpportunityTeamService.getTeamMembersByOwner";
-import getDefaultOppPageSize from "@salesforce/apex/UserOpportunityTeamService.getPageSize";
+import { LightningElement , wire , api } from "lwc";
+import getOpportunityPageSize from "@salesforce/apex/UserOpportunityTeamService.getPageSize";
+import getOpportunityTeamMembers from "@salesforce/apex/UserOpportunityTeamService.getTeamMembersByOwner";
 
 const COLUMNS = Object.freeze([
     { label: "User", fieldName: "userName", type: "text", sortable: true },
@@ -10,28 +10,27 @@ const COLUMNS = Object.freeze([
 
 export default class UserDefaultOpportunityTeam extends LightningElement {
     @api recordId;
-    errorMessage;
 
-    // expose columns for base
+    // expose columns...
     columns = COLUMNS;
-    pageSize;
 
-    // load page size once and push to base
-    @wire(getDefaultOppPageSize)
-    wiredOppPageSize({ data, error }) {
-        if (data) {
+    // wire page size...
+    pageSize;
+    @wire( getOpportunityPageSize )
+    wiredOpportunityPageSize( { data , error } ) {
+        if ( data ) {
             this.pageSize = data;
-        }
-        else if (error) {
+        } else if ( error ) {
             this.pageSize = undefined;
         }
     }
-    
+
     // wire data and set rows...
     rows;
-    @wire(getOpportunityMembers, { ownerId: "$recordId" })
-    wiredOppTeam({ data, error }) {
-        if (Array.isArray(data)) {
+    errorMessage;
+    @wire( getOpportunityTeamMembers , { ownerId: "$recordId" } )
+    wiredOpportunityTeamMembers( { data , error } ) {
+        if ( Array.isArray( data ) ) {
             this.rows = data.map((member) => ({
                 id: member.id,
                 ownerId: member.ownerId,
@@ -40,11 +39,13 @@ export default class UserDefaultOpportunityTeam extends LightningElement {
                 teamMemberRole: member.teamMemberRole || "",
                 opportunityAccessLevel: member.opportunityAccessLevel || ""
             }));
-        } else if (error) {
+        } else if ( error ) {
             const errorText = Array.isArray(error?.body)
                 ? error.body.map((e) => e.message).join(", ")
                 : error?.body?.message || error?.message || "Unknown error";
             this.errorMessage = errorText;
         }
     }
+
 }
+//

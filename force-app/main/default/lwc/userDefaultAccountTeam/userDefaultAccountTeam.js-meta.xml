@@ -3,7 +3,7 @@
     <apiVersion>65.0</apiVersion>
     <isExposed>true</isExposed>
     <masterLabel>Default Account Team</masterLabel>
-    <description>Related-list style table showing Account Team members for the record owner. Initial row count controlled by UserDefaultAccountTeamSettings__c.PageSize__c.</description>
+    <description>Related-list style table showing Account Team members for the record owner.</description>
     <targets>
         <target>lightning__RecordPage</target>
     </targets>
