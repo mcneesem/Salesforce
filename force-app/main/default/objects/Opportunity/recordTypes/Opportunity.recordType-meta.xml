@@ -4778,21 +4778,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Product_Offering__c</picklist>
-        <values>
-            <fullName>HR360</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HRCore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HRScale</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>Product_Purchased__c</picklist>
         <values>
             <fullName>HCM</fullName>

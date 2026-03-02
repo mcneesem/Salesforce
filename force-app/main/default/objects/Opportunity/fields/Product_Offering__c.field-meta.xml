@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Product_Offering__c</fullName>
-    <externalId>false</externalId>
-    <label>Product Offering</label>
+    <description>replaced by Product Solution formula field</description>
+    <label>DEPRECATED - Product Offering</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>

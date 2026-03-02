@@ -15,6 +15,5 @@
     <permissionSets>Named_Account_Group_Bypass_Restrictions</permissionSets>
     <permissionSets>Opportunity_Create</permissionSets>
     <permissionSets>Opportunity_Modify_All</permissionSets>
-    <permissionSets>Opportunity_Product_Offering_Fields_Edit_Access</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

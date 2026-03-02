@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Product_Solution__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(
+  OR(
+    ISPICKVAL( NSP_PrimaryProduct__c , &quot;WX&quot; ) ,
+    ISPICKVAL( NSP_PrimaryProduct__c , &quot;WA&quot; )
+  ) ,
+  &quot;HRCore&quot; ,
+  IF(
+    OR(
+      ISPICKVAL( NSP_PrimaryProduct__c , &quot;WO&quot; ) ,
+      ISPICKVAL( NSP_PrimaryProduct__c , &quot;WS&quot; )
+    ) ,
+    &quot;HR360&quot; ,
+    IF(
+      ISPICKVAL( NSP_PrimaryProduct__c , &quot;HRScale&quot; ) ,
+      &quot;HRScale&quot; ,
+      &quot;&quot;
+    )
+  )
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Product Solution</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -33,7 +33,6 @@
     <permissionSets>Opportunity_Discovery_Call_Completed_Access</permissionSets>
     <permissionSets>Opportunity_Outgoing_Create_and_Edit</permissionSets>
     <permissionSets>Opportunity_Owner_BPC</permissionSets>
-    <permissionSets>Opportunity_Product_Offering_Fields_Edit_Access</permissionSets>
     <permissionSets>Opportunity_Spits_Elevated_Read_Edit</permissionSets>
     <permissionSets>Partner_Access</permissionSets>
     <permissionSets>Sales_Service_Object_Permission</permissionSets>
