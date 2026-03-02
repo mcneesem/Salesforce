@@ -266,7 +266,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Recipients_Check</targetReference>
+            <targetReference>Does_StrategicSales_Email_Exist</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -313,8 +313,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Does_BccEmailAddress_Exist</targetReference>
+            <targetReference>Is_this_possibly_an_HCM_Lead_Specialist_Opty</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -490,7 +489,7 @@
     <formulas>
         <name>OpportunityURL</name>
         <dataType>String</dataType>
-        <expression>{!$User.Server_URL__c}&amp;&apos;/lightning/r/Opportunity/&apos; &amp; {!$Record.Id} &amp; &apos;/view&apos;</expression>
+        <expression>{!$User.Server_URL__c}&amp;{!$Record.Id}</expression>
     </formulas>
     <interviewLabel>Opportunity - Updated - Async - Primary Product Changed {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Opportunity - Updated - Async - Primary Product Changed</label>

@@ -279,10 +279,6 @@
         <label>Does StrategicSales Email Exist ?</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <defaultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Does_BccEmailAddress_Exist</targetReference>
-        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Email_Exists_StrategicSales</name>
@@ -402,7 +398,7 @@
     <formulas>
         <name>OpportunityURL</name>
         <dataType>String</dataType>
-        <expression>{!$User.Server_URL__c}&amp;&apos;/lightning/r/Opportunity/&apos; &amp; {!$Record.Id} &amp; &apos;/view&apos;</expression>
+        <expression>{!$User.Server_URL__c}&amp;{!$Record.Id}</expression>
     </formulas>
     <interviewLabel>Opportunity - Updated - Async - Number of Employees Changed Related To MidMarket {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Opportunity - Updated - Async - Number of Employees Changed Related to MidMarket</label>
