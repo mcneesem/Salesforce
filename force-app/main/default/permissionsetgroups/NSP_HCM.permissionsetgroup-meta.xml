@@ -21,6 +21,7 @@
     <permissionSets>Opportunity_Booking_Stage_Change_Email_Notification</permissionSets>
     <permissionSets>Opportunity_Closed_Lost_Fields_Edit_Access</permissionSets>
     <permissionSets>Opportunity_Closed_Won_Edit_Not_Allowed</permissionSets>
+    <permissionSets>Opportunity_Closed_Won_Opp_Owner</permissionSets>
     <permissionSets>Opportunity_Discovery_Call_Completed_Access</permissionSets>
     <permissionSets>Opportunity_Forecast_Category_Edit_Allowed</permissionSets>
     <permissionSets>Opportunity_Spits_Elevated_Read_Edit</permissionSets>
