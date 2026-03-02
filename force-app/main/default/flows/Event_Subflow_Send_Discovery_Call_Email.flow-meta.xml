@@ -253,28 +253,6 @@
         </connector>
     </assignments>
     <decisions>
-        <name>Bypass_Trigger</name>
-        <label>Bypass Trigger?</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Bypass_Trigger_is_False</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Setup.NSP_Trigger_Switch__c.AutoLaunchedFlows__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Does_Opportunity_Id_Exist</targetReference>
-            </connector>
-            <label>Bypass Trigger is False</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Check_which_Email_should_receive_Notification</name>
         <label>Check which Email should receive Notification</label>
         <locationX>0</locationX>
@@ -452,6 +430,28 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Outbound_Email_custom_setting_check</name>
+        <label>Outbound Email custom setting check</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Does_Opportunity_Id_Exist</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Recipient_Is_Populated</name>
         <label>Recipient Is Populated?</label>
         <locationX>0</locationX>
@@ -557,7 +557,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Bypass_Trigger</targetReference>
+            <targetReference>Outbound_Email_custom_setting_check</targetReference>
         </connector>
     </start>
     <status>Draft</status>
