@@ -448,7 +448,7 @@
     <formulas>
         <name>OpportunityURL</name>
         <dataType>String</dataType>
-        <expression>{!$User.Server_URL__c}&amp;&apos;/lightning/r/Opportunity/&apos; &amp; {!$Record.Id} &amp; &apos;/view&apos;</expression>
+        <expression>{!$User.Server_URL__c}&amp;{!$Record.Id}</expression>
     </formulas>
     <interviewLabel>Opportunity - Updated - Async Stage is Closed Lost HR Product MidMarket Segment {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Opportunity - Updated - Async Stage is Closed Lost HR Product MidMarket Segment</label>
