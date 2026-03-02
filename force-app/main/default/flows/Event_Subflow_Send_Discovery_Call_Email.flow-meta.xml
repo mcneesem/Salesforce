@@ -506,7 +506,7 @@
     <formulas>
         <name>OpportunityURL</name>
         <dataType>String</dataType>
-        <expression>{!$User.Server_URL__c}&amp;{!GetOpportunity.Id}</expression>
+        <expression>{!$User.Server_URL__c} &amp; {!GetOpportunity.Id}</expression>
     </formulas>
     <interviewLabel>Event - Subflow - Send Discovery Call Email {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Event - Subflow - Send Discovery Call Email</label>
