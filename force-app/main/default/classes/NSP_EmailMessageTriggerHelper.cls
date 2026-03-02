@@ -1,5 +1,5 @@
 public with sharing class NSP_EmailMessageTriggerHelper {
-    // test w/ NSP_EmailMessageTriggerHelperTest (86%)
+    // test w/ NSP_EmailMessageTriggerHelperTest (80%)
 
     public static boolean isFirst = false;
     private static List<String> ContactCenterEmailAddresses = System.Label.NSP_Contact_Center_Email_Addresses.toLowerCase().split( ',' );
@@ -18,6 +18,8 @@ public with sharing class NSP_EmailMessageTriggerHelper {
         Set<Id> parentIds = new Set<Id>();
         Set<Id> employmentScreeningcaseIdSet = new Set<Id>();
         Map<Id,EmailMessage> healthWelfareInternalExternalCaseIdFromAddMap = new Map<Id,EmailMessage>();
+        Set<Id> hrScaleCOENexuscaseIdSet = new Set<Id>();
+        String hrScaleCOENexusEmail = EmailMessageTriggerSettings__c.getInstance( UserInfo.getUserId() ).HRScale_COE_Nexus_Email__c;
         for ( EmailMessage eMessage : newList ) {
             if ( ( eMessage.ParentId != null ) && incomingEmailCheck( eMessage ) ) {
                 parentIds.add( eMessage.ParentId );
@@ -32,6 +34,12 @@ public with sharing class NSP_EmailMessageTriggerHelper {
             //As a part of STY-03531
             if ( !switchEnabled && ( eMessage.ToAddress == System.Label.NSP_Health_Welfare_Section_125 ) ) {
                 healthWelfareInternalExternalCaseIdFromAddMap.put( eMessage.ParentId , eMessage );
+            }
+            if ( String.isNotBlank( hrScaleCOENexusEmail )
+                && ( eMessage.ToAddress == hrScaleCOENexusEmail )
+                )
+            {
+                hrScaleCOENexuscaseIdSet.add( eMessage.ParentId );
             }
         }
         Set<Id> validatedParentIds = new Set<Id>();
@@ -72,6 +80,9 @@ public with sharing class NSP_EmailMessageTriggerHelper {
         //As a part of STY-03531
         if ( !switchEnabled && !healthWelfareInternalExternalCaseIdFromAddMap.isEmpty() ) {
             sendEmailToHealthWelfareInternalExternal( healthWelfareInternalExternalCaseIdFromAddMap );
+        }
+        if ( !hrScaleCOENexuscaseIdSet?.isEmpty() ) {
+            NSP_EmailMessageTriggerHelper.updateHRScaleCOENexusCatSubCat( hrScaleCOENexuscaseIdSet );
         }
         // Added as a part of STY-04132
         if ( !caseToUpdate.isEmpty() ) {
@@ -759,6 +770,41 @@ public with sharing class NSP_EmailMessageTriggerHelper {
             NSP_ErrorLogHandler.logException(
                 NSP_EmailMessageTriggerHelper.class.getName() ,
                 'updateConfidentialCheckBoxForEmpScreening' ,
+                e
+            );
+        }
+    }
+
+    // will update Category and Subcategory for the cases that are coming from  HRScale COE Nexus Email Address
+    private static void updateHRScaleCOENexusCatSubCat( Set<Id> caseIdSet ) {
+        try {
+            if ( ( caseIdSet != null ) && !caseIdSet.isEmpty()) {
+                List<Case> caseListToUpdate = [
+                    SELECT Id , NSP_Category__c , NSP_SubCategory__c
+                    FROM Case
+                    WHERE ( Id IN :caseIdSet )
+                ];
+                List<Case> updateCaseList = new List<Case>();
+                if ( ( caseListToUpdate != null ) && !caseListToUpdate.isEmpty() ) {
+                    for ( Case caseRec : caseListToUpdate ) {
+                        caseRec.NSP_Category__c = 'HRScale COE Escalation';
+                        caseRec.NSP_SubCategory__c = 'Nexus';
+                        updateCaseList.add( caseRec );
+                    }
+                }
+                if ( ( updateCaseList != null ) && !updateCaseList.isEmpty() ) {
+                    List<Database.SaveResult> results = Database.update( updateCaseList , false );
+                    NSP_ErrorLogHandler.logResults(
+                        NSP_EmailMessageTriggerHelper.class.getName() ,
+                        'updateHRScaleCOENexusCatSubCat:update' ,
+                        results
+                    );
+                }
+            }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_EmailMessageTriggerHelper.class.getName() ,
+                'updateHRScaleCOENexusCatSubCat' ,
                 e
             );
         }
