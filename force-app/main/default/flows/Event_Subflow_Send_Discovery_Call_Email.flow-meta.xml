@@ -404,13 +404,6 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>varEvent</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>varEvent</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -513,7 +506,7 @@
     <formulas>
         <name>OpportunityURL</name>
         <dataType>String</dataType>
-        <expression>{!$User.Server_URL__c}&amp;&apos;lightning/r/Opportunity/&apos; &amp; {!GetOpportunity.Id} &amp; &apos;/view&apos;</expression>
+        <expression>{!$User.Server_URL__c}&amp;{!GetOpportunity.Id}</expression>
     </formulas>
     <interviewLabel>Event - Subflow - Send Discovery Call Email {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Event - Subflow - Send Discovery Call Email</label>
