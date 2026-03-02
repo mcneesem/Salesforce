@@ -5,5 +5,5 @@
     <mayForecastManagerShare>false</mayForecastManagerShare>
     <name>504 Los Angeles 4 Leader</name>
     <opportunityAccessLevel>Edit</opportunityAccessLevel>
-    <parentRole>Western_4_Leader</parentRole>
+    <parentRole>Western_1_Leader</parentRole>
 </Role>
