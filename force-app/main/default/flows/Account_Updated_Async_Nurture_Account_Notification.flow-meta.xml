@@ -298,9 +298,6 @@
         <label>Does StrategicSales Email Exist ?</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Does_BccEmailAddress_Exist</targetReference>
-        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Email_Exists</name>
@@ -374,7 +371,7 @@
     <formulas>
         <name>AccountURL</name>
         <dataType>String</dataType>
-        <expression>{!$User.Server_URL__c}&amp;&apos;lightning/r/Account/&apos; &amp; {!$Record.Id} &amp; &apos;/view&apos;</expression>
+        <expression>{!$User.Server_URL__c}&amp;{!$Record.Id}</expression>
     </formulas>
     <formulas>
         <name>midMarketThresholdFormula</name>
