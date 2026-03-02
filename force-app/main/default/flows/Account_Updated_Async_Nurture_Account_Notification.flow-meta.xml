@@ -371,7 +371,7 @@
     <formulas>
         <name>AccountURL</name>
         <dataType>String</dataType>
-        <expression>{!$User.Server_URL__c}&amp;{!$Record.Id}</expression>
+        <expression>{!$User.Server_URL__c} &amp; {!$Record.Id}</expression>
     </formulas>
     <formulas>
         <name>midMarketThresholdFormula</name>
