@@ -26,6 +26,10 @@
             <valueName>Northeast 4</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Northeast</controllingFieldValue>
+            <valueName>Northeast 5</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Central</controllingFieldValue>
             <valueName>Central 1</valueName>
         </valueSettings>
@@ -40,6 +44,10 @@
         <valueSettings>
             <controllingFieldValue>Central</controllingFieldValue>
             <valueName>Central 4</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Central</controllingFieldValue>
+            <valueName>Central 5</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Eastern</controllingFieldValue>
