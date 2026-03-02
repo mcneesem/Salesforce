@@ -80,7 +80,11 @@ public class NSP_CaseTriggerHelper {
             // if the case sub category is Wage claim, recordtype will be wage claims and if the case sub category is DOL Audit, recordtype will be DOL Audits
             eachCase.recordTypeId = eachCase.NSP_SubCategory__c ==  NSP_ServiceConstants.CASE_SUB_CATEGORY_WAGE_CLAIMS ?  wageClaimsRecordTypeId :
             eachCase.NSP_SubCategory__c ==  NSP_ServiceConstants.CASE_SUB_CATEGORY_DOL_AUDITS ? dolAuditsRecordTypeId : eachCase.recordTypeId;
-            eachCase.NSP_Opened_Date__c = system.today(); //DF-02760
+            Case_Import_Tool_Settings__c caseSettings =  Case_Import_Tool_Settings__c.getInstance( UserInfo.getUserId() );
+            if ( ( caseSettings != null ) && !caseSettings.Bypass_Opened_Date__c ) {
+                eachCase.NSP_Opened_Date__c = System.today(); //DF-02760
+            }
+            eachCase.NSP_Opened_Date__c = System.today(); //DF-02760
 
             eachCase.NSP_Case_Sub_Status__c = (eachcase.recordTypeId == NSP_CaseTriggerHelper.peoRecordTypeId && eachCase.Status == NSP_ServiceConstants.CLOSED_STATUS) ? NSP_ServiceConstants.RESOLVED : eachCase.NSP_Case_Sub_Status__c;
 
