@@ -474,7 +474,7 @@
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <filterLogic>1 AND 2 AND (3 OR 4 OR 5) AND 6</filterLogic>
+        <filterLogic>1 AND 2 AND (3 OR 4 OR 5 OR 6 OR 7) AND 8</filterLogic>
         <filters>
             <field>StageName</field>
             <operator>IsChanged</operator>
@@ -508,6 +508,20 @@
             <operator>EqualTo</operator>
             <value>
                 <stringValue>HRScale</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_PrimaryProduct__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>WX</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_PrimaryProduct__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>WO</stringValue>
             </value>
         </filters>
         <filters>
