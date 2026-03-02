@@ -667,10 +667,6 @@
         </quickActionListItems>
     </quickActionList>
     <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>Account_Relationship__c.Parent_Account__c</relatedList>
-    </relatedLists>
-    <relatedLists>
         <fields>MEMBER_NAME</fields>
         <fields>TEAM_MEMBER_ROLE</fields>
         <relatedList>RelatedAccountSalesTeam</relatedList>

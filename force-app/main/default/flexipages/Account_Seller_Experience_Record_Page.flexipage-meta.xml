@@ -264,6 +264,16 @@
                             <value>Account.DNB_Connect_Data_Refresh</value>
                         </valueListItems>
                         <valueListItems>
+                            <value>Account.Manage_PCM_Firms</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Account_Manage_PCM_Firms}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
                             <value>CustomButton.Account.NSP_Detailed_Data</value>
                         </valueListItems>
                         <valueListItems>
@@ -418,11 +428,6 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>actionNames</name>
-                    <valueList>
-                        <valueListItems>
-                            <value>CustomButton.Account_Relationship__c.Manage_PCM_Firms</value>
-                        </valueListItems>
-                    </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>adminFilters</name>

@@ -2420,15 +2420,6 @@
         </platformActionListItems>
     </platformActionList>
     <relatedLists>
-        <customButtons>Manage_PCM_Firms</customButtons>
-        <excludeButtons>MassChangeOwner</excludeButtons>
-        <excludeButtons>New</excludeButtons>
-        <fields>Related_Account_Name__c</fields>
-        <fields>PCM_Percentage__c</fields>
-        <fields>Type__c</fields>
-        <relatedList>Account_Relationship__c.Parent_Account__c</relatedList>
-    </relatedLists>
-    <relatedLists>
         <excludeButtons>MassChangeOwner</excludeButtons>
         <fields>NAME</fields>
         <fields>NSP_User__c</fields>
