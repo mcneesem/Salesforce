@@ -47,25 +47,25 @@
         </connector>
     </assignments>
     <decisions>
-        <name>Bypass_Trigger</name>
-        <label>Bypass Trigger?</label>
+        <name>Check_Autolaunched_Flow_Bypass</name>
+        <label>Check Autolaunched Flow Bypass</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnector>
+            <targetReference>Assign_Event_Info_to_varEvent</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Bypass</defaultConnectorLabel>
         <rules>
-            <name>Bypass_Trigger_is_False</name>
+            <name>Is_Bypassed</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Setup.NSP_Trigger_Switch__c.AutoLaunchedFlows__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
-            <connector>
-                <targetReference>Assign_Event_Info_to_varEvent</targetReference>
-            </connector>
-            <label>Bypass Trigger is False</label>
+            <label>Is Bypassed</label>
         </rules>
     </decisions>
     <description>Reworked to run through Event_Subflow_Update_Related_to_Account_Opportunity_or_Lead flow</description>
@@ -141,7 +141,7 @@
         <recordTriggerType>Create</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Bypass_Trigger</targetReference>
+                <targetReference>Check_Autolaunched_Flow_Bypass</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
