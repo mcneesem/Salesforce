@@ -146,6 +146,60 @@ public with sharing class WrapTermination {
         }
         return joinedNames;
     }
+    
+    private String formatDate(Date d) {
+        String result = 'NA';
+        if (d != null) {
+            result = d.month() + '/' + d.day() + '/' + d.year();
+        }
+
+        return result;
+    }
+    
+    public String getFormattedReinstatementReason() {
+        
+        String result = '';
+        
+        Boolean isBlankReason = String.isBlank(reason) || reason == 'NA';
+        
+        Boolean isRevised =
+            revision == 'Yes' &&
+            String.isNotBlank(previousReason) &&
+            previousReason != 'NA' &&
+            previousReason != reason;
+        
+        if (isBlankReason) {
+            result = 'NA';
+        } 
+        else if (isRevised) {
+            result = 'REVISED ' + reason +' (Previous Reason: ' + previousReason + ')';
+        } 
+        else {
+            result = reason;
+        }
+        
+        return result;   
+    }
+    
+    public String getFormattedReinstatementCsaTerm() {
+        
+        Boolean isRevised =
+            revision == 'Yes' &&
+            previousClientTermdate != null &&
+            previousClientTermdate != clientermdate;
+        
+        String result = 'NA';
+        
+        if (clientermdate != null) {
+            if (isRevised) {
+                result = 'REVISED ' + this.formatDate(clientermdate) +' (Previous Term Date: ' +this.formatDate(previousClientTermdate) + ')';
+            } else {
+                result = this.formatDate(clientermdate);
+            }
+        }
+        
+        return result;
+    }
 
 }
 //
