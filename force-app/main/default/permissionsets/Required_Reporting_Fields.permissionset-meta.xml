@@ -1793,6 +1793,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Opportunity.FBCLID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Opportunity.GCLID__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1809,6 +1814,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.Is_Services_Opportunity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.LICLID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.MSCLID__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
