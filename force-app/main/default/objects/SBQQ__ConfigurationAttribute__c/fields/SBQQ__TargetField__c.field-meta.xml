@@ -132,6 +132,11 @@
                 <default>false</default>
                 <label>Active_1099_Employees_CW__c</label>
             </value>
+            <value>
+                <fullName>Sub_Product_Config__c</fullName>
+                <default>false</default>
+                <label>Sub_Product_Config__c</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

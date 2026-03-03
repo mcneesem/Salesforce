@@ -125,6 +125,10 @@
                 <behavior>Readonly</behavior>
                 <field>Has_Legacy_1099_Product2__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Sub_Product_Attribute__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
