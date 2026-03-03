@@ -1023,6 +1023,7 @@
             <default>false</default>
         </values>
     </picklistValues>
+    <picklistValues>
         <picklist>Sub_Product_Attribute__c</picklist>
         <values>
             <fullName>Choice Customized</fullName>
