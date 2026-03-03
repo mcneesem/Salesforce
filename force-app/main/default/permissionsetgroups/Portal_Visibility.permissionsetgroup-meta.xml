@@ -6,6 +6,7 @@
     <permissionSets>Assign_App_Portal_Preview</permissionSets>
     <permissionSets>Portal_Client_Visibility</permissionSets>
     <permissionSets>Portal_Pay_Period_Visibility</permissionSets>
+    <permissionSets>Portal_Project_Visibility</permissionSets>
     <permissionSets>Portal_Task_Visibility</permissionSets>
     <permissionSets>Portal_Team_Member_Visibility</permissionSets>
     <permissionSets>View_Portal_Preview</permissionSets>
