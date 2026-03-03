@@ -2168,7 +2168,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SBQQ__Quote__c.	Sub_Product_Attribute__c<field>
+        <field>SBQQ__Quote__c.Sub_Product_Attribute__c<field>
         <readable>true</readable>
         </fieldPermissions>
     <fieldPermissions>
