@@ -244,7 +244,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Send_Opportunity_Email</targetReference>
+                <targetReference>Does_BccEmailAddress_Exist</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
@@ -356,7 +356,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Does_BccEmailAddress_Exist</targetReference>
+                <targetReference>Get_DC_Event</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
@@ -367,7 +367,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Get_DC_Event</targetReference>
+            <targetReference>Send_Opportunity_Email</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
@@ -398,7 +398,7 @@
     <formulas>
         <name>OpportunityURL</name>
         <dataType>String</dataType>
-        <expression>{!$User.Server_URL__c}&amp;{!$Record.Id}</expression>
+        <expression>{!$User.Server_URL__c} &amp; {!$Record.Id}</expression>
     </formulas>
     <interviewLabel>Opportunity - Updated - Async - Number of Employees Changed Related To MidMarket {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Opportunity - Updated - Async - Number of Employees Changed Related to MidMarket</label>
@@ -473,7 +473,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_DC_Event</targetReference>
+            <targetReference>Send_Opportunity_Email</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Assign_varFaultElement_Update_Num_EEs_on_Acct</targetReference>

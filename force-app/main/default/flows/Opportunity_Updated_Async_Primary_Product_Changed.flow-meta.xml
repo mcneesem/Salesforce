@@ -489,7 +489,7 @@
     <formulas>
         <name>OpportunityURL</name>
         <dataType>String</dataType>
-        <expression>{!$User.Server_URL__c}&amp;{!$Record.Id}</expression>
+        <expression>{!$User.Server_URL__c} &amp; {!$Record.Id}</expression>
     </formulas>
     <interviewLabel>Opportunity - Updated - Async - Primary Product Changed {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Opportunity - Updated - Async - Primary Product Changed</label>
