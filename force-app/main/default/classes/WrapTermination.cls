@@ -157,7 +157,7 @@ public with sharing class WrapTermination {
     }
     
     public String reinstatementReason() {
-            get {
+            public get {
             String local = 'NA';
             if (String.isNotBlank(this.reason) && this.reason != 'NA') {
                 local = this.reason;
@@ -178,7 +178,7 @@ public with sharing class WrapTermination {
     }
     
     public String clientTermDate() {
-     get {
+     public get {
             String local = 'NA';
             if (this.clientermdate != null) {
                 local = this.formatDate(this.clientermdate);
