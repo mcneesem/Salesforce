@@ -448,10 +448,10 @@
     <formulas>
         <name>OpportunityURL</name>
         <dataType>String</dataType>
-        <expression>{!$User.Server_URL__c}&amp;{!$Record.Id}</expression>
+        <expression>{!$User.Server_URL__c} &amp; {!$Record.Id}</expression>
     </formulas>
-    <interviewLabel>Opportunity - Updated - Async Stage is Closed Lost HR Product MidMarket Segment {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Opportunity - Updated - Async Stage is Closed Lost HR Product MidMarket Segment</label>
+    <interviewLabel>Opportunity - Updated - Async - Notify Closed Lost MidMarket {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Opportunity - Updated - Async - Notify Closed Lost MidMarket</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -557,7 +557,7 @@
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Opportunity_Updated_Async_Stage_is_Closed_Lost_HR_Product_MidMarket_Segment</stringValue>
+                <stringValue>Opportunity_Updated_Async_Notify_Closed_Lost_MidMarket</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
