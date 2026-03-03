@@ -2705,10 +2705,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>blng__CustomExceptionCode</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>blng__CustomExceptionTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
