@@ -156,49 +156,46 @@ public with sharing class WrapTermination {
         return result;
     }
     
-    public String getFormattedReinstatementReason() {
-        
-        String result = '';
-        
-        Boolean isBlankReason = String.isBlank(reason) || reason == 'NA';
-        
-        Boolean isRevised =
-            revision == 'Yes' &&
-            String.isNotBlank(previousReason) &&
-            previousReason != 'NA' &&
-            previousReason != reason;
-        
-        if (isBlankReason) {
-            result = 'NA';
-        } 
-        else if (isRevised) {
-            result = 'REVISED ' + reason +' (Previous Reason: ' + previousReason + ')';
-        } 
-        else {
-            result = reason;
+    public String reinstatementReason() {
+            get {
+            String local = 'NA';
+            if (String.isNotBlank(this.reason) && this.reason != 'NA') {
+                local = this.reason;
+                
+                if (this.revision == 'Yes'
+                    && String.isNotBlank(this.previousReason)
+                    && this.previousReason != 'NA'
+                    && this.previousReason != this.reason) {
+                        
+                        local = 'REVISED ' + local +
+                            ' (Previous Reason: ' +
+                            this.previousReason + ')';
+                    }
+            }
+            return local;
         }
-        
-        return result;   
+        private set;  
     }
     
-    public String getFormattedReinstatementCsaTerm() {
-        
-        Boolean isRevised =
-            revision == 'Yes' &&
-            previousClientTermdate != null &&
-            previousClientTermdate != clientermdate;
-        
-        String result = 'NA';
-        
-        if (clientermdate != null) {
-            if (isRevised) {
-                result = 'REVISED ' + this.formatDate(clientermdate) +' (Previous Term Date: ' +this.formatDate(previousClientTermdate) + ')';
-            } else {
-                result = this.formatDate(clientermdate);
+    public String clientTermDate() {
+     get {
+            String local = 'NA';
+            if (this.clientermdate != null) {
+                local = this.formatDate(this.clientermdate);
+
+                if (this.revision == 'Yes'
+                    && this.previousClientTermdate != null
+                    && this.previousClientTermdate != this.clientermdate) {
+                        
+                        local = 'REVISED ' + local +
+                            ' (Previous Term Date: ' +
+                            this.formatDate(this.previousClientTermdate) + ')';
+                    }
             }
+            
+            return local;
         }
-        
-        return result;
+        private set;
     }
 
 }
