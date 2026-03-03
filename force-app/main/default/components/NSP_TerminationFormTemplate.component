@@ -202,13 +202,13 @@
                <tr>
                     <td style="width: 10%; margin: 0; padding: 0;">CSA Term:</td>
                     <td style="margin: 0; padding: 0 0 0 12.5px;vertical-align: top;">
-                        <apex:outputText value="{!reinstatement.FormattedReinstatementCsaTerm}"/>
+                        <apex:outputText value="{!reinstatement.clientTermDate}"/>
                     </td>
                 </tr>
                 <tr>
                     <td style="width: 10%; margin: 0; padding: 0;">Reason:</td>
                     <td style="margin: 0; padding: 0 0 0 12.5px;vertical-align: top;">
-                        <apex:outputText value="{!reinstatement.FormattedReinstatementReason}"/>
+                        <apex:outputText value="{!reinstatement.reinstatementReason}"/>
                     </td>
                 </tr>
             </table>
