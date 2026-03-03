@@ -42,6 +42,11 @@
                 <default>false</default>
                 <label>Upgraded Asset</label>
             </value>
+            <value>
+                <fullName>Product</fullName>
+                <default>false</default>
+                <label>Product</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
