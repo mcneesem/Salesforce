@@ -33,7 +33,7 @@
             <assignToReference>r_portal_task_to_upsert.Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>f_PortalTaskStatus</elementReference>
+                <elementReference>portalTaskStatus</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -47,7 +47,7 @@
             <assignToReference>r_portal_task_to_upsert.Name</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>f_PortalTaskName</elementReference>
+                <elementReference>portalTaskName</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -104,7 +104,7 @@
             <assignToReference>r_portal_task_to_upsert.Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>f_PortalTaskStatus</elementReference>
+                <elementReference>portalTaskStatus</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -426,22 +426,52 @@
     <description>AZD-516115 , 01/13/2025 - Portal Task Create and Update , upsert operation</description>
     <environments>Default</environments>
     <formulas>
-        <name>f_PortalTaskName</name>
+        <name>portalTaskName</name>
         <dataType>String</dataType>
         <expression>CASE(
-  {!recordProjectTask.Name} ,  &quot;Employee Priming Data Provided&quot; , &quot;Employee Data Collection&quot; ,
+  {!recordProjectTask.Name} ,
+  &quot;Employee Priming Data Provided&quot; , &quot;Employee Data Collection&quot; ,
   &quot;FEIN documentation&quot; , &quot;Federal Employer Identification Number (FEIN)&quot; ,
   &quot;Current Payroll Register&quot; , &quot;Current / Prior Payroll Report Samples&quot; ,
   &quot;Job Costing Setup&quot; , &quot;Job Costing / Labor Allocation Setup Information&quot; ,
   &quot;YTD Gross Wage Report Provided&quot; , &quot;YTD Gross Wages Report&quot; ,
   &quot;PTO, paid sick leave, or other accrual policy received&quot; , &quot;Time Off Policies / Handbook&quot; ,
+  &quot;Generate Form 8973&quot; , &quot;Form 8973&quot; ,
+  &quot;General/Auto Liability Certificate of Coverage&quot; ,
+  &quot;General Auto Liability Certificate of Coverage&quot; ,
+  &quot;Company Logo Collected&quot; , &quot;Company Logo&quot; ,
+  &quot;Direct Debit Agreement&quot; , &quot;Direct Debit Agreement&quot; ,
+  &quot;Client User Access&quot; , &quot;User Access Roles Request Form&quot; ,
   {!recordProjectTask.Name}
 )</expression>
     </formulas>
     <formulas>
-        <name>f_PortalTaskStatus</name>
+        <name>portalTaskStatus</name>
         <dataType>String</dataType>
-        <expression>IF({!recordProjectTask.Is_Completed__c},  &apos;Completed&apos;, &apos;Pending&apos;)</expression>
+        <expression>IF(
+  {!recordProjectTask.Is_Completed__c} ,
+  &apos;Completed&apos; ,
+  &apos;Pending&apos;
+)</expression>
+    </formulas>
+    <formulas>
+        <name>portalTaskType</name>
+        <dataType>String</dataType>
+        <expression>CASE(
+  {!portalTaskName} ,
+  &quot;Employee Data Collection&quot; , &quot;Pre-Transition Setup&quot; ,
+  &quot;Federal Employer Identification Number (FEIN)&quot; , &quot;Pre-Transition Setup&quot; ,
+  &quot;Current / Prior Payroll Report Samples&quot; , &quot;Pre-Transition Setup&quot; ,
+  &quot;Job Costing / Labor Allocation Setup Information&quot; , &quot;Pre-Transition Setup&quot; ,
+  &quot;YTD Gross Wages Report&quot; , &quot;Pre-Transition Setup&quot; ,
+  &quot;Time Off Policies / Handbook&quot; , &quot;Pre-Transition Setup&quot; ,
+  &quot;Form 8973&quot; , &quot;Company Setup&quot; ,
+  &quot;General Auto Liability Certificate of Coverage&quot; , &quot;Company Setup&quot; ,
+  &quot;Company Logo&quot; , &quot;Company Setup&quot; ,
+  &quot;Direct Debit Agreement&quot; , &quot;Company Setup&quot; ,
+  &quot;User Access Roles Request Form&quot; , &quot;Company Setup&quot; ,
+  &quot;&quot;
+)</expression>
     </formulas>
     <interviewLabel>Project Task - Populate Portal Task - Subflow {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Project Task - Populate Portal Task - Subflow</label>
@@ -626,16 +656,6 @@
         <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>portalTaskType</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <stringValue>Pre-Transition Setup</stringValue>
-        </value>
     </variables>
     <variables>
         <description>Hold portal task to Update</description>
