@@ -288,6 +288,11 @@
                 <default>false</default>
                 <label>NSP_Product_Type__c</label>
             </value>
+            <value>
+                <fullName>Sub_Product_Config__c</fullName>
+                <default>false</default>
+                <label>Sub_Product_Config__c</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Quote</controllingFieldValue>
@@ -299,6 +304,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Quote</controllingFieldValue>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
             <valueName>NSP_Pricing_Model__c</valueName>
         </valueSettings>
         <valueSettings>
@@ -342,8 +348,14 @@
             <valueName>NSP_Retention_Payment__c</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <valueName>Sub_Product__c</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Quote Line</controllingFieldValue>
             <controllingFieldValue>Product Option</controllingFieldValue>
+            <controllingFieldValue>Product</controllingFieldValue>
             <valueName>SBQQ__ProductCode__c</valueName>
         </valueSettings>
         <valueSettings>
@@ -468,6 +480,10 @@
         <valueSettings>
             <controllingFieldValue>Product Option</controllingFieldValue>
             <valueName>NSP_Number_Of_Users__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Product Option</controllingFieldValue>
+            <valueName>Sub_Product_Config__c</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Configuration Attributes</controllingFieldValue>

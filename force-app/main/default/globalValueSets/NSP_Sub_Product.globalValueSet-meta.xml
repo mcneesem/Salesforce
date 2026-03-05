@@ -106,10 +106,94 @@
         <label>Revolution</label>
     </customValue>
     <customValue>
+        <fullName>Timestar SaaS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Timestar SaaS</label>
+    </customValue>
+    <customValue>
+        <fullName>UED Bundle</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>UED Bundle</label>
+    </customValue>
+    <customValue>
+        <fullName>WX Choice Custom</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>WX Choice Custom</label>
+    </customValue>
+    <customValue>
+        <fullName>Insperity 401k Plan</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Insperity 401k Plan</label>
+    </customValue>
+    <customValue>
+        <fullName>Insperity Customized Plan</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Insperity Customized Plan</label>
+    </customValue>
+    <customValue>
+        <fullName>WX Choice Plan</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>WX Choice Plan</label>
+    </customValue>
+    <customValue>
+        <fullName>WX Choice Customized Plan</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>WX Choice Customized Plan</label>
+    </customValue>
+    <customValue>
         <fullName>Abra Migration</fullName>
         <default>false</default>
         <isActive>false</isActive>
         <label>Abra Migration</label>
+    </customValue>
+    <customValue>
+        <fullName>Tier 1</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Tier 1</label>
+    </customValue>
+    <customValue>
+        <fullName>Tier 2</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Tier 2</label>
+    </customValue>
+    <customValue>
+        <fullName>Tier 3</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Tier 3</label>
+    </customValue>
+    <customValue>
+        <fullName>Tier 4</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Tier 4</label>
+    </customValue>
+    <customValue>
+        <fullName>Tier 5</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Tier 5</label>
+    </customValue>
+    <customValue>
+        <fullName>Tier 6</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Tier 6</label>
+    </customValue>
+    <customValue>
+        <fullName>TimeStar-Software-as-a-Service</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>TimeStar-Software-as-a-Service</label>
     </customValue>
     <customValue>
         <fullName>Add On Software</fullName>
@@ -230,90 +314,6 @@
         <default>false</default>
         <isActive>false</isActive>
         <label>TimeStar On Prem</label>
-    </customValue>
-    <customValue>
-        <fullName>Timestar SaaS</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Timestar SaaS</label>
-    </customValue>
-    <customValue>
-        <fullName>UED Bundle</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>UED Bundle</label>
-    </customValue>
-    <customValue>
-        <fullName>WX Choice Custom</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>WX Choice Custom</label>
-    </customValue>
-    <customValue>
-        <fullName>Insperity 401k Plan</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Insperity 401k Plan</label>
-    </customValue>
-    <customValue>
-        <fullName>Insperity Customized Plan</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Insperity Customized Plan</label>
-    </customValue>
-    <customValue>
-        <fullName>WX Choice Plan</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>WX Choice Plan</label>
-    </customValue>
-    <customValue>
-        <fullName>WX Choice Customized Plan</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>WX Choice Customized Plan</label>
-    </customValue>
-    <customValue>
-        <fullName>TimeStar-Software-as-a-Service</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>TimeStar-Software-as-a-Service</label>
-    </customValue>
-    <customValue>
-        <fullName>Tier 1</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Tier 1</label>
-    </customValue>
-    <customValue>
-        <fullName>Tier 2</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Tier 2</label>
-    </customValue>
-    <customValue>
-        <fullName>Tier 3</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Tier 3</label>
-    </customValue>
-    <customValue>
-        <fullName>Tier 4</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Tier 4</label>
-    </customValue>
-    <customValue>
-        <fullName>Tier 5</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Tier 5</label>
-    </customValue>
-    <customValue>
-        <fullName>Tier 6</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Tier 6</label>
     </customValue>
     <description>Global value set for sub products on Lead and Opportunity</description>
     <masterLabel>Sub Product</masterLabel>

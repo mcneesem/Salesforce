@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sub_Product_Config__c</fullName>
+    <label>Sub Product Config</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Choice Customized</fullName>
+                <default>false</default>
+                <label>Choice Customized</label>
+            </value>
+            <value>
+                <fullName>Choice Merger</fullName>
+                <default>false</default>
+                <label>Choice Merger</label>
+            </value>
+            <value>
+                <fullName>Choice Startup</fullName>
+                <default>false</default>
+                <label>Choice Startup</label>
+            </value>
+            <value>
+                <fullName>NSPK Merger</fullName>
+                <default>false</default>
+                <label>NSPK Merger</label>
+            </value>
+            <value>
+                <fullName>NSPK MM Merger &lt;150</fullName>
+                <default>false</default>
+                <label>NSPK MM Merger &lt;150</label>
+            </value>
+            <value>
+                <fullName>NSPK MM Merger &gt;501 Ees</fullName>
+                <default>false</default>
+                <label>NSPK MM Merger &gt;501 Ees</label>
+            </value>
+            <value>
+                <fullName>NSPK MM Merger 150-300 Ees</fullName>
+                <default>false</default>
+                <label>NSPK MM Merger 150-300 Ees</label>
+            </value>
+            <value>
+                <fullName>NSPK MM Merger 301-500 Ees</fullName>
+                <default>false</default>
+                <label>NSPK MM Merger 301-500 Ees</label>
+            </value>
+            <value>
+                <fullName>NSPK MM Startup &lt;150</fullName>
+                <default>false</default>
+                <label>NSPK MM Startup &lt;150</label>
+            </value>
+            <value>
+                <fullName>NSPK MM Startup &gt;501 Ees</fullName>
+                <default>false</default>
+                <label>NSPK MM Startup &gt;501 Ees</label>
+            </value>
+            <value>
+                <fullName>NSPK MM Startup 150-300 Ees</fullName>
+                <default>false</default>
+                <label>NSPK MM Startup 150-300 Ees</label>
+            </value>
+            <value>
+                <fullName>NSPK MM Startup 301-500 Ees</fullName>
+                <default>false</default>
+                <label>NSPK MM Startup 301-500 Ees</label>
+            </value>
+            <value>
+                <fullName>NSPK Startup</fullName>
+                <default>false</default>
+                <label>NSPK Startup</label>
+            </value>
+            <value>
+                <fullName>WO Customized</fullName>
+                <default>false</default>
+                <label>WO Customized</label>
+            </value>
+            <value>
+                <fullName>WO Customized MM</fullName>
+                <default>false</default>
+                <label>WO Customized MM</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
