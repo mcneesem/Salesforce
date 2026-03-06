@@ -44,13 +44,16 @@ public with sharing class NSP_EmailMessageTriggerHelper {
         }
         Set<Id> validatedParentIds = new Set<Id>();
         if ( !parentIds.isEmpty() ) {
-            // prevent Validation Rule DmlExceptions by excluding 'Closed' Cases from the list of Cases modified by this logic...
+            // Prevent DmlExceptions: FIELD_CUSTOM_VALIDATION_EXCEPTION, Case is closed, set the status to Reopened, save, and then edit.
+            // Prevent DmlExceptions: FIELD_CUSTOM_VALIDATION_EXCEPTION, Please Update Category and Sub category
             List<Case> validatedParents = [
                 SELECT Id
                 FROM Case
                 WHERE (
                     ( Id IN :parentIds )
                     AND ( Status != 'Closed' )
+                    AND ( NSP_Category__c != null )
+                    AND ( NSP_SubCategory__c != null )
                 )
             ];
             Map<Id,Case> validatedParentsMap = new Map<Id,Case>();
@@ -75,7 +78,7 @@ public with sharing class NSP_EmailMessageTriggerHelper {
         }
         //As a part of STY-03671
         if ( !employmentScreeningcaseIdSet.isEmpty() ) {
-            updateConfidentialCheckBoxForEmpScreening( employmentScreeningcaseIdSet );
+            NSP_EmailMessageTriggerHelper.updateConfidentialCheckBoxForEmpScreening( employmentScreeningcaseIdSet );
         }
         //As a part of STY-03531
         if ( !switchEnabled && !healthWelfareInternalExternalCaseIdFromAddMap.isEmpty() ) {
@@ -144,7 +147,8 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                 }
             }
             //
-            List<Case> casesToUpdate = new List<Case>();
+            List<Case> casesReOpened = new List<Case>();
+            List<Case> casesResponseAfterClose = new List<Case>();
             Map<Case,EmailMessage> caseToEmailMessageMap = new Map<Case,EmailMessage>();
             Map<String,String> mapOfEmailAddressToQueueName = new Map<String,String>();
             Map<String,String> mapOfQueueNameToQueueId = new Map<String,String>();
@@ -171,7 +175,7 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                             {
                                 Integer daysBetween = (currentCase.ClosedDate.date()).daysBetween( eMessage.MessageDate.date() );
                                 if ( NSP_EmailMessageTriggerHelper.isLessThanEqualToCategoryTierDays( currentCase.NSP_Category__c , daysBetween ) ) {
-                                    currentCase.Status = REOPENED;
+                                    currentCase.Status = NSP_EmailMessageTriggerHelper.REOPENED;
                                     currentCase.NSP_Case_Reopened_EmaiToCase__c = true;
                                     currentCase.OwnerId = NSP_EmailMessageTriggerHelper.getQueueOwnerId(
                                         currentCase.OwnerId ,
@@ -180,10 +184,10 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                                         mapOfQueueNameToQueueId ,
                                         mapOfUserIdToUserRecord
                                     );
-                                    casesToUpdate.add( currentCase );
+                                    casesReOpened.add( currentCase );
                                 } else if ( NSP_EmailMessageTriggerHelper.isGreaterThanCategoryTierDays( currentCase.NSP_Category__c , daysBetween ) ) {
                                     currentCase.NSP_Response_After_Close__c = true;
-                                    casesToUpdate.add( currentCase );
+                                    casesResponseAfterClose.add( currentCase );
                                     caseToEmailMessageMap.put( currentCase , eMessage );
                                 } else if (
                                     ( currentCase.RecordTypeId == NSP_EmailMessageTriggerHelper.PEO_RECORDTYPEID )
@@ -191,7 +195,7 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                                     )
                                 {
                                     currentCase.NSP_Response_After_Close__c = true;
-                                    casesToUpdate.add( currentCase );
+                                    casesResponseAfterClose.add( currentCase );
                                 }
                             } else if (
                                 ( currentCase.RecordTypeId == NSP_EmailMessageTriggerHelper.PEO_RECORDTYPEID )
@@ -204,15 +208,15 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                                     eMessage.MessageDate.date()
                                 );
                                 if ( businessDaysBetween <= 5 ) {
-                                    currentCase.Status = REOPENED;
+                                    currentCase.Status = NSP_EmailMessageTriggerHelper.REOPENED;
                                     currentCase.NSP_Case_Sub_Status__c = UNASSIGNED;
                                     currentCase.OwnerId = NSP_EmailMessageTriggerHelper.CONTACTCENTER_QUEUEID;
                                     currentCase.NSP_Response_After_Close__c = true;
-                                    casesToUpdate.add( currentCase );
+                                    casesReOpened.add( currentCase );
                                 } else {
                                     caseToEmailMessageMap.put( currentCase , eMessage );
                                     currentCase.NSP_Response_After_Close__c = true;
-                                    casesToUpdate.add( currentCase );
+                                    casesResponseAfterClose.add( currentCase );
                                 }
                             }
                         }
@@ -231,21 +235,29 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                     updateRelatedCaseOnEmailMessage( caseToEmailMessageMap , insertedCases );
                 }
             }
-            if ( !casesToUpdate.isEmpty() ) {
-                try {
-                    List<Database.SaveResult> results = Database.update( casesToUpdate , false );
+            try {
+                if ( !casesReOpened.isEmpty() ) {
+                    List<Database.SaveResult> results = Database.update( casesReOpened , false );
                     NSP_ErrorLogHandler.logResults(
                         NSP_EmailMessageTriggerHelper.class.getName() ,
-                        'reOpenOrMarkResponseAfterCloseTrue:update' ,
+                        'reOpenOrMarkResponseAfterCloseTrue:update:ReOpened' ,
                         results
                     );
-                } catch ( Exception e ) {
-                    NSP_ErrorLogHandler.logException(
+                }
+                if ( !casesResponseAfterClose.isEmpty() ) {
+                    List<Database.SaveResult> results = Database.update( casesResponseAfterClose , false );
+                    NSP_ErrorLogHandler.logResults(
                         NSP_EmailMessageTriggerHelper.class.getName() ,
-                        'reOpenOrMarkResponseAfterCloseTrue' ,
-                        e
+                        'reOpenOrMarkResponseAfterCloseTrue:update:ResponseAfterClose' ,
+                        results
                     );
                 }
+            } catch ( Exception e ) {
+                NSP_ErrorLogHandler.logException(
+                    NSP_EmailMessageTriggerHelper.class.getName() ,
+                    'reOpenOrMarkResponseAfterCloseTrue' ,
+                    e
+                );
             }
         }
     }
@@ -529,7 +541,7 @@ public with sharing class NSP_EmailMessageTriggerHelper {
             }
             // insert updated cases
             if ( !emailMessageClonedList.isEmpty() ) {
-                emailMessageInserted = updateParentIdOnClonedEmailMessage(
+                emailMessageInserted = NSP_EmailMessageTriggerHelper.updateParentIdOnClonedEmailMessage(
                     emailMessageClonedList ,
                     insertedCaseList
                 );
@@ -560,10 +572,10 @@ public with sharing class NSP_EmailMessageTriggerHelper {
     // Story: AZD-320679
     // Params: Map<Id,Id> linkedEntityIdMap
     private static void handleDmlOperationsRelatedEmailMessages( Map<Id,Id> linkedEntityIdMap ) {
-        cloneContentDocumentLinks(linkedEntityIdMap);
+        NSP_EmailMessageTriggerHelper.cloneContentDocumentLinks( linkedEntityIdMap );
         // After process, delete all the Email Message Records which are cloned.
         if ( ( linkedEntityIdMap != null ) && !linkedEntityIdMap.isEmpty() ) {
-            deleteEmailMessages( linkedEntityIdMap.keySet() );
+            NSP_EmailMessageTriggerHelper.deleteEmailMessages( linkedEntityIdMap.keySet() );
         }
     }
 
@@ -572,9 +584,8 @@ public with sharing class NSP_EmailMessageTriggerHelper {
     // Story: AZD-320679
     // Params: Map<Id,Id> linkedEntityIdMap
     private static void cloneContentDocumentLinks( Map<Id,Id> linkedEntityIdMap ) {
-        List<ContentDocumentLink> contentDocumentLinkClonedList = new list<ContentDocumentLink>();
-        List<ContentDocumentLink> contentDocumentLinkList = new List<ContentDocumentLink>();
         try {
+            List<ContentDocumentLink> contentDocumentLinkList = new List<ContentDocumentLink>();
             if ( ( linkedEntityIdMap != null ) && !linkedEntityIdMap.isEmpty() ) {
                 contentDocumentLinkList = [
                     SELECT Id , ContentDocumentId , LinkedEntityId
@@ -582,10 +593,13 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                     WHERE ( LinkedEntityId IN :linkedEntityIdMap.keySet() )
                 ];
             }
+            List<ContentDocumentLink> contentDocumentLinkClonedList = new list<ContentDocumentLink>();
             if ( !contentDocumentLinkList.isEmpty() ) {
                 for ( ContentDocumentLink cLink : contentDocumentLinkList ) {
+                    // Prevent DmlException: REQUIRED_FIELD_MISSING, Required fields are missing: [Linked Entity]
                     if ( ( cLink.LinkedEntityId != null )
                         && linkedEntityIdMap.containsKey( cLink.LinkedEntityId )
+                        && ( linkedEntityIdMap.get( cLink.LinkedEntityId ) != null )
                         )
                     {
                         ContentDocumentLink contentDocumentLinkCloned = cLink.clone( false , true , false , false );
@@ -595,7 +609,12 @@ public with sharing class NSP_EmailMessageTriggerHelper {
                 }
             }
             if ( !contentDocumentLinkClonedList.isEmpty() ) {
-                insert contentDocumentLinkClonedList;
+                List<Database.SaveResult> results = Database.insert( contentDocumentLinkClonedList , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_EmailMessageTriggerHelper.class.getName() ,
+                    'cloneContentDocumentLinks:insert' ,
+                    results
+                );
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
@@ -637,9 +656,9 @@ public with sharing class NSP_EmailMessageTriggerHelper {
     // Params        : List<EmailMessage> emailMessageClonedList, List<Case> insertedCaseList
     //
     private static List<EmailMessage> updateParentIdOnClonedEmailMessage( List<EmailMessage> emailMessageClonedList , List<Case> insertedCaseList ) {
-        List<EmailMessage> emailMessageToBeInserted = New List<EmailMessage>();
-        Map<Id,Id> parentCaseIdToCaseIdMap = new Map<Id,Id>();
-        try{
+        List<EmailMessage> emailMessageToBeInserted = new List<EmailMessage>();
+        try {
+            Map<Id,Id> parentCaseIdToCaseIdMap = new Map<Id,Id>();
             for ( Case c : insertedCaseList ) {
                 parentCaseIdToCaseIdMap.put( c.ParentId , c.Id );
             }
@@ -655,7 +674,12 @@ public with sharing class NSP_EmailMessageTriggerHelper {
             }
             // Insert Updated Email Messages
             if ( !emailMessageToBeInserted.isEmpty() ) {
-                insert emailMessageToBeInserted;
+                List<Database.SaveResult> results = Database.insert( emailMessageToBeInserted , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_EmailMessageTriggerHelper.class.getName() ,
+                    'updateParentIdOnClonedEmailMessage:insert' ,
+                    results
+                );
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
@@ -744,25 +768,29 @@ public with sharing class NSP_EmailMessageTriggerHelper {
     // 'test.customer.service@insperity.com' or 'test.lesdrugscreening.service@insperity.com
     // Params : Set<Id> caseIdSet
     //
-    public static void updateConfidentialCheckBoxForEmpScreening( Set<Id> caseIdSet ) {
-        List<Case> caseListToUpdate = new List<Case>();
+    private static void updateConfidentialCheckBoxForEmpScreening( Set<Id> caseIdSet ) {
         try {
+            // Prevent DmlExceptions: FIELD_CUSTOM_VALIDATION_EXCEPTION, Case is closed, set the status to Reopened, save, and then edit.
+            List<Case> caseListToUpdate = new List<Case>();
             for ( Case caseRec: [
                         SELECT Id , NSP_Confidential__c , NSP_Category__c
                         FROM Case
-                        WHERE Id IN: caseIdSet
+                        WHERE (
+                            ( Id IN :caseIdSet )
+                            AND ( Status != 'Closed' )
+                        )
                     ]
                 )
             {
                 caseRec.NSP_Confidential__c = True;
                 caseRec.NSP_Category__c = 'Employment Screening';
-                caseListToUpdate.add(caseRec);
+                caseListToUpdate.add( caseRec );
             }
             if ( !caseListToUpdate.isEmpty() ) {
                 List<Database.SaveResult> results = Database.update( caseListToUpdate , false );
                 NSP_ErrorLogHandler.logResults(
                     NSP_EmailMessageTriggerHelper.class.getName() ,
-                    'updateConfidentialCheckBoxForEmpScreening' ,
+                    'updateConfidentialCheckBoxForEmpScreening:update' ,
                     results
                 );
             }
@@ -948,21 +976,21 @@ public with sharing class NSP_EmailMessageTriggerHelper {
 
     //Method to insert updated Email Message record.
     private static void updateParentIdOnEmailMessage( List<EmailMessage> emailMessageClonedList , Map<String,String> caseExtrnlIdsByCaseIds ) {
-        List<EmailMessage> emailMessageToBeInserted = New List<EmailMessage>();
-        for(EmailMessage eMessage : emailMessageClonedList) {
-            string[] caseExtDetails = eMessage.FromName.split('\\.');
-            string[] caseExtIds = caseExtDetails[2].split('_');
+        List<EmailMessage> emailMessageToBeInserted = new List<EmailMessage>();
+        for ( EmailMessage eMessage : emailMessageClonedList ) {
+            String[] caseExtDetails = eMessage.FromName.split( '\\.' );
+            String[] caseExtIds = caseExtDetails[2].split( '_' );
             //Case number should be there
-            if(!caseExtIds.isEmpty()) {
-                if(caseExtrnlIdsByCaseIds.containskey(caseExtIds[0])){
+            if ( !caseExtIds.isEmpty() ) {
+                if ( caseExtrnlIdsByCaseIds.containskey( caseExtIds[0] ) ) {
                     //Update Parent Id
-                    eMessage.ParentId = caseExtrnlIdsByCaseIds.get(caseExtIds[0]);
-                    emailMessageToBeInserted.add(eMessage);
+                    eMessage.ParentId = caseExtrnlIdsByCaseIds.get( caseExtIds[0] );
+                    emailMessageToBeInserted.add( eMessage );
                 }
             }
         }
         //Insert Updated Email Messages
-        if(!emailMessageToBeInserted.isEmpty()) {
+        if ( !emailMessageToBeInserted.isEmpty() ) {
             insert emailMessageToBeInserted;
         }
     }
