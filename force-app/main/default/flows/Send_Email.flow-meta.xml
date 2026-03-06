@@ -64,7 +64,6 @@
             <name>senderAddress</name>
             <value>
                 <elementReference>senderEmail</elementReference>
-                <inputConfiguratorMode>Resource</inputConfiguratorMode>
             </value>
         </inputParameters>
         <inputParameters>
