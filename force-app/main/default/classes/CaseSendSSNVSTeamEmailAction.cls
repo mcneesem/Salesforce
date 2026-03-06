@@ -104,11 +104,6 @@ public with sharing class CaseSendSSNVSTeamEmailAction
         }
         if ( 
             (
-                out.subClientContacts == null || 
-                out.subClientContacts.isEmpty()
-            ) 
-            && 
-            (
                 errorMap != null && 
                 !errorMap.isEmpty() 
             )
@@ -197,6 +192,7 @@ public with sharing class CaseSendSSNVSTeamEmailAction
     */
     private static List<NSP_Error_Log__c> buildErrors( Map<String, String> errorMap )
     {
+        System.debug(LoggingLevel.DEBUG, ' Error Map : ' + errorMap);
         List<NSP_Error_Log__c> entries = new List<NSP_Error_Log__c>();
         
         if ( errorMap != null && !errorMap.isEmpty() ) 
@@ -281,6 +277,7 @@ public with sharing class CaseSendSSNVSTeamEmailAction
     * @param caseObj Case context (recordId for the Flow)
     * @return true if Flow started without exception; false otherwise
     */
+    @TestVisible
     private static Boolean callEmailAction( String emailSubject, String emailBody, List<String> listOfToAddresses, Case caseObj )
     {  
         Boolean success             = false;
@@ -434,6 +431,7 @@ public with sharing class CaseSendSSNVSTeamEmailAction
                 }
             }
         }
+        System.debug(LoggingLevel.DEBUG, ' All Eligible Sub clients for email : ' + eligibleSubClientContacts.size());
         
         return eligibleSubClientContacts;
     }

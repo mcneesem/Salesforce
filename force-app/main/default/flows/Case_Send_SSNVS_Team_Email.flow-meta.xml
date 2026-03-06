@@ -160,7 +160,7 @@
         </rules>
         <rules>
             <name>Success_Records_Found</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>1 AND 2 AND ( 3 OR 4 )</conditionLogic>
             <conditions>
                 <leftValueReference>succssfulSSCRecords</leftValueReference>
                 <operator>IsNull</operator>
@@ -173,6 +173,20 @@
                 <operator>IsEmpty</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>errorLogRecords</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>errorLogRecords</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -592,7 +606,7 @@
             <targetReference>Outbound_Email_custom_setting_check</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
