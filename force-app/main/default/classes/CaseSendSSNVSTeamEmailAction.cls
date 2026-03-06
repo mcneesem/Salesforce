@@ -328,7 +328,7 @@ public with sharing class CaseSendSSNVSTeamEmailAction
     */
     private static List<NSP_Sub_Client_Contact__c> collectSubClientContacts( List<NSP_Sub_Client__c> subClients, Contact caseContact, Map<String, String> errorMap )
     {
-        List<NSP_Sub_Client_Contact__c> returnSSCList = null;
+        List<NSP_Sub_Client_Contact__c> returnSSCList = new List<NSP_Sub_Client_Contact__c>();
         if ( subClients != null && !subClients.isEmpty() && caseContact != null ) 
         {
             for ( NSP_Sub_Client__c sc : subClients ) 
@@ -336,7 +336,7 @@ public with sharing class CaseSendSSNVSTeamEmailAction
                 List<NSP_Sub_Client_Contact__c> sccs = sc.NSP_Sub_Client_Contacts__r;
                 if( sccs != null && !sccs.isEmpty() )
                 {
-                    returnSSCList = getEligibleCaseContact( sccs, caseContact );
+                    returnSSCList.addAll(getEligibleCaseContact( sccs, caseContact ));
                 }
             }
         }
