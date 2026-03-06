@@ -395,7 +395,7 @@ public void updateActivitySales(List<Task> newList,Map<Id,Task> OldTaskMap){
                 NSP_ServiceConstants.PERFORMANCE_MANAGEMENT => NSP_ServiceConstants.SERVICE_REFERRAL ,
                 NSP_ServiceConstants.TIME_AND_ATTENDANCE => NSP_ServiceConstants.SERVICE_REFERRAL ,
                 NSP_ServiceConstants.PI_CONTINGENT_WORKFORCE => NSP_ServiceConstants.CONTINGENT_WORKFORCE ,
-                NSP_TaskTriggerHelper.PI_I9_ASSIST_EVERIFY => NSP_ServiceConstants.I9_ASSIST_EVERIFY ,
+                NSP_TaskTriggerHelper.PI_I9_ASSIST_EVERIFY => NSP_TaskTriggerHelper.I9_ASSIST_EVERIFY ,
                 NSP_ServiceConstants.PI_CONTRACTOR_MANAGEMENT => NSP_ServiceConstants.CONTRACTOR_MANAGEMENT ,
                 NSP_ServiceConstants.PI_HRCORE_ONBOARDING_AMENDMENT => NSP_ServiceConstants.HRCORE_ONBOARDING_AMENDMENT ,
                 NSP_ServiceConstants.EMPLOYMENT_SCREENING => NSP_TaskTriggerHelper.EMPLOYMENT_SCREENING,
