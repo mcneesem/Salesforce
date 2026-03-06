@@ -5,7 +5,7 @@
 */
 
 public with sharing class NSP_ContactServiceTriggerHelper {
-    
+     //test /w NSP_ContactServiceTriggerHelperTest (89%)
     /**
     * Iterates throught the list of new Contact and passes the required attributes to other methods.
     * @param newList List of New Contact.
@@ -36,6 +36,12 @@ public with sharing class NSP_ContactServiceTriggerHelper {
     
     public void beforeUpdateDirector(Map<Id, Contact> newMap,Map<Id, Contact> oldMap) {
         try{
+            Map<String,AccountContactRelation> acrMapWithAccConId = new Map<String,AccountContactRelation>();
+            for(AccountContactRelation acr : [Select Id, AccountId, ContactId, NSP_Work_Email__c, NSP_Work_Phone__c, NSP_Employee_Status__c, NSP_Status_Date__c, NSP_Job_Title__c from AccountContactRelation where ContactId in :newMap.keySet()]){
+                if(acr.AccountId != null && acr.ContactId != null){
+                    acrMapWithAccConId.put((String)acr.AccountId + acr.ContactId, acr);
+                }
+            }
             for(Contact conObj : newMap.values()){
                 // Populating Preferred First Name if Pref First Name is left blank
                 if(newMap.get(conObj.id).NSP_Preferred_First_Name__c != oldMap.get(conObj.id).NSP_Preferred_First_Name__c 
@@ -48,8 +54,18 @@ public with sharing class NSP_ContactServiceTriggerHelper {
                 && conObj.NSP_Service_Request_Channel__c == null && oldMap.get(conObj.id).NSP_Service_Request_Channel__c == 'Phone'){
                     conObj.NSP_Pin_Validated__c = false;  
                 }
-            }
-             
+                //Update primary details on contact based on account  
+                if(conObj.AccountId != null && conObj.AccountId != oldMap.get(conObj.Id).AccountId){
+                    AccountContactRelation acrRecord = acrMapWithAccConId.get((String)conObj.AccountId + conObj.Id);
+                    if(acrRecord != null){
+                        conObj.NSP_Work_email__c = acrRecord.NSP_Work_Email__c;
+                        conObj.NSP_Work_Phone__c = acrRecord.NSP_Work_Phone__c;
+                        conObj.NSP_Employee_Status__c = acrRecord.NSP_Employee_Status__c;
+                        conObj.NSP_Status_Date__c = acrRecord.NSP_Status_Date__c;
+                        conObj.NSP_Job_Title__c = acrRecord.NSP_Job_Title__c;
+                    }
+                }
+            }     
         }catch(Exception ex){
             NSP_CustomException.LogException(ex);
         }
