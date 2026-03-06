@@ -829,7 +829,6 @@ public class NSP_ServiceConstants {
     public static final String SERVICE_REFERRAL =  'Service_Referrals';
     public static final String RECRUITING_SERVICES ='NSP_Recruiting_Services';
     public static final String CONTINGENT_WORKFORCE = 'Contingent_Workforce';
-    public static final String I9_ASSIST_EVERIFY = 'I_9_Assist_E_Verify';
     public static final String CONTRACTOR_MANAGEMENT = 'Contractor_Management';
     public static final String INSURANCE_SERVICES ='NSP_Insurance_Services';
     public static final String HR_CONSULTING =  'NSP_Human_Capital_Consulting';
@@ -851,7 +850,6 @@ public class NSP_ServiceConstants {
     public static final String TIME_ATTENDANCE = NSP_ServiceConstants.TIME_AMP_ATTENDANCE;
     public static final String PI_RECRUITING_SERVICES = 'Recruiting Services';
     public static final String PI_CONTINGENT_WORKFORCE =  'Contingent Workforce';
-    public static final String PI_I9_ASSIST_EVERIFY = 'I-9 Assist & E-Verify';
     public static final String PI_CONTRACTOR_MANAGEMENT = 'Contractor Management';
     public static final String PI_RETIREMENT_SERVICES = 'Retirement Services';
     public static final String TIME_AND_ATTENDANCE = 'Time and Attendance';
