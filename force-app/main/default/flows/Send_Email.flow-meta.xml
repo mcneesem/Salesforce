@@ -1,14 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
+        <name>Render_Template</name>
+        <label>Render Template</label>
+        <locationX>314</locationX>
+        <locationY>350</locationY>
+        <actionName>EmailTemplateRenderer</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Check_if_Email_Params_are_present</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Render_Template_Fault</targetReference>
+        </faultConnector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>templateId</name>
+            <value>
+                <elementReference>emailTemplateId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>whatId</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>EmailTemplateRenderer</nameSegment>
+        <offset>0</offset>
+        <outputParameters>
+            <assignToReference>emailBody</assignToReference>
+            <name>htmlBody</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>emailSubject</assignToReference>
+            <name>subject</name>
+        </outputParameters>
+    </actionCalls>
+    <actionCalls>
         <name>Send_Email</name>
         <label>Send Email</label>
         <locationX>50</locationX>
-        <locationY>566</locationY>
+        <locationY>1064</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <faultConnector>
-            <targetReference>Fault_Flow_For_Email</targetReference>
+            <targetReference>Send_Email_Fault</targetReference>
         </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -26,7 +63,7 @@
         <inputParameters>
             <name>senderAddress</name>
             <value>
-                <stringValue>no-reply@insperity.com</stringValue>
+                <elementReference>senderEmail</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -74,7 +111,7 @@
         <name>Count_Recipients</name>
         <label>Count Recipients</label>
         <locationX>314</locationX>
-        <locationY>350</locationY>
+        <locationY>848</locationY>
         <assignmentItems>
             <assignToReference>countRecipients</assignToReference>
             <operator>AssignCount</operator>
@@ -86,12 +123,45 @@
             <targetReference>Check_Recipients</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Render_Template_Fault</name>
+        <label>Render Template Fault</label>
+        <locationX>578</locationX>
+        <locationY>458</locationY>
+        <assignmentItems>
+            <assignToReference>FaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Render_Template</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Flow_For_Email</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Send_Email_Fault</name>
+        <label>Send Email Fault</label>
+        <locationX>314</locationX>
+        <locationY>1172</locationY>
+        <assignmentItems>
+            <assignToReference>FaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Send_Email</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fault_Flow_For_Email</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <description>Check if Email Params are present.</description>
         <name>Check_if_Email_Params_are_present</name>
         <label>Check if Email Params are present</label>
         <locationX>578</locationX>
-        <locationY>242</locationY>
+        <locationY>740</locationY>
         <defaultConnectorLabel>Not present</defaultConnectorLabel>
         <rules>
             <name>Present</name>
@@ -134,7 +204,7 @@
         <name>Check_Recipients</name>
         <label>Check Recipients</label>
         <locationX>314</locationX>
-        <locationY>458</locationY>
+        <locationY>956</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Has_Recipients</name>
@@ -153,13 +223,45 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_Template_Params</name>
+        <label>Check Template Params</label>
+        <locationX>578</locationX>
+        <locationY>242</locationY>
+        <defaultConnector>
+            <targetReference>Check_if_Email_Params_are_present</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Call_Render_Template</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>emailTemplateId</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>recordId</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Render_Template</targetReference>
+            </connector>
+            <label>Call Render Template</label>
+        </rules>
+    </decisions>
+    <decisions>
         <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
         <name>Outbound_Email_custom_setting_check</name>
         <label>Outbound Email custom setting check</label>
         <locationX>182</locationX>
         <locationY>134</locationY>
         <defaultConnector>
-            <targetReference>Check_if_Email_Params_are_present</targetReference>
+            <targetReference>Check_Template_Params</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
         <rules>
@@ -210,8 +312,14 @@
         <name>Fault_Flow_For_Email</name>
         <label>Fault Flow For Email</label>
         <locationX>314</locationX>
-        <locationY>674</locationY>
+        <locationY>1280</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>FaultElement</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <name>faultFlow</name>
             <value>
@@ -259,6 +367,25 @@
         </value>
     </variables>
     <variables>
+        <description>to store the email template id from the inputs</description>
+        <name>emailTemplateId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
+    <variables>
+        <description>Store the name of the fault element</description>
+        <name>FaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>logEmail</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
@@ -277,6 +404,16 @@
         <isOutput>false</isOutput>
         <value>
             <stringValue></stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>senderEmail</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>no-reply@insperity.com</stringValue>
         </value>
     </variables>
     <variables>
