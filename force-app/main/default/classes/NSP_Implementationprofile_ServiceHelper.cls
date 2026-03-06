@@ -649,14 +649,25 @@ public class NSP_Implementationprofile_ServiceHelper {
         return newipAutomationList;
     }
 
-    private void updateEligibleRecordsMap(Map<String, Set<Id>> automationMap, Id recId, String fnName){
-        Set<Id> relevantRecords = automationMap.get(fnName);
-        if(relevantRecords == null){
-            relevantRecords = new Set<Id>();
+    private void updateEligibleRecordsMap(
+        Map<String,Set<Id>> automationMap ,
+        Id recordId ,
+        String fnName
+        )
+    {
+        if ( ( automationMap != null ) && String.isNotBlank( fnName ) ) {
+            Set<Id> relevantRecords = null;
+            if ( automationMap.containsKey( fnName ) ) {
+                relevantRecords = automationMap.get( fnName );
+            }
+            if ( relevantRecords == null ) {
+                relevantRecords = new Set<Id>();
+            }
+            if ( recordId != null ) {
+                relevantRecords.add( recordId );
+            }
+            automationMap.put( fnName , relevantRecords );
         }
-
-        relevantRecords.add(recId);
-        automationMap.put(fnName, relevantRecords);
     }
 
     private void checkForClientProfileInfo(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
@@ -1806,34 +1817,47 @@ public class NSP_Implementationprofile_ServiceHelper {
     }
 
     private void emailNotifyforFlsaReviewNo() {
-        if(ipRecordsByAutomation != null) {
-            for(Id ipRecId : ipRecordsByAutomation.get(FLSA_REVIEW_NO)) {
-                Implementation_Profile__c ipWithValue=(Implementation_Profile__c) data.get(IP_IDENTIFIER).get(ipRecId);
-                if(ipWithValue != null) {
-
-                    String clients = relatedClients(ipWithValue, TRUE);
+        if ( this.ipRecordsByAutomation != null ) {
+            for ( Id ipRecId : this.ipRecordsByAutomation.get( NSP_Implementationprofile_ServiceHelper.FLSA_REVIEW_NO ) ) {
+                Implementation_Profile__c ipWithValue = (Implementation_Profile__c)this.data.get( NSP_Implementationprofile_ServiceHelper.IP_IDENTIFIER ).get( ipRecId );
+                if ( ipWithValue != null ) {
+                    String clients = this.relatedClients( ipWithValue , true );
                     String relatedAccounts = '';
                     String bulletList = '';
-                    if(String.isNotBlank(clients)) {
+                    if ( String.isNotBlank( clients ) ) {
                         relatedAccounts = RELATED_ACCOUNTS;
                         bulletList = clients;
                     }
-
-                    String subject = ipWithValue.Account__r.Name + ' ('+ ipWithValue.NSP_AIMS_ClientNo__c+') FLSA Exemption Classification Review Declined';
-                    String body = ipWithValue.Account__r.Name + ' ('+ ipWithValue.NSP_AIMS_ClientNo__c+') does not want to have an exemption classification '
-                        +'review during implementation.'
-                        +'<p> No action is required on your part for FLSA Exemption Classification Review. </p>'
-                        +'<p> Service Team HR Professional: You have been included on this message for information purposes only. '
+                    String subject = ipWithValue.Account__r.Name + ' (' + ipWithValue.NSP_AIMS_ClientNo__c + ') FLSA Exemption Classification Review Declined';
+                    String body = ''
+                        + ipWithValue.Account__r.Name
+                        + ' (' + ipWithValue.NSP_AIMS_ClientNo__c + ') does not want to have an exemption classification '
+                        + 'review during implementation.'
+                        + '<p> No action is required on your part for FLSA Exemption Classification Review.</p>'
+                        + '<p> Service Team HR Professional: You have been included on this message for information purposes only. '
                         + 'No action is required on your part. Please do not make FLSA Review a part of your initial client meetings or conversations. '
-                        + 'FLSA Review is only to be initiated when a client asks for this service in the future. </p>'
+                        + 'FLSA Review is only to be initiated when a client asks for this service in the future.</p>'
                         + relatedAccounts
-                        + bulletList;
-                    emailFlsaReviewNo(ipWithValue, FLSA_REVIEW_NO, subject, body, 'FLSA_Review_No');
+                        + bulletList
+                        ;
+                    this.emailFlsaReviewNo(
+                        ipWithValue ,
+                        NSP_Implementationprofile_ServiceHelper.FLSA_REVIEW_NO ,
+                        subject ,
+                        body ,
+                        'FLSA_Review_No'
+                    );
                 }
             }
         }
-        if(impRecordId!=null && impAutomationName !=null){
-            NSP_Implprofile_ServiceHelperUpdate.automationRecordUpdate(impRecordId,impAutomationName,impMethodName,impAutomationRecordType,impAutomationSection );
+        if ( ( impRecordId != null ) && ( impAutomationName != null ) ) {
+            NSP_Implprofile_ServiceHelperUpdate.automationRecordUpdate(
+                impRecordId ,
+                impAutomationName ,
+                impMethodName ,
+                impAutomationRecordType ,
+                impAutomationSection
+            );
         }
     }
 
