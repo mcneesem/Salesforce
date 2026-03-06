@@ -10,9 +10,9 @@ public with sharing class NSP_TaskTriggerHelper {
     private static final String EXPENSE_MANAGEMENT = 'Expense_Management';
     private static final String EMPLOYMENT_SCREENING = 'NSP_Employment_Screening';
     //Queue DeveloperNames
-    public static final String I9_ASSIST_EVERIFY = 'I_9_Assist_E_Verify';
+    private static final String I9_ASSIST_EVERIFY = 'I_9_Assist_E_Verify';
     //Products of Interest Tasks
-    public static final String PI_I9_ASSIST_EVERIFY = 'I-9 Assist & E-Verify';
+    private static final String PI_I9_ASSIST_EVERIFY = 'I-9 Assist & E-Verify';
     /**
     * Iterates throught the list of new tasks/ activity and passes the required attributes to other methods.
     * @param newList List of New Task
