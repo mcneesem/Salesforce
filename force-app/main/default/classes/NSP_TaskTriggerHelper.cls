@@ -9,7 +9,10 @@ public with sharing class NSP_TaskTriggerHelper {
     private static Boolean Is_Enabled_WO_WS_Stage_Entry = OpportunityStageSettings__c.getInstance(UserInfo.getUserId()).Is_Enabled_WO_WS_Stage_Entry__c;
     private static final String EXPENSE_MANAGEMENT = 'Expense_Management';
     private static final String EMPLOYMENT_SCREENING = 'NSP_Employment_Screening';
-
+    //Queue DeveloperNames
+    public static final String I9_ASSIST_EVERIFY = 'I_9_Assist_E_Verify';
+    //Products of Interest Tasks
+    public static final String PI_I9_ASSIST_EVERIFY = 'I-9 Assist & E-Verify';
     /**
     * Iterates throught the list of new tasks/ activity and passes the required attributes to other methods.
     * @param newList List of New Task
@@ -353,7 +356,7 @@ public void updateActivitySales(List<Task> newList,Map<Id,Task> OldTaskMap){
             NSP_ServiceConstants.CONTRACTOR_MANAGEMENT ,
             NSP_ServiceConstants.HRCORE_ONBOARDING_AMENDMENT ,
             NSP_TaskTriggerHelper.EMPLOYMENT_SCREENING ,
-            NSP_ServiceConstants.I9_ASSIST_EVERIFY
+            NSP_TaskTriggerHelper.I9_ASSIST_EVERIFY
         };
         Map<String,String> mapQueueDeveloperNameQueueId = new Map<String,String>();
         for ( Group ogroup : [
@@ -392,7 +395,7 @@ public void updateActivitySales(List<Task> newList,Map<Id,Task> OldTaskMap){
                 NSP_ServiceConstants.PERFORMANCE_MANAGEMENT => NSP_ServiceConstants.SERVICE_REFERRAL ,
                 NSP_ServiceConstants.TIME_AND_ATTENDANCE => NSP_ServiceConstants.SERVICE_REFERRAL ,
                 NSP_ServiceConstants.PI_CONTINGENT_WORKFORCE => NSP_ServiceConstants.CONTINGENT_WORKFORCE ,
-                NSP_ServiceConstants.PI_I9_ASSIST_EVERIFY => NSP_ServiceConstants.I9_ASSIST_EVERIFY ,
+                NSP_TaskTriggerHelper.PI_I9_ASSIST_EVERIFY => NSP_ServiceConstants.I9_ASSIST_EVERIFY ,
                 NSP_ServiceConstants.PI_CONTRACTOR_MANAGEMENT => NSP_ServiceConstants.CONTRACTOR_MANAGEMENT ,
                 NSP_ServiceConstants.PI_HRCORE_ONBOARDING_AMENDMENT => NSP_ServiceConstants.HRCORE_ONBOARDING_AMENDMENT ,
                 NSP_ServiceConstants.EMPLOYMENT_SCREENING => NSP_TaskTriggerHelper.EMPLOYMENT_SCREENING,
