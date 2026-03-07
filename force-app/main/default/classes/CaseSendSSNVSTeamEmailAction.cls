@@ -422,37 +422,38 @@ public with sharing class CaseSendSSNVSTeamEmailAction
     private static Boolean getEligibleSubClientContact(NSP_Sub_Client_Contact__c subClientContact, Map<String, String> errorMap)
     {
         Boolean validityCheck = false;
-        Boolean statusOk = CaseSendSSNVSTeamEmailAction.contactStatusCheck( subClientContact );
+        if(subClientContact != null)
+        {
+            Boolean statusOk = CaseSendSSNVSTeamEmailAction.contactStatusCheck( subClientContact );
 
-        String activeNonPaidRole = 'Active Non-Paid User';
-        String paidWorkSiteRole = 'Paid WSEE';
+            String activeNonPaidRole = 'Active Non-Paid User';
+            String paidWorkSiteRole = 'Paid WSEE';
 
-        Boolean onSiteSupervisorOrPayrollContactCheck = (
-            subClientContact != null &&
-            (subClientContact.NSP_On_Site_Supervisor__c == true ||
-             subClientContact.NSP_Payroll_Contact__c == true)
-        );
+            Boolean onSiteSupervisorOrPayrollContactCheck = (
+                (subClientContact.NSP_On_Site_Supervisor__c == true ||
+                subClientContact.NSP_Payroll_Contact__c == true)
+                );
 
-        Boolean activeNonPaidCheck = (
-            subClientContact != null &&
-            String.isBlank(subClientContact.NSP_Employee_Status__c) &&
-            activeNonPaidRole.equalsIgnoreCase(subClientContact.NSP_Paid_Non_Paid__c)
-        );
+            Boolean activeNonPaidCheck = (
+                String.isBlank(subClientContact.NSP_Employee_Status__c) &&
+                activeNonPaidRole.equalsIgnoreCase(subClientContact.NSP_Paid_Non_Paid__c)
+                );
 
-        if (onSiteSupervisorOrPayrollContactCheck  &&
-            (
+            if (onSiteSupervisorOrPayrollContactCheck  &&
+                (
                 (statusOk && paidWorkSiteRole.equalsIgnoreCase(subClientContact.NSP_Paid_Non_Paid__c)) ||
                 activeNonPaidCheck
+                )
             )
-           )
-        {
-            if (String.isNotBlank(subClientContact.NSP_Work_Email__c))
             {
-                validityCheck = true;
-            }
-            else
-            {
-                errorMap?.put(subClientContact.Id, 'Blank Email');
+                if (String.isNotBlank(subClientContact.NSP_Work_Email__c))
+                {
+                    validityCheck = true;
+                }
+                else
+                {
+                    errorMap?.put(subClientContact.Id, 'Blank Email');
+                }
             }
         }
 
