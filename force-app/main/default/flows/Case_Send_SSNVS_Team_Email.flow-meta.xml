@@ -4,13 +4,16 @@
         <description>Calling the Apex Action to do the business logic and send the email</description>
         <name>Case_Send_SSNVS_Team_Email_Action</name>
         <label>Case Send SSNVS Team Email Action</label>
-        <locationX>550</locationX>
+        <locationX>451</locationX>
         <locationY>674</locationY>
         <actionName>CaseSendSSNVSTeamEmailAction</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Check_For_Errors_Or_Success_Records</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Invocable_Apex_Fault_Subflow</targetReference>
+        </faultConnector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>accountId</name>
@@ -52,7 +55,7 @@
     <assignments>
         <name>Assign_varFaultElement_Get_Account_on_Case</name>
         <label>Assign varFaultElement - Get Account on Case</label>
-        <locationX>1342</locationX>
+        <locationX>1507</locationX>
         <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -69,7 +72,7 @@
     <assignments>
         <name>Assign_varFaultElement_Get_SSNVS_Team_Cases</name>
         <label>Assign varFaultElement - Get SSNVS Team Cases</label>
-        <locationX>1870</locationX>
+        <locationX>2035</locationX>
         <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -85,7 +88,7 @@
     <assignments>
         <name>Convert_And_Assign_Not_Eligible_Error</name>
         <label>Convert And Assign Not Eligible Error</label>
-        <locationX>902</locationX>
+        <locationX>803</locationX>
         <locationY>1106</locationY>
         <assignmentItems>
             <assignToReference>errorMesageValue</assignToReference>
@@ -101,7 +104,7 @@
     <assignments>
         <name>Convert_And_Assign_Status_Not_Found_Error</name>
         <label>Convert And Assign Status Not Found Error</label>
-        <locationX>638</locationX>
+        <locationX>539</locationX>
         <locationY>1106</locationY>
         <assignmentItems>
             <assignToReference>errorMesageValue</assignToReference>
@@ -117,7 +120,7 @@
     <assignments>
         <name>Covert_And_Assign_Blank_Email_Message</name>
         <label>Covert And Assign Blank Email Message</label>
-        <locationX>374</locationX>
+        <locationX>275</locationX>
         <locationY>1106</locationY>
         <assignmentItems>
             <assignToReference>errorMesageValue</assignToReference>
@@ -133,7 +136,7 @@
     <decisions>
         <name>Check_For_Errors_Or_Success_Records</name>
         <label>Check For Errors Or Success Records</label>
-        <locationX>550</locationX>
+        <locationX>451</locationX>
         <locationY>782</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -221,7 +224,7 @@
     <decisions>
         <name>Sorting_Error_Messages</name>
         <label>Sorting Error Messages</label>
-        <locationX>770</locationX>
+        <locationX>671</locationX>
         <locationY>998</locationY>
         <defaultConnector>
             <targetReference>Iterate_Over_Error_Records</targetReference>
@@ -283,7 +286,7 @@
     <decisions>
         <name>Was_Account_found_on_Case</name>
         <label>Was Account found on Case?</label>
-        <locationX>814</locationX>
+        <locationX>847</locationX>
         <locationY>566</locationY>
         <defaultConnector>
             <targetReference>No_Account_found_Error</targetReference>
@@ -294,7 +297,7 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>varAccount</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -309,7 +312,7 @@
         <description>Confirms that a Case Account is listed</description>
         <name>Was_Case_found</name>
         <label>Was Case found?</label>
-        <locationX>1210</locationX>
+        <locationX>1309</locationX>
         <locationY>350</locationY>
         <defaultConnector>
             <targetReference>No_Case_found_Error</targetReference>
@@ -320,7 +323,7 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>varCase</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -338,7 +341,7 @@
     <loops>
         <name>Iterate_Over_Error_Records</name>
         <label>Iterate Over Error Records</label>
-        <locationX>286</locationX>
+        <locationX>187</locationX>
         <locationY>890</locationY>
         <collectionReference>errorLogRecords</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -371,7 +374,7 @@
     <recordLookups>
         <name>Get_Account_on_Case</name>
         <label>Get Account on Case</label>
-        <locationX>814</locationX>
+        <locationX>847</locationX>
         <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -397,7 +400,7 @@
         <description>Gets and stores data for SSNVS Team Cases</description>
         <name>Get_SSNVS_Team_Cases</name>
         <label>Get SSNVS Team Cases</label>
-        <locationX>1210</locationX>
+        <locationX>1309</locationX>
         <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -482,7 +485,7 @@
     <screens>
         <name>Case_Send_SSNVS_Team_Email_Error</name>
         <label>Case - Send SSNVS Team Email</label>
-        <locationX>286</locationX>
+        <locationX>187</locationX>
         <locationY>1382</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -506,7 +509,7 @@
     <screens>
         <name>Case_Send_SSNVS_Team_Email_Success</name>
         <label>Case - Send SSNVS Team Email</label>
-        <locationX>550</locationX>
+        <locationX>451</locationX>
         <locationY>890</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -530,7 +533,7 @@
     <screens>
         <name>Flow_Fault_Message</name>
         <label>Flow Fault Message</label>
-        <locationX>1870</locationX>
+        <locationX>2035</locationX>
         <locationY>566</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -554,7 +557,7 @@
     <screens>
         <name>No_Account_found_Error</name>
         <label>No Account found Error</label>
-        <locationX>1078</locationX>
+        <locationX>1243</locationX>
         <locationY>674</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -578,7 +581,7 @@
     <screens>
         <name>No_Case_found_Error</name>
         <label>No Case found Error</label>
-        <locationX>1606</locationX>
+        <locationX>1771</locationX>
         <locationY>458</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -610,7 +613,7 @@
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
-        <locationX>1870</locationX>
+        <locationX>2035</locationX>
         <locationY>458</locationY>
         <connector>
             <targetReference>Flow_Fault_Message</targetReference>
@@ -620,6 +623,31 @@
             <name>faultElement</name>
             <value>
                 <elementReference>varFaultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Case_Send_SSNVS_Team_Email</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Invocable_Apex_Fault_Subflow</name>
+        <label>Invocable Apex Fault Subflow</label>
+        <locationX>979</locationX>
+        <locationY>782</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <stringValue>Case Send SSNVS Team Email Action</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
