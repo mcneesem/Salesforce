@@ -528,7 +528,7 @@ public with sharing class CaseSendSSNVSTeamEmailAction
                     WHERE
                     Id = :caseObj.ContactId
                     AND
-                    NSP_Employee_Status__c IN :ALLOWED_EMPLOYEE_STATUS
+                    NSP_Employee_Status__c IN :CaseSendSSNVSTeamEmailAction.vaALLOWED_EMPLOYEE_STATUS
                     WITH USER_MODE
                 ];
 
