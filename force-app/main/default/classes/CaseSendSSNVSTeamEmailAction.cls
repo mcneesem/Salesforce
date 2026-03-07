@@ -261,7 +261,6 @@ public with sharing class CaseSendSSNVSTeamEmailAction
     * @param caseObj Case context (recordId for the Flow)
     * @return true if Flow started without exception; false otherwise
     */
-    @TestVisible
     private static Boolean callEmailAction(String emailSubject, String emailBody, List<String> listOfToAddresses, String caseRecordId)
     {
         Boolean success = false;
