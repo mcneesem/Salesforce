@@ -429,9 +429,10 @@ public with sharing class CaseSendSSNVSTeamEmailAction
             String activeNonPaidRole = 'Active Non-Paid User';
             String paidWorkSiteRole = 'Paid WSEE';
 
-            Boolean onSiteSupervisorOrPayrollContactCheck = (
-                (subClientContact.NSP_On_Site_Supervisor__c == true ||
-                subClientContact.NSP_Payroll_Contact__c == true)
+            Boolean onSiteSupervisorOrPayrollContactCheck =
+                (
+                    subClientContact.NSP_On_Site_Supervisor__c == true ||
+                subClientContact.NSP_Payroll_Contact__c == true
                 );
 
             Boolean activeNonPaidCheck = (
@@ -528,7 +529,7 @@ public with sharing class CaseSendSSNVSTeamEmailAction
                     WHERE
                     Id = :caseObj.ContactId
                     AND
-                    NSP_Employee_Status__c IN :CaseSendSSNVSTeamEmailAction.vaALLOWED_EMPLOYEE_STATUS
+                    NSP_Employee_Status__c IN :CaseSendSSNVSTeamEmailAction.ALLOWED_EMPLOYEE_STATUS
                     WITH USER_MODE
                 ];
 
