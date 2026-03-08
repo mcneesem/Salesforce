@@ -1,0 +1,574 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>65.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Set_Fault_Element_Get_Account</name>
+        <label>Set Fault Element : Get_Account</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Account</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_Account_Group_Members</name>
+        <label>Set Fault Element : Get_Account_Group_Members</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Account_Group_Members</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_Asset_WX_WA</name>
+        <label>Set Fault Element : Get_Asset_WX_WA</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Asset_WX_WA</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_HRCore_Project</name>
+        <label>Set Fault Element : Get_HRCore_Project</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_HRCore_Project</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <constants>
+        <description>Default - WX Account Group</description>
+        <name>accountGroup</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>WX Account Group</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <description>Default - WX/WA Customer Success Specialist</description>
+        <name>accountTeamRole</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>WX/WA Customer Success Specialist</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <description>Default - WX_WA Record Type</description>
+        <name>assetRecordType</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>NSP_Asset_Product</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <description>Default - Business Team (1-30 EE&apos;s)</description>
+        <name>productSegment</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Business Team (1-30 EE&apos;s)</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <description>Project Task - Quarterly Client Meeting 4</description>
+        <name>ptQuarterlyClientMeeting4</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Quarterly Client Meeting 4</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <description>Project Task - Transition to Support</description>
+        <name>ptTransitiontoSupport</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Transition to Support</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <description>Template - HRCore Client Engagement Y1</description>
+        <name>templateHRCoreY1</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>HRCore Client Engagement Y1</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <description>Template - HRCore Client Engagement Y2+</description>
+        <name>templateHRCoreY2</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>HRCore Client Engagement Y2+</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>templateiSolvedHCM</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>iSolved HCM Implementation</stringValue>
+        </value>
+    </constants>
+    <decisions>
+        <description>Proceed if valid account</description>
+        <name>Account_Exists</name>
+        <label>Account Exists?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Account_Exists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Account</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Account_Group_Members</targetReference>
+            </connector>
+            <label>Yes : Account Exists</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Proceed to create project if valid asset record is found</description>
+        <name>Valid_Asset</name>
+        <label>Valid Asset ?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Valid_Asset</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Asset_WX_WA</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Project_From_Template_and_Account_Subflow</targetReference>
+            </connector>
+            <label>Yes : Valid Asset</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>if WX Account Group is exists then proceed with project creation else do not create project</description>
+        <name>Valid_Group_Member</name>
+        <label>Valid Group Member?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Account_Group_Member</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Account_Group_Members</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>f_ProjectTemplate</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_HRCore_Project</targetReference>
+            </connector>
+            <label>Yes : Valid Group Member</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Create New &quot;WX/WA New Tax IMPL&quot; Project if  project is already not exists.</description>
+        <name>Validate_to_Create_New_Project</name>
+        <label>Validate to Create New Project?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Create_New_Project</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_HRCore_Project</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Asset_WX_WA</targetReference>
+            </connector>
+            <label>Yes : Create New Project</label>
+        </rules>
+    </decisions>
+    <description>Create HR Core Project</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>f_ProjectTemplate</name>
+        <dataType>String</dataType>
+        <expression>IF(
+  AND(
+    {!$Record.Name} = {!ptTransitiontoSupport},
+    {!$Record.Template_Name_Formula__c} = {!templateiSolvedHCM}
+  ),
+  {!templateHRCoreY1},
+  IF(
+    AND(
+      {!$Record.Name} = {!ptQuarterlyClientMeeting4},
+      {!$Record.Template_Name_Formula__c} = {!templateHRCoreY1}
+    ),
+   {!templateHRCoreY2},
+    &quot;&quot;
+  )
+)</expression>
+    </formulas>
+    <interviewLabel>Project Task - Update - Async - Create HRCore Project From Template And Account {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Project Task - Update - Async - Create HRCore Project From Template and Account</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Verify if Account exists</description>
+        <name>Get_Account</name>
+        <label>Get Account</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Account_Exists</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_Account</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.NSP_AccountId__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Get the &quot;WX Account Group&quot; from Account Group Members</description>
+        <name>Get_Account_Group_Members</name>
+        <label>Get Account Group Members</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Valid_Group_Member</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_Account_Group_Members</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>NSP_Member_Account__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Account.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>accountGroup</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Primary__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>NSP_Account_Group_Member__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Validate if Account has WX_WA Asset exists if not then don&apos;t create Project</description>
+        <name>Get_Asset_WX_WA</name>
+        <label>Get Asset (WX_WA)</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Valid_Asset</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_Asset_WX_WA</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RecordTypeName__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>assetRecordType</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Product_Segment__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>productSegment</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>AccountId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Account.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Asset</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>NSP_Product_Segment__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Check to see if &quot;HRCore Client Engagement Y1&quot; or &quot;HRCore Client Engagement Y2+&quot; Project is already created</description>
+        <name>Get_HRCore_Project</name>
+        <label>Get HRCore Project</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Validate_to_Create_New_Project</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_HRCore_Project</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>pse__Account__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Account.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>pse__Is_Template__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>TemplateName__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>f_ProjectTemplate</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>pse__Proj__c</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <filterLogic>(1 AND 2 AND 3 AND 4 AND 5 AND ( (6 AND 7) OR (8 AND 9) ))</filterLogic>
+        <filters>
+            <field>pse__Status__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>pse__Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Complete</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_AccountId__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Project_Status__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Close/Lost</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Project_Status__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Cancelled</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Quarterly Client Meeting 4</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Template_Name_Formula__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>HRCore Client Engagement Y1</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Transition to Support</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Template_Name_Formula__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>iSolved HCM Implementation</stringValue>
+            </value>
+        </filters>
+        <object>pse__Project_Task__c</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <scheduledPaths>
+            <connector>
+                <targetReference>Get_Account</targetReference>
+            </connector>
+            <pathType>AsyncAfterCommit</pathType>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Draft</status>
+    <subflows>
+        <name>Create_Project_From_Template_and_Account_Subflow</name>
+        <label>Create HRCore Project Template_ and_ AccountSubflow</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <flowName>Create_Project_From_Template_and_Account_Subflow</flowName>
+        <inputAssignments>
+            <name>accountId</name>
+            <value>
+                <elementReference>Get_Account.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>assignRole</name>
+            <value>
+                <elementReference>accountTeamRole</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>deleteBudget</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>projectTemplate</name>
+            <value>
+                <elementReference>f_ProjectTemplate</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
+        <name>Insperity_Fault_Handler_Subflow</name>
+        <label>Insperity Fault Handler Subflow</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>faultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Project_Task_Update_Async_Create_HRCore_Project_From_Template_and_Account</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <variables>
+        <name>faultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

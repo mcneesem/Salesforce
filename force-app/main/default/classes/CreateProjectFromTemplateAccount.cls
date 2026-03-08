@@ -1,5 +1,5 @@
 public with sharing class CreateProjectFromTemplateAccount {
-    // test w/ CreateProjectFromTemplateAccountTest (85%)
+    // test w/ CreateProjectFromTemplateAccountTest (87%)
 
     @InvocableMethod(
         label='Create Project From Template And Account'
@@ -31,7 +31,7 @@ public with sharing class CreateProjectFromTemplateAccount {
             // Query all Templates
             Map<Id,pse__Proj__c> templateMap = new Map<Id,pse__Proj__c>(
                 [
-                    SELECT Id , Template_Name__c , RecordTypeId
+                    SELECT Id , Template_Name__c,TemplateName__c , RecordTypeId
                     FROM pse__Proj__c
                     WHERE (
                         ( pse__Is_Template__c = true )
@@ -113,10 +113,18 @@ public with sharing class CreateProjectFromTemplateAccount {
     private static Id createProjectFromTemplate( Account oaccount , pse__proj__c oprojectTemplate ) {
         Id resultId = null;
         if ( ( oaccount != null ) && ( oprojectTemplate != null ) ) {
+
+            String templateName = oprojectTemplate != null ? oprojectTemplate.TemplateName__c : null;
+            Date prjStartDate = System.today();
+            if (templateName != null && templateName.equalsIgnoreCase('HRCore Client Engagement Y2+')){
+                Integer offsetDays = ProjectTaskTriggerSettings__c.getInstance(UserInfo.getUserId() ).HRCoreY1StartDateOffsetDays__c.intValue();
+                if (offsetDays < 0) offsetDays = 0;
+                    prjStartDate = System.today().addDays(offsetDays);
+            }
             pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest projRequest = new pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest(
                 oaccount.Id ,
                 oprojectTemplate.Id ,
-                System.today()
+                prjStartDate
             );
             projRequest.ProjectName = oprojectTemplate.Template_Name__c;
             projRequest.IsActive = true;
