@@ -293,6 +293,16 @@
                 <default>false</default>
                 <label>Sub_Product_Config__c</label>
             </value>
+            <value>
+                <fullName>Validate_Promotion__c</fullName>
+                <default>false</default>
+                <label>Validate_Promotion__c</label>
+            </value>
+            <value>
+                <fullName>SBQQ__EffectiveQuantity__c</fullName>
+                <default>false</default>
+                <label>SBQQ__EffectiveQuantity__c</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Quote</controllingFieldValue>
@@ -435,6 +445,14 @@
         <valueSettings>
             <controllingFieldValue>Quote Line</controllingFieldValue>
             <valueName>NSP_Product_Type__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <valueName>Validate_Promotion__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <valueName>SBQQ__EffectiveQuantity__c</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Product Option</controllingFieldValue>

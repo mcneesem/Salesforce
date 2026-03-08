@@ -347,6 +347,11 @@
                 <default>false</default>
                 <label>SBQQ__ProductOption__c</label>
             </value>
+            <value>
+                <fullName>Has_Promo__c</fullName>
+                <default>false</default>
+                <label>Has_Promo__c</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
