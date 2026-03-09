@@ -68,12 +68,12 @@ public without sharing class NSP_AccountGroupFocusItemsBatch implements Database
                 lstFocusItems.add(prepareFocusItem(lstAIMS, accGrp.Id, NSP_ServiceConstants.EARLY_TENURE, NSP_ServiceConstants.EARLY_TENURE_CLIENT, NSP_ServiceConstants.UNFAVORABLE, NSP_ServiceConstants.FOCUS_COMMENTS));
             } else if (accGrpWithFocusItemActive.containsKey(accGrp.Id) && !lstAIMS.isEmpty()){
                 NSP_Focus_Item__c focusItem = accGrpWithFocusItemActive.get(accGrp.Id);
-                focusItem.NSP_Comments__c = NSP_ServiceConstants.FOCUS_COMMENTS+' ['+String.join(lstAIMS, ',')+']';
+                focusItem.Details__c = NSP_ServiceConstants.FOCUS_COMMENTS+' ['+String.join(lstAIMS, ',')+']';
                 lstFocusItems.add(focusItem);
             } else if (accGrpWithFocusItemActive.containsKey(accGrp.Id) && lstAIMS.isEmpty()){
                 NSP_Focus_Item__c focusItem = accGrpWithFocusItemActive.get(accGrp.Id);
                 focusItem.NSP_Estimated_Impact__c = NSP_ServiceConstants.NEUTRAL;
-                focusItem.NSP_Comments__c = NULL;
+                focusItem.Details__c = NULL;
                 focusItem.NSP_Status__c = NSP_ServiceConstants.CLOSED_STATUS;
                 focusItem.NSP_End_Date__c = System.Today();
                 lstFocusItems.add(focusItem);
@@ -84,12 +84,12 @@ public without sharing class NSP_AccountGroupFocusItemsBatch implements Database
                 lstFocusItems.add(prepareFocusItem(noInsperityAIMSClient, accGrp.Id, NSP_ServiceConstants.NO_INSPERITY_401K, '', NSP_ServiceConstants.SOME_WHAT_UNFAVORABLE, NSP_ServiceConstants.FOCUS_401_COMMENTS));
             } else if (accGrpWithFocusItemActiveNSP.containsKey(accGrp.Id) && !noInsperityAIMSClient.isEmpty()){
                 NSP_Focus_Item__c focusItem = accGrpWithFocusItemActiveNSP.get(accGrp.Id);
-                focusItem.NSP_Comments__c = NSP_ServiceConstants.FOCUS_401_COMMENTS+' ['+String.join(noInsperityAIMSClient, ',')+']';
+                focusItem.Details__c = NSP_ServiceConstants.FOCUS_401_COMMENTS+' ['+String.join(noInsperityAIMSClient, ',')+']';
                 lstFocusItems.add(focusItem);
             } else if (accGrpWithFocusItemActiveNSP.containsKey(accGrp.Id) && !checkForAIMS(accGrp.Id, grpIdWithAccId,noNSPAccIdWithAimsClient).isEmpty()){
                 NSP_Focus_Item__c focusItem = accGrpWithFocusItemActiveNSP.get(accGrp.Id);
                 focusItem.NSP_Estimated_Impact__c = NSP_ServiceConstants.NEUTRAL;
-                focusItem.NSP_Comments__c = NULL;
+                focusItem.Details__c = NULL;
                 focusItem.NSP_Status__c = NSP_ServiceConstants.CLOSED_STATUS;
                 focusItem.NSP_End_Date__c = System.Today();
                 lstFocusItems.add(focusItem);
@@ -206,7 +206,7 @@ public without sharing class NSP_AccountGroupFocusItemsBatch implements Database
             RecordTypeId = NSP_GenericRecordType.getRecordTypeId('NSP_Focus_Item__c', 'NSP_System_Generated_Focus_Item'),
             NSP_Detail__c = detail,
             NSP_Estimated_Impact__c = estimatedImpact,
-            NSP_Comments__c = comments+' ['+String.join(lstAIMS, ',')+']',
+            Details__c = comments+' ['+String.join(lstAIMS, ',')+']',
             NSP_Status__c = NSP_ServiceConstants.STATUS_ACTIVE,
             NSP_Start_Date__c = System.Today(),
             NSP_System_Generated__c = 'Y',

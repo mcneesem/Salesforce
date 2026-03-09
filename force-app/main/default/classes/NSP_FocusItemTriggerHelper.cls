@@ -74,7 +74,7 @@ public class NSP_FocusItemTriggerHelper {
             if(!focusItemIdSet.isEmpty() && woRecordTypeId != null ){
                 for(NSP_Focus_Item__c focusItems : [SELECT Id, NSP_Detail__c, NSP_Asset__r.AccountId, NSP_Asset__r.NSP_Client__c, 
                                                     NSP_Asset__c, NSP_Asset__r.RecordTypeId, NSP_Asset__r.NSP_Account_Status__c, 
-                                                    Focus_Item__c, NSP_Account_Group__r.NSP_Type__c, NSP_Comments__c 
+                                                    Focus_Item__c, NSP_Account_Group__r.NSP_Type__c, Details__c 
                                                     FROM NSP_Focus_Item__c 
                                                     WHERE Id IN : focusItemIdSet
                                                     AND NSP_Asset__r.RecordTypeId =: woRecordTypeId
@@ -222,8 +222,8 @@ public class NSP_FocusItemTriggerHelper {
         if(String.isNotBlank(focusItem.NSP_Detail__c)){
             description+= ' : '+focusItem.NSP_Detail__c;
         }
-        if(String.isNotBlank(focusItem.NSP_Comments__c)){
-            description+= ' : '+focusItem.NSP_Comments__c;
+        if(String.isNotBlank(focusItem.Details__c)){
+            description+= ' : '+focusItem.Details__c;
         }
         
         return description;

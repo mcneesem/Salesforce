@@ -44,10 +44,10 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>FocusItem.NSP_Comments__c</assignToReference>
+            <assignToReference>FocusItem.Details__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>$Record.NSP_Comments__c</elementReference>
+                <elementReference>$Record.Details__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
