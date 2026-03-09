@@ -80,6 +80,16 @@
                 <identifier>RecordPortal_Client_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Project__c</fieldItem>
+                <identifier>RecordProject_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-22add541-d473-4e30-9701-bd143b830953</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -105,6 +115,58 @@
             </componentInstance>
         </itemInstances>
         <name>Facet-d88a829e-93e8-46b3-9edd-45b7ab2e9a5c</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Completed_Portal_Tasks__c</fieldItem>
+                <identifier>RecordCompleted_Portal_Tasks_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-24542754-99bc-4463-a206-cfd0925a5397</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Total_Portal_Tasks__c</fieldItem>
+                <identifier>RecordTotal_Portal_Tasks_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-8e84b7f3-a5c1-45ef-a823-1d3dc3338b44</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-24542754-99bc-4463-a206-cfd0925a5397</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column5</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-8e84b7f3-a5c1-45ef-a823-1d3dc3338b44</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column6</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-01eb7bb9-270c-4e11-9eb9-3c20bfd12927</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -182,6 +244,24 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>columns</name>
+                    <value>Facet-01eb7bb9-270c-4e11-9eb9-3c20bfd12927</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Progress</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection3</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
                     <value>Facet-4df22639-56cb-4bf4-b66a-a8d2dd730041</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -226,16 +306,8 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentInstanceProperties>
-                    <name>decorate</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>richTextValue</name>
-                    <value>&lt;p&gt;PENDING&lt;/p&gt;</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:richText</componentName>
-                <identifier>flexipage_richText</identifier>
+                <componentName>portalProjectPreview</componentName>
+                <identifier>c_portalProjectPreview</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-2668fb88-d739-4c2f-b93d-06830238554c</name>
