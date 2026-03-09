@@ -52,6 +52,11 @@
                 <label>Do Not Need</label>
             </value>
             <value>
+                <fullName>Duplicate Order</fullName>
+                <default>false</default>
+                <label>Duplicate Order</label>
+            </value>
+            <value>
                 <fullName>ERP has module</fullName>
                 <default>false</default>
                 <label>ERP has module</label>
