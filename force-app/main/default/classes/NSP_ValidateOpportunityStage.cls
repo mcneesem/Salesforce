@@ -304,12 +304,12 @@ public with sharing class NSP_ValidateOpportunityStage {
                     valObjectListSize = valObjectList.size();
                 }
 
-                do {
+                do { // must run once even if related object list (valObjectList) is empty
                     SObject valObject = ( ( valObjectListSize > i ) ? valObjectList[i] : null );
                     Integer passCheckCount = NSP_ValidateOpportunityStage.evaluateOneCriteriaGroup(
                         opp ,
                         groupName ,
-                        valObject , // must run even if valObject is null
+                        valObject ,
                         valObjectAgs ,
                         groupedStageValMap
                     );
