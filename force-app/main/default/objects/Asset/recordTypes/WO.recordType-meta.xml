@@ -100,6 +100,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Electronic_HB_Ack_On__c</picklist>
+        <values>
+            <fullName>no</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>HRCore_Contract_Changes__c</picklist>
         <values>
             <fullName>Contract Term</fullName>
