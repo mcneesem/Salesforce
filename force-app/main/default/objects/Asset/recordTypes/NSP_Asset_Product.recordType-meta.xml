@@ -1388,6 +1388,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Duplicate Order</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>FEIN Change</fullName>
             <default>false</default>
         </values>
