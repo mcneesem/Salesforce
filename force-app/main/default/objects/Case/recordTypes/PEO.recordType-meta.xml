@@ -2674,19 +2674,19 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>DNFP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>DNSC</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Data Issue</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Delivery Courier</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DNFP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DNSC</fullName>
             <default>false</default>
         </values>
         <values>
