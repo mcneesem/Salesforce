@@ -12,7 +12,7 @@
             <targetReference>Check_For_Errors_Or_Success_Records</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Invocable_Apex_Fault_Subflow</targetReference>
+            <targetReference>Fault_Element_From_Apex_Action</targetReference>
         </faultConnector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
@@ -133,11 +133,31 @@
             <targetReference>Iterate_Over_Error_Records</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Fault_Element_From_Apex_Action</name>
+        <label>Fault Element From Apex Action</label>
+        <locationX>979</locationX>
+        <locationY>782</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Case_Send_SSNVS_Team_Email_Action</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Check_For_Errors_Or_Success_Records</name>
         <label>Check For Errors Or Success Records</label>
         <locationX>451</locationX>
         <locationY>782</locationY>
+        <defaultConnector>
+            <targetReference>Default_Screen</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Error_Records_Found</name>
@@ -163,7 +183,7 @@
         </rules>
         <rules>
             <name>Success_Records_Found</name>
-            <conditionLogic>1 AND 2 AND ( 3 OR 4 )</conditionLogic>
+            <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>succssfulSSCRecords</leftValueReference>
                 <operator>IsNull</operator>
@@ -176,20 +196,6 @@
                 <operator>IsEmpty</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>errorLogRecords</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>errorLogRecords</leftValueReference>
-                <operator>IsEmpty</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -531,6 +537,30 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <name>Default_Screen</name>
+        <label>Default Screen</label>
+        <locationX>715</locationX>
+        <locationY>890</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>DefaultMessage</name>
+            <fieldText>&lt;p&gt;There is some issue with the flow. Please reach out for support.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Flow_Fault_Message</name>
         <label>Flow Fault Message</label>
         <locationX>2035</locationX>
@@ -623,31 +653,6 @@
             <name>faultElement</name>
             <value>
                 <elementReference>varFaultElement</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>faultFlow</name>
-            <value>
-                <stringValue>Case_Send_SSNVS_Team_Email</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>faultMessage</name>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <subflows>
-        <name>Invocable_Apex_Fault_Subflow</name>
-        <label>Invocable Apex Fault Subflow</label>
-        <locationX>979</locationX>
-        <locationY>782</locationY>
-        <flowName>Insperity_Fault_Handler_Subflow</flowName>
-        <inputAssignments>
-            <name>faultElement</name>
-            <value>
-                <stringValue>Case Send SSNVS Team Email Action</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
