@@ -293,6 +293,7 @@ public with sharing class NSP_ValidateOpportunityStage {
             Boolean passCheckDNE = true;
             String groupRelObjName = NSP_ValidateOpportunityStage.getGroupRelObjName( groupName , groupedStageValMap );
             Integer i = 0;
+            Integer valObjectListSize = 0;
             if ( ( groupedStageValMap != null )
                 && ( valObjectMap != null )
                 && valObjectMap.containsKey( groupRelObjName )
@@ -300,30 +301,34 @@ public with sharing class NSP_ValidateOpportunityStage {
             {
                 List<SObject> valObjectList = valObjectMap.get( groupRelObjName );
                 if ( ( valObjectList != null ) && !valObjectList.isEmpty() ) {
-                    do {
-                        SObject valObject = ( ( valObjectList.size() > i ) ? valObjectList[i] : null );
-                        Integer passCheckCount = NSP_ValidateOpportunityStage.evaluateOneCriteriaGroup(
-                            opp ,
-                            groupName ,
-                            valObject , // must run even if valObject is null
-                            valObjectAgs ,
-                            groupedStageValMap
-                        );
-                        if ( passCheckCount >= groupedStageValMap.get( groupName ).size() ) {
-                            passCheck = true;
-                        }
-                        if ( passCheckCount == NSP_ValidateOpportunityStage.ERROR_DOES_NOT_EXIST ) { // when any record violates DOES NOT EXIST case
-                            passCheckDNE = false;
-                        }
-                        i++;
-                    } while ( i < valObjectList.size() );
-                    NSP_ValidateOpportunityStage.addValError(
-                        opp ,
-                        passCheck ,
-                        passCheckDNE ,
-                        groupedStageValMap.get( groupName )[0].Error_Message__c
-                    );
+                    valObjectListSize = valObjectList.size();
                 }
+
+                do {
+                    SObject valObject = ( ( valObjectListSize > i ) ? valObjectList[i] : null );
+                    Integer passCheckCount = NSP_ValidateOpportunityStage.evaluateOneCriteriaGroup(
+                        opp ,
+                        groupName ,
+                        valObject , // must run even if valObject is null
+                        valObjectAgs ,
+                        groupedStageValMap
+                    );
+                    if ( passCheckCount >= groupedStageValMap.get( groupName ).size() ) {
+                        passCheck = true;
+                    }
+                    if ( passCheckCount == NSP_ValidateOpportunityStage.ERROR_DOES_NOT_EXIST ) { // when any record violates DOES NOT EXIST case
+                        passCheckDNE = false;
+                    }
+                    i++;
+                } while ( i < valObjectListSize );
+
+                NSP_ValidateOpportunityStage.addValError(
+                    opp ,
+                    passCheck ,
+                    passCheckDNE ,
+                    groupedStageValMap.get( groupName )[0].Error_Message__c
+                );
+
             }
         }
     }
