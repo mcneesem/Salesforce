@@ -75,29 +75,32 @@ public with sharing class CaseSendSSNVSTeamEmailAction
         Contact caseContact                     = null;
         Set<NSP_Sub_Client_Contact__c> subClientContactSet  = new Set<NSP_Sub_Client_Contact__c>();
 
-        for(ActionInputParams inParams : inputParams)
+        if(inputParams != null && !inputParams.isEmpty())
         {
-            // Guard input
-            if (inParams != null && inParams.caseObj != null)
+            for(ActionInputParams inParams : inputParams)
             {
-                // Load case contact (only Active/HIRED/REHIRED)
-                caseContact = CaseSendSSNVSTeamEmailAction.getCaseContact(inParams.caseObj);
-
-                // Valid Contact Not Found related to Case
-                if (caseContact != null && inParams.caseObj.ContactId == caseContact.Id)
+                // Guard input
+                if (inParams != null && inParams.caseObj != null)
                 {
-                    subClientContactSet = CaseSendSSNVSTeamEmailAction.processSubClientRecordsBasedOnContact(inParams, caseContact, errorMap);
-                    result.subClientContacts = new List<NSP_Sub_Client_Contact__c>(subClientContactSet);
-                     results.add(result);
+                    // Load case contact (only Active/HIRED/REHIRED)
+                    caseContact = CaseSendSSNVSTeamEmailAction.getCaseContact(inParams.caseObj);
 
-                }
-                else
-                {
-                    errorMap.put(inParams.caseObj.ContactId, CaseSendSSNVSTeamEmailAction.ERR_NO_CONTACT);
-                    List<NSP_Error_Log__c> errorLogs = new List<NSP_Error_Log__c>();
-                    errorLogs = CaseSendSSNVSTeamEmailAction.buildErrors(errorMap);
-                    result.errorEntries = errorLogs;
-                    results.add(result);
+                    // Valid Contact Not Found related to Case
+                    if (caseContact != null && inParams.caseObj.ContactId == caseContact.Id)
+                    {
+                        subClientContactSet = CaseSendSSNVSTeamEmailAction.processSubClientRecordsBasedOnContact(inParams, caseContact, errorMap);
+                        result.subClientContacts = new List<NSP_Sub_Client_Contact__c>(subClientContactSet);
+                        results.add(result);
+
+                    }
+                    else
+                    {
+                        errorMap.put(inParams.caseObj.ContactId, CaseSendSSNVSTeamEmailAction.ERR_NO_CONTACT);
+                        List<NSP_Error_Log__c> errorLogs = new List<NSP_Error_Log__c>();
+                        errorLogs = CaseSendSSNVSTeamEmailAction.buildErrors(errorMap);
+                        result.errorEntries = errorLogs;
+                        results.add(result);
+                    }
                 }
             }
         }
@@ -457,7 +460,9 @@ public with sharing class CaseSendSSNVSTeamEmailAction
         Map<Id, NSP_Sub_Client__c> subClientMap = new Map<Id, NSP_Sub_Client__c>();
         if (String.isNotBlank(caseAccountId) && String.isNotBlank(accountId))
         {
-            List<NSP_Sub_Client__c> rows =
+            try
+            {
+                List<NSP_Sub_Client__c> rows =
                 [
                     SELECT
                     Id, Name,
@@ -473,20 +478,29 @@ public with sharing class CaseSendSSNVSTeamEmailAction
                         NSP_Employee_Status__c, NSP_Contact__c
                         FROM
                         NSP_Sub_Client_Contacts__r
-                    )
-                    FROM
-                    NSP_Sub_Client__c
-                    WHERE
-                    NSP_Account__c = :accountId
-                    AND
-                    NSP_Account__c = :caseAccountId
-                    AND
-                    NSP_Account_Status__c = 'Active'
-                    WITH USER_MODE
+                        )
+                        FROM
+                        NSP_Sub_Client__c
+                        WHERE
+                        NSP_Account__c = :accountId
+                        AND
+                        NSP_Account__c = :caseAccountId
+                        AND
+                        NSP_Account_Status__c = 'Active'
+                        WITH USER_MODE
                 ];
-            if ( rows != null && !rows.isEmpty() )
+                if ( rows != null && !rows.isEmpty() )
+                {
+                    subClientMap = new Map<Id, NSP_Sub_Client__c>(rows);
+                 }
+            }
+            catch(Exception ex)
             {
-                subClientMap = new Map<Id, NSP_Sub_Client__c>(rows);
+                NSP_ErrorLogHandler.logException(
+                    CaseSendSSNVSTeamEmailAction.class.getName(),
+                    'queryActiveSubClients',
+                    ex
+                    );
             }
         }
 
@@ -502,8 +516,12 @@ public with sharing class CaseSendSSNVSTeamEmailAction
     private static Contact getCaseContact(Case caseObj)
     {
         Contact result = null;
-        if (caseObj != null && caseObj.ContactId != null) {
-            List<Contact> rows =
+        if (caseObj != null && caseObj.ContactId != null)
+        {
+            try
+            {
+
+                List<Contact> rows =
                 [
                     SELECT
                     Id, NSP_Per_ID__c,
@@ -518,9 +536,18 @@ public with sharing class CaseSendSSNVSTeamEmailAction
                     WITH USER_MODE
                 ];
 
-            if (rows != null && !rows.isEmpty())
+                if (rows != null && !rows.isEmpty())
+                {
+                     result = rows[0];
+                }
+            }
+            catch(Exception ex)
             {
-                result = rows[0];
+                NSP_ErrorLogHandler.logException(
+                    CaseSendSSNVSTeamEmailAction.class.getName(),
+                    'getCaseContact',
+                    ex
+                    );
             }
         }
 
