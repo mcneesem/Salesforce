@@ -22,6 +22,16 @@
                 <label>Administrative Relief</label>
             </value>
             <value>
+                <fullName>AFIC</fullName>
+                <default>false</default>
+                <label>AFIC</label>
+            </value>
+            <value>
+                <fullName>AFIN</fullName>
+                <default>false</default>
+                <label>AFIN</label>
+            </value>
+            <value>
                 <fullName>CO Support</fullName>
                 <default>false</default>
                 <label>CO Support</label>
@@ -57,11 +67,6 @@
                 <label>Known Issue</label>
             </value>
             <value>
-                <fullName>License Issue</fullName>
-                <default>false</default>
-                <label>License Issue</label>
-            </value>
-            <value>
                 <fullName>Misconfiguration</fullName>
                 <default>false</default>
                 <label>Misconfiguration</label>
@@ -77,20 +82,11 @@
                 <label>Payment/filing error</label>
             </value>
             <value>
-                <fullName>Prior to Insperity</fullName>
-                <default>false</default>
-                <label>Prior to Insperity</label>
-            </value>
-            <value>
                 <fullName>Reports</fullName>
                 <default>false</default>
                 <label>Reports</label>
             </value>
             <value>
-                <fullName>Server Issue</fullName>
-                <default>false</default>
-                <label>Server Issue</label>
-            </value>
             <value>
                 <fullName>Service Team Question</fullName>
                 <default>false</default>
@@ -102,24 +98,9 @@
                 <label>Training Issue</label>
             </value>
             <value>
-                <fullName>Upgrade Issue</fullName>
-                <default>false</default>
-                <label>Upgrade Issue</label>
-            </value>
-            <value>
-                <fullName>Upgrade Needed</fullName>
-                <default>false</default>
-                <label>Upgrade Needed</label>
-            </value>
-            <value>
                 <fullName>User Error</fullName>
                 <default>false</default>
                 <label>User Error</label>
-            </value>
-            <value>
-                <fullName>Workstation Issue</fullName>
-                <default>false</default>
-                <label>Workstation Issue</label>
             </value>
             <value>
                 <fullName>Termination</fullName>
