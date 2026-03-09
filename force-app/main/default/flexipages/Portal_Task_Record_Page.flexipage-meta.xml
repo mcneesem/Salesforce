@@ -116,6 +116,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Rank__c</fieldItem>
+                <identifier>RecordRank_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.Due_Date__c</fieldItem>
                 <identifier>RecordDue_Date_cField</identifier>
             </fieldInstance>
