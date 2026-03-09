@@ -38,32 +38,32 @@ public with sharing class NSP_ContactServiceTriggerHelper {
         try{
             Map<String,AccountContactRelation> acrMapWithAccConId ;
             if(newMap != null){
-                acrMapWithAccConId = NSP_ContactServiceTriggerHelper.getACRData(newMap);
-                for(Contact conObj : newMap.values()){
-                    // Populating Preferred First Name if Pref First Name is left blank
-                    if(newMap.get(conObj.id).NSP_Preferred_First_Name__c != oldMap.get(conObj.id).NSP_Preferred_First_Name__c 
-                    && conObj.NSP_Preferred_First_Name__c == null 
-                    && conObj.FirstName != null){
-                        conObj.NSP_Preferred_First_Name__c = conObj.FirstName;  
+               acrMapWithAccConId = NSP_ContactServiceTriggerHelper.getACRData(newMap);
+            }
+            for(Contact conObj : newMap.values()){
+                // Populating Preferred First Name if Pref First Name is left blank
+                if(newMap.get(conObj.id).NSP_Preferred_First_Name__c != oldMap.get(conObj.id).NSP_Preferred_First_Name__c 
+                   && conObj.NSP_Preferred_First_Name__c == null 
+                   && conObj.FirstName != null){
+                       conObj.NSP_Preferred_First_Name__c = conObj.FirstName;  
+                   }
+                   //Updating Pin Validated to false, when Service Request Channel changes from Phone to null - DF-03665
+                if(conObj.NSP_Service_Request_Channel__c != oldMap.get(conObj.id).NSP_Service_Request_Channel__c 
+                && conObj.NSP_Service_Request_Channel__c == null && oldMap.get(conObj.id).NSP_Service_Request_Channel__c == 'Phone'){
+                    conObj.NSP_Pin_Validated__c = false;  
+                }
+                //Update primary details on contact based on account  
+                if(oldMap != null && conObj.AccountId != null && conObj.AccountId != oldMap.get(conObj.Id).AccountId){
+                    AccountContactRelation acrRecord = acrMapWithAccConId.get((String)conObj.AccountId + conObj.Id);
+                    if(acrRecord != null){
+                        conObj.NSP_Work_email__c = acrRecord.NSP_Work_Email__c;
+                        conObj.NSP_Work_Phone__c = acrRecord.NSP_Work_Phone__c;
+                        conObj.NSP_Employee_Status__c = acrRecord.NSP_Employee_Status__c;
+                        conObj.NSP_Status_Date__c = acrRecord.NSP_Status_Date__c;
+                        conObj.NSP_Job_Title__c = acrRecord.NSP_Job_Title__c;
                     }
-                    //Updating Pin Validated to false, when Service Request Channel changes from Phone to null - DF-03665
-                    if(conObj.NSP_Service_Request_Channel__c != oldMap.get(conObj.id).NSP_Service_Request_Channel__c 
-                    && conObj.NSP_Service_Request_Channel__c == null && oldMap.get(conObj.id).NSP_Service_Request_Channel__c == 'Phone'){
-                        conObj.NSP_Pin_Validated__c = false;  
-                    }
-                    //Update primary details on contact based on account  
-                    if(oldMap != null && conObj.AccountId != null && conObj.AccountId != oldMap.get(conObj.Id).AccountId){
-                        AccountContactRelation acrRecord = acrMapWithAccConId.get((String)conObj.AccountId + conObj.Id);
-                        if(acrRecord != null){
-                            conObj.NSP_Work_email__c = acrRecord.NSP_Work_Email__c;
-                            conObj.NSP_Work_Phone__c = acrRecord.NSP_Work_Phone__c;
-                            conObj.NSP_Employee_Status__c = acrRecord.NSP_Employee_Status__c;
-                            conObj.NSP_Status_Date__c = acrRecord.NSP_Status_Date__c;
-                            conObj.NSP_Job_Title__c = acrRecord.NSP_Job_Title__c;
-                        }
-                    }
-                }   
-            }  
+                }
+            }     
         }catch(Exception ex){
             NSP_CustomException.LogException(ex);
         }
