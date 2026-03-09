@@ -220,7 +220,16 @@ export default class CaseCatSubcatDetail extends LightningElement {
 
     handleCategoryChange(value) {
         this.selectedCategory = value;
-        this.subCategoryOptions = this.createOptions(this.categoryWrapper.mCatToSubCatogories[value]);
+        let options = [];
+        let localKey = value;
+        if ( this.categoryWrapper?.mCatToSubCatogories
+            && localKey
+            && ( localKey in this.categoryWrapper.mCatToSubCatogories )
+            )
+        {
+            options = this.categoryWrapper.mCatToSubCatogories[localKey];
+        }
+        this.subCategoryOptions = this.createOptions( options );
         this.resetSelection( [ 'SubCategory' , 'Detail' , 'Version' ] );
         this.showAllSubCategoryButton = !this.isBPSUser && this.subCategoryOptions.length > 0;
         this.dispatchEvent(new CustomEvent('catsubcatselect', {
@@ -233,12 +242,28 @@ export default class CaseCatSubcatDetail extends LightningElement {
         this.dispatchEvent(new CustomEvent('catsubcatselect', {
             detail: { type: 'SubCategory', value }
         }));
-        this.detailOptions = this.createOptions(this.categoryWrapper.mCatSubToDetails[`${this.selectedCategory}-${value}`]);
+        let localKey = `${this.selectedCategory}-${value}`;
+        let options = [];
+        if ( this.categoryWrapper?.mCatSubToDetails
+            && localKey
+            && ( localKey in this.categoryWrapper.mCatSubToDetails )
+            )
+        {
+            options = this.categoryWrapper.mCatSubToDetails[localKey];
+        }
+        this.detailOptions = this.createOptions( options );
         this.resetSelection( [ 'Detail' , 'Version' ] );
         this.showDetail = this.detailOptions.length > 0;
-        this.versionOptions = this.createOptions(this.categoryWrapper.mCatSubDetailToVersions[
-            `${this.selectedCategory}-${this.selectedSubCategory}-${this.selectedDetail}`
-        ]);
+        localKey = `${this.selectedCategory}-${this.selectedSubCategory}-${this.selectedDetail}`;
+        options = [];
+        if ( this.categoryWrapper?.mCatSubDetailToVersions
+            && localKey
+            && ( localKey in this.categoryWrapper.mCatSubDetailToVersions )
+            )
+        {
+            options = this.categoryWrapper.mCatSubDetailToVersions[localKey];
+        }
+        this.versionOptions = this.createOptions( options );
         this.showVersion = this.versionOptions.length > 0;
         this.recordTypeID = this.recordTypeCategoryMap.get(`${this.selectedCategory}-${this.selectedSubCategory}`);
         if (this.selectedCategory && this.selectedSubCategory && this.accountID) {
@@ -248,9 +273,16 @@ export default class CaseCatSubcatDetail extends LightningElement {
 
     handleDetailChange(value) {
         this.selectedDetail = value;
-        this.versionOptions = this.createOptions(this.categoryWrapper.mCatSubDetailToVersions[
-            `${this.selectedCategory}-${this.selectedSubCategory}-${value}`
-        ]);
+        let options = [];
+        let localKey = `${this.selectedCategory}-${this.selectedSubCategory}-${value}`;
+        if ( this.categoryWrapper?.mCatSubDetailToVersions
+            && localKey
+            && ( localKey in this.categoryWrapper.mCatSubDetailToVersions )
+            )
+        {
+            options = this.categoryWrapper.mCatSubDetailToVersions[localKey];
+        }
+        this.versionOptions = this.createOptions( options );
         this.showVersion = this.versionOptions.length > 0;
     }
 
@@ -357,7 +389,16 @@ export default class CaseCatSubcatDetail extends LightningElement {
         }
         if (event.currentTarget.name == 'Sub Category') {
             this.selectedSubCategory = event.target.value;
-            this.detailOptions = this.createOptions(this.categoryWrapper.mCatSubToDetails[this.selectedCategory + '-' + event.target.value]);
+            let options = [];
+            let localKey = this.selectedCategory + '-' + event.target.value;
+            if ( this.categoryWrapper?.mCatToSubCatogories
+                && localKey
+                && ( localKey in this.categoryWrapper.mCatToSubCatogories )
+                )
+            {
+                options = this.categoryWrapper.mCatToSubCatogories[localKey];
+            }
+            this.detailOptions = this.createOptions( options );
             if(this.detailOptions.length > 0){
                 this.showDetail = true;
                 this.showAllDetail = false;
@@ -388,7 +429,16 @@ export default class CaseCatSubcatDetail extends LightningElement {
     handleCategoryFilteredView(event){
         this.showAllCategory = false;
         this.showAllSubCategory = true;
-        this.subCategoryOptions = this.createOptions(this.categoryWrapper.mCatToSubCatogories[this.selectedCategory]);
+        let options = [];
+        let localKey = this.selectedCategory;
+        if ( this.categoryWrapper?.mCatToSubCatogories
+            && localKey
+            && ( localKey in this.categoryWrapper.mCatToSubCatogories )
+            )
+        {
+            options = this.categoryWrapper.mCatToSubCatogories[localKey];
+        }
+        this.subCategoryOptions = this.createOptions( options );
         this.handleDisplayConfidentialCheckBox();
         this.dispatchChangeFields();
     }
@@ -406,9 +456,16 @@ export default class CaseCatSubcatDetail extends LightningElement {
         this.showAllSubCategory = false;
         this.showAllSubCategoryButton = true;
         this.showFilterSubCategoryButton = false;
-        if(this.categoryWrapper && this.categoryWrapper.mCatToSubCatogories && this.categoryWrapper.mCatToSubCatogories!==undefined){
-            this.subCategoryOptions = this.createOptions(this.categoryWrapper.mCatToSubCatogories[this.selectedCategory]);
+        let options = [];
+        let localKey = this.selectedCategory;
+        if ( this.categoryWrapper?.mCatToSubCatogories
+            && localKey
+            && ( localKey in this.categoryWrapper.mCatToSubCatogories )
+            )
+        {
+            options = this.categoryWrapper.mCatToSubCatogories[localKey];
         }
+        this.subCategoryOptions = this.createOptions( options );
         this.handleDisplayConfidentialCheckBox();
         this.dispatchChangeFields();
     }
