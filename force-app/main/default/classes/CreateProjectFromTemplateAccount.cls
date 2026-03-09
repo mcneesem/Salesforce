@@ -1,5 +1,33 @@
 public with sharing class CreateProjectFromTemplateAccount {
-    // test w/ CreateProjectFromTemplateAccountTest (87%)
+    // test w/ CreateProjectFromTemplateAccountTest (77%)
+
+    /**
+     * Cached org settings for current user (Custom Setting)
+     */
+    private static ProjectTaskTriggerSettings__c settings {
+        private get {
+            if (settings == null) {
+                settings = ProjectTaskTriggerSettings__c.getInstance(UserInfo.getUserId());
+            }
+            return settings;
+        }
+        private set;
+    }
+
+    private static Integer HRCoreY1StartDateOffsetDays {
+        private get {
+            if (HRCoreY1StartDateOffsetDays == null) {
+                Integer localVal = 0;
+                if (CreateProjectFromTemplateAccount.settings != null && CreateProjectFromTemplateAccount.settings.HRCoreY1StartDateOffsetDays__c != null) {
+                    localVal = CreateProjectFromTemplateAccount.settings.HRCoreY1StartDateOffsetDays__c.intValue();
+                }
+                if (localVal < 0) localVal = 0;
+                HRCoreY1StartDateOffsetDays = localVal;
+            }
+            return HRCoreY1StartDateOffsetDays;
+        }
+        private set;
+    }
 
     @InvocableMethod(
         label='Create Project From Template And Account'
@@ -114,13 +142,7 @@ public with sharing class CreateProjectFromTemplateAccount {
         Id resultId = null;
         if ( ( oaccount != null ) && ( oprojectTemplate != null ) ) {
 
-            String templateName = oprojectTemplate != null ? oprojectTemplate.TemplateName__c : null;
-            Date prjStartDate = System.today();
-            if (templateName != null && templateName.equalsIgnoreCase('HRCore Client Engagement Y2+')){
-                Integer offsetDays = ProjectTaskTriggerSettings__c.getInstance(UserInfo.getUserId() ).HRCoreY1StartDateOffsetDays__c.intValue();
-                if (offsetDays < 0) offsetDays = 0;
-                    prjStartDate = System.today().addDays(offsetDays);
-            }
+            Date prjStartDate = getProjectStartDate(oprojectTemplate);
             pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest projRequest = new pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest(
                 oaccount.Id ,
                 oprojectTemplate.Id ,
@@ -152,5 +174,20 @@ public with sharing class CreateProjectFromTemplateAccount {
         return resultId;
     }
 
+
+    /**
+     * Computes start date for a given template name with per-template overrides.
+     * - HRCore Client Engagement Y2+ uses HRCoreY1StartDateOffsetDays
+     * - Y3 Project uses HRCoreY3StartDateOffsetDays
+     * - Any other template defaults to today
+     */
+    private static Date getProjectStartDate(pse__proj__c oprojectTemplate) {
+        String templateName = oprojectTemplate != null ? oprojectTemplate.TemplateName__c : null;
+        Date prjStartDate  = System.today();
+        if (templateName != null && templateName.equalsIgnoreCase('HRCore Client Engagement Y2+')) {
+            prjStartDate.addDays(HRCoreY1StartDateOffsetDays);
+        }
+        return prjStartDate ;
+    }
 }
 //
