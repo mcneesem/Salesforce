@@ -41,14 +41,6 @@
                 <default>false</default>
                 <label>Configuration Adjustment</label>
             </value>
-            <values>
-                <fullName>DNFP</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>DNSC</fullName>
-                <default>false</default>
-            </values>
             <value>
                 <fullName>Data Issue</fullName>
                 <default>false</default>
@@ -59,6 +51,14 @@
                 <default>false</default>
                 <label>Delivery Courier</label>
             </value>
+            <values>
+                <fullName>DNFP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DNSC</fullName>
+                <default>false</default>
+            </values>
             <value>
                 <fullName>Information</fullName>
                 <default>false</default>
