@@ -1,0 +1,13 @@
+<template>
+    <template lwc:if={error}>
+        error: {error}<br/>
+    </template>
+    <template lwc:if={record}>
+        PENDING C-PORTAL-PROJECT
+    </template>
+    <template lwc:else>
+        <template lwc:if={recordId}>
+            recordId: {recordId}<br/>
+        </template>
+    </template>
+</template>
