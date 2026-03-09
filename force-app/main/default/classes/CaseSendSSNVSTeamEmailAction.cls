@@ -69,46 +69,40 @@ public with sharing class CaseSendSSNVSTeamEmailAction
     {
         // LOCAL VARIABLES
         Map<String, String> errorMap = new Map<String, String>();
-        List<ActionOutputParams> result = new List<ActionOutputParams>();
+        List<ActionOutputParams> results = new List<ActionOutputParams>();
 
-        ActionOutputParams out = new ActionOutputParams();
-        ActionInputParams inParams = CaseSendSSNVSTeamEmailAction.parseInput(inputParams);
-
-        Contact caseContact                                 = null;
+        ActionOutputParams result = new ActionOutputParams();
+        Contact caseContact                     = null;
         Set<NSP_Sub_Client_Contact__c> subClientContactSet  = new Set<NSP_Sub_Client_Contact__c>();
 
-        // Guard input
-        if (inParams != null && inParams.caseObj != null)
+        for(ActionInputParams inParams : inputParams)
         {
-            // Load case contact (only Active/HIRED/REHIRED)
-            caseContact = CaseSendSSNVSTeamEmailAction.getCaseContact(inParams.caseObj);
-
-            // Valid Contact Not Found related to Case
-            if (caseContact != null && inParams.caseObj.ContactId == caseContact.Id)
+            // Guard input
+            if (inParams != null && inParams.caseObj != null)
             {
-                subClientContactSet = CaseSendSSNVSTeamEmailAction.processSubClientRecordsBasedOnContact(inParams, caseContact, errorMap);
-            }
-            else
-            {
-                errorMap.put(inParams.caseObj.ContactId, CaseSendSSNVSTeamEmailAction.ERR_NO_CONTACT);
+                // Load case contact (only Active/HIRED/REHIRED)
+                caseContact = CaseSendSSNVSTeamEmailAction.getCaseContact(inParams.caseObj);
+
+                // Valid Contact Not Found related to Case
+                if (caseContact != null && inParams.caseObj.ContactId == caseContact.Id)
+                {
+                    subClientContactSet = CaseSendSSNVSTeamEmailAction.processSubClientRecordsBasedOnContact(inParams, caseContact, errorMap);
+                    result.subClientContacts = new List<NSP_Sub_Client_Contact__c>(subClientContactSet);
+                     results.add(result);
+
+                }
+                else
+                {
+                    errorMap.put(inParams.caseObj.ContactId, CaseSendSSNVSTeamEmailAction.ERR_NO_CONTACT);
+                    List<NSP_Error_Log__c> errorLogs = new List<NSP_Error_Log__c>();
+                    errorLogs = CaseSendSSNVSTeamEmailAction.buildErrors(errorMap);
+                    result.errorEntries = errorLogs;
+                    results.add(result);
+                }
             }
         }
 
-        // Build output (single return)
-        if (!subClientContactSet.isEmpty()) {
-            out.subClientContacts = new List<NSP_Sub_Client_Contact__c>(subClientContactSet);
-        }
-        if (errorMap != null && !errorMap.isEmpty())
-        {
-            out.errorEntries = CaseSendSSNVSTeamEmailAction.buildErrors(errorMap);
-        }
-        if ((out.subClientContacts != null && !out.subClientContacts.isEmpty()) ||
-            (out.errorEntries != null && !out.errorEntries.isEmpty()))
-        {
-            result.add(out);
-        }
-
-        return result;
+        return results;
     }
 
     /**
@@ -150,23 +144,6 @@ public with sharing class CaseSendSSNVSTeamEmailAction
         }
 
         return returnSet;
-    }
-
-    /**
-    * Parsing the flow input variables
-    *
-    * @param inputParams List of ActionInputParams
-    * @return ActionInputParams
-    */
-    private static ActionInputParams parseInput(List<ActionInputParams> inputParams)
-    {
-        ActionInputParams inParams;
-        if (inputParams != null && !inputParams.isEmpty())
-        {
-            inParams = inputParams.get(0);
-        }
-
-        return inParams;
     }
 
     /**
@@ -234,20 +211,25 @@ public with sharing class CaseSendSSNVSTeamEmailAction
     */
     private static String getFormattedEmailBody(String emailBody, NSP_Sub_Client_Contact__c subClientContact, Contact contactObj)
     {
-        String formatted = '<html><body>';
-        formatted += '<b><p>SSN Mismatch Client Notice</p></b><br />';
-        formatted += '<b>SSN Mismatch / ' + subClientContact.NSP_AIMS_Sub_Client__c + ' / ';
-        if (String.isNotBlank(contactObj.NSP_Per_ID__c))
+        String formatted = '';
+        if(subClientContact != null && contactObj != null && emailBody != null)
         {
-            formatted += contactObj.NSP_Per_ID__c + ' / ';
-        } else if (String.isNotBlank(contactObj.Workday_Employee_ID__c))
-        {
-            formatted += contactObj.Workday_Employee_ID__c + ' / ';
-        }
 
-        formatted += contactObj.FirstName + ' ' + contactObj.LastName + '</b><br />';
-        formatted += emailBody;
-        formatted += '</body></html>';
+            formatted = '<html><body>';
+            formatted += '<b><p>SSN Mismatch Client Notice</p></b><br />';
+            formatted += '<b>SSN Mismatch / ' + subClientContact.NSP_AIMS_Sub_Client__c + ' / ';
+            if (String.isNotBlank(contactObj.NSP_Per_ID__c))
+            {
+                formatted += contactObj.NSP_Per_ID__c + ' / ';
+            } else if (String.isNotBlank(contactObj.Workday_Employee_ID__c))
+            {
+                formatted += contactObj.Workday_Employee_ID__c + ' / ';
+            }
+
+            formatted += contactObj.FirstName + ' ' + contactObj.LastName + '</b><br />';
+            formatted += emailBody;
+            formatted += '</body></html>';
+        }
 
         return formatted;
     }
@@ -339,13 +321,16 @@ public with sharing class CaseSendSSNVSTeamEmailAction
     {
         List<NSP_Sub_Client_Contact__c> returnList = new List<NSP_Sub_Client_Contact__c>();
 
-        for (NSP_Sub_Client_Contact__c subClientContact : subClientContacts)
+        if(subClientContacts != null && !subClientContacts.isEmpty() && caseContact != null)
         {
-            Boolean statusAndRoleCheck = (CaseSendSSNVSTeamEmailAction.contactStatusCheck(subClientContact) && CaseSendSSNVSTeamEmailAction.contactPaidNonPaidCheck(subClientContact));
-
-            if (subClientContact != null && subClientContact.NSP_Contact__c == caseContact.Id && statusAndRoleCheck)
+            for (NSP_Sub_Client_Contact__c subClientContact : subClientContacts)
             {
-                returnList.addAll(subClientContacts);
+                Boolean statusAndRoleCheck = (CaseSendSSNVSTeamEmailAction.contactStatusCheck(subClientContact) && CaseSendSSNVSTeamEmailAction.contactPaidNonPaidCheck(subClientContact));
+
+                if (subClientContact != null && subClientContact.NSP_Contact__c == caseContact.Id && statusAndRoleCheck)
+                {
+                    returnList.addAll(subClientContacts);
+                }
             }
         }
 
