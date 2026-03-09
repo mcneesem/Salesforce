@@ -115,6 +115,7 @@
         <fields>NAME</fields>
         <fields>Account.NAME</fields>
         <fields>NSP_AIMS_Client_ID__c</fields>
+        <fields>Account.iSolved_ID__c</fields>
         <fields>NSP_Primary__c</fields>
         <fields>NSP_Type__c</fields>
         <fields>NSP_Enter_Date__c</fields>
