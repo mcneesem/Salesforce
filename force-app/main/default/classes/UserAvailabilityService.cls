@@ -1,5 +1,5 @@
 public with sharing class UserAvailabilityService {
-    // test w/ UserAvailabilityServiceTest (85%)
+    // test w/ UserAvailabilityServiceTest (83%)
 
     private static final Integer DAYS_LIMIT = 10;
 
@@ -61,10 +61,11 @@ public with sharing class UserAvailabilityService {
     private static List<Event> getTimeZoneBlocks( String skill, String timeZone ) {
         List<Event> timeBlocks = new List<Event>();
         Map<String,List<Event>> timeZoneBlocks = new Map<String,List<Event>>{
-            'America/New_York'=> UserAvailabilityService.getTimeBlocksPrimary( 13, skill) ,
-            'America/Chicago' => UserAvailabilityService.getTimeBlocksPrimary( 14, skill ) ,
-            'America/Denver'=> UserAvailabilityService.getTimeBlocksAlternate( 15 ) ,
-            'America/Los_Angeles'=> UserAvailabilityService.getTimeBlocksPrimary( 16, skill )
+            //For Daylight saving time modify first parameter
+            'America/New_York'=> UserAvailabilityService.getTimeBlocksPrimary( 12, skill) ,
+            'America/Chicago' => UserAvailabilityService.getTimeBlocksPrimary( 13, skill ) ,
+            'America/Denver'=> UserAvailabilityService.getTimeBlocksAlternate( 14 ) ,
+            'America/Los_Angeles'=> UserAvailabilityService.getTimeBlocksPrimary( 15, skill )
         };
         //
         if ( String.isNotBlank( timeZone )
@@ -489,9 +490,9 @@ public with sharing class UserAvailabilityService {
             'Schedule_Seller_HRScale' => 120 ,
             'Schedule_Seller_Time_Attendance' => 30 ,
             'Schedule_Seller_Performance' => 30 ,
-            'Schedule_Seller_HR360_Middle_Market' => 90 ,
-            'Schedule_Seller_HRCore_Middle_Market' => 90 ,
-            'Schedule_Seller_HRScale_Middle_Market' => 120 ,
+            'Schedule_Seller_HR360_MidMarket' => 90 ,
+            'Schedule_Seller_HRCore_MidMarket' => 90 ,
+            'Schedule_Seller_HRScale_MidMarket' => 120 ,
             'Schedule_Seller_HR360_Enterprise' => 90 ,
             'Schedule_Seller_HRCore_Enterprise' => 90
         };
