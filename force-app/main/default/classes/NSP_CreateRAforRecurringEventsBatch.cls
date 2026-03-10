@@ -78,7 +78,8 @@ public without sharing class NSP_CreateRAforRecurringEventsBatch implements ISel
                         )
                     )
                     AND ( RecordTypeId = :NSP_CreateRAforRecurringEventsBatch.eventRecordTypeId )
-                    AND ( CreatedDate = YESTERDAY )
+                    AND ( CreatedDate <= :NSP_CreateRAforRecurringEventsBatch.createdDateTime )
+                    AND ( CreatedDate > :NSP_CreateRAforRecurringEventsBatch.createdDateTime.addDays( -1 ) )
             ]
         );
     }
@@ -214,6 +215,36 @@ public without sharing class NSP_CreateRAforRecurringEventsBatch implements ISel
                 eventRecordTypeId = local;
             }
             return eventRecordTypeId;
+        }
+        private set;
+    }
+        
+    private static DateTime createdDateTime {
+        private get {
+            if ( createdDateTime == null ) {
+                createdDateTime = System.now().addDays( -1 * NSP_CreateRAforRecurringEventsBatch.soqlDaysLimit );
+            }
+            return createdDateTime;
+        }
+        private set;
+    }
+
+    private static Integer soqlDaysLimit {
+        private get {
+            if ( soqlDaysLimit == null ) {
+                Integer local = 1;
+                if ( ( NSP_CreateRAforRecurringEventsBatch.settings != null )
+                    && ( NSP_CreateRAforRecurringEventsBatch.settings.SoqlDaysLimit__c != null )
+                    )
+                {
+                    local = NSP_CreateRAforRecurringEventsBatch.settings.SoqlDaysLimit__c.intValue();
+                }
+                if ( local < 0 ) {
+                    local = 0;
+                }
+                soqlDaysLimit = local;
+            }
+            return soqlDaysLimit;
         }
         private set;
     }
