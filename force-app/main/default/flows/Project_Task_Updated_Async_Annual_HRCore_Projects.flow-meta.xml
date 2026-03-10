@@ -148,8 +148,8 @@ If &quot;WX Account Group&quot; is exists and triggering account is Primary Memb
   )
 )</expression>
     </formulas>
-    <interviewLabel>Project Task - Update - Async - Create HRCore Project From Template And Account {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Project Task - Update - Async - Create HRCore Project From Template and Account</label>
+    <interviewLabel>Project Task - Updated - Async - Annual HRCore Projects {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Project Task - Updated - Async - Annual HRCore Projects</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -371,6 +371,7 @@ If &quot;WX Account Group&quot; is exists and triggering account is Primary Memb
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <subflows>
+        <description>Fault handling</description>
         <name>Insperity_Fault_Handler_Subflow</name>
         <label>Insperity Fault Handler Subflow</label>
         <locationX>0</locationX>
@@ -385,7 +386,7 @@ If &quot;WX Account Group&quot; is exists and triggering account is Primary Memb
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Project_Task_Update_Async_Create_HRCore_Project_From_Template_and_Account</stringValue>
+                <stringValue>Project_Task_Updated_Async_Annual_HRCore_Projects</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
