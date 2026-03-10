@@ -51,14 +51,14 @@
                 <default>false</default>
                 <label>Delivery Courier</label>
             </value>
-            <values>
+            <value>
                 <fullName>DNFP</fullName>
                 <default>false</default>
-            </values>
-            <values>
+            </value>
+            <value>
                 <fullName>DNSC</fullName>
                 <default>false</default>
-            </values>
+            </value>
             <value>
                 <fullName>Information</fullName>
                 <default>false</default>
