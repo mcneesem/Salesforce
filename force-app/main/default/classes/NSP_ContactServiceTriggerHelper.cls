@@ -49,8 +49,8 @@ public with sharing class NSP_ContactServiceTriggerHelper {
                 && conObj.NSP_Service_Request_Channel__c == null && oldMap.get(conObj.id).NSP_Service_Request_Channel__c == 'Phone'){
                     conObj.NSP_Pin_Validated__c = false;  
                 }
-                //Update primary details on contact based on account  
-                if(oldMap != null && oldMap.containsKey(conObj.id) && oldMap.get(conObj.Id).AccountId != null && conObj.AccountId != null && conObj.AccountId != oldMap.get(conObj.Id).AccountId){
+                //Update primary details on contact based on account
+                if(oldMap?.get(conObj.Id) != null && conObj.AccountId != null && conObj.AccountId != oldMap.get(conObj.Id).AccountId){
                     AccountContactRelation acrRecord = acrMapWithAccConId.get((String)conObj.AccountId + conObj.Id);
                     if(acrRecord != null){
                         conObj.NSP_Work_email__c = acrRecord.NSP_Work_Email__c;
