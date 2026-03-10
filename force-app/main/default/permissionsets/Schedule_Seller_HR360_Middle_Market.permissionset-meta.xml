@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Schedule_Seller_HR360_Middle_Market</name>
+    </customPermissions>
+    <description>Scheduling tool permission set for Sales Engineer HR360 with Middle Market skill.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Schedule Seller: HR360 Middle Market</label>
+</PermissionSet>
