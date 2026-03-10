@@ -1,13 +1,13 @@
-@IsTest
-private class CaseSendSSNVSTeamEmailActionTest
-{
-    /**
-    * Test data covers:
-    * - Account, Contact, Asset
-    * - Case with Contact
-    * - NSP_Sub_Client__c with Active status
-    * - NSP_Sub_Client_Contact__c qualifying for query (email present, Paid WSEE/Active Non-Paid, HIRED)
-    */
+@isTest
+private class CaseSendSSNVSTeamEmailActionTest {
+
+    //
+    // Test data covers:
+    // - Account, Contact, Asset
+    // - Case with Contact
+    // - NSP_Sub_Client__c with Active status
+    // - NSP_Sub_Client_Contact__c qualifying for query (email present, Paid WSEE/Active Non-Paid, HIRED)
+    //
 
     // LOCAL VARIABLES
     private static final String emailBodyString = 'Body with token {!varCase.SSNVS_Mismatch__c} and other text';
@@ -20,9 +20,8 @@ private class CaseSendSSNVSTeamEmailActionTest
     private static final String sccSetupAssertMessage = 'Expected one SCC without email';
     private static final String sccSetupEmailAssertMessage = 'Expected seeded SCC with test@test.com';
 
-    @TestSetup
-    private static void prepareTestData()
-    {
+    @testSetup
+    private static void prepareTestData() {
         // Account creation
         Account acc = new Account();
         acc.Name = 'Test Acc';
@@ -88,9 +87,8 @@ private class CaseSendSSNVSTeamEmailActionTest
         insert subClientContacts;
     }
 
-    @IsTest
-    private static void testGetSubClientAndSubClientContacts_Positive()
-    {
+    @isTest
+    private static void testGetSubClientAndSubClientContacts_Positive() {
         List<Case> caseList = [SELECT Id, AccountId, ContactId, SSNVS_Mismatch__c
                                FROM Case
                                WHERE SSNVS_Mismatch__c != NULL LIMIT 1];
@@ -117,7 +115,7 @@ private class CaseSendSSNVSTeamEmailActionTest
         NSP_Sub_Client_Contact__c subClientContact = subClientContacts[0];
         subClientContact.NSP_Work_Email__c = 'test@example.com';
         update subClientContact;
-        
+
         List<CaseSendSSNVSTeamEmailAction.ActionInputParams> inputParams = new List<CaseSendSSNVSTeamEmailAction.ActionInputParams>();
         CaseSendSSNVSTeamEmailAction.ActionInputParams actionInputParams = new CaseSendSSNVSTeamEmailAction.ActionInputParams();
         actionInputParams.accountId = accountObj.Id;
@@ -127,8 +125,7 @@ private class CaseSendSSNVSTeamEmailActionTest
         inputParams.add(actionInputParams);
 
         Test.startTest();
-        List<CaseSendSSNVSTeamEmailAction.ActionOutputParams> results =
-            CaseSendSSNVSTeamEmailAction.getSubClientAndSubClientContacts(inputParams);
+        List<CaseSendSSNVSTeamEmailAction.ActionOutputParams> results = CaseSendSSNVSTeamEmailAction.getSubClientAndSubClientContacts(inputParams);
         Test.stopTest();
 
         // VALIDATION
@@ -141,14 +138,11 @@ private class CaseSendSSNVSTeamEmailActionTest
             results[0] :
             new CaseSendSSNVSTeamEmailAction.ActionOutputParams()
         );
-
         Assert.areEqual(2, result.subClientContacts?.size(), 'Email should be sent');
-
     }
-    
-        @IsTest
-    private static void testGetSubClientAndSubClientContacts_Negative_No_Email()
-    {
+
+    @isTest
+    private static void testGetSubClientAndSubClientContacts_Negative_No_Email() {
         List<Case> caseList = [SELECT Id, AccountId, ContactId, SSNVS_Mismatch__c
                                FROM Case
                                WHERE SSNVS_Mismatch__c != NULL LIMIT 1];
@@ -168,7 +162,7 @@ private class CaseSendSSNVSTeamEmailActionTest
         Contact contactObj = contactList[0];
         contactObj.NSP_Per_ID__c = '1234';
         update contactObj;
-        
+
         List<CaseSendSSNVSTeamEmailAction.ActionInputParams> inputParams = new List<CaseSendSSNVSTeamEmailAction.ActionInputParams>();
         CaseSendSSNVSTeamEmailAction.ActionInputParams actionInputParams = new CaseSendSSNVSTeamEmailAction.ActionInputParams();
         actionInputParams.accountId = accountObj.Id;
@@ -178,8 +172,7 @@ private class CaseSendSSNVSTeamEmailActionTest
         inputParams.add(actionInputParams);
 
         Test.startTest();
-        List<CaseSendSSNVSTeamEmailAction.ActionOutputParams> results =
-            CaseSendSSNVSTeamEmailAction.getSubClientAndSubClientContacts(inputParams);
+        List<CaseSendSSNVSTeamEmailAction.ActionOutputParams> results = CaseSendSSNVSTeamEmailAction.getSubClientAndSubClientContacts(inputParams);
         Test.stopTest();
 
         // VALIDATION
@@ -192,14 +185,11 @@ private class CaseSendSSNVSTeamEmailActionTest
             results[0] :
             new CaseSendSSNVSTeamEmailAction.ActionOutputParams()
         );
-
         Assert.areNotEqual(null, result.errorEntries, 'Error is required before sending the success email');
-
     }
 
     @isTest
-    private static void testGetSubClientAndSubClientContacts_Negative_ContactTerminated()
-    {
+    private static void testGetSubClientAndSubClientContacts_Negative_ContactTerminated() {
         List<Case> caseList = [SELECT Id, AccountId, ContactId, SSNVS_Mismatch__c
                                FROM Case
                                WHERE SSNVS_Mismatch__c != NULL LIMIT 1];
@@ -229,26 +219,21 @@ private class CaseSendSSNVSTeamEmailActionTest
         inputParams.add(actionInputParams);
 
         Test.startTest();
-        List<CaseSendSSNVSTeamEmailAction.ActionOutputParams> results =
-            CaseSendSSNVSTeamEmailAction.getSubClientAndSubClientContacts(inputParams);
+        List<CaseSendSSNVSTeamEmailAction.ActionOutputParams> results = CaseSendSSNVSTeamEmailAction.getSubClientAndSubClientContacts(inputParams);
         Test.stopTest();
 
         // VALIDATION
         Assert.areNotEqual(null, results, resultMessageString);
-
         CaseSendSSNVSTeamEmailAction.ActionOutputParams result = (
             ( results != null && !results.isEmpty() ) ?
             results[0] :
             new CaseSendSSNVSTeamEmailAction.ActionOutputParams()
         );
-
         Assert.areNotEqual(null, result.errorEntries, 'Expecting no contacts found');
-
     }
 
     @isTest
-    private static void testGetSubClientAndSubClientContacts_Negative_NotMatchedSCC()
-    {
+    private static void testGetSubClientAndSubClientContacts_Negative_NotMatchedSCC() {
         List<Case> caseList = [SELECT Id, AccountId, ContactId, SSNVS_Mismatch__c
                                FROM Case
                                WHERE SSNVS_Mismatch__c != NULL LIMIT 1];
@@ -263,8 +248,7 @@ private class CaseSendSSNVSTeamEmailActionTest
 
         List<NSP_Sub_Client_Contact__c> subClientCons = [SELECT Id, NSP_Work_Email__c, NSP_Employee_Status__c, NSP_Contact__c
                                                          FROM NSP_Sub_Client_Contact__c LIMIT 2];
-        for( NSP_Sub_Client_Contact__c scc : subClientCons )
-        {
+        for( NSP_Sub_Client_Contact__c scc : subClientCons ) {
             scc.NSP_Contact__c = null;
         }
 
@@ -279,26 +263,21 @@ private class CaseSendSSNVSTeamEmailActionTest
         inputParams.add(actionInputParams);
 
         Test.startTest();
-        List<CaseSendSSNVSTeamEmailAction.ActionOutputParams> results =
-            CaseSendSSNVSTeamEmailAction.getSubClientAndSubClientContacts(inputParams);
+        List<CaseSendSSNVSTeamEmailAction.ActionOutputParams> results = CaseSendSSNVSTeamEmailAction.getSubClientAndSubClientContacts(inputParams);
         Test.stopTest();
 
         // VALIDATION
         Assert.areNotEqual(null, results, resultMessageString);
-
         CaseSendSSNVSTeamEmailAction.ActionOutputParams result = (
             ( results != null && !results.isEmpty() ) ?
             results[0] :
             new CaseSendSSNVSTeamEmailAction.ActionOutputParams()
         );
-
         Assert.areNotEqual(null, result.errorEntries, 'Expecting no contacts found');
-
     }
 
     @isTest
-    private static void testGetSubClientAndSubClientContacts_Negative_BlankWorkEmail()
-    {
+    private static void testGetSubClientAndSubClientContacts_Negative_BlankWorkEmail() {
         List<Case> caseList = [SELECT Id, AccountId, ContactId, SSNVS_Mismatch__c
                                FROM Case
                                WHERE SSNVS_Mismatch__c != NULL LIMIT 1];
@@ -328,26 +307,21 @@ private class CaseSendSSNVSTeamEmailActionTest
         inputParams.add(actionInputParams);
 
         Test.startTest();
-        List<CaseSendSSNVSTeamEmailAction.ActionOutputParams> results =
-            CaseSendSSNVSTeamEmailAction.getSubClientAndSubClientContacts(inputParams);
+        List<CaseSendSSNVSTeamEmailAction.ActionOutputParams> results = CaseSendSSNVSTeamEmailAction.getSubClientAndSubClientContacts(inputParams);
         Test.stopTest();
 
         // VALIDATION
         Assert.areNotEqual(null, results, resultMessageString);
-
         CaseSendSSNVSTeamEmailAction.ActionOutputParams result = (
             ( results != null && !results.isEmpty() ) ?
             results[0] :
             new CaseSendSSNVSTeamEmailAction.ActionOutputParams()
         );
-
         Assert.areNotEqual(null, result.errorEntries, 'Expecting Blank email error');
-
     }
 
     @isTest
-    private static void testGetSubClientAndSubClientContacts_Positive_ActiveNonPaid()
-    {
+    private static void testGetSubClientAndSubClientContacts_Positive_ActiveNonPaid() {
         List<Case> caseList = [SELECT Id, AccountId, ContactId, SSNVS_Mismatch__c
                                FROM Case
                                WHERE SSNVS_Mismatch__c != NULL LIMIT 1];
@@ -397,26 +371,21 @@ private class CaseSendSSNVSTeamEmailActionTest
         inputParams.add(actionInputParams);
 
         Test.startTest();
-        List<CaseSendSSNVSTeamEmailAction.ActionOutputParams> results =
-            CaseSendSSNVSTeamEmailAction.getSubClientAndSubClientContacts(inputParams);
+        List<CaseSendSSNVSTeamEmailAction.ActionOutputParams> results = CaseSendSSNVSTeamEmailAction.getSubClientAndSubClientContacts(inputParams);
         Test.stopTest();
 
         // VALIDATION
         Assert.areNotEqual(null, results, resultMessageString);
-
         CaseSendSSNVSTeamEmailAction.ActionOutputParams result = (
             ( results != null && !results.isEmpty() ) ?
             results[0] :
             new CaseSendSSNVSTeamEmailAction.ActionOutputParams()
         );
-
         Assert.areEqual(1, result.subClientContacts?.size(), 'Email should be sent');
-
     }
-    
-        @isTest
-    private static void testGetSubClientAndSubClientContacts_Negative_NotEligibleSSC()
-    {
+
+    @isTest
+    private static void testGetSubClientAndSubClientContacts_Negative_NotEligibleSSC() {
         List<Case> caseList = [SELECT Id, AccountId, ContactId, SSNVS_Mismatch__c
                                FROM Case
                                WHERE SSNVS_Mismatch__c != NULL LIMIT 1];
@@ -431,11 +400,10 @@ private class CaseSendSSNVSTeamEmailActionTest
 
         List<NSP_Sub_Client_Contact__c> subClientConList = [SELECT Id, NSP_Work_Email__c, NSP_Payroll_Contact__c, NSP_Employee_Status__c
                                                             FROM NSP_Sub_Client_Contact__c];
-        for(NSP_Sub_Client_Contact__c subClientContact : subClientConList)
-        {
+        for(NSP_Sub_Client_Contact__c subClientContact : subClientConList){
             subClientContact.NSP_Payroll_Contact__c = false;
         }
-        
+
         update subClientConList;
 
         List<CaseSendSSNVSTeamEmailAction.ActionInputParams> inputParams = new List<CaseSendSSNVSTeamEmailAction.ActionInputParams>();
@@ -447,20 +415,18 @@ private class CaseSendSSNVSTeamEmailActionTest
         inputParams.add(actionInputParams);
 
         Test.startTest();
-        List<CaseSendSSNVSTeamEmailAction.ActionOutputParams> results =
-            CaseSendSSNVSTeamEmailAction.getSubClientAndSubClientContacts(inputParams);
+        List<CaseSendSSNVSTeamEmailAction.ActionOutputParams> results = CaseSendSSNVSTeamEmailAction.getSubClientAndSubClientContacts(inputParams);
         Test.stopTest();
 
         // VALIDATION
         Assert.areNotEqual(null, results, resultMessageString);
-
         CaseSendSSNVSTeamEmailAction.ActionOutputParams result = (
             ( results != null && !results.isEmpty() ) ?
             results[0] :
             new CaseSendSSNVSTeamEmailAction.ActionOutputParams()
         );
-
         Assert.areNotEqual(null, result.errorEntries, 'Not Eligible SSC records');
-
     }
+
 }
+//
