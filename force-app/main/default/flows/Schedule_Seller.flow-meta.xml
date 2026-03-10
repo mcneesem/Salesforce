@@ -55,6 +55,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Admin_Skill</name>
+        <label>Admin Skill</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>skillSelected</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Select_a_Product_Admin</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Availability_Matrix</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Demo_Owner_Automatically_Assigned</name>
         <label>Demo Owner Automatically Assigned</label>
         <locationX>0</locationX>
@@ -68,6 +84,38 @@
         </assignmentItems>
         <connector>
             <targetReference>Loop_Users</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Enterprise_Admin_Skill</name>
+        <label>Enterprise Admin Skill</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>skillSelected</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Select_a_Product_Admin_Enterprise</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Availability_Matrix</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Enterprise_Skill</name>
+        <label>Enterprise Skill</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>skillSelected</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Select_a_Product_Enterprise</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Availability_Matrix</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -98,6 +146,10 @@
                 <stringValue>Get_Opportunity</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Fault_Element_Assignment_Get_User_Records</name>
@@ -131,6 +183,22 @@
         <connector>
             <isGoTo>true</isGoTo>
             <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Middle_Market_Admin_Skill</name>
+        <label>Middle Market Admin Skill</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>skillSelected</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Select_a_Product_Admin_MM</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Availability_Matrix</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -174,6 +242,14 @@
         </value>
     </choices>
     <choices>
+        <name>HR360_Solution_Enterprise</name>
+        <choiceText>HR360 Solution</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Schedule_Seller_HR360_Enterprise</stringValue>
+        </value>
+    </choices>
+    <choices>
         <name>HR360_Solution_Middle_Market</name>
         <choiceText>HR360 Solution Middle Market</choiceText>
         <dataType>String</dataType>
@@ -187,6 +263,14 @@
         <dataType>String</dataType>
         <value>
             <stringValue>Schedule_Seller_HRCore</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>HRCore_Solution_Enterprise</name>
+        <choiceText>HRCore Solution</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Schedule_Seller_HRCore_Enterprise</stringValue>
         </value>
     </choices>
     <choices>
@@ -227,6 +311,22 @@
         <dataType>String</dataType>
         <value>
             <stringValue>America/Los_Angeles</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Performance_Management</name>
+        <choiceText>Performance Management</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Schedule_Seller_Performance</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Time_Attendance</name>
+        <choiceText>Time and Attendance</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Schedule_Seller_Time_Attendance</stringValue>
         </value>
     </choices>
     <customProperties>
@@ -304,10 +404,22 @@
         <label>Skill is Middle Market</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Availability_Matrix</targetReference>
-        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Admin</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Select_a_Product_Admin</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Admin_Skill</targetReference>
+            </connector>
+            <label>Is Admin</label>
+        </rules>
         <rules>
             <name>Is_Middle_Market</name>
             <conditionLogic>and</conditionLogic>
@@ -322,6 +434,51 @@
                 <targetReference>Middle_Market_Skill</targetReference>
             </connector>
             <label>Is Middle Market</label>
+        </rules>
+        <rules>
+            <name>Is_Middle_Market_Admin</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Select_a_Product_Admin_MM</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Middle_Market_Admin_Skill</targetReference>
+            </connector>
+            <label>Is Middle Market Admin</label>
+        </rules>
+        <rules>
+            <name>Is_Enterprise</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Select_a_Product_Enterprise</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Enterprise_Skill</targetReference>
+            </connector>
+            <label>Is Enterprise</label>
+        </rules>
+        <rules>
+            <name>Is_Enterprise_Admin</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Select_a_Product_Admin_Enterprise</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Enterprise_Admin_Skill</targetReference>
+            </connector>
+            <label>Is Enterprise Admin</label>
         </rules>
     </decisions>
     <decisions>
@@ -390,9 +547,14 @@
         <valueField>Id</valueField>
     </dynamicChoiceSets>
     <environments>Default</environments>
+    <formulas>
+        <name>isScheduleSellerAdmin</name>
+        <dataType>Boolean</dataType>
+        <expression>IF({!$Permission.Schedule_Seller_Admin}, TRUE, FALSE)</expression>
+    </formulas>
     <interviewLabel>Schedule Seller {!$Flow.CurrentDateTime}</interviewLabel>
     <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
-    <label>Schedule Seller</label>
+    <label>Schedule Demo</label>
     <loops>
         <name>Loop_Users</name>
         <label>Loop Users</label>
@@ -494,6 +656,7 @@
         <object>Opportunity</object>
         <queriedFields>Id</queriedFields>
         <queriedFields>NSP_Account_Segment__c</queriedFields>
+        <queriedFields>AccountId</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
@@ -777,13 +940,20 @@
                                 <stringValue>Enterprise</stringValue>
                             </rightValue>
                         </conditions>
+                        <conditions>
+                            <leftValueReference>isScheduleSellerAdmin</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <booleanValue>false</booleanValue>
+                            </rightValue>
+                        </conditions>
                     </visibilityRule>
                 </fields>
                 <fields>
                     <name>Select_a_Skill_MM</name>
                     <choiceReferences>HR360_Solution_Middle_Market</choiceReferences>
                     <choiceReferences>HRCore_Solution_Middle_Market</choiceReferences>
-                    <choiceReferences>HRScale_Middle_Market</choiceReferences>
+                    <choiceReferences>HRScale</choiceReferences>
                     <dataType>String</dataType>
                     <defaultSelectedChoiceReference>HR360_Solution_Middle_Market</defaultSelectedChoiceReference>
                     <fieldText>Select a Product</fieldText>
@@ -805,6 +975,184 @@
                             <operator>EqualTo</operator>
                             <rightValue>
                                 <stringValue>MidMarket</stringValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>Get_Opportunity.Account.NSP_Sales_Service_Account_Status__c</leftValueReference>
+                            <operator>NotEqualTo</operator>
+                            <rightValue>
+                                <stringValue>Active</stringValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>Select_a_Product_Admin</name>
+                    <choiceReferences>HR360_Solution</choiceReferences>
+                    <choiceReferences>HRCore_Solution</choiceReferences>
+                    <choiceReferences>HRScale</choiceReferences>
+                    <choiceReferences>Time_Attendance</choiceReferences>
+                    <choiceReferences>Performance_Management</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Select a Product</fieldText>
+                    <fieldType>RadioButtons</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <styleProperties>
+                        <verticalAlignment>
+                            <stringValue>top</stringValue>
+                        </verticalAlignment>
+                        <width>
+                            <stringValue>12</stringValue>
+                        </width>
+                    </styleProperties>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>isScheduleSellerAdmin</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <booleanValue>true</booleanValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>Get_Opportunity.Account.NSP_Sales_Service_Account_Status__c</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Active</stringValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>Get_Opportunity.NSP_Account_Segment__c</leftValueReference>
+                            <operator>NotEqualTo</operator>
+                            <rightValue>
+                                <stringValue>MidMarket</stringValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>Get_Opportunity.NSP_Account_Segment__c</leftValueReference>
+                            <operator>NotEqualTo</operator>
+                            <rightValue>
+                                <stringValue>Enterprise</stringValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>Select_a_Product_Admin_MM</name>
+                    <choiceReferences>HR360_Solution_Middle_Market</choiceReferences>
+                    <choiceReferences>HRCore_Solution_Middle_Market</choiceReferences>
+                    <choiceReferences>HRScale</choiceReferences>
+                    <choiceReferences>Time_Attendance</choiceReferences>
+                    <choiceReferences>Performance_Management</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Select a Product</fieldText>
+                    <fieldType>RadioButtons</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <styleProperties>
+                        <verticalAlignment>
+                            <stringValue>top</stringValue>
+                        </verticalAlignment>
+                        <width>
+                            <stringValue>12</stringValue>
+                        </width>
+                    </styleProperties>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>isScheduleSellerAdmin</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <booleanValue>true</booleanValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>Get_Opportunity.Account.NSP_Sales_Service_Account_Status__c</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Active</stringValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>Get_Opportunity.NSP_Account_Segment__c</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>MidMarket</stringValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>Select_a_Product_Enterprise</name>
+                    <choiceReferences>HR360_Solution_Enterprise</choiceReferences>
+                    <choiceReferences>HRCore_Solution_Enterprise</choiceReferences>
+                    <choiceReferences>HRScale</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Select a Product</fieldText>
+                    <fieldType>RadioButtons</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <styleProperties>
+                        <verticalAlignment>
+                            <stringValue>top</stringValue>
+                        </verticalAlignment>
+                        <width>
+                            <stringValue>12</stringValue>
+                        </width>
+                    </styleProperties>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Get_Opportunity.NSP_Account_Segment__c</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Enterprise</stringValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>isScheduleSellerAdmin</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <booleanValue>false</booleanValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>Select_a_Product_Admin_Enterprise</name>
+                    <choiceReferences>HR360_Solution_Enterprise</choiceReferences>
+                    <choiceReferences>HRCore_Solution_Enterprise</choiceReferences>
+                    <choiceReferences>HRScale</choiceReferences>
+                    <choiceReferences>Time_Attendance</choiceReferences>
+                    <choiceReferences>Performance_Management</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Select a Product</fieldText>
+                    <fieldType>RadioButtons</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <styleProperties>
+                        <verticalAlignment>
+                            <stringValue>top</stringValue>
+                        </verticalAlignment>
+                        <width>
+                            <stringValue>12</stringValue>
+                        </width>
+                    </styleProperties>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>isScheduleSellerAdmin</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <booleanValue>true</booleanValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>Get_Opportunity.NSP_Account_Segment__c</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Enterprise</stringValue>
                             </rightValue>
                         </conditions>
                     </visibilityRule>
