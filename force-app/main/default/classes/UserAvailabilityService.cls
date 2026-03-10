@@ -32,7 +32,7 @@ public with sharing class UserAvailabilityService {
                         nextBusinessStart.day()
                     );
                     // If user is not admin, skip today; otherwise include as-is
-                    if ( UserAvailabilityService.getIsAdmin() || ( days != Date.today() ) ) {
+                    if ( UserAvailabilityService.isScheduleSellerAdmin() || ( days != Date.today() ) ) {
                         response.add( days );
                     }
                     // Advance to the next business start (next business day)
@@ -388,7 +388,7 @@ public with sharing class UserAvailabilityService {
     }
 
     @AuraEnabled(cacheable=true)
-    public static Boolean getIsAdmin() {
+    public static Boolean isScheduleSellerAdmin() {
         return CustomPermissionController.checkUserPermission(
             'Schedule_Seller_Admin' ,
             UserInfo.getUserId()
