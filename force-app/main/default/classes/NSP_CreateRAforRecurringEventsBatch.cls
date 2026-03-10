@@ -218,7 +218,7 @@ public without sharing class NSP_CreateRAforRecurringEventsBatch implements ISel
         }
         private set;
     }
-        
+
     private static DateTime createdDateTime {
         private get {
             if ( createdDateTime == null ) {
