@@ -36,10 +36,7 @@ public with sharing class NSP_ContactServiceTriggerHelper {
     
     public void beforeUpdateDirector(Map<Id, Contact> newMap,Map<Id, Contact> oldMap) {
         try{
-            Map<String,AccountContactRelation> acrMapWithAccConId ;
-            if(newMap != null){
-               acrMapWithAccConId = NSP_ContactServiceTriggerHelper.getACRData(newMap);
-            }
+            Map<String,AccountContactRelation> acrMapWithAccConId = NSP_ContactServiceTriggerHelper.getACRData(newMap);
             for(Contact conObj : newMap.values()){
                 // Populating Preferred First Name if Pref First Name is left blank
                 if(newMap.get(conObj.id).NSP_Preferred_First_Name__c != oldMap.get(conObj.id).NSP_Preferred_First_Name__c 
@@ -53,7 +50,7 @@ public with sharing class NSP_ContactServiceTriggerHelper {
                     conObj.NSP_Pin_Validated__c = false;  
                 }
                 //Update primary details on contact based on account  
-                if(oldMap != null && conObj.AccountId != null && conObj.AccountId != oldMap.get(conObj.Id).AccountId){
+                if(oldMap != null && oldMap.containsKey(conObj.id) && oldMap.get(conObj.Id).AccountId != null && conObj.AccountId != null && conObj.AccountId != oldMap.get(conObj.Id).AccountId){
                     AccountContactRelation acrRecord = acrMapWithAccConId.get((String)conObj.AccountId + conObj.Id);
                     if(acrRecord != null){
                         conObj.NSP_Work_email__c = acrRecord.NSP_Work_Email__c;
@@ -184,9 +181,11 @@ public with sharing class NSP_ContactServiceTriggerHelper {
 
     private static Map<String,AccountContactRelation> getACRData(Map<Id, Contact> newMap)  {
         Map<String,AccountContactRelation> acrMapWithAccConId = new Map<String,AccountContactRelation>();
-        for(AccountContactRelation acr : [Select Id, AccountId, ContactId, NSP_Work_Email__c, NSP_Work_Phone__c, NSP_Employee_Status__c, NSP_Status_Date__c, NSP_Job_Title__c from AccountContactRelation where ContactId in :newMap.keySet()]){
-            if(acr.AccountId != null && acr.ContactId != null){
-                acrMapWithAccConId.put((String)acr.AccountId + acr.ContactId, acr);
+        if(newMap != null && newMap.keySet() != null){
+            for(AccountContactRelation acr : [Select Id, AccountId, ContactId, NSP_Work_Email__c, NSP_Work_Phone__c, NSP_Employee_Status__c, NSP_Status_Date__c, NSP_Job_Title__c from AccountContactRelation where ContactId in :newMap.keySet()]){
+                if(acr.AccountId != null && acr.ContactId != null){
+                    acrMapWithAccConId.put((String)acr.AccountId + acr.ContactId, acr);
+                }
             }
         }
         return acrMapWithAccConId;
