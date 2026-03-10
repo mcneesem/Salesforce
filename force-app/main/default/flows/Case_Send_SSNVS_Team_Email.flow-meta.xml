@@ -546,7 +546,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>DefaultMessage</name>
-            <fieldText>&lt;p&gt;There is some issue with the flow. Please reach out for support.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;No results returned from InvocableMethod CaseSendSSNVSTeamEmailAction.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
