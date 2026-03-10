@@ -1,76 +1,122 @@
-/* 
-*    Class Name  : NSP_ContactServiceTriggerHelper
-*    @Description: Represents the Contact trigger helper of Service Stream which handles all the logic.
-*    @Date       : 05/11/2022
-*/
-
 public with sharing class NSP_ContactServiceTriggerHelper {
-     // test w/ NSP_ContactServiceTriggerHelperTest (89%)
-    /**
-    * Iterates throught the list of new Contact and passes the required attributes to other methods.
-    * @param newList List of New Contact.
-    * @return void
-    *                
-    */
-    
-    public void beforeInsertDirector(List<Contact> newList) {
-        try{
-            For(Contact conObj : newList){
+    // test w/ NSP_ContactServiceTriggerHelperTest (89%)
+
+    // iterates throught the list of new Contact and passes the required attributes to other methods.
+    public void beforeInsertDirector( List<Contact> newList ) {
+        try {
+            for ( Contact conObj : newList ) {
                 // Populating Preferred First Name if Pref First Name is left blank
-                if(conObj.NSP_Preferred_First_Name__c == null && conObj.FirstName != null){
+                if ( ( conObj.NSP_Preferred_First_Name__c == null )
+                    && ( conObj.FirstName != null )
+                    )
+                {
                     conObj.NSP_Preferred_First_Name__c = conObj.FirstName;
                 }
             }
-        }catch(Exception ex){
-            NSP_CustomException.LogException(ex);
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ContactServiceTriggerHelper.class.getName() ,
+                'beforeInsertDirector' ,
+                e
+            );
         }
     }
-    
-    /**
-    * Iterates throught the list of new Contact and passes the required attributes to other methods.
-    * @param oldMap List of New Contact.
-    * @param newMap List of New Contact.
-    * @return void
-    *                
-    */
-    
-    public void beforeUpdateDirector(Map<Id, Contact> newMap,Map<Id, Contact> oldMap) {
-        try{
-            Map<String,AccountContactRelation> acrMapWithAccConId = NSP_ContactServiceTriggerHelper.getACRData(newMap);
-            for(Contact conObj : newMap.values()){
+
+    // iterates throught the list of new Contact and passes the required attributes to other methods.
+    public void beforeUpdateDirector( Map<Id,Contact> newMap , Map<Id,Contact> oldMap ) {
+        try {
+            Map<String,AccountContactRelation> acrMapWithAccConId = NSP_ContactServiceTriggerHelper.selectAccountContactRelations( newMap );
+            for ( Contact conObj : newMap.values() ) {
                 // Populating Preferred First Name if Pref First Name is left blank
-                if(newMap.get(conObj.id).NSP_Preferred_First_Name__c != oldMap.get(conObj.id).NSP_Preferred_First_Name__c 
-                   && conObj.NSP_Preferred_First_Name__c == null 
-                   && conObj.FirstName != null){
-                       conObj.NSP_Preferred_First_Name__c = conObj.FirstName;  
-                   }
-                   //Updating Pin Validated to false, when Service Request Channel changes from Phone to null - DF-03665
-                if(conObj.NSP_Service_Request_Channel__c != oldMap.get(conObj.id).NSP_Service_Request_Channel__c 
-                && conObj.NSP_Service_Request_Channel__c == null && oldMap.get(conObj.id).NSP_Service_Request_Channel__c == 'Phone'){
-                    conObj.NSP_Pin_Validated__c = false;  
+                if ( ( newMap.get( conObj.Id ).NSP_Preferred_First_Name__c != oldMap.get( conObj.Id ).NSP_Preferred_First_Name__c )
+                    && ( conObj.NSP_Preferred_First_Name__c == null )
+                    && ( conObj.FirstName != null )
+                    )
+                {
+                    conObj.NSP_Preferred_First_Name__c = conObj.FirstName;
+                }
+                //Updating Pin Validated to false, when Service Request Channel changes from Phone to null - DF-03665
+                if ( ( conObj.NSP_Service_Request_Channel__c != oldMap.get( conObj.Id ).NSP_Service_Request_Channel__c )
+                    && ( conObj.NSP_Service_Request_Channel__c == null )
+                    && ( oldMap.get( conObj.Id ).NSP_Service_Request_Channel__c == 'Phone' )
+                    )
+                {
+                    conObj.NSP_Pin_Validated__c = false;
                 }
                 //Update primary details on contact based on account
-                AccountContactRelation acrRecord = NSP_ContactServiceTriggerHelper.getMappedACR( conObj , oldMap , acrMapWithAccConId );
-                if(acrRecord != null){
-                        conObj.NSP_Work_email__c = acrRecord.NSP_Work_Email__c;
-                        conObj.NSP_Work_Phone__c = acrRecord.NSP_Work_Phone__c;
-                        conObj.NSP_Employee_Status__c = acrRecord.NSP_Employee_Status__c;
-                        conObj.NSP_Status_Date__c = acrRecord.NSP_Status_Date__c;
-                        conObj.NSP_Job_Title__c = acrRecord.NSP_Job_Title__c;
-                    }
-            }     
-        }catch(Exception ex){
-            NSP_CustomException.LogException(ex);
+                AccountContactRelation acrRecord = NSP_ContactServiceTriggerHelper.getMappedAccountContactRelation(
+                    conObj ,
+                    oldMap ,
+                    acrMapWithAccConId
+                );
+                if ( acrRecord != null ) {
+                    conObj.NSP_Work_email__c = acrRecord.NSP_Work_Email__c;
+                    conObj.NSP_Work_Phone__c = acrRecord.NSP_Work_Phone__c;
+                    conObj.NSP_Employee_Status__c = acrRecord.NSP_Employee_Status__c;
+                    conObj.NSP_Status_Date__c = acrRecord.NSP_Status_Date__c;
+                    conObj.NSP_Job_Title__c = acrRecord.NSP_Job_Title__c;
+                }
+            }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ContactServiceTriggerHelper.class.getName() ,
+                'beforeUpdateDirector' ,
+                e
+            );
         }
     }
-    /**
-    * @MethodName: updateSSNField
-    * @Description: This method is used to update Contact SSN Fields on before Insert or update
-    * @param : List<Contact> newList, Map<Id, Contact> oldMap
-    * @createdDate : 01/02/2023
-    * @Defect : STY-02659
-    * @return void                          
-    */
+
+    private static Map<String,AccountContactRelation> selectAccountContactRelations( Map<Id,Contact> newMap ) {
+        Map<String,AccountContactRelation> acrMapWithAccConId = new Map<String,AccountContactRelation>();
+        if ( ( newMap != null ) && !newMap.isEmpty() ) {
+            for ( AccountContactRelation acr : [
+                        SELECT
+                            Id ,
+                            AccountId ,
+                            ContactId ,
+                            NSP_Work_Email__c ,
+                            NSP_Work_Phone__c ,
+                            NSP_Employee_Status__c ,
+                            NSP_Status_Date__c ,
+                            NSP_Job_Title__c
+                        FROM AccountContactRelation
+                        WHERE ( ContactId IN :newMap.keySet() )
+                    ]
+                )
+            {
+                if ( ( acr.AccountId != null ) && ( acr.ContactId != null ) ) {
+                    acrMapWithAccConId.put(
+                        (String)acr.AccountId + acr.ContactId ,
+                        acr
+                    );
+                }
+            }
+        }
+        return acrMapWithAccConId;
+    }
+
+    private static AccountContactRelation getMappedAccountContactRelation(
+        Contact conObj ,
+        Map<Id,Contact> oldMap ,
+        Map<String,AccountContactRelation> acrMapWithAccConId
+        )
+    {
+        AccountContactRelation response = null;
+        if ( ( conObj != null )
+            && ( oldMap != null )
+            && ( acrMapWithAccConId != null )
+            && oldMap.containsKey( conObj.Id )
+            && ( oldMap.get( conObj.Id ) != null )
+            && ( conObj.AccountId != null )
+            && ( conObj.AccountId != oldMap.get( conObj.Id ).AccountId )
+            )
+        {
+            response = acrMapWithAccConId.get( (String)conObj.AccountId + conObj.Id );
+        }
+        return response;
+    }
+
+    // used to update Contact SSN Fields on before Insert or update
     public void updateSSNField( List<Contact> newList , Map<Id,Contact> oldMap ) {
         if ( newList != null ) {
             for ( Contact con : newList ) {
@@ -105,16 +151,8 @@ public with sharing class NSP_ContactServiceTriggerHelper {
             }
         }
     }
-    
-    /**
-    * @MethodName: updateDateofbirthfield
-    * @Description: This method is used to update Contact Birthday, SSN, DOB Fields on before Insert or update
-    * @param : List<Contact> newList, Map<Id, Contact> oldMap
-    * @createdDate : 05/02/2023
-    * @Defect : STY-02659
-    * @return void                          
-    */
-    
+
+    // used to update Contact Birthday, SSN, DOB Fields on before Insert or update
     public void updateBirthday( List<Contact> newList , Map<Id,Contact> oldMap ) {
         if ( newList != null ) {
             for ( Contact con : newList ) {
@@ -137,7 +175,7 @@ public with sharing class NSP_ContactServiceTriggerHelper {
                         con.NSP_Is_Unmasked__c = true;
                         con.NSP_Date_Of_Birth_Unmasked__c = null;
                         //Update Birthday field
-                        updateBirthdayBasedOnDOB(con); 
+                        updateBirthdayBasedOnDOB( con );
                     }
                 }
             }
@@ -147,7 +185,7 @@ public with sharing class NSP_ContactServiceTriggerHelper {
     private static void updateBirthdayBasedOnDOB( Contact con ) {
         if ( ( con != null ) && ( con.NSP_Date_of_Birth__c != null ) ) {
             Date dt = con.NSP_Date_of_Birth__c;
-            Integer day = dt.Day(); 
+            Integer day = dt.Day();
             Integer month = dt.Month();
             if ( month == 1 ) {
                 con.NSP_Birthday__c = 'JAN ' + day;
@@ -177,32 +215,5 @@ public with sharing class NSP_ContactServiceTriggerHelper {
         }
     }
 
-    private static Map<String,AccountContactRelation> getACRData(Map<Id, Contact> newMap)  {
-        Map<String,AccountContactRelation> acrMapWithAccConId = new Map<String,AccountContactRelation>();
-        if(newMap != null && newMap.keySet() != null){
-            for(AccountContactRelation acr : [Select Id, AccountId, ContactId, NSP_Work_Email__c, NSP_Work_Phone__c, NSP_Employee_Status__c, NSP_Status_Date__c, NSP_Job_Title__c from AccountContactRelation where ContactId in :newMap.keySet()]){
-                if(acr.AccountId != null && acr.ContactId != null){
-                    acrMapWithAccConId.put((String)acr.AccountId + acr.ContactId, acr);
-                }
-            }
-        }
-        return acrMapWithAccConId;
-    }
-
-    private static AccountContactRelation getMappedACR(Contact conObj , Map<Id,Contact> oldMap , Map<String,AccountContactRelation> acrMapWithAccConId){
-        AccountContactRelation response = null;
-        if ( ( conObj != null )
-            && ( oldMap != null )
-            && ( acrMapWithAccConId != null )
-            && oldMap.containsKey( conObj.Id )
-            && ( oldMap.get( conObj.Id ) != null )
-            && ( conObj.AccountId != null )
-            && ( conObj.AccountId != oldMap.get( conObj.Id ).AccountId )
-            )
-        {
-            response = acrMapWithAccConId.get( (String)conObj.AccountId + conObj.Id );
-        }
-        return response;
-    }
-
 }
+//
