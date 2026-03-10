@@ -50,16 +50,14 @@ public with sharing class NSP_ContactServiceTriggerHelper {
                     conObj.NSP_Pin_Validated__c = false;  
                 }
                 //Update primary details on contact based on account
-                if(oldMap?.get(conObj.Id) != null && conObj.AccountId != null && conObj.AccountId != oldMap.get(conObj.Id).AccountId){
-                    AccountContactRelation acrRecord = acrMapWithAccConId.get((String)conObj.AccountId + conObj.Id);
-                    if(acrRecord != null){
+                AccountContactRelation acrRecord = NSP_ContactServiceTriggerHelper.getMappedACR( conObj , oldMap , acrMapWithAccConId );
+                if(acrRecord != null){
                         conObj.NSP_Work_email__c = acrRecord.NSP_Work_Email__c;
                         conObj.NSP_Work_Phone__c = acrRecord.NSP_Work_Phone__c;
                         conObj.NSP_Employee_Status__c = acrRecord.NSP_Employee_Status__c;
                         conObj.NSP_Status_Date__c = acrRecord.NSP_Status_Date__c;
                         conObj.NSP_Job_Title__c = acrRecord.NSP_Job_Title__c;
                     }
-                }
             }     
         }catch(Exception ex){
             NSP_CustomException.LogException(ex);
@@ -189,6 +187,22 @@ public with sharing class NSP_ContactServiceTriggerHelper {
             }
         }
         return acrMapWithAccConId;
+    }
+
+    private static AccountContactRelation getMappedACR(Contact conObj , Map<Id,Contact> oldMap , Map<String,AccountContactRelation> acrMapWithAccConId){
+        AccountContactRelation response = null;
+        if ( ( conObj != null )
+            && ( oldMap != null )
+            && ( acrMapWithAccConId != null )
+            && oldMap.containsKey( conObj.Id )
+            && ( oldMap.get( conObj.Id ) != null )
+            && ( conObj.AccountId != null )
+            && ( conObj.AccountId != oldMap.get( conObj.Id ).AccountId )
+            )
+        {
+            response = acrMapWithAccConId.get( (String)conObj.AccountId + conObj.Id );
+        }
+        return response;
     }
 
 }
