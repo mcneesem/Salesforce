@@ -15,8 +15,15 @@ export default class PrepSandbox extends LightningElement {
     postRefreshRun2 = false;
     postRefreshRun3 = false;
     postRefreshRun4 = false;
+    sandboxApiName = '';
     wiredCustomSettingResult;
     isUserAllowedE2C = false;
+
+    // Computed flag: show Import Users button only when sandboxApiName starts with "dev"
+    get showImportUsers() {
+        const name = this.sandboxApiName;
+        return name.startsWith('dev');
+    }
 
     connectedCallback() {
         this.checkUserAccessE2C();
@@ -39,6 +46,7 @@ export default class PrepSandbox extends LightningElement {
             this.postRefreshRun2 = result.data.PostRefreshRun2__c;
             this.postRefreshRun3 = result.data.PostRefreshRun3__c;
             this.postRefreshRun4 = result.data.PostRefreshRun4__c;
+            this.sandboxApiName = result.data.SandboxApiName__c;
         } else if (result.error) {
             this.showToast('Error', result.error.message, 'error');
         }

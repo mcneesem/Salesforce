@@ -17,19 +17,21 @@
             </div>
 
             <!-- Import Org Users Button -->
-            <div class="slds-form-element_stacked">
-                <lightning-button
-                    label="Import Org Users"
-                    onclick={handleImportUsers}
-                    variant="brand">
-                </lightning-button>
-                <apex:outputPanel if:true={postRefreshRun2}
-                    class="slds-m-left_x-small"
-                    id="importUsersAlreadyRun"
-                    style="font-family: 'Helvetica';font-size: 14px;color: black">
-                    <i>Import Users step has been run.</i>
-                </apex:outputPanel>
-            </div>
+            <template if:true={showImportUsers}>
+                <div class="slds-form-element_stacked">
+                    <lightning-button
+                        label="Import Org Users"
+                        onclick={handleImportUsers}
+                        variant="brand">
+                    </lightning-button>
+                    <apex:outputPanel if:true={postRefreshRun2}
+                        class="slds-m-left_x-small"
+                        id="importUsersAlreadyRun"
+                        style="font-family: 'Helvetica';font-size: 14px;color: black">
+                        <i>Import Users step has been run.</i>
+                    </apex:outputPanel>
+                </div>
+            </template>
 
             <!-- Post-Import Steps Button -->
             <div class="slds-form-element_stacked">
