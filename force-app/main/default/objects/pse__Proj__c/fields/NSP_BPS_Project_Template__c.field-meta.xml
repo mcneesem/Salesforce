@@ -327,6 +327,21 @@
                 <label>XML Utility Rework</label>
             </value>
             <value>
+                <fullName>HRCore - Module Termination</fullName>
+                <default>false</default>
+                <label>HRCore - Module Termination</label>
+            </value>
+            <value>
+                <fullName>HRCore Amendment Parent</fullName>
+                <default>false</default>
+                <label>HRCore Amendment Parent</label>
+            </value>
+            <value>
+                <fullName>HRCore Performance Management - Small Business</fullName>
+                <default>false</default>
+                <label>HRCore Performance Management - Small Business</label>
+            </value>
+            <value>
                 <fullName>iSolve – Hardware</fullName>
                 <default>false</default>
                 <isActive>false</isActive>

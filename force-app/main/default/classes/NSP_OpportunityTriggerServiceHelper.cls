@@ -164,10 +164,6 @@ public class NSP_OpportunityTriggerServiceHelper {
         if((!timeAttAssetMap.isEmpty() || !perAssetMap.isEmpty())  ){
             createAssetwithProject(timeAttAssetMap,perAssetMap,oppIdAccIdMap);
         }
-        // added as a part of STY-02129
-        if(!accountIdSet.isEmpty() && !system.isfuture() && !system.isBatch()){
-            updateImplementationProfile(accountIdSet);
-        }
 
     }
 
@@ -202,52 +198,6 @@ public class NSP_OpportunityTriggerServiceHelper {
             }
         }
         return newProjectId;
-    }
-
-    //
-    // MethodName: updateImplementationProfile
-    // Description : This Method will update Opportunity related account ProjectId on the Implementation Profile for the Closed Opportunities
-    // Params:     Set<Id> accountIdSet
-    //
-    @future
-    public static void updateImplementationProfile( Set<Id> accountIdSet){
-        Map<Id,Id> mapAccountIdProjectId = new Map<Id,Id>();
-        List<Implementation_Profile__c> updateImProfileList = new List<Implementation_Profile__c>();
-        try{
-            Id projectRecordType = SObjectType.pse__Proj__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PEOProject).getRecordTypeId();
-            // fetching Implementation Project for Closed Opportunity related Account
-            List<pse__Proj__c> projectList = [Select Id, pse__Account__c from pse__Proj__c  WHERE pse__Account__c IN:accountIdSet
-                               AND RecordTypeId=:projectRecordType AND pse__Project_Type__c =:NSP_ServiceConstants.ImplementationProjectType
-                               AND (TemplateName__c = :label.Middle_Market_Implementation_Project OR TemplateName__c = :label.FSOImplementationProject)
-                               Order By CreatedDate DESC limit 1];
-            // Creating map of opp account Id and Project Id
-            for(pse__Proj__c project:projectList){
-                mapAccountIdProjectId.put(project.pse__Account__c,project.Id);
-            }
-            // fetching and Updating Project Id on  Implementation Profiles
-            List<Implementation_Profile__c> impProfileList =[Select Id ,Account__c,NSP_Project__c from Implementation_Profile__c
-                                                             WHERE Account__c IN: mapAccountIdProjectId.KeySet()  ];
-            for(Implementation_Profile__c iProfile:impProfileList){
-                // checking if Implementaion Profile has valid account and Project
-                if(mapAccountIdProjectId.ContainsKey(iProfile.Account__c)){
-                    Implementation_Profile__c impProfile = new Implementation_Profile__c();
-                    impProfile.Id= iProfile.Id;
-                    // updating Project Id on Implementation Profile
-                    impProfile.NSP_Project__c= mapAccountIdProjectId.get(iProfile.Account__c);
-                    updateImProfileList.add(impProfile);
-                }
-            }
-            // Updating Implementation Profiles List
-            if(!updateImProfileList.isEmpty()){
-                update updateImProfileList;
-            }
-        } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
-                NSP_OpportunityTriggerServiceHelper.class.getName() ,
-                'updateImplementationProfile' ,
-                e
-            );
-        }
     }
 
     //

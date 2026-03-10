@@ -690,6 +690,17 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         } catch(Exception e) {
             NSP_PrepSandbox.handleException( e , 'doCSettings2:NVMContactWorld__Settings__c' );
         }
+
+        try {
+            Sales_Team_Email_Settings__c cS9 = Sales_Team_Email_Settings__c.getOrgDefaults();
+            cS9.BccEmailAddress__c = 'test.datacollection_sfqa2@insperity.com';
+            cS9.NationalAccountEmailAddress__c = 'nationalaccountssales@insperity.com.invalid';
+            cS9.PrivateCapitalMarketEmailAddress__c = 'pcm.leads@insperity.com.invalid';
+            cS9.StrategicSalesEmailAddress__c = 'strategicsalesleads@insperity.com.invalid';
+            upsert cS9;
+        } catch(Exception e) {
+            NSP_PrepSandbox.handleException( e , 'doCSettings2:Sales_Team_Email_Settings__c' );
+        }
     }
 
     public static void doE2CAddresses(String sandboxName) {

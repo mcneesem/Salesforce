@@ -517,6 +517,11 @@
                 <default>false</default>
                 <label>Lawrence, Evans &amp; Co</label>
             </value>
+            <value>
+                <fullName>139</fullName>
+                <default>false</default>
+                <label>Cornerstone Capital</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

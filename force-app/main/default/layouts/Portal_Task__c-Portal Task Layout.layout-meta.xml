@@ -6,8 +6,9 @@
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
     <excludeButtons>Edit</excludeButtons>
-    <excludeButtons>OpenSlackRecordChannel</excludeButtons>
     <excludeButtons>PrintableView</excludeButtons>
+    <excludeButtons>RecordShareHierarchy</excludeButtons>
+    <excludeButtons>Share</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>false</customLabel>
@@ -22,6 +23,10 @@
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>Portal_Client__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Portal_Project__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

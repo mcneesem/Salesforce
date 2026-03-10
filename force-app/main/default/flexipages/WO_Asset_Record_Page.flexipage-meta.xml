@@ -934,6 +934,16 @@
                 <identifier>RecordNSP_Biometric_End_Date_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Integration_Terms_Executed__c</fieldItem>
+                <identifier>RecordIntegration_Terms_Executed_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-9d815660-b3e8-4c80-b239-d93f52b65af7</name>
         <type>Facet</type>
     </flexiPageRegions>

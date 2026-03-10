@@ -21,6 +21,11 @@
         <label>Central 4</label>
     </customValue>
     <customValue>
+        <fullName>Central 5</fullName>
+        <default>false</default>
+        <label>Central 5</label>
+    </customValue>
+    <customValue>
         <fullName>Eastern 1</fullName>
         <default>false</default>
         <label>Eastern 1</label>
@@ -59,6 +64,11 @@
         <fullName>Northeast 4</fullName>
         <default>false</default>
         <label>Northeast 4</label>
+    </customValue>
+    <customValue>
+        <fullName>Northeast 5</fullName>
+        <default>false</default>
+        <label>Northeast 5</label>
     </customValue>
     <customValue>
         <fullName>Western 1</fullName>

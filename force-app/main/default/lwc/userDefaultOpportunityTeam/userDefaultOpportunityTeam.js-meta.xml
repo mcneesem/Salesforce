@@ -3,7 +3,7 @@
     <apiVersion>65.0</apiVersion>
     <isExposed>true</isExposed>
     <masterLabel>Default Opportunity Team</masterLabel>
-    <description>Related-list style table showing Opportunity Team members for the record owner. Initial row count controlled by UserDefaultOpportunityTeamSettings__c.PageSize__c.</description>
+    <description>Related-list style table showing Opportunity Team members for the record owner.</description>
     <targets>
         <target>lightning__RecordPage</target>
     </targets>

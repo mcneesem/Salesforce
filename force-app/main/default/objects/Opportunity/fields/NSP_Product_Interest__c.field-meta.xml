@@ -3,7 +3,7 @@
     <fullName>NSP_Product_Interest__c</fullName>
     <description>Product interest, identifies the product interests of lead. This field is populated during lead conversion</description>
     <externalId>false</externalId>
-    <label>Product Interest</label>
+    <label>Products of Interest</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>

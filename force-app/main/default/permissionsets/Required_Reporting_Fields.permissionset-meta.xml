@@ -263,6 +263,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Asset.Integration_Terms_Executed__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Asset.Is_HRScale__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -549,6 +554,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.First_Level_2_Owner_Assigned_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Is_Archived__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -993,12 +1003,27 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Lead.FBCLID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Lead.GCLID__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Lead.Interest_Product_Offering__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Lead.LICLID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Lead.MSCLID__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1074,6 +1099,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Account_Group_Member__c.Account_Group_Member_ID_18__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Account_Group_Member__c.Bypass_Self_Group_Creation__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1274,6 +1304,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Engagement_Path__c.Action__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Focus_Item__c.Item_Owner__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Focus_Item__c.Details__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1773,6 +1813,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Opportunity.FBCLID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Opportunity.GCLID__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1789,6 +1834,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.Is_Services_Opportunity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.LICLID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.MSCLID__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1923,12 +1978,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Opportunity.Product_Offering__c</field>
+        <field>Opportunity.Product_Recommendation_Outcome__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Opportunity.Product_Recommendation_Outcome__c</field>
+        <field>Opportunity.Product_Solution__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2138,6 +2193,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SBQQ__ProductOption__c.Sub_Product_Config__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__Quote__c.Sub_Product_Attribute__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SBQQ__QuoteLine__c.Add_HRCore_Setup_Fee__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2189,6 +2254,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>User.NSP_Service_Region__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>User.Server_URL__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

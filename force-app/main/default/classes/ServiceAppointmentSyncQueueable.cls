@@ -39,7 +39,7 @@ public with sharing class ServiceAppointmentSyncQueueable implements Queueable {
                 this.syncServiceAppointment( serviceAppointmentId );
             }
             if ( !this.serviceAppointmentIds.isEmpty() ) {
-                System.enqueueJob( new ServiceAppointmentSyncQueueable( this.serviceAppointmentIds ) ); // chain new queueable job for remaining serviceAppointmentIds...
+                ServiceAppointmentSyncQueueable.enqueueJob( this.serviceAppointmentIds ); // chain new queueable job for remaining serviceAppointmentIds...
             }
         }
     }
@@ -139,7 +139,8 @@ public with sharing class ServiceAppointmentSyncQueueable implements Queueable {
                         OwnerId ,
                         Duration ,
                         SchedStartTime ,
-                        SchedEndTime,NSP_Meeting_Type__c
+                        SchedEndTime ,
+                        NSP_Meeting_Type__c
                     FROM ServiceAppointment
                     WHERE ( Id = :recordId )
                 ];

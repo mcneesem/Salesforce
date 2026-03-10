@@ -411,8 +411,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Product_Offering__c</fieldItem>
-                <identifier>RecordProduct_Offering_cField</identifier>
+                <fieldItem>Record.Product_Solution__c</fieldItem>
+                <identifier>RecordProduct_Solution__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -839,8 +839,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Product_Offering__c</fieldItem>
-                <identifier>RecordProduct_Offering_cField2</identifier>
+                <fieldItem>Record.Product_Solution__c</fieldItem>
+                <identifier>RecordProduct_Solution__cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1089,7 +1089,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Product_Interest__c</fieldItem>
                 <identifier>RecordNSP_Product_Interest_cField</identifier>
@@ -1361,8 +1361,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Product_Offering__c</fieldItem>
-                <identifier>RecordProduct_Offering_cField3</identifier>
+                <fieldItem>Record.Product_Solution__c</fieldItem>
+                <identifier>RecordProduct_Solution__cField3</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
