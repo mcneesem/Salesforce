@@ -3,6 +3,7 @@
     <fullName>All</fullName>
     <columns>NAME</columns>
     <columns>Portal_Client__c</columns>
+    <columns>Label__c</columns>
     <columns>Completed_Portal_Tasks__c</columns>
     <columns>Total_Portal_Tasks__c</columns>
     <columns>Project__c</columns>

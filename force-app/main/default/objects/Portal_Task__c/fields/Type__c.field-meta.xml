@@ -30,6 +30,31 @@
                 <default>false</default>
                 <label>System Setup</label>
             </value>
+            <value>
+                <fullName>First Steps</fullName>
+                <default>false</default>
+                <label>First Steps</label>
+            </value>
+            <value>
+                <fullName>Discovery</fullName>
+                <default>false</default>
+                <label>Discovery</label>
+            </value>
+            <value>
+                <fullName>Configuration</fullName>
+                <default>false</default>
+                <label>Configuration</label>
+            </value>
+            <value>
+                <fullName>Training</fullName>
+                <default>false</default>
+                <label>Training</label>
+            </value>
+            <value>
+                <fullName>Go Live</fullName>
+                <default>false</default>
+                <label>Go Live</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
