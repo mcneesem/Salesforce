@@ -111,6 +111,13 @@ private class CaseSendSSNVSTeamEmailActionTest
         contactObj.NSP_Per_ID__c = '1234';
         update contactObj;
 
+        List<NSP_Sub_Client_Contact__c> subClientContacts = [SELECT Id, NSP_Work_Email__c, NSP_Employee_Status__c, NSP_Contact__c
+                                                         FROM NSP_Sub_Client_Contact__c WHERE NSP_Work_Email__c = NULL LIMIT 1];
+        Assert.areNotEqual(null, subClientContacts, 'All sub client contacts should be there to send the email');
+        NSP_Sub_Client_Contact__c subClientContact = subClientContacts[0];
+        subClientContact.NSP_Work_Email__c = 'test@example.com';
+        update subClientContact;
+        
         List<CaseSendSSNVSTeamEmailAction.ActionInputParams> inputParams = new List<CaseSendSSNVSTeamEmailAction.ActionInputParams>();
         CaseSendSSNVSTeamEmailAction.ActionInputParams actionInputParams = new CaseSendSSNVSTeamEmailAction.ActionInputParams();
         actionInputParams.accountId = accountObj.Id;
@@ -135,7 +142,58 @@ private class CaseSendSSNVSTeamEmailActionTest
             new CaseSendSSNVSTeamEmailAction.ActionOutputParams()
         );
 
-        Assert.areEqual(1, result.subClientContacts?.size(), 'Email should be sent');
+        Assert.areEqual(2, result.subClientContacts?.size(), 'Email should be sent');
+
+    }
+    
+        @IsTest
+    private static void testGetSubClientAndSubClientContacts_Negative_No_Email()
+    {
+        List<Case> caseList = [SELECT Id, AccountId, ContactId, SSNVS_Mismatch__c
+                               FROM Case
+                               WHERE SSNVS_Mismatch__c != NULL LIMIT 1];
+        Assert.areEqual(1, caseList.size(), caseSetupAssertMessage);
+        Case caseObj = caseList[0];
+
+        List<Account> accList = [SELECT Id
+                                 FROM Account
+                                 WHERE Id = :caseObj.AccountId LIMIT 1];
+        Assert.areEqual(1, accList.size(), accountSetupAssertMessage);
+        Account accountObj = accList[0];
+
+        List<Contact> contactList = [SELECT Id, NSP_Per_ID__c
+                                     FROM Contact
+                                     WHERE AccountId = :accountObj.Id LIMIT 1];
+        Assert.areEqual(1, contactList.size(), contactSetupAssertMessage);
+        Contact contactObj = contactList[0];
+        contactObj.NSP_Per_ID__c = '1234';
+        update contactObj;
+        
+        List<CaseSendSSNVSTeamEmailAction.ActionInputParams> inputParams = new List<CaseSendSSNVSTeamEmailAction.ActionInputParams>();
+        CaseSendSSNVSTeamEmailAction.ActionInputParams actionInputParams = new CaseSendSSNVSTeamEmailAction.ActionInputParams();
+        actionInputParams.accountId = accountObj.Id;
+        actionInputParams.caseObj = caseObj;
+        actionInputParams.emailSubject = 'TestSubject';
+        actionInputParams.emailBody= emailBodyString;
+        inputParams.add(actionInputParams);
+
+        Test.startTest();
+        List<CaseSendSSNVSTeamEmailAction.ActionOutputParams> results =
+            CaseSendSSNVSTeamEmailAction.getSubClientAndSubClientContacts(inputParams);
+        Test.stopTest();
+
+        // VALIDATION
+        Assert.areNotEqual(null, accountObj.Id, 'Account should persist');
+        Assert.areNotEqual(null, caseObj.Id, 'Case should persist');
+        Assert.areNotEqual(null, results, resultMessageString);
+
+        CaseSendSSNVSTeamEmailAction.ActionOutputParams result = (
+            (results != null && !results.isEmpty()) ?
+            results[0] :
+            new CaseSendSSNVSTeamEmailAction.ActionOutputParams()
+        );
+
+        Assert.areNotEqual(null, result.errorEntries, 'Error is required before sending the success email');
 
     }
 

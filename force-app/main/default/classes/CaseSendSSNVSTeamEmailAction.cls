@@ -154,7 +154,7 @@ public with sharing class CaseSendSSNVSTeamEmailAction
             }
 
             // Deliver emails to eligible
-            if (eligibleSubClientContacts != null && !eligibleSubClientContacts.isEmpty())
+            if ((errorMap == null || errorMap.isEmpty()) && (eligibleSubClientContacts != null && !eligibleSubClientContacts.isEmpty()))
             {
                 returnSet = CaseSendSSNVSTeamEmailAction.deliverEmails(caseContact, inParams, eligibleSubClientContacts);
             }
