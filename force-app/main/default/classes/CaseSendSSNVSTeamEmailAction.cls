@@ -74,7 +74,7 @@ public with sharing class CaseSendSSNVSTeamEmailAction
         {
             for(ActionInputParams inParams : inputParams)
             {
-                ActionOutputParams result = processContactAndSubclients(inParams);
+                ActionOutputParams result = CaseSendSSNVSTeamEmailAction.processContactAndSubclients(inParams);
 
                 results.add(result);
             }
@@ -92,19 +92,17 @@ public with sharing class CaseSendSSNVSTeamEmailAction
     private static ActionOutputParams processContactAndSubclients(ActionInputParams inputRecord)
     {
         ActionOutputParams result = new ActionOutputParams();
-        Map<String, String> errorMap = new Map<String, String>();
-        Contact caseContact = null;
-        Set<NSP_Sub_Client_Contact__c> subClientContactSet  = new Set<NSP_Sub_Client_Contact__c>();
         // Guard input
         if (inputRecord != null && inputRecord.caseObj != null)
         {
             // Load case contact (only Active/HIRED/REHIRED)
-            caseContact = CaseSendSSNVSTeamEmailAction.getCaseContact(inputRecord.caseObj);
+            Contact caseContact = CaseSendSSNVSTeamEmailAction.getCaseContact(inputRecord.caseObj);
+            Map<String, String> errorMap = new Map<String, String>();
 
             // Valid Contact Not Found related to Case
             if (caseContact != null && inputRecord.caseObj.ContactId == caseContact.Id)
             {
-                subClientContactSet = CaseSendSSNVSTeamEmailAction.processSubClientRecordsBasedOnContact(inputRecord, caseContact, errorMap);
+                Set<NSP_Sub_Client_Contact__c> subClientContactSet = CaseSendSSNVSTeamEmailAction.processSubClientRecordsBasedOnContact(inputRecord, caseContact, errorMap);
                 result.subClientContacts = new List<NSP_Sub_Client_Contact__c>(subClientContactSet);
             }
             else
@@ -132,21 +130,23 @@ public with sharing class CaseSendSSNVSTeamEmailAction
     */
     private static Set<NSP_Sub_Client_Contact__c> processSubClientRecordsBasedOnContact(ActionInputParams inParams, Contact caseContact, Map<String, String> errorMap)
     {
-        List<NSP_Sub_Client_Contact__c> subClientContacts = new List<NSP_Sub_Client_Contact__c>();
-        List<NSP_Sub_Client_Contact__c> eligibleSubClientContacts = new List<NSP_Sub_Client_Contact__c>();
-        Map<Id, NSP_Sub_Client__c> subClientMap = new Map<Id, NSP_Sub_Client__c>();
         Set<NSP_Sub_Client_Contact__c> returnSet = new Set<NSP_Sub_Client_Contact__c>();
 
         if(inParams != null && caseContact != null)
         {
-            // Query active Sub Clients with children
-            subClientMap = CaseSendSSNVSTeamEmailAction.queryActiveSubClients(inParams.caseObj?.AccountId, inParams.accountId);
+            List<NSP_Sub_Client_Contact__c> subClientContacts = new List<NSP_Sub_Client_Contact__c>();
+            Map<Id, NSP_Sub_Client__c> subClientMap = CaseSendSSNVSTeamEmailAction.queryActiveSubClients(
+                inParams.caseObj?.AccountId,
+                inParams.accountId
+                );
 
             // Collect sub client contacts with atleast one sub client contact that is related to case contact
             if (subClientMap != null && !subClientMap.isEmpty())
             {
                 subClientContacts = CaseSendSSNVSTeamEmailAction.collectSubClientContacts(subClientMap?.values(), caseContact, errorMap);
             }
+
+            List<NSP_Sub_Client_Contact__c> eligibleSubClientContacts = new List<NSP_Sub_Client_Contact__c>();
             // Evaluate eligibility and collect reasons
             if (subClientContacts != null && !subClientContacts.isEmpty())
             {
@@ -229,7 +229,7 @@ public with sharing class CaseSendSSNVSTeamEmailAction
     private static String getFormattedEmailBody(String emailBody, NSP_Sub_Client_Contact__c subClientContact, Contact contactObj)
     {
         String formatted = '';
-        if(subClientContact != null && contactObj != null && emailBody != null)
+        if(subClientContact != null && contactObj != null && String.isNotBlank(emailBody))
         {
 
             formatted = '<html><body>';
