@@ -1,7 +1,7 @@
 /**
 * Represents the Focus Item trigger helper which handles all the logic.
 */
-public class NSP_FocusItemTriggerHelper {
+public with sharing class NSP_FocusItemTriggerHelper {
    private NSP_FocusItemTriggerHelper(){} 
    /***********************************************************************
     * @MethodName : beforeInsertDirector
