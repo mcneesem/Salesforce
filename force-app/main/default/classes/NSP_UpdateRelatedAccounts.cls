@@ -6,7 +6,10 @@ public without sharing class NSP_UpdateRelatedAccounts {
 
     // Updates the last updated date on the related accounts(this helps in identifying the account that can be set as inactive).
     public static void updateRelatedAccounts( Set<String> accountIdSet ) {
-        if ( Limits.getFutureCalls() < Limits.getLimitFutureCalls() ) { // prevent LimitExceptions...
+        if ( !System.isFuture() // prevent AsyncExceptions...
+            && Limits.getFutureCalls() < Limits.getLimitFutureCalls() // prevent LimitExceptions...
+            )
+        {
             NSP_UpdateRelatedAccounts.updateRelatedAccountsFuture( accountIdSet );
         }
     }
@@ -42,7 +45,10 @@ public without sharing class NSP_UpdateRelatedAccounts {
 
     // Update Account status to 'Prospecting' once opportunity is added and there are no assets
     public static void updateAccountStatus( Set<String> accountIdSet ) {
-        if ( Limits.getFutureCalls() < Limits.getLimitFutureCalls() ) { // prevent LimitExceptions...
+        if ( !System.isFuture() // prevent AsyncExceptions...
+            && Limits.getFutureCalls() < Limits.getLimitFutureCalls() // prevent LimitExceptions...
+            )
+        {
             NSP_UpdateRelatedAccounts.updateAccountStatusFuture( accountIdSet );
         }
     }

@@ -1067,87 +1067,103 @@ public class NSP_ProjectTasksTriggerHelper {
 
     }
 
-    /**
-    * INSERT: This method update Milestone Complete field on related Milestone and Project Complete field on related Project
-    * @param projectTaskList List of New project.
-    * @return void
-    * STY-00717
-    */
-    public void updateMilestoneAndProjectPercentCompleteOnInsert(List<pse__Project_Task__c> projectTaskList){
+    //
+    // INSERT: This method update Milestone Complete field on related Milestone and Project Complete field on related Project
+    // @param projectTaskList List of New project.
+    // @return void
+    // STY-00717
+    //
+    public void updateMilestoneAndProjectPercentCompleteOnInsert( List<pse__Project_Task__c> projectTaskList ) {
         Set<Id> setOfMilestoneId = new Set<Id>();
         Set<Id> setOfProjectId = new Set<Id>();
-        for(pse__Project_Task__c pTask : projectTaskList){
-            if(pTask.pse__Milestone__c != null){
-                setOfMilestoneId.add(pTask.pse__Milestone__c);
+        for ( pse__Project_Task__c pTask : projectTaskList ) {
+            if ( pTask.pse__Milestone__c != null ) {
+                setOfMilestoneId.add( pTask.pse__Milestone__c );
             }
-            if(pTask.pse__Project__c != null){
-                setOfProjectId.add(pTask.pse__Project__c);
+            if ( pTask.pse__Project__c != null ) {
+                setOfProjectId.add( pTask.pse__Project__c );
             }
         }
-        if(!setOfMilestoneId.isEmpty()){
-            updateMilestonePercentComplete(setOfMilestoneId);
+        if ( !setOfMilestoneId.isEmpty() ) {
+            NSP_ProjectTasksTriggerHelper.updateMilestonePercentComplete( setOfMilestoneId );
         }
-
         //updating values in Project Percent Complete Field
-        if(!setOfProjectId.isEmpty() && !System.isFuture() && !System.isBatch()){
-            updateProjectPercentageComplete(setOfProjectId);
-        }
-    }
-        /**
-    * UPDATE: This method update Milestone Complete field and Project Complete on related Milestone and Project respectively after deletion of Project task
-    * @param projectTaskList List of old project.
-    * @Defect : DF-02180
-    * STORY : STY-00717
-    * @return void
-    *
-    */
-    public void afterDeleteProjectTask(List<pse__Project_Task__c> projectTaskList){
-    Set<Id> setOfMilestoneId = new Set<Id>();
-    Set<Id> projectIdSet = new Set<Id>();
-    for(pse__Project_Task__c pTask : projectTaskList){
-        if(pTask.pse__Milestone__c != null){
-            setOfMilestoneId.add(pTask.pse__Milestone__c);
-        }
-        if(pTask.pse__Project__c != null){
-            projectIdSet.add(pTask.pse__Project__c);
+        if ( !setOfProjectId.isEmpty()
+            && !System.isQueueable()
+            && !System.isFuture()
+            && !System.isBatch()
+            )
+        {
+            NSP_ProjectTasksTriggerHelper.updateProjectPercentageComplete( setOfProjectId );
         }
     }
 
-    if(!setOfMilestoneId.isEmpty()){
-            updateMilestonePercentComplete(setOfMilestoneId);
-        }
-    if(!projectIdSet.isEmpty() && !System.isFuture() && !System.isBatch()){
-            updateProjectPercentageComplete(projectIdSet);
+    //
+    // UPDATE: This method update Milestone Complete field and Project Complete on related Milestone and Project respectively after deletion of Project task
+    // @param projectTaskList List of old project.
+    // @Defect : DF-02180
+    // STORY : STY-00717
+    // @return void
+    //
+    public void afterDeleteProjectTask( List<pse__Project_Task__c> projectTaskList ) {
+        Set<Id> setOfMilestoneId = new Set<Id>();
+        Set<Id> projectIdSet = new Set<Id>();
+        for ( pse__Project_Task__c pTask : projectTaskList ) {
+            if ( pTask.pse__Milestone__c != null ) {
+                setOfMilestoneId.add( pTask.pse__Milestone__c );
             }
+            if ( pTask.pse__Project__c != null ) {
+                projectIdSet.add( pTask.pse__Project__c );
+            }
+        }
+        if ( !setOfMilestoneId.isEmpty() ) {
+            NSP_ProjectTasksTriggerHelper.updateMilestonePercentComplete( setOfMilestoneId );
+        }
+        if ( !projectIdSet.isEmpty()
+            && !System.isQueueable()
+            && !System.isFuture()
+            && !System.isBatch()
+            )
+        {
+            NSP_ProjectTasksTriggerHelper.updateProjectPercentageComplete( projectIdSet );
+        }
     }
-    /**
-    * UPDATE: This method update Milestone Complete field and Project Complete field on related Milestone and Project respectively.
-    * @param projectTaskList List of New project.
-    * @param oldMap Map of Project
-    * @return void
-    * STY-00717
-    */
-    public void updateMilestoneAndProjectPercentCompleteOnUpdate(List<pse__Project_Task__c> projectTaskList, Map<Id, pse__Project_Task__c> oldMap){
+
+    //
+    // UPDATE: This method update Milestone Complete field and Project Complete field on related Milestone and Project respectively.
+    // @param projectTaskList List of New project.
+    // @param oldMap Map of Project
+    // @return void
+    // STY-00717
+    //
+    public void updateMilestoneAndProjectPercentCompleteOnUpdate( List<pse__Project_Task__c> projectTaskList , Map<Id,pse__Project_Task__c> oldMap ) {
         Set<Id> setOfMilestoneId = new Set<Id>();
         Set<Id> setOFProjectId = new Set<Id>();
-        for(pse__Project_Task__c pTask : projectTaskList){
-            if(pTask.NSP_PercentageCompleteFormula__c!=null && !String.isBlank(pTask.pse__Status__c) &&
-                pTask.NSP_PercentageCompleteFormula__c != oldMap.get(pTask.id).NSP_PercentageCompleteFormula__c
-            || (pTask.pse__Status__c != oldMap.get(pTask.id).pse__Status__c)){
-
-                if(String.isNotBlank(pTask.pse__Milestone__c)){
-                    setOfMilestoneId.add(pTask.pse__Milestone__c);
+        for ( pse__Project_Task__c pTask : projectTaskList ) {
+            if ( pTask.NSP_PercentageCompleteFormula__c != null
+                && !String.isBlank( pTask.pse__Status__c )
+                && pTask.NSP_PercentageCompleteFormula__c != oldMap.get( pTask.Id ).NSP_PercentageCompleteFormula__c
+                || ( pTask.pse__Status__c != oldMap.get( pTask.id ).pse__Status__c )
+                )
+            {
+                if ( String.isNotBlank( pTask.pse__Milestone__c ) ) {
+                    setOfMilestoneId.add( pTask.pse__Milestone__c );
                 }
-                    if(String.isNotBlank(pTask.pse__Project__c)){
-                    setOFProjectId.add(pTask.pse__Project__c);
+                if ( String.isNotBlank( pTask.pse__Project__c ) ) {
+                    setOFProjectId.add( pTask.pse__Project__c );
                 }
             }
         }
-        if(!setOfMilestoneId.isEmpty()){
-            updateMilestonePercentComplete(setOfMilestoneId);
+        if ( !setOfMilestoneId.isEmpty() ) {
+            NSP_ProjectTasksTriggerHelper.updateMilestonePercentComplete( setOfMilestoneId );
         }
-        if(!setOfProjectId.isEmpty() && !System.isFuture() && !System.isBatch()){
-        updateProjectPercentageComplete(setOfProjectId);
+        if ( !setOfProjectId.isEmpty()
+            && !System.isQueueable()
+            && !System.isFuture()
+            && !System.isBatch()
+            )
+        {
+            NSP_ProjectTasksTriggerHelper.updateProjectPercentageComplete( setOfProjectId );
         }
     }
 
@@ -1254,14 +1270,14 @@ public class NSP_ProjectTasksTriggerHelper {
                 List<Database.SaveResult> results = Database.update( records , false );
                 NSP_ErrorLogHandler.logResults(
                     NSP_ProjectTasksTriggerHelper.class.getName() ,
-                    'updateProjectPercentageComplete:update' ,
+                    'updateProjectPercentageCompleteFuture:update' ,
                     results
                 );
             }
         } catch ( Exception e ) {
             NSP_ProjectTasksTriggerHelper.handleException(
                 e ,
-                'updateProjectPercentageComplete'
+                'updateProjectPercentageCompleteFuture'
             );
         }
     }
@@ -1447,13 +1463,24 @@ public class NSP_ProjectTasksTriggerHelper {
         if ( !mapOfProjectTaskAndProject.isEmpty() && !listOfAccountId.isEmpty() ) {
             onSubmitTaskCompletion( mapOfProjectTaskAndProject , listOfAccountId );
         }
-        if(!projectTaskidsChangedOwner.isEmpty() && !System.isFuture() && !System.isBatch()){
-            Map<String, Object> mapInputParams = new Map<String, Object>{
+        if ( !projectTaskidsChangedOwner.isEmpty() && !System.isFuture() && !System.isBatch() ) {
+            Map<String,Object> mapInputParams = new Map<String,Object>{
                 'projectTaskidsChangedOwner' => projectTaskidsChangedOwner
             };
             List<NSP_ProjectTaskQueueEvent__e> lstTaskQueueEvent = new List<NSP_ProjectTaskQueueEvent__e>();
-            lstTaskQueueEvent.add(new NSP_ProjectTaskQueueEvent__e(NSP_Input_Parameters__c = JSON.serialize(mapInputParams), NSP_MethodName__c = 'createPTAIfOwnerIsChanged', NSP_UserId__c = UserInfo.getUserId()));
-            List<Database.SaveResult> saveResults = EventBus.publish(lstTaskQueueEvent);
+            lstTaskQueueEvent.add(
+                new NSP_ProjectTaskQueueEvent__e(
+                    NSP_Input_Parameters__c=JSON.serialize( mapInputParams ) ,
+                    NSP_MethodName__c='createPTAIfOwnerIsChanged' ,
+                    NSP_UserId__c=UserInfo.getUserId()
+                )
+            );
+            List<Database.SaveResult> saveResults = EventBus.publish( lstTaskQueueEvent );
+            NSP_ErrorLogHandler.logResults(
+                NSP_ProjectTasksTriggerHelper.class.getName() ,
+                'afterUpdateTaskfilters:publish' ,
+                saveResults
+            );
         }
         if ( !sProjectTasksIds.isEmpty()
             && NotificationDeliverabilityController.IsEnabledOutbound
@@ -2568,49 +2595,69 @@ public class NSP_ProjectTasksTriggerHelper {
             }
         }
         //check if woListToUpdate is not empty
-        if( !woListToUpdate.isEmpty() && !System.isFuture() ){
-            scheduleWorkOrderAndSA( woListToUpdate , mapWoIdToPt, mapUserIdsToServiceResource );
+        if ( !woListToUpdate.isEmpty()
+            && !System.isQueueable()
+            && !System.isFuture()
+            )
+        {
+            NSP_ProjectTasksTriggerHelper.scheduleWorkOrderAndSA(
+                woListToUpdate ,
+                mapWoIdToPt ,
+                mapUserIdsToServiceResource
+            );
         }
     }
 
-    /***********************************************************************************************
-    * MethodName: scheduleWorkOrderAndSA
-    * Description : Schedule WO and SA when Project task status is changed to Scheduled
-    * Params: List<WorkOrder> woListToUpdate
-    * Params: Map<Id,pse__Project_Task__c> mapWoIdToPt
-    * Params: Map<Id,Id> mapUserIdsToServiceResource
-    * STY-03891
-    * ********************************************************************************************/
-    private static void scheduleWorkOrderAndSA(List<WorkOrder> woListToUpdate, Map<Id,pse__Project_Task__c> mapWoIdToPt, Map<Id,Id> mapUserIdsToServiceResource ){
+    //
+    // MethodName: scheduleWorkOrderAndSA
+    // Description : Schedule WO and SA when Project task status is changed to Scheduled
+    // Params: List<WorkOrder> woListToUpdate
+    // Params: Map<Id,pse__Project_Task__c> mapWoIdToPt
+    // Params: Map<Id,Id> mapUserIdsToServiceResource
+    // STY-03891
+    //
+    private static void scheduleWorkOrderAndSA(
+        List<WorkOrder> woListToUpdate ,
+        Map<Id,pse__Project_Task__c> mapWoIdToPt ,
+        Map<Id,Id> mapUserIdsToServiceResource
+        )
+    {
         List<ServiceAppointment> saListToUpdate = new List<ServiceAppointment>();
         List<AssignedResource> assgnResToCreate = new List<AssignedResource>();
         List<sObject> recordsToUpdate = new List<sObject>();
         //update WorkOrder Status and Sync other fields
-        for( WorkOrder eachWo : woListToUpdate){
-            eachWo.StartDate = mapWoIdToPt.get( eachWo.Id).pse__Start_Date_Time__c;
-            eachWo.EndDate = mapWoIdToPt.get( eachWo.Id).pse__End_Date_Time__c;
+        for ( WorkOrder eachWo : woListToUpdate ) {
+            eachWo.StartDate = mapWoIdToPt.get( eachWo.Id ).pse__Start_Date_Time__c;
+            eachWo.EndDate = mapWoIdToPt.get( eachWo.Id ).pse__End_Date_Time__c;
             eachWo.Status = 'Scheduled';
-            // eachWo.OwnerId = mapWoIdToPt.get( eachWo.Id).OwnerId;
         }
         //update Service Appointment and sync other fields
-        for( ServiceAppointment eachSa : [ SELECT Id,Status,SchedStartTime,SchedEndTime,OwnerId ,ParentRecordId
-                                            FROM ServiceAppointment
-                                            WHERE ParentRecordId IN: mapWoIdToPt.keySet() ]){
-
-                                                eachSa.SchedStartTime = mapWoIdToPt.get( eachSa.ParentRecordId).pse__Start_Date_Time__c;
-                                                eachSa.SchedEndTime = mapWoIdToPt.get( eachSa.ParentRecordId).pse__End_Date_Time__c;
-                                                eachSa.Status = 'Scheduled';
-                                                // eachSa.OwnerId =  mapWoIdToPt.get( eachSa.ParentRecordId).OwnerId;
-                                                saListToUpdate.add(eachSa);
-                                                //Create new Assigned Resource Rec
-                                                    AssignedResource newAssgnRes = new AssignedResource();
-                                                newAssgnRes.ServiceResourceId = mapUserIdsToServiceResource.get( mapWoIdToPt.get( eachSa.ParentRecordId).OwnerId);
-                                                newAssgnRes.ServiceAppointmentId = eachSa.Id;
-                                                assgnResToCreate.add(newAssgnRes);
+        for ( ServiceAppointment eachSa : [
+                    SELECT
+                        Id ,
+                        Status ,
+                        SchedStartTime ,
+                        SchedEndTime ,
+                        OwnerId ,
+                        ParentRecordId
+                    FROM ServiceAppointment
+                    WHERE ( ParentRecordId IN :mapWoIdToPt.keySet() )
+                ]
+            )
+        {
+            eachSa.SchedStartTime = mapWoIdToPt.get( eachSa.ParentRecordId ).pse__Start_Date_Time__c;
+            eachSa.SchedEndTime = mapWoIdToPt.get( eachSa.ParentRecordId ).pse__End_Date_Time__c;
+            eachSa.Status = 'Scheduled';
+            saListToUpdate.add( eachSa );
+            //Create new Assigned Resource Rec
+            AssignedResource newAssgnRes = new AssignedResource();
+            newAssgnRes.ServiceResourceId = mapUserIdsToServiceResource.get( mapWoIdToPt.get( eachSa.ParentRecordId ).OwnerId );
+            newAssgnRes.ServiceAppointmentId = eachSa.Id;
+            assgnResToCreate.add( newAssgnRes );
         }
         //update WO And SA
-        recordsToUpdate.addAll(woListToUpdate);
-        recordsToUpdate.addAll(saListToUpdate);
+        recordsToUpdate.addAll( woListToUpdate );
+        recordsToUpdate.addAll( saListToUpdate );
         List<Database.SaveResult> results1 = Database.update( recordsToUpdate , false );
         NSP_ErrorLogHandler.logResults(
             NSP_ProjectTasksTriggerHelper.class.getName() ,

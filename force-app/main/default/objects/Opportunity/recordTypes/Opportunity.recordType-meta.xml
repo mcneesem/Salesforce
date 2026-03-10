@@ -2327,6 +2327,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Central 5</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Corporate</fullName>
             <default>false</default>
         </values>
@@ -2380,6 +2384,10 @@
         </values>
         <values>
             <fullName>Northeast 4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Northeast 5</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4774,21 +4782,6 @@
         </values>
         <values>
             <fullName>Workforce Optimization</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Product_Offering__c</picklist>
-        <values>
-            <fullName>HR360</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HRCore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HRScale</fullName>
             <default>false</default>
         </values>
     </picklistValues>

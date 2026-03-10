@@ -3638,9 +3638,6 @@
                         <valueListItems>
                             <value>Anticipated_Return_To_Work_Date__c</value>
                         </valueListItems>
-                        <valueListItems>
-                            <value>Processed_Date__c</value>
-                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>

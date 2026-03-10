@@ -5,5 +5,5 @@
     <mayForecastManagerShare>false</mayForecastManagerShare>
     <name>4301 Nashville 1 Leader</name>
     <opportunityAccessLevel>Edit</opportunityAccessLevel>
-    <parentRole>Eastern_1_Leader</parentRole>
+    <parentRole>Northeast_5_Leader</parentRole>
 </Role>

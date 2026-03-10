@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>64.0</apiVersion>
+    <apiVersion>65.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Assign_Event_Info_to_varEvent</name>
@@ -33,6 +33,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>$Record.NSP_Status__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varEvent.StartDateTime</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.StartDateTime</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -142,10 +149,26 @@
     </start>
     <status>Draft</status>
     <subflows>
+        <name>Event_Subflow_Send_Discovery_Call_Email</name>
+        <label>Event - Subflow - Send Discovery Call Email</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <flowName>Event_Subflow_Send_Discovery_Call_Email</flowName>
+        <inputAssignments>
+            <name>varEvent</name>
+            <value>
+                <elementReference>varEvent</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
         <name>Event_Subflow_Update_Related_to_Account_Opportunity_or_Lead</name>
         <label>Event - Subflow - Update Related to Account Opportunity or Lead</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <connector>
+            <targetReference>Event_Subflow_Send_Discovery_Call_Email</targetReference>
+        </connector>
         <flowName>Event_Subflow_Update_Related_to_Account_Opportunity_or_Lead</flowName>
         <inputAssignments>
             <name>isDiscoveryCallCreated</name>

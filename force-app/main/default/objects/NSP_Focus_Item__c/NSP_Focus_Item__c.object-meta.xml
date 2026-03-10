@@ -149,7 +149,7 @@
     <enableHistory>true</enableHistory>
     <enableLicensing>false</enableLicensing>
     <enableReports>false</enableReports>
-    <enableSearch>false</enableSearch>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ControlledByParent</externalSharingModel>
@@ -162,7 +162,14 @@
     </nameField>
     <pluralLabel>Focus Items</pluralLabel>
     <recordTypeTrackHistory>false</recordTypeTrackHistory>
-    <searchLayouts></searchLayouts>
+   <searchLayouts>
+        <searchResultsAdditionalFields>Item_Owner__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>NSP_Account_Group__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Focus_Item__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>NSP_Detail__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Details__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>NSP_Status__c</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

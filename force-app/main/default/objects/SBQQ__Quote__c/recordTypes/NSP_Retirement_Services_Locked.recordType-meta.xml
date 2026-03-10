@@ -1079,4 +1079,91 @@
             <default>false</default>
         </values>
     </picklistValues>
+    <picklistValues>
+        <picklist>Sub_Product_Attribute__c</picklist>
+        <values>
+            <fullName>Choice Customized</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Choice Merger</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Choice Startup</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Compensation Services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Health %26 Welfare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NSPK Association</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NSPK Association w%2F merger</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NSPK MM Merger %3C150</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NSPK MM Merger %3E501 Ees</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NSPK MM Merger 150-300 Ees</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NSPK MM Merger 301-500 Ees</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NSPK MM Startup %3C150</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NSPK MM Startup %3E501 Ees</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NSPK MM Startup 150-300 Ees</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NSPK MM Startup 301-500 Ees</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NSPK Merger</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NSPK Startup</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Property %26 Casualty</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Revolution</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WO Customized</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WO Customized MM</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
 </RecordType>
