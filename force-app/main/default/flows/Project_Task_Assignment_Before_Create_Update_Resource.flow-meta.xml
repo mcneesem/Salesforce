@@ -113,7 +113,16 @@ AZD-520750 : HRCore Client Engagement Project Automation</description>
         <connector>
             <targetReference>Valid_Project</targetReference>
         </connector>
-        <filterFormula>AND( NOT(ISBLANK({!$Record.pse__Project_Task__r.pse__Project__c})) ,OR ( ({!$Record.pse__Project_Task__r.Template_Name__c} = &apos;WX Benefits Renewal Project&apos;),({!$Record.pse__Project_Task__r.Template_Name__c} = &apos;HRCore Client Engagement Y1&apos;), ({!$Record.pse__Project_Task__r.Template_Name__c} = &apos;HRCore Client Engagement Y2+&apos;)) , ISBLANK({!$Record.pse__Resource__c}))</filterFormula>
+        <filterFormula>AND(
+  NOT( ISBLANK( {!$Record.pse__Project_Task__c} ) ) ,
+  NOT( ISBLANK( {!$Record.pse__Project_Task__r.pse__Project__c} ) ) ,
+  OR(
+    ( {!$Record.pse__Project_Task__r.Template_Name__c} = &apos;WX Benefits Renewal Project&apos; ) ,
+    ( {!$Record.pse__Project_Task__r.Template_Name__c} = &apos;HRCore Client Engagement Y1&apos; ) ,
+    ( {!$Record.pse__Project_Task__r.Template_Name__c} = &apos;HRCore Client Engagement Y2+&apos; )
+  ) ,
+  ISBLANK( {!$Record.pse__Resource__c} )
+)</filterFormula>
         <object>pse__Project_Task_Assignment__c</object>
         <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>

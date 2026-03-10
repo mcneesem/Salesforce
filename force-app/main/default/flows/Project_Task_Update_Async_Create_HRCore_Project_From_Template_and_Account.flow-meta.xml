@@ -35,94 +35,6 @@
             <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
-    <assignments>
-        <name>Set_Fault_Element_Get_HRCore_Project</name>
-        <label>Set Fault Element : Get_HRCore_Project</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>faultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Get_HRCore_Project</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <constants>
-        <description>Default - WX Account Group</description>
-        <name>accountGroup</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>WX Account Group</stringValue>
-        </value>
-    </constants>
-    <constants>
-        <description>Default - WX/WA Customer Success Specialist</description>
-        <name>accountTeamRole</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>WX/WA Customer Success Specialist</stringValue>
-        </value>
-    </constants>
-    <constants>
-        <description>Default - WX_WA Record Type</description>
-        <name>assetRecordType</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>NSP_Asset_Product</stringValue>
-        </value>
-    </constants>
-    <constants>
-        <description>Default - Business Team (1-30 EE&apos;s)</description>
-        <name>productSegment</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>Business Team (1-30 EE&apos;s)</stringValue>
-        </value>
-    </constants>
-    <constants>
-        <description>Project Task - Quarterly Client Meeting 4</description>
-        <name>ptQuarterlyClientMeeting4</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>Quarterly Client Meeting 4</stringValue>
-        </value>
-    </constants>
-    <constants>
-        <description>Project Task - Transition to Support</description>
-        <name>ptTransitiontoSupport</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>Transition to Support</stringValue>
-        </value>
-    </constants>
-    <constants>
-        <description>Template - HRCore Client Engagement Y1</description>
-        <name>templateHRCoreY1</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>HRCore Client Engagement Y1</stringValue>
-        </value>
-    </constants>
-    <constants>
-        <description>Template - HRCore Client Engagement Y2+</description>
-        <name>templateHRCoreY2</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>HRCore Client Engagement Y2+</stringValue>
-        </value>
-    </constants>
-    <constants>
-        <name>templateiSolvedHCM</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>iSolved HCM Implementation</stringValue>
-        </value>
-    </constants>
     <decisions>
         <description>Proceed to create project if valid asset record is found</description>
         <name>Valid_Asset</name>
@@ -158,45 +70,15 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>f_ProjectTemplate</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>f_ProjectTemplate</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_HRCore_Project</targetReference>
-            </connector>
-            <label>Yes : valid Template</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <description>Create New &quot;WX/WA New Tax IMPL&quot; Project if  project is already not exists.</description>
-        <name>Validate_to_Create_New_Project</name>
-        <label>Validate to Create New Project?</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Yes_Create_New_Project</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_HRCore_Project</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
                 <targetReference>Get_Asset_WX_WA</targetReference>
             </connector>
-            <label>Yes : Create New Project</label>
+            <label>Yes : valid Template</label>
         </rules>
     </decisions>
     <decisions>
@@ -252,16 +134,16 @@ If &quot;WX Account Group&quot; is exists and triggering account is Primary Memb
         <dataType>String</dataType>
         <expression>IF(
   AND(
-    {!$Record.Name} = {!ptTransitiontoSupport},
-    {!$Record.Template_Name_Formula__c} = {!templateiSolvedHCM}
+    {!$Record.Name} = &quot;Transition to Support&quot;,
+    {!$Record.Template_Name_Formula__c} = &quot;iSolved HCM Implementation&quot;
   ),
-  {!templateHRCoreY1},
+  &quot;HRCore Client Engagement Y1&quot;,
   IF(
     AND(
-      {!$Record.Name} = {!ptQuarterlyClientMeeting4},
-      {!$Record.Template_Name_Formula__c} = {!templateHRCoreY1}
+      {!$Record.Name} = &quot;Quarterly Client Meeting 4&quot;,
+      OR ({!$Record.Template_Name_Formula__c} = &quot;HRCore Client Engagement Y1&quot; , {!$Record.Template_Name_Formula__c} = &quot;HRCore Client Engagement Y2+&quot; )
     ),
-   {!templateHRCoreY2},
+   &quot;HRCore Client Engagement Y2+&quot;,
     &quot;&quot;
   )
 )</expression>
@@ -312,7 +194,7 @@ If &quot;WX Account Group&quot; is exists and triggering account is Primary Memb
             <field>NSP_Type__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>accountGroup</elementReference>
+                <stringValue>WX Account Group</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -341,14 +223,14 @@ If &quot;WX Account Group&quot; is exists and triggering account is Primary Memb
             <field>RecordTypeName__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>assetRecordType</elementReference>
+                <stringValue>NSP_Asset_Product</stringValue>
             </value>
         </filters>
         <filters>
             <field>NSP_Product_Segment__c</field>
             <operator>NotEqualTo</operator>
             <value>
-                <elementReference>productSegment</elementReference>
+                <stringValue>Business Team (1-30 EE&apos;s)</stringValue>
             </value>
         </filters>
         <filters>
@@ -364,51 +246,10 @@ If &quot;WX Account Group&quot; is exists and triggering account is Primary Memb
         <queriedFields>NSP_Product_Segment__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordLookups>
-        <description>Check to see if &quot;HRCore Client Engagement Y1&quot; or &quot;HRCore Client Engagement Y2+&quot; Project is already created</description>
-        <name>Get_HRCore_Project</name>
-        <label>Get HRCore Project</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Validate_to_Create_New_Project</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Set_Fault_Element_Get_HRCore_Project</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>pse__Account__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$Record.NSP_Account_Id__c</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>pse__Is_Template__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </filters>
-        <filters>
-            <field>TemplateName__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>f_ProjectTemplate</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>pse__Proj__c</object>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>Name</queriedFields>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <filterLogic>(1 AND 2 AND 3 AND 4 AND 5 AND ( (6 AND 7) OR (8 AND 9) ))</filterLogic>
+        <filterLogic>(1 AND 2 AND 3 AND 4 AND 5 AND ( (6 AND 7) OR (8 AND 9) OR (10 AND 11) ) )</filterLogic>
         <filters>
             <field>pse__Status__c</field>
             <operator>IsChanged</operator>
@@ -472,6 +313,20 @@ If &quot;WX Account Group&quot; is exists and triggering account is Primary Memb
                 <stringValue>iSolved HCM Implementation</stringValue>
             </value>
         </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Quarterly Client Meeting 4</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Template_Name_Formula__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>HRCore Client Engagement Y2+</stringValue>
+            </value>
+        </filters>
         <object>pse__Project_Task__c</object>
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
@@ -498,7 +353,7 @@ If &quot;WX Account Group&quot; is exists and triggering account is Primary Memb
         <inputAssignments>
             <name>assignRole</name>
             <value>
-                <elementReference>accountTeamRole</elementReference>
+                <stringValue>WX/WA Customer Success Specialist</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
