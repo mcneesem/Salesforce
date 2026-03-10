@@ -16,8 +16,8 @@
         </assignmentItems>
     </assignments>
     <environments>Default</environments>
-    <interviewLabel>Subscription - Before Save - Set Promo Termination Date {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Subscription - Before Save - Set Promo Termination Date</label>
+    <interviewLabel>Subscription - Before Create - Set Promo Termination Date {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Subscription - Before Create - Set Promo Termination Date</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>

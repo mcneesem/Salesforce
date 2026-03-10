@@ -25,8 +25,8 @@
     1
 ) - 1</expression>
     </formulas>
-    <interviewLabel>Order Product - Before Save - Set Termination Date {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Order Product - Before Save - Set Promo Termination Date</label>
+    <interviewLabel>Order Product - Before Update - Set Promo Termination Date {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Order Product - Before Update - Set Promo Termination Date</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
