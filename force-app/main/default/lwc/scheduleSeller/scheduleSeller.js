@@ -2,7 +2,7 @@ import { LightningElement , api , wire } from 'lwc';
 import getAggregateCountsMatrix from '@salesforce/apex/UserAvailabilityService.getAggregateCountsMatrix';
 import getBusinessDates from '@salesforce/apex/UserAvailabilityService.getBusinessDates';
 import getTimeBlocks from '@salesforce/apex/UserAvailabilityService.getTimeBlocks';
-import getIsAdmin from '@salesforce/apex/UserAvailabilityService.getIsAdmin';
+import isScheduleSellerAdmin from '@salesforce/apex/UserAvailabilityService.isScheduleSellerAdmin';
 import { NavigationMixin } from 'lightning/navigation';
 import { FlowNavigationNextEvent } from 'lightning/flowSupport';
 
@@ -69,16 +69,13 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
                         //
 
                         const countVal = counts[colIndex];
-                        const hasZero = countVal === 0;
-                        let isDisabled = false;
-                        if ( !this.isAdmin ) {
+                        // default Button disabled when zero availability
+                        let isDisabled = ( countVal === 0 );
+                        if ( !isDisabled && !this.isAdmin ) {
                             const startRounded = new Date(startUTCDate.getTime());
                             startRounded.setUTCSeconds(0, 0);
                             // Enforce 24-hour restriction for non-admins and disable when count is zero
-                            isDisabled = (startRounded < cutoffUtc) || hasZero;
-                        } else {
-                            // Button disabled when zero availability
-                            isDisabled = hasZero;
+                            isDisabled = ( startRounded < cutoffUtc );
                         }
 
                         return {
@@ -177,7 +174,7 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
     }
 
     // Admin flag
-    @wire(getIsAdmin)
+    @wire(isScheduleSellerAdmin)
     wiredIsAdmin({ data, error }) {
         if (data !== undefined) {
             this.isAdmin = Boolean(data);
@@ -197,11 +194,7 @@ export default class ScheduleSeller extends NavigationMixin(LightningElement) {
         const dataStart = event.currentTarget.dataset.start;
         const dataEnd = event.currentTarget.dataset.end;
         const isDisabled = event.currentTarget.dataset.disabled === 'true';
-        // Block selection when cell is disabled (non-admin rule)
-        if ( isDisabled ) {
-            return;
-        }
-        if ( dataStart && dataEnd ) {
+        if ( !isDisabled && dataStart && dataEnd ) {
             this.startDateTime = dataStart;
             this.endDateTime = dataEnd;
             // Move Flow to next screen
