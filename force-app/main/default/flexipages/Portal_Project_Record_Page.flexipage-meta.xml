@@ -66,6 +66,16 @@
                 <identifier>RecordNameField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Label__c</fieldItem>
+                <identifier>RecordLabel_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-24b54787-cd32-4783-9349-9f01c35952de</name>
         <type>Facet</type>
     </flexiPageRegions>

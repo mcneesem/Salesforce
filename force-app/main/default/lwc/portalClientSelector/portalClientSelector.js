@@ -1,26 +1,43 @@
 import { LightningElement , wire } from 'lwc';
 import { getRecords } from "lightning/uiRecordApi";
+import getPortalClients from "@salesforce/apex/PortalClientSelector.getPortalClients";
 import ID_FIELD from "@salesforce/schema/Portal_Client__c.Id";
 import NAME_FIELD from "@salesforce/schema/Portal_Client__c.Name";
 import CLIENT_NUMBER_FIELD from "@salesforce/schema/Portal_Client__c.Client_Number__c";
 
 export default class PortalClientSelector extends LightningElement {
+
+    parameterObject;
+    clients = [];
+    @wire(getPortalClients , {})
+    wiredPortalClients( { error , data } ) {
+        if ( data ) {
+            this.clients = data;
+            this.parameterObject = [];
+            this.clients.forEach(
+                ( client ) => {
+                    this.parameterObject.push(
+                        {
+                            recordIds: [ client.Id ] ,
+                            fields: [
+                                ID_FIELD ,
+                                NAME_FIELD ,
+                                CLIENT_NUMBER_FIELD ,
+                            ] ,
+                        }
+                    );
+                }
+            );
+        } else if ( error ) {
+            this.clients = undefined;
+            this.parameterObject = undefined;
+        }
+    }
+
     recordId;
     error;
     records;
-    @wire(getRecords, {
-        records: [
-            {
-                recordIds : [
-                ] ,
-                fields : [
-                    ID_FIELD ,
-                    NAME_FIELD ,
-                    CLIENT_NUMBER_FIELD ,
-                ] ,
-            } ,
-        ] ,
-    })
+    @wire(getRecords, { records: "$parameterObject" })
     recordsInfo({ error, data }) {
         if ( data ) {
             let local = [];

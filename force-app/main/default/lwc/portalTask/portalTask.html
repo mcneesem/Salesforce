@@ -2,7 +2,7 @@
     <template lwc:if={record}>
         <lightning-layout multiple-rows>
             <lightning-layout-item size="12" padding="around-small">
-                <lightning-layout onclick={handleClick} onkeydown={handleKeyDown}>
+                <lightning-layout onclick={handleClickAccordion} onkeydown={handleKeyDown}>
                     <lightning-layout-item size={titleSize}>
                         <template lwc:if={isParent}>
                             <template lwc:if={hasBody}>
@@ -47,7 +47,7 @@
                             {record.fields.Action__c.value}
                         </template>
                     </lightning-layout-item>
-                    <lightning-layout-item size="1">
+                    <lightning-layout-item size="1" onclick={handleClickFiles} onkeydown={handleKeyDown}>
                         <lightning-icon icon-name="utility:form" size="xx-small" alternative-text="Uploaded Files"></lightning-icon>&nbsp;({totalRelatedFiles})
                     </lightning-layout-item>
                     <lightning-layout-item size="1">
@@ -67,7 +67,7 @@
                             PENDING GUIDANCE
                         </template>
                         <template lwc:if={isParent}>
-                            <c-portal-task-list variant="child" record-id={record.fields.Id.value}></c-portal-task-list>
+                            <c-portal-task-list variant="child" parent-record-id={record.fields.Id.value}></c-portal-task-list>
                         </template>
                     </lightning-layout-item>
                 </template>

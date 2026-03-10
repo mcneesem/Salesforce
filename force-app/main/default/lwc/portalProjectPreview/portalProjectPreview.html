@@ -3,7 +3,7 @@
         error: {error}<br/>
     </template>
     <template lwc:if={record}>
-        PENDING C-PORTAL-PROJECT
+        <c-portal-project record={record}></c-portal-project>
     </template>
     <template lwc:else>
         <template lwc:if={recordId}>

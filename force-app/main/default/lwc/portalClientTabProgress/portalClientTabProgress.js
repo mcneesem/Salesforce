@@ -1,12 +1,6 @@
-import { LightningElement , api } from 'lwc';
+import { LightningElement } from 'lwc';
 
 export default class PortalClientTabProgress extends LightningElement {
-    @api recordId;
-    get showMeetingCalendar() {
-        return !this.showMeetingList;
-    }
-    get showMeetingList() {
-        return true;
-    }
+    // DEPRECATED (PortalClientTabProgress)
 }
 //

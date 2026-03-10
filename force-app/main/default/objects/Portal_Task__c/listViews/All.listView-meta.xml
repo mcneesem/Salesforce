@@ -5,6 +5,7 @@
     <columns>Parent_Portal_Task__c</columns>
     <columns>Portal_Project__c</columns>
     <columns>Type__c</columns>
+    <columns>Rank__c</columns>
     <columns>Due_Date__c</columns>
     <columns>Action__c</columns>
     <columns>Status__c</columns>
