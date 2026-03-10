@@ -1218,8 +1218,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Interest_Product_Offering__c</fieldItem>
-                <identifier>RecordInterest_Product_Offering_cField3</identifier>
+                <fieldItem>Record.Marketed_Solution__c</fieldItem>
+                <identifier>RecordMarketed_Solution_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1842,8 +1842,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Interest_Product_Offering__c</fieldItem>
-                <identifier>RecordInterest_Product_Offering_cField</identifier>
+                <fieldItem>Record.Marketed_Solution__c</fieldItem>
+                <identifier>RecordMarketed_Solution_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-a510c052-db09-44d1-b0e3-2e3fa93d0cba</name>

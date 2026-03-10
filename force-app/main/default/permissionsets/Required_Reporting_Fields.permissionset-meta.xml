@@ -1028,6 +1028,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Lead.Marketed_Solution__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Lead.Marketing_Priority__c</field>
         <readable>true</readable>
     </fieldPermissions>
