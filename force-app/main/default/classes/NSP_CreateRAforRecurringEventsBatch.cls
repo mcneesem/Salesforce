@@ -1,4 +1,4 @@
-public without sharing class NSP_CreateRAforRecurringEventsBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<SObject> , Database.Stateful {
+public with sharing class NSP_CreateRAforRecurringEventsBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<SObject> , Database.Stateful {
     // test w/ NSP_CreateRAforRecurringEventsBatchTest (93%)
 
     //
@@ -78,8 +78,8 @@ public without sharing class NSP_CreateRAforRecurringEventsBatch implements ISel
                         )
                     )
                     AND ( RecordTypeId = :NSP_CreateRAforRecurringEventsBatch.eventRecordTypeId )
-                    AND ( CreatedDate <= :NSP_CreateRAforRecurringEventsBatch.createdDateTime )
-                    AND ( CreatedDate > :NSP_CreateRAforRecurringEventsBatch.createdDateTime.addDays( -1 ) )
+                    AND ( CreatedDate <= :NSP_CreateRAforRecurringEventsBatch.cutoffDate )
+                    AND ( CreatedDate > :NSP_CreateRAforRecurringEventsBatch.cutoffDate.addDays( -1 ) )
             ]
         );
     }
@@ -219,12 +219,16 @@ public without sharing class NSP_CreateRAforRecurringEventsBatch implements ISel
         private set;
     }
 
-    private static DateTime createdDateTime {
+    private static DateTime cutoffDate {
         private get {
-            if ( createdDateTime == null ) {
-                createdDateTime = System.now().addDays( -1 * NSP_CreateRAforRecurringEventsBatch.soqlDaysLimit );
+            if ( cutoffDate == null ) {
+                DateTime local = System.now();
+                if ( NSP_CreateRAforRecurringEventsBatch.soqlDaysLimit != null ) {
+                    local = local.addDays( -1 * NSP_CreateRAforRecurringEventsBatch.soqlDaysLimit );
+                }
+                cutoffDate = local;
             }
-            return createdDateTime;
+            return cutoffDate;
         }
         private set;
     }
