@@ -554,7 +554,7 @@
     </formulas>
     <interviewLabel>Schedule Seller {!$Flow.CurrentDateTime}</interviewLabel>
     <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
-    <label>Schedule Demo</label>
+    <label>Schedule Seller</label>
     <loops>
         <name>Loop_Users</name>
         <label>Loop Users</label>
