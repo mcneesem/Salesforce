@@ -61,35 +61,18 @@ public with sharing class UserAvailabilityService {
     private static List<Event> getTimeZoneBlocks( String skill, String timeZone ) {
         List<Event> timeBlocks = new List<Event>();
         Map<String,List<Event>> timeZoneBlocks = new Map<String,List<Event>>{
-            'America/New_York'=> UserAvailabilityService.getTimeBlocksPrimary( 13 ) ,
-            'America/Chicago' => UserAvailabilityService.getTimeBlocksPrimary( 14 ) ,
+            'America/New_York'=> UserAvailabilityService.getTimeBlocksPrimary( 13, skill) ,
+            'America/Chicago' => UserAvailabilityService.getTimeBlocksPrimary( 14, skill ) ,
             'America/Denver'=> UserAvailabilityService.getTimeBlocksAlternate( 15 ) ,
-            'America/Los_Angeles'=> UserAvailabilityService.getTimeBlocksPrimary( 16 )
-        };
-        Map<String,List<Event>> timeZoneBlocksMiddleMarket = new Map<String,List<Event>>{
-            'America/New_York'=> UserAvailabilityService.getTimeBlocksPrimaryMiddleMarket( 13 ) ,
-            'America/Chicago' => UserAvailabilityService.getTimeBlocksPrimaryMiddleMarket( 14 ) ,
-            'America/Denver'=> UserAvailabilityService.getTimeBlocksAlternate( 15 ) ,
-            'America/Los_Angeles'=> UserAvailabilityService.getTimeBlocksPrimaryMiddleMarket( 16 )
-        };
-        Map<String,Map<String,List<Event>>> skillTimeZoneMap = new Map<String,Map<String,List<Event>>>{
-            'Schedule_Seller_HR360' => timeZoneBlocks ,
-            'Schedule_Seller_HRCore' => timeZoneBlocks ,
-            'Schedule_Seller_HRScale' => timeZoneBlocks ,
-            'Schedule_Seller_HR360_Middle_Market' => timeZoneBlocksMiddleMarket ,
-            'Schedule_Seller_HRCore_Middle_Market' => timeZoneBlocksMiddleMarket ,
-            'Schedule_Seller_HRScale_Middle_Market' => timeZoneBlocksMiddleMarket
+            'America/Los_Angeles'=> UserAvailabilityService.getTimeBlocksPrimary( 16, skill )
         };
         //
-        if ( String.isNotBlank( skill )
-            && String.isNotBlank( timeZone )
-            && skillTimeZoneMap.containsKey( skill )
-            && ( skillTimeZoneMap.get( skill ) != null )
-            && skillTimeZoneMap.get( skill ).containsKey( timeZone )
-            && ( skillTimeZoneMap.get( skill ).get( timeZone ) != null )
+        if ( String.isNotBlank( timeZone )
+            && timeZoneBlocks.containsKey( timeZone )
+            && ( timeZoneBlocks.get( timeZone ) != null )
             )
         {
-            timeBlocks = skillTimeZoneMap.get( skill ).get( timeZone );
+            timeBlocks = timeZoneBlocks.get( timeZone );
         }
         return timeBlocks;
     }
@@ -149,7 +132,7 @@ public with sharing class UserAvailabilityService {
         return response;
     }
 
-    public static List<Event> getTimeBlocksPrimary( Integer offset ) {
+    public static List<Event> getTimeBlocksPrimary( Integer offset, String skill ) {
         if ( offset == null ) {
             offset = 14; // 8 AM CST // 14 GMT
         }
@@ -166,169 +149,77 @@ public with sharing class UserAvailabilityService {
             new Event(
                 Subject='X8:00 - Y9:00' ,
                 StartDateTime=startDateTime ,
-                EndDateTime=startDateTime.addHours( 1 )
+                EndDateTime=startDateTime.addMinutes( getStepMinutes( skill ) )
             ) ,
             new Event(
                 Subject='X8:30 - Y9:30' ,
                 StartDateTime=startDateTime.addMinutes( 30 ) ,
-                EndDateTime=startDateTime.addMinutes( 30 ).addHours( 1 )
+                EndDateTime=startDateTime.addMinutes( getStepMinutes( skill ) + 30 )
             ) ,
             new Event(
                 Subject='X9:00 - Y10:00' ,
                 StartDateTime=startDateTime.addMinutes( 60 ) ,
-                EndDateTime=startDateTime.addMinutes( 60 ).addHours( 1 )
+                EndDateTime=startDateTime.addMinutes( getStepMinutes( skill ) + 60 )
             ) ,
             new Event(
                 Subject='X9:30 - Y10:30' ,
                 StartDateTime=startDateTime.addMinutes( 90 ) ,
-                EndDateTime=startDateTime.addMinutes( 90 ).addHours( 1 )
+                EndDateTime=startDateTime.addMinutes( getStepMinutes( skill ) + 90 )
             ) ,
             new Event(
                 Subject='X10:00 - Y11:00' ,
                 StartDateTime=startDateTime.addMinutes( 120 ) ,
-                EndDateTime=startDateTime.addMinutes( 120 ).addHours( 1 )
+                EndDateTime=startDateTime.addMinutes( getStepMinutes( skill ) + 120 )
             ) ,
             new Event(
                 Subject='X10:30 - Y11:30' ,
                 StartDateTime=startDateTime.addMinutes( 150 ) ,
-                EndDateTime=startDateTime.addMinutes( 150 ).addHours( 1 )
+                EndDateTime=startDateTime.addMinutes( getStepMinutes( skill ) + 150 )
             ) ,
             new Event(
                 Subject='X11:00 - Y12:00' ,
                 StartDateTime=startDateTime.addMinutes( 180 ) ,
-                EndDateTime=startDateTime.addMinutes( 180 ).addHours( 1 )
+                EndDateTime=startDateTime.addMinutes( getStepMinutes( skill ) + 180 )
             ) ,
             new Event(
                 Subject='X11:30 - Y12:30' ,
                 StartDateTime=startDateTime.addMinutes( 210 ) ,
-                EndDateTime=startDateTime.addMinutes( 210 ).addHours( 1 )
+                EndDateTime=startDateTime.addMinutes( getStepMinutes( skill ) + 210 )
             ) ,
             new Event(
                 Subject='X12:30 - Y1:30' ,
                 StartDateTime=startDateTime.addMinutes( 270 ) ,
-                EndDateTime=startDateTime.addMinutes( 270 ).addHours( 1 )
+                EndDateTime=startDateTime.addMinutes( getStepMinutes( skill ) + 270 )
             ) ,
             new Event(
                 Subject='X1:00 - Y2:00' ,
                 StartDateTime=startDateTime.addMinutes( 300 ) ,
-                EndDateTime=startDateTime.addMinutes( 300 ).addHours( 1 )
+                EndDateTime=startDateTime.addMinutes( getStepMinutes( skill ) + 300 )
             ) ,
             new Event(
                 Subject='X1:30 - Y2:30' ,
                 StartDateTime=startDateTime.addMinutes( 330 ) ,
-                EndDateTime=startDateTime.addMinutes( 330 ).addHours( 1 )
+                EndDateTime=startDateTime.addMinutes( getStepMinutes( skill ) + 330 )
             ) ,
             new Event(
                 Subject='X2:00 - Y3:00' ,
                 StartDateTime=startDateTime.addMinutes( 360 ) ,
-                EndDateTime=startDateTime.addMinutes( 360 ).addHours( 1 )
+                EndDateTime=startDateTime.addMinutes( getStepMinutes( skill ) + 360 )
             ) ,
             new Event(
                 Subject='X3:00 - Y4:00' ,
                 StartDateTime=startDateTime.addMinutes( 420 ) ,
-                EndDateTime=startDateTime.addMinutes( 420 ).addHours( 1 )
+                EndDateTime=startDateTime.addMinutes( getStepMinutes( skill ) + 420)
             ) ,
             new Event(
                 Subject='X3:30 - Y4:30' ,
                 StartDateTime=startDateTime.addMinutes( 450 ) ,
-                EndDateTime=startDateTime.addMinutes( 450 ).addHours( 1 )
+                EndDateTime=startDateTime.addMinutes( getStepMinutes( skill ) + 450 )
             ) ,
             new Event(
                 Subject='X4:00 - Y5:00' ,
                 StartDateTime=startDateTime.addMinutes( 480 ) ,
-                EndDateTime=startDateTime.addMinutes( 480 ).addHours( 1 )
-            )
-        };
-        return timeBlocksPrimary;
-    }
-    public static List<Event> getTimeBlocksPrimaryMiddleMarket( Integer offset ) {
-        if ( offset == null ) {
-            offset = 14; // 8 AM CST // 14 GMT
-        }
-        DateTime currentDate = System.now().dateGMT();
-        Datetime startDateTime = Datetime.newInstanceGmt(
-            currentDate.yearGmt() ,
-            currentDate.monthGmt() ,
-            currentDate.dayGmt() ,
-            offset ,
-            0 ,
-            0
-        );
-        List<Event> timeBlocksPrimary = new List<Event>{
-            new Event(
-                Subject='X8:00 - Y9:30' ,
-                StartDateTime=startDateTime ,
-                EndDateTime=startDateTime.addMinutes( 30 ).addHours( 1 )
-            ) ,
-            new Event(
-                Subject='X8:30 - Y10:00' ,
-                StartDateTime=startDateTime.addMinutes( 30 ) ,
-                EndDateTime=startDateTime.addMinutes( 60 ).addHours( 1 )
-            ) ,
-            new Event(
-                Subject='X9:00 - Y10:30' ,
-                StartDateTime=startDateTime.addMinutes( 60 ) ,
-                EndDateTime=startDateTime.addMinutes( 90 ).addHours( 1 )
-            ) ,
-            new Event(
-                Subject='X9:30 - Y11:00' ,
-                StartDateTime=startDateTime.addMinutes( 90 ) ,
-                EndDateTime=startDateTime.addMinutes( 120 ).addHours( 1 )
-            ) ,
-            new Event(
-                Subject='X10:00 - Y11:30' ,
-                StartDateTime=startDateTime.addMinutes( 120 ) ,
-                EndDateTime=startDateTime.addMinutes( 150 ).addHours( 1 )
-            ) ,
-            new Event(
-                Subject='X10:30 - Y12:00' ,
-                StartDateTime=startDateTime.addMinutes( 150 ) ,
-                EndDateTime=startDateTime.addMinutes( 180 ).addHours( 1 )
-            ) ,
-            new Event(
-                Subject='X11:00 - Y12:30' ,
-                StartDateTime=startDateTime.addMinutes( 180 ) ,
-                EndDateTime=startDateTime.addMinutes( 210 ).addHours( 1 )
-            ) ,
-            new Event(
-                Subject='X11:30 - Y1:00' ,
-                StartDateTime=startDateTime.addMinutes( 210 ) ,
-                EndDateTime=startDateTime.addMinutes( 240 ).addHours( 1 )
-            ) ,
-            new Event(
-                Subject='X12:00 - Y1:30' ,
-                StartDateTime=startDateTime.addMinutes( 240 ) ,
-                EndDateTime=startDateTime.addMinutes( 270 ).addHours( 1 )
-            ) ,
-            new Event(
-                Subject='X12:30 - Y2:00' ,
-                StartDateTime=startDateTime.addMinutes( 270 ) ,
-                EndDateTime=startDateTime.addMinutes( 300 ).addHours( 1 )
-            ) ,
-            new Event(
-                Subject='X1:00 - Y2:30' ,
-                StartDateTime=startDateTime.addMinutes( 300 ) ,
-                EndDateTime=startDateTime.addMinutes( 330 ).addHours( 1 )
-            ) ,
-            new Event(
-                Subject='X1:30 - Y2:30' ,
-                StartDateTime=startDateTime.addMinutes( 330 ) ,
-                EndDateTime=startDateTime.addMinutes( 360 ).addHours( 1 )
-            ) ,
-            new Event(
-                Subject='X2:00 - Y3:30' ,
-                StartDateTime=startDateTime.addMinutes( 360 ) ,
-                EndDateTime=startDateTime.addMinutes( 390 ).addHours( 1 )
-            ) ,
-            new Event(
-                Subject='X2:30 - Y4:00' ,
-                StartDateTime=startDateTime.addMinutes( 390 ) ,
-                EndDateTime=startDateTime.addMinutes( 420 ).addHours( 1 )
-            ) ,
-            new Event(
-                Subject='X3:00 - Y4:30' ,
-                StartDateTime=startDateTime.addMinutes( 420 ) ,
-                EndDateTime=startDateTime.addMinutes( 450 ).addHours( 1 )
+                EndDateTime=startDateTime.addMinutes( getStepMinutes( skill ) + 480 )
             )
         };
         return timeBlocksPrimary;
@@ -595,10 +486,14 @@ public with sharing class UserAvailabilityService {
         Map<String,Integer> skillStepMinutesMap = new Map<String,Integer>{
             'Schedule_Seller_HR360' => 60 ,
             'Schedule_Seller_HRCore' => 60 ,
-            'Schedule_Seller_HRScale' => 60 ,
+            'Schedule_Seller_HRScale' => 120 ,
+            'Schedule_Seller_Time_Attendance' => 30 ,
+            'Schedule_Seller_Performance' => 30 ,
             'Schedule_Seller_HR360_Middle_Market' => 90 ,
             'Schedule_Seller_HRCore_Middle_Market' => 90 ,
-            'Schedule_Seller_HRScale_Middle_Market' => 90
+            'Schedule_Seller_HRScale_Middle_Market' => 120 ,
+            'Schedule_Seller_HR360_Enterprise' => 90 ,
+            'Schedule_Seller_HRCore_Enterprise' => 90
         };
         //
         Integer stepMinutes = 60;
