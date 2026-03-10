@@ -9,7 +9,7 @@
 */
 public with sharing class CaseSendSSNVSTeamEmailAction
 {
-    // test w/ CaseSendSSNVSTeamEmailActionTest (97%)
+    // test w/ CaseSendSSNVSTeamEmailActionTest (92%)
 
     // Error Messages
     private static final String ERR_NO_CONTACT = 'No Contact Found';
@@ -68,44 +68,58 @@ public with sharing class CaseSendSSNVSTeamEmailAction
     public static List<ActionOutputParams> getSubClientAndSubClientContacts(List<ActionInputParams> inputParams)
     {
         // LOCAL VARIABLES
-        Map<String, String> errorMap = new Map<String, String>();
         List<ActionOutputParams> results = new List<ActionOutputParams>();
-
-        ActionOutputParams result = new ActionOutputParams();
-        Contact caseContact                     = null;
-        Set<NSP_Sub_Client_Contact__c> subClientContactSet  = new Set<NSP_Sub_Client_Contact__c>();
 
         if(inputParams != null && !inputParams.isEmpty())
         {
             for(ActionInputParams inParams : inputParams)
             {
-                // Guard input
-                if (inParams != null && inParams.caseObj != null)
-                {
-                    // Load case contact (only Active/HIRED/REHIRED)
-                    caseContact = CaseSendSSNVSTeamEmailAction.getCaseContact(inParams.caseObj);
+                ActionOutputParams result = processContactAndSubclients(inParams);
 
-                    // Valid Contact Not Found related to Case
-                    if (caseContact != null && inParams.caseObj.ContactId == caseContact.Id)
-                    {
-                        subClientContactSet = CaseSendSSNVSTeamEmailAction.processSubClientRecordsBasedOnContact(inParams, caseContact, errorMap);
-                        result.subClientContacts = new List<NSP_Sub_Client_Contact__c>(subClientContactSet);
-                        results.add(result);
-
-                    }
-                    else
-                    {
-                        errorMap.put(inParams.caseObj.ContactId, CaseSendSSNVSTeamEmailAction.ERR_NO_CONTACT);
-                        List<NSP_Error_Log__c> errorLogs = new List<NSP_Error_Log__c>();
-                        errorLogs = CaseSendSSNVSTeamEmailAction.buildErrors(errorMap);
-                        result.errorEntries = errorLogs;
-                        results.add(result);
-                    }
-                }
+                results.add(result);
             }
         }
 
         return results;
+    }
+
+    /**
+     * Process Contacts and sub client contacts based on inputs from the flow
+     *
+     * @param inParams ActionInputParams
+     * @return ActionOutputParams
+     */
+    private static ActionOutputParams processContactAndSubclients(ActionInputParams inputRecord)
+    {
+        ActionOutputParams result = new ActionOutputParams();
+        Map<String, String> errorMap = new Map<String, String>();
+        Contact caseContact = null;
+        Set<NSP_Sub_Client_Contact__c> subClientContactSet  = new Set<NSP_Sub_Client_Contact__c>();
+        // Guard input
+        if (inputRecord != null && inputRecord.caseObj != null)
+        {
+            // Load case contact (only Active/HIRED/REHIRED)
+            caseContact = CaseSendSSNVSTeamEmailAction.getCaseContact(inputRecord.caseObj);
+
+            // Valid Contact Not Found related to Case
+            if (caseContact != null && inputRecord.caseObj.ContactId == caseContact.Id)
+            {
+                subClientContactSet = CaseSendSSNVSTeamEmailAction.processSubClientRecordsBasedOnContact(inputRecord, caseContact, errorMap);
+                result.subClientContacts = new List<NSP_Sub_Client_Contact__c>(subClientContactSet);
+            }
+            else
+            {
+                errorMap.put(inputRecord.caseObj.Id, CaseSendSSNVSTeamEmailAction.ERR_NO_CONTACT);
+            }
+
+            if(errorMap != null && !errorMap.isEmpty())
+            {
+                List<NSP_Error_Log__c> errorLogs = new List<NSP_Error_Log__c>();
+                errorLogs = CaseSendSSNVSTeamEmailAction.buildErrors(errorMap);
+                result.errorEntries = errorLogs;
+            }
+        }
+        return result;
     }
 
     /**
@@ -393,7 +407,7 @@ public with sharing class CaseSendSSNVSTeamEmailAction
             }
         }
 
-        if (eligibleSubClientContacts == null || eligibleSubClientContacts.isEmpty())
+        if ((errorMap == null || errorMap.isEmpty()) && (eligibleSubClientContacts == null || eligibleSubClientContacts.isEmpty()))
         {
             errorMap?.put(null, 'Not Eligible');
         }

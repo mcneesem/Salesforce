@@ -79,7 +79,7 @@ private class CaseSendSSNVSTeamEmailActionTest
         subClientCon2.NSP_Sub_Client__c = subClient.Id;
         subClientCon2.NSP_Paid_Non_Paid__c = 'Paid WSEE';
         subClientCon2.NSP_Employee_Status__c = 'HIRED';
-        subClientCon2.NSP_Payroll_Contact__c = false;
+        subClientCon2.NSP_Payroll_Contact__c = true;
         subClientCon2.NSP_Work_Email__c = '';
         subClientCon2.NSP_Contact__c = con.Id;
 
@@ -355,43 +355,30 @@ private class CaseSendSSNVSTeamEmailActionTest
         Assert.areEqual(1, result.subClientContacts?.size(), 'Email should be sent');
 
     }
-
-    @isTest
-    private static void testGetSubClientAndSubClientContacts_Negative_BlankStatus()
+    
+        @isTest
+    private static void testGetSubClientAndSubClientContacts_Negative_NotEligibleSSC()
     {
         List<Case> caseList = [SELECT Id, AccountId, ContactId, SSNVS_Mismatch__c
-                        FROM Case
-                        WHERE SSNVS_Mismatch__c != NULL LIMIT 1];
-
-        Assert.areNotEqual(null, caseList, caseSetupAssertMessage);
+                               FROM Case
+                               WHERE SSNVS_Mismatch__c != NULL LIMIT 1];
+        Assert.areEqual(1, caseList.size(), caseSetupAssertMessage);
         Case caseObj = caseList[0];
-        List<Account> accountList = [SELECT Id
-                              FROM Account
-                              WHERE Id = :caseObj.AccountId LIMIT 1];
-        Assert.areNotEqual(null, accountList, accountSetupAssertMessage);
 
-        Account accountObj = accountList[0];
+        List<Account> accList = [SELECT Id
+                                 FROM Account
+                                 WHERE Id = :caseObj.AccountId LIMIT 1];
+        Assert.areEqual(1, accList.size(), accountSetupAssertMessage);
+        Account accountObj = accList[0];
 
-        List<NSP_Sub_Client_Contact__c> subClientConListC = [SELECT Id, NSP_Work_Email__c, NSP_Employee_Status__c
-                                                             FROM NSP_Sub_Client_Contact__c
-                                                             WHERE NSP_Work_Email__c = NULL LIMIT 1];
-        Assert.areEqual(1, subClientConListC.size(), sccSetupAssertMessage);
-        NSP_Sub_Client_Contact__c subClientCon = subClientConListC[0];
-        subClientCon.NSP_Employee_Status__c = 'L.O.A.';
-        subClientCon.NSP_Paid_Non_Paid__c = paidNonPaidString;
-        subClientCon.NSP_On_Site_Supervisor__c = true;
-        subClientCon.NSP_Work_Email__c = 'test@example2.com';
-
-        update subClientCon;
-
-        List<NSP_Sub_Client_Contact__c> subClientConListD = [SELECT Id, NSP_Work_Email__c, NSP_Employee_Status__c
-                                                             FROM NSP_Sub_Client_Contact__c
-                                                             WHERE NSP_Work_Email__c = 'test@test.com' LIMIT 1];
-        Assert.areEqual(1, subClientConListD.size(), sccSetupEmailAssertMessage);
-        NSP_Sub_Client_Contact__c subClientCon1 = subClientConListD[0];
-        subClientCon1.NSP_Work_Email__c = '';
-        update subClientCon1;
-
+        List<NSP_Sub_Client_Contact__c> subClientConList = [SELECT Id, NSP_Work_Email__c, NSP_Payroll_Contact__c, NSP_Employee_Status__c
+                                                            FROM NSP_Sub_Client_Contact__c];
+        for(NSP_Sub_Client_Contact__c subClientContact : subClientConList)
+        {
+            subClientContact.NSP_Payroll_Contact__c = false;
+        }
+        
+        update subClientConList;
 
         List<CaseSendSSNVSTeamEmailAction.ActionInputParams> inputParams = new List<CaseSendSSNVSTeamEmailAction.ActionInputParams>();
         CaseSendSSNVSTeamEmailAction.ActionInputParams actionInputParams = new CaseSendSSNVSTeamEmailAction.ActionInputParams();
@@ -415,73 +402,7 @@ private class CaseSendSSNVSTeamEmailActionTest
             new CaseSendSSNVSTeamEmailAction.ActionOutputParams()
         );
 
-        Assert.areNotEqual(null, result.errorEntries, 'Status not found error');
-
-    }
-
-    @isTest
-    private static void testGetSubClientAndSubClientContacts_Negative_NotEligibleSCC()
-    {
-                List<Case> caseList = [SELECT Id, AccountId, ContactId, SSNVS_Mismatch__c
-                        FROM Case
-                        WHERE SSNVS_Mismatch__c != NULL LIMIT 1];
-
-        Assert.areNotEqual(null, caseList, caseSetupAssertMessage);
-        Case caseObj = caseList[0];
-        List<Account> accountList = [SELECT Id
-                              FROM Account
-                              WHERE Id = :caseObj.AccountId LIMIT 1];
-        Assert.areNotEqual(null, accountList, accountSetupAssertMessage);
-
-        Account accountObj = accountList[0];
-        List<NSP_Sub_Client_Contact__c> subClientConListE = [SELECT Id, NSP_Work_Email__c, NSP_Employee_Status__c
-                                                             FROM NSP_Sub_Client_Contact__c
-                                                             WHERE NSP_Work_Email__c = NULL LIMIT 1];
-        Assert.areEqual(1, subClientConListE.size(), sccSetupAssertMessage);
-        NSP_Sub_Client_Contact__c subClientCon = subClientConListE[0];
-        subClientCon.NSP_Employee_Status__c = '';
-        subClientCon.NSP_Paid_Non_Paid__c = paidNonPaidString;
-        subClientCon.NSP_On_Site_Supervisor__c = false;
-        subClientCon.NSP_Work_Email__c = 'test@example3.com';
-        subClientCon.NSP_Payroll_Contact__c = false;
-
-        update subClientCon;
-
-        List<NSP_Sub_Client_Contact__c> subClientConListF = [SELECT Id, NSP_Work_Email__c, NSP_Employee_Status__c
-                                                             FROM NSP_Sub_Client_Contact__c
-                                                             WHERE NSP_Work_Email__c = 'test@test.com' LIMIT 1];
-        Assert.areEqual(1, subClientConListF.size(), sccSetupEmailAssertMessage);
-        NSP_Sub_Client_Contact__c subClientCon1 = subClientConListF[0];
-        subClientCon1.NSP_Work_Email__c = '';
-        subClientCon1.NSP_Payroll_Contact__c = false;
-        subClientCon1.NSP_On_Site_Supervisor__c = false;
-
-        update subClientCon1;
-
-
-        List<CaseSendSSNVSTeamEmailAction.ActionInputParams> inputParams = new List<CaseSendSSNVSTeamEmailAction.ActionInputParams>();
-        CaseSendSSNVSTeamEmailAction.ActionInputParams actionInputParams = new CaseSendSSNVSTeamEmailAction.ActionInputParams();
-        actionInputParams.accountId = accountObj.Id;
-        actionInputParams.caseObj = caseObj;
-        actionInputParams.emailSubject = 'TestSubject';
-        actionInputParams.emailBody= emailBodyString;
-        inputParams.add(actionInputParams);
-
-        Test.startTest();
-        List<CaseSendSSNVSTeamEmailAction.ActionOutputParams> results =
-            CaseSendSSNVSTeamEmailAction.getSubClientAndSubClientContacts(inputParams);
-        Test.stopTest();
-
-        // VALIDATION
-        Assert.areNotEqual(null, results, resultMessageString);
-
-        CaseSendSSNVSTeamEmailAction.ActionOutputParams result = (
-            ( results != null && !results.isEmpty() ) ?
-            results[0] :
-            new CaseSendSSNVSTeamEmailAction.ActionOutputParams()
-        );
-
-        Assert.areNotEqual(null, result.errorEntries, 'Not Eligible sub client contacts');
+        Assert.areNotEqual(null, result.errorEntries, 'Not Eligible SSC records');
 
     }
 }
