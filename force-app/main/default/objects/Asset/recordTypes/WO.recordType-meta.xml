@@ -100,6 +100,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Electronic_Handbook_Acknowledgment_On__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>HRCore_Contract_Changes__c</picklist>
         <values>
             <fullName>Contract Term</fullName>
