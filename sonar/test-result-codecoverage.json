@@ -67648,5 +67648,16 @@
     },
     "totalCovered": 18,
     "coveredPercent": 90
+  },
+  {
+    "id": "01pOx00000RrNJtIAN",
+    "name": "PortalClientSelector",
+    "totalLines": 2,
+    "lines": {
+      "1": 1,
+      "6": 1
+    },
+    "totalCovered": 2,
+    "coveredPercent": 100
   }
 ]

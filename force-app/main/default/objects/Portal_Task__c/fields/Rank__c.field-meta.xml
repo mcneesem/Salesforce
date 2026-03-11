@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Rank__c</fullName>
+    <externalId>false</externalId>
+    <formula>CASE(
+  TEXT( Type__c ) ,
+  &quot;Pre-Transition Setup&quot; , 10 ,
+  &quot;Company Setup&quot; , 20 ,
+  &quot;Employee Setup&quot; , 30 ,
+  &quot;System Setup&quot; , 40 ,
+  &quot;First Steps&quot; , 50 ,
+  &quot;Discovery&quot; , 60 ,
+  &quot;Configuration&quot; , 70 ,
+  &quot;Training&quot; , 80 ,
+  &quot;Go Live&quot; , 90 ,
+  1000
+)</formula>
+    <label>Rank</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

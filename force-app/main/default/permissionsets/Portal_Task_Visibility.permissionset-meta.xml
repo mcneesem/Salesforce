@@ -28,6 +28,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Portal_Task__c.Rank__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Portal_Task__c.Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
