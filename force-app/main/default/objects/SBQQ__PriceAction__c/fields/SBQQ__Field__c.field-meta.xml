@@ -5,7 +5,7 @@
     <inlineHelpText>Select the field you want updated when the conditions are met.</inlineHelpText>
     <label>Target Field</label>
     <required>false</required>
-    <trackTrending>true</trackTrending>
+    <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
         <controllingField>SBQQ__TargetObject__c</controllingField>

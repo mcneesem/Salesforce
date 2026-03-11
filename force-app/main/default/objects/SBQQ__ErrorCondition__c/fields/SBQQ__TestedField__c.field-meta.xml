@@ -7,7 +7,7 @@
     <inlineHelpText>Field on the Quote object that should be used in testing this condition.</inlineHelpText>
     <label>Tested Field</label>
     <required>false</required>
-    <trackTrending>true</trackTrending>
+    <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
         <controllingField>SBQQ__TestedObject__c</controllingField>

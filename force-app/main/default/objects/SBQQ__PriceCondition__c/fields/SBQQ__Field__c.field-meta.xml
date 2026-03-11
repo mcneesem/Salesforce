@@ -7,7 +7,7 @@
     <inlineHelpText>Choose a field on the target object.</inlineHelpText>
     <label>Field</label>
     <required>false</required>
-    <trackTrending>true</trackTrending>
+    <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
         <valueSetDefinition>
