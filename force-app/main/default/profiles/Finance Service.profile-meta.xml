@@ -15393,7 +15393,7 @@
         <recordType>Account.NSP_Partner_Client</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>AccountContactRelation-ACR Finance Layout</layout>
+        <layout>AccountContactRelation-ACR Service Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>AccountContactRole-Account Contact Role Layout</layout>
