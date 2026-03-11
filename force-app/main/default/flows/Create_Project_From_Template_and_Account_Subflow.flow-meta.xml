@@ -34,6 +34,64 @@
     <apiVersion>64.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
+        <description>assign record variable</description>
+        <name>Assign_Record_accountTeam</name>
+        <label>Assign Record : accountTeam</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>r_accountTeam</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Loop_Collection_accountTeam</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_Collection_accountTeam</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Set count variables</description>
+        <name>Set_accountTeamCount</name>
+        <label>Set : accountTeamCount</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>accountTeamCount</assignToReference>
+            <operator>AssignCount</operator>
+            <value>
+                <elementReference>rc_accountTeam</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>accountTeamPrimaryCount</assignToReference>
+            <operator>AssignCount</operator>
+            <value>
+                <elementReference>Filter_Primary_Role</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Primary_Roles_Exists</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>if primary found set the collection to primary</description>
+        <name>Set_Collection_accountTeam_Primary</name>
+        <label>Set Collection : accountTeam (Primary)</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>rc_accountTeam</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Filter_Primary_Role</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_Collection_accountTeam</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_Fault_Element_CreateProjectFromTemplateAccount</name>
         <label>Set Fault Element : CreateProjectFromTemplateAccount</label>
         <locationX>0</locationX>
@@ -185,13 +243,35 @@
             <assignToReference>r_Project.Project_Implementer__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Account_Team_Role.NSP_User__c</elementReference>
+                <elementReference>r_accountTeam.NSP_User__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
             <targetReference>Update_Project</targetReference>
         </connector>
     </assignments>
+    <collectionProcessors>
+        <description>Get the Primary Account team role</description>
+        <name>Filter_Primary_Role</name>
+        <elementSubtype>FilterCollectionProcessor</elementSubtype>
+        <label>Filter : Primary Role</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNextValueToReference>currentItem_Filter_Primary_Role</assignNextValueToReference>
+        <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
+        <collectionReference>rc_accountTeam</collectionReference>
+        <conditionLogic>and</conditionLogic>
+        <conditions>
+            <leftValueReference>currentItem_Filter_Primary_Role.NSP_Primary__c</leftValueReference>
+            <operator>EqualTo</operator>
+            <rightValue>
+                <booleanValue>true</booleanValue>
+            </rightValue>
+        </conditions>
+        <connector>
+            <targetReference>Set_accountTeamCount</targetReference>
+        </connector>
+    </collectionProcessors>
     <decisions>
         <name>Account_Exists</name>
         <label>Account Exists?</label>
@@ -272,6 +352,50 @@ Pass the role of the for account team to which resource will be assignment to ri
         </rules>
     </decisions>
     <decisions>
+        <name>Primary_Roles_Exists</name>
+        <label>Primary Roles Exists ?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Primary_Role_Found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>accountTeamPrimaryCount</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>1.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Collection_accountTeam_Primary</targetReference>
+            </connector>
+            <label>Yes : Primary Role Found</label>
+        </rules>
+        <rules>
+            <name>No_Primary_Role</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>accountTeamCount</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>1.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>accountTeamPrimaryCount</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Loop_Collection_accountTeam</targetReference>
+            </connector>
+            <label>No Primary Role</label>
+        </rules>
+    </decisions>
+    <decisions>
         <description>Verify if Project Created Sucessfully</description>
         <name>Response</name>
         <label>Response?</label>
@@ -321,14 +445,21 @@ Pass the role of the for account team to which resource will be assignment to ri
             <name>Yes_Role_Exists</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Account_Team_Role</leftValueReference>
-                <operator>IsBlank</operator>
+                <leftValueReference>rc_accountTeam</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>rc_accountTeam</leftValueReference>
+                <operator>IsEmpty</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Set_Project_Implementor</targetReference>
+                <targetReference>Filter_Primary_Role</targetReference>
             </connector>
             <label>Yes : Role Exists</label>
         </rules>
@@ -390,6 +521,21 @@ Pass the role of the for account team to which resource will be assignment to ri
     <environments>Default</environments>
     <interviewLabel>Create Project From Template And Account Subflow {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Create Project From Template and Account Subflow</label>
+    <loops>
+        <description>Loop account team role to get the account team record</description>
+        <name>Loop_Collection_accountTeam</name>
+        <label>Loop Collection : accountTeam</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <collectionReference>rc_accountTeam</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Assign_Record_accountTeam</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Set_Project_Implementor</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -459,12 +605,13 @@ Pass the role of the for account team to which resource will be assignment to ri
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <description>Get the Team Role for Resource Assignment , assign only when role is primary</description>
+        <description>Get the Team Role for Resource Assignment , assign only when role is primary when primary exists
+Added LIMIT 2 to avoid looping over multiple records</description>
         <name>Get_Account_Team_Role</name>
         <label>Get Account Team Role</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Role_Exists</targetReference>
         </connector>
@@ -486,18 +633,17 @@ Pass the role of the for account team to which resource will be assignment to ri
                 <elementReference>assignRole</elementReference>
             </value>
         </filters>
-        <filters>
-            <field>NSP_Primary__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <limit>
+            <numberValue>2.0</numberValue>
+        </limit>
         <object>NSP_Account_Team__c</object>
+        <outputReference>rc_accountTeam</outputReference>
         <queriedFields>Id</queriedFields>
         <queriedFields>NSP_User__c</queriedFields>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <queriedFields>NSP_Role__c</queriedFields>
+        <queriedFields>NSP_Primary__c</queriedFields>
+        <sortField>NSP_Primary__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </recordLookups>
     <recordLookups>
         <description>Get Template Record for input template for the flow</description>
@@ -586,12 +732,37 @@ Pass the role of the for account team to which resource will be assignment to ri
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <description>Hold counts of account teams matching role</description>
+        <name>accountTeamCount</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+    </variables>
+    <variables>
+        <name>accountTeamPrimaryCount</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+    </variables>
+    <variables>
         <description>Input Parameter to Assign Account Team Role</description>
         <name>assignRole</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>currentItem_Filter_Primary_Role</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>NSP_Account_Team__c</objectType>
     </variables>
     <variables>
         <description>default to delete the budget record. Budget record is required for billing projects only</description>
@@ -607,13 +778,6 @@ Pass the role of the for account team to which resource will be assignment to ri
     <variables>
         <name>faultElement</name>
         <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>isSuccess</name>
-        <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
@@ -635,11 +799,27 @@ Pass the role of the for account team to which resource will be assignment to ri
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>r_accountTeam</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>NSP_Account_Team__c</objectType>
+    </variables>
+    <variables>
         <name>r_Project</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>pse__Proj__c</objectType>
+    </variables>
+    <variables>
+        <name>rc_accountTeam</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>NSP_Account_Team__c</objectType>
     </variables>
 </Flow>
