@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Root_Cause__c</fullName>
-    <externalId>false</externalId>
     <label>Root Cause</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
@@ -32,14 +31,24 @@
                 <label>AFIN</label>
             </value>
             <value>
-                <fullName>CO Support</fullName>
+                <fullName>Audit/Review Finding</fullName>
                 <default>false</default>
-                <label>CO Support</label>
+                <label>Audit/Review Finding</label>
+            </value>
+            <value>
+                <fullName>Communication Issue</fullName>
+                <default>false</default>
+                <label>Communication Issue</label>
             </value>
             <value>
                 <fullName>Configuration Adjustment</fullName>
                 <default>false</default>
                 <label>Configuration Adjustment</label>
+            </value>
+            <value>
+                <fullName>CO Support</fullName>
+                <default>false</default>
+                <label>CO Support</label>
             </value>
             <value>
                 <fullName>Data Issue</fullName>
@@ -54,10 +63,17 @@
             <value>
                 <fullName>DNFP</fullName>
                 <default>false</default>
+                <label>DNFP</label>
             </value>
             <value>
                 <fullName>DNSC</fullName>
                 <default>false</default>
+                <label>DNSC</label>
+            </value>
+            <value>
+                <fullName>Enhancement Request</fullName>
+                <default>false</default>
+                <label>Enhancement Request</label>
             </value>
             <value>
                 <fullName>Information</fullName>
@@ -70,6 +86,16 @@
                 <label>Insperity</label>
             </value>
             <value>
+                <fullName>Integration Issue</fullName>
+                <default>false</default>
+                <label>Integration Issue</label>
+            </value>
+            <value>
+                <fullName>Internal Process Issue</fullName>
+                <default>false</default>
+                <label>Internal Process Issue</label>
+            </value>
+            <value>
                 <fullName>Known Issue</fullName>
                 <default>false</default>
                 <label>Known Issue</label>
@@ -78,6 +104,11 @@
                 <fullName>Misconfiguration</fullName>
                 <default>false</default>
                 <label>Misconfiguration</label>
+            </value>
+            <value>
+                <fullName>No Issue Found</fullName>
+                <default>false</default>
+                <label>No Issue Found</label>
             </value>
             <value>
                 <fullName>Other</fullName>
@@ -90,24 +121,24 @@
                 <label>Payment/filing error</label>
             </value>
             <value>
+                <fullName>Report Issue</fullName>
+                <default>false</default>
+                <label>Report Issue</label>
+            </value>
+            <value>
                 <fullName>Reports</fullName>
                 <default>false</default>
                 <label>Reports</label>
             </value>
             <value>
+                <fullName>Security/Access Issue</fullName>
+                <default>false</default>
+                <label>Security/Access Issue</label>
+            </value>
+            <value>
                 <fullName>Service Team Question</fullName>
                 <default>false</default>
                 <label>Service Team Question</label>
-            </value>
-            <value>
-                <fullName>Training Issue</fullName>
-                <default>false</default>
-                <label>Training Issue</label>
-            </value>
-            <value>
-                <fullName>User Error</fullName>
-                <default>false</default>
-                <label>User Error</label>
             </value>
             <value>
                 <fullName>Termination</fullName>
@@ -120,44 +151,14 @@
                 <label>Third Party/Vendor Issue</label>
             </value>
             <value>
-                <fullName>Integration Issue</fullName>
+                <fullName>Training Issue</fullName>
                 <default>false</default>
-                <label>Integration Issue</label>
+                <label>Training Issue</label>
             </value>
             <value>
-                <fullName>Security/Access Issue</fullName>
+                <fullName>User Error</fullName>
                 <default>false</default>
-                <label>Security/Access Issue</label>
-            </value>
-            <value>
-                <fullName>No Issue Found</fullName>
-                <default>false</default>
-                <label>No Issue Found</label>
-            </value>
-            <value>
-                <fullName>Enhancement Request</fullName>
-                <default>false</default>
-                <label>Enhancement Request</label>
-            </value>
-            <value>
-                <fullName>Report Issue</fullName>
-                <default>false</default>
-                <label>Report Issue</label>
-            </value>
-            <value>
-                <fullName>Internal Process Issue</fullName>
-                <default>false</default>
-                <label>Internal Process Issue</label>
-            </value>
-            <value>
-                <fullName>Communication Issue</fullName>
-                <default>false</default>
-                <label>Communication Issue</label>
-            </value>
-            <value>
-                <fullName>Audit/Review Finding</fullName>
-                <default>false</default>
-                <label>Audit/Review Finding</label>
+                <label>User Error</label>
             </value>
         </valueSetDefinition>
     </valueSet>
