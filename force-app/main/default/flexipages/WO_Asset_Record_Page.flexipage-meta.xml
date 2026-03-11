@@ -1126,8 +1126,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Electronic_Handbook_Acknowledgment__c</fieldItem>
-                <identifier>RecordElectronic_HB_Ack_On_cField</identifier>
+                <fieldItem>Record.Electronic_Handbook_Acknowledgment_On__c</fieldItem>
+                <identifier>RecordElectronic_Handbook_Acknowledgment_On_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>

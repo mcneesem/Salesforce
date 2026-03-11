@@ -100,7 +100,7 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Electronic_Handbook_Acknowledgment__c</picklist>
+        <picklist>Electronic_Handbook_Acknowledgment_On__c</picklist>
         <values>
             <fullName>No</fullName>
             <default>false</default>

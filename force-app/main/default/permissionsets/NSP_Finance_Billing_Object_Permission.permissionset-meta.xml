@@ -126,7 +126,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Asset.Electronic_Handbook_Acknowledgment__c</field>
+        <field>Asset.Electronic_Handbook_Acknowledgment_On__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

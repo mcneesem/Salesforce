@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Electronic_Handbook_Acknowledgment__c</fullName>
+    <fullName>Electronic_Handbook_Acknowledgment_On__c</fullName>
     <label>Electronic HB Ack On</label>
     <required>false</required>
-    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
+    <trackFeedHistory>false</trackFeedHistory>
     <type>Picklist</type>
     <valueSet>
         <valueSetDefinition>
