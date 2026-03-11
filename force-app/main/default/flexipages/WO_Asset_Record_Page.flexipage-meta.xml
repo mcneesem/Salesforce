@@ -1126,7 +1126,7 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Electronic_HB_Ack_On__c</fieldItem>
+                <fieldItem>Record.Electronic_HB_Ack_On_</fieldItem>
                 <identifier>RecordElectronic_HB_Ack_On_cField</identifier>
             </fieldInstance>
         </itemInstances>
