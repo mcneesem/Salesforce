@@ -596,12 +596,12 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             List<Wingspan_Settings__c> updateWsSettings = new List<Wingspan_Settings__c>();
             Map<String, Wingspan_Settings__c> wingspanSettingsMap = Wingspan_Settings__c.getAll();
             for (String key : wingspanSettingsMap.keySet()) {
-                  Wingspan_Settings__c winspanSettings = Wingspan_Settings__c.getValues(key);
-                  winspanSettings.IsEnabled__c = false;
-                  if (winspanSettings.Name == 'DEV') {
-                    winspanSettings.IsEnabled__c = true;
-                  }
-                  updateWsSettings.add(winspanSettings);
+                Wingspan_Settings__c wingspanSettings = Wingspan_Settings__c.getValues(key);
+                wingspanSettings.IsEnabled__c = false;
+                if (wingspanSettings.Name == 'DEV') {
+                    wingspanSettings.IsEnabled__c = true;
+                }
+                updateWsSettings.add(wingspanSettings);
             }
             update updateWsSettings;
         } catch (Exception e) {
