@@ -597,9 +597,9 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             Map<String, Wingspan_Settings__c> wingspanSettingsMap = Wingspan_Settings__c.getAll();
             for (String key : wingspanSettingsMap.keySet()) {
                   Wingspan_Settings__c winspanSettings = Wingspan_Settings__c.getValues(key);
-                  winspanSettings.IsEnabled__c = true;
-                  if (winspanSettings.Name == 'PROD') {
-                    winspanSettings.IsEnabled__c = false;
+                  winspanSettings.IsEnabled__c = false;
+                  if (winspanSettings.Name == 'DEV') {
+                    winspanSettings.IsEnabled__c = true;
                   }
                   updateWsSettings.add(winspanSettings);
             }
