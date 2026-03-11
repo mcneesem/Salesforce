@@ -234,7 +234,7 @@ debugger;
         processCSDiscount(quoteModel,quoteLineModels,csProducts,csRates);
     }
     if(promoProducts != null){
-        processPromoProductsCSRates(quoteModel,quoteLineModels,promoProducts);
+        processPromoProductsCSRates( quoteLineModels , promoProducts );
     }
     return Promise.resolve();
 }
@@ -244,46 +244,48 @@ Process Promo Product Consumption Rates
 Method - processPromoProductsCSRates
 called via onAfterPriceRules
 */
-export function processPromoProductsCSRates(quote,lines,promoProducts){
+export function processPromoProductsCSRates( lines , promoProducts ) {
 
-    lines.forEach(function(line){
-        if ( line && line.record ){
-            let percentDiscount = line.record.SBQQ__Discount__c;
-            let amountDiscount = line.record.SBQQ__AdditionalDiscountAmount__c;
-            let productcode = line.record.SBQQ__ProductCode__c;
-            let discountType = "";
-            if(percentDiscount === null || percentDiscount === ""){
-                if(amountDiscount === null || amountDiscount === ""){
-                    discountType = "no discount";
-                }else{
-                    discountType = "amount";
+    if( lines ){
+        lines.forEach(function(line){
+            if ( line && line.record ){
+                let percentDiscount = line.record.SBQQ__Discount__c;
+                let amountDiscount = line.record.SBQQ__AdditionalDiscountAmount__c;
+                let productcode = line.record.SBQQ__ProductCode__c;
+                let discountType = "";
+                if(percentDiscount === null || percentDiscount === ""){
+                    if(amountDiscount === null || amountDiscount === ""){
+                        discountType = "no discount";
+                    }else{
+                        discountType = "amount";
+                    }
+                }
+                if(line.consumptionSchedules){
+                    line.consumptionSchedules.forEach(function(cs){
+                        if(promoProducts && promoProducts.includes(productcode)){
+                            const rates = cs.getRates();
+                            rates.forEach(function(csRate){
+                                let currentPrice =  csRate.get("SBQQ__Price__c");
+                                let pricingMethod = csRate.get("SBQQ__PricingMethod__c");
+                                if(promoProducts && promoProducts.includes(productcode) && pricingMethod != 'FlatFee'){
+                                    let newPriceAmt = 0;
+                                    switch (discountType){
+                                        case "no discount":
+                                            break;
+                                        case "amount":
+                                            newPriceAmt = -1 * currentPrice;
+                                            csRate.set("SBQQ__Price__c", newPriceAmt);
+                                            newPriceAmt = 0;
+                                            break;
+                                    }
+                                }
+                            });
+                        }
+                    });
                 }
             }
-            if(line.consumptionSchedules){
-                line.consumptionSchedules.forEach(function(cs){
-                    if(promoProducts && promoProducts.includes(productcode)){
-                        const rates = cs.getRates();
-                        rates.forEach(function(csRate){
-                            let currentPrice =  csRate.get("SBQQ__Price__c");
-                            let pricingMethod = csRate.get("SBQQ__PricingMethod__c");
-                            if(promoProducts && promoProducts.includes(productcode) && pricingMethod != 'FlatFee'){
-                                let newPriceAmt = 0;
-                                switch (discountType){
-                                    case "no discount":
-                                        break;
-                                    case "amount":
-                                        newPriceAmt = -1 * currentPrice;
-                                        csRate.set("SBQQ__Price__c", newPriceAmt);
-                                        newPriceAmt = 0;
-                                        break;
-                                }
-                            }
-                        });
-                    }
-                });
-            }
-        }
-    });
+        });
+    }
 }
 
 /*
