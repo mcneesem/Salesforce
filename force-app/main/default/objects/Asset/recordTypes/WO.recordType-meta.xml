@@ -100,13 +100,13 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Electronic_HB_Ack_On__c</picklist>
+        <picklist>Electronic_Handbook_Acknowledgment__c</picklist>
         <values>
-            <fullName>no</fullName>
+            <fullName>No</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>yes</fullName>
+            <fullName>Yes</fullName>
             <default>false</default>
         </values>
     </picklistValues>
