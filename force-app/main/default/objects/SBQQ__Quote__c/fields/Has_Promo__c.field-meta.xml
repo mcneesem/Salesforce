@@ -3,7 +3,7 @@
     <fullName>Has_Promo__c</fullName>
     <defaultValue>false</defaultValue>
     <label>Has Promo</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

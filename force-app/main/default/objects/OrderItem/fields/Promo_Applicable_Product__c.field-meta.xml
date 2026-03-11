@@ -4,6 +4,6 @@
     <encryptionScheme>None</encryptionScheme>
     <label>Promo Applicable Product</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>TextArea</type>
 </CustomField>
