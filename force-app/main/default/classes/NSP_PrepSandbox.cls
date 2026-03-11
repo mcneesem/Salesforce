@@ -593,6 +593,22 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         }
 
         try {
+            List<Wingspan_Settings__c> updateWsSettings = new List<Wingspan_Settings__c>();
+            Map<String, Wingspan_Settings__c> wingspanSettingsMap = Wingspan_Settings__c.getAll();
+            for (String key : wingspanSettingsMap.keySet()) {
+                  Wingspan_Settings__c winspanSettings = Wingspan_Settings__c.getValues(key);
+                  winspanSettings.IsEnabled__c = true;
+                  if (winspanSettings.Name == 'PROD') {
+                    winspanSettings.IsEnabled__c = false;
+                  }
+                  updateWsSettings.add(winspanSettings);
+            }
+            update updateWsSettings;
+        } catch (Exception e) {
+            NSP_PrepSandbox.handleException( e , 'doCSettings:Wingspan_Settings__c' );
+        }
+
+        try {
             NSP_GoogleRecaptchaSettings__c cS1 = NSP_GoogleRecaptchaSettings__c.getOrgDefaults();
             cS1.NSP_SiteKey__c = '6LegnBQiAAAAAM_at9VCdc-X143lsbrvrgZPlOta';
             cS1.NSP_SiteUrl__c = 'https://insperity--' + sandboxName + '.sandbox.my.salesforce-sites.com/';
