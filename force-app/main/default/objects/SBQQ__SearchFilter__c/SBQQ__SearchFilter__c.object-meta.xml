@@ -160,7 +160,7 @@
     <nameField>
         <encryptionScheme>None</encryptionScheme>
         <label>Filter Name</label>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <type>Text</type>
     </nameField>
     <pluralLabel>Search Filters</pluralLabel>
