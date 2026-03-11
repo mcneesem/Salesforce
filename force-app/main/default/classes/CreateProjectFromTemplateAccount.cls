@@ -32,7 +32,7 @@ public with sharing class CreateProjectFromTemplateAccount {
             // Query all Templates
             Map<Id,pse__Proj__c> templateMap = new Map<Id,pse__Proj__c>(
                 [
-                    SELECT Id , Template_Name__c,TemplateName__c,Start_Date_Offset__c, RecordTypeId
+                    SELECT Id , Template_Name__c,Start_Date_Offset__c, RecordTypeId
                     FROM pse__Proj__c
                     WHERE (
                         ( pse__Is_Template__c = true )
