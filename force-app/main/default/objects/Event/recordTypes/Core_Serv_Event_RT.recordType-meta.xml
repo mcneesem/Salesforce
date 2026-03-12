@@ -661,11 +661,11 @@
         <picklist>NSP_Event_Type__c</picklist>
         <values>
             <fullName>Core Sales</fullName>
-            <default>true</default>
+            <default>false</default>
         </values>
         <values>
             <fullName>Core Service</fullName>
-            <default>false</default>
+            <default>true</default>
         </values>
         <values>
             <fullName>Demo</fullName>

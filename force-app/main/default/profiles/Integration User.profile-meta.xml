@@ -32459,7 +32459,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Contact.Resource</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>

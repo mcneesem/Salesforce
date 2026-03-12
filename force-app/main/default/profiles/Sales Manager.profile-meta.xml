@@ -14803,7 +14803,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Opportunity.Opportunity</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>

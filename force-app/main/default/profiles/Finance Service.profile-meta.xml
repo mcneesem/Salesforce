@@ -15624,6 +15624,10 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Event-Core Sales Events Layouts</layout>
+        <recordType>Event.Core_Serv_Event_RT</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Event-Core Sales Events Layouts</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Event-Mid Market Sales 0322</layout>
@@ -16454,6 +16458,11 @@
         <default>false</default>
         <recordType>Event.Core_Sales_Event_RT</recordType>
         <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>Event.Core_Serv_Event_RT</recordType>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>

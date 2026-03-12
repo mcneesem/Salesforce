@@ -124,10 +124,6 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <recordType>Event.Core_Sales_Event_RT</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
         <recordType>NSP_Account_Group__c.Manually_Created</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>

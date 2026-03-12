@@ -72,10 +72,6 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <recordType>Event.Core_Sales_Event_RT</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
         <recordType>Lead.Service_Referral_Lead</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
