@@ -261,6 +261,12 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldItem>Record.NSP_Member_Account__r.iSolved_ID__c</fieldItem>
+                <identifier>RecordNSP_Member_Account_riSolved_ID_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
                     <value>none</value>
