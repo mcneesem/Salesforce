@@ -19,7 +19,7 @@
             <assignToReference>r_portal_task_to_upsert.Type__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>PortalTaskTypeValue</elementReference>
+                <elementReference>portalTaskType</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -94,7 +94,7 @@
             <assignToReference>r_portal_task_to_upsert.Type__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>PortalTaskTypeValue</elementReference>
+                <elementReference>portalTaskType</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -263,14 +263,14 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Portal_Projects</leftValueReference>
-                <operator>IsEmpty</operator>
+                <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>Get_Portal_Projects</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsEmpty</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -363,13 +363,6 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>recordProjectTask.pse__Project__r.pse__Account__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
             <connector>
                 <targetReference>Get_Portal_Projects</targetReference>
             </connector>
@@ -410,45 +403,51 @@
 AZD - 532934 Updated the logic from portal client to protal project</description>
     <environments>Default</environments>
     <formulas>
-        <name>f_PortalTaskName</name>
+        <name>portalTaskName</name>
         <dataType>String</dataType>
         <expression>CASE(
-  {!recordProjectTask.Name} ,  &quot;Employee Priming Data Provided&quot; , &quot;Employee Data Collection&quot; ,
+  {!recordProjectTask.Name} ,
+  &quot;Employee Priming Data Provided&quot; , &quot;Employee Data Collection&quot; ,
   &quot;FEIN documentation&quot; , &quot;Federal Employer Identification Number (FEIN)&quot; ,
   &quot;Current Payroll Register&quot; , &quot;Current / Prior Payroll Report Samples&quot; ,
   &quot;Job Costing Setup&quot; , &quot;Job Costing / Labor Allocation Setup Information&quot; ,
   &quot;YTD Gross Wage Report Provided&quot; , &quot;YTD Gross Wages Report&quot; ,
   &quot;PTO, paid sick leave, or other accrual policy received&quot; , &quot;Time Off Policies / Handbook&quot; ,
-&quot;Generate Form 8973&quot; , &quot;Form 8973&quot; ,
-&quot;General/Auto Liability Certificate of Coverage&quot; , &quot;General Auto Liability Certificate of Coverage&quot; ,
-&quot;Company Logo Collected&quot; , &quot;Company Logo&quot; ,
-&quot;Direct Debit Agreement&quot; , &quot;Direct Debit Agreement&quot; ,
-&quot;Client User Access&quot; , &quot;User Access Roles Request Form&quot; ,
+  &quot;Generate Form 8973&quot; , &quot;Form 8973&quot; ,
+  &quot;General/Auto Liability Certificate of Coverage&quot; ,
+  &quot;General Auto Liability Certificate of Coverage&quot; ,
+  &quot;Company Logo Collected&quot; , &quot;Company Logo&quot; ,
+  &quot;Direct Debit Agreement&quot; , &quot;Direct Debit Agreement&quot; ,
+  &quot;Client User Access&quot; , &quot;User Access Roles Request Form&quot; ,
   {!recordProjectTask.Name}
 )</expression>
     </formulas>
     <formulas>
-        <name>f_PortalTaskStatus</name>
+        <name>portalTaskStatus</name>
         <dataType>String</dataType>
-        <expression>IF({!recordProjectTask.Is_Completed__c},  &apos;Completed&apos;, &apos;Pending&apos;)</expression>
+        <expression>IF(
+  {!recordProjectTask.Is_Completed__c} ,
+  &apos;Completed&apos; ,
+  &apos;Pending&apos;
+)</expression>
     </formulas>
     <formulas>
-        <name>PortalTaskTypeValue</name>
+        <name>portalTaskType</name>
         <dataType>String</dataType>
         <expression>CASE(
-{!f_PortalTaskName} ,
-&quot;Employee Data Collection&quot; , &quot;Pre-Transition Setup&quot; ,
-&quot;Federal Employer Identification Number (FEIN)&quot; , &quot;Pre-Transition Setup&quot; ,
-&quot;Current / Prior Payroll Report Samples&quot; , &quot;Pre-Transition Setup&quot; ,
-&quot;Job Costing / Labor Allocation Setup Information&quot; , &quot;Pre-Transition Setup&quot; ,
-&quot;YTD Gross Wages Report&quot; , &quot;Pre-Transition Setup&quot; ,
-&quot;Time Off Policies / Handbook&quot; , &quot;Pre-Transition Setup&quot; ,
-&quot;Form 8973&quot; , &quot;Company Setup&quot; ,
-&quot;General Auto Liability Certificate of Coverage&quot; , &quot;Company Setup&quot; ,
-&quot;Company Logo&quot; , &quot;Company Setup&quot; ,
-&quot;Direct Debit Agreement&quot; , &quot;Company Setup&quot; ,
-&quot;User Access Roles Request Form&quot; , &quot;Company Setup&quot; ,
-&quot;&quot;
+  {!portalTaskName} ,
+  &quot;Employee Data Collection&quot; , &quot;Pre-Transition Setup&quot; ,
+  &quot;Federal Employer Identification Number (FEIN)&quot; , &quot;Pre-Transition Setup&quot; ,
+  &quot;Current / Prior Payroll Report Samples&quot; , &quot;Pre-Transition Setup&quot; ,
+  &quot;Job Costing / Labor Allocation Setup Information&quot; , &quot;Pre-Transition Setup&quot; ,
+  &quot;YTD Gross Wages Report&quot; , &quot;Pre-Transition Setup&quot; ,
+  &quot;Time Off Policies / Handbook&quot; , &quot;Pre-Transition Setup&quot; ,
+  &quot;Form 8973&quot; , &quot;Company Setup&quot; ,
+  &quot;General Auto Liability Certificate of Coverage&quot; , &quot;Company Setup&quot; ,
+  &quot;Company Logo&quot; , &quot;Company Setup&quot; ,
+  &quot;Direct Debit Agreement&quot; , &quot;Company Setup&quot; ,
+  &quot;User Access Roles Request Form&quot; , &quot;Company Setup&quot; ,
+  &quot;&quot;
 )</expression>
     </formulas>
     <interviewLabel>Project Task - Populate Portal Task - Subflow {!$Flow.CurrentDateTime}</interviewLabel>
@@ -537,7 +536,6 @@ AZD - 532934 Updated the logic from portal client to protal project</description
         <object>Portal_Task__c</object>
         <outputReference>rc_all_portal_tasks</outputReference>
         <queriedFields>Id</queriedFields>
-        <queriedFields>Portal_Client__c</queriedFields>
         <queriedFields>Project_Task__c</queriedFields>
         <queriedFields>Portal_Project__c</queriedFields>
     </recordLookups>
@@ -565,7 +563,6 @@ AZD - 532934 Updated the logic from portal client to protal project</description
         <object>Portal_Project__c</object>
         <queriedFields>Id</queriedFields>
         <queriedFields>Project__c</queriedFields>
-        <queriedFields>Portal_Client__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
@@ -631,36 +628,11 @@ AZD - 532934 Updated the logic from portal client to protal project</description
         <objectType>Portal_Task__c</objectType>
     </variables>
     <variables>
-        <name>currentItemFromSourceCollection</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Portal_Project__c</objectType>
-    </variables>
-    <variables>
         <name>FaultElement</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <description>Collection of Portal Client ID&apos;s</description>
-        <name>portalclient_ids</name>
-        <dataType>String</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <description>Hold portal task to Update</description>
-        <name>r_portal_task_to_update</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Portal_Task__c</objectType>
     </variables>
     <variables>
         <description>Hold portal task to create and update</description>
@@ -679,15 +651,6 @@ AZD - 532934 Updated the logic from portal client to protal project</description
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Portal_Task__c</objectType>
-    </variables>
-    <variables>
-        <description>Portal Clients record collection</description>
-        <name>rc_portal_clients</name>
-        <dataType>SObject</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Portal_Client__c</objectType>
     </variables>
     <variables>
         <name>rc_portal_tasks_upsert</name>
