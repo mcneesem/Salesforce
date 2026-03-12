@@ -1,11 +1,11 @@
 public class CaseImportRestoreQueueable implements Queueable {
-	// test w/ FileUploadControllerTest (77%)
+    // test w/ FileUploadControllerTest (77%)
     private Id targetUserId;
 
     private CaseImportRestoreQueueable() {
         this.targetUserId = UserInfo.getUserId();
     }
-	public static void enqueueJob() {
+    public static void enqueueJob() {
         if ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
             System.enqueueJob(
                 new CaseImportRestoreQueueable() ,
@@ -21,13 +21,13 @@ public class CaseImportRestoreQueueable implements Queueable {
                 if (settings != null) {
                     settings.Bypass_Opened_Date__c = false;
                     update settings;
-                }    
+                }
                 Notification_Deliverability_Settings__c notificationDeliverability = Notification_Deliverability_Settings__c.getInstance(this.targetUserId);
                 if (notificationDeliverability != null) {
                     notificationDeliverability.IsEnabledOutbound__c = true;
                     update notificationDeliverability;
                 }
-                
+
                 Email_Deliverability_Settings__c emailDeliverability = Email_Deliverability_Settings__c.getInstance(this.targetUserId);
                 if (emailDeliverability != null) {
                     emailDeliverability.IsEnabledOutbound__c = true;
