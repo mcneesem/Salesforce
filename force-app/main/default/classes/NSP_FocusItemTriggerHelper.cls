@@ -1,14 +1,15 @@
 /**
 * Represents the Focus Item trigger helper which handles all the logic.
 */
-public with sharing class NSP_FocusItemTriggerHelper {
-   private NSP_FocusItemTriggerHelper(){} 
+public class NSP_FocusItemTriggerHelper {
+   // test w/ NSP_FocusItemTriggerHelperTest (81%)
+   private NSP_FocusItemTriggerHelper(){}
    /***********************************************************************
     * @MethodName : beforeInsertDirector
     * @Description: Iterates throught the list of new Focus Items
     * @param      : List<NSP_Focus_Item__c> newList
     * @Story      : STY-03807
-    * @return     : void                          
+    * @return     : void
 **************************************************************************/
     public static void beforeInsertDirector(List<NSP_Focus_Item__c> newList){
         try{
@@ -17,22 +18,22 @@ public with sharing class NSP_FocusItemTriggerHelper {
             for(NSP_Focus_Item__c focusItem: newList){
                 if(focusItem.NSP_Asset__c != null ) {
                     focusItemToCheck.add(focusItem);
-                } 
+                }
             }// if asset field is populated, send the list of focus item records to check account related to asset field
             if(!focusItemToCheck.isEmpty()){
-                 checkAssetRelatedToAccount(focusItemToCheck);  
-            }           
-        } catch(Exception exc){          
+                 checkAssetRelatedToAccount(focusItemToCheck);
+            }
+        } catch(Exception exc){
             NSP_ErrorLogHandler.logSaveException('NSP_FocusItemTriggerHelper','beforeInsertDirector', exc.getMessage());
         }
     }
-    
+
    /***********************************************************************
    * @MethodName : beforeUpdateDirector
     * @Description: Iterates throught the list of  focus items
     * @param      : Map<Id, NSP_Focus_Item__c> newMap,  Map<Id, NSP_Focus_Item__c> oldMap
     * @Story      : STY-03807
-    * @return     : void                          
+    * @return     : void
     **************************************************************************/
     public static void beforeUpdateDirector( Map<Id, NSP_Focus_Item__c> newMap,  Map<Id, NSP_Focus_Item__c> oldMap){
         try{
@@ -41,12 +42,12 @@ public with sharing class NSP_FocusItemTriggerHelper {
             for(NSP_Focus_Item__c focusItem: newMap.values()){
                 if(focusItem.NSP_Asset__c != oldMap.get(focusItem.ID).NSP_Asset__c ) {
                     focusItemToCheck.add(focusItem);
-                } 
+                }
             }// if asset field is populated, send the list of focus item records to check account related to asset field
             if(!focusItemToCheck.isEmpty()){
-                 checkAssetRelatedToAccount(focusItemToCheck);  
+                 checkAssetRelatedToAccount(focusItemToCheck);
             }
-        } catch(Exception exc){          
+        } catch(Exception exc){
             NSP_ErrorLogHandler.logSaveException('NSP_FocusItemTriggerHelper','beforeUpdateDirector', exc.getMessage());
         }
     }
@@ -56,7 +57,7 @@ public with sharing class NSP_FocusItemTriggerHelper {
     * @Description: Iterates throught the list of new Account GroupMembers
     * @param      : List<NSP_Focus_Item__c> newList , Map<Id, NSP_Focus_Item__c> newMap
     * @Story      : STY-01437
-    * @return     : void                          
+    * @return     : void
     **************************************************************************/
     public static void afterInsertDirector(List<NSP_Focus_Item__c> newList , Map<Id, NSP_Focus_Item__c> newMap){
         try{
@@ -68,63 +69,63 @@ public with sharing class NSP_FocusItemTriggerHelper {
             Set<Id> focusItemIdSet = new Set<Id>();
             Id woRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.WO_ASSET_RECORDTYPE );
             for(NSP_Focus_Item__c focusItems : newList){
-            	focusItemIdSet.add(focusItems.Id);
+                focusItemIdSet.add(focusItems.Id);
             }
-            
+
             if(!focusItemIdSet.isEmpty() && woRecordTypeId != null ){
-                for(NSP_Focus_Item__c focusItems : [SELECT Id, NSP_Detail__c, NSP_Asset__r.AccountId, NSP_Asset__r.NSP_Client__c, 
-                                                    NSP_Asset__c, NSP_Asset__r.RecordTypeId, NSP_Asset__r.NSP_Account_Status__c, 
-                                                    Focus_Item__c, NSP_Account_Group__r.NSP_Type__c, Details__c 
-                                                    FROM NSP_Focus_Item__c 
+                for(NSP_Focus_Item__c focusItems : [SELECT Id, NSP_Detail__c, NSP_Asset__r.AccountId, NSP_Asset__r.NSP_Client__c,
+                                                    NSP_Asset__c, NSP_Asset__r.RecordTypeId, NSP_Asset__r.NSP_Account_Status__c,
+                                                    Focus_Item__c, NSP_Account_Group__r.NSP_Type__c, Details__c
+                                                    FROM NSP_Focus_Item__c
                                                     WHERE Id IN : focusItemIdSet
                                                     AND NSP_Asset__r.RecordTypeId =: woRecordTypeId
                                                     AND NSP_Is_Duplicate__c = false
                                                     AND NSP_Asset__r.NSP_Account_Status__c =: NSP_ServiceConstants.AIMS_STATUS
-                                                    AND (NSP_Account_Group__r.NSP_Type__c =: NSP_ServiceConstants.ACCOUNT_HEALTH 
+                                                    AND (NSP_Account_Group__r.NSP_Type__c =: NSP_ServiceConstants.ACCOUNT_HEALTH
                                                     OR NSP_Account_Group__r.NSP_Type__c =: NSP_ServiceConstants.RENEWAL_PROBABILITY)]){
-    
+
                     if(focusItems.Focus_Item__c == NSP_ServiceConstants.BUSINESS_RESTRUCTURE){
                         businessRestructureList.add(focusItems);
                     }
-                      
-                    if(focusItems.Focus_Item__c == NSP_ServiceConstants.FINANCIAL_RISK 
+
+                    if(focusItems.Focus_Item__c == NSP_ServiceConstants.FINANCIAL_RISK
                        && focusItems.NSP_Detail__c == NSP_ServiceConstants.EXTENSIVE_SLALARY_REDUCTION){
                         extnsvSalaryReductionList.add(focusItems);
                     }
-                    
-                    if((focusItems.Focus_Item__c == NSP_ServiceConstants.ECONOMIC_SHIFTS 
+
+                    if((focusItems.Focus_Item__c == NSP_ServiceConstants.ECONOMIC_SHIFTS
                         || focusItems.Focus_Item__c == NSP_ServiceConstants.FINANCIAL_RISK)
-                      	&& focusItems.NSP_Detail__c != NSP_ServiceConstants.EXTENSIVE_SLALARY_REDUCTION){
+                          && focusItems.NSP_Detail__c != NSP_ServiceConstants.EXTENSIVE_SLALARY_REDUCTION){
                         ecoShiftOrFinRiskList.add(focusItems);
                     }
-                                                        
+
                     if(focusItems.Focus_Item__c == NSP_ServiceConstants.RISK_MITIGATION){
                         riskMitigationList.add(focusItems);
                     }
-                                                        
+
                     if(focusItems.Focus_Item__c == NSP_ServiceConstants.RAPID_GROWTH_OR_DECLINE
                         && focusItems.NSP_Detail__c == NSP_ServiceConstants.DECLINING_20_PERCENT_OR_MORE){
                         rapidGrowthOrDeclineList.add(focusItems);
-                    }                                    
+                    }
                 }
-        	} 
+            }
 
             if(!businessRestructureList.isEmpty() && getCreditServiceQueueId() != null){
                 createCaseAfterInsertOfFocusItem(businessRestructureList, getCreditServiceQueueId(), NSP_ServiceConstants.CRITICAL_BUSINESS_CHALLENGES);
             }
-            
+
             if(!extnsvSalaryReductionList.isEmpty() && getCreditServiceQueueId() != null){
                 createCaseAfterInsertOfFocusItem(extnsvSalaryReductionList, getCreditServiceQueueId(), NSP_ServiceConstants.EXTENSIVE_SLALARY_REDUCTION);
             }
-            
+
             if(!ecoShiftOrFinRiskList.isEmpty() && getCreditServiceQueueId() != null){
                 createCaseAfterInsertOfFocusItem(ecoShiftOrFinRiskList, getCreditServiceQueueId(), NSP_ServiceConstants.FINANCIAL_BUSINESS_CHALLENGES);
             }
-            
+
             if(!riskMitigationList.isEmpty() && getCreditServiceQueueId() != null){
                 createCaseAfterInsertOfFocusItem(riskMitigationList, getCreditServiceQueueId(), NSP_ServiceConstants.NOT_FOLLOWING_GUIDELINES);
             }
-            
+
             if(!rapidGrowthOrDeclineList.isEmpty() && getCreditServiceQueueId() != null){
                 createCaseAfterInsertOfFocusItem(rapidGrowthOrDeclineList, getCreditServiceQueueId(), NSP_ServiceConstants.HEADCOUNT_REDUCTION);
             }
@@ -138,7 +139,7 @@ public with sharing class NSP_FocusItemTriggerHelper {
     * @Description: To get NSP_Credit_Services queue Id
     * @param      : NA
     * @Story      : STY-01437
-    * @return     : Id                          
+    * @return     : Id
     **************************************************************************/
     private static Id getCreditServiceQueueId(){
         List<String> fields = new List<String>{'Id','DeveloperName','Type'};
@@ -155,10 +156,10 @@ public with sharing class NSP_FocusItemTriggerHelper {
     * @Description: Iterates throught the list of new Account GroupMembers
     * @param      : List<NSP_Focus_Item__c> focusItemList, Id peoRecordTypeId
     * @Story      : STY-01437
-    * @return     : void                          
+    * @return     : void
     **************************************************************************/
     private static void createCaseAfterInsertOfFocusItem(List<NSP_Focus_Item__c> focusItemList, Id queueId, String subCategoryValue){
-        
+
         try{
             List<Case> caseList = new List<Case>();
             Id peoRecordTypeId = NSP_GenericRecordType.getRecordTypeId('Case',NSP_ServiceConstants.PEO);
@@ -176,16 +177,16 @@ public with sharing class NSP_FocusItemTriggerHelper {
         }catch(Exception exc){
             NSP_ErrorLogHandler.logSaveException('NSP_FocusItemTriggerHelper', 'createCaseAfterInsertOfFocusItem', exc.getMessage());
         }
-        
+
     }
-    
+
     /***********************************************************************
     * @MethodName: peoCaseFieldMapping
-    * @Description: This method will map the PEO type case field values 
+    * @Description: This method will map the PEO type case field values
     * @param : NSP_Focus_Item__c focusItemRec, Id peoRecordTypeId,
     * 		   Id queueId, String subCategoryValue
     * @Story : STY-01437
-    * @return: case                          
+    * @return: case
     **************************************************************************/
     private static case peoCaseFieldMapping(NSP_Focus_Item__c focusItemRec, Id peoRecordTypeId, Id queueId, String subCategoryValue){
         Case caseObj = new Case();
@@ -202,20 +203,20 @@ public with sharing class NSP_FocusItemTriggerHelper {
         caseObj.AssetId = focusItemRec.NSP_Asset__c;
         caseObj.NSP_ClientNumber__c = focusItemRec.NSP_Asset__r.NSP_Client__c;
         caseObj.OwnerId = queueId;
-        
+
         return caseObj;
     }
-    
+
     /***********************************************************************
     * @MethodName : createDescriptionString
     * @Description: To create case description
     * @param      : NSP_Focus_Item__c focusItem
     * @Story      : STY-01437
-    * @return     : String                          
+    * @return     : String
     **************************************************************************/
     private static String createDescriptionString(NSP_Focus_Item__c focusItem){
         String description = '';
-        
+
         if(String.isNotBlank(focusItem.Focus_Item__c)){
             description = focusItem.Focus_Item__c;
         }
@@ -225,16 +226,16 @@ public with sharing class NSP_FocusItemTriggerHelper {
         if(String.isNotBlank(focusItem.Details__c)){
             description+= ' : '+focusItem.Details__c;
         }
-        
+
         return description;
     }
-  
+
         /***********************************************************************
     * @MethodName : checkAssetRelatedToAccount
     * @Description: To validate asset added is related to the account of the account group
     * @param      : List<NSP_Focus_Item__c>
     * @Story      : STY-03807
-    * @return     : void                          
+    * @return     : void
     **************************************************************************/
     private static void  checkAssetRelatedToAccount(List<NSP_Focus_Item__c> newList){
         List<ID>  accountGroupIDs = new  List<ID> ();
@@ -244,7 +245,7 @@ public with sharing class NSP_FocusItemTriggerHelper {
         // Get list of asset and account groups
         for(NSP_Focus_Item__c focusItem:newList){
             if(focusItem.NSP_Asset__c != null){
-                assetIDs.add(focusItem.NSP_Asset__c); 
+                assetIDs.add(focusItem.NSP_Asset__c);
             }
             accountGroupIDs.add(focusItem.NSP_Account_Group__c);
         }
@@ -253,7 +254,7 @@ public with sharing class NSP_FocusItemTriggerHelper {
             assetAccountIDs.put(asst.ID, asst.accountID);
         }
         //Store account group and corresponding accounts in MAP<AccountID , Set<AssetID>>
-        for(NSP_Account_Group_Member__c acctGroupMem:[Select ID,NSP_Group__c,NSP_Member_Account__c FROM NSP_Account_Group_Member__c WHERE NSP_Group__c  IN : accountGroupIDs ]){             
+        for(NSP_Account_Group_Member__c acctGroupMem:[Select ID,NSP_Group__c,NSP_Member_Account__c FROM NSP_Account_Group_Member__c WHERE NSP_Group__c  IN : accountGroupIDs ]){
             Set<ID> accountIDs = new Set<ID>();
             // check if the accountgroup key already exist in the map
             if(accountGrpLstOfAccount.containskey(acctGroupMem.NSP_Group__c)){
@@ -269,7 +270,7 @@ public with sharing class NSP_FocusItemTriggerHelper {
                 Set<ID> accountIDs = new Set<ID>();
                 // get the account related to asset
                 if(assetAccountIDs.containsKey(focusItem.NSP_Asset__c)){
-                    AssetAccount =  assetAccountIDs.get(focusItem.NSP_Asset__c);   
+                    AssetAccount =  assetAccountIDs.get(focusItem.NSP_Asset__c);
                 }
                 // get the accounts related to account group
                 if(accountGrpLstOfAccount.containsKey(focusItem.NSP_Account_Group__c)){
@@ -277,8 +278,8 @@ public with sharing class NSP_FocusItemTriggerHelper {
                 }
                 //check if the account from asset matches with any of the account IDs in the list
                 if(!accountIDs.contains(AssetAccount) && !Test.isRunningTest()){
-                    // throw an error if it doesn't match with any of the account IDs                   
-                      focusItem.addError(System.Label.NSP_SelectRelatedAsset) ;                                                       
+                    // throw an error if it doesn't match with any of the account IDs
+                      focusItem.addError(System.Label.NSP_SelectRelatedAsset) ;
                 }
             }
         }
