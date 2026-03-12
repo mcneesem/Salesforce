@@ -20,9 +20,22 @@
         <name>CalculatedTerminationDate</name>
         <dataType>Date</dataType>
         <expression>DATE(
-    YEAR(ADDMONTHS({!$Flow.CurrentDate}, VALUE(TEXT({!$Record.Credit_Duration_Months__c})))),
-    MOD(MONTH(ADDMONTHS({!$Flow.CurrentDate}, VALUE(TEXT({!$Record.Credit_Duration_Months__c})))), 12),
-    1
+  YEAR(
+    ADDMONTHS(
+      {!$Flow.CurrentDate} ,
+      VALUE( TEXT( {!$Record.Credit_Duration_Months__c} ) )
+    )
+  ) ,
+  MOD(
+    MONTH(
+      ADDMONTHS(
+        {!$Flow.CurrentDate} ,
+        VALUE( TEXT( {!$Record.Credit_Duration_Months__c} ) )
+      )
+    ) ,
+    12
+  ) ,
+  1
 ) - 1</expression>
     </formulas>
     <interviewLabel>Order Product - Before Update - Set Promo Termination Date {!$Flow.CurrentDateTime}</interviewLabel>
