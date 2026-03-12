@@ -20,7 +20,7 @@ public without sharing class NSP_AccountGroupFocusItemsBatch implements ISelfSch
     Map<String,Map<String,Integer>> accGrpFoucsItemCount = new Map<String, Map<String,Integer>>();
     Set<Id> accountIds = new Set<Id>();
     List<String> focusItemStatus = new List<String>{ NSP_ServiceConstants.STATUS_ACTIVE, NSP_ServiceConstants.CLOSED_STATUS };
-    
+
     //
     // Argument-free constructor is required to be "runnable"
     //
@@ -74,28 +74,28 @@ public without sharing class NSP_AccountGroupFocusItemsBatch implements ISelfSch
     //
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
-        return Database.getQueryLocator( [ 
+        return Database.getQueryLocator( [
             SELECT Id,
                 Name,
                 NSP_Type__c,
                 NSP_Account__c,
                 NSP_Tag__c,
                 NSP_Group_Member_Count__c,
-            	( SELECT Id,
+                ( SELECT Id,
                      NSP_Member_Account__c
                   FROM Account_Group_Members__r
                 ),
-            	( SELECT Id,
+                ( SELECT Id,
                      Focus_Item__c,
                      NSP_Status__c,
                      NSP_Detail__c
-            	  FROM Focus_Items__r
-           		  WHERE NSP_Status__c != 'Closed'
+                  FROM Focus_Items__r
+                     WHERE NSP_Status__c != 'Closed'
                 )
-   			FROM NSP_Account_Group__c
-   			WHERE NSP_Group_Member_Count__c > 0
-   			AND NSP_Type__c IN ('Account Health','Renewal Probability')
-		] );
+               FROM NSP_Account_Group__c
+               WHERE NSP_Group_Member_Count__c > 0
+               AND NSP_Type__c IN ('Account Health','Renewal Probability')
+        ] );
     }
 
     public void execute(Database.BatchableContext bc, List<NSP_Account_Group__c> lstAccGrps) {
@@ -106,13 +106,13 @@ public without sharing class NSP_AccountGroupFocusItemsBatch implements ISelfSch
                 this.checkForFocusItems(lstAccGrps);
                 this.insertFocusItems();
             } catch ( Exception e ) {
-    		    NSP_ErrorLogHandler.logException(
-        	        NSP_AccountGroupFocusItemsBatch.class.getName() ,
-        	       'execute' ,
-        	       e
-    		    );
-		    }
-        }        
+                NSP_ErrorLogHandler.logException(
+                    NSP_AccountGroupFocusItemsBatch.class.getName() ,
+                   'execute' ,
+                   e
+                );
+            }
+        }
     }
 
     //finish method
@@ -126,7 +126,7 @@ public without sharing class NSP_AccountGroupFocusItemsBatch implements ISelfSch
     private void checkForFocusItems(List<NSP_Account_Group__c> lstAccGrps) {
         if ( lstAccGrps != null && !lstAccGrps.isempty() ){
              for(NSP_Account_Group__c accGrp : lstAccGrps){
-                List<String> lstAIMS = checkForAIMS( 
+                List<String> lstAIMS = checkForAIMS(
                     accGrp.Id,
                     this.grpIdWithAccId,
                     this.accIdWithAimsClient
@@ -222,13 +222,13 @@ public without sharing class NSP_AccountGroupFocusItemsBatch implements ISelfSch
                  );
 
                  // 2) Update existing ACTIVE focus item when AIMS list is present
-             } else if ( this.accGrpWithFocusItemActiveNSP.containsKey(accGrpId) 
-                        && this.accGrpWithFocusItemActiveNSP.get(accGrpId) != null 
+             } else if ( this.accGrpWithFocusItemActiveNSP.containsKey(accGrpId)
+                        && this.accGrpWithFocusItemActiveNSP.get(accGrpId) != null
                        )
              {
                  NSP_Focus_Item__c focusItem = this.accGrpWithFocusItemActiveNSP.get(accGrpId);
-                 focusItem.Details__c = NSP_ServiceConstants.FOCUS_401_COMMENTS 
-                     + ' [' + String.join( noInsperityAIMSClient, ',') 
+                 focusItem.Details__c = NSP_ServiceConstants.FOCUS_401_COMMENTS
+                     + ' [' + String.join( noInsperityAIMSClient, ',')
                      + ']';
                  this.lstFocusItems.add(focusItem);
 
@@ -236,7 +236,7 @@ public without sharing class NSP_AccountGroupFocusItemsBatch implements ISelfSch
              }
 
          // 3) Close existing ACTIVE focus item based on your original condition
-         } else if ( accGrpId != null 
+         } else if ( accGrpId != null
                     && this.accGrpWithFocusItemActiveNSP.containsKey(accGrpId)
                     && this.accGrpWithFocusItemActiveNSP.get(accGrpId) != null
                     && noNSPAccIdWithAims != null
@@ -263,11 +263,11 @@ public without sharing class NSP_AccountGroupFocusItemsBatch implements ISelfSch
     **/
     private List<String> checkForAIMS(Id accGrpId, Map<String, List<String>> grpIdWithAccId, Map<String, String> accIdWithAimsClient){
         List<String> lstAIMS = new List<String>();
-        if ( grpIdWithAccId != null 
-            && !grpIdWithAccId.isEmpty() 
-            && accGrpId != null 
+        if ( grpIdWithAccId != null
+            && !grpIdWithAccId.isEmpty()
+            && accGrpId != null
             && accIdWithAimsClient != null
-            && !accIdWithAimsClient.isEmpty() 
+            && !accIdWithAimsClient.isEmpty()
            )
         {
            for ( String accId : grpIdWithAccId.get( accGrpId ) ) {
@@ -318,10 +318,10 @@ public without sharing class NSP_AccountGroupFocusItemsBatch implements ISelfSch
 
                 this.collectMemberAccounts( accGrp.Id, accGrp.Account_Group_Members__r);
                 if ( accGrp.Focus_Items__r != null && !accGrp.Focus_Items__r.isEmpty() ){
-                    for( NSP_Focus_Item__c focusItem : accGrp.Focus_Items__r) { 
+                    for( NSP_Focus_Item__c focusItem : accGrp.Focus_Items__r) {
                         this.processEarlyTenureFocusItem( accGrp.Id, focusItem );
                         this.processNoInsperity401KFocusItem( accGrp.Id, focusItem );
-                    }    
+                    }
                 }
 
             }
@@ -330,34 +330,34 @@ public without sharing class NSP_AccountGroupFocusItemsBatch implements ISelfSch
 
     private void collectMemberAccounts(Id accountGroupId, List<NSP_Account_Group_Member__c> records){
         if ( records != null && !records.isEmpty() && accountGroupId != null ){
-            for( NSP_Account_Group_Member__c accGrpMbr : records ) { 
-                if ( accGrpMbr.NSP_Member_Account__c != null ){ 
-                    if ( this.grpIdWithAccId != null 
-                        && !this.grpIdWithAccId.isEmpty() 
-                        && this.grpIdWithAccId.containsKey( accountGroupId ) 
+            for( NSP_Account_Group_Member__c accGrpMbr : records ) {
+                if ( accGrpMbr.NSP_Member_Account__c != null ){
+                    if ( this.grpIdWithAccId != null
+                        && !this.grpIdWithAccId.isEmpty()
+                        && this.grpIdWithAccId.containsKey( accountGroupId )
                        )
                     {
                         this.grpIdWithAccId.get( accountGroupId ).add( accGrpMbr.NSP_Member_Account__c );
                     }
                     accountIds.add(accGrpMbr.NSP_Member_Account__c);
                 }
-            } 
+            }
         }
 
     }
 
     private void processEarlyTenureFocusItem( Id accGrpId, NSP_Focus_Item__c focusItem ){
-        if ( accGrpId != null 
-             && focusItem !=null 
-             && focusItem.Focus_Item__c == NSP_ServiceConstants.EARLY_TENURE  
-             && this.accGrpWithFocusItem != null 
+        if ( accGrpId != null
+             && focusItem !=null
+             && focusItem.Focus_Item__c == NSP_ServiceConstants.EARLY_TENURE
+             && this.accGrpWithFocusItem != null
              && this.accGrpWithFocusItem.containsKey(accGrpId)
            )
-        { 
-             if ( String.isNotBlank( focusItem.NSP_Status__c ) 
-                 && !this.focusItemStatus.contains( focusItem.NSP_Status__c ) ){  
+        {
+             if ( String.isNotBlank( focusItem.NSP_Status__c )
+                 && !this.focusItemStatus.contains( focusItem.NSP_Status__c ) ){
                   this.accGrpWithFocusItem.remove(accGrpId);
-             } else if ( focusItem.NSP_Status__c == NSP_ServiceConstants.STATUS_ACTIVE ) { 
+             } else if ( focusItem.NSP_Status__c == NSP_ServiceConstants.STATUS_ACTIVE ) {
                   this.accGrpWithFocusItem.remove(accGrpId);
                   this.accGrpWithFocusItemActive.put(accGrpId, focusItem);
              }
@@ -365,14 +365,14 @@ public without sharing class NSP_AccountGroupFocusItemsBatch implements ISelfSch
     }
 
     private void processNoInsperity401KFocusItem( Id accGrpId, NSP_Focus_Item__c focusItem ){
-        if ( accGrpId != null 
-             && focusItem !=null 
-             && focusItem.Focus_Item__c == NSP_ServiceConstants.NO_INSPERITY_401K 
-             && this.accGrpWithFocusItemNSP != null 
+        if ( accGrpId != null
+             && focusItem !=null
+             && focusItem.Focus_Item__c == NSP_ServiceConstants.NO_INSPERITY_401K
+             && this.accGrpWithFocusItemNSP != null
              && this.accGrpWithFocusItemNSP.containsKey(accGrpId)
            )
         {
-            if ( String.isNotBlank( focusItem.NSP_Status__c ) 
+            if ( String.isNotBlank( focusItem.NSP_Status__c )
                 && !this.focusItemStatus.contains(focusItem.NSP_Status__c)){
                  this.accGrpWithFocusItemNSP.remove(accGrpId);
              } else if( focusItem.NSP_Status__c == NSP_ServiceConstants.STATUS_ACTIVE) {
@@ -446,7 +446,7 @@ public without sharing class NSP_AccountGroupFocusItemsBatch implements ISelfSch
                     AND NSP_AIMS_Original_First_Pay_Date__c <= LAST_N_DAYS:730
                     AND AccountId IN :accIds
                     WITH SECURITY_ENFORCED
-            ];
+                ];
             }
             return assets;
         }
@@ -477,6 +477,6 @@ public without sharing class NSP_AccountGroupFocusItemsBatch implements ISelfSch
             }
             return assets;
        }
-        
+
    }
 }
