@@ -70,7 +70,7 @@
                         </div>
                     </td>
                     <td style="margin: 0; padding: 0 0 0 12.5px;vertical-align: top;">
-                        <apex:outputText value="{!IF (AND(termination.revision == 'Yes',termination.csaterm != termination.previousTermDate,NOT(ISNULL(termination.previousTermDate))), 
+                        <apex:outputText value="{!IF (AND(termination.revision == 'Yes',termination.csaterm != termination.previousTermDate,NOT(ISNULL(termination.previousTermDate))),
                                                 'REVISED ' & TEXT(MONTH(termination.csaterm)) & '/' & TEXT(DAY(termination.csaterm)) & '/' &
                                                 TEXT(YEAR(termination.csaterm)) &
                                                 ' (Previous Term Date: ' &
@@ -114,7 +114,7 @@
                             TEXT(YEAR(termination.beneterm))
                             )
                             )}"/>
-                        
+
                     </td>
                 </tr>
                 <tr>
@@ -158,7 +158,7 @@
                                 )}" escape="false"
                                 rendered="{!OR(termination.reason == '1900 Merger with Insperity Client', termination.reason == '2700 Change in FEIN')}" />
                         <apex:outputPanel rendered="{!AND(termination.revision == 'Yes', termination.reason != termination.previousReason)}">
-                            &nbsp;<apex:outputText value="{!'(Previous Reason: ' & termination.previousReason & 
+                            &nbsp;<apex:outputText value="{!'(Previous Reason: ' & termination.previousReason &
                                 IF(NOT(ISBLANK(termination.previousSubtermReason)),
                                 '/' & termination.previousSubtermReason,
                                 ''
@@ -199,28 +199,17 @@
                     <td style="width: 10%; margin: 0; padding: 0;">CL:</td>
                     <td style="margin: 0; padding: 0 0 0 12.5px;vertical-align: top;">{!reinstatement.clName}</td>
                 </tr>
-                <tr>
+               <tr>
                     <td style="width: 10%; margin: 0; padding: 0;">CSA Term:</td>
                     <td style="margin: 0; padding: 0 0 0 12.5px;vertical-align: top;">
-                        <apex:outputText value="{!IF(
-                            reinstatement.clientermdate == Null,
-                            'NA',
-                            IF(reinstatement.revision == 'Yes','REVISED ' & TEXT(MONTH(reinstatement.clientermdate)) & '/' & TEXT(DAY(reinstatement.clientermdate)) & '/' &
-                            TEXT(YEAR(reinstatement.clientermdate)) &
-                            ' (Previous Term Date: ' &
-                            TEXT(MONTH(reinstatement.previousClientTermdate)) & '/' &
-                            TEXT(DAY(reinstatement.previousClientTermdate)) & '/' &
-                            TEXT(YEAR(reinstatement.previousClientTermdate)) & ')',
-                            TEXT(MONTH(reinstatement.clientermdate)) & '/' &
-                            TEXT(DAY(reinstatement.clientermdate)) & '/' &
-                            TEXT(YEAR(reinstatement.clientermdate))
-                            ))}">
-                        </apex:outputText>
+                        <apex:outputText value="{!reinstatement.clientTermDate}"/>
                     </td>
                 </tr>
                 <tr>
                     <td style="width: 10%; margin: 0; padding: 0;">Reason:</td>
-                    <td style="margin: 0; padding: 0 0 0 12.5px;vertical-align: top;">{!reinstatement.reason}</td>
+                    <td style="margin: 0; padding: 0 0 0 12.5px;vertical-align: top;">
+                        <apex:outputText value="{!reinstatement.reinstatementReason}"/>
+                    </td>
                 </tr>
             </table>
         </apex:column>
