@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Promo_Expired__c</fullName>
-    <formula>IF(NOT(ISBLANK(Promo_End_Date__c)) &amp;&amp; Promo_End_Date__c &lt; TODAY(), TRUE , FALSE)</formula>
+    <formula>AND(
+  NOT( ISBLANK( Promo_End_Date__c ) ) ,
+  ( Promo_End_Date__c &lt; TODAY() )
+)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Promo Expired</label>
     <trackHistory>false</trackHistory>
