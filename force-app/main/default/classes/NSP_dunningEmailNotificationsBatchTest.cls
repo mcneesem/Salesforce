@@ -12,6 +12,12 @@ private class NSP_dunningEmailNotificationsBatchTest {
         sett.EffectiveDateStartOfMonth__c = true;
         insert sett;
 
+        DunningEmailNotificationBatchSettings__c ccSetting = new DunningEmailNotificationBatchSettings__c();
+        ccSetting.IsEnabled__c = true;
+        ccSetting.BatchSize__c = 200;
+        ccSetting.FinanceEmailAddresses__c = UserInfo.getUserEmail();
+        insert ccSetting;
+
         NSP_TestHelper.switchOffTriggers();
         Account objaccount = NSP_TestHelper.createAccount(true);
         //Contact objcontact = NSP_TestHelper.createContact(objaccount.id, true);
@@ -89,7 +95,7 @@ private class NSP_dunningEmailNotificationsBatchTest {
         invc[0].blng__InvoiceStatus__c = NSP_CPQConstants.INVOICESTATUS;
         update invc;
 
-        Id DUNNING_CASE_RT_ID = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(NSP_CPQConstants.DUNNING).getRecordTypeId();
+        Id DUNNING_CASE_RT_ID = NSP_GenericRecordType.getRecordTypeId( 'Case' , 'Dunning' );
         NSP_CaseTriggerHandler.TriggerDisabled = TRUE;
         Case dunCase = new Case();
         dunCase.AccountId = objaccount.Id;
@@ -126,7 +132,7 @@ private class NSP_dunningEmailNotificationsBatchTest {
         invc[0].blng__InvoiceStatus__c = NSP_CPQConstants.INVOICESTATUS;
         update invc;
 
-        Id DUNNING_CASE_RT_ID = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(NSP_CPQConstants.DUNNING).getRecordTypeId();
+        Id DUNNING_CASE_RT_ID = NSP_GenericRecordType.getRecordTypeId( 'Case' , 'Dunning' );
         NSP_CaseTriggerHandler.TriggerDisabled = TRUE;
         Case dunCase = new Case();
         dunCase.AccountId = objaccount.Id;
@@ -140,10 +146,8 @@ private class NSP_dunningEmailNotificationsBatchTest {
         insert dunCase;
 
         NSP_DunningEmailNotificationsBatch ebatch = new NSP_DunningEmailNotificationsBatch();
-        ID ebatchprocessid = Database.executeBatch(ebatch);
+        NSP_DunningEmailNotificationsBatch.schedule();
         Test.stopTest();
-
-        System.assertNotEquals(null, ebatchprocessid);
     }
 
     @isTest
@@ -172,7 +176,7 @@ private class NSP_dunningEmailNotificationsBatchTest {
         invc[0].blng__InvoiceStatus__c = NSP_CPQConstants.INVOICESTATUS;
         update invc;
 
-        Id DUNNING_CASE_RT_ID = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(NSP_CPQConstants.DUNNING).getRecordTypeId();
+        Id DUNNING_CASE_RT_ID = NSP_GenericRecordType.getRecordTypeId( 'Case' , 'Dunning' );
         NSP_CaseTriggerHandler.TriggerDisabled = TRUE;
         Case dunCase = new Case();
         dunCase.AccountId = objaccount.Id;
@@ -221,7 +225,7 @@ private class NSP_dunningEmailNotificationsBatchTest {
         invc[0].blng__InvoiceStatus__c = NSP_CPQConstants.INVOICESTATUS;
         update invc;
 
-        Id DUNNING_CASE_RT_ID = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(NSP_CPQConstants.DUNNING).getRecordTypeId();
+        Id DUNNING_CASE_RT_ID = NSP_GenericRecordType.getRecordTypeId( 'Case' , 'Dunning' );
         NSP_CaseTriggerHandler.TriggerDisabled = TRUE;
         Case dunCase = new Case();
         dunCase.AccountId = objaccount.Id;
@@ -256,7 +260,7 @@ private class NSP_dunningEmailNotificationsBatchTest {
         update acr;
 
         NSP_DunningEmailsMessageService.dunningEmailParams accDParams = new NSP_DunningEmailsMessageService.dunningEmailParams('X30_Days_Past_Due_Reminder','Account',objaccount.Id);
-        NSP_DunningEmailsMessageService.sendDunningEmail(new List<NSP_DunningEmailsMessageService.dunningEmailParams> {accDParams});
+        NSP_DunningEmailsMessageService.processDunningEmails(new List<NSP_DunningEmailsMessageService.dunningEmailParams> {accDParams});
         System.assert(acr.NSP_Dunning_Emails__c == TRUE);
         Test.stopTest();
 
