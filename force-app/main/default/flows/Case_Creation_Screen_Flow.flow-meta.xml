@@ -30,22 +30,6 @@
     <apiVersion>64.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
-        <name>Account_Path</name>
-        <label>Account Path</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>contextAccountId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Category_Sub_Category</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Assign_Fault_Element_Create_Case</name>
         <label>Assign Fault Element : Create_Case</label>
         <locationX>0</locationX>
@@ -198,40 +182,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_Fault_Element_Update_Messaging_Session</name>
-        <label>Assign Fault Element : Update Messaging Session</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>faultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Update_Messaging_Session</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Create_Case_Fault_Handler</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_Fault_Element_Update_Voice_Call</name>
-        <label>Assign Fault Element : Update_Voice_Call</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>faultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Update_Voice_Call</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Create_Case_Fault_Handler</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Assign_Selected_Record_Type</name>
         <label>Assign Selected Record Type</label>
         <locationX>0</locationX>
@@ -277,22 +227,6 @@
         </assignmentItems>
         <connector>
             <targetReference>Populate_Case_Fields</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Contact_Path</name>
-        <label>Contact Path</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>contextContactId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Category_Sub_Category</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -419,7 +353,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Store_Project_Account_Id</targetReference>
+            <targetReference>Store_Project_Attributes</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -435,7 +369,39 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Store_RET_Sales_to_Implementation_Account_Id</targetReference>
+            <targetReference>Store_RET_Sales_to_Implementation_Attributes</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Store_Account_Attributes</name>
+        <label>Store Account Attributes</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>contextAccountId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Accessible_Record_Types</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Store_Contact_Attributes</name>
+        <label>Store Contact Attributes</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>contextContactId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Accessible_Record_Types</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -506,8 +472,8 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Store_Project_Account_Id</name>
-        <label>Store Project Account Id</label>
+        <name>Store_Project_Attributes</name>
+        <label>Store Project Attributes</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
@@ -522,8 +488,8 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Store_RET_Sales_to_Implementation_Account_Id</name>
-        <label>Store RET-Sales-to-Implementation Account Id</label>
+        <name>Store_RET_Sales_to_Implementation_Attributes</name>
+        <label>Store RET-Sales-to-Implementation Attributes</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
@@ -709,7 +675,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Check_Record_Id_After_Case_Creation</targetReference>
+                <targetReference>Case_Creation_Screen_Flow_Related_Records</targetReference>
             </connector>
             <label>Case Created</label>
         </rules>
@@ -778,6 +744,36 @@
                 <targetReference>Blank_Record_Id</targetReference>
             </connector>
             <label>Record Id Is Blank</label>
+        </rules>
+        <rules>
+            <name>Is_Account</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>recordId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>001</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Store_Account_Attributes</targetReference>
+            </connector>
+            <label>Is Account</label>
+        </rules>
+        <rules>
+            <name>Is_Contact</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>recordId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>003</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Store_Contact_Attributes</targetReference>
+            </connector>
+            <label>Is Contact</label>
         </rules>
         <rules>
             <name>Is_Case</name>
@@ -853,162 +849,6 @@
                 <targetReference>Get_RET_Sales_to_Implementation</targetReference>
             </connector>
             <label>Is  RET-Sales-to-Implementation</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Check_Record_Id_After_Case_Creation</name>
-        <label>Check Record Id (After-Case-Creation)</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Navigate_To_Record</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Case_Created_by_Messaging_Session</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>recordId</leftValueReference>
-                <operator>StartsWith</operator>
-                <rightValue>
-                    <stringValue>0Mw</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Update_Messaging_Session</targetReference>
-            </connector>
-            <label>Case Created by Messaging Session</label>
-        </rules>
-        <rules>
-            <name>Case_Created_by_Voice_Call</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>recordId</leftValueReference>
-                <operator>StartsWith</operator>
-                <rightValue>
-                    <stringValue>0LQ</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Update_Voice_Call</targetReference>
-            </connector>
-            <label>Case Created by Voice Call</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <description>Evaluate the sourceRecordId is Account or Contact or Case</description>
-        <name>Check_sObjectType</name>
-        <label>Check sObjectType</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>UnidentifiedSObjectType</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>From_Account</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>recordId</leftValueReference>
-                <operator>StartsWith</operator>
-                <rightValue>
-                    <stringValue>001</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Account_Path</targetReference>
-            </connector>
-            <label>From Account</label>
-        </rules>
-        <rules>
-            <name>From_Contact</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>recordId</leftValueReference>
-                <operator>StartsWith</operator>
-                <rightValue>
-                    <stringValue>003</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Contact_Path</targetReference>
-            </connector>
-            <label>From Contact</label>
-        </rules>
-        <rules>
-            <name>From_Case</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>recordId</leftValueReference>
-                <operator>StartsWith</operator>
-                <rightValue>
-                    <stringValue>500</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Category_Sub_Category</targetReference>
-            </connector>
-            <label>From Case</label>
-        </rules>
-        <rules>
-            <name>From_Project</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>recordId</leftValueReference>
-                <operator>StartsWith</operator>
-                <rightValue>
-                    <stringValue>a2o</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Category_Sub_Category</targetReference>
-            </connector>
-            <label>From Project</label>
-        </rules>
-        <rules>
-            <name>From_Messaging_Session</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>recordId</leftValueReference>
-                <operator>StartsWith</operator>
-                <rightValue>
-                    <stringValue>0Mw</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Category_Sub_Category</targetReference>
-            </connector>
-            <label>From Messaging Session</label>
-        </rules>
-        <rules>
-            <name>From_Voice_Call</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>recordId</leftValueReference>
-                <operator>StartsWith</operator>
-                <rightValue>
-                    <stringValue>0LQ</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Category_Sub_Category</targetReference>
-            </connector>
-            <label>From Voice Call</label>
-        </rules>
-        <rules>
-            <name>From_RET_Sales_to_Implementation</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>recordId</leftValueReference>
-                <operator>StartsWith</operator>
-                <rightValue>
-                    <stringValue>aCz</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Category_Sub_Category</targetReference>
-            </connector>
-            <label>From RET-Sales-to-Implementation</label>
         </rules>
     </decisions>
     <decisions>
@@ -1281,7 +1121,7 @@
             <targetReference>Assign_Selected_Record_Type</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Check_sObjectType</targetReference>
+            <targetReference>Category_Sub_Category</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -1484,60 +1324,6 @@
         <object>MessagingEndUser</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordUpdates>
-        <name>Update_Messaging_Session</name>
-        <label>Update Messaging Session</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>Navigate_To_Record</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Assign_Fault_Element_Update_Messaging_Session</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>CaseId</field>
-            <value>
-                <elementReference>caseRecord.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <object>MessagingSession</object>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Update_Voice_Call</name>
-        <label>Update Voice Call</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>Navigate_To_Record</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Assign_Fault_Element_Update_Voice_Call</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>CaseId__c</field>
-            <value>
-                <elementReference>caseRecord.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <object>VoiceCall</object>
-    </recordUpdates>
     <runInMode>DefaultMode</runInMode>
     <screens>
         <name>Blank_Record_Id</name>
@@ -1996,7 +1782,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Check_sObjectType</targetReference>
+            <targetReference>Category_Sub_Category</targetReference>
         </connector>
         <fields>
             <name>recordTypeSection</name>
@@ -2057,30 +1843,6 @@
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
-    <screens>
-        <name>UnidentifiedSObjectType</name>
-        <label>Unidentified SObjectType</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <fields>
-            <name>AccountContactErrorDisplay</name>
-            <fieldText>&lt;p&gt;Unable to identify SObjectType.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <styleProperties>
-                <verticalAlignment>
-                    <stringValue>top</stringValue>
-                </verticalAlignment>
-                <width>
-                    <stringValue>12</stringValue>
-                </width>
-            </styleProperties>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
@@ -2089,6 +1851,28 @@
         </connector>
     </start>
     <status>Draft</status>
+    <subflows>
+        <name>Case_Creation_Screen_Flow_Related_Records</name>
+        <label>Case Creation Screen Flow - Related Records</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Navigate_To_Record</targetReference>
+        </connector>
+        <flowName>Case_Creation_Screen_Flow_Related_Records</flowName>
+        <inputAssignments>
+            <name>caseRecord</name>
+            <value>
+                <elementReference>caseRecord</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>recordId</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <subflows>
         <name>Create_Case_Fault_Handler</name>
         <label>Create Case Fault Handler</label>
