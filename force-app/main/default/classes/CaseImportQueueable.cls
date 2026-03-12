@@ -84,8 +84,7 @@ public with sharing class CaseImportQueueable implements Queueable , Finalizer {
     public void execute( FinalizerContext context ) {
         try {
             // Schedule the restoration of custom settings to avoid race condition with flow
-            Integer delayMinutes = 10;
-            System.enqueueJob(new CaseImportQueueableRestoreValues(UserInfo.getUserId()), delayMinutes);
+            CaseImportRestoreQueueable.enqueueJob();
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 CaseImportQueueable.class.getName() ,
