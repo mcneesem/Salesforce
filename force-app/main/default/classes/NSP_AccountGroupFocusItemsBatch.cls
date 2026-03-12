@@ -8,18 +8,18 @@
 public without sharing class NSP_AccountGroupFocusItemsBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<SObject>  {
     // test w/ NSP_AccountGroupFocusItemsBatch_Test (87%)
 
-    Map<String, Integer> accGrpWithFocusItem = new Map<String, Integer>();
-    Map<String, NSP_Focus_Item__c> accGrpWithFocusItemActive = new Map<String, NSP_Focus_Item__c>();
-    Map<String, Integer> accGrpWithFocusItemNSP = new Map<String, Integer>();
-    Map<String, NSP_Focus_Item__c> accGrpWithFocusItemActiveNSP = new Map<String, NSP_Focus_Item__c>();
-    Map<String, String> accIdWithAimsClient = new Map<String, String>();
-    Map<String, String> noInsperityAccIdWithAimsClient = new Map<String, String>();
-    Map<String, String> noNSPAccIdWithAimsClient = new Map<String, String>();
-    List<NSP_Focus_Item__c> lstFocusItems = new List<NSP_Focus_Item__c>();
-    Map<String, List<String>> grpIdWithAccId = new Map<String, List<String>>();
-    Map<String,Map<String,Integer>> accGrpFoucsItemCount = new Map<String, Map<String,Integer>>();
-    Set<Id> accountIds = new Set<Id>();
-    List<String> focusItemStatus = new List<String>{ NSP_ServiceConstants.STATUS_ACTIVE, NSP_ServiceConstants.CLOSED_STATUS };
+    private Map<String, Integer> accGrpWithFocusItem = new Map<String, Integer>();
+    private Map<String, NSP_Focus_Item__c> accGrpWithFocusItemActive = new Map<String, NSP_Focus_Item__c>();
+    private Map<String, Integer> accGrpWithFocusItemNSP = new Map<String, Integer>();
+    private Map<String, NSP_Focus_Item__c> accGrpWithFocusItemActiveNSP = new Map<String, NSP_Focus_Item__c>();
+
+    private Map<String, String> accIdWithAimsClient = new Map<String, String>();
+    private Map<String, String> noInsperityAccIdWithAimsClient = new Map<String, String>();
+    private Map<String, String> noNSPAccIdWithAimsClient = new Map<String, String>();
+    private List<NSP_Focus_Item__c> lstFocusItems = new List<NSP_Focus_Item__c>();
+    private Map<String, List<String>> grpIdWithAccId = new Map<String, List<String>>();
+    private Set<Id> accountIds = new Set<Id>();
+    private List<String> focusItemStatus = new List<String>{ NSP_ServiceConstants.STATUS_ACTIVE, NSP_ServiceConstants.CLOSED_STATUS };
 
     //
     // Argument-free constructor is required to be "runnable"
@@ -124,7 +124,7 @@ public without sharing class NSP_AccountGroupFocusItemsBatch implements ISelfSch
     * @param lstAccGrps
     **/
     private void checkForFocusItems(List<NSP_Account_Group__c> lstAccGrps) {
-        if ( lstAccGrps != null && !lstAccGrps.isempty() ){
+        if ( lstAccGrps != null && !lstAccGrps.isEmpty() ){
              for(NSP_Account_Group__c accGrp : lstAccGrps){
                 List<String> lstAIMS = checkForAIMS(
                     accGrp.Id,
@@ -138,8 +138,8 @@ public without sharing class NSP_AccountGroupFocusItemsBatch implements ISelfSch
                 );
                 List<String> noNSPAccIdWithAims = checkForAIMS(
                     accGrp.Id,
-                    grpIdWithAccId,
-                    noNSPAccIdWithAimsClient
+                    this.grpIdWithAccId,
+                    this.noNSPAccIdWithAimsClient
                 );
                 this.checkEarlyTenureFocusItems( accGrp.Id, lstAIMS );
                 this.checkNoInsperity401kFocusItems( accGrp.Id, noInsperityAIMSClient, noNSPAccIdWithAims );
@@ -287,15 +287,15 @@ public without sharing class NSP_AccountGroupFocusItemsBatch implements ISelfSch
     private void checkForAssets() {
         if ( !accountIds.isEmpty() ){
             for(Asset asst : new Selector().getAssets(new List<Id>(accountIds))) {
-                accIdWithAimsClient.put(asst.AccountId, asst.NSP_Client__c);
+                this.accIdWithAimsClient.put(asst.AccountId, asst.NSP_Client__c);
             }
 
             for(Asset asst : new Selector().getNoInsperityAssets(new List<Id>(accountIds))) {
                 if((asst.NSP_Retirement_Service_Plan_Name__c != null && asst.NSP_Retirement_Service_Plan_Name__c?.contains(NSP_ServiceConstants.ORK)) || asst.NSP_Retirement_Service_Plan_Name__c == null) {
-                    noInsperityAccIdWithAimsClient.put(asst.AccountId, asst.NSP_Client__c);
+                    this.noInsperityAccIdWithAimsClient.put(asst.AccountId, asst.NSP_Client__c);
                 }
                 if((asst.NSP_Retirement_Service_Plan_Name__c != null && !asst.NSP_Retirement_Service_Plan_Name__c?.contains(NSP_ServiceConstants.ORK)) || asst.NSP_Retirement_Service_Plan_Name__c != null){
-                    noNSPAccIdWithAimsClient.put(asst.AccountId, asst.NSP_Client__c);
+                    this.noNSPAccIdWithAimsClient.put(asst.AccountId, asst.NSP_Client__c);
                 }
             }
         }
@@ -312,9 +312,9 @@ public without sharing class NSP_AccountGroupFocusItemsBatch implements ISelfSch
 
             for( NSP_Account_Group__c accGrp : lstAccGrps ) {
 
-                grpIdWithAccId.put(accGrp.Id, new List<String>());
-                accGrpWithFocusItem.put(accGrp.Id, 0);
-                accGrpWithFocusItemNSP.put(accGrp.Id, 0);
+                this.grpIdWithAccId.put(accGrp.Id, new List<String>());
+                this.accGrpWithFocusItem.put(accGrp.Id, 0);
+                this.accGrpWithFocusItemNSP.put(accGrp.Id, 0);
 
                 this.collectMemberAccounts( accGrp.Id, accGrp.Account_Group_Members__r);
                 if ( accGrp.Focus_Items__r != null && !accGrp.Focus_Items__r.isEmpty() ){
