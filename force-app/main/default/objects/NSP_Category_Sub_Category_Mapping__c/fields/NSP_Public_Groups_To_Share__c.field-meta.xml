@@ -5,7 +5,7 @@
     <externalId>false</externalId>
     <label>Confidental Case Public Group Access</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>MultiselectPicklist</type>
     <valueSet>
@@ -96,6 +96,11 @@
                 <fullName>Background Check Data Visibility</fullName>
                 <default>false</default>
                 <label>Background Check Data Visibility</label>
+            </value>
+            <value>
+                <fullName>Records Data Visibility</fullName>
+                <default>false</default>
+                <label>Records Data Visibility</label>
             </value>
         </valueSetDefinition>
     </valueSet>
