@@ -125,6 +125,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Asset.Electronic_Handbook_Acknowledgment_On__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Asset.Handbook_Publish_Date_18_Month_Ago__c</field>
         <readable>true</readable>

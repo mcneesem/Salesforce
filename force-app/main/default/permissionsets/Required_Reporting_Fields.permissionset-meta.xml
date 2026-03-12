@@ -213,6 +213,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Asset.Electronic_Handbook_Acknowledgment_On__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Asset.Employees_First_Pay__c</field>
         <readable>true</readable>
     </fieldPermissions>
