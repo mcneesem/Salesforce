@@ -276,7 +276,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_Project_Ids</targetReference>
+                <targetReference>Get_Portal_Project_Ids</targetReference>
             </connector>
             <label>Yes : Record Exist</label>
         </rules>
@@ -530,7 +530,7 @@ AZD - 532934 Updated the logic from portal client to protal project</description
             <field>Portal_Project__c</field>
             <operator>In</operator>
             <value>
-                <elementReference>Get_Project_Ids</elementReference>
+                <elementReference>Get_Portal_Project_Ids</elementReference>
             </value>
         </filters>
         <object>Portal_Task__c</object>
@@ -599,8 +599,8 @@ AZD - 532934 Updated the logic from portal client to protal project</description
         </inputAssignments>
     </subflows>
     <transforms>
-        <name>Get_Project_Ids</name>
-        <label>Get Project Ids</label>
+        <name>Get_Portal_Project_Ids</name>
+        <label>Get Portal Project Ids</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
