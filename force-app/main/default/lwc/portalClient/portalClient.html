@@ -2,17 +2,23 @@
     <template lwc:if={recordId}>
         <lightning-card title="Onboarding Tracker">
             <lightning-layout multiple-rows>
-                <lightning-layout-item size="12" padding="around-small">
-                    <c-portal-client-progress-bar record-id={recordId}></c-portal-client-progress-bar>
-                </lightning-layout-item>
+                <template lwc:if={bar}>
+                    <lightning-layout-item size="12" padding="around-small" key={bar.fields.Id.value}>
+                        <c-portal-project-progress-bar record-id={bar.fields.Id.value}></c-portal-project-progress-bar>
+                    </lightning-layout-item>
+                </template>
                 <lightning-layout-item size="12" padding="horizontal-small">
                     <lightning-tabset>
                         <lightning-tab label="Home">
                             <c-portal-client-tab-home record-id={recordId}></c-portal-client-tab-home>
                         </lightning-tab>
-                        <lightning-tab label="Progress">
-                            <c-portal-client-tab-progress record-id={recordId}></c-portal-client-tab-progress>
-                        </lightning-tab>
+                        <template lwc:if={projects}>
+                            <template for:each={projects} for:item="project">
+                                <lightning-tab label={project.fields.Label__c.value} key={project.fields.Id.value}>
+                                    <c-portal-project-tab record={project}></c-portal-project-tab>
+                                </lightning-tab>
+                            </template>
+                        </template>
                     </lightning-tabset>
                 </lightning-layout-item>
             </lightning-layout>

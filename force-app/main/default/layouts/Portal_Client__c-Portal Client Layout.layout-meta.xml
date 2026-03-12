@@ -95,6 +95,13 @@
     <relatedLists>
         <excludeButtons>MassChangeOwner</excludeButtons>
         <fields>NAME</fields>
+        <fields>Completed_Portal_Tasks__c</fields>
+        <fields>Total_Portal_Tasks__c</fields>
+        <relatedList>Portal_Project__c.Portal_Client__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <fields>NAME</fields>
         <fields>Contact__c</fields>
         <fields>Position__c</fields>
         <fields>Rank__c</fields>
@@ -110,20 +117,6 @@
         <fields>Pay_Frequency__c</fields>
         <relatedList>Portal_Pay_Period__c.Portal_Client__c</relatedList>
         <sortField>First_Pay_Date__c</sortField>
-        <sortOrder>Asc</sortOrder>
-    </relatedLists>
-    <relatedLists>
-        <excludeButtons>MassChangeOwner</excludeButtons>
-        <fields>NAME</fields>
-        <relatedList>Portal_Project__c.Portal_Client__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <excludeButtons>MassChangeOwner</excludeButtons>
-        <fields>NAME</fields>
-        <fields>Type__c</fields>
-        <fields>Due_Date__c</fields>
-        <relatedList>Portal_Task__c.Portal_Client__c</relatedList>
-        <sortField>Due_Date__c</sortField>
         <sortOrder>Asc</sortOrder>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
