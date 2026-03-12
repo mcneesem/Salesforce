@@ -1,11 +1,18 @@
-public class CaseImportQueueableRestoreValues implements Queueable {
+public class CaseImportRestoreQueueable implements Queueable {
 	// test w/ FileUploadControllerTest (77%)
     private Id targetUserId;
 
-    public CaseImportQueueableRestoreValues(Id targetUserId) {
-        this.targetUserId = targetUserId;
+    private CaseImportRestoreQueueable() {
+        this.targetUserId = UserInfo.getUserId();
     }
-
+	public static void enqueueJob() {
+        if ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) {
+            System.enqueueJob(
+                new CaseImportRestoreQueueable() ,
+                10
+            );
+        }
+    }
     public void execute(QueueableContext context) {
         try {
             // Restore the custom settings to their original values
@@ -29,7 +36,7 @@ public class CaseImportQueueableRestoreValues implements Queueable {
             }
         } catch (Exception e) {
             NSP_ErrorLogHandler.logException(
-                CaseImportQueueableRestoreValues.class.getName(),
+                CaseImportRestoreQueueable.class.getName(),
                 'execute',
                 e
             );
