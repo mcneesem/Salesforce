@@ -1848,6 +1848,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Opportunity.Has_Primary_Product__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Opportunity.ICP_Percent__c</field>
         <readable>true</readable>
     </fieldPermissions>
