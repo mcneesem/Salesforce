@@ -9,17 +9,17 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>r_portal_task_to_upsert.Portal_Client__c</assignToReference>
+            <assignToReference>r_portal_task_to_upsert.Portal_Project__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Loop_For_Each_Portal_Client_Record.Id</elementReference>
+                <elementReference>Loop_For_Each_Portal_Project_Record.Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_portal_task_to_upsert.Type__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>portalTaskType</elementReference>
+                <elementReference>PortalTaskTypeValue</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -33,7 +33,7 @@
             <assignToReference>r_portal_task_to_upsert.Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>portalTaskStatus</elementReference>
+                <elementReference>f_PortalTaskStatus</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -47,28 +47,11 @@
             <assignToReference>r_portal_task_to_upsert.Name</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>portalTaskName</elementReference>
+                <elementReference>f_PortalTaskName</elementReference>
             </value>
         </assignmentItems>
         <connector>
             <targetReference>Valid_Portal_Task_Record</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <description>Extract all Portal Client IDs into text collection</description>
-        <name>Assign_Portal_Client_Id_s</name>
-        <label>Assign : Portal Client Id&apos;s</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>portalclient_ids</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>Loop_Multiple_Portal_Clients.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Loop_Multiple_Portal_Clients</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -104,14 +87,14 @@
             <assignToReference>r_portal_task_to_upsert.Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>portalTaskStatus</elementReference>
+                <elementReference>f_PortalTaskStatus</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_portal_task_to_upsert.Type__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>portalTaskType</elementReference>
+                <elementReference>PortalTaskTypeValue</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -136,7 +119,7 @@
             <operator>Assign</operator>
         </assignmentItems>
         <connector>
-            <targetReference>Loop_For_Each_Portal_Client_Record</targetReference>
+            <targetReference>Loop_For_Each_Portal_Project_Record</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -190,45 +173,45 @@
         </connector>
     </assignments>
     <collectionProcessors>
-        <description>Filter Portal Tasks for each Portal Client</description>
-        <name>Filter_Portal_Tasks_for_Each_PC</name>
+        <description>Filter Portal Tasks for each Portal Project</description>
+        <name>Filter_Portal_Tasks_for_Each_Portal_Project</name>
         <elementSubtype>FilterCollectionProcessor</elementSubtype>
-        <label>Filter : Portal Tasks for Each PC</label>
+        <label>Filter : Portal Tasks for Each Portal Project</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <assignNextValueToReference>currentItem_Filter_Portal_Tasks_for_Each_PC</assignNextValueToReference>
+        <assignNextValueToReference>currentItem_Filter_Portal_Tasks_for_Each_Portal_Project</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
         <collectionReference>rc_all_portal_tasks</collectionReference>
         <conditionLogic>and</conditionLogic>
         <conditions>
-            <leftValueReference>currentItem_Filter_Portal_Tasks_for_Each_PC.Portal_Client__c</leftValueReference>
+            <leftValueReference>currentItem_Filter_Portal_Tasks_for_Each_Portal_Project.Portal_Project__c</leftValueReference>
             <operator>EqualTo</operator>
             <rightValue>
-                <elementReference>Loop_For_Each_Portal_Client_Record.Id</elementReference>
+                <elementReference>Loop_For_Each_Portal_Project_Record.Id</elementReference>
             </rightValue>
         </conditions>
         <conditions>
-            <leftValueReference>currentItem_Filter_Portal_Tasks_for_Each_PC.Project_Task__c</leftValueReference>
+            <leftValueReference>currentItem_Filter_Portal_Tasks_for_Each_Portal_Project.Project_Task__c</leftValueReference>
             <operator>EqualTo</operator>
             <rightValue>
                 <elementReference>recordProjectTask.Id</elementReference>
             </rightValue>
         </conditions>
         <connector>
-            <targetReference>Sort_Portal_Task_Record_for_Each_PC</targetReference>
+            <targetReference>Sort_Portal_Task_Record_for_Each_Portal_Project</targetReference>
         </connector>
     </collectionProcessors>
     <collectionProcessors>
-        <description>Adding sort to get single portal task record for each PC</description>
-        <name>Sort_Portal_Task_Record_for_Each_PC</name>
+        <description>Adding sort to get single portal task record for each Portal Project</description>
+        <name>Sort_Portal_Task_Record_for_Each_Portal_Project</name>
         <elementSubtype>SortCollectionProcessor</elementSubtype>
-        <label>Sort : Portal Task Record for Each PC</label>
+        <label>Sort : Portal Task Record for Each Portal Project</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <collectionProcessorType>SortCollectionProcessor</collectionProcessorType>
-        <collectionReference>Filter_Portal_Tasks_for_Each_PC</collectionReference>
+        <collectionReference>Filter_Portal_Tasks_for_Each_Portal_Project</collectionReference>
         <connector>
-            <targetReference>For_Each_PC_Portal_Task_Exists</targetReference>
+            <targetReference>For_Each_Portal_Project_Portal_Task_Exists</targetReference>
         </connector>
         <limit>1</limit>
         <sortOptions>
@@ -238,8 +221,8 @@
         </sortOptions>
     </collectionProcessors>
     <decisions>
-        <name>For_Each_PC_Portal_Task_Exists</name>
-        <label>For Each PC : Portal Task Exists?</label>
+        <name>For_Each_Portal_Project_Portal_Task_Exists</name>
+        <label>For Each Portal Project : Portal Task Exists?</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
@@ -247,17 +230,17 @@
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Yes_Extract_Record</name>
+            <name>Portal_Project_Task_Exists</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Filter_Portal_Tasks_for_Each_PC</leftValueReference>
+                <leftValueReference>Filter_Portal_Tasks_for_Each_Portal_Project</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Filter_Portal_Tasks_for_Each_PC</leftValueReference>
+                <leftValueReference>Filter_Portal_Tasks_for_Each_Portal_Project</leftValueReference>
                 <operator>IsEmpty</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -266,12 +249,12 @@
             <connector>
                 <targetReference>Loop_Extract_Portal_Task_Record</targetReference>
             </connector>
-            <label>Yes : Extract Record</label>
+            <label>Portal Project Task Exists</label>
         </rules>
     </decisions>
     <decisions>
-        <name>Portal_Client_Record_Exists</name>
-        <label>Portal Client Record Exists?</label>
+        <name>Portal_Projects_Exists</name>
+        <label>Portal Projects Exists?</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
@@ -279,21 +262,21 @@
             <name>Yes_Record_Exist</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>rc_portal_clients</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>rc_portal_clients</leftValueReference>
+                <leftValueReference>Get_Portal_Projects</leftValueReference>
                 <operator>IsEmpty</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Get_Portal_Projects</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>Loop_Multiple_Portal_Clients</targetReference>
+                <targetReference>Get_Project_Ids</targetReference>
             </connector>
             <label>Yes : Record Exist</label>
         </rules>
@@ -327,7 +310,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Filter_Portal_Tasks_for_Each_PC</targetReference>
+                <targetReference>Filter_Portal_Tasks_for_Each_Portal_Project</targetReference>
             </connector>
             <label>Yes : Portal Tasks Exist</label>
         </rules>
@@ -388,7 +371,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_Portal_Clients</targetReference>
+                <targetReference>Get_Portal_Projects</targetReference>
             </connector>
             <label>Valid Input</label>
         </rules>
@@ -423,54 +406,49 @@
             <label>Proceed to Upsert</label>
         </rules>
     </decisions>
-    <description>AZD-516115 , 01/13/2025 - Portal Task Create and Update , upsert operation</description>
+    <description>AZD-516115 , 01/13/2025 - Portal Task Create and Update , upsert operation
+AZD - 532934 Updated the logic from portal client to protal project</description>
     <environments>Default</environments>
     <formulas>
-        <name>portalTaskName</name>
+        <name>f_PortalTaskName</name>
         <dataType>String</dataType>
         <expression>CASE(
-  {!recordProjectTask.Name} ,
-  &quot;Employee Priming Data Provided&quot; , &quot;Employee Data Collection&quot; ,
+  {!recordProjectTask.Name} ,  &quot;Employee Priming Data Provided&quot; , &quot;Employee Data Collection&quot; ,
   &quot;FEIN documentation&quot; , &quot;Federal Employer Identification Number (FEIN)&quot; ,
   &quot;Current Payroll Register&quot; , &quot;Current / Prior Payroll Report Samples&quot; ,
   &quot;Job Costing Setup&quot; , &quot;Job Costing / Labor Allocation Setup Information&quot; ,
   &quot;YTD Gross Wage Report Provided&quot; , &quot;YTD Gross Wages Report&quot; ,
   &quot;PTO, paid sick leave, or other accrual policy received&quot; , &quot;Time Off Policies / Handbook&quot; ,
-  &quot;Generate Form 8973&quot; , &quot;Form 8973&quot; ,
-  &quot;General/Auto Liability Certificate of Coverage&quot; ,
-  &quot;General Auto Liability Certificate of Coverage&quot; ,
-  &quot;Company Logo Collected&quot; , &quot;Company Logo&quot; ,
-  &quot;Direct Debit Agreement&quot; , &quot;Direct Debit Agreement&quot; ,
-  &quot;Client User Access&quot; , &quot;User Access Roles Request Form&quot; ,
+&quot;Generate Form 8973&quot; , &quot;Form 8973&quot; ,
+&quot;General/Auto Liability Certificate of Coverage&quot; , &quot;General Auto Liability Certificate of Coverage&quot; ,
+&quot;Company Logo Collected&quot; , &quot;Company Logo&quot; ,
+&quot;Direct Debit Agreement&quot; , &quot;Direct Debit Agreement&quot; ,
+&quot;Client User Access&quot; , &quot;User Access Roles Request Form&quot; ,
   {!recordProjectTask.Name}
 )</expression>
     </formulas>
     <formulas>
-        <name>portalTaskStatus</name>
+        <name>f_PortalTaskStatus</name>
         <dataType>String</dataType>
-        <expression>IF(
-  {!recordProjectTask.Is_Completed__c} ,
-  &apos;Completed&apos; ,
-  &apos;Pending&apos;
-)</expression>
+        <expression>IF({!recordProjectTask.Is_Completed__c},  &apos;Completed&apos;, &apos;Pending&apos;)</expression>
     </formulas>
     <formulas>
-        <name>portalTaskType</name>
+        <name>PortalTaskTypeValue</name>
         <dataType>String</dataType>
         <expression>CASE(
-  {!portalTaskName} ,
-  &quot;Employee Data Collection&quot; , &quot;Pre-Transition Setup&quot; ,
-  &quot;Federal Employer Identification Number (FEIN)&quot; , &quot;Pre-Transition Setup&quot; ,
-  &quot;Current / Prior Payroll Report Samples&quot; , &quot;Pre-Transition Setup&quot; ,
-  &quot;Job Costing / Labor Allocation Setup Information&quot; , &quot;Pre-Transition Setup&quot; ,
-  &quot;YTD Gross Wages Report&quot; , &quot;Pre-Transition Setup&quot; ,
-  &quot;Time Off Policies / Handbook&quot; , &quot;Pre-Transition Setup&quot; ,
-  &quot;Form 8973&quot; , &quot;Company Setup&quot; ,
-  &quot;General Auto Liability Certificate of Coverage&quot; , &quot;Company Setup&quot; ,
-  &quot;Company Logo&quot; , &quot;Company Setup&quot; ,
-  &quot;Direct Debit Agreement&quot; , &quot;Company Setup&quot; ,
-  &quot;User Access Roles Request Form&quot; , &quot;Company Setup&quot; ,
-  &quot;&quot;
+{!f_PortalTaskName} ,
+&quot;Employee Data Collection&quot; , &quot;Pre-Transition Setup&quot; ,
+&quot;Federal Employer Identification Number (FEIN)&quot; , &quot;Pre-Transition Setup&quot; ,
+&quot;Current / Prior Payroll Report Samples&quot; , &quot;Pre-Transition Setup&quot; ,
+&quot;Job Costing / Labor Allocation Setup Information&quot; , &quot;Pre-Transition Setup&quot; ,
+&quot;YTD Gross Wages Report&quot; , &quot;Pre-Transition Setup&quot; ,
+&quot;Time Off Policies / Handbook&quot; , &quot;Pre-Transition Setup&quot; ,
+&quot;Form 8973&quot; , &quot;Company Setup&quot; ,
+&quot;General Auto Liability Certificate of Coverage&quot; , &quot;Company Setup&quot; ,
+&quot;Company Logo&quot; , &quot;Company Setup&quot; ,
+&quot;Direct Debit Agreement&quot; , &quot;Company Setup&quot; ,
+&quot;User Access Roles Request Form&quot; , &quot;Company Setup&quot; ,
+&quot;&quot;
 )</expression>
     </formulas>
     <interviewLabel>Project Task - Populate Portal Task - Subflow {!$Flow.CurrentDateTime}</interviewLabel>
@@ -481,7 +459,7 @@
         <label>Loop : Extract Portal Task Record</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <collectionReference>Filter_Portal_Tasks_for_Each_PC</collectionReference>
+        <collectionReference>Filter_Portal_Tasks_for_Each_Portal_Project</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>Assign_Update_Portal_Task_Record</targetReference>
@@ -491,32 +469,18 @@
         </noMoreValuesConnector>
     </loops>
     <loops>
-        <description>Loop for each Portal Client and process the Portal Task for each Portal Client record</description>
-        <name>Loop_For_Each_Portal_Client_Record</name>
-        <label>Loop : For Each Portal Client Record</label>
+        <description>Iterate over the portal project records</description>
+        <name>Loop_For_Each_Portal_Project_Record</name>
+        <label>Loop : For Each Portal Project Record</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <collectionReference>rc_portal_clients</collectionReference>
+        <collectionReference>Get_Portal_Projects</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>Portal_Tasks_Exists</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>Validate_Upsert</targetReference>
-        </noMoreValuesConnector>
-    </loops>
-    <loops>
-        <name>Loop_Multiple_Portal_Clients</name>
-        <label>Loop : Multiple Portal Clients</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <collectionReference>rc_portal_clients</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>Assign_Portal_Client_Id_s</targetReference>
-        </nextValueConnector>
-        <noMoreValuesConnector>
-            <targetReference>Get_All_Portal_Tasks</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -550,24 +514,24 @@
         <inputReference>rc_portal_tasks_upsert</inputReference>
     </recordCreates>
     <recordLookups>
-        <description>Retrieve portal tasks records for all Portal Client IDs into collection</description>
-        <name>Get_All_Portal_Tasks</name>
-        <label>Get All Portal Tasks</label>
+        <description>Retrieve portal tasks records for all Portal Project IDs into collection</description>
+        <name>Get_All_Portal_Tasks_Related_to_Portal_Projects</name>
+        <label>Get All Portal Tasks Related to Portal Projects</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Loop_For_Each_Portal_Client_Record</targetReference>
+            <targetReference>Loop_For_Each_Portal_Project_Record</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Set_Fault_Element_Get_All_Portal_Tasks</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>Portal_Client__c</field>
+            <field>Portal_Project__c</field>
             <operator>In</operator>
             <value>
-                <elementReference>portalclient_ids</elementReference>
+                <elementReference>Get_Project_Ids</elementReference>
             </value>
         </filters>
         <object>Portal_Task__c</object>
@@ -575,31 +539,34 @@
         <queriedFields>Id</queriedFields>
         <queriedFields>Portal_Client__c</queriedFields>
         <queriedFields>Project_Task__c</queriedFields>
+        <queriedFields>Portal_Project__c</queriedFields>
     </recordLookups>
     <recordLookups>
-        <name>Get_Portal_Clients</name>
-        <label>Get Portal Clients</label>
+        <name>Get_Portal_Projects</name>
+        <label>Get Portal Projects</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Portal_Client_Record_Exists</targetReference>
+            <targetReference>Portal_Projects_Exists</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Set_Fault_Element_Get_Portal_Clients</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>Account__c</field>
+            <field>Project__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>recordProjectTask.pse__Project__r.pse__Account__c</elementReference>
+                <elementReference>recordProjectTask.pse__Project__c</elementReference>
             </value>
         </filters>
-        <object>Portal_Client__c</object>
-        <outputReference>rc_portal_clients</outputReference>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Portal_Project__c</object>
         <queriedFields>Id</queriedFields>
-        <queriedFields>Account__c</queriedFields>
+        <queriedFields>Project__c</queriedFields>
+        <queriedFields>Portal_Client__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
         <locationX>0</locationX>
@@ -634,13 +601,42 @@
             </value>
         </inputAssignments>
     </subflows>
+    <transforms>
+        <name>Get_Project_Ids</name>
+        <label>Get Project Ids</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_All_Portal_Tasks_Related_to_Portal_Projects</targetReference>
+        </connector>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <scale>0</scale>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <transformValues>
+            <transformValueActions>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>Get_Portal_Projects[$EachItem].Id</elementReference>
+                </value>
+            </transformValueActions>
+        </transformValues>
+    </transforms>
     <variables>
-        <name>currentItem_Filter_Portal_Tasks_for_Each_PC</name>
+        <name>currentItem_Filter_Portal_Tasks_for_Each_Portal_Project</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Portal_Task__c</objectType>
+    </variables>
+    <variables>
+        <name>currentItemFromSourceCollection</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Portal_Project__c</objectType>
     </variables>
     <variables>
         <name>FaultElement</name>
