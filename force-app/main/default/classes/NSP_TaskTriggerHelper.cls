@@ -6,16 +6,17 @@ public with sharing class NSP_TaskTriggerHelper {
 
     public static Id referralRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Task' , 'Referral_Task' );
     public static Id peoTaskRecordType = NSP_GenericRecordType.getRecordTypeId( 'Task' , 'PEO_Service_Task' );
-    private static Boolean Is_Enabled_WO_WS_Stage_Entry = OpportunityStageSettings__c.getInstance(UserInfo.getUserId()).Is_Enabled_WO_WS_Stage_Entry__c;
+    private static Boolean Is_Enabled_WO_WS_Stage_Entry = OpportunityStageSettings__c.getInstance( UserInfo.getUserId() ).Is_Enabled_WO_WS_Stage_Entry__c;
     private static final String EXPENSE_MANAGEMENT = 'Expense_Management';
     private static final String EMPLOYMENT_SCREENING = 'NSP_Employment_Screening';
+    private static final String I9_ASSIST_EVERIFY = 'I_9_Assist_E_Verify';
+    private static final String PI_I9_ASSIST_EVERIFY = 'I-9 Assist & E-Verify';
 
-    /**
-    * Iterates throught the list of new tasks/ activity and passes the required attributes to other methods.
-    * @param newList List of New Task
-    * @return void
-    *
-    */
+    //
+    // Iterates throught the list of new tasks/ activity and passes the required attributes to other methods.
+    // @param newList List of New Task
+    // @return void
+    //
     public void beforeInsertDirector( List<Task> newList ) {
         List<Task> lstRefferalTask = new List<Task>();
         Set<Id> accountIds = new Set<Id>();
@@ -147,48 +148,46 @@ public with sharing class NSP_TaskTriggerHelper {
         }
     }
 
-     /**
-* Method Name : updateActivitySales
-* Description : Method to update sales region, sales devison and sales office.
-* Date : 08/09/2022
-* @param newList List of New Task.
-* @param OldTaskMap Map of Old Task.
-* @return void
-*/
-
-public void updateActivitySales(List<Task> newList,Map<Id,Task> OldTaskMap){
-
-    set<Id> ownerIdSet = new set<Id>();
-    for(Task newTask : newList)
-    {
-        Task oldTask = OldTaskMap != null ? OldTaskMap.get(newTask.Id):null;
-
-        if(Trigger.isInsert || newTask.OwnerId != oldTask.OwnerId )
-        {
-            ownerIdSet.add(newTask.ownerId);
+    //
+    // Method Name : updateActivitySales
+    // Description : Method to update sales region, sales devison and sales office.
+    // Date : 08/09/2022
+    // @param newList List of New Task.
+    // @param OldTaskMap Map of Old Task.
+    // @return void
+    //
+    public void updateActivitySales( List<Task> newList , Map<Id,Task> oldTaskMap ) {
+        Set<Id> ownerIdSet = new Set<Id>();
+        for( Task newTask : newList ) {
+            Task oldTask = ( ( oldTaskMap != null ) ? oldTaskMap.get( newTask.Id ) : null );
+            if ( Trigger.isInsert || ( newTask.OwnerId != oldTask.OwnerId ) ) {
+                ownerIdSet.add( newTask.ownerId );
+            }
         }
-    }
-
-    if(ownerIdSet.Size() > 0)
-    {
-        Map<Id,User> userIdMap = new Map<Id,User>([SELECT Id,NSP_SalesDivision__c,NSP_Sales_Office__c,NSP_SalesRegion__c from user WHERE Id In :ownerIdSet AND NSP_Sales_Office__c != null ]);
-        for(Task newTask : newList)
-        {
-            Task oldTask = OldTaskMap != null ? OldTaskMap.get(newTask.Id):null;
-
-            if(Trigger.isInsert || newTask.OwnerId != oldTask.OwnerId )
-            {
-                if(userIdMap.containsKey(newTask.ownerId))
-                {
-                    user eachUser = userIdMap.get(newTask.OwnerId);
-                    newTask.NSP_Sales_Region__c = eachUser.NSP_SalesRegion__c;  // sales region
-                    newTask.NSP_Sales_Division__c = eachUser.NSP_SalesDivision__c; // sales division
-                    newTask.NSP_Sales_Office__c = eachUser.NSP_Sales_Office__c; // sales office
+        if ( !ownerIdSet.isEmpty() ) {
+            Map<Id,User> userIdMap = new Map<Id,User>(
+                [
+                    SELECT Id , NSP_SalesDivision__c , NSP_Sales_Office__c , NSP_SalesRegion__c
+                    FROM User
+                    WHERE (
+                        ( Id IN :ownerIdSet )
+                        AND ( NSP_Sales_Office__c != null )
+                    )
+                ]
+            );
+            for ( Task newTask : newList ) {
+                Task oldTask = ( ( oldTaskMap != null ) ? oldTaskMap.get( newTask.Id ) : null );
+                if ( Trigger.isInsert || ( newTask.OwnerId != oldTask.OwnerId ) ) {
+                    if ( userIdMap.containsKey( newTask.ownerId ) ) {
+                        User eachUser = userIdMap.get( newTask.OwnerId );
+                        newTask.NSP_Sales_Region__c = eachUser.NSP_SalesRegion__c;  // sales region
+                        newTask.NSP_Sales_Division__c = eachUser.NSP_SalesDivision__c; // sales division
+                        newTask.NSP_Sales_Office__c = eachUser.NSP_Sales_Office__c; // sales office
+                    }
                 }
             }
         }
     }
-  }
 
     //
     // Iterates through task and sum up time spent on case.
@@ -352,7 +351,8 @@ public void updateActivitySales(List<Task> newList,Map<Id,Task> OldTaskMap){
             NSP_ServiceConstants.CONTINGENT_WORKFORCE ,
             NSP_ServiceConstants.CONTRACTOR_MANAGEMENT ,
             NSP_ServiceConstants.HRCORE_ONBOARDING_AMENDMENT ,
-            NSP_TaskTriggerHelper.EMPLOYMENT_SCREENING
+            NSP_TaskTriggerHelper.EMPLOYMENT_SCREENING ,
+            NSP_TaskTriggerHelper.I9_ASSIST_EVERIFY
         };
         Map<String,String> mapQueueDeveloperNameQueueId = new Map<String,String>();
         for ( Group ogroup : [
@@ -391,12 +391,13 @@ public void updateActivitySales(List<Task> newList,Map<Id,Task> OldTaskMap){
                 NSP_ServiceConstants.PERFORMANCE_MANAGEMENT => NSP_ServiceConstants.SERVICE_REFERRAL ,
                 NSP_ServiceConstants.TIME_AND_ATTENDANCE => NSP_ServiceConstants.SERVICE_REFERRAL ,
                 NSP_ServiceConstants.PI_CONTINGENT_WORKFORCE => NSP_ServiceConstants.CONTINGENT_WORKFORCE ,
+                NSP_TaskTriggerHelper.PI_I9_ASSIST_EVERIFY => NSP_TaskTriggerHelper.I9_ASSIST_EVERIFY ,
                 NSP_ServiceConstants.PI_CONTRACTOR_MANAGEMENT => NSP_ServiceConstants.CONTRACTOR_MANAGEMENT ,
                 NSP_ServiceConstants.PI_HRCORE_ONBOARDING_AMENDMENT => NSP_ServiceConstants.HRCORE_ONBOARDING_AMENDMENT ,
-                NSP_ServiceConstants.EMPLOYMENT_SCREENING => NSP_TaskTriggerHelper.EMPLOYMENT_SCREENING,
-                    'Insurance Services (Health & Wellness)' =>  NSP_ServiceConstants.INSURANCE_SERVICES ,
-                    'Insurance Services (Property & Casualty)' =>  NSP_ServiceConstants.INSURANCE_SERVICES ,
-                    'Insurance Services (Revolution)' => NSP_ServiceConstants.INSURANCE_SERVICES 
+                NSP_ServiceConstants.EMPLOYMENT_SCREENING => NSP_TaskTriggerHelper.EMPLOYMENT_SCREENING ,
+                'Insurance Services (Health & Wellness)' => NSP_ServiceConstants.INSURANCE_SERVICES ,
+                'Insurance Services (Property & Casualty)' => NSP_ServiceConstants.INSURANCE_SERVICES ,
+                'Insurance Services (Revolution)' => NSP_ServiceConstants.INSURANCE_SERVICES
             };
         }
     }
@@ -411,39 +412,52 @@ public void updateActivitySales(List<Task> newList,Map<Id,Task> OldTaskMap){
         }
     }
 
-    /**
-    * Iterates throught the list of old Tasks and passes the required attributes to other methods.
-    * @param taskList List of old Task.
-    * @return void
-    *
-    */
-    public static void beforeDeleteDirector(List<Task> taskList){
-        try{
-            Map<Id,User> userdetails = new Map<Id,User>([SELECT Id, Profile.Name FROM User WHERE Id = : UserInfo.getUserId()]);
-            List<String> serviceUserProf = new List<String>(label.NSP_ServiceProfiles.split(','));
-            for(Task task :taskList){
-                if(serviceUserProf.contains(userdetails.get(UserInfo.getUserId()).Profile.Name) &&
-                   UserInfo.getUserId() != task.createdById  ){
-                       task.addError(label.NSP_CRMTaskError);
-                   }
+    //
+    // Iterates throught the list of old Tasks and passes the required attributes to other methods.
+    // @param taskList List of old Task.
+    // @return void
+    //
+    public static void beforeDeleteDirector( List<Task> taskList ) {
+        try {
+            Map<Id,User> userdetails = new Map<Id,User>(
+                [
+                    SELECT Id , Profile.Name
+                    FROM User
+                    WHERE ( Id = :UserInfo.getUserId() )
+                ]
+            );
+            List<String> serviceUserProf = new List<String>( System.label.NSP_ServiceProfiles.split( ',' ) );
+            for ( Task task : taskList ) {
+                if ( serviceUserProf.contains( userdetails.get( UserInfo.getUserId() ).Profile.Name )
+                    && ( UserInfo.getUserId() != task.createdById )
+                    )
+                {
+                    task.addError( System.label.NSP_CRMTaskError );
+                }
             }
         } catch ( Exception e ) {
             NSP_TaskTriggerHelper.handleException( e , 'beforeDeleteDirector' );
         }
     }
 
-     /**
-* @MethodName: removePermissionSet
-* @Description: Remove Task-Referral Task Permission Set when cancel a referral record while creating through UPSELL Button
-* DF-02737
-* @return void
-*/
+    //
+    // @MethodName: removePermissionSet
+    // @Description: Remove Task-Referral Task Permission Set when cancel a referral record while creating through UPSELL Button
+    // DF-02737
+    // @return void
+    //
     @future
-    public static void removePermissionSet(){
-        List<PermissionSetAssignment> permAsign = [SELECT Id, PermissionSetId, AssigneeId, IsActive
-                                                    FROM PermissionSetAssignment WHERE PermissionSet.Name = 'NSP_Task_Referral_Task'
-                                                    AND AssigneeId =: Userinfo.getUserId() AND IsActive = true];
-        if(!permAsign.isempty()){
+    public static void removePermissionSet() {
+        List<PermissionSetAssignment> permAsign = [
+            SELECT Id , PermissionSetId , AssigneeId , IsActive
+            FROM PermissionSetAssignment
+            WHERE (
+                ( PermissionSet.Name = 'NSP_Task_Referral_Task' )
+                AND ( AssigneeId = :Userinfo.getUserId() )
+                AND ( IsActive = true )
+            )
+        ];
+        if ( !permAsign.isempty() ) {
             delete permAsign;
         }
     }
@@ -491,18 +505,16 @@ public void updateActivitySales(List<Task> newList,Map<Id,Task> OldTaskMap){
         }
     }
 
-    /**
-    * Method Name : tasksFieldsToUpdate
-    * Description : Method to update NSP_What_Name__c and/or NSP_Who_Name__c on Task on update
-    * Date : 17/02/2023
-    * @param newList List of new tasks
-    * @param oldTaskMap Map on old tasks
-    * @return void
-    */
-
-    public void tasksFieldsToUpdate(Map<Id,Task> oldTaskMap, List<Task> newList) {
-        try{
-
+    //
+    // Method Name : tasksFieldsToUpdate
+    // Description : Method to update NSP_What_Name__c and/or NSP_Who_Name__c on Task on update
+    // Date : 17/02/2023
+    // @param newList List of new tasks
+    // @param oldTaskMap Map on old tasks
+    // @return void
+    //
+    public void tasksFieldsToUpdate( Map<Id,Task> oldTaskMap , List<Task> newList ) {
+        try {
             List<Task> eligibleTasks = new List<Task>();
             for(Task newTaskRecord : newList) {
                 Task oldTaskRecord = oldTaskMap?.get(newTaskRecord.Id);
