@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <description>Assign the Inbound Voice Record Case Id to Outbound Voice Record</description>
         <name>Assign_CaseId_Outbound_Voice_Record</name>
@@ -74,8 +75,8 @@
         <dataType>String</dataType>
         <expression>RIGHT({!$Record.EndUser.MessagingPlatformKey},10)</expression>
     </formulas>
-    <interviewLabel>Voice Call - Before Save - Outbound Calls {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Voice Call - Before Save - Outbound Calls</label>
+    <interviewLabel>DEPRECATED - Voice Call - Before Save - Outbound Calls {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>DEPRECATED - Voice Call - Before Save - Outbound Calls</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
