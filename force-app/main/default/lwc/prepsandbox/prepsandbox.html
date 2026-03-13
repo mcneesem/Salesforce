@@ -2,66 +2,90 @@
     <lightning-card title="Sandbox Refresh" icon-name="custom:custom63">
         <div class="slds-p-around_xx-small">
             <!-- Post-Refresh Steps Button -->
-            <div class="slds-form-element_stacked">
-                <lightning-button
-                    label="Post-Refresh Steps"
-                    onclick={handlePostRefresh}
-                    variant="brand">
-                </lightning-button>
-                <apex:outputPanel if:true={postRefreshRun}
-                    class="slds-m-left_x-small"
-                    id="postRefreshAlreadyRun"
-                    style="font-family: 'Helvetica';font-size: 14px;color: black">
-                    <i>Post-refresh steps have been run.</i>
-                </apex:outputPanel>
+            <div class="slds-form-element_stacked slds-grid">
+                <div class="slds-size_1-of-3">
+                    <lightning-button
+                        class="slds-size_1-of-3"
+                        label="Post-Refresh Steps"
+                        onclick={handlePostRefresh}
+                        variant="neutral"
+                        stretch>
+                    </lightning-button>
+                </div>
+                <div class="slds-grid slds-grid_vertical-align-center">
+                    <span if:true={postRefreshRun}
+                        class="slds-m-left_x-small"
+                        id="postRefreshAlreadyRun"
+                        style="font-family: 'Helvetica';font-size: 14px;color: black">
+                        <i>Post-refresh steps have been run.</i>
+                    </span>
+                </div>
             </div>
 
             <!-- Import Org Users Button -->
             <template if:true={showImportUsers}>
-                <div class="slds-form-element_stacked">
-                    <lightning-button
-                        label="Import Org Users"
-                        onclick={handleImportUsers}
-                        variant="brand">
-                    </lightning-button>
-                    <apex:outputPanel if:true={postRefreshRun2}
-                        class="slds-m-left_x-small"
-                        id="importUsersAlreadyRun"
-                        style="font-family: 'Helvetica';font-size: 14px;color: black">
-                        <i>Import Users step has been run.</i>
-                    </apex:outputPanel>
+                <div class="slds-form-element_stacked slds-grid">
+                    <div class="slds-size_1-of-3">
+                        <lightning-button
+                            class="slds-size_1-of-3"
+                            label="Import Org Users"
+                            onclick={handleImportUsers}
+                            variant="neutral"
+                            stretch>
+                        </lightning-button>
+                    </div>
+                    <div class="slds-grid slds-grid_vertical-align-center">
+                        <span if:true={postRefreshRun2}
+                            class="slds-m-left_x-small"
+                            id="importUsersAlreadyRun"
+                            style="font-family: 'Helvetica';font-size: 14px;color: black">
+                            <i>Import Users step has been run.</i>
+                        </span>
+                    </div>
                 </div>
             </template>
 
             <!-- Post-Import Steps Button -->
-            <div class="slds-form-element_stacked">
-                <lightning-button
-                    label="Post-Import Steps"
-                    onclick={handlePostImport}
-                    variant="brand">
-                </lightning-button>
-                <apex:outputPanel if:true={postRefreshRun3}
-                    class="slds-m-left_x-small"
-                    id="postImportStepsAlreadyRun"
-                    style="font-family: 'Helvetica';font-size: 14px;color: black">
-                    <i>Post-import steps have been run.</i>
-                </apex:outputPanel>
+            <div class="slds-form-element_stacked slds-grid">
+                <div class="slds-size_1-of-3">
+                    <lightning-button
+                        class="slds-size_1-of-3"
+                        label="Post-Import Steps"
+                        onclick={handlePostImport}
+                        variant="neutral"
+                        stretch>
+                    </lightning-button>
+                </div>
+                <div class="slds-grid slds-grid_vertical-align-center">
+                    <span if:true={postRefreshRun3}
+                        class="slds-m-left_x-small"
+                        id="postImportStepsAlreadyRun"
+                        style="font-family: 'Helvetica';font-size: 14px;color: black">
+                        <i>Post-import steps have been run.</i>
+                    </span>
+                </div>
             </div>
 
             <!-- E2C Addresses Button -->
             <template if:true={isUserAllowedE2C}>
-                <div class="slds-form-element_stacked">
-                    <lightning-button
-                        label="E2C Addresses"
-                        onclick={handleE2CAddresses}
-                        variant="brand">
-                    </lightning-button>
-                    <apex:outputPanel if:true={postRefreshRun4}
-                        class="slds-m-left_x-small e2cAddressAlreadyRunClass"
-                        id="e2cAddressAlreadyRun"
-                        style="font-family: 'Helvetica';font-size: 14px;color: black">
-                        <i>E2C Address updates have been run.</i>
-                    </apex:outputPanel>
+                <div class="slds-form-element_stacked slds-grid">
+                    <div class="slds-size_1-of-3">
+                        <lightning-button
+                            class="slds-size_1-of-3"
+                            label="E2C Addresses"
+                            onclick={handleE2CAddresses}
+                            variant="neutral"
+                            stretch>
+                        </lightning-button>
+                    </div>
+                    <div class="slds-grid slds-grid_vertical-align-center">
+                        <span if:true={postRefreshRun4}
+                            class="slds-m-left_x-small e2cAddressAlreadyRunClass"
+                            id="e2cAddressAlreadyRun"
+                            style="font-family: 'Helvetica';font-size: 14px;color: black">
+                            <i>E2C Address updates have been run.</i>
+                        </span>
+                    </div>
                 </div>
             </template>
         </div>
