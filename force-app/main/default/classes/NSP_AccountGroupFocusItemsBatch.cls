@@ -483,7 +483,7 @@ public without sharing class NSP_AccountGroupFocusItemsBatch implements ISelfSch
                         NSP_Client__c
                     FROM Asset
                     WHERE (
-                        ( RecordTypeId = :NSP_GenericRecordType.getRecordTypeId( 'Asset' , NSP_ServiceConstants.WO_ASSET_RECORDTYPE )
+                        ( RecordTypeId = :NSP_GenericRecordType.getRecordTypeId( 'Asset' , NSP_ServiceConstants.WO_ASSET_RECORDTYPE ) )
                         AND ( AccountId IN :accIds )
                     )
                     WITH SECURITY_ENFORCED
