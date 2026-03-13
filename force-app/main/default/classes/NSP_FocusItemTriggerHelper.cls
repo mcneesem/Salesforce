@@ -57,7 +57,7 @@ public class NSP_FocusItemTriggerHelper {
             for ( NSP_Focus_Item__c focusItems : newList ) {
                 focusItemIdSet.add( focusItems.Id );
             }
-            if ( !focusItemIdSet.isEmpty() && ) woRecordTypeId != null ) ) {
+            if ( !focusItemIdSet.isEmpty() && ( woRecordTypeId != null ) ) {
                 for ( NSP_Focus_Item__c focusItems : [
                             SELECT
                                 Id ,
