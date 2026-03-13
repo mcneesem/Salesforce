@@ -33,7 +33,7 @@
             <assignToReference>r_portal_task_to_upsert.Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>f_PortalTaskStatus</elementReference>
+                <elementReference>portalTaskStatus</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -47,7 +47,7 @@
             <assignToReference>r_portal_task_to_upsert.Name</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>f_PortalTaskName</elementReference>
+                <elementReference>portalTaskName</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -87,7 +87,7 @@
             <assignToReference>r_portal_task_to_upsert.Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>f_PortalTaskStatus</elementReference>
+                <elementReference>portalTaskStatus</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
