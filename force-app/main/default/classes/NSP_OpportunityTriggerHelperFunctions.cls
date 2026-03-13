@@ -6,6 +6,7 @@ public with sharing class NSP_OpportunityTriggerHelperFunctions {
     private static Map<Id,User> customerSuccessUsers;
     private static Map<Id,User> coreMidMarketUsers;
     private static Pricebook2 woPriceBookCache;
+    private static final String I9ASSIST_EVERIFY ='I-9 Assist & E-Verify';
 
     public NSP_OpportunityTriggerHelperFunctions() {
     }
@@ -136,6 +137,9 @@ public with sharing class NSP_OpportunityTriggerHelperFunctions {
             }
             if ( opptyPrimaryProduct.equals( NSP_SalesConstants.CONTRACTOR_MANAGEMENT ) ) {
                 opptyCfl = NSP_SalesConstants.STAND_ALONE;
+            }
+            if ( opptyPrimaryProduct.equals( NSP_OpportunityTriggerHelperFunctions.I9ASSIST_EVERIFY ) ) {
+                opptyCfl = NSP_CPQConstants.CLIENT_WOWS;
             }
         }
         return opptyCfl;
