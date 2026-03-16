@@ -717,6 +717,14 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         } catch(Exception e) {
             NSP_PrepSandbox.handleException( e , 'doCSettings2:Sales_Team_Email_Settings__c' );
         }
+
+        try {
+            Workday_URL_Settings__c cS10 = Workday_URL_Settings__c.getOrgDefaults();
+            cS10.Corporate_Instance_URL__c = null;
+            upsert cS10;
+        } catch ( Exception e ) {
+            NSP_PrepSandbox.handleException( e , 'doCSettings2:Workday_URL_Settings__c' );
+        }
     }
 
     public static void doE2CAddresses(String sandboxName) {
