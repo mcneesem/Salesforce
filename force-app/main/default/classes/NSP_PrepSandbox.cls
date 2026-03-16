@@ -699,7 +699,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                     cS8.NVMContactWorld__clientId__c = 'mfb4hpckwhw';
                 }
                 when else {
-                    cS8.NVMContactWorld__clientId__c = '';
+                    cS8.NVMContactWorld__clientId__c = null;
                 }
             }
             upsert cS8;
@@ -890,11 +890,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     }
 
     private static String apiEnabledSessionId(){
-        PageReference sessionPage = Page.SessionId;
-        String vfContent = sessionPage.getContent().toString();
-        Integer startIndex = vfContent.indexOf('Start_Of_Session_Id') + 'Start_Of_Session_Id'.length();
-        Integer endIndex = vfContent.indexOf('End_Of_Session_Id');
-        return vfContent.substring(startIndex, endIndex);
+        return UserInfo.getSessionId();
     }
 
     public static void doTrustedURLs() {
