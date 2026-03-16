@@ -10,7 +10,7 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Run</name>
-            <conditionLogic>1 AND 2 AND 3 AND (4 OR 5)</conditionLogic>
+            <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.StageName</leftValueReference>
                 <operator>EqualTo</operator>
@@ -26,13 +26,6 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>ByPass</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
                 <leftValueReference>$Record.SBQQ__PrimaryQuote__r.NSP_Product_Type__c</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
@@ -40,10 +33,10 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record.SBQQ__PrimaryQuote__r.NSP_Opportunity_Primary_Product__c</leftValueReference>
-                <operator>NotEqualTo</operator>
+                <leftValueReference>ByPass</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>I-9 Assist &amp; E-Verify</stringValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -55,7 +48,7 @@
     <description>Primary quote is marked as Ordered when opportunity is closed won</description>
     <environments>Default</environments>
     <interviewLabel>Update Primary Quote on Opportunity Closed Won {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Update Primary Quote on Opportunity Closed Won</label>
+    <label>DEPRECATED - Update Primary Quote on Opportunity Closed Won</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
