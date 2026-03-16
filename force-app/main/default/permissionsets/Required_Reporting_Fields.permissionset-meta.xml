@@ -2358,6 +2358,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>blng__InvoiceRun__c.Ready_For_Posting__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>blng__PaymentMethod__c.Payment_Method_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
