@@ -570,7 +570,7 @@
     <textTemplates>
         <name>EmailBody</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>&lt;p&gt;&lt;span style=&quot;font-size: 14px; font-family: verdana;&quot;&gt;Hello!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; font-family: verdana;&quot;&gt;&lt;a href=&quot;{!OpportunityURL}&quot;&gt; {!$Record.Name} &lt;/a&gt; has been updated to Closed Lost.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; font-family: verdana;&quot;&gt;Please take any necessary actions to finish the close out process.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; font-family: verdana;&quot;&gt;Let’s go win!&lt;/span&gt;&lt;/p&gt;</text>
+        <text>&lt;p&gt;&lt;span style=&quot;font-family: verdana; font-size: 14px;&quot;&gt;Hello!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;{!OpportunityURL}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-family: verdana; font-size: 14px;&quot;&gt; {!$Record.Name} &lt;/a&gt;&lt;span style=&quot;font-family: verdana; font-size: 14px;&quot;&gt; has been updated to Closed Lost.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-family: verdana; font-size: 14px;&quot;&gt;Please take any necessary actions to finish the close out process.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;</text>
     </textTemplates>
     <textTemplates>
         <name>EmailSubject</name>
