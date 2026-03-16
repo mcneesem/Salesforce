@@ -684,10 +684,10 @@
                             <value>NSP_Detail__c</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>NSP_Estimated_Impact__c</value>
+                            <value>Details__c</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>NSP_Comments__c</value>
+                            <value>NSP_Estimated_Impact__c</value>
                         </valueListItems>
                         <valueListItems>
                             <value>NSP_Status__c</value>
