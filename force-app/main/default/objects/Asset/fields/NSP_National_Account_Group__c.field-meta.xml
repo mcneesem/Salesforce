@@ -13,49 +13,9 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>48</fullName>
+                <fullName>22</fullName>
                 <default>false</default>
-                <label>AAA</label>
-            </value>
-            <value>
-                <fullName>25</fullName>
-                <default>false</default>
-                <label>Agency</label>
-            </value>
-            <value>
-                <fullName>44</fullName>
-                <default>false</default>
-                <label>Ameriprise</label>
-            </value>
-            <value>
-                <fullName>46</fullName>
-                <default>false</default>
-                <label>AtWork</label>
-            </value>
-            <value>
-                <fullName>38</fullName>
-                <default>false</default>
-                <label>Charles Schwab</label>
-            </value>
-            <value>
-                <fullName>43</fullName>
-                <default>false</default>
-                <label>Commonwealth</label>
-            </value>
-            <value>
-                <fullName>47</fullName>
-                <default>false</default>
-                <label>FreedomBoatClub</label>
-            </value>
-            <value>
-                <fullName>39</fullName>
-                <default>false</default>
-                <label>FSI</label>
-            </value>
-            <value>
-                <fullName>26</fullName>
-                <default>false</default>
-                <label>HEA Members</label>
+                <label>RJ Advisors</label>
             </value>
             <value>
                 <fullName>23</fullName>
@@ -63,29 +23,19 @@
                 <label>Independent Agency</label>
             </value>
             <value>
-                <fullName>36</fullName>
+                <fullName>24</fullName>
                 <default>false</default>
-                <label>NFP - Midwest</label>
+                <label>YHN Practices</label>
             </value>
             <value>
-                <fullName>33</fullName>
+                <fullName>25</fullName>
                 <default>false</default>
-                <label>NFP - Northeast</label>
+                <label>Agency</label>
             </value>
             <value>
-                <fullName>35</fullName>
+                <fullName>26</fullName>
                 <default>false</default>
-                <label>NFP - Southeast</label>
-            </value>
-            <value>
-                <fullName>34</fullName>
-                <default>false</default>
-                <label>NFP - TZP</label>
-            </value>
-            <value>
-                <fullName>22</fullName>
-                <default>false</default>
-                <label>RJ Advisors</label>
+                <label>HEA Members</label>
             </value>
             <value>
                 <fullName>31</fullName>
@@ -93,24 +43,74 @@
                 <label>WO - DKG</label>
             </value>
             <value>
-                <fullName>37</fullName>
-                <default>false</default>
-                <label>WorldCom</label>
-            </value>
-            <value>
                 <fullName>32</fullName>
                 <default>false</default>
                 <label>WO - UFG</label>
             </value>
             <value>
-                <fullName>24</fullName>
+                <fullName>33</fullName>
                 <default>false</default>
-                <label>YHN Practices</label>
+                <label>NFP - Northeast</label>
+            </value>
+            <value>
+                <fullName>34</fullName>
+                <default>false</default>
+                <label>NFP - TZP</label>
+            </value>
+            <value>
+                <fullName>35</fullName>
+                <default>false</default>
+                <label>NFP - Southeast</label>
+            </value>
+            <value>
+                <fullName>36</fullName>
+                <default>false</default>
+                <label>NFP - Midwest</label>
+            </value>
+            <value>
+                <fullName>37</fullName>
+                <default>false</default>
+                <label>WorldCom</label>
+            </value>
+            <value>
+                <fullName>38</fullName>
+                <default>false</default>
+                <label>Charles Schwab</label>
+            </value>
+            <value>
+                <fullName>39</fullName>
+                <default>false</default>
+                <label>FSI</label>
+            </value>
+            <value>
+                <fullName>43</fullName>
+                <default>false</default>
+                <label>Commonwealth</label>
+            </value>
+            <value>
+                <fullName>44</fullName>
+                <default>false</default>
+                <label>Ameriprise</label>
             </value>
             <value>
                 <fullName>45</fullName>
                 <default>false</default>
                 <label>Gradient</label>
+            </value>
+            <value>
+                <fullName>46</fullName>
+                <default>false</default>
+                <label>AtWork</label>
+            </value>
+            <value>
+                <fullName>47</fullName>
+                <default>false</default>
+                <label>FreedomBoatClub</label>
+            </value>
+            <value>
+                <fullName>48</fullName>
+                <default>false</default>
+                <label>AAA</label>
             </value>
             <value>
                 <fullName>49</fullName>
@@ -521,6 +521,11 @@
                 <fullName>139</fullName>
                 <default>false</default>
                 <label>Cornerstone Capital</label>
+            </value>
+            <value>
+                <fullName>140</fullName>
+                <default>false</default>
+                <label>Preserve Partners</label>
             </value>
         </valueSetDefinition>
     </valueSet>
