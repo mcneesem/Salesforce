@@ -36092,7 +36092,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>pse__Proj__c.pse__Estimate</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -36348,7 +36347,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Event.Core_Sales_Event_RT</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -36544,7 +36542,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Task.Task</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -36555,7 +36552,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Contact.Resource</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -36621,7 +36617,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>NSP_ReportRequest__c.NSP_SeparationRequest</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
