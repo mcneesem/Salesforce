@@ -1,6 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
     <sharingCriteriaRules>
+        <fullName>Dunning_Read_Only</fullName>
+        <accessLevel>Read</accessLevel>
+        <description>To share the record with &quot;Read Only&quot; access to the public group &quot;Service Sharing Visibility&quot; if the recordType = Dunning case</description>
+        <label>Dunning Read Only</label>
+        <sharedTo>
+            <group>NSP_Service_Profile_Group_Members</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Dunning Case</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Dunning_Read_Write</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>To share the record with &quot;Read/Write&quot; access to the public group &quot;Dunning Sharing Visbilibity&quot; if the recordType = Dunning case</description>
+        <label>Dunning Read/Write</label>
+        <sharedTo>
+            <group>Dunning_Sharing_Visibility</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Dunning Case</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>Email_to_Case_Corporate_Default</fullName>
         <accessLevel>Edit</accessLevel>
         <description>Provide access to Email to Case that default to Corporate.  This is one of two to accommodate formula limits.</description>
