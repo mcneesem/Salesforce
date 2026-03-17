@@ -124,6 +124,10 @@
                 <behavior>Edit</behavior>
                 <field>NSP_Project__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Client_Size__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
