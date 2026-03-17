@@ -9,7 +9,7 @@ public with sharing class UpdateInvoiceLinesBatch implements Database.Batchable<
         if ( ( invoiceRunIds != null ) && ( !invoiceRunIds.isEmpty() ) ) {
             Database.executeBatch(
                 new UpdateInvoiceLinesBatch( invoiceRunIds ) ,
-                UpdateInvoiceLinesBatch.batchSize 
+                UpdateInvoiceLinesBatch.batchSize
             );
         }
     }
@@ -41,8 +41,8 @@ public with sharing class UpdateInvoiceLinesBatch implements Database.Batchable<
     }
 
     public void execute( Database.BatchableContext bc , List<blng__InvoiceLine__c> scope ) {
-        if ( ( scope != null ) 
-            && ( !scope.isEmpty() ) 
+        if ( ( scope != null )
+            && ( !scope.isEmpty() )
             && ( UpdateInvoiceLinesBatch.isEnabled )
             )
         {
@@ -67,7 +67,34 @@ public with sharing class UpdateInvoiceLinesBatch implements Database.Batchable<
     }
 
     public void finish( Database.BatchableContext bc ) {
-        //do nothing
+        try {
+            if ( UpdateInvoiceLinesBatch.isEnabled
+                && ( this.invoiceRunIds != null )
+                && !this.invoiceRunIds.isEmpty()
+                )
+            {
+                List<blng__InvoiceRun__c> invoiceRuns = [
+                    SELECT Id , Ready_For_Posting__c
+                    FROM blng__InvoiceRun__c
+                    WHERE ( Id IN :this.invoiceRunIds )
+                ];
+                for ( blng__InvoiceRun__c invoiceRun : invoiceRuns ) {
+                    invoiceRun.Ready_For_Posting__c = true;
+                }
+                List<Database.SaveResult> results = Database.update( invoiceRuns , false );
+                NSP_ErrorLogHandler.logResults(
+                    UpdateInvoiceLinesBatch.class.getName() ,
+                    'finish:update',
+                    results
+                );
+            }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                UpdateInvoiceLinesBatch.class.getName() ,
+                'finish' ,
+                e
+            );
+        }
     }
 
     //
