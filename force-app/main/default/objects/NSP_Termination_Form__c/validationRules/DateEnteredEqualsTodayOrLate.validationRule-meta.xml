@@ -5,6 +5,7 @@
     <errorConditionFormula>AND(
   NOT(
     OR(
+      ( $Setup.NSP_Trigger_Switch__c.NSP_TerminationFormValidation__c ) ,
       ( NSP_Approver__c = &apos;Termination Team&apos; ) ,
       ( NSP_Approver_Formula__c = &apos;Termination Team&apos; ) ,
       AND(
