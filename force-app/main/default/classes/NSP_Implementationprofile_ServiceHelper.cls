@@ -207,18 +207,23 @@ public class NSP_Implementationprofile_ServiceHelper {
 
     public Map<String,Set<Id>> executeAutomation() {
         Map<String,Set<Id>> ipRecordsByAutomationMap = new Map<String,Set<Id>>();
-        try {
-            start();
-            execute();
-            finish();
-            ipRecordsByAutomationMap = ipRecordsByAutomation;
-        } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
-                NSP_Implementationprofile_ServiceHelper.class.getName() ,
-                'executeAutomation' ,
-                e
-            );
-       }
+        Boolean hasPermission = CustomPermissionController.checkUserPermission('Use_Implementation_Profile', UserInfo.getUserId());
+        if(hasPermission)
+        {
+            try {
+                start();
+                execute();
+                finish();
+                ipRecordsByAutomationMap = ipRecordsByAutomation;
+            } catch ( Exception e ) {
+                NSP_ErrorLogHandler.logException(
+                    NSP_Implementationprofile_ServiceHelper.class.getName() ,
+                    'executeAutomation' ,
+                    e
+                );
+            }
+        }
+
        return ipRecordsByAutomationMap;
     }
 

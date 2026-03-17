@@ -116,17 +116,21 @@ public class NSP_Implprofile_ServiceHelperUpdate {
     }
     public Map<String, Set<Id>>  executeAutomation() {
         Map<String, Set<Id>> ipRecordsByAutomationMap = new  Map<String, Set<Id>> ();
-        try{
-            start();
-            execute();
-            finish();
-            ipRecordsByAutomationMap= ipRecordsByAutomation;
-        } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
-                NSP_Implprofile_ServiceHelperUpdate.class.getName() ,
-                'executeAutomation' ,
-                e
-            );
+        Boolean hasPermission = CustomPermissionController.checkUserPermission('Use_Implementation_Profile', UserInfo.getUserId());
+        if(hasPermission)
+        {
+            try{
+                start();
+                execute();
+                finish();
+                ipRecordsByAutomationMap= ipRecordsByAutomation;
+            } catch ( Exception e ) {
+                NSP_ErrorLogHandler.logException(
+                    NSP_Implprofile_ServiceHelperUpdate.class.getName() ,
+                    'executeAutomation' ,
+                    e
+                );
+            }
         }
         return ipRecordsByAutomationMap;
     }
