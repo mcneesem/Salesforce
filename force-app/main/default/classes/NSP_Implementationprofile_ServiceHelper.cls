@@ -209,6 +209,7 @@ public class NSP_Implementationprofile_ServiceHelper {
         Map<String,Set<Id>> ipRecordsByAutomationMap = new Map<String,Set<Id>>();
         if(CustomPermissionController.checkUserPermission('Use_Implementation_Profile', UserInfo.getUserId()) &&
         Schema.sObjectType.Implementation_Profile__c.isAccessible() &&
+        Schema.SObjectType.Implementation_Profile__c.isCreateable() &&
         Schema.sObjectType.Implementation_Profile__c.isUpdateable())
         {
             try {
