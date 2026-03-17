@@ -118,6 +118,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         Map<String, Set<Id>> ipRecordsByAutomationMap = new  Map<String, Set<Id>> ();
         if(CustomPermissionController.checkUserPermission('Use_Implementation_Profile', UserInfo.getUserId()) &&
         Schema.sObjectType.Implementation_Profile__c.isAccessible() &&
+        Schema.SObjectType.Implementation_Profile__c.isCreateable() &&
         Schema.sObjectType.Implementation_Profile__c.isUpdateable())
         {
             try{
@@ -469,7 +470,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, PAYROLL_JOBCOSTING_FN);
         }
     }
-    
+
     private void checkforPayrollRegister(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
         if (automationsToExecute.contains(PAYROLL_REGISTER_FN)
             && newRec != null
