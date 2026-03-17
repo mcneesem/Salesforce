@@ -474,7 +474,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         try {
             String host = URL.getOrgDomainUrl().toExternalForm();
             String endPoint = host + '/services/data/v55.0/tooling/';
-            String sessionId = UserInfo.getSessionId();
+            String sessionId = apiEnabledSessionId();
             List<String[]> wfaNames = new List<String[]>();
             wfaNames.add(new String[]{});
             List<List<MetadataService.Metadata>> allMetadataList = new List<List<MetadataService.Metadata>>();
@@ -528,7 +528,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         Integer batch = 0;
         HTTPResponse response = new HTTPResponse();
         String host = URL.getOrgDomainUrl().toExternalForm();
-        String sessionId = UserInfo.getSessionId();
+        String sessionId = apiEnabledSessionId();
         for (RecordAlert alert : records) {
             // Get the Alert meta-data
             request = new HttpRequest();
@@ -897,8 +897,12 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         }
     }
 
-    private static String apiEnabledSessionId() {
-        return UserInfo.getSessionId();
+    private static String apiEnabledSessionId(){
+        PageReference sessionPage = Page.SessionId;
+        String vfContent = sessionPage.getContent().toString();
+        Integer startIndex = vfContent.indexOf('Start_Of_Session_Id') + 'Start_Of_Session_Id'.length();
+        Integer endIndex = vfContent.indexOf('End_Of_Session_Id');
+        return vfContent.substring(startIndex, endIndex);
     }
 
     public static void doTrustedURLs() {
