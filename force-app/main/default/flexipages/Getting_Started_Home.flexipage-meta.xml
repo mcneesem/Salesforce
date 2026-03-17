@@ -78,9 +78,15 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentName>runtime_approval_process:pendingApprovalCard</componentName>
+                <identifier>runtime_approval_process_pendingApprovalCard</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>height</name>
-                    <value>140</value>
+                    <value>165</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -96,29 +102,43 @@
                 <componentName>flexipage:visualforcePage</componentName>
                 <identifier>flexipage_visualforcePage</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3</booleanFilter>
-                    <criteria>
-                        <leftValue>{!$User.UserRole.DeveloperName}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>NSP_L3_Support_Config</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!$User.UserRole.DeveloperName}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>NSP_L4_Support_Master_Admin</rightValue>
-                    </criteria>
+                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6 OR 7</booleanFilter>
                     <criteria>
                         <leftValue>{!$User.Username}</leftValue>
                         <operator>CONTAINS</operator>
                         <rightValue>paul.mccluskey@insperity.com</rightValue>
                     </criteria>
+                    <criteria>
+                        <leftValue>{!$User.Username}</leftValue>
+                        <operator>CONTAINS</operator>
+                        <rightValue>matt.mcneese@insperity.com</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$User.Username}</leftValue>
+                        <operator>CONTAINS</operator>
+                        <rightValue>lisa.myers@insperity.com</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$User.Username}</leftValue>
+                        <operator>CONTAINS</operator>
+                        <rightValue>marguerite.blackburn@insperity.com</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$User.Username}</leftValue>
+                        <operator>CONTAINS</operator>
+                        <rightValue>jerry.markham@insperity.com</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$User.Username}</leftValue>
+                        <operator>CONTAINS</operator>
+                        <rightValue>john.effang@insperity.com</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$User.Username}</leftValue>
+                        <operator>CONTAINS</operator>
+                        <rightValue>blessing.sanders@insperity.com</rightValue>
+                    </criteria>
                 </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentName>runtime_approval_process:pendingApprovalCard</componentName>
-                <identifier>runtime_approval_process_pendingApprovalCard</identifier>
             </componentInstance>
         </itemInstances>
         <name>bottomLeft</name>
@@ -165,6 +185,50 @@
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentName>sandboxHealth</componentName>
+                <identifier>c_sandboxHealth</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6 OR 7</booleanFilter>
+                    <criteria>
+                        <leftValue>{!$User.Username}</leftValue>
+                        <operator>CONTAINS</operator>
+                        <rightValue>paul.mccluskey@insperity.com</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$User.Username}</leftValue>
+                        <operator>CONTAINS</operator>
+                        <rightValue>matt.mcneese@insperity.com</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$User.Username}</leftValue>
+                        <operator>CONTAINS</operator>
+                        <rightValue>lisa.myers@insperity.com</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$User.Username}</leftValue>
+                        <operator>CONTAINS</operator>
+                        <rightValue>marguerite.blackburn@insperity.com</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$User.Username}</leftValue>
+                        <operator>CONTAINS</operator>
+                        <rightValue>jerry.markham@insperity.com</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$User.Username}</leftValue>
+                        <operator>CONTAINS</operator>
+                        <rightValue>john.effang@insperity.com</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$User.Username}</leftValue>
+                        <operator>CONTAINS</operator>
+                        <rightValue>blessing.sanders@insperity.com</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>wizardHomePage</componentName>
