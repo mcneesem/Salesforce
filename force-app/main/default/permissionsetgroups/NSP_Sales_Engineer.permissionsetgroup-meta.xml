@@ -11,18 +11,29 @@
     <permissionSets>Contact_View_All</permissionSets>
     <permissionSets>Core_Sales</permissionSets>
     <permissionSets>List_View_Enhanced_Access</permissionSets>
+    <permissionSets>Mid_Market</permissionSets>
     <permissionSets>NSPSteelBrickCPQUser</permissionSets>
+    <permissionSets>NSP_BPS_Support_Home_Page</permissionSets>
     <permissionSets>NSP_Billing_View_All</permissionSets>
+    <permissionSets>NSP_CRMA_Limited_and_Collections</permissionSets>
     <permissionSets>NSP_Finance_Service_Objects_Permission</permissionSets>
     <permissionSets>NSP_Main_Service_Contacts</permissionSets>
     <permissionSets>NSP_Order_ViewAll</permissionSets>
+    <permissionSets>NSP_Service_Operations_AppAcces</permissionSets>
+    <permissionSets>Opportunity_Splits_Elevated_Create_Read_Edit</permissionSets>
+    <permissionSets>Report_export_and_print_access</permissionSets>
     <permissionSets>SBQQ__SalesforceCPQUserAccess</permissionSets>
     <permissionSets>SBQQ__SteelBrickCPQUser</permissionSets>
     <permissionSets>Sales_Account_Indicator</permissionSets>
     <permissionSets>Sales_Service_Object_Permission</permissionSets>
+    <permissionSets>Upsell_Task</permissionSets>
+    <permissionSets>Xactly_Permission_Set</permissionSets>
     <permissionSets>bloomfirex__Bloomfire_User</permissionSets>
+    <permissionSets>force__HighVelocitySalesUserIncluded</permissionSets>
     <permissionSets>force__NextBestActionRecUnlimitedPSL</permissionSets>
     <permissionSets>force__PipelineInspectionIncluded</permissionSets>
+    <permissionSets>force__VoiceInbound</permissionSets>
+    <permissionSets>force__VoiceOutbound</permissionSets>
     <permissionSets>sbaa__AdvancedApprovalsUser</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
