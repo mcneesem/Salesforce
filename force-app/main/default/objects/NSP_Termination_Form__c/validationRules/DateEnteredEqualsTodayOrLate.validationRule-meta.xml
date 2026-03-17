@@ -3,18 +3,15 @@
     <fullName>DateEnteredEqualsTodayOrLate</fullName>
     <active>true</active>
     <errorConditionFormula>AND(
+ NOT( $Permission.Bypass_Benefit_Termination_Date_Rule ) ,
+ ( NSP_Benefit_Termination_Date__c &lt; TODAY() ) ,
   NOT(
     OR(
-      ( $Setup.NSP_Trigger_Switch__c.NSP_TerminationFormValidation__c ) ,
       ( NSP_Approver__c = &apos;Termination Team&apos; ) ,
       ( NSP_Approver_Formula__c = &apos;Termination Team&apos; ) ,
-      AND(
-        ISPICKVAL( NSP_Status__c , &apos;PR Supervisor Approved&apos; ) ,
-        $Permission.Bypass_Benefit_Termination_Date_Rule
-      )
+      ISPICKVAL( NSP_Status__c , &apos;PR Supervisor Approved&apos; )
     )
-  ) ,
-  ( NSP_Benefit_Termination_Date__c &lt; TODAY() )
+  )
 )</errorConditionFormula>
     <errorDisplayField>NSP_Benefit_Termination_Date__c</errorDisplayField>
     <errorMessage>Date entered must equal today’s date or later</errorMessage>
