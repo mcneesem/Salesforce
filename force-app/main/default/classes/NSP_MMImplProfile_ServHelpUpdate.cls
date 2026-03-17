@@ -155,8 +155,9 @@ public class NSP_MMImplProfile_ServHelpUpdate {
 
     public  Map<String, Set<Id>> executeAutomation() {
         Map<String,Set<Id>> ipRecordsByAutomationMap = new  Map<String,Set<Id>>();
-        Boolean hasPermission = CustomPermissionController.checkUserPermission('Use_Implementation_Profile', UserInfo.getUserId());
-        if(hasPermission)
+        if(CustomPermissionController.checkUserPermission('Use_Implementation_Profile', UserInfo.getUserId()) &&
+        Schema.sObjectType.Implementation_Profile__c.isAccessible() &&
+        Schema.sObjectType.Implementation_Profile__c.isUpdateable())
         {
             try {
                 start();
@@ -2348,7 +2349,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
             childProjectTask = HSA_OPTUM_NO_MM;
         }
     }
-    
+
     //Return value to create child tasks of "Client offers HSA" Automation
     //in afterInsert Project Task trigger
     public static String hsaOptumChildren(){
