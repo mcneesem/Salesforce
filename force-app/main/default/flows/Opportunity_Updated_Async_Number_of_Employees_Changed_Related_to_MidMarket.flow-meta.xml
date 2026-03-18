@@ -355,6 +355,13 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed Lost</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Get_DC_Event</targetReference>
             </connector>
@@ -434,14 +441,7 @@
         <faultConnector>
             <targetReference>Assign_varFaultElement_Get_DC_Event</targetReference>
         </faultConnector>
-        <filterLogic>(1 OR 2) AND 3 AND 4</filterLogic>
-        <filters>
-            <field>NSP_Status__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Open</stringValue>
-            </value>
-        </filters>
+        <filterLogic>1 AND 2 AND 3</filterLogic>
         <filters>
             <field>NSP_Status__c</field>
             <operator>EqualTo</operator>
@@ -614,7 +614,7 @@
     <textTemplates>
         <name>EmailBody</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;p&gt;&lt;span style=&quot;font-size: 14px; font-family: verdana;&quot;&gt;Hello!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; font-family: verdana;&quot;&gt;We are excited to announce that the number of employees for &lt;/span&gt;&lt;a href=&quot;{!OpportunityURL}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-size: 14px; font-family: verdana;&quot;&gt; {!$Record.Name}&lt;/a&gt; &lt;span style=&quot;font-size: 14px; font-family: verdana;&quot;&gt;has updated to {!$Record.NSP_Number_of_Employees__c}. This opportunity now falls within the Strategic Sales domain.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; font-family: verdana;&quot;&gt;Please take necessary actions to ensure the appropriate seller is assigned to the opportunity.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; font-family: verdana;&quot;&gt;Let’s go win!&lt;/span&gt;&lt;/p&gt;</text>
+        <text>&lt;p&gt;&lt;span style=&quot;font-size: 14px; font-family: verdana;&quot;&gt;Hello!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; font-family: verdana;&quot;&gt;We are excited to announce that the number of employees for &lt;/span&gt;&lt;a href=&quot;{!OpportunityURL}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-size: 14px; font-family: verdana;&quot;&gt; {!$Record.Name}&lt;/a&gt; &lt;span style=&quot;font-size: 14px; font-family: verdana;&quot;&gt;has updated to {!$Record.NSP_Number_of_Employees__c}, and has a completed Discovery Call. This opportunity now falls within the Strategic Sales domain.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; font-family: verdana;&quot;&gt;Opportunity Owner: {!$Record.Owner.FirstName} &lt;/span&gt;&lt;span style=&quot;font-size: 14px; font-family: verdana; background-color: rgb(255, 255, 255);&quot;&gt;{!$Record.Owner.LastName}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; font-family: verdana;&quot;&gt;Please take necessary actions to ensure the appropriate seller is assigned to the opportunity.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; font-family: verdana;&quot;&gt;Let’s go win!&lt;/span&gt;&lt;/p&gt;</text>
     </textTemplates>
     <textTemplates>
         <name>EmailSubject</name>
