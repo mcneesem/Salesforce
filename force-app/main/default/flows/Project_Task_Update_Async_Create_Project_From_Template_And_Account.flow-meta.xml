@@ -1,36 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <actionCalls>
-        <description>Apex Action</description>
-        <name>CreateProjectFromTemplateAccount</name>
-        <label>Create Project From Template Account</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <actionName>CreateProjectFromTemplateAccount</actionName>
-        <actionType>apex</actionType>
-        <connector>
-            <targetReference>Response</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Set_Fault_Element_CreateProjectFromTemplateAccount</targetReference>
-        </faultConnector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>oaccountId</name>
-            <value>
-                <elementReference>Get_Parent_Project.pse__Account__c</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>oprojectTemplateId</name>
-            <value>
-                <elementReference>Get_Template_Project.Id</elementReference>
-            </value>
-        </inputParameters>
-        <nameSegment>CreateProjectFromTemplateAccount</nameSegment>
-        <offset>0</offset>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </actionCalls>
     <apiVersion>64.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
@@ -42,79 +11,11 @@
             <assignToReference>ProjectId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>CreateProjectFromTemplateAccount.projectId</elementReference>
+                <elementReference>Create_Project_From_Template_and_Account_Subflow.projectId</elementReference>
             </value>
         </assignmentItems>
         <connector>
             <targetReference>Update_Parent_Project</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_Fault_Element_CreateProjectFromTemplateAccount</name>
-        <label>Set Fault Element : CreateProjectFromTemplateAccount</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>FaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>CreateProjectFromTemplateAccount</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_Fault_Element_Get_Account</name>
-        <label>Set Fault Element : Get_Account</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>FaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Get_Account</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_Fault_Element_Get_Project</name>
-        <label>Set Fault Element : Get_Project</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>FaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Get_Project</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_Fault_Element_Get_Template_Project</name>
-        <label>Set Fault Element : Get_Template_Project</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>FaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Get_Template_Project</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -175,28 +76,6 @@
         </value>
     </constants>
     <decisions>
-        <name>Account_Exists</name>
-        <label>Account Exists?</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Yes_Account_Exists</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Account</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_Template_Project</targetReference>
-            </connector>
-            <label>Yes : Account Exists</label>
-        </rules>
-    </decisions>
-    <decisions>
         <description>Verify if Project Created Sucessfully</description>
         <name>Response</name>
         <label>Response?</label>
@@ -210,21 +89,7 @@
             <name>Success</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>CreateProjectFromTemplateAccount</leftValueReference>
-                <operator>WasVisited</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>CreateProjectFromTemplateAccount.isSuccess</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>CreateProjectFromTemplateAccount.projectId</leftValueReference>
+                <leftValueReference>Create_Project_From_Template_and_Account_Subflow.projectId</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -234,35 +99,6 @@
                 <targetReference>Assign_ProjectId</targetReference>
             </connector>
             <label>Success</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Valid_Project</name>
-        <label>Valid Project</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Yes_Project_Exist</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Parent_Project</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_Parent_Project.pse__Account__c</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_Account</targetReference>
-            </connector>
-            <label>Yes : Project Exist</label>
         </rules>
     </decisions>
     <decisions>
@@ -276,13 +112,6 @@
             <name>Yes_Create_New_Project</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Template_Project</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
                 <leftValueReference>Get_WX_WA_New_Tax_IMPL_Project</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
@@ -290,13 +119,14 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>CreateProjectFromTemplateAccount</targetReference>
+                <targetReference>Create_Project_From_Template_and_Account_Subflow</targetReference>
             </connector>
             <label>Yes : Create New Project</label>
         </rules>
     </decisions>
     <description>Created new on 08/12/2025- AZD-429718
-Bug-497996</description>
+Bug-497996
+03/12/2026 - Updated to include subflow</description>
     <environments>Default</environments>
     <interviewLabel>Project Task - Update - Async - Create Project From Template And Account {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Project Task - Update - Async - Create Project From Template And Account</label>
@@ -320,94 +150,6 @@ Bug-497996</description>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
-        <description>Verify if Account exisits</description>
-        <name>Get_Account</name>
-        <label>Get Account</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Account_Exists</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Set_Fault_Element_Get_Account</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Parent_Project.pse__Account__c</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Account</object>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>Name</queriedFields>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <description>Project associated to task record</description>
-        <name>Get_Parent_Project</name>
-        <label>Get Parent Project</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Valid_Project</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Set_Fault_Element_Get_Project</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$Record.pse__Project__c</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>pse__Proj__c</object>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>pse__Account__c</queriedFields>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <description>Get Template Record for Template WX/WA New Tax IMPL</description>
-        <name>Get_Template_Project</name>
-        <label>Get Template Project</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Get_WX_WA_New_Tax_IMPL_Project</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Set_Fault_Element_Get_Template_Project</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>pse__Is_Template__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </filters>
-        <filters>
-            <field>TemplateName__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>ProjectTemplate</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>pse__Proj__c</object>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>TemplateName__c</queriedFields>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
         <description>Check to see if WX/WA New Tax IMPL Project is already exists</description>
         <name>Get_WX_WA_New_Tax_IMPL_Project</name>
         <label>Get WX/WA New Tax IMPL Project</label>
@@ -425,14 +167,14 @@ Bug-497996</description>
             <field>pse__Parent_Project__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Parent_Project.Id</elementReference>
+                <elementReference>$Record.pse__Project__c</elementReference>
             </value>
         </filters>
         <filters>
             <field>pse__Account__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Parent_Project.pse__Account__c</elementReference>
+                <elementReference>$Record.NSP_AccountId__c</elementReference>
             </value>
         </filters>
         <filters>
@@ -475,7 +217,7 @@ Bug-497996</description>
         <inputAssignments>
             <field>pse__Parent_Project__c</field>
             <value>
-                <elementReference>Get_Parent_Project.Id</elementReference>
+                <elementReference>$Record.pse__Project__c</elementReference>
             </value>
         </inputAssignments>
         <object>pse__Proj__c</object>
@@ -512,17 +254,63 @@ Bug-497996</description>
                 <stringValue>iSolved HCM Implementation</stringValue>
             </value>
         </filters>
+        <filters>
+            <field>pse__Project__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Account_Id__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
         <object>pse__Project_Task__c</object>
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Get_Parent_Project</targetReference>
+                <targetReference>Get_WX_WA_New_Tax_IMPL_Project</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Draft</status>
+    <subflows>
+        <name>Create_Project_From_Template_and_Account_Subflow</name>
+        <label>Create Project From Template and Account Subflow</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Response</targetReference>
+        </connector>
+        <flowName>Create_Project_From_Template_and_Account_Subflow</flowName>
+        <inputAssignments>
+            <name>accountId</name>
+            <value>
+                <elementReference>$Record.NSP_AccountId__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>assignRole</name>
+        </inputAssignments>
+        <inputAssignments>
+            <name>deleteBudget</name>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>projectTemplate</name>
+            <value>
+                <elementReference>ProjectTemplate</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
     <subflows>
         <name>Insperity_Fault_Handler_Subflow</name>
         <label>Insperity Fault Handler Subflow</label>
