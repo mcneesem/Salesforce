@@ -134,6 +134,35 @@
             <targetReference>Account_DML_Subflow_Update</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_current_Account</name>
+        <label>Assign varFaultElement Get_current_Account</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_current_Account</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Get_new_Account</name>
+        <label>Assign varFaultElement Get_new_Account</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_new_Account</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
     <customProperties>
         <name>ScreenProgressIndicator</name>
         <value>
@@ -244,6 +273,9 @@
         <connector>
             <targetReference>Record_found</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_current_Account</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -262,7 +294,6 @@
         <queriedFields>NSP_Sales_Office__c</queriedFields>
         <queriedFields>NSP_SalesRegion__c</queriedFields>
         <queriedFields>NSP_Sales_Division__c</queriedFields>
-        <queriedFields>DNB_Connect_DUNS_Number__c</queriedFields>
         <queriedFields>RecordTypeId</queriedFields>
         <queriedFields>Type</queriedFields>
         <queriedFields>NSP_FEIN__c</queriedFields>
@@ -278,8 +309,9 @@
         <queriedFields>ShippingState</queriedFields>
         <queriedFields>ShippingPostalCode</queriedFields>
         <queriedFields>ShippingCountry</queriedFields>
-        <queriedFields>DnB_Domestic_Ultimate_DUNS__c</queriedFields>
-        <queriedFields>DnB_Global_Ultimate_DUNS__c</queriedFields>
+        <queriedFields>DnB_Headquarter_DUNS__c</queriedFields>
+        <queriedFields>DnB_Parent_DUNS__c</queriedFields>
+        <queriedFields>DNB_Connect_DUNS_Number__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
@@ -291,6 +323,9 @@
         <connector>
             <targetReference>New_Account_found</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_new_Account</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>NSP_FEIN__c</field>
@@ -474,6 +509,31 @@
             </value>
         </inputAssignments>
     </subflows>
+    <subflows>
+        <name>Insperity_Fault_Handler_Subflow</name>
+        <label>Insperity Fault Handler Subflow</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>varFaultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Account_Screen_Clone_with_new_FEIN</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>accountName</name>
         <dataType>String</dataType>
@@ -502,6 +562,13 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varFaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
 </Flow>
