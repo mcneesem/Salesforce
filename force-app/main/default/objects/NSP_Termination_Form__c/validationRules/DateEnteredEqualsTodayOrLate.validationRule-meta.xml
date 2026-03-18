@@ -3,8 +3,8 @@
     <fullName>DateEnteredEqualsTodayOrLate</fullName>
     <active>true</active>
     <errorConditionFormula>AND(
- NOT( $Permission.Bypass_Benefit_Termination_Date_Rule ) ,
- ( NSP_Benefit_Termination_Date__c &lt; TODAY() ) ,
+  NOT( $Permission.Bypass_Benefit_Termination_Date_Rule ) ,
+  ( NSP_Benefit_Termination_Date__c &lt; TODAY() ) ,
   NOT(
     OR(
       ( NSP_Approver__c = &apos;Termination Team&apos; ) ,
