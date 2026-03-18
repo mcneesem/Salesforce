@@ -121,49 +121,49 @@
             <assignToReference>r_PDS_to_update.NSP_HR_Contact_Methods__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_HR_Contact_Best_Time_Of_Day_to_Reach__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.HR_Contact_Notes_Txt__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_HR_Contact_Alt_Office_Phone__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_HR_Contact_Alt_Cell_Phone__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_HR_Contact_Alt_Email__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_HR_Contact_International_Phone__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -193,49 +193,49 @@
             <assignToReference>r_PDS_to_update.NSP_On_site_Supervisor_Contact_Method__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_OnsiteSupervisor_Best_TimeOfDay_to_R__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.On_site_Supervisor_Notes_Txt__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_OSS_Contact_Alt_Office_Phone__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_OSS_Contact_Alt_Cell_Phone__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_OSS_Contact_Alt_Email__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_OnsiteSupervisor_International_Phone__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -265,42 +265,42 @@
             <assignToReference>r_PDS_to_update.NSP_Primary_Payroll_Contact_Methods__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_PrimaryPayrollContc_Best_Time_Of_Day__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_Primary_PC_Alt_Office_Phone__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_Primary_PC_Alt_Cell_Phone__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_Primary_PC_Alt_Email__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_PrimaryPayrollConta_International_Ph__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -314,7 +314,7 @@
             <assignToReference>r_PDS_to_update.Primary_Payroll_Contact_Notes__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -344,63 +344,63 @@
             <assignToReference>r_PDS_to_update.NSP_HR_Contact_SCC__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_HR_Contact__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_HR_Contact_Methods__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_HR_Contact_Best_Time_Of_Day_to_Reach__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.HR_Contact_Notes_Txt__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_HR_Contact_Alt_Office_Phone__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_HR_Contact_Alt_Cell_Phone__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_HR_Contact_Alt_Email__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_HR_Contact_International_Phone__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -438,63 +438,63 @@
             <assignToReference>r_PDS_to_update.NSP_HR_Contact_SCC__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_HR_Contact__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_HR_Contact_Methods__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_HR_Contact_Best_Time_Of_Day_to_Reach__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.HR_Contact_Notes_Txt__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_HR_Contact_Alt_Office_Phone__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_HR_Contact_Alt_Cell_Phone__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_HR_Contact_Alt_Email__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_HR_Contact_International_Phone__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -531,63 +531,63 @@
             <assignToReference>r_PDS_to_update.NSP_OSS_SCC__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_On_site_Supervisor__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_On_site_Supervisor_Contact_Method__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_OnsiteSupervisor_Best_TimeOfDay_to_R__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.On_site_Supervisor_Notes_Txt__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_OSS_Contact_Alt_Office_Phone__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_OSS_Contact_Alt_Cell_Phone__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_OSS_Contact_Alt_Email__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_OnsiteSupervisor_International_Phone__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -625,63 +625,63 @@
             <assignToReference>r_PDS_to_update.NSP_OSS_SCC__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_On_site_Supervisor__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_On_site_Supervisor_Contact_Method__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_OnsiteSupervisor_Best_TimeOfDay_to_R__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.On_site_Supervisor_Notes_Txt__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_OSS_Contact_Alt_Office_Phone__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_OSS_Contact_Alt_Cell_Phone__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_OSS_Contact_Alt_Email__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_OnsiteSupervisor_International_Phone__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -718,56 +718,56 @@
             <assignToReference>r_PDS_to_update.NSP_Payroll_SCC__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_Primary_Payroll_Contact__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_Primary_Payroll_Contact_Methods__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_PrimaryPayrollContc_Best_Time_Of_Day__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_Primary_PC_Alt_Office_Phone__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_Primary_PC_Alt_Cell_Phone__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_Primary_PC_Alt_Email__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_PrimaryPayrollConta_International_Ph__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -781,7 +781,7 @@
             <assignToReference>r_PDS_to_update.Primary_Payroll_Contact_Notes__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -812,56 +812,56 @@
             <assignToReference>r_PDS_to_update.NSP_Payroll_SCC__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_Primary_Payroll_Contact__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_Primary_Payroll_Contact_Methods__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_PrimaryPayrollContc_Best_Time_Of_Day__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_Primary_PC_Alt_Office_Phone__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_Primary_PC_Alt_Cell_Phone__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_Primary_PC_Alt_Email__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>r_PDS_to_update.NSP_PrimaryPayrollConta_International_Ph__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -875,7 +875,7 @@
             <assignToReference>r_PDS_to_update.Primary_Payroll_Contact_Notes__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>v_NullValue</elementReference>
+                <elementReference>emptyString</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -1018,18 +1018,36 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Set_Fault_Element_Get_PDS_Record</name>
+        <label>Set Fault Element : Get_PDS_Record</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_PDS_Record</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_Fault_Element_Get_Sub_Client_Contact_Records</name>
         <label>Set Fault Element : Get_Sub_Client_Contact_Records</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>FaultElement</assignToReference>
+            <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Get_Sub_Client_Contact_Records</stringValue>
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
@@ -1039,7 +1057,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>FaultElement</assignToReference>
+            <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Get_Sub_Client_Record</stringValue>
@@ -1047,6 +1065,22 @@
         </assignmentItems>
         <connector>
             <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Update_PDS_Record</name>
+        <label>Set Fault Element : Update_PDS_Record</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_PDS_Record</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
             <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
@@ -1167,6 +1201,65 @@
             <sortOrder>Desc</sortOrder>
         </sortOptions>
     </collectionProcessors>
+    <decisions>
+        <name>Kill_Switch_Enable_For_Workday</name>
+        <label>Kill Switch : Enable For Workday?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Enable_For_Workday</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Payroll_Data_Sheet_Settings__c.IsEnabledHRContact__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Setup.Payroll_Data_Sheet_Settings__c.IsEnabledOnsiteSupervisor__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Setup.Payroll_Data_Sheet_Settings__c.IsEnabledPrimaryPayrollContact__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Valid_Input_Set</targetReference>
+            </connector>
+            <label>Yes : Enable For Workday</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Validate if record already exists</description>
+        <name>PDS_Record_Exists</name>
+        <label>PDS Record Exists?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Valid_PDS_Record</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>r_PDS</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Sub_Client_Contact_Records</targetReference>
+            </connector>
+            <label>Yes : Valid PDS Record</label>
+        </rules>
+    </decisions>
     <decisions>
         <description>Loop for Each SCC Contact Flag : PC or HR or OSS :
 1) Execute Multiple Route when there are Multiple SCC with PC/HR or OSS Found - Count &gt;1 , Remove PC/HR/OSS when same as SCC Contact on PDS
@@ -1485,6 +1578,7 @@
         </rules>
     </decisions>
     <decisions>
+        <description>flow invoked from multiple places. Create PDS , Create SCC , Update SCC</description>
         <name>Valid_Input_Set</name>
         <label>Valid Input Set?</label>
         <locationX>0</locationX>
@@ -1494,14 +1588,7 @@
             <name>Yes_Valid_Input</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>v_SubClient_Id</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>r_PDS</leftValueReference>
+                <leftValueReference>subClientId</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -1514,8 +1601,30 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Valid_SC_and_PDS_Record</name>
-        <label>Valid SC and PDS Record?</label>
+        <name>Valid_PDS_Record_to_Update</name>
+        <label>Valid PDS Record to Update?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Valid_for_Update</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>r_PDS_to_update</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_PDS_Record</targetReference>
+            </connector>
+            <label>Yes : Valid for Update</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Valid_SC_Record</name>
+        <label>Valid SC Record?</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
@@ -1529,15 +1638,8 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>r_PDS</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
             <connector>
-                <targetReference>Get_Sub_Client_Contact_Records</targetReference>
+                <targetReference>Get_PDS_Record</targetReference>
             </connector>
             <label>Yes : Valid Record</label>
         </rules>
@@ -1597,6 +1699,9 @@
         <nextValueConnector>
             <targetReference>Process_each_SCC_Flag</targetReference>
         </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Valid_PDS_Record_to_Update</targetReference>
+        </noMoreValuesConnector>
     </loops>
     <loops>
         <name>Loop_SCC_Extract_HR_Record</name>
@@ -1660,6 +1765,37 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
+        <description>Get the PDS Record associated to Sub client</description>
+        <name>Get_PDS_Record</name>
+        <label>Get PDS Record</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>PDS_Record_Exists</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_PDS_Record</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>NSP_Sub_Client_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>subClientId</elementReference>
+            </value>
+        </filters>
+        <object>NSP_Payroll__c</object>
+        <outputReference>r_PDS</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>NSP_Payroll_SCC__c</queriedFields>
+        <queriedFields>NSP_HR_Contact_SCC__c</queriedFields>
+        <queriedFields>NSP_OSS_SCC__c</queriedFields>
+        <queriedFields>NSP_Primary_Payroll_Contact__c</queriedFields>
+        <queriedFields>NSP_HR_Contact__c</queriedFields>
+        <queriedFields>NSP_On_site_Supervisor__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
         <description>Retrieve all Payroll, HR and On-Site Supervisor Contacts</description>
         <name>Get_Sub_Client_Contact_Records</name>
         <label>Get Sub Client Contact Records</label>
@@ -1716,7 +1852,7 @@
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Valid_SC_and_PDS_Record</targetReference>
+            <targetReference>Valid_SC_Record</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Set_Fault_Element_Get_Sub_Client_Record</targetReference>
@@ -1726,7 +1862,7 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>v_SubClient_Id</elementReference>
+                <elementReference>subClientId</elementReference>
             </value>
         </filters>
         <object>NSP_Sub_Client__c</object>
@@ -1734,15 +1870,27 @@
         <queriedFields>Id</queriedFields>
         <queriedFields>NSP_Account__c</queriedFields>
     </recordLookups>
+    <recordUpdates>
+        <description>Update the Payroll Data Sheet</description>
+        <name>Update_PDS_Record</name>
+        <label>Update PDS Record</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Update_PDS_Record</targetReference>
+        </faultConnector>
+        <inputReference>r_PDS_to_update</inputReference>
+    </recordUpdates>
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Valid_Input_Set</targetReference>
+            <targetReference>Kill_Switch_Enable_For_Workday</targetReference>
         </connector>
     </start>
     <status>Draft</status>
     <subflows>
+        <description>Fault handler</description>
         <name>Insperity_Fault_Handler_Subflow</name>
         <label>Insperity Fault Handler Subflow</label>
         <locationX>0</locationX>
@@ -1751,7 +1899,7 @@
         <inputAssignments>
             <name>faultElement</name>
             <value>
-                <elementReference>FaultElement</elementReference>
+                <elementReference>faultElement</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1816,7 +1964,18 @@
         <objectType>NSP_Sub_Client_Contact__c</objectType>
     </variables>
     <variables>
-        <name>FaultElement</name>
+        <description>to clear-off the filed values</description>
+        <name>emptyString</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>faultElement</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
@@ -1826,7 +1985,7 @@
         <name>r_PDS</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
-        <isInput>true</isInput>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>NSP_Payroll__c</objectType>
     </variables>
@@ -1835,7 +1994,7 @@
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
-        <isOutput>true</isOutput>
+        <isOutput>false</isOutput>
         <objectType>NSP_Payroll__c</objectType>
     </variables>
     <variables>
@@ -1864,7 +2023,7 @@
     </variables>
     <variables>
         <description>Sub Client Record
-1) Pass SCC Record when Record Trigger from SCC
+1) Pass SCC Record when Record Trigger from SCC , Need this to compare the
 2) Pass Null for when Record Trigger from Create PDS</description>
         <name>r_SCC_Record</name>
         <dataType>SObject</dataType>
@@ -1890,10 +2049,11 @@
         <objectType>NSP_Sub_Client_Contact__c</objectType>
     </variables>
     <variables>
-        <name>v_NullValue</name>
+        <description>Sub Client Record Id needed to get all Contact Flags and compute logic</description>
+        <name>subClientId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
-        <isInput>false</isInput>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
@@ -1902,14 +2062,6 @@
         <dataType>String</dataType>
         <isCollection>true</isCollection>
         <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <description>Sub Client Record Id</description>
-        <name>v_SubClient_Id</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
 </Flow>
