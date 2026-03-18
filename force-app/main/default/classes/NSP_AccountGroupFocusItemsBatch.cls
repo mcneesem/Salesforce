@@ -1,253 +1,498 @@
-/**
-* @description       : System to run a batch jobs to identify situations that could affect Account Health/Renewal Probability.
-* @author            : Anil
-* @group             :
-* @last modified on  : 02-13-2023
-* @last modified by  : Anil
-**/
-public without sharing class NSP_AccountGroupFocusItemsBatch implements Database.Batchable<sObject>, Schedulable  {
-    // test w/ NSP_AccountGroupFocusItemsBatch_Test (90%)
+public without sharing class NSP_AccountGroupFocusItemsBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<SObject> {
+    // test w/ NSP_AccountGroupFocusItemsBatch_Test (87%)
 
-    Map<String, Integer> accGrpWithFocusItem = new Map<String, Integer>();
-    Map<String, NSP_Focus_Item__c> accGrpWithFocusItemActive = new Map<String, NSP_Focus_Item__c>();
-    Map<String, Integer> accGrpWithFocusItemNSP = new Map<String, Integer>();
-    Map<String, NSP_Focus_Item__c> accGrpWithFocusItemActiveNSP = new Map<String, NSP_Focus_Item__c>();
-    Map<String, String> accIdWithAimsClient = new Map<String, String>();
-    Map<String, String> noInsperityAccIdWithAimsClient = new Map<String, String>();
-    Map<String, String> noNSPAccIdWithAimsClient = new Map<String, String>();
-    List<NSP_Focus_Item__c> lstFocusItems = new List<NSP_Focus_Item__c>();
-    Map<String, List<String>> grpIdWithAccId = new Map<String, List<String>>();
-    Map<String,Map<String,Integer>> accGrpFoucsItemCount = new Map<String, Map<String,Integer>>();
-    Set<Id> accountIds = new Set<Id>();
+    private Map<String,Integer> accGrpWithFocusItem = new Map<String,Integer>();
+    private Map<String,NSP_Focus_Item__c> accGrpWithFocusItemActive = new Map<String,NSP_Focus_Item__c>();
+    private Map<String,Integer> accGrpWithFocusItemNSP = new Map<String,Integer>();
+    private Map<String,NSP_Focus_Item__c> accGrpWithFocusItemActiveNSP = new Map<String,NSP_Focus_Item__c>();
+    private Map<String,String> accIdWithAimsClient = new Map<String,String>();
+    private Map<String,String> noInsperityAccIdWithAimsClient = new Map<String,String>();
+    private Map<String,String> noNSPAccIdWithAimsClient = new Map<String,String>();
+    private List<NSP_Focus_Item__c> lstFocusItems = new List<NSP_Focus_Item__c>();
+    private Map<String,List<String>> grpIdWithAccId = new Map<String,List<String>>();
+    private Set<Id> accountIds = new Set<Id>();
+    private List<String> focusItemStatus = new List<String>{
+        NSP_ServiceConstants.STATUS_ACTIVE ,
+        NSP_ServiceConstants.CLOSED_STATUS
+    };
+
+    //
+    // Argument-free constructor is required to be "runnable"
+    //
+
+    public NSP_AccountGroupFocusItemsBatch() {
+    }
+
+    //
+    // ISelfSchedulable
+    //
+
+    public static String schedule() {
+        String suffix = '';
+        if ( Test.isRunningTest() ) {
+            suffix = ' ~ TEST';
+        }
+        return System.schedule(
+            'NSP_AccountGroupFocusItemsBatch ~ monthly at 11 PM' + suffix ,
+            '0 0 23 1 * ?' ,
+            new NSP_AccountGroupFocusItemsBatch()
+        );
+    }
+
+    //
+    // Schedulable
+    //
+
+    public void execute( SchedulableContext sc ) {
+        this.call( 'run' , null );
+    }
+
+    //
+    // Callable
+    //
+
+    public Object call( String action , Map<String,Object> args ) {
+        Object response = null;
+        if ( action == 'run' ) {
+            response = this.run();
+        }
+        return response;
+    }
+
+    //
+    // IJobRunnable
+    //
+
+    public Id run() {
+        return Database.executeBatch( new NSP_AccountGroupFocusItemsBatch() , 200 );
+    }
+
+    //
+    // Batchable
+    //
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
-        //Account group fields
-        List<String> acctGroups = new List<String>{'Account Health','Renewal Probability'};
-        //query of all Account Group
-            String query = 'SELECT Id, Name, NSP_Type__c, NSP_Account__c, NSP_Tag__c, NSP_Group_Member_Count__c, '+
-            '(SELECT Id, NSP_Member_Account__c FROM Account_Group_Members__r), '+
-            '(SELECT Id, Focus_Item__c, NSP_Status__c, NSP_Detail__c FROM Focus_Items__r WHERE NSP_Status__c != \'Closed\' ) '+
-            'FROM NSP_Account_Group__c WHERE NSP_Group_Member_Count__c > 0 AND NSP_Type__c IN: acctGroups';
-        return Database.getQueryLocator(query);
+        return Database.getQueryLocator(
+            [
+                SELECT
+                    Id ,
+                    Name ,
+                    NSP_Type__c ,
+                    NSP_Account__c ,
+                    NSP_Tag__c ,
+                    NSP_Group_Member_Count__c ,
+                    (
+                        SELECT
+                            Id ,
+                            NSP_Member_Account__c
+                        FROM Account_Group_Members__r
+                    ) ,
+                    (
+                        SELECT
+                            Id ,
+                            Focus_Item__c ,
+                            NSP_Status__c ,
+                            NSP_Detail__c
+                        FROM Focus_Items__r
+                        WHERE ( NSP_Status__c != 'Closed' )
+                    )
+                FROM NSP_Account_Group__c
+                WHERE (
+                    ( NSP_Group_Member_Count__c > 0 )
+                    AND (
+                        NSP_Type__c IN (
+                            'Account Health' ,
+                            'Renewal Probability'
+                        )
+                    )
+                )
+            ]
+        );
     }
 
-    public void execute(Database.BatchableContext bc, List<NSP_Account_Group__c> lstAccGrps) {
-       try{
-            //calling the method checkForAccountGroups
-            checkForAccountGroups(lstAccGrps);
+    public void execute( Database.BatchableContext bc , List<NSP_Account_Group__c> scope ) {
+        if ( ( scope != null ) && !scope.isEmpty() ) {
+            try {
+                this.checkForAccountGroups( scope );
+                this.checkForAssets();
+                this.checkForFocusItems( scope );
+                this.insertFocusItems();
+            } catch ( Exception e ) {
+                NSP_ErrorLogHandler.logException(
+                    NSP_AccountGroupFocusItemsBatch.class.getName() ,
+                   'execute' ,
+                   e
+                );
+            }
+        }
+    }
 
-        } catch (Exception ex) {
-           NSP_ErrorLogHandler.logSaveException('NSP_AccountGroupFocusItemsBatch', 'NSP_AccountGroupFocusItemsBatch:execute', ex.getMessage());
+    public void finish( Database.BatchableContext bc ) {
+    }
+
+    //
+    //
+    //
+
+    // check for FocusItems that matches with Account Groups
+    private void checkForFocusItems( List<NSP_Account_Group__c> lstAccGrps ) {
+        if ( ( lstAccGrps != null ) && !lstAccGrps.isEmpty() ){
+             for ( NSP_Account_Group__c accGrp : lstAccGrps ) {
+                List<String> lstAIMS = this.checkForAIMS(
+                    accGrp.Id ,
+                    this.grpIdWithAccId ,
+                    this.accIdWithAimsClient
+                );
+                List<String> noInsperityAIMSClient = this.checkForAIMS(
+                    accGrp.Id ,
+                    this.grpIdWithAccId ,
+                    this.noInsperityAccIdWithAimsClient
+                );
+                List<String> noNSPAccIdWithAims = this.checkForAIMS(
+                    accGrp.Id ,
+                    this.grpIdWithAccId ,
+                    this.noNSPAccIdWithAimsClient
+                );
+                this.checkEarlyTenureFocusItems( accGrp.Id, lstAIMS );
+                this.checkNoInsperity401kFocusItems(
+                    accGrp.Id ,
+                    noInsperityAIMSClient ,
+                    noNSPAccIdWithAims
+                );
+            }
         }
     }
 
-    //finish method
-    public void finish(Database.BatchableContext bc) {
-
-    }
-
-    //excuting the batch
-    public void execute(SchedulableContext sc) {
-        Database.executeBatch(new NSP_AccountGroupFocusItemsBatch());
-    }
-
-    /**
-    * @description check for FocusItems that matches with Account Groups
-    * @author Anil | 02-03-2023
-    * @param lstAccGrps
-    **/
-    private void checkForFocusItems(List<NSP_Account_Group__c> lstAccGrps) {
-        checkForAssets();
-
-        for(NSP_Account_Group__c accGrp : lstAccGrps){
-
-            List<String> lstAIMS = checkForAIMS(accGrp.Id, grpIdWithAccId, accIdWithAimsClient);
-            List<String> noInsperityAIMSClient = checkForAIMS(accGrp.Id, grpIdWithAccId,noInsperityAccIdWithAimsClient);
-
-            if(accGrpWithFocusItem.containsKey(accGrp.Id) && accGrpWithFocusItem.get(accGrp.Id) == 0 && !lstAIMS.isEmpty()) {
-                lstFocusItems.add(prepareFocusItem(lstAIMS, accGrp.Id, NSP_ServiceConstants.EARLY_TENURE, NSP_ServiceConstants.EARLY_TENURE_CLIENT, NSP_ServiceConstants.UNFAVORABLE, NSP_ServiceConstants.FOCUS_COMMENTS));
-            } else if (accGrpWithFocusItemActive.containsKey(accGrp.Id) && !lstAIMS.isEmpty()){
-                NSP_Focus_Item__c focusItem = accGrpWithFocusItemActive.get(accGrp.Id);
-                focusItem.NSP_Comments__c = NSP_ServiceConstants.FOCUS_COMMENTS+' ['+String.join(lstAIMS, ',')+']';
-                lstFocusItems.add(focusItem);
-            } else if (accGrpWithFocusItemActive.containsKey(accGrp.Id) && lstAIMS.isEmpty()){
-                NSP_Focus_Item__c focusItem = accGrpWithFocusItemActive.get(accGrp.Id);
+    private void checkEarlyTenureFocusItems( Id accGrpId , List<String> lstAIMS ) {
+        if ( accGrpId != null ) {
+            if( ( lstAIMS != null ) && !lstAIMS.isEmpty() ) {
+                if ( this.accGrpWithFocusItem.containsKey( accGrpId )
+                    && ( this.accGrpWithFocusItem.get( accGrpId ) == 0 )
+                    )
+                {
+                    // 1) Create NEW focus item when none exists and AIMS list is present
+                    this.lstFocusItems.add(
+                        this.prepareFocusItem(
+                            lstAIMS ,
+                            accGrpId ,
+                            NSP_ServiceConstants.EARLY_TENURE ,
+                            NSP_ServiceConstants.EARLY_TENURE_CLIENT ,
+                            NSP_ServiceConstants.UNFAVORABLE ,
+                            NSP_ServiceConstants.FOCUS_COMMENTS
+                        )
+                    );
+                } else if ( this.accGrpWithFocusItemActive.containsKey( accGrpId )
+                    && ( this.accGrpWithFocusItemActive.get( accGrpId ) != null )
+                    )
+                {
+                    // 2) Update existing ACTIVE focus item when AIMS list is present
+                    NSP_Focus_Item__c focusItem = this.accGrpWithFocusItemActive.get( accGrpId );
+                    focusItem.Details__c = NSP_ServiceConstants.FOCUS_COMMENTS + ' [' + String.join( lstAIMS , ',' ) + ']';
+                    this.lstFocusItems.add( focusItem );
+                }
+            } else if ( this.accGrpWithFocusItemActive.containsKey(accGrpId)
+                && ( this.accGrpWithFocusItemActive.get(accGrpId) != null )
+                )
+            {
+                // 3) Close existing ACTIVE focus item when AIMS list is empty
+                NSP_Focus_Item__c focusItem = this.accGrpWithFocusItemActive.get(accGrpId);
                 focusItem.NSP_Estimated_Impact__c = NSP_ServiceConstants.NEUTRAL;
-                focusItem.NSP_Comments__c = NULL;
+                focusItem.Details__c = null;
                 focusItem.NSP_Status__c = NSP_ServiceConstants.CLOSED_STATUS;
-                focusItem.NSP_End_Date__c = System.Today();
-                lstFocusItems.add(focusItem);
-            }
-
-
-            if(accGrpWithFocusItemNSP.containsKey(accGrp.Id) && accGrpWithFocusItemNSP.get(accGrp.Id) == 0 && !noInsperityAIMSClient.isEmpty()) {
-                lstFocusItems.add(prepareFocusItem(noInsperityAIMSClient, accGrp.Id, NSP_ServiceConstants.NO_INSPERITY_401K, '', NSP_ServiceConstants.SOME_WHAT_UNFAVORABLE, NSP_ServiceConstants.FOCUS_401_COMMENTS));
-            } else if (accGrpWithFocusItemActiveNSP.containsKey(accGrp.Id) && !noInsperityAIMSClient.isEmpty()){
-                NSP_Focus_Item__c focusItem = accGrpWithFocusItemActiveNSP.get(accGrp.Id);
-                focusItem.NSP_Comments__c = NSP_ServiceConstants.FOCUS_401_COMMENTS+' ['+String.join(noInsperityAIMSClient, ',')+']';
-                lstFocusItems.add(focusItem);
-            } else if (accGrpWithFocusItemActiveNSP.containsKey(accGrp.Id) && !checkForAIMS(accGrp.Id, grpIdWithAccId,noNSPAccIdWithAimsClient).isEmpty()){
-                NSP_Focus_Item__c focusItem = accGrpWithFocusItemActiveNSP.get(accGrp.Id);
-                focusItem.NSP_Estimated_Impact__c = NSP_ServiceConstants.NEUTRAL;
-                focusItem.NSP_Comments__c = NULL;
-                focusItem.NSP_Status__c = NSP_ServiceConstants.CLOSED_STATUS;
-                focusItem.NSP_End_Date__c = System.Today();
-                lstFocusItems.add(focusItem);
+                focusItem.NSP_End_Date__c = System.today();
+                this.lstFocusItems.add( focusItem );
             }
         }
-        insertFocusItems();
     }
 
-    /**
-    * @description check whether asset is associate with account Group Member
-    * @author Anil | 02-03-2023
-    * @param accGrpId
-    * @param grpIdWithAccId
-    * @param accIdWithAimsClient
-    * @return List<String>
-    **/
-    private List<String> checkForAIMS(Id accGrpId, Map<String, List<String>> grpIdWithAccId, Map<String, String> accIdWithAimsClient){
+    private void checkNoInsperity401kFocusItems(
+        Id accGrpId ,
+        List<String> noInsperityAIMSClient ,
+        List<String> noNSPAccIdWithAims
+        )
+    {
+        if ( ( accGrpId != null )
+            && ( noInsperityAIMSClient != null )
+            && !noInsperityAIMSClient.isEmpty()
+            )
+        {
+             // 1) Create NEW focus item when none exists and AIMS list is present
+            if ( this.accGrpWithFocusItemNSP.containsKey( accGrpId )
+                && ( this.accGrpWithFocusItemNSP.get( accGrpId ) == 0 )
+                )
+            {
+                this.lstFocusItems.add(
+                    this.prepareFocusItem(
+                        noInsperityAIMSClient ,
+                        accGrpId ,
+                        NSP_ServiceConstants.NO_INSPERITY_401K ,
+                        '' ,
+                        NSP_ServiceConstants.SOME_WHAT_UNFAVORABLE ,
+                        NSP_ServiceConstants.FOCUS_401_COMMENTS
+                    )
+                );
+            } else if ( this.accGrpWithFocusItemActiveNSP.containsKey( accGrpId )
+                && ( this.accGrpWithFocusItemActiveNSP.get( accGrpId ) != null )
+                )
+            {
+                // 2) Update existing ACTIVE focus item when AIMS list is present
+                NSP_Focus_Item__c focusItem = this.accGrpWithFocusItemActiveNSP.get( accGrpId );
+                focusItem.Details__c = ''
+                    + NSP_ServiceConstants.FOCUS_401_COMMENTS
+                    + ' ['
+                    + String.join( noInsperityAIMSClient , ',' )
+                    + ']';
+                this.lstFocusItems.add( focusItem );
+            }
+        } else if ( ( accGrpId != null )
+            && this.accGrpWithFocusItemActiveNSP.containsKey( accGrpId )
+            && ( this.accGrpWithFocusItemActiveNSP.get( accGrpId ) != null )
+            && ( noNSPAccIdWithAims != null )
+            && !noNSPAccIdWithAims.isEmpty()
+            )
+        {
+            // 3) Close existing ACTIVE focus item based on your original condition
+            NSP_Focus_Item__c focusItem = this.accGrpWithFocusItemActiveNSP.get( accGrpId );
+            focusItem.NSP_Estimated_Impact__c = NSP_ServiceConstants.NEUTRAL;
+            focusItem.Details__c = null;
+            focusItem.NSP_Status__c = NSP_ServiceConstants.CLOSED_STATUS;
+            focusItem.NSP_End_Date__c = System.today();
+            this.lstFocusItems.add( focusItem );
+        }
+    }
+
+    // check whether asset is associate with account Group Member
+    private List<String> checkForAIMS(
+        Id accGrpId ,
+        Map<String,List<String>> grpIdWithAccId ,
+        Map<String,String> accIdWithAimsClient
+        )
+    {
         List<String> lstAIMS = new List<String>();
-        for(String accId : grpIdWithAccId.get(accGrpId)){
-            if(accIdWithAimsClient.containsKey(accId) && accIdWithAimsClient.get(accId) != null) {
-                lstAIMS.add(accIdWithAimsClient.get(accId));
+        if ( ( grpIdWithAccId != null )
+            && !grpIdWithAccId.isEmpty()
+            && ( accGrpId != null )
+            && ( accIdWithAimsClient != null )
+            && !accIdWithAimsClient.isEmpty()
+            )
+        {
+            for ( String accId : grpIdWithAccId.get( accGrpId ) ) {
+                if ( accIdWithAimsClient.containsKey( accId )
+                    && ( accIdWithAimsClient.get( accId ) != null )
+                    )
+                {
+                    lstAIMS.add( accIdWithAimsClient.get( accId ) );
+                }
             }
         }
         return lstAIMS;
     }
 
-    /**
-    * @description check for valid assets
-    * @author Anil | 02-03-2023
-    **/
+    // check for valid assets
     private void checkForAssets() {
-        if(!accountIds.isEmpty()){
-            for(Asset asst : new Selector().getAssets(new List<Id>(accountIds))) {
-                accIdWithAimsClient.put(asst.AccountId, asst.NSP_Client__c);
+        if ( !accountIds.isEmpty() ) {
+            for ( Asset asst : new Selector().getAssets( new List<Id>( accountIds ) ) ) {
+                this.accIdWithAimsClient.put(
+                    asst.AccountId ,
+                    asst.NSP_Client__c
+                );
             }
-
-            for(Asset asst : new Selector().getNoInsperityAssets(new List<Id>(accountIds))) {
-                if((asst.NSP_Retirement_Service_Plan_Name__c != null && asst.NSP_Retirement_Service_Plan_Name__c?.contains(NSP_ServiceConstants.ORK)) || asst.NSP_Retirement_Service_Plan_Name__c == null) {
-                    noInsperityAccIdWithAimsClient.put(asst.AccountId, asst.NSP_Client__c);
+            for ( Asset asst : new Selector().getNoInsperityAssets( new List<Id>( accountIds ) ) ) {
+                if ( ( ( asst.NSP_Retirement_Service_Plan_Name__c != null )
+                        && asst.NSP_Retirement_Service_Plan_Name__c?.contains( NSP_ServiceConstants.ORK )
+                        )
+                    || ( asst.NSP_Retirement_Service_Plan_Name__c == null )
+                    )
+                {
+                    this.noInsperityAccIdWithAimsClient.put(
+                        asst.AccountId ,
+                        asst.NSP_Client__c
+                    );
                 }
-                if((asst.NSP_Retirement_Service_Plan_Name__c != null && !asst.NSP_Retirement_Service_Plan_Name__c?.contains(NSP_ServiceConstants.ORK)) || asst.NSP_Retirement_Service_Plan_Name__c != null){
-                    noNSPAccIdWithAimsClient.put(asst.AccountId, asst.NSP_Client__c);
+                if ( ( ( asst.NSP_Retirement_Service_Plan_Name__c != null )
+                        && !asst.NSP_Retirement_Service_Plan_Name__c?.contains( NSP_ServiceConstants.ORK )
+                        )
+                    || ( asst.NSP_Retirement_Service_Plan_Name__c != null )
+                    )
+                {
+                    this.noNSPAccIdWithAimsClient.put(
+                        asst.AccountId ,
+                        asst.NSP_Client__c
+                    );
                 }
             }
         }
     }
 
-    /**
-    * @description check for Account Groups and Focus Items
-    * @author Anil | 02-03-2023
-    * @param lstAccGrps
-    **/
-    private void checkForAccountGroups(List<NSP_Account_Group__c> lstAccGrps) {
-        List<String> focusItemStatus = new List<String>{ NSP_ServiceConstants.STATUS_ACTIVE, NSP_ServiceConstants.CLOSED_STATUS };
-
-        for(NSP_Account_Group__c accGrp : lstAccGrps) {
-            grpIdWithAccId.put(accGrp.Id, new List<String>());
-            accGrpWithFocusItem.put(accGrp.Id, 0);
-            accGrpWithFocusItemNSP.put(accGrp.Id, 0);
-
-            for(NSP_Account_Group_Member__c accGrpMbr : accGrp.Account_Group_Members__r) {
-                grpIdWithAccId.get(accGrp.Id).add(accGrpMbr.NSP_Member_Account__c);
-                accountIds.add(accGrpMbr.NSP_Member_Account__c);
-            }
-
-            for(NSP_Focus_Item__c focusItem : accGrp.Focus_Items__r) {
-
-                if(focusItem.Focus_Item__c == NSP_ServiceConstants.EARLY_TENURE && !focusItemStatus.contains(focusItem.NSP_Status__c)) {
-                    accGrpWithFocusItem.remove(accGrp.Id);
-
-                } else if(focusItem.Focus_Item__c == NSP_ServiceConstants.EARLY_TENURE && focusItem.NSP_Status__c == NSP_ServiceConstants.STATUS_ACTIVE) {
-                    accGrpWithFocusItem.remove(accGrp.Id);
-                    accGrpWithFocusItemActive.put(accGrp.Id, focusItem);
-                }
-
-                if(focusItem.Focus_Item__c == NSP_ServiceConstants.NO_INSPERITY_401K && !focusItemStatus.contains(focusItem.NSP_Status__c)){
-                    accGrpWithFocusItemNSP.remove(accGrp.Id);
-
-                } else if(focusItem.Focus_Item__c == NSP_ServiceConstants.NO_INSPERITY_401K && focusItem.NSP_Status__c == NSP_ServiceConstants.STATUS_ACTIVE) {
-                    accGrpWithFocusItemNSP.remove(accGrp.Id);
-                    accGrpWithFocusItemActiveNSP.put(accGrp.Id, focusItem);
+    // check for Account Groups and Focus Items
+    private void checkForAccountGroups( List<NSP_Account_Group__c> lstAccGrps ) {
+       if ( ( lstAccGrps != null ) && !lstAccGrps.isEmpty() ) {
+            for ( NSP_Account_Group__c accGrp : lstAccGrps ) {
+                this.grpIdWithAccId.put( accGrp.Id , new List<String>() );
+                this.accGrpWithFocusItem.put( accGrp.Id , 0 );
+                this.accGrpWithFocusItemNSP.put( accGrp.Id , 0 );
+                this.collectMemberAccounts( accGrp.Id , accGrp.Account_Group_Members__r );
+                if ( ( accGrp.Focus_Items__r != null ) && !accGrp.Focus_Items__r.isEmpty() ) {
+                    for ( NSP_Focus_Item__c focusItem : accGrp.Focus_Items__r ) {
+                        this.processEarlyTenureFocusItem( accGrp.Id , focusItem );
+                        this.processNoInsperity401KFocusItem( accGrp.Id , focusItem );
+                    }
                 }
             }
         }
-        checkForFocusItems(lstAccGrps);
     }
 
-    /**
-    * @description upsert FocusItems
-    * @author Anil | 02-03-2023
-    **/
+    private void collectMemberAccounts( Id accountGroupId , List<NSP_Account_Group_Member__c> records ) {
+        if ( ( records != null )
+            && !records.isEmpty()
+            && ( accountGroupId != null )
+            )
+        {
+            for( NSP_Account_Group_Member__c accGrpMbr : records ) {
+                if ( accGrpMbr.NSP_Member_Account__c != null ){
+                    if ( ( this.grpIdWithAccId != null )
+                        && !this.grpIdWithAccId.isEmpty()
+                        && this.grpIdWithAccId.containsKey( accountGroupId )
+                        )
+                    {
+                        this.grpIdWithAccId.get( accountGroupId ).add( accGrpMbr.NSP_Member_Account__c );
+                    }
+                    accountIds.add( accGrpMbr.NSP_Member_Account__c );
+                }
+            }
+        }
+    }
+
+    private void processEarlyTenureFocusItem( Id accGrpId, NSP_Focus_Item__c focusItem ){
+        if ( ( accGrpId != null )
+            && ( focusItem != null )
+            && ( focusItem.Focus_Item__c == NSP_ServiceConstants.EARLY_TENURE )
+            && ( this.accGrpWithFocusItem != null )
+            && this.accGrpWithFocusItem.containsKey(accGrpId)
+            )
+        {
+            if ( String.isNotBlank( focusItem.NSP_Status__c )
+                && !this.focusItemStatus.contains( focusItem.NSP_Status__c )
+                )
+            {
+                this.accGrpWithFocusItem.remove( accGrpId );
+            } else if ( focusItem.NSP_Status__c == NSP_ServiceConstants.STATUS_ACTIVE ) {
+                this.accGrpWithFocusItem.remove( accGrpId );
+                this.accGrpWithFocusItemActive.put( accGrpId , focusItem );
+            }
+        }
+    }
+
+    private void processNoInsperity401KFocusItem( Id accGrpId , NSP_Focus_Item__c focusItem ) {
+        if ( ( accGrpId != null )
+            && ( focusItem != null )
+            && ( focusItem.Focus_Item__c == NSP_ServiceConstants.NO_INSPERITY_401K )
+            && ( this.accGrpWithFocusItemNSP != null )
+            && this.accGrpWithFocusItemNSP.containsKey( accGrpId )
+            )
+        {
+            if ( String.isNotBlank( focusItem.NSP_Status__c )
+                && !this.focusItemStatus.contains( focusItem.NSP_Status__c )
+                )
+            {
+                this.accGrpWithFocusItemNSP.remove( accGrpId );
+            } else if ( focusItem.NSP_Status__c == NSP_ServiceConstants.STATUS_ACTIVE ) {
+                this.accGrpWithFocusItemNSP.remove( accGrpId );
+                this.accGrpWithFocusItemActiveNSP.put( accGrpId , focusItem );
+            }
+        }
+    }
+
+    // upsert FocusItems
     private void insertFocusItems() {
-        if(!lstFocusItems.isEmpty()) {
-            List<Database.UpsertResult> upsertResults = Database.upsert(lstFocusItems, false);
-            NSP_ErrorLogHandler.logUpsertResultsException('NSP_AccountGroupFocusItemsBatch', 'NSP_AccountGroupFocusItemsBatch:insertFocusItems', upsertResults);
+        if ( ( this.lstFocusItems != null )
+            && !this.lstFocusItems.isEmpty()
+            )
+        {
+            List<Database.UpsertResult> upsertResults = Database.upsert( this.lstFocusItems , false );
+            NSP_ErrorLogHandler.logResults(
+                NSP_AccountGroupFocusItemsBatch.class.getName() ,
+                'insertFocusItems' ,
+                upsertResults
+            );
         }
     }
 
-    /**
-    * @description Prepare FocusItem
-    * @author Anil | 02-03-2023
-    * @param lstAIMS
-    * @param accGrpId
-    * @param focusItem
-    * @param detail
-    * @param estimatedImpact
-    * @param comments
-    * @return NSP_Focus_Item__c
-    **/
-    private NSP_Focus_Item__c prepareFocusItem(List<String> lstAIMS, Id accGrpId, String focusItem, String detail, String estimatedImpact, String comments) {
+
+    // Prepare FocusItem
+    private NSP_Focus_Item__c prepareFocusItem(
+        List<String> lstAIMS ,
+        Id accGrpId ,
+        String focusItem ,
+        String detail ,
+        String estimatedImpact ,
+        String comments
+        )
+    {
         return new NSP_Focus_Item__c (
-            Area_of_Focus__c = NSP_ServiceConstants.CUSTOMER_RELATIONSHIP,
-            Focus_Item__c = focusItem,
-            RecordTypeId = NSP_GenericRecordType.getRecordTypeId('NSP_Focus_Item__c', 'NSP_System_Generated_Focus_Item'),
-            NSP_Detail__c = detail,
-            NSP_Estimated_Impact__c = estimatedImpact,
-            NSP_Comments__c = comments+' ['+String.join(lstAIMS, ',')+']',
-            NSP_Status__c = NSP_ServiceConstants.STATUS_ACTIVE,
-            NSP_Start_Date__c = System.Today(),
-            NSP_System_Generated__c = 'Y',
-            NSP_Account_Group__c = accGrpId
+            Area_of_Focus__c=NSP_ServiceConstants.CUSTOMER_RELATIONSHIP ,
+            Focus_Item__c=focusItem ,
+            RecordTypeId=NSP_GenericRecordType.getRecordTypeId( 'NSP_Focus_Item__c' , 'NSP_System_Generated_Focus_Item' ) ,
+            NSP_Detail__c=detail ,
+            NSP_Estimated_Impact__c=estimatedImpact ,
+            Details__c=comments + ' [' + String.join( lstAIMS , ',' ) + ']' ,
+            NSP_Status__c=NSP_ServiceConstants.STATUS_ACTIVE ,
+            NSP_Start_Date__c=System.today() ,
+            NSP_System_Generated__c='Y' ,
+            NSP_Account_Group__c=accGrpId
         );
     }
 
     @TestVisible
     private without sharing Class Selector {
 
-        /**
-        * @description get Assets based on AccountIds last 24 Months
-        * @author Anil | 02-03-2023
-        * @param accIds
-        * @return List<Asset>
-        **/
-        private List<Asset> getAssets(List<Id> accIds) {
-            List<String> assetFields = new List<String> { 'Id', 'NSP_AIMS_Original_First_Pay_Date__c', 'NSP_Retirement_Service_Plan_Name__c', 'AccountId', 'NSP_Client__c'};
-            String query = new NSP_QueryBuilder('Asset', assetFields)
-                .addFilter('RecordTypeId', NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.WO_ASSET_RECORDTYPE))
-                .addFilter('NSP_AIMS_Original_First_Pay_Date__c', 'LAST_N_DAYS:730', NSP_QueryBuilder.Operator.GREATER_THAN_OR_EQUALS, false)
-                .addFilter('NSP_AIMS_Original_First_Pay_Date__c', 'LAST_N_DAYS:730', NSP_QueryBuilder.Operator.LESS_THAN_OR_EQUALS, false)
-                .addFilter('AccountId', accIds, NSP_QueryBuilder.Operator.INCLUDES)
-                .build();
-            return Database.query(query);
+        // get Assets based on AccountIds last 24 Months
+        private List<Asset> getAssets( List<Id> accIds ) {
+            List<Asset> assets = new List<Asset>();
+            if ( ( accIds != null ) && !accIds.isEmpty() ) {
+                assets = [
+                    SELECT
+                        Id ,
+                        NSP_AIMS_Original_First_Pay_Date__c ,
+                        NSP_Retirement_Service_Plan_Name__c ,
+                        AccountId ,
+                        NSP_Client__c
+                    FROM Asset
+                    WHERE (
+                        ( RecordTypeId = :NSP_GenericRecordType.getRecordTypeId( 'Asset' , NSP_ServiceConstants.WO_ASSET_RECORDTYPE ) )
+                        AND ( NSP_AIMS_Original_First_Pay_Date__c >= LAST_N_DAYS:730 )
+                        AND ( NSP_AIMS_Original_First_Pay_Date__c <= LAST_N_DAYS:730 )
+                        AND ( AccountId IN :accIds )
+                    )
+                    WITH SECURITY_ENFORCED
+                ];
+            }
+            return assets;
         }
 
-        /**
-        * @description get Assets based on AccountIds and which contains ORK
-        * @author Anil | 02-03-2023
-        * @param accIds
-        * @return List<Asset>
-        **/
-        private List<Asset> getNoInsperityAssets(List<Id> accIds) {
-            List<String> assetFields = new List<String> { 'Id', 'NSP_AIMS_Original_First_Pay_Date__c', 'NSP_Retirement_Service_Plan_Name__c', 'AccountId', 'NSP_Client__c'};
-                String query = new NSP_QueryBuilder('Asset', assetFields)
-                .addFilter('RecordTypeId', NSP_GenericRecordType.getRecordTypeId('Asset',NSP_ServiceConstants.WO_ASSET_RECORDTYPE))
-                .addFilter('AccountId', accIds, NSP_QueryBuilder.Operator.INCLUDES)
-                .build();
-            return Database.query(query);
-        }
+        // get Assets based on AccountIds and which contains ORK
+        private List<Asset> getNoInsperityAssets( List<Id> accIds ) {
+            List<Asset> assets = new List<Asset>();
+            if ( ( accIds != null ) && !accIds.isEmpty() ) {
+                assets = [
+                    SELECT
+                        Id ,
+                        NSP_AIMS_Original_First_Pay_Date__c ,
+                        NSP_Retirement_Service_Plan_Name__c ,
+                        AccountId ,
+                        NSP_Client__c
+                    FROM Asset
+                    WHERE (
+                        ( RecordTypeId = :NSP_GenericRecordType.getRecordTypeId( 'Asset' , NSP_ServiceConstants.WO_ASSET_RECORDTYPE ) )
+                        AND ( AccountId IN :accIds )
+                    )
+                    WITH SECURITY_ENFORCED
+                ];
+            }
+            return assets;
+       }
+
     }
 
 }
+//
