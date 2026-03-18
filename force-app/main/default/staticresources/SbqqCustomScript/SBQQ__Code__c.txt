@@ -1192,7 +1192,7 @@ export function processQuotelinesAfterPricerule(quote, lines){
 
             // Assign NSP_Product_Amendment_Description__c to NSP_Product_Description__c for specific product codes in Amendment quotes
             if(quoteType == 'Amendment'  && !productsForDescChange.includes(productcode) && !renewalProductsForDescChange.includes(productcode)  ) {
-                if(line.record.SBQQ__Product__r !== null && line.record.SBQQ__Product__r.Description !== null) {
+                if(line.record.SBQQ__Product__r !== null && line.record.SBQQ__Product__r.Description !== null && line.record.SBQQ__Product__r.SBQQ__DescriptionLocked__c === true) {
                     line.record["SBQQ__Description__c"] = line.record.SBQQ__Product__r.Description.slice(0, 250);
                 }
             }
