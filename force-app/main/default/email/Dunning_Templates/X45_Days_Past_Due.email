@@ -3,7 +3,7 @@
 <p>Perhaps you missed an invoice?</p>
 <p>Your attention is needed in resolving the past due status of the attached invoice.</p>
 <p>If you would like to pay by credit card, please use the link below to access our online payment portal or contact us directly <a href="mailto:orders@insperity.com">orders@insperity.com</a> </p>
-<c:NSP_dunningInvoicesList caseId="{!relatedTo.Id}" caseAccId="{!relatedTo.AccountId}"> </c:NSP_dunningInvoicesList>  
+<c:NSP_dunningInvoicesList caseId="{!relatedTo.Id}" caseAccId="{!relatedTo.AccountId}"> </c:NSP_dunningInvoicesList>
 <p>Thank you for your prompt attention to this matter.</p>
 <c:NSP_InsperityEmailLogo ></c:NSP_InsperityEmailLogo>
 </messaging:htmlEmailBody>
