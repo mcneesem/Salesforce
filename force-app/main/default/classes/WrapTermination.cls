@@ -1,5 +1,5 @@
 public with sharing class WrapTermination {
-    // test w/ SingleTermFormController_Test (96%)
+    // test w/ SingleTermFormControllerTest (96%)
 
     public String clinetName { get; set; }
     public String clinetNumber { get; set; }
