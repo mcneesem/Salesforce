@@ -1451,10 +1451,6 @@
     <picklistValues>
         <picklist>NSP_PrimaryProduct__c</picklist>
         <values>
-            <fullName>I-9 Assist %26 E-Verify</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Workday</fullName>
             <default>true</default>
         </values>
