@@ -3013,6 +3013,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>pse__Proj__c.WO_Asset_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>pse__Proj__c.WX_Carrier_Sync_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
