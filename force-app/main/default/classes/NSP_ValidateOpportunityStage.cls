@@ -293,28 +293,33 @@ public with sharing class NSP_ValidateOpportunityStage {
             Boolean passCheckDNE = true;
             String groupRelObjName = NSP_ValidateOpportunityStage.getGroupRelObjName( groupName , groupedStageValMap );
             Integer i = 0;
-            if ( ( groupedStageValMap != null ) && ( valObjectMap != null ) ) {
-                List<SObject> valObjectList = valObjectMap.get(groupRelObjName);
-                do {
-                    SObject valObject = ( ( valObjectList != null ) && ( valObjectList.size() > i ) ) ? valObjectList[i] : null;
+            Integer valObjectListSize = 0;
+            if ( ( groupedStageValMap != null )
+                && ( valObjectMap != null )
+                && valObjectMap.containsKey( groupRelObjName )
+                )
+            {
+                List<SObject> valObjectList = valObjectMap.get( groupRelObjName );
+                if ( ( valObjectList != null ) && !valObjectList.isEmpty() ) {
+                    valObjectListSize = valObjectList.size();
+                }
+                do { // must run once even if related object list (valObjectList) is empty
+                    SObject valObject = ( ( valObjectListSize > i ) ? valObjectList[i] : null );
                     Integer passCheckCount = NSP_ValidateOpportunityStage.evaluateOneCriteriaGroup(
                         opp ,
                         groupName ,
-                        valObject , // must run even if valObject is null
+                        valObject ,
                         valObjectAgs ,
                         groupedStageValMap
                     );
-
-                    if( passCheckCount >= groupedStageValMap.get(groupName).size() ) {
+                    if ( passCheckCount >= groupedStageValMap.get( groupName ).size() ) {
                         passCheck = true;
                     }
-
-                    if( passCheckCount == NSP_ValidateOpportunityStage.ERROR_DOES_NOT_EXIST ) { // when any record violates DOES NOT EXIST case
+                    if ( passCheckCount == NSP_ValidateOpportunityStage.ERROR_DOES_NOT_EXIST ) { // when any record violates DOES NOT EXIST case
                         passCheckDNE = false;
                     }
-
                     i++;
-                } while ( i < valObjectList.size() );
+                } while ( i < valObjectListSize );
                 NSP_ValidateOpportunityStage.addValError(
                     opp ,
                     passCheck ,
