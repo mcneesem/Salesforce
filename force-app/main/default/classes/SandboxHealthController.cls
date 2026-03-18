@@ -549,7 +549,7 @@ public with sharing class SandboxHealthController {
                 WHERE (
                         ( Folder.Name = 'Services' )
                         AND ( IsPublic = true )
-                        AND ( IsInternalUseOnly = true )
+                        AND ( IsInternalUseOnly = false )
                     )
                 WITH SECURITY_ENFORCED
             ]) {
