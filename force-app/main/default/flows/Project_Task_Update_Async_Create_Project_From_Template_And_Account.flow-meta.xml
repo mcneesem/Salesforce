@@ -3,22 +3,6 @@
     <apiVersion>64.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
-        <name>Assign_ProjectId</name>
-        <label>Assign : ProjectId</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>ProjectId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Create_Project_From_Template_and_Account_Subflow.projectId</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Update_Parent_Project</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Set_Fault_Element_Get_WX_WA_New_Tax_IMPL_Project</name>
         <label>Set Fault Element : Get_WX_WA_New_Tax_IMPL_Project</label>
         <locationX>0</locationX>
@@ -48,23 +32,6 @@
             </value>
         </assignmentItems>
         <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_Fault_Element_Valid_Response</name>
-        <label>Set Fault Element : Valid_Response</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>FaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Response : Error</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
             <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
@@ -81,9 +48,6 @@
         <label>Response?</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Set_Fault_Element_Valid_Response</targetReference>
-        </defaultConnector>
         <defaultConnectorLabel>Error</defaultConnectorLabel>
         <rules>
             <name>Success</name>
@@ -96,7 +60,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assign_ProjectId</targetReference>
+                <targetReference>Update_Parent_Project</targetReference>
             </connector>
             <label>Success</label>
         </rules>
@@ -211,7 +175,7 @@ Bug-497996
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>ProjectId</elementReference>
+                <elementReference>Create_Project_From_Template_and_Account_Subflow.projectId</elementReference>
             </value>
         </filters>
         <inputAssignments>
@@ -338,20 +302,6 @@ Bug-497996
     </subflows>
     <variables>
         <name>FaultElement</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>isSuccess</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>ProjectId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
