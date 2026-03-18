@@ -11,7 +11,7 @@ public class NSP_CustomException extends Exception {
     //
 
     // primary entry point...
-    // ~ 14 classes
+    // ~ 10 classes
     public static void logException( Exception e ) {
         NSP_CustomException.insertLog( e );
     }
