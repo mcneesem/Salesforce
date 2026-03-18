@@ -66,6 +66,8 @@ private class SandboxHealthControllerTest {
             SandboxHealthController.STATUS.WARN.name(),
             SandboxHealthController.STATUS.FAIL.name()
         };
+        Boolean sawImageDocs = false;
+
         for (SandboxHealthController.Section s : res.sections) {
             assertValidSection(s);
             System.assert(allowed.contains(s.status), 'Section status must be PASS/WARN/FAIL');
@@ -77,7 +79,17 @@ private class SandboxHealthControllerTest {
                 // expected/actual/message can be null depending on check type; status must be valid
                 System.assert(allowed.contains(c.status), 'Check status must be PASS/WARN/FAIL');
             }
+
+            // Capture presence of the new Image Documents section
+            if (s.key == 'imageDocuments') {
+                sawImageDocs = true;
+                // Basic expectations specific to the Image Documents section:
+                // - At least one check is produced (presence/visibility/type)
+                System.assert(s.checks.size() >= 1, 'Image Documents section should contain checks');
+            }
         }
+
+        System.assert(sawImageDocs, 'Expected Image Documents section to be present');
     }
 
     /**

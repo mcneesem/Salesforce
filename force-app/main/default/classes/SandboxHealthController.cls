@@ -98,6 +98,8 @@ public with sharing class SandboxHealthController {
 
         // Sections
         res.sections.add(verifyCspTrustedSites());
+        // Validate Documents created by NSP_PrepSandbox.doImageDocs()
+        res.sections.add(verifyImageDocuments());
         // Split label checks into core and email label sections
         LabelSections lblSections = verifyCustomLabels(sandbox);
         res.sections.add(lblSections.core);
@@ -509,6 +511,88 @@ public with sharing class SandboxHealthController {
         }
 
         // Set section status after all checks are processed
+        s.status = calculateSectionStatus(s.checks);
+        return s;
+    }
+
+    // Required image Documents created by NSP_PrepSandbox.doImageDocs()
+    // Verifies presence in the 'Services' folder with public visibility.
+    private static Map<String, String> requiredImageDocs() {
+        // Map of metadata names (used by NSP_PrepSandbox) to expected human-readable Document Name
+        // NSP_PrepSandbox sets Document.fullName = 'Services/' + name + '.png' and doc.name = replaceUnderscoresWithSpaces(name)
+        Map<String, String> m = new Map<String, String>();
+        m.put('Insperity_Copyright_Logo', 'Insperity_Copy_write_logo');
+        m.put('Insperity_Footer_Logo', 'Insperity_Footer_Logo');
+        m.put('Insperity_HR', 'Insperity_HR');
+        m.put('Insperity_HR_Logo', 'Insperity_HR_Logo');
+        m.put('Insperity_Service_Operations', 'Insperity_Service_Operations');
+        m.put('InsperityEmailSignatureLogo', 'InsperityEmailSignatureLogo');
+        return m;
+    }
+
+    private static Section verifyImageDocuments() {
+        Section s = new Section();
+        s.key = 'imageDocuments';
+        s.label = 'Image Documents';
+        s.category = 'OTHER';
+        s.checks = new List<Check>();
+
+        Map<String, String> required = requiredImageDocs();
+
+        // Build a lookup of Documents in Services folder by Name
+        Map<String, Document> byName = new Map<String, Document>();
+        try {
+            // Document is classic; enforce user-context security
+            for (Document d : [
+                SELECT Id, Name, Folder.Name, IsPublic, IsInternalUseOnly, Type
+                FROM Document
+                WHERE (
+                        ( Folder.Name = 'Services' )
+                        AND ( IsPublic = true )
+                        AND ( IsInternalUseOnly = true )
+                    )
+                WITH SECURITY_ENFORCED
+            ]) {
+                byName.put(d.Name, d);
+            }
+        } catch (Exception e) {
+            // If user can't access Documents, emit a WARN and exit with section status
+            s.checks.add(newWarn(
+                'docs_query',
+                'Image Documents',
+                'Queryable via user-context',
+                'No access',
+                'Unable to read Document records in Services folder: ' + e.getMessage()
+            ));
+            s.status = calculateSectionStatus(s.checks);
+            return s;
+        }
+
+        // For each required metadata key, compute the expected human-readable Document.Name
+        for (String metaKey : required.keySet()) {
+            String expectedDocName = required.get(metaKey).replace('_', ' ');
+            Document d = byName.get(expectedDocName);
+
+            if (d == null) {
+                s.checks.add(newFail(
+                    'doc_presence_' + metaKey,
+                    expectedDocName,
+                    'Exists in Services',
+                    'Missing',
+                    'Document not found in Services folder or is not public'
+                ));
+                continue;
+            }
+
+            if (String.isBlank(d.Type)) {
+                s.checks.add(newWarn('doc_type_' + metaKey, expectedDocName + ' Type', 'png', 'blank', 'File type not available'));
+            } else if (d.Type?.toLowerCase() != 'png') {
+                s.checks.add(newWarn('doc_type_' + metaKey, expectedDocName + ' Type', 'png', d.Type, 'Expected PNG type per metadata creation'));
+            } else {
+                s.checks.add(newPass('doc_type_' + metaKey, expectedDocName + ' Type', 'png', d.Type, 'PNG document found as expected'));
+            }
+        }
+
         s.status = calculateSectionStatus(s.checks);
         return s;
     }
