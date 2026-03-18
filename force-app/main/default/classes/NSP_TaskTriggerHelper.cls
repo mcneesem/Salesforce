@@ -177,13 +177,14 @@ public with sharing class NSP_TaskTriggerHelper {
             );
             for ( Task newTask : newList ) {
                 Task oldTask = ( ( oldTaskMap != null ) ? oldTaskMap.get( newTask.Id ) : null );
-                if ( Trigger.isInsert || ( newTask.OwnerId != oldTask.OwnerId ) ) {
-                    if ( userIdMap.containsKey( newTask.ownerId ) ) {
-                        User eachUser = userIdMap.get( newTask.OwnerId );
-                        newTask.NSP_Sales_Region__c = eachUser.NSP_SalesRegion__c;  // sales region
-                        newTask.NSP_Sales_Division__c = eachUser.NSP_SalesDivision__c; // sales division
-                        newTask.NSP_Sales_Office__c = eachUser.NSP_Sales_Office__c; // sales office
-                    }
+                if ( ( Trigger.isInsert || ( newTask.OwnerId != oldTask.OwnerId )
+                    && userIdMap.containsKey( newTask.ownerId )
+                    )
+                {
+                    User eachUser = userIdMap.get( newTask.OwnerId );
+                    newTask.NSP_Sales_Region__c = eachUser.NSP_SalesRegion__c;  // sales region
+                    newTask.NSP_Sales_Division__c = eachUser.NSP_SalesDivision__c; // sales division
+                    newTask.NSP_Sales_Office__c = eachUser.NSP_Sales_Office__c; // sales office
                 }
             }
         }
