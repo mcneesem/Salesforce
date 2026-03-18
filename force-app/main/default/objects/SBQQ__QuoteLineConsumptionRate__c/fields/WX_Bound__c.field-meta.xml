@@ -20,8 +20,8 @@
       ( SBQQ__ProcessingOrder__c = 12 ) ,
       ( SBQQ__ProcessingOrder__c = 13 )
     ) ,
-    ( TEXT( SBQQ__LowerBound__c + 1 ) &amp; &quot; - &quot; &amp; TEXT( SBQQ__UpperBound__c ) ) ,
-    ( TEXT( SBQQ__LowerBound__c ) &amp; &quot; - &quot; &amp; TEXT( SBQQ__UpperBound__c ) )
+    ( TEXT( SBQQ__LowerBound__c ) &amp; &quot; - &quot; &amp; TEXT( SBQQ__UpperBound__c - 1 ) ) ,
+    ( TEXT( SBQQ__LowerBound__c ) &amp; &quot; - &quot; &amp; TEXT( SBQQ__UpperBound__c - 1 ) )
   )
 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
