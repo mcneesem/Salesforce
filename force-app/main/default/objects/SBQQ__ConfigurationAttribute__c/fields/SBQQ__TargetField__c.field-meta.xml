@@ -7,6 +7,7 @@
     <inlineHelpText>Specify field on Product Option that will hold this attribute&apos;s value.</inlineHelpText>
     <label>Target Field</label>
     <required>false</required>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
@@ -136,6 +137,11 @@
                 <fullName>Sub_Product_Config__c</fullName>
                 <default>false</default>
                 <label>Sub_Product_Config__c</label>
+            </value>
+            <value>
+                <fullName>Client_Size__c</fullName>
+                <default>false</default>
+                <label>Client_Size__c</label>
             </value>
         </valueSetDefinition>
     </valueSet>

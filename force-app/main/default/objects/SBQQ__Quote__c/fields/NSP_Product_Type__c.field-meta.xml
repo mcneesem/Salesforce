@@ -118,6 +118,11 @@
                 <label>Contractor Management</label>
             </value>
             <value>
+                <fullName>I-9 Assist &amp; E-Verify</fullName>
+                <default>false</default>
+                <label>I-9 Assist &amp; E-Verify</label>
+            </value>
+            <value>
                 <fullName>Contingent Workforce</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -271,6 +276,10 @@
             <controllingFieldValue>WA</controllingFieldValue>
             <controllingFieldValue>WO</controllingFieldValue>
             <valueName>Time and Attendance Hardware</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>WO</controllingFieldValue>
+            <valueName>I-9 Assist &amp; E-Verify</valueName>
         </valueSettings>
     </valueSet>
     <visibleLines>4</visibleLines>
