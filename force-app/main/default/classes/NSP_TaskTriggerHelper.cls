@@ -177,7 +177,7 @@ public with sharing class NSP_TaskTriggerHelper {
             );
             for ( Task newTask : newList ) {
                 Task oldTask = ( ( oldTaskMap != null ) ? oldTaskMap.get( newTask.Id ) : null );
-                if ( ( Trigger.isInsert || ( newTask.OwnerId != oldTask.OwnerId )
+                if ( ( Trigger.isInsert || ( newTask.OwnerId != oldTask.OwnerId ) )
                     && userIdMap.containsKey( newTask.ownerId )
                     )
                 {
