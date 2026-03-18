@@ -82,10 +82,10 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>dmlAccount.Id</assignToReference>
+            <assignToReference>dmlAccount</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_new_Account.Id</elementReference>
+                <elementReference>Get_current_Account</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -103,24 +103,10 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>dmlAccount.DNB_Connect_DUNS_Number__c</assignToReference>
+            <assignToReference>dmlAccount.Id</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_current_Account.DNB_Connect_DUNS_Number__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>dmlAccount.DnB_Headquarter_DUNS__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_current_Account.DnB_Headquarter_DUNS__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>dmlAccount.DnB_Parent_DUNS__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_current_Account.DnB_Parent_DUNS__c</elementReference>
+                <elementReference>Get_new_Account.Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
