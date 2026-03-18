@@ -34,3 +34,4 @@ SBQQ__LineItemCount__c
 Seasonal_Pricing_Enabled__c
 Discounted_Product_Codes__c
 Discounted_Consumption_Rates__c
+Promo_Product_Codes__c

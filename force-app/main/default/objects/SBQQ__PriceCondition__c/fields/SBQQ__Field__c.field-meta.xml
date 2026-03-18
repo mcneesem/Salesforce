@@ -7,6 +7,7 @@
     <inlineHelpText>Choose a field on the target object.</inlineHelpText>
     <label>Field</label>
     <required>false</required>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
@@ -351,6 +352,11 @@
                 <fullName>Client_Size__c</fullName>
                 <default>false</default>
                 <label>Client_Size__c</label>
+            </value>
+            <value>
+                <fullName>Has_Promo__c</fullName>
+                <default>false</default>
+                <label>Has_Promo__c</label>
             </value>
         </valueSetDefinition>
     </valueSet>
