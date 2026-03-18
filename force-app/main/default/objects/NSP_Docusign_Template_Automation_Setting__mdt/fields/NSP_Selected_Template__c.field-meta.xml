@@ -146,6 +146,11 @@
                 <default>false</default>
                 <label>ContractorManagement</label>
             </value>
+            <value>
+                <fullName>I9AssistandEVerify</fullName>
+                <default>false</default>
+                <label>I9AssistandEVerify</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

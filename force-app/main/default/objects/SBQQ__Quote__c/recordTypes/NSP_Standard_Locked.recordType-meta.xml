@@ -130,6 +130,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>I9AssistandEVerify</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>IPS</fullName>
             <default>false</default>
         </values>
@@ -553,6 +557,10 @@
         </values>
         <values>
             <fullName>HRComplianceReviewSOW</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>I9AssistandEVerify</fullName>
             <default>false</default>
         </values>
         <values>
