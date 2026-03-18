@@ -162,6 +162,10 @@
                 <stringValue>Get_new_Account</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
     </assignments>
     <customProperties>
         <name>ScreenProgressIndicator</name>
