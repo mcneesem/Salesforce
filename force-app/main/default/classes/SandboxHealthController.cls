@@ -585,11 +585,11 @@ public with sharing class SandboxHealthController {
             }
 
             if (String.isBlank(d.Type)) {
-                s.checks.add(newWarn('doc_type_' + metaKey, expectedDocName + ' Type', 'png', 'blank', 'File type not available'));
+                s.checks.add(newWarn('doc_type_' + metaKey , expectedDocName , 'png' , 'blank' , 'Document found but type not available'));
             } else if (d.Type?.toLowerCase() != 'png') {
-                s.checks.add(newWarn('doc_type_' + metaKey, expectedDocName + ' Type', 'png', d.Type, 'Expected PNG type per metadata creation'));
+                s.checks.add(newWarn('doc_type_' + metaKey , expectedDocName , 'png' , d.Type , 'Document found but expected PNG type'));
             } else {
-                s.checks.add(newPass('doc_type_' + metaKey, expectedDocName + ' Type', 'png', d.Type, 'PNG document found as expected'));
+                s.checks.add(newPass('doc_type_' + metaKey , expectedDocName , d.Name , 'Document found' , 'Document found as expected'));
             }
         }
 
