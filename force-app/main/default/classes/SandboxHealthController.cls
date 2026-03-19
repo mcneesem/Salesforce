@@ -98,6 +98,8 @@ public with sharing class SandboxHealthController {
 
         // Sections
         res.sections.add(verifyCspTrustedSites());
+        // Queues email suffix verification (.invalid) to mirror NSP_PrepSandbox.doQueues()
+        res.sections.add(verifyQueuesEmailSuffix());
         // Validate Documents created by NSP_PrepSandbox.doImageDocs()
         res.sections.add(verifyImageDocuments());
         // Split label checks into core and email label sections
@@ -397,6 +399,57 @@ public with sharing class SandboxHealthController {
             s.checks.add(checkSuffix('stes_str', 'StrategicSalesEmailAddress__c', '.invalid', def == null ? null : def.StrategicSalesEmailAddress__c));
         } catch (Exception e) {
             s.checks.add(newWarn('stes_query', 'Access', 'Queryable', 'Error', 'Unable to read Sales_Team_Email_Settings__c: ' + e.getMessage()));
+        }
+
+        s.status = calculateSectionStatus(s.checks);
+        return s;
+    }
+
+    // Queues email suffix verification (.invalid), mirrors NSP_PrepSandbox.doQueues() but read-only
+    private static Section verifyQueuesEmailSuffix() {
+        Section s = new Section();
+        s.key = 'queuesEmailSuffix';
+        s.label = 'Queue Emails';
+        s.category = 'SECURITY';
+        s.checks = new List<Check>();
+
+        List<Group> queues = new List<Group>();
+        try {
+            queues = [
+                SELECT Id, Name, Email
+                FROM Group
+                WHERE Type = 'Queue' AND Email > ''
+                WITH SECURITY_ENFORCED
+            ];
+        } catch (Exception e) {
+            s.checks.add(newWarn(
+                'queues_query',
+                'Queues',
+                'Readable via user-context',
+                'No access',
+                'Unable to read Queue Groups with email: ' + e.getMessage()
+            ));
+            s.status = calculateSectionStatus(s.checks);
+            return s;
+        }
+
+        if (queues.isEmpty()) {
+            s.checks.add(newWarn(
+                'queues_none',
+                'Queues with Email',
+                'At least one queue with email',
+                'None found',
+                'No Queue groups with non-blank email were found'
+            ));
+            s.status = calculateSectionStatus(s.checks);
+            return s;
+        }
+
+        for (Group q : queues) {
+            String key = 'queue_' + String.valueOf(q.Id);
+            String label = q.Name;
+            String expectedSuffix = '.invalid';
+            s.checks.add(checkSuffix(key, label, expectedSuffix, q.Email));
         }
 
         s.status = calculateSectionStatus(s.checks);

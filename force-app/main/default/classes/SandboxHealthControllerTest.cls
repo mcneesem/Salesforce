@@ -24,6 +24,51 @@ private class SandboxHealthControllerTest {
         // No data creation required for read-only verification service
     }
 
+    @IsTest
+    static void testQueuesEmailSuffix_section_verification() {
+        // Arrange: create two queues, one compliant and one non-compliant
+        Group passQueue = new Group(
+            Name = 'Test Queue PASS',
+            Type = 'Queue',
+            Email = 'queue.pass@insperity.com.invalid'
+        );
+        Group failQueue = new Group(
+            Name = 'Test Queue FAIL',
+            Type = 'Queue',
+            Email = 'queue.fail@insperity.com'
+        );
+        insert new List<Group>{ passQueue, failQueue };
+
+        Test.startTest();
+        SandboxHealthController.HealthResult res = SandboxHealthController.getHealth();
+        Test.stopTest();
+
+        // Find the Queues Email Suffix section
+        SandboxHealthController.Section target = null;
+        for (SandboxHealthController.Section s : res.sections) {
+            if (s != null && s.key == 'queuesEmailSuffix') {
+                target = s;
+                break;
+            }
+        }
+        System.assertNotEquals(null, target, 'Queues Email Suffix section should be present');
+
+        // Build a map of checks by label (queue name)
+        Map<String, SandboxHealthController.Check> byLabel = new Map<String, SandboxHealthController.Check>();
+        for (SandboxHealthController.Check c : target.checks) {
+            byLabel.put(c.label, c);
+        }
+
+        System.assert(byLabel.containsKey(passQueue.Name), 'PASS queue check should exist');
+        System.assert(byLabel.containsKey(failQueue.Name), 'FAIL queue check should exist');
+
+        System.assertEquals(SandboxHealthController.STATUS.PASS.name(), byLabel.get(passQueue.Name).status, 'PASS queue should PASS');
+        System.assertEquals(SandboxHealthController.STATUS.FAIL.name(), byLabel.get(failQueue.Name).status, 'FAIL queue should FAIL');
+
+        // With at least one FAIL, section should be FAIL
+        System.assertEquals(SandboxHealthController.STATUS.FAIL.name(), target.status, 'Section should be FAIL when any queue fails');
+    }
+
     /**
      * Helper: Validate that a Section has required shape.
      */
