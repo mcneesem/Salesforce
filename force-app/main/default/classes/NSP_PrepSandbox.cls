@@ -66,6 +66,34 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     }
 
     @AuraEnabled
+    public static void runManualStepsAsync() {
+        {
+            System.enqueueJob( new PrepSandboxQueueable( 'runManualSteps' ) );
+        }
+    }
+
+    @AuraEnabled
+    public static void runUserImportAsync() {
+        {
+            System.enqueueJob( new PrepSandboxQueueable( 'runUserImport' ) );
+        }
+    }
+
+    @AuraEnabled
+    public static void runManualSteps2Async() {
+        {
+            System.enqueueJob( new PrepSandboxQueueable( 'runManualSteps2' ) );
+        }
+    }
+
+    @AuraEnabled
+    public static void runE2CAddressesAsync() {
+        {
+            System.enqueueJob( new PrepSandboxQueueable( 'runE2CAddresses' ) );
+        }
+    }
+
+    // @AuraEnabled
     public static void runManualSteps() {
         String sandbox = System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName();
         doCMetadata(sandbox);
@@ -79,20 +107,20 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         setPostRefreshRunFlag(1);
     }
 
-    @AuraEnabled
+    // @AuraEnabled
     public static void runUserImport() {
         doUserImport(System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName());
         setPostRefreshRunFlag(2);
     }
 
-    @AuraEnabled
+    // @AuraEnabled
     public static void runManualSteps2() {
         doCMetadataSvc(System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName());
         runPostSeeding();
         setPostRefreshRunFlag(3);
     }
 
-    @AuraEnabled
+    // @AuraEnabled
     public static void runE2CAddresses() {
         doE2CAddresses(System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName());
         setPostRefreshRunFlag(4);
