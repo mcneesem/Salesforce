@@ -77,7 +77,7 @@
         <locationY>0</locationY>
         <flowName>Sub_Client_Contact_Updated_Async_Update_PDS_Subflow</flowName>
         <inputAssignments>
-            <name>v_SubClient_Id</name>
+            <name>subClientId</name>
             <value>
                 <elementReference>$Record.NSP_Sub_Client_Name__c</elementReference>
             </value>
@@ -89,13 +89,5 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>r_PDS_to_update</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>NSP_Payroll__c</objectType>
     </variables>
 </Flow>
