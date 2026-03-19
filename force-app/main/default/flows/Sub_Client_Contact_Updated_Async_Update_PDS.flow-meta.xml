@@ -90,7 +90,7 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>v_SubClient_Id</name>
+            <name>subClientId</name>
             <value>
                 <elementReference>$Record.NSP_Sub_Client__c</elementReference>
             </value>
@@ -102,23 +102,5 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <description>Current PDS Record</description>
-        <name>r_PDS</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>NSP_Payroll__c</objectType>
-    </variables>
-    <variables>
-        <description>PDS record to update</description>
-        <name>r_PDS_to_update</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>NSP_Payroll__c</objectType>
     </variables>
 </Flow>

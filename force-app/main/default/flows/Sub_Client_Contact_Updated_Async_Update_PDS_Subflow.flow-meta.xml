@@ -2023,8 +2023,8 @@
     </variables>
     <variables>
         <description>Sub Client Record
-1) Pass SCC Record when Record Trigger from SCC , Need this to compare the
-2) Pass Null for when Record Trigger from Create PDS</description>
+1)Pass SCC Record when Record Trigger from SCC , Need this to compare the
+2)Pass Null for when Record Trigger from Create PDS</description>
         <name>r_SCC_Record</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
