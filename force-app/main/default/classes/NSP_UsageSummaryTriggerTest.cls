@@ -1,27 +1,25 @@
-/*This is the test class for Usage Summary trigger*/
 @isTest
-public class NSP_UsageSummaryTriggerTest {
-    /*Set Up method to create test data*/
+private class NSP_UsageSummaryTriggerTest {
+
     @testSetup
-    static void setupTestData(){
+    private static void setupTestData() {
         NSP_InvoiceTriggerHandler.TriggerDisabled = true;
         NSP_AccountTriggerHandler.TriggerDisabled = true;
         NSP_OrderItemTriggerHandler.TriggerDisabled = true;
         NSP_OrderTriggerHandler.TriggerDisabled = true;
         NSP_AccountTriggerHandler.TriggerDisabled = true;
-        NSP_OpportunityTriggerHandler.TriggerDisabled = true; 
+        NSP_OpportunityTriggerHandler.TriggerDisabled = true;
         NSP_QuoteTriggerHandler.TriggerDisabled = true;
         NSP_ContactTriggerHandler.TriggerDisabled=true;
         NSP_QuoteLineTriggerHandler.TriggerDisabled=true;
         NSP_SubscriptionTriggerHandler.TriggerDisabled=true;
         NSP_ContractTriggerHandler.TriggerDisabled=true;
-        
+
         Account objaccount = NSP_TestHelper.createAccount(true);
-        //Contact objcontact = NSP_TestHelper.createContact(objaccount.id, true);
         blng__BillingRule__c bRule=NSP_TestHelper.createBillingRule(); //creates billing rule
         blng__RevenueRecognitionRule__c rRule=NSP_TestHelper.createRevrecRule('Test');//creates revenue recogintion rule
         blng__TaxRule__c tRule=NSP_TestHelper.createRevTaxRule(); //creates tax rule
-        
+
         Product2 objproduct = NSP_TestHelper.createProduct('Test Product',false);  //Product Creation
         objproduct.SBQQ__ChargeType__c = 'Recurring';
         objproduct.SBQQ__BillingType__c = 'Arrears';
@@ -30,13 +28,12 @@ public class NSP_UsageSummaryTriggerTest {
         objproduct.blng__BillingRule__c=bRule.Id;
         objproduct.blng__RevenueRecognitionRule__c=rRule.Id;
         objproduct.blng__TaxRule__c=tRule.Id;
-        
         insert objproduct;
-        
     }
+
     @isTest
-    private static void usageSummaryTest(){
-                // Query account and product
+    private static void usageSummaryTest() {
+        // Query account and product
         Account objaccount  = [Select Id, Name from Account WHERE Name =: NSP_TestHelper.DEFAULT_COMPANY_NAME LIMIT 1];
         Product2 objproduct  = [Select Id, Name from Product2 WHERE Name = 'Test Product' LIMIT 1];
         // create consumption schedule
@@ -55,9 +52,9 @@ public class NSP_UsageSummaryTriggerTest {
         Test.startTest();
         // create opportunity
         Opportunity objOpprtunity = NSP_TestHelper.createOpenOpportunity(objaccount.Id,'New Product',true);
-        PriceBookEntry objPbe     = NSP_TestHelper.createPriceBookEntry(objproduct.Id,200.0,true);
+        PriceBookEntry objPbe = NSP_TestHelper.createPriceBookEntry(objproduct.Id,200.0,true);
         //create quote
-        SBQQ__Quote__c objQuote   = NSP_TestHelper.createCPQQuote(objaccount.Id,objOpprtunity.Id,true);
+        SBQQ__Quote__c objQuote = NSP_TestHelper.createCPQQuote(objaccount.Id,objOpprtunity.Id,true);
         // create quote lines
         NSP_TestHelper.createCPQQuotelines(objQuote,new List<Product2>{objproduct},new List<PriceBookEntry> {objPbe}, true);
         // create order from quote
@@ -67,24 +64,22 @@ public class NSP_UsageSummaryTriggerTest {
         NSP_OrderItemTriggerHandler.TriggerDisabled =true;
         update objQuote;
         system.assert(true, objQuote.SBQQ__Primary__c );
-       
-        
-        list<OrderItem> orderItemList = new list<OrderItem>([select id from OrderItem WHERE Order.SBQQ__Quote__c =:objQuote.Id]);
+
+        List<OrderItem> orderItemList = new List<OrderItem>([select id from OrderItem WHERE Order.SBQQ__Quote__c =:objQuote.Id]);
         SBQQ__Subscription__c sub= new SBQQ__Subscription__c();
         sub.NSP_Waived_Amount__c=500;
         sub.SBQQ__Quantity__c=1;
-       // sub.SBQQ__OrderProduct__c=orderItemList[0].Id;
         insert sub;
         orderItemList[0].SBQQ__Subscription__c=sub.Id;
         update orderItemList;
         blng__UsageSummary__c uSummary=NSP_TestHelper.createUsageSummary(orderItemList,objaccount);
         uSummary.blng__Status__c='Processed';
-       // update uSummary;
-       // system.assertEquals('Processed', uSummary.blng__Status__c);
-       system.assert(orderItemList.size() > 0);
+        update uSummary;
+        System.assert(orderItemList.size() > 0);
         NSP_OrderTriggerHandler.TriggerDisabled=false;
         NSP_OrderItemTriggerHandler.TriggerDisabled =false;
         Test.stopTest();
-
     }
+
 }
+//
