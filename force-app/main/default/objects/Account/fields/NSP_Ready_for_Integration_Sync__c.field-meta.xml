@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Ready_for_Integration_Sync__c</fullName>
     <defaultValue>true</defaultValue>
-    <description>Used to track if Ready for Integration Sync</description>
+    <description>DEPRECATED ~ Used to track if Ready for Integration Sync</description>
     <externalId>false</externalId>
     <label>Ready for Integration Sync</label>
     <trackFeedHistory>false</trackFeedHistory>
