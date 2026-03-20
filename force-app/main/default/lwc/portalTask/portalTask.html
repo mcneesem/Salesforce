@@ -37,9 +37,11 @@
                                 label={record.fields.Action__c.value}
                                 name="fileUploader"
                                 record-id={record.fields.Id.value}
+                                onclick={handleClickUpload}
+                                onkeydown={handleKeyDown}
                                 onuploadfinished={handleUploadFinished}
-                                multiple
                                 variant="label-hidden"
+                                multiple
                                 >
                             </lightning-file-upload>
                         </template>
@@ -48,7 +50,14 @@
                         </template>
                     </lightning-layout-item>
                     <lightning-layout-item size="1" onclick={handleClickFiles} onkeydown={handleKeyDown}>
-                        <lightning-icon icon-name="utility:form" size="xx-small" alternative-text="Uploaded Files"></lightning-icon>&nbsp;({totalRelatedFiles})
+                        <template lwc:if={isLoading}>
+                            <div class="slds-is-relative slds-size_1-of-2 slds-m-top_x-small">
+                                <lightning-spinner alternative-text="Loading" size="xx-small"></lightning-spinner>
+                            </div>
+                        </template>
+                        <template lwc:else>
+                            <lightning-icon icon-name="utility:form" size="xx-small" alternative-text="Uploaded Files"></lightning-icon>&nbsp;({totalRelatedFiles})
+                        </template>
                     </lightning-layout-item>
                     <lightning-layout-item size="1">
                         <template lwc:if={isCompleted}>

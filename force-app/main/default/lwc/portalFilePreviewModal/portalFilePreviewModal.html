@@ -1,0 +1,30 @@
+<template>
+    <lightning-modal-header label={modalLabel}></lightning-modal-header>
+    <lightning-modal-body>
+        <div class="slds-text-align_center">
+            <div class="player">
+                <div class="document slds-p-vertical_xxx-small">
+                    <div class="preview">
+                        <div class="scroller-wrapper">
+                            <div class="scroller slds-size_1-of-1">
+                                <div class="page">
+                                    <div class="slds-is-relative">
+                                        <template lwc:if={versionId}>
+                                            <img src={previewUrl} alt="File Preview"/>
+                                        </template>
+                                        <template lwc:else>
+                                            <lightning-spinner alternative-text="Loading" size="medium" variant="inverse"></lightning-spinner>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </lightning-modal-body>
+    <lightning-modal-footer>
+        <lightning-button label="Close" onclick={handleClose}></lightning-button>
+    </lightning-modal-footer>
+</template>
