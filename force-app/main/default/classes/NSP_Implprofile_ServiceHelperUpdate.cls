@@ -114,15 +114,24 @@ public class NSP_Implprofile_ServiceHelperUpdate {
     public NSP_Implprofile_ServiceHelperUpdate(Boolean isSave){
         this.isSaveForm = isSave;
     }
-    public Map<String, Set<Id>>  executeAutomation() {
-        Map<String, Set<Id>> ipRecordsByAutomationMap = new  Map<String, Set<Id>> ();
-        if(NSP_Implprofile_ServiceHelperUpdate.isAutomationAllowed())
-        {
-            try{
-                start();
-                execute();
-                finish();
-                ipRecordsByAutomationMap= ipRecordsByAutomation;
+
+    public static Boolean isAutomationAllowed() {
+        return (
+            CustomPermissionController.checkUserPermission( 'Use_Implementation_Profile' , UserInfo.getUserId() )
+            && Schema.sObjectType.Implementation_Profile__c.isAccessible()
+            && Schema.SObjectType.Implementation_Profile__c.isCreateable()
+            && Schema.sObjectType.Implementation_Profile__c.isUpdateable()
+        );
+    }
+
+    public Map<String,Set<Id>>  executeAutomation() {
+        Map<String,Set<Id>> ipRecordsByAutomationMap = new Map<String,Set<Id>>();
+        if ( NSP_Implprofile_ServiceHelperUpdate.isAutomationAllowed() ) {
+            try {
+                this.start();
+                this.execute();
+                this.finish();
+                ipRecordsByAutomationMap = this.ipRecordsByAutomation;
             } catch ( Exception e ) {
                 NSP_ErrorLogHandler.logException(
                     NSP_Implprofile_ServiceHelperUpdate.class.getName() ,
@@ -133,20 +142,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         }
         return ipRecordsByAutomationMap;
     }
-    
-    public static Boolean isAutomationAllowed()
-    {
-        Boolean returnFlag = false;
-        if(CustomPermissionController.checkUserPermission('Use_Implementation_Profile', UserInfo.getUserId()) &&
-        Schema.sObjectType.Implementation_Profile__c.isAccessible() &&
-        Schema.SObjectType.Implementation_Profile__c.isCreateable() &&
-        Schema.sObjectType.Implementation_Profile__c.isUpdateable())
-        {
-            returnFlag = true;
-        }
-        
-        return returnFlag;
-    }
+
     private void start() {
         //get all Employee Data
         // Create a set of eligible records which we need to pull
@@ -1167,7 +1163,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         String milestoneKey = createMilestoneForProjectTask(proj, pta);
         pse__Project_Task__c eachProjecttask = null;
         if(pta != null){
-        	eachProjecttask = createProjectTaskfromIP(proj,  pta.NSP_Category__c,ipRecId,milestoneKey);
+            eachProjecttask = createProjectTaskfromIP(proj,  pta.NSP_Category__c,ipRecId,milestoneKey);
         }
         genericProjectTask(proj,eachProjecttask, pta, workCalendarId);
         if(ipwithValue != null
@@ -1819,7 +1815,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                         List<String> empDetails = empName?.split('~');
                         if(empDetails.size() > 1 && empDetails[1] == yesOrNoConstant){
                             eachProjecttask = genericPMTask(proj,pta,ipRecId,ipwithValue,workCalendarId);
-                            if(eachProjecttask != null)	{
+                            if(eachProjecttask != null){
                                 eachProjectTask.Name = formCollectedTemplate.replace('<WSEE Name>', empDetails[0]);
                                 projectTaskToInsertList.add(eachProjecttask);
                             }
@@ -2096,7 +2092,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                     NSP_Project_Manager__r.NSP_Work_email__c ,
                     NSP_HR_Quality_Support_Team_Member__c ,
                     NSP_HR_Quality_Support_Team_Member__r.NSP_Work_email__c ,
-                	NSP_HR_Quality_Support_Team_Member__r.pse__Salesforce_User__c ,
+                    NSP_HR_Quality_Support_Team_Member__r.pse__Salesforce_User__c ,
                     NSP_Project_Manager__r.NSP_Job_Title__c ,
                     NSP_Project_Manager__r.pse__Salesforce_User__c ,
                     Account__c ,

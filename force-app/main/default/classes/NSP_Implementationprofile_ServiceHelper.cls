@@ -207,13 +207,12 @@ public class NSP_Implementationprofile_ServiceHelper {
 
     public Map<String,Set<Id>> executeAutomation() {
         Map<String,Set<Id>> ipRecordsByAutomationMap = new Map<String,Set<Id>>();
-        if(NSP_Implprofile_ServiceHelperUpdate.isAutomationAllowed())
-        {
+        if ( NSP_Implprofile_ServiceHelperUpdate.isAutomationAllowed() ) {
             try {
-                start();
-                execute();
-                finish();
-                ipRecordsByAutomationMap = ipRecordsByAutomation;
+                this.start();
+                this.execute();
+                this.finish();
+                ipRecordsByAutomationMap = this.ipRecordsByAutomation;
             } catch ( Exception e ) {
                 NSP_ErrorLogHandler.logException(
                     NSP_Implementationprofile_ServiceHelper.class.getName() ,
@@ -222,8 +221,7 @@ public class NSP_Implementationprofile_ServiceHelper {
                 );
             }
         }
-
-       return ipRecordsByAutomationMap;
+        return ipRecordsByAutomationMap;
     }
 
     private void start() {

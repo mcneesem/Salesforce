@@ -9,56 +9,54 @@ private class NSP_ImpprofileServiceHelper_Test {
     @testSetup
     private static void setUpData() {
         User userRec = (User)NSP_TestExtendedDataFactory.createSObject(new User(), 'NSP_TestDataFactory.UserDefaults', true);
-        
+
         // Getting the Permission Sets
         List<PermissionSet> permissionSets = [
             SELECT Id
             FROM PermissionSet
             WHERE (
-                Name = 'Implementation_Profile_Read_Only' 
-                OR 
+                Name = 'Implementation_Profile_Read_Only'
+                OR
                 Name = 'NSP_Implementation_Profile_permission_set')
         ];
-        
+
         Assert.areNotEqual(null, permissionSets, 'Permission sets are needed for this test class');
         Assert.areEqual(2, permissionSets?.size(), 'Query results should match the count');
-        
+
         List<PermissionSetAssignment> permissionSetAssignments = new List<PermissionSetAssignment>();
-        for(PermissionSet ps : permissionSets)
-        {
+        for(PermissionSet ps : permissionSets) {
             permissionSetAssignments.add(new PermissionSetAssignment(
                 AssigneeId = userRec.id,
                 PermissionSetId = ps.Id
             ));
         }
-        
+
         insert permissionSetAssignments;
-        
-        System.runAs(userRec)
-        {
+
+        System.runAs(userRec) {
             Email_Deliverability_Settings__c emailSetting = Email_Deliverability_Settings__c.getOrgDefaults();
             emailSetting.IsEnabledOutbound__c = true;
             upsert emailSetting;
-            
+
             Account acc = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), 'NSP_TestDataFactory.AccountDefaults', false);
             insert acc;
-            
+
             Contact con = new Contact();
             con.AccountId = acc.Id;
             con.lastName= TEST_NAME;
             con.pse__Salesforce_User__c=userRec.Id;
             con.NSP_Work_email__c='test@pwc.com';
             insert con;
-            
+
             Asset woAsset = (Asset) NSP_TestExtendedDataFactory.createSObject(new Asset(), 'NSP_TestDataFactory.AssetDefaults', false);
             woAsset.Name = 'Test Asset';
             woAsset.AccountId = acc.Id;
             woAsset.NSP_Legal_Name__c = 'Test Legal Name';
             woAsset.Status= NSP_ServiceConstants.AIMS_STATUS;
             insert woAsset;
-            
+
             list<Implementation_Profile__c> ipListFSA = new list<Implementation_Profile__c>();
-            
+
             Implementation_Profile__c impl = (Implementation_Profile__c) NSP_TestExtendedDataFactory.createSObject(new Implementation_Profile__c());
             impl.RecordTypeId = fsoRecordTypeId;
             impl.NSP_Form_Completed__c = True;
@@ -67,7 +65,7 @@ private class NSP_ImpprofileServiceHelper_Test {
             impl.NSP_CheckToSendTheClient_Summary_email__c = true;
             impl.NSP_Orientation_Coordinator__c=con.id;
             ipListFSA.add(impl);
-            
+
             Implementation_Profile__c impl4 = (Implementation_Profile__c) NSP_TestExtendedDataFactory.createSObject(new Implementation_Profile__c());
             impl4.Client_have_will_have_any_Seasonal_EEs__c = 'No';
             impl4.RecordTypeId = ipMMRecordTypeId;
@@ -87,7 +85,7 @@ private class NSP_ImpprofileServiceHelper_Test {
             impl4.Who_should_the_FLSA_team_reach_out_to__c = 'Test, Test2';
             impl4.NSP_CheckToSendTheClient_Summary_email__c = true;
             ipListFSA.add(impl4);
-            
+
             Implementation_Profile__c impl7 = (Implementation_Profile__c) NSP_TestExtendedDataFactory.createSObject(new Implementation_Profile__c());
             impl7.Does_the_client_offer_a_HSA__c = NSP_ServiceConstants.YES;
             impl7.Is_client_s_current_HSA_with_Optum_Bank__c = NSP_ServiceConstants.YES;
@@ -95,7 +93,7 @@ private class NSP_ImpprofileServiceHelper_Test {
             impl7.NSP_Orientation_Coordinator__c=con.id;
             impl7.NSP_CheckToSendTheClient_Summary_email__c = true;
             ipListFSA.add(impl7);
-            
+
             //CHECK FOR EMAIL TRIGGER FOR FSO IP
             Implementation_Profile__c fsoIp = (Implementation_Profile__c) NSP_TestExtendedDataFactory.createSObject(new Implementation_Profile__c());
             fsoIp.RecordTypeId = fsoRecordTypeId;
@@ -129,9 +127,9 @@ private class NSP_ImpprofileServiceHelper_Test {
             fsoIp.Does_this_client_have_an_AWW__c = 'Yes';
             fsoIp.Is_client_CA_docs_submitted_for_approval__c = 'Yes';
             fsoIp.NSP_CheckToSendTheClient_Summary_email__c = true;
-            
+
             ipListFSA.add(fsoIp);
-            
+
             Implementation_Profile__c fsoIp1 = (Implementation_Profile__c) NSP_TestExtendedDataFactory.createSObject(new Implementation_Profile__c());
             fsoIp1.RecordTypeId = fsoRecordTypeId;
             fsoIp1.Is_there_a_need_for_a_tech_package__c=NSP_ServiceConstants.YES;
@@ -161,7 +159,7 @@ private class NSP_ImpprofileServiceHelper_Test {
             fsoIp1.Who_should_the_FLSA_team_reach_out_to__c = 'Test';
             fsoIp1.NSP_CheckToSendTheClient_Summary_email__c = true;
             ipListFSA.add(fsoIp1);
-            
+
             Implementation_Profile__c fsoIpAutomationObj = (Implementation_Profile__c) NSP_TestExtendedDataFactory.createSObject(new Implementation_Profile__c());
             fsoIpAutomationObj.RecordTypeId = fsoRecordTypeId;
             fsoIpAutomationObj.NSP_Asset__c = woAsset.Id;
@@ -235,7 +233,7 @@ private class NSP_ImpprofileServiceHelper_Test {
             fsoIpAutomationObj.Who_should_the_FLSA_team_reach_out_to__c = 'Test';
             ipListFSA.add(fsoIpAutomationObj);
             insert ipListFSA;
-            
+
             Implementation_Pay_Period__c ipayPeriod = (Implementation_Pay_Period__c) NSP_TestExtendedDataFactory.createSObject(new Implementation_Pay_Period__c());
             ipayPeriod.Frequency__c= 'Weekly';
             ipayPeriod.Final_pay_period_prior_to_Insperity__c= 'Tomorrow';
@@ -243,7 +241,7 @@ private class NSP_ImpprofileServiceHelper_Test {
             ipayPeriod.Does_the_client_have_prior_wages__c= 'Yes';
             ipayPeriod.NSP_Implementation_Profile__c = ipListFSA[5].Id;
             insert ipayPeriod;
-            
+
             NSP_Regulated_Area__c regulatedArea = (NSP_Regulated_Area__c) NSP_TestExtendedDataFactory.createSObject(new NSP_Regulated_Area__c());
             regulatedArea.NSP_Regulation_Type__c = 'State Retirement Plan';
             regulatedArea.NSP_State__c = 'MA';
@@ -254,8 +252,7 @@ private class NSP_ImpprofileServiceHelper_Test {
     @isTest
     private static void testPrivateMethodFSOEmails() {
         User user=[SELECT  Id, Username FROM User WHERE Id != null AND Alias = 'sas' LIMIT 1];
-        System.runAs(user)
-        {
+        System.runAs(user) {
             Test.StartTest();
             Map<Id,Implementation_Profile__c> ipRecordMap =new Map<Id,Implementation_Profile__c>([SELECT Id,NSP_COBRA_Takeover_Emp_Details__c,recordType.Name, OwnerId, Name,  RecordTypeId, Account__c, Addressee_for_each_worksite_location__c, All_EEs_paid_under_same_FEIN_currently__c, Allowances__c, Any_EEs_in_clients_waiting_period__c, Any_EEs_travel_internationally_for_work__c, Any_EEs_with_urgent_medical_needs__c, Any_employees_currently_enrolled__c, Any_employer_contributions_to_EE_HSA__c, Any_special_needs_for_EE_orientation__c, Any_users_who_cannot_see_salary__c, Arbitration_Agreement_been_discussed__c, Are_there_any_EEs_on_Leave_of_Absence__c, Are_there_any_non_paid_users__c, Are_there_multiple_worksite_locations__c, NSP_Documents_Collected_Leviesd__c,NSP_BPA_BPC__c,NSP_BPA_BPC_Ids__c,  NSP_Documents_garnishments__c, Benefit_effective_date_carry_from_tab_4__c, Benefits_Package__c, Brief_description_of_client__c, Business_Inception_Date__c, Can_client_show_EEO_filing_address__c, Carrier_notified_of_termination__c, Check_all_changes_that_apply__c, Check_all_sch_B_changes_that_apply__c, Check_all_tht_apply_ministers_teachers__c, Chngs_for_cafeteria_plan_questionnaire__c, Client_Address__c, Client_Contact_Notes__c, Client_FEIN__c, Client_Implementing_Premier_Performance__c, NSP_Client_Liaison__c,
                                                                                                   Client_Name_del__c, Client_Number__c, Client_Profile_Information__c, Client_does_business_in_MA_NY_or_VA__c, Client_entity_owned_or_a_non_profit__c, Client_expect_chnges_in_the_organization__c, Client_has_Service_Contract_Act_SCA_EEs__c, Client_has_any_post_tax_deductions__c, Client_has_any_special_payroll_needs__c, Client_has_existing_retirement_plan__c, Client_have_EEO_filing_under__c, Client_have_any_Commission_only_EEs__c, Client_have_any_EEs_on_F1_or_J1_Visa_s__c, Client_have_any_EEs_that_work_in_NY__c, Client_have_any_urgent_HR_needs__c, Client_have_will_have_any_Seasonal_EEs__c, Client_interested_in_NSP_tracking_PTO__c, Client_internal_deadline_for_OEE_OBE__c, Client_is_making_employer_contributions__c, Client_maintain_own_FSA__c, Client_maintaining_existing_EPLI_policy__c, Client_part_of_entity_w_o_NSP__c, Client_runs_expenses_or_payroll__c, Client_s_previous_payroll_provider__c, Client_s_previous_waiting_period__c, Client_union_EE_Check_all_that_Apply__c, Client_utilizing_Insperity_s_TimeStar__c, Client_want_to_begin_401k_w_NSP_setup__c, Client_working_with_an_NSP_RS_rep__c, Contact_Information__c, Current_hours_tracking_method_infolet__c, DBA__c, Date_and_Time__c, Day_one_start__c, Did_the_sch_B_change_at_the_SKO__c, Do_any_EEs_have_garnishments__c, Do_any_EEs_have_tax_levies__c,
@@ -273,14 +270,14 @@ private class NSP_ImpprofileServiceHelper_Test {
                                                                                                   NSP_AIMS_ClientNo__c, NSP_AIMS_Client_Name__c, NSP_Any_active_severance_agreement__c, NSP_Any_employee_with_temporary_status__c, NSP_Assignment_Notes__c, NSP_BPS_Notes__c, NSP_Client_Sponsored_Plan__c, NSP_Client_retaining_benefit_plan__c, NSP_Does_arrearage_comply_with_state_law__c, NSP_Does_the_client_have_prior_wages__c, NSP_EE_Name__c, NSP_Employee_Notes__c, NSP_Employee_with_compensation_other__c, NSP_FLSA_EE_exemption_category_provided__c, NSP_Final_pay_date_prior_to_Insperity__c, NSP_Final_pay_period_prior_to_Insperity__c, NSP_Frequency__c, NSP_Have_credit_services_approved__c, NSP_How_e_verify_be_completed__c, NSP_How_employee_hours_be_reported_to_I__c, NSP_How_hours_currently_captured__c, NSP_Immediate_payroll_needs_or_concerns__c, NSP_Inspeirty_last_day_of_1st_pay_period__c, NSP_Insperity_1st_day_of_1st_pay_period__c, NSP_Insperity_1st_day_of_2nd_pay_period__c, NSP_Insperity_1st_pay_date__c, NSP_Insperity_2nd_pay_date__c, NSP_Is_arrearage_7_days__c, NSP_Onsite_Safety_Inspection_Details__c, NSP_Other_Urgent_HR_Needs__c, NSP_Overtime_owed_after_hours__c, NSP_Payment_Details__c, NSP_Payroll_Specialist_to_confirm__c, NSP_Plan_for_EE_Payment__c, NSP_Project__c, NSP_Review_Cigna_Enrollment_Process__c, NSP_Separate_Vacation_Policy__c, NSP_Service_Model__c, NSP_Standard_No_of_Hours_worked_for_EEs__c, NSP_State_require_specific_priming_field__c,
                                                                                                   NSP_Subaccount__c, NSP_Urgent_HR_Needs_Details__c, NSP_When_where_and_quantity_needed__c, NSP_Who_receives_Insperity_Communication__c, NSP_Who_will_approve_the_payroll__c, NSP_Who_will_submit_payroll__c, NSP_collected_copies_of_state_WC_policy__c,NSP_current_waiting_period__c, NSP_how_future_payment_will_be_done__c, NSP_prior_medical_contributions__c, NSP_remote_EEs_not_working_physical_loc__c, NSP_separate_pay_document_specify__c, WC__c, received_introductory_email_frm_ORK_Team__c, remove_employee_directory_from_premier__c, NSP_AIMS_ClientNo_KDM__c, NSP_AIMS_ClientNo_OSS__c, NSP_AIMS_ClientNo_PC__c, NSP_AIMS_ClientNo_WC__c, NSP_Benefit_Notes__c, NSP_Commission_Provide_Details__c, NSP_DoYouPay_Other_Provide_details__c, NSP_Non_paid_users_Enter_User_Names__c, NSP_compensation_structu_Provide_Details__c, NSP_Govt_Type_Other_Provide_Details__c, NSP_employee_40_hour_work_Week_PDetails__c, NSP_Any_OT_Expections_Provide_Details__c, NSP_PD_different_contact_for_subaccount__c, NSP_Provide_Details_Relabeling_Needed__c, NSP_Any_special_pay_code_Provide_Details__c, Insperity_pay_frequency__c,
                                                                                                   NSP_Payroll_Specialist__r.NSP_Work_email__c,NSP_Asset__r.AccountId, NSP_Payroll_Specialist__r.pse__Salesforce_User__c,  NSP_Project_Manager__r.pse__Salesforce_User__c,  NSP_Project_Manager__r.pse__Salesforce_User__r.Email,NSP_Urgent_Medical_Needs_Emp_Details__c, NSP_Employees_on_LOA__c,NSP_Employee_Details_On_LOA__c ,NSP_Old_Benefits_Package__c,NSP_Old_Effective_Date_EPLI__c,NSP_Old_Insperity_Ben_effective_date__c,NSP_OT_Representative__r.NSP_Work_email__c,Does_this_client_have_an_AWW__c,Is_client_CA_docs_submitted_for_approval__c,Are_you_registered_with_the_CSLB__c,Contractor_s_License__c,NSP_Legal_Name__c,Federal_Labor_Law_poster__c,Would_the_client_like_a_FLSA_Exemption__c FROM Implementation_Profile__c WHERE Implementing_biz_Performance_solutions__c = 'YES' LIMIT 1]);
-            
+
             Map<Id,Implementation_Profile__c> ipRecordMap2 =new Map<Id,Implementation_Profile__c>([SELECT ID, NSP_Form_Completed__c
                                                                                                    FROM Implementation_Profile__c
                                                                                                    WHERE Is_the_client_Emerging_Growth__c = 'No' LIMIT 1]);
-            
+
             Implementation_Pay_Period__c additionalIpPayPeriods = [ SELECT Id, Frequency__c, NSP_Implementation_Profile__c, Final_pay_period_prior_to_Insperity__c, Final_pay_date_prior_to_Insperity__c,Does_the_client_have_prior_wages__c
                                                                    FROM Implementation_Pay_Period__c WHERE NSP_Implementation_Profile__c IN: ipRecordMap.keyset() Limit 1 ];
-            
+
             for(Implementation_Profile__c ip: ipRecordMap.values()){
                 ip.NSP_Form_Completed__c = true;
                 ip.Would_the_client_like_a_FLSA_Exemption__c = NSP_ServiceConstants.No;
@@ -290,7 +287,7 @@ private class NSP_ImpprofileServiceHelper_Test {
                 ip.NSP_Form_Completed__c = true;
             }
             update  ipRecordMap2.values();
-            
+
             NSP_Implementationprofile_ServiceHelper helper = new NSP_Implementationprofile_ServiceHelper(ipRecordMap, new Map<Id, Implementation_Profile__c>());
             helper.isRerun = True;
             helper.executeAutomation();
@@ -299,12 +296,10 @@ private class NSP_ImpprofileServiceHelper_Test {
         }
     }
 
-
     @isTest
     private static void testMethodMiddleMarketEmails() {
         User user=[SELECT  Id, Username FROM User WHERE Id != null AND Alias = 'sas' LIMIT 1];
-        System.runAs(user)
-        {
+        System.runAs(user) {
             Test.StartTest();
             Map<Id,Implementation_Profile__c> ipRecordMap =new Map<Id,Implementation_Profile__c>([SELECT Id,NSP_COBRA_Takeover_Emp_Details__c,recordType.Name, OwnerId, Name,  RecordTypeId, Account__c, Addressee_for_each_worksite_location__c, All_EEs_paid_under_same_FEIN_currently__c, Allowances__c, Any_EEs_in_clients_waiting_period__c, Any_EEs_travel_internationally_for_work__c, Any_EEs_with_urgent_medical_needs__c, Any_employees_currently_enrolled__c, Any_employer_contributions_to_EE_HSA__c, Any_special_needs_for_EE_orientation__c, Any_users_who_cannot_see_salary__c, Arbitration_Agreement_been_discussed__c, Are_there_any_EEs_on_Leave_of_Absence__c, Are_there_any_non_paid_users__c, Are_there_multiple_worksite_locations__c, NSP_Documents_Collected_Leviesd__c,NSP_BPA_BPC__c,NSP_BPA_BPC_Ids__c,  NSP_Documents_garnishments__c, Benefit_effective_date_carry_from_tab_4__c, Benefits_Package__c, Brief_description_of_client__c, Business_Inception_Date__c, Can_client_show_EEO_filing_address__c, Carrier_notified_of_termination__c, Check_all_changes_that_apply__c, Check_all_sch_B_changes_that_apply__c, Check_all_tht_apply_ministers_teachers__c, Chngs_for_cafeteria_plan_questionnaire__c, Client_Address__c, Client_Contact_Notes__c, Client_FEIN__c, Client_Implementing_Premier_Performance__c, NSP_Client_Liaison__c,
                                                                                                   Client_Name_del__c, Client_Number__c, Client_Profile_Information__c, Client_does_business_in_MA_NY_or_VA__c, Client_entity_owned_or_a_non_profit__c, Client_expect_chnges_in_the_organization__c, Client_has_Service_Contract_Act_SCA_EEs__c, Client_has_any_post_tax_deductions__c, Client_has_any_special_payroll_needs__c, Client_has_existing_retirement_plan__c, Client_have_EEO_filing_under__c, Client_have_any_Commission_only_EEs__c, Client_have_any_EEs_on_F1_or_J1_Visa_s__c, Client_have_any_EEs_that_work_in_NY__c, Client_have_any_urgent_HR_needs__c, Client_have_will_have_any_Seasonal_EEs__c, Client_interested_in_NSP_tracking_PTO__c, Client_internal_deadline_for_OEE_OBE__c, Client_is_making_employer_contributions__c, Client_maintain_own_FSA__c, Client_maintaining_existing_EPLI_policy__c, Client_part_of_entity_w_o_NSP__c, Client_runs_expenses_or_payroll__c, Client_s_previous_payroll_provider__c, Client_s_previous_waiting_period__c, Client_union_EE_Check_all_that_Apply__c, Client_utilizing_Insperity_s_TimeStar__c, Client_want_to_begin_401k_w_NSP_setup__c, Client_working_with_an_NSP_RS_rep__c, Contact_Information__c, Current_hours_tracking_method_infolet__c, DBA__c, Date_and_Time__c, Day_one_start__c, Did_the_sch_B_change_at_the_SKO__c, Do_any_EEs_have_garnishments__c, Do_any_EEs_have_tax_levies__c,
@@ -322,7 +317,7 @@ private class NSP_ImpprofileServiceHelper_Test {
                                                                                                   NSP_AIMS_ClientNo__c, NSP_AIMS_Client_Name__c, NSP_Any_active_severance_agreement__c, NSP_Any_employee_with_temporary_status__c, NSP_Assignment_Notes__c, NSP_BPS_Notes__c, NSP_Client_Sponsored_Plan__c, NSP_Client_retaining_benefit_plan__c, NSP_Does_arrearage_comply_with_state_law__c, NSP_Does_the_client_have_prior_wages__c, NSP_EE_Name__c, NSP_Employee_Notes__c, NSP_Employee_with_compensation_other__c, NSP_FLSA_EE_exemption_category_provided__c, NSP_Final_pay_date_prior_to_Insperity__c, NSP_Final_pay_period_prior_to_Insperity__c, NSP_Frequency__c, NSP_Have_credit_services_approved__c, NSP_How_e_verify_be_completed__c, NSP_How_employee_hours_be_reported_to_I__c, NSP_How_hours_currently_captured__c, NSP_Immediate_payroll_needs_or_concerns__c, NSP_Inspeirty_last_day_of_1st_pay_period__c, NSP_Insperity_1st_day_of_1st_pay_period__c, NSP_Insperity_1st_day_of_2nd_pay_period__c, NSP_Insperity_1st_pay_date__c, NSP_Insperity_2nd_pay_date__c, NSP_Is_arrearage_7_days__c, NSP_Onsite_Safety_Inspection_Details__c, NSP_Other_Urgent_HR_Needs__c, NSP_Overtime_owed_after_hours__c, NSP_Payment_Details__c, NSP_Payroll_Specialist_to_confirm__c, NSP_Plan_for_EE_Payment__c, NSP_Project__c, NSP_Review_Cigna_Enrollment_Process__c, NSP_Separate_Vacation_Policy__c, NSP_Service_Model__c, NSP_Standard_No_of_Hours_worked_for_EEs__c, NSP_State_require_specific_priming_field__c,
                                                                                                   NSP_Subaccount__c, NSP_Urgent_HR_Needs_Details__c, NSP_When_where_and_quantity_needed__c, NSP_Who_receives_Insperity_Communication__c, NSP_Who_will_approve_the_payroll__c, NSP_Who_will_submit_payroll__c, NSP_collected_copies_of_state_WC_policy__c,NSP_current_waiting_period__c, NSP_how_future_payment_will_be_done__c, NSP_prior_medical_contributions__c, NSP_remote_EEs_not_working_physical_loc__c, NSP_separate_pay_document_specify__c, WC__c, received_introductory_email_frm_ORK_Team__c, remove_employee_directory_from_premier__c, NSP_AIMS_ClientNo_KDM__c, NSP_AIMS_ClientNo_OSS__c, NSP_AIMS_ClientNo_PC__c, NSP_AIMS_ClientNo_WC__c, NSP_Benefit_Notes__c, NSP_Commission_Provide_Details__c, NSP_DoYouPay_Other_Provide_details__c, NSP_Non_paid_users_Enter_User_Names__c, NSP_compensation_structu_Provide_Details__c, NSP_Govt_Type_Other_Provide_Details__c, NSP_employee_40_hour_work_Week_PDetails__c, NSP_Any_OT_Expections_Provide_Details__c, NSP_PD_different_contact_for_subaccount__c, NSP_Provide_Details_Relabeling_Needed__c, NSP_Any_special_pay_code_Provide_Details__c, Insperity_pay_frequency__c,
                                                                                                   NSP_Payroll_Specialist__r.NSP_Work_email__c,NSP_Asset__r.AccountId, NSP_Payroll_Specialist__r.pse__Salesforce_User__c,  NSP_Project_Manager__r.pse__Salesforce_User__c,  NSP_Project_Manager__r.pse__Salesforce_User__r.Email,NSP_Urgent_Medical_Needs_Emp_Details__c, NSP_Employees_on_LOA__c,NSP_Employee_Details_On_LOA__c ,NSP_Old_Benefits_Package__c,NSP_Old_Effective_Date_EPLI__c,NSP_Old_Insperity_Ben_effective_date__c,NSP_OT_Representative__r.NSP_Work_email__c,Federal_Labor_Law_poster__c,NSP_HR_Specialist__c,Would_the_client_like_a_FLSA_Exemption__c FROM Implementation_Profile__c WHERE recordType.Name= 'Middle Market' LIMIT 1 ]);
-            
+
             for(Implementation_Profile__c ip: ipRecordMap.values()){
                 ip.NSP_Form_Completed__c = true;
                 ip.Effective_Date_Payroll_Worker_comp_EPLI__c = system.today();
@@ -341,7 +336,7 @@ private class NSP_ImpprofileServiceHelper_Test {
                 ip.Would_the_client_like_a_FLSA_Exemption__c = NSP_ServiceConstants.No;
             }
             update  ipRecordMap.values();
-            
+
             NSP_Implementationprofile_ServiceHelper helper = new NSP_Implementationprofile_ServiceHelper(ipRecordMap, new Map<Id, Implementation_Profile__c>());
             helper.isRerun = True;
             helper.executeAutomation();
@@ -353,11 +348,10 @@ private class NSP_ImpprofileServiceHelper_Test {
     @isTest
     private static void testMMRetirementServiceEmails() {
         User user=[SELECT  Id, Username FROM User WHERE Id != null AND Alias = 'sas' LIMIT 1];
-        System.runAs(user)
-        {
+        System.runAs(user) {
             Test.StartTest();
             NSP_Regulated_Area__c regArea =  [SELECT Id, NSP_State__c,  NSP_Regulation_Type__c  FROM NSP_Regulated_Area__c  WHERE NSP_State__c != null  AND NSP_Regulation_Type__c =: NSP_ServiceConstants.STATE_RET_PLAN];
-            
+
             Map<Id,Implementation_Profile__c> ipRecordMap =new Map<Id,Implementation_Profile__c>([SELECT Id,NSP_COBRA_Takeover_Emp_Details__c,recordType.Name, OwnerId, Name,  RecordTypeId, Account__c, Addressee_for_each_worksite_location__c, All_EEs_paid_under_same_FEIN_currently__c, Allowances__c, Any_EEs_in_clients_waiting_period__c, Any_EEs_travel_internationally_for_work__c, Any_EEs_with_urgent_medical_needs__c, Any_employees_currently_enrolled__c, Any_employer_contributions_to_EE_HSA__c, Any_special_needs_for_EE_orientation__c, Any_users_who_cannot_see_salary__c, Arbitration_Agreement_been_discussed__c, Are_there_any_EEs_on_Leave_of_Absence__c, Are_there_any_non_paid_users__c, Are_there_multiple_worksite_locations__c, NSP_Documents_Collected_Leviesd__c,NSP_BPA_BPC__c,NSP_BPA_BPC_Ids__c,  NSP_Documents_garnishments__c, Benefit_effective_date_carry_from_tab_4__c, Benefits_Package__c, Brief_description_of_client__c, Business_Inception_Date__c, Can_client_show_EEO_filing_address__c, Carrier_notified_of_termination__c, Check_all_changes_that_apply__c, Check_all_sch_B_changes_that_apply__c, Check_all_tht_apply_ministers_teachers__c, Chngs_for_cafeteria_plan_questionnaire__c, Client_Address__c, Client_Contact_Notes__c, Client_FEIN__c, Client_Implementing_Premier_Performance__c, NSP_Client_Liaison__c,
                                                                                                   Client_Name_del__c, Client_Number__c, Client_Profile_Information__c, Client_does_business_in_MA_NY_or_VA__c, Client_entity_owned_or_a_non_profit__c, Client_expect_chnges_in_the_organization__c, Client_has_Service_Contract_Act_SCA_EEs__c, Client_has_any_post_tax_deductions__c, Client_has_any_special_payroll_needs__c, Client_has_existing_retirement_plan__c, Client_have_EEO_filing_under__c, Client_have_any_Commission_only_EEs__c, Client_have_any_EEs_on_F1_or_J1_Visa_s__c, Client_have_any_EEs_that_work_in_NY__c, Client_have_any_urgent_HR_needs__c, Client_have_will_have_any_Seasonal_EEs__c, Client_interested_in_NSP_tracking_PTO__c, Client_internal_deadline_for_OEE_OBE__c, Client_is_making_employer_contributions__c, Client_maintain_own_FSA__c, Client_maintaining_existing_EPLI_policy__c, Client_part_of_entity_w_o_NSP__c, Client_runs_expenses_or_payroll__c, Client_s_previous_payroll_provider__c, Client_s_previous_waiting_period__c, Client_union_EE_Check_all_that_Apply__c, Client_utilizing_Insperity_s_TimeStar__c, Client_want_to_begin_401k_w_NSP_setup__c, Client_working_with_an_NSP_RS_rep__c, Contact_Information__c, Current_hours_tracking_method_infolet__c, DBA__c, Date_and_Time__c, Day_one_start__c, Did_the_sch_B_change_at_the_SKO__c, Do_any_EEs_have_garnishments__c, Do_any_EEs_have_tax_levies__c,
                                                                                                   Do_you_have_the_LOA_information__c, Do_you_pay_non_exempt_employees__c, Does_client_employ_ministers_or_teachers__c, Does_client_have_any_Minor_EEs__c, Does_client_have_their_code_group_ID__c, Does_the_Cigna_takeover_apply_to_client__c, Does_the_client_currently_offer_a_FSA__c, Does_the_client_have_any_union_EEs__c, Does_the_client_offer_a_HSA__c, Does_the_client_offer_a_Stock_Purchase__c, Duration__c, EEO__c, EEO_name_phone_contact_email_for_info__c, EEs_to_punch_in_out_or_use_timesheet__c, Effective_Date_Payroll_Worker_comp_EPLI__c, Employee_Data_Collection_EDC_collected__c, Employees_currently_enrolled_in_FSA__c, Employees_work_in_the_following_states__c, Enter_non_paid_user_names__c, Enter_user_names_that_can_t_see_salary__c, Exempt_EEs_normal_of_hours_per_day__c, Expenses__c, FSA_Notes__c, Filing_address__c, First_Pay_Date__c, Form_8973_Contact__c, Gave_copy_of_PTO_sick_leave_other_policy__c, Gotten_Cvrg_Cert_Gen_Liability_Auto__c, NSP_Employee_Names_List_garnishments__c, NSP_List_Employee_Names_Levies__c, HR_Contact_Method__c, NSP_Account_Executive__c, NSP_OS_Coordinator__c, NSP_OT_Coordinator__c, NSP_HR_Quality_Support_Team_Member__c, HR_Specialist__c, HR_contact_is_same_as_OSS__c, Has_FEIN_documentation_been_collected__c, Has_FLSA_team_approved__c,
@@ -374,7 +368,7 @@ private class NSP_ImpprofileServiceHelper_Test {
                                                                                                   NSP_AIMS_ClientNo__c, NSP_AIMS_Client_Name__c, NSP_Any_active_severance_agreement__c, NSP_Any_employee_with_temporary_status__c, NSP_Assignment_Notes__c, NSP_BPS_Notes__c, NSP_Client_Sponsored_Plan__c, NSP_Client_retaining_benefit_plan__c, NSP_Does_arrearage_comply_with_state_law__c, NSP_Does_the_client_have_prior_wages__c, NSP_EE_Name__c, NSP_Employee_Notes__c, NSP_Employee_with_compensation_other__c, NSP_FLSA_EE_exemption_category_provided__c, NSP_Final_pay_date_prior_to_Insperity__c, NSP_Final_pay_period_prior_to_Insperity__c, NSP_Frequency__c, NSP_Have_credit_services_approved__c, NSP_How_e_verify_be_completed__c, NSP_How_employee_hours_be_reported_to_I__c, NSP_How_hours_currently_captured__c, NSP_Immediate_payroll_needs_or_concerns__c, NSP_Inspeirty_last_day_of_1st_pay_period__c, NSP_Insperity_1st_day_of_1st_pay_period__c, NSP_Insperity_1st_day_of_2nd_pay_period__c, NSP_Insperity_1st_pay_date__c, NSP_Insperity_2nd_pay_date__c, NSP_Is_arrearage_7_days__c, NSP_Onsite_Safety_Inspection_Details__c, NSP_Other_Urgent_HR_Needs__c, NSP_Overtime_owed_after_hours__c, NSP_Payment_Details__c, NSP_Payroll_Specialist_to_confirm__c, NSP_Plan_for_EE_Payment__c, NSP_Project__c, NSP_Review_Cigna_Enrollment_Process__c, NSP_Separate_Vacation_Policy__c, NSP_Service_Model__c, NSP_Standard_No_of_Hours_worked_for_EEs__c, NSP_State_require_specific_priming_field__c,
                                                                                                   NSP_Subaccount__c, NSP_Urgent_HR_Needs_Details__c, NSP_When_where_and_quantity_needed__c, NSP_Who_receives_Insperity_Communication__c, NSP_Who_will_approve_the_payroll__c, NSP_Who_will_submit_payroll__c, NSP_collected_copies_of_state_WC_policy__c,NSP_current_waiting_period__c, NSP_how_future_payment_will_be_done__c, NSP_prior_medical_contributions__c, NSP_remote_EEs_not_working_physical_loc__c, NSP_separate_pay_document_specify__c, WC__c, received_introductory_email_frm_ORK_Team__c, remove_employee_directory_from_premier__c, NSP_AIMS_ClientNo_KDM__c, NSP_AIMS_ClientNo_OSS__c, NSP_AIMS_ClientNo_PC__c, NSP_AIMS_ClientNo_WC__c, NSP_Benefit_Notes__c, NSP_Commission_Provide_Details__c, NSP_DoYouPay_Other_Provide_details__c, NSP_Non_paid_users_Enter_User_Names__c, NSP_compensation_structu_Provide_Details__c, NSP_Govt_Type_Other_Provide_Details__c, NSP_employee_40_hour_work_Week_PDetails__c, NSP_Any_OT_Expections_Provide_Details__c, NSP_PD_different_contact_for_subaccount__c, NSP_Provide_Details_Relabeling_Needed__c, NSP_Any_special_pay_code_Provide_Details__c, Insperity_pay_frequency__c,
                                                                                                   NSP_Payroll_Specialist__r.NSP_Work_email__c,NSP_Asset__r.AccountId, NSP_Payroll_Specialist__r.pse__Salesforce_User__c,  NSP_Project_Manager__r.pse__Salesforce_User__c,  NSP_Project_Manager__r.pse__Salesforce_User__r.Email,NSP_Urgent_Medical_Needs_Emp_Details__c, NSP_Employees_on_LOA__c,NSP_Employee_Details_On_LOA__c ,NSP_Old_Benefits_Package__c,NSP_Old_Effective_Date_EPLI__c,NSP_Old_Insperity_Ben_effective_date__c,NSP_OT_Representative__r.NSP_Work_email__c,Federal_Labor_Law_poster__c FROM Implementation_Profile__c WHERE recordType.Name= 'Middle Market' LIMIT 1 ]);
-            
+
             for(Implementation_Profile__c ip: ipRecordMap.values()){
                 ip.NSP_Form_Completed__c = true;
                 ip.Client_has_existing_retirement_plan__c = NSP_ServiceConstants.NO;
@@ -382,7 +376,7 @@ private class NSP_ImpprofileServiceHelper_Test {
                 ip.Employees_work_in_the_following_states__c = 'MA';
             }
             update  ipRecordMap.values();
-            
+
             NSP_Implementationprofile_ServiceHelper helper = new NSP_Implementationprofile_ServiceHelper(ipRecordMap, new Map<Id, Implementation_Profile__c>());
             helper.isRerun = True;
             helper.executeAutomation();
@@ -394,11 +388,10 @@ private class NSP_ImpprofileServiceHelper_Test {
     @isTest
     private static void testMMRetirementEmails() {
         User user=[SELECT  Id, Username FROM User WHERE Id != null AND Alias = 'sas' LIMIT 1];
-        System.runAs(user)
-        {
+        System.runAs(user) {
             Test.StartTest();
             NSP_Regulated_Area__c regArea =  [SELECT Id, NSP_State__c,  NSP_Regulation_Type__c  FROM NSP_Regulated_Area__c  WHERE NSP_State__c != null  AND NSP_Regulation_Type__c =: NSP_ServiceConstants.STATE_RET_PLAN];
-            
+
             Map<Id,Implementation_Profile__c> ipRecordMap =new Map<Id,Implementation_Profile__c>([SELECT Id,NSP_COBRA_Takeover_Emp_Details__c,recordType.Name, OwnerId, Name,  RecordTypeId, Account__c, Addressee_for_each_worksite_location__c, All_EEs_paid_under_same_FEIN_currently__c, Allowances__c, Any_EEs_in_clients_waiting_period__c, Any_EEs_travel_internationally_for_work__c, Any_EEs_with_urgent_medical_needs__c, Any_employees_currently_enrolled__c, Any_employer_contributions_to_EE_HSA__c, Any_special_needs_for_EE_orientation__c, Any_users_who_cannot_see_salary__c, Arbitration_Agreement_been_discussed__c, Are_there_any_EEs_on_Leave_of_Absence__c, Are_there_any_non_paid_users__c, Are_there_multiple_worksite_locations__c, NSP_Documents_Collected_Leviesd__c,NSP_BPA_BPC__c,NSP_BPA_BPC_Ids__c,  NSP_Documents_garnishments__c, Benefit_effective_date_carry_from_tab_4__c, Benefits_Package__c, Brief_description_of_client__c, Business_Inception_Date__c, Can_client_show_EEO_filing_address__c, Carrier_notified_of_termination__c, Check_all_changes_that_apply__c, Check_all_sch_B_changes_that_apply__c, Check_all_tht_apply_ministers_teachers__c, Chngs_for_cafeteria_plan_questionnaire__c, Client_Address__c, Client_Contact_Notes__c, Client_FEIN__c, Client_Implementing_Premier_Performance__c, NSP_Client_Liaison__c,
                                                                                                   Client_Name_del__c, Client_Number__c, Client_Profile_Information__c, Client_does_business_in_MA_NY_or_VA__c, Client_entity_owned_or_a_non_profit__c, Client_expect_chnges_in_the_organization__c, Client_has_Service_Contract_Act_SCA_EEs__c, Client_has_any_post_tax_deductions__c, Client_has_any_special_payroll_needs__c, Client_has_existing_retirement_plan__c, Client_have_EEO_filing_under__c, Client_have_any_Commission_only_EEs__c, Client_have_any_EEs_on_F1_or_J1_Visa_s__c, Client_have_any_EEs_that_work_in_NY__c, Client_have_any_urgent_HR_needs__c, Client_have_will_have_any_Seasonal_EEs__c, Client_interested_in_NSP_tracking_PTO__c, Client_internal_deadline_for_OEE_OBE__c, Client_is_making_employer_contributions__c, Client_maintain_own_FSA__c, Client_maintaining_existing_EPLI_policy__c, Client_part_of_entity_w_o_NSP__c, Client_runs_expenses_or_payroll__c, Client_s_previous_payroll_provider__c, Client_s_previous_waiting_period__c, Client_union_EE_Check_all_that_Apply__c, Client_utilizing_Insperity_s_TimeStar__c, Client_want_to_begin_401k_w_NSP_setup__c, Client_working_with_an_NSP_RS_rep__c, Contact_Information__c, Current_hours_tracking_method_infolet__c, DBA__c, Date_and_Time__c, Day_one_start__c, Did_the_sch_B_change_at_the_SKO__c, Do_any_EEs_have_garnishments__c, Do_any_EEs_have_tax_levies__c,
                                                                                                   Do_you_have_the_LOA_information__c, Do_you_pay_non_exempt_employees__c, Does_client_employ_ministers_or_teachers__c, Does_client_have_any_Minor_EEs__c, Does_client_have_their_code_group_ID__c, Does_the_Cigna_takeover_apply_to_client__c, Does_the_client_currently_offer_a_FSA__c, Does_the_client_have_any_union_EEs__c, Does_the_client_offer_a_HSA__c, Does_the_client_offer_a_Stock_Purchase__c, Duration__c, EEO__c, EEO_name_phone_contact_email_for_info__c, EEs_to_punch_in_out_or_use_timesheet__c, Effective_Date_Payroll_Worker_comp_EPLI__c, Employee_Data_Collection_EDC_collected__c, Employees_currently_enrolled_in_FSA__c, Employees_work_in_the_following_states__c, Enter_non_paid_user_names__c, Enter_user_names_that_can_t_see_salary__c, Exempt_EEs_normal_of_hours_per_day__c, Expenses__c, FSA_Notes__c, Filing_address__c, First_Pay_Date__c, Form_8973_Contact__c, Gave_copy_of_PTO_sick_leave_other_policy__c, Gotten_Cvrg_Cert_Gen_Liability_Auto__c, NSP_Employee_Names_List_garnishments__c, NSP_List_Employee_Names_Levies__c, HR_Contact_Method__c, NSP_Account_Executive__c, NSP_OS_Coordinator__c, NSP_OT_Coordinator__c, NSP_HR_Quality_Support_Team_Member__c, HR_Specialist__c, HR_contact_is_same_as_OSS__c, Has_FEIN_documentation_been_collected__c, Has_FLSA_team_approved__c,
@@ -415,7 +408,7 @@ private class NSP_ImpprofileServiceHelper_Test {
                                                                                                   NSP_AIMS_ClientNo__c, NSP_AIMS_Client_Name__c, NSP_Any_active_severance_agreement__c, NSP_Any_employee_with_temporary_status__c, NSP_Assignment_Notes__c, NSP_BPS_Notes__c, NSP_Client_Sponsored_Plan__c, NSP_Client_retaining_benefit_plan__c, NSP_Does_arrearage_comply_with_state_law__c, NSP_Does_the_client_have_prior_wages__c, NSP_EE_Name__c, NSP_Employee_Notes__c, NSP_Employee_with_compensation_other__c, NSP_FLSA_EE_exemption_category_provided__c, NSP_Final_pay_date_prior_to_Insperity__c, NSP_Final_pay_period_prior_to_Insperity__c, NSP_Frequency__c, NSP_Have_credit_services_approved__c, NSP_How_e_verify_be_completed__c, NSP_How_employee_hours_be_reported_to_I__c, NSP_How_hours_currently_captured__c, NSP_Immediate_payroll_needs_or_concerns__c, NSP_Inspeirty_last_day_of_1st_pay_period__c, NSP_Insperity_1st_day_of_1st_pay_period__c, NSP_Insperity_1st_day_of_2nd_pay_period__c, NSP_Insperity_1st_pay_date__c, NSP_Insperity_2nd_pay_date__c, NSP_Is_arrearage_7_days__c, NSP_Onsite_Safety_Inspection_Details__c, NSP_Other_Urgent_HR_Needs__c, NSP_Overtime_owed_after_hours__c, NSP_Payment_Details__c, NSP_Payroll_Specialist_to_confirm__c, NSP_Plan_for_EE_Payment__c, NSP_Project__c, NSP_Review_Cigna_Enrollment_Process__c, NSP_Separate_Vacation_Policy__c, NSP_Service_Model__c, NSP_Standard_No_of_Hours_worked_for_EEs__c, NSP_State_require_specific_priming_field__c,
                                                                                                   NSP_Subaccount__c, NSP_Urgent_HR_Needs_Details__c, NSP_When_where_and_quantity_needed__c, NSP_Who_receives_Insperity_Communication__c, NSP_Who_will_approve_the_payroll__c, NSP_Who_will_submit_payroll__c, NSP_collected_copies_of_state_WC_policy__c,NSP_current_waiting_period__c, NSP_how_future_payment_will_be_done__c, NSP_prior_medical_contributions__c, NSP_remote_EEs_not_working_physical_loc__c, NSP_separate_pay_document_specify__c, WC__c, received_introductory_email_frm_ORK_Team__c, remove_employee_directory_from_premier__c, NSP_AIMS_ClientNo_KDM__c, NSP_AIMS_ClientNo_OSS__c, NSP_AIMS_ClientNo_PC__c, NSP_AIMS_ClientNo_WC__c, NSP_Benefit_Notes__c, NSP_Commission_Provide_Details__c, NSP_DoYouPay_Other_Provide_details__c, NSP_Non_paid_users_Enter_User_Names__c, NSP_compensation_structu_Provide_Details__c, NSP_Govt_Type_Other_Provide_Details__c, NSP_employee_40_hour_work_Week_PDetails__c, NSP_Any_OT_Expections_Provide_Details__c, NSP_PD_different_contact_for_subaccount__c, NSP_Provide_Details_Relabeling_Needed__c, NSP_Any_special_pay_code_Provide_Details__c, Insperity_pay_frequency__c,
                                                                                                   NSP_Payroll_Specialist__r.NSP_Work_email__c,NSP_Asset__r.AccountId, NSP_Payroll_Specialist__r.pse__Salesforce_User__c,  NSP_Project_Manager__r.pse__Salesforce_User__c,  NSP_Project_Manager__r.pse__Salesforce_User__r.Email,NSP_Urgent_Medical_Needs_Emp_Details__c, NSP_Employees_on_LOA__c,NSP_Employee_Details_On_LOA__c ,NSP_Old_Benefits_Package__c,NSP_Old_Effective_Date_EPLI__c,NSP_Old_Insperity_Ben_effective_date__c,NSP_OT_Representative__r.NSP_Work_email__c,Federal_Labor_Law_poster__c FROM Implementation_Profile__c WHERE recordType.Name= 'Middle Market' LIMIT 1 ]);
-            
+
             for(Implementation_Profile__c ip: ipRecordMap.values()){
                 ip.NSP_Form_Completed__c = true;
                 ip.Client_has_existing_retirement_plan__c = NSP_ServiceConstants.YES ;
@@ -423,7 +416,7 @@ private class NSP_ImpprofileServiceHelper_Test {
                 ip.Client_want_to_begin_401k_w_NSP_setup__c = 'NO';
             }
             update  ipRecordMap.values();
-            
+
             NSP_Implementationprofile_ServiceHelper helper = new NSP_Implementationprofile_ServiceHelper(ipRecordMap, new Map<Id, Implementation_Profile__c>());
             helper.isRerun = True;
             helper.executeAutomation();
@@ -435,8 +428,7 @@ private class NSP_ImpprofileServiceHelper_Test {
     @isTest
     private static void createCaseTest() {
         User user=[SELECT  Id, Username FROM User WHERE Id != null AND Alias = 'sas' LIMIT 1];
-        System.runAs(user)
-        {
+        System.runAs(user) {
             List <Implementation_Profile__c>updateIPList = new List<Implementation_Profile__c>();
             List<Implementation_Profile__c> getListFSA = [SELECT Id,Client_Profile_Information__c
                                                           FROM Implementation_Profile__c
@@ -447,7 +439,7 @@ private class NSP_ImpprofileServiceHelper_Test {
             getListFSA[0].NSP_Urgent_Medical_Needs_Emp_Details__c = 'Test';
             getListFSA[0].NSP_BPA_BPC_Ids__c =userInfo.getUserId();
             database.update(getListFSA);
-            
+
             Test.startTest();
             List<Implementation_Profile__c> getImpProfileList = [SELECT Id,Is_there_a_need_for_a_subaccount__c,Any_EEs_with_urgent_medical_needs__c,classing_req_a_new_download_for_Subacc__c,NSP_Form_Completed__c
                                                                  FROM Implementation_Profile__c WHERE Id != null];
@@ -467,7 +459,7 @@ private class NSP_ImpprofileServiceHelper_Test {
             getImpProfileList[0].Would_the_client_like_a_FLSA_Exemption__c = NSP_ServiceConstants.YES;
             getImpProfileList[0].Is_the_client_Emerging_Growth__c = NSP_ServiceConstants.YES;
             update getImpProfileList[0];
-            
+
             database.update(updateIPList);
             Test.stopTest();
             system.assertEquals( getImpProfileList[0].NSP_Immediate_need_for_Workers_Comp_Cert__c, NSP_ServiceConstants.YES);
@@ -477,8 +469,7 @@ private class NSP_ImpprofileServiceHelper_Test {
     @isTest
     private static void createCaseTest2() {
         User user=[SELECT  Id, Username FROM User WHERE Id != null AND Alias = 'sas' LIMIT 1];
-        System.runAs(user)
-        {
+        System.runAs(user) {
             Test.startTest();
             List<Implementation_Profile__c> getListCompCerts = [SELECT Id,NSP_Immediate_need_for_Workers_Comp_Cert__c FROM Implementation_Profile__c WHERE Id != null LIMIT 1];
             getListCompCerts[0].NSP_Immediate_need_for_Workers_Comp_Cert__c = NSP_ServiceConstants.YES;
@@ -491,13 +482,12 @@ private class NSP_ImpprofileServiceHelper_Test {
     @isTest
     private static void createCaseTest3() {
         User user=[SELECT  Id, Username FROM User WHERE Id != null AND Alias = 'sas' LIMIT 1];
-        System.runAs(user)
-        {
+        System.runAs(user) {
             Test.startTest();
             List<Implementation_Profile__c> getListSeasonal = [SELECT Id,Client_have_will_have_any_Seasonal_EEs__c FROM Implementation_Profile__c WHERE Id != null LIMIT 1];
             getListSeasonal[0].Client_have_will_have_any_Seasonal_EEs__c = NSP_ServiceConstants.YES;
             database.update(getListSeasonal);
-            
+
             List<Implementation_Profile__c> getListRRP = [SELECT Id,NSP_Check_to_create_the_RRP_Case__c FROM Implementation_Profile__c WHERE Id != null LIMIT 1];
             getListRRP[0].NSP_Check_to_create_the_RRP_Case__c = NSP_ServiceConstants.VALUE_TRUE;
             database.update(getListRRP);
@@ -510,14 +500,13 @@ private class NSP_ImpprofileServiceHelper_Test {
     @isTest
     private static void createCaseTest4() {
         User user=[SELECT  Id, Username FROM User WHERE Id != null AND Alias = 'sas' LIMIT 1];
-        System.runAs(user)
-        {
+        System.runAs(user) {
             Test.startTest();
             List<Implementation_Profile__c> getListOptum = [SELECT Id,Does_client_have_their_code_group_ID__c FROM Implementation_Profile__c WHERE Does_client_have_their_code_group_ID__c=:NSP_ServiceConstants.NO];
             getListOptum[0].RecordTypeId = fsoRecordTypeId;
             getListOptum[0].NSP_Form_Completed__c = True;
             database.update(getListOptum);
-            
+
             List<Implementation_Profile__c> getListMMIps = [SELECT Id,How_are_empl_hrs_reported_to_Insperity__c FROM Implementation_Profile__c WHERE RecordTypeId=:ipMMRecordTypeId];
             getListMMIps[0].How_are_empl_hrs_reported_to_Insperity__c = NSP_ServiceConstants.XML;
             getListMMIps[0].Client_have_will_have_any_Seasonal_EEs__c = NSP_ServiceConstants.YES;
@@ -533,8 +522,7 @@ private class NSP_ImpprofileServiceHelper_Test {
     @isTest
     private static void createEmailTest() {
         User user=[SELECT  Id, Username FROM User WHERE Id != null AND Alias = 'sas' LIMIT 1];
-        System.runAs(user)
-        {
+        System.runAs(user) {
             List<Implementation_Profile__c> getListIp = [SELECT Id,Form_8973_Contact__c
                                                          FROM Implementation_Profile__c
                                                          WHERE Form_8973_Contact__c = 'test'
@@ -544,12 +532,12 @@ private class NSP_ImpprofileServiceHelper_Test {
             getListIp[0].Client_does_business_in_MA_NY_or_VA__c=NSP_ServiceConstants.YES;
             update getListIp;
             system.assertEquals( getListIp[0].NSP_Form_Completed__c ,true);
-            
+
             List<Implementation_Profile__c> getList = [SELECT Id,EEO__c
                                                        FROM Implementation_Profile__c
                                                        WHERE NSP_Select_all_that_apply__c = 'IRR'
                                                        LIMIT 1];
-            
+
             getList[0].NSP_Form_Completed__c = true;
             getList[0].Employees_work_in_the_following_states__c = 'DE';
             getList[0].Client_have_any_Commission_only_EEs__c=NSP_ServiceConstants.YES;
@@ -563,8 +551,7 @@ private class NSP_ImpprofileServiceHelper_Test {
     @isTest
     private static void createEmailTestEECommission() {
         User user=[SELECT  Id, Username FROM User WHERE Id != null AND Alias = 'sas' LIMIT 1];
-        System.runAs(user)
-        {
+        System.runAs(user) {
             Contact con=[SELECT Id,pse__Salesforce_User__c FROM Contact WHERE Id != null LIMIT 1];
             Test.startTest();
             Implementation_Profile__c ip = new Implementation_Profile__c();
@@ -589,15 +576,14 @@ private class NSP_ImpprofileServiceHelper_Test {
     @isTest
     private static void createEmailTestStock() {
         User user=[SELECT  Id, Username FROM User WHERE Id != null AND Alias = 'sas' LIMIT 1];
-        System.runAs(user)
-        {
+        System.runAs(user) {
             Contact con=[SELECT Id,pse__Salesforce_User__c FROM Contact WHERE Id != null LIMIT 1];
             Test.startTest();
             NSP_Regulated_Area__c regulatedArea =new NSP_Regulated_Area__c  ();
             regulatedArea.NSP_State__c ='MN';
             regulatedArea.NSP_Regulation_Type__c ='State Retirement Plan';
             insert regulatedArea;
-            
+
             Implementation_Profile__c ip = new Implementation_Profile__c();
             ip.RecordTypeId = fsoRecordTypeId;
             ip.NSP_Form_Completed__c = true;
@@ -622,15 +608,14 @@ private class NSP_ImpprofileServiceHelper_Test {
     @isTest
     private static void createEmailTestStock2() {
         User user=[SELECT  Id, Username FROM User WHERE Id != null AND Alias = 'sas' LIMIT 1];
-        System.runAs(user)
-        {
+        System.runAs(user) {
             Contact con=[SELECT Id,pse__Salesforce_User__c FROM Contact WHERE Id != null LIMIT 1];
             Test.startTest();
             NSP_Regulated_Area__c regulatedArea = new NSP_Regulated_Area__c  ();
             regulatedArea.NSP_State__c ='MN';
             regulatedArea.NSP_Regulation_Type__c ='State Retirement Plan';
             insert regulatedArea;
-            
+
             Implementation_Profile__c ip = new Implementation_Profile__c();
             ip.RecordTypeId = fsoRecordTypeId;
             ip.NSP_Form_Completed__c = true;
@@ -655,8 +640,7 @@ private class NSP_ImpprofileServiceHelper_Test {
     @isTest
     private static void createEmailTestStock3() {
         User user=[SELECT  Id, Username FROM User WHERE Id != null AND Alias = 'sas' LIMIT 1];
-        System.runAs(user)
-        {
+        System.runAs(user) {
             Test.startTest();
             List<Asset> assetRecord = [SELECT Id, Status FROM Asset WHERE Status =: NSP_ServiceConstants.AIMS_STATUS];
             List<Implementation_Profile__c> getListMMIps = [SELECT Id,Does_the_client_offer_a_Stock_Purchase__c,remove_employee_directory_from_premier__c FROM Implementation_Profile__c WHERE RecordTypeId=:ipMMRecordTypeId];
@@ -672,8 +656,7 @@ private class NSP_ImpprofileServiceHelper_Test {
     @isTest
     private static void createEmailTestStock4() {
         User user=[SELECT  Id, Username FROM User WHERE Id != null AND Alias = 'sas' LIMIT 1];
-        System.runAs(user)
-        {
+        System.runAs(user) {
             List<Asset> assetRecord = [SELECT Id, Status FROM Asset WHERE Status =: NSP_ServiceConstants.AIMS_STATUS];
             Implementation_Profile__c ip = new Implementation_Profile__c();
             ip.RecordTypeId = ipMMRecordTypeId;
@@ -687,5 +670,6 @@ private class NSP_ImpprofileServiceHelper_Test {
             Test.stopTest();
         }
     }
+
 }
 //
