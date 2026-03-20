@@ -155,10 +155,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
 
     public  Map<String, Set<Id>> executeAutomation() {
         Map<String,Set<Id>> ipRecordsByAutomationMap = new  Map<String,Set<Id>>();
-        if(CustomPermissionController.checkUserPermission('Use_Implementation_Profile', UserInfo.getUserId()) &&
-        Schema.sObjectType.Implementation_Profile__c.isAccessible() &&
-        Schema.SObjectType.Implementation_Profile__c.isCreateable() &&
-        Schema.sObjectType.Implementation_Profile__c.isUpdateable())
+        if(NSP_Implprofile_ServiceHelperUpdate.isAutomationAllowed())
         {
             try {
                 start();
