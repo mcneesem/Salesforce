@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Time_Zone__c</fullName>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Time Zone</label>
+    <required>true</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>America/Chicago</fullName>
+                <default>true</default>
+                <label>Central</label>
+            </value>
+            <value>
+                <fullName>America/Denver</fullName>
+                <default>false</default>
+                <label>Mountain</label>
+            </value>
+            <value>
+                <fullName>America/Los_Angeles</fullName>
+                <default>false</default>
+                <label>Pacific</label>
+            </value>
+            <value>
+                <fullName>America/New_York</fullName>
+                <default>false</default>
+                <label>Eastern</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
