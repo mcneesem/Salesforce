@@ -65,6 +65,7 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
     wiredPortalLinks( value ) {
         this.wiredPortalLinksInfo = value;
         const { error , data } = value;
+        this.links = [];
         if ( data ) {
             // reduce the getPortalLinks wire response data to an array of ContentDocumentLink.Id values...
             // ~ data is-a List<ContentDocumentLink>
@@ -89,7 +90,6 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
                     ] ,
                 }
             ];
-            this.links = undefined;
             this.error = undefined;
         } else if ( error ) {
             this.error = error;
