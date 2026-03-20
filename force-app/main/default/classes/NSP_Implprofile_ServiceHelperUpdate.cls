@@ -116,10 +116,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
     }
     public Map<String, Set<Id>>  executeAutomation() {
         Map<String, Set<Id>> ipRecordsByAutomationMap = new  Map<String, Set<Id>> ();
-        if(CustomPermissionController.checkUserPermission('Use_Implementation_Profile', UserInfo.getUserId()) &&
-        Schema.sObjectType.Implementation_Profile__c.isAccessible() &&
-        Schema.SObjectType.Implementation_Profile__c.isCreateable() &&
-        Schema.sObjectType.Implementation_Profile__c.isUpdateable())
+        if(NSP_Implprofile_ServiceHelperUpdate.isAutomationAllowed())
         {
             try{
                 start();
@@ -135,6 +132,20 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             }
         }
         return ipRecordsByAutomationMap;
+    }
+    
+    public static Boolean isAutomationAllowed()
+    {
+        Boolean returnFlag = false;
+        if(CustomPermissionController.checkUserPermission('Use_Implementation_Profile', UserInfo.getUserId()) &&
+        Schema.sObjectType.Implementation_Profile__c.isAccessible() &&
+        Schema.SObjectType.Implementation_Profile__c.isCreateable() &&
+        Schema.sObjectType.Implementation_Profile__c.isUpdateable())
+        {
+            returnFlag = true;
+        }
+        
+        return returnFlag;
     }
     private void start() {
         //get all Employee Data
