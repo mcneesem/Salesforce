@@ -153,14 +153,13 @@ public class NSP_MMImplProfile_ServHelpUpdate {
         this.isSaveForm = isSave;
     }
 
-    public  Map<String, Set<Id>> executeAutomation() {
-        Map<String,Set<Id>> ipRecordsByAutomationMap = new  Map<String,Set<Id>>();
-        if(NSP_Implprofile_ServiceHelperUpdate.isAutomationAllowed())
-        {
+    public Map<String,Set<Id>> executeAutomation() {
+        Map<String,Set<Id>> ipRecordsByAutomationMap = new Map<String,Set<Id>>();
+        if ( NSP_Implprofile_ServiceHelperUpdate.isAutomationAllowed() ) {
             try {
-                start();
-                execute();
-                ipRecordsByAutomationMap = ipRecordsByAutomation;
+                this.start();
+                this.execute();
+                ipRecordsByAutomationMap = this.ipRecordsByAutomation;
             } catch ( Exception e ) {
                 NSP_ErrorLogHandler.logException(
                     NSP_MMImplProfile_ServHelpUpdate.class.getName() ,
