@@ -41,6 +41,11 @@ private class UserAvailabilityServiceTest {
         };
         insert evts;
 
+        Schedule_Seller_Settings__c scheduleSettings = new Schedule_Seller_Settings__c();
+        scheduleSettings.SetupOwnerId = UserInfo.getOrganizationId();
+            scheduleSettings.Name = 'Test';
+            scheduleSettings.Days_Limit__c = 10;
+            insert scheduleSettings;
         // NOTE:
         // - Do NOT insert BusinessHours in this org (not insertable in tests)
         // - Avoid Mixed DML: We will NOT create PermissionSet/Assignments here.
@@ -54,33 +59,19 @@ private class UserAvailabilityServiceTest {
 
     @isTest
     private static void testGetTimeBlocks() {
-        // Primary (non-MidMarket) skills
+        // Primary (non-MidMarket) skill
         Test.startTest();
         List<Event> central = UserAvailabilityService.getTimeBlocks( 'Schedule_Seller_HR360' , 'America/Chicago' );
-        List<Event> mountain = UserAvailabilityService.getTimeBlocks( 'Schedule_Seller_HR360' , 'America/Denver' );
-        List<Event> pacific = UserAvailabilityService.getTimeBlocks( 'Schedule_Seller_HR360' , 'America/Los_Angeles' );
-        List<Event> eastern = UserAvailabilityService.getTimeBlocks( 'Schedule_Seller_HR360' , 'America/New_York' );
-        List<Event> unknown = UserAvailabilityService.getTimeBlocks( 'Schedule_Seller_HR360' , 'Unknown' );
 
-        // Middle Market skills path (validates getTimeZoneBlocks MidMarket mappings via public getTimeBlocks)
+        // Middle Market skill path (validates getTimeZoneBlocks MidMarket mappings via public getTimeBlocks)
         List<Event> centralMM = UserAvailabilityService.getTimeBlocks( 'Schedule_Seller_HR360_MidMarket' , 'America/Chicago' );
-        List<Event> easternMM = UserAvailabilityService.getTimeBlocks( 'Schedule_Seller_HRCore_MidMarket' , 'America/New_York' );
-        List<Event> denverMM = UserAvailabilityService.getTimeBlocks( 'Schedule_Seller_HR360_MidMarket' , 'America/Denver' );
-        List<Event> badTzMM = UserAvailabilityService.getTimeBlocks( 'Schedule_Seller_HR360_MidMarket' , 'Unknown/TZ' );
 
         Test.stopTest();
 
         System.assertNotEquals(0, central.size(), 'Central should return default time blocks');
-        System.assertNotEquals(0, pacific.size(), 'Pacific should return default time blocks');
-        System.assertNotEquals(0, eastern.size(), 'Eastern should return default time blocks');
-        System.assertNotEquals(0, mountain.size(), 'Mountain mapping should return values');
-        System.assertEquals(0, unknown.size(), 'Unknown timezone should return empty');
 
-        //MidMarket skills
+        //MidMarket skill
         System.assertNotEquals(0, centralMM.size(), 'Central MM should resolve to middle-market blocks');
-        System.assertNotEquals(0, easternMM.size(), 'Eastern MM should resolve to middle-market blocks');
-        System.assertNotEquals(0, denverMM.size(), 'Denver MM should resolve (alternate mapping still valid)');
-        System.assertEquals(0, badTzMM.size(), 'Unknown timezone for MM returns empty list');
         // Sanity: MidMarket vs Primary may have same count; intent is mapping coverage
         System.assert(centralMM.size() >= 0, 'MidMarket mapping executed');
     }

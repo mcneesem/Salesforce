@@ -1,7 +1,5 @@
 public with sharing class UserAvailabilityService {
-    // test w/ UserAvailabilityServiceTest (83%)
-
-    private static final Integer DAYS_LIMIT = 10;
+    // test w/ UserAvailabilityServiceTest (89%)
 
     //Returns the available days based on Business Hours for the given skill...
     @AuraEnabled(cacheable=true)
@@ -25,7 +23,7 @@ public with sharing class UserAvailabilityService {
                     System.now()
                 );
                 // Collect next business days
-                while ( (nextBusinessStart != null ) && ( response.size() < UserAvailabilityService.DAYS_LIMIT ) ) {
+                while ( (nextBusinessStart != null ) && ( response.size() < UserAvailabilityService.daysLimit.Days_Limit__c ) ) {
                     Date days = Date.newInstance(
                         nextBusinessStart.year() ,
                         nextBusinessStart.month() ,
@@ -62,10 +60,10 @@ public with sharing class UserAvailabilityService {
         List<Event> timeBlocks = new List<Event>();
         Map<String,List<Event>> timeZoneBlocks = new Map<String,List<Event>>{
             //For Daylight saving time modify first parameter
-            'America/New_York'=> UserAvailabilityService.getTimeBlocksPrimary( 12, skill) ,
-            'America/Chicago' => UserAvailabilityService.getTimeBlocksPrimary( 13, skill ) ,
-            'America/Denver'=> UserAvailabilityService.getTimeBlocksAlternate( 14 ) ,
-            'America/Los_Angeles'=> UserAvailabilityService.getTimeBlocksPrimary( 15, skill )
+            'America/New_York'=> UserAvailabilityService.getTimeBlocksPrimary( 4, skill, timeZone) ,
+            'America/Chicago' => UserAvailabilityService.getTimeBlocksPrimary( 5, skill, timeZone ) ,
+            'America/Denver'=> UserAvailabilityService.getTimeBlocksPrimary( 6, skill, timeZone ) ,
+            'America/Los_Angeles'=> UserAvailabilityService.getTimeBlocksPrimary( 7, skill, timeZone )
         };
         //
         if ( String.isNotBlank( timeZone )
@@ -133,146 +131,36 @@ public with sharing class UserAvailabilityService {
         return response;
     }
 
-    public static List<Event> getTimeBlocksPrimary( Integer offset, String skill ) {
-        if ( offset == null ) {
-            offset = 14; // 8 AM CST // 14 GMT
-        }
-        DateTime currentDate = System.now().dateGMT();
-        Datetime startDateTime = Datetime.newInstanceGmt(
-            currentDate.yearGmt() ,
-            currentDate.monthGmt() ,
-            currentDate.dayGmt() ,
-            offset ,
-            0 ,
-            0
+    public static List<Event> getTimeBlocksPrimary( Integer offset, String skill, String timeZone ) {
+        // Base day = today's date in GMT at 00:00 to construct template Events
+        Date currentDate = System.now().dateGMT();
+        Datetime baseDateTime = Datetime.newInstanceGmt(
+            currentDate.year(),
+            currentDate.month(),
+            currentDate.day(),
+            offset, 0, 0
         );
-        List<Event> timeBlocksPrimary = new List<Event>{
-            new Event(
-                Subject='X8:00 - Y9:00' ,
-                StartDateTime=startDateTime ,
-                EndDateTime=startDateTime.addMinutes( getStepMinutes( skill ) )
-            ) ,
-            new Event(
-                Subject='X8:30 - Y9:30' ,
-                StartDateTime=startDateTime.addMinutes( 30 ) ,
-                EndDateTime=startDateTime.addMinutes( getStepMinutes( skill ) + 30 )
-            ) ,
-            new Event(
-                Subject='X9:00 - Y10:00' ,
-                StartDateTime=startDateTime.addMinutes( 60 ) ,
-                EndDateTime=startDateTime.addMinutes( getStepMinutes( skill ) + 60 )
-            ) ,
-            new Event(
-                Subject='X9:30 - Y10:30' ,
-                StartDateTime=startDateTime.addMinutes( 90 ) ,
-                EndDateTime=startDateTime.addMinutes( getStepMinutes( skill ) + 90 )
-            ) ,
-            new Event(
-                Subject='X10:00 - Y11:00' ,
-                StartDateTime=startDateTime.addMinutes( 120 ) ,
-                EndDateTime=startDateTime.addMinutes( getStepMinutes( skill ) + 120 )
-            ) ,
-            new Event(
-                Subject='X10:30 - Y11:30' ,
-                StartDateTime=startDateTime.addMinutes( 150 ) ,
-                EndDateTime=startDateTime.addMinutes( getStepMinutes( skill ) + 150 )
-            ) ,
-            new Event(
-                Subject='X11:00 - Y12:00' ,
-                StartDateTime=startDateTime.addMinutes( 180 ) ,
-                EndDateTime=startDateTime.addMinutes( getStepMinutes( skill ) + 180 )
-            ) ,
-            new Event(
-                Subject='X11:30 - Y12:30' ,
-                StartDateTime=startDateTime.addMinutes( 210 ) ,
-                EndDateTime=startDateTime.addMinutes( getStepMinutes( skill ) + 210 )
-            ) ,
-            new Event(
-                Subject='X12:30 - Y1:30' ,
-                StartDateTime=startDateTime.addMinutes( 270 ) ,
-                EndDateTime=startDateTime.addMinutes( getStepMinutes( skill ) + 270 )
-            ) ,
-            new Event(
-                Subject='X1:00 - Y2:00' ,
-                StartDateTime=startDateTime.addMinutes( 300 ) ,
-                EndDateTime=startDateTime.addMinutes( getStepMinutes( skill ) + 300 )
-            ) ,
-            new Event(
-                Subject='X1:30 - Y2:30' ,
-                StartDateTime=startDateTime.addMinutes( 330 ) ,
-                EndDateTime=startDateTime.addMinutes( getStepMinutes( skill ) + 330 )
-            ) ,
-            new Event(
-                Subject='X2:00 - Y3:00' ,
-                StartDateTime=startDateTime.addMinutes( 360 ) ,
-                EndDateTime=startDateTime.addMinutes( getStepMinutes( skill ) + 360 )
-            ) ,
-            new Event(
-                Subject='X3:00 - Y4:00' ,
-                StartDateTime=startDateTime.addMinutes( 420 ) ,
-                EndDateTime=startDateTime.addMinutes( getStepMinutes( skill ) + 420)
-            ) ,
-            new Event(
-                Subject='X3:30 - Y4:30' ,
-                StartDateTime=startDateTime.addMinutes( 450 ) ,
-                EndDateTime=startDateTime.addMinutes( getStepMinutes( skill ) + 450 )
-            ) ,
-            new Event(
-                Subject='X4:00 - Y5:00' ,
-                StartDateTime=startDateTime.addMinutes( 480 ) ,
-                EndDateTime=startDateTime.addMinutes( getStepMinutes( skill ) + 480 )
-            )
-        };
+
+        List<Event> timeBlocksPrimary = new List<Event>();
+        for (Schedule_Seller_Time_Slot__mdt rows : UserAvailabilityService.getTimeSlots(skill, timezone)) {
+            // Convert decimal hour fields (8.0, 8.5) to minutes
+            Integer startMinutes = (rows.Start_Time__c == null) ? null : Integer.valueOf(Math.round((Double)rows.Start_Time__c * 60));
+            Integer endMinutes   = (rows.End_Time__c   == null) ? null : Integer.valueOf(Math.round((Double)rows.End_Time__c   * 60));
+
+            // Build Event using base GMT date + offset minutes
+            Datetime startDateTime = baseDateTime.addMinutes(startMinutes);
+            Datetime endDateTime   = baseDateTime.addMinutes(endMinutes);
+
+            timeBlocksPrimary.add(new Event(
+                Subject = 'Demo',
+                StartDateTime = startDateTime,
+                EndDateTime = endDateTime
+            ));
+        }
         return timeBlocksPrimary;
     }
 
-    public static List<Event> getTimeBlocksAlternate( Integer offset ) {
-        if ( offset == null ) {
-            offset = 15; // 8 AM MST // 15 GMT
-        }
-        DateTime currentDate = System.now().dateGMT();
-        Datetime startDateTime = Datetime.newInstanceGmt(
-            currentDate.yearGmt() ,
-            currentDate.monthGmt() ,
-            currentDate.dayGmt() ,
-            offset ,
-            0 ,
-            0
-        );
-        List<Event> timeBlocksAlternate = new List<Event>{
-            new Event(
-                Subject='X1:00 - Y2:00' ,
-                StartDateTime=startDateTime.addMinutes( 300 ) ,
-                EndDateTime=startDateTime.addMinutes( 300 ).addHours( 1 )
-            ) ,
-            new Event(
-                Subject='X2:00 - Y3:00' ,
-                StartDateTime=startDateTime.addMinutes( 360 ) ,
-                EndDateTime=startDateTime.addMinutes( 360 ).addHours( 1 )
-            ) ,
-            new Event(
-                Subject='X3:30 - Y4:30' ,
-                StartDateTime=startDateTime.addMinutes( 450 ) ,
-                EndDateTime=startDateTime.addMinutes( 450 ).addHours( 1 )
-            ) ,
-            new Event(
-                Subject='X4:00 - Y5:00' ,
-                StartDateTime=startDateTime.addMinutes( 480 ) ,
-                EndDateTime=startDateTime.addMinutes( 480 ).addHours( 1 )
-            ) ,
-            new Event(
-                Subject='X5:30 - Y6:30' ,
-                StartDateTime=startDateTime.addMinutes( 570 ) ,
-                EndDateTime=startDateTime.addMinutes( 570 ).addHours( 1 )
-            ) ,
-            new Event(
-                Subject='X6:00 - Y7:00' ,
-                StartDateTime=startDateTime.addMinutes( 600 ) ,
-                EndDateTime=startDateTime.addMinutes( 600 ).addHours( 1 )
-            )
-        };
-        return timeBlocksAlternate;
-    }
+
 
     @AuraEnabled(cacheable=true)
     public static List<Event> getTimeBlocks( String skill , String timeZone ) {
@@ -287,50 +175,6 @@ public with sharing class UserAvailabilityService {
         );
     }
 
-    @AuraEnabled(cacheable=true)
-    public static List<String> getTimeBlocksString( String skill , String timeZone ) {
-        List<String> value = new List<String>();
-        List<String> timeBlocksPrimary = new List<String>{
-            '8:00 - 9:00' ,
-            '8:30 - 9:30' ,
-            '9:00 - 10:00' ,
-            '9:30 - 10:30' ,
-            '10:00 - 11:00' ,
-            '10:30 - 11:30' ,
-            '11:00 - 12:00' ,
-            '11:30 - 12:30' ,
-            '12:30 - 1:30' ,
-            '1:00 - 2:00' ,
-            '1:30 - 2:30' ,
-            '2:00 - 3:00' ,
-            '3:00 - 4:00' ,
-            '3:30 - 4:30' ,
-            '4:00 - 5:00'
-        };
-        List<String> timeBlocksAlternate = new List<String>{
-            '1:00 - 2:00' ,
-            '2:00 - 3:00' ,
-            '3:30 - 4:30' ,
-            '4:00 - 5:00' ,
-            '5:30 - 6:30' ,
-            '6:00 - 7:00'
-        };
-        Map<String,List<String>> timeZoneBlocks = new Map<String,List<String>>{
-            'Central' => timeBlocksPrimary ,
-            'Mountain'=> timeBlocksAlternate ,
-            'Pacific'=> timeBlocksPrimary ,
-            'Eastern'=> timeBlocksPrimary
-        };
-        if ( String.isNotBlank( timeZone )
-            && timeZoneBlocks.containsKey( timeZone )
-            && timeZoneBlocks.get( timeZone ) != null
-            )
-        {
-            value = timeZoneBlocks.get( timeZone );
-        }
-        return value;
-    }
-
     // Helper: convert a flat list of integer counts into a matrix of rows with up to N columns
     private static List<List<Integer>> convertToMatrix( List<Integer> counts ) {
         List<List<Integer>> matrix = new List<List<Integer>>();
@@ -338,7 +182,7 @@ public with sharing class UserAvailabilityService {
             List<Integer> row = new List<Integer>();
             for ( Integer c : counts ) {
                 row.add( ( c == null ) ? 0 : c );
-                if ( row.size() == UserAvailabilityService.DAYS_LIMIT ) {
+                if ( row.size() == UserAvailabilityService.daysLimit.Days_Limit__c ) {
                     matrix.add( new List<Integer>( row ) );
                     row.clear();
                 }
@@ -626,7 +470,7 @@ public with sharing class UserAvailabilityService {
                 List<BusinessHours> defaultBusinessHours = [
                     SELECT Id
                     FROM BusinessHours
-                    WHERE ( IsDefault = true )
+                    WHERE ( Name = 'Schedule Seller' )
                     ORDER BY CreatedDate ASC
                     LIMIT 1
                 ];
@@ -637,6 +481,33 @@ public with sharing class UserAvailabilityService {
             return defaultBusinessHoursId;
         }
         private set;
+    }
+
+    private static Schedule_Seller_Settings__c daysLimit {
+        private get {
+            if ( daysLimit == null ) {
+                daysLimit = Schedule_Seller_Settings__c.getOrgDefaults();
+            }
+            return daysLimit;
+        }
+        private set;
+    }
+
+    // Load time slot definitions from Custom Metadata for the given product (skill) and time zone
+    public static List<Schedule_Seller_Time_Slot__mdt> getTimeSlots(String skill, String timeZone){
+        List<Schedule_Seller_Time_Slot__mdt> timeSlots = new List<Schedule_Seller_Time_Slot__mdt>();
+        if( String.isNotBlank(skill) && String.isNotBlank(timeZone) ) {
+            timeSlots = [
+                SELECT Start_Time__c, End_Time__c
+                FROM Schedule_Seller_Time_Slot__mdt
+                WHERE Active__c = true
+                AND Product__c = :skill
+                AND Time_Zone__c = :timeZone
+                WITH SECURITY_ENFORCED
+                ORDER BY Start_Time__c ASC
+            ];
+        }
+        return timeSlots;
     }
 
 }
