@@ -265,11 +265,13 @@ public with sharing class NSP_OpportunityTriggerHelperFunctions {
                 }
             }
             if ( !accountIdSet.isEmpty() ) {
-                NSP_OpportunityTriggerHelper.publishIntegrationSyncEvents([
-                    SELECT Id
-                    FROM Opportunity
-                    WHERE ( AccountId IN :accountIdSet )
-                ]);
+                NSP_OpportunityTriggerHelper.publishIntegrationSyncEvents(
+                    [
+                        SELECT Id
+                        FROM Opportunity
+                        WHERE ( AccountId IN :accountIdSet )
+                    ]
+                );
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
