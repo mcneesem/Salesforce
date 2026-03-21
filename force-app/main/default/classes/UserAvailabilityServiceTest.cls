@@ -40,12 +40,21 @@ private class UserAvailabilityServiceTest {
             new Event(OwnerId = u2.Id, StartDateTime = base.addMinutes(30), EndDateTime = base.addHours(1).addMinutes(30)) // 8:30-9:30 busy u2
         };
         insert evts;
-
+        
+        List<BusinessHours> defaultBusinessHours = [
+            SELECT Id
+            FROM BusinessHours
+            WHERE ( Name = 'Schedule Seller' )
+            ORDER BY CreatedDate ASC
+            LIMIT 1
+        ];
+        
         Schedule_Seller_Settings__c scheduleSettings = new Schedule_Seller_Settings__c();
         scheduleSettings.SetupOwnerId = UserInfo.getOrganizationId();
-            scheduleSettings.Name = 'Test';
-            scheduleSettings.Days_Limit__c = 10;
-            insert scheduleSettings;
+        scheduleSettings.Name = 'Test';
+        scheduleSettings.Days_Limit__c = 10;
+        scheduleSettings.Business_Hours_ID__c = defaultBusinessHours[0].Id;
+        insert scheduleSettings;
         // NOTE:
         // - Do NOT insert BusinessHours in this org (not insertable in tests)
         // - Avoid Mixed DML: We will NOT create PermissionSet/Assignments here.
