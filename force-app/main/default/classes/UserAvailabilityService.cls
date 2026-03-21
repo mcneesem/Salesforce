@@ -7,7 +7,7 @@ public with sharing class UserAvailabilityService {
         List<BusinessHours> hours = [
             SELECT Id
             FROM BusinessHours
-            WHERE ( Id = :UserAvailabilityService.defaultBusinessHoursId )
+            WHERE ( Id = :UserAvailabilityService.defaultBusinessHoursId.Business_Hours_ID__c )
             LIMIT 1
         ];
         BusinessHours open = null;
@@ -464,19 +464,10 @@ public with sharing class UserAvailabilityService {
     //
 
     // identify the default Business Hours for current Org...
-    private static Id defaultBusinessHoursId {
+    private static Schedule_Seller_Settings__c defaultBusinessHoursId {
         private get {
             if ( defaultBusinessHoursId == null ) {
-                List<BusinessHours> defaultBusinessHours = [
-                    SELECT Id
-                    FROM BusinessHours
-                    WHERE ( Name = 'Schedule Seller' )
-                    ORDER BY CreatedDate ASC
-                    LIMIT 1
-                ];
-                if ( ( defaultBusinessHours != null ) && ( defaultBusinessHours.size() > 0 ) ) {
-                    defaultBusinessHoursId = defaultBusinessHours[0].Id;
-                }
+                defaultBusinessHoursId = Schedule_Seller_Settings__c.getOrgDefaults();
             }
             return defaultBusinessHoursId;
         }
