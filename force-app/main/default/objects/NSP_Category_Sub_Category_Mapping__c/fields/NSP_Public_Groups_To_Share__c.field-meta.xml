@@ -98,9 +98,9 @@
                 <label>Background Check Data Visibility</label>
             </value>
             <value>
-                <fullName>Records Data Visibility</fullName>
+                <fullName>HRCore Case Visibility</fullName>
                 <default>false</default>
-                <label>Records Data Visibility</label>
+                <label>HRCore Case Visibility</label>
             </value>
         </valueSetDefinition>
     </valueSet>
