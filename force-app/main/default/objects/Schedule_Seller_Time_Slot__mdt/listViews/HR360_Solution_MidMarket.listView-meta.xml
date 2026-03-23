@@ -7,7 +7,7 @@
     <columns>Product__c</columns>
     <columns>Start_Time__c</columns>
     <columns>End_Time__c</columns>
-    <columns>Active__c</columns>
+    <columns>Is_Active__c</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>Product__c</field>
