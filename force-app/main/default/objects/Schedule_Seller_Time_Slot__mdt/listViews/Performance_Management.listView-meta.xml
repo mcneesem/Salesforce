@@ -12,7 +12,7 @@
     <filters>
         <field>Product__c</field>
         <operation>equals</operation>
-        <value>Schedule_Seller_Performance</value>
+        <value>Schedule_Seller_Performance_Management</value>
     </filters>
     <label>Performance Management</label>
 </ListView>
