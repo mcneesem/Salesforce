@@ -1,4 +1,5 @@
 import { LightningElement , api , wire } from "lwc";
+import LightningConfirm from "lightning/confirm";
 import { NavigationMixin } from "lightning/navigation";
 import Toast from "lightning/toast";
 import { deleteRecord , getRecords } from "lightning/uiRecordApi";
@@ -102,8 +103,8 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
     wiredRecords( { error , data } ) {
         if ( data ) {
             this.links = data?.results?.map(
-                function( result ) {
-                    return result?.result;
+                function( record ) {
+                    return record?.result;
                 }
             );
             this.error = undefined;
@@ -118,7 +119,7 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
     }
 
     get isLoading() {
-        return !this.links || this.isDeleting;
+        return ( !this.links || this.isDeleting );
     }
 
     get totalRelatedFiles() {
@@ -164,7 +165,7 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
                 this.handleModalFilePreview( event?.detail?.state );
                 break;
             case 'external__delete':
-                this.handleDeleteRecord( event?.detail?.state );
+                this.handleModalConfirmDelete( event?.detail?.state );
                 break;
             case 'standard__namedPage':
                 this[NavigationMixin.Navigate]( event?.detail );
@@ -193,6 +194,28 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
         }
     }
 
+    // https://developer.salesforce.com/docs/platform/lightning-component-reference/guide/lightning-confirm.html
+    // ~ use standard components where possible...
+
+    async handleModalConfirmDelete( state ) {
+        if ( state ) {
+            let message = "Delete this file?";
+            if ( state.name ) {
+                message = "Delete the file (" + state.name + ")?";
+            }
+            const confirmation = await LightningConfirm.open(
+                {
+                    label: "Confirm File Delete" ,
+                    message: message ,
+                    theme: "warning" ,
+                }
+            );
+            if ( confirmation ) {
+                this.handleDeleteRecord( state );
+            }
+        }
+    }
+
     isDeleting;
     async handleDeleteRecord( state ) {
         if ( state?.recordId ) {
@@ -207,6 +230,10 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
             this.refresh();
         }
     }
+
+    //
+    // Toasters
+    //
 
     showToastSuccess( label , message ) {
         if ( label && message ) {

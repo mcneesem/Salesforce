@@ -58,22 +58,18 @@ export default class PortalClientSelector extends LightningElement {
     @wire( getRecords , { records: "$parameterObject" } )
     recordsInfo( { error , data } ) {
         if ( data ) {
-            let local = [];
-            data.results.forEach(
-                ( record ) => {
+            this.records = data?.results?.map(
+                function( record ) {
                     let label = record.result.fields.Name.value;
                     if ( record.result.fields.Client_Number__c.value ) {
                         label = label + ' (' + record.result.fields.Client_Number__c.value + ')';
                     }
-                    local.push(
-                        {
-                            label: label ,
-                            value: record.result.fields.Id.value ,
-                        }
-                    );
+                    return {
+                        label: label ,
+                        value: record.result.fields.Id.value ,
+                    };
                 }
             );
-            this.records = local;
             if ( this.records.length > 0 ) {
                 this.recordId = this.records[0].value;
             }
