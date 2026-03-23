@@ -24,6 +24,22 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
+            <assignToReference>dmlAccounts</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>dmlAccount</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Account_DML_Subflow_Create</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_new_Account_record_fields</name>
+        <label>Assign new Account record fields</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
             <assignToReference>dmlAccount.Name</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -58,6 +74,15 @@
                 <elementReference>Get_current_Account.Type</elementReference>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>Assign_new_Account_record</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_update_Account_record</name>
+        <label>Assign update Account record</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>dmlAccounts</assignToReference>
             <operator>Add</operator>
@@ -66,12 +91,12 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Account_DML_Subflow_Create</targetReference>
+            <targetReference>Account_DML_Subflow_Update</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_update_Account_record</name>
-        <label>Assign update Account record</label>
+        <name>Assign_update_Account_record_fields</name>
+        <label>Assign update Account record fields</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
@@ -109,15 +134,8 @@
                 <elementReference>Get_new_Account.Id</elementReference>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>dmlAccounts</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>dmlAccount</elementReference>
-            </value>
-        </assignmentItems>
         <connector>
-            <targetReference>Account_DML_Subflow_Update</targetReference>
+            <targetReference>Assign_update_Account_record</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -170,13 +188,13 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_new_Account</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assign_update_Account_record</targetReference>
+                <targetReference>Assign_update_Account_record_fields</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
@@ -196,7 +214,7 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_current_Account</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -371,7 +389,7 @@
         <allowPause>false</allowPause>
         <backButtonLabel>Cancel</backButtonLabel>
         <connector>
-            <targetReference>Assign_new_Account_record</targetReference>
+            <targetReference>Assign_new_Account_record_fields</targetReference>
         </connector>
         <fields>
             <name>Title</name>

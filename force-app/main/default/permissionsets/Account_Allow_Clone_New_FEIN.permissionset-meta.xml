@@ -4,6 +4,10 @@
         <enabled>true</enabled>
         <name>Account_Allow_Clone_New_FEIN</name>
     </customPermissions>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Account_Screen_Clone_with_new_FEIN</flow>
+    </flowAccesses>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Account - Allow Clone New FEIN</label>
 </PermissionSet>
