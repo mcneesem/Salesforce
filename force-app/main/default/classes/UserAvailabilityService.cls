@@ -519,7 +519,7 @@ public with sharing class UserAvailabilityService {
             timeSlots = [
                 SELECT Start_Time__c, End_Time__c
                 FROM Schedule_Seller_Time_Slot__mdt
-                WHERE Active__c = true
+                WHERE Is_Active__c = true
                 AND Product__c = :skill
                 AND Time_Zone__c = :timeZone
                 ORDER BY Start_Time__c ASC
