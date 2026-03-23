@@ -310,7 +310,7 @@
         <choiceText>Performance Management</choiceText>
         <dataType>String</dataType>
         <value>
-            <stringValue>Schedule_Seller_Performance</stringValue>
+            <stringValue>Schedule_Seller_Performance_Management</stringValue>
         </value>
     </choices>
     <choices>
