@@ -52,8 +52,8 @@ private class UserAvailabilityServiceTest {
         Schedule_Seller_Settings__c scheduleSettings = new Schedule_Seller_Settings__c();
         scheduleSettings.SetupOwnerId = UserInfo.getOrganizationId();
         scheduleSettings.Name = 'Test';
-        scheduleSettings.Days_Limit__c = 10;
-        scheduleSettings.Business_Hours_ID__c = defaultBusinessHours[0].Id;
+        //scheduleSettings.Days_Limit__c = 10;
+        scheduleSettings.BusinessHoursId__c = defaultBusinessHours[0].Id;
         insert scheduleSettings;
         // NOTE:
         // - Do NOT insert BusinessHours in this org (not insertable in tests)
