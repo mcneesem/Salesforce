@@ -10,6 +10,11 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
+                <fullName>America/New_York</fullName>
+                <default>false</default>
+                <label>Eastern</label>
+            </value>
+            <value>
                 <fullName>America/Chicago</fullName>
                 <default>true</default>
                 <label>Central</label>
@@ -23,11 +28,6 @@
                 <fullName>America/Los_Angeles</fullName>
                 <default>false</default>
                 <label>Pacific</label>
-            </value>
-            <value>
-                <fullName>America/New_York</fullName>
-                <default>false</default>
-                <label>Eastern</label>
             </value>
         </valueSetDefinition>
     </valueSet>
