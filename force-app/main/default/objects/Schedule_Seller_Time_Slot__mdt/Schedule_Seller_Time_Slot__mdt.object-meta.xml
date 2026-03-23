@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Time Slots for the Schedule Demo window.</description>
+    <description>Time Slots for the Schedule Demo window. (See Apex Class: UserAvailabilityService)</description>
     <label>Schedule Seller Time Slot</label>
     <pluralLabel>Schedule Seller Time Slots</pluralLabel>
     <visibility>Public</visibility>
