@@ -46,9 +46,9 @@
                 <label>Schedule_Seller_HRScale</label>
             </value>
             <value>
-                <fullName>Schedule_Seller_Performance</fullName>
+                <fullName>Schedule_Seller_Performance_Management</fullName>
                 <default>false</default>
-                <label>Schedule_Seller_Performance</label>
+                <label>Schedule_Seller_Performance_Management</label>
             </value>
             <value>
                 <fullName>Schedule_Seller_Time_Attendance</fullName>
