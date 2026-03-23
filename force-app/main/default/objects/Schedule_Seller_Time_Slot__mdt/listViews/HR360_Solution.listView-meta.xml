@@ -3,7 +3,6 @@
     <fullName>HR360_Solution</fullName>
     <columns>MasterLabel</columns>
     <columns>DeveloperName</columns>
-    <columns>NamespacePrefix</columns>
     <columns>Time_Zone__c</columns>
     <columns>Product__c</columns>
     <columns>Start_Time__c</columns>
