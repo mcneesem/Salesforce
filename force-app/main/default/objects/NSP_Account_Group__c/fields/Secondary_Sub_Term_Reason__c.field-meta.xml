@@ -67,6 +67,11 @@
                 <label>Client non-compliance</label>
             </value>
             <value>
+                <fullName>Cost/Risk</fullName>
+                <default>false</default>
+                <label>Cost/Risk</label>
+            </value>
+            <value>
                 <fullName>Credit challenges/move to wire</fullName>
                 <default>false</default>
                 <label>Credit challenges/move to wire</label>
@@ -604,6 +609,10 @@
         <valueSettings>
             <controllingFieldValue>HR360 Model no longer a fit</controllingFieldValue>
             <valueName>Believes have outgrown HR360 model</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>HR360 Model no longer a fit</controllingFieldValue>
+            <valueName>Cost/Risk</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>HR360 Model no longer a fit</controllingFieldValue>
