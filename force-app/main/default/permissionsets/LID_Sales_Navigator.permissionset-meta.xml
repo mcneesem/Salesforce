@@ -982,11 +982,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.NSP_Sales_Region__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Account.NSP_Short_Term_KPIs_to_Measure_Success__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -5980,8 +5975,8 @@
         <field>NSP_Reward__c.NSP_Benefits_Non_Profit__c</field>
         <readable>false</readable>
     </fieldPermissions>
-    
-    
+
+
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_SObject_History_Tracking__c.NSP_Account__c</field>
@@ -12045,11 +12040,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>User.NSP_Sales_Office__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>User.NSP_Sales_Region__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
