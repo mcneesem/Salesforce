@@ -233,6 +233,7 @@ export default class PortalFileListModal extends LightningModal {
                 } ,
                 state: {
                     recordId: row.documentId ,
+                    name: row.title ,
                 } ,
             };
         }
