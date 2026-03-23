@@ -7,7 +7,7 @@ public with sharing class UserAvailabilityService {
         List<BusinessHours> hours = [
             SELECT Id
             FROM BusinessHours
-            WHERE ( Id = :UserAvailabilityService.defaultBusinessHoursId.Business_Hours_ID__c )
+            WHERE ( Id = :UserAvailabilityService.defaultBusinessHoursId )
             LIMIT 1
         ];
         BusinessHours open = null;
@@ -23,7 +23,7 @@ public with sharing class UserAvailabilityService {
                     System.now()
                 );
                 // Collect next business days
-                while ( (nextBusinessStart != null ) && ( response.size() < UserAvailabilityService.daysLimit.Days_Limit__c ) ) {
+                while ( (nextBusinessStart != null ) && ( response.size() < UserAvailabilityService.daysLimit ) ) {
                     Date days = Date.newInstance(
                         nextBusinessStart.year() ,
                         nextBusinessStart.month() ,
@@ -57,23 +57,7 @@ public with sharing class UserAvailabilityService {
         List<List<Event>> slots;
     }
     private static List<Event> getTimeZoneBlocks( String skill, String timeZone ) {
-        List<Event> timeBlocks = new List<Event>();
-        Map<String,List<Event>> timeZoneBlocks = new Map<String,List<Event>>{
-            //For Daylight saving time modify first parameter
-            'America/New_York'=> UserAvailabilityService.getTimeBlocksPrimary( 4, skill, timeZone) ,
-            'America/Chicago' => UserAvailabilityService.getTimeBlocksPrimary( 5, skill, timeZone ) ,
-            'America/Denver'=> UserAvailabilityService.getTimeBlocksPrimary( 6, skill, timeZone ) ,
-            'America/Los_Angeles'=> UserAvailabilityService.getTimeBlocksPrimary( 7, skill, timeZone )
-        };
-        //
-        if ( String.isNotBlank( timeZone )
-            && timeZoneBlocks.containsKey( timeZone )
-            && ( timeZoneBlocks.get( timeZone ) != null )
-            )
-        {
-            timeBlocks = timeZoneBlocks.get( timeZone );
-        }
-        return timeBlocks;
+        return UserAvailabilityService.getTimeBlocksPrimary( skill , timeZone );
     }
     private static DaysMatrix getBusinessDaysMatrix( String skill, String timeZone ) {
         List<Event> template = UserAvailabilityService.getTimeZoneBlocks( skill, timeZone );
@@ -131,31 +115,61 @@ public with sharing class UserAvailabilityService {
         return response;
     }
 
-    public static List<Event> getTimeBlocksPrimary( Integer offset, String skill, String timeZone ) {
+    // Convert decimal hour fields (8.0, 8.5) to minutes
+    private static Integer getMinutes( Decimal hours ) {
+        return ( ( hours != null ) ? Integer.valueOf( Math.round( hours * 60 ) ) : null );
+    }
+
+    private static DateTime getBaseDateTime( String timeZone ) {
+        Map<String,Integer> timeZoneOffsets = new Map<String,Integer>{
+            'America/New_York'=> 4 ,
+            'America/Chicago' => 5 ,
+            'America/Denver'=> 6 ,
+            'America/Los_Angeles'=> 7
+        };
+        Integer daylightSavingTimeOffset = 0; // Roberto/PMCC ~ for daylight saving time modifications...
+        Integer offset = 0;
+        if ( String.isNotBlank( timeZone )
+            && timeZoneOffsets.containsKey( timeZone )
+            && ( timeZoneOffsets.get( timeZone ) != null )
+            )
+        {
+            offset = ( daylightSavingTimeOffset + timeZoneOffsets.get( timeZone ) );
+        }
         // Base day = today's date in GMT at 00:00 to construct template Events
         Date currentDate = System.now().dateGMT();
-        Datetime baseDateTime = Datetime.newInstanceGmt(
-            currentDate.year(),
-            currentDate.month(),
-            currentDate.day(),
-            offset, 0, 0
+        DateTime baseDateTime = DateTime.newInstanceGmt(
+            currentDate.year() ,
+            currentDate.month() ,
+            currentDate.day() ,
+            offset ,
+            0 ,
+            0
         );
+        return baseDateTime;
+    }
+
+    private static List<Event> getTimeBlocksPrimary( String skill , String timeZone ) {
+        // Base day = today's date in GMT at 00:00 to construct template Events
+        Datetime baseDateTime = UserAvailabilityService.getBaseDateTime( timeZone );
 
         List<Event> timeBlocksPrimary = new List<Event>();
-        for (Schedule_Seller_Time_Slot__mdt rows : UserAvailabilityService.getTimeSlots(skill, timezone)) {
-            // Convert decimal hour fields (8.0, 8.5) to minutes
-            Integer startMinutes = (rows.Start_Time__c == null) ? null : Integer.valueOf(Math.round((Double)rows.Start_Time__c * 60));
-            Integer endMinutes   = (rows.End_Time__c   == null) ? null : Integer.valueOf(Math.round((Double)rows.End_Time__c   * 60));
-
-            // Build Event using base GMT date + offset minutes
-            Datetime startDateTime = baseDateTime.addMinutes(startMinutes);
-            Datetime endDateTime   = baseDateTime.addMinutes(endMinutes);
-
-            timeBlocksPrimary.add(new Event(
-                Subject = 'Demo',
-                StartDateTime = startDateTime,
-                EndDateTime = endDateTime
-            ));
+        if( baseDateTime != null ) {
+            for (Schedule_Seller_Time_Slot__mdt row : UserAvailabilityService.getTimeSlots(skill, timezone)) {
+                // Convert decimal hour fields (8.0, 8.5) to minutes
+                Integer startMinutes = UserAvailabilityService.getMinutes( row.Start_Time__c );
+                Integer endMinutes = UserAvailabilityService.getMinutes( row.End_Time__c );
+                if ( ( startMinutes != null ) && ( endMinutes != null ) ) {
+                    // Build Event using base GMT date + offset minutes
+                    timeBlocksPrimary.add(
+                        new Event(
+                            Subject='Demo' ,
+                            StartDateTime=baseDateTime.addMinutes( startMinutes ) ,
+                            EndDateTime=baseDateTime.addMinutes( endMinutes )
+                        )
+                    );
+                }
+            }
         }
         return timeBlocksPrimary;
     }
@@ -182,7 +196,7 @@ public with sharing class UserAvailabilityService {
             List<Integer> row = new List<Integer>();
             for ( Integer c : counts ) {
                 row.add( ( c == null ) ? 0 : c );
-                if ( row.size() == UserAvailabilityService.daysLimit.Days_Limit__c ) {
+                if ( row.size() == UserAvailabilityService.daysLimit ) {
                     matrix.add( new List<Integer>( row ) );
                     row.clear();
                 }
@@ -464,20 +478,34 @@ public with sharing class UserAvailabilityService {
     //
 
     // identify the default Business Hours for current Org...
-    private static Schedule_Seller_Settings__c defaultBusinessHoursId {
+    private static Id defaultBusinessHoursId {
         private get {
-            if ( defaultBusinessHoursId == null ) {
-                defaultBusinessHoursId = Schedule_Seller_Settings__c.getOrgDefaults();
+            if ( ( defaultBusinessHoursId == null )
+                && ( UserAvailabilityService.settings != null )
+                )
+            {
+                defaultBusinessHoursId = UserAvailabilityService.settings.BusinessHoursId__c;
             }
             return defaultBusinessHoursId;
         }
         private set;
     }
 
-    private static Schedule_Seller_Settings__c daysLimit {
+    private static Integer daysLimit {
         private get {
             if ( daysLimit == null ) {
-                daysLimit = Schedule_Seller_Settings__c.getOrgDefaults();
+                Integer local = 1;
+                if ( ( UserAvailabilityService.settings != null )
+                    && ( UserAvailabilityService.settings.DaysLimit__c != null )
+                   )
+                {
+                    local = UserAvailabilityService.settings.DaysLimit__c.intValue();
+                }
+                // days limit must be greater than zero...
+                if ( local < 1 ) {
+                    local = 1;
+                }
+                daysLimit = local;
             }
             return daysLimit;
         }
@@ -494,12 +522,20 @@ public with sharing class UserAvailabilityService {
                 WHERE Active__c = true
                 AND Product__c = :skill
                 AND Time_Zone__c = :timeZone
-                WITH SECURITY_ENFORCED
                 ORDER BY Start_Time__c ASC
             ];
         }
         return timeSlots;
     }
 
+    private static Schedule_Seller_Settings__c settings {
+        private get {
+            if ( settings == null ) {
+                settings = Schedule_Seller_Settings__c.getInstance( UserInfo.getUserId() );
+            }
+            return settings;
+        }
+        private set;
+    }
 }
 //
