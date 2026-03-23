@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Days_Limit__c</fullName>
+    <fullName>DaysLimit__c</fullName>
     <defaultValue>10</defaultValue>
     <description>Represents the max number of days the user can see while seeing availability in the Schedule Demo window.</description>
     <externalId>false</externalId>
