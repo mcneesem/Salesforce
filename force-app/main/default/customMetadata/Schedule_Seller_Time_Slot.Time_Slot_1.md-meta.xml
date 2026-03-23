@@ -3,7 +3,7 @@
     <label>Time Slot 1</label>
     <protected>false</protected>
     <values>
-        <field>Active__c</field>
+        <field>Is_Active__c</field>
         <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
