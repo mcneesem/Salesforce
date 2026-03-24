@@ -2,7 +2,7 @@ import { LightningElement , api , wire } from 'lwc';
 import { getRelatedListRecords } from 'lightning/uiRelatedListApi';
 
 export default class PortalTaskList extends LightningElement {
-    @api recordId;
+    @api parentRecordId; // is-a Portal_Project__c.Id OR Portal_Task__c.Id
     @api type;
     @api variant;
 
@@ -28,7 +28,7 @@ export default class PortalTaskList extends LightningElement {
     error;
     records;
     @wire(getRelatedListRecords, {
-        parentRecordId: '$recordId' ,
+        parentRecordId: '$parentRecordId' ,
         relatedListId: '$relatedListId' ,
         fields: [
             'Portal_Task__c.Id' ,
@@ -36,7 +36,7 @@ export default class PortalTaskList extends LightningElement {
             'Portal_Task__c.Action__c' ,
             'Portal_Task__c.Due_Date__c' ,
             'Portal_Task__c.Parent_Portal_Task__c' ,
-            'Portal_Task__c.Portal_Client__c' ,
+            'Portal_Task__c.Portal_Project__c' ,
             'Portal_Task__c.Status__c' ,
             'Portal_Task__c.Type__c' ,
         ] ,

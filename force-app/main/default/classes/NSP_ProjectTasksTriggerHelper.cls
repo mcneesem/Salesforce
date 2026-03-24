@@ -189,48 +189,55 @@ public class NSP_ProjectTasksTriggerHelper {
         }
     }
 
-    /***********************************************************************************************
-    * MethodName:  createSubtask
-    * Description : Create sub tasks for garnishments and levies
-    * Params: List<pse__Project_Task__c> projectTasks, String taskType
-    * ********************************************************************************************/
-    private void createSubtask(List<pse__Project_Task__c> projectTasks, String taskType){
+    //
+    // MethodName:  createSubtask
+    // Description : Create sub tasks for garnishments and levies
+    // Params: List<pse__Project_Task__c> projectTasks, String taskType
+    //
+    private void createSubtask( List<pse__Project_Task__c> records , String taskType ) {
         try {
             List<pse__Project_Task__c> newProjectTasks = new List<pse__Project_Task__c>();
-            Map<Id, pse__Project_Task__c> ipToParentTaskMap = new Map<Id, pse__Project_Task__c>();
-            Map<Id, Map<String, String>> taskEmployeedata = new Map<Id, Map<String, String>>();
-            Map<String, String> documentMap = new Map<String, String>();
-            Map<Id, pse__Project_Task__c> idProjecttask = new Map<Id, pse__Project_Task__c>();
-            Map<Id, Implementation_Profile__c> implMap = new Map<Id, Implementation_Profile__c>();
-
-            for (pse__Project_Task__c task : projectTasks) {
-                if (task.Implementation_Profile__c != null) {
-                    ipToParentTaskMap.put(task.Implementation_Profile__c, task);
+            Map<Id,pse__Project_Task__c> ipToParentTaskMap = new Map<Id,pse__Project_Task__c>();
+            Map<Id,Map<String, String>> taskEmployeedata = new Map<Id,Map<String, String>>();
+            Map<String,String> documentMap = new Map<String,String>();
+            Map<Id,pse__Project_Task__c> idProjecttask = new Map<Id,pse__Project_Task__c>();
+            Map<Id,Implementation_Profile__c> implMap = new Map<Id,Implementation_Profile__c>();
+            for ( pse__Project_Task__c record : records ) {
+                if ( record.Implementation_Profile__c != null ) {
+                    ipToParentTaskMap.put( record.Implementation_Profile__c , record );
                 }
-                if (task.id != null) {
-                    idProjecttask.put(task.id, task);
+                if ( record.Id != null ) {
+                    idProjecttask.put( record.Id , record );
                 }
             }
-
-            if(ipToParentTaskMap.keyset().size() > 0){
+            if ( !ipToParentTaskMap.isEmpty() ) {
                 List<Implementation_Profile__c> employeeDataList = [
                     SELECT
-                        Id , Account__r.Name , NSP_Project_Manager__r.pse__Salesforce_User__c ,
-                        Account__r.Id , NSP_Documents_garnishments__c , Document_Levies__c
+                        Id ,
+                        Account__r.Name ,
+                        NSP_Project_Manager__r.pse__Salesforce_User__c ,
+                        Account__r.Id ,
+                        NSP_Documents_garnishments__c ,
+                        Document_Levies__c
                     FROM Implementation_Profile__c
-                    WHERE Id IN :ipToParentTaskMap.keyset()
+                    WHERE ( Id IN :ipToParentTaskMap.keyset() )
                 ];
-                if(employeeDataList.size() > 0){
-                    for(Implementation_Profile__c impl:employeeDataList){
-                        if(impl != null){
-                            implMap.put(impl.id,impl);
+                if ( !employeeDataList.isEmpty() ) {
+                    for ( Implementation_Profile__c impl : employeeDataList ) {
+                        if ( impl != null ) {
+                            implMap.put( impl.id , impl );
                             List<String> documentList = new List<String>();
-                            if(taskType == NSP_ServiceConstants.GARNISHMENT){
-                                documentList = impl.NSP_Documents_garnishments__c.split(',');
-                            } else if(taskType == LEVIESTASK){
-                                documentList = impl.Document_Levies__c.split(',');
+                            if ( ( taskType == NSP_ServiceConstants.GARNISHMENT )
+                                && String.isNotBlank( impl.NSP_Documents_garnishments__c )
+                                )
+                            {
+                                documentList = impl.NSP_Documents_garnishments__c.split( ',' );
+                            } else if ( ( taskType == NSP_ProjectTasksTriggerHelper.LEVIESTASK )
+                                && String.isNotBlank( impl.Document_Levies__c )
+                                )
+                            {
+                                documentList = impl.Document_Levies__c.split( ',' );
                             }
-
                             if(!documentList.isEmpty()){
                                 for (String documents : documentList) {
                                     if(String.isNotBlank(documents)){

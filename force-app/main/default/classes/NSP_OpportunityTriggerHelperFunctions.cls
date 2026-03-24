@@ -137,6 +137,12 @@ public with sharing class NSP_OpportunityTriggerHelperFunctions {
             if ( opptyPrimaryProduct.equals( NSP_SalesConstants.CONTRACTOR_MANAGEMENT ) ) {
                 opptyCfl = NSP_SalesConstants.STAND_ALONE;
             }
+            if ( ( opptyCfl != 'WX' )
+                && ( opptyPrimaryProduct == 'I-9 Assist & E-Verify' )
+                )
+            {
+                opptyCfl = NSP_CPQConstants.CLIENT_WOWS;
+            }
         }
         return opptyCfl;
     }

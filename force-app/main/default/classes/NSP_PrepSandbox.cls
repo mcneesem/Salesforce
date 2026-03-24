@@ -593,6 +593,22 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         }
 
         try {
+            List<Wingspan_Settings__c> updateWsSettings = new List<Wingspan_Settings__c>();
+            Map<String, Wingspan_Settings__c> wingspanSettingsMap = Wingspan_Settings__c.getAll();
+            for (String key : wingspanSettingsMap.keySet()) {
+                Wingspan_Settings__c wingspanSettings = Wingspan_Settings__c.getValues(key);
+                wingspanSettings.IsEnabled__c = false;
+                if (wingspanSettings.Name == 'DEV') {
+                    wingspanSettings.IsEnabled__c = true;
+                }
+                updateWsSettings.add(wingspanSettings);
+            }
+            update updateWsSettings;
+        } catch (Exception e) {
+            NSP_PrepSandbox.handleException( e , 'doCSettings:Wingspan_Settings__c' );
+        }
+
+        try {
             NSP_GoogleRecaptchaSettings__c cS1 = NSP_GoogleRecaptchaSettings__c.getOrgDefaults();
             cS1.NSP_SiteKey__c = '6LegnBQiAAAAAM_at9VCdc-X143lsbrvrgZPlOta';
             cS1.NSP_SiteUrl__c = 'https://insperity--' + sandboxName + '.sandbox.my.salesforce-sites.com/';
@@ -700,6 +716,14 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             upsert cS9;
         } catch(Exception e) {
             NSP_PrepSandbox.handleException( e , 'doCSettings2:Sales_Team_Email_Settings__c' );
+        }
+
+        try {
+            Workday_URL_Settings__c cS10 = Workday_URL_Settings__c.getOrgDefaults();
+            cS10.Corporate_Instance_URL__c = null;
+            upsert cS10;
+        } catch ( Exception e ) {
+            NSP_PrepSandbox.handleException( e , 'doCSettings2:Workday_URL_Settings__c' );
         }
     }
 

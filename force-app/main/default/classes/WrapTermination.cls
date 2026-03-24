@@ -1,5 +1,5 @@
 public with sharing class WrapTermination {
-    // test w/ SingleTermFormController_Test (96%)
+    // test w/ SingleTermFormControllerTest (96%)
 
     public String clinetName { get; set; }
     public String clinetNumber { get; set; }
@@ -145,6 +145,57 @@ public with sharing class WrapTermination {
             joinedNames = String.join( names , ', ' );
         }
         return joinedNames;
+    }
+    
+    private String formatDate(Date d) {
+        String result = 'NA';
+        if (d != null) {
+            result = d.month() + '/' + d.day() + '/' + d.year();
+        }
+
+        return result;
+    }
+    
+    public String reinstatementReason {
+            public get {
+            String local = 'NA';
+            if (String.isNotBlank(this.reason) && this.reason != 'NA') {
+                local = this.reason;
+                
+                if (this.revision == 'Yes'
+                    && String.isNotBlank(this.previousReason)
+                    && this.previousReason != 'NA'
+                    && this.previousReason != this.reason) {
+                        
+                        local = 'REVISED ' + local +
+                            ' (Previous Reason: ' +
+                            this.previousReason + ')';
+                    }
+            }
+            return local;
+        }
+        private set;  
+    }
+    
+    public String clientTermDate {
+     public get {
+            String local = 'NA';
+            if (this.clientermdate != null) {
+                local = this.formatDate(this.clientermdate);
+
+                if (this.revision == 'Yes'
+                    && this.previousClientTermdate != null
+                    && this.previousClientTermdate != this.clientermdate) {
+                        
+                        local = 'REVISED ' + local +
+                            ' (Previous Term Date: ' +
+                            this.formatDate(this.previousClientTermdate) + ')';
+                    }
+            }
+            
+            return local;
+        }
+        private set;
     }
 
 }

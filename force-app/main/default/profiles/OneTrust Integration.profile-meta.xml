@@ -194,7 +194,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Lead.Lead</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>

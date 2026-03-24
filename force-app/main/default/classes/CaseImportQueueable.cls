@@ -1,5 +1,5 @@
 public with sharing class CaseImportQueueable implements Queueable , Finalizer {
-    // test w/ FileUploadControllerTest (88%)
+    // test w/ FileUploadControllerTest (83%)
 
     private List<Case> caseList = null;
     private List<Id> caseSuccessList = null;
@@ -83,12 +83,8 @@ public with sharing class CaseImportQueueable implements Queueable , Finalizer {
 
     public void execute( FinalizerContext context ) {
         try {
-            CaseImportQueueable.settings.Bypass_Opened_Date__c = false;
-            update CaseImportQueueable.settings;
-            CaseImportQueueable.emailDeliverability.IsEnabledOutbound__c = true;
-            update CaseImportQueueable.emailDeliverability;
-            CaseImportQueueable.notificationDeliverability.IsEnabledOutbound__c = true;
-            update CaseImportQueueable.notificationDeliverability;
+            // Schedule the restoration of custom settings to avoid race condition with flow
+            CaseImportRestoreQueueable.enqueueJob();
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 CaseImportQueueable.class.getName() ,
@@ -170,26 +166,6 @@ public with sharing class CaseImportQueueable implements Queueable , Finalizer {
                 settings = Case_Import_Tool_Settings__c.getInstance( UserInfo.getUserId() );
             }
             return settings;
-        }
-        private set;
-    }
-
-    private static Email_Deliverability_Settings__c emailDeliverability {
-        private get {
-            if ( emailDeliverability == null ) {
-                emailDeliverability = Email_Deliverability_Settings__c.getInstance( UserInfo.getUserId() );
-            }
-            return emailDeliverability;
-        }
-        private set;
-    }
-
-    private static Notification_Deliverability_Settings__c notificationDeliverability {
-        private get {
-            if ( notificationDeliverability == null ) {
-                notificationDeliverability = Notification_Deliverability_Settings__c.getInstance( UserInfo.getUserId() );
-            }
-            return notificationDeliverability;
         }
         private set;
     }

@@ -1,0 +1,13 @@
+<template>
+    <template lwc:if={error}>
+        error: {error}<br/>
+    </template>
+    <template lwc:if={record}>
+        <c-portal-project record={record}></c-portal-project>
+    </template>
+    <template lwc:else>
+        <template lwc:if={recordId}>
+            recordId: {recordId}<br/>
+        </template>
+    </template>
+</template>

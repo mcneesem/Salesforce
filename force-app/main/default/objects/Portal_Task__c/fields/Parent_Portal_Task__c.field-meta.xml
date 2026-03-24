@@ -6,9 +6,9 @@
     <lookupFilter>
         <active>true</active>
         <filterItems>
-            <field>Portal_Task__c.Portal_Client__c</field>
+            <field>Portal_Task__c.Portal_Project__c</field>
             <operation>equals</operation>
-            <valueField>$Source.Portal_Client__c</valueField>
+            <valueField>$Source.Portal_Project__c</valueField>
         </filterItems>
         <isOptional>false</isOptional>
     </lookupFilter>

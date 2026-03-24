@@ -165,6 +165,11 @@
         <default>false</default>
         <label>ContractorManagement</label>
     </customValue>
+    <customValue>
+        <fullName>I9AssistandEVerify</fullName>
+        <default>false</default>
+        <label>I9AssistandEVerify</label>
+    </customValue>
     <description>Used in Docusign template selection process.</description>
     <masterLabel>Template Selection Value Set</masterLabel>
     <sorted>false</sorted>

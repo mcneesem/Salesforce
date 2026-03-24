@@ -657,6 +657,9 @@
         <relatedList>NSP_ReportRequest__c.NSP_Case__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>Contact_Name__c</fields>
         <fields>NSP_Work_Phone__c</fields>

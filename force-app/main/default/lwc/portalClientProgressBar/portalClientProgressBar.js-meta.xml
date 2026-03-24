@@ -2,6 +2,6 @@
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>64.0</apiVersion>
     <isExposed>false</isExposed>
-    <masterLabel>Portal Client Progress Bar</masterLabel>
-    <description>Portal Client: Progress Bar</description>
+    <masterLabel>DEPRECATED Portal Client Progress Bar</masterLabel>
+    <description>DEPRECATED Portal Client: Progress Bar</description>
 </LightningComponentBundle>

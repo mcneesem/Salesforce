@@ -73,8 +73,9 @@
             <label>Yes : Project is linked</label>
         </rules>
     </decisions>
-    <description>AZD-459027 : Update Assignments When &quot;WX Benefits Renewal Project&quot; Project Resource is Created by batch. 
-Refer batch - NSP_WXBenefitsRenewalProjectCreation</description>
+    <description>AZD-459027 : Update Assignments When &quot;WX Benefits Renewal Project&quot; Project Resource is Created by batch.
+Refer batch - NSP_WXBenefitsRenewalProjectCreation
+AZD-520750 - HRCore Client Engagement Project Automation</description>
     <environments>Default</environments>
     <interviewLabel>Resource Request - Before Create - Update Assignment {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Resource Request - Before Create - Update Assignment</label>
@@ -126,7 +127,15 @@ Refer batch - NSP_WXBenefitsRenewalProjectCreation</description>
         <connector>
             <targetReference>Is_Project_Linked</targetReference>
         </connector>
-        <filterFormula>AND(NOT(ISBLANK({!$Record.pse__Project__c})), {!$Record.pse__Project__r.TemplateName__c}= &apos;WX Benefits Renewal Project&apos;, ISBLANK({!$Record.pse__Staffer_Resource__c}))</filterFormula>
+        <filterFormula>AND(
+  NOT( ISBLANK( {!$Record.pse__Project__c} ) ) ,
+  OR(
+    ( {!$Record.pse__Project__r.TemplateName__c} = &apos;WX Benefits Renewal Project&apos; ) ,
+    ( {!$Record.pse__Project__r.TemplateName__c} = &apos;HRCore Client Engagement Y1&apos; ) ,
+    ( {!$Record.pse__Project__r.TemplateName__c} = &apos;HRCore Client Engagement Y2+&apos; )
+  ),
+  ISBLANK( {!$Record.pse__Staffer_Resource__c} )
+)</filterFormula>
         <object>pse__Resource_Request__c</object>
         <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>

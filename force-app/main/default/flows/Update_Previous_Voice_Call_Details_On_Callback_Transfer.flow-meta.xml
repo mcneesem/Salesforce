@@ -190,8 +190,8 @@
         </rules>
     </decisions>
     <environments>Default</environments>
-    <interviewLabel>Update Previous Voice Call Details On Callback/Transfer {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Update Previous Voice Call Details On Callback/Transfer</label>
+    <interviewLabel>DEPRECATED - Update Previous Voice Call Details On Callback/Transfer {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>DEPRECATED - Update Previous Voice Call Details On Callback/Transfer</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>

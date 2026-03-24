@@ -99,6 +99,8 @@ private class SingleTermFormControllerTest {
         
         Test.startTest();
         WrapTermination wrapper = new WrapTermination(tf, roleMapDetails);
+        String resultcst = wrapper.clientTermDate;
+        String resultrsr = wrapper.reinstatementReason;
         Test.stopTest();
         
         System.assertEquals('acc1', wrapper.clinetName);

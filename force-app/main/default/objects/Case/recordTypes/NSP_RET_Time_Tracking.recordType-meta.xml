@@ -2593,10 +2593,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>License Issue</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Misconfiguration</fullName>
             <default>false</default>
         </values>
@@ -2613,10 +2609,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Prior to Insperity</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Report Issue</fullName>
             <default>false</default>
         </values>
@@ -2626,10 +2618,6 @@
         </values>
         <values>
             <fullName>Security%2FAccess Issue</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Server Issue</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2645,19 +2633,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Upgrade Issue</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Upgrade Needed</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>User Error</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Workstation Issue</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -167,6 +167,11 @@
                 <label>Contractor Management</label>
             </value>
             <value>
+                <fullName>I-9 Assist &amp; E-Verify</fullName>
+                <default>false</default>
+                <label>I-9 Assist &amp; E-Verify</label>
+            </value>
+            <value>
                 <fullName>Contingent Workforce</fullName>
                 <default>false</default>
                 <isActive>false</isActive>

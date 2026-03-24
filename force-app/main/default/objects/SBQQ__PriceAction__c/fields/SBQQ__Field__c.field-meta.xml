@@ -5,6 +5,7 @@
     <inlineHelpText>Select the field you want updated when the conditions are met.</inlineHelpText>
     <label>Target Field</label>
     <required>false</required>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
@@ -511,6 +512,11 @@
                 <default>false</default>
                 <label>Has_Legacy_1099_Product_Text__c</label>
             </value>
+            <value>
+                <fullName>Has_Promo__c</fullName>
+                <default>false</default>
+                <label>Has_Promo__c</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Quote</controllingFieldValue>
@@ -719,6 +725,10 @@
             <controllingFieldValue>Quote</controllingFieldValue>
             <controllingFieldValue>Quote Line</controllingFieldValue>
             <valueName>Has_Legacy_1099_Product_Text__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <valueName>Has_Promo__c</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Quote Line</controllingFieldValue>

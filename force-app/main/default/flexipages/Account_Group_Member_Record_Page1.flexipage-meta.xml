@@ -108,10 +108,16 @@
                 <fieldItem>Record.NSP_Hicomp_EEs__c</fieldItem>
                 <identifier>RecordNSP_Hicomp_EEs_cField2</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.CreatedBy.NSP_Profile_Name__c}</leftValue>
                         <operator>NE</operator>
                         <rightValue>Integration User</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Type__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Controlled Group</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -125,10 +131,16 @@
                 <fieldItem>Record.NSP_Hicomp_EEs__c</fieldItem>
                 <identifier>RecordNSP_Hicomp_EEs_cField</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.CreatedBy.NSP_Profile_Name__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Integration User</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Type__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Controlled Group</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -142,10 +154,16 @@
                 <fieldItem>Record.NSP_Total_EEs__c</fieldItem>
                 <identifier>RecordNSP_Total_EEs_cField</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.CreatedBy.NSP_Profile_Name__c}</leftValue>
                         <operator>NE</operator>
                         <rightValue>Integration User</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Type__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Controlled Group</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -159,10 +177,16 @@
                 <fieldItem>Record.NSP_Total_EEs__c</fieldItem>
                 <identifier>RecordNSP_Total_EEs_cField2</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.CreatedBy.NSP_Profile_Name__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Integration User</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Type__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Controlled Group</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -233,6 +257,12 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_AIMS_Client_ID__c</fieldItem>
                 <identifier>RecordNSP_AIMS_Client_ID_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.NSP_Member_Account__r.iSolved_ID__c</fieldItem>
+                <identifier>RecordNSP_Member_Account_riSolved_ID_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
