@@ -52,6 +52,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Purchased_Product__c.Ready_For_Billing__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Purchased_Product__c.Retail_Price__c</field>
         <readable>true</readable>
     </fieldPermissions>
