@@ -789,52 +789,45 @@ public with sharing class NSP_OpportunityTriggerHelper {
     // Opportunity-after-insert
     private void publishNewRecords( List<Opportunity> records ) {
         // publish sync events for all new opportunies...
-        if ( !NSP_OpportunityTriggerHelper.isEnabledDmlOpportunities ) {
-            Set<Id> syncIds = new Set<Id>();
-            if ( ( records != null ) && !records.isEmpty() ) {
-                for ( Opportunity record : records ) {
-                    syncIds.add( record.Id );
-                }
+        Set<Id> syncIds = new Set<Id>();
+        if ( ( records != null ) && !records.isEmpty() ) {
+            for ( Opportunity record : records ) {
+                syncIds.add( record.Id );
             }
-            this.publishIntegrationSyncEvents(
-                syncIds ,
-                NSP_OpportunityTriggerHelper.isEnabledIntegrationOpportunityEvent ,
-                false
-            );
         }
+        this.publishIntegrationSyncEvents(
+            syncIds ,
+            NSP_OpportunityTriggerHelper.isEnabledIntegrationOpportunityEvent
+        );
     }
 
     // Opportunity-after-update
     private void publishCriticalRecords( Map<Id,Opportunity> opportunityNewMap , Map<Id,Opportunity> opportunityOldMap ) {
         // publish sync events for critically modified opportunies...
-        if ( !NSP_OpportunityTriggerHelper.isEnabledDmlOpportunities ) {
-            Set<Id> criticalRecordIds = this.identifyCriticalRecordIds( opportunityNewMap , opportunityOldMap );
-            Set<Id> syncIdsAnalysis = new Set<Id>();
-            Set<Id> syncIds = new Set<Id>();
-            if ( !criticalRecordIds.isEmpty() ){
-                for ( Id recordId : criticalRecordIds ) {
-                    if ( this.isNewStageAnalysis( recordId, opportunityNewMap , opportunityOldMap ) ) {
-                        syncIdsAnalysis.add( recordId );
-                    } else {
-                        syncIds.add( recordId );
-                    }
+        Set<Id> criticalRecordIds = this.identifyCriticalRecordIds( opportunityNewMap , opportunityOldMap );
+        Set<Id> syncIdsAnalysis = new Set<Id>();
+        Set<Id> syncIds = new Set<Id>();
+        if ( !criticalRecordIds.isEmpty() ){
+            for ( Id recordId : criticalRecordIds ) {
+                if ( this.isNewStageAnalysis( recordId, opportunityNewMap , opportunityOldMap ) ) {
+                    syncIdsAnalysis.add( recordId );
+                } else {
+                    syncIds.add( recordId );
                 }
             }
-            Boolean isEnabledSyncAnalysis = (
-                NSP_OpportunityTriggerHelper.isEnabledIntegrationOpportunityEvent
-                || NSP_OpportunityTriggerHelper.isEnabledOpportunityStageChangeEvent
-            );
-            this.publishIntegrationSyncEvents(
-                syncIdsAnalysis ,
-                isEnabledSyncAnalysis ,
-                false
-            );
-            this.publishIntegrationSyncEvents(
-                syncIds ,
-                NSP_OpportunityTriggerHelper.isEnabledIntegrationOpportunityEvent ,
-                false
-            );
         }
+        Boolean isEnabledSyncAnalysis = (
+            NSP_OpportunityTriggerHelper.isEnabledIntegrationOpportunityEvent
+            || NSP_OpportunityTriggerHelper.isEnabledOpportunityStageChangeEvent
+        );
+        this.publishIntegrationSyncEvents(
+            syncIdsAnalysis ,
+            isEnabledSyncAnalysis
+        );
+        this.publishIntegrationSyncEvents(
+            syncIds ,
+            NSP_OpportunityTriggerHelper.isEnabledIntegrationOpportunityEvent
+        );
     }
 
     // identify opportunities with critical field changes...
@@ -871,44 +864,30 @@ public with sharing class NSP_OpportunityTriggerHelper {
 
     // Event-after-insert
     // OpportunityTeamMember-after-insert
+    // OpportunityTeamMember-after-update
     public static void setReadyForIntegrationSync( Set<Id> syncIds ) {
         if ( ( syncIds != null ) && !syncIds.isEmpty() ) {
-            if ( NSP_OpportunityTriggerHelper.isEnabledDmlRelatedOpportunities ) {
-                List<Opportunity> records = new List<Opportunity>();
-                for ( Id syncId : syncIds ) {
-                    Opportunity record = new Opportunity();
-                    record.Id = syncId;
-                    record.NSP_Ready_for_Integration_Sync__c = true;
-                    records.add( record );
-                }
-                if ( !records.isEmpty() ) {
-                    Database.update( records );
-                }
-            } else {
-                NSP_OpportunityTriggerHelper helper = new NSP_OpportunityTriggerHelper();
-                helper.publishIntegrationSyncEvents(
-                    syncIds ,
-                    NSP_OpportunityTriggerHelper.isEnabledIntegrationOpportunityEvent ,
-                    false
-                );
-            }
+            NSP_OpportunityTriggerHelper helper = new NSP_OpportunityTriggerHelper();
+            helper.publishIntegrationSyncEvents(
+                syncIds ,
+                NSP_OpportunityTriggerHelper.isEnabledIntegrationOpportunityEvent
+            );
         }
     }
 
-    // Account-after-update
+    // Account-after-update (NSP_OpportunityTriggerHelperFunctions)
     public static void publishIntegrationSyncEvents( List<Opportunity> records ) {
         if ( ( records != null ) && !records.isEmpty() ) {
             Map<Id,Opportunity> recordMap = new Map<Id,Opportunity>( records );
             NSP_OpportunityTriggerHelper helper = new NSP_OpportunityTriggerHelper();
             helper.publishIntegrationSyncEvents(
                 recordMap.keySet() ,
-                NSP_OpportunityTriggerHelper.isEnabledIntegrationOpportunityEvent ,
-                false
+                NSP_OpportunityTriggerHelper.isEnabledIntegrationOpportunityEvent
             );
         }
     }
 
-    private void publishIntegrationSyncEvents( Set<Id> syncIds , Boolean isEnabled , Boolean isEnabledDml ) {
+    private void publishIntegrationSyncEvents( Set<Id> syncIds , Boolean isEnabled ) {
         if ( isEnabled
             && ( syncIds != null )
             && !syncIds.isEmpty()
@@ -922,51 +901,21 @@ public with sharing class NSP_OpportunityTriggerHelper {
                         Id__c=syncId
                     )
                 );
-                if ( isEnabledDml ) {
-                    records.add(
-                        new Opportunity(
-                            Id=syncId
-                        )
-                    );
-                }
             }
-            this.publishEventBus( eventList , records );
+            this.publishEventBus( eventList );
         }
     }
 
-    //
     // Iterates throught the event list publish the records in event bus.
-    // @param eventList of New Account.
-    // @param objectList of New Account.
-    // @return void
-    //
-    private void publishEventBus( List<Integration_Opportunity_Event__e> eventList , List<Opportunity> records ) {
+    private void publishEventBus( List<sObject> eventList ) {
         try {
             if ( ( eventList != null ) && !eventList.isEmpty() ) {
-                // Publishing records Event
                 List<Database.SaveResult> results = EventBus.publish( eventList );
                 NSP_ErrorLogHandler.logResults(
                     NSP_OpportunityTriggerHelper.class.getName() ,
                     'publishEventBus:publish' ,
                     results
                 );
-            }
-            if ( ( records != null ) && !records.isEmpty() ) {
-                List<Opportunity> updateResyncFlagOpportunityList = new List<Opportunity>();
-                for ( Opportunity record : records ) {
-                    Opportunity tempRecord = new Opportunity();
-                    tempRecord.Id = record.Id;
-                    tempRecord.NSP_Ready_for_Integration_Sync__c = false;
-                    updateResyncFlagOpportunityList.add( tempRecord );
-                }
-                if ( !updateResyncFlagOpportunityList.isEmpty() ) {
-                    List<Database.SaveResult> results = Database.update( updateResyncFlagOpportunityList , false );
-                    NSP_ErrorLogHandler.logResults(
-                        NSP_OpportunityTriggerHelper.class.getName() ,
-                        'publishEventBus:update' ,
-                        results
-                    );
-                }
             }
         } catch ( Exception e ) {
             NSP_OpportunityTriggerHelper.handleException( e , 'publishEventBus' );
@@ -987,38 +936,10 @@ public with sharing class NSP_OpportunityTriggerHelper {
         private set;
     }
 
-    private static Boolean isEnabledDmlOpportunities {
-        private get {
-            if ( isEnabledDmlOpportunities == null ) {
-                Boolean local = False;
-                if ( NSP_OpportunityTriggerHelper.platformEventSettings != null ) {
-                    local = NSP_OpportunityTriggerHelper.platformEventSettings.IsEnabled_DmlOpportunities__c;
-                }
-                isEnabledDmlOpportunities = local;
-            }
-            return isEnabledDmlOpportunities;
-        }
-        private set;
-    }
-
-    private static Boolean isEnabledDmlRelatedOpportunities {
-        private get {
-            if ( isEnabledDmlRelatedOpportunities == null ) {
-                Boolean local = False;
-                if ( NSP_OpportunityTriggerHelper.platformEventSettings != null ) {
-                    local = NSP_OpportunityTriggerHelper.platformEventSettings.IsEnabled_DmlRelatedOpportunities__c;
-                }
-                isEnabledDmlRelatedOpportunities = local;
-            }
-            return isEnabledDmlRelatedOpportunities;
-        }
-        private set;
-    }
-
     private static Boolean isEnabledIntegrationOpportunityEvent {
         private get {
             if ( isEnabledIntegrationOpportunityEvent == null ) {
-                Boolean local = False;
+                Boolean local = false;
                 if ( NSP_OpportunityTriggerHelper.platformEventSettings != null ) {
                     local = NSP_OpportunityTriggerHelper.platformEventSettings.IsEnabled_IntegrationOpportunityEvent__c;
                 }
@@ -1032,7 +953,7 @@ public with sharing class NSP_OpportunityTriggerHelper {
     private static Boolean isEnabledOpportunityStageChangeEvent {
         private get {
             if ( isEnabledOpportunityStageChangeEvent == null ) {
-                Boolean local = False;
+                Boolean local = false;
                 if ( NSP_OpportunityTriggerHelper.platformEventSettings != null ) {
                     local = NSP_OpportunityTriggerHelper.platformEventSettings.IsEnabled_OpportunityStageChangeEvent__c;
                 }
