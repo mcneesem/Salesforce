@@ -295,7 +295,6 @@
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Account</object>
         <queriedFields>Id</queriedFields>
-        <queriedFields>AccountNumber</queriedFields>
         <queriedFields>Name</queriedFields>
         <queriedFields>OwnerId</queriedFields>
         <queriedFields>Website</queriedFields>
