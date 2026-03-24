@@ -7,7 +7,7 @@
     <permissionSets>Account_Edit_PCM_Investor_Fields</permissionSets>
     <permissionSets>Account_Profile_Access</permissionSets>
     <permissionSets>Account_Team_Management</permissionSets>
-    <permissionSets>Accrual_Profile_access</permissionSets>
+    <permissionSets>Accrual_Profile_Access</permissionSets>
     <permissionSets>Admin_Layout_Access</permissionSets>
     <permissionSets>Allow_Delete_Accounts</permissionSets>
     <permissionSets>Allow_Delete_Leads</permissionSets>
