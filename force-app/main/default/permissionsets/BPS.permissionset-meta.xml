@@ -2912,11 +2912,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Event.NSP_Completed_Date_Deprecated__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Event.NSP_Completed_Date__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -11670,11 +11665,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Task.NSP_Assigned_Sales_Engineer__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Task.NSP_Completed_Date_Deprecated__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
