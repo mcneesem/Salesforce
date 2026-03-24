@@ -28,6 +28,7 @@
     <permissionSets>Named_Account_Group_Edit_Access</permissionSets>
     <permissionSets>New_Task_Aura</permissionSets>
     <permissionSets>Onboarding_Meeting_Request_Detail_Edit</permissionSets>
+    <permissionSets>Price_Increase_Visibility</permissionSets>
     <permissionSets>Purchased_Product_Visibility</permissionSets>
     <permissionSets>Request_CTM_and_Employee_Orientation_Meeting_Detail</permissionSets>
     <permissionSets>Request_Employee_Orientation_Meeting_Detail</permissionSets>
