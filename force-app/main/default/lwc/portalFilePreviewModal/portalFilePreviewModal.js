@@ -4,10 +4,7 @@ import isCommunityContext from "@salesforce/apex/PortalClientSelector.isCommunit
 import { getRecord } from "lightning/uiRecordApi";
 import ID_FIELD from "@salesforce/schema/ContentDocument.Id";
 import TITLE_FIELD from "@salesforce/schema/ContentDocument.Title";
-import CONTENTSIZE_FIELD from "@salesforce/schema/ContentDocument.ContentSize";
-import FILETYPE_FIELD from "@salesforce/schema/ContentDocument.FileType";
 import LATESTPUBLISHEDVERSIONID_FIELD from "@salesforce/schema/ContentDocument.LatestPublishedVersionId";
-import LASTMODIFIEDDATE_FIELD from "@salesforce/schema/ContentDocument.LastModifiedDate";
 
 export default class PortalFilePreviewModal extends LightningModal {
     @api recordIds // is-a comma-separated String of ContentDocument.Id values
@@ -37,9 +34,6 @@ export default class PortalFilePreviewModal extends LightningModal {
         fields: [
             ID_FIELD ,
             TITLE_FIELD ,
-            CONTENTSIZE_FIELD ,
-            FILETYPE_FIELD ,
-            LASTMODIFIEDDATE_FIELD ,
             LATESTPUBLISHEDVERSIONID_FIELD ,
         ] ,
     })
@@ -53,38 +47,8 @@ export default class PortalFilePreviewModal extends LightningModal {
         }
     }
 
-    // https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resources_files_preview_format.htm
-
-    @api
-    get hasPreview() {
-        const previewableFileTypes = [
-            'PDF' ,
-            'JPG' ,
-            'PNG' ,
-            'DOCX' ,
-            'XLSX' ,
-            'PPTX' ,
-            'TEXT'
-        ];
-        return (
-            this.versionId
-            && this.previewUrl
-            && this.contentSize
-            && ( this.contentSize < 25000000 ) // PMCC ~ must be less than 25 MB to generate a preview...
-            && this.fileType
-            && previewableFileTypes.includes( this.fileType ) // PMCC ~ must be a "previewable" file type...
-            && this.lastModifiedDate
-            && ( this.millisecondsSinceLastModifiedDate > ( 5 * 60 * 1000 ) ) // 5 minutes ~ PMCC ~ using slight delay (for now) until ContentVersionRenditionContent exist for preview...
-        );
-    }
-
-    @api
-    get previewUrl() {
-        return ( this.isCommunity ? './sfsites/c' : '' )
-            + '/sfc/servlet.shepherd/version/renditionDownload'
-            + '?rendition=' + this.rendition
-            + '&versionId=' + this.versionId
-            ;
+    get versionId() {
+        return this.record?.fields?.LatestPublishedVersionId?.value;
     }
 
     get rendition() {
@@ -95,28 +59,100 @@ export default class PortalFilePreviewModal extends LightningModal {
         return "THUMB720BY480";
     }
 
-    get versionId() {
-        return this.record?.fields?.LatestPublishedVersionId?.value;
+    get previewUrl() {
+        return ( this.isCommunity ? './sfsites/c' : '' )
+            + '/sfc/servlet.shepherd/version/renditionDownload'
+            + '?rendition=' + this.rendition
+            + '&versionId=' + this.versionId
+            ;
     }
 
-    get contentSize() {
-        return this.record?.fields?.ContentSize?.value;
+    get hasPreviewUrl() {
+        return ( this.versionId && this.previewUrl );
     }
 
-    get fileType() {
-        return this.record?.fields?.FileType?.value;
+    // img.onload OR img.onerror will fire after img.src is populated with the previewUrl...
+    isPreviewLoaded;
+    handleImageLoad( event ) {
+        this.isPreviewLoaded = true;
+        this.isPreviewErrored = false;
     }
 
-    get lastModifiedDate() {
-        return this.record?.fields?.LastModifiedDate?.value;
+    // img.onload OR img.onerror will fire after img.src is populated with the previewUrl...
+    isPreviewErrored;
+    handleImageError( event ) {
+        this.isPreviewErrored = true;
+        this.isPreviewLoaded = false;
     }
 
-    get millisecondsSinceLastModifiedDate() {
-        let local = 0;
-        if ( this.lastModifiedDate ) {
-            local = ( ( new Date() ) - new Date( this.lastModifiedDate ) )
+    // true only if img.onerror has fired...
+    get hasPreviewError() {
+        return this.isPreviewErrored;
+    }
+
+    // true until img.onload OR img.onerror have fired...
+    get isPreviewLoading() {
+        return ( !this.isPreviewLoaded && !this.hasPreviewError );
+    }
+
+    //
+    // preview lifecyle...
+    // ~ show loading message and spinner
+    // ~ wire record
+    // ~ has versionId
+    // ~ has previewUrl
+    // ~ img starts loading
+    // ~ img onload/onerror fires
+    //   ~ img.onload OR img.onerror occurrs
+    //     ~ onload
+    //       ~ is loaded / show image
+    //     ~ onerror
+    //       ~ is errored / show button
+    //
+
+    // hide image while image loading...
+    // hide image if error during image loading...
+    get imageClass() {
+        return ( ( this.isPreviewLoading || this.hasPreviewError ) ? "slds-hide" : "slds-show" );
+    }
+
+    // show download button if error during image loading...
+    get buttonClass() {
+        return ( this.hasPreviewError ? "slds-show" : "slds-hide" );
+    }
+
+    // true if any message is ready to be displayed...
+    get hasMessage() {
+        return ( this.message && ( this.message != "" ) );
+    }
+
+    // translate image loading/error state to text...
+    get message() {
+        let local = "";
+        if ( !this.hasPreviewUrl || this.isPreviewLoading ) {
+            local = "Loading preview...";
+        } else if ( this.hasPreviewError ) {
+            local = "No preview available";
         }
         return local;
+    }
+
+    handleDownloadClick( event ) {
+        this.download();
+    }
+
+    // "File Download"
+    // ~ navigate to standard internal File Download Page...
+    pageReference;
+    download() {
+        if ( this.selectedRecordId ) {
+            this.pageReference = {
+                type: 'standard__webPage' ,
+                attributes: {
+                    url: ( this.isCommunity ? './sfsites/c' : '' ) + '/sfc/servlet.shepherd/document/download/' + this.selectedRecordId ,
+                } ,
+            };
+        }
     }
 
 }

@@ -5,6 +5,7 @@ import Toast from "lightning/toast";
 import { deleteRecord , getRecords } from "lightning/uiRecordApi";
 import PortalFileListModal from "c/portalFileListModal";
 import PortalFilePreviewModal from "c/portalFilePreviewModal";
+import PortalFileNewVersionModal from "c/portalFileNewVersionModal";
 import { refreshApex } from "@salesforce/apex";
 import getPortalLinks from "@salesforce/apex/PortalClientSelector.getPortalLinks";
 import ID_FIELD from "@salesforce/schema/ContentDocumentLink.Id";
@@ -29,12 +30,13 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
     handleClickAccordion( event ) {
         event.stopPropagation();
         this.isVisibleBody = !this.isVisibleBody;
+        this.refresh();
     }
     handleKeyDown( event ) {
         // only created to appease sonar...
     }
     get hasGuidance() {
-        return false;
+        return ( this.record?.fields?.Portal_Guidance__c?.value );
     }
     get isCompleted() {
         return ( this.record?.fields?.Status__c?.value === "Completed" );
@@ -66,7 +68,6 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
     wiredPortalLinks( value ) {
         this.wiredPortalLinksInfo = value;
         const { error , data } = value;
-        this.links = [];
         if ( data ) {
             // reduce the getPortalLinks wire response data to an array of ContentDocumentLink.Id values...
             // ~ data is-a List<ContentDocumentLink>
@@ -75,6 +76,11 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
                     return link.Id;
                 }
             );
+            if ( linkIds?.length > 0 ) {
+                this.links = undefined; // continue showing loading spinner...
+            } else {
+                this.links = []; // show 0-count file icon...
+            }
             // populate the parameter object for the getRecords wire...
             this.parameterObject = [
                 {
@@ -164,6 +170,9 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
             case 'external__filePreview':
                 this.handleModalFilePreview( event?.detail?.state );
                 break;
+            case 'external__uploadNewVersion':
+                this.handleModalFileNewVersion( event?.detail?.state );
+                break;
             case 'external__delete':
                 this.handleModalConfirmDelete( event?.detail?.state );
                 break;
@@ -189,6 +198,21 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
                     size: "large" ,
                     recordIds: state.recordIds ,
                     selectedRecordId: state.selectedRecordId ,
+                    onnavigate: ( e ) => {
+                        this.handleNavigate( e );
+                    } ,
+                }
+            );
+        }
+    }
+
+    async handleModalFileNewVersion( state ) {
+        if ( state ) {
+            await PortalFileNewVersionModal.open(
+                {
+                    label: "Upload New Version" ,
+                    size: "small" ,
+                    recordId: state.recordId ,
                 }
             );
         }
@@ -226,8 +250,8 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
             } catch ( error ) {
                 this.showToastError( "Error Deleting File" , JSON.stringify( error ) );
             }
+            await this.refresh();
             this.isDeleting = false;
-            this.refresh();
         }
     }
 
