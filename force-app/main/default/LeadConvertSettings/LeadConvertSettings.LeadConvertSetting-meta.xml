@@ -276,12 +276,24 @@
             <outputField>NSP_Is_Originated_From_Lead_Conversion__c</outputField>
         </mappingFields>
         <mappingFields>
+            <inputField>LICLID__c</inputField>
+            <outputField>LICLID__c</outputField>
+        </mappingFields>
+        <mappingFields>
             <inputField>NSP_LoyaltyProgram__c</inputField>
             <outputField>NSP_LoyaltyProgram__c</outputField>
         </mappingFields>
         <mappingFields>
             <inputField>NSP_MedicalRenewal__c</inputField>
             <outputField>NSP_MedicalRenewal__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>FBCLID__c</inputField>
+            <outputField>FBCLID__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>MSCLID__c</inputField>
+            <outputField>MSCLID__c</outputField>
         </mappingFields>
         <mappingFields>
             <inputField>NSP_MidMarketNationalAccount__c</inputField>
