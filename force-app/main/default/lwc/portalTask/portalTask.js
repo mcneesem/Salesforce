@@ -5,7 +5,6 @@ import Toast from "lightning/toast";
 import { deleteRecord , getRecords } from "lightning/uiRecordApi";
 import PortalFileListModal from "c/portalFileListModal";
 import PortalFilePreviewModal from "c/portalFilePreviewModal";
-import PortalFileNewVersionModal from "c/portalFileNewVersionModal";
 import { refreshApex } from "@salesforce/apex";
 import getPortalLinks from "@salesforce/apex/PortalClientSelector.getPortalLinks";
 import ID_FIELD from "@salesforce/schema/ContentDocumentLink.Id";
@@ -30,13 +29,12 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
     handleClickAccordion( event ) {
         event.stopPropagation();
         this.isVisibleBody = !this.isVisibleBody;
-        this.refresh();
     }
     handleKeyDown( event ) {
         // only created to appease sonar...
     }
     get hasGuidance() {
-        return ( this.record?.fields?.Portal_Guidance__c?.value );
+        return false;
     }
     get isCompleted() {
         return ( this.record?.fields?.Status__c?.value === "Completed" );
@@ -170,9 +168,6 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
             case 'external__filePreview':
                 this.handleModalFilePreview( event?.detail?.state );
                 break;
-            case 'external__uploadNewVersion':
-                this.handleModalFileNewVersion( event?.detail?.state );
-                break;
             case 'external__delete':
                 this.handleModalConfirmDelete( event?.detail?.state );
                 break;
@@ -201,18 +196,6 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
                     onnavigate: ( e ) => {
                         this.handleNavigate( e );
                     } ,
-                }
-            );
-        }
-    }
-
-    async handleModalFileNewVersion( state ) {
-        if ( state ) {
-            await PortalFileNewVersionModal.open(
-                {
-                    label: "Upload New Version" ,
-                    size: "small" ,
-                    recordId: state.recordId ,
                 }
             );
         }
