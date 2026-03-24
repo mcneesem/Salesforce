@@ -10,8 +10,8 @@
         <targetConfig targets="lightning__RecordPage">
             <objects>
                 <object>Account</object>
-                <object>Case</object>
                 <object>Asset</object>
+                <object>Case</object>
             </objects>
         </targetConfig>
     </targetConfigs>
