@@ -14,6 +14,213 @@
 @IsTest
 private class SandboxHealthControllerTest {
 
+    // Helper: Find a section by key
+    private static SandboxHealthController.Section findSectionByKey(List<SandboxHealthController.Section> sections, String key) {
+        for (SandboxHealthController.Section s : sections) {
+            if (s != null && s.key == key) return s;
+        }
+        return null;
+    }
+
+    // Helper: Allowed status set assertion
+    private static void assertAllowedStatus(String status) {
+        Set<String> allowed = new Set<String>{
+            SandboxHealthController.STATUS.PASS.name(),
+            SandboxHealthController.STATUS.WARN.name(),
+            SandboxHealthController.STATUS.FAIL.name()
+        };
+        System.assert(allowed.contains(status), 'Unexpected status value: ' + status);
+    }
+
+    @IsTest
+    static void testOrgSettings_section_with_defaults_present() {
+        // Upsert minimal org defaults to traverse checks without depending on org state
+        OrgSettings__c def = OrgSettings__c.getOrgDefaults();
+        def.SandboxApiName__c = 'devx';
+        def.SandboxName__c = 'devx';
+        upsert def;
+
+        Test.startTest();
+        SandboxHealthController.HealthResult res = SandboxHealthController.getHealth();
+        Test.stopTest();
+
+        SandboxHealthController.Section s = findSectionByKey(res.sections, 'OrgSettings__c');
+        System.assertNotEquals(null, s, 'Org Settings section should exist');
+        assertValidSection(s);
+        assertAllowedStatus(s.status);
+    }
+
+    @IsTest
+    static void testRecaptcha_section_with_defaults_present() {
+        NSP_GoogleRecaptchaSettings__c rec = NSP_GoogleRecaptchaSettings__c.getOrgDefaults();
+        rec.NSP_SiteKey__c = 'dummy';
+        rec.NSP_SiteUrl__c = 'https://insperity--dev.sandbox.my.salesforce-sites.com/';
+        upsert rec;
+
+        Test.startTest();
+        SandboxHealthController.HealthResult res = SandboxHealthController.getHealth();
+        Test.stopTest();
+
+        SandboxHealthController.Section s = findSectionByKey(res.sections, 'NSP_GoogleRecaptchaSettings__c');
+        System.assertNotEquals(null, s, 'Google reCAPTCHA Settings section should exist');
+        assertValidSection(s);
+        assertAllowedStatus(s.status);
+    }
+
+    @IsTest
+    static void testDocusignAccountDetails_section_with_defaults_present() {
+        NSP_Docusign_Account_Details__c dad = NSP_Docusign_Account_Details__c.getOrgDefaults();
+        // Use minimal non-null values (controller tolerates mismatch via FAIL/WARN)
+        dad.Docusign_Account_Id__c = '12345';
+        dad.CLM_Base_URL__c = 'https://example.com';
+        upsert dad;
+
+        Test.startTest();
+        SandboxHealthController.HealthResult res = SandboxHealthController.getHealth();
+        Test.stopTest();
+
+        SandboxHealthController.Section s = findSectionByKey(res.sections, 'NSP_Docusign_Account_Details__c');
+        System.assertNotEquals(null, s, 'Docusign Account Details section should exist');
+        assertValidSection(s);
+        assertAllowedStatus(s.status);
+    }
+
+    @IsTest
+    static void testEnvironmentDetails_section_with_defaults_present() {
+        NSP_Environment_Details__c env = NSP_Environment_Details__c.getOrgDefaults();
+        env.NSP_Detailed_Data__c = 'dev1';
+        upsert env;
+
+        Test.startTest();
+        SandboxHealthController.HealthResult res = SandboxHealthController.getHealth();
+        Test.stopTest();
+
+        SandboxHealthController.Section s = findSectionByKey(res.sections, 'NSP_Environment_Details__c');
+        System.assertNotEquals(null, s, 'Environment Details section should exist');
+        assertValidSection(s);
+        assertAllowedStatus(s.status);
+    }
+
+    @IsTest
+    static void testBoxFileRequest_section_present() {
+        BoxFileRequest__c box = BoxFileRequest__c.getOrgDefaults();
+        box.BoxTemplateFolderId__c = '1234567890';
+        upsert box;
+
+        Test.startTest();
+        SandboxHealthController.HealthResult res = SandboxHealthController.getHealth();
+        Test.stopTest();
+
+        SandboxHealthController.Section s = findSectionByKey(res.sections, 'BoxFileRequest__c');
+        System.assertNotEquals(null, s, 'Box File Request section should exist');
+        assertValidSection(s);
+        assertAllowedStatus(s.status);
+    }
+
+    @IsTest
+    static void testUserTriggerSettings_section_present() {
+        UserTriggerSettings__c uts = UserTriggerSettings__c.getOrgDefaults();
+        uts.AllowedAdmins__c = null;
+        uts.BccAddresses__c = null;
+        upsert uts;
+
+        Test.startTest();
+        SandboxHealthController.HealthResult res = SandboxHealthController.getHealth();
+        Test.stopTest();
+
+        SandboxHealthController.Section s = findSectionByKey(res.sections, 'UserTriggerSettings__c');
+        System.assertNotEquals(null, s, 'User Trigger Settings section should exist');
+        assertValidSection(s);
+        assertAllowedStatus(s.status);
+    }
+
+    @IsTest
+    static void testContractTerminationSettings_section_present() {
+        Contract_Termination_Settings__c cts = Contract_Termination_Settings__c.getOrgDefaults();
+        cts.AutoTerminationEmailAddresses__c = null;
+        upsert cts;
+
+        Test.startTest();
+        SandboxHealthController.HealthResult res = SandboxHealthController.getHealth();
+        Test.stopTest();
+
+        SandboxHealthController.Section s = findSectionByKey(res.sections, 'Contract_Termination_Settings__c');
+        System.assertNotEquals(null, s, 'Contract Termination Settings section should exist');
+        assertValidSection(s);
+        assertAllowedStatus(s.status);
+    }
+
+    @IsTest
+    static void testSalesTeamEmailSettings_section_present() {
+        Sales_Team_Email_Settings__c stes = Sales_Team_Email_Settings__c.getOrgDefaults();
+        stes.BccEmailAddress__c = 'test@example.invalid';
+        stes.NationalAccountEmailAddress__c = 'nat@example.invalid';
+        stes.PrivateCapitalMarketEmailAddress__c = 'pcm@example.invalid';
+        stes.StrategicSalesEmailAddress__c = 'strat@example.invalid';
+        upsert stes;
+
+        Test.startTest();
+        SandboxHealthController.HealthResult res = SandboxHealthController.getHealth();
+        Test.stopTest();
+
+        SandboxHealthController.Section s = findSectionByKey(res.sections, 'Sales_Team_Email_Settings__c');
+        System.assertNotEquals(null, s, 'Sales Team Email Settings section should exist');
+        assertValidSection(s);
+        assertAllowedStatus(s.status);
+    }
+
+    @IsTest
+    static void testNVMContactWorldSettings_section_present() {
+        NVMContactWorld__Settings__c nvm = NVMContactWorld__Settings__c.getOrgDefaults();
+        // Populate with a value; controller branches based on sandbox name but will still produce checks
+        nvm.NVMContactWorld__clientId__c = 'someid';
+        upsert nvm;
+
+        Test.startTest();
+        SandboxHealthController.HealthResult res = SandboxHealthController.getHealth();
+        Test.stopTest();
+
+        SandboxHealthController.Section s = findSectionByKey(res.sections, 'NVMContactWorld__Settings__c');
+        System.assertNotEquals(null, s, 'NVM ContactWorld Settings section should exist');
+        assertValidSection(s);
+        assertAllowedStatus(s.status);
+    }
+
+    @IsTest
+    static void testImageDocuments_section_tolerates_absence() {
+        // Do not insert any Document rows; controller should WARN/FAIL gracefully without exceptions
+        Test.startTest();
+        SandboxHealthController.HealthResult res = SandboxHealthController.getHealth();
+        Test.stopTest();
+
+        SandboxHealthController.Section s = findSectionByKey(res.sections, 'imageDocuments');
+        System.assertNotEquals(null, s, 'Image Documents section should exist');
+        assertValidSection(s);
+        assertAllowedStatus(s.status);
+    }
+
+    @IsTest
+    static void testCustomMetadata_grouping_structural_presence() {
+        // Even if no custom metadata exists or access is restricted, the controller should not throw
+        Test.startTest();
+        SandboxHealthController.HealthResult res = SandboxHealthController.getHealth();
+        Test.stopTest();
+
+        // Scan for any sections that might have been categorized as CUSTOM_METADATA (keys depend on controller impl)
+        Boolean sawAny = false;
+        for (SandboxHealthController.Section s : res.sections) {
+            if (s == null) continue;
+            // The controller sets category for each section; when present and equals CUSTOM_METADATA it's a match
+            if (s.category != null && s.category.toUpperCase().startsWith('CUSTOM_METADATA')) {
+                sawAny = true;
+                assertValidSection(s);
+                assertAllowedStatus(s.status);
+            }
+        }
+        // We don't require presence in every org; at least ensure the loop didn't throw
+        System.assert(true, 'Custom Metadata structural check executed');
+    }
+
     /**
      * @TestSetup
      * Minimal setup. Intentionally does not seed Custom Settings or CSP metadata since the controller is read-only

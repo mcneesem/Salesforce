@@ -133,69 +133,98 @@ export default class SandboxHealth extends LightningElement {
 
         // Predicate to identify Custom Settings sections
         const isCustomSettingsSection = (sec) => {
-            const key = (sec?.key || '').toLowerCase();
-            const label = (sec?.label || '').toLowerCase();
             const category = (sec?.category || '').toString().toLowerCase();
-            // Prefer explicit category/type if supplied by Apex
-            if (category === 'custom_settings' || category === 'custom_setting' || category === 'customsetting') {
-                return true;
-            }
-            // Fallback heuristics on key/label
-            return key.includes('custom setting') || key.includes('custom_settings') || label.includes('custom setting') || label.includes('custom settings');
+            return ( category === 'custom_settings' );
+        };
+
+        // Predicate to identify Custom Metadata sections
+        const isCustomMetadataSection = (sec) => {
+            const category = (sec?.category || '').toString().toLowerCase();
+            return ( category === 'custom_metadata' );
+        };
+
+        // Predicate to identify Custom Label sections
+        const isCustomLabelSection = (sec) => {
+            const category = (sec?.category || '').toString().toLowerCase();
+            return ( category === 'labels' );
         };
 
         const rawSections = Array.isArray(data?.sections) ? data.sections : [];
 
-        const customChildren = [];
+        const customSettingsChildren = [];
+        const customMetadataChildren = [];
+        const customLabelChildren = [];
         const others = [];
 
         for (const sec of rawSections) {
             if (isCustomSettingsSection(sec)) {
-                customChildren.push(decorateSection(sec));
+                customSettingsChildren.push(decorateSection(sec));
+            } else if (isCustomMetadataSection(sec)) {
+                customMetadataChildren.push(decorateSection(sec));
+            } else if (isCustomLabelSection(sec)) {
+                customLabelChildren.push(decorateSection(sec));
             } else {
                 others.push(decorateSection(sec));
             }
         }
 
-        // If we have any custom settings sections, wrap them under a parent section
-        if (customChildren.length > 0) {
-            // Derive parent status: FAIL > WARN > PASS
-            const statuses = customChildren.map((s) => s.status);
+        // Helper to build a grouped parent with derived status and named children
+        const makeParent = (key, label, kids, prefix) => {
+            const statuses = kids.map((s) => s.status);
             let parentStatus = 'PASS';
             if (statuses.includes('FAIL')) {
                 parentStatus = 'FAIL';
             } else if (statuses.includes('WARN')) {
                 parentStatus = 'WARN';
             }
-
             const parent = decorateSection({
-                key: 'CUSTOM_SETTINGS',
-                label: 'Custom Settings',
+                key,
+                label,
                 status: parentStatus,
-                // parent will render nested accordion; keep checks empty to avoid duplicate rendering
                 checks: []
             });
-
-            // attach children and generate unique child names for nested accordion
-            parent.children = customChildren.map((c) => ({
+            parent.children = kids.map((c) => ({
                 ...c,
-                // Ensure nested unique names; preserve original key for display
-                name: `CS-${c.key || c.label}` // used only in nested accordion active names
+                name: `${prefix}-${c.key || c.label}`
             }));
+            return parent;
+        };
 
-            this.sections = [...others, parent];
-
-            // Maintain expand/collapse expectations:
-            // When top-level expand-all is requested, also ensure nested children are opened.
-            // We won't auto-open here, but reset child actives if necessary.
-            if (!this.activeChildSections || this.activeChildSections.length === 0) {
-                this.activeChildSections = parent.children.map((c) => c.name);
-            }
-        } else {
-            // No custom settings grouping needed
-            this.sections = others;
-            this.activeChildSections = [];
+        // Build final sections list including grouped parents (if any)
+        const grouped = [...others];
+        if (customSettingsChildren.length > 0) {
+            grouped.unshift(makeParent('CUSTOM_SETTINGS', 'Custom Settings', customSettingsChildren, 'CS'));
         }
+        if (customMetadataChildren.length > 0) {
+            grouped.unshift(makeParent('CUSTOM_METADATA', 'Custom Metadata', customMetadataChildren, 'CM'));
+        }
+        if (customLabelChildren.length > 0) {
+            grouped.unshift(makeParent('CUSTOM_LABELS', 'Custom Labels', customLabelChildren, 'C'));
+        }
+
+        this.sections = grouped;
+
+        // Maintain expand/collapse expectations:
+        // If no child sections are currently active, default to opening all children for grouped parents
+        if (!this.activeChildSections || this.activeChildSections.length === 0) {
+            const childNames = [];
+            for (const s of grouped) {
+                if (s && Array.isArray(s.children) && s.children.length > 0) {
+                    for (const c of s.children) {
+                        if (c && c.name) {
+                            childNames.push(c.name);
+                        }
+                    }
+                }
+            }
+            this.activeChildSections = childNames;
+        }
+
+        // Default all sections to collapsed initially if currently empty
+        if (!this.activeSections || this.activeSections.length === 0) {
+            this.activeSections = []; // Collapse all
+        }
+        // Note: activeChildSections already computed above if empty.
 
         // Default all sections to collapsed initially if currently empty
         if (!this.activeSections || this.activeSections.length === 0) {

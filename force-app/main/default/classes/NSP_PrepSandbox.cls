@@ -205,9 +205,9 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         for (NSP_DocuSign_Signers__mdt cMdRecord : cMdDocuSigners) {
             String name = cMdRecord.DeveloperName;
             String fullName = 'NSP_DocuSign_Signers.' + name; //custom metadata full name
-            String signer_Username = cMdRecord.NSP_Signer_Username__c;
-
-            MetadataService.CustomMetadata cMdUpd = buildCustomMetadataRow( fullName , name , 'NSP_Signer_Username__c' , signer_Username + '.' + sandboxName );
+            String signer_Username = cMdRecord.NSP_Signer_Username__c;            
+            String signer_Username_new = signer_Username.substringBefore('.' + sandboxName).trim() + '.' + sandboxName;
+            MetadataService.CustomMetadata cMdUpd = buildCustomMetadataRow( fullName , name , 'NSP_Signer_Username__c' , signer_Username_new );
             allMetadataList = addCustomMetadataRow(allMetadataList, cMdUpd);
         }
     }
@@ -229,23 +229,23 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         }
 
         for (String key : docusignSettingsMap.keySet()) {
-            if (key.startsWith(keyVal)) {
+            if ( key.startsWith( keyVal ) ) {
                 keyVal = key;
                 break;
             }
         }
-        DocuSign_Settings__c docusignSettings = DocuSign_Settings__c.getValues(keyVal);
-        resourceMap.put('CLMv2ApiEndpoint', 'https://api' + docusignSettings.CLMBaseUrl__c + '/v2/');
-        resourceMap.put('DSAccountID', docusignSettings.AccountId__c);
-        resourceMap.put('DSUserName', docusignSettings.UserId__c);
-        resourceMap.put('NSP_Docusign_Callback_Username', docusignSettings.Docusign_Callback_Username__c);
-        resourceMap.put('RequestAuthDomain', docusignSettings.BaseUrl__c);
-        resourceMap.put('RequestAuthEndpoint', 'https://' + docusignSettings.BaseUrl__c + '/oauth/token');
-        resourceMap.put('NSP_Invoice_Workflow_Name', 'Invoice AutoGen');
-        resourceMap.put('RequestAuthBody', 'grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&assertion=');
-        resourceMap.put('RequestAuthContentType','application/x-www-form-urlencoded');
-        resourceMap.put('RequestIntegratorKey',docusignSettings.IntegrationKey__c);
-        resourceMap.put('RequestScope','signature impersonation spring_read spring_write');
+        DocuSign_Settings__c docusignSettings = DocuSign_Settings__c.getValues( keyVal );
+        resourceMap.put( 'CLMv2ApiEndpoint' , 'https://api' + docusignSettings.CLMBaseUrl__c + '/v2/' );
+        resourceMap.put( 'DSAccountID' , docusignSettings.AccountId__c );
+        resourceMap.put( 'DSUserName' , docusignSettings.UserId__c );
+        resourceMap.put( 'NSP_Docusign_Callback_Username' , docusignSettings.Docusign_Callback_Username__c );
+        resourceMap.put( 'RequestAuthDomain' , docusignSettings.BaseUrl__c );
+        resourceMap.put( 'RequestAuthEndpoint' , 'https://' + docusignSettings.BaseUrl__c + '/oauth/token' );
+        resourceMap.put( 'NSP_Invoice_Workflow_Name' , 'Invoice AutoGen' );
+        resourceMap.put( 'RequestAuthBody' , 'grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&assertion=' );
+        resourceMap.put( 'RequestAuthContentType' , 'application/x-www-form-urlencoded' );
+        resourceMap.put( 'RequestIntegratorKey' , docusignSettings.IntegrationKey__c );
+        resourceMap.put( 'RequestScope' , 'signature impersonation spring_read spring_write' );
         resourceMap.put(
             'RequestPrivateKey' ,
             docusignSettings.PrivateKey1__c
@@ -303,9 +303,9 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         try {
             List<List<MetadataService.Metadata>> allMetadataList = new List<List<MetadataService.Metadata>>();
             allMetadataList.add(new List<MetadataService.Metadata>());
-            List<NSP_ProjectTemplateMapping__mdt> cMdTmpls = [Select Id, Label, DeveloperName, Key__c, Template_ID__c, Template_Name__c FROM NSP_ProjectTemplateMapping__mdt WHERE Id!=Null];
-            List<Template_Key_and_Id_Mapping__mdt> cMdTmplKeys = [Select Id, Label, DeveloperName, Key__c, Template_ID__c, Template_Name__c FROM Template_Key_and_Id_Mapping__mdt WHERE Id!=Null];
-            List<pse__Proj__c> oProjTmpls = [Select Id, TemplateName__c FROM pse__Proj__c WHERE pse__Is_Template__c = true];
+            List<NSP_ProjectTemplateMapping__mdt> cMdTmpls = [ SELECT Id , Label, DeveloperName , Key__c , Template_ID__c , Template_Name__c FROM NSP_ProjectTemplateMapping__mdt WHERE Id != null ];
+            List<Template_Key_and_Id_Mapping__mdt> cMdTmplKeys = [ SELECT Id , Label, DeveloperName , Key__c , Template_ID__c , Template_Name__c FROM Template_Key_and_Id_Mapping__mdt WHERE Id != null ];
+            List<pse__Proj__c> oProjTmpls = [ SELECT Id , TemplateName__c FROM pse__Proj__c WHERE pse__Is_Template__c = true] ;
             Map<String, Id> mTmplId = new map<String, Id>();
             for (pse__Proj__c oProjTmpl : oProjTmpls) {
                 mTmplId.put(oProjTmpl.TemplateName__c, oProjTmpl.Id);
@@ -322,8 +322,8 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     }
 
     public static void doTmpls_mdt(String sandboxName, Map<String, Id> mTmplId, List<List<MetadataService.Metadata>> allMetadataList, List<NSP_ProjectTemplateMapping__mdt> cMdTmpls) {
-        for (NSP_ProjectTemplateMapping__mdt cMdTmpl : cMdTmpls) {
-            if (mTmplId.containsKey(cMdTmpl.Template_Name__c) || Test.isRunningTest()) {
+        for ( NSP_ProjectTemplateMapping__mdt cMdTmpl : cMdTmpls ) {
+            if ( mTmplId.containsKey( cMdTmpl.Template_Name__c ) || Test.isRunningTest() ) {
                 string name = cMdTmpl.DeveloperName;
                 string fullName = 'NSP_ProjectTemplateMapping.' + name; //custom metadata full name
 
@@ -596,7 +596,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             List<Wingspan_Settings__c> updateWsSettings = new List<Wingspan_Settings__c>();
             Map<String, Wingspan_Settings__c> wingspanSettingsMap = Wingspan_Settings__c.getAll();
             for (String key : wingspanSettingsMap.keySet()) {
-                Wingspan_Settings__c wingspanSettings = Wingspan_Settings__c.getValues(key);
+                Wingspan_Settings__c wingspanSettings = Wingspan_Settings__c.getValues( key );
                 wingspanSettings.IsEnabled__c = false;
                 if (wingspanSettings.Name == 'DEV') {
                     wingspanSettings.IsEnabled__c = true;
