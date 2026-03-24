@@ -2,7 +2,7 @@
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customPermissions>
         <enabled>true</enabled>
-        <name>Account_Allow_Clone_New_FEIN</name>
+        <name>Account_Screen_Same_DUNS_New_FEIN</name>
     </customPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -41,8 +41,8 @@
     </fieldPermissions>
     <flowAccesses>
         <enabled>true</enabled>
-        <flow>Account_Screen_Clone_with_new_FEIN</flow>
+        <flow>Account_Screen_Same_DUNS_New_FEIN</flow>
     </flowAccesses>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Account - Allow Clone New FEIN</label>
+    <label>Account - Screen - Same DUNS New FEIN</label>
 </PermissionSet>
