@@ -4,7 +4,7 @@
     <description>Formula field to track activity completed date</description>
     <externalId>false</externalId>
     <formula>Today()</formula>
-    <label>Completed Date Deprecated</label>
+    <label>DEPRECATED - Completed Date Deprecated</label>
     <required>false</required>
     <type>Date</type>
 </CustomField>
