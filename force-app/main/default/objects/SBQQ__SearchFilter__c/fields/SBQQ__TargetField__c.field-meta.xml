@@ -7,6 +7,7 @@
     <inlineHelpText>Specify the field to search.</inlineHelpText>
     <label>Target Field</label>
     <required>false</required>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
@@ -68,6 +69,11 @@
                 <default>false</default>
                 <label>NSP_Allowed_Groups__c</label>
             </value>
+            <value>
+                <fullName>Promo_Expired__c</fullName>
+                <default>false</default>
+                <label>Promo_Expired__c</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Product</controllingFieldValue>
@@ -109,6 +115,10 @@
         <valueSettings>
             <controllingFieldValue>Product</controllingFieldValue>
             <valueName>NSP_Allowed_Groups__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Product</controllingFieldValue>
+            <valueName>Promo_Expired__c</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Asset</controllingFieldValue>

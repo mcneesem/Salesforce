@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <excludeButtons>OpenSlackRecordChannel</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -138,6 +139,15 @@
         <fields>NAME</fields>
         <relatedList>NSP_Sales_to_Implementation__c.NSP_Opportunity__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>Product2</fields>
+        <fields>Quantity</fields>
+        <fields>UnitPrice</fields>
+        <fields>ServiceDate</fields>
+        <fields>Description</fields>
+        <fields>ListPrice</fields>
+        <relatedList>RelatedLineItemList</relatedList>
+    </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
@@ -145,7 +155,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00hbf000006uPGP</masterLabel>
+        <masterLabel>00hOx00000FYNrB</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

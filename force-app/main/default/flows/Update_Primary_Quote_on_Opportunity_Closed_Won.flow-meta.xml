@@ -47,8 +47,8 @@
     </decisions>
     <description>Primary quote is marked as Ordered when opportunity is closed won</description>
     <environments>Default</environments>
-    <interviewLabel>Update Primary Quote on Opportunity Closed Won {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Update Primary Quote on Opportunity Closed Won</label>
+    <interviewLabel>DEPRECATED - Update Primary Quote on Opportunity Closed Won {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>DEPRECATED - Update Primary Quote on Opportunity Closed Won</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>

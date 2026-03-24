@@ -72,16 +72,6 @@
                     <name>uiBehavior</name>
                     <value>required</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Portal_Client__c</fieldItem>
-                <identifier>RecordPortal_Client_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>required</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.Portal_Project__c</fieldItem>
                 <identifier>RecordPortal_Project_cField</identifier>
             </fieldInstance>
@@ -118,6 +108,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Type__c</fieldItem>
                 <identifier>RecordType_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Rank__c</fieldItem>
+                <identifier>RecordRank_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>

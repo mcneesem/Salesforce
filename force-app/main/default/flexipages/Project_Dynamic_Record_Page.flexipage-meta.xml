@@ -3224,11 +3224,19 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>enableIssueAccordion</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>enableManageResources</name>
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>enablePreferences</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableRiskAccordion</name>
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -4574,6 +4582,29 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_BPS_Project_Template__c</fieldItem>
                 <identifier>RecordNSP_BPS_Project_Template_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Start_Date_Offset__c</fieldItem>
+                <identifier>RecordStart_Date_Offset_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.pse__Is_Template__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>

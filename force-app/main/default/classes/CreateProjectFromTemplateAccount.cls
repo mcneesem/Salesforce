@@ -1,5 +1,5 @@
 public with sharing class CreateProjectFromTemplateAccount {
-    // test w/ CreateProjectFromTemplateAccountTest (85%)
+    // test w/ CreateProjectFromTemplateAccountTest (77%)
 
     @InvocableMethod(
         label='Create Project From Template And Account'
@@ -31,7 +31,11 @@ public with sharing class CreateProjectFromTemplateAccount {
             // Query all Templates
             Map<Id,pse__Proj__c> templateMap = new Map<Id,pse__Proj__c>(
                 [
-                    SELECT Id , Template_Name__c , RecordTypeId
+                    SELECT
+                        Id ,
+                        Template_Name__c ,
+                        Start_Date_Offset__c ,
+                        RecordTypeId
                     FROM pse__Proj__c
                     WHERE (
                         ( pse__Is_Template__c = true )
@@ -113,10 +117,18 @@ public with sharing class CreateProjectFromTemplateAccount {
     private static Id createProjectFromTemplate( Account oaccount , pse__proj__c oprojectTemplate ) {
         Id resultId = null;
         if ( ( oaccount != null ) && ( oprojectTemplate != null ) ) {
+            Date prjStartDate  = System.today();
+            if ( ( oprojectTemplate != null )
+                && ( oprojectTemplate.Start_Date_Offset__c != null )
+                && ( oprojectTemplate.Start_Date_Offset__c.intValue() > 0 )
+                )
+            {
+                prjStartDate = prjStartDate.addDays( oprojectTemplate.Start_Date_Offset__c.intValue() );
+            }
             pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest projRequest = new pse.CreateProjectFromTemplateService.CreateProjectFromTemplateAndAccountRequest(
                 oaccount.Id ,
                 oprojectTemplate.Id ,
-                System.today()
+                prjStartDate
             );
             projRequest.ProjectName = oprojectTemplate.Template_Name__c;
             projRequest.IsActive = true;

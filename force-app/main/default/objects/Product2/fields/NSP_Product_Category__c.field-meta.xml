@@ -5,7 +5,7 @@
     <externalId>false</externalId>
     <label>Product Category</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>MultiselectPicklist</type>
     <valueSet>
         <restricted>true</restricted>
@@ -125,6 +125,11 @@
                 <fullName>Contractor Management</fullName>
                 <default>false</default>
                 <label>Contractor Management</label>
+            </value>
+            <value>
+                <fullName>I-9 Assist &amp; E-Verify</fullName>
+                <default>false</default>
+                <label>I-9 Assist &amp; E-Verify</label>
             </value>
             <value>
                 <fullName>Contingent Workforce</fullName>

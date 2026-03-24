@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CutOffDate__c</fullName>
+    <description>Cut-off date for invoices</description>
+    <encryptionScheme>None</encryptionScheme>
+    <label>CutOffDate</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
+</CustomField>

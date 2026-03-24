@@ -13,5 +13,6 @@ package.xml
 **/__tests__/**
 
 # Ignored Metadata Types
+**/appMenus/**
 **/objectTranslations/**
 **/wave/**

@@ -239,6 +239,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>NSP_Dunning_Emails__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>NSP_Updated_By_Integration__c</field>
             </layoutItems>
         </layoutColumns>

@@ -2,7 +2,7 @@ import { LightningElement , api , wire } from 'lwc';
 import { getRelatedListRecords } from 'lightning/uiRelatedListApi';
 
 export default class PortalTask extends LightningElement {
-    @api record;
+    @api record; // is-a Portal_Task__c
 
     isVisibleBody = false;
     get showBody() {
@@ -11,7 +11,7 @@ export default class PortalTask extends LightningElement {
     get hasBody() {
         return ( this.hasGuidance || this.isParent );
     }
-    handleClick( event ) {
+    handleClickAccordion( event ) {
         event.stopPropagation();
         this.isVisibleBody = !this.isVisibleBody;
     }
@@ -26,7 +26,7 @@ export default class PortalTask extends LightningElement {
     }
 
     error;
-    links;
+    links; // is-a ContentDocumentLink[]
     @wire(getRelatedListRecords, {
         parentRecordId: '$record.fields.Id.value' ,
         relatedListId: 'ContentDocumentLinks' ,
@@ -65,6 +65,9 @@ export default class PortalTask extends LightningElement {
     handleUploadFinished( event ) {
         const uploadedFiles = event.detail.files;
         console.log( "PortalTask.handleUploadFinished ~ uploadedFiles.length ~ " + uploadedFiles.length );
+    }
+    handleClickFiles( event ) {
+        event.stopPropagation();
     }
 
 }

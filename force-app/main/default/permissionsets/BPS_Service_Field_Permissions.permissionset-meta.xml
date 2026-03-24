@@ -1753,6 +1753,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Asset.Electronic_Handbook_Acknowledgment_On__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Asset.HRRC_Access__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -13089,6 +13094,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Events_Milestone__c.NSP_InformationAboutEvent__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Focus_Item__c.Details__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

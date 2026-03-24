@@ -221,6 +221,7 @@ debugger;
     let isSeasonal = checkSeasonalQuote(quoteModel);
     let csProducts = quoteModel.record["Discounted_Product_Codes__c"]? quoteModel.record["Discounted_Product_Codes__c"].split(',') : null;
     let csRates = quoteModel.record["Discounted_Consumption_Rates__c"]? quoteModel.record["Discounted_Consumption_Rates__c"].split(',') : null;
+    let promoProducts = quoteModel.record["Promo_Product_Codes__c"]? quoteModel.record["Promo_Product_Codes__c"].split(',') : null;
 
     debugger;
     if(!isPartnerCS && isSeasonal === false){
@@ -232,7 +233,59 @@ debugger;
     if(csProducts != null && csRates != null){
         processCSDiscount(quoteModel,quoteLineModels,csProducts,csRates);
     }
+    if(promoProducts != null){
+        processPromoProductsCSRates( quoteLineModels , promoProducts );
+    }
     return Promise.resolve();
+}
+
+/*
+Process Promo Product Consumption Rates
+Method - processPromoProductsCSRates
+called via onAfterPriceRules
+*/
+export function processPromoProductsCSRates( lines , promoProducts ) {
+
+    if( lines ){
+        lines.forEach(function(line){
+            if ( line && line.record ){
+                let percentDiscount = line.record.SBQQ__Discount__c;
+                let amountDiscount = line.record.SBQQ__AdditionalDiscountAmount__c;
+                let productcode = line.record.SBQQ__ProductCode__c;
+                let discountType = "";
+                if(percentDiscount === null || percentDiscount === ""){
+                    if(amountDiscount === null || amountDiscount === ""){
+                        discountType = "no discount";
+                    }else{
+                        discountType = "amount";
+                    }
+                }
+                if(line.consumptionSchedules){
+                    line.consumptionSchedules.forEach(function(cs){
+                        if(promoProducts && promoProducts.includes(productcode)){
+                            const rates = cs.getRates();
+                            rates.forEach(function(csRate){
+                                let currentPrice =  csRate.get("SBQQ__Price__c");
+                                let pricingMethod = csRate.get("SBQQ__PricingMethod__c");
+                                if(promoProducts && promoProducts.includes(productcode) && pricingMethod != 'FlatFee'){
+                                    let newPriceAmt = 0;
+                                    switch (discountType){
+                                        case "no discount":
+                                            break;
+                                        case "amount":
+                                            newPriceAmt = -1 * currentPrice;
+                                            csRate.set("SBQQ__Price__c", newPriceAmt);
+                                            newPriceAmt = 0;
+                                            break;
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
+            }
+        });
+    }
 }
 
 /*
@@ -1139,7 +1192,7 @@ export function processQuotelinesAfterPricerule(quote, lines){
 
             // Assign NSP_Product_Amendment_Description__c to NSP_Product_Description__c for specific product codes in Amendment quotes
             if(quoteType == 'Amendment'  && !productsForDescChange.includes(productcode) && !renewalProductsForDescChange.includes(productcode)  ) {
-                if(line.record.SBQQ__Product__r !== null && line.record.SBQQ__Product__r.Description !== null) {
+                if(line.record.SBQQ__Product__r !== null && line.record.SBQQ__Product__r.Description !== null && line.record.SBQQ__Product__r.SBQQ__DescriptionLocked__c === true) {
                     line.record["SBQQ__Description__c"] = line.record.SBQQ__Product__r.Description.slice(0, 250);
                 }
             }

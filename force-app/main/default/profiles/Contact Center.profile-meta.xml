@@ -31843,6 +31843,10 @@
         <recordType>Event.Core_Sales_Event_RT</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Event-Core Sales Events Layouts</layout>
+        <recordType>Event.Core_Serv_Event_RT</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Event-Event Layout</layout>
         <recordType>Event.Mid_Market_Event_RT</recordType>
     </layoutAssignments>
@@ -33165,7 +33169,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Account.NSP_Client</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -33236,7 +33239,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Asset.WO</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -33257,13 +33259,11 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Case.PEO</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Contact.New_Contact_Record_Type</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -33273,9 +33273,13 @@
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
+        <default>false</default>
         <recordType>Event.Core_Sales_Event_RT</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>Event.Core_Serv_Event_RT</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
@@ -33555,7 +33559,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Task.Core_Sales_Task_RT</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
@@ -33621,7 +33624,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>pse__Proj__c.PSA_Project</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>

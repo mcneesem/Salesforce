@@ -15393,7 +15393,7 @@
         <recordType>Account.NSP_Partner_Client</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>AccountContactRelation-ACR Finance Layout</layout>
+        <layout>AccountContactRelation-ACR Service Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>AccountContactRole-Account Contact Role Layout</layout>
@@ -15621,6 +15621,10 @@
     <layoutAssignments>
         <layout>Event-Core Sales Events Layout 0322</layout>
         <recordType>Event.Core_Sales_Event_RT</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Event-Core Sales Events Layouts</layout>
+        <recordType>Event.Core_Serv_Event_RT</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Event-Core Sales Events Layouts</layout>
@@ -16454,6 +16458,11 @@
         <default>false</default>
         <recordType>Event.Core_Sales_Event_RT</recordType>
         <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>Event.Core_Serv_Event_RT</recordType>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>

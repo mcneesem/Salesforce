@@ -34479,6 +34479,10 @@
         <recordType>Event.Core_Sales_Event_RT</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Event-Core Sales Events Layouts</layout>
+        <recordType>Event.Core_Serv_Event_RT</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Event-Event Layout</layout>
         <recordType>Event.Mid_Market_Event_RT</recordType>
     </layoutAssignments>
@@ -35760,7 +35764,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>NSP_Project_Team__c.NSP_FSO_Project_Team</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -35906,13 +35909,11 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Asset.WO</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Case.BPS</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -35943,7 +35944,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Contact.New_Contact_Record_Type</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -35953,9 +35953,13 @@
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
+        <default>false</default>
         <recordType>Event.Core_Sales_Event_RT</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>Event.Core_Serv_Event_RT</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
@@ -36270,7 +36274,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Task.Task</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
@@ -36281,7 +36284,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>pse__Milestone__c.BPS_Milestone</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -36322,7 +36324,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>pse__Proj__c.TES_BPS</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>

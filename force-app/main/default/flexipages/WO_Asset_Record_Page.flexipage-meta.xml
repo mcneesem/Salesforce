@@ -1126,6 +1126,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Electronic_Handbook_Acknowledgment_On__c</fieldItem>
+                <identifier>RecordElectronic_Handbook_Acknowledgment_On_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Handbook_Author__c</fieldItem>
                 <identifier>RecordNSP_Handbook_Author_cField</identifier>
             </fieldInstance>

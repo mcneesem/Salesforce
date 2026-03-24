@@ -1,191 +1,209 @@
-/**
-* @description  : Dunning Email Service Class to customize dunning emails sent from Apex
-* @author Rakesh Das
-* @date 09/20/2022
-* Name : NSP_DunningEmailsMessageService
-*/
+public with sharing class NSP_DunningEmailsMessageService {
+    // test w/ NSP_DunningEmailNotificationsBatchTest (84%)
 
-public class NSP_DunningEmailsMessageService {
-    
-    private NSP_DunningEmailsMessageService(){}
-    /**
-* Invocable Method that can be called from Flows
-* @param  List of dunningEmailParams objects - dunningEmailParams is a Wrapper Class to pass multiple values from flow
-* @return void
-* @Author Rakesh Das
-* @Since September 2022
-*/
-    @InvocableMethod(label='Send Dunning Email' description='Sends dunning email reminders based on invoice due dates')
-    public static void sendDunningEmail(List<dunningEmailParams> dparams) {
-        sendDunningEmailsWithCount(dparams);
+    public static List<Integer> processDunningEmails( List<dunningEmailParams> dparams ) {
+        Set<Id> caseIds = new set<Id>();
+        Map<String,String> templateIdMap = NSP_DunningEmailsMessageService.getTemplates( dparams );
+        Map<String,String> caseTemplateMap = new Map<String,String>();
+        Map<String,String> caseTemplateNameMap = new Map<String,String>();
+        List<Integer> resultList = new List<Integer>{ 0, 0 };
+        NSP_DunningEmailsMessageService.extractFromParams(
+            dparams,
+            templateIdMap,
+            caseTemplateMap,
+            caseTemplateNameMap,
+            caseIds
+        );
+        //fetch important Case Fields using IDs
+        List<Case> caseList = [
+            SELECT Id , AccountId
+            FROM Case
+            WHERE (
+                ( Id IN :caseIds )
+                AND ( AccountId != null )
+            )
+        ];
+        //get unique Accounts
+        Set<Id> accountIds = new Set<Id>();
+        if ( ( caseList != null ) && !caseList.isEmpty() ) {
+            for ( Case cs : caseList ) {
+                accountIds.add( cs.AccountId );
+            }
+        }
+        //extract Contact emails from ACR records
+        Map<String,Set<String>> accountIdToContactEmails = NSP_DunningEmailsMessageService.getEmails( accountIds );
+        //send out emails for all Cases
+        for ( Case cs : caseList ) {
+            if ( String.isNotBlank( cs.AccountId )
+                && accountIdToContactEmails.containsKey( cs.AccountId )
+                && !accountIdToContactEmails.get(cs.AccountId).isEmpty()
+                && caseTemplateMap.containsKey( cs.Id )
+                && String.isNotBlank( caseTemplateMap.get( cs.Id ) )
+                )
+            {
+                //flow will be called only for valid inputs
+                Map<String,Object> inputs = new Map<String,Object>();
+                inputs.put(
+                    'toEmailAddresses' ,
+                    NSP_DunningEmailsMessageService.getToAddress(
+                        caseTemplateNameMap ,
+                        accountIdToContactEmails ,
+                        cs
+                    )
+                );
+                inputs.put( 'emailTemplateId' , caseTemplateMap.get( cs.Id ) );
+                inputs.put( 'recordId' , cs.Id );
+                List<Integer> result = NSP_DunningEmailsMessageService.callSendEmailFlow( inputs );
+                resultList[0] += result[0];
+                resultList[1] += result[1];
+            }
+        }
+        return resultList;
     }
 
-    /**
-* Single static method called via Flow / Batch to send dunning emails. Depends on generateDunningEmails for email generation.
-* @param  List of dunningEmailParams objects - dunningEmailParams is a Wrapper Class to pass multiple values from flow
-* @return Integer - count of emails sent
-* @Author Rakesh Das
-* @Since September 2022
-*/    
-     public static Integer sendDunningEmailsWithCount(List<dunningEmailParams> dparams) {
-         Integer ecount = 0; // count of emails sent
-         List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
-        emails = generateDunningEmails(dparams); // call to generate email from template
-        if(emails.size()>0) {
-           ecount = NSP_GenericEmailUtility.sendSingleEmailMessages(emails,false); //method to send emails.
-        }
-         return ecount;
-     }
- 
- 
-/**
-* Single static method to generate emails.
-* @param  List of dunningEmailParams objects - dunningEmailParams is a Wrapper Class to pass multiple values from flow
-* @return List of Email Messages - List of Messaging.SingleEmailMessage objects
-* @Author Rakesh Das
-* @Since September 2022
-*/
-    public static List<Messaging.SingleEmailMessage> generateDunningEmails(List<dunningEmailParams> dparams) {
-        List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
-        if(dparams!=null){
-            //variables decalartions to store mappings.
-            Map<String, String> templateNameToIdMap = new Map<String, String>();
-            Map<String, String> caseToTemplateNameMap = new Map<String, String>();
-            List<String> recordIds = new List<String>();
-            // taking first template name from param list
-            String objectName = dparams.get(0).objectName;
-            Set<String> accountIds = new Set<String>();
-            //querying org wide address
-            OrgWideEmailAddress orgWidAddress = NSP_GenericEmailUtility.getOrgWideAddress( System.label.NSP_no_reply );
-
-            if(objectName == 'Account') {
-                Messaging.SingleEmailMessage pendingInvcemail = generateAccount30DaysEmail(dparams[0], orgWidAddress.Id);
-                emails.add(pendingInvcemail);
-            }
-            else {
-            for(dunningEmailParams dep : dparams) {
-                recordIds.add(dep.recordId);
-                caseToTemplateNameMap.put(dep.recordid,dep.templateName); //linking case with template id
-                if(!templateNameToIdMap.containsKey(dep.templateName)) {
-                    //getTemplateIdFromDevName is called only once per template name, only if it is not present in the map
-                    String templateId = NSP_GenericEmailUtility.getTemplateIdFromDevName(dep.templateName);
-            		templateNameToIdMap.put(dep.templateName,templateId);
-                }
-            }
-            if(recordIds!=null) {
-                //populating case records for Map
-                Map<String, Case> recordIdToCaseMap = new  Map<String, Case>();
-                for (Case caseCon : [SELECT Id, OwnerId, ContactId, Contact.Email, CaseNumber, AccountId, Origin, Type, RecordTypeId FROM Case WHERE Id IN:recordIds ]) {
-                    recordIdToCaseMap.put(caseCon.Id,caseCon);
-                    accountIds.add(caseCon.AccountId);
-                }
-                //populating toaddress list from ACR records
-                Map<String, Set<String>> accountIdToContactEmails = new Map<String, Set<String>>();
-                for(AccountContactRelation acr : [Select Id, NSP_Dunning_Emails__c, Contact.Email, Contact.Name, ContactId, AccountId from AccountContactRelation WHERE AccountId IN:accountIds AND NSP_Dunning_Emails__c=true  ]) {
-                    if(accountIdToContactEmails.containsKey(acr.AccountId)) {
-                        Set<String> contactEmails = accountIdToContactEmails.get(acr.AccountId);
-                        contactEmails.add(acr.Contact.Email);
-                        accountIdToContactEmails.put(acr.AccountId, contactEmails );
-                    }
-                    else {
-                        accountIdToContactEmails.put(acr.AccountId, new Set<String>{acr.Contact.Email});  
-                    }
-                }
-                
-                // Primary Email Generation Loop iterating over Cases.
-                for(Case cs : recordIdToCaseMap.values()) {
-                    String targetObjId = cs.ContactId;
-                    Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-                    //mail.setWhatId(recordId); 
-                    String tid;
-                    //below code block selects the template id and target object id required for template
-                    if(caseToTemplateNameMap.containsKey(cs.Id)) {
-                        String tname = caseToTemplateNameMap.get(cs.id);
-                        if(tname == NSP_BillingConstants.X135_PAST_DUE){
-                            targetObjId = cs.OwnerId;
-                        }
-                        if(templateNameToIdMap.containsKey(tname)) {
-                    	tid = templateNameToIdMap.get(tname);   
-                    }
-                    }
-                    // below code block populates address list
-                    List<String> toAddressList = New List<String>();
-                    if(accountIdToContactEmails.containsKey(cs.AccountId)) {
-                        toAddressList.addAll(accountIdToContactEmails.get(cs.AccountId)); 
-                    }
-                    if(!toAddressList.contains(cs.Contact.Email)) {
-                        toAddressList.add(cs.Contact.Email);
-                    }
-                    if(tid!=null){
-                        // method call to generate email message with vf template id
-                        mail = NSP_GenericEmailUtility.generateSingleMessageWithTemplate(tid,cs.id,targetObjId,orgWidAddress.Id,toAddressList, null, null, null);
-                    }
-                    //mail.setOrgWideEmailAddressId(orgWidAddress.Id);
-                    //mail.setCcAddresses();
-                    //mail.setToAddresses(toAddressList);
-                    mail.setSaveAsActivity(true);
-                    emails.add(mail);
-                    //System.debug('MAIL : '+mail);
+    //method to get unique Case IDs and map Case with template IDs
+    private static void extractFromParams(
+        List<dunningEmailParams> dparams ,
+        Map<String,String> templateIdMap ,
+        Map<String,String> caseTemplateMap ,
+        Map<String,String> caseTemplateNameMap ,
+        Set<Id> caseIds
+        )
+    {
+        if ( ( dparams != null ) && !dparams.isEmpty() ){
+            for(dunningEmailParams dunningWrap : dparams){
+                if( String.isNotBlank( dunningWrap.recordid )
+                   && ( String.isNotBlank( dunningWrap.templateName ) )
+                   && ( templateIdMap != null )
+                   && ( templateIdMap.containsKey( dunningWrap.templateName ) )
+                  )
+                {
+                    caseIds.add( dunningWrap.recordid );
+                    caseTemplateMap.put( dunningWrap.recordid , templateIdMap.get( dunningWrap.templateName ));
+                    caseTemplateNameMap.put( dunningWrap.recordid , dunningWrap.templateName );
                 }
             }
         }
-            //NSP_GenericEmailUtility.sendSingleEmailMessages(emails,false);
+    }
+
+    //method to call SendEmail Flow
+    private static List<Integer> callSendEmailFlow( Map<String,Object> inputs ) {
+        Integer successCount = 0;
+        Integer failCount = 0;
+        if ( inputs != null ) {
+            try {
+                Flow.Interview.Send_Email sendEmailFlow = new Flow.Interview.Send_Email( inputs );
+                sendEmailFlow.start();
+                successCount++;
+            } catch ( Exception e ) {
+                NSP_ErrorLogHandler.logException(
+                    NSP_DunningEmailsMessageService.class.getName() ,
+                    'callSendEmailFlow' ,
+                    e
+                );
+                failCount++;
+            }
         }
-        return emails;
-        
+        return new List<Integer>{ successCount , failCount };
     }
 
-    /**
-* Single static method to generate emails.
-* @param  dunningEmailParams object - dunningEmailParams is a Wrapper Class to pass multiple values from flow
-* @return Single Email Messages - Messaging.SingleEmailMessage object
-* @Author Rakesh Das
-* @Since September 2022
-*/
-public static Messaging.SingleEmailMessage generateAccount30DaysEmail(dunningEmailParams dparam, String orgWideId) {
-
-    Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-    String templateId = NSP_GenericEmailUtility.getTemplateIdFromDevName(dparam.templateName);
-    List<String> toAddressList = New List<String>();
-    String targetObjId;
-    for(AccountContactRelation acr : [Select Id, NSP_Dunning_Emails__c, Contact.Email, Contact.Name, ContactId, AccountId from AccountContactRelation WHERE AccountId =:dparam.recordid AND NSP_Dunning_Emails__c=true  ]) {
-        toAddressList.add(acr.Contact.Email);
-        targetObjId = acr.ContactId;
+    //method to get template records in map
+    private static Map<String,String> getTemplates( List<dunningEmailParams> dparams ) {
+        Set<String> templateNames = new Set<String>();
+        Map<String,String> templateIdMap = new Map<String,String>();
+        if ( dparams != null ) {
+            //get unique templates
+            for ( dunningEmailParams dunningWrap : dparams ) {
+                if ( String.isNotBlank( dunningWrap.templateName ) ) {
+                    templateNames.add( dunningWrap.templateName );
+                }
+            }
+            if ( !templateNames.isEmpty() ) {
+                //map template names with IDs
+                for ( EmailTemplate template : [
+                            SELECT Id , DeveloperName
+                            FROM EmailTemplate
+                            WHERE ( DeveloperName IN :templateNames )
+                        ]
+                    )
+                {
+                    templateIdMap.put( template.DeveloperName , template.Id );
+                }
+            }
+        }
+        return templateIdMap;
     }
-    if(templateId!=null){
-        // method call to generate email message with vf template id
-        mail = NSP_GenericEmailUtility.generateSingleMessageWithTemplate(templateId,dparam.recordid,targetObjId,orgWideId,toAddressList, null, null, null);
-        mail.setSaveAsActivity(true);
-    }
-    return mail;
-          
-}
 
- 
-/**
-* @description  : Wrapper Class to pass multiple parameters from Flow
-* @author Rakesh Das
-* @date 09/20/2022
-* Name : dunningEmailParams
-*/
+    private static Set<String> getToAddress(
+        Map<String,String> caseTemplateNameMap ,
+        Map<String,Set<String>> accountIdToContactEmails ,
+        Case cs
+        )
+    {
+        Set<String> toAddresses = new set<String>();
+        if ( ( caseTemplateNameMap != null )
+            && ( cs != null )
+            && caseTemplateNameMap.containsKey( cs.Id )
+            && ( caseTemplateNameMap.get( cs.Id ) == 'X135_Days_Past_Due' )
+            )
+        {
+            toAddresses = NSP_DunningEmailNotificationsBatch.financeEmailAddresses;
+        } else {
+            if ( ( accountIdToContactEmails != null )
+                && accountIdToContactEmails.containsKey( cs.AccountId )
+                )
+            {
+                toAddresses = accountIdToContactEmails.get( cs.AccountId );
+            }
+        }
+        return toAddresses;
+    }
+
+    //method to extract Emails from Contacts of ACR records for the Case Accounts
+    private static Map<String,Set<String>> getEmails( Set<Id> accountIds ) {
+        Map<String,Set<String>> accountIdToContactEmails = new Map<String,Set<String>>();
+        if ( ( accountIDs != null ) && !accountIds.isEmpty() ) {
+            for ( AccountContactRelation acr : [
+                        SELECT
+                            Id ,
+                            Contact.Email ,
+                            AccountId
+                        FROM AccountContactRelation
+                        WHERE (
+                            ( AccountId IN :accountIds )
+                            AND ( NSP_Dunning_Emails__c = true )
+                            AND ( ContactId != null )
+                        )
+                    ]
+                )
+            {
+                if ( String.isNotBlank( acr.AccountId ) && String.isNotBlank( acr.Contact.Email ) ) {
+                    if ( !accountIdToContactEmails.containsKey( acr.AccountId ) ) {
+                        accountIdToContactEmails.put( acr.AccountId , new Set<String>() );
+                    }
+                    Set<String> contactEmails = accountIdToContactEmails.get( acr.AccountId );
+                    contactEmails.add( acr.Contact.Email );
+                    accountIdToContactEmails.put( acr.AccountId , contactEmails );
+                }
+            }
+        }
+        return accountIdToContactEmails;
+    }
+
+    //
+    //
+    //
+
     public class dunningEmailParams {
-        @InvocableVariable(label='Email Template Name' description='Holds Email Template Developer Name' required=false)
         public String templateName;
-        
-        @InvocableVariable(label='Object Name' description='Holds Object Name' required=true)
         public String objectName;
-        
-        @InvocableVariable(label='Record Ids' description='Holds Record Id' required=true)
         public String recordid;
-        //constructor
-        public dunningEmailParams(String tmpName, String objName, String recid) {
+        public dunningEmailParams( String tmpName , String objName , String recid ) {
             this.templateName = tmpName;
             this.objectName = objName;
             this.recordId = recid;
         }
-        //default constructor
-        public dunningEmailParams() {
-            
-        }
-    }    
+    }
+
 }
+//

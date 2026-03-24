@@ -46,6 +46,11 @@
                 <default>false</default>
                 <label>WX IMPL</label>
             </value>
+            <value>
+                <fullName>Dunning Case</fullName>
+                <default>false</default>
+                <label>Dunning Case</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

@@ -423,6 +423,25 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Marketed_Solution__c</picklist>
+        <values>
+            <fullName>Agnostic</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HR360</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HRCore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HRScale</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Marketing_Priority__c</picklist>
         <values>
             <fullName>General</fullName>

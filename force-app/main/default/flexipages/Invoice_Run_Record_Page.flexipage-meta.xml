@@ -38,6 +38,13 @@
                         </valueListItems>
                         <valueListItems>
                             <value>CustomButton.blng__InvoiceRun__c.blng__Post_All_Invoices</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.Ready_For_Posting__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>blng__InvoiceRun__c.Rollback_Unposted_Lines</value>

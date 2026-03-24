@@ -39,6 +39,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Ready_For_Posting__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>blng__CleanUpStatus__c</field>
             </layoutItems>
             <layoutItems>
