@@ -333,6 +333,7 @@ public class NSP_Implementationprofile_ServiceHelper {
             emailNotifyforNew401k();
         }
         if(ipRecordsByAutomation.containsKey(SRP_NOTIFY_FN)){
+            System.debug('enter email emailNotifyforSRPNotification');
             emailNotifyforSRPNotification();
         }
         if(ipRecordsByAutomation.containsKey(WC_NOTIFICATION_FN)){
