@@ -4,6 +4,10 @@
         <enabled>true</enabled>
         <name>NSP_Implementation_Profile_Permission_set</name>
     </customPermissions>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Use_Implementation_Profile</name>
+    </customPermissions>
     <description>Implementation Profile Permission Set - for Edit access on all fields on Implementation Profile</description>
     <fieldPermissions>
         <editable>false</editable>
@@ -104,7 +108,7 @@
         <editable>true</editable>
         <field>NSP_IP_Additional_Client_Contact__c.NSP_Contact_Method__c</field>
         <readable>true</readable>
-    </fieldPermissions> 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_IP_Additional_Client_Contact__c.NSP_AIMS_Client__c</field>
@@ -4425,7 +4429,6 @@
         <field>Case.NSP_Due_Date__c</field>
         <readable>false</readable>
     </fieldPermissions>
-    
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.NSP_FLSA_Case__c</field>
@@ -6746,7 +6749,6 @@
         <field>EmailMessage.NSP_NetSuite_External_ID__c</field>
         <readable>false</readable>
     </fieldPermissions>
-   
     <fieldPermissions>
         <editable>false</editable>
         <field>Entitlement.AssetId</field>
@@ -11252,7 +11254,6 @@
         <field>Implementation_Profile__c.NSP_collected_copies_of_state_WC_policy__c</field>
         <readable>true</readable>
     </fieldPermissions>
-  
     <fieldPermissions>
         <editable>true</editable>
         <field>Implementation_Profile__c.NSP_current_waiting_period__c</field>
@@ -13557,7 +13558,7 @@
         <editable>false</editable>
         <field>NSP_Account_Regulated_area__c.NSP_City__c</field>
         <readable>false</readable>
-    </fieldPermissions> 
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Account_Team__c.NSP_Email__c</field>
@@ -15217,7 +15218,7 @@
         <editable>false</editable>
         <field>NSP_Contribution__c.NSP_Tier_2__c</field>
         <readable>false</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Controlled_Group_Members__c.NSP_Enter_Date__c</field>
@@ -17643,7 +17644,6 @@
         <field>NSP_ReportRequest__c.NSP_Phone_Number__c</field>
         <readable>false</readable>
     </fieldPermissions>
-    
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_ReportRequest__c.NSP_Question10_MatrixSubCategories__c</field>
@@ -17979,8 +17979,6 @@
         <field>NSP_Reward__c.NSP_Benefits_Non_Profit__c</field>
         <readable>false</readable>
     </fieldPermissions>
-    
-    
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_SObject_History_Tracking__c.NSP_Account__c</field>
@@ -46221,15 +46219,11 @@
         <field>pse__Proj__c.NSP_NetSuite_External_ID__c</field>
         <readable>false</readable>
     </fieldPermissions>
-    
-   
-   
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Proj__c.NSP_OneVoice_External_ID__c</field>
         <readable>false</readable>
     </fieldPermissions>
-    
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Proj__c.NSP_RET_Client_ID__c</field>
@@ -46240,7 +46234,6 @@
         <field>pse__Proj__c.NSP_Sales_Rep__c</field>
         <readable>false</readable>
     </fieldPermissions>
-    
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Proj__c.NSP_Template_Generated__c</field>
@@ -46251,7 +46244,6 @@
         <field>pse__Proj__c.NSP_Total_Projected_Employee_Enrollment__c</field>
         <readable>false</readable>
     </fieldPermissions>
-    
     <fieldPermissions>
         <editable>false</editable>
         <field>pse__Proj__c.NSP_Visible_to_Client__c</field>
