@@ -66,7 +66,6 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
     wiredPortalLinks( value ) {
         this.wiredPortalLinksInfo = value;
         const { error , data } = value;
-        this.links = [];
         if ( data ) {
             // reduce the getPortalLinks wire response data to an array of ContentDocumentLink.Id values...
             // ~ data is-a List<ContentDocumentLink>
@@ -75,6 +74,11 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
                     return link.Id;
                 }
             );
+            if ( linkIds?.length > 0 ) {
+                this.links = undefined; // continue showing loading spinner...
+            } else {
+                this.links = []; // show 0-count file icon...
+            }
             // populate the parameter object for the getRecords wire...
             this.parameterObject = [
                 {
@@ -189,6 +193,9 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
                     size: "large" ,
                     recordIds: state.recordIds ,
                     selectedRecordId: state.selectedRecordId ,
+                    onnavigate: ( e ) => {
+                        this.handleNavigate( e );
+                    } ,
                 }
             );
         }
@@ -226,8 +233,8 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
             } catch ( error ) {
                 this.showToastError( "Error Deleting File" , JSON.stringify( error ) );
             }
+            await this.refresh();
             this.isDeleting = false;
-            this.refresh();
         }
     }
 

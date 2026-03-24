@@ -1,4 +1,5 @@
 <template>
+    <c-navigate-page-reference page-reference={pageReference} onnavigate={handleClose}></c-navigate-page-reference>
     <lightning-modal-header label={modalLabel}></lightning-modal-header>
     <lightning-modal-body>
         <div class="slds-text-align_center">
@@ -7,15 +8,33 @@
                     <div class="preview">
                         <div class="scroller-wrapper">
                             <div class="scroller slds-size_1-of-1">
+                                <template lwc:if={hasMessage}>
+                                    <div class="slds-text-heading_medium slds-m-bottom_large slds-m-top_large slds-text-color_inverse">{message}</div>
+                                </template>
                                 <div class="page">
-                                    <div class="slds-is-relative">
-                                        <template lwc:if={hasPreview}>
-                                            <img src={previewUrl} alt="File Preview"/>
-                                        </template>
-                                        <template lwc:else>
+                                    <template lwc:if={hasPreviewUrl}>
+                                        <img
+                                            src={previewUrl}
+                                            alt="File Preview"
+                                            onload={handleImageLoad}
+                                            onerror={handleImageError}
+                                            class={imageClass}
+                                            />
+                                        <lightning-button
+                                            variant="brand"
+                                            icon-name="utility:download"
+                                            label="Download"
+                                            title="Download"
+                                            onclick={handleDownloadClick}
+                                            class={buttonClass}
+                                            >
+                                        </lightning-button>
+                                    </template>
+                                    <template lwc:if={isPreviewLoading}>
+                                        <div class="slds-is-relative slds-m-bottom_xx-large slds-m-top_large">
                                             <lightning-spinner alternative-text="Loading" size="medium" variant="inverse"></lightning-spinner>
-                                        </template>
-                                    </div>
+                                        </div>
+                                    </template>
                                 </div>
                             </div>
                         </div>
