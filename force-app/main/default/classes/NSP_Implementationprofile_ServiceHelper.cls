@@ -202,24 +202,23 @@ public class NSP_Implementationprofile_ServiceHelper {
     public NSP_Implementationprofile_ServiceHelper(Id ipRecord, String automationName){
         this.newIPs = NSP_ImpAutomationsController.getIpRecord(ipRecord);
         this.isRerun=true;
-                this.automationsToExecute.add(automationName);
+        system.debug('isrerun values '+this.isRerun);
+        this.automationsToExecute.add(automationName);
     }
 
     public Map<String,Set<Id>> executeAutomation() {
         Map<String,Set<Id>> ipRecordsByAutomationMap = new Map<String,Set<Id>>();
-        if ( NSP_Implprofile_ServiceHelperUpdate.isAutomationAllowed() ) {
         try {
-                this.start();
-                this.execute();
-                this.finish();
-                ipRecordsByAutomationMap = this.ipRecordsByAutomation;
+            start();
+            execute();
+            finish();
+            ipRecordsByAutomationMap = ipRecordsByAutomation;
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 NSP_Implementationprofile_ServiceHelper.class.getName() ,
                 'executeAutomation' ,
                 e
             );
-            }
        }
        return ipRecordsByAutomationMap;
     }
@@ -320,6 +319,7 @@ public class NSP_Implementationprofile_ServiceHelper {
         }
         //Email Notificaton for Existing Retirement Plan/Keep
         if(ipRecordsByAutomation.containsKey(EXISTING_RET_PLAN_KEEP_FN)){
+            System.debug('enter emailNotifyforExistingRetirementPlanKeep');
             emailNotifyforExistingRetirementPlanKeep();
         }
         if(ipRecordsByAutomation.containsKey(EXISTING_RET_PLAN_MOVE_FN)){
@@ -330,6 +330,7 @@ public class NSP_Implementationprofile_ServiceHelper {
             emailNotifyforEEOInfoFSO();
         }
         if(ipRecordsByAutomation.containsKey(NEW_401_FN)){
+            System.debug('enter email notifyfornew 401k');
             emailNotifyforNew401k();
         }
         if(ipRecordsByAutomation.containsKey(SRP_NOTIFY_FN)){
@@ -540,6 +541,7 @@ public class NSP_Implementationprofile_ServiceHelper {
                 checkforNew401k(ipRec, existingRec);
             }
             if(automationsToExecute.contains(SRP_NOTIFY_FN)){
+                System.debug('enter entry method>>>>>>>>>>>> checkSRPNotification');
                 checkSRPNotification(ipRec, existingRec);
             }
             if(automationsToExecute.contains(WC_NOTIFICATION_FN)){
@@ -652,25 +654,14 @@ public class NSP_Implementationprofile_ServiceHelper {
         return newipAutomationList;
     }
 
-    private void updateEligibleRecordsMap(
-        Map<String,Set<Id>> automationMap ,
-        Id recordId ,
-        String fnName
-        )
-    {
-        if ( ( automationMap != null ) && String.isNotBlank( fnName ) ) {
-            Set<Id> relevantRecords = null;
-            if ( automationMap.containsKey( fnName ) ) {
-                relevantRecords = automationMap.get( fnName );
-            }
-            if ( relevantRecords == null ) {
+    private void updateEligibleRecordsMap(Map<String, Set<Id>> automationMap, Id recId, String fnName){
+        Set<Id> relevantRecords = automationMap.get(fnName);
+        if(relevantRecords == null){
             relevantRecords = new Set<Id>();
         }
-            if ( recordId != null ) {
-                relevantRecords.add( recordId );
-            }
-            automationMap.put( fnName , relevantRecords );
-        }
+
+        relevantRecords.add(recId);
+        automationMap.put(fnName, relevantRecords);
     }
 
     private void checkForClientProfileInfo(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
@@ -1821,47 +1812,34 @@ public class NSP_Implementationprofile_ServiceHelper {
     }
 
     private void emailNotifyforFlsaReviewNo() {
-        if ( this.ipRecordsByAutomation != null ) {
-            for ( Id ipRecId : this.ipRecordsByAutomation.get( NSP_Implementationprofile_ServiceHelper.FLSA_REVIEW_NO ) ) {
-                Implementation_Profile__c ipWithValue = (Implementation_Profile__c)this.data.get( NSP_Implementationprofile_ServiceHelper.IP_IDENTIFIER ).get( ipRecId );
-                if ( ipWithValue != null ) {
-                    String clients = this.relatedClients( ipWithValue , true );
+        if(ipRecordsByAutomation != null) {
+            for(Id ipRecId : ipRecordsByAutomation.get(FLSA_REVIEW_NO)) {
+                Implementation_Profile__c ipWithValue=(Implementation_Profile__c) data.get(IP_IDENTIFIER).get(ipRecId);
+                if(ipWithValue != null) {
+
+                    String clients = relatedClients(ipWithValue, TRUE);
                     String relatedAccounts = '';
                     String bulletList = '';
-                    if ( String.isNotBlank( clients ) ) {
+                    if(String.isNotBlank(clients)) {
                         relatedAccounts = RELATED_ACCOUNTS;
                         bulletList = clients;
                     }
-                    String subject = ipWithValue.Account__r.Name + ' (' + ipWithValue.NSP_AIMS_ClientNo__c + ') FLSA Exemption Classification Review Declined';
-                    String body = ''
-                        + ipWithValue.Account__r.Name
-                        + ' (' + ipWithValue.NSP_AIMS_ClientNo__c + ') does not want to have an exemption classification '
-                        + 'review during implementation.'
-                        + '<p> No action is required on your part for FLSA Exemption Classification Review.</p>'
-                        + '<p> Service Team HR Professional: You have been included on this message for information purposes only. '
+
+                    String subject = ipWithValue.Account__r.Name + ' ('+ ipWithValue.NSP_AIMS_ClientNo__c+') FLSA Exemption Classification Review Declined';
+                    String body = ipWithValue.Account__r.Name + ' ('+ ipWithValue.NSP_AIMS_ClientNo__c+') does not want to have an exemption classification '
+                        +'review during implementation.'
+                        +'<p> No action is required on your part for FLSA Exemption Classification Review. </p>'
+                        +'<p> Service Team HR Professional: You have been included on this message for information purposes only. '
                         + 'No action is required on your part. Please do not make FLSA Review a part of your initial client meetings or conversations. '
-                        + 'FLSA Review is only to be initiated when a client asks for this service in the future.</p>'
+                        + 'FLSA Review is only to be initiated when a client asks for this service in the future. </p>'
                         + relatedAccounts
-                        + bulletList
-                        ;
-                    this.emailFlsaReviewNo(
-                        ipWithValue ,
-                        NSP_Implementationprofile_ServiceHelper.FLSA_REVIEW_NO ,
-                        subject ,
-                        body ,
-                        'FLSA_Review_No'
-                    );
+                        + bulletList;
+                    emailFlsaReviewNo(ipWithValue, FLSA_REVIEW_NO, subject, body, 'FLSA_Review_No');
                 }
             }
         }
-        if ( ( impRecordId != null ) && ( impAutomationName != null ) ) {
-            NSP_Implprofile_ServiceHelperUpdate.automationRecordUpdate(
-                impRecordId ,
-                impAutomationName ,
-                impMethodName ,
-                impAutomationRecordType ,
-                impAutomationSection
-            );
+        if(impRecordId!=null && impAutomationName !=null){
+            NSP_Implprofile_ServiceHelperUpdate.automationRecordUpdate(impRecordId,impAutomationName,impMethodName,impAutomationRecordType,impAutomationSection );
         }
     }
 
@@ -3411,19 +3389,20 @@ public class NSP_Implementationprofile_ServiceHelper {
                || newIp.Type_of_retirement_plan_client_has_today__c == NSP_ServiceConstants.SIMPLEIRA
                || newIp.Type_of_retirement_plan_client_has_today__c == NSP_ServiceConstants.CLIENTB
                || newIp.Type_of_retirement_plan_client_has_today__c == NSP_ServiceConstants.UNIDENTIFIED_ORK )){
+                   System.debug('enter method>>> checkforExistingRetirementPlanKeep'+EXISTING_RET_PLAN_KEEP_FN);
                    updateEligibleRecordsMap(ipRecordsByAutomation, newIp.Id, EXISTING_RET_PLAN_KEEP_FN);
                }
     }
-
+    
     public  void emailNotifyforExistingRetirementPlanKeep(){
         NSP_PEO_Implementations__mdt pI = NSP_PEO_Implementations__mdt.getInstance(NSP_ServiceConstants.ER_PLAN_KEEP);
         List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
         List<String> listOfCCAddress = new List<String>();
         for(Id ipRecId : ipRecordsByAutomation.get(EXISTING_RET_PLAN_KEEP_FN)){
             Implementation_Profile__c ipRec = newIPs.get(ipRecId);
-            if((isRerun || ipRec.NSP_Form_Completed__c) && !isSaveForm ){
+            if((isRerun || ipRec.NSP_Form_Completed__c) && !isSaveForm ){ 
                 // added by Masthan
-                listOfCCAddress = this.buildCCAddresses( ipRecId );
+                this.buildCCAddresses( ipRecId, listOfCCAddress );
                 if(ipRec.RecordTypeId==ipMMRecordTypeId){
                     if(!isRerun && !ipAutomationdata?.get(IP_AUTOMATION_IDENTIFIER).contains(ipRec.Id+'_'+EXISTING_RET_PLAN_KEEP_FN+'_'+NSP_ServiceConstants.MIDDLEMARKET)){
                         lstEmailMessages.add(NSP_IP_MM_EmailAutomationsController.getMailObject(ipRec,new List<String>{pI.NSP_Email_Address__c},null,listOfCCAddress, mapOfEmailTempaltes.get(NSP_ServiceConstants.ER_PLAN_KEEP).Id, isRerun));
@@ -3468,6 +3447,7 @@ public class NSP_Implementationprofile_ServiceHelper {
            && newIp.Client_has_existing_retirement_plan__c == NSP_ServiceConstants.YES
            && (newIp.Type_of_retirement_plan_client_has_today__c == NSP_ServiceConstants.PEOMULTIPLIER
                || newIp.Type_of_retirement_plan_client_has_today__c == NSP_ServiceConstants.CSP401KNSP)){
+                   System.debug('method namecheckforExistingRetirementMovetoNSP401 >>>>> '+EXISTING_RET_PLAN_MOVE_FN);
                    updateEligibleRecordsMap(ipRecordsByAutomation, newIp.Id, EXISTING_RET_PLAN_MOVE_FN);
                }
     }
@@ -3481,7 +3461,7 @@ public class NSP_Implementationprofile_ServiceHelper {
             Implementation_Profile__c ipRec = newIPs.get(ipRecId);
             if((isRerun || ipRec.NSP_Form_Completed__c) && !isSaveForm ){
                 // added by Masthan
-                listOfCCAddress = this.buildCCAddresses( ipRecId );
+                this.buildCCAddresses( ipRecId, listOfCCAddress );
                 if(ipRec.RecordTypeId==ipMMRecordTypeId){
                     if(!isRerun && !ipAutomationdata?.get(IP_AUTOMATION_IDENTIFIER).contains(ipRec.Id+'_'+EXISTING_RET_PLAN_MOVE_FN+'_'+NSP_ServiceConstants.MIDDLEMARKET)){
                         lstEmailMessages.add(NSP_IP_MM_EmailAutomationsController.getMailObject(ipRec,new List<String>{pI.NSP_Email_Address__c},null,listOfCCAddress, mapOfEmailTempaltes.get(NSP_ServiceConstants.ER_PLAN_MOVE).Id, isRerun));
@@ -3620,8 +3600,12 @@ public class NSP_Implementationprofile_ServiceHelper {
         if(((ipMMRecordTypeId == newIp.recordTypeId && newIp.NSP_Asset__c!=null) || ipFSORecordTypeId== newIp.recordTypeId)
            && newIp.Client_has_existing_retirement_plan__c == NSP_ServiceConstants.NO
            && newIp.Client_want_to_begin_401k_w_NSP_setup__c == NSP_ServiceConstants.NO ){
+               System.debug('method>>>>>>>>> checkSRPNotification level ');
             getRegulatedAreaStates();
+               System.debug('listRequlatedStates>>>>>>>>>>>>>>>'+listRegulatedStates);
+               System.debug('newIp.Employees_work_in_the_following_states__c>>>>>>>>>>>>>>>'+newIp.Employees_work_in_the_following_states__c);
             if(findSharedValue(listRegulatedStates,newIp.Employees_work_in_the_following_states__c)){
+                System.debug('enter no - no method >>>>> checkSRPNotification ------>'+SRP_NOTIFY_FN);
                    updateEligibleRecordsMap(ipRecordsByAutomation, newIp.Id, SRP_NOTIFY_FN);
                }
            }
@@ -3638,7 +3622,7 @@ public class NSP_Implementationprofile_ServiceHelper {
             Implementation_Profile__c ipRec = newIPs.get(ipRecId);
             if((isRerun || ipRec.NSP_Form_Completed__c) && !isSaveForm ){
                 // added by Masthan
-                listOfCCAddress = this.buildCCAddresses( ipRecId );
+                this.buildCCAddresses( ipRecId, listOfCCAddress );
                 if(ipMMRecordTypeId == ipRec.recordTypeId){
                     if(!isRerun && !ipAutomationdata?.get(IP_AUTOMATION_IDENTIFIER).contains(ipRec.Id+'_'+SRP_NOTIFY_FN+'_'+NSP_ServiceConstants.MIDDLEMARKET)){
                         lstEmailMessages.add(NSP_IP_MM_EmailAutomationsController.getMailObject(ipRec,new List<String>{pI.NSP_Email_Address__c},null,listOfCCAddress, mapOfEmailTempaltes.get(NSP_ServiceConstants.SRP_NOTIFY).Id, isRerun));
@@ -3652,8 +3636,6 @@ public class NSP_Implementationprofile_ServiceHelper {
                         impAutomationName = NSP_ServiceConstants.AUTOMATION_SRP_NOTIFY;
                         impMethodName = SRP_NOTIFY_FN;
                         impAutomationRecordType = NSP_ServiceConstants.MIDDLEMARKET ;
-
-
                     }
                 }
                 if(ipFSORecordTypeId == ipRec.recordTypeId){
@@ -3685,10 +3667,12 @@ public class NSP_Implementationprofile_ServiceHelper {
     Automation icon: envelope
     */
     public void checkforNew401k(Implementation_Profile__c newIp, Implementation_Profile__c existingRecp){
+        System.debug('enter retirement services methods');
         if(((ipMMRecordTypeId == newIp.recordTypeId && newIp.NSP_Asset__c!=null) || ipFSORecordTypeId == newIp.recordTypeId)
            && newIp.Client_has_existing_retirement_plan__c == NSP_ServiceConstants.NO
            && newIp.Client_want_to_begin_401k_w_NSP_setup__c == NSP_ServiceConstants.YES){
-                               updateEligibleRecordsMap(ipRecordsByAutomation, newIp.Id, NEW_401_FN);
+                System.debug('enter retirement services methods 3662');
+               updateEligibleRecordsMap(ipRecordsByAutomation, newIp.Id, NEW_401_FN);
            }
     }
 
@@ -3700,7 +3684,7 @@ public class NSP_Implementationprofile_ServiceHelper {
             Implementation_Profile__c ipRec = newIPs.get(ipRecId);
             if((isRerun || ipRec.NSP_Form_Completed__c) && !isSaveForm ){
                 // added by Masthan
-                listOfCCAddress = this.buildCCAddresses( ipRecId );
+                this.buildCCAddresses( ipRecId, listOfCCAddress );
                 if(ipMMRecordTypeId == ipRec.recordTypeId){
                     if(!isRerun && !ipAutomationdata?.get(IP_AUTOMATION_IDENTIFIER).contains(ipRec.Id+'_'+NEW_401_FN+'_'+NSP_ServiceConstants.MIDDLEMARKET)){
                         lstEmailMessages.add(NSP_IP_MM_EmailAutomationsController.getMailObject(ipRec,new List<String>{pI.NSP_Email_Address__c},null,listOfCCAddress, mapOfEmailTempaltes.get(NSP_ServiceConstants.NEW_401).Id ,isRerun));
@@ -3720,7 +3704,11 @@ public class NSP_Implementationprofile_ServiceHelper {
                         ipAutomationRecords.add(NSP_Implprofile_ServiceHelperUpdate.createIPAutomation(ipRecId, NSP_ServiceConstants.AUTOMATION_NEW_401, NEW_401_FN, NSP_ServiceConstants.RT, NSP_ServiceConstants.FSOProfile));
                     }
                     else if(isRerun){
-                        lstEmailMessages.add(NSP_IP_MM_EmailAutomationsController.getMailObject(ipRec,new List<String>{pI.NSP_Email_Address__c},null,listOfCCAddress, mapOfEmailTempaltes.get(NSP_New_401_k_FSO).Id ,isRerun));
+                        lstEmailMessages.add(NSP_IP_MM_EmailAutomationsController.getMailObject(
+                            ipRec,new List<String>{pI.NSP_Email_Address__c},
+                            null,listOfCCAddress,
+                            mapOfEmailTempaltes.get(NSP_New_401_k_FSO).Id ,
+                            isRerun));
                         impRecordId = ipRecId;
                         impAutomationName = NSP_ServiceConstants.AUTOMATION_NEW_401;
                         impMethodName = NEW_401_FN;
@@ -3941,31 +3929,28 @@ public class NSP_Implementationprofile_ServiceHelper {
         }
         return contactsFormatted;
     }
-
-
-    private List<String> buildCCAddresses( String recordId ){
-        List<String> listOfCCAddress = new List<String>();
-        if ( String.isNotBlank( recordId )
-            && data.ContainsKey( IP_IDENTIFIER )
-            && data.get( IP_IDENTIFIER ) != null
+    
+    private void buildCCAddresses( String recordId, List<String> listOfCCAddress ){
+        if ( String.isNotBlank( recordId ) 
+            && data.containsKey( IP_IDENTIFIER ) 
+            && data.get( IP_IDENTIFIER ) != null 
            )
         {
             Map<Id, sObject> iPMap = data.get(IP_IDENTIFIER);
-            if ( ipMap != null
-                && ipMap.containsKey( recordId )
-                && ipMap.get(recordId) != null
+            if ( ipMap != null 
+                && ipMap.containsKey( recordId ) 
+                && ipMap.get(recordId) != null 
                )
             {
                 Implementation_Profile__c ipWithValue = (Implementation_Profile__c) iPMap.get( recordId );
-                if ( ipWithValue.NSP_Project_Manager__r != null
+                if ( ipWithValue.NSP_Project_Manager__r != null 
                     && ipWithValue.NSP_Project_Manager__r.NSP_Work_email__c != null
                    )
                 {
-                   listOfCCAddress.add( ipWithValue.NSP_Project_Manager__r.NSP_Work_email__c );
+                   listOfCCAddress.add( ipWithValue.NSP_Project_Manager__r.NSP_Work_email__c ); 
                 }
             }
         }
-        return listOfCCAddress;
     }
 
 }
