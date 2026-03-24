@@ -2186,11 +2186,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Account.NSP_Sales_Region__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Account.NSP_SalesRegion__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -4113,11 +4108,6 @@
         <editable>false</editable>
         <field>Event.NSP_Activity_Type_Reporting__c</field>
         <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Event.NSP_Completed_Date_Deprecated__c</field>
-        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -13218,11 +13208,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Task.NSP_Completed_Date_Deprecated__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Task.NSP_Completed_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -13530,11 +13515,6 @@
         <editable>false</editable>
         <field>User.NSP_Sales_Office__c</field>
         <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>User.NSP_Sales_Region__c</field>
-        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
