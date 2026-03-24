@@ -36839,6 +36839,7 @@
     <flowAccesses>
         <enabled>true</enabled>
         <flow>NSP_Project_Merge</flow>
+    </flowAccesses>
     <flowAccesses>
         <enabled>true</enabled>
         <flow>NSP_Add_Multiple_Contacts_On_Case</flow>
