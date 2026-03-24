@@ -341,6 +341,11 @@
                 <default>false</default>
                 <label>WX Open Enrollment Specialist</label>
             </value>
+            <value>
+                <fullName>Insurance Services</fullName>
+                <default>false</default>
+                <label>Insurance Services</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
