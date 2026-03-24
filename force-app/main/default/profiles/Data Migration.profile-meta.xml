@@ -35077,18 +35077,6 @@
         <field>blng__Payment__c.Payment_ID_18__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <flowAccesses>
-        <enabled>true</enabled>
-        <flow>NSP_Create_CSS_Service_Plan_Task</flow>
-    </flowAccesses>
-    <flowAccesses>
-        <enabled>true</enabled>
-        <flow>NSP_Create_BPS_Case_From_Task_Record_Page</flow>
-    </flowAccesses>
-    <flowAccesses>
-        <enabled>true</enabled>
-        <flow>Update_Status_to_Resubmitted_when_Submitted_for_Approval_again</flow>
-    </flowAccesses>
     <layoutAssignments>
         <layout>NSP_Assign_permission_set_to_Community__mdt-Assign permission set to Community Layout</layout>
     </layoutAssignments>
