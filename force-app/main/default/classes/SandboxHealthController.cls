@@ -90,7 +90,7 @@ public with sharing class SandboxHealthController {
 
         // Labels
         res.sections.add( verifyAppCustomLabels( sandbox ) );
-        res.sections.add( verifyEmailCustomLabels( sandbox ) );
+        res.sections.add( verifyEmailCustomLabels() );
 
         // Custom Settings checks (from doCSettings and doCSettings2)
         // Resolve DocuSign context first to get expected downstream values
@@ -978,7 +978,7 @@ public with sharing class SandboxHealthController {
         return core;
     }
 
-    private static Section verifyEmailCustomLabels( String sandbox ) {
+    private static Section verifyEmailCustomLabels() {
         Section email = new Section();
         email.key = 'emailCustomLabels';
         email.label = 'Email Labels';
