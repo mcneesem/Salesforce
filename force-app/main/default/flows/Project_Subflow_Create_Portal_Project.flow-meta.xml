@@ -314,15 +314,15 @@ Create if not exists else skip create record</description>
             <label>Yes : Valid Inputs</label>
         </rules>
     </decisions>
-    <description>AZD-519976 Client Portal Automation</description>
+    <description>ADO-519976 - Client Portal Automation</description>
     <environments>Default</environments>
     <formulas>
         <name>f_portalProjectName</name>
         <dataType>String</dataType>
         <expression>IF(NOT(ISBLANK({!Get_Project_Record.Id})), &quot;New Client &quot;+&quot; &quot; + {!Get_Project_Record.pse__Account__r.Name}, &quot;&quot;)</expression>
     </formulas>
-    <interviewLabel>Project - Updated - Async - Create Portal Project Subflow {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Project - Updated - Async - Create Portal Project Subflow</label>
+    <interviewLabel>Project - Subflow - Create Portal Project {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Project - Subflow - Create Portal Project</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -483,6 +483,7 @@ Create if not exists else skip create record</description>
     </start>
     <status>Draft</status>
     <subflows>
+        <description>fault handler</description>
         <name>Insperity_Fault_Handler_Subflow_Flow</name>
         <label>Insperity Fault Handler Subflow Flow</label>
         <locationX>0</locationX>
@@ -497,7 +498,7 @@ Create if not exists else skip create record</description>
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Project_Updated_Async_Create_Portal_Project_Subflow</stringValue>
+                <stringValue>Project_Subflow_Create_Portal_Project</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -513,6 +514,22 @@ Create if not exists else skip create record</description>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Output variable , newly created portal client record id</description>
+        <name>portalClientId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <description>Output variable , newly created portal project record id</description>
+        <name>portalProjectId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
     </variables>
     <variables>
         <description>Pass the project id (e.g FSO Implementation)</description>
