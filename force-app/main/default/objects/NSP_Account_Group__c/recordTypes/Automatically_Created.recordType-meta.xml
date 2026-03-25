@@ -248,6 +248,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Cost%2FRisk</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Credit challenges%2Fmove to wire</fullName>
             <default>false</default>
         </values>
@@ -595,6 +599,10 @@
         </values>
         <values>
             <fullName>Client non-compliance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cost%2FRisk</fullName>
             <default>false</default>
         </values>
         <values>
