@@ -11,7 +11,7 @@
     <filters>
         <field>pse__Project_Status__c</field>
         <operation>notEqual</operation>
-        <value>Complete,Cancelled</value>
+        <value>Complete,Cancelled,Closed Prior to CQA,Close/Lost</value>
     </filters>
     <label>My Open Projects</label>
     <sharedTo>
