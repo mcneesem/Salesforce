@@ -516,22 +516,6 @@ Create if not exists else skip create record</description>
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <description>Output variable , newly created portal client record id</description>
-        <name>portalClientId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>true</isOutput>
-    </variables>
-    <variables>
-        <description>Output variable , newly created portal project record id</description>
-        <name>portalProjectId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>true</isOutput>
-    </variables>
-    <variables>
         <description>Pass the project id (e.g FSO Implementation)</description>
         <name>projectId</name>
         <dataType>String</dataType>
