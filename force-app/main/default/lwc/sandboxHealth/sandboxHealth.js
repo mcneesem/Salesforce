@@ -34,37 +34,30 @@ export default class SandboxHealth extends LightningElement {
     }
 
     handleToggleAll() {
-        // If any top-level sections are open, collapse everything (top-level and children)
-        if (this.activeSections && this.activeSections.length > 0) {
-            this.activeSections = []; // Collapse all top-level
-            this.activeChildSections = []; // Collapse all nested children
-        } else {
-        // Otherwise, expand all top-level sections and all nested child sections (if any)
-            const topLevel = Array.isArray(this.sections) ? this.sections : [];
-            this.activeSections = topLevel.map((s) => s.key);
-
-            // Collect all child section names from grouped sections (e.g., Custom Settings)
-            const childNames = [];
-            for (const s of topLevel) {
-                if (s && Array.isArray(s.children) && s.children.length > 0) {
-                    for (const c of s.children) {
-                        if (c && c.name) {
-                            childNames.push(c.name);
-                        }
-                    }
-                }
-            }
-            this.activeChildSections = childNames;
+        if (this.hasAnyTopOpen()) {
+            this.collapseAll();
+            return;
         }
+        this.expandAll();
+    }
+
+    hasAnyTopOpen() { 
+        return Array.isArray(this.activeSections) && this.activeSections.length > 0;
+    }
+
+    collapseAll() {
+        this.activeSections = [];
+        this.activeChildSections = [];
+    }
+
+    expandAll() {
+        const top = Array.isArray(this.sections) ? this.sections : [];
+        this.activeSections = top.map(s => s.key);
+        this.activeChildSections = this.collectAllChildNames(top);
     }
 
     get toggleIcon() {
         return (!this.activeSections || this.activeSections.length === 0) ? 'utility:add' : 'utility:dash';
-    }
-
-    // Derive a set for quick lookup during render if needed
-    get activeSectionsSet() {
-        return new Set(this.activeSections || []);
     }
 
     handleRefresh() {
@@ -103,133 +96,122 @@ export default class SandboxHealth extends LightningElement {
         }
     }
 
+    decorateSection(sec) {
+        const checks = (sec?.checks || []).map((c) => ({
+            ...c,
+            isPass: c.status === 'PASS',
+            isFail: c.status === 'FAIL',
+            isWarn: c.status === 'WARN'
+        }));
+        return {
+            ...sec,
+            checks,
+            isSectionPass: sec?.status === 'PASS',
+            isSectionFail: sec?.status === 'FAIL',
+            isSectionWarn: sec?.status === 'WARN'
+        };
+    }
+
+    isCustomSettings(sec) {
+        const cat = (sec?.category || '').toString().toLowerCase();
+        return (cat === 'custom_settings' );
+    }
+
+    isCustomMetadata(sec) {
+        const cat = (sec?.category || '').toString().toLowerCase();
+        return ( cat === 'custom_metadata' );
+    }
+
+    isCustomLabels(sec) {
+        const cat = (sec?.category || '').toString().toLowerCase();
+        return ( cat === 'labels' );
+    }
+
+    bucketSections(sections) {
+        const buckets = { others: [] , customSettings: [] , customMetadata: [] , customLabels: [] };
+        for (const s of sections) {
+            if (this.isCustomSettings(s)) buckets.customSettings.push(s);
+            else if (this.isCustomMetadata(s)) buckets.customMetadata.push(s);
+            else if (this.isCustomLabels(s)) buckets.customLabels.push(s);
+            else buckets.others.push(s);
+        }
+        return buckets;
+    }
+
+    deriveStatus(children) {
+        const st = children.map((s) => s.status);
+        if (st.includes('FAIL')) return 'FAIL';
+        if (st.includes('WARN')) return 'WARN';
+        return 'PASS';
+    }
+
+    makeParent(key, label, kids, prefix) {
+        const parent = this.decorateSection({
+            key,
+            label,
+            status: this.deriveStatus(kids),
+            checks: []
+        });
+        parent.children = kids.map((c) => ({ ...c, name: `${prefix}-${c.key || c.label}` }));
+        return parent;
+    }
+
+    buildGroupedSections({ others , customSettings , customMetadata , customLabels }) {
+        const out = [...others];
+        if ( customSettings.length ) out.unshift( this.makeParent( 'CUSTOM_SETTINGS' , 'Custom Settings' , customSettings , 'CS' ) );
+        if ( customMetadata.length ) out.unshift( this.makeParent( 'CUSTOM_METADATA' , 'Custom Metadata' , customMetadata , 'CM' ) );
+        if ( customLabels.length ) out.unshift( this.makeParent( 'CUSTOM_LABELS' , 'Custom Labels' , customLabels , 'CL' ) );
+        return out;
+    }
+
+    collectAllChildNames(sections) {
+        const names = [];
+        for (const s of sections) {
+            if (s && Array.isArray(s.children)) {
+                for (const c of s.children) if (c?.name) names.push(c.name);
+            }
+        }
+        return names;
+    }
+
+    initChildActivesIfEmpty(grouped) {
+        if (!this.activeChildSections || this.activeChildSections.length === 0) {
+            this.activeChildSections = this.collectAllChildNames(grouped);
+        }
+    }
+
+    // --- Refactored to reduce cognitive complexity ---
     applyData(data) {
-        // Context
+        this.setContext(data);
+        this.setTimestamp(data);
+
+        const raw = this.toArray(data?.sections);
+        const decorated = raw.map((s) => this.decorateSection(s));
+        const buckets = this.bucketSections(decorated); // { others, customSettings, customMetadata, customLabels }
+        const grouped = this.buildGroupedSections(buckets); // adds parents when needed
+
+        this.sections = grouped;
+        this.initChildActivesIfEmpty(grouped);
+        this.initTopActivesIfEmpty();
+    }
+
+    toArray(x) {
+        return Array.isArray(x) ? x : [];
+    }
+
+    setContext(data) {
         this.context = {
             sandboxName: data?.sandboxName || '',
             instance: data?.instance || ''
         };
-        // Timestamp
+    }
+
+    setTimestamp(data) {
         try {
             const dt = data?.evaluatedAt ? new Date(data.evaluatedAt) : new Date();
             this.evaluatedAtDisplay = dt.toLocaleString();
         } catch (e) {
             this.evaluatedAtDisplay = '';
-        }
-
-        // Helper to decorate a section/check with computed flags
-        const decorateSection = (sec) => {
-            const checks = (sec.checks || []).map((c) => ({
-                ...c,
-                isPass: c.status === 'PASS',
-                isFail: c.status === 'FAIL',
-                isWarn: c.status === 'WARN'
-            }));
-            const isSectionPass = sec.status === 'PASS';
-            const isSectionFail = sec.status === 'FAIL';
-            const isSectionWarn = sec.status === 'WARN';
-            return { ...sec, checks, isSectionPass, isSectionFail, isSectionWarn };
-        };
-
-        // Predicate to identify Custom Settings sections
-        const isCustomSettingsSection = (sec) => {
-            const category = (sec?.category || '').toString().toLowerCase();
-            return ( category === 'custom_settings' );
-        };
-
-        // Predicate to identify Custom Metadata sections
-        const isCustomMetadataSection = (sec) => {
-            const category = (sec?.category || '').toString().toLowerCase();
-            return ( category === 'custom_metadata' );
-        };
-
-        // Predicate to identify Custom Label sections
-        const isCustomLabelSection = (sec) => {
-            const category = (sec?.category || '').toString().toLowerCase();
-            return ( category === 'labels' );
-        };
-
-        const rawSections = Array.isArray(data?.sections) ? data.sections : [];
-
-        const customSettingsChildren = [];
-        const customMetadataChildren = [];
-        const customLabelChildren = [];
-        const others = [];
-
-        for (const sec of rawSections) {
-            if (isCustomSettingsSection(sec)) {
-                customSettingsChildren.push(decorateSection(sec));
-            } else if (isCustomMetadataSection(sec)) {
-                customMetadataChildren.push(decorateSection(sec));
-            } else if (isCustomLabelSection(sec)) {
-                customLabelChildren.push(decorateSection(sec));
-            } else {
-                others.push(decorateSection(sec));
-            }
-        }
-
-        // Helper to build a grouped parent with derived status and named children
-        const makeParent = (key, label, kids, prefix) => {
-            const statuses = kids.map((s) => s.status);
-            let parentStatus = 'PASS';
-            if (statuses.includes('FAIL')) {
-                parentStatus = 'FAIL';
-            } else if (statuses.includes('WARN')) {
-                parentStatus = 'WARN';
-            }
-            const parent = decorateSection({
-                key,
-                label,
-                status: parentStatus,
-                checks: []
-            });
-            parent.children = kids.map((c) => ({
-                ...c,
-                name: `${prefix}-${c.key || c.label}`
-            }));
-            return parent;
-        };
-
-        // Build final sections list including grouped parents (if any)
-        const grouped = [...others];
-        if (customSettingsChildren.length > 0) {
-            grouped.unshift(makeParent('CUSTOM_SETTINGS', 'Custom Settings', customSettingsChildren, 'CS'));
-        }
-        if (customMetadataChildren.length > 0) {
-            grouped.unshift(makeParent('CUSTOM_METADATA', 'Custom Metadata', customMetadataChildren, 'CM'));
-        }
-        if (customLabelChildren.length > 0) {
-            grouped.unshift(makeParent('CUSTOM_LABELS', 'Custom Labels', customLabelChildren, 'C'));
-        }
-
-        this.sections = grouped;
-
-        // Maintain expand/collapse expectations:
-        // If no child sections are currently active, default to opening all children for grouped parents
-        if (!this.activeChildSections || this.activeChildSections.length === 0) {
-            const childNames = [];
-            for (const s of grouped) {
-                if (s && Array.isArray(s.children) && s.children.length > 0) {
-                    for (const c of s.children) {
-                        if (c && c.name) {
-                            childNames.push(c.name);
-                        }
-                    }
-                }
-            }
-            this.activeChildSections = childNames;
-        }
-
-        // Default all sections to collapsed initially if currently empty
-        if (!this.activeSections || this.activeSections.length === 0) {
-            this.activeSections = []; // Collapse all
-        }
-        // Note: activeChildSections already computed above if empty.
-
-        // Default all sections to collapsed initially if currently empty
-        if (!this.activeSections || this.activeSections.length === 0) {
-            this.activeChildSections = [];
-            this.activeSections = []; // Collapse all
         }
     }
 

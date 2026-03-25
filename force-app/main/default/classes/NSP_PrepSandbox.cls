@@ -218,46 +218,32 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
 
         // retrieve org-specific values from DocuSign_Settings__c
         Map<String, DocuSign_Settings__c> docusignSettingsMap = DocuSign_Settings__c.getAll();
-        String keyVal = '';
-        if ( String.isEmpty( sandboxName )
-            || sandboxName.toUpperCase().startsWith( 'DEV' )
-            )
-        {
-            keyVal = 'DEV';
-        } else {
-            keyVal = sandboxName.toUpperCase();
-        }
+        String keyVal = ( String.isEmpty( sandboxName ) || sandboxName.toUpperCase().startsWith( 'DEV' ) ) ? 'DEV' : sandboxName.toUpperCase();
 
-        for (String key : docusignSettingsMap.keySet()) {
-            if ( key.startsWith( keyVal ) ) {
-                keyVal = key;
-                break;
-            }
-        }
         DocuSign_Settings__c docusignSettings = DocuSign_Settings__c.getValues( keyVal );
-        resourceMap.put( 'CLMv2ApiEndpoint' , 'https://api' + docusignSettings.CLMBaseUrl__c + '/v2/' );
-        resourceMap.put( 'DSAccountID' , docusignSettings.AccountId__c );
-        resourceMap.put( 'DSUserName' , docusignSettings.UserId__c );
-        resourceMap.put( 'NSP_Docusign_Callback_Username' , docusignSettings.Docusign_Callback_Username__c );
-        resourceMap.put( 'RequestAuthDomain' , docusignSettings.BaseUrl__c );
-        resourceMap.put( 'RequestAuthEndpoint' , 'https://' + docusignSettings.BaseUrl__c + '/oauth/token' );
-        resourceMap.put( 'NSP_Invoice_Workflow_Name' , 'Invoice AutoGen' );
-        resourceMap.put( 'RequestAuthBody' , 'grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&assertion=' );
-        resourceMap.put( 'RequestAuthContentType' , 'application/x-www-form-urlencoded' );
-        resourceMap.put( 'RequestIntegratorKey' , docusignSettings.IntegrationKey__c );
-        resourceMap.put( 'RequestScope' , 'signature impersonation spring_read spring_write' );
-        resourceMap.put(
-            'RequestPrivateKey' ,
-            docusignSettings.PrivateKey1__c
-                + docusignSettings.PrivateKey2__c
-                + docusignSettings.PrivateKey3__c
-                + docusignSettings.PrivateKey4__c
-                + docusignSettings.PrivateKey5__c
-                + docusignSettings.PrivateKey6__c
-                + docusignSettings.PrivateKey7__c
-        );
-
-
+        if ( docusignSettings != null ) {
+            resourceMap.put( 'CLMv2ApiEndpoint' , 'https://api' + docusignSettings.CLMBaseUrl__c + '/v2/' );
+            resourceMap.put( 'DSAccountID' , docusignSettings.AccountId__c );
+            resourceMap.put( 'DSUserName' , docusignSettings.UserId__c );
+            resourceMap.put( 'NSP_Docusign_Callback_Username' , docusignSettings.Docusign_Callback_Username__c );
+            resourceMap.put( 'RequestAuthDomain' , docusignSettings.BaseUrl__c );
+            resourceMap.put( 'RequestAuthEndpoint' , 'https://' + docusignSettings.BaseUrl__c + '/oauth/token' );
+            resourceMap.put( 'NSP_Invoice_Workflow_Name' , 'Invoice AutoGen' );
+            resourceMap.put( 'RequestAuthBody' , 'grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&assertion=' );
+            resourceMap.put( 'RequestAuthContentType' , 'application/x-www-form-urlencoded' );
+            resourceMap.put( 'RequestIntegratorKey' , docusignSettings.IntegrationKey__c );
+            resourceMap.put( 'RequestScope' , 'signature impersonation spring_read spring_write' );
+            resourceMap.put(
+                'RequestPrivateKey' ,
+                docusignSettings.PrivateKey1__c
+                    + docusignSettings.PrivateKey2__c
+                    + docusignSettings.PrivateKey3__c
+                    + docusignSettings.PrivateKey4__c
+                    + docusignSettings.PrivateKey5__c
+                    + docusignSettings.PrivateKey6__c
+                    + docusignSettings.PrivateKey7__c
+            );
+        }
 
         for (DocuSignRESTSettings__mdt cMdRecord : cMdDocuSignREST) {
             String name = cMdRecord.DeveloperName;

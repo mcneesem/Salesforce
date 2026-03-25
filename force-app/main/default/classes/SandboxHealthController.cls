@@ -1,5 +1,13 @@
 public with sharing class SandboxHealthController {
     // test w/ SandboxHealthControllerTest (77%)
+
+    static final string STRING_INVALID = '.invalid';
+    static final string STRING_RECORDS = 'Records presence';
+    static final string STRING_CLEARED = 'Cleared to blank';
+    static final string STRING_ONE_REC = 'At least one record';
+    static final string STRING_MISSING = 'Missing value';
+    static final string STRING_ENDS_W = 'Ends with ';
+
     public enum STATUS {
         PASS , FAIL , WARN
     }
@@ -80,11 +88,9 @@ public with sharing class SandboxHealthController {
         res.instance = orgInfo.InstanceName;
         res.isSandbox = orgInfo.IsSandbox;
 
-        // Sections
-        // Split label checks into core and email label sections
-        LabelSections lblSections = verifyCustomLabels( sandbox );
-        res.sections.add( lblSections.core );
-        res.sections.add( lblSections.email );
+        // Labels
+        res.sections.add( verifyAppCustomLabels( sandbox ) );
+        res.sections.add( verifyEmailCustomLabels( sandbox ) );
 
         // Custom Settings checks (from doCSettings and doCSettings2)
         // Resolve DocuSign context first to get expected downstream values
@@ -138,16 +144,11 @@ public with sharing class SandboxHealthController {
         try {
             Map<String, DocuSign_Settings__c> all = DocuSign_Settings__c.getAll();
             if ( all == null || all.isEmpty() ) {
-                s.checks.add( newFail( 'dss_missing_all' , 'Records presence' , 'At least one row' , 'None' , 'No DocuSign_Settings__c rows found' ) );
+                s.checks.add( newFail( 'dss_missing_all' , STRING_RECORDS , 'At least one row' , 'None' , 'No DocuSign_Settings__c rows found' ) );
             } else {
                 // Determine expected row by NSP_PrepSandbox logic (prefix match)
                 String keyVal = ( String.isEmpty( sandbox ) || sandbox.toUpperCase().startsWith( 'DEV' ) ) ? 'DEV' : sandbox.toUpperCase();
-                for ( String key : all.keySet() ) {
-                    if ( key.startsWith( keyVal ) ) {
-                        keyVal = key;
-                        break;
-                    }
-                }
+
                 DocuSign_Settings__c row = DocuSign_Settings__c.getValues( keyVal );
                 resolvedAccount = ( row == null ) ? null : row.AccountNumber__c;
                 resolvedClmBase = ( row == null ) ? null : row.CLMBaseUrl__c;
@@ -177,7 +178,7 @@ public with sharing class SandboxHealthController {
         try {
             Map<String, Wingspan_Settings__c> all = Wingspan_Settings__c.getAll();
             if ( all == null || all.isEmpty() ) {
-                s.checks.add( newFail( 'wss_missing_all' , 'Records presence' , 'Row named DEV' , 'None' , 'No Wingspan_Settings__c rows found' ) );
+                s.checks.add( newFail( 'wss_missing_all' , STRING_RECORDS , 'Row named DEV' , 'None' , 'No Wingspan_Settings__c rows found' ) );
             } else {
                 Wingspan_Settings__c dev = all.get( 'DEV' );
                 Boolean actual = ( dev != null ) && dev.IsEnabled__c;
@@ -245,12 +246,16 @@ public with sharing class SandboxHealthController {
         try {
             Organization orgInfo = [SELECT Id, InstanceName, IsSandbox FROM Organization WHERE Id != null LIMIT 1];
             OrgSettings__c def = OrgSettings__c.getOrgDefaults();
-            s.checks.add( checkExact( 'org_domain' , 'OrgDomainUrl__c' , URL.getOrgDomainUrl().toExternalForm().toLowerCase(), ( def == null ) ? null : def.OrgDomainUrl__c));
-            s.checks.add( checkExact( 'org_instance' , 'Instance__c' , orgInfo.InstanceName.toLowerCase(), ( def == null ) ? null : def.Instance__c));
-            s.checks.add( checkBool( 'org_is_sbx' , 'IsSandbox__c' , orgInfo.IsSandbox, ( def == null ) ? false : def.IsSandbox__c));
-            s.checks.add( checkExact( 'org_id' , 'OrgId__c' , orgInfo.Id , ( def == null ) ? null : def.OrgId__c));
-            s.checks.add( checkExact( 'org_sb_api' , 'SandboxApiName__c' , sandbox.toLowerCase(), ( def == null ) ? null : def.SandboxApiName__c));
-            s.checks.add( checkExact( 'org_sb_name' , 'SandboxName__c' , sandbox , ( def == null ) ? null : def.SandboxName__c));
+            if ( def != null ) {
+                s.checks.add( checkExact( 'org_domain' , 'OrgDomainUrl__c' , URL.getOrgDomainUrl().toExternalForm().toLowerCase() , def.OrgDomainUrl__c));
+                s.checks.add( checkExact( 'org_instance' , 'Instance__c' , orgInfo.InstanceName.toLowerCase() , def.Instance__c));
+                s.checks.add( checkBool( 'org_is_sbx' , 'IsSandbox__c' , orgInfo.IsSandbox , def.IsSandbox__c));
+                s.checks.add( checkExact( 'org_id' , 'OrgId__c' , orgInfo.Id , def.OrgId__c));
+                s.checks.add( checkExact( 'org_sb_api' , 'SandboxApiName__c' , sandbox.toLowerCase() , def.SandboxApiName__c));
+                s.checks.add( checkExact( 'org_sb_name' , 'SandboxName__c' , sandbox , def.SandboxName__c));
+            } else {
+                s.checks.add( newWarn('org_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read OrgSettings__c' ) );
+            }
         } catch ( Exception e ) {
             s.checks.add( newWarn('org_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read OrgSettings__c: ' + e.getMessage() ) );
         }
@@ -314,8 +319,8 @@ public with sharing class SandboxHealthController {
 
         try {
             UserTriggerSettings__c def = UserTriggerSettings__c.getOrgDefaults();
-            s.checks.add( checkBlank('uts_admins', 'AllowedAdmins__c', 'Cleared to blank', ( def == null ) ? null : def.AllowedAdmins__c));
-            s.checks.add( checkBlank('uts_bcc', 'BccAddresses__c', 'Cleared to blank', ( def == null ) ? null : def.BccAddresses__c));
+            s.checks.add( checkBlank('uts_admins', 'AllowedAdmins__c', STRING_CLEARED, ( def == null ) ? null : def.AllowedAdmins__c));
+            s.checks.add( checkBlank('uts_bcc', 'BccAddresses__c', STRING_CLEARED, ( def == null ) ? null : def.BccAddresses__c));
         } catch ( Exception e ) {
             s.checks.add( newWarn('uts_query', 'Access', 'Queryable', 'Error', 'Unable to read UserTriggerSettings__c: ' + e.getMessage()));
         }
@@ -334,7 +339,7 @@ public with sharing class SandboxHealthController {
 
         try {
             Contract_Termination_Settings__c def = Contract_Termination_Settings__c.getOrgDefaults();
-            s.checks.add( checkBlank('cts_auto', 'AutoTerminationEmailAddresses__c', 'Cleared to blank', ( def == null ) ? null : def.AutoTerminationEmailAddresses__c));
+            s.checks.add( checkBlank('cts_auto', 'AutoTerminationEmailAddresses__c', STRING_CLEARED, ( def == null ) ? null : def.AutoTerminationEmailAddresses__c));
         } catch ( Exception e ) {
             s.checks.add( newWarn('cts_query', 'Access', 'Queryable', 'Error', 'Unable to read Contract_Termination_Settings__c: ' + e.getMessage()));
         }
@@ -360,7 +365,7 @@ public with sharing class SandboxHealthController {
                 when else { expectedId = null; }
             }
             if ( expectedId == null ){
-                s.checks.add( checkBlank('nvm_client', 'NVMContactWorld__clientId__c', 'Cleared to blank', ( def == null ) ? null : def.NVMContactWorld__clientId__c));
+                s.checks.add( checkBlank('nvm_client', 'NVMContactWorld__clientId__c', STRING_CLEARED, ( def == null ) ? null : def.NVMContactWorld__clientId__c));
             } else {
                 s.checks.add( checkExact('nvm_client', 'NVMContactWorld__clientId__c', expectedId, ( def == null ) ? null : def.NVMContactWorld__clientId__c));
             }
@@ -384,9 +389,9 @@ public with sharing class SandboxHealthController {
         try {
             Sales_Team_Email_Settings__c def = Sales_Team_Email_Settings__c.getOrgDefaults();
             s.checks.add( checkExact('stes_bcc', 'BccEmailAddress__c', 'test.datacollection_sfqa2@insperity.com', ( def == null ) ? null : def.BccEmailAddress__c));
-            s.checks.add( checkSuffix('stes_nat', 'NationalAccountEmailAddress__c', '.invalid', ( def == null ) ? null : def.NationalAccountEmailAddress__c));
-            s.checks.add( checkSuffix('stes_pcm', 'PrivateCapitalMarketEmailAddress__c', '.invalid', ( def == null ) ? null : def.PrivateCapitalMarketEmailAddress__c));
-            s.checks.add( checkSuffix('stes_str', 'StrategicSalesEmailAddress__c', '.invalid', ( def == null ) ? null : def.StrategicSalesEmailAddress__c));
+            s.checks.add( checkSuffix('stes_nat', 'NationalAccountEmailAddress__c', STRING_INVALID, ( def == null ) ? null : def.NationalAccountEmailAddress__c));
+            s.checks.add( checkSuffix('stes_pcm', 'PrivateCapitalMarketEmailAddress__c', STRING_INVALID, ( def == null ) ? null : def.PrivateCapitalMarketEmailAddress__c));
+            s.checks.add( checkSuffix('stes_str', 'StrategicSalesEmailAddress__c', STRING_INVALID, ( def == null ) ? null : def.StrategicSalesEmailAddress__c));
         } catch ( Exception e ) {
             s.checks.add( newWarn( 'stes_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read Sales_Team_Email_Settings__c: ' + e.getMessage() ) );
         }
@@ -408,7 +413,7 @@ public with sharing class SandboxHealthController {
         try {
             List<NSP_DocuSign_Signers__mdt> records = [SELECT Id, Label, DeveloperName, NSP_Signer_Username__c FROM NSP_DocuSign_Signers__mdt WHERE Id != null WITH SECURITY_ENFORCED];
             if ( records.isEmpty() ) {
-                s.checks.add( newFail( 'ds_signers_missing' , 'Records presence' , 'At least one record' , 'None' , 'No NSP_DocuSign_Signers__mdt records found' ) );
+                s.checks.add( newFail( 'ds_signers_missing' , STRING_RECORDS , STRING_ONE_REC , 'None' , 'No NSP_DocuSign_Signers__mdt records found' ) );
             } else {
                 // Check that each record has a valid username with sandbox suffix
                 for (NSP_DocuSign_Signers__mdt record : records) {
@@ -492,9 +497,9 @@ public with sharing class SandboxHealthController {
         try {
             List<DocuSignRESTSettings__mdt> records = [SELECT Id, Label, DeveloperName, Value__c FROM DocuSignRESTSettings__mdt WHERE Id != null WITH SECURITY_ENFORCED];
             if ( records.isEmpty() ) {
-                s.checks.add( newFail( 'ds_rest_missing' , 'Records presence' , 'At least one record' , 'None' , 'No DocuSignRESTSettings__mdt records found' ) );
+                s.checks.add( newFail( 'ds_rest_missing' , STRING_RECORDS , STRING_ONE_REC , 'None' , 'No DocuSignRESTSettings__mdt records found' ) );
             } else if ( required.isEmpty() ) {
-                s.checks.add( newFail( 'ds_settings_missing' , 'Records presence' , 'At least one record' , 'None' , 'No DocuSign_Settings__c records found' ) );
+                s.checks.add( newFail( 'ds_settings_missing' , STRING_RECORDS , STRING_ONE_REC , 'None' , 'No DocuSign_Settings__c records found' ) );
             } else {
                 // Check that each record has a value set (based on NSP_PrepSandbox.doDSREST_mdt)
                 for ( DocuSignRESTSettings__mdt record : records ) {
@@ -528,10 +533,9 @@ public with sharing class SandboxHealthController {
         try {
             List<NSP_PEO_Implementations__mdt> records = [SELECT Id, Label, DeveloperName, NSP_Email_Address__c FROM NSP_PEO_Implementations__mdt WHERE Id != null WITH SECURITY_ENFORCED];
             if ( records.isEmpty() ) {
-                s.checks.add( newFail( 'peo_missing' , 'Records presence' , 'At least one record' , 'None' , 'No NSP_PEO_Implementations__mdt records found' ) );
+                s.checks.add( newFail( 'peo_missing' , STRING_RECORDS , STRING_ONE_REC , 'None' , 'No NSP_PEO_Implementations__mdt records found' ) );
             } else {
                 String expected = 'monica.adams@insperity.com';
-                String expectedSuffix = '.invalid';
                 // Check that each record has a valid email address with sandbox suffix (based on NSP_PrepSandbox.doPEO_mdt)
                 for (NSP_PEO_Implementations__mdt record : records) {
                     String key = 'peo_' + record.DeveloperName;
@@ -545,7 +549,7 @@ public with sharing class SandboxHealthController {
                                 s.checks.add( checkExact( key , label , expected , actual ) );
                             }
                             when else {
-                                s.checks.add( checkSuffix( key , label , expectedSuffix , actual ) );
+                                s.checks.add( checkSuffix( key , label , STRING_INVALID , actual ) );
                             }
                         }
                     }
@@ -570,9 +574,8 @@ public with sharing class SandboxHealthController {
         try {
             List<NSP_Retirement_Services__mdt> records = [SELECT Id, Label, DeveloperName, NSP_Email_Address__c FROM NSP_Retirement_Services__mdt WHERE Id != null WITH SECURITY_ENFORCED];
             if ( records.isEmpty() ) {
-                s.checks.add( newFail( 'ret_missing' , 'Records presence' , 'At least one record' , 'None' , 'No NSP_Retirement_Services__mdt records found' ) );
+                s.checks.add( newFail( 'ret_missing' , STRING_RECORDS , STRING_ONE_REC , 'None' , 'No NSP_Retirement_Services__mdt records found' ) );
             } else {
-                String expectedSuffix = '.invalid';
                 // Check that each record has a valid email address with sandbox suffix (based on NSP_PrepSandbox.doRET_mdt)
                 for (NSP_Retirement_Services__mdt record : records) {
                     String key = 'ret_' + record.DeveloperName;
@@ -582,7 +585,7 @@ public with sharing class SandboxHealthController {
                     if ( String.isBlank( actual ) ) {
                         s.checks.add( newFail( key , label , 'Email address' , actual , 'Email address should not be blank' ) );
                     } else {
-                        s.checks.add( checkSuffix( key , label , expectedSuffix , actual ) );
+                        s.checks.add( checkSuffix( key , label , STRING_INVALID , actual ) );
                     }
                 }
             }
@@ -606,9 +609,9 @@ public with sharing class SandboxHealthController {
             List<NSP_ProjectTemplateMapping__mdt> records = [ SELECT Id , Label , DeveloperName , Key__c , Template_ID__c , Template_Name__c FROM NSP_ProjectTemplateMapping__mdt WHERE Id != null WITH SECURITY_ENFORCED ];
 
             if ( records.isEmpty() ) {
-                s.checks.add( newFail( 'tmpl_missing' , 'Records presence' , 'At least one record' , 'None' , 'No NSP_ProjectTemplateMapping__mdt records found' ) );
+                s.checks.add( newFail( 'tmpl_missing' , STRING_RECORDS , STRING_ONE_REC , 'None' , 'No NSP_ProjectTemplateMapping__mdt records found' ) );
             } else if ( SandboxHealthController.mTmplId == null ) {
-                s.checks.add( newWarn( 'proj_tmpl_missing' , 'Records presence' , 'At least one record' , 'None' , 'No pse__Proj__c template records found' ) );
+                s.checks.add( newWarn( 'proj_tmpl_missing' , STRING_RECORDS , STRING_ONE_REC , 'None' , 'No pse__Proj__c template records found' ) );
             } else {
                 // Check that each record has a template ID set (based on NSP_PrepSandbox.doTmpls_mdt)
                 for ( NSP_ProjectTemplateMapping__mdt record : records ) {
@@ -643,9 +646,9 @@ public with sharing class SandboxHealthController {
             List<Template_Key_and_Id_Mapping__mdt> records = [ SELECT Id , Label , DeveloperName , Key__c , Template_ID__c , Template_Name__c FROM Template_Key_and_Id_Mapping__mdt WHERE Id != null WITH SECURITY_ENFORCED ];
 
             if ( records.isEmpty() ) {
-                s.checks.add( newFail( 'tmplkey_missing' , 'Records presence' , 'At least one record' , 'None' , 'No Template_Key_and_Id_Mapping__mdt records found' ) );
+                s.checks.add( newFail( 'tmplkey_missing' , STRING_RECORDS , STRING_ONE_REC , 'None' , 'No Template_Key_and_Id_Mapping__mdt records found' ) );
             } else if ( SandboxHealthController.mTmplId == null ) {
-                s.checks.add( newWarn( 'proj_tmpl_missing' , 'Records presence' , 'At least one record' , 'None' , 'No pse__Proj__c template records found' ) );
+                s.checks.add( newWarn( 'proj_tmpl_missing' , STRING_RECORDS , STRING_ONE_REC , 'None' , 'No pse__Proj__c template records found' ) );
             } else {
                 // Check that each record has a template ID set (based on NSP_PrepSandbox.doTmplKeys_mdt)
                 for ( Template_Key_and_Id_Mapping__mdt record : records ) {
@@ -711,8 +714,7 @@ public with sharing class SandboxHealthController {
         for (Group q : queues) {
             String key = 'queue_' + String.valueOf( q.Id );
             String label = q.Name;
-            String expectedSuffix = '.invalid';
-            s.checks.add( checkSuffix( key , label , expectedSuffix , q.Email ) );
+            s.checks.add( checkSuffix( key , label , STRING_INVALID , q.Email ) );
         }
 
         s.status = calculateSectionStatus( s.checks );
@@ -744,14 +746,14 @@ public with sharing class SandboxHealthController {
     }
 
     private static Check checkExact( String key , String label , String expected , String actual ) {
-        if ( actual == null ) return newFail( key , label , expected , 'null' , 'Missing value' );
+        if ( actual == null ) return newFail( key , label , expected , 'null' , STRING_MISSING );
         return expected == actual
             ? newPass( key , label , expected , actual , 'Matches expected' )
             : newFail( key , label , expected , actual , 'Value mismatch' );
     }
 
     private static Check checkBool( String key , String label , Boolean expected , Boolean actual ) {
-        if ( actual == null ) return newFail( key , label , String.valueOf(expected) , 'null' , 'Missing value' );
+        if ( actual == null ) return newFail( key , label , String.valueOf(expected) , 'null' , STRING_MISSING );
         return expected == actual
             ? newPass(key, label, String.valueOf(expected), String.valueOf(actual), 'Matches expected')
             : newFail(key, label, String.valueOf(expected), String.valueOf(actual), 'Value mismatch');
@@ -764,10 +766,10 @@ public with sharing class SandboxHealthController {
     }
 
     private static Check checkSuffix( String key , String label , String expectedSuffix , String actual ) {
-        if (String.isBlank( actual )) return newFail( key , label , 'Ends with ' + expectedSuffix , actual , 'Missing value' );
+        if (String.isBlank( actual )) return newFail( key , label , STRING_ENDS_W + expectedSuffix , actual , STRING_MISSING );
         return actual.endsWith( expectedSuffix )
-            ? newPass( key , label , 'Ends with ' + expectedSuffix , actual , 'Has required suffix' )
-            : newFail( key , label , 'Ends with ' + expectedSuffix , actual , 'Missing required suffix' );
+            ? newPass( key , label , STRING_ENDS_W + expectedSuffix , actual , 'Has required suffix' )
+            : newFail( key , label , STRING_ENDS_W + expectedSuffix , actual , 'Missing required suffix' );
     }
 
     // Placeholder expectations for CSP Trusted Sites (keys must match CspTrustedSite fullName)
@@ -942,16 +944,7 @@ public with sharing class SandboxHealthController {
         return m;
     }
 
-    // DTO to return two sections: core and email
-    public class LabelSections {
-        @AuraEnabled public Section core;
-        @AuraEnabled public Section email;
-    }
-
-    private static LabelSections verifyCustomLabels( String sandbox ) {
-        LabelSections out = new LabelSections();
-
-        // Core section
+    private static Section verifyAppCustomLabels( String sandbox ) {
         Section core = new Section();
         core.key = 'customLabels';
         core.label = 'App Labels';
@@ -982,7 +975,10 @@ public with sharing class SandboxHealthController {
         // Set section status for core labels
         core.status = calculateSectionStatus( core.checks );
 
-        // Email labels section from Post_Refresh_Email_Labels and Post_Refresh_Email_Labels_2
+        return core;
+    }
+
+    private static Section verifyEmailCustomLabels( String sandbox ) {
         Section email = new Section();
         email.key = 'emailCustomLabels';
         email.label = 'Email Labels';
@@ -990,18 +986,15 @@ public with sharing class SandboxHealthController {
         email.checks = new List<Check>();
 
         List<String> dynamicLabelNames = new List<String>();
-        try {
-            String list1 = System.Label.Post_Refresh_Email_Labels;
-            if (String.isNotBlank(list1)) {
-                dynamicLabelNames.addAll(new List<String>(list1.split(',')));
-            }
-        } catch (Exception ignore) {}
-        try {
-            String list2 = System.Label.Post_Refresh_Email_Labels_2;
-            if (String.isNotBlank(list2)) {
-                dynamicLabelNames.addAll(new List<String>(list2.split(',')));
-            }
-        } catch (Exception ignore) {}
+        String list1 = System.Label.Post_Refresh_Email_Labels;
+        if (String.isNotBlank(list1)) {
+            dynamicLabelNames.addAll(new List<String>(list1.split(',')));
+        }
+
+        String list2 = System.Label.Post_Refresh_Email_Labels_2;
+        if (String.isNotBlank(list2)) {
+            dynamicLabelNames.addAll(new List<String>(list2.split(',')));
+        }
 
         Set<String> uniqueNames = new Set<String>();
         for (String n : dynamicLabelNames) {
@@ -1021,20 +1014,17 @@ public with sharing class SandboxHealthController {
                 act = null;
             }
 
-            final String expectedSuffix = '.invalid';
             if ( String.isBlank(act) ) {
-                email.checks.add( newFail( 'email_label_' + lblName , lblName , 'Ends with ' + expectedSuffix , act , 'Label not found or empty via System.Label.get(' + lblName + ').' ) );
+                email.checks.add( newFail( 'email_label_' + lblName , lblName , STRING_ENDS_W + STRING_INVALID , act , 'Label not found or empty via System.Label.get(' + lblName + ').' ) );
             } else {
-                email.checks.add( checkSuffix( 'email_label_' + lblName , lblName , expectedSuffix , act ) );
+                email.checks.add( checkSuffix( 'email_label_' + lblName , lblName , STRING_INVALID , act ) );
             }
         }
         // Set section status for email labels
         email.status = calculateSectionStatus( email.checks );
 
-        out.core = core;
-        out.email = email;
-        return out;
-    }    
+        return email;
+    }
 
     private static Map<String, Id> mTmplId {
         // Get map of Project Template names and IDs (based on NSP_PrepSandbox.doTmpls_mdt)
