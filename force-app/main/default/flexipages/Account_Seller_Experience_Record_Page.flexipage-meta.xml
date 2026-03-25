@@ -305,10 +305,10 @@
                             <value>FeedItem.ContentNote</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Account.Same_DUNS_new_FEIN</value>
+                            <value>Account.Same_DUNS_New_FEIN</value>
                             <visibilityRule>
                                 <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.Account_Allow_Clone_New_FEIN}</leftValue>
+                                    <leftValue>{!$Permission.CustomPermission.Account_Screen_Same_DUNS_New_FEIN}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
                                 </criteria>
