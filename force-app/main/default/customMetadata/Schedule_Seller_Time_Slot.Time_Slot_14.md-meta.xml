@@ -3,12 +3,12 @@
     <label>Time Slot 14</label>
     <protected>false</protected>
     <values>
-        <field>Is_Active__c</field>
-        <value xsi:type="xsd:boolean">true</value>
+        <field>End_Time__c</field>
+        <value xsi:type="xsd:double">18.0</value>
     </values>
     <values>
-        <field>End_Time__c</field>
-        <value xsi:type="xsd:double">17.0</value>
+        <field>Is_Active__c</field>
+        <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
         <field>Product__c</field>
@@ -16,10 +16,10 @@
     </values>
     <values>
         <field>Start_Time__c</field>
-        <value xsi:type="xsd:double">16.0</value>
+        <value xsi:type="xsd:double">17.0</value>
     </values>
     <values>
         <field>Time_Zone__c</field>
-        <value xsi:type="xsd:string">America/Chicago</value>
+        <value xsi:type="xsd:string">America/New_York</value>
     </values>
 </CustomMetadata>
