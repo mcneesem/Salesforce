@@ -620,10 +620,11 @@ public with sharing class SandboxHealthController {
 
         try {
             List<NSP_ProjectTemplateMapping__mdt> records = [ SELECT Id , Label , DeveloperName , Key__c , Template_ID__c , Template_Name__c FROM NSP_ProjectTemplateMapping__mdt WHERE Id != null WITH SECURITY_ENFORCED ];
+
             if ( records.isEmpty() ) {
                 s.checks.add( newFail( 'tmpl_missing' , 'Records presence' , 'At least one record' , 'None' , 'No NSP_ProjectTemplateMapping__mdt records found' ) );
             } else if ( SandboxHealthController.mTmplId == null ) {
-                s.checks.add( newFail( 'proj_tmpl_missing' , 'Records presence' , 'At least one record' , 'None' , 'No pse__Proj__c template records found' ) );
+                s.checks.add( newWarn( 'proj_tmpl_missing' , 'Records presence' , 'At least one record' , 'None' , 'No pse__Proj__c template records found' ) );
             } else {
                 // Check that each record has a template ID set (based on NSP_PrepSandbox.doTmpls_mdt)
                 for ( NSP_ProjectTemplateMapping__mdt record : records ) {
@@ -634,7 +635,7 @@ public with sharing class SandboxHealthController {
                     if ( String.isBlank( actual ) ) {
                         s.checks.add( newFail( key , label , 'Template ID' , actual , 'Template ID should not be blank' ) );
                     } else {
-                        s.checks.add( checkExact( key , label , SandboxHealthController.mTmplId.get( record.Template_Name__c ) , actual ) );
+                        s.checks.add( checkExact( key , label , SandboxHealthController.mTmplId.get( record.Template_Name__c.trim() ) , actual ) );
                     }
                 }
             }
@@ -656,10 +657,11 @@ public with sharing class SandboxHealthController {
 
         try {
             List<Template_Key_and_Id_Mapping__mdt> records = [ SELECT Id , Label , DeveloperName , Key__c , Template_ID__c , Template_Name__c FROM Template_Key_and_Id_Mapping__mdt WHERE Id != null WITH SECURITY_ENFORCED ];
+
             if ( records.isEmpty() ) {
                 s.checks.add( newFail( 'tmplkey_missing' , 'Records presence' , 'At least one record' , 'None' , 'No Template_Key_and_Id_Mapping__mdt records found' ) );
             } else if ( SandboxHealthController.mTmplId == null ) {
-                s.checks.add( newFail( 'proj_tmpl_missing' , 'Records presence' , 'At least one record' , 'None' , 'No pse__Proj__c template records found' ) );
+                s.checks.add( newWarn( 'proj_tmpl_missing' , 'Records presence' , 'At least one record' , 'None' , 'No pse__Proj__c template records found' ) );
             } else {
                 // Check that each record has a template ID set (based on NSP_PrepSandbox.doTmplKeys_mdt)
                 for ( Template_Key_and_Id_Mapping__mdt record : records ) {
@@ -670,7 +672,7 @@ public with sharing class SandboxHealthController {
                     if ( String.isBlank( actual ) ) {
                         s.checks.add( newFail( key , label , 'Template ID' , actual , 'Template ID should not be blank' ) );
                     } else {
-                        s.checks.add( checkExact( key , label , SandboxHealthController.mTmplId.get( record.Template_Name__c ) , actual ) );
+                        s.checks.add( checkExact( key , label , SandboxHealthController.mTmplId.get( record.Template_Name__c.trim() ) , actual ) );
                     }
                 }
             }
@@ -1053,12 +1055,12 @@ public with sharing class SandboxHealthController {
     private static Map<String, Id> mTmplId {
         // Get map of Project Template names and IDs (based on NSP_PrepSandbox.doTmpls_mdt)
         private get {
-            if ( mTmplId == null ) {
-                List<pse__Proj__c> oProjTmpls = [ SELECT Id , TemplateName__c FROM pse__Proj__c WHERE pse__Is_Template__c = true ];
-                Map<String, Id> mTmplId = new map<String, Id>();
-                for ( pse__Proj__c oProjTmpl : oProjTmpls ) {
-                    mTmplId.put( oProjTmpl.TemplateName__c , oProjTmpl.Id );
+            if (mTmplId == null) {
+                Map<String, Id> tmp = new Map<String, Id>();
+                for (pse__Proj__c t : [ SELECT Id , TemplateName__c FROM pse__Proj__c WHERE pse__Is_Template__c = true ]) {
+                    if (t.TemplateName__c != null) tmp.put( t.TemplateName__c.trim() , t.Id );
                 }
+                mTmplId = tmp;
             }
             return mTmplId;
         }

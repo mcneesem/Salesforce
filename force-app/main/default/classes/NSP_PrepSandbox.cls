@@ -307,8 +307,8 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             List<Template_Key_and_Id_Mapping__mdt> cMdTmplKeys = [ SELECT Id , Label, DeveloperName , Key__c , Template_ID__c , Template_Name__c FROM Template_Key_and_Id_Mapping__mdt WHERE Id != null ];
             List<pse__Proj__c> oProjTmpls = [ SELECT Id , TemplateName__c FROM pse__Proj__c WHERE pse__Is_Template__c = true] ;
             Map<String, Id> mTmplId = new map<String, Id>();
-            for (pse__Proj__c oProjTmpl : oProjTmpls) {
-                mTmplId.put(oProjTmpl.TemplateName__c, oProjTmpl.Id);
+            for ( pse__Proj__c oProjTmpl : oProjTmpls ) {
+                mTmplId.put( oProjTmpl.TemplateName__c , oProjTmpl.Id );
             }
 
             doTmpls_mdt( sandboxName , mTmplId , allMetadataList , cMdTmpls );
@@ -328,19 +328,19 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                 string fullName = 'NSP_ProjectTemplateMapping.' + name; //custom metadata full name
 
                 MetadataService.CustomMetadata cMdUpd = buildCustomMetadataRow( fullName , name , 'Template_ID__c' , mTmplId.get(cMdTmpl.Template_Name__c) );
-                allMetadataList = addCustomMetadataRow(allMetadataList, cMdUpd);
+                allMetadataList = addCustomMetadataRow( allMetadataList , cMdUpd );
             }
         }
     }
 
     public static void doTmplKeys_mdt(String sandboxName, Map<String, Id> mTmplId, List<List<MetadataService.Metadata>> allMetadataList, List<Template_Key_and_Id_Mapping__mdt> cMdTmplKeys) {
         for (Template_Key_and_Id_Mapping__mdt cMdTmplKey : cMdTmplKeys) {
-            if (mTmplId.containsKey(cMdTmplKey.Template_Name__c) || Test.isRunningTest()) {
+            if ( mTmplId.containsKey( cMdTmplKey.Template_Name__c ) || Test.isRunningTest() ) {
                 string name = cMdTmplKey.DeveloperName;
                 string fullName = 'Template_Key_and_Id_Mapping.' + name; //custom metadata full name
 
                 MetadataService.CustomMetadata cMdUpd = buildCustomMetadataRow( fullName , name , 'Template_ID__c' , mTmplId.get(cMdTmplKey.Template_Name__c) );
-                allMetadataList = addCustomMetadataRow(allMetadataList, cMdUpd);
+                allMetadataList = addCustomMetadataRow( allMetadataList , cMdUpd );
             }
         }
     }
