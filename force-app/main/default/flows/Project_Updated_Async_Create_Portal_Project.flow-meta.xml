@@ -68,7 +68,7 @@
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Project_Updated_Async_Create_Portal_Project_Subflow</targetReference>
+                <targetReference>Project_Subflow_Create_Portal_Project</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
@@ -76,16 +76,18 @@
     </start>
     <status>Draft</status>
     <subflows>
-        <name>Project_Updated_Async_Create_Portal_Project_Subflow</name>
-        <label>Project - Updated - Async - Create Portal Project Subflow</label>
+        <description>Invoke Subflow</description>
+        <name>Project_Subflow_Create_Portal_Project</name>
+        <label>Project - Subflow - Create Portal Project</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <flowName>Project_Updated_Async_Create_Portal_Project_Subflow</flowName>
+        <flowName>Project_Subflow_Create_Portal_Project</flowName>
         <inputAssignments>
             <name>projectId</name>
             <value>
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
 </Flow>
