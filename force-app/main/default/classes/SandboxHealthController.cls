@@ -1,21 +1,5 @@
-/**
- * ApexDocs:
- * Class: SandboxHealthController
- * Description: Provides read-only health verification for sandbox-specific configuration.
- * Sections implemented:
- *  - CSP Trusted Sites presence and expected endpoint URL
- *  - Custom Labels values against expected sandbox placeholders
- *
- * Design:
- * - with sharing, user mode operations where applicable
- * - All methods are @AuraEnabled(cacheable=true) for LWC consumption
- * - Returns a DTO with sections and checks for easy UI rendering
- *
- * Notes:
- * - Placeholder expectations are hard-coded initially and should be externalized to Custom Metadata in future.
- * - No DML is performed; this is a verification-only service.
- */
 public with sharing class SandboxHealthController {
+    // test w/ SandboxHealthControllerTest (77%)
     public enum STATUS {
         PASS , FAIL , WARN
     }
