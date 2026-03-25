@@ -1,0 +1,21 @@
+.player {
+    background-color: var(--lwc-modalPreviewPlayerBackgroundColor, rgba(0, 0, 0, 0.8));
+    border-radius: var(--slds-c-modal-radius-border, var(--slds-s-container-radius-border, var(--slds-g-radius-border-2, 1rem)));
+}
+
+.scroller-wrapper {
+    height: 100%;
+}
+
+.page {
+    border: 3px dashed transparent;
+    margin: 30px auto;
+    max-width: 800px;
+}
+
+img {
+    background-color: var(--slds-g-color-neutral-base-100, white);
+    display: block;
+    height: auto;
+    width: 100%;
+}
