@@ -1589,17 +1589,18 @@ public class NSP_Implementationprofile_ServiceHelper {
                         Case eachCase = createCase(ipRec);
                         if(ipWithValue != null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r!=null && ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c!=null){
                             eachCase.OwnerId=ipwithValue.NSP_Sr_Onboarding_Benefit_Rep__r.pse__Salesforce_User__c;
-                            eachCase.NSP_Category__c = NSP_ServiceConstants.CATEGORY7;
-                            eachCase.NSP_SubCategory__c = NSP_ServiceConstants.SUBCATEGORY1;
-                            eachCase.Subject =subject+ipWithValue.Account__r.Name;
-                            eachCase.NSP_Instructions__c = instruction;
-                            eachCase.Status = NSP_ServiceConstants.CASE_OPEN_STATUS;
-                            eachCase.NSP_Case_Sub_Status__c = NSP_ServiceConstants.UNASSIGNED;
-                            eachCase.Priority = NSP_ServiceConstants.MEDIUM;
-                            eachCase.Origin = NSP_ServiceConstants.CANCELLED_REASON;
-                            eachCase.AssetId = ipwithValue.NSP_Asset__c;
-                            eachCase.NSP_Segment__c = ipWithValue.Account__r.NSP_Service_Segment__c;
                         }
+
+                        eachCase.NSP_Category__c = NSP_ServiceConstants.CATEGORY7;
+                        eachCase.NSP_SubCategory__c = NSP_ServiceConstants.SUBCATEGORY1;
+                        eachCase.Subject =subject+ipWithValue.Account__r.Name;
+                        eachCase.NSP_Instructions__c = instruction;
+                        eachCase.Status = NSP_ServiceConstants.CASE_OPEN_STATUS;
+                        eachCase.NSP_Case_Sub_Status__c = NSP_ServiceConstants.UNASSIGNED;
+                        eachCase.Priority = NSP_ServiceConstants.MEDIUM;
+                        eachCase.Origin = NSP_ServiceConstants.CANCELLED_REASON;
+                        eachCase.AssetId = ipwithValue.NSP_Asset__c;
+                        eachCase.NSP_Segment__c = ipWithValue.Account__r.NSP_Service_Segment__c;
 
                         caseList.add(eachCase);
                         ipAutomationRecords.add(ipAutomationHelper.createIPAutomation(ipRec, MMOPTUM,MM_OPTUM_CASE,NSP_ServiceConstants.BENEFITS));
