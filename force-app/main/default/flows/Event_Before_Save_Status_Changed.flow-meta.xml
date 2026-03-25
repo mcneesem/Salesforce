@@ -80,7 +80,7 @@
         <connector>
             <targetReference>What_is_the_new_status</targetReference>
         </connector>
-        <filterLogic>or</filterLogic>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>NSP_Status__c</field>
             <operator>IsChanged</operator>
