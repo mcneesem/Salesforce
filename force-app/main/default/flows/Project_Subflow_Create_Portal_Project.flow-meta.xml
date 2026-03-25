@@ -314,7 +314,7 @@ Create if not exists else skip create record</description>
             <label>Yes : Valid Inputs</label>
         </rules>
     </decisions>
-    <description>ADO-519976 - Client Portal Automation</description>
+    <description>New Client Portal: Portal Project Creation</description>
     <environments>Default</environments>
     <formulas>
         <name>f_portalProjectName</name>
