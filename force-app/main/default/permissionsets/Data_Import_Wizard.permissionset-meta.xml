@@ -3001,7 +3001,6 @@
         <field>Event.NSP_Priority__c</field>
         <readable>false</readable>
     </fieldPermissions>
-
     <fieldPermissions>
         <editable>false</editable>
         <field>Event.NSP_Regional_Manager__c</field>
@@ -5927,8 +5926,6 @@
         <field>NSP_Reward__c.NSP_Benefits_Non_Profit__c</field>
         <readable>false</readable>
     </fieldPermissions>
-
-
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_SObject_History_Tracking__c.NSP_Account__c</field>
