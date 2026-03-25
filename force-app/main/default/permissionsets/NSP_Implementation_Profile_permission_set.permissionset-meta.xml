@@ -4,6 +4,10 @@
         <enabled>true</enabled>
         <name>NSP_Implementation_Profile_Permission_set</name>
     </customPermissions>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Use_Implementation_Profile</name>
+    </customPermissions>
     <description>Implementation Profile Permission Set - for Edit access on all fields on Implementation Profile</description>
     <fieldPermissions>
         <editable>false</editable>
