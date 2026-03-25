@@ -194,7 +194,7 @@ export default class SandboxHealth extends LightningElement {
 
         const raw = this.toArray(data?.sections);
         const decorated = raw.map((s) => this.decorateSection(s));
-        const buckets = this.bucketSections(decorated); // { others, customSettings, customMetadata, customLabels }
+        const buckets = this.bucketSections(decorated);
         const grouped = this.buildGroupedSections(buckets); // adds parents when needed
 
         this.sections = grouped;
