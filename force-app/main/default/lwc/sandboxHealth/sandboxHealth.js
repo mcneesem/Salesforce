@@ -180,6 +180,13 @@ export default class SandboxHealth extends LightningElement {
         }
     }
 
+    // Ensure top-level accordion starts collapsed if unset
+    initTopActivesIfEmpty() {
+        if (!this.activeSections || this.activeSections.length === 0) {
+            this.activeSections = [];
+        }
+    }
+
     // --- Refactored to reduce cognitive complexity ---
     applyData(data) {
         this.setContext(data);
