@@ -983,11 +983,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.NSP_Sales_Region__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Account.NSP_Short_Term_KPIs_to_Measure_Success__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -11999,11 +11994,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>User.NSP_Sales_Office__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>User.NSP_Sales_Region__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
