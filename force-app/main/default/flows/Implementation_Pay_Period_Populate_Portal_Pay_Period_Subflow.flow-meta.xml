@@ -527,7 +527,7 @@ If Pay Period is exists then Update Pay Period for the current PC else Create ne
             <label>Proceed to Update</label>
         </rules>
     </decisions>
-    <description>12/11/2025 - AZD-500803</description>
+    <description>DEPRECATED</description>
     <environments>Default</environments>
     <interviewLabel>DEPRECATED - Implementation Pay Period - Populate Portal Pay Period - Subflow {!$Flow.CurrentDateTime}</interviewLabel>
     <label>DEPRECATED - Implementation Pay Period - Populate Portal Pay Period - Subflow</label>

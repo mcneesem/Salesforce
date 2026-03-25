@@ -399,8 +399,7 @@
             <label>Proceed to Upsert</label>
         </rules>
     </decisions>
-    <description>AZD-516115 , 01/13/2025 - Portal Task Create and Update , upsert operation
-AZD - 532934 Updated the logic from portal client to protal project</description>
+    <description>DEPRECATED</description>
     <environments>Default</environments>
     <formulas>
         <name>portalTaskName</name>
