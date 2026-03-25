@@ -27,7 +27,8 @@
       (ISPICKVAL( NSP_Role__c , &apos;Manager, ITA&apos;)) ||
       (ISPICKVAL( NSP_Role__c , &apos;ITA Support Specialist&apos;)) ||
       (ISPICKVAL( NSP_Role__c , &apos;Manager, ITA Support&apos;)) ||
-      (ISPICKVAL( NSP_Role__c , &apos;401k Plan Consultant&apos;))
+      (ISPICKVAL( NSP_Role__c , &apos;401k Plan Consultant&apos;)) ||
+      (ISPICKVAL( NSP_Role__c , &apos;Insurance Services&apos;))
     ),
     NOT(
       (ISPICKVAL(PRIORVALUE(NSP_Role__c),&apos;WA/WX Payroll Specialist&apos;)) ||
@@ -43,7 +44,8 @@
       (ISPICKVAL(PRIORVALUE(NSP_Role__c),&apos;Manager, ITA&apos;)) ||
       (ISPICKVAL(PRIORVALUE(NSP_Role__c),&apos;ITA Support Specialist&apos;)) ||
       (ISPICKVAL(PRIORVALUE(NSP_Role__c),&apos;Manager, ITA Support&apos;)) ||
-      (ISPICKVAL(PRIORVALUE(NSP_Role__c),&apos;401k Plan Consultant&apos;))
+      (ISPICKVAL(PRIORVALUE(NSP_Role__c),&apos;401k Plan Consultant&apos;)) ||
+      (ISPICKVAL(PRIORVALUE(NSP_Role__c),&apos;Insurance Services&apos;))
     )
   )
 )
