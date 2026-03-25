@@ -34,11 +34,11 @@ export default class SandboxHealth extends LightningElement {
     }
 
     handleToggleAll() {
-        if (this.hasAnyTopOpen()) {
+        if ( this.hasAnyTopOpen() ) {
             this.collapseAll();
-            return;
+        } else {
+            this.expandAll();
         }
-        this.expandAll();
     }
 
     hasAnyTopOpen() { 
@@ -176,7 +176,7 @@ export default class SandboxHealth extends LightningElement {
 
     initChildActivesIfEmpty(grouped) {
         if (!this.activeChildSections || this.activeChildSections.length === 0) {
-            this.activeChildSections = this.collectAllChildNames(grouped);
+            this.activeChildSections = [];
         }
     }
 
