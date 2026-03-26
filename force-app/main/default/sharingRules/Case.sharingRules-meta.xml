@@ -159,7 +159,7 @@
         <sharedTo>
             <group>NSP_Service_Profile_Group_Members</group>
         </sharedTo>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND (6 OR 7 OR 8 OR 9 OR 10) AND 11</booleanFilter>
+        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND (6 OR 7 OR 8 OR 9 OR 10 OR 11)</booleanFilter>
         <criteriaItems>
             <field>CaseNumber</field>
             <operation>notEqual</operation>
@@ -211,9 +211,9 @@
             <value>00G4x000003qQZFEA2</value>
         </criteriaItems>
         <criteriaItems>
-            <field>RecordTypeId</field>
-            <operation>notEqual</operation>
-            <value>Dunning Case</value>
+            <field>OwnerId</field>
+            <operation>equals</operation>
+            <value>00G4x000003qQZFEA2</value>
         </criteriaItems>
         <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
