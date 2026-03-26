@@ -318,6 +318,12 @@ const DYNAMIC_FIELDS = {
       ],
     },
   ],
+  Annual_Usage_Limit__c: [
+    {
+      expValue: ['Yes'],
+      dependentFields: ['Accrual_Usage_Hours__c'],
+    }
+  ]
 };
 
 const MULTIPLE_DEPENDENT_FIELDS = {

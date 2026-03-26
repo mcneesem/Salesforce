@@ -3,6 +3,16 @@
     <description>Created as part of 250908 to give access for new fields</description>
     <fieldPermissions>
         <editable>true</editable>
+        <field>NSP_Accrual_Profile__c.Accrual_Usage_Hours__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Accrual_Profile__c.Annual_Usage_Limit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>NSP_Accrual_Profile__c.CustomOwnerId__c</field>
         <readable>true</readable>
     </fieldPermissions>
