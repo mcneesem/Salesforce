@@ -4000,62 +4000,6 @@
         <layout>NSP_Focus_Item__c-System Generated Focus Item Layout</layout>
         <recordType>NSP_Focus_Item__c.NSP_System_Generated_Focus_Item</recordType>
     </layoutAssignments>
-    <flowAccesses>
-        <enabled>true</enabled>
-        <flow>Update_Rated_Review_Details_on_Account_Group</flow>
-    </flowAccesses>
-    <flowAccesses>
-        <enabled>true</enabled>
-        <flow>Enter_Final_Employee_Orientation_Meeting_Information</flow>
-    </flowAccesses>
-    <flowAccesses>
-        <enabled>true</enabled>
-        <flow>Request_Discover_SKO_Meeting</flow>
-    </flowAccesses>
-    <flowAccesses>
-        <enabled>true</enabled>
-        <flow>Request_Employee_Orientation_Meeting</flow>
-    </flowAccesses>
-    <flowAccesses>
-        <enabled>true</enabled>
-        <flow>Take_Final_OMR_Meeting_Information</flow>
-    </flowAccesses>
-    <flowAccesses>
-        <enabled>true</enabled>
-        <flow>Update_Final_Employee_Orientation_Meeting_Information</flow>
-    </flowAccesses>
-    <flowAccesses>
-        <enabled>true</enabled>
-        <flow>Update_Final_OMR_Meeting_Information</flow>
-    </flowAccesses>
-    <flowAccesses>
-        <enabled>true</enabled>
-        <flow>NSP_Update_Project_Status_Notes</flow>
-    </flowAccesses>
-    <flowAccesses>
-        <enabled>true</enabled>
-        <flow>NSP_Update_Milestone_Status_to_InProgress</flow>
-    </flowAccesses>
-    <flowAccesses>
-        <enabled>true</enabled>
-        <flow>NSP_Add_Multiple_Contacts_On_Case</flow>
-    </flowAccesses>
-    <flowAccesses>
-        <enabled>true</enabled>
-        <flow>NSP_Create_CSS_Service_Plan_Task</flow>
-    </flowAccesses>
-    <flowAccesses>
-        <enabled>true</enabled>
-        <flow>NSP_Create_BPS_Case_From_Task_Record_Page</flow>
-    </flowAccesses>
-    <flowAccesses>
-        <enabled>true</enabled>
-        <flow>NSP_Project_Merge</flow>
-    </flowAccesses>
-    <flowAccesses>
-        <enabled>true</enabled>
-        <flow>Update_Status_to_Resubmitted_when_Submitted_for_Approval_again</flow>
-    </flowAccesses>
     <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
