@@ -96,7 +96,7 @@
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Project_Task_Populate_Portal_Task_Subflow</targetReference>
+                <targetReference>Project_Task_Subflow_Populate_Portal_Task</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
@@ -104,11 +104,11 @@
     </start>
     <status>Draft</status>
     <subflows>
-        <name>Project_Task_Populate_Portal_Task_Subflow</name>
-        <label>Project Task - Populate Portal Task - Subflow</label>
+        <name>Project_Task_Subflow_Populate_Portal_Task</name>
+        <label>Project Task - Subflow - Populate Portal Task</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <flowName>Project_Task_Populate_Portal_Task_Subflow</flowName>
+        <flowName>Project_Task_Subflow_Populate_Portal_Task</flowName>
         <inputAssignments>
             <name>recordProjectTask</name>
             <value>
