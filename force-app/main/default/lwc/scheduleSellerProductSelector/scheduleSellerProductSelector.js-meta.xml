@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>65.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Schedule Seller Product Selector</masterLabel>
+    <description>Schedule Seller Product Selector component for choosing products</description>
+    <targets>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property
+                name="recordId"
+                label="Record ID"
+                type="String"
+                role="inputOnly"
+                description="The Opportunity Record ID" />
+            <property
+                name="selectedProduct"
+                label="Selected Product"
+                type="String"
+                role="outputOnly"
+                description="The selected product value" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

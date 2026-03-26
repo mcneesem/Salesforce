@@ -1,0 +1,16 @@
+<template>
+    <!-- Render content only after load -->
+    <template lwc:if={isLoaded}>
+            <template lwc:if={showProductOptions}>
+                <lightning-radio-group
+                    name="productSelection"
+                    label="Select a Product"
+                    options={productOptions}
+                    value={selectedProduct}
+                    onchange={handleProductChange}
+                    type="radio"
+                    required>
+                </lightning-radio-group>
+            </template>
+    </template>
+</template>
