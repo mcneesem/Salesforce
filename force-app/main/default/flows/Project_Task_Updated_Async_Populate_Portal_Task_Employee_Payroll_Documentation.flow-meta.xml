@@ -60,14 +60,14 @@
             <field>Name</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Deductions – Employee Level</stringValue>
+                <stringValue>Deductions - Employee Level</stringValue>
             </value>
         </filters>
         <filters>
             <field>Name</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Employee Deduction Authorization Form – ORK</stringValue>
+                <stringValue>Employee Deduction Authorization Form - ORK</stringValue>
             </value>
         </filters>
         <filters>
