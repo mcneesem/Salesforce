@@ -38,7 +38,7 @@
         <sharedTo>
             <group>NSP_Service_Profile_Group_Members</group>
         </sharedTo>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND (6 OR 7 OR 8 OR 9 OR 10 OR 11 OR 12 OR 13 OR 14 OR 15 OR 16 OR 17 OR 18 OR 19 OR 20 OR 21)</booleanFilter>
+        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND (6 OR 7 OR 8 OR 9 OR 10 OR 11 OR 12 OR 13 OR 14 OR 15 OR 16 OR 17 OR 18 OR 19 OR 20 OR 21) AND 22</booleanFilter>
         <criteriaItems>
             <field>CaseNumber</field>
             <operation>notEqual</operation>
@@ -144,6 +144,11 @@
             <operation>equals</operation>
             <value>00G4x000001fc4gEAA</value>
         </criteriaItems>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>notEqual</operation>
+            <value>Dunning Case</value>
+        </criteriaItems>
         <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
@@ -219,7 +224,7 @@
         <sharedTo>
             <group>NSP_RET_Sales</group>
         </sharedTo>
-        <booleanFilter>1 AND 4 AND (2 OR 3)</booleanFilter>
+        <booleanFilter>1 AND 4 AND (2 OR 3) AND 5</booleanFilter>
         <criteriaItems>
             <field>CaseNumber</field>
             <operation>notEqual</operation>
@@ -240,6 +245,11 @@
             <operation>equals</operation>
             <value>RET Time Tracking,PEO</value>
         </criteriaItems>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>notEqual</operation>
+            <value>Dunning Case</value>
+        </criteriaItems>
         <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
@@ -250,10 +260,16 @@
         <sharedTo>
             <group>NSP_Corp_Cases_Visibility</group>
         </sharedTo>
+        <booleanFilter>1 AND 2</booleanFilter>
         <criteriaItems>
             <field>NSP_CorporateEmployeeEE__c</field>
             <operation>equals</operation>
             <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>notEqual</operation>
+            <value>Dunning Case</value>
         </criteriaItems>
         <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
@@ -264,7 +280,7 @@
         <sharedTo>
             <group>NSP_Service_Profile_Group_Members</group>
         </sharedTo>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7 AND 8 AND 9</booleanFilter>
+        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7 AND 8 AND 9 AND 10</booleanFilter>
         <criteriaItems>
             <field>CaseNumber</field>
             <operation>notEqual</operation>
@@ -309,6 +325,11 @@
             <field>OwnerId</field>
             <operation>notEqual</operation>
             <value>00G4x000001fXVzEAM</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>notEqual</operation>
+            <value>Dunning Case</value>
         </criteriaItems>
         <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
