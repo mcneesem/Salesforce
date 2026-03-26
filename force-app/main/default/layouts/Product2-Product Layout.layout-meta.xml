@@ -39,6 +39,10 @@
                 <behavior>Edit</behavior>
                 <field>Flat_Fee_Reference_Price__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Validate_Promotion__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

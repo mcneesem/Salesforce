@@ -2228,6 +2228,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Product2.Validate_Promotion__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>ProductConsumptionSchedule.NSP_External_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
