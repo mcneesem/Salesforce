@@ -156,6 +156,9 @@
         <label>New Account found?</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Error_AccountNF</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>Yes_new_Account</name>
@@ -179,8 +182,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Record_not_found</targetReference>
+            <targetReference>Error_RecordNF</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
@@ -346,6 +348,39 @@
         <inputReference>updateAccount</inputReference>
     </recordUpdates>
     <screens>
+        <description>Account not found.</description>
+        <name>Error_AccountNF</name>
+        <label>Error</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>ErrorAccountNF</name>
+            <fieldText>&lt;p&gt;Account not found (Id = {!createAccount.Id} ).&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Error_RecordNF</name>
+        <label>Error</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Record_NF</name>
+            <fieldText>&lt;p&gt;Record not found ( Id = {!recordId} ).&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Error_Screen</name>
         <label>Error Screen</label>
         <locationX>0</locationX>
@@ -474,7 +509,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>Record_not_found_message</name>
-            <fieldText>&lt;p&gt;Record not found&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Blank recordId.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
