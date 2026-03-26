@@ -271,6 +271,9 @@ export function processPromoProductsCSRates( lines , promoProducts ) {
                                     let newPriceAmt = 0;
                                     switch (discountType){
                                         case "no discount":
+                                            newPriceAmt = -1 * currentPrice;
+                                            csRate.set("SBQQ__Price__c", newPriceAmt);
+                                            newPriceAmt = 0;
                                             break;
                                         case "amount":
                                             newPriceAmt = -1 * currentPrice;
