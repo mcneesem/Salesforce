@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Schedule_Seller_HRCore_Enterprise</name>
+    </customPermissions>
+    <description>Scheduling tool permission set for Sales Engineer HRCore with Enterprise skill.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Schedule Seller: HRCore Enterprise</label>
+</PermissionSet>
