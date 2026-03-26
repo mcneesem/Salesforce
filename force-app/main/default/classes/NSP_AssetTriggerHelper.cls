@@ -458,7 +458,7 @@ public with sharing class NSP_AssetTriggerHelper {
             }
             List<Asset> assetResult = null;
             if ( !idSet.isEmpty() ) {
-                // PreventDmlExceptions: FIELD_CUSTOM_VALIDATION_EXCEPTION, You do not have access to edit this Opportunity. Once it is Closed Won it cannot be modified. Please contact Sales Operations team
+                // Prevent DmlExceptions: FIELD_CUSTOM_VALIDATION_EXCEPTION, You do not have access to edit this Opportunity. Once it is Closed Won it cannot be modified. Please contact Sales Operations team.
                 // ~ ignore Assets with a "Closed Won" Opportunity...
                 assetResult = [
                     SELECT Id , NSP_AIMS_First_Pay_Date__c , Opportunity__c
