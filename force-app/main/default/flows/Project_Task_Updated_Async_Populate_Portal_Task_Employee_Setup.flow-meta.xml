@@ -3,8 +3,8 @@
     <apiVersion>66.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <environments>Default</environments>
-    <interviewLabel>Project Task - Created - Async - Populate Portal Task - {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Project Task - Created - Async - Populate Portal Task - Employee Payroll Documentation</label>
+    <interviewLabel>Project Task - Updated - Async - Populate Portal Task - Employee Setup {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Project Task - Updated - Async - Populate Portal Task - Employee Setup</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -27,7 +27,7 @@
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <filterLogic>( 1 AND 2 AND ( 3 OR 4 OR 5 OR 6 OR 7 OR 8 ) )</filterLogic>
+        <filterLogic>( 1 AND 2 AND ( 3 OR 4 ) AND ( 5 OR 6 OR 7 OR 8 OR 9 OR 10 ) )</filterLogic>
         <filters>
             <field>pse__Project__c</field>
             <operator>IsNull</operator>
@@ -40,6 +40,20 @@
             <operator>IsNull</operator>
             <value>
                 <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>pse__Status__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>pse__End_Date_Time__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
             </value>
         </filters>
         <filters>
@@ -85,7 +99,7 @@
             </value>
         </filters>
         <object>pse__Project_Task__c</object>
-        <recordTriggerType>Create</recordTriggerType>
+        <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <connector>
                 <targetReference>Project_Task_Subflow_Populate_Portal_Task</targetReference>
