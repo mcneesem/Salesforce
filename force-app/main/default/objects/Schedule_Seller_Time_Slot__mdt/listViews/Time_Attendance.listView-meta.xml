@@ -13,5 +13,5 @@
         <operation>equals</operation>
         <value>Schedule_Seller_Time_Attendance</value>
     </filters>
-    <label>Time and Attendance</label>
+    <label>Time &amp; Attendance</label>
 </ListView>
