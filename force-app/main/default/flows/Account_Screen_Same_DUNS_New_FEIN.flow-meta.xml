@@ -3,139 +3,96 @@
     <apiVersion>66.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
-        <name>Assign_Account_Name_variable</name>
-        <label>Assign Account Name variable</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>accountName</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_current_Account.Name</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>New_FEIN</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_new_Account_record</name>
-        <label>Assign new Account record</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>dmlAccounts</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>dmlAccount</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Account_DML_Subflow_Create</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Assign_new_Account_record_fields</name>
         <label>Assign new Account record fields</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>dmlAccount.Name</assignToReference>
+            <assignToReference>createAccount.Name</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Get_current_Account.Name</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>dmlAccount.NSP_FEIN__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Enter_new_FEIN</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>dmlAccount.OwnerId</assignToReference>
+            <assignToReference>createAccount.OwnerId</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Get_current_Account.OwnerId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>dmlAccount.RecordTypeId</assignToReference>
+            <assignToReference>createAccount.RecordTypeId</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Get_current_Account.RecordTypeId</elementReference>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>dmlAccount.Type</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_current_Account.Type</elementReference>
-            </value>
-        </assignmentItems>
         <connector>
-            <targetReference>Assign_new_Account_record</targetReference>
+            <targetReference>Create_Account_Copy</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_update_Account_record</name>
-        <label>Assign update Account record</label>
+        <name>Assign_Update_Account_Record</name>
+        <label>Assign Update Account Record</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>dmlAccounts</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>dmlAccount</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Account_DML_Subflow_Update</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_update_Account_record_fields</name>
-        <label>Assign update Account record fields</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>dmlAccounts</assignToReference>
-            <operator>RemoveAll</operator>
-            <value>
-                <elementReference>dmlAccounts</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>dmlAccount</assignToReference>
+            <assignToReference>updateAccount</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Get_current_Account</elementReference>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>Assign_Update_Account_Record_Fields</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Update_Account_Record_Fields</name>
+        <label>Assign Update Account Record Fields</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>dmlAccount.ParentId</assignToReference>
+            <assignToReference>updateAccount.Id</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_current_Account.Id</elementReference>
+                <elementReference>Get_new_Account.Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>dmlAccount.NSP_FEIN__c</assignToReference>
+            <assignToReference>updateAccount.NSP_FEIN__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Enter_new_FEIN</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>dmlAccount.Id</assignToReference>
+            <assignToReference>updateAccount.ParentId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_new_Account.Id</elementReference>
+                <elementReference>Get_current_Account.Id</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Assign_update_Account_record</targetReference>
+            <targetReference>Update_Account_Copy</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Create_Account_Copy</name>
+        <label>Assign varFaultElement Create_Account_Copy</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_Account_Copy</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -171,6 +128,23 @@
             <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Update_Account_Copy</name>
+        <label>Assign varFaultElement Update_Account_Copy</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Account_Copy</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
     <customProperties>
         <name>ScreenProgressIndicator</name>
         <value>
@@ -194,7 +168,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assign_update_Account_record_fields</targetReference>
+                <targetReference>Assign_Update_Account_Record</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
@@ -220,7 +194,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assign_Account_Name_variable</targetReference>
+                <targetReference>New_FEIN</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
@@ -272,6 +246,19 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordCreates>
+        <name>Create_Account_Copy</name>
+        <label>Create Account Copy</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_new_Account</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Create_Account_Copy</targetReference>
+        </faultConnector>
+        <inputReference>createAccount</inputReference>
+    </recordCreates>
     <recordLookups>
         <name>Get_current_Account</name>
         <label>Get current Account</label>
@@ -335,16 +322,53 @@
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>NSP_FEIN__c</field>
+            <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Enter_new_FEIN</elementReference>
+                <elementReference>createAccount.Id</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Account</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordUpdates>
+        <name>Update_Account_Copy</name>
+        <label>Update Account Copy</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Navigate_To_Record</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Update_Account_Copy</targetReference>
+        </faultConnector>
+        <inputReference>updateAccount</inputReference>
+    </recordUpdates>
+    <screens>
+        <name>Error_Screen</name>
+        <label>Error Screen</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>FaultMessage</name>
+            <fieldText>&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <screens>
         <name>Navigate_To_Record</name>
         <label>Navigate To Record</label>
@@ -405,7 +429,7 @@
         </fields>
         <fields>
             <name>ShowAccountName</name>
-            <fieldText>&lt;p&gt;Account Name:   &lt;strong&gt;{!accountName}&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Account Name:   {!Get_current_Account.Name}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -473,54 +497,13 @@
     </start>
     <status>Draft</status>
     <subflows>
-        <name>Account_DML_Subflow_Create</name>
-        <label>Account - DML Subflow - Create</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>Get_new_Account</targetReference>
-        </connector>
-        <flowName>Account_DML_Subflow</flowName>
-        <inputAssignments>
-            <name>dmlAccounts</name>
-            <value>
-                <elementReference>dmlAccounts</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>dmlAction</name>
-            <value>
-                <stringValue>Create</stringValue>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <subflows>
-        <name>Account_DML_Subflow_Update</name>
-        <label>Account - DML Subflow - Update</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>Navigate_To_Record</targetReference>
-        </connector>
-        <flowName>Account_DML_Subflow</flowName>
-        <inputAssignments>
-            <name>dmlAccounts</name>
-            <value>
-                <elementReference>dmlAccounts</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>dmlAction</name>
-            <value>
-                <stringValue>Update</stringValue>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <subflows>
         <name>Insperity_Fault_Handler_Subflow</name>
         <label>Insperity Fault Handler Subflow</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <connector>
+            <targetReference>Error_Screen</targetReference>
+        </connector>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
@@ -531,7 +514,7 @@
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Account_Screen_Same_DUNS_New_FEIN</stringValue>
+                <stringValue>Account_Screen_Clone_with_new_FEIN</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -542,24 +525,9 @@
         </inputAssignments>
     </subflows>
     <variables>
-        <name>accountName</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>dmlAccount</name>
+        <name>createAccount</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Account</objectType>
-    </variables>
-    <variables>
-        <name>dmlAccounts</name>
-        <dataType>SObject</dataType>
-        <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Account</objectType>
@@ -570,6 +538,14 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>updateAccount</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Account</objectType>
     </variables>
     <variables>
         <name>varFaultElement</name>
