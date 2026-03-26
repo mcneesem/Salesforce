@@ -4130,6 +4130,33 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Non_Billable_Reason__c</picklist>
+        <values>
+            <fullName>Bulk Survey Pricing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Complimentary T%26R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Initial Consultation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Project Inclusion</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service Team Exception</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Origin</picklist>
         <values>
             <fullName>1st CSS TP Follow up</fullName>
