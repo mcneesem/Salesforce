@@ -96,6 +96,11 @@
                 <default>false</default>
                 <label>CPQ Compensation Services</label>
             </value>
+            <value>
+                <fullName>I9Assist CPQ</fullName>
+                <default>false</default>
+                <label>I9Assist CPQ</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
     <visibleLines>4</visibleLines>
