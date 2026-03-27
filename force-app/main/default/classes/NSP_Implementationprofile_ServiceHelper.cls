@@ -3431,7 +3431,7 @@ public class NSP_Implementationprofile_ServiceHelper {
                     this.getEmailTemplateId( NSP_ServiceConstants.ER_PLAN_KEEP ) ,
                     this.isRerun
                 );
-                if ( ipRec.RecordTypeId == this.ipMMRecordTypeId ) {
+                if ( ipRec.RecordTypeId == NSP_Implementationprofile_ServiceHelper.ipMMRecordTypeId ) {
                     if(!this.isRerun && !ipAutomationdata?.get(IP_AUTOMATION_IDENTIFIER).contains(ipRec.Id+'_'+EXISTING_RET_PLAN_KEEP_FN+'_'+NSP_ServiceConstants.MIDDLEMARKET)){
                         lstEmailMessages.add( message );
                         ipAutomationRecords.add(NSP_Implprofile_ServiceHelperUpdate.createIPAutomation(ipRecId, NSP_ServiceConstants.AUTOMATION_EXIST_RET_PLAN_KEEP, EXISTING_RET_PLAN_KEEP_FN, NSP_ServiceConstants.RT, NSP_ServiceConstants.MIDDLEMARKET));
@@ -3443,7 +3443,7 @@ public class NSP_Implementationprofile_ServiceHelper {
                         impAutomationRecordType = NSP_ServiceConstants.MIDDLEMARKET ;
                     }
                 }
-                if ( ipRec.RecordTypeId == this.ipFSORecordTypeId ) {
+                if ( ipRec.RecordTypeId == NSP_Implementationprofile_ServiceHelper.ipFSORecordTypeId ) {
                     if(!this.isRerun && !ipAutomationdata?.get(IP_AUTOMATION_IDENTIFIER).contains(ipRec.Id+'_'+EXISTING_RET_PLAN_KEEP_FN+'_'+NSP_ServiceConstants.FSOProfile)){
                         lstEmailMessages.add( message );
                         ipAutomationRecords.add(NSP_Implprofile_ServiceHelperUpdate.createIPAutomation(ipRecId, NSP_ServiceConstants.AUTOMATION_EXIST_RET_PLAN_KEEP, EXISTING_RET_PLAN_KEEP_FN, NSP_ServiceConstants.RT, NSP_ServiceConstants.FSOProfile));
@@ -3486,7 +3486,7 @@ public class NSP_Implementationprofile_ServiceHelper {
             Implementation_Profile__c ipRec = newIPs.get(ipRecId);
             if((this.isRerun || ipRec.NSP_Form_Completed__c) && !isSaveForm ){
                 listOfCCAddress = this.buildCCAddresses( ipRecId , listOfCCAddress );
-                if ( ipRec.RecordTypeId == this.ipMMRecordTypeId ) {
+                if ( ipRec.RecordTypeId == NSP_Implementationprofile_ServiceHelper.ipMMRecordTypeId ) {
                     Messaging.SingleEmailMessage message = NSP_IP_MM_EmailAutomationsController.getMailObject(
                         ipRec ,
                         listOfToAddress ,
@@ -3506,7 +3506,7 @@ public class NSP_Implementationprofile_ServiceHelper {
                         impAutomationRecordType = NSP_ServiceConstants.MIDDLEMARKET ;
                     }
                 }
-                if ( ipRec.RecordTypeId == this.ipFSORecordTypeId ) {
+                if ( ipRec.RecordTypeId == NSP_Implementationprofile_ServiceHelper.ipFSORecordTypeId ) {
                     Messaging.SingleEmailMessage message = NSP_IP_MM_EmailAutomationsController.getMailObject(
                         ipRec ,
                         listOfToAddress ,
@@ -3673,7 +3673,7 @@ public class NSP_Implementationprofile_ServiceHelper {
                     this.getEmailTemplateId( NSP_ServiceConstants.SRP_NOTIFY_401 ) ,
                     this.isRerun
                 );
-                if ( this.ipMMRecordTypeId == ipRec.RecordTypeId ) {
+                if ( NSP_Implementationprofile_ServiceHelper.ipMMRecordTypeId == ipRec.RecordTypeId ) {
                     if(!this.isRerun && !ipAutomationdata?.get(IP_AUTOMATION_IDENTIFIER).contains(ipRec.Id+'_'+SRP_NOTIFY_FN+'_'+NSP_ServiceConstants.MIDDLEMARKET)){
                         lstEmailMessages.add( message1 );
                         lstEmailMessages.add( message2 );
@@ -3687,7 +3687,7 @@ public class NSP_Implementationprofile_ServiceHelper {
                         impAutomationRecordType = NSP_ServiceConstants.MIDDLEMARKET ;
                     }
                 }
-                if ( this.ipFSORecordTypeId == ipRec.RecordTypeId ) {
+                if ( NSP_Implementationprofile_ServiceHelper.ipFSORecordTypeId == ipRec.RecordTypeId ) {
                     if(!this.isRerun && !ipAutomationdata?.get(IP_AUTOMATION_IDENTIFIER).contains(ipRec.Id+'_'+SRP_NOTIFY_FN+'_'+NSP_ServiceConstants.FSOProfile)){
                         lstEmailMessages.add( message1 );
                         lstEmailMessages.add( message2 );
@@ -3731,7 +3731,7 @@ public class NSP_Implementationprofile_ServiceHelper {
             Implementation_Profile__c ipRec = newIPs.get(ipRecId);
             if((this.isRerun || ipRec.NSP_Form_Completed__c) && !isSaveForm ){
                 listOfCCAddress = this.buildCCAddresses( ipRecId , listOfCCAddress );
-                if ( this.ipMMRecordTypeId == ipRec.RecordTypeId ) {
+                if ( NSP_Implementationprofile_ServiceHelper.ipMMRecordTypeId == ipRec.RecordTypeId ) {
                     Messaging.SingleEmailMessage message = NSP_IP_MM_EmailAutomationsController.getMailObject(
                         ipRec ,
                         listOfToAddress ,
@@ -3751,7 +3751,7 @@ public class NSP_Implementationprofile_ServiceHelper {
                         impAutomationRecordType = NSP_ServiceConstants.MIDDLEMARKET ;
                     }
                 }
-                if ( this.ipFSORecordTypeId == ipRec.RecordTypeId ) {
+                if ( NSP_Implementationprofile_ServiceHelper.ipFSORecordTypeId == ipRec.RecordTypeId ) {
                     Messaging.SingleEmailMessage message = NSP_IP_MM_EmailAutomationsController.getMailObject(
                         ipRec ,
                         listOfToAddress ,
