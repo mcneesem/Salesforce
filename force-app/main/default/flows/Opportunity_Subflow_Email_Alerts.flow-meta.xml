@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Email_Alert_Child_Opportunity_Closed_Lost_Email_Alert</name>
         <label>Email Alert - Child Opportunity Closed Lost Email Alert</label>
-        <locationX>13250</locationX>
+        <locationX>12194</locationX>
         <locationY>458</locationY>
         <actionName>Opportunity.NSP_Child_Opportunity_Closed_Lost_Email_Alert</actionName>
         <actionType>emailAlert</actionType>
@@ -18,46 +18,6 @@
             </value>
         </inputParameters>
         <nameSegment>Opportunity.NSP_Child_Opportunity_Closed_Lost_Email_Alert</nameSegment>
-        <offset>0</offset>
-    </actionCalls>
-    <actionCalls>
-        <name>Email_Alert_MidMarket_Opportunity_Closed_Lost</name>
-        <label>Email Alert - MidMarket_Opportunity_Closed_Lost</label>
-        <locationX>12194</locationX>
-        <locationY>458</locationY>
-        <actionName>Opportunity.MidMarket_Opportunity_Closed_Lost</actionName>
-        <actionType>emailAlert</actionType>
-        <faultConnector>
-            <targetReference>Assign_varFaultElement_MidMarket_Opty_Closed_Lost</targetReference>
-        </faultConnector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>SObjectRowId</name>
-            <value>
-                <elementReference>opportunityId</elementReference>
-            </value>
-        </inputParameters>
-        <nameSegment>Opportunity.MidMarket_Opportunity_Closed_Lost</nameSegment>
-        <offset>0</offset>
-    </actionCalls>
-    <actionCalls>
-        <name>Email_Alert_Notify_MidMarket_Team_of_WX_WA_Opty</name>
-        <label>Email Alert - Notify MidMarket Team of WX/WA Opty</label>
-        <locationX>12722</locationX>
-        <locationY>458</locationY>
-        <actionName>Opportunity.Notify_MidMarket_Team_of_WX_WA_Opportunity</actionName>
-        <actionType>emailAlert</actionType>
-        <faultConnector>
-            <targetReference>Assign_varFaultElement_Notify_MidMarket_Team_of_WX_WA_Opty</targetReference>
-        </faultConnector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>SObjectRowId</name>
-            <value>
-                <elementReference>opportunityId</elementReference>
-            </value>
-        </inputParameters>
-        <nameSegment>Opportunity.Notify_MidMarket_Team_of_WX_WA_Opportunity</nameSegment>
         <offset>0</offset>
     </actionCalls>
     <actionCalls>
@@ -762,7 +722,7 @@
     <assignments>
         <name>Assign_varFaultElement_Email_Alert_Child_Opportunity_Closed_Lost_Email_Alert</name>
         <label>Assign varFaultElement - Email Alert - Child Opportunity Closed Lost Email Alert</label>
-        <locationX>13514</locationX>
+        <locationX>12458</locationX>
         <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
@@ -811,23 +771,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_varFaultElement_MidMarket_Opty_Closed_Lost</name>
-        <label>Assign varFaultElement - MidMarket Opty Closed Lost</label>
-        <locationX>12458</locationX>
-        <locationY>566</locationY>
-        <assignmentItems>
-            <assignToReference>varFaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Email_Alert_MidMarket_Opportunity_Closed_Lost</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Assign_varFaultElement_Notice_of_Termination_for_Account_Owner</name>
         <label>Assign varFaultElement - Notice of Termination for Account Owner</label>
         <locationX>7706</locationX>
@@ -837,23 +780,6 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>EmailAlert_Notice_of_Termination_For_Account_Owner</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_varFaultElement_Notify_MidMarket_Team_of_WX_WA_Opty</name>
-        <label>Assign varFaultElement - Notify MidMarket Team of WX/WA Opty</label>
-        <locationX>12986</locationX>
-        <locationY>566</locationY>
-        <assignmentItems>
-            <assignToReference>varFaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Email_Alert_Notify_MidMarket_Team_of_WX_WA_Opty</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -967,7 +893,7 @@
         <description>Checks the value of the custom setting Email_Deliverability_Settings__c.IsEnabledOutbound for the current user</description>
         <name>Outbound_Email_custom_setting_check</name>
         <label>Outbound Email custom setting check</label>
-        <locationX>3350</locationX>
+        <locationX>3086</locationX>
         <locationY>242</locationY>
         <defaultConnector>
             <targetReference>Which_Email_Alert_should_be_sent</targetReference>
@@ -989,7 +915,7 @@
     <decisions>
         <name>Verify_inputs_are_populated</name>
         <label>Verify inputs are populated</label>
-        <locationX>8696</locationX>
+        <locationX>8036</locationX>
         <locationY>134</locationY>
         <defaultConnectorLabel>Inputs missing</defaultConnectorLabel>
         <rules>
@@ -1018,7 +944,7 @@
     <decisions>
         <name>Which_Email_Alert_should_be_sent</name>
         <label>Which Email Alert should be sent?</label>
-        <locationX>6914</locationX>
+        <locationX>6386</locationX>
         <locationY>350</locationY>
         <defaultConnectorLabel>N/A</defaultConnectorLabel>
         <rules>
@@ -1367,36 +1293,6 @@
             <label>NSP_Alert_when_Order_is_Generated_for_an_Opportunity</label>
         </rules>
         <rules>
-            <name>MidMarket_Opportunity_Closed_Lost</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>varEmailAlert</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>MidMarket_Opportunity_Closed_Lost</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Email_Alert_MidMarket_Opportunity_Closed_Lost</targetReference>
-            </connector>
-            <label>MidMarket_Opportunity_Closed_Lost</label>
-        </rules>
-        <rules>
-            <name>Notify_MidMarket_Team_of_WX_WA_Opportunity</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>varEmailAlert</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Notify_MidMarket_Team_of_WX_WA_Opportunity</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Email_Alert_Notify_MidMarket_Team_of_WX_WA_Opty</targetReference>
-            </connector>
-            <label>Notify_MidMarket_Team_of_WX_WA_Opportunity</label>
-        </rules>
-        <rules>
             <name>NSP_Child_Opportunity_Closed_Lost_Email_Alert</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
@@ -1436,7 +1332,7 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <start>
-        <locationX>8570</locationX>
+        <locationX>7910</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Verify_inputs_are_populated</targetReference>
