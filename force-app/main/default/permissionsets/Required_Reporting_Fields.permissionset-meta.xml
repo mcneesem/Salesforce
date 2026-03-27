@@ -1363,7 +1363,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>NSP_Client_Sub_Plan_History__c.AssetRecordType__c</field>
+        <field>NSP_Client_Sub_Plan_History__c.Asset_Record_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
