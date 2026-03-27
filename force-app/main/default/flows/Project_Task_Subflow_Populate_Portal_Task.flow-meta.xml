@@ -418,6 +418,12 @@
   &quot;Company Logo Collected&quot; , &quot;Company Logo&quot; ,
   &quot;Direct Debit Agreement&quot; , &quot;Direct Debit Agreement&quot; ,
   &quot;Client User Access&quot; , &quot;User Access Roles Request Form&quot; ,
+  &quot;Deductions - Employee Level&quot;, &quot;Employee Deductions&quot;,
+  &quot;Employee Deduction Authorization Form - ORK&quot;, &quot;Outside Record Keeper (Retirement Plan) Deductions&quot;,
+  &quot;Cell Phone Stipend&quot;, &quot;Cell Phone Stipends&quot;,
+  &quot;Employee Garnishments Provided&quot;, &quot;Garnishments&quot;,
+  &quot;COBRA Takeover Form(s) received and submitted to COBRA team&quot;, &quot;COBRA Takeover&quot;,
+  &quot;Employees Currently on LOA&quot;, &quot;LOA Information&quot;,
   {!recordProjectTask.Name}
 )</expression>
     </formulas>
@@ -446,6 +452,12 @@
   &quot;Company Logo&quot; , &quot;Company Setup&quot; ,
   &quot;Direct Debit Agreement&quot; , &quot;Company Setup&quot; ,
   &quot;User Access Roles Request Form&quot; , &quot;Company Setup&quot; ,
+  &quot;Employee Deductions&quot;, &quot;Employee Setup&quot;,
+  &quot;Outside Record Keeper (Retirement Plan) Deductions&quot;, &quot;Employee Setup&quot;,
+  &quot;Cell Phone Stipends&quot;, &quot;Employee Setup&quot;,
+  &quot;Garnishments&quot;, &quot;Employee Setup&quot;,
+  &quot;COBRA Takeover&quot;, &quot;Employee Setup&quot;,
+  &quot;LOA Information&quot;, &quot;Employee Setup&quot;,
   &quot;&quot;
 )</expression>
     </formulas>
