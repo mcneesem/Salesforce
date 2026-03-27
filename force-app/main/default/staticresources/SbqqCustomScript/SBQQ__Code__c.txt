@@ -1903,7 +1903,7 @@ export function processSlabConsumptionSchedule(quote, lines)
 {
     let slabProducts;
     if(quote && quote.record){
-        slabProducts = quote.record["Slab_Promo_Codes__c"]? quote.record["Slab_Promo_Codes__c"].split(',') : null;
+        slabProducts = quote.record["Slab_Product_Codes__c"]? quote.record["Slab_Product_Codes__c"].split(',') : null;
     }
     if(lines){
         lines.forEach(function(line){
