@@ -5,7 +5,7 @@
     <externalId>false</externalId>
     <label>Allowed Groups</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>MultiselectPicklist</type>
     <valueSet>
         <restricted>true</restricted>
