@@ -20,6 +20,11 @@
                 <default>false</default>
                 <label>Prospect</label>
             </value>
+            <value>
+                <fullName>Terminated</fullName>
+                <default>false</default>
+                <label>Terminated</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>BPA</controllingFieldValue>
@@ -29,6 +34,7 @@
             <controllingFieldValue>Premier</controllingFieldValue>
             <controllingFieldValue>Nurture Campaign</controllingFieldValue>
             <controllingFieldValue>Self-Generated</controllingFieldValue>
+            <controllingFieldValue>IIS</controllingFieldValue>
             <valueName>Client</valueName>
         </valueSettings>
         <valueSettings>
@@ -39,7 +45,12 @@
             <controllingFieldValue>Premier</controllingFieldValue>
             <controllingFieldValue>Nurture Campaign</controllingFieldValue>
             <controllingFieldValue>Self-Generated</controllingFieldValue>
+            <controllingFieldValue>IIS</controllingFieldValue>
             <valueName>Prospect</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>IIS</controllingFieldValue>
+            <valueName>Terminated</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>
