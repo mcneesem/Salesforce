@@ -12,11 +12,11 @@ const FIELDS = [ACCOUNT_SEGMENT, ACCOUNT_ID, ACCOUNT_IS_CLIENT];
 export default class ScheduleSellerProductSelector extends LightningElement {
     @api selectedProduct;
     @api recordId;
-    opportunity;
+    record;
     error;
 
     // Loading state
-    isLoading = true;
+    _isLoaded = false;
 
     // Cached fields
     _accountSegment;
@@ -24,39 +24,22 @@ export default class ScheduleSellerProductSelector extends LightningElement {
 
     @wire(getRecord, { recordId: '$recordId', fields: FIELDS})
         wiredOpportunity( { data , error } ) {
+            this._isLoaded = false;
             // Normalize to nulls to avoid undefined
             if (data) {
-                this.opportunity = data;
-                this._accountSegment = getFieldValue(data, ACCOUNT_SEGMENT) ?? null;
-                this._accountIsClient = getFieldValue(data, ACCOUNT_IS_CLIENT) ?? null;
-                this.isLoading = false;
+                this.record = data;
+                this._accountSegment = getFieldValue( this.record , ACCOUNT_SEGMENT );
+                this._accountIsClient = getFieldValue( this.record , ACCOUNT_IS_CLIENT );
+                this._isLoaded = true;
             } else if (error) {
                 this.error = error;
-                this._accountSegment = null;
-                this._accountIsClient = null;
-                this.isLoading = false;
-            } else {
-                // Neither data nor error (intermediate state) - keep loading true
-                this._accountSegment = this._accountSegment ?? null;
-                this._accountIsClient = this._accountIsClient ?? null;
+                this._accountSegment = undefined;
+                this._accountIsClient = undefined;
             }
         }
 
-     get accountSegment() {
-        const seg = this._accountSegment ?? null;
-        return seg;
-    }
-
-    // Convenience getter for templates
-    get isLoaded() {
-        return !this.isLoading;
-    }
-
     // Product options for different account segments
     get productOptions() {
-        const seg = this._accountSegment ?? null;
-        const isClient = this._accountIsClient ?? null;
-
         // Define base options per segment
         const baseBySeg = {
             MidMarket: [
@@ -83,26 +66,25 @@ export default class ScheduleSellerProductSelector extends LightningElement {
         ];
 
         // Pick base list by segment
-        const base =
-            seg === 'MidMarket' ? baseBySeg.MidMarket
-          : seg === 'Enterprise' ? baseBySeg.Enterprise
-          : baseBySeg.Default;
+        let base = baseBySeg.Default;
+        if ( this._accountSegment === 'MidMarket' ) {
+            base = baseBySeg.MidMarket;
+        } else if ( this._accountSegment === 'Enterprise' ) {
+            base = baseBySeg.Enterprise;
+        }
 
         // Single flag to decide if extended options apply
-        const canShowExtended = hasPermission === true && isClient === 'Active';
+        const canShowExtended = ( ( hasPermission === true ) && ( this._accountIsClient === 'Active' ) );
 
         // Return base plus extended (when allowed) or just base
         return canShowExtended ? [...base, ...extended] : base;
     }
 
     handleProductChange(event) {
-        const value = event && event.detail ? event.detail.value : null;
-        this.selectedProduct = value;
+        this.selectedProduct = event?.detail?.value;
     }
 
     get showProductOptions() {
-        const seg = this.accountSegment;
-        const show = seg !== undefined && seg !== null;
-        return show;
+        return ( this._isLoaded && this._accountSegment );
     }
 }
