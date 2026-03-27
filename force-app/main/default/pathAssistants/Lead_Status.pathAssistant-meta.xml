@@ -5,32 +5,15 @@
     <fieldName>Status</fieldName>
     <masterLabel>Lead Status</masterLabel>
     <pathAssistantSteps>
-        <fieldNames>Name</fieldNames>
-        <fieldNames>Company</fieldNames>
-        <info>&lt;ul&gt;&lt;li&gt;&lt;i style=&quot;font-size: 9pt;&quot;&gt;Prioritize action based on FIRE score&lt;/i&gt;&lt;/li&gt;&lt;li&gt;&lt;i style=&quot;font-size: 9pt;&quot;&gt;Read notes from any previous interactions to determine next best step&lt;/i&gt;&lt;/li&gt;&lt;li&gt;&lt;i style=&quot;font-size: 9pt;&quot;&gt;A new lead is protected for 5 days. Be sure to advance the lead to “working” within this timeframe&lt;/i&gt;&lt;/li&gt;&lt;/ul&gt;</info>
         <picklistValueName>New</picklistValueName>
     </pathAssistantSteps>
     <pathAssistantSteps>
-        <fieldNames>Name</fieldNames>
-        <fieldNames>Company</fieldNames>
-        <info>&lt;ul&gt;&lt;li&gt;&lt;i style=&quot;font-size: 9pt;&quot;&gt;Review FIRE score for increased or recent engagement&lt;/i&gt;&lt;/li&gt;&lt;li&gt;&lt;i style=&quot;font-size: 9pt;&quot;&gt;Execute a low-touch cadence to keep the prospect interested until they are ready to meet&lt;/i&gt;&lt;/li&gt;&lt;li&gt;&lt;i style=&quot;font-size: 9pt;&quot;&gt;Move the lead status to “converted” if a DC is set&lt;/i&gt;&lt;/li&gt;&lt;li&gt;&lt;i style=&quot;font-size: 9pt;&quot;&gt;Move the lead status to “unqualified” if you no future interacted is appropriate&lt;/i&gt;&lt;/li&gt;&lt;/ul&gt;</info>
         <picklistValueName>Nurturing</picklistValueName>
     </pathAssistantSteps>
     <pathAssistantSteps>
-        <fieldNames>Name</fieldNames>
-        <fieldNames>Company</fieldNames>
-        <picklistValueName>Qualified</picklistValueName>
-    </pathAssistantSteps>
-    <pathAssistantSteps>
-        <fieldNames>Name</fieldNames>
-        <fieldNames>Company</fieldNames>
-        <info>&lt;ul&gt;&lt;li&gt;&lt;span style=&quot;font-size: 9pt;&quot;&gt;No future interaction is warranted&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;</info>
         <picklistValueName>Unqualified</picklistValueName>
     </pathAssistantSteps>
     <pathAssistantSteps>
-        <fieldNames>Name</fieldNames>
-        <fieldNames>Company</fieldNames>
-        <info>&lt;ul&gt;&lt;li&gt;&lt;span style=&quot;font-size: 9pt;&quot;&gt;Execute a strategic contact plan (i.e., high-touch or low-touch cadence) to schedule a Discovery Call&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 9pt;&quot;&gt;Log every attempt to contact&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 9pt;&quot;&gt;A lead is considered an active Working lead if there is activity logged within the past 30 days&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 9pt;&quot;&gt;Move the lead status to “converted” if a DC is set&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 9pt;&quot;&gt;Move the lead status to “nurturing” if you’ve made contact and want to stay passively engaged&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 9pt;&quot;&gt;Move the lead status to &amp;quot;unqualified&amp;quot; if no future interaction is appropriate&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</info>
         <picklistValueName>Working</picklistValueName>
     </pathAssistantSteps>
     <recordTypeName>Lead</recordTypeName>
