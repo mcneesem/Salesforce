@@ -512,10 +512,15 @@
                 <default>false</default>
                 <label>Has_Legacy_1099_Product_Text__c</label>
             </value>
-            <value>
+             <value>
                 <fullName>Has_Promo__c</fullName>
                 <default>false</default>
                 <label>Has_Promo__c</label>
+            </value>
+            <value>
+                <fullName>Has_SMS__c</fullName>
+                <default>false</default>
+                <label>Has_SMS__c</label>
             </value>
         </valueSetDefinition>
         <valueSettings>
@@ -729,6 +734,11 @@
         <valueSettings>
             <controllingFieldValue>Quote</controllingFieldValue>
             <valueName>Has_Promo__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <valueName>Has_SMS__c</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Quote Line</controllingFieldValue>
