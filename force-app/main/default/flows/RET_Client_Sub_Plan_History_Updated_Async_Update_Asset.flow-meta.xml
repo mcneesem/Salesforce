@@ -15,6 +15,23 @@
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Update_Asset</name>
+        <label>Set Fault Element : Update_Asset</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Asset</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
             <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
@@ -36,7 +53,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>RET_Client_Sub_Plan_History_Updated_Async_Update_Asset_Subflow</targetReference>
+                <targetReference>Update_Asset</targetReference>
             </connector>
             <label>No : Active SubPlan</label>
         </rules>
@@ -98,6 +115,36 @@ Alternative solution to NSP_ClientSubPlanHistoryBatch</description>
         <queriedFields>Id</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordUpdates>
+        <name>Update_Asset</name>
+        <label>Update Asset</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Update_Asset</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.NSP_Asset__c</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>NSP_Termination_Date__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Terminated</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Asset</object>
+    </recordUpdates>
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
@@ -131,14 +178,14 @@ Alternative solution to NSP_ClientSubPlanHistoryBatch</description>
             </value>
         </filters>
         <filters>
-            <field>AssetRecordType__c</field>
+            <field>Asset_Record_Type__c</field>
             <operator>EqualTo</operator>
             <value>
                 <stringValue>RET_Choice</stringValue>
             </value>
         </filters>
         <filters>
-            <field>AssetRecordType__c</field>
+            <field>Asset_Record_Type__c</field>
             <operator>EqualTo</operator>
             <value>
                 <stringValue>RET_WO</stringValue>
@@ -177,31 +224,6 @@ Alternative solution to NSP_ClientSubPlanHistoryBatch</description>
             <name>faultMessage</name>
             <value>
                 <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <subflows>
-        <name>RET_Client_Sub_Plan_History_Updated_Async_Update_Asset_Subflow</name>
-        <label>RET-Client Sub Plan History - Updated - Async - Update Asset Subflow</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <flowName>RET_Client_Sub_Plan_History_Updated_Async_Update_Asset_Subflow</flowName>
-        <inputAssignments>
-            <name>assetRecordId</name>
-            <value>
-                <elementReference>$Record.NSP_Asset__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>assetStatus</name>
-            <value>
-                <stringValue>Terminated</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>assetTerminationDate</name>
-            <value>
-                <elementReference>$Flow.CurrentDate</elementReference>
             </value>
         </inputAssignments>
     </subflows>
