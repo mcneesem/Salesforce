@@ -14,7 +14,7 @@
                 label="Record ID"
                 type="String"
                 role="inputOnly"
-                description="The Opportunity Record ID" />
+                description="The record Id" />
             <property
                 name="selectedProduct"
                 label="Selected Product"
