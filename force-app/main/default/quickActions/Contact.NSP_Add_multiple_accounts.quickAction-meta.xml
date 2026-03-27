@@ -2,7 +2,7 @@
 <QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Add multiple accounts to contact record in a single flow.</description>
     <flowDefinition>NSP_Add_Multiple_Accounts_on_Contact</flowDefinition>
-    <label>Add multiple accounts</label>
+    <label>Add Multiple Accounts</label>
     <optionsCreateFeedItem>false</optionsCreateFeedItem>
     <type>Flow</type>
 </QuickAction>

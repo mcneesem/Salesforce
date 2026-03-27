@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <apiVersion>54.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Add_Account_Id_in_Collection</name>
         <label>Add Account Id in Collection</label>
         <locationX>270</locationX>
-        <locationY>518</locationY>
+        <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>ExistingAccountIDs</assignToReference>
             <operator>Add</operator>
@@ -20,8 +21,8 @@
     <assignments>
         <name>Add_Non_Service_Role_Records_to_Collection</name>
         <label>Add Non Service Role Records to Collection</label>
-        <locationX>798</locationX>
-        <locationY>1454</locationY>
+        <locationX>1062</locationX>
+        <locationY>1514</locationY>
         <assignmentItems>
             <assignToReference>AcrRecords</assignToReference>
             <operator>Add</operator>
@@ -36,8 +37,8 @@
     <assignments>
         <name>Add_one_more_record</name>
         <label>Add one more record</label>
-        <locationX>534</locationX>
-        <locationY>1790</locationY>
+        <locationX>798</locationX>
+        <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>values</assignToReference>
             <operator>Add</operator>
@@ -52,8 +53,8 @@
     <assignments>
         <name>Add_Service_Role_Records_to_Collection</name>
         <label>Add Service Role Records to Collection</label>
-        <locationX>534</locationX>
-        <locationY>1454</locationY>
+        <locationX>798</locationX>
+        <locationY>1514</locationY>
         <assignmentItems>
             <assignToReference>ServiceRoleRecords</assignToReference>
             <operator>Add</operator>
@@ -69,7 +70,7 @@
         <name>Assign_values</name>
         <label>Assign values</label>
         <locationX>182</locationX>
-        <locationY>158</locationY>
+        <locationY>134</locationY>
         <assignmentItems>
             <assignToReference>values</assignToReference>
             <operator>Add</operator>
@@ -84,8 +85,8 @@
     <assignments>
         <name>Populate_ACR_from_user_input</name>
         <label>Populate ACR from user input</label>
-        <locationX>666</locationX>
-        <locationY>1214</locationY>
+        <locationX>930</locationX>
+        <locationY>1298</locationY>
         <assignmentItems>
             <assignToReference>ACR_Record.AccountId</assignToReference>
             <operator>Assign</operator>
@@ -147,10 +148,28 @@
         </connector>
     </assignments>
     <assignments>
+        <description>Prevent DmlExceptions: FIELD_CUSTOM_VALIDATION_EXCEPTION: New contact relationships cannot be added on accounts owned by &quot;Available&quot;. Please contact your District Manager to request this account.</description>
+        <name>Populate_Available_Owner_Error_Message</name>
+        <label>Populate Available Owner Error Message</label>
+        <locationX>534</locationX>
+        <locationY>1298</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>New contact relationships cannot be added on accounts owned by &quot;Available&quot;. Please contact your District Manager to request this account.</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fill_Account_Details</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Populate_Common_Details</name>
         <label>Populate Common Details</label>
         <locationX>138</locationX>
-        <locationY>2558</locationY>
+        <locationY>2582</locationY>
         <assignmentItems>
             <assignToReference>Iterate_Service_Role_Records.NSP_KIP_Perspective_of_Relationship__c</assignToReference>
             <operator>Assign</operator>
@@ -187,7 +206,7 @@
         <name>Populate_relationship_exists_error_message</name>
         <label>Populate relationship exists error message</label>
         <locationX>270</locationX>
-        <locationY>1214</locationY>
+        <locationY>1082</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
             <operator>Assign</operator>
@@ -196,14 +215,15 @@
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Fill_Account_Details</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Unset_error_message</name>
         <label>Unset error message</label>
-        <locationX>468</locationX>
-        <locationY>974</locationY>
+        <locationX>501</locationX>
+        <locationY>866</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
             <operator>Assign</operator>
@@ -218,10 +238,10 @@
     <decisions>
         <name>Check_account_already_associated</name>
         <label>Check account already associated</label>
-        <locationX>468</locationX>
-        <locationY>1094</locationY>
+        <locationX>501</locationX>
+        <locationY>974</locationY>
         <defaultConnector>
-            <targetReference>Populate_ACR_from_user_input</targetReference>
+            <targetReference>Get_Check_Account</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -248,10 +268,43 @@
         </rules>
     </decisions>
     <decisions>
+        <description>Prevent DmlExceptions: FIELD_CUSTOM_VALIDATION_EXCEPTION: New contact relationships cannot be added on accounts owned by &quot;Available&quot;. Please contact your District Manager to request this account.</description>
+        <name>Check_Account_Owner</name>
+        <label>Check Account Owner</label>
+        <locationX>732</locationX>
+        <locationY>1190</locationY>
+        <defaultConnector>
+            <targetReference>Populate_ACR_from_user_input</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Available</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Check_Account</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Check_Account.OwnerId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>0054x000008PgqNAAS</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Populate_Available_Owner_Error_Message</targetReference>
+            </connector>
+            <label>Is Available</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Is_Add_More_Button_Clicked</name>
         <label>Is Add More Button Clicked</label>
-        <locationX>666</locationX>
-        <locationY>1670</locationY>
+        <locationX>930</locationX>
+        <locationY>1706</locationY>
         <defaultConnector>
             <targetReference>Iteration</targetReference>
         </defaultConnector>
@@ -276,7 +329,7 @@
         <name>Is_any_service_role_user_exists</name>
         <label>Is any service role user exists</label>
         <locationX>182</locationX>
-        <locationY>2198</locationY>
+        <locationY>2258</locationY>
         <defaultConnector>
             <targetReference>Create_ACRs</targetReference>
         </defaultConnector>
@@ -300,8 +353,8 @@
     <decisions>
         <name>Is_Service_Role_Selected</name>
         <label>Is Service Role Selected</label>
-        <locationX>666</locationX>
-        <locationY>1334</locationY>
+        <locationX>930</locationX>
+        <locationY>1406</locationY>
         <defaultConnector>
             <targetReference>Add_Non_Service_Role_Records_to_Collection</targetReference>
         </defaultConnector>
@@ -362,13 +415,14 @@
         <picklistField>NSP_Service_Roles__c</picklistField>
         <picklistObject>AccountContactRelation</picklistObject>
     </dynamicChoiceSets>
+    <environments>Default</environments>
     <interviewLabel>Add Multiple Accounts on Contact {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Add Multiple Accounts on Contact</label>
     <loops>
         <name>Extract_Account_Ids</name>
         <label>Extract Account Ids</label>
         <locationX>182</locationX>
-        <locationY>398</locationY>
+        <locationY>350</locationY>
         <collectionReference>Get_All_Associated_Accounts</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -382,7 +436,7 @@
         <name>Iterate_Service_Role_Records</name>
         <label>Iterate Service Role Records</label>
         <locationX>50</locationX>
-        <locationY>2438</locationY>
+        <locationY>2474</locationY>
         <collectionReference>ServiceRoleRecords</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -396,7 +450,7 @@
         <name>Iteration</name>
         <label>Iteration</label>
         <locationX>182</locationX>
-        <locationY>734</locationY>
+        <locationY>650</locationY>
         <collectionReference>values</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -429,14 +483,14 @@
         <name>Create_ACRs</name>
         <label>Create ACRs</label>
         <locationX>182</locationX>
-        <locationY>2870</locationY>
+        <locationY>2858</locationY>
         <inputReference>AcrRecords</inputReference>
     </recordCreates>
     <recordLookups>
         <name>Get_All_Associated_Accounts</name>
         <label>Get All Associated Accounts</label>
         <locationX>182</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Extract_Account_Ids</targetReference>
@@ -455,11 +509,32 @@
         <queriedFields>AccountId</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>Get_Check_Account</name>
+        <label>Get Check Account</label>
+        <locationX>732</locationX>
+        <locationY>1082</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Account_Owner</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Account.recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <screens>
         <name>Common_Details</name>
         <label>Fill Common Details</label>
         <locationX>50</locationX>
-        <locationY>2318</locationY>
+        <locationY>2366</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -472,14 +547,32 @@
             <dataType>String</dataType>
             <fieldText>KIP Perspective of Relationship</fieldText>
             <fieldType>DropdownBox</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>false</isRequired>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <fields>
             <name>KDM_Perspective_of_Relationship</name>
             <dataType>String</dataType>
             <fieldText>KDM&apos;s Perspective of Relationship</fieldText>
             <fieldType>InputField</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>false</isRequired>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <fields>
             <name>Active_Influencer</name>
@@ -487,7 +580,16 @@
             <dataType>String</dataType>
             <fieldText>Active Influencer?</fieldText>
             <fieldType>DropdownBox</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>false</isRequired>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -495,8 +597,8 @@
     <screens>
         <name>Fill_Account_Details</name>
         <label>Fill Account Details</label>
-        <locationX>468</locationX>
-        <locationY>854</locationY>
+        <locationX>501</locationX>
+        <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -507,6 +609,14 @@
             <name>ErrorMessageComponent</name>
             <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(255, 0, 0);&quot;&gt;{!errorMessage}&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
@@ -555,6 +665,14 @@
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                     <storeOutputAutomatically>true</storeOutputAutomatically>
+                    <styleProperties>
+                        <verticalAlignment>
+                            <stringValue>top</stringValue>
+                        </verticalAlignment>
+                        <width>
+                            <stringValue>12</stringValue>
+                        </width>
+                    </styleProperties>
                 </fields>
                 <fields>
                     <name>Work_Email</name>
@@ -575,6 +693,14 @@
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                     <storeOutputAutomatically>true</storeOutputAutomatically>
+                    <styleProperties>
+                        <verticalAlignment>
+                            <stringValue>top</stringValue>
+                        </verticalAlignment>
+                        <width>
+                            <stringValue>12</stringValue>
+                        </width>
+                    </styleProperties>
                 </fields>
                 <fields>
                     <name>Work_Phone</name>
@@ -589,6 +715,14 @@
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                     <storeOutputAutomatically>true</storeOutputAutomatically>
+                    <styleProperties>
+                        <verticalAlignment>
+                            <stringValue>top</stringValue>
+                        </verticalAlignment>
+                        <width>
+                            <stringValue>12</stringValue>
+                        </width>
+                    </styleProperties>
                 </fields>
                 <fields>
                     <name>Influence_Level</name>
@@ -596,7 +730,16 @@
                     <dataType>String</dataType>
                     <fieldText>Influence Level</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
+                    <styleProperties>
+                        <verticalAlignment>
+                            <stringValue>top</stringValue>
+                        </verticalAlignment>
+                        <width>
+                            <stringValue>12</stringValue>
+                        </width>
+                    </styleProperties>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -616,7 +759,16 @@
                     <fieldText>Service Role</fieldText>
                     <fieldType>MultiSelectPicklist</fieldType>
                     <helpText>&lt;p&gt;To unselect an option, CTRL + click currently selected option.&lt;/p&gt;</helpText>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
+                    <styleProperties>
+                        <verticalAlignment>
+                            <stringValue>top</stringValue>
+                        </verticalAlignment>
+                        <width>
+                            <stringValue>12</stringValue>
+                        </width>
+                    </styleProperties>
                 </fields>
                 <fields>
                     <name>Product_Support_Role</name>
@@ -625,7 +777,16 @@
                     <fieldText>Product Support Role</fieldText>
                     <fieldType>MultiSelectPicklist</fieldType>
                     <helpText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;To unselect an option, CTRL + click currently selected option.&lt;/span&gt;&lt;/p&gt;</helpText>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
+                    <styleProperties>
+                        <verticalAlignment>
+                            <stringValue>top</stringValue>
+                        </verticalAlignment>
+                        <width>
+                            <stringValue>12</stringValue>
+                        </width>
+                    </styleProperties>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -637,6 +798,14 @@
             </fields>
             <isRequired>false</isRequired>
             <regionContainerType>SectionWithoutHeader</regionContainerType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <fields>
             <name>Footer</name>
@@ -648,6 +817,14 @@
                 <assignToReference>AddMore</assignToReference>
                 <name>createMore</name>
             </outputParameters>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>true</showHeader>
@@ -659,7 +836,7 @@
             <targetReference>Assign_values</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>ACR_Record</name>
         <dataType>SObject</dataType>
