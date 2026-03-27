@@ -8,32 +8,31 @@ public class NSP_Implementationprofile_ServiceHelper {
     private List<Case> caseToInsertSubjectIpList = new List<Case>();
     private List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
     private String impRecordId;
-    private String  impAutomationName;
+    private String impAutomationName;
     private String impMethodName;
-    private String  impAutomationRecordType;
-    private String  impAutomationSection;
+    private String impAutomationRecordType;
+    private String impAutomationSection;
     @testVisible
-    private Boolean isRerun =false;
+    private Boolean isRerun = false;
     private Boolean isSaveForm = false;
-    private Map<Id, Implementation_Profile__c> newIPs = null;
-    private Map<Id, Implementation_Profile__c> oldIPs = null;
-    private Map<String, Set<Id>> ipRecordsByAutomation = new Map<String, Set<Id>>();
+    private Map<Id,Implementation_Profile__c> newIPs = null;
+    private Map<Id,Implementation_Profile__c> oldIPs = null;
+    private Map<String,Set<Id>> ipRecordsByAutomation = new Map<String,Set<Id>>();
     private List<sObject> recToInsert = new List<sObject>();
     private List<sObject> recToUpdate = new List<sObject>();
-    private Map<String, Map<Id, sObject>> data = new Map<String, Map<Id, sObject>>();
+    private Map<String,Map<Id,sObject>> data = new Map<String,Map<Id,sObject>>();
     private List<String> automationsToExecute = new List<String>();
-    private Map<String, Id> mapofGroupIds=new Map<String, Id>();
+    private Map<String,Id> mapofGroupIds=new Map<String,Id>();
     private Set<Id> ipIds = new Set<Id>();
     private List<Messaging.SingleEmailMessage> lstEmailMessages = new List<Messaging.SingleEmailMessage>();
-    private Map<String, EmailTemplate> mapOfEmailTempaltes = new Map<String, EmailTemplate>();
+    private Map<String,EmailTemplate> mapOfEmailTempaltes = new Map<String,EmailTemplate>();
     private List<String> listRegulatedStates = new List<String>();
-    private Map<String, List<String>> ipAutomationdata = new Map<String, List<String>>();
+    private Map<String,List<String>> ipAutomationdata = new Map<String,List<String>>();
     private Set<Id> setOfBPAIds = new Set<Id>();
-    private static Id ipFSORecordTypeId = SObjectType.Implementation_Profile__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.FSOProfile).getRecordTypeId();
-    private static Id ipMMRecordTypeId = SObjectType.Implementation_Profile__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.MMProfile).getRecordTypeId();
-    private static Id casePEORecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PEO).getRecordTypeId();
+    private static Id ipFSORecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Implementation_Profile__c' , 'FSO' );
+    private static Id ipMMRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Implementation_Profile__c' , 'Middle_Market' );
+    private static Id casePEORecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Case' , 'PEO' );
     private static final String RELATED_ACCOUNTS = 'Related Accounts:';
-
     private static final String EMP_HOURS_FN = 'NSP_Emp_Hours_Reported';
     private static final String SEASONAL_EE_FN = 'NSP_SEASONAL_EE';
     private static final String LEAVE_ABSENCE_FN = 'NSP_Leave_Absence';
@@ -86,9 +85,8 @@ public class NSP_Implementationprofile_ServiceHelper {
     private static final String FLSA_REVIEW_NO ='flsaReviewNo';
     private static final String FLSA_REVIEW_NO_MM ='FLSA_Review_No_MM';
     private static final String FLSA_EXEMPTION_REVIEW_EMAIL ='FLSA_Exemption_Review_non_EG_Email';
-
-    private Map<Id, Id> mapOfProjectManagers = new Map<Id, Id>();
-    private Map<Id, Id> mapOfPayrollSpecialist = new Map<Id, Id>();
+    private Map<Id,Id> mapOfProjectManagers = new Map<Id,Id>();
+    private Map<Id,Id> mapOfPayrollSpecialist = new Map<Id,Id>();
     private static final String IP_IDENTIFIER = 'Implementation_Profile__c';
     private static final String IP_AUTOMATION_IDENTIFIER = 'NSP_Implementation_Profile_Automation__c';
     private static final String USER_IDENTIFIER = 'User';
@@ -132,13 +130,15 @@ public class NSP_Implementationprofile_ServiceHelper {
         NSP_New_401_k_FSO
     };
 
-   NSP_IP_Automation_Helper ipAutomationHelper = new NSP_IP_Automation_Helper();
+    NSP_IP_Automation_Helper ipAutomationHelper = new NSP_IP_Automation_Helper();
 
+    //
+    //
+    //
 
-   public NSP_Implementationprofile_ServiceHelper (Boolean isSave){
-    this.isSaveForm = isSave;
-   }
-
+    public NSP_Implementationprofile_ServiceHelper ( Boolean isSave ) {
+        this.isSaveForm = isSave;
+    }
 
     public NSP_Implementationprofile_ServiceHelper(Map<Id, Implementation_Profile__c> newIPs, Map<Id, Implementation_Profile__c> oldIPs){
         this.newIPs = newIPs;
