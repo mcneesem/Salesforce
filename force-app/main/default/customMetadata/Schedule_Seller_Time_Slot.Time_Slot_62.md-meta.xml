@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>Start_Time__c</field>
-        <value xsi:type="xsd:double">15.3</value>
+        <value xsi:type="xsd:double">15.5</value>
     </values>
     <values>
         <field>Time_Zone__c</field>
