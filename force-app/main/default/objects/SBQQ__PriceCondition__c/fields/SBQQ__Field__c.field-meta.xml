@@ -353,11 +353,11 @@
                 <default>false</default>
                 <label>Client_Size__c</label>
             </value>
-          <value>
+            <value>
                 <fullName>Has_Promo__c</fullName>
                 <default>false</default>
                 <label>Has_Promo__c</label>
-            </value>  
+            </value>
             <value>
                 <fullName>Has_SMS__c</fullName>
                 <default>false</default>
