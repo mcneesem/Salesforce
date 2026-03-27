@@ -226,6 +226,7 @@ debugger;
     debugger;
     if(!isPartnerCS && isSeasonal === false){
         processConsumptionSchedule(quoteModel, quoteLineModels);
+        processSlabConsumptionSchedule(quoteModel, quoteLineModels);
     }
     if(isSeasonal === true){
         processSeasonalDiscount(quoteModel,quoteLineModels);
@@ -568,7 +569,7 @@ export function calculateWXSetupFee(quoteModel, quoteLines) {
             //if(!isClonedLine)
             {
                 // copy list minimumfee to final minimumfee
-                if(!scholarshipApplicable  && listMinFee > 0  ){
+                if(!scholarshipApplicable  && listMinFee >= 0  ){
                     //minimumfeediscount  = minimumfeediscount > 0 ? minimumfeediscount: 0;
                     line.record["NSP_Final_Minimum_Fee__c"] = listMinFee - (minimumfeediscount);
                     finalMinFee = listMinFee - minimumfeediscount;
@@ -1703,6 +1704,7 @@ export function processConsumptionSchedule(quote, lines)
     let applicableProductlist = ['IWXBundle','IWXBundleW2','IWACore','IWACoreW2','IWAPerCheckFee','IWXPerCheckFee','ITSUserLicenseWO'];
     let contractorProductlist = ['IWAContractors','IWXContractors'];
     let customProductlist =  quote.record["Discounted_Product_Codes__c"]? quote.record["Discounted_Product_Codes__c"].split(',') : null;
+    let slabProducts = quote.record["Slab_Product_Codes__c"]? quote.record["Slab_Product_Codes__c"].split(',') : null;
 
     lines.forEach(function(line){
         let minmumfeeVal =  line.record["NSP_List_Minimum_Fee__c"];
@@ -1778,7 +1780,7 @@ export function processConsumptionSchedule(quote, lines)
 
 
                         debugger;
-                        if(!minmumfeeVal && productcode && !applicableProductlist.includes(productcode))// for product with non min fee
+                        if(!minmumfeeVal && productcode && !applicableProductlist.includes(productcode) && !slabProducts.includes(productcode))// for product with non min fee
                         {
                             if(lowerbond <= linequantity && upperbond > linequantity)
                             {
@@ -1885,7 +1887,9 @@ export function processConsumptionSchedule(quote, lines)
                             }
                         }
                         else{
-                            csrate.set('SBQQ__Price__c', netUnitPrice);
+                            if(!slabProducts.includes(productcode)){
+                                csrate.set('SBQQ__Price__c', netUnitPrice);
+                            }
                         }
                     });
                 }
@@ -1893,6 +1897,38 @@ export function processConsumptionSchedule(quote, lines)
         }
 
     });
+}
+
+export function processSlabConsumptionSchedule(quote, lines)
+{
+    let slabProducts;
+    if(quote && quote.record){
+        slabProducts = quote.record["Slab_Promo_Codes__c"]? quote.record["Slab_Promo_Codes__c"].split(',') : null;
+    }
+    if(lines){
+        lines.forEach(function(line){
+            let netUnitPrice =  line.record["SBQQ__NetPrice__c"];
+            let productcode = line.record["SBQQ__ProductCode__c"];
+
+            if(productcode && slabProducts && slabProducts.includes(productcode)){
+
+                if (line.consumptionSchedules) {
+                    line.consumptionSchedules.forEach(function(cs){
+                        const rates = cs.getRates();
+                        if(rates){
+                            rates.forEach(function(csrate,index){
+                                let pricingMethod = csrate.get('SBQQ__PricingMethod__c');
+                                if(pricingMethod == 'PerUnit'){
+                                    csrate.set('SBQQ__Price__c', netUnitPrice);
+                                }
+                            });
+                        }
+                    });
+                }
+            }
+        });
+    }
+
 }
 
 export function checkBookedSetup(quote, lines){
