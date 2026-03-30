@@ -708,17 +708,18 @@ public with sharing class FileUploadController {
         Map<String,String> contactToEmployeeWorkDayIdMap = new Map<String,String>();
         if ( ( contactRecordList != null ) && !contactRecordList.isEmpty() ) {
             for ( AccountContactRelation acr : [
-                        SELECT Id ,
-                            Workday_Employee_ID__c,
-                            ContactId
-                        FROM AccountContactRelation
-                        WHERE ( Workday_Employee_ID__c IN :contactRecordList )
+                SELECT Id ,
+                Workday_Employee_ID__c,
+                ContactId
+                FROM AccountContactRelation
+                WHERE (
+                    ( Workday_Employee_ID__c IN :contactRecordList )
+                    AND ( ContactId != null )
+                )
                     ]
                 )
             {
-                if ( acr != null && acr.ContactId != null ) {
-                    contactToEmployeeWorkDayIdMap.put( acr.Workday_Employee_ID__c , acr.ContactId );
-                }
+                contactToEmployeeWorkDayIdMap.put( acr.Workday_Employee_ID__c , acr.ContactId );
             }
         }
         return contactToEmployeeWorkDayIdMap;
@@ -1008,10 +1009,14 @@ public with sharing class FileUploadController {
             && ( caseToLoad != null )
             && ( cpw.caseList != null )
             && !cpw.caseList.isEmpty()
+            && ( cpw.contactToPerIdMap != null )
             && !cpw.contactToPerIdMap.containsKey( cpw.contactRecord.get( rowNumber ) )
+            && ( cpw.contactToEmployeeWorkDayIdMap != null )
             && !cpw.contactToEmployeeWorkDayIdMap.containsKey( cpw.contactRecord.get( rowNumber ) )
             && ( cpw.caseList.indexOf( caseToLoad ) >= 0 )
+            && ( cpw.rowCaseMap != null )
             && cpw.rowCaseMap.containsKey( caseToLoad )
+            && ( cpw.rowCaseMap != null )
             && ( cpw.rowCaseMap.get( caseToLoad ) != null )
             )
         {
@@ -1032,6 +1037,7 @@ public with sharing class FileUploadController {
             && ( cpw.contactToPerIdMap != null )
             && cpw.contactToPerIdMap.containsKey( cpw.contactRecord.get( rowNumber ) )
             && ( cpw.contactToPerIdMap.get( cpw.contactRecord.get( rowNumber ) ) != null )
+            && ( cpw.rowCaseMap != null )
             && cpw.rowCaseMap.containsKey( caseToLoad )
             && ( cpw.rowCaseMap.get( caseToLoad ) != null )
             )
