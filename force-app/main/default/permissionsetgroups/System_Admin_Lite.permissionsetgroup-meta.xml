@@ -21,6 +21,7 @@
     <permissionSets>Bypass_Restrict_Compensation_Services_Closure</permissionSets>
     <permissionSets>Bypass_Restrict_Termination_Date_and_Status</permissionSets>
     <permissionSets>Case_Compensation_Access</permissionSets>
+    <permissionSets>Case_Send_SSNVS_Team_Email</permissionSets>
     <permissionSets>Client_goal_project_task_junction_access</permissionSets>
     <permissionSets>Docusign_Account_Management_Report</permissionSets>
     <permissionSets>Docusign_Log_Visibility</permissionSets>
@@ -38,6 +39,7 @@
     <permissionSets>Onboarding_Profile_Edit</permissionSets>
     <permissionSets>OpportunityTeamMember_Elevated_Access</permissionSets>
     <permissionSets>Organization_Wide_Email_Address_Compensation_Services</permissionSets>
+    <permissionSets>Organization_Wide_Email_Address_SSNVS_Team</permissionSets>
     <permissionSets>Project_Task_Access</permissionSets>
     <permissionSets>Project_Template_Editor</permissionSets>
     <permissionSets>Resource_Absence_record_type_access</permissionSets>
