@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Key__c</field>
-        <value xsi:type="xsd:string">SMSSU</value>
+        <value xsi:type="xsd:string">SMSSUTRAD</value>
     </values>
     <values>
         <field>Template_ID__c</field>
