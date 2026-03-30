@@ -2,18 +2,7 @@
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <name>Retirement Services - Individual Plans</name>
-    <queueMembers>
-        <users>
-            <user>sfdc.admin@insperity.com</user>
-        </users>
-    </queueMembers>
     <queueSobject>
-        <sobjectType>Case</sobjectType>
-    </queueSobject>
-    <queueSobject>
-        <sobjectType>Task</sobjectType>
-    </queueSobject>
-    <queueSobject>
-        <sobjectType>pse__Project_Task__c</sobjectType>
+        <sobjectType>WorkBadgeDefinition</sobjectType>
     </queueSobject>
 </Queue>
