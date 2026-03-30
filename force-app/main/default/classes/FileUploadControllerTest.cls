@@ -2,9 +2,11 @@
 private class FileUploadControllerTest {
     private static final String accName = 'Test Account 01';
     private static final String accAIMS = '123400';
+    private static final String accAIMS1 = '123401';
     private static final String caseName = 'Case';
     private static final String testsubject = 'TEST1';
     private static final String contPER = '12367';
+     private static final String acrEmployeeWorkDayId = '101624900';
     private static final String assetName = 'Testing';
     private static final String bps = 'BPS';
     private static final String userName = 'testimportcsv';
@@ -40,9 +42,9 @@ private class FileUploadControllerTest {
         + '1,12367,123400,123400,H&W Reporting & Compliance,Offer of Coverage letter,Letters,TestingImport,Other,Medium,Closed,Resolved,Approved,TEST17,06/24/2023,TRUE,08/27/2023,TRUE,Neutral,NSP_WX_IMPL,Testing\n'
         + '1,12367,123400,123400,H&W Reporting & Compliance,Offer of Coverage letter,Letters,TestingImport,Other,Medium,Closed,Resolved,Approved,TEST18,06/24/2023,06/24/2023,08/27/2023,TRUE,Neutral,NSP_WX_IMPL,Testing\n'
         + '1,12367,123400,123400,H&W Reporting & Compliance,Offer of Coverage letter,Letters,TestingImport,Other,Medium,Closed,Resolved,Approved,TEST19,06/24/2023,06/24/2023,TRUE,TRUE,Neutral,NSP_WX_IMPL,Testing\n'
-        + '1,12367,123400,123400,H&W Reporting & Compliance,Offer of Coverage letter,Letters,test@insperity.com,Other,Medium,Closed,Resolved,Approved,TEST20,06/24/2023,06/24/2023,08/27/2023,TRUE,Neutral,BPS,Testing\n'
-        + '1,12367,123400,123400,H&W Reporting & Compliance,Offer of Coverage letter,Letters,test@test.com,Other,Medium,Closed,Resolved,Approved,TEST21,06/24/2023,06/24/2023,08/27/2023,TRUE,Neutral,BPS,Testing\n'
-        + '1,12367,8687,123400,H&W Reporting & Compliance,Offer of Coverage letter,Letters,TestingImport,Other,Medium,Closed,Resolved,Approved,TEST22,06/24/2023,06/24/2023,08/27/2023,TRUE,Neutral,BPS,Testing\n'
+        + '1,101624900,123401,123400,H&W Reporting & Compliance,Offer of Coverage letter,Letters,test@insperity.com,Other,Medium,Closed,Resolved,Approved,TEST20,06/24/2023,06/24/2023,08/27/2023,TRUE,Neutral,BPS,Testing\n'
+        + '1,101624900,123401,123400,H&W Reporting & Compliance,Offer of Coverage letter,Letters,test@test.com,Other,Medium,Closed,Resolved,Approved,TEST21,06/24/2023,06/24/2023,08/27/2023,TRUE,Neutral,BPS,Testing\n'
+        + '1,101624900,8687,123400,H&W Reporting & Compliance,Offer of Coverage letter,Letters,TestingImport,Other,Medium,Closed,Resolved,Approved,TEST22,06/24/2023,06/24/2023,08/27/2023,TRUE,Neutral,BPS,Testing\n'
         + '1,12367,123400,78668,H&W Reporting & Compliance,Offer of Coverage letter,Letters,TestingImport,Other,Medium,Closed,Resolved,Approved,TEST23,06/24/2023,06/24/2023,08/27/2023,TRUE,Neutral,BPS,Testing\n'
         + '1,8688,123400,123400,H&W Reporting & Compliance,Offer of Coverage letter,Letters,TestingImport,Other,Medium,Closed,Resolved,Approved,TEST24,06/24/2023,06/24/2023,08/27/2023,TRUE,Neutral,BPS,Testing\n'
         + '1,12367,123400,123400,H&W Reporting & Compliance,Offer of Coverage letter,Letters,TestingImport,Other,Medium,Closed,Resolved,Approved,TEST25,06/24/2023,06/24/2023,08/27/2023,TRUE,Neutral,BPS,Testing\n'
@@ -57,11 +59,29 @@ private class FileUploadControllerTest {
         oAccount1.NSP_AIMS_Client__c = accAIMS;
         insert oAccount1;
 
+        //Insert Account
+        Account oAccount2 = new Account();
+        oAccount2.Name = accName+'2';
+        oAccount2.NSP_AIMS_Client__c = accAIMS1;
+        insert oAccount2;
+
         //Insert Contact
         Contact newContact = (Contact)NSP_TestExtendedDataFactory.createSObject(new Contact(), 'NSP_TestDataFactory.ContactDefaultsLight', false);
         newContact.AccountId = oAccount1.Id;
         newContact.NSP_Per_ID__c = contPER;
         insert newContact;
+
+        //Insert Contact
+        Contact newContact1 = (Contact)NSP_TestExtendedDataFactory.createSObject(new Contact(), 'NSP_TestDataFactory.ContactDefaultsLight', false);
+        newContact1.AccountId = oAccount2.Id;
+        insert newContact1;
+
+        // Insert AccountContactRelation
+        AccountContactRelation acr = new AccountContactRelation();
+        acr.AccountId = oAccount1.Id;
+        acr.ContactId = newContact1.Id;
+        acr.Workday_Employee_ID__c = acrEmployeeWorkDayId;
+        insert acr;
 
         //Insert Asset
         Asset newAsset = (Asset)NSP_TestExtendedDataFactory.createSObject(new Asset(), 'NSP_TestDataFactory.AssetDefaults', false);
