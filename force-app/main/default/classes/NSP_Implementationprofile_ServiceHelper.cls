@@ -8,32 +8,31 @@ public class NSP_Implementationprofile_ServiceHelper {
     private List<Case> caseToInsertSubjectIpList = new List<Case>();
     private List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
     private String impRecordId;
-    private String  impAutomationName;
+    private String impAutomationName;
     private String impMethodName;
-    private String  impAutomationRecordType;
-    private String  impAutomationSection;
+    private String impAutomationRecordType;
+    private String impAutomationSection;
     @testVisible
-    private  Boolean isRerun =false;
+    private Boolean isRerun = false;
     private Boolean isSaveForm = false;
-    private Map<Id, Implementation_Profile__c> newIPs = null;
-    private Map<Id, Implementation_Profile__c> oldIPs = null;
-    private Map<String, Set<Id>> ipRecordsByAutomation = new Map<String, Set<Id>>();
+    private Map<Id,Implementation_Profile__c> newIPs = null;
+    private Map<Id,Implementation_Profile__c> oldIPs = null;
+    private Map<String,Set<Id>> ipRecordsByAutomation = new Map<String,Set<Id>>();
     private List<sObject> recToInsert = new List<sObject>();
     private List<sObject> recToUpdate = new List<sObject>();
-    private Map<String, Map<Id, sObject>> data = new Map<String, Map<Id, sObject>>();
+    private Map<String,Map<Id,sObject>> data = new Map<String,Map<Id,sObject>>();
     private List<String> automationsToExecute = new List<String>();
-    private Map<String, Id> mapofGroupIds=new Map<String, Id>();
+    private Map<String,Id> mapofGroupIds=new Map<String,Id>();
     private Set<Id> ipIds = new Set<Id>();
     private List<Messaging.SingleEmailMessage> lstEmailMessages = new List<Messaging.SingleEmailMessage>();
-    private Map<String, EmailTemplate> mapOfEmailTempaltes = new Map<String, EmailTemplate>();
+    private Map<String,EmailTemplate> mapOfEmailTempaltes = new Map<String,EmailTemplate>();
     private List<String> listRegulatedStates = new List<String>();
-    private Map<String, List<String>> ipAutomationdata = new Map<String, List<String>>();
+    private Map<String,List<String>> ipAutomationdata = new Map<String,List<String>>();
     private Set<Id> setOfBPAIds = new Set<Id>();
-    private static Id ipFSORecordTypeId = SObjectType.Implementation_Profile__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.FSOProfile).getRecordTypeId();
-    private static Id ipMMRecordTypeId = SObjectType.Implementation_Profile__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.MMProfile).getRecordTypeId();
-    private static Id casePEORecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PEO).getRecordTypeId();
+    private static Id ipFSORecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Implementation_Profile__c' , 'FSO' );
+    private static Id ipMMRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Implementation_Profile__c' , 'Middle_Market' );
+    private static Id casePEORecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'Case' , 'PEO' );
     private static final String RELATED_ACCOUNTS = 'Related Accounts:';
-
     private static final String EMP_HOURS_FN = 'NSP_Emp_Hours_Reported';
     private static final String SEASONAL_EE_FN = 'NSP_SEASONAL_EE';
     private static final String LEAVE_ABSENCE_FN = 'NSP_Leave_Absence';
@@ -86,9 +85,8 @@ public class NSP_Implementationprofile_ServiceHelper {
     private static final String FLSA_REVIEW_NO ='flsaReviewNo';
     private static final String FLSA_REVIEW_NO_MM ='FLSA_Review_No_MM';
     private static final String FLSA_EXEMPTION_REVIEW_EMAIL ='FLSA_Exemption_Review_non_EG_Email';
-
-    private Map<Id, Id> mapOfProjectManagers = new Map<Id, Id>();
-    private Map<Id, Id> mapOfPayrollSpecialist = new Map<Id, Id>();
+    private Map<Id,Id> mapOfProjectManagers = new Map<Id,Id>();
+    private Map<Id,Id> mapOfPayrollSpecialist = new Map<Id,Id>();
     private static final String IP_IDENTIFIER = 'Implementation_Profile__c';
     private static final String IP_AUTOMATION_IDENTIFIER = 'NSP_Implementation_Profile_Automation__c';
     private static final String USER_IDENTIFIER = 'User';
@@ -132,13 +130,15 @@ public class NSP_Implementationprofile_ServiceHelper {
         NSP_New_401_k_FSO
     };
 
-   NSP_IP_Automation_Helper ipAutomationHelper = new NSP_IP_Automation_Helper();
+    NSP_IP_Automation_Helper ipAutomationHelper = new NSP_IP_Automation_Helper();
 
+    //
+    //
+    //
 
-   public NSP_Implementationprofile_ServiceHelper (Boolean isSave){
-    this.isSaveForm = isSave;
-   }
-
+    public NSP_Implementationprofile_ServiceHelper ( Boolean isSave ) {
+        this.isSaveForm = isSave;
+    }
 
     public NSP_Implementationprofile_ServiceHelper(Map<Id, Implementation_Profile__c> newIPs, Map<Id, Implementation_Profile__c> oldIPs){
         this.newIPs = newIPs;
@@ -3414,32 +3414,41 @@ public class NSP_Implementationprofile_ServiceHelper {
                }
     }
 
-    public  void emailNotifyforExistingRetirementPlanKeep(){
+    private void emailNotifyforExistingRetirementPlanKeep() {
         NSP_PEO_Implementations__mdt pI = NSP_PEO_Implementations__mdt.getInstance(NSP_ServiceConstants.ER_PLAN_KEEP);
         List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
+        List<String> listOfCCAddress = new List<String>();
+        List<String> listOfToAddress = this.getToAddress( pI );
         for(Id ipRecId : ipRecordsByAutomation.get(EXISTING_RET_PLAN_KEEP_FN)){
             Implementation_Profile__c ipRec = newIPs.get(ipRecId);
-            if((isRerun || ipRec.NSP_Form_Completed__c) && !isSaveForm ){
-                if(ipRec.RecordTypeId==ipMMRecordTypeId){
-                    if(!isRerun && !ipAutomationdata?.get(IP_AUTOMATION_IDENTIFIER).contains(ipRec.Id+'_'+EXISTING_RET_PLAN_KEEP_FN+'_'+NSP_ServiceConstants.MIDDLEMARKET)){
-                        lstEmailMessages.add(NSP_IP_MM_EmailAutomationsController.sendMail(mapOfEmailTempaltes.get(NSP_ServiceConstants.ER_PLAN_KEEP),ipRec, new List<String>{pI.NSP_Email_Address__c},isRerun));
+            if((this.isRerun || ipRec.NSP_Form_Completed__c) && !isSaveForm ){
+                listOfCCAddress = this.buildCCAddresses( ipRecId , listOfCCAddress );
+                Messaging.SingleEmailMessage message = NSP_IP_MM_EmailAutomationsController.getMailObject(
+                    ipRec ,
+                    listOfToAddress ,
+                    null ,
+                    listOfCCAddress ,
+                    this.getEmailTemplateId( NSP_ServiceConstants.ER_PLAN_KEEP ) ,
+                    this.isRerun
+                );
+                if ( ipRec.RecordTypeId == NSP_Implementationprofile_ServiceHelper.ipMMRecordTypeId ) {
+                    if(!this.isRerun && !ipAutomationdata?.get(IP_AUTOMATION_IDENTIFIER).contains(ipRec.Id+'_'+EXISTING_RET_PLAN_KEEP_FN+'_'+NSP_ServiceConstants.MIDDLEMARKET)){
+                        lstEmailMessages.add( message );
                         ipAutomationRecords.add(NSP_Implprofile_ServiceHelperUpdate.createIPAutomation(ipRecId, NSP_ServiceConstants.AUTOMATION_EXIST_RET_PLAN_KEEP, EXISTING_RET_PLAN_KEEP_FN, NSP_ServiceConstants.RT, NSP_ServiceConstants.MIDDLEMARKET));
-                    }
-                    else if(isRerun){
-                        lstEmailMessages.add(NSP_IP_MM_EmailAutomationsController.sendMail(mapOfEmailTempaltes.get(NSP_ServiceConstants.ER_PLAN_KEEP),ipRec, new List<String>{pI.NSP_Email_Address__c},isRerun));
+                    } else if( this.isRerun ) {
+                        lstEmailMessages.add( message );
                         impRecordId = ipRecId;
                         impAutomationName = NSP_ServiceConstants.AUTOMATION_EXIST_RET_PLAN_KEEP;
                         impMethodName = EXISTING_RET_PLAN_KEEP_FN;
                         impAutomationRecordType = NSP_ServiceConstants.MIDDLEMARKET ;
                     }
                 }
-                if(ipRec.RecordTypeId==ipFSORecordTypeId){
-                    if(!isRerun && !ipAutomationdata?.get(IP_AUTOMATION_IDENTIFIER).contains(ipRec.Id+'_'+EXISTING_RET_PLAN_KEEP_FN+'_'+NSP_ServiceConstants.FSOProfile)){
-                        lstEmailMessages.add(NSP_IP_MM_EmailAutomationsController.sendMail(mapOfEmailTempaltes.get(NSP_ServiceConstants.ER_PLAN_KEEP),ipRec, new List<String>{pI.NSP_Email_Address__c},isRerun));
+                if ( ipRec.RecordTypeId == NSP_Implementationprofile_ServiceHelper.ipFSORecordTypeId ) {
+                    if(!this.isRerun && !ipAutomationdata?.get(IP_AUTOMATION_IDENTIFIER).contains(ipRec.Id+'_'+EXISTING_RET_PLAN_KEEP_FN+'_'+NSP_ServiceConstants.FSOProfile)){
+                        lstEmailMessages.add( message );
                         ipAutomationRecords.add(NSP_Implprofile_ServiceHelperUpdate.createIPAutomation(ipRecId, NSP_ServiceConstants.AUTOMATION_EXIST_RET_PLAN_KEEP, EXISTING_RET_PLAN_KEEP_FN, NSP_ServiceConstants.RT, NSP_ServiceConstants.FSOProfile));
-                    }
-                    else if(isRerun){
-                        lstEmailMessages.add(NSP_IP_MM_EmailAutomationsController.sendMail(mapOfEmailTempaltes.get(NSP_ServiceConstants.ER_PLAN_KEEP),ipRec, new List<String>{pI.NSP_Email_Address__c},isRerun));
+                    } else if ( this.isRerun ) {
+                        lstEmailMessages.add( message );
                         impRecordId = ipRecId;
                         impAutomationName = NSP_ServiceConstants.AUTOMATION_EXIST_RET_PLAN_KEEP;
                         impMethodName = EXISTING_RET_PLAN_KEEP_FN;
@@ -3451,7 +3460,7 @@ public class NSP_Implementationprofile_ServiceHelper {
         recToInsert.addAll(ipAutomationRecords);
         if(impRecordId!=null && impAutomationName !=null){
             NSP_Implprofile_ServiceHelperUpdate.automationRecordUpdate(impRecordId,impAutomationName,impMethodName,impAutomationRecordType,NSP_ServiceConstants.RT);
-       }
+        }
     }
 
     /**
@@ -3468,38 +3477,49 @@ public class NSP_Implementationprofile_ServiceHelper {
                }
     }
 
-    public  void emailNotifyforExistingRetirementPlanMove(){
+    private void emailNotifyforExistingRetirementPlanMove() {
         NSP_PEO_Implementations__mdt pI = NSP_PEO_Implementations__mdt.getInstance(NSP_ServiceConstants.ER_PLAN_MOVE);
-
         List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
         List<String> listOfCCAddress = new List<String>();
+        List<String> listOfToAddress = this.getToAddress( pI );
         for(Id ipRecId : ipRecordsByAutomation.get(EXISTING_RET_PLAN_MOVE_FN)){
             Implementation_Profile__c ipRec = newIPs.get(ipRecId);
-            Implementation_Profile__c ipWithValue=(Implementation_Profile__c) data.get(IP_IDENTIFIER).get(ipRecId);
-            if((isRerun || ipRec.NSP_Form_Completed__c) && !isSaveForm ){
-                if(ipRec.RecordTypeId==ipMMRecordTypeId){
-                    if(!isRerun && !ipAutomationdata?.get(IP_AUTOMATION_IDENTIFIER).contains(ipRec.Id+'_'+EXISTING_RET_PLAN_MOVE_FN+'_'+NSP_ServiceConstants.MIDDLEMARKET)){
-                        lstEmailMessages.add(NSP_IP_MM_EmailAutomationsController.sendMail(mapOfEmailTempaltes.get(NSP_ServiceConstants.ER_PLAN_MOVE),ipRec, new List<String>{pI.NSP_Email_Address__c},isRerun));
+            if((this.isRerun || ipRec.NSP_Form_Completed__c) && !isSaveForm ){
+                listOfCCAddress = this.buildCCAddresses( ipRecId , listOfCCAddress );
+                if ( ipRec.RecordTypeId == NSP_Implementationprofile_ServiceHelper.ipMMRecordTypeId ) {
+                    Messaging.SingleEmailMessage message = NSP_IP_MM_EmailAutomationsController.getMailObject(
+                        ipRec ,
+                        listOfToAddress ,
+                        null ,
+                        listOfCCAddress ,
+                        this.getEmailTemplateId( NSP_ServiceConstants.ER_PLAN_MOVE ) ,
+                        this.isRerun
+                    );
+                    if(!this.isRerun && !ipAutomationdata?.get(IP_AUTOMATION_IDENTIFIER).contains(ipRec.Id+'_'+EXISTING_RET_PLAN_MOVE_FN+'_'+NSP_ServiceConstants.MIDDLEMARKET)){
+                        lstEmailMessages.add( message );
                         ipAutomationRecords.add(NSP_Implprofile_ServiceHelperUpdate.createIPAutomation(ipRecId, NSP_ServiceConstants.AUTOMATION_EXIST_RET_PLAN_MOVE, EXISTING_RET_PLAN_MOVE_FN, NSP_ServiceConstants.RT, NSP_ServiceConstants.MIDDLEMARKET));
-                    }
-                    else if(isRerun){
-                        lstEmailMessages.add(NSP_IP_MM_EmailAutomationsController.sendMail(mapOfEmailTempaltes.get(NSP_ServiceConstants.ER_PLAN_MOVE),ipRec, new List<String>{pI.NSP_Email_Address__c},isRerun));
+                    } else if ( this.isRerun ) {
+                        lstEmailMessages.add( message );
                         impRecordId = ipRecId;
                         impAutomationName = NSP_ServiceConstants.AUTOMATION_EXIST_RET_PLAN_MOVE;
                         impMethodName = EXISTING_RET_PLAN_MOVE_FN;
                         impAutomationRecordType = NSP_ServiceConstants.MIDDLEMARKET ;
                     }
                 }
-                if(ipRec.RecordTypeId==ipFSORecordTypeId){
-                    if(ipWithValue.NSP_Project_Manager__r.NSP_Work_email__c!=null){
-                        listOfCCAddress.add(ipWithValue.NSP_Project_Manager__r.NSP_Work_email__c);
-                    }
-                    if(!isRerun && !ipAutomationdata?.get(IP_AUTOMATION_IDENTIFIER).contains(ipRec.Id+'_'+EXISTING_RET_PLAN_MOVE_FN+'_'+NSP_ServiceConstants.FSOProfile)){
-                        lstEmailMessages.add(NSP_IP_MM_EmailAutomationsController.getMailObject(ipRec,new List<String>{pI.NSP_Email_Address__c},null,listOfCCAddress, mapOfEmailTempaltes.get(NSP_Existing_Retirement_Plan_Move_FSO).Id ,isRerun));
+                if ( ipRec.RecordTypeId == NSP_Implementationprofile_ServiceHelper.ipFSORecordTypeId ) {
+                    Messaging.SingleEmailMessage message = NSP_IP_MM_EmailAutomationsController.getMailObject(
+                        ipRec ,
+                        listOfToAddress ,
+                        null ,
+                        listOfCCAddress ,
+                        this.getEmailTemplateId( NSP_Implementationprofile_ServiceHelper.NSP_Existing_Retirement_Plan_Move_FSO ) ,
+                        this.isRerun
+                    );
+                    if(!this.isRerun && !ipAutomationdata?.get(IP_AUTOMATION_IDENTIFIER).contains(ipRec.Id+'_'+EXISTING_RET_PLAN_MOVE_FN+'_'+NSP_ServiceConstants.FSOProfile)){
+                        lstEmailMessages.add( message );
                         ipAutomationRecords.add(NSP_Implprofile_ServiceHelperUpdate.createIPAutomation(ipRecId, NSP_ServiceConstants.AUTOMATION_EXIST_RET_PLAN_MOVE, EXISTING_RET_PLAN_MOVE_FN, NSP_ServiceConstants.RT, NSP_ServiceConstants.FSOProfile));
-                    }
-                    else if(isRerun){
-                        lstEmailMessages.add(NSP_IP_MM_EmailAutomationsController.getMailObject(ipRec,new List<String>{pI.NSP_Email_Address__c},null,listOfCCAddress, mapOfEmailTempaltes.get(NSP_Existing_Retirement_Plan_Move_FSO).Id ,isRerun));
+                    } else if( this.isRerun ) {
+                        lstEmailMessages.add( message );
                         impRecordId = ipRecId;
                         impAutomationName = NSP_ServiceConstants.AUTOMATION_EXIST_RET_PLAN_MOVE;
                         impMethodName = EXISTING_RET_PLAN_MOVE_FN;
@@ -3511,7 +3531,7 @@ public class NSP_Implementationprofile_ServiceHelper {
         recToInsert.addAll(ipAutomationRecords);
         if(impRecordId!=null && impAutomationName !=null){
             NSP_Implprofile_ServiceHelperUpdate.automationRecordUpdate(impRecordId,impAutomationName,impMethodName,impAutomationRecordType,NSP_ServiceConstants.RT);
-       }
+        }
     }
 
     /**
@@ -3625,41 +3645,56 @@ public class NSP_Implementationprofile_ServiceHelper {
            }
     }
 
-    public void emailNotifyforSRPNotification(){
+    private void emailNotifyforSRPNotification() {
         NSP_PEO_Implementations__mdt pI = NSP_PEO_Implementations__mdt.getInstance(NSP_ServiceConstants.SRP_NOTIFY);
         NSP_PEO_Implementations__mdt pI1 = NSP_PEO_Implementations__mdt.getInstance(NSP_ServiceConstants.SRP_NOTIFY_401);
         NSP_PEO_Implementations__mdt pI2 = NSP_PEO_Implementations__mdt.getInstance(NSP_ServiceConstants.SRP_RET_SALES);
-
         List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
+        List<String> listOfCCAddress = new List<String>();
+        List<String> listOfToAddress1 = this.getToAddress( pI );
+        List<String> listOfToAddress2 = this.getToAddress( pI1 , pI2 );
         for(Id ipRecId : ipRecordsByAutomation.get(SRP_NOTIFY_FN)){
             Implementation_Profile__c ipRec = newIPs.get(ipRecId);
-            if((isRerun || ipRec.NSP_Form_Completed__c) && !isSaveForm ){
-                if(ipMMRecordTypeId == ipRec.recordTypeId){
-                    if(!isRerun && !ipAutomationdata?.get(IP_AUTOMATION_IDENTIFIER).contains(ipRec.Id+'_'+SRP_NOTIFY_FN+'_'+NSP_ServiceConstants.MIDDLEMARKET)){
-                        lstEmailMessages.add(NSP_IP_MM_EmailAutomationsController.sendMail(mapOfEmailTempaltes.get(NSP_ServiceConstants.SRP_NOTIFY),ipRec, new List<String>{pI.NSP_Email_Address__c},isRerun));
-                        lstEmailMessages.add(NSP_IP_MM_EmailAutomationsController.sendMail(mapOfEmailTempaltes.get(NSP_ServiceConstants.SRP_NOTIFY_401),ipRec, new List<String>{pI1.NSP_Email_Address__c,pI2.NSP_Email_Address__c},isRerun));
+            if((this.isRerun || ipRec.NSP_Form_Completed__c) && !isSaveForm ){
+                listOfCCAddress = this.buildCCAddresses( ipRecId , listOfCCAddress );
+                Messaging.SingleEmailMessage message1 = NSP_IP_MM_EmailAutomationsController.getMailObject(
+                    ipRec ,
+                    listOfToAddress1 ,
+                    null ,
+                    listOfCCAddress ,
+                    this.getEmailTemplateId( NSP_ServiceConstants.SRP_NOTIFY ) ,
+                    this.isRerun
+                );
+                Messaging.SingleEmailMessage message2 = NSP_IP_MM_EmailAutomationsController.getMailObject(
+                    ipRec ,
+                    listOfToAddress2 ,
+                    null ,
+                    listOfCCAddress ,
+                    this.getEmailTemplateId( NSP_ServiceConstants.SRP_NOTIFY_401 ) ,
+                    this.isRerun
+                );
+                if ( NSP_Implementationprofile_ServiceHelper.ipMMRecordTypeId == ipRec.RecordTypeId ) {
+                    if(!this.isRerun && !ipAutomationdata?.get(IP_AUTOMATION_IDENTIFIER).contains(ipRec.Id+'_'+SRP_NOTIFY_FN+'_'+NSP_ServiceConstants.MIDDLEMARKET)){
+                        lstEmailMessages.add( message1 );
+                        lstEmailMessages.add( message2 );
                         ipAutomationRecords.add(NSP_Implprofile_ServiceHelperUpdate.createIPAutomation(ipRecId, NSP_ServiceConstants.AUTOMATION_SRP_NOTIFY, SRP_NOTIFY_FN, NSP_ServiceConstants.RT, NSP_ServiceConstants.MIDDLEMARKET));
-                    }
-                    else if(isRerun){
-                        lstEmailMessages.add(NSP_IP_MM_EmailAutomationsController.sendMail(mapOfEmailTempaltes.get(NSP_ServiceConstants.SRP_NOTIFY),ipRec, new List<String>{pI.NSP_Email_Address__c},isRerun));
-                        lstEmailMessages.add(NSP_IP_MM_EmailAutomationsController.sendMail(mapOfEmailTempaltes.get(NSP_ServiceConstants.SRP_NOTIFY_401),ipRec, new List<String>{pI1.NSP_Email_Address__c,pI2.NSP_Email_Address__c},isRerun));
+                    } else if ( this.isRerun ) {
+                        lstEmailMessages.add( message1 );
+                        lstEmailMessages.add( message2 );
                         impRecordId = ipRecId;
                         impAutomationName = NSP_ServiceConstants.AUTOMATION_SRP_NOTIFY;
                         impMethodName = SRP_NOTIFY_FN;
                         impAutomationRecordType = NSP_ServiceConstants.MIDDLEMARKET ;
-
-
                     }
                 }
-                if(ipFSORecordTypeId == ipRec.recordTypeId){
-                    if(!isRerun && !ipAutomationdata?.get(IP_AUTOMATION_IDENTIFIER).contains(ipRec.Id+'_'+SRP_NOTIFY_FN+'_'+NSP_ServiceConstants.FSOProfile)){
-                        lstEmailMessages.add(NSP_IP_MM_EmailAutomationsController.sendMail(mapOfEmailTempaltes.get(NSP_ServiceConstants.SRP_NOTIFY),ipRec, new List<String>{pI.NSP_Email_Address__c},isRerun));
-                        lstEmailMessages.add(NSP_IP_MM_EmailAutomationsController.sendMail(mapOfEmailTempaltes.get(NSP_ServiceConstants.SRP_NOTIFY_401),ipRec, new List<String>{pI1.NSP_Email_Address__c,pI2.NSP_Email_Address__c},isRerun));
+                if ( NSP_Implementationprofile_ServiceHelper.ipFSORecordTypeId == ipRec.RecordTypeId ) {
+                    if(!this.isRerun && !ipAutomationdata?.get(IP_AUTOMATION_IDENTIFIER).contains(ipRec.Id+'_'+SRP_NOTIFY_FN+'_'+NSP_ServiceConstants.FSOProfile)){
+                        lstEmailMessages.add( message1 );
+                        lstEmailMessages.add( message2 );
                         ipAutomationRecords.add(NSP_Implprofile_ServiceHelperUpdate.createIPAutomation(ipRecId, NSP_ServiceConstants.AUTOMATION_SRP_NOTIFY, SRP_NOTIFY_FN, NSP_ServiceConstants.RT, NSP_ServiceConstants.FSOProfile));
-                    }
-                    else if(isRerun){
-                        lstEmailMessages.add(NSP_IP_MM_EmailAutomationsController.sendMail(mapOfEmailTempaltes.get(NSP_ServiceConstants.SRP_NOTIFY),ipRec, new List<String>{pI.NSP_Email_Address__c},isRerun));
-                        lstEmailMessages.add(NSP_IP_MM_EmailAutomationsController.sendMail(mapOfEmailTempaltes.get(NSP_ServiceConstants.SRP_NOTIFY_401),ipRec, new List<String>{pI1.NSP_Email_Address__c,pI2.NSP_Email_Address__c},isRerun));
+                    } else if ( this.isRerun ) {
+                        lstEmailMessages.add( message1 );
+                        lstEmailMessages.add( message2 );
                         impRecordId = ipRecId;
                         impAutomationName = NSP_ServiceConstants.AUTOMATION_SRP_NOTIFY;
                         impMethodName = SRP_NOTIFY_FN;
@@ -3670,7 +3705,7 @@ public class NSP_Implementationprofile_ServiceHelper {
         }
         recToInsert.addAll(ipAutomationRecords);
         if(impRecordId!=null && impAutomationName !=null){
-             NSP_Implprofile_ServiceHelperUpdate.automationRecordUpdate(impRecordId,impAutomationName,impMethodName,impAutomationRecordType,NSP_ServiceConstants.RT);
+            NSP_Implprofile_ServiceHelperUpdate.automationRecordUpdate(impRecordId,impAutomationName,impMethodName,impAutomationRecordType,NSP_ServiceConstants.RT);
         }
     }
 
@@ -3687,49 +3722,60 @@ public class NSP_Implementationprofile_ServiceHelper {
            }
     }
 
-    public void emailNotifyforNew401k(){
+    private void emailNotifyforNew401k() {
         NSP_PEO_Implementations__mdt pI = NSP_PEO_Implementations__mdt.getInstance(NSP_ServiceConstants.ER_PLAN_MOVE);
         List<NSP_Implementation_Profile_Automation__c> ipAutomationRecords = new List<NSP_Implementation_Profile_Automation__c>();
         List<String> listOfCCAddress = new List<String>();
-       for(Id ipRecId : ipRecordsByAutomation.get(NEW_401_FN)){
+        List<String> listOfToAddress = this.getToAddress( pI );
+        for(Id ipRecId : ipRecordsByAutomation.get(NEW_401_FN)){
             Implementation_Profile__c ipRec = newIPs.get(ipRecId);
-            Implementation_Profile__c ipWithValue=(Implementation_Profile__c) data.get(IP_IDENTIFIER).get(ipRecId);
-            if((isRerun || ipRec.NSP_Form_Completed__c) && !isSaveForm ){
-                if(ipMMRecordTypeId == ipRec.recordTypeId){
-                    if(!isRerun && !ipAutomationdata?.get(IP_AUTOMATION_IDENTIFIER).contains(ipRec.Id+'_'+NEW_401_FN+'_'+NSP_ServiceConstants.MIDDLEMARKET)){
-                        lstEmailMessages.add(NSP_IP_MM_EmailAutomationsController.sendMail(mapOfEmailTempaltes.get(NSP_ServiceConstants.NEW_401),ipRec, new List<String>{pI.NSP_Email_Address__c},isRerun));
+            if((this.isRerun || ipRec.NSP_Form_Completed__c) && !isSaveForm ){
+                listOfCCAddress = this.buildCCAddresses( ipRecId , listOfCCAddress );
+                if ( NSP_Implementationprofile_ServiceHelper.ipMMRecordTypeId == ipRec.RecordTypeId ) {
+                    Messaging.SingleEmailMessage message = NSP_IP_MM_EmailAutomationsController.getMailObject(
+                        ipRec ,
+                        listOfToAddress ,
+                        null ,
+                        listOfCCAddress ,
+                        this.getEmailTemplateId( NSP_ServiceConstants.NEW_401 ) ,
+                        this.isRerun
+                    );
+                    if(!this.isRerun && !ipAutomationdata?.get(IP_AUTOMATION_IDENTIFIER).contains(ipRec.Id+'_'+NEW_401_FN+'_'+NSP_ServiceConstants.MIDDLEMARKET)){
+                        lstEmailMessages.add( message );
                         ipAutomationRecords.add(NSP_Implprofile_ServiceHelperUpdate.createIPAutomation(ipRecId, NSP_ServiceConstants.AUTOMATION_NEW_401, NEW_401_FN, NSP_ServiceConstants.RT, NSP_ServiceConstants.MIDDLEMARKET));
-                    }
-                    else if(isRerun){
-                        lstEmailMessages.add(NSP_IP_MM_EmailAutomationsController.sendMail(mapOfEmailTempaltes.get(NSP_ServiceConstants.NEW_401),ipRec, new List<String>{pI.NSP_Email_Address__c},isRerun));
+                    } else if ( this.isRerun ) {
+                        lstEmailMessages.add( message );
                         impRecordId = ipRecId;
                         impAutomationName = NSP_ServiceConstants.AUTOMATION_NEW_401;
                         impMethodName = NEW_401_FN;
                         impAutomationRecordType = NSP_ServiceConstants.MIDDLEMARKET ;
                     }
                 }
-                if(ipFSORecordTypeId == ipRec.recordTypeId){
-                    if(ipWithValue.NSP_Project_Manager__r.NSP_Work_email__c!=null){
-                        listOfCCAddress.add(ipWithValue.NSP_Project_Manager__r.NSP_Work_email__c);
-                    }
-                    if(!isRerun && !ipAutomationdata?.get(IP_AUTOMATION_IDENTIFIER).contains(ipRec.Id+'_'+NEW_401_FN+'_'+NSP_ServiceConstants.FSOProfile)){
-                        lstEmailMessages.add(NSP_IP_MM_EmailAutomationsController.getMailObject(ipRec,new List<String>{pI.NSP_Email_Address__c},null,listOfCCAddress, mapOfEmailTempaltes.get(NSP_New_401_k_FSO).Id ,isRerun));
+                if ( NSP_Implementationprofile_ServiceHelper.ipFSORecordTypeId == ipRec.RecordTypeId ) {
+                    Messaging.SingleEmailMessage message = NSP_IP_MM_EmailAutomationsController.getMailObject(
+                        ipRec ,
+                        listOfToAddress ,
+                        null ,
+                        listOfCCAddress ,
+                        this.getEmailTemplateId( NSP_Implementationprofile_ServiceHelper.NSP_New_401_k_FSO ) ,
+                        this.isRerun
+                    );
+                    if(!this.isRerun && !ipAutomationdata?.get(IP_AUTOMATION_IDENTIFIER).contains(ipRec.Id+'_'+NEW_401_FN+'_'+NSP_ServiceConstants.FSOProfile)){
+                        lstEmailMessages.add( message );
                         ipAutomationRecords.add(NSP_Implprofile_ServiceHelperUpdate.createIPAutomation(ipRecId, NSP_ServiceConstants.AUTOMATION_NEW_401, NEW_401_FN, NSP_ServiceConstants.RT, NSP_ServiceConstants.FSOProfile));
-                    }
-                    else if(isRerun){
-                        lstEmailMessages.add(NSP_IP_MM_EmailAutomationsController.getMailObject(ipRec,new List<String>{pI.NSP_Email_Address__c},null,listOfCCAddress, mapOfEmailTempaltes.get(NSP_New_401_k_FSO).Id ,isRerun));
+                    } else if ( this.isRerun ) {
+                        lstEmailMessages.add( message );
                         impRecordId = ipRecId;
                         impAutomationName = NSP_ServiceConstants.AUTOMATION_NEW_401;
                         impMethodName = NEW_401_FN;
                         impAutomationRecordType = NSP_ServiceConstants.FSOProfile ;
                     }
-
                 }
             }
         }
         if(impRecordId!=null && impAutomationName !=null){
             NSP_Implprofile_ServiceHelperUpdate.automationRecordUpdate(impRecordId,impAutomationName,impMethodName,impAutomationRecordType,NSP_ServiceConstants.RT);
-         }
+        }
         recToInsert.addAll(ipAutomationRecords);
     }
 
@@ -3937,6 +3983,65 @@ public class NSP_Implementationprofile_ServiceHelper {
             }
         }
         return contactsFormatted;
+    }
+
+    private List<String> buildCCAddresses( String recordId , List<String> listOfCCAddress ) {
+        if ( listOfCCAddress == null ) {
+            listOfCCAddress = new List<String>();
+        }
+        if ( String.isNotBlank( recordId )
+            && ( this.data != null )
+            && this.data.containsKey( NSP_Implementationprofile_ServiceHelper.IP_IDENTIFIER )
+            && ( this.data.get( NSP_Implementationprofile_ServiceHelper.IP_IDENTIFIER ) != null )
+            )
+        {
+            Map<Id,sObject> iPMap = this.data.get( NSP_Implementationprofile_ServiceHelper.IP_IDENTIFIER );
+            if ( ( ipMap != null )
+                && ipMap.containsKey( recordId )
+                && ( ipMap.get( recordId ) != null )
+                )
+            {
+                Implementation_Profile__c ipWithValue = (Implementation_Profile__c)iPMap.get( recordId );
+                if ( ( ipWithValue != null )
+                    && ( ipWithValue.NSP_Project_Manager__r != null )
+                    && String.isNotBlank( ipWithValue.NSP_Project_Manager__r.NSP_Work_email__c )
+                    )
+                {
+                   listOfCCAddress.add( ipWithValue.NSP_Project_Manager__r.NSP_Work_email__c );
+                }
+            }
+        }
+        return listOfCCAddress;
+    }
+
+    private Id getEmailTemplateId( String key ) {
+        Id templateId = null;
+        if ( String.isNotBlank( key )
+            && ( this.mapOfEmailTempaltes != null )
+            && this.mapOfEmailTempaltes.containsKey( key )
+            )
+        {
+            EmailTemplate template = this.mapOfEmailTempaltes.get( key );
+            if ( template != null ) {
+                templateId = template.Id;
+            }
+        }
+        return templateId;
+    }
+
+    private List<String> getToAddress( NSP_PEO_Implementations__mdt pI ) {
+        return this.getToAddress( pI , null );
+    }
+
+    private List<String> getToAddress( NSP_PEO_Implementations__mdt pI1 , NSP_PEO_Implementations__mdt pI2 ) {
+        List<String> listOfToAddress = new List<String>();
+        if ( ( pI1 != null ) && String.isNotBlank( pI1.NSP_Email_Address__c ) ) {
+            listOfToAddress.add( pI1.NSP_Email_Address__c );
+        }
+        if ( ( pI2 != null ) && String.isNotBlank( pI2.NSP_Email_Address__c ) ) {
+            listOfToAddress.add( pI2.NSP_Email_Address__c );
+        }
+        return listOfToAddress;
     }
 
 }
