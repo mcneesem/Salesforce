@@ -260,7 +260,6 @@
         <sharedTo>
             <group>NSP_Corp_Cases_Visibility</group>
         </sharedTo>
-        <booleanFilter>1 AND 2</booleanFilter>
         <criteriaItems>
             <field>NSP_CorporateEmployeeEE__c</field>
             <operation>equals</operation>
