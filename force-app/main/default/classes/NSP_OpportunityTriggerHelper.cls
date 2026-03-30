@@ -894,7 +894,6 @@ public with sharing class NSP_OpportunityTriggerHelper {
             )
         {
             List<Integration_Opportunity_Event__e> eventList = new List<Integration_Opportunity_Event__e>();
-            List<Opportunity> records = new List<Opportunity>();
             for ( Id syncId : syncIds ) {
                 eventList.add(
                     new Integration_Opportunity_Event__e(
