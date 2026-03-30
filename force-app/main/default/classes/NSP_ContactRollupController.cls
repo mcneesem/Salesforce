@@ -45,9 +45,11 @@ public without sharing class NSP_ContactRollupController {
     // @param  recordId of Account,
     // @param  Map<Id,ResultWrapper> contact and allACR's and SubClientContacts
     // @return string
-    //
+
     public static Map < Id, ResultWrapper > getSubClientContacts(string recordId, Map < Id, ResultWrapper > resultsMap,
         Integer offSetCount, Integer offSetLimit, String subClientFilter) {
+            Set<String> paidNonPaidValues = new Set<String>{'Paid WSEE', 'Active Non-Paid User'};
+
         List < String > strList = new List < String > {
             'NSP_On_Site_Supervisor__c',
             'NSP_Payroll_Contact__c',
@@ -62,8 +64,11 @@ public without sharing class NSP_ContactRollupController {
         string query = 'SELECT Id, Name, NSP_Sub_Client__c, NSP_Sub_Client__r.Name, NSP_Contact__r.Name, NSP_Sub_Client__r.NSP_Account__r.Name, ' +
             'NSP_Sub_Client__r.NSP_Account__c, NSP_Contact__r.firstName, NSP_Contact__r.lastName,NSP_Contact__r.NSP_Preferred_First_Name__c, ' +
             'NSP_Contact__c, NSP_On_Site_Supervisor__c, NSP_Payroll_Contact__c, NSP_Client_Leave_Administrator__c, NSP_WC_Contact__c, ' +
-            'NSP_HR_Contact__c, NSP_Benefits_Contact__c, NSP_Background_Contact__c, NSP_Unemployment_Contact__c FROM NSP_Sub_Client_Contact__c ' +
-            +'WHERE NSP_Sub_Client__r.NSP_Account__c =: recordId ';
+            'NSP_HR_Contact__c, NSP_Benefits_Contact__c, NSP_Background_Contact__c, NSP_Unemployment_Contact__c, NSP_Paid_Non_Paid__c, NSP_Employee_Status__c '+
+            ' FROM NSP_Sub_Client_Contact__c ' +
+            +'WHERE NSP_Sub_Client__r.NSP_Account__c =: recordId ' +
+            ' AND  NSP_Paid_Non_Paid__c IN :paidNonPaidValues AND NSP_Employee_Status__c != \'Terminated \'' +
+            ' AND NSP_Paid_Non_Paid__c != \'Inactive Non-Paid User\'';
 
         if (string.isNotblank(subClientFilter)) {
             query += ' AND (' + subClientFilter + ') ';
