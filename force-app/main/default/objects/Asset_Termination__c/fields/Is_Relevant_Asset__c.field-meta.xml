@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_Relevant_Asset__c</fullName>
+    <description>Compares the Asset Rank to the &quot;best&quot; Asset Scores on the Account Group Member to control if the current record is rendered on the dynamic related list of Asset Terminations on the Account Group page</description>
+    <formula>OR(
+  ( ROUND( Asset__r.Rank__c , 0 ) == ROUND( Account_Group_Member__r.Best_WO_Asset_Rank__c , 0 ) ) ,
+  ( ROUND( Asset__r.Rank__c , 0 ) == ROUND( Account_Group_Member__r.Best_WXWA_Asset_Rank__c , 0 ) )
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Is Relevant Asset</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>
