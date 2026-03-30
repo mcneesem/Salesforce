@@ -2,11 +2,9 @@
 private class FileUploadControllerTest {
     private static final String accName = 'Test Account 01';
     private static final String accAIMS = '123400';
-    private static final String accAIMS1 = '123401';
     private static final String caseName = 'Case';
     private static final String testsubject = 'TEST1';
     private static final String contPER = '12367';
-     private static final String acrEmployeeWorkDayId = '101624900';
     private static final String assetName = 'Testing';
     private static final String bps = 'BPS';
     private static final String userName = 'testimportcsv';
@@ -62,7 +60,7 @@ private class FileUploadControllerTest {
         //Insert Account
         Account oAccount2 = new Account();
         oAccount2.Name = accName+'2';
-        oAccount2.NSP_AIMS_Client__c = accAIMS1;
+        oAccount2.NSP_AIMS_Client__c = '123401';
         insert oAccount2;
 
         //Insert Contact
@@ -80,7 +78,7 @@ private class FileUploadControllerTest {
         AccountContactRelation acr = new AccountContactRelation();
         acr.AccountId = oAccount1.Id;
         acr.ContactId = newContact1.Id;
-        acr.Workday_Employee_ID__c = acrEmployeeWorkDayId;
+        acr.Workday_Employee_ID__c = '101624900';
         insert acr;
 
         //Insert Asset
