@@ -1059,6 +1059,7 @@ public with sharing class FileUploadController {
             && ( cpw.contactToEmployeeWorkDayIdMap != null )
             && cpw.contactToEmployeeWorkDayIdMap.containsKey( cpw.contactRecord.get( rowNumber ) )
             && ( cpw.contactToEmployeeWorkDayIdMap.get( cpw.contactRecord.get( rowNumber ) ) != null )
+            && ( cpw.rowCaseMap != null )
             && cpw.rowCaseMap.containsKey( caseToLoad )
             && ( cpw.rowCaseMap.get( caseToLoad ) != null )
             )
