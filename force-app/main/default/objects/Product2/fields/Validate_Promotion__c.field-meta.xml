@@ -3,6 +3,6 @@
     <fullName>Validate_Promotion__c</fullName>
     <defaultValue>false</defaultValue>
     <label>Validate Promotion</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>
