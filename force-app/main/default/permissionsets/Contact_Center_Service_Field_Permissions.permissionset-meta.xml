@@ -12813,11 +12813,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>NSP_Focus_Item__c.NSP_Comments__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>NSP_Focus_Item__c.NSP_Detail__c</field>
         <readable>true</readable>
     </fieldPermissions>

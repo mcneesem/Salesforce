@@ -19,6 +19,7 @@
     <permissionSets>Legacy_Data_Migration_Object_Permissions</permissionSets>
     <permissionSets>Marketing_Fields_Edit_Access</permissionSets>
     <permissionSets>NSP_Payroll_Data_Sheet</permissionSets>
+    <permissionSets>PEO_Service_Field_Permissions</permissionSets>
     <permissionSets>Project_Task_Access</permissionSets>
     <permissionSets>Termination_Revision_Access</permissionSets>
     <status>Updated</status>
