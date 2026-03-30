@@ -1781,7 +1781,7 @@ export function processConsumptionSchedule(quote, lines)
 
 
                                 debugger;
-                                if(!minmumfeeVal && productcode && !applicableProductlist.includes(productcode) && !slabProducts.includes(productcode))// for product with non min fee
+                                if(!minmumfeeVal && productcode && !applicableProductlist.includes(productcode) && slabProducts && !slabProducts.includes(productcode))// for product with non min fee
                                 {
                                     if(lowerbond <= linequantity && upperbond > linequantity)
                                     {
@@ -1888,7 +1888,7 @@ export function processConsumptionSchedule(quote, lines)
                                     }
                                 }
                                 else{
-                                    if(!slabProducts.includes(productcode)){
+                                    if(slabProducts && !slabProducts.includes(productcode)){
                                         csrate.set('SBQQ__Price__c', netUnitPrice);
                                     }
                                 }
