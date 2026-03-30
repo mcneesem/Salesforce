@@ -1967,11 +1967,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Account.NSP_Sales_Region__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Account.NSP_Sales_Service_Account_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -7818,11 +7813,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Event.NSP_Sales_Division__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Event.NSP_Sales_Office_Old1__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -18107,11 +18097,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Task.NSP_Sales_Office_Old1__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Task.NSP_Sales_Office__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -18478,11 +18463,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>User.NSP_Sales_Office__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>User.NSP_Sales_Region__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
