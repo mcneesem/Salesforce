@@ -222,7 +222,7 @@ public with sharing class FileUploadController {
         cpw.clientToUserMap = clientToUserMap;
         cpw.clientEmailtoUserMap = clientEmailtoUserMap;
         cpw.contactToPerIdMap = contactToPerIdMap;
-        cpw.contactToEmployeeWorkDayIdMap = contactToEmployeeWorkDayIdMap; // added by Masthan
+        cpw.contactToEmployeeWorkDayIdMap = contactToEmployeeWorkDayIdMap;
         cpw.caseList = caseList;
         cpw.rowCaseMap = rowCaseMap;
         cpw.accountToClientMap = accountToClientMap;
