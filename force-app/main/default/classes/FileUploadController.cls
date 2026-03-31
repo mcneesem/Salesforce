@@ -1016,7 +1016,6 @@ public with sharing class FileUploadController {
             && ( cpw.caseList.indexOf( caseToLoad ) >= 0 )
             && ( cpw.rowCaseMap != null )
             && cpw.rowCaseMap.containsKey( caseToLoad )
-            && ( cpw.rowCaseMap != null )
             && ( cpw.rowCaseMap.get( caseToLoad ) != null )
             )
         {
