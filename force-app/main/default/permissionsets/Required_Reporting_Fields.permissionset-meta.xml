@@ -113,6 +113,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.Target_Load_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.Total_Assets__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -843,6 +848,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Contact.Target_Load_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Contact.Workday_Employee_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1114,6 +1124,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Lead.Range_of_Estimated_Number_of_Employees__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Lead.Target_Load_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
