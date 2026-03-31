@@ -3436,6 +3436,41 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>NSP_Participation_SaaS_Activity__c.I_9_Appointment_Billing__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Participation_SaaS_Activity__c.I_9_Appointment_Usage__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Participation_SaaS_Activity__c.Insperity_E_Verify_Billing__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Participation_SaaS_Activity__c.Insperity_E_Verify_Usage__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Participation_SaaS_Activity__c.NSP_Activity_From__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Participation_SaaS_Activity__c.NSP_Activity_To__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Participation_SaaS_Activity__c.NSP_Asset__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>NSP_Plan_SubPlan__c.NSP_Annual_Profit_Sharing__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -23021,6 +23056,10 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>NSP_Participation_SaaS_Activity__c.Contractor_Management</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>NSP_Participation_SaaS_Activity__c.I_9_Assist_E_Verify</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
