@@ -3,8 +3,8 @@
     <apiVersion>66.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <environments>Default</environments>
-    <interviewLabel>Portal Task Create Sub Portal Task {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Portal Task Created Sub Portal Task</label>
+    <interviewLabel>Portal Task - Created - Async - Populate Sub Portal Tasks {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Portal Task - Created - Async - Populate Sub Portal Tasks</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -27,9 +27,6 @@
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <connector>
-            <targetReference>Portal_Task_Subflow_Populate_Sub_Portal_Task</targetReference>
-        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Name</field>
@@ -40,15 +37,21 @@
         </filters>
         <object>Portal_Task__c</object>
         <recordTriggerType>Create</recordTriggerType>
+        <scheduledPaths>
+            <connector>
+                <targetReference>Portal_Task_Subflow_Populate_Sub_Portal_Tasks</targetReference>
+            </connector>
+            <pathType>AsyncAfterCommit</pathType>
+        </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Draft</status>
     <subflows>
-        <name>Portal_Task_Subflow_Populate_Sub_Portal_Task</name>
-        <label>Portal Task Subflow Populate Sub Portal Task</label>
+        <name>Portal_Task_Subflow_Populate_Sub_Portal_Tasks</name>
+        <label>Portal Task - Subflow - Populate Sub Portal Tasks</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <flowName>Portal_Task_Subflow_Populate_Sub_Portal_Task</flowName>
+        <flowName>Portal_Task_Subflow_Populate_Sub_Portal_Tasks</flowName>
         <inputAssignments>
             <name>portalTaskRec</name>
             <value>
