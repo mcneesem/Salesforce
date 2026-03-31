@@ -17,13 +17,61 @@
         <wednesdayStartTime>07:00:00.000Z</wednesdayStartTime>
     </businessHours>
     <businessHours>
-        <active>true</active>
+        <active>false</active>
         <default>false</default>
         <fridayEndTime>19:00:00.000Z</fridayEndTime>
         <fridayStartTime>07:00:00.000Z</fridayStartTime>
         <mondayEndTime>19:00:00.000Z</mondayEndTime>
         <mondayStartTime>07:00:00.000Z</mondayStartTime>
         <name>Contact Center</name>
+        <thursdayEndTime>19:00:00.000Z</thursdayEndTime>
+        <thursdayStartTime>07:00:00.000Z</thursdayStartTime>
+        <timeZoneId>America/Chicago</timeZoneId>
+        <tuesdayEndTime>19:00:00.000Z</tuesdayEndTime>
+        <tuesdayStartTime>07:00:00.000Z</tuesdayStartTime>
+        <wednesdayEndTime>19:00:00.000Z</wednesdayEndTime>
+        <wednesdayStartTime>07:00:00.000Z</wednesdayStartTime>
+    </businessHours>
+    <businessHours>
+        <active>false</active>
+        <default>false</default>
+        <fridayEndTime>19:00:00.000Z</fridayEndTime>
+        <fridayStartTime>07:00:00.000Z</fridayStartTime>
+        <mondayEndTime>19:00:00.000Z</mondayEndTime>
+        <mondayStartTime>07:00:00.000Z</mondayStartTime>
+        <name>Contact Center Chat</name>
+        <thursdayEndTime>19:00:00.000Z</thursdayEndTime>
+        <thursdayStartTime>07:00:00.000Z</thursdayStartTime>
+        <timeZoneId>America/Chicago</timeZoneId>
+        <tuesdayEndTime>19:00:00.000Z</tuesdayEndTime>
+        <tuesdayStartTime>07:00:00.000Z</tuesdayStartTime>
+        <wednesdayEndTime>19:00:00.000Z</wednesdayEndTime>
+        <wednesdayStartTime>07:00:00.000Z</wednesdayStartTime>
+    </businessHours>
+    <businessHours>
+        <active>false</active>
+        <default>false</default>
+        <fridayEndTime>19:00:00.000Z</fridayEndTime>
+        <fridayStartTime>07:00:00.000Z</fridayStartTime>
+        <mondayEndTime>19:00:00.000Z</mondayEndTime>
+        <mondayStartTime>07:00:00.000Z</mondayStartTime>
+        <name>Contact Center Phone</name>
+        <thursdayEndTime>19:00:00.000Z</thursdayEndTime>
+        <thursdayStartTime>07:00:00.000Z</thursdayStartTime>
+        <timeZoneId>America/Chicago</timeZoneId>
+        <tuesdayEndTime>19:00:00.000Z</tuesdayEndTime>
+        <tuesdayStartTime>07:00:00.000Z</tuesdayStartTime>
+        <wednesdayEndTime>19:00:00.000Z</wednesdayEndTime>
+        <wednesdayStartTime>07:00:00.000Z</wednesdayStartTime>
+    </businessHours>
+    <businessHours>
+        <active>true</active>
+        <default>false</default>
+        <fridayEndTime>19:00:00.000Z</fridayEndTime>
+        <fridayStartTime>07:00:00.000Z</fridayStartTime>
+        <mondayEndTime>19:00:00.000Z</mondayEndTime>
+        <mondayStartTime>07:00:00.000Z</mondayStartTime>
+        <name>Premier Chat</name>
         <thursdayEndTime>19:00:00.000Z</thursdayEndTime>
         <thursdayStartTime>07:00:00.000Z</thursdayStartTime>
         <timeZoneId>America/Chicago</timeZoneId>
@@ -64,38 +112,6 @@
         <wednesdayEndTime>19:00:00.000Z</wednesdayEndTime>
         <wednesdayStartTime>07:00:00.000Z</wednesdayStartTime>
     </businessHours>
-    <businessHours>
-        <active>true</active>
-        <default>false</default>
-        <fridayEndTime>19:00:00.000Z</fridayEndTime>
-        <fridayStartTime>07:00:00.000Z</fridayStartTime>
-        <mondayEndTime>19:00:00.000Z</mondayEndTime>
-        <mondayStartTime>07:00:00.000Z</mondayStartTime>
-        <name>Premier Chat</name>
-        <thursdayEndTime>19:00:00.000Z</thursdayEndTime>
-        <thursdayStartTime>07:00:00.000Z</thursdayStartTime>
-        <timeZoneId>America/Chicago</timeZoneId>
-        <tuesdayEndTime>19:00:00.000Z</tuesdayEndTime>
-        <tuesdayStartTime>07:00:00.000Z</tuesdayStartTime>
-        <wednesdayEndTime>19:00:00.000Z</wednesdayEndTime>
-        <wednesdayStartTime>07:00:00.000Z</wednesdayStartTime>
-    </businessHours>
-    <businessHours>
-        <active>true</active>
-        <default>false</default>
-        <fridayEndTime>19:00:00.000Z</fridayEndTime>
-        <fridayStartTime>07:00:00.000Z</fridayStartTime>
-        <mondayEndTime>19:00:00.000Z</mondayEndTime>
-        <mondayStartTime>07:00:00.000Z</mondayStartTime>
-        <name>Contact Center Phone</name>
-        <thursdayEndTime>19:00:00.000Z</thursdayEndTime>
-        <thursdayStartTime>07:00:00.000Z</thursdayStartTime>
-        <timeZoneId>America/Chicago</timeZoneId>
-        <tuesdayEndTime>19:00:00.000Z</tuesdayEndTime>
-        <tuesdayStartTime>07:00:00.000Z</tuesdayStartTime>
-        <wednesdayEndTime>19:00:00.000Z</wednesdayEndTime>
-        <wednesdayStartTime>07:00:00.000Z</wednesdayStartTime>
-    </businessHours>
     <holidays>
         <businessHours>Contact Center</businessHours>
         <businessHours>Contact Center Phone</businessHours>
@@ -109,6 +125,13 @@
         <recurrenceMonthOfYear>December</recurrenceMonthOfYear>
         <recurrenceStartDate>2024-12-25</recurrenceStartDate>
         <recurrenceType>RecursYearly</recurrenceType>
+    </holidays>
+    <holidays>
+        <activityDate>2026-04-02</activityDate>
+        <endTime>19:00:00.000Z</endTime>
+        <isRecurring>false</isRecurring>
+        <name>Early Release</name>
+        <startTime>15:00:00.000Z</startTime>
     </holidays>
     <holidays>
         <activityDate>2024-03-29</activityDate>
