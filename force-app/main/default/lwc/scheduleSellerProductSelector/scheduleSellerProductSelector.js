@@ -46,7 +46,7 @@ export default class ScheduleSellerProductSelector extends LightningElement {
     }
 
     get showProductOptions() {
-        return ( this._isLoaded && this._accountSegment );
+        return ( this._isLoaded && ( this.productOptions?.length > 0 ) );
     }
 
     // Product options for different account segments
