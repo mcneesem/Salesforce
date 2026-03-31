@@ -71,7 +71,7 @@
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Get Sub Portal Task Records</stringValue>
+                <stringValue>Get_Sub_Portal_Task_Records</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -88,7 +88,7 @@
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Create Sub Portal Task Records</stringValue>
+                <stringValue>Create_Sub_Portal_Task_Records</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -134,14 +134,14 @@
             <name>Valid_Portal_Task</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>portalTaskRec</leftValueReference>
+                <leftValueReference>recordPortalTask</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>portalTaskRec.Name</leftValueReference>
+                <leftValueReference>recordPortalTask.Name</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -183,8 +183,8 @@
         </rules>
     </decisions>
     <environments>Default</environments>
-    <interviewLabel>Portal Task Subflow Populate Sub Portal Task {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Portal Task Subflow Populate Sub Portal Task</label>
+    <interviewLabel>Portal Task - Subflow - Populate Sub Portal Tasks {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Portal Task - Subflow - Populate Sub Portal Tasks</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -231,7 +231,7 @@
             <field>Parent_Portal_Task__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>portalTaskRec.Id</elementReference>
+                <elementReference>recordPortalTask.Id</elementReference>
             </value>
         </filters>
         <filters>
@@ -305,35 +305,35 @@
                 <outputFieldApiName>Parent_Portal_Task__c</outputFieldApiName>
                 <transformType>Map</transformType>
                 <value>
-                    <elementReference>portalTaskRec.Id</elementReference>
+                    <elementReference>recordPortalTask.Id</elementReference>
                 </value>
             </transformValueActions>
             <transformValueActions>
                 <outputFieldApiName>Portal_Project__c</outputFieldApiName>
                 <transformType>Map</transformType>
                 <value>
-                    <elementReference>portalTaskRec.Portal_Project__c</elementReference>
+                    <elementReference>recordPortalTask.Portal_Project__c</elementReference>
                 </value>
             </transformValueActions>
             <transformValueActions>
                 <outputFieldApiName>Status__c</outputFieldApiName>
                 <transformType>Map</transformType>
                 <value>
-                    <elementReference>portalTaskRec.Status__c</elementReference>
+                    <elementReference>recordPortalTask.Status__c</elementReference>
                 </value>
             </transformValueActions>
             <transformValueActions>
                 <outputFieldApiName>Type__c</outputFieldApiName>
                 <transformType>Map</transformType>
                 <value>
-                    <elementReference>portalTaskRec.Type__c</elementReference>
+                    <elementReference>recordPortalTask.Type__c</elementReference>
                 </value>
             </transformValueActions>
             <transformValueActions>
                 <outputFieldApiName>Due_Date__c</outputFieldApiName>
                 <transformType>Map</transformType>
                 <value>
-                    <elementReference>portalTaskRec.Due_Date__c</elementReference>
+                    <elementReference>recordPortalTask.Due_Date__c</elementReference>
                 </value>
             </transformValueActions>
         </transformValues>
@@ -357,7 +357,7 @@
         </value>
     </variables>
     <variables>
-        <name>portalTaskRec</name>
+        <name>recordPortalTask</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>

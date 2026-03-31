@@ -96,7 +96,7 @@
             <field>Name</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>CSP Client Authorization/Cafeteria Plan documentation collected</stringValue>
+                <stringValue>CSP Client Authorization/Cafeteria Plan Documentation Collected</stringValue>
             </value>
         </filters>
         <object>pse__Project_Task__c</object>
