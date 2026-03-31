@@ -203,8 +203,6 @@ public with sharing class FileUploadController {
             clientToUserMap ,
             clientEmailtoUserMap
         );
-        Map<String,String> contactToPerIdMap = FileUploadController.buildcontactToPerIdMap( contactRecord.values() );
-        Map<String,String> contactToEmployeeWorkDayIdMap = FileUploadController.buildContactToEmployeeWorkDayIdMap( contactRecord.values() );
         Map<String,String> accountToClientMap = new Map<String,String>();
         Map<String,String> assetToClientMap = new Map<String,String>();
         FileUploadController.buildAccountAssetClientMap(
@@ -221,8 +219,8 @@ public with sharing class FileUploadController {
         cpw.createRecordMap = createRecordMap;
         cpw.clientToUserMap = clientToUserMap;
         cpw.clientEmailtoUserMap = clientEmailtoUserMap;
-        cpw.contactToPerIdMap = contactToPerIdMap;
-        cpw.contactToEmployeeWorkDayIdMap = contactToEmployeeWorkDayIdMap;
+        cpw.contactToPerIdMap = FileUploadController.buildcontactToPerIdMap( contactRecord.values() );
+        cpw.contactToEmployeeWorkDayIdMap = FileUploadController.buildContactToEmployeeWorkDayIdMap( contactRecord.values() );
         cpw.caseList = caseList;
         cpw.rowCaseMap = rowCaseMap;
         cpw.accountToClientMap = accountToClientMap;
@@ -627,10 +625,10 @@ public with sharing class FileUploadController {
         FileUploadController.buildClientToUserMap( userRecordList , clientToUserMap );
     }
 
-    private static Map<Integer,String> buildRecordMap( List<CsvRowWrapper> csvRowWrapperList , String fieldName ){
+    private static Map<Integer,String> buildRecordMap( List<CsvRowWrapper> csvRowWrapperList , String fieldName ) {
         Map<Integer,String> linkMap = new Map<Integer,String>();
         if ( ( csvRowWrapperList != null ) && !csvRowWrapperList.isEmpty() ) {
-            for  ( CsvRowWrapper obj : csvRowWrapperList ) {
+            for ( CsvRowWrapper obj : csvRowWrapperList ) {
                 if ( ( obj.rowNum != null ) && String.isBlank( obj.errorMessage ) ) {
                     String value = FileUploadController.getFieldValue( obj , fieldName );
                     if ( String.isNotBlank( value ) ) {
@@ -704,18 +702,19 @@ public with sharing class FileUploadController {
         return contactToPerIdMap;
     }
 
-    private static Map<String,String> buildContactToEmployeeWorkDayIdMap( List<String> contactRecordList ){
+    private static Map<String,String> buildContactToEmployeeWorkDayIdMap( List<String> contactRecordList ) {
         Map<String,String> contactToEmployeeWorkDayIdMap = new Map<String,String>();
         if ( ( contactRecordList != null ) && !contactRecordList.isEmpty() ) {
             for ( AccountContactRelation acr : [
-                SELECT Id ,
-                Workday_Employee_ID__c,
-                ContactId
-                FROM AccountContactRelation
-                WHERE (
-                    ( Workday_Employee_ID__c IN :contactRecordList )
-                    AND ( ContactId != null )
-                )
+                        SELECT
+                            Id ,
+                            Workday_Employee_ID__c,
+                            ContactId
+                        FROM AccountContactRelation
+                        WHERE (
+                            ( Workday_Employee_ID__c IN :contactRecordList )
+                            AND ( ContactId != null )
+                        )
                     ]
                 )
             {
@@ -1002,18 +1001,18 @@ public with sharing class FileUploadController {
     private static Boolean contactUpdateIfElseCheck( Integer rowNumber , Case caseToLoad , CaseProcessWrapper cpw ) {
         Boolean returnValue = false;
         if ( ( cpw != null )
-            && ( cpw.contactRecord != null )
             && ( rowNumber != null )
+            && ( cpw.contactRecord != null )
             && cpw.contactRecord.containsKey( rowNumber )
             && ( cpw.contactRecord.get( rowNumber ) != null )
             && ( caseToLoad != null )
             && ( cpw.caseList != null )
             && !cpw.caseList.isEmpty()
+            && ( cpw.caseList.indexOf( caseToLoad ) >= 0 )
             && ( cpw.contactToPerIdMap != null )
             && !cpw.contactToPerIdMap.containsKey( cpw.contactRecord.get( rowNumber ) )
             && ( cpw.contactToEmployeeWorkDayIdMap != null )
             && !cpw.contactToEmployeeWorkDayIdMap.containsKey( cpw.contactRecord.get( rowNumber ) )
-            && ( cpw.caseList.indexOf( caseToLoad ) >= 0 )
             && ( cpw.rowCaseMap != null )
             && cpw.rowCaseMap.containsKey( caseToLoad )
             && ( cpw.rowCaseMap.get( caseToLoad ) != null )
@@ -1027,8 +1026,8 @@ public with sharing class FileUploadController {
     private static Boolean contactUpdateIfCheck( Integer rowNumber , Case caseToLoad , CaseProcessWrapper cpw ) {
         Boolean returnValue = false;
         if ( ( cpw != null )
-            && ( cpw.contactRecord != null )
             && ( rowNumber != null )
+            && ( cpw.contactRecord != null )
             && cpw.contactRecord.containsKey( rowNumber )
             && ( cpw.contactRecord.get( rowNumber ) != null )
             && ( caseToLoad != null )
@@ -1049,8 +1048,8 @@ public with sharing class FileUploadController {
     private static Boolean contactUpdateWithWorkIdIfCheck( Integer rowNumber , Case caseToLoad , CaseProcessWrapper cpw ) {
         Boolean returnValue = false;
         if ( ( cpw != null )
-            && ( cpw.contactRecord != null )
             && ( rowNumber != null )
+            && ( cpw.contactRecord != null )
             && cpw.contactRecord.containsKey( rowNumber )
             && ( cpw.contactRecord.get( rowNumber ) != null )
             && ( caseToLoad != null )
