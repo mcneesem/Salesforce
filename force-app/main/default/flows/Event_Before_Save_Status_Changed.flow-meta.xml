@@ -80,13 +80,17 @@
         <connector>
             <targetReference>What_is_the_new_status</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
+        <filterLogic>or</filterLogic>
         <filters>
             <field>NSP_Status__c</field>
             <operator>IsChanged</operator>
             <value>
                 <booleanValue>true</booleanValue>
             </value>
+        </filters>
+        <filters>
+            <field>NSP_Status__c</field>
+            <operator>NotEqualTo</operator>
         </filters>
         <object>Event</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
