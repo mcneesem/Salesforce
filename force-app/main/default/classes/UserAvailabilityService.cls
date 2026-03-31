@@ -7,7 +7,10 @@ public with sharing class UserAvailabilityService {
         List<BusinessHours> hours = [
             SELECT Id
             FROM BusinessHours
-            WHERE ( Id = :UserAvailabilityService.defaultBusinessHoursId )
+            WHERE (
+                ( Id = :UserAvailabilityService.defaultBusinessHoursId )
+                AND ( IsActive = true )
+            )
             LIMIT 1
         ];
         BusinessHours open = null;
