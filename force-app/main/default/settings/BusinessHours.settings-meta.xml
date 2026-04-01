@@ -17,7 +17,7 @@
         <wednesdayStartTime>07:00:00.000Z</wednesdayStartTime>
     </businessHours>
     <businessHours>
-        <active>true</active>
+        <active>false</active>
         <default>false</default>
         <fridayEndTime>19:00:00.000Z</fridayEndTime>
         <fridayStartTime>07:00:00.000Z</fridayStartTime>
@@ -33,13 +33,29 @@
         <wednesdayStartTime>07:00:00.000Z</wednesdayStartTime>
     </businessHours>
     <businessHours>
-        <active>true</active>
+        <active>false</active>
         <default>false</default>
         <fridayEndTime>19:00:00.000Z</fridayEndTime>
         <fridayStartTime>07:00:00.000Z</fridayStartTime>
         <mondayEndTime>19:00:00.000Z</mondayEndTime>
         <mondayStartTime>07:00:00.000Z</mondayStartTime>
-        <name>Workday Chat</name>
+        <name>Contact Center Chat</name>
+        <thursdayEndTime>19:00:00.000Z</thursdayEndTime>
+        <thursdayStartTime>07:00:00.000Z</thursdayStartTime>
+        <timeZoneId>America/Chicago</timeZoneId>
+        <tuesdayEndTime>19:00:00.000Z</tuesdayEndTime>
+        <tuesdayStartTime>07:00:00.000Z</tuesdayStartTime>
+        <wednesdayEndTime>19:00:00.000Z</wednesdayEndTime>
+        <wednesdayStartTime>07:00:00.000Z</wednesdayStartTime>
+    </businessHours>
+    <businessHours>
+        <active>false</active>
+        <default>false</default>
+        <fridayEndTime>19:00:00.000Z</fridayEndTime>
+        <fridayStartTime>07:00:00.000Z</fridayStartTime>
+        <mondayEndTime>19:00:00.000Z</mondayEndTime>
+        <mondayStartTime>07:00:00.000Z</mondayStartTime>
+        <name>Contact Center Phone</name>
         <thursdayEndTime>19:00:00.000Z</thursdayEndTime>
         <thursdayStartTime>07:00:00.000Z</thursdayStartTime>
         <timeZoneId>America/Chicago</timeZoneId>
@@ -71,7 +87,23 @@
         <fridayStartTime>07:00:00.000Z</fridayStartTime>
         <mondayEndTime>19:00:00.000Z</mondayEndTime>
         <mondayStartTime>07:00:00.000Z</mondayStartTime>
-        <name>Contact Center Phone</name>
+        <name>Schedule Seller</name>
+        <thursdayEndTime>19:00:00.000Z</thursdayEndTime>
+        <thursdayStartTime>07:00:00.000Z</thursdayStartTime>
+        <timeZoneId>America/Chicago</timeZoneId>
+        <tuesdayEndTime>19:00:00.000Z</tuesdayEndTime>
+        <tuesdayStartTime>07:00:00.000Z</tuesdayStartTime>
+        <wednesdayEndTime>19:00:00.000Z</wednesdayEndTime>
+        <wednesdayStartTime>07:00:00.000Z</wednesdayStartTime>
+    </businessHours>
+    <businessHours>
+        <active>true</active>
+        <default>false</default>
+        <fridayEndTime>19:00:00.000Z</fridayEndTime>
+        <fridayStartTime>07:00:00.000Z</fridayStartTime>
+        <mondayEndTime>19:00:00.000Z</mondayEndTime>
+        <mondayStartTime>07:00:00.000Z</mondayStartTime>
+        <name>Workday Chat</name>
         <thursdayEndTime>19:00:00.000Z</thursdayEndTime>
         <thursdayStartTime>07:00:00.000Z</thursdayStartTime>
         <timeZoneId>America/Chicago</timeZoneId>
@@ -84,6 +116,7 @@
         <businessHours>Contact Center</businessHours>
         <businessHours>Contact Center Phone</businessHours>
         <businessHours>Premier Chat</businessHours>
+        <businessHours>Schedule Seller</businessHours>
         <businessHours>Workday Chat</businessHours>
         <description>Recurring every year on December 25th.</description>
         <isRecurring>true</isRecurring>
@@ -92,6 +125,13 @@
         <recurrenceMonthOfYear>December</recurrenceMonthOfYear>
         <recurrenceStartDate>2024-12-25</recurrenceStartDate>
         <recurrenceType>RecursYearly</recurrenceType>
+    </holidays>
+    <holidays>
+        <activityDate>2026-04-02</activityDate>
+        <endTime>19:00:00.000Z</endTime>
+        <isRecurring>false</isRecurring>
+        <name>Early Release</name>
+        <startTime>15:00:00.000Z</startTime>
     </holidays>
     <holidays>
         <activityDate>2024-03-29</activityDate>
@@ -108,6 +148,7 @@
         <businessHours>Contact Center</businessHours>
         <businessHours>Contact Center Phone</businessHours>
         <businessHours>Premier Chat</businessHours>
+        <businessHours>Schedule Seller</businessHours>
         <businessHours>Workday Chat</businessHours>
         <isRecurring>false</isRecurring>
         <name>Good Friday 2026</name>
@@ -116,6 +157,7 @@
         <businessHours>Contact Center</businessHours>
         <businessHours>Contact Center Phone</businessHours>
         <businessHours>Premier Chat</businessHours>
+        <businessHours>Schedule Seller</businessHours>
         <businessHours>Workday Chat</businessHours>
         <description>Recurring every year on July 4th.</description>
         <isRecurring>true</isRecurring>
@@ -129,6 +171,7 @@
         <businessHours>Contact Center</businessHours>
         <businessHours>Contact Center Phone</businessHours>
         <businessHours>Premier Chat</businessHours>
+        <businessHours>Schedule Seller</businessHours>
         <businessHours>Workday Chat</businessHours>
         <description>Recurring every year on the first Monday of September.</description>
         <isRecurring>true</isRecurring>
@@ -143,6 +186,7 @@
         <businessHours>Contact Center</businessHours>
         <businessHours>Contact Center Phone</businessHours>
         <businessHours>Premier Chat</businessHours>
+        <businessHours>Schedule Seller</businessHours>
         <businessHours>Workday Chat</businessHours>
         <description>Recurring every year on the third Monday of January.</description>
         <isRecurring>true</isRecurring>
@@ -157,6 +201,7 @@
         <businessHours>Contact Center</businessHours>
         <businessHours>Contact Center Phone</businessHours>
         <businessHours>Premier Chat</businessHours>
+        <businessHours>Schedule Seller</businessHours>
         <businessHours>Workday Chat</businessHours>
         <description>Recurring every year on the last Monday of May.</description>
         <isRecurring>true</isRecurring>
@@ -171,6 +216,7 @@
         <businessHours>Contact Center</businessHours>
         <businessHours>Contact Center Phone</businessHours>
         <businessHours>Premier Chat</businessHours>
+        <businessHours>Schedule Seller</businessHours>
         <businessHours>Workday Chat</businessHours>
         <description>Recurring every year on January 1st.</description>
         <isRecurring>true</isRecurring>
@@ -184,6 +230,7 @@
         <businessHours>Contact Center</businessHours>
         <businessHours>Contact Center Phone</businessHours>
         <businessHours>Premier Chat</businessHours>
+        <businessHours>Schedule Seller</businessHours>
         <businessHours>Workday Chat</businessHours>
         <description>Recurring every year on the fourth Thursday of November.</description>
         <isRecurring>true</isRecurring>
@@ -198,6 +245,7 @@
         <businessHours>Contact Center</businessHours>
         <businessHours>Contact Center Phone</businessHours>
         <businessHours>Premier Chat</businessHours>
+        <businessHours>Schedule Seller</businessHours>
         <businessHours>Workday Chat</businessHours>
         <description>Recurring every year on the fourth Friday of November.</description>
         <isRecurring>true</isRecurring>
