@@ -226,6 +226,7 @@ debugger;
     debugger;
     if(!isPartnerCS && isSeasonal === false){
         processConsumptionSchedule(quoteModel, quoteLineModels);
+        processSlabConsumptionSchedule(quoteModel, quoteLineModels);
     }
     if(isSeasonal === true){
         processSeasonalDiscount(quoteModel,quoteLineModels);
@@ -571,7 +572,7 @@ export function calculateWXSetupFee(quoteModel, quoteLines) {
             //if(!isClonedLine)
             {
                 // copy list minimumfee to final minimumfee
-                if(!scholarshipApplicable  && listMinFee > 0  ){
+                if(!scholarshipApplicable  && listMinFee >= 0  ){
                     //minimumfeediscount  = minimumfeediscount > 0 ? minimumfeediscount: 0;
                     line.record["NSP_Final_Minimum_Fee__c"] = listMinFee - (minimumfeediscount);
                     finalMinFee = listMinFee - minimumfeediscount;
@@ -1701,201 +1702,238 @@ export function resetSeasonalRate(csRate){
 
 export function processConsumptionSchedule(quote, lines)
 {
-    let thresholdPercentage = quote.record["NSP_Threshold_Percentage__c"];
-    let wxscholarship = quote.record["NSP_WX_Scholarship__c"];
-    let applicableProductlist = ['IWXBundle','IWXBundleW2','IWACore','IWACoreW2','IWAPerCheckFee','IWXPerCheckFee','ITSUserLicenseWO'];
-    let contractorProductlist = ['IWAContractors','IWXContractors'];
-    let customProductlist =  quote.record["Discounted_Product_Codes__c"]? quote.record["Discounted_Product_Codes__c"].split(',') : null;
+    if(quote){
+        let thresholdPercentage = quote.record["NSP_Threshold_Percentage__c"];
+        let wxscholarship = quote.record["NSP_WX_Scholarship__c"];
+        let applicableProductlist = ['IWXBundle','IWXBundleW2','IWACore','IWACoreW2','IWAPerCheckFee','IWXPerCheckFee','ITSUserLicenseWO'];
+        let contractorProductlist = ['IWAContractors','IWXContractors'];
+        let customProductlist =  quote.record["Discounted_Product_Codes__c"]? quote.record["Discounted_Product_Codes__c"].split(',') : null;
+        let slabProducts = quote.record["Slab_Product_Codes__c"]? quote.record["Slab_Product_Codes__c"].split(',') : [];
+        if(lines){
+            lines.forEach(function(line){
+                let minmumfeeVal =  line.record["NSP_List_Minimum_Fee__c"];
+                let finalMinFee  =  line.record["NSP_Final_Minimum_Fee__c"];
+                let netUnitPrice =  line.record["SBQQ__NetPrice__c"];
+                let scholarshipApplicable = line.record["NSP_Scholarship_Price__c"];
+                let listPrice = line.record["SBQQ__ListPrice__c"];
+                let originalMinFee = line.record["NSP_Original_List_Minimum_Fee__c"];
+                let linequantity = line.record["NSP_Quoted_Quantity__c"];
+                let maxquantity = line.record["NSP_Max_Quantity__c"];
+                let productcode = line.record["SBQQ__ProductCode__c"];
+                let thresholdapplicable = line.record["NSP_Threshold_Applicable__c"];
+                let totalDiscountAmount = line.record["SBQQ__TotalDiscountAmount__c"];
+                let addDiscPercent = line.record["SBQQ__Discount__c"];
+                let flatFeeReferencePrice = line.record["Flat_Fee_Reference_Price__c"];
+                let flatfeeUpperbondvalue;
+                let flatfeeprice = finalMinFee;
+                let unitPriceThresholduantity;
+                let nPerUnitContWorkforce = 0;
 
-    lines.forEach(function(line){
-        let minmumfeeVal =  line.record["NSP_List_Minimum_Fee__c"];
-        let finalMinFee  =  line.record["NSP_Final_Minimum_Fee__c"];
-        let netUnitPrice =  line.record["SBQQ__NetPrice__c"];
-        let scholarshipApplicable = line.record["NSP_Scholarship_Price__c"];
-        let listPrice = line.record["SBQQ__ListPrice__c"];
-        let originalMinFee = line.record["NSP_Original_List_Minimum_Fee__c"];
-        let linequantity = line.record["NSP_Quoted_Quantity__c"];
-        let maxquantity = line.record["NSP_Max_Quantity__c"];
-        let productcode = line.record["SBQQ__ProductCode__c"];
-        let thresholdapplicable = line.record["NSP_Threshold_Applicable__c"];
-        let totalDiscountAmount = line.record["SBQQ__TotalDiscountAmount__c"];
-        let addDiscPercent = line.record["SBQQ__Discount__c"];
-        let flatFeeReferencePrice = line.record["Flat_Fee_Reference_Price__c"];
-        let flatfeeUpperbondvalue;
-        let flatfeeprice = finalMinFee;
-        let unitPriceThresholduantity;
-        let nPerUnitContWorkforce = 0;
-
-        if(maxquantity && linequantity && linequantity <= maxquantity && finalMinFee >= 0){
-            if(finalMinFee == 0 && thresholdPercentage >= 0) {
-                flatfeeUpperbondvalue = 1;
-                flatfeeprice = 0;
-            } else {
-                flatfeeUpperbondvalue = parseInt(finalMinFee/netUnitPrice)+1;
-            }
-        }
-        else if(thresholdapplicable && thresholdPercentage && linequantity){
-            flatfeeUpperbondvalue = parseInt(0.01*thresholdPercentage * linequantity)+1;
-            flatfeeprice = (0.01*thresholdPercentage * linequantity) * netUnitPrice;
-            unitPriceThresholduantity = (0.01*thresholdPercentage * linequantity) * listPrice;
-        }
-        else if(contractorProductlist.includes(productcode) && maxquantity && linequantity && linequantity > maxquantity && finalMinFee >= 0){
-            flatfeeUpperbondvalue = parseInt(finalMinFee/netUnitPrice)+1;
-        }
-        else if(maxquantity && linequantity && linequantity > maxquantity && finalMinFee>=0){
-            if(finalMinFee == 0 && thresholdPercentage >= 0) {
-                flatfeeUpperbondvalue = 1;
-                flatfeeprice = 0;
-            }else{
-                flatfeeUpperbondvalue = parseInt(finalMinFee/netUnitPrice)+1;
-            }
-
-        }
-        if(maxquantity && linequantity && linequantity > maxquantity && thresholdPercentage == 0 && thresholdapplicable){
-            flatfeeUpperbondvalue = 1;
-                flatfeeprice = 0;
-        }
-
-        if(applicableProductlist.includes(productcode) && productcode != 'ITSUserLicenseWO'  ){
-                quote.record["NSP_WX_Upper_Bound__c"] = flatfeeUpperbondvalue ? flatfeeUpperbondvalue : null;
-                line.record["NSP_UsageUpperBound__c"] = flatfeeUpperbondvalue ? flatfeeUpperbondvalue - 1 : null;
-            }
-
-        if (line.consumptionSchedules) {
-
-            line.consumptionSchedules.forEach(function(cs){
-                const rates = cs.getRates();
-                let ratecount = rates.length;
-                let matchingattribute = cs.get('SBQQ__MatchingAttribute__c');
-                let Name = cs.get("Name");
-                if(String(Name).substring(0,8) === "Seasonal"){
-                    return;
+                if(maxquantity && linequantity && linequantity <= maxquantity && finalMinFee >= 0){
+                    if(finalMinFee == 0 && thresholdPercentage >= 0) {
+                        flatfeeUpperbondvalue = 1;
+                        flatfeeprice = 0;
+                    } else {
+                        flatfeeUpperbondvalue = parseInt(finalMinFee/netUnitPrice)+1;
+                    }
                 }
-                if(!matchingattribute || !matchingattribute.toLowerCase().includes('partner')){
+                else if(thresholdapplicable && thresholdPercentage && linequantity){
+                    flatfeeUpperbondvalue = parseInt(0.01*thresholdPercentage * linequantity)+1;
+                    flatfeeprice = (0.01*thresholdPercentage * linequantity) * netUnitPrice;
+                    unitPriceThresholduantity = (0.01*thresholdPercentage * linequantity) * listPrice;
+                }
+                else if(contractorProductlist.includes(productcode) && maxquantity && linequantity && linequantity > maxquantity && finalMinFee >= 0){
+                    flatfeeUpperbondvalue = parseInt(finalMinFee/netUnitPrice)+1;
+                }
+                else if(maxquantity && linequantity && linequantity > maxquantity && finalMinFee>=0){
+                    if(finalMinFee == 0 && thresholdPercentage >= 0) {
+                        flatfeeUpperbondvalue = 1;
+                        flatfeeprice = 0;
+                    }else{
+                        flatfeeUpperbondvalue = parseInt(finalMinFee/netUnitPrice)+1;
+                    }
 
-                    rates.forEach(function(csrate,index){
-                        let upperbond = csrate.get('SBQQ__UpperBound__c');
-                        let lowerbond = csrate.get('SBQQ__LowerBound__c');
-                        let processingorder = csrate.get('SBQQ__ProcessingOrder__c');
-                        let pricingMethod = csrate.get('SBQQ__PricingMethod__c');
+                }
+                if(maxquantity && linequantity && linequantity > maxquantity && thresholdPercentage == 0 && thresholdapplicable){
+                    flatfeeUpperbondvalue = 1;
+                        flatfeeprice = 0;
+                }
 
+                if(applicableProductlist.includes(productcode) && productcode != 'ITSUserLicenseWO'  ){
+                        quote.record["NSP_WX_Upper_Bound__c"] = flatfeeUpperbondvalue ? flatfeeUpperbondvalue : null;
+                        line.record["NSP_UsageUpperBound__c"] = flatfeeUpperbondvalue ? flatfeeUpperbondvalue - 1 : null;
+                    }
 
-                        debugger;
-                        if(!minmumfeeVal && productcode && !applicableProductlist.includes(productcode))// for product with non min fee
-                        {
-                            if(lowerbond <= linequantity && upperbond > linequantity)
-                            {
-                                csrate.set('SBQQ__Price__c', netUnitPrice);
-                            }
+                if (line.consumptionSchedules) {
+
+                    line.consumptionSchedules.forEach(function(cs){
+                        const rates = cs.getRates();
+                        let ratecount = rates.length;
+                        let matchingattribute = cs.get('SBQQ__MatchingAttribute__c');
+                        let Name = cs.get("Name");
+                        if(String(Name).substring(0,8) === "Seasonal"){
+                            return;
                         }
-                        else if(productcode && applicableProductlist.includes(productcode) && !scholarshipApplicable )
-                        { // scholarship not applicable
+                        if(!matchingattribute || !matchingattribute.toLowerCase().includes('partner')){
 
-                            if( pricingMethod == 'FlatFee' && flatfeeprice >= 0 && flatfeeUpperbondvalue)
-                            {
-                                csrate.set('SBQQ__Price__c', flatfeeprice);
-                                csrate.set('SBQQ__UpperBound__c', flatfeeUpperbondvalue);
+                            rates.forEach(function(csrate,index){
+                                let upperbond = csrate.get('SBQQ__UpperBound__c');
+                                let lowerbond = csrate.get('SBQQ__LowerBound__c');
+                                let processingorder = csrate.get('SBQQ__ProcessingOrder__c');
+                                let pricingMethod = csrate.get('SBQQ__PricingMethod__c');
 
-                            }
-                            else if(pricingMethod == 'PerUnit' && flatfeeUpperbondvalue){
-                                csrate.set('SBQQ__Price__c', netUnitPrice);
-                                csrate.set('SBQQ__LowerBound__c', flatfeeUpperbondvalue);
-                            }
 
-                            if(!wxscholarship && matchingattribute == 'Scholarship'){ // update price of scholarschip cs ro zero
-                                    csrate.set('SBQQ__Price__c', 0); // setting scholarship CS price to zero when Wx scholarhip is false STY-01818
-                            }
-
-                        }
-                        else if(productcode && applicableProductlist.includes(productcode) && scholarshipApplicable )
-                        { // scholarship  applicable
-
-                            let flatfeeval = flatfeeprice;
-                            let perunitval = netUnitPrice;
-                            let nonSchFlatfee = unitPriceThresholduantity;
-
-                                if(maxquantity && linequantity && linequantity <= maxquantity && finalMinFee)
+                                debugger;
+                                if(!minmumfeeVal && productcode && !applicableProductlist.includes(productcode) && slabProducts && !slabProducts.includes(productcode))// for product with non min fee
                                 {
-                                    //flatfeeval = minmumfeeVal;
-                                    perunitval = listPrice;
-                                    nonSchFlatfee = minmumfeeVal;
-                                }
-
-                                if(!matchingattribute)
-                                {
-                                    if( pricingMethod == 'FlatFee' && flatfeeprice >= 0 && flatfeeUpperbondvalue   ) // update non scholarship cs
+                                    if(lowerbond <= linequantity && upperbond > linequantity)
                                     {
-                                        csrate.set('SBQQ__Price__c', nonSchFlatfee);
-                                            csrate.set('SBQQ__UpperBound__c', parseInt(nonSchFlatfee/listPrice)+1);
-
-                                    }
-                                    else if(pricingMethod == 'PerUnit' && flatfeeUpperbondvalue){
-                                        csrate.set('SBQQ__Price__c', listPrice);
-                                            csrate.set('SBQQ__LowerBound__c', parseInt(nonSchFlatfee/listPrice)+1);
+                                        csrate.set('SBQQ__Price__c', netUnitPrice);
                                     }
                                 }
-                                else if(matchingattribute == 'Scholarship')
-                                {
-                                    if( pricingMethod == 'FlatFee' && flatfeeprice >= 0 && flatfeeUpperbondvalue  ) // update scholarship cs
+                                else if(productcode && applicableProductlist.includes(productcode) && !scholarshipApplicable )
+                                { // scholarship not applicable
+
+                                    if( pricingMethod == 'FlatFee' && flatfeeprice >= 0 && flatfeeUpperbondvalue)
                                     {
-                                        csrate.set('SBQQ__Price__c', flatfeeval);
-                                            csrate.set('SBQQ__UpperBound__c', parseInt(flatfeeval/netUnitPrice)+1);
+                                        csrate.set('SBQQ__Price__c', flatfeeprice);
+                                        csrate.set('SBQQ__UpperBound__c', flatfeeUpperbondvalue);
 
                                     }
                                     else if(pricingMethod == 'PerUnit' && flatfeeUpperbondvalue){
                                         csrate.set('SBQQ__Price__c', netUnitPrice);
-                                            csrate.set('SBQQ__LowerBound__c', parseInt(flatfeeval/netUnitPrice)+1);
+                                        csrate.set('SBQQ__LowerBound__c', flatfeeUpperbondvalue);
+                                    }
+
+                                    if(!wxscholarship && matchingattribute == 'Scholarship'){ // update price of scholarschip cs ro zero
+                                            csrate.set('SBQQ__Price__c', 0); // setting scholarship CS price to zero when Wx scholarhip is false STY-01818
+                                    }
+
+                                }
+                                else if(productcode && applicableProductlist.includes(productcode) && scholarshipApplicable )
+                                { // scholarship  applicable
+
+                                    let flatfeeval = flatfeeprice;
+                                    let perunitval = netUnitPrice;
+                                    let nonSchFlatfee = unitPriceThresholduantity;
+
+                                        if(maxquantity && linequantity && linequantity <= maxquantity && finalMinFee)
+                                        {
+                                            //flatfeeval = minmumfeeVal;
+                                            perunitval = listPrice;
+                                            nonSchFlatfee = minmumfeeVal;
+                                        }
+
+                                        if(!matchingattribute)
+                                        {
+                                            if( pricingMethod == 'FlatFee' && flatfeeprice >= 0 && flatfeeUpperbondvalue   ) // update non scholarship cs
+                                            {
+                                                csrate.set('SBQQ__Price__c', nonSchFlatfee);
+                                                    csrate.set('SBQQ__UpperBound__c', parseInt(nonSchFlatfee/listPrice)+1);
+
+                                            }
+                                            else if(pricingMethod == 'PerUnit' && flatfeeUpperbondvalue){
+                                                csrate.set('SBQQ__Price__c', listPrice);
+                                                    csrate.set('SBQQ__LowerBound__c', parseInt(nonSchFlatfee/listPrice)+1);
+                                            }
+                                        }
+                                        else if(matchingattribute == 'Scholarship')
+                                        {
+                                            if( pricingMethod == 'FlatFee' && flatfeeprice >= 0 && flatfeeUpperbondvalue  ) // update scholarship cs
+                                            {
+                                                csrate.set('SBQQ__Price__c', flatfeeval);
+                                                    csrate.set('SBQQ__UpperBound__c', parseInt(flatfeeval/netUnitPrice)+1);
+
+                                            }
+                                            else if(pricingMethod == 'PerUnit' && flatfeeUpperbondvalue){
+                                                csrate.set('SBQQ__Price__c', netUnitPrice);
+                                                    csrate.set('SBQQ__LowerBound__c', parseInt(flatfeeval/netUnitPrice)+1);
+                                            }
+                                        }
+                                }
+                                else if(productcode && contractorProductlist.includes(productcode)){ // for contractors
+
+                                    if( pricingMethod == 'FlatFee' && finalMinFee >= 0 && flatfeeUpperbondvalue)
+                                    {
+                                        csrate.set('SBQQ__Price__c', finalMinFee);
+                                        csrate.set('SBQQ__UpperBound__c', flatfeeUpperbondvalue);
+                                    }
+                                    else if(pricingMethod == 'PerUnit' && flatfeeUpperbondvalue){
+                                        csrate.set('SBQQ__Price__c', netUnitPrice);
+                                        csrate.set('SBQQ__LowerBound__c', flatfeeUpperbondvalue);
                                     }
                                 }
-                        }
-                        else if(productcode && contractorProductlist.includes(productcode)){ // for contractors
+                                else if( flatFeeReferencePrice && customProductlist.includes(productcode) && linequantity > 0){ // for contractors
 
-                            if( pricingMethod == 'FlatFee' && finalMinFee >= 0 && flatfeeUpperbondvalue)
-                            {
-                                csrate.set('SBQQ__Price__c', finalMinFee);
-                                csrate.set('SBQQ__UpperBound__c', flatfeeUpperbondvalue);
-                            }
-                            else if(pricingMethod == 'PerUnit' && flatfeeUpperbondvalue){
-                                csrate.set('SBQQ__Price__c', netUnitPrice);
-                                csrate.set('SBQQ__LowerBound__c', flatfeeUpperbondvalue);
-                            }
-                        }
-                        else if( flatFeeReferencePrice && customProductlist.includes(productcode) && linequantity > 0){ // for contractors
-
-                            if( pricingMethod == 'FlatFee' && flatFeeReferencePrice >= 0 && flatfeeUpperbondvalue && finalMinFee !=null)
-                            {
-                                csrate.set('SBQQ__Price__c', finalMinFee);
-                                if(addDiscPercent)
-                                {
-                                    csrate.set('SBQQ__UpperBound__c', parseInt(finalMinFee/(flatFeeReferencePrice-(addDiscPercent*0.01*flatFeeReferencePrice))) +1);
+                                    if( pricingMethod == 'FlatFee' && flatFeeReferencePrice >= 0 && flatfeeUpperbondvalue && finalMinFee !=null)
+                                    {
+                                        csrate.set('SBQQ__Price__c', finalMinFee);
+                                        if(addDiscPercent)
+                                        {
+                                            csrate.set('SBQQ__UpperBound__c', parseInt(finalMinFee/(flatFeeReferencePrice-(addDiscPercent*0.01*flatFeeReferencePrice))) +1);
+                                        }
+                                        else
+                                        {
+                                            csrate.set('SBQQ__UpperBound__c', parseInt(finalMinFee/(flatFeeReferencePrice-totalDiscountAmount)) +1);
+                                        }
+                                    }
+                                    else if(pricingMethod == 'PerUnit' && flatFeeReferencePrice >=0 && nPerUnitContWorkforce <= 0 && netUnitPrice !=null){
+                                        csrate.set('SBQQ__Price__c', netUnitPrice);
+                                        if(addDiscPercent)
+                                        {
+                                            csrate.set('SBQQ__LowerBound__c', parseInt(finalMinFee/(flatFeeReferencePrice-(addDiscPercent*0.01*flatFeeReferencePrice))) +1);
+                                        }
+                                        else
+                                        {
+                                            csrate.set('SBQQ__LowerBound__c', parseInt(finalMinFee/(flatFeeReferencePrice-totalDiscountAmount))+1);
+                                        }
+                                        nPerUnitContWorkforce = nPerUnitContWorkforce +1;
+                                    }
                                 }
-                                else
-                                {
-                                    csrate.set('SBQQ__UpperBound__c', parseInt(finalMinFee/(flatFeeReferencePrice-totalDiscountAmount)) +1);
+                                else{
+                                    if(slabProducts && !slabProducts.includes(productcode)){
+                                        csrate.set('SBQQ__Price__c', netUnitPrice);
+                                    }
                                 }
-                            }
-                            else if(pricingMethod == 'PerUnit' && flatFeeReferencePrice >=0 && nPerUnitContWorkforce <= 0 && netUnitPrice !=null){
-                                csrate.set('SBQQ__Price__c', netUnitPrice);
-                                if(addDiscPercent)
-                                {
-                                    csrate.set('SBQQ__LowerBound__c', parseInt(finalMinFee/(flatFeeReferencePrice-(addDiscPercent*0.01*flatFeeReferencePrice))) +1);
-                                }
-                                else
-                                {
-                                    csrate.set('SBQQ__LowerBound__c', parseInt(finalMinFee/(flatFeeReferencePrice-totalDiscountAmount))+1);
-                                }
-                                nPerUnitContWorkforce = nPerUnitContWorkforce +1;
-                            }
-                        }
-                        else{
-                            csrate.set('SBQQ__Price__c', netUnitPrice);
+                            });
                         }
                     });
                 }
             });
         }
+    }
+}
 
-    });
+export function processSlabConsumptionSchedule(quote, lines)
+{
+    let slabProducts = [];
+    if(quote && quote.record && quote.record["Slab_Product_Codes__c"]){
+        slabProducts = quote.record["Slab_Product_Codes__c"].split(',');
+    }
+    if(lines){
+        lines.forEach(function(line){
+            let netUnitPrice =  line.record["SBQQ__NetPrice__c"];
+            let productcode = line.record["SBQQ__ProductCode__c"];
+
+            if(productcode && slabProducts && slabProducts.includes(productcode)){
+
+                if (line.consumptionSchedules) {
+                    line.consumptionSchedules.forEach(function(cs){
+                        const rates = cs.getRates();
+                        if(rates){
+                            rates.forEach(function(csrate,index){
+                                let pricingMethod = csrate.get('SBQQ__PricingMethod__c');
+                                if(pricingMethod == 'PerUnit'){
+                                    csrate.set('SBQQ__Price__c', netUnitPrice);
+                                }
+                            });
+                        }
+                    });
+                }
+            }
+        });
+    }
+
 }
 
 export function checkBookedSetup(quote, lines){
