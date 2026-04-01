@@ -1,4 +1,4 @@
-import { LightningElement, wire, track } from 'lwc';
+import { LightningElement, wire } from 'lwc';
 import getHealth from '@salesforce/apex/SandboxHealthController.getHealth';
 import { refreshApex } from '@salesforce/apex';
 
