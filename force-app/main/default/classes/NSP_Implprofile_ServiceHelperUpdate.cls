@@ -118,9 +118,8 @@ public class NSP_Implprofile_ServiceHelperUpdate {
     public static Boolean isAutomationAllowed() {
         return (
             CustomPermissionController.checkUserPermission( 'Use_Implementation_Profile' , UserInfo.getUserId() )
-            && Schema.sObjectType.Implementation_Profile__c.isAccessible()
-            && Schema.SObjectType.Implementation_Profile__c.isCreateable()
-            && Schema.sObjectType.Implementation_Profile__c.isUpdateable()
+            && Schema.SObjectType.Implementation_Profile__c.isAccessible()
+            && Schema.SObjectType.Implementation_Profile__c.isUpdateable()
         );
     }
 
