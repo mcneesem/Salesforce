@@ -82,8 +82,8 @@
                 <field>Has_Promo__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Promo_Product_Codes__c</field>
+                <behavior>Edit</behavior>
+                <field>Has_SMS__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
