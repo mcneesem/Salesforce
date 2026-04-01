@@ -35,34 +35,34 @@ public with sharing class SandboxHealthController {
 
     /**
      * Calculates the overall status for a section based on individual check statuses
-     * Logic: If ALL checks are PASS -> Section PASS, If ANY check is FAIL -> Section FAIL, 
+     * Logic: If ALL checks are PASS -> Section PASS, If ANY check is FAIL -> Section FAIL,
      * If NO checks are FAIL but some are WARN -> Section WARN, Else Section WARN (empty or all warn)
      */
     private static String calculateSectionStatus( List<Check> checks ) {
-        if ( ( checks == null ) || checks.isEmpty() ) {
-            return STATUS.WARN.name(); // Default to WARN for empty sections
-        }
-        
         Boolean hasFail = false;
         Boolean hasWarn = false;
-        
-        for (Check check : checks) {
-            if ( check.status == STATUS.FAIL.name() ) {
-                hasFail = true;
-                break; // Early exit on first fail
-            } else if ( check.status == STATUS.WARN.name() ) {
-                hasWarn = true;
+        String secStat = STATUS.PASS.name();
+
+        if ( ( checks == null ) || checks.isEmpty() ) {
+            secStat = STATUS.WARN.name(); // Default to WARN for empty sections
+        } else {
+            for ( Check check : checks ) {
+                if ( check.status == STATUS.FAIL.name() ) {
+                    hasFail = true;
+                    break; // Early exit on first fail
+                } else if ( check.status == STATUS.WARN.name() ) {
+                    hasWarn = true;
+                }
+            }
+
+            if ( hasFail ) {
+                secStat = STATUS.FAIL.name();
+            } else if ( hasWarn ) {
+                secStat = STATUS.WARN.name();
             }
         }
-        
-        if ( hasFail ) {
-            return STATUS.FAIL.name();
-        } else if (hasWarn) {
-            return STATUS.WARN.name();
-        } else {
-            // All checks are PASS
-            return STATUS.PASS.name();
-        }
+
+        return secStat;
     }
 
     public class HealthResult {
@@ -369,7 +369,7 @@ public with sharing class SandboxHealthController {
             } else {
                 s.checks.add( checkExact('nvm_client', 'NVMContactWorld__clientId__c', expectedId, ( def == null ) ? null : def.NVMContactWorld__clientId__c));
             }
-            
+
         } catch ( Exception e ) {
             s.checks.add( newWarn('nvm_query', 'Access', 'Queryable', 'Error', 'Unable to read NVMContactWorld__Settings__c: ' + e.getMessage()));
         }
@@ -615,15 +615,7 @@ public with sharing class SandboxHealthController {
             } else {
                 // Check that each record has a template ID set (based on NSP_PrepSandbox.doTmpls_mdt)
                 for ( NSP_ProjectTemplateMapping__mdt record : records ) {
-                    String key = 'tmpl_' + record.DeveloperName;
-                    String label = record.Label;
-                    String actual = record.Template_ID__c;
-                    // Should not be null or blank (when mapping to actual templates)
-                    if ( String.isBlank( actual ) ) {
-                        s.checks.add( newFail( key , label , 'Template ID' , actual , 'Template ID should not be blank' ) );
-                    } else {
-                        s.checks.add( checkExact( key , label , SandboxHealthController.mTmplId.get( record.Template_Name__c.trim() ) , actual ) );
-                    }
+                    s.checks.add( templCheck( record.Template_Name__c.trim() , 'tmpl_' + record.DeveloperName , record.Label , record.Template_ID__c ) );
                 }
             }
         } catch ( Exception e ) {
@@ -652,15 +644,7 @@ public with sharing class SandboxHealthController {
             } else {
                 // Check that each record has a template ID set (based on NSP_PrepSandbox.doTmplKeys_mdt)
                 for ( Template_Key_and_Id_Mapping__mdt record : records ) {
-                    String key = 'tmplkey_' + record.DeveloperName;
-                    String label = record.Label;
-                    String actual = record.Template_ID__c;
-                    // Should not be null or blank (when mapping to actual templates)
-                    if ( String.isBlank( actual ) ) {
-                        s.checks.add( newFail( key , label , 'Template ID' , actual , 'Template ID should not be blank' ) );
-                    } else {
-                        s.checks.add( checkExact( key , label , SandboxHealthController.mTmplId.get( record.Template_Name__c.trim() ) , actual ) );
-                    }
+                    s.checks.add( templCheck( record.Template_Name__c.trim() , 'tmplkey_' + record.DeveloperName , record.Label , record.Template_ID__c ) );
                 }
             }
         } catch ( Exception e ) {
@@ -669,6 +653,17 @@ public with sharing class SandboxHealthController {
 
         s.status = calculateSectionStatus( s.checks );
         return s;
+    }
+
+    private static Check templCheck( String tmplName , String key , String label , String actual ) {
+        Check c = new Check();
+        // Should not be null or blank (when mapping to actual templates)
+        if ( String.isBlank( actual ) ) {
+            c = newFail( key , label , 'Template ID' , actual , 'Template ID should not be blank' );
+        } else {
+            c = checkExact( key , label , SandboxHealthController.mTmplId.get( tmplName ) , actual );
+        }
+        return c;
     }
 
     // Queues email suffix verification (.invalid), mirrors NSP_PrepSandbox.doQueues() but read-only
@@ -687,6 +682,22 @@ public with sharing class SandboxHealthController {
                 WHERE Type = 'Queue' AND Email > ''
                 WITH SECURITY_ENFORCED
             ];
+
+            if ( queues.isEmpty() ) {
+                s.checks.add( newWarn(
+                    'queues_none',
+                    'Queues with Email',
+                    'At least one queue with email',
+                    'None found',
+                    'No Queue groups with non-blank email were found'
+                ));
+            } else {
+                for ( Group q : queues ) {
+                    String key = 'queue_' + String.valueOf( q.Id );
+                    String label = q.Name;
+                    s.checks.add( checkSuffix( key , label , STRING_INVALID , q.Email ) );
+                }
+            }
         } catch ( Exception e ) {
             s.checks.add( newWarn(
                 'queues_query',
@@ -695,26 +706,6 @@ public with sharing class SandboxHealthController {
                 'No access',
                 'Unable to read Queue Groups with email: ' + e.getMessage()
             ));
-            s.status = calculateSectionStatus( s.checks );
-            return s;
-        }
-
-        if (queues.isEmpty()) {
-            s.checks.add( newWarn(
-                'queues_none',
-                'Queues with Email',
-                'At least one queue with email',
-                'None found',
-                'No Queue groups with non-blank email were found'
-            ));
-            s.status = calculateSectionStatus( s.checks );
-            return s;
-        }
-
-        for (Group q : queues) {
-            String key = 'queue_' + String.valueOf( q.Id );
-            String label = q.Name;
-            s.checks.add( checkSuffix( key , label , STRING_INVALID , q.Email ) );
         }
 
         s.status = calculateSectionStatus( s.checks );
@@ -746,17 +737,29 @@ public with sharing class SandboxHealthController {
     }
 
     private static Check checkExact( String key , String label , String expected , String actual ) {
-        if ( actual == null ) return newFail( key , label , expected , 'null' , STRING_MISSING );
-        return expected == actual
-            ? newPass( key , label , expected , actual , 'Matches expected' )
-            : newFail( key , label , expected , actual , 'Value mismatch' );
+        Check c = new Check();
+        if ( actual == null ) {
+            c = newFail( key , label , expected , 'null' , STRING_MISSING );
+        } else {
+            c = ( expected == actual )
+                ? newPass( key , label , expected , actual , 'Matches expected' )
+                : newFail( key , label , expected , actual , 'Value mismatch' );
+        }
+
+        return c;
     }
 
     private static Check checkBool( String key , String label , Boolean expected , Boolean actual ) {
-        if ( actual == null ) return newFail( key , label , String.valueOf(expected) , 'null' , STRING_MISSING );
-        return expected == actual
-            ? newPass(key, label, String.valueOf(expected), String.valueOf(actual), 'Matches expected')
-            : newFail(key, label, String.valueOf(expected), String.valueOf(actual), 'Value mismatch');
+        Check c = new Check();
+        if ( actual == null ) {
+            c = newFail( key , label , String.valueOf(expected) , 'null' , STRING_MISSING );
+        } else {
+            c = ( expected == actual )
+                ? newPass(key, label, String.valueOf(expected), String.valueOf(actual), 'Matches expected')
+                : newFail(key, label, String.valueOf(expected), String.valueOf(actual), 'Value mismatch');
+        }
+
+        return c;
     }
 
     private static Check checkBlank( String key , String label , String expectedDesc , String actual ) {
@@ -766,10 +769,16 @@ public with sharing class SandboxHealthController {
     }
 
     private static Check checkSuffix( String key , String label , String expectedSuffix , String actual ) {
-        if (String.isBlank( actual )) return newFail( key , label , STRING_ENDS_W + expectedSuffix , actual , STRING_MISSING );
-        return actual.endsWith( expectedSuffix )
-            ? newPass( key , label , STRING_ENDS_W + expectedSuffix , actual , 'Has required suffix' )
-            : newFail( key , label , STRING_ENDS_W + expectedSuffix , actual , 'Missing required suffix' );
+        Check c = new Check();
+        if ( String.isBlank( actual ) ) {
+            c = newFail( key , label , STRING_ENDS_W + expectedSuffix , actual , STRING_MISSING );
+        } else {
+            c = actual.endsWith( expectedSuffix )
+                ? newPass( key , label , STRING_ENDS_W + expectedSuffix , actual , 'Has required suffix' )
+                : newFail( key , label , STRING_ENDS_W + expectedSuffix , actual , 'Missing required suffix' );
+        }
+
+        return c;
     }
 
     // Placeholder expectations for CSP Trusted Sites (keys must match CspTrustedSite fullName)

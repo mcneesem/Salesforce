@@ -3,15 +3,15 @@ import getHealth from '@salesforce/apex/SandboxHealthController.getHealth';
 import { refreshApex } from '@salesforce/apex';
 
 export default class SandboxHealth extends LightningElement {
-    @track activeSections = [];
-    @track sections = [];
-    @track context = { sandboxName: '', instance: '' };
-    @track evaluatedAtDisplay = '';
-    @track error = '';
-    @track loading = true;
+    activeSections = [];
+    sections = [];
+    context = { sandboxName: '', instance: '' };
+    evaluatedAtDisplay = '';
+    error = '';
+    loading = true;
 
     // Track child active sections for nested accordion (e.g., Custom Settings children)
-    @track activeChildSections = [];
+    activeChildSections = [];
 
     // Wire to Apex (cacheable)
     // Capture wired result so we can refresh later if needed
@@ -30,7 +30,7 @@ export default class SandboxHealth extends LightningElement {
     }
 
     handleToggle(event) {
-        this.activeSections = event.detail.openSections;
+        this.activeSections = event?.detail?.openSections;
     }
 
     handleToggleAll() {
@@ -41,7 +41,7 @@ export default class SandboxHealth extends LightningElement {
         }
     }
 
-    hasAnyTopOpen() { 
+    hasAnyTopOpen() {
         return Array.isArray(this.activeSections) && this.activeSections.length > 0;
     }
 
@@ -130,22 +130,35 @@ export default class SandboxHealth extends LightningElement {
     bucketSections(sections) {
         const buckets = { others: [] , customSettings: [] , customMetadata: [] , customLabels: [] };
         for (const s of sections) {
-            if (this.isCustomSettings(s)) buckets.customSettings.push(s);
-            else if (this.isCustomMetadata(s)) buckets.customMetadata.push(s);
-            else if (this.isCustomLabels(s)) buckets.customLabels.push(s);
-            else buckets.others.push(s);
+            if (this.isCustomSettings(s)) {
+                buckets.customSettings.push(s);
+            }
+            else if ( this.isCustomMetadata(s) ) {
+                buckets.customMetadata.push(s);
+            }
+            else if ( this.isCustomLabels(s) ) {
+                buckets.customLabels.push(s);
+            }
+            else {
+                buckets.others.push(s);
+            }
         }
         return buckets;
     }
 
-    deriveStatus(children) {
+    deriveStatus( children ) {
+        let derStat = 'PASS';
         const st = children.map((s) => s.status);
-        if (st.includes('FAIL')) return 'FAIL';
-        if (st.includes('WARN')) return 'WARN';
-        return 'PASS';
+        if ( st.includes( 'FAIL' ) ) {
+            derStat = 'FAIL';
+        }
+        if ( st.includes( 'WARN' ) ) {
+            derStat = 'WARN';
+        }
+        return derStat;
     }
 
-    makeParent(key, label, kids, prefix) {
+    makeParent( key , label , kids , prefix ) {
         const parent = this.decorateSection({
             key,
             label,
@@ -158,23 +171,33 @@ export default class SandboxHealth extends LightningElement {
 
     buildGroupedSections({ others , customSettings , customMetadata , customLabels }) {
         const out = [...others];
-        if ( customSettings.length ) out.unshift( this.makeParent( 'CUSTOM_SETTINGS' , 'Custom Settings' , customSettings , 'CS' ) );
-        if ( customMetadata.length ) out.unshift( this.makeParent( 'CUSTOM_METADATA' , 'Custom Metadata' , customMetadata , 'CM' ) );
-        if ( customLabels.length ) out.unshift( this.makeParent( 'CUSTOM_LABELS' , 'Custom Labels' , customLabels , 'CL' ) );
+        if ( customSettings.length ) {
+            out.unshift( this.makeParent( 'CUSTOM_SETTINGS' , 'Custom Settings' , customSettings , 'CS' ) );
+        }
+        if ( customMetadata.length ) {
+            out.unshift( this.makeParent( 'CUSTOM_METADATA' , 'Custom Metadata' , customMetadata , 'CM' ) );
+        }
+        if ( customLabels.length ) {
+            out.unshift( this.makeParent( 'CUSTOM_LABELS' , 'Custom Labels' , customLabels , 'CL' ) );
+        }
         return out;
     }
 
-    collectAllChildNames(sections) {
+    collectAllChildNames( sections ) {
         const names = [];
-        for (const s of sections) {
-            if (s && Array.isArray(s.children)) {
-                for (const c of s.children) if (c?.name) names.push(c.name);
+        for ( const s of sections ) {
+            if ( s && Array.isArray( s.children ) ) {
+                for (const c of s.children) {
+                    if ( c?.name ) {
+                        names.push( c.name );
+                    }
+                }
             }
         }
         return names;
     }
 
-    initChildActivesIfEmpty(grouped) {
+    initChildActivesIfEmpty() {
         if (!this.activeChildSections || this.activeChildSections.length === 0) {
             this.activeChildSections = [];
         }
@@ -198,45 +221,51 @@ export default class SandboxHealth extends LightningElement {
         const grouped = this.buildGroupedSections(buckets); // adds parents when needed
 
         this.sections = grouped;
-        this.initChildActivesIfEmpty(grouped);
+        this.initChildActivesIfEmpty();
         this.initTopActivesIfEmpty();
     }
 
-    toArray(x) {
-        return Array.isArray(x) ? x : [];
+    toArray( x ) {
+        return Array.isArray( x ) ? x : [];
     }
 
-    setContext(data) {
+    setContext( data ) {
         this.context = {
             sandboxName: data?.sandboxName || '',
             instance: data?.instance || ''
         };
     }
 
-    setTimestamp(data) {
+    setTimestamp( data ) {
         try {
-            const dt = data?.evaluatedAt ? new Date(data.evaluatedAt) : new Date();
+            const dt = data?.evaluatedAt ? new Date( data.evaluatedAt ) : new Date();
             this.evaluatedAtDisplay = dt.toLocaleString();
         } catch (e) {
             this.evaluatedAtDisplay = '';
         }
     }
 
-    normalizeError(err) {
-        if (!err) return 'Unknown error';
-        if (Array.isArray(err.body)) {
-            return err.body.map((e) => e.message).join(', ');
+    normalizeError( err ) {
+        let normErr = '';
+        if ( !err ) {
+            normErr = 'Unexpected error';
         }
-        if (err.body && typeof err.body.message === 'string') {
-            return err.body.message;
+        else if ( Array.isArray( err.body ) ) {
+            normErr = err.body.map( ( e ) => e.message ).join(', ');
         }
-        if (typeof err.message === 'string') {
-            return err.message;
+        else if ( err.body && typeof err.body.message === 'string' ) {
+            normErr = err.body.message;
         }
-        try {
-            return JSON.stringify(err);
-        } catch (e) {
-            return 'Unexpected error';
+        else if ( typeof err.message === 'string' ) {
+            normErr = err.message;
         }
+        else {
+            try {
+                normErr = JSON.stringify( err );
+            } catch (e) {
+                normErr = 'Unexpected error';
+            }
+        }
+        return normErr;
     }
 }

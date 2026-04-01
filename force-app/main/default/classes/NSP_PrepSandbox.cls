@@ -205,7 +205,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         for (NSP_DocuSign_Signers__mdt cMdRecord : cMdDocuSigners) {
             String name = cMdRecord.DeveloperName;
             String fullName = 'NSP_DocuSign_Signers.' + name; //custom metadata full name
-            String signer_Username = cMdRecord.NSP_Signer_Username__c;            
+            String signer_Username = cMdRecord.NSP_Signer_Username__c;
             String signer_Username_new = signer_Username.substringBefore('.' + sandboxName).trim() + '.' + sandboxName;
             MetadataService.CustomMetadata cMdUpd = buildCustomMetadataRow( fullName , name , 'NSP_Signer_Username__c' , signer_Username_new );
             allMetadataList = addCustomMetadataRow(allMetadataList, cMdUpd);
@@ -460,7 +460,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         try {
             String host = URL.getOrgDomainUrl().toExternalForm();
             String endPoint = host + '/services/data/v55.0/tooling/';
-            String sessionId = apiEnabledSessionId();
+            String sessionId = NSP_PrepSandbox.apiEnabledSessionId();
             List<String[]> wfaNames = new List<String[]>();
             wfaNames.add(new String[]{});
             List<List<MetadataService.Metadata>> allMetadataList = new List<List<MetadataService.Metadata>>();
@@ -514,7 +514,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         Integer batch = 0;
         HTTPResponse response = new HTTPResponse();
         String host = URL.getOrgDomainUrl().toExternalForm();
-        String sessionId = apiEnabledSessionId();
+        String sessionId = NSP_PrepSandbox.apiEnabledSessionId();
         for (RecordAlert alert : records) {
             // Get the Alert meta-data
             request = new HttpRequest();
@@ -839,7 +839,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     public static MetadataService.MetadataPort createService() {
         MetadataService.MetadataPort service = new MetadataService.MetadataPort();
         service.SessionHeader = new MetadataService.SessionHeader_element();
-        service.SessionHeader.sessionId = apiEnabledSessionId();
+        service.SessionHeader.sessionId = NSP_PrepSandbox.apiEnabledSessionId();
         return service;
     }
 
