@@ -397,10 +397,10 @@ export default class Nsp_mainServiceContacts extends NavigationMixin(LightningEl
         //SubClient filters
         let subCFilter = []
         for (let x of this.value) {
-            subCFilter.push(x + ' = true')
+            subCFilter.push(x)
         }
         //Assign Values to the varaiable, prepare condition
-        this.subClientFilter = subCFilter.join(' AND ');
+        this.subClientFilter = subCFilter.join(' , ');
         this.acrFilter = aCRFilter.join(' AND ');
 
         this.offSetCount = 0;
