@@ -869,17 +869,21 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     }
 
     private static void updateLabelsValues(Map<String, String> refreshValMap){
+        try {
+            MetadataService.MetadataPort service = createService();
+            List<MetadataService.Metadata> allMetadataList = new List<MetadataService.Metadata>();
+            MetadataService.CustomLabel cL = new MetadataService.CustomLabel();
 
-        MetadataService.MetadataPort service = createService();
-        List<MetadataService.Metadata> allMetadataList = new List<MetadataService.Metadata>();
-        MetadataService.CustomLabel cL = new MetadataService.CustomLabel();
+            for (String cLName : refreshValMap.keySet()) {
+                setCLabelData(service, cL, allMetadataList, cLName, refreshValMap);
+            }
 
-        for (String cLName : refreshValMap.keySet()) {
-            setCLabelData(service, cL, allMetadataList, cLName, refreshValMap);
+            if(allMetadataList.size() > 0 && !Test.isRunningTest()){
+                service.updateMetadata(allMetadataList);
+            }
         }
-
-        if(allMetadataList.size() > 0 && !Test.isRunningTest()){
-            service.updateMetadata(allMetadataList);
+        catch(Exception e) {
+            NSP_PrepSandbox.handleException( e , 'updateLabelsValues' );
         }
     }
 

@@ -106,6 +106,7 @@ public with sharing class SandboxHealthController {
         res.sections.add( verifyContractTerminationSettings() );
         res.sections.add( verifyNVMContactWorldSettings( sandbox ) );
         res.sections.add( verifySalesTeamEmailSettings() );
+        res.sections.add( verifyProjectCreationSettings() );
         // Custom Metadata checks (from doCMetadata and doCMetadataSvc)
         res.sections.add( verifyDocuSignSignersMetadata( sandbox ) );
         res.sections.add( verifyDocuSignRESTMetadata( sandbox ) );
@@ -244,20 +245,21 @@ public with sharing class SandboxHealthController {
         s.checks = new List<Check>();
 
         try {
+            OrgSettings__c orgset = OrgSettings__c.getOrgDefaults();
             Organization orgInfo = [SELECT Id, InstanceName, IsSandbox FROM Organization WHERE Id != null LIMIT 1];
-            OrgSettings__c def = OrgSettings__c.getOrgDefaults();
-            if ( def != null ) {
-                s.checks.add( checkExact( 'org_domain' , 'OrgDomainUrl__c' , URL.getOrgDomainUrl().toExternalForm().toLowerCase() , def.OrgDomainUrl__c));
-                s.checks.add( checkExact( 'org_instance' , 'Instance__c' , orgInfo.InstanceName.toLowerCase() , def.Instance__c));
-                s.checks.add( checkBool( 'org_is_sbx' , 'IsSandbox__c' , orgInfo.IsSandbox , def.IsSandbox__c));
-                s.checks.add( checkExact( 'org_id' , 'OrgId__c' , orgInfo.Id , def.OrgId__c));
-                s.checks.add( checkExact( 'org_sb_api' , 'SandboxApiName__c' , sandbox.toLowerCase() , def.SandboxApiName__c));
-                s.checks.add( checkExact( 'org_sb_name' , 'SandboxName__c' , sandbox , def.SandboxName__c));
+            if ( ( orgset != null )
+              && ( orgInfo != null ) ) {
+                s.checks.add( checkExact( 'org_domain' , 'OrgDomainUrl__c' , URL.getOrgDomainUrl().toExternalForm().toLowerCase() , orgset.OrgDomainUrl__c));
+                s.checks.add( checkExact( 'org_instance' , 'Instance__c' , orgInfo.InstanceName.toLowerCase() , orgset.Instance__c));
+                s.checks.add( checkBool( 'org_is_sbx' , 'IsSandbox__c' , orgInfo.IsSandbox , orgset.IsSandbox__c));
+                s.checks.add( checkExact( 'org_id' , 'OrgId__c' , orgInfo.Id , orgset.OrgId__c));
+                s.checks.add( checkExact( 'org_sb_api' , 'SandboxApiName__c' , sandbox.toLowerCase() , orgset.SandboxApiName__c));
+                s.checks.add( checkExact( 'org_sb_name' , 'SandboxName__c' , sandbox , orgset.SandboxName__c));
             } else {
-                s.checks.add( newWarn('org_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read OrgSettings__c' ) );
+                s.checks.add( newWarn('org_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read ' + ( ( orgset != null ) ? 'Organization' : 'OrgSettings__c' ) ) );
             }
         } catch ( Exception e ) {
-            s.checks.add( newWarn('org_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read OrgSettings__c: ' + e.getMessage() ) );
+            s.checks.add( newWarn('org_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to verify OrgSettings__c: ' + e.getMessage() ) );
         }
 
         s.status = calculateSectionStatus( s.checks );
@@ -394,6 +396,31 @@ public with sharing class SandboxHealthController {
             s.checks.add( checkSuffix('stes_str', 'StrategicSalesEmailAddress__c', STRING_INVALID, ( def == null ) ? null : def.StrategicSalesEmailAddress__c));
         } catch ( Exception e ) {
             s.checks.add( newWarn( 'stes_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read Sales_Team_Email_Settings__c: ' + e.getMessage() ) );
+        }
+
+        s.status = calculateSectionStatus( s.checks );
+        return s;
+    }
+
+    // 12) ProjectCreationSettings__c (org defaults with specific DefaultRegionId__c)
+    private static Section verifyProjectCreationSettings() {
+        Section s = new Section();
+        s.key = 'ProjectCreationSettings__c';
+        s.label = 'Project Creation Settings';
+        s.category = 'CUSTOM_SETTINGS';
+        s.checks = new List<Check>();
+
+        try {
+            ProjectCreationSettings__c pcs = ProjectCreationSettings__c.getOrgDefaults();
+            List<pse__Region__c> reg = [SELECT Id FROM pse__Region__c WHERE Name = 'United States' LIMIT 1];
+            if ( ( pcs != null )
+              && ( reg != null ) ) {
+                s.checks.add( checkExact( 'pcs_regid' , 'DefaultRegionId__c' , reg[0].id , pcs.DefaultRegionId__c ) );
+            } else {
+                s.checks.add( newWarn( 'pcs_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read ' + ( ( pcs != null ) ? 'pse__Region__c' : 'ProjectCreationSettings__c' ) ) );
+            }
+        } catch ( Exception e ) {
+            s.checks.add( newWarn( 'pcs_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to verify ProjectCreationSettings__c' ) );
         }
 
         s.status = calculateSectionStatus( s.checks );
@@ -928,7 +955,10 @@ public with sharing class SandboxHealthController {
     private static Map<String, String> requiredLabels(String sandbox) {
         Map<String, String> m = new Map<String, String>();
         // Baseline placeholders
+        List<Account> accountRecord = [SELECT id FROM Account WHERE NSP_AIMS_Client__c = '500' LIMIT 1];
+        m.put( 'NSP_Insperity_Account' , ( accountRecord != null ) ? accountRecord[0].id : '500 Account not found' );
         m.put( 'NSP_Docusign_Base_URL', 'https://uatna11.springcm.com/atlas/doclauncher/OneClickDocGen' );
+
         // Sandbox-specific values from NSP_PrepSandbox.doCLabels()
         if ( sandbox == 'stage' ) {
             m.put( 'NSP_FTA_Base_URL', 'https://stageportalapps.insperity.com/financialcomparison/financialanalysis/' );
@@ -964,6 +994,7 @@ public with sharing class SandboxHealthController {
 
         // Verify known labels via direct System.Label references (including Contact Center and Section 125)
         Map<String,String> directLabelActuals = new Map<String,String>{
+            'NSP_Insperity_Account' => System.Label.NSP_Insperity_Account ,
             'NSP_Docusign_Base_URL' => System.Label.NSP_Docusign_Base_URL ,
             'NSP_FTA_Base_URL' => System.Label.NSP_FTA_Base_URL ,
             'NSP_Docusign_Account_Id' => System.Label.NSP_Docusign_Account_Id ,
@@ -971,14 +1002,14 @@ public with sharing class SandboxHealthController {
             'NSP_Health_Welfare_Section_125' => System.Label.NSP_Health_Welfare_Section_125
         };
 
-        for (String lblName : expected.keySet()) {
-            String exp = expected.get(lblName);
-            String act = directLabelActuals.containsKey(lblName) ? directLabelActuals.get(lblName) : null;
+        for ( String lblName : expected.keySet() ) {
+            String exp = expected.get( lblName );
+            String act = directLabelActuals.containsKey( lblName ) ? directLabelActuals.get( lblName ) : null;
 
-            if (String.isBlank(act)) {
-                core.checks.add(newFail('label_' + lblName, lblName, exp, act, 'Label value unavailable via System.Label. Ensure the label exists and is referenced here.'));
+            if ( String.isBlank( act ) ) {
+                core.checks.add( newFail( 'label_' + lblName , lblName , exp , act , 'Label value unavailable via System.Label. Ensure the label exists and is referenced here.' ) );
             } else {
-                core.checks.add(checkExact('label_' + lblName, lblName, exp, act));
+                core.checks.add( checkExact( 'label_' + lblName , lblName , exp , act ) );
             }
         }
         // Set section status for core labels
