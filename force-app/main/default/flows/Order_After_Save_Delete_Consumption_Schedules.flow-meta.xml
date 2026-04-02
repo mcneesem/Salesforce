@@ -539,6 +539,31 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Is_Promo_Product</name>
+        <label>Is Promo Product ?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Is_Seasonal</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Exclude_Promo_Product</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Consumption_Schedule_Discount_Settings__c.Promo_Product_Codes__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <elementReference>Order_Products.Product2.ProductCode</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Order_Products</targetReference>
+            </connector>
+            <label>Exclude Promo Product</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Is_Seasonal</name>
         <label>Is Seasonal</label>
         <locationX>0</locationX>
@@ -625,8 +650,8 @@
         </rules>
     </decisions>
     <environments>Default</environments>
-    <interviewLabel>DEPRECATED - Order - After Save - Delete Consumption Schedules {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>DEPRECATED - Order - After Save - Delete Consumption Schedules</label>
+    <interviewLabel>Order - After Save - Delete Consumption Schedules {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Order - After Save - Delete Consumption Schedules</label>
     <loops>
         <name>Cat1_Loop</name>
         <label>Cat1 Loop</label>
@@ -677,7 +702,7 @@
         <collectionReference>Get_Order_Products</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>Is_Seasonal</targetReference>
+            <targetReference>Is_Promo_Product</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>Check_Cat1</targetReference>
@@ -874,7 +899,7 @@
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Fault_Path</name>
         <label>Fault Path</label>
