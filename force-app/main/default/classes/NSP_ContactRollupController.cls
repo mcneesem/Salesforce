@@ -124,10 +124,12 @@ public without sharing class NSP_ContactRollupController {
                 OR 
                 NSP_Unemployment_Contact__c = true
             ) 
+            WITH SECURITY_ENFORCED 
             ORDER BY 
             NSP_Contact__r.Name ASC 
             LIMIT :offSetLimit 
-            OFFSET :offSetCount
+            OFFSET :offSetCount 
+            
             
         ];
         
@@ -221,10 +223,11 @@ public without sharing class NSP_ContactRollupController {
             NSP_Background_Contact__c = :subClientContact.NSP_Background_Contact__c  
             AND  
             NSP_Unemployment_Contact__c = :subClientContact.NSP_Unemployment_Contact__c  
+            WITH SECURITY_ENFORCED 
             ORDER BY 
             NSP_Contact__r.Name ASC 
             LIMIT :offSetLimit 
-            OFFSET :offSetCount
+            OFFSET :offSetCount     
         ];
         
         return returnList;
