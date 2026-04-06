@@ -667,7 +667,7 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Payroll_specialist_user</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>User_Role</leftValueReference>
                 <operator>EqualTo</operator>
@@ -675,10 +675,17 @@
                     <stringValue>Payroll Specialist</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>User_Role</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Payroll Supervisor/Manager</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Check_Project_Task</targetReference>
             </connector>
-            <label>Payroll specialist user</label>
+            <label>Payroll specialist OR Payroll Supervisor/Manager user</label>
         </rules>
         <rules>
             <name>System_admin_admin_lite</name>
@@ -917,7 +924,7 @@
     ( {!Reinstatement_Requested_Project_Task} ) ,
     ( {!Reinstatement_Requested} ) ,
     ( {!Reinstatement_Project_Task} )
-  ) , 
+  ) ,
   &quot;Reinstate Client&quot;&amp;&quot;-&quot;&amp;TEXT(MONTH(TODAY()))&amp;&quot;.&quot;&amp;TEXT(DAY(TODAY()))&amp;&quot;.&quot;&amp;TEXT(YEAR(TODAY()))&amp;&quot;-&quot;&amp;{!recordId.NSP_Account__c} ,
   &quot;Term Request&quot;&amp;&quot;-&quot;&amp;TEXT(MONTH(TODAY()))&amp;&quot;.&quot;&amp;TEXT(DAY(TODAY()))&amp;&quot;.&quot;&amp;TEXT(YEAR(TODAY()))&amp;&quot;-&quot;&amp;{!recordId.NSP_Account__c}
 )</expression>
@@ -1405,7 +1412,7 @@
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                     <visibilityRule>
-                        <conditionLogic>(1 OR 2 OR 3) AND 4 AND 5</conditionLogic>
+                        <conditionLogic>(1 OR 2 ) AND 3 AND 4</conditionLogic>
                         <conditions>
                             <leftValueReference>User_Role</leftValueReference>
                             <operator>EqualTo</operator>
@@ -1418,13 +1425,6 @@
                             <operator>EqualTo</operator>
                             <rightValue>
                                 <stringValue>Payroll Implementation</stringValue>
-                            </rightValue>
-                        </conditions>
-                        <conditions>
-                            <leftValueReference>User_Role</leftValueReference>
-                            <operator>EqualTo</operator>
-                            <rightValue>
-                                <stringValue>Payroll Supervisor/Manager</stringValue>
                             </rightValue>
                         </conditions>
                         <conditions>
