@@ -312,14 +312,25 @@ public with sharing class NSP_SObjectHistoryTrackingHelper implements Queueable 
         {
             SObjectType schemaType = NSP_SObjectHistoryTrackingHelper.globalDescribe.get( String.valueOf( recordId.getSObjectType() ) );
             if ( schemaType != null ) {
-                Map<String,SObjectField> fieldMap = schemaType.getDescribe().fields.getMap();
-                if ( ( fieldMap != null ) && !fieldMap.isEmpty() ) {
-                    for ( String field : fieldMap.keySet() ) {
-                        SObjectField sfield = fieldMap.get( field );
-                        if ( sfield.getDescribe().isAccessible() ) {
-                            fieldsToShow.add( sfield.getDescribe().getLabel() );
-                        }
-                    }
+                fieldsToShow = NSP_SObjectHistoryTrackingHelper.populateFieldsToShow(
+                    fieldsToShow ,
+                    schemaType.getDescribe().fields.getMap()
+                );
+            }
+        }
+        return fieldsToShow;
+    }
+
+    // helper method to defeat sonar cognitive complexity...
+    private static List<String> populateFieldsToShow( List<String> fieldsToShow , Map<String,SObjectField> fieldMap ) {
+        if ( fieldsToShow == null ) {
+            fieldsToShow = new List<String>();
+        }
+        if ( ( fieldMap != null ) && !fieldMap.isEmpty() ) {
+            for ( String field : fieldMap.keySet() ) {
+                SObjectField sfield = fieldMap.get( field );
+                if ( ( sfield != null ) && sfield.getDescribe().isAccessible() ) {
+                    fieldsToShow.add( sfield.getDescribe().getLabel() );
                 }
             }
         }
