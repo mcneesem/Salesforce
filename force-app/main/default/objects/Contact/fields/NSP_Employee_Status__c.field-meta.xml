@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NSP_Employee_Status__c</fullName>
-    <externalId>false</externalId>
     <label>Employee Status</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
@@ -9,78 +8,6 @@
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>FMLA</fullName>
-                <default>false</default>
-                <label>FMLA</label>
-            </value>
-            <value>
-                <fullName>FMLA - WORKERS COMP</fullName>
-                <default>false</default>
-                <label>FMLA - WORKERS COMP</label>
-            </value>
-            <value>
-                <fullName>FUTURE HIRED</fullName>
-                <default>false</default>
-                <label>FUTURE HIRED</label>
-            </value>
-            <value>
-                <fullName>HIRED</fullName>
-                <default>false</default>
-                <label>HIRED</label>
-            </value>
-            <value>
-                <fullName>Intermittent Leave</fullName>
-                <default>false</default>
-                <label>Intermittent Leave</label>
-            </value>
-            <value>
-                <fullName>L.O.A.</fullName>
-                <default>false</default>
-                <label>L.O.A.</label>
-            </value>
-            <value>
-                <fullName>L.O.A. - EDUCATION</fullName>
-                <default>false</default>
-                <label>L.O.A. - EDUCATION</label>
-            </value>
-            <value>
-                <fullName>L.O.A. - MILITARY</fullName>
-                <default>false</default>
-                <label>L.O.A. - MILITARY</label>
-            </value>
-            <value>
-                <fullName>PRIMED</fullName>
-                <default>false</default>
-                <label>PRIMED</label>
-            </value>
-            <value>
-                <fullName>REHIRED</fullName>
-                <default>false</default>
-                <label>REHIRED</label>
-            </value>
-            <value>
-                <fullName>State Leave</fullName>
-                <default>false</default>
-                <label>State Leave</label>
-            </value>
-            <value>
-                <fullName>TERMINATED</fullName>
-                <default>false</default>
-                <label>TERMINATED</label>
-            </value>
-            <value>
-                <fullName>TLO Leave</fullName>
-                <default>false</default>
-                <label>TLO Leave</label>
-            </value>
-            <value>
-                <fullName>WORKER&apos;S COMP</fullName>
-                <default>false</default>
-                <label>WORKER&apos;S COMP</label>
-            </value>
-        </valueSetDefinition>
+        <valueSetName>Employee_Status</valueSetName>
     </valueSet>
 </CustomField>
