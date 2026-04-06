@@ -3,5 +3,8 @@
     <description>Group of Permission Sets to be granted to Team L2 Users.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Team L2</label>
+    <permissionSets>Assign_Permission_Sets</permissionSets>
+    <permissionSets>Freeze_Users</permissionSets>
+    <permissionSets>Manage_Internal_Users</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
