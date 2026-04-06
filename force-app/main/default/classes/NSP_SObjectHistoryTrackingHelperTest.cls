@@ -1,12 +1,8 @@
-/**
-* @description  :   Test class for NSP_SObjectHistoryTrackingHelper.
-* @date 09/3/2022
-* Name : NSP_SObjectHistoryTrackingHelper
-*/
 @isTest
-public with sharing class NSP_SObjectHistoryTrackingHelperTest {
+private class NSP_SObjectHistoryTrackingHelperTest {
+
     @testSetup
-    static void testData() {
+    private static void testData() {
         HistoryTrackingSettings__c settings = HistoryTrackingSettings__c.getOrgDefaults();
         settings.IsEnabled__c = true;
         settings.AllowedSObjectNames__c = 'Account,Asset,Contact,Implementation_Profile__c,Lead,NSP_Account_Group__c,Opportunity';
@@ -32,10 +28,11 @@ public with sharing class NSP_SObjectHistoryTrackingHelperTest {
         oProject1.RecordTypeId = peoProjectRecordTypeId;
         lstProject.add(oProject1);
         insert lstProject;
-        
+
     }
 
-    @isTest private static void testContactHistoryTracking() {
+    @isTest
+    private static void testContactHistoryTracking() {
         Contact sharedContact = new Contact(
             LastName='sharedContact'
         );
@@ -46,12 +43,8 @@ public with sharing class NSP_SObjectHistoryTrackingHelperTest {
         Test.stopTest();
     }
 
-    /***********************************************************************************************
-    * MethodName: NSP_SObjectHistoryTrackingHelper
-    * Description : Unit test for Queuable class to insert History Records 
-    * ********************************************************************************************/
-   
-    static testMethod void testSObjectHistoryTracking() {  
+    @isTest
+    private static void testSObjectHistoryTracking() {
         Test.startTest();
         //GIVEN
         List<Implementation_Profile__c> lstIPToUpdate = new List<Implementation_Profile__c>();
@@ -77,4 +70,6 @@ public with sharing class NSP_SObjectHistoryTrackingHelperTest {
         System.assertEquals(lstIPToUpdate.size(), 2);
         Test.stopTest();
     }
+
 }
+//
