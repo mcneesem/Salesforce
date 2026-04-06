@@ -2,7 +2,7 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>66.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
-    <description>New Client Portal: Employee Setup Mapping</description>
+    <description>Visible Client</description>
     <environments>Default</environments>
     <interviewLabel>Project Task - Updated - Async - Populate Portal Task - Employee Setup {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Project Task - Updated - Async - Populate Portal Task - Employee Setup</label>
@@ -28,7 +28,7 @@
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <filterLogic>( 1 AND 2 AND ( 3 OR 4 ) AND ( 5 OR 6 OR 7 OR 8 OR 9 OR 10 ) )</filterLogic>
+        <filterLogic>( 1 AND 2 AND ( 3 OR 4 ) AND ( 5 OR 6 OR 7 OR 8 OR 9 OR 10 ) AND 11 )</filterLogic>
         <filters>
             <field>pse__Project__c</field>
             <operator>IsNull</operator>
@@ -61,14 +61,14 @@
             <field>Name</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Deductions - Employee Level</stringValue>
+                <stringValue>Deductions – Employee Level</stringValue>
             </value>
         </filters>
         <filters>
             <field>Name</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Employee Deduction Authorization Form - ORK</stringValue>
+                <stringValue>Employee Deduction Authorization Form – ORK</stringValue>
             </value>
         </filters>
         <filters>
@@ -97,6 +97,13 @@
             <operator>EqualTo</operator>
             <value>
                 <stringValue>Employees Currently on LOA</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Visible_to_Client__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
             </value>
         </filters>
         <object>pse__Project_Task__c</object>
