@@ -1,5 +1,5 @@
 public with sharing class SandboxHealthController {
-    // test w/ SandboxHealthControllerTest (77%)
+    // test w/ SandboxHealthControllerTest (80%)
 
     static final string STRING_INVALID = '.invalid';
     static final string STRING_RECORDS = 'Records presence';
@@ -955,8 +955,13 @@ public with sharing class SandboxHealthController {
     private static Map<String, String> requiredLabels(String sandbox) {
         Map<String, String> m = new Map<String, String>();
         // Baseline placeholders
-        List<Account> accountRecord = [SELECT id FROM Account WHERE NSP_AIMS_Client__c = '500' LIMIT 1];
-        m.put( 'NSP_Insperity_Account' , ( accountRecord != null ) ? accountRecord[0].id : '500 Account not found' );
+        try {
+            List<Account> accountRecord = [SELECT id FROM Account WHERE NSP_AIMS_Client__c = '500' LIMIT 1];
+            m.put( 'NSP_Insperity_Account' , ( accountRecord != null ) ? accountRecord[0].id : '500 Account not found' );
+        } catch ( Exception e ) {
+            m.put( 'NSP_Insperity_Account' , '500 Account not found' );
+        }
+
         m.put( 'NSP_Docusign_Base_URL', 'https://uatna11.springcm.com/atlas/doclauncher/OneClickDocGen' );
 
         // Sandbox-specific values from NSP_PrepSandbox.doCLabels()

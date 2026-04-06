@@ -228,7 +228,8 @@ private class SandboxHealthControllerTest {
      */
     @TestSetup
     private static void setupData() {
-        // No data creation required for read-only verification service
+        Account account = New Account( Name = 'TestAccount' , AccountNumber = '12345' , NSP_AIMS_Client__c = '500' );
+        insert account;
     }
 
     @IsTest
