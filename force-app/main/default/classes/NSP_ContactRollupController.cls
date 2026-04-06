@@ -46,101 +46,101 @@ public without sharing class NSP_ContactRollupController {
     // @param  Map<Id,ResultWrapper> contact and allACR's and SubClientContacts
     // @return string
 	public static Map<Id, ResultWrapper> getSubClientContacts(string recordId, Map < Id, ResultWrapper > resultsMap,
-                                                              Integer offSetCount, Integer offSetLimit, String subClientFilter) 
+                                                              Integer offSetCount, Integer offSetLimit, String subClientFilter)
     {
         Set<String> paidNonPaidValues = new Set<String>{
-            'Paid WSEE', 
+            'Paid WSEE',
                 'Active Non-Paid User'
                 };
-        
+
         List<NSP_Sub_Client_Contact__c> subClientsBasedOnQueryResults = New List<NSP_Sub_Client_Contact__c>();
-        
+
         // Based on Subclient contact fields filter
         if( String.isNotBlank(subClientFilter) )
         {
             subClientsBasedOnQueryResults = NSP_ContactRollupController.getSubClientContactsBasedOnFilter(
-                recordId, 
-                offSetCount, 
-                offSetLimit, 
+                recordId,
+                offSetCount,
+                offSetLimit,
                 subClientFilter,
                 paidNonPaidValues
             );
         }
         else
         {
-            subClientsBasedOnQueryResults = NSP_ContactRollupController.getSubClientContactsBasedOnNoFilter( recordId, 
-                                                                                                            offSetCount, 
-                                                                                                            offSetLimit, 
+            subClientsBasedOnQueryResults = NSP_ContactRollupController.getSubClientContactsBasedOnNoFilter( recordId,
+                                                                                                            offSetCount,
+                                                                                                            offSetLimit,
                                                                                                             paidNonPaidValues );
         }
-        
+
         return NSP_ContactRollupController.getSubClinetContactRecords( subClientsBasedOnQueryResults, resultsMap, recordId );
     }
-    
+
     // @description : Fetch sub client contact records based on default filters
     // @params: recordId, offSetCount, offSetLimit, paidNonPaidValues
     // @return : List<NSP_Sub_Client_Contact__c>
-    private static List<NSP_Sub_Client_Contact__c> getSubClientContactsBasedOnNoFilter(string recordId, 
-                                                                                       Integer offSetCount, 
-                                                                                       Integer offSetLimit, 
+    private static List<NSP_Sub_Client_Contact__c> getSubClientContactsBasedOnNoFilter(string recordId,
+                                                                                       Integer offSetCount,
+                                                                                       Integer offSetLimit,
                                                                                        Set<String> paidNonPaidValues)
     {
         List<NSP_Sub_Client_Contact__c> returnList = [
-            SELECT 
-            Id, Name, NSP_Sub_Client__c, 
-            NSP_Sub_Client__r.Name, NSP_Contact__r.Name, 
-            NSP_Sub_Client__r.NSP_Account__r.Name, NSP_Sub_Client__r.NSP_Account__c, 
-            NSP_Contact__r.firstName, NSP_Contact__r.lastName, 
-            NSP_Contact__r.NSP_Preferred_First_Name__c, NSP_Contact__c, 
-            NSP_On_Site_Supervisor__c, NSP_Payroll_Contact__c, 
-            NSP_Client_Leave_Administrator__c, NSP_WC_Contact__c, 
-            NSP_HR_Contact__c, NSP_Benefits_Contact__c, 
-            NSP_Background_Contact__c, NSP_Unemployment_Contact__c, 
-            NSP_Paid_Non_Paid__c, NSP_Employee_Status__c  
-            FROM 
-            NSP_Sub_Client_Contact__c 
-            WHERE 
-            NSP_Sub_Client__r.NSP_Account__c =: recordId  
-            AND  
-            NSP_Paid_Non_Paid__c IN :paidNonPaidValues 
-            AND 
-            NSP_Employee_Status__c != 'Terminated ' 
-            AND 
-            NSP_Paid_Non_Paid__c != 'Inactive Non-Paid User' 
+            SELECT
+            Id, Name, NSP_Sub_Client__c,
+            NSP_Sub_Client__r.Name, NSP_Contact__r.Name,
+            NSP_Sub_Client__r.NSP_Account__r.Name, NSP_Sub_Client__r.NSP_Account__c,
+            NSP_Contact__r.firstName, NSP_Contact__r.lastName,
+            NSP_Contact__r.NSP_Preferred_First_Name__c, NSP_Contact__c,
+            NSP_On_Site_Supervisor__c, NSP_Payroll_Contact__c,
+            NSP_Client_Leave_Administrator__c, NSP_WC_Contact__c,
+            NSP_HR_Contact__c, NSP_Benefits_Contact__c,
+            NSP_Background_Contact__c, NSP_Unemployment_Contact__c,
+            NSP_Paid_Non_Paid__c, NSP_Employee_Status__c
+            FROM
+            NSP_Sub_Client_Contact__c
+            WHERE
+            NSP_Sub_Client__r.NSP_Account__c =: recordId
+            AND
+            NSP_Paid_Non_Paid__c IN :paidNonPaidValues
+            AND
+            NSP_Employee_Status__c != 'Terminated'
+            AND
+            NSP_Paid_Non_Paid__c != 'Inactive Non-Paid User'
             AND (
-                NSP_On_Site_Supervisor__c = true 
-                OR 
-                NSP_Payroll_Contact__c = true 
-                OR 
-                NSP_Client_Leave_Administrator__c = true 
-                OR 
-                NSP_WC_Contact__c = true 
-                OR 
-                NSP_HR_Contact__c = true 
-                OR 
-                NSP_Benefits_Contact__c = true 
-                OR 
-                NSP_Background_Contact__c = true 
-                OR 
+                NSP_On_Site_Supervisor__c = true
+                OR
+                NSP_Payroll_Contact__c = true
+                OR
+                NSP_Client_Leave_Administrator__c = true
+                OR
+                NSP_WC_Contact__c = true
+                OR
+                NSP_HR_Contact__c = true
+                OR
+                NSP_Benefits_Contact__c = true
+                OR
+                NSP_Background_Contact__c = true
+                OR
                 NSP_Unemployment_Contact__c = true
-            ) 
-            WITH SECURITY_ENFORCED 
-            ORDER BY 
-            NSP_Contact__r.Name ASC 
-            LIMIT :offSetLimit 
-            OFFSET :offSetCount 
-            
-            
+            )
+            WITH SECURITY_ENFORCED
+            ORDER BY
+            NSP_Contact__r.Name ASC
+            LIMIT :offSetLimit
+            OFFSET :offSetCount
+
+
         ];
-        
+
         return returnList;
     }
-    
+
     // @description : Filter the sub client contacts based on sub client contact filters from UI
     // @params: recordId,  offSetCount, offSetLimit, subClientFilter, paidNonPaidValues
     // @return : List<NSP_Sub_Client_Contact__c>
-    private static List<NSP_Sub_Client_Contact__c> getSubClientContactsBasedOnFilter(string recordId, Integer offSetCount, 
-                                                                                     Integer offSetLimit, String subClientFilter, 
+    private static List<NSP_Sub_Client_Contact__c> getSubClientContactsBasedOnFilter(string recordId, Integer offSetCount,
+                                                                                     Integer offSetLimit, String subClientFilter,
                                                                                      Set<String> paidNonPaidValues)
     {
         List<NSP_Sub_Client_Contact__c> returnList = new List<NSP_Sub_Client_Contact__c>();
@@ -148,98 +148,98 @@ public without sharing class NSP_ContactRollupController {
 
         if( String.isNotBlank(subClientFilter) )
         {
-            subClientFilterList = new List<String>(subClientFilter.Split(','));     
+            subClientFilterList = new List<String>(subClientFilter.Split(','));
         }
-        
+
         if( subClientFilterList != null && !subClientFilterList?.isEmpty() )
         {
             NSP_Sub_Client_Contact__c tempSubClientContact = NSP_ContactRollupController.getSubClientContactObj();
-            
+
             // Get the field map for the SObject (e.g., NSP_Sub_Client_Contact__c)
             Map<String, Schema.SObjectField> fieldMap = Schema.SObjectType.NSP_Sub_Client_Contact__c.fields.getMap();
-            
+
             for( String subClientFilterField : subClientFilterList )
             {
                 Boolean flagCheck = NSP_ContactRollupController.getFlagFieldValue( subClientFilterField, fieldMap );
-                
+
                 if(flagCheck)
                 {
                     tempSubClientContact.put(fieldMap.get(subClientFilterField), true);
                 }
             }
-            
-            returnList = NSP_ContactRollupController.getSubClientContactsBasedOnObjectFilter( recordId, offSetCount, 
-                                                                                             offSetLimit, tempSubClientContact, 
+
+            returnList = NSP_ContactRollupController.getSubClientContactsBasedOnObjectFilter( recordId, offSetCount,
+                                                                                             offSetLimit, tempSubClientContact,
                                                                                              paidNonPaidValues);
         }
-        
+
         return returnList;
     }
-    
+
     //@description : Query results based on sub client contact field values
     //@params : recordId, offSetCount, offSetLimit, NSP_Sub_Client_Contact__c, paidNonPaidValues
     //@return : List<NSP_Sub_Client_Contact__c>
-    private static List<NSP_Sub_Client_Contact__c> getSubClientContactsBasedOnObjectFilter(string recordId, 
-                                                                                           Integer offSetCount, 
-                                                                                           Integer offSetLimit, 
-                                                                                           NSP_Sub_Client_Contact__c subClientContact, 
+    private static List<NSP_Sub_Client_Contact__c> getSubClientContactsBasedOnObjectFilter(string recordId,
+                                                                                           Integer offSetCount,
+                                                                                           Integer offSetLimit,
+                                                                                           NSP_Sub_Client_Contact__c subClientContact,
                                                                                            Set<String> paidNonPaidValues)
     {
         List<NSP_Sub_Client_Contact__c> returnList = [
-            SELECT 
-            Id, Name, NSP_Sub_Client__c, 
-            NSP_Sub_Client__r.Name, NSP_Contact__r.Name, 
-            NSP_Sub_Client__r.NSP_Account__r.Name, NSP_Sub_Client__r.NSP_Account__c, 
-            NSP_Contact__r.firstName, NSP_Contact__r.lastName, 
-            NSP_Contact__r.NSP_Preferred_First_Name__c, NSP_Contact__c, 
-            NSP_On_Site_Supervisor__c, NSP_Payroll_Contact__c, 
-            NSP_Client_Leave_Administrator__c, NSP_WC_Contact__c, 
-            NSP_HR_Contact__c, NSP_Benefits_Contact__c, 
-            NSP_Background_Contact__c, NSP_Unemployment_Contact__c, 
-            NSP_Paid_Non_Paid__c, NSP_Employee_Status__c  
-            FROM 
-            NSP_Sub_Client_Contact__c 
-            WHERE 
-            NSP_Sub_Client__r.NSP_Account__c =: recordId  
-            AND  
-            NSP_Paid_Non_Paid__c IN :paidNonPaidValues 
-            AND 
-            NSP_Employee_Status__c != 'Terminated ' 
-            AND 
-            NSP_Paid_Non_Paid__c != 'Inactive Non-Paid User' 
-            AND 
-            NSP_On_Site_Supervisor__c = :subClientContact.NSP_On_Site_Supervisor__c 
-            AND 
-            NSP_Payroll_Contact__c = :subClientContact.NSP_Payroll_Contact__c 
-            AND 
-            NSP_Client_Leave_Administrator__c = :subClientContact.NSP_Client_Leave_Administrator__c 
-            AND 
-            NSP_WC_Contact__c = :subClientContact.NSP_WC_Contact__c 
-            AND 
-            NSP_HR_Contact__c = :subClientContact.NSP_HR_Contact__c 
-            AND  
-            NSP_Benefits_Contact__c = :subClientContact.NSP_Benefits_Contact__c 
-            AND  
-            NSP_Background_Contact__c = :subClientContact.NSP_Background_Contact__c  
-            AND  
-            NSP_Unemployment_Contact__c = :subClientContact.NSP_Unemployment_Contact__c  
-            WITH SECURITY_ENFORCED 
-            ORDER BY 
-            NSP_Contact__r.Name ASC 
-            LIMIT :offSetLimit 
-            OFFSET :offSetCount     
+            SELECT
+            Id, Name, NSP_Sub_Client__c,
+            NSP_Sub_Client__r.Name, NSP_Contact__r.Name,
+            NSP_Sub_Client__r.NSP_Account__r.Name, NSP_Sub_Client__r.NSP_Account__c,
+            NSP_Contact__r.firstName, NSP_Contact__r.lastName,
+            NSP_Contact__r.NSP_Preferred_First_Name__c, NSP_Contact__c,
+            NSP_On_Site_Supervisor__c, NSP_Payroll_Contact__c,
+            NSP_Client_Leave_Administrator__c, NSP_WC_Contact__c,
+            NSP_HR_Contact__c, NSP_Benefits_Contact__c,
+            NSP_Background_Contact__c, NSP_Unemployment_Contact__c,
+            NSP_Paid_Non_Paid__c, NSP_Employee_Status__c
+            FROM
+            NSP_Sub_Client_Contact__c
+            WHERE
+            NSP_Sub_Client__r.NSP_Account__c =: recordId
+            AND
+            NSP_Paid_Non_Paid__c IN :paidNonPaidValues
+            AND
+            NSP_Employee_Status__c != 'Terminated '
+            AND
+            NSP_Paid_Non_Paid__c != 'Inactive Non-Paid User'
+            AND
+            NSP_On_Site_Supervisor__c = :subClientContact.NSP_On_Site_Supervisor__c
+            AND
+            NSP_Payroll_Contact__c = :subClientContact.NSP_Payroll_Contact__c
+            AND
+            NSP_Client_Leave_Administrator__c = :subClientContact.NSP_Client_Leave_Administrator__c
+            AND
+            NSP_WC_Contact__c = :subClientContact.NSP_WC_Contact__c
+            AND
+            NSP_HR_Contact__c = :subClientContact.NSP_HR_Contact__c
+            AND
+            NSP_Benefits_Contact__c = :subClientContact.NSP_Benefits_Contact__c
+            AND
+            NSP_Background_Contact__c = :subClientContact.NSP_Background_Contact__c
+            AND
+            NSP_Unemployment_Contact__c = :subClientContact.NSP_Unemployment_Contact__c
+            WITH SECURITY_ENFORCED
+            ORDER BY
+            NSP_Contact__r.Name ASC
+            LIMIT :offSetLimit
+            OFFSET :offSetCount
         ];
-        
+
         return returnList;
     }
-    
+
     // @description : Setting the default field values for NSP_Sub_Client_Contact__c
     // @params : NONE
     // @return : NSP_Sub_Client_Contact__c
     private static NSP_Sub_Client_Contact__c getSubClientContactObj()
     {
         NSP_Sub_Client_Contact__c subClientContact = new NSP_Sub_Client_Contact__c(
-            
+
             NSP_On_Site_Supervisor__c = false,
             NSP_Payroll_Contact__c = false,
             NSP_Client_Leave_Administrator__c = false,
@@ -247,25 +247,25 @@ public without sharing class NSP_ContactRollupController {
             NSP_HR_Contact__c  = false,
             NSP_Benefits_Contact__c = false,
             NSP_Background_Contact__c = false,
-            NSP_Unemployment_Contact__c = false    
+            NSP_Unemployment_Contact__c = false
         );
-        
+
         return subClientContact;
     }
-    
+
     // @description: based on field string match the field api name from schema object map
     // @params : string fild API name, fieldMap
-    // @return : Boolean flag 
+    // @return : Boolean flag
     private static Boolean getFlagFieldValue(string fieldName, Map<String, Schema.SObjectField> fieldMap)
     {
         Boolean returnFlag = false;
-        if( fieldMap!= null && !fieldMap?.isEmpty() && 
-           String.isNotBlank(fieldName) && 
+        if( fieldMap!= null && !fieldMap?.isEmpty() &&
+           String.isNotBlank(fieldName) &&
            fieldMap.containsKey(fieldName) )
         {
             returnFlag = true;
         }
-        
+
         return returnFlag;
     }
 
