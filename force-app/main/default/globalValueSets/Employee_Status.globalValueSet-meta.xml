@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>FMLA</fullName>
+        <default>false</default>
+        <label>FMLA</label>
+    </customValue>
+    <customValue>
+        <fullName>FMLA - WORKERS COMP</fullName>
+        <default>false</default>
+        <label>FMLA - WORKERS COMP</label>
+    </customValue>
+    <customValue>
+        <fullName>FUTURE HIRED</fullName>
+        <default>false</default>
+        <label>FUTURE HIRED</label>
+    </customValue>
+    <customValue>
+        <fullName>HIRED</fullName>
+        <default>false</default>
+        <label>HIRED</label>
+    </customValue>
+    <customValue>
+        <fullName>Intermittent Leave</fullName>
+        <default>false</default>
+        <label>Intermittent Leave</label>
+    </customValue>
+    <customValue>
+        <fullName>L.O.A.</fullName>
+        <default>false</default>
+        <label>L.O.A.</label>
+    </customValue>
+    <customValue>
+        <fullName>L.O.A. - EDUCATION</fullName>
+        <default>false</default>
+        <label>L.O.A. - EDUCATION</label>
+    </customValue>
+    <customValue>
+        <fullName>L.O.A. - MILITARY</fullName>
+        <default>false</default>
+        <label>L.O.A. - MILITARY</label>
+    </customValue>
+    <customValue>
+        <fullName>PRIMED</fullName>
+        <default>false</default>
+        <label>PRIMED</label>
+    </customValue>
+    <customValue>
+        <fullName>REHIRED</fullName>
+        <default>false</default>
+        <label>REHIRED</label>
+    </customValue>
+    <customValue>
+        <fullName>State Leave</fullName>
+        <default>false</default>
+        <label>State Leave</label>
+    </customValue>
+    <customValue>
+        <fullName>TERMINATED</fullName>
+        <default>false</default>
+        <label>TERMINATED</label>
+    </customValue>
+    <customValue>
+        <fullName>TLO Leave</fullName>
+        <default>false</default>
+        <label>TLO Leave</label>
+    </customValue>
+    <customValue>
+        <fullName>WORKER&apos;S COMP</fullName>
+        <default>false</default>
+        <label>WORKER&apos;S COMP</label>
+    </customValue>
+    <masterLabel>Employee Status</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>
