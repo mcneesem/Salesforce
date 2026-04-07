@@ -66,7 +66,7 @@
             <assignToReference>VarFaultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Get_best_WO_Asset</stringValue>
+                <stringValue>Get_Best_WO_Asset</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -132,7 +132,7 @@
             <assignToReference>varBestWORank</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_best_WO_Asset.Rank__c</elementReference>
+                <elementReference>Get_Best_WO_Asset.Rank__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -166,7 +166,7 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Account_Group_Members</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsEmpty</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -219,7 +219,7 @@
             <name>WO_Found</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_best_WO_Asset.Id</leftValueReference>
+                <leftValueReference>Get_Best_WO_Asset.Id</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -273,7 +273,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_best_WO_Asset</targetReference>
+                <targetReference>Get_Best_WO_Asset</targetReference>
             </connector>
             <label>Account Id Present</label>
         </rules>
@@ -321,11 +321,6 @@
     </decisions>
     <description>Accepts AccountId as input. Gets the lowest WO Asset Rank and lowest WX/WA Asset Rank for the Account. Updates all related Account Group Member records with the best ranks.</description>
     <environments>Default</environments>
-    <formulas>
-        <name>frmHasAccountId</name>
-        <dataType>Boolean</dataType>
-        <expression>NOT(ISBLANK({!varAccountId}))</expression>
-    </formulas>
     <interviewLabel>Account Group Member - Subflow - Populate Best Asset Ranks {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Account Group Member - Subflow - Populate Best Asset Ranks</label>
     <loops>
@@ -391,8 +386,8 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Get_best_WO_Asset</name>
-        <label>Get best WO Asset</label>
+        <name>Get_Best_WO_Asset</name>
+        <label>Get Best WO Asset</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
@@ -494,6 +489,12 @@
             <name>faultElement</name>
             <value>
                 <elementReference>VarFaultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <elementReference>Account_Group_Member_Subflow_Populate_Best_Asset_Ranks</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
