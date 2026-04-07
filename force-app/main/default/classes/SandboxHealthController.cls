@@ -892,7 +892,6 @@ public with sharing class SandboxHealthController {
         s.checks = new List<Check>();
 
         Map<String, String> required = requiredImageDocs();
-        String eMsg = '';
 
         // Build a lookup of Documents in Services folder by Name
         Map<String, Document> byName = new Map<String, Document>();
@@ -912,7 +911,7 @@ public with sharing class SandboxHealthController {
                 byName.put(d.Name, d);
             }
         } catch ( Exception e ) {
-            eMsg = e.getMessage();
+            // empty byName will emit WARN
         }
 
         if( byName == null || byName.isEmpty() ) {
@@ -922,7 +921,7 @@ public with sharing class SandboxHealthController {
                 'Image Documents' ,
                 'Queryable via user-context' ,
                 'No access' ,
-                'Unable to read Document records in Services folder' + ( ( eMsg != '' ) ? ': ' + eMsg : '' )
+                'Unable to read Document records in Services folder'
             ) );
         } else {
             // For each required metadata key, compute the expected human-readable Document.Name
