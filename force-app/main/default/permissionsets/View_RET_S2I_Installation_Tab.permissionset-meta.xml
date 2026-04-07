@@ -4,6 +4,11 @@
         <enabled>true</enabled>
         <name>View_RET_S2I_Installation_Tab</name>
     </customPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Sales_to_Implementation__c.New_EEs_Affected__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>View RET S2I Installation Tab</label>
 </PermissionSet>
