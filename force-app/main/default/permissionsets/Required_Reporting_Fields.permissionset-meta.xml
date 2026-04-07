@@ -28,6 +28,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.Insperity_Data_Score__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.Is_Transitioning_Client__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -114,6 +119,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.Product_Solution__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.Sales_Data_Collection_Score__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2388,17 +2398,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SBQQ__ProductOption__c.Sub_Product_Config__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SBQQ__Quote__c.Sub_Product_Attribute__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>SBQQ__ProductOption__c.Client_Size__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__ProductOption__c.Sub_Product_Config__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2473,6 +2478,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SBQQ__Quote__c.Sub_Product_Attribute__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__Subscription__c.Credit_Duration_Months__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Task.Creator_Title__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2489,11 +2504,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>User.Bypass_Duplicate_Rules__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SBQQ__Subscription__c.Credit_Duration_Months__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
