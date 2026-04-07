@@ -16,7 +16,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Asset_Termination__c.Account_Group_Member__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -61,12 +61,12 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>NSP_Account_Group_Member__c.Best_WO_Asset_Rank__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>NSP_Account_Group_Member__c.Best_WXWA_Asset_Rank__c</field>
         <readable>true</readable>
     </fieldPermissions>
