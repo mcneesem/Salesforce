@@ -1,23 +1,18 @@
-//
-// @description  :  Batch Class to Syn RET Asset status based on Client subplanchange history
-// Story : STY-03794 - RET Automation Retirement Services Asset Status Field Updates
-//
-public with sharing class NSP_RET_AssetSyncWithClientHistBatch implements ISelfSchedulable , Schedulable , Database.Batchable<SObject> {
+public with sharing class NSP_RET_AssetSyncWithClientHistBatch implements ISelfSchedulable , Schedulable , Callable , IJobRunnable ,  Database.Batchable<SObject> {
     // test w/ NSP_RET_AssetSyncWithClientHistTest (85%)
 
     private static final String STATUS_ACTIVE = 'Active';
 
     //
-    // Schedulable
+    // argument-free constructor is required to be "runnable"...
     //
 
-    // Schedulable execute method to fire the batch class
-    public void execute( SchedulableContext sc ) {
-        Database.executeBatch(
-            new NSP_RET_AssetSyncWithClientHistBatch() ,
-            NSP_RET_AssetSyncWithClientHistBatch.batchSize
-        );
+    public NSP_RET_AssetSyncWithClientHistBatch() {
     }
+
+    //
+    // ISelfSchedulable
+    //
 
     // runs everyday at 12am central...
     public static String schedule() {
@@ -30,6 +25,41 @@ public with sharing class NSP_RET_AssetSyncWithClientHistBatch implements ISelfS
             '0 0 0 ? * * *' ,
             new NSP_RET_AssetSyncWithClientHistBatch()
         );
+    }
+
+    //
+    // Schedulable
+    //
+
+    public void execute( SchedulableContext sc ) {
+        this.call( 'run' , null );
+    }
+
+    //
+    // Callable
+    //
+
+    public Object call( String action , Map<String,Object> args ) {
+        Object response = null;
+        if ( action == 'run' ) {
+            response = this.run();
+        }
+        return response;
+    }
+
+    //
+    // IJobRunnable
+    //
+
+    public Id run() {
+        Id response = null;
+        if ( NSP_RET_AssetSyncWithClientHistBatch.isEnabled ) {
+            response = Database.executeBatch(
+                new NSP_RET_AssetSyncWithClientHistBatch() ,
+                NSP_RET_AssetSyncWithClientHistBatch.batchSize
+            );
+        }
+        return response;
     }
 
     //
@@ -64,7 +94,6 @@ public with sharing class NSP_RET_AssetSyncWithClientHistBatch implements ISelfS
             if ( NSP_RET_AssetSyncWithClientHistBatch.isEnabled ) {
                 //Variable declarations
                 Set<Id> assetIDS = new Set<Id>();
-                List<Asset> assetListToUpdate = new List<Asset>();
                 Map<Id,Id> mapAssetOpptyID = new Map<Id,Id>();
                 Map<Id,Date> opptyToProjDateMap = new Map<Id,Date>();
                 Map<Id,Id> mapAssetAccountIds = new Map<Id,Id>();
@@ -91,21 +120,29 @@ public with sharing class NSP_RET_AssetSyncWithClientHistBatch implements ISelfS
                 //Latest Client Sub Plan History per Asset
                 assetToSubplanHistMap = NSP_RET_AssetSyncWithClientHistBatch.getAssetToSubplanHistMap( assetIDS );
                 // get Backout Asset List
-                assetListToUpdate = NSP_RET_AssetSyncWithClientHistBatch.getBackoutAssetList(
+                List<Asset> backoutAssets = NSP_RET_AssetSyncWithClientHistBatch.getBackoutAssetList(
                     mapAssetOpptyID ,
                     opptyToProjDateMap
                 );
                 // get Active Asset list
-                assetListToUpdate.addAll(
-                    NSP_RET_AssetSyncWithClientHistBatch.getActiveAssetList(
-                        assetList ,
-                        assetListToUpdate ,
-                        assetToSubplanHistMap ,
-                        accountsWithActiveWO
-                    )
+                List<Asset> activeAssets = NSP_RET_AssetSyncWithClientHistBatch.getActiveAssetList(
+                    assetList ,
+                    backoutAssets ,
+                    assetToSubplanHistMap ,
+                    accountsWithActiveWO
                 );
-                //Update the Asset record List - DML Update
-                this.updateAsset( assetListToUpdate );
+                // prevent ListException: Duplicate id in list
+                // ~ combine backout and active assets into single map to be updated...
+                Map<Id,Asset> assetUpdateMap = new Map<Id,Asset>();
+                if ( ( backoutAssets != null ) && !backoutAssets.isEmpty() ) {
+                    assetUpdateMap = new Map<Id,Asset>( backoutAssets );
+                }
+                if ( ( activeAssets != null ) && !activeAssets.isEmpty() ) {
+                    for ( Asset activeAsset : activeAssets ) {
+                        assetUpdateMap.put( activeAsset.Id , activeAsset );
+                    }
+                }
+                this.updateAssets( assetUpdateMap.values() );
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
@@ -131,7 +168,7 @@ public with sharing class NSP_RET_AssetSyncWithClientHistBatch implements ISelfS
         return mapAssetAccountIds;
     }
 
-    private static Map<Id,Id> getMapAssetOpptyId(Asset asst){
+    private static Map<Id,Id> getMapAssetOpptyId( Asset asst ) {
         Map<Id,Id> mapAssetOpptyID = new Map<Id,Id>();
         if ( ( asst != null ) && ( asst.Opportunity__c != null ) ) {
             mapAssetOpptyID.put( asst.Id , asst.Opportunity__c );
@@ -139,12 +176,12 @@ public with sharing class NSP_RET_AssetSyncWithClientHistBatch implements ISelfS
         return mapAssetOpptyID;
     }
 
-    private void updateAsset( List<Asset> assetListToUpdate ) {
+    private void updateAssets( List<Asset> assetListToUpdate ) {
         if ( ( assetListToUpdate != null ) && !assetListToUpdate.isEmpty() ) {
             List<Database.SaveResult> results = Database.update( assetListToUpdate , false );
             NSP_ErrorLogHandler.logResults(
                 NSP_RET_AssetSyncWithClientHistBatch.class.getName() ,
-                'updateAsset' ,
+                'updateAssets' ,
                 results
             );
         }
@@ -152,7 +189,7 @@ public with sharing class NSP_RET_AssetSyncWithClientHistBatch implements ISelfS
 
     // Method to get BackoutAssetList
     private static List<Asset> getBackoutAssetList( Map<Id,Id> mapAssetOpptyID , Map<Id,Date> opptyToProjDateMap ) {
-        List<Asset> backoutAssetList = new List<Asset>();
+        Map<Id,Asset> backoutAssetMap = new Map<Id,Asset>();
         if ( ( mapAssetOpptyID != null )
             && !mapAssetOpptyID.isEmpty()
             && ( opptyToProjDateMap != null )
@@ -166,7 +203,9 @@ public with sharing class NSP_RET_AssetSyncWithClientHistBatch implements ISelfS
                     termdate = opptyToProjDateMap.get( opptyID );
                 }
                 if ( opptyToProjDateMap.containsKey( opptyID ) ) {
-                    backoutAssetList.add(
+                    // prevent ListException: Duplicate id in list
+                    backoutAssetMap.put(
+                        assetID ,
                         NSP_RET_AssetSyncWithClientHistBatch.setAssetFields(
                             assetID ,
                             'Backout' ,
@@ -176,46 +215,51 @@ public with sharing class NSP_RET_AssetSyncWithClientHistBatch implements ISelfS
                 }
             }
         }
-        return backoutAssetList;
+        return backoutAssetMap.values();
     }
 
     // Method to get Active Asset list
     private static List<Asset> getActiveAssetList(
         List<Asset> assetList ,
-        List<Asset> backoutAssetList,
+        List<Asset> backoutAssetList ,
         Map<Id,NSP_Client_Sub_Plan_History__c> assetToSubplanHistMap ,
         Set<Id> accountsWithActiveWO
         )
     {
-        List<Asset> activeAssetList = new List<Asset>();
+        Map<Id,Asset> activeAssetMap = new Map<Id,Asset>();
         if ( ( assetList != null )
             && ( backoutAssetList != null )
             && ( assetToSubplanHistMap != null )
             )
         {
+            Map<Id,Asset> backoutAssetMap = new Map<Id,Asset>( backoutAssetList );
             for ( Asset eachAsset : assetList ) {
                 NSP_Client_Sub_Plan_History__c subplanHist = null;
                 if ( ( eachAsset != null )
                     && ( eachAsset.Id != null )
                     && assetToSubplanHistMap.containsKey( eachAsset.Id )
-                    && !backoutAssetList.contains( eachAsset )
+                    && !backoutAssetMap.containsKey( eachAsset.Id )
                     )
                 {
                     subplanHist = assetToSubplanHistMap.get( eachAsset.Id );
                 }
-                activeAssetList.addAll(
-                    NSP_RET_AssetSyncWithClientHistBatch.getActiveAssetFromSubPlan(
-                        subplanHist ,
-                        accountsWithActiveWO
-                    )
+                List<Asset> subPlanActiveAssetList = NSP_RET_AssetSyncWithClientHistBatch.getActiveAssetFromSubPlan(
+                    subplanHist ,
+                    accountsWithActiveWO
                 );
+                // prevent ListException: Duplicate id in list
+                if ( ( subPlanActiveAssetList != null ) && !subPlanActiveAssetList.isEmpty() ) {
+                    for ( Asset subPlanActiveAsset : subPlanActiveAssetList ) {
+                        activeAssetMap.put( subPlanActiveAsset.Id , subPlanActiveAsset );
+                    }
+                }
             }
         }
-        return activeAssetList;
+        return activeAssetMap.values();
     }
 
     private static List<Asset> getActiveAssetFromSubPlan( NSP_Client_Sub_Plan_History__c subplanHist , Set<Id> accountsWithActiveWO ) {
-        List<Asset> activeAssetList = new List<Asset>();
+        Map<Id,Asset> activeAssetMap = new Map<Id,Asset>();
         Date todaysDate = Date.today();
         if ( ( subplanHist != null ) && ( subplanHist.NSP_Start_Date__c != null ) ) {
             Boolean isCurrentSubplan = subplanHist.NSP_Current_Subplan__c;
@@ -246,7 +290,9 @@ public with sharing class NSP_RET_AssetSyncWithClientHistBatch implements ISelfS
                     )
                 )
             {
-                activeAssetList.add(
+                // prevent ListException: Duplicate id in list
+                activeAssetMap.put(
+                    subplanHist.NSP_Asset__c ,
                     NSP_RET_AssetSyncWithClientHistBatch.setAssetFields(
                         subplanHist.NSP_Asset__c ,
                         NSP_RET_AssetSyncWithClientHistBatch.STATUS_ACTIVE ,
@@ -255,7 +301,7 @@ public with sharing class NSP_RET_AssetSyncWithClientHistBatch implements ISelfS
                 );
             }
         }
-        return activeAssetList;
+        return activeAssetMap.values();
     }
 
     //Method to Check if Account has Active WO Asset
@@ -314,7 +360,14 @@ public with sharing class NSP_RET_AssetSyncWithClientHistBatch implements ISelfS
         Map<Id,NSP_Client_Sub_Plan_History__c> assetToSubplanHistMap = new Map<Id,NSP_Client_Sub_Plan_History__c>();
         if ( assetIDS != null ) {
             for ( NSP_Client_Sub_Plan_History__c subplanHist : [
-                        SELECT Id , NSP_Asset__c , NSP_Start_Date__c , Createddate , NSP_End_Date__c , NSP_Current_Subplan__c , NSP_Asset__r.AccountId
+                        SELECT
+                            Id ,
+                            NSP_Asset__c ,
+                            NSP_Start_Date__c ,
+                            Createddate ,
+                            NSP_End_Date__c ,
+                            NSP_Current_Subplan__c ,
+                            NSP_Asset__r.AccountId
                         FROM NSP_Client_Sub_Plan_History__c
                         WHERE (
                             ( NSP_Asset__c IN :assetIDS )

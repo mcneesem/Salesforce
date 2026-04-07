@@ -3,7 +3,7 @@
     <fullName>NSP_Sales_Region__c</fullName>
     <description>Used to store sales region</description>
     <externalId>false</externalId>
-    <label>Sales Region</label>
+    <label>DEPRECATED Sales Region</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>

@@ -2,120 +2,6 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>65.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
-    <assignments>
-        <name>Set_Fault_Element_Get_PDS_Record</name>
-        <label>Set Fault Element : Get_PDS_Record</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>FaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Get_PDS_Record</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_Fault_Element_Update_PDS_Record</name>
-        <label>Set Fault Element : Update_PDS_Record</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>FaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Update_PDS_Record</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <decisions>
-        <name>Check_Record_Before_Update</name>
-        <label>Check Record Before Update</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Yes_Valid_Record</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>r_PDS_to_update</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Update_PDS_Record</targetReference>
-            </connector>
-            <label>Yes : Valid Record</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <description>Kill Switch for Workday - Verify Payroll Data Sheet Custom Settings enable for Workday - Multiple Contact Flag PC/HR</description>
-        <name>Kill_Switch_Enable_For_Workday</name>
-        <label>Kill Switch : Enable For Workday?</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Yes_Enable_For_Workday</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Setup.Payroll_Data_Sheet_Settings__c.IsEnabledHRContact__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Setup.Payroll_Data_Sheet_Settings__c.IsEnabledOnsiteSupervisor__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Setup.Payroll_Data_Sheet_Settings__c.IsEnabledPrimaryPayrollContact__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_PDS_Record</targetReference>
-            </connector>
-            <label>Yes : Enable For Workday</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Valid_PDS_Record</name>
-        <label>Valid PDS Record?</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Yes_Valid_PDS</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>r_PDS</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Update_PDS_HR_PC_OSS_Contacts</targetReference>
-            </connector>
-            <label>Yes : Valid PDS</label>
-        </rules>
-    </decisions>
     <description>AZD-502310 , When PC/HR/OSS Flags updated on SCC Update the PC/HR/OSS on PDS Record
 11/11 - Get PDS record to Update</description>
     <environments>Default</environments>
@@ -140,50 +26,10 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordLookups>
-        <name>Get_PDS_Record</name>
-        <label>Get PDS Record</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Valid_PDS_Record</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Set_Fault_Element_Get_PDS_Record</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>NSP_Sub_Client_Name__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$Record.NSP_Sub_Client__c</elementReference>
-            </value>
-        </filters>
-        <object>NSP_Payroll__c</object>
-        <outputReference>r_PDS</outputReference>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>NSP_Payroll_SCC__c</queriedFields>
-        <queriedFields>NSP_HR_Contact_SCC__c</queriedFields>
-        <queriedFields>NSP_OSS_SCC__c</queriedFields>
-        <queriedFields>NSP_Primary_Payroll_Contact__c</queriedFields>
-        <queriedFields>NSP_HR_Contact__c</queriedFields>
-        <queriedFields>NSP_On_site_Supervisor__c</queriedFields>
-    </recordLookups>
-    <recordUpdates>
-        <name>Update_PDS_Record</name>
-        <label>Update PDS Record</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <faultConnector>
-            <targetReference>Set_Fault_Element_Update_PDS_Record</targetReference>
-        </faultConnector>
-        <inputReference>r_PDS_to_update</inputReference>
-    </recordUpdates>
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <filterLogic>or</filterLogic>
+        <filterLogic>( 1 OR 2 OR 3 ) AND ( 4 AND 5 )</filterLogic>
         <filters>
             <field>NSP_Payroll_Contact__c</field>
             <operator>IsChanged</operator>
@@ -205,11 +51,25 @@
                 <booleanValue>true</booleanValue>
             </value>
         </filters>
+        <filters>
+            <field>NSP_Sub_Client__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NSP_Contact__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
         <object>NSP_Sub_Client_Contact__c</object>
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Kill_Switch_Enable_For_Workday</targetReference>
+                <targetReference>Update_PDS_HR_PC_OSS_Contacts</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
@@ -217,46 +77,12 @@
     </start>
     <status>Draft</status>
     <subflows>
-        <name>Insperity_Fault_Handler_Subflow</name>
-        <label>Insperity Fault Handler Subflow</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <flowName>Insperity_Fault_Handler_Subflow</flowName>
-        <inputAssignments>
-            <name>faultElement</name>
-            <value>
-                <elementReference>FaultElement</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>faultFlow</name>
-            <value>
-                <stringValue>Sub_Client_Contact_Updated_Async_Update_PDS</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>faultMessage</name>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <subflows>
         <description>Invoke the Sub flow to compute the logic for PC/HR/OSS contacts on PDS</description>
         <name>Update_PDS_HR_PC_OSS_Contacts</name>
         <label>Update PDS HR/PC/OSS Contacts</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <connector>
-            <targetReference>Check_Record_Before_Update</targetReference>
-        </connector>
         <flowName>Sub_Client_Contact_Updated_Async_Update_PDS_Subflow</flowName>
-        <inputAssignments>
-            <name>r_PDS</name>
-            <value>
-                <elementReference>r_PDS</elementReference>
-            </value>
-        </inputAssignments>
         <inputAssignments>
             <name>r_SCC_Record</name>
             <value>
@@ -264,15 +90,11 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>v_SubClient_Id</name>
+            <name>subClientId</name>
             <value>
                 <elementReference>$Record.NSP_Sub_Client__c</elementReference>
             </value>
         </inputAssignments>
-        <outputAssignments>
-            <assignToReference>r_PDS_to_update</assignToReference>
-            <name>r_PDS_to_update</name>
-        </outputAssignments>
     </subflows>
     <variables>
         <name>FaultElement</name>
@@ -280,23 +102,5 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <description>Current PDS Record</description>
-        <name>r_PDS</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>NSP_Payroll__c</objectType>
-    </variables>
-    <variables>
-        <description>PDS record to update</description>
-        <name>r_PDS_to_update</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>NSP_Payroll__c</objectType>
     </variables>
 </Flow>

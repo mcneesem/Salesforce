@@ -27,12 +27,12 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Implementation_Pay_Period_Populate_Portal_Pay_Period_Subflow</targetReference>
+                <targetReference>Implementation_Pay_Period_Subflow_Populate_Portal_Pay_Period</targetReference>
             </connector>
             <label>Valid IP Record</label>
         </rules>
     </decisions>
-    <description>12/11/2025 - AZD-500803</description>
+    <description>New Client Portal: Pay Period Mapping</description>
     <environments>Default</environments>
     <interviewLabel>Implementation Pay Period - Updated - Async - Populate Portal Pay Period {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Implementation Pay Period - Updated - Async - Populate Portal Pay Period</label>
@@ -106,11 +106,11 @@
     </start>
     <status>Draft</status>
     <subflows>
-        <name>Implementation_Pay_Period_Populate_Portal_Pay_Period_Subflow</name>
-        <label>Implementation Pay Period Populate Portal Pay Period Subflow</label>
+        <name>Implementation_Pay_Period_Subflow_Populate_Portal_Pay_Period</name>
+        <label>Implementation Pay Period - Subflow - Populate Portal Pay Period</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <flowName>Implementation_Pay_Period_Populate_Portal_Pay_Period_Subflow</flowName>
+        <flowName>Implementation_Pay_Period_Subflow_Populate_Portal_Pay_Period</flowName>
         <inputAssignments>
             <name>recordImplementationPayPeriod</name>
             <value>

@@ -4,7 +4,7 @@
     <description>Field used to track, to which sales region the User belongs to</description>
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
-    <label>Sales Region</label>
+    <label>DEPRECATED Sales Region</label>
     <length>50</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

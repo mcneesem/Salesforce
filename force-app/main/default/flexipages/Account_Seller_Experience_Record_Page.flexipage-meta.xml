@@ -62,16 +62,11 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_AIMS_Client__c</fieldItem>
-                <identifier>RecordNSP_AIMS_Client_cField2</identifier>
+                <fieldItem>Record.iSolved_ID__c</fieldItem>
+                <identifier>RecordiSolved_ID_cField2</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
-                        <leftValue>{!Record.PEO_TES_Client_Status__c}</leftValue>
-                        <operator>NE</operator>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_AIMS_Client__c}</leftValue>
+                        <leftValue>{!Record.iSolved_ID__c}</leftValue>
                         <operator>NE</operator>
                     </criteria>
                 </visibilityRule>
@@ -83,11 +78,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.iSolved_ID__c</fieldItem>
-                <identifier>RecordiSolved_ID_cField2</identifier>
+                <fieldItem>Record.NSP_AIMS_Client__c</fieldItem>
+                <identifier>RecordNSP_AIMS_Client_cField2</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
-                        <leftValue>{!Record.iSolved_ID__c}</leftValue>
+                        <leftValue>{!Record.PEO_TES_Client_Status__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_AIMS_Client__c}</leftValue>
                         <operator>NE</operator>
                     </criteria>
                 </visibilityRule>
@@ -176,9 +176,15 @@
                 <fieldItem>Record.NSP_Active_Assets__c</fieldItem>
                 <identifier>RecordNSP_Active_Assets_cField</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.PEO_TES_Client_Status__c}</leftValue>
                         <operator>NE</operator>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Has_Active_Assets__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -191,6 +197,12 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.ParentId</fieldItem>
                 <identifier>RecordParentIdField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Parent.NSP_Account_Id__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-e3a0b5c8-c3b4-4e22-8855-453a5f6d374a</name>
@@ -292,6 +304,16 @@
                         <valueListItems>
                             <value>FeedItem.ContentNote</value>
                         </valueListItems>
+                        <valueListItems>
+                            <value>Account.Same_DUNS_New_FEIN</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Account_Screen_Same_DUNS_New_FEIN}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -380,6 +402,36 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Private_Capital_Firm__c</fieldItem>
                 <identifier>RecordPrivate_Capital_Firm_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.DNB_Connect_DUNS_Number__c</fieldItem>
+                <identifier>RecordDNB_Connect_DUNS_Number_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.DnB_Parent_Name__c</fieldItem>
+                <identifier>RecordDnB_Parent_Name_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.DnB_Headquarter_Name__c</fieldItem>
+                <identifier>RecordDnB_Headquarter_Name_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-dd91ccab-8831-4aff-8096-df76ece95b7e</name>
@@ -1148,6 +1200,23 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.RecordTypeId</fieldItem>
+                <identifier>RecordRecordTypeIdField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-e89f5a6b-517e-4fe5-bb1a-211b82115c6e</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -1500,6 +1569,26 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Business_Vertical__c</fieldItem>
+                <identifier>RecordNSP_Business_Vertical_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Other_Vertical__c</fieldItem>
+                <identifier>RecordNSP_Other_Vertical_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Legal_Entity_Type__c</fieldItem>
                 <identifier>RecordNSP_Legal_Entity_Type_cField</identifier>
             </fieldInstance>
@@ -1544,6 +1633,16 @@
                 <identifier>RecordDescriptionField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Expected_Annual_Business_Growth__c</fieldItem>
+                <identifier>RecordNSP_Expected_Annual_Business_Growth_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-cace9321-0e9e-413f-9024-60bcddefb227</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -1584,6 +1683,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.NSP_PAR_Recipient__c</fieldItem>
+                <identifier>RecordNSP_PAR_Recipient_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Partners_Chief_Decision_Maker__c</fieldItem>
                 <identifier>RecordNSP_Partners_Chief_Decision_Maker_cField</identifier>
             </fieldInstance>
@@ -1604,8 +1713,18 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Expected_Annual_Business_Growth__c</fieldItem>
-                <identifier>RecordNSP_Expected_Annual_Business_Growth_cField</identifier>
+                <fieldItem>Record.NSP_Template_Selection__c</fieldItem>
+                <identifier>RecordNSP_Template_Selection_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Signed_MOD_Document__c</fieldItem>
+                <identifier>RecordNSP_Signed_MOD_Document_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-914903b0-9a81-41fa-bf96-c6f3778f7b85</name>
@@ -1636,6 +1755,98 @@
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_EF_Percentage__c</fieldItem>
+                <identifier>RecordNSP_EF_Percentage_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Minimum_Percentage__c</fieldItem>
+                <identifier>RecordNSP_Minimum_Percentage_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Part_Time_Payout__c</fieldItem>
+                <identifier>RecordNSP_Part_Time_Payout_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-62b60577-eba6-496f-8429-6b9c29c4d951</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Direct_Deposit__c</fieldItem>
+                <identifier>RecordNSP_Direct_Deposit_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Vendor_ID__c</fieldItem>
+                <identifier>RecordNSP_Vendor_ID_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-e3be1c5c-e1b3-4779-9bb5-4f70295cd417</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-62b60577-eba6-496f-8429-6b9c29c4d951</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column23</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-e3be1c5c-e1b3-4779-9bb5-4f70295cd417</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column24</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-b04da815-f61d-4d8d-9dbd-226c1d447fce</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_AnyActiveOpportunitiesInThe_Pipeline__c</fieldItem>
+                <identifier>RecordNSP_AnyActiveOpportunitiesInThe_Pipeline_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
@@ -1714,6 +1925,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_If_So_WhoandHow_Successful_are_They__c</fieldItem>
                 <identifier>RecordNSP_If_So_WhoandHow_Successful_are_They_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Why_isThisBetterFitFor_Affiliate_Pgm__c</fieldItem>
+                <identifier>RecordNSP_Why_isThisBetterFitFor_Affiliate_Pgm_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-846c6071-499a-4a3a-9c6b-77748819107b</name>
@@ -1868,10 +2089,28 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
-                    <value>Partner Details</value>
+                    <value>Agreement</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection10</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
+                    <value>Facet-b04da815-f61d-4d8d-9dbd-226c1d447fce</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Payment</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection12</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -1886,7 +2125,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
-                    <value>Partner Relationship</value>
+                    <value>Partner Referral</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection11</identifier>
@@ -1932,16 +2171,13 @@
                             <value>ASSET.NAME</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>ASSET.INSTALL_DATE</value>
-                        </valueListItems>
-                        <valueListItems>
                             <value>ASSET.STATUS</value>
                         </valueListItems>
                         <valueListItems>
                             <value>NSP_First_Pay_Date__c</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>NSP_Product_Bundle__c</value>
+                            <value>NSP_Service_Region__c</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -2004,13 +2240,10 @@
                             <value>ASSET.STATUS</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>ASSET.INSTALL_DATE</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>NSP_Product_Bundle__c</value>
-                        </valueListItems>
-                        <valueListItems>
                             <value>NSP_Termination_Date__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>NSP_Service_Region__c</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -2285,23 +2518,22 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>entityNames</name>
-                    <valueList>
-                        <valueListItems>
-                            <value>Account</value>
-                        </valueListItems>
-                    </valueList>
+                    <name>height</name>
+                    <value>800</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
-                    <value>Standard.RecentItems</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>maxRecords</name>
-                    <value>3</value>
+                    <name>pageName</name>
+                    <value>DOZISF__ZoomInfoAccountInline</value>
                 </componentInstanceProperties>
-                <componentName>flexipage:recentItems</componentName>
-                <identifier>flexipage_recentItems</identifier>
+                <componentInstanceProperties>
+                    <name>showLabel</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:visualforcePage</componentName>
+                <identifier>flexipage_visualforcePage</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-6e933f73-cbac-4da3-ab4b-82b5dcb1429d</name>

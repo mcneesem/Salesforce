@@ -303,6 +303,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Non_Billable_Reason__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Complexity__c</field>
             </layoutItems>
             <layoutItems>

@@ -184,6 +184,7 @@ The unique ID of the Salesforce user who initiates an outbound call or accepts a
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordUpdates>
+        <description>Prevent DmlExceptions: FIELD_CUSTOM_VALIDATION_EXCEPTION: Case is closed, set the status to Reopened, save, and then edit</description>
         <name>Update_Case_Owner</name>
         <label>Update Case Owner</label>
         <locationX>50</locationX>
@@ -197,6 +198,13 @@ The unique ID of the Salesforce user who initiates an outbound call or accepts a
             <operator>EqualTo</operator>
             <value>
                 <elementReference>$Record.CaseId__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Status</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Closed</stringValue>
             </value>
         </filters>
         <inputAssignments>

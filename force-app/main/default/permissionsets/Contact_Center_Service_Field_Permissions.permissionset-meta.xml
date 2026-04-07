@@ -6123,11 +6123,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Event.NSP_Sales_Office_Old1__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Event.NSP_Sales_Office__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -12588,11 +12583,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>NSP_Employee_Split__c.NSP_SalesOffice__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>NSP_Employee_Split__c.NSP_Sales_Division__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -12819,11 +12809,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_Focus_Item__c.NSP_Asset__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>NSP_Focus_Item__c.NSP_Comments__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -20919,11 +20904,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Task.NSP_Sales_Division__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Task.NSP_Sales_Office_Old1__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

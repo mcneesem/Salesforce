@@ -5,7 +5,7 @@
     <externalId>false</externalId>
     <label>Allowed Groups</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>MultiselectPicklist</type>
     <valueSet>
         <restricted>true</restricted>
@@ -95,6 +95,11 @@
                 <fullName>CPQ Compensation Services</fullName>
                 <default>false</default>
                 <label>CPQ Compensation Services</label>
+            </value>
+            <value>
+                <fullName>I9Assist CPQ</fullName>
+                <default>false</default>
+                <label>I9Assist CPQ</label>
             </value>
         </valueSetDefinition>
     </valueSet>

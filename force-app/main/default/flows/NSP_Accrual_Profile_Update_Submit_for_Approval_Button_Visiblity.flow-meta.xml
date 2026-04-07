@@ -823,7 +823,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Update_Submit_For_Approval_to_True</targetReference>
+                <targetReference>Usage_Details</targetReference>
             </connector>
             <label>Accrual</label>
         </rules>
@@ -1191,6 +1191,53 @@
                 <targetReference>Client_Information_Fields</targetReference>
             </connector>
             <label>Check for ITA?</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Usage_Details</name>
+        <label>Usage Details</label>
+        <locationX>930</locationX>
+        <locationY>977</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Update_Submit_for_Approval_to_False</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_Usage_Limit_Defined</name>
+            <conditionLogic>1 AND ( (2 AND 3) OR 4 )</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Annual_Usage_Limit__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Annual_Usage_Limit__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Yes</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Accrual_Usage_Hours__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Annual_Usage_Limit__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>No</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Submit_For_Approval_to_True</targetReference>
+            </connector>
+            <label>Has Usage Limit Defined</label>
         </rules>
     </decisions>
     <environments>Default</environments>

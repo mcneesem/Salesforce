@@ -1,0 +1,20 @@
+<template>
+    <c-navigate-page-reference page-reference={pageReference} onnavigate={handleClose}></c-navigate-page-reference>
+    <lightning-modal-header label={modalLabel}></lightning-modal-header>
+    <lightning-modal-body>
+        <div tabindex="0">
+            <lightning-datatable
+                key-field="id"
+                data={data}
+                columns={columns}
+                onrowaction={handleRowAction}
+                hide-checkbox-column="true"
+                show-row-number-column="true"
+                >
+            </lightning-datatable>
+        </div>
+    </lightning-modal-body>
+    <lightning-modal-footer>
+        <lightning-button label="Close" onclick={handleClose}></lightning-button>
+    </lightning-modal-footer>
+</template>

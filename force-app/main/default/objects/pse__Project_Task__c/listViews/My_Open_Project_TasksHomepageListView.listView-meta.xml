@@ -13,7 +13,7 @@
     <filters>
         <field>pse__Status__c</field>
         <operation>notEqual</operation>
-        <value>Complete,Canceled</value>
+        <value>Complete,Canceled,Closed - Moved</value>
     </filters>
     <label>My Open Project Tasks</label>
     <sharedTo>

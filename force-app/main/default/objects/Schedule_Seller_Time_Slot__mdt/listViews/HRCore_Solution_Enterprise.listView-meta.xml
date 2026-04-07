@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HRCore_Solution_Enterprise</fullName>
+    <columns>MasterLabel</columns>
+    <columns>Product__c</columns>
+    <columns>Time_Zone__c</columns>
+    <columns>Start_Time__c</columns>
+    <columns>End_Time__c</columns>
+    <columns>Is_Active__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Product__c</field>
+        <operation>equals</operation>
+        <value>Schedule_Seller_HRCore_Enterprise</value>
+    </filters>
+    <label>HRCore Solution Enterprise</label>
+</ListView>

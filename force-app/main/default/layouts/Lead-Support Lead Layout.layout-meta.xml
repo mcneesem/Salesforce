@@ -1013,11 +1013,12 @@
     </relatedContent>
     <relatedLists>
         <fields>CAMPAIGN.NAME</fields>
-        <fields>CAMPAIGN.START_DATE</fields>
+        <fields>NSP_Campaign_Source__c</fields>
         <fields>CAMPAIGN.CAMPAIGN_TYPE</fields>
-        <fields>CM.STATUS</fields>
-        <fields>CM.RESPONDED</fields>
+        <fields>Delivery_Mechanism_Type__c</fields>
+        <fields>CM.FIRST_ASSOCIATED_DATE</fields>
         <fields>CM.LAST_UPDATE</fields>
+        <fields>CM.STATUS</fields>
         <relatedList>RelatedCampaignList</relatedList>
     </relatedLists>
     <relatedLists>

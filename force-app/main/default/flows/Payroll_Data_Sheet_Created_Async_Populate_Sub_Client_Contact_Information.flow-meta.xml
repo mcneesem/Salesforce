@@ -2,22 +2,6 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>65.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
-    <assignments>
-        <name>Set_Fault_Element_Update_PDS_Record</name>
-        <label>Set Fault Element : Update_PDS_Record</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>FaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Update_PDS_Record</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
     <decisions>
         <description>Kill Switch for Workday - Verify Payroll Data Sheet Custom Settings enable for Workday - Create PDS</description>
         <name>Kill_Switch_Enable_For_Workday</name>
@@ -39,29 +23,6 @@
                 <targetReference>Sub_Client_Contact_Updated_Async_Update_PDS_Subflow</targetReference>
             </connector>
             <label>Yes : Enable For Workday</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <description>Verify if return is not null</description>
-        <name>Valid_Record</name>
-        <label>Valid Record ?</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Yes_Valid_Record</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>r_PDS_to_update</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Update_PDS_Record</targetReference>
-            </connector>
-            <label>Yes : Valid Record</label>
         </rules>
     </decisions>
     <description>AZD-509194 : Flow will populate the Contact fields , Invoked either by Manual / Integration Process- Workday Implementation</description>
@@ -87,16 +48,6 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordUpdates>
-        <name>Update_PDS_Record</name>
-        <label>Update PDS Record</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <faultConnector>
-            <targetReference>Set_Fault_Element_Update_PDS_Record</targetReference>
-        </faultConnector>
-        <inputReference>r_PDS_to_update</inputReference>
-    </recordUpdates>
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
@@ -120,56 +71,17 @@
     </start>
     <status>Draft</status>
     <subflows>
-        <description>Fault Handler</description>
-        <name>Insperity_Fault_Handler_Subflow</name>
-        <label>Insperity Fault Handler Subflow</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <flowName>Insperity_Fault_Handler_Subflow</flowName>
-        <inputAssignments>
-            <name>faultElement</name>
-            <value>
-                <elementReference>FaultElement</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>faultFlow</name>
-            <value>
-                <stringValue>Payroll_Data_Sheet_Created_Async_Populate_Sub_Client_Contact_Information</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>faultMessage</name>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <subflows>
         <name>Sub_Client_Contact_Updated_Async_Update_PDS_Subflow</name>
         <label>Sub Client Contact Updated Async Update PDS Subflow</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <connector>
-            <targetReference>Valid_Record</targetReference>
-        </connector>
         <flowName>Sub_Client_Contact_Updated_Async_Update_PDS_Subflow</flowName>
         <inputAssignments>
-            <name>r_PDS</name>
-            <value>
-                <elementReference>$Record</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>v_SubClient_Id</name>
+            <name>subClientId</name>
             <value>
                 <elementReference>$Record.NSP_Sub_Client_Name__c</elementReference>
             </value>
         </inputAssignments>
-        <outputAssignments>
-            <assignToReference>r_PDS_to_update</assignToReference>
-            <name>r_PDS_to_update</name>
-        </outputAssignments>
     </subflows>
     <variables>
         <name>FaultElement</name>
@@ -177,13 +89,5 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>r_PDS_to_update</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>NSP_Payroll__c</objectType>
     </variables>
 </Flow>
