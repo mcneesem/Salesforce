@@ -8,6 +8,26 @@ public without sharing class NSP_ContactRollupController {
     // @param recordId of Account.
     // @return resultWrapper
     //
+    private static Set<String> paidNonPaidValues = new Set<String>
+    {
+        'Paid WSEE',
+        'Active Non-Paid User'
+    };
+
+    private static Map<String, Schema.SObjectField> fieldMap
+    {
+        private get
+        {
+            if( fieldMap == null )
+            {
+                fieldMap = Schema.SObjectType.NSP_Sub_Client_Contact__c.fields.getMap();
+            }
+
+            return fieldMap;
+        }
+
+        private set;
+    }
     @AuraEnabled(cacheable = true)
     public static List < ResultWrapper > getContactRollUpRecords(String recordId, Integer offSetCount, Boolean fullView, List < String > allFilters, String subClientFilter, String acrFilter) {
         try {
@@ -48,10 +68,7 @@ public without sharing class NSP_ContactRollupController {
 	public static Map<Id, ResultWrapper> getSubClientContacts(string recordId, Map < Id, ResultWrapper > resultsMap,
                                                               Integer offSetCount, Integer offSetLimit, String subClientFilter)
     {
-        Set<String> paidNonPaidValues = new Set<String>{
-            'Paid WSEE',
-                'Active Non-Paid User'
-                };
+
 
         List<NSP_Sub_Client_Contact__c> subClientsBasedOnQueryResults = New List<NSP_Sub_Client_Contact__c>();
 
@@ -62,16 +79,15 @@ public without sharing class NSP_ContactRollupController {
                 recordId,
                 offSetCount,
                 offSetLimit,
-                subClientFilter,
-                paidNonPaidValues
-            );
+                subClientFilter
+                );
         }
         else
         {
             subClientsBasedOnQueryResults = NSP_ContactRollupController.getSubClientContactsBasedOnNoFilter( recordId,
                                                                                                             offSetCount,
-                                                                                                            offSetLimit,
-                                                                                                            paidNonPaidValues );
+                                                                                                            offSetLimit
+                                                                                                            );
         }
 
         return NSP_ContactRollupController.getSubClinetContactRecords( subClientsBasedOnQueryResults, resultsMap, recordId );
@@ -82,8 +98,7 @@ public without sharing class NSP_ContactRollupController {
     // @return : List<NSP_Sub_Client_Contact__c>
     private static List<NSP_Sub_Client_Contact__c> getSubClientContactsBasedOnNoFilter(string recordId,
                                                                                        Integer offSetCount,
-                                                                                       Integer offSetLimit,
-                                                                                       Set<String> paidNonPaidValues)
+                                                                                       Integer offSetLimit)
     {
         List<NSP_Sub_Client_Contact__c> returnList = [
             SELECT
@@ -102,7 +117,7 @@ public without sharing class NSP_ContactRollupController {
             WHERE
             NSP_Sub_Client__r.NSP_Account__c =: recordId
             AND
-            NSP_Paid_Non_Paid__c IN :paidNonPaidValues
+            NSP_Paid_Non_Paid__c IN :NSP_ContactRollupController.paidNonPaidValues
             AND
             NSP_Employee_Status__c != 'Terminated'
             AND
@@ -137,11 +152,10 @@ public without sharing class NSP_ContactRollupController {
     }
 
     // @description : Filter the sub client contacts based on sub client contact filters from UI
-    // @params: recordId,  offSetCount, offSetLimit, subClientFilter, paidNonPaidValues
+    // @params: recordId,  offSetCount, offSetLimit, subClientFilter
     // @return : List<NSP_Sub_Client_Contact__c>
     private static List<NSP_Sub_Client_Contact__c> getSubClientContactsBasedOnFilter(string recordId, Integer offSetCount,
-                                                                                     Integer offSetLimit, String subClientFilter,
-                                                                                     Set<String> paidNonPaidValues)
+                                                                                     Integer offSetLimit, String subClientFilter)
     {
         List<NSP_Sub_Client_Contact__c> returnList = new List<NSP_Sub_Client_Contact__c>();
         List<String> subClientFilterList;
@@ -155,22 +169,18 @@ public without sharing class NSP_ContactRollupController {
         {
             NSP_Sub_Client_Contact__c tempSubClientContact = NSP_ContactRollupController.getSubClientContactObj();
 
-            // Get the field map for the SObject (e.g., NSP_Sub_Client_Contact__c)
-            Map<String, Schema.SObjectField> fieldMap = Schema.SObjectType.NSP_Sub_Client_Contact__c.fields.getMap();
-
             for( String subClientFilterField : subClientFilterList )
             {
-                Boolean flagCheck = NSP_ContactRollupController.getFlagFieldValue( subClientFilterField, fieldMap );
+                Boolean flagCheck = NSP_ContactRollupController.getFlagFieldValue( subClientFilterField );
 
                 if(flagCheck)
                 {
-                    tempSubClientContact.put(fieldMap.get(subClientFilterField), true);
+                    tempSubClientContact.put(NSP_ContactRollupController.fieldMap.get(subClientFilterField), true);
                 }
             }
 
             returnList = NSP_ContactRollupController.getSubClientContactsBasedOnObjectFilter( recordId, offSetCount,
-                                                                                             offSetLimit, tempSubClientContact,
-                                                                                             paidNonPaidValues);
+                                                                                             offSetLimit, tempSubClientContact);
         }
 
         return returnList;
@@ -182,8 +192,7 @@ public without sharing class NSP_ContactRollupController {
     private static List<NSP_Sub_Client_Contact__c> getSubClientContactsBasedOnObjectFilter(string recordId,
                                                                                            Integer offSetCount,
                                                                                            Integer offSetLimit,
-                                                                                           NSP_Sub_Client_Contact__c subClientContact,
-                                                                                           Set<String> paidNonPaidValues)
+                                                                                           NSP_Sub_Client_Contact__c subClientContact)
     {
         List<NSP_Sub_Client_Contact__c> returnList = [
             SELECT
@@ -202,9 +211,9 @@ public without sharing class NSP_ContactRollupController {
             WHERE
             NSP_Sub_Client__r.NSP_Account__c =: recordId
             AND
-            NSP_Paid_Non_Paid__c IN :paidNonPaidValues
+            NSP_Paid_Non_Paid__c IN :NSP_ContactRollupController.paidNonPaidValues
             AND
-            NSP_Employee_Status__c != 'Terminated '
+            NSP_Employee_Status__c != 'Terminated'
             AND
             NSP_Paid_Non_Paid__c != 'Inactive Non-Paid User'
             AND
@@ -238,7 +247,7 @@ public without sharing class NSP_ContactRollupController {
     // @return : NSP_Sub_Client_Contact__c
     private static NSP_Sub_Client_Contact__c getSubClientContactObj()
     {
-        NSP_Sub_Client_Contact__c subClientContact = new NSP_Sub_Client_Contact__c(
+        return new NSP_Sub_Client_Contact__c(
 
             NSP_On_Site_Supervisor__c = false,
             NSP_Payroll_Contact__c = false,
@@ -249,24 +258,17 @@ public without sharing class NSP_ContactRollupController {
             NSP_Background_Contact__c = false,
             NSP_Unemployment_Contact__c = false
         );
-
-        return subClientContact;
     }
 
     // @description: based on field string match the field api name from schema object map
     // @params : string fild API name, fieldMap
     // @return : Boolean flag
-    private static Boolean getFlagFieldValue(string fieldName, Map<String, Schema.SObjectField> fieldMap)
+    private static Boolean getFlagFieldValue(string fieldName)
     {
-        Boolean returnFlag = false;
-        if( fieldMap!= null && !fieldMap?.isEmpty() &&
-           String.isNotBlank(fieldName) &&
-           fieldMap.containsKey(fieldName) )
-        {
-            returnFlag = true;
-        }
-
-        return returnFlag;
+        return (
+            String.isNotBlank(fieldName) &&
+            NSP_ContactRollupController.fieldMap?.containsKey(fieldName)
+            );
     }
 
 
