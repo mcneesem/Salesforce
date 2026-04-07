@@ -55,6 +55,11 @@
                 <default>false</default>
                 <label>Schedule_Seller_Time_Attendance</label>
             </value>
+            <value>
+                <fullName>Schedule_Seller_Performance_Management_and_Time_Attendance</fullName>
+                <default>false</default>
+                <label>Schedule_Seller_Performance_Management_and_Time_Attendance</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
