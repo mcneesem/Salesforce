@@ -160,7 +160,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn( 'dss_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read DocuSign_Settings__c: ' + e.getMessage() ) );
         }
 
-        s.status = calculateSectionStatus( s.checks );
+        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
         DocuSignContext ctx = new DocuSignContext();
         ctx.section = s;
         ctx.accountNumber = resolvedAccount;
@@ -189,7 +189,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn( 'wss_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read Wingspan_Settings__c: ' + e.getMessage() ) );
         }
 
-        s.status = calculateSectionStatus( s.checks );
+        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
         return s;
     }
 
@@ -212,7 +212,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn( 'rec_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read NSP_GoogleRecaptchaSettings__c: ' + e.getMessage() ) );
         }
 
-        s.status = calculateSectionStatus( s.checks );
+        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
         return s;
     }
 
@@ -232,7 +232,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn( 'dad_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read NSP_Docusign_Account_Details__c: ' + e.getMessage() ) );
         }
 
-        s.status = calculateSectionStatus( s.checks );
+        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
         return s;
     }
 
@@ -262,7 +262,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn('org_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to verify OrgSettings__c: ' + e.getMessage() ) );
         }
 
-        s.status = calculateSectionStatus( s.checks );
+        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
         return s;
     }
 
@@ -288,7 +288,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn( 'env_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read NSP_Environment_Details__c: ' + e.getMessage() ) );
         }
 
-        s.status = calculateSectionStatus( s.checks );
+        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
         return s;
     }
 
@@ -307,7 +307,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn( 'box_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read BoxFileRequest__c: ' + e.getMessage() ) );
         }
 
-        s.status = calculateSectionStatus( s.checks );
+        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
         return s;
     }
 
@@ -327,7 +327,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn('uts_query', 'Access', 'Queryable', 'Error', 'Unable to read UserTriggerSettings__c: ' + e.getMessage()));
         }
 
-        s.status = calculateSectionStatus( s.checks );
+        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
         return s;
     }
 
@@ -346,7 +346,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn('cts_query', 'Access', 'Queryable', 'Error', 'Unable to read Contract_Termination_Settings__c: ' + e.getMessage()));
         }
 
-        s.status = calculateSectionStatus( s.checks );
+        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
         return s;
     }
 
@@ -376,7 +376,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn('nvm_query', 'Access', 'Queryable', 'Error', 'Unable to read NVMContactWorld__Settings__c: ' + e.getMessage()));
         }
 
-        s.status = calculateSectionStatus( s.checks );
+        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
         return s;
     }
 
@@ -398,7 +398,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn( 'stes_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read Sales_Team_Email_Settings__c: ' + e.getMessage() ) );
         }
 
-        s.status = calculateSectionStatus( s.checks );
+        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
         return s;
     }
 
@@ -423,7 +423,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn( 'pcs_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to verify ProjectCreationSettings__c' ) );
         }
 
-        s.status = calculateSectionStatus( s.checks );
+        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
         return s;
     }
 
@@ -456,7 +456,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn( 'ds_signers_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read NSP_DocuSign_Signers__mdt: ' + e.getMessage() ) );
         }
 
-        s.status = calculateSectionStatus( s.checks );
+        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
         return s;
     }
 
@@ -545,7 +545,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn( 'ds_rest_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read DocuSignRESTSettings__mdt: ' + e.getMessage() ) );
         }
 
-        s.status = calculateSectionStatus( s.checks );
+        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
         return s;
     }
 
@@ -586,7 +586,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn( 'peo_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read NSP_PEO_Implementations__mdt: ' + e.getMessage() ) );
         }
 
-        s.status = calculateSectionStatus( s.checks );
+        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
         return s;
     }
 
@@ -620,7 +620,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn( 'ret_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read NSP_Retirement_Services__mdt: ' + e.getMessage() ) );
         }
 
-        s.status = calculateSectionStatus( s.checks );
+        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
         return s;
     }
 
@@ -649,7 +649,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn('tmpl_query', 'Access', 'Queryable', 'Error', 'Unable to read NSP_ProjectTemplateMapping__mdt: ' + e.getMessage()));
         }
 
-        s.status = calculateSectionStatus( s.checks );
+        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
         return s;
     }
 
@@ -678,7 +678,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn( 'tmplkey_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read Template_Key_and_Id_Mapping__mdt: ' + e.getMessage() ) );
         }
 
-        s.status = calculateSectionStatus( s.checks );
+        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
         return s;
     }
 
@@ -735,7 +735,7 @@ public with sharing class SandboxHealthController {
             ));
         }
 
-        s.status = calculateSectionStatus( s.checks );
+        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
         return s;
     }
 
@@ -865,7 +865,7 @@ public with sharing class SandboxHealthController {
         }
 
         // Set section status after all checks are processed
-        s.status = calculateSectionStatus( s.checks );
+        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
         return s;
     }
 
@@ -892,62 +892,66 @@ public with sharing class SandboxHealthController {
         s.checks = new List<Check>();
 
         Map<String, String> required = requiredImageDocs();
+        String eMsg = '';
 
         // Build a lookup of Documents in Services folder by Name
         Map<String, Document> byName = new Map<String, Document>();
         try {
             // Document is classic; enforce user-context security
             for ( Document d : [
-                SELECT Id , Name , Folder.Name , IsPublic , IsInternalUseOnly , Type
-                FROM Document
-                WHERE (
-                        ( Folder.Name = 'Services' )
-                    AND ( IsPublic = true )
-                    AND ( IsInternalUseOnly = false )
-                    )
-                WITH SECURITY_ENFORCED
-            ]) {
+                    SELECT Id , Name , Folder.Name , IsPublic , IsInternalUseOnly , Type
+                    FROM Document
+                    WHERE (
+                            ( Folder.Name = 'Services' )
+                        AND ( IsPublic = true )
+                        AND ( IsInternalUseOnly = false )
+                        )
+                    WITH SECURITY_ENFORCED
+                ] )
+            {
                 byName.put(d.Name, d);
             }
         } catch ( Exception e ) {
-            // If user can't access Documents, emit a WARN and exit with section status
+            eMsg = e.getMessage();
+        }
+
+        if( byName == null || byName.isEmpty() ) {
+            // If user can't access Documents, emit a WARN
             s.checks.add( newWarn(
                 'docs_query' ,
                 'Image Documents' ,
                 'Queryable via user-context' ,
                 'No access' ,
-                'Unable to read Document records in Services folder: ' + e.getMessage()
+                'Unable to read Document records in Services folder' + ( ( eMsg != '' ) ? ': ' + eMsg : '' )
             ) );
-            s.status = calculateSectionStatus( s.checks );
-            return s;
-        }
+        } else {
+            // For each required metadata key, compute the expected human-readable Document.Name
+            for ( String metaKey : required.keySet() ) {
+                String expectedDocName = required.get(metaKey).replace('_' , ' ');
+                Document d = byName.get( expectedDocName );
 
-        // For each required metadata key, compute the expected human-readable Document.Name
-        for ( String metaKey : required.keySet() ) {
-            String expectedDocName = required.get(metaKey).replace('_' , ' ');
-            Document d = byName.get( expectedDocName );
+                if ( d == null ) {
+                    s.checks.add( newFail(
+                        'doc_presence_' + metaKey ,
+                        expectedDocName ,
+                        'Exists in Services' ,
+                        'Missing' ,
+                        'Document not found in Services folder or is not public'
+                    ));
+                    continue;
+                }
 
-            if ( d == null ) {
-                s.checks.add( newFail(
-                    'doc_presence_' + metaKey ,
-                    expectedDocName ,
-                    'Exists in Services' ,
-                    'Missing' ,
-                    'Document not found in Services folder or is not public'
-                ));
-                continue;
-            }
-
-            if ( String.isBlank( d.Type ) ) {
-                s.checks.add( newWarn( 'doc_type_' + metaKey , expectedDocName , 'png' , 'blank' , 'Document found but type not available' ) );
-            } else if ( d.Type?.toLowerCase() != 'png' ) {
-                s.checks.add( newWarn( 'doc_type_' + metaKey , expectedDocName , 'png' , d.Type , 'Document found but expected PNG type' ) );
-            } else {
-                s.checks.add( newPass( 'doc_type_' + metaKey , expectedDocName , d.Name , 'Document found' , 'Document found as expected' ) );
+                if ( String.isBlank( d.Type ) ) {
+                    s.checks.add( newWarn( 'doc_type_' + metaKey , expectedDocName , 'png' , 'blank' , 'Document found but type not available' ) );
+                } else if ( d.Type?.toLowerCase() != 'png' ) {
+                    s.checks.add( newWarn( 'doc_type_' + metaKey , expectedDocName , 'png' , d.Type , 'Document found but expected PNG type' ) );
+                } else {
+                    s.checks.add( newPass( 'doc_type_' + metaKey , expectedDocName , d.Name , 'Document found' , 'Document found as expected' ) );
+                }
             }
         }
 
-        s.status = calculateSectionStatus( s.checks );
+        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
         return s;
     }
 
@@ -1018,7 +1022,7 @@ public with sharing class SandboxHealthController {
             }
         }
         // Set section status for core labels
-        core.status = calculateSectionStatus( core.checks );
+        core.status = SandboxHealthController.calculateSectionStatus( core.checks );
 
         return core;
     }
@@ -1049,7 +1053,9 @@ public with sharing class SandboxHealthController {
         }
 
         for ( String lblName : uniqueNames ) {
-            if ( String.isBlank(lblName) ) continue;
+            if ( String.isBlank(lblName) ) {
+                continue;
+            }
             String act = null;
             try {
                 // Use namespace-aware overload: System.Label.get(namespace, name)
@@ -1066,7 +1072,7 @@ public with sharing class SandboxHealthController {
             }
         }
         // Set section status for email labels
-        email.status = calculateSectionStatus( email.checks );
+        email.status = SandboxHealthController.calculateSectionStatus( email.checks );
 
         return email;
     }
@@ -1077,7 +1083,9 @@ public with sharing class SandboxHealthController {
             if (mTmplId == null) {
                 Map<String, Id> tmp = new Map<String, Id>();
                 for (pse__Proj__c t : [ SELECT Id , TemplateName__c FROM pse__Proj__c WHERE pse__Is_Template__c = true ]) {
-                    if (t.TemplateName__c != null) tmp.put( t.TemplateName__c.trim() , t.Id );
+                    if ( t.TemplateName__c != null ) {
+                        tmp.put( t.TemplateName__c.trim() , t.Id );
+                    }
                 }
                 mTmplId = tmp;
             }
