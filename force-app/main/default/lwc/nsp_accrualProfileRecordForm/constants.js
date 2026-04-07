@@ -70,7 +70,9 @@ const RL_FIELDS = [
   'NSP_balances_paid_in_lieu_of_carryover__c',
   'NSP_Are_balances_paid_on_termination__c',
   'NSP_Howdoestimeaccrueunder_the_plan_AIMS__c',
-  'NSP_time_accrue_under_plan_aims_calendar__c'
+  'NSP_time_accrue_under_plan_aims_calendar__c',
+  'Annual_Usage_Limit__c',
+  'Accrual_Usage_Hours__c'
 ];
 
 const ACCRUAL_LEVEL_CHANGES_FIELD_MAPPING_CALENDAR_YEAR = {

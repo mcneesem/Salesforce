@@ -740,6 +740,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <description>Prevent DmlExceptions: FIELD_CUSTOM_VALIDATION_EXCEPTION: Task is no longer editable on this Project. (pse__Status__c != &apos;Closed - Moved&apos;)</description>
         <name>Get_Project_Tasks</name>
         <label>Get Project Tasks</label>
         <locationX>0</locationX>
@@ -771,6 +772,13 @@
             <operator>NotEqualTo</operator>
             <value>
                 <stringValue>Complete</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>pse__Status__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Closed - Moved</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>

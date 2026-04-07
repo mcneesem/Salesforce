@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>54.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <decisions>
         <description>Checks whether status is completed or not</description>
         <name>Is_Completed</name>
         <label>Is Completed?</label>
         <locationX>314</locationX>
-        <locationY>311</locationY>
+        <locationY>287</locationY>
         <defaultConnector>
             <targetReference>Update_Completed_Date_to_Null_if_Status_is_Empty</targetReference>
         </defaultConnector>
@@ -42,7 +43,8 @@
             <label>Not Is Completed</label>
         </rules>
     </decisions>
-    <description>This flow describes about the updation of Completed Date on Event based on NSP_Status__c</description>
+    <description>DEPRECATED - This flow updates the custom &quot;Completed Date&quot; on Event based on NSP_Status__c</description>
+    <environments>Default</environments>
     <formulas>
         <description>This Formula is used to store today&apos;s date</description>
         <name>TodayDate</name>
@@ -50,7 +52,7 @@
         <expression>{!$Flow.CurrentDate}</expression>
     </formulas>
     <interviewLabel>Update Completed Date On Event {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Update Completed Date On Event</label>
+    <label>DEPRECATED - Update Completed Date On Event</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -75,7 +77,7 @@
         <name>Update_Complete_Date</name>
         <label>Update Complete Date</label>
         <locationX>50</locationX>
-        <locationY>431</locationY>
+        <locationY>395</locationY>
         <inputAssignments>
             <field>NSP_Completed_Date__c</field>
             <value>
@@ -89,7 +91,7 @@
         <name>Update_Completed_Date_to_Null</name>
         <label>Update Completed Date to Null</label>
         <locationX>314</locationX>
-        <locationY>431</locationY>
+        <locationY>395</locationY>
         <inputAssignments>
             <field>NSP_Completed_Date__c</field>
         </inputAssignments>
@@ -99,7 +101,7 @@
         <name>Update_Completed_Date_to_Null_if_Status_is_Empty</name>
         <label>Update Completed Date to Null if Status is Empty</label>
         <locationX>578</locationX>
-        <locationY>431</locationY>
+        <locationY>395</locationY>
         <inputAssignments>
             <field>NSP_Completed_Date__c</field>
         </inputAssignments>
@@ -130,5 +132,5 @@
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
 </Flow>

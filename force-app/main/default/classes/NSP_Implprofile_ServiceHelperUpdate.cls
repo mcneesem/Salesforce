@@ -3,7 +3,7 @@
 // Refactored FSO IP - AZD-352367
 //
 public class NSP_Implprofile_ServiceHelperUpdate {
-    // test w/ NSP_Implprofile_ServiceHelperUpdate_Test (85%)
+    // test w/ NSP_Implprofile_ServiceHelperUpdate_Test (84%)
 
     private  Boolean isRerun =false;
     private Boolean isSaveForm = false;
@@ -114,22 +114,34 @@ public class NSP_Implprofile_ServiceHelperUpdate {
     public NSP_Implprofile_ServiceHelperUpdate(Boolean isSave){
         this.isSaveForm = isSave;
     }
-    public Map<String, Set<Id>>  executeAutomation() {
-        Map<String, Set<Id>> ipRecordsByAutomationMap = new  Map<String, Set<Id>> ();
-        try{
-            start();
-            execute();
-            finish();
-            ipRecordsByAutomationMap= ipRecordsByAutomation;
-        } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
-                NSP_Implprofile_ServiceHelperUpdate.class.getName() ,
-                'executeAutomation' ,
-                e
-            );
+
+    public static Boolean isAutomationAllowed() {
+        return (
+            CustomPermissionController.checkUserPermission( 'Use_Implementation_Profile' , UserInfo.getUserId() )
+            && Schema.SObjectType.Implementation_Profile__c.isAccessible()
+            && Schema.SObjectType.Implementation_Profile__c.isUpdateable()
+        );
+    }
+
+    public Map<String,Set<Id>>  executeAutomation() {
+        Map<String,Set<Id>> ipRecordsByAutomationMap = new Map<String,Set<Id>>();
+        if ( NSP_Implprofile_ServiceHelperUpdate.isAutomationAllowed() ) {
+            try {
+                this.start();
+                this.execute();
+                this.finish();
+                ipRecordsByAutomationMap = this.ipRecordsByAutomation;
+            } catch ( Exception e ) {
+                NSP_ErrorLogHandler.logException(
+                    NSP_Implprofile_ServiceHelperUpdate.class.getName() ,
+                    'executeAutomation' ,
+                    e
+                );
+            }
         }
         return ipRecordsByAutomationMap;
     }
+
     private void start() {
         //get all Employee Data
         // Create a set of eligible records which we need to pull
@@ -347,7 +359,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, CT_SPONSORED_PLAN_FN);
         }
     }
-    
+
 
     private void checkforReceivedCertificate(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
         if (automationsToExecute.contains(GENERAL_LIABILITY_FN)
@@ -363,7 +375,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, GENERAL_LIABILITY_FN);
         }
     }
-    
+
     private void checkforEEO(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
         if (automationsToExecute.contains(EEO_FILING_FN)
             && newRec != null
@@ -378,7 +390,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, EEO_FILING_FN);
         }
     }
-    
+
     private void checkforClientHandbook(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
         if (automationsToExecute.contains(CLIENT_HANDBOOK_FN)
             && newRec != null
@@ -395,7 +407,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, CLIENT_HANDBOOK_FN);
         }
     }
-    
+
     private void checkforEDC(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
         if (automationsToExecute.contains(EDC_FN)
             && newRec != null
@@ -412,7 +424,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, EDC_FN);
         }
     }
-    
+
     private void checkforPayrollLocations(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
         if (automationsToExecute.contains(PAYROLL_LOCATIONS_FN)
             && newRec != null
@@ -430,7 +442,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, PAYROLL_LOCATIONS_FN);
         }
     }
-    
+
     private void checkforPayrollDepartments(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
         if (automationsToExecute.contains(PAYROLL_DEPARTMENTS_FN)
             && newRec != null
@@ -447,7 +459,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, PAYROLL_DEPARTMENTS_FN);
         }
     }
-    
+
     private void checkforPayrollJobCosting(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
         if (automationsToExecute.contains(PAYROLL_JOBCOSTING_FN)
             && newRec != null
@@ -464,7 +476,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, PAYROLL_JOBCOSTING_FN);
         }
     }
-    
+
     private void checkforPayrollRegister(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
         if (automationsToExecute.contains(PAYROLL_REGISTER_FN)
             && newRec != null
@@ -481,7 +493,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, PAYROLL_REGISTER_FN);
         }
     }
-    
+
     private void checkforGarnishments(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
         if (automationsToExecute.contains(GARNISHMENT_FN)
             && newRec != null
@@ -496,7 +508,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, GARNISHMENT_FN);
         }
     }
-    
+
     private void checkforGarnishmentSubtask(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
         if (automationsToExecute.contains(SUBTASK_GARNISH_FN)
             && newRec != null
@@ -514,7 +526,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, SUBTASK_GARNISH_FN);
         }
     }
-    
+
     private void checkforTaxLevies(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
         if (automationsToExecute.contains(TAX_LEVIES_FN)
             && newRec != null
@@ -529,7 +541,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, TAX_LEVIES_FN);
         }
     }
-    
+
     private void checkforTaxLeviesSubtask(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
         if (automationsToExecute.contains(SUBTASK_LEVIES_FN)
             && newRec != null
@@ -547,7 +559,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, SUBTASK_LEVIES_FN);
         }
     }
-    
+
     private void checkforPostDeduction(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
         if (automationsToExecute.contains(POST_DEDUCTION_FN)
             && newRec != null
@@ -569,7 +581,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, POST_DEDUCTION_FN);
         }
     }
-    
+
     private void checkforRetPlan(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
         if (automationsToExecute.contains(RETIRE_PLAN_FN)
             && newRec != null
@@ -587,7 +599,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, RETIRE_PLAN_FN);
         }
     }
-    
+
     private void checkforPostTaxLoans(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
         if (automationsToExecute.contains(POSTTAX_LOANS_FN)
             && newRec != null
@@ -612,7 +624,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, POSTTAX_LOANS_FN);
         }
     }
-    
+
     private void checkforRelabel(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
         if (automationsToExecute.contains(SPECIAL_RELABEL_FN)
             && newRec != null
@@ -627,7 +639,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, SPECIAL_RELABEL_FN);
         }
     }
-    
+
     private void checkforReportingJobCosting(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
         if (automationsToExecute.contains(REPORT_JOBCOSTING_FN)
             && newRec != null
@@ -643,7 +655,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, REPORT_JOBCOSTING_FN);
         }
     }
-    
+
     private void checkforReportingIntegraResponse(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
         if (automationsToExecute.contains(INTEGRA_RESPONSE)
             && newRec != null
@@ -666,7 +678,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             updateProjecttaskforIntegraResponse(existingRec);
         }
     }
-    
+
     private void checkforReportingIntegra(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
         if (automationsToExecute.contains(REPORT_Integra_FN)
             && newRec != null
@@ -682,7 +694,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, REPORT_Integra_FN);
         }
     }
-    
+
     private void checkforReportingCustom(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
         if (automationsToExecute.contains(REPORT_Custom401k_FN)
             && newRec != null
@@ -698,7 +710,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, REPORT_Custom401k_FN);
         }
     }
-    
+
     private void checkforReportingOther(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
         if (automationsToExecute.contains(REPORT_OTHER_FN)
             && newRec != null
@@ -714,7 +726,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, REPORT_OTHER_FN);
         }
     }
-    
+
     private void checkforCOBRA(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
         if (automationsToExecute.contains(COBRA_FN)
             && newRec != null
@@ -730,7 +742,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, COBRA_FN);
         }
     }
-    
+
     private void checkforCOBRAForm(
         Implementation_Profile__c newRec,
         Implementation_Profile__c existingRec,
@@ -746,7 +758,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                 || newRec.NSP_Form_Completed__c
                 || newRec.Have_name_s_of_COBRA_takeovr_employees__c != existingRec.Have_name_s_of_COBRA_takeovr_employees__c
                 )
-            ) 
+            )
         {
             List<String> employeeNames = newRec.NSP_COBRA_Takeover_Emp_Details__c.split(',');
             for (String employee : employeeNames) {
@@ -761,7 +773,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             }
         }
     }
-    
+
     private void checkforLOAInfo(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
         if ( (automationsToExecute.contains(MISSING_LOA_FN) || automationsToExecute.contains(LOA_INFO_FN))
             && newRec != null
@@ -793,7 +805,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             }
         }
     }
-    
+
     private void updateEligibleRecordsMap(Map<String, Set<Id>> automationMap, Id recId, String fnName){
         Set<Id> relevantRecords = automationMap.get(fnName);
         if(relevantRecords == null){
@@ -912,9 +924,9 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                 eachProjecttask.pse__Work_Calendar__c = workCalendarId;
             }
         }
-        
+
     }
-    
+
     private Id getProjectTaskId(pse__Proj__c proj, String projectTaskName){
         String projectTaskId = '';
         if ( ( proj != null ) && ( proj.pse__Project_Tasks__r != null ) && String.isNotBlank(projectTaskName)) {
@@ -938,8 +950,8 @@ public class NSP_Implprofile_ServiceHelperUpdate {
     {
         // CSP_HCFSA_FSO
         pse__Project_Task__c eachProjecttask = null;
-        Implementation_Profile__c ipRec = newIPs.get(ipRecId);            
-        if(ipRec != null 
+        Implementation_Profile__c ipRec = newIPs.get(ipRecId);
+        if(ipRec != null
             && ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c != null
             && ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.HCFSA)
             )
@@ -963,7 +975,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         // CSP_HSA_FSO
         pse__Project_Task__c eachProjecttask = null;
         Implementation_Profile__c ipRec = newIPs.get(ipRecId);
-        if(ipRec != null 
+        if(ipRec != null
             && ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c != null
             && ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.HSA)
             )
@@ -987,7 +999,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         // CSP_DCFSA_FSO
         pse__Project_Task__c eachProjecttask = null;
         Implementation_Profile__c ipRec = newIPs.get(ipRecId);
-        if(ipRec != null 
+        if(ipRec != null
             && ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c != null
             && ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.DCFSA)
             )
@@ -1010,8 +1022,8 @@ public class NSP_Implprofile_ServiceHelperUpdate {
     {
       // CSP_MEDICAL_FSO
         pse__Project_Task__c eachProjecttask = null;
-        Implementation_Profile__c ipRec = newIPs.get(ipRecId);        
-        if( ipRec != null 
+        Implementation_Profile__c ipRec = newIPs.get(ipRecId);
+        if( ipRec != null
             && ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c != null
             && ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.MEDICAL)
             )
@@ -1035,7 +1047,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         // CSP_DENTAL_FSO
         pse__Project_Task__c eachProjecttask = null;
         Implementation_Profile__c ipRec = newIPs.get(ipRecId);
-        if( ipRec != null 
+        if( ipRec != null
             && ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c != null
             && ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.DENTAL)
             )
@@ -1059,7 +1071,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         // CSP_VISION_FSO
         pse__Project_Task__c eachProjecttask = null;
         Implementation_Profile__c ipRec = newIPs.get(ipRecId);
-        if( ipRec != null 
+        if( ipRec != null
             && ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c != null
             && ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.VISION)
             )
@@ -1137,7 +1149,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         }
         return eachProjectTask;
     }
-    
+
     //HR Client Implementation Team Member owner
     private pse__Project_Task__c hrClientImplementationOwner(
         pse__Proj__c proj ,
@@ -1150,7 +1162,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         String milestoneKey = createMilestoneForProjectTask(proj, pta);
         pse__Project_Task__c eachProjecttask = null;
         if(pta != null){
-        	eachProjecttask = createProjectTaskfromIP(proj,  pta.NSP_Category__c,ipRecId,milestoneKey);    
+            eachProjecttask = createProjectTaskfromIP(proj,  pta.NSP_Category__c,ipRecId,milestoneKey);
         }
         genericProjectTask(proj,eachProjecttask, pta, workCalendarId);
         if(ipwithValue != null
@@ -1802,7 +1814,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                         List<String> empDetails = empName?.split('~');
                         if(empDetails.size() > 1 && empDetails[1] == yesOrNoConstant){
                             eachProjecttask = genericPMTask(proj,pta,ipRecId,ipwithValue,workCalendarId);
-                            if(eachProjecttask != null)	{
+                            if(eachProjecttask != null){
                                 eachProjectTask.Name = formCollectedTemplate.replace('<WSEE Name>', empDetails[0]);
                                 projectTaskToInsertList.add(eachProjecttask);
                             }
@@ -2079,7 +2091,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                     NSP_Project_Manager__r.NSP_Work_email__c ,
                     NSP_HR_Quality_Support_Team_Member__c ,
                     NSP_HR_Quality_Support_Team_Member__r.NSP_Work_email__c ,
-                	NSP_HR_Quality_Support_Team_Member__r.pse__Salesforce_User__c ,
+                    NSP_HR_Quality_Support_Team_Member__r.pse__Salesforce_User__c ,
                     NSP_Project_Manager__r.NSP_Job_Title__c ,
                     NSP_Project_Manager__r.pse__Salesforce_User__c ,
                     Account__c ,

@@ -399,8 +399,7 @@
             <label>Proceed to Upsert</label>
         </rules>
     </decisions>
-    <description>AZD-516115 , 01/13/2025 - Portal Task Create and Update , upsert operation
-AZD - 532934 Updated the logic from portal client to protal project</description>
+    <description>DEPRECATED</description>
     <environments>Default</environments>
     <formulas>
         <name>portalTaskName</name>
@@ -450,8 +449,8 @@ AZD - 532934 Updated the logic from portal client to protal project</description
   &quot;&quot;
 )</expression>
     </formulas>
-    <interviewLabel>Project Task - Populate Portal Task - Subflow {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Project Task - Populate Portal Task - Subflow</label>
+    <interviewLabel>DEPRECATED - Project Task - Populate Portal Task - Subflow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>DEPRECATED - Project Task - Populate Portal Task - Subflow</label>
     <loops>
         <description>Loop runs only once as there will be only one record should exists for each PC</description>
         <name>Loop_Extract_Portal_Task_Record</name>

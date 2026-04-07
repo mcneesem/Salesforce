@@ -3272,10 +3272,6 @@
         <recordType>Contact.Resource</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
-    <flowAccesses>
-        <enabled>true</enabled>
-        <flow>NSP_Update_NiceCx_Agent_as_Owner_on_Case</flow>
-    </flowAccesses>
     <userLicense>Salesforce</userLicense>
     <userPermissions>
         <enabled>true</enabled>

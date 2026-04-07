@@ -153,18 +153,20 @@ public class NSP_MMImplProfile_ServHelpUpdate {
         this.isSaveForm = isSave;
     }
 
-    public  Map<String, Set<Id>> executeAutomation() {
-        Map<String,Set<Id>> ipRecordsByAutomationMap = new  Map<String,Set<Id>>();
-        try {
-            start();
-            execute();
-            ipRecordsByAutomationMap = ipRecordsByAutomation;
-        } catch ( Exception e ) {
-            NSP_ErrorLogHandler.logException(
-                NSP_MMImplProfile_ServHelpUpdate.class.getName() ,
-                'executeAutomation' ,
-                e
-            );
+    public Map<String,Set<Id>> executeAutomation() {
+        Map<String,Set<Id>> ipRecordsByAutomationMap = new Map<String,Set<Id>>();
+        if ( NSP_Implprofile_ServiceHelperUpdate.isAutomationAllowed() ) {
+            try {
+                this.start();
+                this.execute();
+                ipRecordsByAutomationMap = this.ipRecordsByAutomation;
+            } catch ( Exception e ) {
+                NSP_ErrorLogHandler.logException(
+                    NSP_MMImplProfile_ServHelpUpdate.class.getName() ,
+                    'executeAutomation' ,
+                    e
+                );
+            }
         }
         return ipRecordsByAutomationMap;
     }
@@ -2344,7 +2346,7 @@ public class NSP_MMImplProfile_ServHelpUpdate {
             childProjectTask = HSA_OPTUM_NO_MM;
         }
     }
-    
+
     //Return value to create child tasks of "Client offers HSA" Automation
     //in afterInsert Project Task trigger
     public static String hsaOptumChildren(){

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Compensation_Services_Billable</fullName>
+    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6</booleanFilter>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>Billable__c</columns>
+    <columns>Non_Billable_Reason__c</columns>
+    <columns>NSP_SubCategory__c</columns>
+    <columns>NSP_ClientNumber__c</columns>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>Client_Type__c</columns>
+    <columns>NAME</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>CASES.STATUS</columns>
+    <columns>NSP_Case_Sub_Status__c</columns>
+    <columns>CASES.CREATED_DATE</columns>
+    <columns>OWNER_NAME</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>ACCOUNT.NAME</field>
+        <operation>notContain</operation>
+        <value>zzz</value>
+    </filters>
+    <filters>
+        <field>NSP_Category__c</field>
+        <operation>equals</operation>
+        <value>Compensation Services</value>
+    </filters>
+    <filters>
+        <field>CASES.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Case.PEO</value>
+    </filters>
+    <filters>
+        <field>Client_Type__c</field>
+        <operation>equals</operation>
+        <value>HR360 - Select Edition,HRCore - Select Edition,Stand Alone,HRCore Solution</value>
+    </filters>
+    <filters>
+        <field>CASES.STATUS</field>
+        <operation>notEqual</operation>
+        <value>Cancelled</value>
+    </filters>
+    <filters>
+        <field>NSP_ClientNumber__c</field>
+        <operation>greaterOrEqual</operation>
+    </filters>
+    <label>Compensation Services Billable</label>
+</ListView>

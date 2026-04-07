@@ -15,4 +15,6 @@ package.xml
 # Ignored Metadata Types
 **/appMenus/**
 **/objectTranslations/**
+**/reports/**
+**/reportTypes/**
 **/wave/**

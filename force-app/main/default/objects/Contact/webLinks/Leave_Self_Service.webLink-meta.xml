@@ -16,5 +16,5 @@
     <protected>false</protected>
     <showsLocation>false</showsLocation>
     <showsStatus>false</showsStatus>
-    <url>{!URLFOR($Setup.Workday_URL_Settings__c.Corporate_Instance_URL__c)}/d/inst/13102!CK5mGhEKBggDEMenAhIHCgUI1A0QTw~~*M2gj7SEabY0~/cacheable-task/3001$26.htmld#backheader=true</url>
+    <url>{!URLFOR($Setup.Workday_URL_Settings__c.Corporate_Instance_URL__c)}{!URLFOR($Setup.Workday_URL_Settings__c.Corporate_Instance_Path__c)}</url>
 </WebLink>

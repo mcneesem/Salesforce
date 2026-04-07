@@ -102,6 +102,11 @@
                 <default>false</default>
                 <label>Records Data Visibility</label>
             </value>
+            <value>
+                <fullName>HRCore Case Visibility</fullName>
+                <default>false</default>
+                <label>HRCore Case Visibility</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
     <visibleLines>4</visibleLines>

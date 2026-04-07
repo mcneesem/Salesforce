@@ -773,6 +773,23 @@
                 onchange={handleValueChange}>
               </lightning-input-field>
 
+              <lightning-input-field
+                field-name="Annual_Usage_Limit__c"
+                data-name="Annual_Usage_Limit__c"
+                value={fieldValue.Annual_Usage_Limit__c}
+                disabled={apFieldPermission}
+                onchange={handleValueChange}>
+              </lightning-input-field>
+
+              <lightning-input-field
+                if:true={visibility.Accrual_Usage_Hours__c}
+                field-name="Accrual_Usage_Hours__c"
+                data-name="Accrual_Usage_Hours__c"
+                value={fieldValue.Accrual_Usage_Hours__c}
+                disabled={apFieldPermission}
+                onchange={handleValueChange}>
+              </lightning-input-field>
+
               <lightning-formatted-text
                 value={infoMessage.NSP_Add_info_not_already_listed_on_form_info_msg}
                 class="slds-show slds-var-m-around_medium"

@@ -18,7 +18,7 @@ public without sharing class IntegrationSyncController {
     public static void assignReadyForIntegrationSync( List<Account> records ) {
         if ( ( records != null ) && !records.isEmpty() ) {
             for ( Account record : records ) {
-                record.NSP_Ready_for_Integration_Sync__c = true;
+                record.NSP_Ready_for_Integration_Sync__c = true; // DEPRECATED
             }
         }
     }
@@ -41,9 +41,9 @@ public without sharing class IntegrationSyncController {
     public static void setReadyForIntegrationSync( Set<Id> recordIds , Schema.sObjectType soType ) {
         if ( soType != null ) {
             if ( soType == Account.getSObjectType() ) {
-                IntegrationSyncController.updateReadyForIntegrationSync( recordIds , true , false );
+                NSP_AccountTriggerHelper.setReadyForIntegrationSync( recordIds );
             } else if ( soType == Contact.getSObjectType() ) {
-                IntegrationSyncController.updateReadyForIntegrationSync( recordIds , true , true );
+                NSP_AccountTriggerHelper.setReadyForIntegrationSync( recordIds );
             } else if ( soType == Event.getSObjectType() ) {
                 NSP_OpportunityTriggerHelper.setReadyForIntegrationSync( recordIds );
             } else if ( soType == OpportunityTeamMember.getSObjectType() ) {
@@ -65,7 +65,7 @@ public without sharing class IntegrationSyncController {
             for ( Id recordId : recordIds ) {
                 Account record = new Account();
                 record.Id = recordId;
-                record.NSP_Ready_for_Integration_Sync__c = value;
+                record.NSP_Ready_for_Integration_Sync__c = value; // DEPRECATED
                 records.add( record );
             }
             if ( !records.isEmpty() ) {
@@ -170,7 +170,7 @@ public without sharing class IntegrationSyncController {
     private static Boolean isEnabledIntegrationAccountEvent {
         private get {
             if ( isEnabledIntegrationAccountEvent == null ) {
-                Boolean local = False;
+                Boolean local = false;
                 if ( IntegrationSyncController.settings != null ) {
                     local = IntegrationSyncController.settings.IsEnabled_IntegrationAccountEvent__c;
                 }

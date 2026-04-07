@@ -358,6 +358,11 @@
                 <default>false</default>
                 <label>Has_Promo__c</label>
             </value>
+            <value>
+                <fullName>Has_SMS__c</fullName>
+                <default>false</default>
+                <label>Has_SMS__c</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
