@@ -26,19 +26,12 @@
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <filterLogic>or</filterLogic>
+        <filterLogic>1</filterLogic>
         <filters>
-            <field>Asset_Status__c</field>
-            <operator>EqualTo</operator>
+            <field>Asset__c</field>
+            <operator>IsNull</operator>
             <value>
-                <stringValue>Active</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Asset_Status__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Onboarding</stringValue>
+                <booleanValue>false</booleanValue>
             </value>
         </filters>
         <object>Asset_Termination__c</object>
