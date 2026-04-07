@@ -61,29 +61,35 @@ public without sharing class NSP_ContactRollupController {
     // @param  recordId of Account,
     // @param  Map<Id,ResultWrapper> contact and allACR's and SubClientContacts
     // @return string
-	public static Map<Id, ResultWrapper> getSubClientContacts(string recordId, Map < Id, ResultWrapper > resultsMap,
-                                                              Integer offSetCount, Integer offSetLimit, String subClientFilter) {
-
-
-        List<NSP_Sub_Client_Contact__c> subClientsBasedOnQueryResults = New List<NSP_Sub_Client_Contact__c>();
-
+    public static Map<Id,ResultWrapper> getSubClientContacts(
+        String recordId ,
+        Map<Id,ResultWrapper> resultsMap ,
+        Integer offSetCount ,
+        Integer offSetLimit ,
+        String subClientFilter
+        )
+    {
+        List<NSP_Sub_Client_Contact__c> subClientsBasedOnQueryResults = new List<NSP_Sub_Client_Contact__c>();
         // Based on Subclient contact fields filter
-        if( String.isNotBlank(subClientFilter) ) {
+        if ( String.isNotBlank( subClientFilter ) ) {
             subClientsBasedOnQueryResults = NSP_ContactRollupController.getSubClientContactsBasedOnFilter(
-                recordId,
-                offSetCount,
-                offSetLimit,
+                recordId ,
+                offSetCount ,
+                offSetLimit ,
                 subClientFilter
-                );
+            );
+        } else {
+            subClientsBasedOnQueryResults = NSP_ContactRollupController.getSubClientContactsBasedOnNoFilter(
+                recordId ,
+                offSetCount ,
+                offSetLimit
+            );
         }
-        else {
-            subClientsBasedOnQueryResults = NSP_ContactRollupController.getSubClientContactsBasedOnNoFilter( recordId,
-                                                                                                            offSetCount,
-                                                                                                            offSetLimit
-                                                                                                            );
-        }
-
-        return NSP_ContactRollupController.getSubClinetContactRecords( subClientsBasedOnQueryResults, resultsMap, recordId );
+        return NSP_ContactRollupController.getSubClientContactRecords(
+            subClientsBasedOnQueryResults ,
+            resultsMap ,
+            recordId
+        );
     }
 
     // @description : Fetch sub client contact records based on default filters
@@ -146,30 +152,36 @@ public without sharing class NSP_ContactRollupController {
     // @description : Filter the sub client contacts based on sub client contact filters from UI
     // @params: recordId,  offSetCount, offSetLimit, subClientFilter
     // @return : List<NSP_Sub_Client_Contact__c>
-    private static List<NSP_Sub_Client_Contact__c> getSubClientContactsBasedOnFilter(string recordId, Integer offSetCount,
-                                                                                     Integer offSetLimit, String subClientFilter) {
+    private static List<NSP_Sub_Client_Contact__c> getSubClientContactsBasedOnFilter(
+        String recordId ,
+        Integer offSetCount ,
+        Integer offSetLimit ,
+        String subClientFilter
+        )
+    {
         List<NSP_Sub_Client_Contact__c> returnList = new List<NSP_Sub_Client_Contact__c>();
-        List<String> subClientFilterList;
-
-        if( String.isNotBlank(subClientFilter) ) {
-            subClientFilterList = new List<String>(subClientFilter.Split(','));
+        List<String> subClientFilterList = new List<String>();
+        if ( String.isNotBlank(subClientFilter) ) {
+            subClientFilterList = new List<String>( subClientFilter.split( ',' ) );
         }
-
-        if( subClientFilterList != null && !subClientFilterList?.isEmpty() ) {
+        if ( ( subClientFilterList != null ) && !subClientFilterList.isEmpty() ) {
             NSP_Sub_Client_Contact__c tempSubClientContact = NSP_ContactRollupController.getSubClientContactObj();
-
-            for( String subClientFilterField : subClientFilterList ) {
+            for ( String subClientFilterField : subClientFilterList ) {
                 Boolean flagCheck = NSP_ContactRollupController.getFlagFieldValue( subClientFilterField );
-
-                if(flagCheck) {
-                    tempSubClientContact.put(NSP_ContactRollupController.fieldMap.get(subClientFilterField), true);
+                if ( NSP_ContactRollupController.getFlagFieldValue( subClientFilterField ) ) {
+                    tempSubClientContact.put(
+                        NSP_ContactRollupController.fieldMap.get( subClientFilterField ) ,
+                        true
+                    );
                 }
             }
-
-            returnList = NSP_ContactRollupController.getSubClientContactsBasedOnObjectFilter( recordId, offSetCount,
-                                                                                             offSetLimit, tempSubClientContact);
+            returnList = NSP_ContactRollupController.getSubClientContactsBasedOnObjectFilter(
+                recordId ,
+                offSetCount ,
+                offSetLimit ,
+                tempSubClientContact
+            );
         }
-
         return returnList;
     }
 
@@ -247,11 +259,11 @@ public without sharing class NSP_ContactRollupController {
     // @description: based on field string match the field api name from schema object map
     // @params : string fild API name, fieldMap
     // @return : Boolean flag
-    private static Boolean getFlagFieldValue(string fieldName) {
+    private static Boolean getFlagFieldValue( String fieldName ) {
         return (
-            String.isNotBlank(fieldName) &&
-            NSP_ContactRollupController.fieldMap?.containsKey(fieldName)
-            );
+            String.isNotBlank( fieldName )
+            && NSP_ContactRollupController.fieldMap?.containsKey( fieldName )
+        );
     }
 
 
