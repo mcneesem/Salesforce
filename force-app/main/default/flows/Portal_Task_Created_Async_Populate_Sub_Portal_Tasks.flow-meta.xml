@@ -53,7 +53,7 @@
         <locationY>0</locationY>
         <flowName>Portal_Task_Subflow_Populate_Sub_Portal_Tasks</flowName>
         <inputAssignments>
-            <name>portalTaskRec</name>
+            <name>recordPortalTask</name>
             <value>
                 <elementReference>$Record</elementReference>
             </value>
