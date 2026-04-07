@@ -68,6 +68,13 @@
             <field>Name</field>
             <operator>EqualTo</operator>
             <value>
+                <stringValue>Generate Form 8973</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
                 <stringValue>General/Auto Liability Certificate of Coverage</stringValue>
             </value>
         </filters>
@@ -97,13 +104,6 @@
             <operator>EqualTo</operator>
             <value>
                 <stringValue>CSP Client Authorization/Cafeteria Plan Documentation Collected</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Name</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Generate Form 8973</stringValue>
             </value>
         </filters>
         <object>pse__Project_Task__c</object>

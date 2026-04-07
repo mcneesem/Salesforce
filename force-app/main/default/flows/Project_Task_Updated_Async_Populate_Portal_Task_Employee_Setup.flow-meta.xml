@@ -67,6 +67,13 @@
             <field>Name</field>
             <operator>EqualTo</operator>
             <value>
+                <stringValue>Deductions - Employee Level</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
                 <stringValue>Employee Deduction Authorization Form - ORK</stringValue>
             </value>
         </filters>
@@ -96,13 +103,6 @@
             <operator>EqualTo</operator>
             <value>
                 <stringValue>Employees Currently on LOA</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Name</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Deductions - Employee Level</stringValue>
             </value>
         </filters>
         <object>pse__Project_Task__c</object>

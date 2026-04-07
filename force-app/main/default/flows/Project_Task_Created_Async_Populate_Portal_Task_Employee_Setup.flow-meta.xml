@@ -53,6 +53,13 @@
             <field>Name</field>
             <operator>EqualTo</operator>
             <value>
+                <stringValue>Deductions - Employee Level</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
                 <stringValue>Employee Deduction Authorization Form - ORK</stringValue>
             </value>
         </filters>
@@ -84,13 +91,6 @@
                 <stringValue>Employees Currently on LOA</stringValue>
             </value>
         </filters>
-        <filters>
-            <field>Name</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Deductions - Employee Level</stringValue>
-            </value>
-        </filters>
         <object>pse__Project_Task__c</object>
         <recordTriggerType>Create</recordTriggerType>
         <scheduledPaths>
@@ -101,7 +101,7 @@
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Project_Task_Subflow_Populate_Portal_Task</name>
         <label>Project Task - Subflow - Populate Portal Task</label>

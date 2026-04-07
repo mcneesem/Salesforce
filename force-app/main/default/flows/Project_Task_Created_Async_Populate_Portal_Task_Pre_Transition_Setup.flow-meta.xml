@@ -54,6 +54,13 @@
             <field>Name</field>
             <operator>EqualTo</operator>
             <value>
+                <stringValue>Employee Priming Data Provided</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
                 <stringValue>FEIN documentation</stringValue>
             </value>
         </filters>
@@ -83,13 +90,6 @@
             <operator>EqualTo</operator>
             <value>
                 <stringValue>PTO, paid sick leave, or other accrual policy received</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Name</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Employee Priming Data Provided</stringValue>
             </value>
         </filters>
         <object>pse__Project_Task__c</object>

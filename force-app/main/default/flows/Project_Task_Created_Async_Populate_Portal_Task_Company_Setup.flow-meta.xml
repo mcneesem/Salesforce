@@ -2,8 +2,7 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>65.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
-    <description>New Client Portal: Company Setup Mapping
-Added entry condition for Visible to Client check</description>
+    <description>New Client Portal: Company Setup Mapping</description>
     <environments>Default</environments>
     <interviewLabel>Project Task - Created - Async - Populate Portal Task - Company Setup {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Project Task - Created - Async - Populate Portal Task - Company Setup</label>
@@ -29,7 +28,7 @@ Added entry condition for Visible to Client check</description>
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <filterLogic>(  ( 1 AND 2 AND 3 ) AND ( 4 OR 5 OR 6 OR 7 OR 8  OR 9 ) )</filterLogic>
+        <filterLogic>( ( 1 AND 2 AND 3 ) AND ( 4 OR 5 OR 6 OR 7 OR 8 OR 9 ) )</filterLogic>
         <filters>
             <field>pse__Project__c</field>
             <operator>IsNull</operator>
@@ -49,6 +48,13 @@ Added entry condition for Visible to Client check</description>
             <operator>EqualTo</operator>
             <value>
                 <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Generate Form 8973</stringValue>
             </value>
         </filters>
         <filters>
@@ -86,13 +92,6 @@ Added entry condition for Visible to Client check</description>
                 <stringValue>CSP Client Authorization/Cafeteria Plan Documentation Collected</stringValue>
             </value>
         </filters>
-        <filters>
-            <field>Name</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Generate Form 8973</stringValue>
-            </value>
-        </filters>
         <object>pse__Project_Task__c</object>
         <recordTriggerType>Create</recordTriggerType>
         <scheduledPaths>
@@ -103,7 +102,7 @@ Added entry condition for Visible to Client check</description>
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Project_Task_Subflow_Populate_Portal_Task</name>
         <label>Project Task - Subflow - Populate Portal Task</label>
