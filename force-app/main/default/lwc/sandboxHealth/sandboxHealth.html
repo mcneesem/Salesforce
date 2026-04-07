@@ -65,31 +65,15 @@
                                                 <ul class="slds-has-dividers_around-space">
                                                     <template for:each={child.checks} for:item="chk">
                                                         <li key={chk.key} class="slds-item">
-                                                            <lightning-layout multiple-rows>
-                                                                <lightning-layout-item size="x-small" class="slds-m-right_small slds-m-top_medium">
-                                                                    <lightning-icon if:true={chk.isPass} icon-name="utility:success" alternative-text="Pass" title="Pass" variant="success" size="x-small"></lightning-icon>
-                                                                    <lightning-icon if:true={chk.isFail} icon-name="utility:error" alternative-text="Fail" title="Fail" variant="error" size="x-small"></lightning-icon>
-                                                                    <lightning-icon if:true={chk.isWarn} icon-name="utility:warning" alternative-text="Warn" title="Warn" variant="warning" size="x-small"></lightning-icon>
-                                                                </lightning-layout-item>
-                                                                <lightning-layout-item>
-                                                                    <div class="slds-truncate" title={chk.label}>
-                                                                        <span class="slds-text-title">{chk.label}</span>
-                                                                        <div class="slds-text-body_small slds-m-top_xx-small">
-                                                                            <span class="slds-m-right_medium slds-text-color_weak">Actual:</span>
-                                                                            <span class="slds-m-left_xxx-small slds-text-color_default">{chk.actual}</span>
-                                                                        </div>
-                                                                        <div class="slds-text-body_small">
-                                                                            <span class="slds-text-color_weak">Expected:</span>
-                                                                            <span class="slds-m-left_xx-small slds-text-color_default">{chk.expected}</span>
-                                                                        </div>
-                                                                        <template if:false={chk.isPass}>
-                                                                            <div class="slds-text-body_small">
-                                                                                {chk.message}
-                                                                            </div>
-                                                                        </template>
-                                                                    </div>
-                                                                </lightning-layout-item>
-                                                            </lightning-layout>
+                                                            <c-sandbox-health-line-item
+                                                                label={chk.label}
+                                                                actual={chk.actual}
+                                                                expected={chk.expected}
+                                                                message={chk.message}
+                                                                is-pass={chk.isPass}
+                                                                is-fail={chk.isFail}
+                                                                is-warn={chk.isWarn}>
+                                                            </c-sandbox-health-line-item>
                                                         </li>
                                                     </template>
                                                 </ul>
@@ -103,31 +87,15 @@
                                     <ul class="slds-has-dividers_around-space">
                                         <template for:each={section.checks} for:item="chk">
                                             <li key={chk.key} class="slds-item">
-                                                <lightning-layout multiple-rows>
-                                                    <lightning-layout-item size="x-small" class="slds-m-right_small slds-m-top_medium">
-                                                        <lightning-icon if:true={chk.isPass} icon-name="utility:success" alternative-text="Pass" title="Pass" variant="success" size="x-small"></lightning-icon>
-                                                        <lightning-icon if:true={chk.isFail} icon-name="utility:error" alternative-text="Fail" title="Fail" variant="error" size="x-small"></lightning-icon>
-                                                        <lightning-icon if:true={chk.isWarn} icon-name="utility:warning" alternative-text="Warn" title="Warn" variant="warning" size="x-small"></lightning-icon>
-                                                    </lightning-layout-item>
-                                                    <lightning-layout-item>
-                                                        <div class="slds-truncate" title={chk.label}>
-                                                            <span class="slds-text-title">{chk.label}</span>
-                                                            <div class="slds-text-body_small slds-m-top_xx-small">
-                                                                <span class="slds-m-right_medium slds-text-color_weak">Actual:</span>
-                                                                <span class="slds-m-left_xxx-small slds-text-color_default">{chk.actual}</span>
-                                                            </div>
-                                                            <div class="slds-text-body_small">
-                                                                <span class="slds-text-color_weak">Expected:</span>
-                                                                <span class="slds-m-left_xx-small slds-text-color_default">{chk.expected}</span>
-                                                            </div>
-                                                            <template if:false={chk.isPass}>
-                                                                <div class="slds-text-body_small">
-                                                                    {chk.message}
-                                                                </div>
-                                                            </template>
-                                                        </div>
-                                                    </lightning-layout-item>
-                                                </lightning-layout>
+                                                <c-sandbox-health-line-item
+                                                    label={chk.label}
+                                                    actual={chk.actual}
+                                                    expected={chk.expected}
+                                                    message={chk.message}
+                                                    is-pass={chk.isPass}
+                                                    is-fail={chk.isFail}
+                                                    is-warn={chk.isWarn}>
+                                                </c-sandbox-health-line-item>
                                             </li>
                                         </template>
                                     </ul>
