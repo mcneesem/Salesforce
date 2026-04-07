@@ -233,7 +233,6 @@ public without sharing class NSP_ContactRollupController {
     // @return : NSP_Sub_Client_Contact__c
     private static NSP_Sub_Client_Contact__c getSubClientContactObj() {
         return new NSP_Sub_Client_Contact__c(
-
             NSP_On_Site_Supervisor__c = false,
             NSP_Payroll_Contact__c = false,
             NSP_Client_Leave_Administrator__c = false,
