@@ -1036,36 +1036,36 @@ public with sharing class SandboxHealthController {
 
         List<String> dynamicLabelNames = new List<String>();
         String list1 = System.Label.Post_Refresh_Email_Labels;
-        if (String.isNotBlank(list1)) {
-            dynamicLabelNames.addAll(new List<String>(list1.split(',')));
+        if (String.isNotBlank( list1 )) {
+            dynamicLabelNames.addAll( new List<String>( list1.split(',') ) );
         }
 
         String list2 = System.Label.Post_Refresh_Email_Labels_2;
-        if (String.isNotBlank(list2)) {
-            dynamicLabelNames.addAll(new List<String>(list2.split(',')));
+        if (String.isNotBlank( list2 )) {
+            dynamicLabelNames.addAll( new List<String>( list2.split(',') ) );
         }
 
         Set<String> uniqueNames = new Set<String>();
         for (String n : dynamicLabelNames) {
-            if (n != null) {
-                uniqueNames.add(n.trim());
+            if ( n != null ) {
+                uniqueNames.add( n.trim() );
             }
         }
 
         for ( String lblName : uniqueNames ) {
-            if ( String.isBlank(lblName) ) {
+            if ( String.isBlank( lblName ) ) {
                 continue;
             }
             String act = null;
             try {
                 // Use namespace-aware overload: System.Label.get(namespace, name)
                 // No namespace for these labels, so pass empty string as namespace per feedback
-                act = System.Label.get('', lblName);
+                act = System.Label.get( '' , lblName );
             } catch ( Exception e ) {
                 act = null;
             }
 
-            if ( String.isBlank(act) ) {
+            if ( String.isBlank( act ) ) {
                 email.checks.add( newFail( 'email_label_' + lblName , lblName , STRING_ENDS_W + STRING_INVALID , act , 'Label not found or empty via System.Label.get(' + lblName + ').' ) );
             } else {
                 email.checks.add( checkSuffix( 'email_label_' + lblName , lblName , STRING_INVALID , act ) );
@@ -1080,7 +1080,7 @@ public with sharing class SandboxHealthController {
     private static Map<String, Id> mTmplId {
         // Get map of Project Template names and IDs (based on NSP_PrepSandbox.doTmpls_mdt)
         private get {
-            if (mTmplId == null) {
+            if ( mTmplId == null ) {
                 Map<String, Id> tmp = new Map<String, Id>();
                 for (pse__Proj__c t : [ SELECT Id , TemplateName__c FROM pse__Proj__c WHERE pse__Is_Template__c = true ]) {
                     if ( t.TemplateName__c != null ) {
