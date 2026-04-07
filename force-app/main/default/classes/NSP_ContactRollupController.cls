@@ -167,7 +167,6 @@ public without sharing class NSP_ContactRollupController {
         if ( ( subClientFilterList != null ) && !subClientFilterList.isEmpty() ) {
             NSP_Sub_Client_Contact__c tempSubClientContact = NSP_ContactRollupController.getSubClientContactObj();
             for ( String subClientFilterField : subClientFilterList ) {
-                Boolean flagCheck = NSP_ContactRollupController.getFlagFieldValue( subClientFilterField );
                 if ( NSP_ContactRollupController.getFlagFieldValue( subClientFilterField ) ) {
                     tempSubClientContact.put(
                         NSP_ContactRollupController.fieldMap.get( subClientFilterField ) ,
@@ -267,7 +266,7 @@ public without sharing class NSP_ContactRollupController {
     }
 
 
-    private static Map<Id,ResultWrapper> getSubClinetContactRecords( List<NSP_Sub_Client_Contact__c> lstSubClientContacts , Map<Id,ResultWrapper> resultsMap , String recordId ) {
+    private static Map<Id,ResultWrapper> getSubClientContactRecords( List<NSP_Sub_Client_Contact__c> lstSubClientContacts , Map<Id,ResultWrapper> resultsMap , String recordId ) {
         Set<Id> contactIdSet = new Set<Id>();
         for ( NSP_Sub_Client_Contact__c subClientCont : lstSubClientContacts ) {
             if ( !resultsMap.containsKey( subClientCont.NSP_Contact__c )
