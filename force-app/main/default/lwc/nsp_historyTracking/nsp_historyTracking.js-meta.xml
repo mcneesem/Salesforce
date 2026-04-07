@@ -1,17 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>55.0</apiVersion>
-    <isExposed>true</isExposed>
-    <targets>
-        <target>lightning__RecordPage</target>
-        <target>lightning__AppPage</target>
-        <target>lightning__HomePage</target>
-    </targets>
-    <targetConfigs>
-        <targetConfig targets="lightning__AppPage,lightning__HomePage,lightning__RecordPage">
-            <property name="relatedFieldApiName" label="Parent Id" type="String" description="Parent Id" default="NSP_Sobject_Record_Id__c" required="true" />
-            <property name="fields" type="String" label="fields to display" description="fields to display" default="NSP_Field_Label__c,NSP_Modified_Date__c,NSP_Old_Value__c,NSP_New_Value__c,NSP_Modified_By__r.Name,NSP_Index__c" required="true" />
-            <property name="sobjectApiName" type="String" label="sObject Name" description="sObject Name" default="NSP_IP_History_Tracking__b" required="true" />
-        </targetConfig>
-    </targetConfigs>
+    <isExposed>false</isExposed>
 </LightningComponentBundle>

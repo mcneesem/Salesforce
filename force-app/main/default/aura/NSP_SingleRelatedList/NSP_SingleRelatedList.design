@@ -1,5 +1,5 @@
 <design:component>
-	<design:attribute name="sobjectApiName" label="Name of child sobject" placeholder="NSP_History_Tracking__b" required="true"/>
+	<design:attribute name="sobjectApiName" label="Name of child sobject" placeholder="" required="true"/>
     <design:attribute name="relatedFieldApiName" label="Name of lookup field on child sobject" placeholder="" required="true"/>
     <design:attribute name="sortedBy" label="Name of field used for sorting" placeholder="" required="true"/>
     <design:attribute name="fields" label="List of API Names for displaying" placeholder="" required="true"/>

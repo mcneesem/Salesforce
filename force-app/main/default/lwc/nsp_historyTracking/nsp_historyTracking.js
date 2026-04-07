@@ -48,7 +48,7 @@ export default class Nsp_historyTracking extends LightningElement {
             this.parameterObject = JSON.stringify({
                 fields: 'NSP_Field_Label__c,NSP_Field_Name__c,NSP_Modified_Date__c,NSP_Old_Value__c,NSP_New_Value__c,NSP_Modified_By__r.Name,NSP_Index__c',
                 relatedFieldApiName: 'NSP_Sobject_Record_Id__c',
-                sobjectApiName: 'NSP_IP_History_Tracking__b',
+                sobjectApiName: 'NSP_IP_History_Tracking__b', // DEPRECATED
                 recordId: value,
                 numberOfRecords: 10,
                 pageNumber: null
@@ -145,7 +145,7 @@ export default class Nsp_historyTracking extends LightningElement {
 
     handleNext() {
         const { pageNumber, totalPages } = this.state;
-       
+
         this.state.pageNumber = pageNumber >= totalPages ? totalPages : pageNumber + 1;
         let pgeNumber = this.data && this.data?.slice(-1)[0]?.NSP_Index__c;
         let json = JSON.parse(this.parameterObject);
@@ -234,7 +234,7 @@ export default class Nsp_historyTracking extends LightningElement {
             } else {
                 this.payPeriodHistoriesData = undefined;
             }
-            
+
             this.statePayRecords.recordCount = data?.lstRecords?.length;
 
             if (!this.statePayRecords.totalRecords) {
