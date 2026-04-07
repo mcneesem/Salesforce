@@ -1,50 +1,44 @@
-<!-- Name: NSP_SingleRelatedList 
-   Purpose: Display History tracking big object as a related list
-   Author: Hemali Patel
-   Create Date: 2021-10-12
-   Modify History:
-   2021-10-12  Hemali Patel	Created
--->
-<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" controller="NSP_SingleRelatedListController">
-    <aura:attribute name="sobjectApiName" type="String" required="true" />    
-    <aura:attribute name="relatedFieldApiName" type="String" required="true"/>    
-    <aura:attribute name="numberOfRecords" type="Integer" default="50000"/>    
+<!-- DEPRECATED -->
+<aura:component implements="force:hasRecordId" access="global" controller="NSP_SingleRelatedListController">
+    <aura:attribute name="sobjectApiName" type="String" required="true" />
+    <aura:attribute name="relatedFieldApiName" type="String" required="true"/>
+    <aura:attribute name="numberOfRecords" type="Integer" default="50000"/>
     <aura:attribute name="sortedBy" type="String" required="true"  default="NSP_Modified_Date__c"/>
-    <aura:attribute name="sortedDirection" type="String" default="ASC"/>    
-    <aura:attribute name="onRowActionHandler" type="Aura.Action"/>    
-    <aura:attribute name="customActions" type="List"/>    
+    <aura:attribute name="sortedDirection" type="String" default="ASC"/>
+    <aura:attribute name="onRowActionHandler" type="Aura.Action"/>
+    <aura:attribute name="customActions" type="List"/>
     <aura:attribute name="columns" type="List" default="['NSP_Field_Name__c']"/>
     <aura:attribute name="columnsWithActions" type="List" access="private" />
     <aura:attribute name="fields" type="String" required="true"/>
     <aura:attribute name="records" type="Object" access="private"/>
-    <aura:attribute name="parentRelationshipApiName" type="String" access="private"/>    
-    <aura:attribute name="sobjectLabel" type="String" access="private"/>    
-    <aura:attribute name="sobjectLabelPlural" type="String" access="private"/>    
-    <aura:attribute name="numberOfRecordsForTitle" type="String" access="private"/>    
-    <aura:attribute name="iconName" type="String" access="private"/>    
-    
+    <aura:attribute name="parentRelationshipApiName" type="String" access="private"/>
+    <aura:attribute name="sobjectLabel" type="String" access="private"/>
+    <aura:attribute name="sobjectLabelPlural" type="String" access="private"/>
+    <aura:attribute name="numberOfRecordsForTitle" type="String" access="private"/>
+    <aura:attribute name="iconName" type="String" access="private"/>
+
     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
     <aura:handler name="change" value="{!v.columns}" action="{! c.handleColumnsChange }"/>
-    <aura:handler event="force:showToast" action="{!c.handleToastEvent}"/>  
+    <aura:handler event="force:showToast" action="{!c.handleToastEvent}"/>
     <lightning:overlayLibrary aura:id="overlayLib"/>
-    
+
     <div class="c-container">
         <lightning:card class="slds-card_boundary" iconName="{!v.iconName}">
             <aura:set attribute="title">
                 <b><a class="slds-card__header-link" >{!(v.sobjectLabelPlural) + ' (' + (v.numberOfRecordsForTitle) + ')'}</a></b>
-            </aura:set>             
-            <aura:if isTrue="{!not(empty(v.records))}">    
-                <div class="slds-scrollable" style="width:100%">                
+            </aura:set>
+            <aura:if isTrue="{!not(empty(v.records))}">
+                <div class="slds-scrollable" style="width:100%">
                     <lightning:datatable class="related-list"
                                          columns="{! v.columnsWithActions }"
                                          data="{! v.records }"
                                          keyField="id"
                                          hideCheckboxColumn="true"
-                                         sortedBy="{!v.sortedBy}"/>                     
-                                        </div>              
+                                         sortedBy="{!v.sortedBy}"/>
+                                        </div>
             </aura:if>
-            
+
         </lightning:card>
     </div>
-    
+
 </aura:component>
