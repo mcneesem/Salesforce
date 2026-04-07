@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>Product__c</field>
-        <value xsi:type="xsd:string">Schedule_Seller_Performance_Management_and_Time_Attendance</value>
+        <value xsi:type="xsd:string">Schedule_Seller_Performance_Management_Time_Attendance</value>
     </values>
     <values>
         <field>Start_Time__c</field>

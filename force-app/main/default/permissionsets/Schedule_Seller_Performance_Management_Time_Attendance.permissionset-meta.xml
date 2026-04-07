@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Schedule_Seller_Performance_Management_Time_Attendance</name>
+    </customPermissions>
+    <description>Scheduling tool permission set for Sales Engineer Performance Management and Time &amp; Attendance. Used when scheduling both products with the same Sales Engineer.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Schedule Seller: Performance Management / Time &amp; Attendance</label>
+</PermissionSet>
