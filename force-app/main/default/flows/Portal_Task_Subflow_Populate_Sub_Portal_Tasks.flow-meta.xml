@@ -277,7 +277,7 @@
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Portal Task Subflow Sub Portal Task</stringValue>
+                <stringValue>Portal_Task_Subflow_Populate_Sub_Portal_Tasks</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
