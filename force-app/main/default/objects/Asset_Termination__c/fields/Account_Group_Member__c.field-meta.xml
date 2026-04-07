@@ -4,7 +4,6 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <label>Account Group Member</label>
     <description>Lookup to Account Group Member representing the matching Account Group, Asset, and Account combination for this Asset Termination record.</description>
-    <description></description>
     <referenceTo>NSP_Account_Group_Member__c</referenceTo>
     <relationshipLabel>Asset Terminations</relationshipLabel>
     <relationshipName>Asset_Terminations</relationshipName>
