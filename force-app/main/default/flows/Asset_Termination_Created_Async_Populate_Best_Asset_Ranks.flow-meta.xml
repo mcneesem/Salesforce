@@ -26,7 +26,7 @@
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <filterLogic>1</filterLogic>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Asset__c</field>
             <operator>IsNull</operator>
