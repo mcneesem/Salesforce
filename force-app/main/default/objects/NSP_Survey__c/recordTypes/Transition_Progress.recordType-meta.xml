@@ -257,6 +257,121 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>NSP_OnboardingExperience__c</picklist>
+        <values>
+            <fullName>0</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>10</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>6</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>7</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>8</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>9</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_Onboarding_Experience__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_RateSatisfactionKnowingWhoToContact__c</picklist>
+        <values>
+            <fullName>Agree</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disagree</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Strongly agree</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Strongly disagree</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_TrainingPreparedMeForFirstPayroll__c</picklist>
+        <values>
+            <fullName>Agree</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disagree</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Strongly agree</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Strongly disagree</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NSP_levelOf_satisfaction_with_transition__c</picklist>
+        <values>
+            <fullName>Completely satisfied</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mostly satisfied</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not satisfied</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Somewhat satisfied</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>New_Client_Experience__c</picklist>
         <values>
             <fullName>1</fullName>
@@ -467,6 +582,44 @@
         </values>
         <values>
             <fullName>9</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Satisfaction_With_Payroll_Imp_Exp__c</picklist>
+        <values>
+            <fullName>Completely satisfied</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mostly satisfied</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not satisfied</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Somewhat satisfied</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Satisfaction_With_Time_Attendance_Exp__c</picklist>
+        <values>
+            <fullName>Completely satisfied</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mostly satisfied</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not satisfied</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Somewhat satisfied</fullName>
             <default>false</default>
         </values>
     </picklistValues>

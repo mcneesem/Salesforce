@@ -136,6 +136,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>NSP_Survey__c.Satisfaction_With_Payroll_Imp_Exp__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_Survey__c.Satisfaction_With_Time_Attendance_Exp__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>NSP_Survey__c.Service_Team_comments__c</field>
         <readable>true</readable>
     </fieldPermissions>

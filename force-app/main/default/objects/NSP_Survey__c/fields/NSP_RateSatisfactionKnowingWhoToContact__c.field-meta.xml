@@ -3,7 +3,7 @@
     <fullName>NSP_RateSatisfactionKnowingWhoToContact__c</fullName>
     <description>How would you rate your satisfaction with knowing who to contact with questions or concerns?</description>
     <externalId>false</externalId>
-    <inlineHelpText>How would you rate your satisfaction with knowing who to contact with questions or concerns?</inlineHelpText>
+    <inlineHelpText>I feel supported in knowing who to contact when I need assistance.</inlineHelpText>
     <label>Rate satisfaction knowing who to contact</label>
     <required>false</required>
     <trackHistory>true</trackHistory>
@@ -17,6 +17,11 @@
                 <fullName>Very satisfied</fullName>
                 <default>false</default>
                 <label>Very satisfied</label>
+            </value>
+            <value>
+                <fullName>Strongly agree</fullName>
+                <default>false</default>
+                <label>Strongly agree</label>
             </value>
             <value>
                 <fullName>Satisfied</fullName>
@@ -37,6 +42,21 @@
                 <fullName>Not sure</fullName>
                 <default>false</default>
                 <label>Not sure</label>
+            </value>
+            <value>
+                <fullName>Agree</fullName>
+                <default>false</default>
+                <label>Agree</label>
+            </value>
+            <value>
+                <fullName>Disagree</fullName>
+                <default>false</default>
+                <label>Disagree</label>
+            </value>
+            <value>
+                <fullName>Strongly disagree</fullName>
+                <default>false</default>
+                <label>Strongly disagree</label>
             </value>
         </valueSetDefinition>
     </valueSet>
