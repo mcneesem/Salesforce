@@ -14,5 +14,5 @@
         <operation>equals</operation>
         <value>Schedule_Seller_Performance_Management_Time_Attendance</value>
     </filters>
-    <label>Performance Management and Time &amp; Attend</label>
+    <label>Performance Management / Time &amp; Attend</label>
 </ListView>
