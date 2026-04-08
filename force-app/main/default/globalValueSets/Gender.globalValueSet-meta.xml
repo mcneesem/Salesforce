@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Male</fullName>
+        <default>false</default>
+        <label>Male</label>
+    </customValue>
+    <customValue>
+        <fullName>Female</fullName>
+        <default>false</default>
+        <label>Female</label>
+    </customValue>
+    <customValue>
+        <fullName>Unknown</fullName>
+        <default>false</default>
+        <label>Unknown</label>
+    </customValue>
+    <customValue>
+        <fullName>Non-Binary</fullName>
+        <default>false</default>
+        <label>Non-Binary</label>
+    </customValue>
+    <customValue>
+        <fullName>Not Declared</fullName>
+        <default>false</default>
+        <label>Not Declared</label>
+    </customValue>
+    <customValue>
+        <fullName>No Response</fullName>
+        <default>false</default>
+        <label>No Response</label>
+    </customValue>
+    <masterLabel>Gender</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>
