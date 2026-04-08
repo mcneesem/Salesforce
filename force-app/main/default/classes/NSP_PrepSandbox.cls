@@ -206,8 +206,8 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             String name = cMdRecord.DeveloperName;
             String fullName = 'NSP_DocuSign_Signers.' + name; //custom metadata full name
             String signer_Username = cMdRecord.NSP_Signer_Username__c;
-
-            MetadataService.CustomMetadata cMdUpd = buildCustomMetadataRow( fullName , name , 'NSP_Signer_Username__c' , signer_Username + '.' + sandboxName );
+            String signer_Username_new = signer_Username.substringBefore('.' + sandboxName).trim() + '.' + sandboxName;
+            MetadataService.CustomMetadata cMdUpd = buildCustomMetadataRow( fullName , name , 'NSP_Signer_Username__c' , signer_Username_new );
             allMetadataList = addCustomMetadataRow(allMetadataList, cMdUpd);
         }
     }
@@ -218,46 +218,32 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
 
         // retrieve org-specific values from DocuSign_Settings__c
         Map<String, DocuSign_Settings__c> docusignSettingsMap = DocuSign_Settings__c.getAll();
-        String keyVal = '';
-        if ( String.isEmpty( sandboxName )
-            || sandboxName.toUpperCase().startsWith( 'DEV' )
-            )
-        {
-            keyVal = 'DEV';
-        } else {
-            keyVal = sandboxName.toUpperCase();
+        String keyVal = ( String.isEmpty( sandboxName ) || sandboxName.toUpperCase().startsWith( 'DEV' ) ) ? 'DEV' : sandboxName.toUpperCase();
+
+        DocuSign_Settings__c docusignSettings = DocuSign_Settings__c.getValues( keyVal );
+        if ( docusignSettings != null ) {
+            resourceMap.put( 'CLMv2ApiEndpoint' , 'https://api' + docusignSettings.CLMBaseUrl__c + '/v2/' );
+            resourceMap.put( 'DSAccountID' , docusignSettings.AccountId__c );
+            resourceMap.put( 'DSUserName' , docusignSettings.UserId__c );
+            resourceMap.put( 'NSP_Docusign_Callback_Username' , docusignSettings.Docusign_Callback_Username__c );
+            resourceMap.put( 'RequestAuthDomain' , docusignSettings.BaseUrl__c );
+            resourceMap.put( 'RequestAuthEndpoint' , 'https://' + docusignSettings.BaseUrl__c + '/oauth/token' );
+            resourceMap.put( 'NSP_Invoice_Workflow_Name' , 'Invoice AutoGen' );
+            resourceMap.put( 'RequestAuthBody' , 'grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&assertion=' );
+            resourceMap.put( 'RequestAuthContentType' , 'application/x-www-form-urlencoded' );
+            resourceMap.put( 'RequestIntegratorKey' , docusignSettings.IntegrationKey__c );
+            resourceMap.put( 'RequestScope' , 'signature impersonation spring_read spring_write' );
+            resourceMap.put(
+                'RequestPrivateKey' ,
+                docusignSettings.PrivateKey1__c
+                    + docusignSettings.PrivateKey2__c
+                    + docusignSettings.PrivateKey3__c
+                    + docusignSettings.PrivateKey4__c
+                    + docusignSettings.PrivateKey5__c
+                    + docusignSettings.PrivateKey6__c
+                    + docusignSettings.PrivateKey7__c
+            );
         }
-
-        for (String key : docusignSettingsMap.keySet()) {
-            if (key.startsWith(keyVal)) {
-                keyVal = key;
-                break;
-            }
-        }
-        DocuSign_Settings__c docusignSettings = DocuSign_Settings__c.getValues(keyVal);
-        resourceMap.put('CLMv2ApiEndpoint', 'https://api' + docusignSettings.CLMBaseUrl__c + '/v2/');
-        resourceMap.put('DSAccountID', docusignSettings.AccountId__c);
-        resourceMap.put('DSUserName', docusignSettings.UserId__c);
-        resourceMap.put('NSP_Docusign_Callback_Username', docusignSettings.Docusign_Callback_Username__c);
-        resourceMap.put('RequestAuthDomain', docusignSettings.BaseUrl__c);
-        resourceMap.put('RequestAuthEndpoint', 'https://' + docusignSettings.BaseUrl__c + '/oauth/token');
-        resourceMap.put('NSP_Invoice_Workflow_Name', 'Invoice AutoGen');
-        resourceMap.put('RequestAuthBody', 'grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&assertion=');
-        resourceMap.put('RequestAuthContentType','application/x-www-form-urlencoded');
-        resourceMap.put('RequestIntegratorKey',docusignSettings.IntegrationKey__c);
-        resourceMap.put('RequestScope','signature impersonation spring_read spring_write');
-        resourceMap.put(
-            'RequestPrivateKey' ,
-            docusignSettings.PrivateKey1__c
-                + docusignSettings.PrivateKey2__c
-                + docusignSettings.PrivateKey3__c
-                + docusignSettings.PrivateKey4__c
-                + docusignSettings.PrivateKey5__c
-                + docusignSettings.PrivateKey6__c
-                + docusignSettings.PrivateKey7__c
-        );
-
-
 
         for (DocuSignRESTSettings__mdt cMdRecord : cMdDocuSignREST) {
             String name = cMdRecord.DeveloperName;
@@ -303,12 +289,12 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         try {
             List<List<MetadataService.Metadata>> allMetadataList = new List<List<MetadataService.Metadata>>();
             allMetadataList.add(new List<MetadataService.Metadata>());
-            List<NSP_ProjectTemplateMapping__mdt> cMdTmpls = [Select Id, Label, DeveloperName, Key__c, Template_ID__c, Template_Name__c FROM NSP_ProjectTemplateMapping__mdt WHERE Id!=Null];
-            List<Template_Key_and_Id_Mapping__mdt> cMdTmplKeys = [Select Id, Label, DeveloperName, Key__c, Template_ID__c, Template_Name__c FROM Template_Key_and_Id_Mapping__mdt WHERE Id!=Null];
-            List<pse__Proj__c> oProjTmpls = [Select Id, TemplateName__c FROM pse__Proj__c WHERE pse__Is_Template__c = true];
+            List<NSP_ProjectTemplateMapping__mdt> cMdTmpls = [ SELECT Id , Label, DeveloperName , Key__c , Template_ID__c , Template_Name__c FROM NSP_ProjectTemplateMapping__mdt WHERE Id != null ];
+            List<Template_Key_and_Id_Mapping__mdt> cMdTmplKeys = [ SELECT Id , Label, DeveloperName , Key__c , Template_ID__c , Template_Name__c FROM Template_Key_and_Id_Mapping__mdt WHERE Id != null ];
+            List<pse__Proj__c> oProjTmpls = [ SELECT Id , TemplateName__c FROM pse__Proj__c WHERE pse__Is_Template__c = true] ;
             Map<String, Id> mTmplId = new map<String, Id>();
-            for (pse__Proj__c oProjTmpl : oProjTmpls) {
-                mTmplId.put(oProjTmpl.TemplateName__c, oProjTmpl.Id);
+            for ( pse__Proj__c oProjTmpl : oProjTmpls ) {
+                mTmplId.put( oProjTmpl.TemplateName__c , oProjTmpl.Id );
             }
 
             doTmpls_mdt( sandboxName , mTmplId , allMetadataList , cMdTmpls );
@@ -322,25 +308,25 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     }
 
     public static void doTmpls_mdt(String sandboxName, Map<String, Id> mTmplId, List<List<MetadataService.Metadata>> allMetadataList, List<NSP_ProjectTemplateMapping__mdt> cMdTmpls) {
-        for (NSP_ProjectTemplateMapping__mdt cMdTmpl : cMdTmpls) {
-            if (mTmplId.containsKey(cMdTmpl.Template_Name__c) || Test.isRunningTest()) {
+        for ( NSP_ProjectTemplateMapping__mdt cMdTmpl : cMdTmpls ) {
+            if ( mTmplId.containsKey( cMdTmpl.Template_Name__c ) || Test.isRunningTest() ) {
                 string name = cMdTmpl.DeveloperName;
                 string fullName = 'NSP_ProjectTemplateMapping.' + name; //custom metadata full name
 
                 MetadataService.CustomMetadata cMdUpd = buildCustomMetadataRow( fullName , name , 'Template_ID__c' , mTmplId.get(cMdTmpl.Template_Name__c) );
-                allMetadataList = addCustomMetadataRow(allMetadataList, cMdUpd);
+                allMetadataList = addCustomMetadataRow( allMetadataList , cMdUpd );
             }
         }
     }
 
     public static void doTmplKeys_mdt(String sandboxName, Map<String, Id> mTmplId, List<List<MetadataService.Metadata>> allMetadataList, List<Template_Key_and_Id_Mapping__mdt> cMdTmplKeys) {
         for (Template_Key_and_Id_Mapping__mdt cMdTmplKey : cMdTmplKeys) {
-            if (mTmplId.containsKey(cMdTmplKey.Template_Name__c) || Test.isRunningTest()) {
+            if ( mTmplId.containsKey( cMdTmplKey.Template_Name__c ) || Test.isRunningTest() ) {
                 string name = cMdTmplKey.DeveloperName;
                 string fullName = 'Template_Key_and_Id_Mapping.' + name; //custom metadata full name
 
                 MetadataService.CustomMetadata cMdUpd = buildCustomMetadataRow( fullName , name , 'Template_ID__c' , mTmplId.get(cMdTmplKey.Template_Name__c) );
-                allMetadataList = addCustomMetadataRow(allMetadataList, cMdUpd);
+                allMetadataList = addCustomMetadataRow( allMetadataList , cMdUpd );
             }
         }
     }
@@ -474,7 +460,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         try {
             String host = URL.getOrgDomainUrl().toExternalForm();
             String endPoint = host + '/services/data/v55.0/tooling/';
-            String sessionId = UserInfo.getSessionId();
+            String sessionId = NSP_PrepSandbox.apiEnabledSessionId();
             List<String[]> wfaNames = new List<String[]>();
             wfaNames.add(new String[]{});
             List<List<MetadataService.Metadata>> allMetadataList = new List<List<MetadataService.Metadata>>();
@@ -528,7 +514,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
         Integer batch = 0;
         HTTPResponse response = new HTTPResponse();
         String host = URL.getOrgDomainUrl().toExternalForm();
-        String sessionId = UserInfo.getSessionId();
+        String sessionId = NSP_PrepSandbox.apiEnabledSessionId();
         for (RecordAlert alert : records) {
             // Get the Alert meta-data
             request = new HttpRequest();
@@ -596,7 +582,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
             List<Wingspan_Settings__c> updateWsSettings = new List<Wingspan_Settings__c>();
             Map<String, Wingspan_Settings__c> wingspanSettingsMap = Wingspan_Settings__c.getAll();
             for (String key : wingspanSettingsMap.keySet()) {
-                Wingspan_Settings__c wingspanSettings = Wingspan_Settings__c.getValues(key);
+                Wingspan_Settings__c wingspanSettings = Wingspan_Settings__c.getValues( key );
                 wingspanSettings.IsEnabled__c = false;
                 if (wingspanSettings.Name == 'DEV') {
                     wingspanSettings.IsEnabled__c = true;
@@ -699,7 +685,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                     cS8.NVMContactWorld__clientId__c = 'mfb4hpckwhw';
                 }
                 when else {
-                    cS8.NVMContactWorld__clientId__c = '';
+                    cS8.NVMContactWorld__clientId__c = null;
                 }
             }
             upsert cS8;
@@ -853,7 +839,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     public static MetadataService.MetadataPort createService() {
         MetadataService.MetadataPort service = new MetadataService.MetadataPort();
         service.SessionHeader = new MetadataService.SessionHeader_element();
-        service.SessionHeader.sessionId = apiEnabledSessionId();
+        service.SessionHeader.sessionId = NSP_PrepSandbox.apiEnabledSessionId();
         return service;
     }
 
@@ -883,21 +869,25 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     }
 
     private static void updateLabelsValues(Map<String, String> refreshValMap){
+        try {
+            MetadataService.MetadataPort service = createService();
+            List<MetadataService.Metadata> allMetadataList = new List<MetadataService.Metadata>();
+            MetadataService.CustomLabel cL = new MetadataService.CustomLabel();
 
-        MetadataService.MetadataPort service = createService();
-        List<MetadataService.Metadata> allMetadataList = new List<MetadataService.Metadata>();
-        MetadataService.CustomLabel cL = new MetadataService.CustomLabel();
+            for (String cLName : refreshValMap.keySet()) {
+                setCLabelData(service, cL, allMetadataList, cLName, refreshValMap);
+            }
 
-        for (String cLName : refreshValMap.keySet()) {
-            setCLabelData(service, cL, allMetadataList, cLName, refreshValMap);
+            if(allMetadataList.size() > 0 && !Test.isRunningTest()){
+                service.updateMetadata(allMetadataList);
+            }
         }
-
-        if(allMetadataList.size() > 0 && !Test.isRunningTest()){
-            service.updateMetadata(allMetadataList);
+        catch(Exception e) {
+            NSP_PrepSandbox.handleException( e , 'updateLabelsValues' );
         }
     }
 
-    private static String apiEnabledSessionId() {
+    private static String apiEnabledSessionId(){
         return UserInfo.getSessionId();
     }
 
