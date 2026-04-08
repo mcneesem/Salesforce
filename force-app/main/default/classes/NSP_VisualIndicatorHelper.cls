@@ -55,7 +55,8 @@ public without sharing class NSP_VisualIndicatorHelper {
                             NSP_Product_Line__c ,
                             Is_HRScale__c,
                             RecordTypeId ,
-                            NSP_National_Account__c
+                            NSP_National_Account__c,
+                            HRCore_Strategic_Partner__c
                         FROM Assets
                     ) ,
                     (
@@ -118,6 +119,7 @@ public without sharing class NSP_VisualIndicatorHelper {
         )
     {
         VisualIndicatorWrapper accWrapper = new VisualIndicatorWrapper();
+        accWrapper.hrScale = false;
         if (expList != null) {
             checkServiceExceptions(expList, accWrapper);
         }
@@ -188,6 +190,9 @@ public without sharing class NSP_VisualIndicatorHelper {
         }
         if ( asset.NSP_Pending_Termination__c) {
             accWrapper.pendingTermination = true;
+        }
+        if(asset.HRCore_Strategic_Partner__c){
+            accWrapper.hrScale = true;
         }
     }
 

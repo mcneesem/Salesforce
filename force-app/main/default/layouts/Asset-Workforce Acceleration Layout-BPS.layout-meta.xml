@@ -137,6 +137,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>HRCore_Strategic_Partner__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>NSP_WX_WA_Parent_Billing__c</field>
             </layoutItems>
             <layoutItems>
