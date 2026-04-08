@@ -26,7 +26,7 @@
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <filterLogic>( 1 ) AND ( ( 2 ) OR ( 3 ) )</filterLogic>
+        <filterLogic>1 AND ( 2 OR 3 )</filterLogic>
         <filters>
             <field>Asset__c</field>
             <operator>IsNull</operator>
