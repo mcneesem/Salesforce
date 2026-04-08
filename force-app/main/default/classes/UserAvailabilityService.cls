@@ -355,7 +355,7 @@ public with sharing class UserAvailabilityService {
             'Schedule_Seller_HRCore_MidMarket' => 90 ,
             'Schedule_Seller_HRScale_MidMarket' => 120 ,
             'Schedule_Seller_HR360_Enterprise' => 90 ,
-            'Schedule_Seller_HRCore_Enterprise' => 90,
+            'Schedule_Seller_HRCore_Enterprise' => 90 ,
             'Schedule_Seller_Performance_Management_Time_Attendance' => 60
         };
         //
