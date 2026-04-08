@@ -49,17 +49,18 @@ export default class ScheduleSellerProductSelector extends LightningElement {
         return ( this._isLoaded && ( this.productOptions?.length > 0 ) );
     }
 
+    //
     // Product options for different account segments
-    /* For new skill addition follow the next steps:
-        Permission Set: add new Permission Set
-        Custom Permission: add new Custom Permission
-        Apex: UserAvailabilityService.getStepMinutes() (add to the map)
-        LWC: scheduleSellerProductSelector.productOptions() (add to the map)
-        Custom Metadata:
-            Schedule_Seller_Time_Slot__mdt.Product__c (add picklist value)
-            Schedule_Seller_Time_Slot__mdt (Time Slots) – add records
-    */
-
+    //
+    // For new skill addition follow the next steps:
+    // ~ Permission Set: add new Permission Set
+    // ~ Custom Permission: add new Custom Permission
+    // ~ Apex: UserAvailabilityService.getStepMinutes() (add to the map)
+    // ~ LWC: scheduleSellerProductSelector.productOptions() (add to the map)
+    // ~ Custom Metadata:
+    //   ~ Schedule_Seller_Time_Slot__mdt.Product__c (add picklist value)
+    //   ~ Schedule_Seller_Time_Slot__mdt (Time Slots) – add records
+    //
     get productOptions() {
         // Define base options per segment
         const baseBySeg = {
