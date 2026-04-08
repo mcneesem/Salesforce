@@ -3,7 +3,7 @@
     <fullName>NSP_levelOf_satisfaction_with_transition__c</fullName>
     <description>How would you rate your overall level of satisfaction with your recent transition to Insperity?</description>
     <externalId>false</externalId>
-    <inlineHelpText>How would you rate your overall level of satisfaction with your recent transition to Insperity?</inlineHelpText>
+    <inlineHelpText>Please rate your overall satisfaction with your recent Insperity implementation experience.</inlineHelpText>
     <label>Level of satisfaction with transition</label>
     <required>false</required>
     <trackHistory>true</trackHistory>
