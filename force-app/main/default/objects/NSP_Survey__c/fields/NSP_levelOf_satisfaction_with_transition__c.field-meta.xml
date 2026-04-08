@@ -14,6 +14,26 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
+                <fullName>Completely satisfied</fullName>
+                <default>false</default>
+                <label>Completely satisfied</label>
+            </value>
+            <value>
+                <fullName>Mostly satisfied</fullName>
+                <default>false</default>
+                <label>Mostly satisfied</label>
+            </value>
+            <value>
+                <fullName>Somewhat satisfied</fullName>
+                <default>false</default>
+                <label>Somewhat satisfied</label>
+            </value>
+            <value>
+                <fullName>Not satisfied</fullName>
+                <default>false</default>
+                <label>Not satisfied</label>
+            </value>
+            <value>
                 <fullName>Very satisfied</fullName>
                 <default>false</default>
                 <label>Very satisfied</label>
