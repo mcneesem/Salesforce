@@ -1470,39 +1470,42 @@ public class NSP_AccountTriggerHelper {
         }
     }
 
-    //
-    // Description: This method create for update field Payroll Employee Of Account Group Member From Payroll Employee Of Account
-    //
-    // @param: Map <Id, Account> newMap, Map <Id, Account> oldMap
-    // @return: void
-    // Modification History:
-    // -------------------------------------------------------------------------------------
-    //  Date              | Description
-    // -------------------------------------------------------------------------------------
-    //  03/11/2022          created this new method added for STY-02846
-    //
-    public static void updateAGMPayrollEmployees( Map <Id, Account> newMap, Map <Id, Account> oldMap) {
-        List<NSP_Account_Group_Member__c>  accGroupMemberToBeUpdated = new List<NSP_Account_Group_Member__c>();
-        Map<Id, decimal> accPayrollByIds = new Map<Id, decimal>();
-
-        // put accountId By Payroll Employees in Map
-        for(Account accList : newMap.Values()) {
-            if(accList.NSP_Payroll_employee__c != oldMap.get(accList.Id).NSP_Payroll_employee__c) {
-                accPayrollByIds.put(accList.Id, accList.NSP_Payroll_employee__c);
-            }
-        }
-
-        // update Account Group Member field Payroll Employees From Account field Payroll Employees
-        if(!accPayrollByIds.isEmpty()) {
-            for(NSP_Account_Group_Member__c accGroMember : [SELECT Id, NSP_Member_Account__c, NSP_Payroll_Employees__c FROM NSP_Account_Group_Member__c WHERE NSP_Member_Account__c =:accPayrollByIds.keySet()]) {
-                if(accGroMember.NSP_Payroll_Employees__c != accPayrollByIds.get(accGroMember.NSP_Member_Account__c)) {
-                    accGroMember.NSP_Payroll_Employees__c = accPayrollByIds.get(accGroMember.NSP_Member_Account__c);
-                    accGroupMemberToBeUpdated.add(accGroMember);
+    // update field Payroll Employee Of Account Group Member From Payroll Employee Of Account
+    public static void updateAGMPayrollEmployees( Map<Id,Account> newMap , Map<Id,Account> oldMap ) {
+        try {
+            List<NSP_Account_Group_Member__c> accGroupMemberToBeUpdated = new List<NSP_Account_Group_Member__c>();
+            Map<Id,Decimal> accPayrollByIds = new Map<Id,Decimal>();
+            // put accountId By Payroll Employees in Map
+            for ( Account accList : newMap.values() ) {
+                if ( accList.NSP_Payroll_employee__c != oldMap.get( accList.Id ).NSP_Payroll_employee__c ) {
+                    accPayrollByIds.put( accList.Id , accList.NSP_Payroll_employee__c );
                 }
             }
-        }
-        if(!accGroupMemberToBeUpdated.isEmpty()) {
-            update accGroupMemberToBeUpdated;
+            // update Account Group Member field Payroll Employees From Account field Payroll Employees
+            if ( !accPayrollByIds.isEmpty() ) {
+                for ( NSP_Account_Group_Member__c accGroMember : [
+                            SELECT Id , NSP_Member_Account__c , NSP_Payroll_Employees__c
+                            FROM NSP_Account_Group_Member__c
+                            WHERE ( NSP_Member_Account__c = :accPayrollByIds.keySet() )
+                        ]
+                    )
+                {
+                    if ( accGroMember.NSP_Payroll_Employees__c != accPayrollByIds.get( accGroMember.NSP_Member_Account__c ) ) {
+                        accGroMember.NSP_Payroll_Employees__c = accPayrollByIds.get( accGroMember.NSP_Member_Account__c );
+                        accGroupMemberToBeUpdated.add( accGroMember );
+                    }
+                }
+            }
+            if ( !accGroupMemberToBeUpdated.isEmpty() ) {
+                List<Database.SaveResult> results = Database.update( accGroupMemberToBeUpdated , false );
+                NSP_ErrorLogHandler.logResults(
+                    NSP_AccountTriggerHelper.class.getName() ,
+                    'updateAGMPayrollEmployees:update' ,
+                    results
+                );
+            }
+        } catch ( Exception e ) {
+            NSP_AccountTriggerHelper.handleException( e , 'updateAGMPayrollEmployees' );
         }
     }
 
