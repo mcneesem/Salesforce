@@ -26,10 +26,10 @@ export default class WizardCaseCreation extends NavigationMixin(LightningElement
   recordTypeID = '012000000000000AAA';
   @track subclientData;
   @track error;
-  
 
 
-  
+
+
 defultRecordInputCreation(queueID){
     const fields = {
         Subject:'',
@@ -93,12 +93,12 @@ getQueueIdbyName( queueName ) {
                         const caseRecord = JSON.parse(JSON.stringify(this.recordInput));
                         this.createCaseRecord(caseRecord);
                       }
-                      else if( this.reReqObj != null &&  this.reReqObj.NSP_AgreementType__c != null && this.reReqObj.NSP_AgreementType__c.value != null 
+                      else if( this.reReqObj != null &&  this.reReqObj.NSP_AgreementType__c != null && this.reReqObj.NSP_AgreementType__c.value != null
                             && this.reReqObj.NSP_AgreementType__c.value  != '') {
                                 this.getQueueIdbyName(this.separationQueueName);
-                      }else if( this.reReqObj != null &&  this.reReqObj.NSP_Survey_Type__c != null && this.reReqObj.NSP_Survey_Type__c.value != null 
+                      }else if( this.reReqObj != null &&  this.reReqObj.NSP_Survey_Type__c != null && this.reReqObj.NSP_Survey_Type__c.value != null
                             && this.reReqObj.NSP_Survey_Type__c.value  != '') {
-                                this.getQueueIdbyName('HR COE Survey Team');
+                                this.getQueueIdbyName('Consulting & Development');
                      }else{
                          this.dispatchEvent(
                             new ShowToastEvent({
@@ -124,10 +124,10 @@ connectedCallback(){
 }
 
 async createCaseRecord(inputData){
-    
-    await this.handleRetrieveWoassetId(this.reReqObj.NSP_ClientName__c.value); 
+
+    await this.handleRetrieveWoassetId(this.reReqObj.NSP_ClientName__c.value);
     if(inputData != null && this.reReqObj != null ){
-    let today = new Date();  
+    let today = new Date();
     let subject = today.toISOString();
 
     const { wizardReportSubcategory, wizardReportCategory,wizardSeparationCategory, wizardSeparationSubcategory} = LABEL;
@@ -144,7 +144,7 @@ async createCaseRecord(inputData){
                 fields.NSP_SubCategory__c=wizardReportSubcategory;
                 fields.NSP_Category__c=wizardReportCategory;
     }
-    else 
+    else
     if( this.reReqObj.NSP_AgreementType__c != null && this.reReqObj.NSP_ReviewType__c != null &&
          (this.reReqObj.NSP_AgreementType__c.value != null || this.reReqObj.NSP_ReviewType__c.value !=null) ){
             fields.NSP_SubCategory__c=wizardSeparationSubcategory;
@@ -157,7 +157,7 @@ async createCaseRecord(inputData){
         }
         if(this.reReqObj.NSP_RequestingMultipleEmployees__c != null && this.reReqObj.NSP_RequestingMultipleEmployees__c.value !=null){
             subject = this.reReqObj.NSP_RequestingMultipleEmployees__c.value == 'Yes' ? 'Insperity Prepared Separation Agreement requested for multiple WSEEs' :subject ;
-            
+
         }
         if(this.reReqObj.NSP_RequestingMultipleEmployees__c.value == 'Yes' && this.subclientData.fields.NSP_Sub_Client__r.value.fields.NSP_Sub_Client__c.value != null){
             subject = subject + ' (' + this.subclientData.fields.NSP_Sub_Client__r.value.fields.NSP_Sub_Client__c.value + ')' ;
@@ -166,16 +166,12 @@ async createCaseRecord(inputData){
             subject = this.reReqObj.NSP_WSEE_SubClient_Parent_Client_if_None__c.value != null ?
             subject +' - '+ this.reReqObj.NSP_WSEE__r.displayValue + ' ('+ this.reReqObj.NSP_WSEE_SubClient_Parent_Client_if_None__c.value +')' :
             subject +' - '+ this.reReqObj.NSP_WSEE__r.displayValue;
-            
+
         }
 
     } else if(this.reReqObj.NSP_Survey_Type__c != null && this.reReqObj.NSP_Survey_Type__c.value != null && this.reReqObj.NSP_Survey_Type__c.value  != '') {
-        fields.NSP_Category__c='HR Client Support';
-        if(this.reReqObj.NSP_Survey_Type__c.value =='Exit'){
-            fields.NSP_SubCategory__c  ='Exit Interview';
-        }else{
-            fields.NSP_SubCategory__c  ='Employee Surveys';
-        }
+        fields.NSP_Category__c='Strategic Consulting Services';
+        fields.NSP_SubCategory__c  ='Engagement Survey';
         subject = this.reReqObj.NSP_Survey_Type__c.value +' Survey Request';
     }
     // updated for user story - 206842
@@ -213,7 +209,7 @@ async createCaseRecord(inputData){
                 this.hideSpinner();
             });
           this.updateReportRequest(result);
-          
+
     })
     .catch(error => {
         this.error = error;
@@ -241,7 +237,7 @@ categorySubcategoryMM(fields){
 }
 
 updateReportRequest(result) {
-        // Create the recordInput object        
+        // Create the recordInput object
         let today = new Date();
         const fields = {};
         fields[SUBMITEDDATE.fieldApiName]= today.toISOString();
@@ -308,7 +304,7 @@ async handleRetrieveWoassetId(accountId){
 			this.error = error;
 			this.woasset = '';
 		})
-    
+
 }
 
 
