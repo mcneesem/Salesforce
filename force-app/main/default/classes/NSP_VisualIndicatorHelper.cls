@@ -119,7 +119,7 @@ public without sharing class NSP_VisualIndicatorHelper {
         )
     {
         VisualIndicatorWrapper accWrapper = new VisualIndicatorWrapper();
-        accWrapper.hrScale = false;
+        accWrapper.hrCoreStrategicPartner = false;
         if (expList != null) {
             checkServiceExceptions(expList, accWrapper);
         }
@@ -192,7 +192,7 @@ public without sharing class NSP_VisualIndicatorHelper {
             accWrapper.pendingTermination = true;
         }
         if(asset.HRCore_Strategic_Partner__c){
-            accWrapper.hrScale = true;
+            accWrapper.hrCoreStrategicPartner = true;
         }
     }
 
@@ -323,6 +323,8 @@ public without sharing class NSP_VisualIndicatorHelper {
         public Boolean vocSurveyIndicator {get;set;}
         @AuraEnabled
         public Boolean hrScale { get; set; }
+        @AuraEnabled
+        public Boolean hrCoreStrategicPartner  { get; set; }
     }
 
 }
