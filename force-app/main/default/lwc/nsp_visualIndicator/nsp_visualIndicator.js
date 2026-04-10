@@ -100,7 +100,7 @@ export default class vi2 extends LightningElement {
                 if (this.accountsDetails[0].vocSurveyIndicator){
                     this.vocSurveyIndicator = true;
                 }
-                if(this.accountsDetails[0].hrScale){
+                if(this.accountsDetails[0].hrCoreStrategicPartner){
                     this.showStrategicPartner = true;
                 }
                 //For Renewal Probability Indicator

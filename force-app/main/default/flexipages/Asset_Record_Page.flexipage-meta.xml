@@ -1089,10 +1089,16 @@
                 <componentName>nsp_visualIndicator</componentName>
                 <identifier>c_nsp_visualIndicator</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>WO</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.Name}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>WX_WA</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
