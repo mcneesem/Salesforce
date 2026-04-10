@@ -3,34 +3,43 @@
     <fullName>Talent_Connect_Net_Total__c</fullName>
     <externalId>false</externalId>
     <formula>IF(
-  SBQQ__Bundled__c ,
+  OR(
+    ( SBQQ__ProductCode__c = &quot;SMSOVERAGEWO1&quot; ) ,
+    ( SBQQ__ProductCode__c = &quot;SMSOVERAGEWO2&quot; ) ,
+    ( SBQQ__ProductCode__c = &quot;SMSOVERAGETRAD1&quot; ) ,
+    ( SBQQ__ProductCode__c = &quot;SMSOVERAGETRAD2&quot; )
+  ) ,
   0 ,
   IF(
-    AND(
-      ISPICKVAL( SBQQ__Quote__r.SBQQ__Type__c , &quot;Amendment&quot; ) ,
-      ISPICKVAL( SBQQ__PricingMethod__c , &quot;Block&quot; )
-    ) ,
-    SBQQ__NetPrice__c ,
+    SBQQ__Bundled__c ,
+    0 ,
     IF(
       AND(
-        ( NSP_Quoted_Quantity__c &gt; 0 ) ,
-        ( NSP_Max_Quantity__c &gt;= NSP_Quoted_Quantity__c )
+        ISPICKVAL( SBQQ__Quote__r.SBQQ__Type__c , &quot;Amendment&quot; ) ,
+        ISPICKVAL( SBQQ__PricingMethod__c , &quot;Block&quot; )
       ) ,
-      MAX(
-        ( SBQQ__NetPrice__c * NSP_Quoted_Quantity__c ) ,
-        NSP_Final_Minimum_Fee__c
-      ) ,
+      SBQQ__NetPrice__c ,
       IF(
-        SBQQ__HasConsumptionSchedule__c ,
-        ( SBQQ__NetPrice__c * NSP_Quoted_Quantity__c ) ,
+        AND(
+          ( NSP_Quoted_Quantity__c &gt; 0 ) ,
+          ( NSP_Max_Quantity__c &gt;= NSP_Quoted_Quantity__c )
+        ) ,
+        MAX(
+          ( SBQQ__NetPrice__c * NSP_Quoted_Quantity__c ) ,
+          NSP_Final_Minimum_Fee__c
+        ) ,
         IF(
-          AND(
-            ( TEXT( SBQQ__BillingFrequency__c ) = &quot;Annual&quot; ) ,
-            ISPICKVAL( SBQQ__PricingMethod__c , &quot;List&quot; ) ,
-            ( SBQQ__Product__r.SBQQ__SubscriptionTerm__c = 1 )
-          ) ,
-          ( SBQQ__NetPrice__c * NSP_Quoted_Quantity__c * 12 ) ,
-          NSP_Secondary_NetTotal__c
+          SBQQ__HasConsumptionSchedule__c ,
+          ( SBQQ__NetPrice__c * NSP_Quoted_Quantity__c ) ,
+          IF(
+            AND(
+              ( TEXT( SBQQ__BillingFrequency__c ) = &quot;Annual&quot; ) ,
+              ISPICKVAL( SBQQ__PricingMethod__c , &quot;List&quot; ) ,
+              ( SBQQ__Product__r.SBQQ__SubscriptionTerm__c = 1 )
+            ) ,
+            ( SBQQ__NetPrice__c * NSP_Quoted_Quantity__c * 12 ) ,
+            NSP_Secondary_NetTotal__c
+          )
         )
       )
     )
