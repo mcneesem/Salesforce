@@ -3,7 +3,7 @@
     <fullName>Pay_Frequency__c</fullName>
     <label>Pay Frequency</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
