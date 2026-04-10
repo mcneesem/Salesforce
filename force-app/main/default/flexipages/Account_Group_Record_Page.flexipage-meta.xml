@@ -1050,16 +1050,16 @@
                     <name>relatedListFieldAliases</name>
                     <valueList>
                         <valueListItems>
-                            <value>NAME</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Account.ACC_NAME</value>
-                        </valueListItems>
-                        <valueListItems>
                             <value>Asset.NAME</value>
                         </valueListItems>
                         <valueListItems>
                             <value>Asset_Status__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>iSolved__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>AIMS_Client__c</value>
                         </valueListItems>
                         <valueListItems>
                             <value>Reason_for_Termination__c</value>
