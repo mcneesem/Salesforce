@@ -3,7 +3,7 @@
     <fullName>NSP_further_comments__c</fullName>
     <description>Please share any further comments, information, or experiences we should know about.</description>
     <externalId>false</externalId>
-    <inlineHelpText>Please share any further comments, information, or experiences we should know about.</inlineHelpText>
+    <inlineHelpText>Please share any other thoughts, feedback, or stories about your experience.</inlineHelpText>
     <label>Further comments</label>
     <length>30000</length>
     <trackHistory>true</trackHistory>

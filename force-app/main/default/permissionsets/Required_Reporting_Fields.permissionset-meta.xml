@@ -1898,6 +1898,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_Survey__c.Satisfaction_With_Payroll_Imp_Exp__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Survey__c.Satisfaction_With_Time_Attendance_Exp__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Termination_Form__c.Approval_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>

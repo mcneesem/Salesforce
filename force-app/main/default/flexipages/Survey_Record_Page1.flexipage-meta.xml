@@ -121,12 +121,20 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.Asset_Client__c</fieldItem>
                 <identifier>RecordAsset_Client__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Account_AIMS__c</fieldItem>
                 <identifier>RecordNSP_Account_AIMS__cField</identifier>
             </fieldInstance>
@@ -161,6 +169,10 @@
     <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.Respondent_Name__c</fieldItem>
                 <identifier>RecordRespondent_Name__cField</identifier>
                 <visibilityRule>
@@ -173,6 +185,10 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Title__c</fieldItem>
                 <identifier>RecordNSP_Title__cField</identifier>
             </fieldInstance>
@@ -186,33 +202,143 @@
                 <fieldItem>Record.NSP_levelOf_satisfaction_with_transition__c</fieldItem>
                 <identifier>RecordNSP_levelOf_satisfaction_with_transition__cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
+                    <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_levelOf_satisfaction_with_transition__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Very satisfied</rightValue>
+                        <rightValue>Mostly satisfied</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.NSP_levelOf_satisfaction_with_transition__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Satisfied</rightValue>
+                        <rightValue>Completely satisfied</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.NSP_levelOf_satisfaction_with_transition__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Dissatisfied</rightValue>
+                        <rightValue>Somewhat satisfied</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.NSP_levelOf_satisfaction_with_transition__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Very dissatisfied</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_levelOf_satisfaction_with_transition__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Not sure</rightValue>
+                        <rightValue>Not satisfied</rightValue>
                     </criteria>
                 </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_RateSatisfactionKnowingWhoToContact__c</fieldItem>
+                <identifier>RecordNSP_RateSatisfactionKnowingWhoToContact__cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_RateSatisfactionKnowingWhoToContact__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Strongly agree</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_RateSatisfactionKnowingWhoToContact__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Agree</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_RateSatisfactionKnowingWhoToContact__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Disagree</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_RateSatisfactionKnowingWhoToContact__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Strongly disagree</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_TrainingPreparedMeForFirstPayroll__c</fieldItem>
+                <identifier>RecordNSP_TrainingPreparedMeForFirstPayroll__cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_TrainingPreparedMeForFirstPayroll__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Strongly agree</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_TrainingPreparedMeForFirstPayroll__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Agree</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_TrainingPreparedMeForFirstPayroll__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Disagree</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_TrainingPreparedMeForFirstPayroll__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Strongly disagree</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_TrainingPreparedMeForFirstPayroll__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Not sure/Not applicable</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Satisfaction_With_Payroll_Imp_Exp__c</fieldItem>
+                <identifier>RecordSatisfaction_with_Payroll_imp_exp_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Satisfaction_With_Time_Attendance_Exp__c</fieldItem>
+                <identifier>RecordSatisfaction_with_Time_Attendance_exp_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-751a32c6-6b90-492e-9f53-1a46218ddbb2</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Survey_Completion_Date__c</fieldItem>
+                <identifier>RecordSurvey_Completion_Date_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_further_comments__c</fieldItem>
+                <identifier>RecordNSP_further_comments__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -284,34 +410,13 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_RateSatisfactionKnowingWhoToContact__c</fieldItem>
-                <identifier>RecordNSP_RateSatisfactionKnowingWhoToContact__cField</identifier>
+                <fieldItem>Record.NSP_OnboardingExperience__c</fieldItem>
+                <identifier>RecordNSP_OnboardingExperience_cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
                     <criteria>
-                        <leftValue>{!Record.NSP_RateSatisfactionKnowingWhoToContact__c}</leftValue>
+                        <leftValue>{!Record.NSP_OnboardingExperience__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Very satisfied</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_RateSatisfactionKnowingWhoToContact__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Satisfied</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_RateSatisfactionKnowingWhoToContact__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Dissatisfied</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_RateSatisfactionKnowingWhoToContact__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Very dissatisfied</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_RateSatisfactionKnowingWhoToContact__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Not sure</rightValue>
+                        <rightValue>0</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -322,305 +427,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Insperity_prepared_me_for_onboarding__c</fieldItem>
-                <identifier>RecordNSP_Insperity_prepared_me_for_onboarding__cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Insperity_prepared_me_for_onboarding__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Strongly agree</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Insperity_prepared_me_for_onboarding__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Agree</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Insperity_prepared_me_for_onboarding__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Disagree</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Insperity_prepared_me_for_onboarding__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Strongly disagree</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Insperity_prepared_me_for_onboarding__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Not sure/Not applicable</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_InsperityOnboardingTeamWasResponsive__c</fieldItem>
-                <identifier>RecordNSP_InsperityOnboardingTeamWasResponsive__cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.NSP_InsperityOnboardingTeamWasResponsive__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Strongly agree</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_InsperityOnboardingTeamWasResponsive__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Agree</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_InsperityOnboardingTeamWasResponsive__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Disagree</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_InsperityOnboardingTeamWasResponsive__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Strongly disagree</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_InsperityOnboardingTeamWasResponsive__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Not sure/Not applicable</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_ProvidedTheInformationEmployeesNeeds__c</fieldItem>
-                <identifier>RecordNSP_ProvidedTheInformationEmployeesNeeds__cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.NSP_ProvidedTheInformationEmployeesNeeds__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Strongly agree</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_ProvidedTheInformationEmployeesNeeds__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Agree</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_ProvidedTheInformationEmployeesNeeds__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Disagree</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_ProvidedTheInformationEmployeesNeeds__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Strongly disagree</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_ProvidedTheInformationEmployeesNeeds__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Not sure/Not applicable</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_The_benefits_information_is_helpful__c</fieldItem>
-                <identifier>RecordNSP_The_benefits_information_is_helpful__cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.NSP_The_benefits_information_is_helpful__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Strongly agree</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_The_benefits_information_is_helpful__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Agree</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_The_benefits_information_is_helpful__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Disagree</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_The_benefits_information_is_helpful__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Strongly disagree</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_The_benefits_information_is_helpful__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Not sure/Not applicable</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Payroll_ServiceTeamSupportIsPrompt__c</fieldItem>
-                <identifier>RecordNSP_Payroll_ServiceTeamSupportIsPrompt__cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Payroll_ServiceTeamSupportIsPrompt__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Strongly agree</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Payroll_ServiceTeamSupportIsPrompt__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Agree</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Payroll_ServiceTeamSupportIsPrompt__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Disagree</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Payroll_ServiceTeamSupportIsPrompt__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Strongly disagree</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Payroll_ServiceTeamSupportIsPrompt__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Not sure/Not applicable</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_TrainingPreparedMeForFirstPayroll__c</fieldItem>
-                <identifier>RecordNSP_TrainingPreparedMeForFirstPayroll__cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.NSP_TrainingPreparedMeForFirstPayroll__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Strongly agree</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_TrainingPreparedMeForFirstPayroll__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Agree</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_TrainingPreparedMeForFirstPayroll__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Disagree</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_TrainingPreparedMeForFirstPayroll__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Strongly disagree</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_TrainingPreparedMeForFirstPayroll__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Not sure/Not applicable</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_satisfaction_with_your_first_payroll__c</fieldItem>
-                <identifier>RecordNSP_satisfaction_with_your_first_payroll__cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.NSP_satisfaction_with_your_first_payroll__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Very satisfied</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_satisfaction_with_your_first_payroll__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Satisfied</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_satisfaction_with_your_first_payroll__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Dissatisfied</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_satisfaction_with_your_first_payroll__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Very dissatisfied</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_satisfaction_with_your_first_payroll__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Not Sure</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldItem>Record.NSP_Onboarding_Experience__c</fieldItem>
-                <identifier>RecordNSP_Onboarding_Experience__cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 OR 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Onboarding_Experience__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Yes</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Onboarding_Experience__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>No</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-751a32c6-6b90-492e-9f53-1a46218ddbb2</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <fieldInstance>
-                <fieldItem>Record.NSP_OrientationAndOnboardingProcessInf__c</fieldItem>
-                <identifier>RecordNSP_OrientationAndOnboardingProcessInf__cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldItem>Record.NSP_Share_your_experience_With_payroll__c</fieldItem>
-                <identifier>RecordNSP_Share_your_experience_With_payroll__cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldItem>Record.NSP_further_comments__c</fieldItem>
-                <identifier>RecordNSP_further_comments__cField</identifier>
+                <fieldItem>Record.Survey_Type__c</fieldItem>
+                <identifier>RecordSurvey_Type_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-8a9565fb-9bf4-4a96-9e63-c63fa64fc377</name>
@@ -659,16 +467,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.CreatedById</fieldItem>
                 <identifier>RecordCreatedByIdField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Survey_Type__c</fieldItem>
-                <identifier>RecordSurvey_Type_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-63f8f598-6078-4eb0-908d-d7e28e2e2b8a</name>
@@ -720,6 +518,10 @@
                     <value>Facet-e60476ab-95f8-42c4-896d-9b4cc7ad1672</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Information</value>
                 </componentInstanceProperties>
@@ -734,6 +536,10 @@
                     <value>Facet-06ad98ac-a954-430c-8fd3-96e1474ed1c8</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Transition Progress Details</value>
                 </componentInstanceProperties>
@@ -746,6 +552,10 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-5274ca9d-bfd6-4f5b-bd9e-a15d7ac3d610</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -814,6 +624,10 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentInstanceProperties>
+                    <name>showLegacyActivityComposer</name>
+                    <value>false</value>
+                </componentInstanceProperties>
                 <componentName>runtime_sales_activities:activityPanel</componentName>
                 <identifier>runtime_sales_activities_activityPanel</identifier>
             </componentInstance>
