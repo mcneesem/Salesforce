@@ -436,6 +436,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>NSP_Event_Type__c</field>
+            <value>
+                <stringValue>Demo</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>OwnerId</field>
             <value>
                 <elementReference>chooseDemoOwner</elementReference>
@@ -450,7 +456,7 @@
         <inputAssignments>
             <field>Subject</field>
             <value>
-                <stringValue>Created from Flow</stringValue>
+                <stringValue>{!SelectProduct.selectedProductLabel} Demo</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
