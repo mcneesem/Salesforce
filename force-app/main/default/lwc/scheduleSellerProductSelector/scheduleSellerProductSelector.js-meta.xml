@@ -21,6 +21,12 @@
                 type="String"
                 role="outputOnly"
                 description="The selected product value" />
+            <property
+                name="selectedProductLabel"
+                label="Selected Product Label"
+                type="String"
+                role="outputOnly"
+                description="The selected product label" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
