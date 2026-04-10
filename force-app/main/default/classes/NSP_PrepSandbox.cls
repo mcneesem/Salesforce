@@ -9,6 +9,11 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
     global void runApexClass(SandboxContext context){
         try{
             doQueues();
+            // clear the user trigger settings...
+            UserTriggerSettings__c settings = UserTriggerSettings__c.getOrgDefaults();
+            settings.AllowedAdmins__c = null;
+            settings.BccAddresses__c = null;
+            upsert settings;
         } catch(Exception e) {
             NSP_PrepSandbox.handleException( e , 'runApexClass:doQueues' );
         }
