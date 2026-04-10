@@ -14,19 +14,22 @@
                 label="Record ID"
                 type="String"
                 role="inputOnly"
-                description="The record Id" />
+                description="The record Id"
+                />
             <property
                 name="selectedProduct"
                 label="Selected Product"
                 type="String"
                 role="outputOnly"
-                description="The selected product value" />
+                description="The selected product value"
+                />
             <property
                 name="selectedProductLabel"
                 label="Selected Product Label"
                 type="String"
                 role="outputOnly"
-                description="The selected product label" />
+                description="The selected product label"
+                />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
