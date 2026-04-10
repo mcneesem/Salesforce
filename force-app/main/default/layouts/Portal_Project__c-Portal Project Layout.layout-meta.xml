@@ -6,6 +6,7 @@
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
     <excludeButtons>Edit</excludeButtons>
+    <excludeButtons>OpenSlackRecordChannel</excludeButtons>
     <excludeButtons>PrintableView</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -93,6 +94,16 @@
         <fields>Due_Date__c</fields>
         <relatedList>Portal_Task__c.Portal_Project__c</relatedList>
         <sortField>Due_Date__c</sortField>
+        <sortOrder>Asc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <fields>NAME</fields>
+        <fields>Contact__c</fields>
+        <fields>Position__c</fields>
+        <fields>Rank__c</fields>
+        <relatedList>Portal_Team_Member__c.Portal_Project__c</relatedList>
+        <sortField>Rank__c</sortField>
         <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
