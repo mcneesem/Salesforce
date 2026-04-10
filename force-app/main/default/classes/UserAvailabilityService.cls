@@ -343,18 +343,22 @@ public with sharing class UserAvailabilityService {
             window ,
             UserAvailabilityService.getStepMinutes( skill )
         );
-        if( slots != null && !slots.isEmpty() ){
+        if ( ( slots != null ) && !slots.isEmpty() ) {
             for(Event e : slots) {
                 //If time slot falls between Business Hours, include it
-                if ( e.StartDateTime != null
-                    && e.EndDateTime != null
+                if ( ( e.StartDateTime != null )
+                    && ( e.EndDateTime != null )
                     && ( UserAvailabilityService.defaultBusinessHoursId != null )
                     && BusinessHours.isWithin( UserAvailabilityService.defaultBusinessHoursId , e.StartDateTime ) )
                 {
                     Long durationMs = (Long)( e.EndDateTime.getTime() - e.StartDateTime.getTime() );
-                    Datetime completesAt = BusinessHours.add( UserAvailabilityService.defaultBusinessHoursId , e.StartDateTime , durationMs );
+                    Datetime completesAt = BusinessHours.add(
+                        UserAvailabilityService.defaultBusinessHoursId ,
+                        e.StartDateTime ,
+                        durationMs
+                    );
                     if ( completesAt == e.EndDateTime ) {
-                        businessHoursFilter.add(e);
+                        businessHoursFilter.add( e );
                     }
                 }
             }
