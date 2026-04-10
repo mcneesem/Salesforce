@@ -6437,7 +6437,7 @@ Climate (Full): https://nexus.insperity.com/groups/38605/posts/3272612-climate-p
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Post_Refresh_Email_Labels_2</shortDescription>
-        <value>RecepientIdStateretProgram,RecepientToClientSale,RecepientToCOBRA,RecepientToCOEPayroll,RecepientToCusrelCEO,RecepientToEPLI,RecepientToFinanceService,RecepientToForm8973,RecepientToGabrieul,RecepientToId401ORK,RecepientToId401Sales,RecepientToIdEEOTeam,RecepientToIdPriorWages,RecepientToOC,RecepientToOrientReq,RecepientToSBEA,RecepientToWCNotification,Recipient_email_Ids,Termination_Task_Completion</value>
+        <value>RecepientIdStateretProgram,RecepientToClientSale,RecepientToCOBRA,RecepientToCOEPayroll,RecepientToCusrelCEO,RecepientToEPLI,RecepientToFinanceService,RecepientToForm8973,RecepientToGabrieul,RecepientToId401ORK,RecepientToId401Sales,RecepientToIdEEOTeam,RecepientToIdPriorWages,RecepientToOC,RecepientToOrientReq,RecepientToSBEA,RecepientToWCNotification,Termination_Task_Completion</value>
     </labels>
     <labels>
         <fullName>Post_Tax_IIS</fullName>
