@@ -390,10 +390,10 @@ public with sharing class SandboxHealthController {
 
         try {
             Sales_Team_Email_Settings__c def = Sales_Team_Email_Settings__c.getOrgDefaults();
-            s.checks.add( checkExact('stes_bcc', 'BccEmailAddress__c', 'test.datacollection_sfqa2@insperity.com', ( def == null ) ? null : def.BccEmailAddress__c));
-            s.checks.add( checkSuffix('stes_nat', 'NationalAccountEmailAddress__c', STRING_INVALID, ( def == null ) ? null : def.NationalAccountEmailAddress__c));
-            s.checks.add( checkSuffix('stes_pcm', 'PrivateCapitalMarketEmailAddress__c', STRING_INVALID, ( def == null ) ? null : def.PrivateCapitalMarketEmailAddress__c));
-            s.checks.add( checkSuffix('stes_str', 'StrategicSalesEmailAddress__c', STRING_INVALID, ( def == null ) ? null : def.StrategicSalesEmailAddress__c));
+            s.checks.add( checkExact( 'stes_bcc' , 'BccEmailAddress__c' , 'test.datacollection_sfqa2@insperity.com' , ( def == null ) ? null : def.BccEmailAddress__c ) );
+            s.checks.add( checkSuffix( 'stes_nat' , 'NationalAccountEmailAddress__c' , STRING_INVALID , ( def == null ) ? null : def.NationalAccountEmailAddress__c , true ) );
+            s.checks.add( checkSuffix( 'stes_pcm' , 'PrivateCapitalMarketEmailAddress__c' , STRING_INVALID , ( def == null ) ? null : def.PrivateCapitalMarketEmailAddress__c , true ) );
+            s.checks.add( checkSuffix( 'stes_str' , 'StrategicSalesEmailAddress__c' , STRING_INVALID , ( def == null ) ? null : def.StrategicSalesEmailAddress__c , true ) );
         } catch ( Exception e ) {
             s.checks.add( newWarn( 'stes_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read Sales_Team_Email_Settings__c: ' + e.getMessage() ) );
         }
@@ -568,16 +568,12 @@ public with sharing class SandboxHealthController {
                     String key = 'peo_' + record.DeveloperName;
                     String label = record.Label;
                     String actual = record.NSP_Email_Address__c;
-                    if ( String.isBlank( actual ) ) {
-                        s.checks.add( newFail( key , label , 'Email address' , actual , 'Email address should not be blank' ) );
-                    } else {
-                        switch on sandboxName {
-                            when 'merge','test','stage','devserva','devservb','devservx' {
-                                s.checks.add( checkExact( key , label , expected , actual ) );
-                            }
-                            when else {
-                                s.checks.add( checkSuffix( key , label , STRING_INVALID , actual ) );
-                            }
+                    switch on sandboxName {
+                        when 'merge','test','stage','devserva','devservb','devservx' {
+                            s.checks.add( checkExact( key , label , expected , actual ) );
+                        }
+                        when else {
+                            s.checks.add( checkSuffix( key , label , STRING_INVALID , actual , true ) );
                         }
                     }
                 }
@@ -609,11 +605,7 @@ public with sharing class SandboxHealthController {
                     String label = record.Label;
                     String actual = record.NSP_Email_Address__c;
                     // Should be in the format email.invalid or have .[SANDBOX] suffix in dev sandboxes
-                    if ( String.isBlank( actual ) ) {
-                        s.checks.add( newFail( key , label , 'Email address' , actual , 'Email address should not be blank' ) );
-                    } else {
-                        s.checks.add( checkSuffix( key , label , STRING_INVALID , actual ) );
-                    }
+                    s.checks.add( checkSuffix( key , label , STRING_INVALID , actual , true ) );
                 }
             }
         } catch ( Exception e ) {
@@ -722,7 +714,7 @@ public with sharing class SandboxHealthController {
                 for ( Group q : queues ) {
                     String key = 'queue_' + String.valueOf( q.Id );
                     String label = q.Name;
-                    s.checks.add( checkSuffix( key , label , STRING_INVALID , q.Email ) );
+                    s.checks.add( checkSuffix( key , label , STRING_INVALID , q.Email , true ) );
                 }
             }
         } catch ( Exception e ) {
@@ -795,10 +787,12 @@ public with sharing class SandboxHealthController {
             : newFail(key, label, expectedDesc, actual, 'Should be blank');
     }
 
-    private static Check checkSuffix( String key , String label , String expectedSuffix , String actual ) {
+    private static Check checkSuffix( String key , String label , String expectedSuffix , String actual , Boolean blankAllowed ) {
         Check c = new Check();
         if ( String.isBlank( actual ) ) {
-            c = newFail( key , label , STRING_ENDS_W + expectedSuffix , actual , STRING_MISSING );
+            c = blankAllowed
+                ? newPass( key , label , actual , actual , 'Blank value OK' )
+                : newFail( key , label , STRING_ENDS_W + expectedSuffix , actual , STRING_MISSING );
         } else {
             c = actual.endsWith( expectedSuffix )
                 ? newPass( key , label , STRING_ENDS_W + expectedSuffix , actual , 'Has required suffix' )
@@ -806,6 +800,10 @@ public with sharing class SandboxHealthController {
         }
 
         return c;
+    }
+
+    private static Check checkSuffix( String key , String label , String expectedSuffix , String actual ) {
+        return checkSuffix( key , label , expectedSuffix , actual , false );
     }
 
     // Placeholder expectations for CSP Trusted Sites (keys must match CspTrustedSite fullName)
@@ -1055,20 +1053,16 @@ public with sharing class SandboxHealthController {
             if ( String.isBlank( lblName ) ) {
                 continue;
             }
-            String act = null;
+            String actual = null;
             try {
                 // Use namespace-aware overload: System.Label.get(namespace, name)
                 // No namespace for these labels, so pass empty string as namespace per feedback
-                act = System.Label.get( '' , lblName );
+                actual = System.Label.get( '' , lblName );
             } catch ( Exception e ) {
-                act = null;
+                actual = null;
             }
 
-            if ( String.isBlank( act ) ) {
-                email.checks.add( newFail( 'email_label_' + lblName , lblName , STRING_ENDS_W + STRING_INVALID , act , 'Label not found or empty via System.Label.get(' + lblName + ').' ) );
-            } else {
-                email.checks.add( checkSuffix( 'email_label_' + lblName , lblName , STRING_INVALID , act ) );
-            }
+            email.checks.add( checkSuffix( 'email_label_' + lblName , lblName , STRING_INVALID , actual , true) );
         }
         // Set section status for email labels
         email.status = SandboxHealthController.calculateSectionStatus( email.checks );
