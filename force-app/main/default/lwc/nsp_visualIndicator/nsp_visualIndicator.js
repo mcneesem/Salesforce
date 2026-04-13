@@ -65,19 +65,19 @@ export default class vi2 extends LightningElement {
             .then((data) =>{
                 this.accountsDetails = data;
                 //For Service Exemptions
-                if (this.accountsDetails[0].serviceExceptionPresent){
+                if ( this.accountsDetails[0].serviceExceptionPresent ) {
                     this.showContractExempt = true;
                 }
                 //For Asset Paperless
-                if (this.accountsDetails[0].assetPaperlessPresent){
+                if ( this.accountsDetails[0].assetPaperlessPresent ) {
                     this.showPaperless = true;
                 }
                 //For Asset National Account
-                if (this.accountsDetails[0].assetNationalAccount){
+                if ( this.accountsDetails[0].assetNationalAccount ) {
                     this.showNationalAccount = true;
                 }
                 //For workforce sync client
-                if (this.accountsDetails[0].workSyncClientTrue){
+                if ( this.accountsDetails[0].workSyncClientTrue ) {
                     this.showWorkSyncClientTrue = true;
                 }
                 // For HRScale
@@ -85,22 +85,22 @@ export default class vi2 extends LightningElement {
                     this.showHRScale = true;
                 }
                 //For client100True
-                if (this.accountsDetails[0].client100True){
+                if ( this.accountsDetails[0].client100True ) {
                     this.whoClient100True = true;
                 }
                 //For clientAndInsperity
-                if (this.accountsDetails[0].clientAndInsperity){
+                if ( this.accountsDetails[0].clientAndInsperity ) {
                     this.showClientAndInsperity = true;
                 }
                 //For PendingTermination
-                if (this.accountsDetails[0].pendingTermination){
+                if ( this.accountsDetails[0].pendingTermination ) {
                     this.showPendingTermination = true;
                 }
                 //For VOC indicator
-                if (this.accountsDetails[0].vocSurveyIndicator){
+                if ( this.accountsDetails[0].vocSurveyIndicator ) {
                     this.vocSurveyIndicator = true;
                 }
-                if(this.accountsDetails[0].hrCoreStrategicPartner){
+                if ( this.accountsDetails[0].hrCoreStrategicPartner ) {
                     this.showStrategicPartner = true;
                 }
                 //For Renewal Probability Indicator
