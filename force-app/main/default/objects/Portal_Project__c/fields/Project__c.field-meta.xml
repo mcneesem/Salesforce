@@ -7,7 +7,7 @@
     <relationshipLabel>Portal Projects</relationshipLabel>
     <relationshipName>Portal_Projects</relationshipName>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
 </CustomField>

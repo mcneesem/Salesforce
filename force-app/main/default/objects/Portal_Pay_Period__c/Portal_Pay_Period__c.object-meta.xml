@@ -164,7 +164,7 @@
     <nameField>
         <displayFormat>PPP-{0000000000}</displayFormat>
         <label>Portal Pay Period Name</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Portal Pay Periods</pluralLabel>

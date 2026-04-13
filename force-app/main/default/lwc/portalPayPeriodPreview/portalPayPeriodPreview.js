@@ -9,6 +9,7 @@ import FIRST_PAY_PERIOD_START_FIELD from "@salesforce/schema/Portal_Pay_Period__
 import IMPLEMENTATION_PAY_PERIOD_FIELD from "@salesforce/schema/Portal_Pay_Period__c.Implementation_Pay_Period__c";
 import PAY_FREQUENCY_FIELD from "@salesforce/schema/Portal_Pay_Period__c.Pay_Frequency__c";
 import PORTAL_CLIENT_FIELD from "@salesforce/schema/Portal_Pay_Period__c.Portal_Client__c";
+import PORTAL_PROJECT_FIELD from "@salesforce/schema/Portal_Pay_Period__c.Portal_Project__c";
 
 export default class PortalPayPeriodPreview extends LightningElement {
     @api recordId;
@@ -27,6 +28,7 @@ export default class PortalPayPeriodPreview extends LightningElement {
             IMPLEMENTATION_PAY_PERIOD_FIELD ,
             PAY_FREQUENCY_FIELD ,
             PORTAL_CLIENT_FIELD ,
+            PORTAL_PROJECT_FIELD ,
         ] ,
     })
     recordInfo({ error, data }) {
