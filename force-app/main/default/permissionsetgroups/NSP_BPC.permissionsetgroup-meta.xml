@@ -10,6 +10,7 @@
     <permissionSets>Allow_Closed_Lost_Opportunity</permissionSets>
     <permissionSets>Allow_Update_MidMarket_Role</permissionSets>
     <permissionSets>Allow_sending_of_List_Emails</permissionSets>
+    <permissionSets>Auto_Create_Opportunity_From_Account</permissionSets>
     <permissionSets>Basic_SetUp_Config_Access</permissionSets>
     <permissionSets>Bypass_Sales_Segment</permissionSets>
     <permissionSets>Bypass_Task_Event_Cancelled_Status</permissionSets>
