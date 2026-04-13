@@ -64,6 +64,7 @@ export default class vi2 extends LightningElement {
         gethisAccount({accId: this.accountId})
             .then((data) =>{
                 this.accountsDetails = data;
+                const assets = this.accountsDetails[0].accRecord.Assets ;
                 //For Service Exemptions
                 if ( this.accountsDetails[0].serviceExceptionPresent ) {
                     this.showContractExempt = true;
@@ -102,6 +103,10 @@ export default class vi2 extends LightningElement {
                 }
                 if ( this.accountsDetails[0].hrCoreStrategicPartner ) {
                     this.showStrategicPartner = true;
+                }
+                const assetRecAvailable = assets.find( rec => rec.Id === this.recordId );
+                if( assetRecAvailable ){
+                    this.showStrategicPartner = assetRecAvailable.HRCore_Strategic_Partner__c;
                 }
                 //For Renewal Probability Indicator
                 this.handleRenewalProbabilityIndicator( this.accountsDetails[0].accRecord );
