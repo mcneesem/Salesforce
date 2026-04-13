@@ -6,7 +6,9 @@
             <lightning-icon if:true={isWarn} icon-name="utility:warning" alternative-text="Warn" title="Warn" variant="warning" size="x-small"></lightning-icon>
         </lightning-layout-item>
         <lightning-layout-item class="content-col">
-            <div class="slds-text-title line-truncate" title={label}>{label}</div>
+            <div class="slds-text-title line-truncate" title={label}>
+                {label}
+            </div>
             <div class="slds-text-body_small slds-m-top_xx-small line-truncate">
                 <span class="slds-m-right_medium slds-text-color_weak">Actual:</span>
                 <span class="slds-m-left_xxx-small slds-text-color_default line-truncate" title={actual}>{actual}</span>
@@ -16,7 +18,9 @@
                 <span class="slds-m-left_xx-small slds-text-color_default line-truncate" title={expected}>{expected}</span>
             </div>
             <template if:false={isPass}>
-                <div class="slds-text-body_small slds-m-top_xx-small line-truncate" title={message}>{message}</div>
+                <div class="slds-text-body_small slds-m-top_xx-small line-truncate" title={message}>
+                    {message}
+                </div>
             </template>
         </lightning-layout-item>
     </lightning-layout>
