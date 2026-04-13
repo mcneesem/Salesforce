@@ -119,7 +119,6 @@ public without sharing class NSP_VisualIndicatorHelper {
         )
     {
         VisualIndicatorWrapper accWrapper = new VisualIndicatorWrapper();
-        accWrapper.hrCoreStrategicPartner = false;
         if (expList != null) {
             checkServiceExceptions(expList, accWrapper);
         }
