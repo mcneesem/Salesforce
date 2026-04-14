@@ -22,6 +22,11 @@
                 <default>false</default>
                 <label>WX to PEO</label>
             </value>
+            <value>
+                <fullName>IPS to HRCore</fullName>
+                <default>false</default>
+                <label>IPS to HRCore</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
