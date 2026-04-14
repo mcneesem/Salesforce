@@ -1,23 +1,27 @@
 <template>
-    <lightning-layout class="host-row" multiple-rows="false" vertical-align="start">
-        <lightning-layout-item size="x-small" class="icon-col slds-m-right_small slds-m-top_x-small">
+    <lightning-layout multiple-rows>
+        <lightning-layout-item size="x-small" class="slds-m-right_small slds-m-top_medium">
             <lightning-icon if:true={isPass} icon-name="utility:success" alternative-text="Pass" title="Pass" variant="success" size="x-small"></lightning-icon>
             <lightning-icon if:true={isFail} icon-name="utility:error" alternative-text="Fail" title="Fail" variant="error" size="x-small"></lightning-icon>
             <lightning-icon if:true={isWarn} icon-name="utility:warning" alternative-text="Warn" title="Warn" variant="warning" size="x-small"></lightning-icon>
         </lightning-layout-item>
-        <lightning-layout-item class="content-col">
-            <div class="slds-text-title line-truncate" title={label}>{label}</div>
-            <div class="slds-text-body_small slds-m-top_xx-small line-truncate">
-                <span class="slds-m-right_medium slds-text-color_weak">Actual:</span>
-                <span class="slds-m-left_xxx-small slds-text-color_default line-truncate" title={actual}>{actual}</span>
+        <lightning-layout-item>
+            <div class="slds-truncate" title={label}>
+                <span class="slds-text-title">{label}</span>
+                <div class="slds-text-body_small slds-m-top_xx-small">
+                    <span class="slds-m-right_medium slds-text-color_weak">Actual:</span>
+                    <span class="slds-m-left_xxx-small slds-text-color_default">{actual}</span>
+                </div>
+                <div class="slds-text-body_small">
+                    <span class="slds-text-color_weak">Expected:</span>
+                    <span class="slds-m-left_xx-small slds-text-color_default">{expected}</span>
+                </div>
+                <template if:false={isPass}>
+                    <div class="slds-text-body_small">
+                        {message}
+                    </div>
+                </template>
             </div>
-            <div class="slds-text-body_small line-truncate">
-                <span class="slds-text-color_weak">Expected:</span>
-                <span class="slds-m-left_xx-small slds-text-color_default line-truncate" title={expected}>{expected}</span>
-            </div>
-            <template if:false={isPass}>
-                <div class="slds-text-body_small slds-m-top_xx-small line-truncate" title={message}>{message}</div>
-            </template>
         </lightning-layout-item>
     </lightning-layout>
 </template>
