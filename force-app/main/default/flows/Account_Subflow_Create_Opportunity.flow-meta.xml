@@ -143,9 +143,31 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Check_Owner_Custom_Permission</targetReference>
+                <targetReference>Get_Account_Owner_Record</targetReference>
             </connector>
             <label>Present</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_if_Account_Owner_Exists</name>
+        <label>Check if Account Owner Exists</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_Owner</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Account_Owner_Record</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Owner_Custom_Permission</targetReference>
+            </connector>
+            <label>Has Owner</label>
         </rules>
     </decisions>
     <decisions>
@@ -319,6 +341,36 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <description>Prevent DmlExceptions: FIELD_CUSTOM_VALIDATION_EXCEPTION: New opportunities cannot be created on accounts owned by &quot;Available&quot; (User.Id=0054x000008PgqNAAS)</description>
+        <name>Get_Account_Owner_Record</name>
+        <label>Get Account Owner Record</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_if_Account_Owner_Exists</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Account_Name.OwnerId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Id</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>0054x000008PgqNAAS</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>User</object>
+        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_ACR_COI</name>
         <label>Get ACR COI</label>
         <locationX>0</locationX>
@@ -445,7 +497,7 @@
         <name>hasAutoCreateOpportunityPermission</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
-        <isInput>true</isInput>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
