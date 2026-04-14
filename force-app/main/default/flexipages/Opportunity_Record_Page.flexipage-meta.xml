@@ -451,6 +451,40 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Source__c</fieldItem>
+                <identifier>RecordSource_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Insurance Services</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Client_Type__c</fieldItem>
+                <identifier>RecordClient_Type_cField3</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Insurance Services</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.Type</fieldItem>
                 <identifier>RecordTypeField</identifier>
             </fieldInstance>
@@ -612,7 +646,7 @@
                 <fieldItem>Record.NSP_TransitionType__c</fieldItem>
                 <identifier>RecordNSP_TransitionType_cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2</booleanFilter>
+                    <booleanFilter>1 OR 2 OR 3</booleanFilter>
                     <criteria>
                         <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
                         <operator>EQUAL</operator>
@@ -622,6 +656,11 @@
                         <leftValue>{!$User.Profile.Name}</leftValue>
                         <operator>CONTAINS</operator>
                         <rightValue>Sales Admin</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Is_Services_Opportunity__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>

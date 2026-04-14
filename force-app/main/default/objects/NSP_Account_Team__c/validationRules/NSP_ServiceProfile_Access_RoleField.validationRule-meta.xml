@@ -14,39 +14,44 @@
   ) ,
   OR(
     NOT(
-      (ISPICKVAL( NSP_Role__c , &quot;WA/WX Payroll Specialist&quot;)) ||
-      (ISPICKVAL( NSP_Role__c , &quot;WX/WA Benefits Specialist&quot;)) ||
-      (ISPICKVAL(NSP_Role__c , &apos;WX/WA Manager&apos;)) ||
-      (ISPICKVAL(NSP_Role__c , &apos;WX/WA Supervisor&apos;)) ||
-      (ISPICKVAL(NSP_Role__c , &apos;WX/WA Customer Success Specialist&apos;)) ||
-      (ISPICKVAL(NSP_Role__c , &apos;WX Open Enrollment Specialist&apos;)) ||
-      (ISPICKVAL(NSP_Role__c , &apos;WX Time Specialist&apos;)) ||
-      (ISPICKVAL(NSP_Role__c , &apos;WX Business Team&apos;)) ||
-      (ISPICKVAL( NSP_Role__c , &apos;Customer Success Specialist&apos;)) ||
-      (ISPICKVAL( NSP_Role__c , &apos;ITA Analyst&apos;)) ||
-      (ISPICKVAL( NSP_Role__c , &apos;Manager, ITA&apos;)) ||
-      (ISPICKVAL( NSP_Role__c , &apos;ITA Support Specialist&apos;)) ||
-      (ISPICKVAL( NSP_Role__c , &apos;Manager, ITA Support&apos;)) ||
-      (ISPICKVAL( NSP_Role__c , &apos;401k Plan Consultant&apos;))
-    ),
+      OR(
+        ISPICKVAL( NSP_Role__c , &quot;WA/WX Payroll Specialist&quot; ) ,
+        ISPICKVAL( NSP_Role__c , &quot;WX/WA Benefits Specialist&quot; ) ,
+        ISPICKVAL( NSP_Role__c , &apos;WX/WA Manager&apos; ) ,
+        ISPICKVAL( NSP_Role__c , &apos;WX/WA Supervisor&apos; ) ,
+        ISPICKVAL( NSP_Role__c , &apos;WX/WA Customer Success Specialist&apos; ) ,
+        ISPICKVAL( NSP_Role__c , &apos;WX Open Enrollment Specialist&apos; ) ,
+        ISPICKVAL( NSP_Role__c , &apos;WX Time Specialist&apos; ) ,
+        ISPICKVAL( NSP_Role__c , &apos;WX Business Team&apos; ) ,
+        ISPICKVAL( NSP_Role__c , &apos;Customer Success Specialist&apos; ) ,
+        ISPICKVAL( NSP_Role__c , &apos;ITA Analyst&apos; ) ,
+        ISPICKVAL( NSP_Role__c , &apos;Manager, ITA&apos; ) ,
+        ISPICKVAL( NSP_Role__c , &apos;ITA Support Specialist&apos; ) ,
+        ISPICKVAL( NSP_Role__c , &apos;Manager, ITA Support&apos; ) ,
+        ISPICKVAL( NSP_Role__c , &apos;401k Plan Consultant&apos; ) ,
+        ISPICKVAL( NSP_Role__c , &apos;Insurance Services&apos; )
+      )
+    ) ,
     NOT(
-      (ISPICKVAL(PRIORVALUE(NSP_Role__c),&apos;WA/WX Payroll Specialist&apos;)) ||
-      (ISPICKVAL(PRIORVALUE(NSP_Role__c),&apos;WX/WA Benefits Specialist&apos;)) ||
-      (ISPICKVAL(PRIORVALUE(NSP_Role__c),&apos;WX/WA Manager&apos;)) ||
-      (ISPICKVAL(PRIORVALUE(NSP_Role__c),&apos;WX/WA Supervisor&apos;)) ||
-      (ISPICKVAL(PRIORVALUE(NSP_Role__c),&apos;WX/WA Customer Success Specialist&apos;)) ||
-      (ISPICKVAL(PRIORVALUE(NSP_Role__c),&apos;WX Time Specialist&apos;)) ||
-      (ISPICKVAL(PRIORVALUE(NSP_Role__c),&apos;WX Open Enrollment Specialist&apos;)) ||
-      (ISPICKVAL(PRIORVALUE(NSP_Role__c),&apos;WX Business Team&apos;) ||
-      (ISPICKVAL(PRIORVALUE(NSP_Role__c),&apos;Customer Success Specialist&apos;)) ||
-      (ISPICKVAL(PRIORVALUE(NSP_Role__c),&apos;ITA Analyst&apos;)) ||
-      (ISPICKVAL(PRIORVALUE(NSP_Role__c),&apos;Manager, ITA&apos;)) ||
-      (ISPICKVAL(PRIORVALUE(NSP_Role__c),&apos;ITA Support Specialist&apos;)) ||
-      (ISPICKVAL(PRIORVALUE(NSP_Role__c),&apos;Manager, ITA Support&apos;)) ||
-      (ISPICKVAL(PRIORVALUE(NSP_Role__c),&apos;401k Plan Consultant&apos;))
+      OR(
+        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;WA/WX Payroll Specialist&apos; ) ,
+        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;WX/WA Benefits Specialist&apos; ) ,
+        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;WX/WA Manager&apos; ) ,
+        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;WX/WA Supervisor&apos; ) ,
+        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;WX/WA Customer Success Specialist&apos; ) ,
+        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;WX Time Specialist&apos; ) ,
+        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;WX Open Enrollment Specialist&apos; ) ,
+        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;WX Business Team&apos; ) ,
+        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;Customer Success Specialist&apos; ) ,
+        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;ITA Analyst&apos; ) ,
+        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;Manager, ITA&apos; ) ,
+        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;ITA Support Specialist&apos; ) ,
+        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;Manager, ITA Support&apos; ) ,
+        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;401k Plan Consultant&apos; ) ,
+        ISPICKVAL( PRIORVALUE( NSP_Role__c ) , &apos;Insurance Services&apos; )
+      )
     )
   )
-)
 )</errorConditionFormula>
     <errorDisplayField>NSP_Role__c</errorDisplayField>
     <errorMessage>Service User can only select WX/WA Benefits Specialist, WA/WX Payroll Specialist, WX/WA Manager, WX/WA Supervisor, WX/WA Customer Success Specialist, WX Time Specialist, WX Business Team, Customer Success Specialist, 401k Plan Consultant Roles</errorMessage>

@@ -38,6 +38,10 @@
             <fullName>Prospect</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Terminated</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Closed_Lost_Group__c</picklist>
