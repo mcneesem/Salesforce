@@ -3,6 +3,29 @@
     <apiVersion>64.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
+        <name>Assign_Discovery_Call_Created_Date</name>
+        <label>Assign Discovery Call Created Date</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varLead.Discovery_Call_Created_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>leadUpdateNeeded</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Does_Lead_record_need_to_be_updated</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_Discovery_Call_Created_Date_to_varOpportunity</name>
         <label>Assign Discovery Call Created Date to varOpportunity</label>
         <locationX>0</locationX>
@@ -38,7 +61,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Does_Lead_record_need_to_be_updated</targetReference>
+            <targetReference>Does_Discovery_Call_Created_Date_need_updating</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -312,7 +335,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Is_varEvent_a_Discovery_Call_and_does_varLead_have_Discovery_Calls_already</targetReference>
+            <targetReference>Is_varEvent_a_Discovery_Call</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -364,6 +387,38 @@
                 <targetReference>Get_User_Record_Access_for_non_Completed_Discovery_Call</targetReference>
             </connector>
             <label>Found Customer Signer Account</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Does_Discovery_Call_Created_Date_need_updating</name>
+        <label>Does Discovery Call Created Date need updating?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Does_Lead_record_need_to_be_updated</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No update for Discovery Call Created Date</defaultConnectorLabel>
+        <rules>
+            <name>Yes_update_Discovery_Call_Created_Date</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>isDiscoveryCallCreated</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>varLead.Discovery_Call_Created_Date__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Flow.CurrentDate</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Discovery_Call_Created_Date</targetReference>
+            </connector>
+            <label>Yes update Discovery Call Created Date</label>
         </rules>
     </decisions>
     <decisions>
@@ -497,10 +552,42 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>varEvent.NSP_Event_Subtype__c</leftValueReference>
+                <operator>WasSet</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Is_the_WhoId_a_Lead</targetReference>
             </connector>
             <label>Yes - varEvent has relevant info</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Does_varLead_have_Discovery_Calls_already</name>
+        <label>Does varLead have Discovery Calls already?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Does_Discovery_Call_Created_Date_need_updating</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Lead already has one</defaultConnectorLabel>
+        <rules>
+            <name>Lead_does_not_have_one_yet</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varLead.NSP_Has_Discovery_Calls__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Has_Discovery_Calls_to_varLead</targetReference>
+            </connector>
+            <label>Lead does not have one yet</label>
         </rules>
     </decisions>
     <decisions>
@@ -553,7 +640,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Is_varEvent_a_Discovery_Call_and_does_varLead_have_Discovery_Calls_already</targetReference>
+            <targetReference>Is_varEvent_a_Discovery_Call</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Lead Status is not New</defaultConnectorLabel>
         <rules>
@@ -620,22 +707,22 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Is_varEvent_a_Discovery_Call_and_does_varLead_have_Discovery_Calls_already</name>
-        <label>Is varEvent a Discovery Call and does varLead have Discovery Calls already?</label>
+        <name>Is_varEvent_a_Discovery_Call</name>
+        <label>Is varEvent a Discovery Call</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
             <targetReference>Does_Lead_record_need_to_be_updated</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>No Lead Discovery Call update needed</defaultConnectorLabel>
+        <defaultConnectorLabel>Not a Lead Discovery Call</defaultConnectorLabel>
         <rules>
-            <name>Yes_Discovery_Call_and_Lead_does_not_have_them_yet</name>
+            <name>Yes_Discovery_Call</name>
             <conditionLogic>1 AND (2 OR 3)</conditionLogic>
             <conditions>
-                <leftValueReference>varLead.NSP_Has_Discovery_Calls__c</leftValueReference>
+                <leftValueReference>varEvent.NSP_Event_Subtype__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <stringValue>Discovery Call</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -653,9 +740,9 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assign_Has_Discovery_Calls_to_varLead</targetReference>
+                <targetReference>Does_varLead_have_Discovery_Calls_already</targetReference>
             </connector>
-            <label>Yes Discovery Call and Lead does not have them yet</label>
+            <label>Yes Discovery Call</label>
         </rules>
     </decisions>
     <decisions>
@@ -987,6 +1074,7 @@
         <queriedFields>Id</queriedFields>
         <queriedFields>Status</queriedFields>
         <queriedFields>NSP_Has_Discovery_Calls__c</queriedFields>
+        <queriedFields>Discovery_Call_Created_Date__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_Opportunity_Info</name>
@@ -1237,6 +1325,7 @@
         </faultConnector>
         <inputReference>varOpportunity</inputReference>
     </recordUpdates>
+    <runInMode>SystemModeWithSharing</runInMode>
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
