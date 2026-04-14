@@ -36928,6 +36928,10 @@
         <layout>NSP_Amendment_Checklist__c-Amendment Checklist Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>NSP_Participation_SaaS_Activity__c-I-9 Assist %26 E-Verify</layout>
+        <recordType>NSP_Participation_SaaS_Activity__c.I_9_Assist_E_Verify</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>NSP_Participation_SaaS_Activity__c-ITA Activity Layout</layout>
         <recordType>NSP_Participation_SaaS_Activity__c.ITA_Activity</recordType>
     </layoutAssignments>
