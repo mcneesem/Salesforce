@@ -15,8 +15,8 @@
         </inputParameters>
     </actionCalls>
     <apiVersion>56.0</apiVersion>
-    <interviewLabel>Update Free Periods Applicable on Order Item on Invoice Posting {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Update Free Periods Applicable on Order Item on Invoice Posting</label>
+    <interviewLabel>DEPRECATED - Update Free Periods Applicable on Order Item on Invoice Posting {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>DEPRECATED - Update Free Periods Applicable on Order Item on Invoice Posting</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -54,5 +54,5 @@
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
 </Flow>

@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Set_AIMS_Billing_Id</name>
+        <label>Set AIMS Billing Id</label>
+        <locationX>611</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.NSP_AIMS_Billing_ID__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>get_linked_order_item.NSP_AIMS_Billing_ID__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.NSP_Funding_Source_PEO__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>get_linked_order_item.NSP_Funding_Source_PEO__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>check_if_order_item_has_free_periods</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_as_Free_month</name>
+        <label>Set as Free month</label>
+        <locationX>314</locationX>
+        <locationY>935</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.NSP_Reason_For_Zero_Invoice_Line__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Free Month</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Set_Reason_for_Zeroing_out_Inv_Line</name>
+        <label>Set Reason for Zeroing out Inv Line</label>
+        <locationX>50</locationX>
+        <locationY>935</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.NSP_Reason_For_Zero_Invoice_Line__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Partial Period</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Check_Free_Period_EndDate</name>
+        <label>Check Free Period EndDate</label>
+        <locationX>380</locationX>
+        <locationY>611</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Within_EndDate</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>get_linked_order_item.Free_Periods_End_Date__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.blng__StartDate__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.blng__StartDate__c</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <elementReference>get_linked_order_item.Free_Periods_End_Date__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>update_invoice_line_to_zero</targetReference>
+            </connector>
+            <label>Within EndDate</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>check_if_order_item_has_free_periods</name>
+        <label>check if order item has free periods</label>
+        <locationX>611</locationX>
+        <locationY>503</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>free_periods_available</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>get_linked_order_item.SBQQ__Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Activated</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>get_linked_order_item.NSP_Free_Periods_Available__c</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>1.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Free_Period_EndDate</targetReference>
+            </connector>
+            <label>free periods available</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Identify_Free_Vs_Partial_Month</name>
+        <label>Identify Free Vs Partial Month</label>
+        <locationX>182</locationX>
+        <locationY>827</locationY>
+        <defaultConnector>
+            <targetReference>Set_as_Free_month</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Zeroing Inv Line for Free Month</defaultConnectorLabel>
+        <rules>
+            <name>Zeroing_Inv_Line_for_Partial_Period</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>get_linked_order_item.NSP_Total_Free_Periods__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>get_linked_order_item.NSP_Free_Periods_Available__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>get_linked_order_item.NSP_Partial_Period_Applicable__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Reason_for_Zeroing_out_Inv_Line</targetReference>
+            </connector>
+            <label>Zeroing Inv Line for Partial Period</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Order_Item_Null_Check</name>
+        <label>Order Item Null Check</label>
+        <locationX>858</locationX>
+        <locationY>395</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>OrderItem_Exists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>get_linked_order_item</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_AIMS_Billing_Id</targetReference>
+            </connector>
+            <label>OrderItem Exists</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>Invoice Lines - Before Save - Create Zero Dollar Invoice Lines {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Invoice Lines - Before Save - Create Zero Dollar Invoice Lines</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>get linked order item</description>
+        <name>get_linked_order_item</name>
+        <label>get linked order item</label>
+        <locationX>611</locationX>
+        <locationY>287</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Order_Item_Null_Check</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.blng__OrderProduct__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>OrderItem</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>update invoice line to zero</description>
+        <name>update_invoice_line_to_zero</name>
+        <label>update invoice line to zero</label>
+        <locationX>182</locationX>
+        <locationY>719</locationY>
+        <connector>
+            <targetReference>Identify_Free_Vs_Partial_Month</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>blng__Subtotal__c</field>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>blng__UnitPrice__c</field>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>485</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>get_linked_order_item</targetReference>
+        </connector>
+        <object>blng__InvoiceLine__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Draft</status>
+</Flow>
