@@ -3,7 +3,6 @@
     <fullName>All</fullName>
     <columns>NAME</columns>
     <columns>Portal_Project__c</columns>
-    <columns>Portal_Client__c</columns>
     <columns>Contact__c</columns>
     <columns>Contact_Name__c</columns>
     <columns>Position__c</columns>
