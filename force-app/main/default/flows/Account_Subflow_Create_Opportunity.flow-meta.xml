@@ -86,6 +86,19 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_varFaultElement_Get_Account_Owner_Record</name>
+        <label>Assign varFaultElement - Get Account Owner Record</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Account_Owner_Record</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
         <name>Assign_varFaultElement_Get_ACR_COI</name>
         <label>Assign varFaultElement - Get ACR COI</label>
         <locationX>0</locationX>
@@ -350,6 +363,9 @@
         <connector>
             <targetReference>Check_if_Account_Owner_Exists</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Get_Account_Owner_Record</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
