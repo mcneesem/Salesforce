@@ -15,6 +15,7 @@ const FIELDS = [
 
 export default class ScheduleSellerProductSelector extends LightningElement {
     @api selectedProduct;
+    @api selectedProductLabel;
     @api recordId;
     record;
     error;
@@ -101,6 +102,14 @@ export default class ScheduleSellerProductSelector extends LightningElement {
 
     handleProductChange( event ) {
         this.selectedProduct = event?.detail?.value;
+        this.selectedProductLabel = this.getLabelByValue( this.selectedProduct );
+    }
+
+    //Get the label of selected product
+    getLabelByValue( value ) {
+        const opts = this.productOptions || [];
+        const match = opts.find( o => o.value === value );
+        return match ? match.label : null;
     }
 
 }

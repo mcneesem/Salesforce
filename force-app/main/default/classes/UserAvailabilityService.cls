@@ -1,5 +1,5 @@
 public with sharing class UserAvailabilityService {
-    // test w/ UserAvailabilityServiceTest (89%)
+    // test w/ UserAvailabilityServiceTest (90%)
 
     //Returns the available days based on Business Hours for the given skill...
     @AuraEnabled(cacheable=true)
@@ -325,7 +325,7 @@ public with sharing class UserAvailabilityService {
 
     // helper method to defeat sonar cognitive complexity...
     private static Integer countAvailableSlots( List<Event> records , Event window , String skill ) {
-        List<String> available = UserAvailabilityService.getAvailableSlots(
+        List<Event> available = UserAvailabilityService.getAvailableSlots(
             records ,
             window ,
             skill
@@ -334,14 +334,36 @@ public with sharing class UserAvailabilityService {
     }
 
     // helper method to defeat sonar cognitive complexity...
-    private static List<String> getAvailableSlots( List<Event> records , Event window , String skill ) {
+    private static List<Event> getAvailableSlots( List<Event> records , Event window , String skill ) {
         // Use existing availability algorithm, summing per-user counts per window
         UserAvailability helper = new UserAvailability();
-        return helper.getAvailableSlots(
+        List<Event> businessHoursFilter = new List<Event>();
+        List<Event> slots = helper.getAvailableSlots(
             records ,
             window ,
             UserAvailabilityService.getStepMinutes( skill )
         );
+        if ( ( slots != null ) && !slots.isEmpty() ) {
+            for(Event e : slots) {
+                //If time slot falls between Business Hours, include it
+                if ( ( e.StartDateTime != null )
+                    && ( e.EndDateTime != null )
+                    && ( UserAvailabilityService.defaultBusinessHoursId != null )
+                    && BusinessHours.isWithin( UserAvailabilityService.defaultBusinessHoursId , e.StartDateTime ) )
+                {
+                    Long durationMs = (Long)( e.EndDateTime.getTime() - e.StartDateTime.getTime() );
+                    Datetime completesAt = BusinessHours.add(
+                        UserAvailabilityService.defaultBusinessHoursId ,
+                        e.StartDateTime ,
+                        durationMs
+                    );
+                    if ( completesAt == e.EndDateTime ) {
+                        businessHoursFilter.add( e );
+                    }
+                }
+            }
+        }
+        return businessHoursFilter;
     }
 
     private static Integer getStepMinutes( String skill ) {
@@ -456,7 +478,7 @@ public with sharing class UserAvailabilityService {
                 {
                     userBusy = busyByUser.get( uid );
                 }
-                List<String> slots = UserAvailabilityService.getAvailableSlots(
+                List<Event> slots = UserAvailabilityService.getAvailableSlots(
                     userBusy ,
                     window ,
                     skill
@@ -488,7 +510,13 @@ public with sharing class UserAvailabilityService {
                 && ( UserAvailabilityService.settings != null )
                 )
             {
-                defaultBusinessHoursId = UserAvailabilityService.settings.BusinessHoursId__c;
+                String settingId = UserAvailabilityService.settings.BusinessHoursId__c;
+                if ( String.isNotBlank( settingId ) && ( settingId InstanceOf Id ) ) {
+                    Id checkId = Id.valueOf( settingId );
+                    if ( checkId != null && checkId.getSObjectType() == Schema.BusinessHours.SObjectType ) {
+                        defaultBusinessHoursId = checkId;
+                    }
+                }
             }
             return defaultBusinessHoursId;
         }

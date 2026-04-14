@@ -1,13 +1,13 @@
 // intentionally `without sharing` to ensure that LWC/scheduleSelle has access to all Event records...
 public without sharing class UserAvailability {
-    // test w/ UserAvailabilityTest (91%)
+    // test w/ UserAvailabilityTest (80%)
 
     private List<Event> busy = new List<Event>();
     private List<Event> fused = new List<Event>();
     private Integer slotSizeMinutes = 15;
 
     // find the available time slots within the window of time that do not conflict with the existing Event records...
-    public List<String> getAvailableSlots(
+    public List<Event> getAvailableSlots(
         List<Event> records ,
         Event window ,
         Integer steps
@@ -23,7 +23,7 @@ public without sharing class UserAvailability {
         if ( steps == null ) {
             steps = 1;
         }
-        List<String> available = null;
+        List<Event> available = null;
         if ( window != null ) {
             for ( Event record : records ) {
                 if ( ( record.StartDateTime != null )
@@ -153,25 +153,9 @@ public without sharing class UserAvailability {
         );
     }
 
-    private String toString( Event record ) {
-        String response = null;
-        if ( ( record != null )
-            && ( record.StartDateTime != null )
-            && ( record.EndDateTime != null )
-            )
-        {
-            response = ''
-                + record.StartDateTime.format( 'yyyy-MM-dd HH:mm' )
-                + ' - '
-                + record.EndDateTime.format( 'HH:mm' )
-                ;
-        }
-        return response;
-    }
-
     // compare the fuzed/merged busy slots to the window for all slots, returning only the available slots, split on the step size in minutes...
-    private List<String> availableSlots( Event window ) {
-        List<String> available = null;
+    private List<Event> availableSlots( Event window ) {
+        List<Event> available = null;
         if ( this.fused == null ) {
             this.fused = new List<Event>();
         }
@@ -208,13 +192,13 @@ public without sharing class UserAvailability {
     }
 
     // split range into discrete slots...
-    private List<String> splitRange( Event range ) {
+    private List<Event> splitRange( Event range ) {
         return this.splitRange( null , range );
     }
 
-    private List<String> splitRange( List<String> slots , Event range ) {
+    private List<Event> splitRange( List<Event> slots , Event range ) {
         if ( slots == null ) {
-            slots = new List<String>();
+            slots = new List<Event>();
         }
         if ( ( this.slotSizeMinutes == null ) || ( this.slotSizeMinutes < 1 ) ) {
             this.slotSizeMinutes = 1;
@@ -227,11 +211,9 @@ public without sharing class UserAvailability {
             DateTime temp = range.StartDateTime;
             while ( temp.addMinutes( this.slotSizeMinutes ) <= range.EndDateTime ) {
                 slots.add(
-                    this.toString(
-                        new Event(
-                            StartDateTime=temp ,
-                            EndDateTime=temp.addMinutes( this.slotSizeMinutes )
-                        )
+                    new Event(
+                        StartDateTime=temp ,
+                        EndDateTime=temp.addMinutes( this.slotSizeMinutes )
                     )
                 );
                 temp = temp.addMinutes( this.slotSizeMinutes );
@@ -239,16 +221,5 @@ public without sharing class UserAvailability {
         }
         return slots;
     }
-
-    private List<String> toString( List<Event> records ) {
-        List<String> response = new List<String>();
-        if ( ( records != null ) && !records.isEmpty() ) {
-            for ( Event record : records ) {
-                response.add( this.toString( record ) );
-            }
-        }
-        return response;
-    }
-
 }
 //
