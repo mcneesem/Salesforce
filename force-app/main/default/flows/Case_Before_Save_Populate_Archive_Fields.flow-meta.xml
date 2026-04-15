@@ -41,7 +41,7 @@
             <assignToReference>$Record.Contact_Name__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>$Record.Contact.Name</elementReference>
+                <elementReference>$Record.Contact_Name__c</elementReference>
             </value>
         </assignmentItems>
     </assignments>
