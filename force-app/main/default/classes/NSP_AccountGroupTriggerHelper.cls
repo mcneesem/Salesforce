@@ -1,6 +1,6 @@
 public class NSP_AccountGroupTriggerHelper {
     // test w/ NSP_AccountGroupMemberController_Test (92%)
-    // test w/ NSP_AccountGroupTriggerHelper (77%)
+    // test w/ NSP_AccountGroupTriggerHelperTest (77%)
 
     //
     // Iterates throught the list of NSP_Account_Groups and Updates the group Name based on Criteria.
