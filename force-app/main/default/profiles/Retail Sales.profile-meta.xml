@@ -14043,6 +14043,10 @@
         <layout>NSP_Opportunity_To_Quote_Data_Map__mdt-Opportunity To Quote Data Map Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>NSP_Participation_SaaS_Activity__c-I-9 Assist %26 E-Verify</layout>
+        <recordType>NSP_Participation_SaaS_Activity__c.I_9_Assist_E_Verify</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>NSP_Partner_Configurations__mdt-Partner Configuration Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
