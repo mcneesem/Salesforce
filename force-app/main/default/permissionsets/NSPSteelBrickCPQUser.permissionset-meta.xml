@@ -7528,6 +7528,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SBQQ__Quote__c.Multiple_Companies_Setup_Fee__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__Quote__c.NSP_Budgetary_Quote__c</field>
         <readable>true</readable>
     </fieldPermissions>
