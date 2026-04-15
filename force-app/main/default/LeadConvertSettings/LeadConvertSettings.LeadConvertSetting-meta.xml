@@ -260,6 +260,10 @@
     <objectMapping>
         <inputObject>Lead</inputObject>
         <mappingFields>
+            <inputField>Discovery_Call_Created_Date__c</inputField>
+            <outputField>Discovery_Call_Created_Date__c</outputField>
+        </mappingFields>
+        <mappingFields>
             <inputField>NSP_Current_Provider__c</inputField>
             <outputField>NSP_Current_Provider__c</outputField>
         </mappingFields>

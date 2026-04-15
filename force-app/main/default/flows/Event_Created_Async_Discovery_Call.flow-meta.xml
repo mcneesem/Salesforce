@@ -42,6 +42,13 @@
                 <elementReference>$Record.StartDateTime</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varEvent.NSP_Event_Subtype__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.NSP_Event_Subtype__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Event_Subflow_Update_Related_to_Account_Opportunity_or_Lead</targetReference>
         </connector>
@@ -94,7 +101,7 @@
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <filterLogic>(1 OR 2) AND 3 AND 4 AND (5 OR 6)</filterLogic>
+        <filterLogic>(1 OR 2) AND 3 AND 4 AND (5 OR 6 OR 7)</filterLogic>
         <filters>
             <field>NSP_Event_Type__c</field>
             <operator>EqualTo</operator>
@@ -135,6 +142,13 @@
             <operator>StartsWith</operator>
             <value>
                 <stringValue>001</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>WhoId</field>
+            <operator>StartsWith</operator>
+            <value>
+                <stringValue>00Q</stringValue>
             </value>
         </filters>
         <object>Event</object>
