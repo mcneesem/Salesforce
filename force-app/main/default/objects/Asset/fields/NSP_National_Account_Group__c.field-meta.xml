@@ -527,6 +527,11 @@
                 <default>false</default>
                 <label>Preserve Partners</label>
             </value>
+            <value>
+                <fullName>141</fullName>
+                <default>false</default>
+                <label>Duration Capital</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
