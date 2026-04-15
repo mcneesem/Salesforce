@@ -53,9 +53,10 @@ public without sharing class NSP_VisualIndicatorHelper {
                             NSP_Client_Retained_Workers_Comp__c ,
                             NSP_Pending_Termination__c ,
                             NSP_Product_Line__c ,
-                            Is_HRScale__c,
+                            Is_HRScale__c ,
                             RecordTypeId ,
-                            NSP_National_Account__c
+                            NSP_National_Account__c ,
+                            HRCore_Strategic_Partner__c
                         FROM Assets
                     ) ,
                     (
@@ -186,8 +187,11 @@ public without sharing class NSP_VisualIndicatorHelper {
         {
             accWrapper.clientAndInsperity = true;
         }
-        if ( asset.NSP_Pending_Termination__c) {
+        if ( asset.NSP_Pending_Termination__c ) {
             accWrapper.pendingTermination = true;
+        }
+        if ( asset.HRCore_Strategic_Partner__c ) {
+            accWrapper.hrCoreStrategicPartner = true;
         }
     }
 
@@ -299,25 +303,27 @@ public without sharing class NSP_VisualIndicatorHelper {
     //
     public class VisualIndicatorWrapper{
         @AuraEnabled
-        public Account accRecord {get;set;}
+        public Account accRecord { get; set; }
         @AuraEnabled
-        public Boolean serviceExceptionPresent {get;set;}
+        public Boolean serviceExceptionPresent { get; set; }
         @AuraEnabled
-        public Boolean assetPaperlessPresent {get;set;}
+        public Boolean assetPaperlessPresent { get; set; }
         @AuraEnabled
-        public Boolean assetNationalAccount {get;set;}
+        public Boolean assetNationalAccount { get; set; }
         @AuraEnabled
-        public Boolean workSyncClientTrue {get;set;}
+        public Boolean workSyncClientTrue { get; set; }
         @AuraEnabled
-        public Boolean client100True {get;set;}
+        public Boolean client100True { get; set; }
         @AuraEnabled
-        public Boolean clientAndInsperity {get;set;}
+        public Boolean clientAndInsperity { get; set; }
         @AuraEnabled
-        public Boolean pendingTermination {get;set;}
+        public Boolean pendingTermination { get; set; }
         @AuraEnabled
-        public Boolean vocSurveyIndicator {get;set;}
+        public Boolean vocSurveyIndicator { get; set; }
         @AuraEnabled
         public Boolean hrScale { get; set; }
+        @AuraEnabled
+        public Boolean hrCoreStrategicPartner  { get; set; }
     }
 
 }

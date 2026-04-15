@@ -29,6 +29,7 @@ export default class vi2 extends LightningElement {
     @track vocSurveyIndicator = false;
     @track showEmailToCase = false;
     showHRScale = false;
+    showStrategicPartner = false;
 
     contract_exempt = nsp_ReportingResource + '/nsp_ReportingResource/images/contract_exempt.png';
     somewhat_fav = nsp_ReportingResource + '/nsp_ReportingResource/images/somewhat_fav.jfif';
@@ -44,6 +45,7 @@ export default class vi2 extends LightningElement {
     crwc = nsp_ReportingResource + '/nsp_ReportingResource/images/crwc.png';
     emailToCase = nsp_ReportingResource + '/nsp_ReportingResource/images/emailToCase.png';
     hrScale = nsp_ReportingResource + '/nsp_ReportingResource/images/HRScale.png';
+    strategicPartnerIcon = nsp_ReportingResource + '/nsp_ReportingResource/images/HRCoreStrategicPartnerIcon.png';
 
     @wire(isCaseFromEmail, { caseId: '$recordId' })
     wiredResult({ error, data }) {
@@ -63,19 +65,19 @@ export default class vi2 extends LightningElement {
             .then((data) =>{
                 this.accountsDetails = data;
                 //For Service Exemptions
-                if (this.accountsDetails[0].serviceExceptionPresent){
+                if ( this.accountsDetails[0].serviceExceptionPresent ) {
                     this.showContractExempt = true;
                 }
                 //For Asset Paperless
-                if (this.accountsDetails[0].assetPaperlessPresent){
+                if ( this.accountsDetails[0].assetPaperlessPresent ) {
                     this.showPaperless = true;
                 }
                 //For Asset National Account
-                if (this.accountsDetails[0].assetNationalAccount){
+                if ( this.accountsDetails[0].assetNationalAccount ) {
                     this.showNationalAccount = true;
                 }
                 //For workforce sync client
-                if (this.accountsDetails[0].workSyncClientTrue){
+                if ( this.accountsDetails[0].workSyncClientTrue ) {
                     this.showWorkSyncClientTrue = true;
                 }
                 // For HRScale
@@ -83,20 +85,27 @@ export default class vi2 extends LightningElement {
                     this.showHRScale = true;
                 }
                 //For client100True
-                if (this.accountsDetails[0].client100True){
+                if ( this.accountsDetails[0].client100True ) {
                     this.whoClient100True = true;
                 }
                 //For clientAndInsperity
-                if (this.accountsDetails[0].clientAndInsperity){
+                if ( this.accountsDetails[0].clientAndInsperity ) {
                     this.showClientAndInsperity = true;
                 }
                 //For PendingTermination
-                if (this.accountsDetails[0].pendingTermination){
+                if ( this.accountsDetails[0].pendingTermination ) {
                     this.showPendingTermination = true;
                 }
                 //For VOC indicator
-                if (this.accountsDetails[0].vocSurveyIndicator){
+                if ( this.accountsDetails[0].vocSurveyIndicator ) {
                     this.vocSurveyIndicator = true;
+                }
+                if ( this.accountsDetails[0].hrCoreStrategicPartner ) {
+                    this.showStrategicPartner = true;
+                }
+                const assetRecAvailable = this.accountsDetails[0]?.accRecord?.Assets?.find( rec => rec.Id === this.recordId );
+                if( assetRecAvailable ){
+                    this.showStrategicPartner = assetRecAvailable.HRCore_Strategic_Partner__c;
                 }
                 //For Renewal Probability Indicator
                 this.handleRenewalProbabilityIndicator( this.accountsDetails[0].accRecord );
