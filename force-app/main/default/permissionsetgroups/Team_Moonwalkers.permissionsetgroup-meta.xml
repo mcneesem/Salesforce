@@ -3,6 +3,7 @@
     <description>Group of Permission Sets to be granted to Team Moonwalkers Users.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Team Moonwalkers</label>
+    <permissionSets>Assign_App_Seller_Experience</permissionSets>
     <permissionSets>Assign_Connected_App_Data_Loader</permissionSets>
     <permissionSets>Assign_Connected_App_Workbench</permissionSets>
     <status>Updated</status>
