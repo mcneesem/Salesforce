@@ -65440,7 +65440,7 @@
   {
     "id": "01pOx00000RvCOHIA3",
     "name": "SandboxHealthController",
-    "totalLines": 665,
+    "totalLines": 664,
     "lines": {
       "41": 1,
       "42": 1,
@@ -66105,10 +66105,9 @@
       "1084": 1,
       "1085": 0,
       "1086": 0,
-      "1089": 1,
-      "1091": 1
+      "1089": 1
     },
-    "totalCovered": 526,
+    "totalCovered": 525,
     "coveredPercent": 79
   },
   {
