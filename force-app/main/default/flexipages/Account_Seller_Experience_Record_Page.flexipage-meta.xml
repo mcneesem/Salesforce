@@ -271,6 +271,26 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
+                            <value>Account.Add_Contact_Screen_Flow</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Account_Screen_Add_Contact_and_Add_Relationship}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Account.Add_Relationship_Screen_Flow</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Account_Screen_Add_Contact_and_Add_Relationship}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
                             <value>CustomButton.Account.NSP_Generate_Document</value>
                         </valueListItems>
                         <valueListItems>
@@ -313,6 +333,9 @@
                                     <rightValue>true</rightValue>
                                 </criteria>
                             </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>ChangeRecordType</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -546,12 +569,6 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
-                            <value>NewContact</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>AddRelation</value>
-                        </valueListItems>
-                        <valueListItems>
                             <value>MassAddToCampaign</value>
                         </valueListItems>
                     </valueList>
@@ -594,6 +611,12 @@
                         </valueListItems>
                         <valueListItems>
                             <value>ACCCONRELATION.ROLES</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>NSP_Work_Phone__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>NSP_Work_Email__c</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -1139,6 +1162,36 @@
                 <identifier>RecordLID_LinkedIn_Company_Id_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Account_Status__c</fieldItem>
+                <identifier>RecordNSP_Account_Status_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Account_Assignment_Method__c</fieldItem>
+                <identifier>RecordAccount_Assignment_Method_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Affiliations__c</fieldItem>
+                <identifier>RecordNSP_Affiliations_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-6ffdd06a-76bc-4683-8719-b2b372120593</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -1187,6 +1240,23 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.RecordTypeId</fieldItem>
+                <identifier>RecordRecordTypeIdField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
                     <value>required</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.CurrencyIsoCode</fieldItem>
@@ -1204,17 +1274,20 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>readonly</value>
+                    <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.RecordTypeId</fieldItem>
-                <identifier>RecordRecordTypeIdField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
-                    </criteria>
-                </visibilityRule>
+                <fieldItem>Record.CreatedById</fieldItem>
+                <identifier>RecordCreatedByIdField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.LastModifiedById</fieldItem>
+                <identifier>RecordLastModifiedByIdField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-e89f5a6b-517e-4fe5-bb1a-211b82115c6e</name>
