@@ -797,7 +797,7 @@
             <label>New relationship between related Contact and a different Account</label>
         </rules>
     </decisions>
-    <description>A screen subflow to handle the creation of a new Contact or new AccountContactRelationship records</description>
+    <description>A screen subflow to handle the creation of a new Contact or new AccountContactRelation records</description>
     <dynamicChoiceSets>
         <name>contactType_AccountContactRelationPicklist</name>
         <dataType>Picklist</dataType>
