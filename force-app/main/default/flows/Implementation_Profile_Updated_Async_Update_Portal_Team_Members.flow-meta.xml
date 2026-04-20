@@ -79,7 +79,7 @@
             </value>
         </filters>
         <object>Implementation_Profile__c</object>
-        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <connector>
                 <targetReference>Update_Portal_Team_Members_Subflow</targetReference>
