@@ -245,13 +245,13 @@
                             <value>ACCCONRELATION.ROLES</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Inactive_Date__c</value>
-                        </valueListItems>
-                        <valueListItems>
                             <value>NSP_Work_Phone__c</value>
                         </valueListItems>
                         <valueListItems>
                             <value>NSP_Work_Email__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Inactive_Date__c</value>
                         </valueListItems>
                         <valueListItems>
                             <value>Account.NSP_Sales_Office__c</value>
@@ -340,6 +340,12 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Employee_Identified_Gender__c</fieldItem>
                 <identifier>RecordNSP_Employee_Identified_Gender_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Contact_ID_18__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-835e801c-bf74-470a-b5d2-9036d8191f32</name>
@@ -364,6 +370,12 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Birthdate</fieldItem>
                 <identifier>RecordBirthdateField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Contact_ID_18__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -404,6 +416,12 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Preferred_style_of_communication__c</fieldItem>
                 <identifier>RecordNSP_Preferred_style_of_communication_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Contact_ID_18__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -414,6 +432,12 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.pse__Languages__c</fieldItem>
                 <identifier>Recordpse_Languages_cField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Contact_ID_18__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-35f62514-4e16-4499-aa56-d3a0717786c9</name>
@@ -966,6 +990,12 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection5</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Contact_ID_18__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -984,6 +1014,12 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Contact_ID_18__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -1002,6 +1038,12 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection6</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Contact_ID_18__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -1020,6 +1062,12 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Contact_ID_18__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -1038,6 +1086,12 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection3</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Contact_ID_18__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -1283,70 +1337,27 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>actionNames</name>
-                    <valueList>
-                        <valueListItems>
-                            <value>New</value>
-                        </valueListItems>
-                    </valueList>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>adminFilters</name>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>maxRecordsToDisplay</name>
-                    <value>10</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
                     <name>parentFieldApiName</name>
                     <value>Contact.Id</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relatedListApiName</name>
-                    <value>Notes__r</value>
+                    <value>AttachedContentNotes</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>relatedListDisplayType</name>
-                    <value>ADVGRID</value>
+                    <name>relatedListComponentOverride</name>
+                    <value>NONE</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>relatedListFieldAliases</name>
-                    <valueList>
-                        <valueListItems>
-                            <value>CREATED_DATE</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Note_Type__c</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>NAME</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Note__c</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>CREATEDBY_USER</value>
-                        </valueListItems>
-                    </valueList>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedListLabel</name>
-                    <value>Notes</value>
+                    <name>rowsToDisplay</name>
+                    <value>10</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>showActionBar</name>
                     <value>true</value>
                 </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>sortFieldAlias</name>
-                    <value>CREATED_DATE</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>sortFieldOrder</name>
-                    <value>Descending</value>
-                </componentInstanceProperties>
-                <componentName>lst:dynamicRelatedList</componentName>
-                <identifier>lst_dynamicRelatedList3</identifier>
+                <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-05cdd738-c15b-44e7-acd7-cece3e781bb0</name>
