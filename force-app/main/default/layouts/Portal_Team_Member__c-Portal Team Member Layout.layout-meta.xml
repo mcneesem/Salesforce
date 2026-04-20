@@ -6,7 +6,6 @@
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
     <excludeButtons>Edit</excludeButtons>
-    <excludeButtons>OpenSlackRecordChannel</excludeButtons>
     <excludeButtons>PrintableView</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -22,10 +21,6 @@
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>Portal_Project__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
-                <field>Portal_Client__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
