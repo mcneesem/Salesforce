@@ -58,18 +58,18 @@
   
   .THIS .my-brand {
             line-height: 1.2;
-      font-weight: 700;
+      font-weight: var(--slds-g-font-weight-7, 700);
       border-radius: 2.5rem;
-      font-size: 14px;
+      font-size: var(--slds-g-font-scale-1, 14px);
       padding: 0.7rem 1.4rem;
-      background-color: #d54400;
-      border: 0.111rem solid #d54400;
+      background-color: var(--slds-g-color-palette-hot-orange-50, #d54400);
+      border: var(--slds-g-sizing-border-1, 0.111rem) solid var(--slds-g-color-palette-hot-orange-50, #d54400);
       transition: all .3s ease-in-out;
   }
   
   .THIS .my-brand :hover {
       background-color: #ffffff;
-      color: #d54400; 
+      color: var(--slds-g-color-palette-hot-orange-50, #d54400); 
   }
   
   .THIS .button[disabled="true"] {
@@ -94,7 +94,7 @@
   
   .THIS .slds-form-element__label {
         font-size: 18px;
-        font-weight: bold;
+        font-weight: var(--slds-g-font-weight-bold, bold);
         color: rgba(35, 31, 32, 0.6);
       letter-spacing: 0;
   }
