@@ -1,125 +1,127 @@
-<!DOCTYPE html>
-<html> 
- <head> 
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
-  <meta name="viewport" content="width=device-width, initialscale=1.0" /> 
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
-  <style type="text/css">@media screen and (max-width: 480px) {slot[style] {margin-right: 0 !important;}.columnDiv {margin-right: 0 !important;}}@media screen and (min-width: 480px) {slot[style] {margin-bottom: 0 !important;}.columnDiv {margin-bottom: 0 !important;}}</style> 
-  <style type="text/css">@media screen and (max-width: 480px) {.contentbuilderBaseColumnRow .columnCell {display:inline-block;width:100%}}</style> 
-  <style type="text/css">.contentpageDefaultEmailTemplatePageTemplate .contentRoot {width: 600px;}@media only screen and (max-width: 480px) {.contentpageDefaultEmailTemplatePageTemplate .contentRoot {width: 320px;}}</style> 
- </head> 
- <body> 
-  <table class="contentpageDefaultEmailTemplatePageTemplate" style="background-color: #E9EAEC;" role="presentation" id="contentpage_emailTemplateBodyContent" width="100%" cellpadding="0" cellspacing="0"> 
-   <tbody> 
-    <tr> 
-     <td width="100%" align="center"> 
-      <table class="contentRoot" style="background-color: #FFFFFF;" role="presentation" width="600" cellpadding="0" cellspacing="0"> 
-       <tbody> 
-        <tr> 
-         <td style="padding-top: 10px; padding-bottom: 10px; padding-left: 10px; padding-right: 10px;"> 
-          <table class="contentbuilderBaseColumnRow" style="background-color:;" role="presentation" width="100%" cellpadding="0" cellspacing="0"> 
-           <tbody> 
-            <tr valign="top"> 
-             <td width="100%" class="columnCell" style="vertical-align: top;display: inline-block"> 
-              <table style="width: 100%; border-collapse: collapse; word-break:break-word;"> 
-               <tbody> 
-                <tr> 
-                 <td> 
-                  <table style="width:100%; border-collapse: collapse; word-break:break-word;" id="contentRegion" role="presentation" cellspacing="0" cellpadding="0" locked="0"> 
-                   <tbody> 
-                    <tr> 
-                     <td style="padding-top: 4px;padding-right: 4px;padding-bottom: 4px;padding-left: 2px;" align="right"></td>  <!-- <img style="width: 100%; display: block; border: none; max-width: 50%;" src="{[devName:Insperity_Logo]}" alt="" width="294" /> -->
-                    </tr> 
-                   </tbody> 
-                  </table></td> 
-                </tr> 
-                <tr> 
-                 <td> 
-                  <table style="width: 100%; border-collapse: collapse; word-break: break-word; font-size: 14px" id="contentRegion" role="presentation" cellspacing="0" cellpadding="0" locked="0"> 
-                   <tbody> 
-                    <tr> 
-                     <td style="font-family: Arial, Helvetica, sans-serif;padding-bottom: 8px;"><font>Hi&nbsp;</font>CLIENT CONTACT,</td> 
-                    </tr> 
-                   </tbody> 
-                  </table></td> 
-                </tr> 
-               </tbody> 
-              </table></td> 
-            </tr> 
-           </tbody> 
-          </table> 
-          <table class="contentbuilderBaseColumnRow" style="background-color:;" role="presentation" width="100%" cellpadding="0" cellspacing="0"> 
-           <tbody> 
-            <tr valign="top"> 
-             <td width="100%" class="columnCell" style="vertical-align: top;display: inline-block"> 
-              <table style="width: 100%; border-collapse: collapse; word-break:break-word;"> 
-               <tbody> 
-                <tr> 
-                 <td> 
-                  <table style="width: 100%; border-collapse: collapse; word-break: break-word; font-size: 14px" id="contentRegion" role="presentation" cellspacing="0" cellpadding="0" locked="0"> 
-                   <tbody> 
-                    <tr> 
-                     <td style="font-family: Arial, Helvetica, sans-serif;padding-top: 10px;padding-bottom: 10px;"> 
-                      <div style="text-align:left"> <span style="font-size:12pt"><span style="color:#000000"><span style="font-family:arial"><font>I want to take a moment to thank you for the opportunity to serve as your Insperity Onboarding Specialist. I know the transition process can feel overwhelming at times and I hope we have made you feel at ease throughout. In order to make sure we are providing the highest level of service possible, we will be sending you a brief survey and I would love to hear your feedback.</font></span></span></span> 
-                      </div> 
-                      <div style="text-align:left">
-                        &nbsp; 
-                      </div> 
-                      <div style="text-align: center;"> <span style="font-size:12pt"><span style="color:#000000"><span style="font-family:arial">Now that your transition is complete, your dedicated Insperity&nbsp;</span></span></span><font><span style="font-size:12pt"><span style="font-family:arial"><span style="font-size:12pt"><span style="color:#000000">Client Liaison/</span></span></span></span></font><span style="font-size:12pt"><font style=""><span style="text-align: start;"><span style="font-size: 12pt;"><font color="#000000" face="arial">HR Specialist&nbsp;</font></span></span></font><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">is ready to serve as your main point of contact and will reach out to schedule a welcome and introduction call. If you need assistance sooner or have any questions, outside of payroll, please direct them to:</span></span> 
-                      </div> 
-                      <div style="text-align:left">
-                        &nbsp; 
-                      </div> 
-                      <div style="text-align:center"> <font><span style="font-size:12pt"><span style="font-family: arial;"><span style="color: rgb(0, 0, 0); font-size: 12pt;">Insperity Client Liaison</span></span></span></font> 
-                       <br /> {{{pse__Project_Task__c.NSP_Client_Liaison_Name__c}}} 
-                       <br /> {{{pse__Project_Task__c.NSP_Client_Liaison_Email__c}}} 
-                      </div> 
-                      <div style="text-align:center"> 
-                       <div style="text-align:center"> <span style="font-size:12pt"><span style="color:#000000"><span style="font-family:arial"><font><span style="text-align:start"><span style="font-size:12pt">Insperity HR Specialist</span></span></font></span></span></span> 
-                        <br /> {{{pse__Project_Task__c.NSP_HR_Specialist_Name__c}}} 
-                        <br /> {{{pse__Project_Task__c.NSP_HR_Specialist_Email__c}}} 
-                        <br /><font><span style="font-size:12pt"><span style="color:#000000"><span style="font-family:arial">Once again, it has been a pleasure to serve you and I wish you all the best!</span></span></span></font> 
-                       </div> 
-                      </div></td> 
-                    </tr> 
-                   </tbody> 
-                  </table></td> 
-                </tr> 
-               </tbody> 
-              </table></td> 
-            </tr> 
-           </tbody> 
-          </table> 
-          <table class="contentbuilderBaseColumnRow" style="background-color:;" role="presentation" width="100%" cellpadding="0" cellspacing="0"> 
-           <tbody> 
-            <tr valign="top"> 
-             <td width="100%" class="columnCell" style="vertical-align: top;display: inline-block"> 
-              <table style="width: 100%; border-collapse: collapse; word-break:break-word;"> 
-               <tbody> 
-                <tr> 
-                 <td> 
-                  <table style="width: 100%; border-collapse: collapse; word-break: break-word; font-size: 14px" id="contentRegion" role="presentation" cellspacing="0" cellpadding="0" locked="0"> 
-                   <tbody> 
-                    <tr> 
-                     <td style="font-family: Arial, Helvetica, sans-serif;padding-top: 8px;padding-bottom: 4px;"> 
-                      <div> <span style="font-size:12pt">Warmest Regards,</span> 
-                       <br /> 
-                       <br /> Signature&nbsp; 
-                      </div></td> 
-                    </tr> 
-                   </tbody> 
-                  </table></td> 
-                </tr> 
-               </tbody> 
-              </table></td> 
-            </tr> 
-           </tbody> 
-          </table></td> 
-        </tr> 
-       </tbody> 
-      </table></td> 
-    </tr> 
-   </tbody> 
-  </table> 
- </body>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">@media screen and (max-width: 480px) {slot[style] {margin-right: 0 !important;}.columnDiv {margin-right: 0 !important;}}@media screen and (min-width: 480px) {slot[style] {margin-bottom: 0 !important;}.columnDiv {margin-bottom: 0 !important;}}
+	</style>
+	<style type="text/css">@media screen and (max-width: 480px) {.contentbuilderBaseColumnRow .columnCell {display:inline-block;width:100%}}
+	</style>
+	<style type="text/css">.contentpageDefaultEmailTemplatePageTemplate .contentRoot {width: 600px;}@media only screen and (max-width: 480px) {.contentpageDefaultEmailTemplatePageTemplate .contentRoot {width: 320px;}}
+	</style>
+</head>
+<body style="height: auto; min-height: auto;">
+<table cellpadding="0" cellspacing="0" class="contentpageDefaultEmailTemplatePageTemplate" id="contentpage_emailTemplateBodyContent" style="background-color: #E9EAEC;" width="100%">
+	
+		<tr>
+			<td align="center" width="100%">
+			<table cellpadding="0" cellspacing="0" class="contentRoot" style="background-color: #FFFFFF;" width="600">
+				
+					<tr>
+						<td style="padding-top: 10px; padding-bottom: 10px; padding-left: 10px; padding-right: 10px;">
+						<table cellpadding="0" cellspacing="0" class="contentbuilderBaseColumnRow" style="background-color:;" width="100%">
+							
+								<tr valign="top">
+									<td class="columnCell" style="vertical-align: top;display: inline-block" width="100%">
+									<table style="width: 100%; border-collapse: collapse; word-break:break-word;">
+										
+											<tr>
+												<td>
+												<table cellpadding="0" cellspacing="0" id="contentRegion" style="width:100%; border-collapse: collapse; word-break:break-word;">
+													
+														<tr>
+															<td align="right" style="padding-top: 4px;padding-right: 4px;padding-bottom: 4px;padding-left: 2px;">&nbsp;</td>
+														</tr>
+													
+												</table>
+												</td>
+											</tr>
+											<tr>
+												<td>
+												<table cellpadding="0" cellspacing="0" id="contentRegion" style="width: 100%; border-collapse: collapse; word-break: break-word; font-size: 14px">
+													
+														<tr>
+															<td style="font-family: Arial, Helvetica, sans-serif;padding-bottom: 8px;"><font>Hi&nbsp;</font>CLIENT CONTACT,</td>
+														</tr>
+													
+												</table>
+												</td>
+											</tr>
+										
+									</table>
+									</td>
+								</tr>
+							
+						</table>
+
+						<table cellpadding="0" cellspacing="0" class="contentbuilderBaseColumnRow" style="background-color:;" width="100%">
+							
+								<tr valign="top">
+									<td class="columnCell" style="vertical-align: top;display: inline-block" width="100%">
+									<table style="width: 100%; border-collapse: collapse; word-break:break-word;">
+										
+											<tr>
+												<td>
+												<table cellpadding="0" cellspacing="0" id="contentRegion" style="width: 100%; border-collapse: collapse; word-break: break-word; font-size: 14px">
+													
+														<tr>
+															<td style="font-family: Arial, Helvetica, sans-serif;padding-top: 10px;padding-bottom: 10px;">
+															<div style="text-align:left"><span style="font-size:12pt"><span style="color:#000000"><span style="font-family:arial"><font>I want to take a moment to thank you for the opportunity to serve as your Insperity Onboarding Specialist. I know the transition process can feel overwhelming at times and I hope we have made you feel at ease throughout. In order to make sure we are providing the highest level of service possible, we will be sending you a brief survey and I would love to hear your feedback.</font></span></span></span></div>
+
+															<div style="text-align:left">&nbsp;</div>
+
+															<div style="text-align: center;"><span style="font-size:12pt"><span style="color:#000000"><span style="font-family:arial">Now that your transition is complete, your dedicated Insperity&nbsp;</span></span></span><font><span style="font-size:12pt"><span style="font-family:arial"><span style="font-size:12pt"><span style="color:#000000">Client Liaison/</span></span></span></span></font><span style="font-size:12pt"><font style=""><span style="text-align: start;"><span style="font-size: 12pt;"><font color="#000000" face="arial">HR Specialist&nbsp;</font></span></span></font><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">is ready to serve as your main point of contact and will reach out to schedule a welcome and introduction call. If you need assistance sooner or have any questions, outside of payroll, please direct them to:</span></span></div>
+
+															<div style="text-align:left">&nbsp;</div>
+
+															<div style="text-align:center"><br />
+															<br />
+															<font><span style="font-size:12pt"><span style="color:#000000"><span style="font-family:arial">Once again, it has been a pleasure to serve you and I wish you all the best!</span></span></span></font></div>
+															</td>
+														</tr>
+													
+												</table>
+												</td>
+											</tr>
+										
+									</table>
+									</td>
+								</tr>
+							
+						</table>
+
+						<table cellpadding="0" cellspacing="0" class="contentbuilderBaseColumnRow" style="background-color:;" width="100%">
+							
+								<tr valign="top">
+									<td class="columnCell" style="vertical-align: top;display: inline-block" width="100%">
+									<table style="width: 100%; border-collapse: collapse; word-break:break-word;">
+										
+											<tr>
+												<td>
+												<table cellpadding="0" cellspacing="0" id="contentRegion" style="width: 100%; border-collapse: collapse; word-break: break-word; font-size: 14px">
+													
+														<tr>
+															<td style="font-family: Arial, Helvetica, sans-serif;padding-top: 8px;padding-bottom: 4px;">
+															<div><span style="font-size:12pt">Warmest Regards,</span><br />
+															<br />
+															Signature&nbsp;</div>
+															</td>
+														</tr>
+													
+												</table>
+												</td>
+											</tr>
+										
+									</table>
+									</td>
+								</tr>
+							
+						</table>
+						</td>
+					</tr>
+				
+			</table>
+			</td>
+		</tr>
+	
+</table>
+</body>
 </html>

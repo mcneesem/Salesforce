@@ -6,13 +6,13 @@ public with sharing class NSP_AccountTeamTriggerHelper {
 * @param newList List of New NSP_Account_Team__c.
 *
 * @return void
-*                
+*
 */
-    
+
     public void beforeInsertDirector(List<NSP_Account_Team__c> newList) {
         try{
-            List<NSP_Account_Team__c> newAccountTeamList = new List<NSP_Account_Team__c>(); 
-            Set<String> accountTeamMemberEmployeePerIdSet = new Set<String>(); 
+            List<NSP_Account_Team__c> newAccountTeamList = new List<NSP_Account_Team__c>();
+            Set<String> accountTeamMemberEmployeePerIdSet = new Set<String>();
             Set<String> accountTeamMemberUserIdSet = new Set<String>();
             //Added as part of STY-03667
             Set<Id> accountIdSet = new Set<Id>();
@@ -20,33 +20,33 @@ public with sharing class NSP_AccountTeamTriggerHelper {
             //Added as part of DF-02431
             Id profileId = userinfo.getProfileId();
             String profileName = [SELECT Id, Name from Profile WHERE Id =: profileId].Name;
-                           
-            
+
+
             for(NSP_Account_Team__c accountTeamMemberObj : newList) {
                  if(!String.isBlank(accountTeamMemberObj.NSP_PER_ID__c) || accountTeamMemberObj.NSP_User__c != null){
-                    accountTeamMemberEmployeePerIdSet.add(accountTeamMemberObj.NSP_PER_ID__c);  
+                    accountTeamMemberEmployeePerIdSet.add(accountTeamMemberObj.NSP_PER_ID__c);
                     accountTeamMemberUserIdSet.add(accountTeamMemberObj.NSP_User__c);
                     newAccountTeamList.add(accountTeamMemberObj);
                 }
                 //Added as part of STY-03667
                 //Profile Bypass logic added as part of DF-02431
-                if(accountTeamMemberObj.NSP_Account__c!=null && accountTeamMemberObj.NSP_Primary__c && 
+                if(accountTeamMemberObj.NSP_Account__c!=null && accountTeamMemberObj.NSP_Primary__c &&
                    String.isNotBlank(profileName) && !profileName.containsIgnoreCase(System.label.NSP_Integration_User_Profile_Name)){
-                    
+
                     accountIdSet.add(accountTeamMemberObj.NSP_Account__c);
-                    newAcctTeamList.add(accountTeamMemberObj);                
+                    newAcctTeamList.add(accountTeamMemberObj);
                 }
             }
             //Added as part of STY-03667
             if(!accountIdSet.isEmpty() && !newAcctTeamList.isEmpty()){
                 showErrorOnPrimaryCheckRole(accountIdSet,newAcctTeamList ) ;
             }
-            
+
             //get employee per id from user
             if(accountTeamMemberEmployeePerIdSet.size() > 0 || accountTeamMemberUserIdSet.size() > 0){
                 populateEmployeePerIdOnATMBasedOnUserId(newAccountTeamList, accountTeamMemberEmployeePerIdSet, accountTeamMemberUserIdSet);
             }
-            
+
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 NSP_AccountTeamTriggerHelper.class.getName() ,
@@ -55,17 +55,17 @@ public with sharing class NSP_AccountTeamTriggerHelper {
             );
         }
     }
-    
+
     //populate employee id based on user id on Account Team
     // Updated based on DF-02375
     public void populateEmployeePerIdOnATMBasedOnUserId(List<NSP_Account_Team__c> newList,Set<String> accountTeamIdSet, Set<String> accountTeamMemberUserIdSet){
-        Map<String,User> employeeIdMap = new Map<String,User>(); 
+        Map<String,User> employeeIdMap = new Map<String,User>();
         Map<ID, User> userMap = new Map<ID, User>([SELECT Id, EmployeeNumber,NSP_sales_Office__c FROM User WHERE (EmployeeNumber IN: accountTeamIdSet OR Id IN: accountTeamMemberUserIdSet)]);
-        
+
         for(User oUser : userMap.values()){
             employeeIdMap.put(oUser.EmployeeNumber,oUser);
         }
-        
+
         for(NSP_Account_Team__c accountTeamMemberObj : newList) {
             if(employeeIdMap.containsKey(accountTeamMemberObj.NSP_PER_ID__c) && (accountTeamMemberObj.NSP_PER_ID__c != null && accountTeamMemberObj.NSP_User__c == null)) {
                 accountTeamMemberObj.NSP_User__c = employeeIdMap.get(accountTeamMemberObj.NSP_PER_ID__c).Id;
@@ -163,19 +163,19 @@ public with sharing class NSP_AccountTeamTriggerHelper {
         }
     }
 
-    /*STY-03187: 
+    /*STY-03187:
 * Description: update the account team userId to asset to respective NSP_WX_WA_Benefits_Specialist__c
 NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field based on AccountTeam record role
 * When: 13/10/2022
 * @param: mapAccountTeamId map of AccountId and AccountTeamObject
 * @return void
 */
-    
+
     public void updateAccountTeamNameToAssetName(Map < Id, NSP_Account_Team__c > mapAccountIdtoAccountTeam) {
         Boolean switchEnabled = AccountTeamTriggerSettings__c.getInstance(UserInfo.getUserId()).IsRetServiceNameChangeEnabled__c;
         List < Asset > listAssetObject = new List < Asset > ();
-        
-        //Iterating Asset object based on AccountId 
+
+        //Iterating Asset object based on AccountId
         for (Asset assetObject: [SELECT ID, AccountId,
                                  NSP_WA_WX_Payroll_Specialist__c,
                                  NSP_WX_WA_Benefits_Specialist__c,
@@ -194,8 +194,8 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
                                     }
                                     listAssetObject.add(assetObject);
                                 }
-        
-        //updating Asset object field 
+
+        //updating Asset object field
         try {
             if (listAssetObject.size() > 0) {
                 Database.update(listAssetObject);
@@ -214,9 +214,9 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
 * @param newMap Map of NSP_Account_Team__c.
 * @param oldMap Map of NSP_Account_Team__c.
 * @return void
-*                
+*
 */
-    
+
     public void beforeUpdateDirector(Map<Id, NSP_Account_Team__c> newMap,Map<Id, NSP_Account_Team__c> oldMap) {
         try{
             //Added as part of STY-03667
@@ -234,17 +234,17 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
             if(String.isNotBlank(profileName) && !profileName.containsIgnoreCase(System.label.NSP_Integration_User_Profile_Name)){
                 for(NSP_Account_Team__c accTeam : newMap.values()) {
                   if(accTeam.NSP_Account__c!=null && accTeam.NSP_Primary__c
-                     && (oldMap.get(accTeam.Id).NSP_Primary__c!=accTeam.NSP_Primary__c 
+                     && (oldMap.get(accTeam.Id).NSP_Primary__c!=accTeam.NSP_Primary__c
                        || oldMap.get(accTeam.Id).NSP_Role__c!=accTeam.NSP_Role__c
                        || oldMap.get(accTeam.Id).NSP_Account__c!=accTeam.NSP_Account__c) ){
-                           
+
                            accountIdSet.add(accTeam.NSP_Account__c);
-                           newAcctTeamList.add(accTeam);                
+                           newAcctTeamList.add(accTeam);
                   }
                 }
             }
-            
-            
+
+
             if(!accountIdSet.isEmpty() && !newAcctTeamList.isEmpty()){
                 showErrorOnPrimaryCheckRole(accountIdSet,newAcctTeamList ) ;
             }
@@ -258,7 +258,7 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
                   ){
                     accountTeamMemberObj.NSP_User__c = null;
                 }
-                else if(!String.isBlank(accountTeamMemberObj.NSP_PER_ID__c) 
+                else if(!String.isBlank(accountTeamMemberObj.NSP_PER_ID__c)
                         &&accountTeamMemberObj.NSP_PER_ID__c != oldMap.get(accountTeamMemberObj.Id).NSP_PER_ID__c){
                              perIdActTeamList.add(accountTeamMemberObj);
                             perIdSet.add(accountTeamMemberObj.NSP_PER_ID__c);
@@ -266,14 +266,14 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
                 if(perIdSet.size()>0){
                     populateUserIdOnATMBasedOnPerId(perIdActTeamList, perIdSet);
                 }
-               
+
            }
-           
+
            //update per id if User on account team changes
             if(accountTeamMemberUserIdSet.size() > 0){
                 updatePerIdonUserUpdate(newAccountTeamList, accountTeamMemberUserIdSet);
-            } 
-            
+            }
+
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 NSP_AccountTeamTriggerHelper.class.getName() ,
@@ -292,13 +292,13 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
 * createdDate : 11/7/2023
 * */
     public void populateUserIdOnATMBasedOnPerId(List<NSP_Account_Team__c> acctTeamList,Set<String> perIdSet){
-        Map<String,User> employeeIdMap = new Map<String,User>(); 
+        Map<String,User> employeeIdMap = new Map<String,User>();
         Map<ID, User> userMap = new Map<ID, User>([SELECT Id, EmployeeNumber FROM User WHERE EmployeeNumber IN: perIdSet]);
-       
+
         for(User oUser : userMap.values()){
             employeeIdMap.put(oUser.EmployeeNumber,oUser);
         }
-        
+
         for(NSP_Account_Team__c accountTeamMemberObj : acctTeamList) {
             if(employeeIdMap.containsKey(accountTeamMemberObj.NSP_PER_ID__c) && (accountTeamMemberObj.NSP_PER_ID__c != null)){
                 accountTeamMemberObj.NSP_User__c = employeeIdMap.get(accountTeamMemberObj.NSP_PER_ID__c).Id;
@@ -385,66 +385,52 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
     }
 
     /***********************************************************************************************
-    * MethodName  : updateProjectTaskEmailFields 
+    * MethodName  : updateProjectTaskEmailFields
     * Description : Method to update Project Task Email field
     * Params	  : List<NSP_Account_Team__c> newList, Map<Id, NSP_Account_Team__c> oldMap
-    * 
+    *
     * ********************************************************************************************/
     public static void updateProjectTaskEmailFields(List<NSP_Account_Team__c> newList, Map<Id, NSP_Account_Team__c> oldMap){
-        set<Id> setAccountIds = new set<Id>();   
+        set<Id> setAccountIds = new set<Id>();
         Map<String,set<String>> mapAccTeamEmails = new Map<String,set<String>>();
         Map<String,NSP_Account_Team__c> mapAccTeamCLHR = new Map<String,NSP_Account_Team__c>();
         List<pse__Project_Task__c> lstProjectTask = new List<pse__Project_Task__c>();
-        
+
         List<NSP_Account_Team__c> lstAccTeams = new List<NSP_Account_Team__c>();
         for(NSP_Account_Team__c accTeam: newList){
             if((oldMap == null && accTeam.NSP_Account__c!=null) || (oldMap!=null && accTeam.NSP_Account__c!=null && (oldMap.get(accTeam.Id).NSP_Account__c != accTeam.NSP_Account__c || accTeam.NSP_Role__c!=oldMap.get(accTeam.Id).NSP_Role__c))){
                 setAccountIds.add(accTeam.NSP_Account__c);
             }
         }
-        
+
         if(!setAccountIds.isEmpty()){
             lstAccTeams =  getAccountTeamRecords(setAccountIds);
             mapAccTeamEmails = getCCAccountTeams(lstAccTeams);
             mapAccTeamCLHR = getAccountTeams(lstAccTeams);
         }
-        
+
         if(!mapAccTeamCLHR.isempty()){
-            for(pse__Project_Task__c proj : [SELECT Id,NSP_CC_Emails__c,NSP_Client_Liaison_Name__c,NSP_HR_Specialist_Email__c,NSP_AccountId__c,
-                                             NSP_HR_Specialist_Name__c,NSP_Client_Liaison_Email__c FROM pse__Project_Task__c WHERE NSP_AccountId__c IN:setAccountIds]){
+            for(pse__Project_Task__c proj : [SELECT Id,NSP_CC_Emails__c,NSP_AccountId__c FROM pse__Project_Task__c WHERE NSP_AccountId__c IN:setAccountIds]){
                 if(mapAccTeamEmails.containsKey(proj.NSP_AccountId__c) && mapAccTeamEmails.get(proj.NSP_AccountId__c)!=null){
                     List<String> ccEmails = new List<String>();
                     ccEmails.addAll(mapAccTeamEmails.get(proj.NSP_AccountId__c));
                     proj.NSP_CC_Emails__c = String.join(ccEmails, ',');
                 }
-                if(mapAccTeamCLHR.containsKey(NSP_ServiceConstants.BUS_TEAM_HRSP_CL)){
-                    proj.NSP_Client_Liaison_Name__c = mapAccTeamCLHR?.get(NSP_ServiceConstants.BUS_TEAM_HRSP_CL)?.NSP_First_Name__c +' '+mapAccTeamCLHR?.get(NSP_ServiceConstants.BUS_TEAM_HRSP_CL)?.NSP_Last_Name__c;
-                    proj.NSP_Client_Liaison_Email__c = mapAccTeamCLHR?.get(NSP_ServiceConstants.BUS_TEAM_HRSP_CL)?.NSP_Email__c;
-                    proj.NSP_HR_Specialist_Name__c = mapAccTeamCLHR?.get(NSP_ServiceConstants.BUS_TEAM_HRSP_CL)?.NSP_First_Name__c +' '+mapAccTeamCLHR?.get(NSP_ServiceConstants.BUS_TEAM_HRSP_CL)?.NSP_Last_Name__c;
-                    proj.NSP_HR_Specialist_Email__c =  mapAccTeamCLHR?.get(NSP_ServiceConstants.BUS_TEAM_HRSP_CL)?.NSP_Email__c;
-                }else if(mapAccTeamCLHR.containsKey(NSP_ServiceConstants.CLIENT_LIAISION)){
-                    proj.NSP_Client_Liaison_Name__c = mapAccTeamCLHR?.get(NSP_ServiceConstants.CLIENT_LIAISION)?.NSP_First_Name__c +' '+mapAccTeamCLHR?.get(NSP_ServiceConstants.CLIENT_LIAISION)?.NSP_Last_Name__c;
-                    proj.NSP_Client_Liaison_Email__c = mapAccTeamCLHR?.get(NSP_ServiceConstants.CLIENT_LIAISION)?.NSP_Email__c;
-                    proj.NSP_HR_Specialist_Name__c = '';proj.NSP_HR_Specialist_Email__c ='';
-                }else if(mapAccTeamCLHR.containsKey(NSP_ServiceConstants.HRSpecialist)){
-                    proj.NSP_HR_Specialist_Name__c = mapAccTeamCLHR?.get(NSP_ServiceConstants.HRSpecialist)?.NSP_First_Name__c +' '+mapAccTeamCLHR?.get(NSP_ServiceConstants.HRSpecialist)?.NSP_Last_Name__c;
-                    proj.NSP_HR_Specialist_Email__c =  mapAccTeamCLHR?.get(NSP_ServiceConstants.HRSpecialist)?.NSP_Email__c;
-                    proj.NSP_Client_Liaison_Name__c = '';proj.NSP_Client_Liaison_Email__c = '';
-                }
+
                 lstProjectTask.add(proj);
             }
         }
-        
+
         if(!lstProjectTask.isEmpty()){
             update lstProjectTask;
         }
     }
-    
+
     /***********************************************************************************************
-    * MethodName  : getCCAccountTeams 
+    * MethodName  : getCCAccountTeams
     * Description : Method to get CC account team
     * Params	  : List<NSP_Account_Team__c> accTeamRecords
-    * 
+    *
     * ********************************************************************************************/
     private static Map<String,set<String>> getCCAccountTeams(List<NSP_Account_Team__c> accTeamRecords){
         Map<String,set<String>> mapAccTeamEmails = new Map<String,set<String>>();
@@ -457,22 +443,22 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
         }
         return mapAccTeamEmails;
     }
-    
+
     /***********************************************************************************************
-    * MethodName  : getAccountTeamRecords 
+    * MethodName  : getAccountTeamRecords
     * Description : Method to get account team records
     * Params	  : Set<Id> setAccountIds
-    * 
+    *
     * ********************************************************************************************/
     private static List<NSP_Account_Team__c> getAccountTeamRecords(Set<Id> setAccountIds){
         List<String> lstAccTeamRoles = new List<String>{NSP_ServiceConstants.MANAGER_HRSERVICES,NSP_ServiceConstants.PAYROLL_SUPERVISOR,
             NSP_ServiceConstants.CLIENT_LIAISION,NSP_ServiceConstants.HRSpecialist,NSP_ServiceConstants.PayrollSpecialist,
             NSP_ServiceConstants.PERFOMANCE_SPECIALIST,NSP_ServiceConstants.SAFETY_CONSULTANT,NSP_ServiceConstants.BUS_TEAM_HRSP_CL,
             NSP_ServiceConstants.MID_MARKET_ACC_EX,NSP_ServiceConstants.NATIONAL_ACC_EX};
-                return [SELECT Id,NSP_Email__c,NSP_Account__c,NSP_First_Name__c,NSP_Last_Name__c,NSP_Role__c FROM NSP_Account_Team__c 
+                return [SELECT Id,NSP_Email__c,NSP_Account__c,NSP_First_Name__c,NSP_Last_Name__c,NSP_Role__c FROM NSP_Account_Team__c
                         WHERE NSP_Account__c IN:setAccountIds AND NSP_Role__c IN:lstAccTeamRoles];
     }
-    
+
     private static Map<String,NSP_Account_Team__c> getAccountTeams(List<NSP_Account_Team__c> accTeamRecords){
         Map<String,NSP_Account_Team__c> mapAccTeamCLHR = new Map<String,NSP_Account_Team__c>();
         for(NSP_Account_Team__c accTeam: accTeamRecords){
@@ -488,40 +474,40 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
         }
         return mapAccTeamCLHR;
     }
-    
+
     /***********************************************************************************************
-* MethodName: showErrorOnPrimaryCheckRole 
+* MethodName: showErrorOnPrimaryCheckRole
 * Description : Method for showing error on Account Team when primary checkbox is checked for same role
 * Params:       List<NSP_Account_Team__c> newList, Map<Id, NSP_Account_Team__c> oldMap
-* 
+*
 * ********************************************************************************************/
     public void showErrorOnPrimaryCheckRole(Set<Id> accountIdSet, List<NSP_Account_Team__c> newList) {
-        
-        
-        
+
+
+
         try{
             if(!accountIdSet.isEmpty()){
                 //list all existing primary checked account teams for the set of account id passed
                 List<NSP_Account_Team__c> acctTeamList=[SELECT  NSP_Role__c,NSP_Account__c
                                                         FROM NSP_Account_Team__c
-                                                        WHERE NSP_Primary__c=TRUE 
+                                                        WHERE NSP_Primary__c=TRUE
                                                         AND NSP_Account__c in:accountIdSet];
-                
+
                 Set<string> acctRoleSet=new Set<string>();
-                
+
                 for(NSP_Account_Team__c acctTeam:acctTeamList){
                     //store string combination of account and account team role
                     acctRoleSet.add(acctTeam.NSP_Account__c+'_'+acctTeam.NSP_Role__c);
                 }
-                
-                if(!acctRoleSet.isEmpty()){            
+
+                if(!acctRoleSet.isEmpty()){
                     for(NSP_Account_Team__c accTeam : newList) {
                         //iterate through new account team list and throw error if the primary is checked for same role
                         if(acctRoleSet.contains(accTeam.NSP_Account__c+'_'+accTeam.NSP_Role__c)){
                             accTeam.addError(System.Label.NSP_AccountTeam_Error);
                         }
                     }
-                }                    
+                }
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
@@ -532,7 +518,7 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
         }
     }
 
-    /** 
+    /**
     * @MethodName: updateAssetServiceRegion
     * @Description: This method is used to update Asset Fields on after Insert
     * @param : List<NSP_Account_Team__c> newAccTeam, Map<Id, NSP_Account_Team__c> oldMap
@@ -564,7 +550,7 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
         if(!accIds.isEmpty()) {
             for(NSP_Account_Team__c accountTeam : [
                         SELECT Id , NSP_User__r.NSP_Service_Region__c , NSP_Role__c , NSP_Account__c
-                        FROM NSP_Account_Team__c 
+                        FROM NSP_Account_Team__c
                         WHERE (
                             Id =: newAccTeam
                             AND NSP_User__c != null
@@ -581,13 +567,13 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
         updateAssetRegion(accIds, woRecordTypeId, accountTeams);
     }
 
-    /** 
+    /**
     * @MethodName: updateAssetRegion
     * @Description: This method is used to update Asset Fields on after Insert
     * @param : Set<Id> accIds, Id woRecordTypeId,  Map<Id, NSP_Account_Team__c> accountTeams
     * @createdDate : 11/30/2022
     * @Defect : STY-02108
-    * @return void                          
+    * @return void
     */
     private static void updateAssetRegion(Set<Id> accIds, Id woRecordTypeId,  Map<Id, NSP_Account_Team__c> accountTeams) {
         Boolean switchEnabled = AccountTeamTriggerSettings__c.getInstance(UserInfo.getUserId()).IsServiceRegionChangeEnabled__c;
@@ -603,23 +589,23 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
                 asset.NSP_Service_Region__c = null;
                 assetToBeUpdated.add(asset);
             }
-        }       
-        
+        }
+
         if(!assetToBeUpdated.isEmpty()) {
             update assetToBeUpdated;
         }
     }
 
-    /** 
+    /**
     * @MethodName: updatePerIdonUserUpdate
     * @Description: This method is used to update per Id on user Update
     * @param : List<NSP_Account_Team__c> newList, Set<String> accountTeamMemberUserIdSet
     * @createdDate : 04/27/2023
     * @Defect : DF-03716
-    * @return void                          
+    * @return void
     */
     public void updatePerIdonUserUpdate(List<NSP_Account_Team__c> newList, Set<String> accountTeamMemberUserIdSet){
-        
+
         Map<ID, User> userMap = new Map<ID, User>([SELECT Id, EmployeeNumber,NSP_sales_Office__c FROM User WHERE Id IN: accountTeamMemberUserIdSet]);
         for(NSP_Account_Team__c accountTeamMemberObj : newList) {
             if(userMap.containsKey(accountTeamMemberObj.NSP_User__c) && accountTeamMemberObj.NSP_User__c != null) {
@@ -636,21 +622,21 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
     * createdDate : 5/6/2023
     * ********************************************************************************************/
     public static void validationOnDeletionOfAccountTeam(Map<Id, NSP_Account_Team__c> oldMap){
-        try{ 
+        try{
             List<String> profileFields = new List<String>{'Id','Name'};
             List<String> userProfileNames = new List<String>{NSP_ServiceConstants.SYSTEM_ADMINISTRATOR, NSP_ServiceConstants.INTEGRATION_USER, NSP_ServiceConstants.DATA_MIGRATION};
             List<Profile> integrationUser = new NSP_sObjectSelector('Profile').setSecurityEnforce(false).selectByName(NSP_ServiceConstants.INTEGRATION_USER, null, true);
-            
+
             String queryProfile = new NSP_QueryBuilder('Profile', profileFields)
                 .addFilter('Id', UserInfo.getProfileId()).setSecurityEnforce(false).build();
             List<Profile> loggedInUserProfileName = Database.query(queryProfile);
-            
+
             Map<Id, Id> accTeamCreatedByIdProfileNameMap = new Map<Id, Id>();
             for(NSP_Account_Team__c acTeam :[SELECT Id, createdbyId, createdby.ProfileId FROM NSP_Account_Team__c WHERE Id IN: oldMap.keySet()]){
                 accTeamCreatedByIdProfileNameMap.put(acTeam.createdById, acTeam.createdby.ProfileId);
             }
-            
-            for(NSP_Account_Team__c accTeam : oldmap.values()){   
+
+            for(NSP_Account_Team__c accTeam : oldmap.values()){
                 if(accTeamCreatedByIdProfileNameMap.get(accTeam.createdById) == integrationUser[0].Id && !userProfileNames.contains(loggedInUserProfileName[0].Name)){
                     accTeam.addError(System.Label.NSP_Account_Team_Deletion_Validation);
                 }
@@ -676,7 +662,7 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
         Set<Id> accountIds = new Set<Id>();
         List<NSP_Payroll__c> lstOfPayrolls = new List<NSP_Payroll__c>();
         if ( ( newAccountTeamList != null ) && !newAccountTeamList.isEmpty() ) {
-            // Loop through each accountteam member in the new list  
+            // Loop through each accountteam member in the new list
             for ( NSP_Account_Team__c accountTeam : newAccountTeamList ) {
                 if ( accountTeam.NSP_Account__c != null ) {
                     NSP_Account_Team__c oldAccountTeam = null;
@@ -709,7 +695,7 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
                     ]
                 )
             {
-                if ( pdsRecord.Account__c != null ) { 
+                if ( pdsRecord.Account__c != null ) {
                     lstOfPayrolls.add( pdsRecord );
                 }
             }
