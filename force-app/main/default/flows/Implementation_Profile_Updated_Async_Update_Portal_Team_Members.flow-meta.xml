@@ -2,7 +2,7 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>64.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
-    <description>AZD-545307 -  Updated on  4.16.2026</description>
+    <description>New Client Portal: Portal Team Member Management</description>
     <environments>Default</environments>
     <interviewLabel>Implementation Profile - Updated - Async - Update Portal Client {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Implementation Profile - Updated - Async - Update Portal Team Members</label>
@@ -82,7 +82,7 @@
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Update_Portal_Team_Members_Subflow</targetReference>
+                <targetReference>Handle_Portal_Team_Members</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
@@ -90,11 +90,12 @@
     </start>
     <status>Draft</status>
     <subflows>
-        <name>Update_Portal_Team_Members_Subflow</name>
-        <label>Update Portal Team Members Subflow</label>
+        <description>Update Portal Team Members When IP Members changes</description>
+        <name>Handle_Portal_Team_Members</name>
+        <label>Handle Portal Team Members</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <flowName>Implementation_Profile_Updated_Async_Update_Portal_Team_Members_Subflow</flowName>
+        <flowName>Implementation_Profile_Subflow_Handle_Portal_Team_Members</flowName>
         <inputAssignments>
             <name>projectId</name>
             <value>
@@ -102,11 +103,4 @@
             </value>
         </inputAssignments>
     </subflows>
-    <variables>
-        <name>projectId</name>
-        <dataType>String</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>true</isOutput>
-    </variables>
 </Flow>
