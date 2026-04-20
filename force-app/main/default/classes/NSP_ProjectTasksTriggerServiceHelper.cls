@@ -296,7 +296,11 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
         // prevent DmlException ~ FIELD_CUSTOM_VALIDATION_EXCEPTION, Cannot change status from Dispatched to null: [Status]
         serviceAppointmentRecToUpdate.Status = serviceAppointmentStatus;
         Boolean isProhibitedChange = (
-            ( serviceAppointmentStatus == 'Dispatched' )
+            (
+                ( serviceAppointmentStatus == 'Dispatched' )
+                ||
+                ( serviceAppointmentStatus == 'In Progress' )
+            )
             && (
                 String.isBlank( mapWorkOrderProjectTask.pse__Status__c )
                 || ( mapWorkOrderProjectTask.pse__Status__c == 'null' )
