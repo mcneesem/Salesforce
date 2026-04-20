@@ -88,33 +88,36 @@ public with sharing class SandboxHealthController {
         res.instance = orgInfo.InstanceName;
         res.isSandbox = orgInfo.IsSandbox;
 
-        // Labels
+        // Custom Labels
         res.sections.add( verifyAppCustomLabels( sandbox ) );
         res.sections.add( verifyEmailCustomLabels() );
 
-        // Custom Settings checks (from doCSettings and doCSettings2)
-        // Resolve DocuSign context first to get expected downstream values
-        DocuSignContext dsCtx = verifyDocuSignSettings( sandbox );
-        res.sections.add( dsCtx.section );
-        res.sections.add( verifyWingspanSettings() );
-        res.sections.add( verifyGoogleRecaptchaSettings( sandbox ) );
-        res.sections.add( verifyDocusignAccountDetails( dsCtx.accountNumber , dsCtx.clmBaseUrl ) );
-        res.sections.add( verifyOrgSettings( sandbox ) );
-        res.sections.add( verifyEnvironmentDetails( sandbox ) );
-        res.sections.add( verifyBoxFileRequest() );
-        res.sections.add( verifyUserTriggerSettings() );
-        res.sections.add( verifyContractTerminationSettings() );
-        res.sections.add( verifyNVMContactWorldSettings( sandbox ) );
-        res.sections.add( verifySalesTeamEmailSettings() );
-        res.sections.add( verifyProjectCreationSettings() );
         // Custom Metadata checks (from doCMetadata and doCMetadataSvc)
-        res.sections.add( verifyDocuSignSignersMetadata( sandbox ) );
         res.sections.add( verifyDocuSignRESTMetadata( sandbox ) );
+        res.sections.add( verifyDocuSignSignersMetadata( sandbox ) );
         res.sections.add( verifyPEOMetadata( sandbox ) );
-        res.sections.add( verifyRetirementServicesMetadata() );
         res.sections.add( verifyProjectTemplateMappingMetadata() );
+        res.sections.add( verifyRetirementServicesMetadata() );
         res.sections.add( verifyTemplateKeyAndIdMappingMetadata() );
+
+        // Custom Settings checks (from doCSettings and doCSettings2)
+        res.sections.add( verifyBoxFileRequest() );
+        // Resolve DocuSign context to get expected downstream values
+        DocuSignContext dsCtx = verifyDocuSignSettings( sandbox );
+        res.sections.add( verifyContractTerminationSettings() );
+        res.sections.add( verifyDocusignAccountDetails( dsCtx.accountNumber , dsCtx.clmBaseUrl ) );
+        res.sections.add( dsCtx.section );
+        res.sections.add( verifyEnvironmentDetails( sandbox ) );
+        res.sections.add( verifyGoogleRecaptchaSettings( sandbox ) );
+        res.sections.add( verifyNVMContactWorldSettings( sandbox ) );
+        res.sections.add( verifyOrgSettings( sandbox ) );
+        res.sections.add( verifyProjectCreationSettings() );
+        res.sections.add( verifySalesTeamEmailSettings() );
+        res.sections.add( verifyUserTriggerSettings() );
+        res.sections.add( verifyWingspanSettings() );
+
         // Other checks
+        res.sections.add( verifyExternalIdObjects() );
         res.sections.add( verifyImageDocuments() );
         res.sections.add( verifyQueuesEmailSuffix() );
         res.sections.add( verifyCspTrustedSites() );
@@ -189,8 +192,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn( 'wss_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read Wingspan_Settings__c: ' + e.getMessage() ) );
         }
 
-        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
-        return s;
+        return finalizeSection(s);
     }
 
     // 3) NSP_GoogleRecaptchaSettings__c (org defaults set SiteKey and SiteUrl)
@@ -212,8 +214,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn( 'rec_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read NSP_GoogleRecaptchaSettings__c: ' + e.getMessage() ) );
         }
 
-        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
-        return s;
+        return finalizeSection(s);
     }
 
     // 4) NSP_Docusign_Account_Details__c (org defaults optionally set when values available)
@@ -232,8 +233,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn( 'dad_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read NSP_Docusign_Account_Details__c: ' + e.getMessage() ) );
         }
 
-        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
-        return s;
+        return finalizeSection(s);
     }
 
     // 5) OrgSettings__c (org defaults mirror org context)
@@ -262,8 +262,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn('org_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to verify OrgSettings__c: ' + e.getMessage() ) );
         }
 
-        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
-        return s;
+        return finalizeSection(s);
     }
 
     // 6) NSP_Environment_Details__c (org defaults NSP_Detailed_Data__c branch by sandbox)
@@ -288,8 +287,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn( 'env_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read NSP_Environment_Details__c: ' + e.getMessage() ) );
         }
 
-        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
-        return s;
+        return finalizeSection(s);
     }
 
     // 7) BoxFileRequest__c (org defaults has BoxTemplateFolderId__c hardcoded)
@@ -307,8 +305,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn( 'box_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read BoxFileRequest__c: ' + e.getMessage() ) );
         }
 
-        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
-        return s;
+        return finalizeSection(s);
     }
 
     // 8) UserTriggerSettings__c (org defaults cleared to nulls)
@@ -952,6 +949,136 @@ public with sharing class SandboxHealthController {
         return s;
     }
 
+    // ========== ExternalId objects verification (based on OrgSettings fields containing 'externalidobjects') ==========
+    private static List<String> getExternalIdObjectNames( OrgSettings__c orgSettings ) {
+        List<String> names = new List<String>();
+        if ( orgSettings != null ) {
+            Set<String> orgFields = Schema.SObjectType.OrgSettings__c.fields.getMap().keySet();
+            for ( String f : orgFields ) {
+                if ( ( f != null )
+                  && ( f.toLowerCase().contains( 'externalidobjects' ) ) ) {
+                    try {
+                        String val = (String) orgSettings.get( f );
+                        if ( String.isNotBlank( val ) ) {
+                            for ( String entry : val.split( ',' ) ) {
+                                String obj = entry.trim();
+                                if ( String.isNotBlank( obj )
+                                  && !names.contains( obj ) ) {
+                                    names.add(obj);
+                                }
+                            }
+                        }
+                    } catch ( Exception ex ) {
+                    }
+                }
+            }
+        }
+        return names;
+    }
+
+    private static List<Check> buildExternalIdReadWarnings(OrgSettings__c orgSettings) {
+        // Single-return implementation: always return warns at method end.
+        List<Check> warns = new List<Check>();
+        if ( orgSettings != null ) {
+            Set<String> orgFields = Schema.SObjectType.OrgSettings__c.fields.getMap().keySet();
+            for ( String f : orgFields ) {
+                if ( ( f != null )
+                  && ( f.toLowerCase().contains( 'externalidobjects' ) ) ) {
+                    try {
+                        String ignore = (String) orgSettings.get( f );
+                    } catch ( Exception ex ) {
+                        warns.add( newWarn( 'extid_field_err_' + f , f , 'Readable' , 'error' , 'Unable to read OrgSettings__c.' + f + ': ' + ex.getMessage() ) );
+                    }
+                }
+            }
+        }
+        return warns;
+    }
+
+    private static void evaluateExternalIdForObject(Section target, String objName) {
+        String key = 'extid_' + objName;
+        String label = objName;
+        try {
+            String soql = 'SELECT count() FROM ' + objName + ' WHERE NSP_External_Id__c = null';
+            Integer cnt = Database.countQuery( soql );
+            if ( cnt == 0 ) {
+                target.checks.add( newPass( key , label , 'No blank NSP_External_Id__c' , '0' , 'No records with blank ExternalId' ) );
+            } else {
+                target.checks.add( newFail( key , label , 'No blank NSP_External_Id__c' , String.valueOf(cnt) , cnt + ' records with blank NSP_External_Id__c' ) );
+            }
+        } catch (Exception ex) {
+            target.checks.add( newWarn( key , label , 'Validated' , 'unavailable' , 'Unable to validate ' + objName + ': ' + ex.getMessage() ) );
+        }
+    }
+
+    private static Section verifyExternalIdObjects() {
+        Boolean skipProcessing = false;
+        Section s = new Section();
+            s.key = 'externalIdObjects';
+            s.label = 'ExternalId Objects';
+            s.category = 'DATA_QUALITY';
+            s.checks = new List<Check>();
+
+        try {
+            OrgSettings__c orgSettings = OrgSettings__c.getOrgDefaults();
+            if ( orgSettings == null ) {
+                s.checks.add( newWarn( 'extid_orgsettings_missing' , 'OrgSettings__c' , 'Configured' , 'none' , 'OrgSettings__c.getOrgDefaults() returned null' ) );
+                skipProcessing = true;
+            }
+
+            // gather warnings about unreadable fields (only if we have orgSettings)
+            List<Check> fieldWarns = new List<Check>();
+            List<String> objNames = new List<String>();
+            if ( !skipProcessing ) {
+                fieldWarns = buildExternalIdReadWarnings( orgSettings );
+                if ( !fieldWarns.isEmpty() ) {
+                    s.checks.addAll( fieldWarns );
+                }
+
+                // get object names (may be empty)
+                objNames = getExternalIdObjectNames( orgSettings );
+                if ( objNames.isEmpty() ) {
+                    s.checks.add(newWarn('extid_none_configured', 'ExternalId object list', 'At least one configured', 'None', 'No OrgSettings__c fields containing \"externalidobjects\" with values were found'));
+                    skipProcessing = true;
+                }
+            }
+
+            // If not skipped, evaluate each object
+            if ( !skipProcessing ) {
+                // evaluate per-object checks into a temp list so we can alphabetize by label before adding to section
+                List<Check> perObjectChecks = new List<Check>();
+                for ( String objName : objNames ) {
+                    // create a temporary Section to collect the single-check result then extract it
+                    Section tmpSec = new Section();
+                    tmpSec.checks = new List<Check>();
+                    evaluateExternalIdForObject( tmpSec , objName );
+                    if ( tmpSec.checks != null && !tmpSec.checks.isEmpty() ) {
+                        perObjectChecks.addAll( tmpSec.checks );
+                    }
+                }
+                // Custom sort: build map of label->checks and append in alphabetical order of labels
+                if (!perObjectChecks.isEmpty()) {
+                    Map<String, List<Check>> byLabel = new Map<String, List<Check>>();
+                    for (Check c : perObjectChecks) {
+                        String lbl = ( c.label == null ) ? '' : c.label;
+                        if ( !byLabel.containsKey( lbl ) ) byLabel.put( lbl , new List<Check>() );
+                        byLabel.get( lbl ).add( c );
+                    }
+                    List<String> labels = new List<String>( byLabel.keySet() );
+                    labels.sort();
+                    for ( String lbl : labels ) {
+                        s.checks.addAll( byLabel.get( lbl ) );
+                    }
+                }
+            }
+        } catch (Exception e) {
+            s.checks.add(newWarn('extid_unexpected', 'ExternalId Objects', 'Validated', 'Error', 'Unexpected error: ' + e.getMessage()));
+        }
+
+        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
+        return s;
+    }
+
     // Placeholder required labels. These align with NSP_PrepSandbox.doCLabels() and doEmailCLabels() examples.
     private static Map<String, String> requiredLabels(String sandbox) {
         Map<String, String> m = new Map<String, String>();
@@ -1085,5 +1212,28 @@ public with sharing class SandboxHealthController {
             return mTmplId;
         }
         private set;
+    }
+
+    // Finalize a section: sort checks by label (alphabetical, null-safe) and set status
+    private static Section finalizeSection(Section s) {
+        if (s == null) return s;
+        if (s.checks != null && !s.checks.isEmpty()) {
+            // Group checks by label to ensure stable grouping for identical labels
+            Map<String, List<Check>> byLabel = new Map<String, List<Check>>();
+            for (Check c : s.checks) {
+                String lbl = (c.label == null) ? '' : c.label;
+                if (!byLabel.containsKey(lbl)) byLabel.put(lbl, new List<Check>());
+                byLabel.get(lbl).add(c);
+            }
+            List<String> labels = new List<String>(byLabel.keySet());
+            labels.sort();
+            List<Check> sorted = new List<Check>();
+            for (String lbl : labels) {
+                sorted.addAll(byLabel.get(lbl));
+            }
+            s.checks = sorted;
+        }
+        s.status = calculateSectionStatus(s.checks);
+        return s;
     }
 }
