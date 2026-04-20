@@ -532,6 +532,11 @@
                 <default>false</default>
                 <label>Duration Capital</label>
             </value>
+            <value>
+                <fullName>142</fullName>
+                <default>false</default>
+                <label>Western Partners</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
