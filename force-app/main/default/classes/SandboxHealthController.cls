@@ -88,39 +88,42 @@ public with sharing class SandboxHealthController {
         res.instance = orgInfo.InstanceName;
         res.isSandbox = orgInfo.IsSandbox;
 
-        // Custom Labels
-        res.sections.add( verifyAppCustomLabels( sandbox ) );
-        res.sections.add( verifyEmailCustomLabels() );
+        if ( !res.isSandbox ) {
+            res.sections.add( verifyExternalIdObjects() );
+        } else {
+            // Custom Labels
+            res.sections.add( verifyAppCustomLabels( sandbox ) );
+            res.sections.add( verifyEmailCustomLabels() );
 
-        // Custom Metadata checks (from doCMetadata and doCMetadataSvc)
-        res.sections.add( verifyDocuSignRESTMetadata( sandbox ) );
-        res.sections.add( verifyDocuSignSignersMetadata( sandbox ) );
-        res.sections.add( verifyPEOMetadata( sandbox ) );
-        res.sections.add( verifyProjectTemplateMappingMetadata() );
-        res.sections.add( verifyRetirementServicesMetadata() );
-        res.sections.add( verifyTemplateKeyAndIdMappingMetadata() );
+            // Custom Metadata checks (from doCMetadata and doCMetadataSvc)
+            res.sections.add( verifyDocuSignRESTMetadata( sandbox ) );
+            res.sections.add( verifyDocuSignSignersMetadata( sandbox ) );
+            res.sections.add( verifyPEOMetadata( sandbox ) );
+            res.sections.add( verifyProjectTemplateMappingMetadata() );
+            res.sections.add( verifyRetirementServicesMetadata() );
+            res.sections.add( verifyTemplateKeyAndIdMappingMetadata() );
 
-        // Custom Settings checks (from doCSettings and doCSettings2)
-        res.sections.add( verifyBoxFileRequest() );
-        // Resolve DocuSign context to get expected downstream values
-        DocuSignContext dsCtx = verifyDocuSignSettings( sandbox );
-        res.sections.add( verifyContractTerminationSettings() );
-        res.sections.add( verifyDocusignAccountDetails( dsCtx.accountNumber , dsCtx.clmBaseUrl ) );
-        res.sections.add( dsCtx.section );
-        res.sections.add( verifyEnvironmentDetails( sandbox ) );
-        res.sections.add( verifyGoogleRecaptchaSettings( sandbox ) );
-        res.sections.add( verifyNVMContactWorldSettings( sandbox ) );
-        res.sections.add( verifyOrgSettings( sandbox ) );
-        res.sections.add( verifyProjectCreationSettings() );
-        res.sections.add( verifySalesTeamEmailSettings() );
-        res.sections.add( verifyUserTriggerSettings() );
-        res.sections.add( verifyWingspanSettings() );
+            // Custom Settings checks (from doCSettings and doCSettings2)
+            res.sections.add( verifyBoxFileRequest() );
+            // Resolve DocuSign context to get expected downstream values
+            DocuSignContext dsCtx = verifyDocuSignSettings( sandbox );
+            res.sections.add( verifyContractTerminationSettings() );
+            res.sections.add( verifyDocusignAccountDetails( dsCtx.accountNumber , dsCtx.clmBaseUrl ) );
+            res.sections.add( dsCtx.section );
+            res.sections.add( verifyEnvironmentDetails( sandbox ) );
+            res.sections.add( verifyGoogleRecaptchaSettings( sandbox ) );
+            res.sections.add( verifyNVMContactWorldSettings( sandbox ) );
+            res.sections.add( verifyOrgSettings( sandbox ) );
+            res.sections.add( verifyProjectCreationSettings() );
+            res.sections.add( verifySalesTeamEmailSettings() );
+            res.sections.add( verifyUserTriggerSettings() );
+            res.sections.add( verifyWingspanSettings() );
 
-        // Other checks
-        res.sections.add( verifyExternalIdObjects() );
-        res.sections.add( verifyImageDocuments() );
-        res.sections.add( verifyQueuesEmailSuffix() );
-        res.sections.add( verifyCspTrustedSites() );
+            // Other checks
+            res.sections.add( verifyImageDocuments() );
+            res.sections.add( verifyQueuesEmailSuffix() );
+            res.sections.add( verifyCspTrustedSites() );
+        }
 
         return res;
     }
@@ -192,7 +195,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn( 'wss_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read Wingspan_Settings__c: ' + e.getMessage() ) );
         }
 
-        return finalizeSection(s);
+        return SandboxHealthController.finalizeSection( s );
     }
 
     // 3) NSP_GoogleRecaptchaSettings__c (org defaults set SiteKey and SiteUrl)
@@ -214,7 +217,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn( 'rec_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read NSP_GoogleRecaptchaSettings__c: ' + e.getMessage() ) );
         }
 
-        return finalizeSection(s);
+        return SandboxHealthController.finalizeSection( s );
     }
 
     // 4) NSP_Docusign_Account_Details__c (org defaults optionally set when values available)
@@ -227,13 +230,13 @@ public with sharing class SandboxHealthController {
 
         try {
             NSP_Docusign_Account_Details__c def = NSP_Docusign_Account_Details__c.getOrgDefaults();
-            s.checks.add( checkExact( 'dad_acct' , 'Docusign_Account_Id__c' , expectedAccountId , ( def == null ) ? null : def.Docusign_Account_Id__c ) );
             s.checks.add( checkExact( 'dad_clm' , 'CLM_Base_URL__c' , expectedClmBaseUrl , ( def == null ) ? null : def.CLM_Base_URL__c ) );
+            s.checks.add( checkExact( 'dad_acct' , 'Docusign_Account_Id__c' , expectedAccountId , ( def == null ) ? null : def.Docusign_Account_Id__c ) );
         } catch ( Exception e ) {
             s.checks.add( newWarn( 'dad_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read NSP_Docusign_Account_Details__c: ' + e.getMessage() ) );
         }
 
-        return finalizeSection(s);
+        return SandboxHealthController.finalizeSection( s );
     }
 
     // 5) OrgSettings__c (org defaults mirror org context)
@@ -262,7 +265,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn('org_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to verify OrgSettings__c: ' + e.getMessage() ) );
         }
 
-        return finalizeSection(s);
+        return SandboxHealthController.finalizeSection( s );
     }
 
     // 6) NSP_Environment_Details__c (org defaults NSP_Detailed_Data__c branch by sandbox)
@@ -287,7 +290,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn( 'env_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read NSP_Environment_Details__c: ' + e.getMessage() ) );
         }
 
-        return finalizeSection(s);
+        return SandboxHealthController.finalizeSection( s );
     }
 
     // 7) BoxFileRequest__c (org defaults has BoxTemplateFolderId__c hardcoded)
@@ -305,7 +308,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn( 'box_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read BoxFileRequest__c: ' + e.getMessage() ) );
         }
 
-        return finalizeSection(s);
+        return SandboxHealthController.finalizeSection( s );
     }
 
     // 8) UserTriggerSettings__c (org defaults cleared to nulls)
@@ -724,8 +727,7 @@ public with sharing class SandboxHealthController {
             ));
         }
 
-        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
-        return s;
+        return SandboxHealthController.finalizeSection( s );
     }
 
     // ---------- Small helpers to build checks ----------
@@ -859,9 +861,7 @@ public with sharing class SandboxHealthController {
             ) );
         }
 
-        // Set section status after all checks are processed
-        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
-        return s;
+        return SandboxHealthController.finalizeSection( s );
     }
 
     // Required image Documents created by NSP_PrepSandbox.doImageDocs()
@@ -1014,10 +1014,10 @@ public with sharing class SandboxHealthController {
     private static Section verifyExternalIdObjects() {
         Boolean skipProcessing = false;
         Section s = new Section();
-            s.key = 'externalIdObjects';
-            s.label = 'ExternalId Objects';
-            s.category = 'DATA_QUALITY';
-            s.checks = new List<Check>();
+        s.key = 'externalIdObjects';
+        s.label = 'ExternalId Objects';
+        s.category = 'DATA_QUALITY';
+        s.checks = new List<Check>();
 
         try {
             OrgSettings__c orgSettings = OrgSettings__c.getOrgDefaults();
@@ -1038,17 +1038,15 @@ public with sharing class SandboxHealthController {
                 // get object names (may be empty)
                 objNames = getExternalIdObjectNames( orgSettings );
                 if ( objNames.isEmpty() ) {
-                    s.checks.add(newWarn('extid_none_configured', 'ExternalId object list', 'At least one configured', 'None', 'No OrgSettings__c fields containing \"externalidobjects\" with values were found'));
+                    s.checks.add( newWarn( 'extid_none_configured' , 'ExternalId object list' , 'At least one configured' , 'None' , 'No OrgSettings__c fields containing \"externalidobjects\" with values were found' ) );
                     skipProcessing = true;
                 }
             }
 
             // If not skipped, evaluate each object
             if ( !skipProcessing ) {
-                // evaluate per-object checks into a temp list so we can alphabetize by label before adding to section
                 List<Check> perObjectChecks = new List<Check>();
                 for ( String objName : objNames ) {
-                    // create a temporary Section to collect the single-check result then extract it
                     Section tmpSec = new Section();
                     tmpSec.checks = new List<Check>();
                     evaluateExternalIdForObject( tmpSec , objName );
@@ -1056,27 +1054,15 @@ public with sharing class SandboxHealthController {
                         perObjectChecks.addAll( tmpSec.checks );
                     }
                 }
-                // Custom sort: build map of label->checks and append in alphabetical order of labels
-                if (!perObjectChecks.isEmpty()) {
-                    Map<String, List<Check>> byLabel = new Map<String, List<Check>>();
-                    for (Check c : perObjectChecks) {
-                        String lbl = ( c.label == null ) ? '' : c.label;
-                        if ( !byLabel.containsKey( lbl ) ) byLabel.put( lbl , new List<Check>() );
-                        byLabel.get( lbl ).add( c );
-                    }
-                    List<String> labels = new List<String>( byLabel.keySet() );
-                    labels.sort();
-                    for ( String lbl : labels ) {
-                        s.checks.addAll( byLabel.get( lbl ) );
-                    }
+                if ( !perObjectChecks.isEmpty() ) {
+                    s.checks.addAll( perObjectChecks );
                 }
             }
         } catch (Exception e) {
-            s.checks.add(newWarn('extid_unexpected', 'ExternalId Objects', 'Validated', 'Error', 'Unexpected error: ' + e.getMessage()));
+            s.checks.add( newWarn( 'extid_unexpected' , 'ExternalId Objects' , 'Validated' , 'Error' , 'Unexpected error: ' + e.getMessage() ) );
         }
 
-        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
-        return s;
+        return SandboxHealthController.finalizeSection( s );
     }
 
     // Placeholder required labels. These align with NSP_PrepSandbox.doCLabels() and doEmailCLabels() examples.
@@ -1145,10 +1131,8 @@ public with sharing class SandboxHealthController {
                 core.checks.add( checkExact( 'label_' + lblName , lblName , exp , act ) );
             }
         }
-        // Set section status for core labels
-        core.status = SandboxHealthController.calculateSectionStatus( core.checks );
 
-        return core;
+        return SandboxHealthController.finalizeSection( core );
     }
 
     private static Section verifyEmailCustomLabels() {
@@ -1191,10 +1175,8 @@ public with sharing class SandboxHealthController {
 
             email.checks.add( checkSuffix( 'email_label_' + lblName , lblName , STRING_INVALID , actual , true) );
         }
-        // Set section status for email labels
-        email.status = SandboxHealthController.calculateSectionStatus( email.checks );
 
-        return email;
+        return SandboxHealthController.finalizeSection( email );
     }
 
     private static Map<String, Id> mTmplId {
@@ -1215,25 +1197,26 @@ public with sharing class SandboxHealthController {
     }
 
     // Finalize a section: sort checks by label (alphabetical, null-safe) and set status
-    private static Section finalizeSection(Section s) {
-        if (s == null) return s;
-        if (s.checks != null && !s.checks.isEmpty()) {
-            // Group checks by label to ensure stable grouping for identical labels
-            Map<String, List<Check>> byLabel = new Map<String, List<Check>>();
-            for (Check c : s.checks) {
-                String lbl = (c.label == null) ? '' : c.label;
-                if (!byLabel.containsKey(lbl)) byLabel.put(lbl, new List<Check>());
-                byLabel.get(lbl).add(c);
+    private static Section finalizeSection( Section s ) {
+        if ( s != null ) {
+            if ( s.checks != null && !s.checks.isEmpty() ) {
+                // Group checks by label to ensure stable grouping for identical labels
+                Map<String, List<Check>> byLabel = new Map<String, List<Check>>();
+                for ( Check c : s.checks ) {
+                    String lbl = ( c.label == null ) ? '' : c.label;
+                    if (!byLabel.containsKey(lbl)) byLabel.put( lbl , new List<Check>() );
+                    byLabel.get(lbl).add(c);
+                }
+                List<String> labels = new List<String>( byLabel.keySet() );
+                labels.sort();
+                List<Check> sorted = new List<Check>();
+                for ( String lbl : labels ) {
+                    sorted.addAll( byLabel.get( lbl ) );
+                }
+                s.checks = sorted;
             }
-            List<String> labels = new List<String>(byLabel.keySet());
-            labels.sort();
-            List<Check> sorted = new List<Check>();
-            for (String lbl : labels) {
-                sorted.addAll(byLabel.get(lbl));
-            }
-            s.checks = sorted;
+            s.status = calculateSectionStatus( s.checks );
         }
-        s.status = calculateSectionStatus(s.checks);
         return s;
     }
 }
