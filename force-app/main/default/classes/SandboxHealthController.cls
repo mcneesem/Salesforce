@@ -1204,8 +1204,10 @@ public with sharing class SandboxHealthController {
                 Map<String, List<Check>> byLabel = new Map<String, List<Check>>();
                 for ( Check c : s.checks ) {
                     String lbl = ( c.label == null ) ? '' : c.label;
-                    if (!byLabel.containsKey(lbl)) byLabel.put( lbl , new List<Check>() );
-                    byLabel.get(lbl).add(c);
+                    if ( !byLabel.containsKey( lbl ) ) {
+                        byLabel.put( lbl , new List<Check>() );
+                    }
+                    byLabel.get( lbl ).add( c );
                 }
                 List<String> labels = new List<String>( byLabel.keySet() );
                 labels.sort();
