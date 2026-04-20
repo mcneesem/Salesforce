@@ -13,11 +13,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Portal_Team_Member__c.Portal_Guidance__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Portal_Team_Member__c.Position__c</field>
         <readable>true</readable>
     </fieldPermissions>
