@@ -653,7 +653,7 @@ if Source has Set Value to null and Target has valid record then delete</descrip
             <label>Yes : Valid Portal Record</label>
         </rules>
     </decisions>
-    <description>AZD-545307 - Update Portal Team Member</description>
+    <description>New Client Portal: Portal Team Member Management</description>
     <environments>Default</environments>
     <formulas>
         <description>Contact associated to current IP Position</description>
@@ -667,8 +667,8 @@ if Source has Set Value to null and Target has valid record then delete</descrip
 null
 )</expression>
     </formulas>
-    <interviewLabel>Implementation Profile - Updated - Async - Update Portal Team Members Subflow {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Implementation Profile - Updated - Async - Update Portal Team Members Subflow</label>
+    <interviewLabel>Implementation Profile - Subflow - Handle Portal Team Members {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Implementation Profile - Subflow - Handle Portal Team Members</label>
     <loops>
         <description>Loop to get latest record</description>
         <name>Loop_Each_Positions</name>
@@ -886,7 +886,7 @@ null
         <inputAssignments>
             <name>faultFlow</name>
             <value>
-                <stringValue>Implementation_Profile_Updated_Async_Update_Portal_Team_Members_Subflow</stringValue>
+                <stringValue>Implementation_Profile_Subflow_Handle_Portal_Team_Members</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
