@@ -8,7 +8,7 @@
     width:100%;
 }
 .THIS .icon_white_bg {
-   --sds-c-icon-color-foreground-default: white; 
+   --slds-c-icon-color-foreground-default: white; 
      float: right;
      position: relative;
      right: 7px;

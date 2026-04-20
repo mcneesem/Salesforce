@@ -60,13 +60,13 @@ Function             :  This component is called from the 'Manage Order' button
     <aura:if isTrue="{!(v.section=='Option')}">
         <!--Modal Header-->
         <div class="modal-header slds-modal__header slds-size_1-of-1">
-            <h4 class="title slds-text-heading--medium">Manage Order</h4>
+            <h4 class="title slds-text-heading_medium">Manage Order</h4>
         </div>
         <!--End Modal Header-->
 
         <!--Modal Body-->
 
-        <div class="slds-modal__content slds-p-around--x-small slds-size_1-of-1 slds-is-relative slds-p-bottom_xx-large">
+        <div class="slds-modal__content slds-p-around_x-small slds-size_1-of-1 slds-is-relative slds-p-bottom_xx-large">
             <aura:if isTrue="{!v.displayhelp}">
                 <div class="slds-form-element__icon">
                     <div class="slds-popover slds-popover_tooltip slds-nubbin_bottom-left" role="tooltip" id="help" >
@@ -75,8 +75,8 @@ Function             :  This component is called from the 'Manage Order' button
                 </div>
             </aura:if>
         </div>
-        <div class="slds-modal__content slds-p-around--x-small slds-size_1-of-1 slds-is-relative slds-p-bottom_xx-large">
-            <form class="slds-form--stacked slds-p-left_small">
+        <div class="slds-modal__content slds-p-around_x-small slds-size_1-of-1 slds-is-relative slds-p-bottom_xx-large">
+            <form class="slds-form_stacked slds-p-left_small">
                 <lightning:radioGroup
                                       aura:id="mygroup"
                                       label="Please select an option"
@@ -112,9 +112,9 @@ Function             :  This component is called from the 'Manage Order' button
 
     <aura:if isTrue="{!(v.showMessageModal &amp;&amp; v.hasTerminationPermission)}">
         <div class="modal-header slds-modal__header slds-size_1-of-1">
-            <h4 class="title slds-text-heading--medium">Message</h4>
+            <h4 class="title slds-text-heading_medium">Message</h4>
         </div>
-        <div class="slds-modal__content slds-p-around--x-small slds-size_1-of-1 slds-is-relative slds-p-bottom_xx-large">
+        <div class="slds-modal__content slds-p-around_x-small slds-size_1-of-1 slds-is-relative slds-p-bottom_xx-large">
                 <div class="slds-modal__content slds-p-around_medium">
                     <p>Your termination request for {!v.terminationDate} has been submitted successfully. The process may take a couple of minutes to complete.</p>
                 </div>
