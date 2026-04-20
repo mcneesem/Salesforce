@@ -283,7 +283,7 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
         }
     }
 
-	/**
+/**
 * MethodName  : populateUserIdOnATMBasedOnPerId
 * Description : This Method populates NSP User if there is a change on the PER Id.
 * Params      : List<NSP_Account_Team__c> acctTeamList
@@ -384,44 +384,57 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
         }
     }
 
-    /***********************************************************************************************
-    * MethodName  : updateProjectTaskEmailFields
-    * Description : Method to update Project Task Email field
-    * Params	  : List<NSP_Account_Team__c> newList, Map<Id, NSP_Account_Team__c> oldMap
-    *
-    * ********************************************************************************************/
-    public static void updateProjectTaskEmailFields(List<NSP_Account_Team__c> newList, Map<Id, NSP_Account_Team__c> oldMap){
-        set<Id> setAccountIds = new set<Id>();
-        Map<String,set<String>> mapAccTeamEmails = new Map<String,set<String>>();
+    //
+    // MethodName  : updateProjectTaskEmailFields
+    // Description : Method to update Project Task Email field
+    // Params  : List<NSP_Account_Team__c> newList, Map<Id, NSP_Account_Team__c> oldMap
+    //
+    public static void updateProjectTaskEmailFields( List<NSP_Account_Team__c> newList , Map<Id,NSP_Account_Team__c> oldMap ) {
+        Set<Id> setAccountIds = new Set<Id>();
+        Map<String,Set<String>> mapAccTeamEmails = new Map<String,Set<String>>();
         Map<String,NSP_Account_Team__c> mapAccTeamCLHR = new Map<String,NSP_Account_Team__c>();
         List<pse__Project_Task__c> lstProjectTask = new List<pse__Project_Task__c>();
-
         List<NSP_Account_Team__c> lstAccTeams = new List<NSP_Account_Team__c>();
-        for(NSP_Account_Team__c accTeam: newList){
-            if((oldMap == null && accTeam.NSP_Account__c!=null) || (oldMap!=null && accTeam.NSP_Account__c!=null && (oldMap.get(accTeam.Id).NSP_Account__c != accTeam.NSP_Account__c || accTeam.NSP_Role__c!=oldMap.get(accTeam.Id).NSP_Role__c))){
-                setAccountIds.add(accTeam.NSP_Account__c);
+        for ( NSP_Account_Team__c accTeam : newList ) {
+            if ( ( ( oldMap == null )
+                && ( accTeam.NSP_Account__c != null )
+                )
+                || ( ( oldMap != null )
+                    && ( accTeam.NSP_Account__c != null )
+                    && ( ( oldMap.get( accTeam.Id ).NSP_Account__c != accTeam.NSP_Account__c )
+                        || ( accTeam.NSP_Role__c != oldMap.get( accTeam.Id ).NSP_Role__c )
+                        )
+                    )
+                )
+            {
+                setAccountIds.add( accTeam.NSP_Account__c );
             }
         }
-
-        if(!setAccountIds.isEmpty()){
-            lstAccTeams =  getAccountTeamRecords(setAccountIds);
-            mapAccTeamEmails = getCCAccountTeams(lstAccTeams);
-            mapAccTeamCLHR = getAccountTeams(lstAccTeams);
+        if ( !setAccountIds.isEmpty() ) {
+            lstAccTeams = NSP_AccountTeamTriggerHelper.getAccountTeamRecords( setAccountIds );
+            mapAccTeamEmails = NSP_AccountTeamTriggerHelper.getCCAccountTeams( lstAccTeams );
+            mapAccTeamCLHR = NSP_AccountTeamTriggerHelper.getAccountTeams( lstAccTeams );
         }
-
-        if(!mapAccTeamCLHR.isempty()){
-            for(pse__Project_Task__c proj : [SELECT Id,NSP_CC_Emails__c,NSP_AccountId__c FROM pse__Project_Task__c WHERE NSP_AccountId__c IN:setAccountIds]){
-                if(mapAccTeamEmails.containsKey(proj.NSP_AccountId__c) && mapAccTeamEmails.get(proj.NSP_AccountId__c)!=null){
+        if ( !mapAccTeamCLHR.isempty() ) {
+            for ( pse__Project_Task__c proj : [
+                        SELECT Id , NSP_CC_Emails__c , NSP_AccountId__c
+                        FROM pse__Project_Task__c
+                        WHERE ( NSP_AccountId__c IN :setAccountIds )
+                    ]
+                )
+            {
+                if ( mapAccTeamEmails.containsKey( proj.NSP_AccountId__c )
+                    && ( mapAccTeamEmails.get( proj.NSP_AccountId__c ) != null )
+                    )
+                {
                     List<String> ccEmails = new List<String>();
-                    ccEmails.addAll(mapAccTeamEmails.get(proj.NSP_AccountId__c));
-                    proj.NSP_CC_Emails__c = String.join(ccEmails, ',');
+                    ccEmails.addAll( mapAccTeamEmails.get( proj.NSP_AccountId__c ) );
+                    proj.NSP_CC_Emails__c = String.join( ccEmails , ',' );
                 }
-
-                lstProjectTask.add(proj);
+                lstProjectTask.add( proj );
             }
         }
-
-        if(!lstProjectTask.isEmpty()){
+        if ( !lstProjectTask.isEmpty() ) {
             update lstProjectTask;
         }
     }
@@ -429,16 +442,16 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
     /***********************************************************************************************
     * MethodName  : getCCAccountTeams
     * Description : Method to get CC account team
-    * Params	  : List<NSP_Account_Team__c> accTeamRecords
+    * Params  : List<NSP_Account_Team__c> accTeamRecords
     *
     * ********************************************************************************************/
-    private static Map<String,set<String>> getCCAccountTeams(List<NSP_Account_Team__c> accTeamRecords){
-        Map<String,set<String>> mapAccTeamEmails = new Map<String,set<String>>();
+    private static Map<String,Set<String>> getCCAccountTeams(List<NSP_Account_Team__c> accTeamRecords){
+        Map<String,Set<String>> mapAccTeamEmails = new Map<String,Set<String>>();
         for(NSP_Account_Team__c accTeam: accTeamRecords){
             if(mapAccTeamEmails.containsKey(accTeam.NSP_Account__c)){
                 mapAccTeamEmails.get(accTeam.NSP_Account__c).add(accTeam.NSP_Email__c);
             }else{
-                mapAccTeamEmails.put(accTeam.NSP_Account__c,new set<String>{accTeam.NSP_Email__c});
+                mapAccTeamEmails.put(accTeam.NSP_Account__c,new Set<String>{accTeam.NSP_Email__c});
             }
         }
         return mapAccTeamEmails;
@@ -447,7 +460,7 @@ NSP_WX_WA_Benefits_Specialist__c, and NSP_Retirement_Service_Plan_Name__c field 
     /***********************************************************************************************
     * MethodName  : getAccountTeamRecords
     * Description : Method to get account team records
-    * Params	  : Set<Id> setAccountIds
+    * Params  : Set<Id> setAccountIds
     *
     * ********************************************************************************************/
     private static List<NSP_Account_Team__c> getAccountTeamRecords(Set<Id> setAccountIds){
