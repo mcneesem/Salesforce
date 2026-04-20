@@ -298,8 +298,7 @@ public with sharing class NSP_ProjectTasksTriggerServiceHelper {
         Boolean isProhibitedChange = (
             (
                 ( serviceAppointmentStatus == 'Dispatched' )
-                ||
-                ( serviceAppointmentStatus == 'In Progress' )
+                || ( serviceAppointmentStatus == 'In Progress' )
             )
             && (
                 String.isBlank( mapWorkOrderProjectTask.pse__Status__c )
