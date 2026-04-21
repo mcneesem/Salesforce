@@ -3393,8 +3393,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Portal_Contact_Number__c</fieldItem>
-                <identifier>RecordPortal_Contact_Number_cField</identifier>
+                <fieldItem>Record.Portal_Phone__c</fieldItem>
+                <identifier>RecordPortal_Phone_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
