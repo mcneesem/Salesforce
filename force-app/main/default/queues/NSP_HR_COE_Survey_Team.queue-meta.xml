@@ -1,18 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
-    <email>hrcoe@insperity.com.invalid</email>
     <name>HR COE Survey Team</name>
     <queueSobject>
-        <sobjectType>Case</sobjectType>
-    </queueSobject>
-        <queueSobject>
-        <sobjectType>Task</sobjectType>
-    </queueSobject>
-    <queueSobject>
-        <sobjectType>pse__Project_Task__c</sobjectType>
-    </queueSobject>
-<queueSobject>
-        <sobjectType>NSP_ReportRequest__c</sobjectType>
+        <sobjectType>WorkBadgeDefinition</sobjectType>
     </queueSobject>
 </Queue>
