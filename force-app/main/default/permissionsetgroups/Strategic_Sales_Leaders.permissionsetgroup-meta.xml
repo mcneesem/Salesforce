@@ -7,6 +7,7 @@
     <permissionSets>Account_Assignment_Method_Edit_Access</permissionSets>
     <permissionSets>Account_Create</permissionSets>
     <permissionSets>Account_Manage_PCM_Firms</permissionSets>
+    <permissionSets>Account_Screen_Same_DUNS_New_FEIN</permissionSets>
     <permissionSets>Account_View_All_Modify_All</permissionSets>
     <permissionSets>Advanced_User_Details_Hire_Date_Termination_Date</permissionSets>
     <permissionSets>Allow_Closed_Lost_Opportunity</permissionSets>
