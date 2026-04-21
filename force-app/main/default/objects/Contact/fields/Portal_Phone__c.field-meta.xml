@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Portal_Contact_Number__c</fullName>
+    <fullName>Portal_Phone__c</fullName>
     <description>Renders on communities page in Insperity Contact Phone number position</description>
     <encryptionScheme>None</encryptionScheme>
-    <label>Portal Contact Number</label>
+    <label>Portal Phone</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
