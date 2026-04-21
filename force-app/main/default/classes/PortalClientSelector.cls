@@ -6,6 +6,12 @@ public with sharing class PortalClientSelector {
         return [
             SELECT Id
             FROM Portal_Client__c
+            WHERE (
+                Id IN (
+                    SELECT Portal_Client__c
+                    FROM Portal_Project__c
+                )
+            )
         ];
     }
 

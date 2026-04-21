@@ -3,7 +3,7 @@
     text-align: left;
     background-color: #a0a0a02f;
     padding:0.2rem;
-    border: 1px solid #d8dde6;
+    border: var(--slds-g-sizing-border-1, 1px) solid #d8dde6;
 }
 .typebox {
     padding-bottom: 18rem;

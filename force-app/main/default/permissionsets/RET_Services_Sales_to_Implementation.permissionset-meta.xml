@@ -1308,6 +1308,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>NSP_Sales_to_Implementation__c.New_EEs_Affected__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>NSP_Sales_to_Implementation__c.ORK_Subplan__c</field>
         <readable>true</readable>
     </fieldPermissions>

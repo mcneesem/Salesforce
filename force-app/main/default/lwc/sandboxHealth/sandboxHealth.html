@@ -1,0 +1,110 @@
+<!--
+  LWC: sandboxHealth
+  Purpose: Render real-time verification for sandbox-specific settings
+  Sections: CSP Trusted Sites, Custom Labels (placeholders)
+  Follows SLDS layout and uses lightning icons for pass/fail
+-->
+<template>
+    <lightning-card title="Sandbox Health Checks" icon-name="utility:check">
+        <lightning-layout multiple-rows>
+            <lightning-layout-item size="12">
+                <span class="slds-m-left_x-small slds-text-title">Sandbox:</span>
+                <span class="slds-m-left_x-small">{context.sandboxName}</span>
+                <span class="slds-m-left_large slds-text-title">Instance:</span>
+                <span class="slds-m-left_x-small">{context.instance}</span>
+                <span class="slds-m-left_large slds-text-title">Evaluated:</span>
+                <span class="slds-m-left_x-small">{evaluatedAtDisplay}</span>
+                <lightning-button class="slds-m-left_large" label="Refresh" icon-name="utility:refresh" onclick={handleRefresh} variant="neutral"></lightning-button>
+            </lightning-layout-item>
+
+            <template if:true={loading}>
+                <lightning-layout-item size="12" class="slds-m-left_x-small slds-p-bottom_small slds-text-title slds-text-color_weak">Loading checks...</lightning-layout-item>
+            </template>
+
+            <template if:true={error}>
+                <lightning-layout-item size="12" class="slds-m-left_x-small slds-p-bottom_small slds-text-title slds-text-color_error" padding="around-small">
+                    {error}
+                </lightning-layout-item>
+            </template>
+
+            <template if:true={sections}>
+                <!-- Collapsible sections using lightning-accordion -->
+                <lightning-layout-item size="12">
+                    <lightning-accordion allow-multiple-sections-open active-section-name={activeSections} onsectiontoggle={handleToggle}>
+                        <div class="slds-clearfix">
+                            <div class="slds-float_left slds-m-left_x-small slds-p-bottom_small">
+                                <lightning-button-icon
+                                        icon-name={toggleIcon}
+                                        variant="border-filled"
+                                        size="xx-small"
+                                        alternative-text="Expand/Collapse"
+                                        title="Expand/Collapse"
+                                        onclick={handleToggleAll}>
+                                </lightning-button-icon>
+                            </div>
+                        </div>
+                        <template for:each={sections} for:item="section">
+                            <lightning-accordion-section key={section.key} name={section.key} label={section.label}>
+                                <!-- Section status icon next to section label -->
+                                <lightning-layout multiple-rows slot="actions" class="slds-m-right_small">
+                                    <lightning-icon if:true={section.isSectionPass} icon-name="utility:success" alternative-text="Pass" title="Pass" variant="success" size="x-small"></lightning-icon>
+                                    <lightning-icon if:true={section.isSectionFail} icon-name="utility:error" alternative-text="Fail" title="Fail" variant="error" size="x-small"></lightning-icon>
+                                    <lightning-icon if:true={section.isSectionWarn} icon-name="utility:warning" alternative-text="Warn" title="Warn" variant="warning" size="x-small"></lightning-icon>
+                                </lightning-layout>
+
+                                <!-- If this is a grouped section (e.g., Custom Settings) render nested accordion -->
+                                <template if:true={section.children}>
+                                    <lightning-accordion allow-multiple-sections-open active-section-name={activeChildSections}>
+                                        <template for:each={section.children} for:item="child">
+                                            <lightning-accordion-section key={child.key} name={child.name} label={child.label}>
+                                                <lightning-layout multiple-rows slot="actions" class="slds-m-right_small">
+                                                    <lightning-icon if:true={child.isSectionPass} icon-name="utility:success" alternative-text="Pass" title="Pass" variant="success" size="x-small"></lightning-icon>
+                                                    <lightning-icon if:true={child.isSectionFail} icon-name="utility:error" alternative-text="Fail" title="Fail" variant="error" size="x-small"></lightning-icon>
+                                                    <lightning-icon if:true={child.isSectionWarn} icon-name="utility:warning" alternative-text="Warn" title="Warn" variant="warning" size="x-small"></lightning-icon>
+                                                </lightning-layout>
+                                                <ul class="slds-has-dividers_around-space">
+                                                    <template for:each={child.checks} for:item="chk">
+                                                        <li key={chk.key} class="slds-item">
+                                                            <c-sandbox-health-line-item
+                                                                label={chk.label}
+                                                                actual={chk.actual}
+                                                                expected={chk.expected}
+                                                                message={chk.message}
+                                                                is-pass={chk.isPass}
+                                                                is-fail={chk.isFail}
+                                                                is-warn={chk.isWarn}>
+                                                            </c-sandbox-health-line-item>
+                                                        </li>
+                                                    </template>
+                                                </ul>
+                                            </lightning-accordion-section>
+                                        </template>
+                                    </lightning-accordion>
+                                </template>
+
+                                <!-- Otherwise render as a normal leaf section -->
+                                <template if:false={section.children}>
+                                    <ul class="slds-has-dividers_around-space">
+                                        <template for:each={section.checks} for:item="chk">
+                                            <li key={chk.key} class="slds-item">
+                                                <c-sandbox-health-line-item
+                                                    label={chk.label}
+                                                    actual={chk.actual}
+                                                    expected={chk.expected}
+                                                    message={chk.message}
+                                                    is-pass={chk.isPass}
+                                                    is-fail={chk.isFail}
+                                                    is-warn={chk.isWarn}>
+                                                </c-sandbox-health-line-item>
+                                            </li>
+                                        </template>
+                                    </ul>
+                                </template>
+                            </lightning-accordion-section>
+                        </template>
+                    </lightning-accordion>
+                </lightning-layout-item>
+            </template>
+        </lightning-layout>
+    </lightning-card>
+</template>

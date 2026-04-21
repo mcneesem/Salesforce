@@ -3,6 +3,10 @@
     <custom>true</custom>
     <description>A modified version of the Sysem Administrator Profile that removes various Permissions for compliance purposes.</description>
     <userLicense>Salesforce</userLicense>
+    <layoutAssignments>
+        <layout>NSP_Participation_SaaS_Activity__c-I-9 Assist %26 E-Verify</layout>
+        <recordType>NSP_Participation_SaaS_Activity__c.I_9_Assist_E_Verify</recordType>
+    </layoutAssignments>
     <userPermissions>
         <enabled>false</enabled>
         <name>AssignPermissionSets</name>

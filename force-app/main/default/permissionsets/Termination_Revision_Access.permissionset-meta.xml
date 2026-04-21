@@ -7,7 +7,17 @@
     <description>Grants the ability to use all elements for the Termination Revision feature</description>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Asset.Rank__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Asset_Termination__c.AIMS_Client__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Asset_Termination__c.Account_Group_Member__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -18,6 +28,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Asset_Termination__c.Asset_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Asset_Termination__c.Is_Relevant_Asset__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -43,6 +58,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Asset_Termination__c.iSolved__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Account_Group_Member__c.Best_WO_Asset_Rank__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Account_Group_Member__c.Best_WXWA_Asset_Rank__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

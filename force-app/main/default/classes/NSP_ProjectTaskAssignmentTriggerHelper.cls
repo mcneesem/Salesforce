@@ -1,306 +1,339 @@
 public with sharing class NSP_ProjectTaskAssignmentTriggerHelper {
-    // test w/ NSP_ProjectTaskAssignmentTriggerHelpTest (??%)
+    // test w/ NSP_ProjectTaskAssignmentTriggerHelpTest (92%)
 
-    /**
-    * Update Role on PTA From Contact Resource Role
-    * @param lProjectTaskAssignments List of New Project Task Assignments
-    * @param mProjectTaskAssignments Map of New project Task Assignments.
-    * @return void
-    */
     public static Boolean runAssignmentMethod = false;
 
-    public void beforeInsertTaskAssignmentFilters(List<pse__Project_Task_Assignment__c> lProjectTaskAssignments){
+    public void beforeInsertTaskAssignmentFilters( List<pse__Project_Task_Assignment__c> lProjectTaskAssignments ) {
         Set<Id> sContactIds = new Set<Id>();
         List<pse__Project_Task_Assignment__c> lTaskAssignments = new List<pse__Project_Task_Assignment__c>();
-        //List<pse__Project_Task_Assignment__c> listOfPTA = new List<pse__Project_Task_Assignment__c>();
-        for(pse__Project_Task_Assignment__c oProjectTaskAssignment : lProjectTaskAssignments){
-            if(oProjectTaskAssignment.pse__Resource__c != null){
-                sContactIds.add(oProjectTaskAssignment.pse__Resource__c);
-                lTaskAssignments.add(oProjectTaskAssignment);
+        for ( pse__Project_Task_Assignment__c oProjectTaskAssignment : lProjectTaskAssignments ) {
+            if ( oProjectTaskAssignment.pse__Resource__c != null ) {
+                sContactIds.add( oProjectTaskAssignment.pse__Resource__c );
+                lTaskAssignments.add( oProjectTaskAssignment );
             }
-           
         }
-
     }
-    
-    /**
-    * @param mNewProjectTaskAssignments Map of New Project Task Assignments
-    * @param mOldProjectTaskAssignments Map of Old project Task Assignments.
-    * @return void
-    */
-    public void beforeUpdateTaskAssignmentFilters(Map<Id, pse__Project_Task_Assignment__c> mNewProjectTaskAssignments,Map<Id, pse__Project_Task_Assignment__c> mOldProjectTaskAssignments){
+
+    public void beforeUpdateTaskAssignmentFilters(
+        Map<Id,pse__Project_Task_Assignment__c> mNewProjectTaskAssignments ,
+        Map<Id,pse__Project_Task_Assignment__c> mOldProjectTaskAssignments
+        )
+    {
         Set<Id> sContactsIds = new Set<Id>();
         Set<Id> setOfProjectTaskId1 = new Set<Id> ();
         List<pse__Project_Task_Assignment__c> lTaskAssignments = new List<pse__Project_Task_Assignment__c>();
         List<pse__Project_Task_Assignment__c> listOfPTA1 = new List<pse__Project_Task_Assignment__c>();
-        for(pse__Project_Task_Assignment__c oTaskAssignment : mNewProjectTaskAssignments.values()){
-            if(oTaskAssignment.pse__Resource__c != null && oTaskAssignment.pse__Resource__c != mOldProjectTaskAssignments.get(oTaskAssignment.Id).pse__Resource__c ){
-                sContactsIds.add(oTaskAssignment.pse__Resource__c);
-                lTaskAssignments.add(oTaskAssignment);
+        for ( pse__Project_Task_Assignment__c oTaskAssignment : mNewProjectTaskAssignments.values() ) {
+            if ( ( oTaskAssignment.pse__Resource__c != null )
+                && ( oTaskAssignment.pse__Resource__c != mOldProjectTaskAssignments.get( oTaskAssignment.Id ).pse__Resource__c )
+                )
+            {
+                sContactsIds.add( oTaskAssignment.pse__Resource__c );
+                lTaskAssignments.add( oTaskAssignment );
             }
-            if(oTaskAssignment.pse__Resource__c != null && 
-               oTaskAssignment.pse__Resource__c != mOldProjectTaskAssignments.get(oTaskAssignment.Id).pse__Resource__c && 
-               oTaskAssignment.pse__Project_Task__c != null){
-                   listOfPTA1.add(oTaskAssignment);
-                   setOfProjectTaskId1.add(oTaskAssignment.pse__Project_Task__c);
+            if ( ( oTaskAssignment.pse__Resource__c != null )
+                && ( oTaskAssignment.pse__Resource__c != mOldProjectTaskAssignments.get( oTaskAssignment.Id ).pse__Resource__c )
+                && ( oTaskAssignment.pse__Project_Task__c != null )
+                )
+            {
+                listOfPTA1.add( oTaskAssignment );
+                setOfProjectTaskId1.add( oTaskAssignment.pse__Project_Task__c );
             }
         }
     }
-    
-    /**
-    * This will update Resource field on PTA + mark Resource Type as Primary
-    * @param projectTaskId Set of Project Task Id Linked with PTA
-    * @param projectTaskAssignment List of PTA
-    * @return void
-    */
-    public static void updateResourceOnInsert(Set<Id> projectTaskId, Set<Id> PTAIdSet, Id userId){
-        Id peoRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT_TASK_SOBJECT_TYPE,NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE);
-        Id bpsRecordTypeId = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.PROJECT_TASK_SOBJECT_TYPE,NSP_ServiceConstants.PROJECT_TASK_BPS_RECORDTYPE);
-        try{   
-            createPTAResourceFromAccountTeam(projectTaskId,peoRecordTypeId,bpsRecordTypeId, userId);
-        } catch (Exception ex) {
-            NSP_ErrorLogHandler.logSaveException('NSP_ProjectTaskAssignmentTriggerHelper', 'updateResourceOnInsert', ex.getMessage());
+
+    public static void updateResourceOnInsert( Set<Id> projectTaskId , Set<Id> PTAIdSet , Id userId ) {
+        Id peoRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'pse__Project_Task__c' , 'PEO_Project_Task' );
+        Id bpsRecordTypeId = NSP_GenericRecordType.getRecordTypeId( 'pse__Project_Task__c' , 'BPS_Project_Task' );
+        try {
+            NSP_ProjectTaskAssignmentTriggerHelper.createPTAResourceFromAccountTeam(
+                projectTaskId ,
+                peoRecordTypeId ,
+                bpsRecordTypeId ,
+                userId
+            );
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                NSP_ProjectTaskAssignmentTriggerHelper.class.getName() ,
+                'updateResourceOnInsert' ,
+                e
+            );
         }
-    } 
-    
-	
-    /**
-    * STY-04072 assign resource and Project task based on the cretain conditions
-    * @param projectTaskIds Set of Project Task Id Linked with PTA
-    * @param peoRecordTypeId List of PTA
-    * @param bpsRecordTypeId List of PTA
-    * @return void
-    */
-    public static void createPTAResourceFromAccountTeam(Set<Id> projectTaskIds, Id peoRecordTypeId, Id bpsRecordTypeId, Id currentUserId){
+    }
+
+    private static void createPTAResourceFromAccountTeam( Set<Id> projectTaskIds , Id peoRecordTypeId , Id bpsRecordTypeId , Id currentUserId ) {
         Map<Id,pse__Project_Task__c> projTaskMap = new Map<Id,pse__Project_Task__c>();
-        Map<Id, Set<Id>> mapAccIdSetPrjId = new Map<Id,Set<Id>>();
-        Map<String, List<NSP_Account_Team__c>> mapAccIdAccTeamList = new Map<String, List<NSP_Account_Team__c>>();
+        Map<Id,Set<Id>> mapAccIdSetPrjId = new Map<Id,Set<Id>>();
+        Map<String,List<NSP_Account_Team__c>> mapAccIdAccTeamList = new Map<String,List<NSP_Account_Team__c>>();
         List<pse__Project_Task_Assignment__c> lstPtAToUpdate = new List<pse__Project_Task_Assignment__c>();
-        Map<Id,pse__Project_Task_Assignment__c> mapPTA = new  Map<Id,pse__Project_Task_Assignment__c> ();
+        Map<Id,pse__Project_Task_Assignment__c> mapPTA = new Map<Id,pse__Project_Task_Assignment__c> ();
         Set<Id> accTeamUserContactSet = new Set<Id>();
         Map<Id,Id> mapUserIdContactId = new Map<Id,Id>();
         Map<Id,Id> projectTaskWithCreatedOwner = new Map<Id,Id>();
         Map<Id,Id> projectTaskWithOwner = new Map<Id,Id>();
-        
-        for(pse__Project_Task__c pTask : Database.Query(getProjectTaskQuery(projectTaskIds, peoRecordTypeId, bpsRecordTypeId))){
-            // populating Project Task Map 
-            projTaskMap.put(pTask.Id,pTask);
-            // creating map of AccountId and Set Project Id 
-            if(!mapAccIdSetPrjId.containsKey(pTask.pse__Project__r.pse__Account__c)){
-                mapAccIdSetPrjId.put(pTask.pse__Project__r.pse__Account__c, new Set<Id>());                                    
-            } 
-            mapAccIdSetPrjId.get(pTask.pse__Project__r.pse__Account__c).add(pTask.pse__Project__c);                                             
+        for ( pse__Project_Task__c pTask : Database.query( NSP_ProjectTaskAssignmentTriggerHelper.getProjectTaskQuery( projectTaskIds , peoRecordTypeId , bpsRecordTypeId ) ) ) {
+            // populating Project Task Map
+            projTaskMap.put( pTask.Id , pTask );
+            // creating map of AccountId and Set Project Id
+            if ( !mapAccIdSetPrjId.containsKey( pTask.pse__Project__r.pse__Account__c ) ) {
+                mapAccIdSetPrjId.put( pTask.pse__Project__r.pse__Account__c , new Set<Id>() );
+            }
+            mapAccIdSetPrjId.get( pTask.pse__Project__r.pse__Account__c ).add( pTask.pse__Project__c );
         }
-        
-        if(mapAccIdSetPrjId.size() > 0){
-            for(NSP_Account_Team__c accTeam : Database.Query(getAccountTeamQuery(mapAccIdSetPrjId.keySet()))){   
-                if(!mapAccIdAccTeamList.containsKey(accTeam.NSP_Account__c)){
-                    mapAccIdAccTeamList.put(accTeam.NSP_Account__c, new List<NSP_Account_Team__c>());
-                } 
-                mapAccIdAccTeamList.get(accTeam.NSP_Account__c).add(accTeam);
-                accTeamUserContactSet.add(accTeam.NSP_User__c);   
-            } 
-            for(Contact cont : Database.Query(getContactQuery(accTeamUserContactSet))){
-                mapUserIdContactId.put(cont.pse__Salesforce_User__c, cont.Id);
-            } 
+        if ( !mapAccIdSetPrjId.isEmpty() ) {
+            for ( NSP_Account_Team__c accTeam : Database.query( NSP_ProjectTaskAssignmentTriggerHelper.getAccountTeamQuery( mapAccIdSetPrjId.keySet() ) ) ) {
+                if ( !mapAccIdAccTeamList.containsKey( accTeam.NSP_Account__c ) ) {
+                    mapAccIdAccTeamList.put( accTeam.NSP_Account__c , new List<NSP_Account_Team__c>() );
+                }
+                mapAccIdAccTeamList.get( accTeam.NSP_Account__c ).add( accTeam );
+                accTeamUserContactSet.add( accTeam.NSP_User__c );
+            }
+            for ( Contact cont : Database.query( NSP_ProjectTaskAssignmentTriggerHelper.getContactQuery( accTeamUserContactSet ) ) ) {
+                mapUserIdContactId.put( cont.pse__Salesforce_User__c , cont.Id );
+            }
         }
-        for(pse__Project_Task_Assignment__c projTaskAssign : Database.Query(getProjectTaskAssignQuery(projectTaskIds, peoRecordTypeId, bpsRecordTypeId))){
-            //project task owner to updated to created user if their is no primary accteam or role 
-            projectTaskWithCreatedOwner.put(projTaskAssign.pse__Project_Task__c, currentUserId);
-            
-            if(projTaskMap.containsKey(projTaskAssign.pse__Project_Task__c) && mapAccIdAccTeamList?.containsKey(projTaskMap.get(projTaskAssign.pse__Project_Task__c)?.pse__Project__r.pse__Account__c)){
-                Id accountId = projTaskMap?.get(projTaskAssign.pse__Project_Task__c)?.pse__Project__r?.pse__Account__c;
-                
-                for(NSP_Account_Team__c accTeam : mapAccIdAccTeamList?.get(accountId)){                    
+        for ( pse__Project_Task_Assignment__c projTaskAssign : Database.query( NSP_ProjectTaskAssignmentTriggerHelper.getProjectTaskAssignQuery( projectTaskIds , peoRecordTypeId , bpsRecordTypeId ) ) ) {
+            //project task owner to updated to created user if their is no primary accteam or role
+            projectTaskWithCreatedOwner.put( projTaskAssign.pse__Project_Task__c , currentUserId );
+            if ( projTaskMap.containsKey( projTaskAssign.pse__Project_Task__c )
+                && mapAccIdAccTeamList?.containsKey( projTaskMap.get( projTaskAssign.pse__Project_Task__c )?.pse__Project__r.pse__Account__c )
+                )
+            {
+                Id accountId = projTaskMap?.get( projTaskAssign.pse__Project_Task__c )?.pse__Project__r?.pse__Account__c;
+                for ( NSP_Account_Team__c accTeam : mapAccIdAccTeamList?.get( accountId ) ) {
                     //this holds primary account/ if no primary account the alphabet order
-                    if( accTeam.NSP_User__c != null && !projectTaskWithOwner.containsKey(projTaskAssign.pse__Project_Task__c) && projTaskAssign.pse__Resource_Role__c == accTeam.NSP_Role__c){
-                        projectTaskWithOwner.put(projTaskAssign.pse__Project_Task__c, accTeam.NSP_User__c);
+                    if ( ( accTeam.NSP_User__c != null )
+                        && !projectTaskWithOwner.containsKey( projTaskAssign.pse__Project_Task__c )
+                        && ( projTaskAssign.pse__Resource_Role__c == accTeam.NSP_Role__c )
+                        )
+                    {
+                        projectTaskWithOwner.put( projTaskAssign.pse__Project_Task__c , accTeam.NSP_User__c );
                     }
-
-                    if(projTaskAssign.pse__Resource_Role__c == accTeam.NSP_Role__c && !mapPTA.containsKey(projTaskAssign.id) ){
+                    if ( ( projTaskAssign.pse__Resource_Role__c == accTeam.NSP_Role__c )
+                        && !mapPTA.containsKey( projTaskAssign.Id )
+                        )
+                    {
                         //assigning the resource that exists in the accountTeam user and matches with Contact salesforce User.
-                        mapPTA.put(projTaskAssign.Id,projTaskAssign);
-                        projTaskAssign.pse__Resource__c = mapUserIdContactId.get(accTeam.NSP_User__c);
-                        lstPtAToUpdate.add(projTaskAssign);
-
-                    } else if(projTaskAssign.pse__Resource_Role__c == accTeam.NSP_Role__c){
-                        //if there is role in PTA matching with Accteam, and Acc team exists multiple records with it 
+                        mapPTA.put( projTaskAssign.Id , projTaskAssign );
+                        projTaskAssign.pse__Resource__c = mapUserIdContactId.get( accTeam.NSP_User__c );
+                        lstPtAToUpdate.add( projTaskAssign );
+                    } else if ( projTaskAssign.pse__Resource_Role__c == accTeam.NSP_Role__c ) {
+                        //if there is role in PTA matching with Accteam, and Acc team exists multiple records with it
                         //then creating other PTA's matching the same role from acc team.
-                        lstPtAToUpdate.add(new pse__Project_Task_Assignment__c(
-                            pse__Resource_Role__c = projTaskAssign.pse__Resource_Role__c,
-                            pse__Project_Task__c = projTaskAssign.pse__Project_Task__c,
-                            NSP_Priority__c = projTaskAssign.NSP_Priority__c,
-                            pse__Resource__c = mapUserIdContactId.get(accTeam.NSP_User__c)
-                        ));
+                        lstPtAToUpdate.add(
+                            new pse__Project_Task_Assignment__c(
+                                pse__Resource_Role__c=projTaskAssign.pse__Resource_Role__c ,
+                                pse__Project_Task__c=projTaskAssign.pse__Project_Task__c ,
+                                NSP_Priority__c=projTaskAssign.NSP_Priority__c ,
+                                pse__Resource__c=mapUserIdContactId.get( accTeam.NSP_User__c )
+                            )
+                        );
                     }
                 }
             }
         }
-
-        if(!lstPtAToUpdate.isEmpty()){
-            List<Database.UpsertResult> upsertResults = Database.upsert(lstPtAToUpdate, false);
-            NSP_ErrorLogHandler.logUpsertResultsException('NSP_ProjectTaskAssignmentTriggerHelper', 'createPTAResourceFromAccountTeam:upsertResults', upsertResults);
+        if ( !lstPtAToUpdate.isEmpty() ) {
+            List<Database.UpsertResult> results = Database.upsert( lstPtAToUpdate , false );
+            NSP_ErrorLogHandler.logResults(
+                NSP_ProjectTaskAssignmentTriggerHelper.class.getName() ,
+                'createPTAResourceFromAccountTeam' ,
+                results
+            );
         }
-
-        updateProjectTaskOwner(projectTaskIds, projectTaskWithOwner, projectTaskWithCreatedOwner);
+        NSP_ProjectTaskAssignmentTriggerHelper.updateProjectTaskOwner(
+            projectTaskIds ,
+            projectTaskWithOwner ,
+            projectTaskWithCreatedOwner
+        );
     }
 
-    /**
-    * STY-04072 assign resource and Project task based on the cretain conditions
-    * @param projectTaskIds Set of Project Task Id Linked with PTA
-    * @param projectTaskWithOwner project task owner that has accteam primary
-    * @param projectTaskWithCreatedOwner created Owner
-    * @return void
-    */
-    @testvisible
-    private static void updateProjectTaskOwner(Set<Id> projectTaskIds, Map<Id,Id> projectTaskWithOwner, Map<Id,Id> projectTaskWithCreatedOwner){
+    @TestVisible
+    private static void updateProjectTaskOwner(
+        Set<Id> projectTaskIds ,
+        Map<Id,Id> projectTaskWithOwner ,
+        Map<Id,Id> projectTaskWithCreatedOwner
+        )
+    {
         List<pse__Project_Task__c> lstProjTaskToUpdate = new List<pse__Project_Task__c>();
-        for(Id projectTaskId : projectTaskIds){
-            if(projectTaskWithOwner.containsKey(projectTaskId)) {
-                lstProjTaskToUpdate.add(new pse__Project_Task__c (
-                    Id = projectTaskId,
-                    OwnerId = projectTaskWithOwner.get(projectTaskId)
-                )); 
-            } else if(projectTaskWithCreatedOwner.containsKey(projectTaskId)) { 
-                lstProjTaskToUpdate.add(new pse__Project_Task__c (
-                    Id = projectTaskId,
-                    OwnerId = projectTaskWithCreatedOwner.get(projectTaskId)
-                )); 
+        for ( Id projectTaskId : projectTaskIds ) {
+            if ( projectTaskWithOwner.containsKey( projectTaskId ) ) {
+                lstProjTaskToUpdate.add(
+                    new pse__Project_Task__c(
+                        Id=projectTaskId ,
+                        OwnerId=projectTaskWithOwner.get( projectTaskId )
+                    )
+                );
+            } else if ( projectTaskWithCreatedOwner.containsKey( projectTaskId ) ) {
+                lstProjTaskToUpdate.add(
+                    new pse__Project_Task__c(
+                        Id=projectTaskId ,
+                        OwnerId=projectTaskWithCreatedOwner.get( projectTaskId )
+                    )
+                );
             }
         }
-
-        if(!lstProjTaskToUpdate.isEmpty()){
-            List<Database.UpsertResult> upsertResults = Database.upsert(lstProjTaskToUpdate, false);
-            NSP_ErrorLogHandler.logUpsertResultsException('NSP_ProjectTaskAssignmentTriggerHelper', 'createPTAResourceFromAccountTeam:upsertResults', upsertResults);
+        if ( !lstProjTaskToUpdate.isEmpty() ) {
+            List<Database.UpsertResult> results = Database.upsert( lstProjTaskToUpdate , false );
+            NSP_ErrorLogHandler.logResults(
+                NSP_ProjectTaskAssignmentTriggerHelper.class.getName() ,
+                'updateProjectTaskOwner' ,
+                results
+            );
         }
     }
 
-    /**
-    * STY-04072 get projecttaskassignment query
-    * @param projectTaskIds Set of Project Task Id Linked with PTA
-    * @param peoRecordTypeId recordtypes
-    * @param bpsRecordTypeId recordtypes
-    * @return void
-    */
-    public static String getProjectTaskAssignQuery(Set<Id> projectTaskIds, Id peoRecordTypeId, Id bpsRecordTypeId){
-        String projTaskAssignmtQuery = new NSP_QueryBuilder('pse__Project_Task_Assignment__c', new List<String>{'Id', 'Name', 'pse__Project_Task__r.pse__Project__r.pse__Account__c', 'pse__Resource_Role__c','pse__Resource__c', 'pse__Project_Task__c','NSP_Priority__c', 'pse__Project_Task__r.NSP_isClonedFromAutomation__c'})
-            .addFilter('pse__Project_Task__c', new List<Id>(projectTaskIds) , NSP_QueryBuilder.Operator.INCLUDES)
-            .addFilter('pse__Project_Task__r.RecordTypeId', new List<Id>{ peoRecordTypeId, bpsRecordTypeId } , NSP_QueryBuilder.Operator.INCLUDES)
-            .addFilter('pse__Project_Task__r.pse__Project__r.NSP_Auto_Resource_Project__c', True , NSP_QueryBuilder.Operator.EQUALS, false)
-            .addFilter('pse__Project_Task__r.Owner.Type', 'User' , NSP_QueryBuilder.Operator.EQUALS)
-            .addFilter('pse__Project_Task__r.NSP_isClonedFromAutomation__c', False , NSP_QueryBuilder.Operator.EQUALS, false)
-            .orderBy('NSP_Priority__c','ASC',true)
-            .build();
-
+    public static String getProjectTaskAssignQuery( Set<Id> projectTaskIds , Id peoRecordTypeId , Id bpsRecordTypeId ) {
+        String projTaskAssignmtQuery = new NSP_QueryBuilder(
+                'pse__Project_Task_Assignment__c' ,
+                new List<String>{
+                    'Id' ,
+                    'Name' ,
+                    'pse__Project_Task__r.pse__Project__r.pse__Account__c' ,
+                    'pse__Resource_Role__c' ,
+                    'pse__Resource__c' ,
+                    'pse__Project_Task__c' ,
+                    'NSP_Priority__c' ,
+                    'pse__Project_Task__r.NSP_isClonedFromAutomation__c'
+                }
+            )
+            .addFilter( 'pse__Project_Task__c' , new List<Id>( projectTaskIds ) , NSP_QueryBuilder.Operator.INCLUDES )
+            .addFilter( 'pse__Project_Task__r.RecordTypeId' , new List<Id>{ peoRecordTypeId , bpsRecordTypeId } , NSP_QueryBuilder.Operator.INCLUDES )
+            .addFilter( 'pse__Project_Task__r.pse__Project__r.NSP_Auto_Resource_Project__c', true , NSP_QueryBuilder.Operator.EQUALS , false )
+            .addFilter( 'pse__Project_Task__r.Owner.Type' , 'User' , NSP_QueryBuilder.Operator.EQUALS )
+            .addFilter( 'pse__Project_Task__r.NSP_isClonedFromAutomation__c' , false , NSP_QueryBuilder.Operator.EQUALS , false )
+            .orderBy( 'NSP_Priority__c' , 'ASC' , true )
+            .build()
+            ;
         return projTaskAssignmtQuery;
     }
 
-    /**
-    * STY-04072 get accteam query
-    * @param accountIds Set of accountIds that is associated with project Account
-    * @return void
-    */
-    public static String getAccountTeamQuery(Set<Id> accountIds){
-        String accTeamQuery = new NSP_QueryBuilder('NSP_Account_Team__c', new List<String>{'NSP_Account__c','NSP_Role__c','NSP_User__c','NSP_Primary__c','NSP_First_Name__c'})
-            .addFilter('NSP_Role__c', NULL , NSP_QueryBuilder.Operator.NOT_EQUALS, false)
-            .addFilter('NSP_Account__c', new List<Id>(accountIds) , NSP_QueryBuilder.Operator.INCLUDES)
-            .setSecurityEnforce(false)
-            .build() +' Order by NSP_Primary__c DESC, NSP_First_Name__c ASC';
-
+    private static String getAccountTeamQuery( Set<Id> accountIds ) {
+        String accTeamQuery = new NSP_QueryBuilder(
+                'NSP_Account_Team__c' ,
+                new List<String>{
+                    'NSP_Account__c' ,
+                    'NSP_Role__c' ,
+                    'NSP_User__c' ,
+                    'NSP_Primary__c' ,
+                    'NSP_First_Name__c'
+                }
+            )
+            .addFilter( 'NSP_Role__c' , null , NSP_QueryBuilder.Operator.NOT_EQUALS , false )
+            .addFilter( 'NSP_Account__c', new List<Id>( accountIds ) , NSP_QueryBuilder.Operator.INCLUDES )
+            .setSecurityEnforce( false )
+            .build()
+            + ' ORDER BY NSP_Primary__c DESC , NSP_First_Name__c ASC'
+            ;
         return accTeamQuery;
     }
 
-    /**
-    * STY-04072 get getProjectTaskQuery
-    * @param projectTaskIds Set of Project Task Id Linked with PTA
-    * @param peoRecordTypeId recordtypes
-    * @param bpsRecordTypeId recordtypes
-    * @return void
-    */
-    public static String getProjectTaskQuery(Set<Id> projectTaskIds, Id peoRecordTypeId, Id bpsRecordTypeId){
-        String projTaskQuery = new NSP_QueryBuilder('pse__Project_Task__c', new List<String>{'Id', 'OwnerId', 'pse__Number_of_Assignments__c', 'pse__Project__c', 'pse__Project__r.pse__Account__c', 'NSP_isClonedFromAutomation__c'})
-            .addFilter('Id', new List<Id>(projectTaskIds) , NSP_QueryBuilder.Operator.INCLUDES)
-            .addFilter('pse__Project__r.NSP_Auto_Resource_Project__c', true , NSP_QueryBuilder.Operator.EQUALS, false)
-            .addFilter('RecordTypeId', new List<Id>{ peoRecordTypeId, bpsRecordTypeId } , NSP_QueryBuilder.Operator.INCLUDES)
-            .addFilter('NSP_isClonedFromAutomation__c', False , NSP_QueryBuilder.Operator.EQUALS, false)
-            .build();
-
+    public static String getProjectTaskQuery( Set<Id> projectTaskIds , Id peoRecordTypeId , Id bpsRecordTypeId ) {
+        String projTaskQuery = new NSP_QueryBuilder(
+                'pse__Project_Task__c' ,
+                new List<String>{
+                    'Id' ,
+                    'OwnerId' ,
+                    'pse__Number_of_Assignments__c' ,
+                    'pse__Project__c' ,
+                    'pse__Project__r.pse__Account__c' ,
+                    'NSP_isClonedFromAutomation__c'
+                }
+            )
+            .addFilter( 'Id' , new List<Id>( projectTaskIds ) , NSP_QueryBuilder.Operator.INCLUDES )
+            .addFilter( 'pse__Project__r.NSP_Auto_Resource_Project__c' , true , NSP_QueryBuilder.Operator.EQUALS , false )
+            .addFilter( 'RecordTypeId' , new List<Id>{ peoRecordTypeId , bpsRecordTypeId } , NSP_QueryBuilder.Operator.INCLUDES )
+            .addFilter( 'NSP_isClonedFromAutomation__c' , false , NSP_QueryBuilder.Operator.EQUALS , false )
+            .build()
+            ;
         return projTaskQuery;
     }
 
-    /**
-    * STY-04072 get getContactQuery
-    * @param userIds userIds associated with accountTeam
-    * @return void
-    */
-    public static String getContactQuery(Set<Id> userIds){
-        String contactQuery = new NSP_QueryBuilder('Contact', new List<String>{'Id', 'pse__Salesforce_User__c'})
-            .addFilter('pse__Is_Resource_Active__c', True)
-            .addFilter('pse__Is_Resource__c', True)
-            .addFilter('pse__Salesforce_User__c', NULL , NSP_QueryBuilder.Operator.NOT_EQUALS, false)
-            .addFilter('pse__Salesforce_User__c', new List<Id>(userIds) , NSP_QueryBuilder.Operator.INCLUDES)
-            .build();
-
+    private static String getContactQuery( Set<Id> userIds ) {
+        String contactQuery = new NSP_QueryBuilder(
+                'Contact' ,
+                new List<String>{
+                    'Id' ,
+                    'pse__Salesforce_User__c'
+                }
+            )
+            .addFilter( 'pse__Is_Resource_Active__c' , true )
+            .addFilter( 'pse__Is_Resource__c' , true )
+            .addFilter( 'pse__Salesforce_User__c' , null , NSP_QueryBuilder.Operator.NOT_EQUALS , false )
+            .addFilter( 'pse__Salesforce_User__c' , new List<Id>( userIds ) , NSP_QueryBuilder.Operator.INCLUDES )
+            .build()
+            ;
         return contactQuery;
     }
-    
-    
-    /**
-    * Send Notification to Resource Assigned to Task
-    * @param lProjectTaskAssignments List of New Project Task Assignments
-    * @param mProjectTaskAssignments Map of New project Task Assignments.
-    * @return void
-    */
-    public void afterInsertTaskAssignmentFilters(List<pse__Project_Task_Assignment__c> lProjectTaskAssignments, Map<Id, pse__Project_Task_Assignment__c> mProjectTaskAssignments){
+
+    public void afterInsertTaskAssignmentFilters(
+        List<pse__Project_Task_Assignment__c> lProjectTaskAssignments ,
+        Map<Id,pse__Project_Task_Assignment__c> mProjectTaskAssignments
+        )
+    {
         Set<Id> sContactIds = new Set<Id>();
         Set<Id> setOfProjectTaskId = new Set<Id> ();
         Map<Id,Id> mAssignmentToContact = new Map<Id,Id>();
-        Set<Id> projectTaskAssSet = new Set<Id>(); 
+        Set<Id> projectTaskAssSet = new Set<Id>();
         List<pse__Project_Task_Assignment__c> listOfPTA = new List<pse__Project_Task_Assignment__c>();
-        for(pse__Project_Task_Assignment__c oProjectTaskAssignment : lProjectTaskAssignments){
-            if(oProjectTaskAssignment.pse__Resource__c != null && oProjectTaskAssignment.NSP_Project_Record_Type__c != NSP_ServiceConstants.PROJECT_RET_RECORDTYPE && oProjectTaskAssignment.NSP_Project_Record_Type__c != NSP_ServiceConstants.PROJECT_BPS_RECORDTYPE){
-                sContactIds.add(oProjectTaskAssignment.pse__Resource__c);
-                mAssignmentToContact.put(oProjectTaskAssignment.Id,oProjectTaskAssignment.pse__Resource__c);
+        for ( pse__Project_Task_Assignment__c oProjectTaskAssignment : lProjectTaskAssignments ) {
+            if ( ( oProjectTaskAssignment.pse__Resource__c != null )
+                && ( oProjectTaskAssignment.NSP_Project_Record_Type__c != NSP_ServiceConstants.PROJECT_RET_RECORDTYPE )
+                && ( oProjectTaskAssignment.NSP_Project_Record_Type__c != NSP_ServiceConstants.PROJECT_BPS_RECORDTYPE )
+                )
+            {
+                sContactIds.add( oProjectTaskAssignment.pse__Resource__c );
+                mAssignmentToContact.put( oProjectTaskAssignment.Id , oProjectTaskAssignment.pse__Resource__c );
             }
-            
-            if(oProjectTaskAssignment.pse__Project_Task__c != null){
-                setOfProjectTaskId.add(oProjectTaskAssignment.pse__Project_Task__c);
+            if ( oProjectTaskAssignment.pse__Project_Task__c != null ) {
+                setOfProjectTaskId.add( oProjectTaskAssignment.pse__Project_Task__c );
             }
-            if(oProjectTaskAssignment.pse__Project_Task__c != null && !runAssignmentMethod){
-                setOfProjectTaskId.add(oProjectTaskAssignment.pse__Project_Task__c);
-                listOfPTA.add(oProjectTaskAssignment);
-                projectTaskAssSet.add(oProjectTaskAssignment.Id);
+            if ( oProjectTaskAssignment.pse__Project_Task__c != null && !runAssignmentMethod ) {
+                setOfProjectTaskId.add( oProjectTaskAssignment.pse__Project_Task__c );
+                listOfPTA.add( oProjectTaskAssignment );
+                projectTaskAssSet.add( oProjectTaskAssignment.Id );
             }
         }
-
-        // Update Resource field on PTA STY-04072
-        if(!projectTaskAssSet.isEmpty()){
-            Map<String, Object> mapInputParams = new Map<String, Object>{
-                'projectTaskId' => setOfProjectTaskId,
+        if ( !projectTaskAssSet.isEmpty() ) {
+            Map<String,Object> mapInputParams = new Map<String,Object>{
+                'projectTaskId' => setOfProjectTaskId ,
                 'PTAIdSet' => projectTaskAssSet
             };
             List<NSP_ProjectTaskQueueEvent__e> lstTaskQueueEvent = new List<NSP_ProjectTaskQueueEvent__e>();
-            lstTaskQueueEvent.add(new NSP_ProjectTaskQueueEvent__e(NSP_Input_Parameters__c = JSON.serialize(mapInputParams), NSP_MethodName__c = 'updateResourceOnInsert', NSP_UserId__c = UserInfo.getUserId()));
-            List<Database.SaveResult> saveResults = EventBus.publish(lstTaskQueueEvent);
-            NSP_ErrorLogHandler.logSaveResultsException('NSP_ProjectTaskAssignmentTriggerHelper', 'afterInsertFilter:updateResourceOnInsert', saveResults);
+            lstTaskQueueEvent.add(
+                new NSP_ProjectTaskQueueEvent__e(
+                    NSP_Input_Parameters__c=JSON.serialize( mapInputParams ) ,
+                    NSP_MethodName__c='updateResourceOnInsert' ,
+                    NSP_UserId__c=UserInfo.getUserId()
+                )
+            );
+            List<Database.SaveResult> results = EventBus.publish( lstTaskQueueEvent );
+            NSP_ErrorLogHandler.logResults(
+                NSP_ProjectTaskAssignmentTriggerHelper.class.getName() ,
+                'afterInsertTaskAssignmentFilters' ,
+                results
+            );
         }
     }
-    
-    /**
-    * Filter Project Task Assignment Records to then pass to individual functionality methods
-    * @param lProjectTaskAssignments List of New Project Task Assignments
-    * @param mProjectTaskAssignments Map of New project Task Assignments.
-    * @return void
-    */
-    public void afterUpdateTaskAssignmentfilters(Map<Id, pse__Project_Task_Assignment__c> mNewProjectTaskAssignments,Map<Id, pse__Project_Task_Assignment__c> mOldProjectTaskAssignments){
+
+    public void afterUpdateTaskAssignmentfilters(
+        Map<Id,pse__Project_Task_Assignment__c> mNewProjectTaskAssignments ,
+        Map<Id,pse__Project_Task_Assignment__c> mOldProjectTaskAssignments
+        )
+    {
         Set<Id> sContactIds = new Set<Id>();
         Map<Id,Id> mAssignmentToContact = new Map<Id,Id>();
-        for(pse__Project_Task_Assignment__c oProjectTaskAssignment : mNewProjectTaskAssignments.values()){
-            // FILTER RESOURCE ASSIGNMENT CHANGED RESOURCE
-            if(oProjectTaskAssignment.NSP_Project_Record_Type__c != NSP_ServiceConstants.PROJECT_RET_RECORDTYPE && oProjectTaskAssignment.NSP_Project_Record_Type__c != NSP_ServiceConstants.PROJECT_BPS_RECORDTYPE && oProjectTaskAssignment.pse__Resource__c != null && oProjectTaskAssignment.pse__Resource__c != mOldProjectTaskAssignments.get(oProjectTaskAssignment.Id).pse__Resource__c){
-                sContactIds.add(oProjectTaskAssignment.pse__Resource__c);
-                mAssignmentToContact.put(oProjectTaskAssignment.Id,oProjectTaskAssignment.pse__Resource__c);
+        for ( pse__Project_Task_Assignment__c oProjectTaskAssignment : mNewProjectTaskAssignments.values() ) {
+            if ( ( oProjectTaskAssignment.NSP_Project_Record_Type__c != NSP_ServiceConstants.PROJECT_RET_RECORDTYPE )
+                && ( oProjectTaskAssignment.NSP_Project_Record_Type__c != NSP_ServiceConstants.PROJECT_BPS_RECORDTYPE )
+                && ( oProjectTaskAssignment.pse__Resource__c != null )
+                && ( oProjectTaskAssignment.pse__Resource__c != mOldProjectTaskAssignments.get( oProjectTaskAssignment.Id ).pse__Resource__c )
+                )
+            {
+                sContactIds.add( oProjectTaskAssignment.pse__Resource__c );
+                mAssignmentToContact.put( oProjectTaskAssignment.Id , oProjectTaskAssignment.pse__Resource__c );
             }
         }
     }
+
 }
+//

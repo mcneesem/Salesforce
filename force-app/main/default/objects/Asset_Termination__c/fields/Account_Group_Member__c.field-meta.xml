@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Account_Group_Member__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <label>Account Group Member</label>
+    <description>Lookup to Account Group Member representing the matching Account Group, Asset, and Account combination for this Asset Termination record.</description>
+    <referenceTo>NSP_Account_Group_Member__c</referenceTo>
+    <relationshipLabel>Asset Terminations</relationshipLabel>
+    <relationshipName>Asset_Terminations</relationshipName>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

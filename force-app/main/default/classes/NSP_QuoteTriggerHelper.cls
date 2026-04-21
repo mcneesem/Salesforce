@@ -311,7 +311,8 @@ public class NSP_QuoteTriggerHelper {
         List<String> notapplicableCoreProducts = new List<String>{ 'HR Consulting Services' };
         List<String> applicableCoreProducts = new List<String>{
             'IWXPerCheckFee' ,
-            'IWAPerCheckFee'
+            'IWAPerCheckFee' ,
+            'EVerify'
         };
         Map<Id,PriceBook2> woapplicablePBMap = new Map<Id,PriceBook2>(
             [

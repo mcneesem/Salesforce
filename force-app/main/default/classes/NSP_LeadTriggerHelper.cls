@@ -594,16 +594,6 @@ public with sharing class NSP_LeadTriggerHelper {
             if(childList != null){
                 updateChildLeadOwner(childList);
             }
-            if ( ( leadNewMap != null )
-                && ( leadNewMap.size() > 0 )
-                && !Test.isRunningTest()
-                )
-            {
-                NSP_SObjectHistoryTrackingHelper.enqueueJob(
-                    (Map<Id,sObject>)leadNewMap ,
-                    (Map<Id,sObject>)leadOldMap
-                );
-            }
         } catch ( Exception e ) {
             NSP_LeadTriggerHelper.handleException( e , 'afterUpdateDirector' );
         }

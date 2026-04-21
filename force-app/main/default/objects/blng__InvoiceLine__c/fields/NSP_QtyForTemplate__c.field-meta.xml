@@ -3,7 +3,20 @@
     <fullName>NSP_QtyForTemplate__c</fullName>
     <description>This field is used to display quantity on Invoice template</description>
     <externalId>false</externalId>
-    <formula>IF(ISPICKVAL(blng__Product__r.SBQQ__PricingMethod__c, &apos;Block&apos;),1, blng__Quantity__c)</formula>
+    <formula>IF(
+  ISPICKVAL( blng__Product__r.SBQQ__PricingMethod__c , &apos;Block&apos; ) ,
+  1 ,
+  IF(
+    OR(
+      ( blng__Product__r.ProductCode = &quot;PPUA&quot; ) ,
+      ( blng__Product__r.ProductCode = &quot;PPUW2&quot; ) ,
+      ( blng__Product__r.ProductCode = &quot;PUA&quot; ) ,
+      ( blng__Product__r.ProductCode = &quot;PUW2&quot; )
+    ) ,
+    ABS( blng__Quantity__c ) ,
+    blng__Quantity__c
+  )
+)</formula>
     <label>Qty for Template</label>
     <precision>18</precision>
     <required>false</required>

@@ -28,6 +28,11 @@
         <isRequired>false</isRequired>
     </displayedFields>
     <displayedFields>
+        <field>Multiple_Companies_Setup_Fee__c</field>
+        <isFieldManaged>false</isFieldManaged>
+        <isRequired>false</isRequired>
+    </displayedFields>
+    <displayedFields>
         <field>Total_Employess_of_all_companies__c</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>

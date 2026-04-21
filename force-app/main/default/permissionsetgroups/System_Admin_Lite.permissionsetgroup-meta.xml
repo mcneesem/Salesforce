@@ -12,6 +12,7 @@
     <permissionSets>Allow_Delete_Accounts</permissionSets>
     <permissionSets>Allow_Delete_Leads</permissionSets>
     <permissionSets>Asset_Contact_Edit_Access</permissionSets>
+    <permissionSets>Assign_App_Seller_Experience</permissionSets>
     <permissionSets>Bundle_Template_Flag_fields_Permission</permissionSets>
     <permissionSets>Bypass_Benefit_Termination_Date_Rule</permissionSets>
     <permissionSets>Bypass_Lock_Opportunity_Edits</permissionSets>

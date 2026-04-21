@@ -1028,27 +1028,27 @@ public with sharing class NSP_OpportunityTriggerHelper {
                 )
             )
         ];
-        Boolean isAssetFound=FALSE;
-        for(Id draftAsset:assetMap.keySet()){
-            for(Asset existingAsset: existingAssets ){
-                if(assetMap.get(draftAsset).AccountId == existingAsset.AccountId){
-                    if(retProducts.contains(existingAsset.Product2.NSP_ServiceAssetCategory__c)){
+        Boolean isAssetFound = false;
+        for ( Id draftAsset : assetMap.keySet() ) {
+            for ( Asset existingAsset : existingAssets ) {
+                if ( assetMap.get(draftAsset).AccountId == existingAsset.AccountId ) {
+                    if ( retProducts.contains( existingAsset.Product2.NSP_ServiceAssetCategory__c ) ) {
                         //RET assit exists
-                        isAssetFound = TRUE;
-                        Break;
+                        isAssetFound = true;
+                        break;
                     }
-                    if ( existingAsset.NSP_ProductBundle__c == NSP_SalesConstants.WOSS
-                        && ( assetMap.get(draftAsset).NSP_ProductBundle__c == NSP_SalesConstants.WX || assetMap.get(draftAsset).NSP_ProductBundle__c == NSP_SalesConstants.WA )
-                        && optyType == NSP_SalesConstants.NEW_BUSINESS_OPPORTUNITY
+                    if ( ( existingAsset.NSP_ProductBundle__c == NSP_SalesConstants.WOSS )
+                        && ( ( assetMap.get(draftAsset).NSP_ProductBundle__c == NSP_SalesConstants.WX ) || ( assetMap.get(draftAsset).NSP_ProductBundle__c == NSP_SalesConstants.WA ) )
+                        && ( optyType == NSP_SalesConstants.NEW_BUSINESS_OPPORTUNITY )
                         )
                     {
-                        isAssetFound=FALSE;
-                    } else if ( existingAsset.NSP_ProductBundle__c != NSP_SalesConstants.WOSS
-                        && assetMap.get(draftAsset).NSP_ProductBundle__c == NSP_SalesConstants.WO_WS
-                        && optyType == NSP_SalesConstants.NEW_BUSINESS_OPPORTUNITY
+                        isAssetFound = false;
+                    } else if ( ( existingAsset.NSP_ProductBundle__c != NSP_SalesConstants.WOSS )
+                        && ( assetMap.get(draftAsset).NSP_ProductBundle__c == NSP_SalesConstants.WO_WS )
+                        && ( optyType == NSP_SalesConstants.NEW_BUSINESS_OPPORTUNITY )
                         )
                     {
-                        isAssetFound=FALSE;
+                        isAssetFound = false;
                     } else if ( ( ( existingAsset.NSP_Product_Line__c == NSP_SalesConstants.PROD_WA ) || ( existingAsset.NSP_Product_Line__c == NSP_salesConstants.PROD_WX ) )
                         && ( assetMap.get(draftAsset).NSP_Product_Line__c == NSP_SalesConstants.PROD_WA )
                         && ( assetMap.get(draftAsset).NSP_ProductBundle__c == NSP_SalesConstants.WOSS )
@@ -1056,10 +1056,18 @@ public with sharing class NSP_OpportunityTriggerHelper {
                         )
                     {
                         //Condition to allow woss asset creation
-                        isAssetFound=FALSE;
+                        isAssetFound = false;
+                    } else if ( ( existingAsset.NSP_ProductBundle__c == NSP_SalesConstants.WA )
+                        && ( existingAsset.NSP_Product_Line__c == NSP_SalesConstants.PROD_WA )
+                        && ( assetMap.get(draftAsset).NSP_Product_Line__c == NSP_salesConstants.PROD_WX )
+                        && ( assetMap.get(draftAsset).NSP_ProductBundle__c == NSP_SalesConstants.WX )
+                        && ( optyType == NSP_SalesConstants.NEW_BUSINESS_OPPORTUNITY )
+                        )
+                    {
+                        isAssetFound = false;
                     } else {
-                        isAssetFound=TRUE;
-                        Break;
+                        isAssetFound = true;
+                        break;
                     }
                 }
             }

@@ -261,24 +261,6 @@
                 <identifier>force_relatedListSingleContainer3</identifier>
             </componentInstance>
         </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>fields</name>
-                    <value>NSP_Field_Label__c,NSP_Modified_Date__c,NSP_Old_Value__c,NSP_New_Value__c,NSP_Modified_By__r.Name,NSP_Index__c</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedFieldApiName</name>
-                    <value>NSP_Sobject_Record_Id__c</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>sobjectApiName</name>
-                    <value>NSP_IP_History_Tracking__b</value>
-                </componentInstanceProperties>
-                <componentName>nsp_historyTracking</componentName>
-                <identifier>c_nsp_historyTracking</identifier>
-            </componentInstance>
-        </itemInstances>
         <mode>Replace</mode>
         <name>relatedTabContent</name>
         <type>Facet</type>

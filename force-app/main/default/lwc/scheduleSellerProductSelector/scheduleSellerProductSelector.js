@@ -15,6 +15,7 @@ const FIELDS = [
 
 export default class ScheduleSellerProductSelector extends LightningElement {
     @api selectedProduct;
+    @api selectedProductLabel;
     @api recordId;
     record;
     error;
@@ -49,7 +50,18 @@ export default class ScheduleSellerProductSelector extends LightningElement {
         return ( this._isLoaded && ( this.productOptions?.length > 0 ) );
     }
 
+    //
     // Product options for different account segments
+    //
+    // For new skill addition follow the next steps:
+    // ~ Permission Set: add new Permission Set
+    // ~ Custom Permission: add new Custom Permission
+    // ~ Apex: UserAvailabilityService.getStepMinutes() (add to the map)
+    // ~ LWC: scheduleSellerProductSelector.productOptions() (add to the map)
+    // ~ Custom Metadata:
+    //   ~ Schedule_Seller_Time_Slot__mdt.Product__c (add picklist value)
+    //   ~ Schedule_Seller_Time_Slot__mdt (Time Slots) – add records
+    //
     get productOptions() {
         // Define base options per segment
         const baseBySeg = {
@@ -73,6 +85,7 @@ export default class ScheduleSellerProductSelector extends LightningElement {
         const extended = [
             { label: 'Time and Attendance' , value: 'Schedule_Seller_Time_Attendance' } ,
             { label: 'Performance Management' , value: 'Schedule_Seller_Performance_Management' } ,
+            { label: 'Performance Management / Time & Attendance' , value: 'Schedule_Seller_Performance_Management_Time_Attendance' }
         ];
         // Pick base list by segment
         let base = baseBySeg.Default;
@@ -89,6 +102,14 @@ export default class ScheduleSellerProductSelector extends LightningElement {
 
     handleProductChange( event ) {
         this.selectedProduct = event?.detail?.value;
+        this.selectedProductLabel = this.getLabelByValue( this.selectedProduct );
+    }
+
+    //Get the label of selected product
+    getLabelByValue( value ) {
+        const opts = this.productOptions || [];
+        const match = opts.find( o => o.value === value );
+        return match ? match.label : null;
     }
 
 }

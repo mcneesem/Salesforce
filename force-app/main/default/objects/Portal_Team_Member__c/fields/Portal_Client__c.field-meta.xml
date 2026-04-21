@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Portal_Client__c</fullName>
+    <description>DEPRECATED Converted from Master-Detail to Lookup. See Portal_Team_Member__c.Portal_Project__c</description>
     <label>Portal Client</label>
     <referenceTo>Portal_Client__c</referenceTo>
     <relationshipLabel>Portal Team Members</relationshipLabel>

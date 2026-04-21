@@ -45,6 +45,11 @@
                 <default>false</default>
                 <label>Self-Generated</label>
             </value>
+            <value>
+                <fullName>IIS</fullName>
+                <default>false</default>
+                <label>IIS</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Retirement Services</controllingFieldValue>
@@ -80,6 +85,10 @@
             <controllingFieldValue>Retirement Services</controllingFieldValue>
             <controllingFieldValue>Contractor Management</controllingFieldValue>
             <valueName>Self-Generated</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Insurance Services</controllingFieldValue>
+            <valueName>IIS</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>
