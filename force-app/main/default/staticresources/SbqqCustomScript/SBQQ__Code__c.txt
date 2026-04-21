@@ -18,7 +18,7 @@ export function isFieldEditableForObject(fieldName, line, conn, objectName) {
             return false;
         }
 
-        if((line.NSP_Scholarship_Price__c === true || line.SBQQ__Quote__r.NSP_WX_Scholarship__c == true) && discountfields.includes(fieldName))
+        if((line.NSP_Scholarship_Price__c === true || line.SBQQ__Quote__r.NSP_WX_Scholarship__c == true) && discountfields.includes(fieldName) && line.Override_Scholarship_Discounts__c === false)
         {
             return false;
         }

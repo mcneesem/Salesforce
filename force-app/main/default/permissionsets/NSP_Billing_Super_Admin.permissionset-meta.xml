@@ -13189,6 +13189,11 @@
         <field>SBQQ__Quote__c.NSP_WX_WA_Enrollment_Fee__c</field>
         <readable>true</readable>
     </fieldPermissions>
+<fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Quote__c.Price_Rule_Override__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__Quote__c.Promo_Product_Codes__c</field>

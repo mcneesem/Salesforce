@@ -2466,6 +2466,11 @@
         <field>SBQQ__QuoteLine__c.NSP_Project__c</field>
         <readable>true</readable>
     </fieldPermissions>
+<fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__QuoteLine__c.Override_Scholarship_Discounts__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__QuoteLine__c.Promo_Applicable_Product__c</field>
