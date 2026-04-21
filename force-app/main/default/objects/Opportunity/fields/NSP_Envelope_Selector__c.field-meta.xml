@@ -9,44 +9,48 @@
     NSP_Selected_Template__c == &apos;Estimate&apos; ,
     $Label.NSP_Estimate_Envelope_Configuration ,
     IF(
-      OR(
-        NSP_Selected_Template__c == &apos;TimeStarHardware&apos; ,
-        NSP_Selected_Template__c == &apos;TimeStar&apos; ,
-        NSP_Selected_Template__c == &apos;BPS&apos; ,
-        NSP_Selected_Template__c == &apos;RenewalBPS&apos; ,
-        NSP_Selected_Template__c == &apos;AmendmentBPS&apos; ,
-        NSP_Selected_Template__c == &apos;SupplementBPS&apos;
-      ) ,
-      $Label.NSP_BPS_Envelope_Configuration ,
+      NSP_Selected_Template__c == &apos;I9AssistandEVerify&apos; ,
+      $Label.I9_Assist_Envelope_Configuration ,
       IF(
         OR(
-          NSP_Selected_Template__c == &apos;Recruiting&apos; ,
-          NSP_Selected_Template__c == &apos;RecruitingonDemand&apos;
+          NSP_Selected_Template__c == &apos;TimeStarHardware&apos; ,
+          NSP_Selected_Template__c == &apos;TimeStar&apos; ,
+          NSP_Selected_Template__c == &apos;BPS&apos; ,
+          NSP_Selected_Template__c == &apos;RenewalBPS&apos; ,
+          NSP_Selected_Template__c == &apos;AmendmentBPS&apos; ,
+          NSP_Selected_Template__c == &apos;SupplementBPS&apos;
         ) ,
-        $Label.NSP_Recruiting_Envelope_Configuration ,
+        $Label.NSP_BPS_Envelope_Configuration ,
         IF(
           OR(
-            NSP_Selected_Template__c == &apos;TalentConnect&apos; ,
-            NSP_Selected_Template__c == &apos;TalentConnectAmendment&apos;
+            NSP_Selected_Template__c == &apos;Recruiting&apos; ,
+            NSP_Selected_Template__c == &apos;RecruitingonDemand&apos;
           ) ,
-          $Label.NSP_Talent_Connect_Envelope_Configuration ,
+          $Label.NSP_Recruiting_Envelope_Configuration ,
           IF(
-            NSP_Selected_Template__c == &apos;ALTULA&apos; ,
-            $Label.NSP_Altula_Envelope_Configuration ,
+            OR(
+              NSP_Selected_Template__c == &apos;TalentConnect&apos; ,
+              NSP_Selected_Template__c == &apos;TalentConnectAmendment&apos;
+            ) ,
+            $Label.NSP_Talent_Connect_Envelope_Configuration ,
             IF(
-              NSP_Selected_Template__c = &apos;ContractorManagement&apos; ,
-              $Label.Contractor_Management_Envelope_Configuration ,
+              NSP_Selected_Template__c == &apos;ALTULA&apos; ,
+              $Label.NSP_Altula_Envelope_Configuration ,
               IF(
-                NSP_Selected_Template__c == null , &apos;&apos; ,
+                NSP_Selected_Template__c = &apos;ContractorManagement&apos; ,
+                $Label.Contractor_Management_Envelope_Configuration ,
                 IF(
-                  OR(
-                    NSP_Selected_Template__c == &apos;StandardEmployeeHandbookSOW&apos; ,
-                    NSP_Selected_Template__c == &apos;StandardClimateSurveySOW&apos; ,
-                    NSP_Selected_Template__c == &apos;SalarySurveySOW&apos; ,
-                    NSP_Selected_Template__c == &apos;HRComplianceReviewSOW&apos;
-                  ) ,
-                  $Label.NSP_HR_Services_Envelope_Configuration ,
-                  $Label.NSP_WX_Envelope_Configuration
+                  NSP_Selected_Template__c == null , &apos;&apos; ,
+                  IF(
+                    OR(
+                      NSP_Selected_Template__c == &apos;StandardEmployeeHandbookSOW&apos; ,
+                      NSP_Selected_Template__c == &apos;StandardClimateSurveySOW&apos; ,
+                      NSP_Selected_Template__c == &apos;SalarySurveySOW&apos; ,
+                      NSP_Selected_Template__c == &apos;HRComplianceReviewSOW&apos;
+                    ) ,
+                    $Label.NSP_HR_Services_Envelope_Configuration ,
+                    $Label.NSP_WX_Envelope_Configuration
+                  )
                 )
               )
             )

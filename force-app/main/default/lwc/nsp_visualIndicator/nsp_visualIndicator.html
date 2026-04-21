@@ -110,7 +110,7 @@
             <template lwc:if={showHRScale}>
                 <div class="slds-col slds-size_1-of-3">
                     <div class="slds-text-title slds-align_absolute-center">HRScale</div>
-                    <div class="slds-align_absolute-center"><img src={hrScale} alt="" height="100%"></div>
+                    <div class="slds-align_absolute-center"><img src={hrScale} alt="HRScale" height="100%"></div>
                 </div>
             </template>
             <template if:true={whoClient100True}><!--CHANGE-->
@@ -123,6 +123,12 @@
                 <div class="slds-col slds-size_1-of-3"><!--Need logo for bothcrwc-->
                     <div class="slds-text-title slds-align_absolute-center">CRWC: Client &#38; Insperity</div>
                     <div class="slds-align_absolute-center"><img src={crwc} height="100%"></div>
+                </div>
+            </template>
+            <template if:true={showStrategicPartner}>
+                <div class="slds-col slds-size_1-of-3">
+                    <div class="slds-text-title slds-align_absolute-center">Strategic Partner</div>
+                    <div class="slds-align_absolute-center"><img src={strategicPartnerIcon} alt="Strategic Partner" height="100%"></div>
                 </div>
             </template>
         </div>

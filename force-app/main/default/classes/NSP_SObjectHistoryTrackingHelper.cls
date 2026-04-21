@@ -1,17 +1,7 @@
-//
-// Component Name :  NSP_SObjectHistoryTrackingHelper class
-// Version              :  1.0                                                                          
-// Created Date         :  November, 2021                                                             
-// Function             :  Imported from generic utility
-//                      :  Used in custom history tracking
-// Story                :                                                                             
-// Modification Log     :                                                                               
-// *   Hemali           November 10, 2021          First Iteration
-// *   Harsha Khiroya   March 3, 2022              DF-01347
-// *   Anil             March 31, 2023             DF-03332
-//
 public with sharing class NSP_SObjectHistoryTrackingHelper implements Queueable {
-    // test w/ NSP_SObjectHistoryTrackingHelperTest (87%)
+    // test w/ NSP_SObjectHistoryTrackingHelperTest, NSP_SingleRelatedListControllerTest (80%)
+    // test w/ NSP_SObjectHistoryTrackingHelperTest (66%)
+    // test w/ NSP_SingleRelatedListControllerTest (27%)
 
     // unified entry point...
     public static void enqueueJob( Map<Id,sObject> newRecords , Map<Id,sObject> oldRecords ) {
@@ -49,7 +39,7 @@ public with sharing class NSP_SObjectHistoryTrackingHelper implements Queueable 
     //
 
     private static HistoryTrackingSettings__c settings {
-        get {
+        private get {
             if ( settings == null ) {
                 settings = HistoryTrackingSettings__c.getInstance( UserInfo.getUserId() );
             }
@@ -59,7 +49,7 @@ public with sharing class NSP_SObjectHistoryTrackingHelper implements Queueable 
     }
 
     private static Boolean isEnabled {
-        get {
+        private get {
             if ( isEnabled == null ) {
                 Boolean local = False;
                 if ( NSP_SObjectHistoryTrackingHelper.settings != null ) {
@@ -68,6 +58,20 @@ public with sharing class NSP_SObjectHistoryTrackingHelper implements Queueable 
                 isEnabled = local;
             }
             return isEnabled;
+        }
+        private set;
+    }
+
+    public static Boolean isEnabledStandard {
+        public get {
+            if ( isEnabledStandard == null ) {
+                Boolean local = False;
+                if ( NSP_SObjectHistoryTrackingHelper.settings != null ) {
+                    local = NSP_SObjectHistoryTrackingHelper.settings.IsEnabledStandard__c;
+                }
+                isEnabledStandard = local;
+            }
+            return isEnabledStandard;
         }
         private set;
     }
@@ -176,10 +180,10 @@ public with sharing class NSP_SObjectHistoryTrackingHelper implements Queueable 
         }
     }
 
-    /***********************************************************************************************
-    * MethodName: newHistoryTrackingRec
-    * Description : prepare bigobject history record
-    * ********************************************************************************************/
+    //
+    // MethodName: newHistoryTrackingRec
+    // Description : prepare bigobject history record
+    //
     private  NSP_SObjects_History_Tracking__b newHistoryTrackingRec(sObject newRec, NSP_SObject_Field_History__mdt ofh){
         final NSP_SObjects_History_Tracking__b oht = new NSP_SObjects_History_Tracking__b();
         sObject oldRec = oldMapSObject.get(newRec.Id);
@@ -200,10 +204,10 @@ public with sharing class NSP_SObjectHistoryTrackingHelper implements Queueable 
         return oht;
     }
 
-    /***********************************************************************************************
-    * MethodName: newIPHistoryTrackingRec
-    * Description : prepare bigobject IP history record
-    * ********************************************************************************************/
+    //
+    // MethodName: newIPHistoryTrackingRec
+    // Description : prepare bigobject IP history record
+    //
     private  NSP_IP_History_Tracking__b newIPHistoryTrackingRec(sObject newRec, NSP_SObject_Field_History__mdt ofh, Integer count){
         final NSP_IP_History_Tracking__b oht = new NSP_IP_History_Tracking__b();
         sObject oldRec = oldMapSObject.get(newRec.Id);
@@ -281,6 +285,67 @@ public with sharing class NSP_SObjectHistoryTrackingHelper implements Queueable 
                 recIdHistoryCountMap.put(obj.NSP_Sobject_Record_Id__c, obj.NSP_Index__c >= 1 ? obj.NSP_Index__c + 1: 1 );
             }
         }
+    }
+
+    // mirgrated from NSP_HistoryTrackingVisibilityHandler
+    public static List<SObject> getAccessibleFieldList( List<sObject> objRecords , Id recordId ) {
+        List<sObject> accessibleFieldsData = new List<sObject>();
+        for ( String fieldName : NSP_HistoryTrackingVisibilityHandler.getAccessibleFields( recordId ) ) {
+            for ( sObject objRecord : objRecords ) {
+                if ( ( objRecord.getSObjectType() == NSP_SObjects_History_Tracking__b.sObjectType )
+                    && ( fieldName == ((NSP_SObjects_History_Tracking__b)objRecord).NSP_Field_Name__c )
+                    )
+                {
+                    accessibleFieldsData.add( objRecord );
+                }
+            }
+        }
+        return accessibleFieldsData;
+    }
+
+    // mirgrated from NSP_HistoryTrackingVisibilityHandler
+    public static List<String> getAccessibleFields( Id recordId ) {
+        List<String> fieldsToShow = new List<String>();
+        if ( ( recordId != null )
+            && ( NSP_SObjectHistoryTrackingHelper.globalDescribe != null )
+            )
+        {
+            SObjectType schemaType = NSP_SObjectHistoryTrackingHelper.globalDescribe.get( String.valueOf( recordId.getSObjectType() ) );
+            if ( schemaType != null ) {
+                fieldsToShow = NSP_SObjectHistoryTrackingHelper.populateFieldsToShow(
+                    fieldsToShow ,
+                    schemaType.getDescribe().fields.getMap()
+                );
+            }
+        }
+        return fieldsToShow;
+    }
+
+    // helper method to defeat sonar cognitive complexity...
+    private static List<String> populateFieldsToShow( List<String> fieldsToShow , Map<String,SObjectField> fieldMap ) {
+        if ( fieldsToShow == null ) {
+            fieldsToShow = new List<String>();
+        }
+        if ( ( fieldMap != null ) && !fieldMap.isEmpty() ) {
+            for ( String field : fieldMap.keySet() ) {
+                SObjectField sfield = fieldMap.get( field );
+                if ( ( sfield != null ) && sfield.getDescribe().isAccessible() ) {
+                    fieldsToShow.add( sfield.getDescribe().getLabel() );
+                }
+            }
+        }
+        return fieldsToShow;
+    }
+
+    // cached global schema description...
+    private static Map<String,Schema.SObjectType> globalDescribe {
+        private get {
+            if ( globalDescribe == null ) {
+                globalDescribe = Schema.getGlobalDescribe();
+            }
+            return globalDescribe;
+        }
+        private set;
     }
 
 }

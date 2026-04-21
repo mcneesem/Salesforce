@@ -37,6 +37,10 @@
             <fullName>Prospect</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Terminated</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Closed_Lost_Group__c</picklist>
@@ -4688,6 +4692,10 @@
     <picklistValues>
         <picklist>NSP_TransitionType__c</picklist>
         <values>
+            <fullName>IPS to HRCore</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>PEO to WX</fullName>
             <default>false</default>
         </values>
@@ -4866,6 +4874,10 @@
         <picklist>Source__c</picklist>
         <values>
             <fullName>BPA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IIS</fullName>
             <default>false</default>
         </values>
         <values>

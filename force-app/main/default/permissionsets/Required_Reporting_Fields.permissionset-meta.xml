@@ -28,6 +28,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.Insperity_Data_Score__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.Is_Transitioning_Client__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -118,6 +123,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.Sales_Data_Collection_Score__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.Target_Load_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -148,6 +158,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>AccountContactRelation.Active_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>AccountContactRelation.Arbitration_Agreement_Opt_Out__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -163,7 +178,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>AccountContactRelation.Contact_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>AccountContactRelation.HRScale_Client_Roles__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>AccountContactRelation.Inactive_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1083,6 +1108,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Lead.Discovery_Call_Created_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Lead.Engagement_Score__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1658,6 +1688,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_Sales_to_Implementation__c.New_EEs_Affected__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Sales_to_Implementation__c.ORK_Subplan__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1889,6 +1924,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Sub_Plan_Change_History__c.LTPT_Term_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Survey__c.Satisfaction_With_Payroll_Imp_Exp__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Survey__c.Satisfaction_With_Time_Attendance_Exp__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2388,17 +2433,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SBQQ__ProductOption__c.Sub_Product_Config__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SBQQ__Quote__c.Sub_Product_Attribute__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>SBQQ__ProductOption__c.Client_Size__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__ProductOption__c.Sub_Product_Config__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2458,6 +2498,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SBQQ__Quote__c.Multiple_Companies_Setup_Fee__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SBQQ__Quote__c.NSP_Has_Timestar_Hardware__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2469,6 +2514,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__Quote__c.Run_Quote_Calc_for_Termination__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__Quote__c.Sub_Product_Attribute__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__Subscription__c.Credit_Duration_Months__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2489,11 +2544,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>User.Bypass_Duplicate_Rules__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SBQQ__Subscription__c.Credit_Duration_Months__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

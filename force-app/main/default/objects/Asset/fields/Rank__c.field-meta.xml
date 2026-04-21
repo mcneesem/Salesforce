@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Rank__c</fullName>
+    <description>Ranking field used to prioritize asset records. The rank is derived using a weighted combination of Record Type, Status, and date values. Lower-level digits represent recency (based on status date or created date).</description>
+    <externalId>false</externalId>
+    <formula>CASE(
+  RecordType.DeveloperName ,
+  &quot;WO&quot; , 10000000 ,
+  &quot;NSP_Asset_Product&quot; , 20000000 , /* WX/WA */
+  90000000
+) /* 8-digits */
++ CASE(
+  TEXT( Status ) ,
+  &quot;Active&quot; , 1000000 ,
+  &quot;Onboarding&quot; , 2000000 ,
+  &quot;Terminated&quot; , 3000000 ,
+  &quot;Backout&quot; , 4000000 ,
+  9000000
+) /* 7-digits */
++ CASE(
+  RecordType.DeveloperName ,
+  &quot;WO&quot; , ( NSP_Account_Status_Date__c - DATE( 1900 , 1 , 1 ) ) ,
+  &quot;NSP_Asset_Product&quot; , ( CreatedDate - DATETIMEVALUE( DATE( 1900 , 1 , 1 ) ) ) , /* WX/WA */
+  990000
+) /* 6-digits */</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Rank</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

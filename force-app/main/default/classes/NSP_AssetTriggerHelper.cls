@@ -105,12 +105,6 @@ public with sharing class NSP_AssetTriggerHelper {
     // @return void
     //
     public void afterUpdateDirector( Map<Id,Asset> newMap , Map<Id,Asset> oldMap ) {
-        if ( ( newMap != null ) && !newMap.isEmpty() ) {
-            NSP_SObjectHistoryTrackingHelper.enqueueJob(
-                (Map<Id,sObject>)newMap ,
-                (Map<Id,sObject>)oldMap
-            );
-        }
         this.updateInvoiceDate( newMap.values() , oldMap );
         if ( NSP_AssetTriggerHelper.isEnabledAccountAssetSummary ) {
             AccountAssetSummary.accountWOWXFieldUpdate( newMap.values() , oldMap );

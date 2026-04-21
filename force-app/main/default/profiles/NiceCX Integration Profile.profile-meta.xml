@@ -2829,6 +2829,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <custom>true</custom>
+    <layoutAssignments>
+        <layout>NSP_Participation_SaaS_Activity__c-I-9 Assist %26 E-Verify</layout>
+        <recordType>NSP_Participation_SaaS_Activity__c.I_9_Assist_E_Verify</recordType>
+    </layoutAssignments>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>

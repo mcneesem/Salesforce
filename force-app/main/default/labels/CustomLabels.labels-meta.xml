@@ -514,6 +514,13 @@
         <value>Client maintaining their own FSA.  CSP Set Up Required to take pre-tax deductions.  Receive and submit necessary documents to H&amp;W.</value>
     </labels>
     <labels>
+        <fullName>I9_Assist_Envelope_Configuration</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>I9_Assist_Envelope_Configuration</shortDescription>
+        <value>a8NPb000001hKfdMAE</value>
+    </labels>
+    <labels>
         <fullName>ITA_Time_And_Attendance_Email</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -6437,7 +6444,7 @@ Climate (Full): https://nexus.insperity.com/groups/38605/posts/3272612-climate-p
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Post_Refresh_Email_Labels_2</shortDescription>
-        <value>RecepientIdStateretProgram,RecepientToClientSale,RecepientToCOBRA,RecepientToCOEPayroll,RecepientToCusrelCEO,RecepientToEPLI,RecepientToFinanceService,RecepientToForm8973,RecepientToGabrieul,RecepientToId401ORK,RecepientToId401Sales,RecepientToIdEEOTeam,RecepientToIdPriorWages,RecepientToOC,RecepientToOrientReq,RecepientToSBEA,RecepientToWCNotification,Recipient_email_Ids,Termination_Task_Completion</value>
+        <value>RecepientIdStateretProgram,RecepientToClientSale,RecepientToCOBRA,RecepientToCOEPayroll,RecepientToCusrelCEO,RecepientToEPLI,RecepientToFinanceService,RecepientToForm8973,RecepientToGabrieul,RecepientToId401ORK,RecepientToId401Sales,RecepientToIdEEOTeam,RecepientToIdPriorWages,RecepientToOC,RecepientToOrientReq,RecepientToSBEA,RecepientToWCNotification,Termination_Task_Completion,ITA_Time_And_Attendance_Email</value>
     </labels>
     <labels>
         <fullName>Post_Tax_IIS</fullName>
@@ -6655,7 +6662,7 @@ Climate (Full): https://nexus.insperity.com/groups/38605/posts/3272612-climate-p
         <protected>false</protected>
         <shortDescription>Separation Agreement Terms List</shortDescription>
         <value>&lt;ul&gt;
-  &lt;li&gt;The consideration is &lt;b&gt;MORE THAN&lt;/b&gt; $100,000.&lt;/li&gt;
+  &lt;li&gt;The consideration is &lt;b&gt;MORE THAN&lt;/b&gt; $150,000.&lt;/li&gt;
   &lt;li&gt;The payment of the consideration is in multiple payments (i.e. it is not in a lump sum)&lt;/li&gt;
   &lt;li&gt;Insperity is named as a party to the client prepared Agreement&lt;/li&gt;
   &lt;li&gt;There is an open or closed CSC Management for the WSEE&lt;/li&gt;
@@ -6670,7 +6677,7 @@ Climate (Full): https://nexus.insperity.com/groups/38605/posts/3272612-climate-p
         <protected>false</protected>
         <shortDescription>Seperation Agreement List</shortDescription>
         <value>&lt;ul&gt;
-&lt;li&gt;The consideration is &lt;b&gt;MORE THAN&lt;/b&gt; $100K&lt;/li&gt;
+&lt;li&gt;The consideration is &lt;b&gt;MORE THAN&lt;/b&gt; $150,000&lt;/li&gt;
 &lt;li&gt;The payment of the consideration is more than 3 months of installments&lt;/li&gt;
 &lt;li&gt;Insperity is named as a party to the client-prepared agreement&lt;/li&gt;
 &lt;li&gt;There is an open OR closed CSC Management matter for the WSEE&lt;/li&gt;

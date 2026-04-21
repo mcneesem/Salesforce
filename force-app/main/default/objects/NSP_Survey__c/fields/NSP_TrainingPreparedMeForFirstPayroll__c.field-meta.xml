@@ -3,7 +3,7 @@
     <fullName>NSP_TrainingPreparedMeForFirstPayroll__c</fullName>
     <description>The level of payroll training I received prepared me for my first payroll with Insperity.</description>
     <externalId>false</externalId>
-    <inlineHelpText>The level of payroll training I received prepared me for my first payroll with Insperity.</inlineHelpText>
+    <inlineHelpText>The training I received adequately prepared me to process payroll with Insperity</inlineHelpText>
     <label>Training prepared me for first payroll</label>
     <required>false</required>
     <trackHistory>true</trackHistory>

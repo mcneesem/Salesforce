@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Group of Permission Sets to be granted to Contact Center Agent</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Contact Center Agent</label>
+    <permissionSets>Address_Book_Visibility</permissionSets>
+    <permissionSets>Assign_Connected_App_NewVoiceMedia</permissionSets>
+    <permissionSets>Find_Related_Contact_Screen_Flow</permissionSets>
+    <permissionSets>Messaging_Session_Access</permissionSets>
+    <permissionSets>Messaging_User_Read</permissionSets>
+    <permissionSets>NVMContactWorld__Agent</permissionSets>
+    <permissionSets>Service_Presence_Statuses_Available</permissionSets>
+    <permissionSets>Service_Presence_Statuses_Base</permissionSets>
+    <permissionSets>Vonage_Call_Recording</permissionSets>
+    <permissionSets>force__ContactCenterAgentExternalTelephony</permissionSets>
+    <permissionSets>force__MessagingForInAppAndWebUser</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>
