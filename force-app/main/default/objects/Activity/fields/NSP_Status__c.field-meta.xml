@@ -45,6 +45,16 @@
                 <default>false</default>
                 <label>Complete</label>
             </value>
+            <value>
+                <fullName>Requested</fullName>
+                <default>false</default>
+                <label>Requested</label>
+            </value>
+            <value>
+                <fullName>Scheduled</fullName>
+                <default>false</default>
+                <label>Scheduled</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
