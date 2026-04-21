@@ -430,6 +430,12 @@
             <targetReference>Fault_Element_AssignMent_Create_Event</targetReference>
         </faultConnector>
         <inputAssignments>
+            <field>Description</field>
+            <value>
+                <elementReference>Notes</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>EndDateTime</field>
             <value>
                 <elementReference>Seller.endDateTime</elementReference>
@@ -801,6 +807,21 @@
             </fields>
             <isRequired>false</isRequired>
             <regionContainerType>SectionWithoutHeader</regionContainerType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <fields>
+            <name>Notes</name>
+            <fieldText>Notes</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>false</isRequired>
             <styleProperties>
                 <verticalAlignment>
                     <stringValue>top</stringValue>
