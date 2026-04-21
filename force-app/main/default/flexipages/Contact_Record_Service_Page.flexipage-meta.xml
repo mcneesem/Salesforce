@@ -3387,6 +3387,26 @@
                 <identifier>RecordLastModifiedByIdField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Portal_Contact_Number__c</fieldItem>
+                <identifier>RecordPortal_Contact_Number_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Portal_Email__c</fieldItem>
+                <identifier>RecordPortal_Email_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-2cb53231-50e7-457f-baf6-a82f1b1f7b15</name>
         <type>Facet</type>
     </flexiPageRegions>
