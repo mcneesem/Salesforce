@@ -2,7 +2,7 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>66.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
-    <description>New Client Portal: Portal Project Creation</description>
+    <description>AZD-519976 - Portal Client Automation</description>
     <environments>Default</environments>
     <interviewLabel>Project - Updated - Async - Create Portal Project {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Project - Updated - Async - Create Portal Project</label>
