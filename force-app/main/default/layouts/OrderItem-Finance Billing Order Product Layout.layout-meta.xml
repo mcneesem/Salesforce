@@ -250,6 +250,10 @@
                 <field>NSP_Free_Periods_Available__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Free_Periods_End_Date__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>SBQQ__DefaultSubscriptionTerm__c</field>
             </layoutItems>
