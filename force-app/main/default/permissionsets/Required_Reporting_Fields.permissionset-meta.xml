@@ -213,6 +213,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account_Relationship__c.Account_Relationship_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Asset.AMR_IES_e_Verify_Client__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1439,6 +1444,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Client_Sub_Plan_History__c.Asset_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Employee_Split__c.Opportunity_Credit_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
