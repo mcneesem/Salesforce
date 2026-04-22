@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>66.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_Termination_Date</name>
+        <label>Assign Termination Date</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Termination_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Clear_Termination_Date</name>
+        <label>Clear Termination Date</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Termination_Date__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <description>PEO_TES_Client_Status__c = &quot;Terminated&quot; for any of the following five products, then the Termination_Date__c should be populated with Today&apos;s date. If the field is changed to something else, clear the Termination_Date__c field.</description>
+        <name>Is_PEO_TES_Client_Status_Terminated</name>
+        <label>Is PEO/TES Client Status Terminated?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Should_Termination_Date_be_cleared</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>PEO/TES Client Status is not Terminated</defaultConnectorLabel>
+        <rules>
+            <name>PEO_TES_Client_Status_is_Terminated</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.PEO_TES_Client_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Workforce Acceleration - Terminated</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.PEO_TES_Client_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Workforce Administration - Terminated</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.PEO_TES_Client_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Workforce Optimization - Terminated</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.PEO_TES_Client_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Workforce Synchronization - Terminated</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.PEO_TES_Client_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HRScale - Terminated</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Termination_Date</targetReference>
+            </connector>
+            <label>PEO/TES Client Status is Terminated</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Should_Termination_Date_be_cleared</name>
+        <label>Should Termination Date be cleared?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>No update needed</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Clear_Termination_Date</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Termination_Date__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Clear_Termination_Date</targetReference>
+            </connector>
+            <label>Yes - Clear Termination Date</label>
+        </rules>
+    </decisions>
+    <description>When PEO_TES_Client_Status__c = &quot;Terminated&quot; for any of the following five products (WO,WX,WA,WS, or HRScale), then populate the Termination_Date__c field, otherwise clear it.</description>
+    <environments>Default</environments>
+    <interviewLabel>Account - Before Update - PEO/TES Client Status isChanged {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Account - Before Update - PEO/TES Client Status isChanged</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Is_PEO_TES_Client_Status_Terminated</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>PEO_TES_Client_Status__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>Account</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Draft</status>
+</Flow>
