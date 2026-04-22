@@ -4,8 +4,8 @@
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <description>AZD-519976 - Portal Client Automation</description>
     <environments>Default</environments>
-    <interviewLabel>Project - Updated - Async - Create Portal Project {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Project - Updated - Async - Create Portal Project</label>
+    <interviewLabel>DEPRECATED - Project - Updated - Async - Create Portal Project {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>DEPRECATED - Project - Updated - Async - Create Portal Project</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>

@@ -58,7 +58,7 @@
             <label>Yes : Valid Portal Project</label>
         </rules>
     </decisions>
-    <description>Show/Hide Portal Project</description>
+    <description>New Client Portal: Show/Hide Portal Project</description>
     <environments>Default</environments>
     <formulas>
         <description>Hide or Show Portal Project</description>
