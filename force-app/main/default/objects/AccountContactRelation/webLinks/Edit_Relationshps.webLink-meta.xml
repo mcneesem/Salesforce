@@ -2,9 +2,10 @@
 <WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Edit_Relationshps</fullName>
     <availability>online</availability>
+    <description>DEPRECATED</description>
     <displayType>button</displayType>
     <linkType>page</linkType>
-    <masterLabel>Edit Relationship</masterLabel>
+    <masterLabel>DEPRECATED Edit Relationship</masterLabel>
     <openType>replace</openType>
     <page>nsp_acrEditFormContainer</page>
     <protected>false</protected>

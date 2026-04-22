@@ -2,18 +2,61 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Rank__c</fullName>
     <externalId>false</externalId>
-    <formula>CASE(
+    <formula>/* Sections */
+CASE(
   TEXT( Type__c ) ,
-  &quot;Pre-Transition Setup&quot; , 10 ,
-  &quot;Company Setup&quot; , 20 ,
-  &quot;Employee Setup&quot; , 30 ,
-  &quot;System Setup&quot; , 40 ,
-  &quot;First Steps&quot; , 50 ,
-  &quot;Discovery&quot; , 60 ,
-  &quot;Configuration&quot; , 70 ,
-  &quot;Training&quot; , 80 ,
-  &quot;Go Live&quot; , 90 ,
-  1000
+  &quot;Pre-Transition Setup&quot; , 100 ,
+  &quot;Company Setup&quot; , 200 ,
+  &quot;Employee Setup&quot; , 300 ,
+  &quot;System Setup&quot; , 400 ,
+  &quot;First Steps&quot; , 500 ,
+  &quot;Discovery&quot; , 600 ,
+  &quot;Configuration&quot; , 700 ,
+  &quot;Training&quot; , 800 ,
+  &quot;Go Live&quot; , 900 ,
+  999
+)
+/* Tasks */
++ CASE(
+  Name ,
+  /* Pre-Transition Setup */
+  &quot;Employee Data Collection&quot; , 10 ,
+  &quot;Federal Employer Identification Number (FEIN)&quot; , 20 ,
+  &quot;Current / Prior Payroll Report Samples&quot; , 30 ,
+  &quot;Current Payroll Register and Reports&quot; , 31 ,
+  &quot;Time Off Policies / Handbook&quot; , 40 ,
+  &quot;Time Off Policies&quot; , 41 ,
+  /* Company Setup */
+  &quot;Business Inception Date&quot; , 10 ,
+  &quot;Form 8973&quot; , 20 ,
+  &quot;General Liability / Auto Certificate of Coverage&quot; , 30 ,
+  &quot;Company Logo&quot; , 40 ,
+  &quot;Direct Debit Agreement&quot; , 50 ,
+  &quot;User Access Roles Request Form&quot; , 60 ,
+  &quot;User Access Roles&quot; , 61 ,
+  &quot;Client Sponsored Plan&quot; , 70 ,
+  &quot;Core Policy Handbook&quot; , 80 ,
+  /* Employee Setup */
+  &quot;Employee Payroll Documentation&quot; , 10 ,
+  &quot;Regular Rate Of Pay&quot; , 20 ,
+  /* System Setup */
+  &quot;Additional Documentation&quot; , 10 ,
+  IF( NOT( ISBLANK( Parent_Portal_Task__c ) ) , 0 , 99 )
+)
+/* Sub Tasks */
++ CASE(
+  Name ,
+  /* Client Sponsored Plan */
+  &quot;Insperity Client Authorization&quot; , ( 70 + 1 ) ,
+  &quot;Cafeteria Plan Documentation&quot; , ( 70 + 2 ) ,
+  /* Employee Payroll Documentation */
+  &quot;Employee Deductions&quot; , ( 10 + 1 ) ,
+  &quot;Outside Record Keeper (Retirement Plan) Deductions&quot; , ( 10 + 2 ) ,
+  &quot;Cell Phone Stipends&quot; , ( 10 + 3 ) ,
+  &quot;Garnishments&quot; , ( 10 + 4 ) ,
+  &quot;COBRA Takeover&quot; , ( 10 + 5 ) ,
+  &quot;LOA Information&quot; , ( 10 + 6 ) ,
+  IF( ISBLANK( Parent_Portal_Task__c ) , 0 , 9 )
 )</formula>
     <label>Rank</label>
     <precision>18</precision>
