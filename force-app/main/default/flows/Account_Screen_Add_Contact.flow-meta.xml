@@ -32,38 +32,33 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
-    <screens>
-        <name>No_recordId_Screen</name>
-        <label>No recordId Screen</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <fields>
-            <name>NoAccountIdInrecordId_DisplayText</name>
-            <fieldText>&lt;p&gt;Looks like something went wrong and the AccountId is missing.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Please close this screen and try again.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <styleProperties>
-                <verticalAlignment>
-                    <stringValue>top</stringValue>
-                </verticalAlignment>
-                <width>
-                    <stringValue>12</stringValue>
-                </width>
-            </styleProperties>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>No_recordId_Screen</targetReference>
+            <targetReference>Account_Screen_Add_Contact_and_Add_Relationship_Subflow</targetReference>
         </connector>
     </start>
     <status>Draft</status>
+    <subflows>
+        <name>Account_Screen_Add_Contact_and_Add_Relationship_Subflow</name>
+        <label>Account - Screen - Add Contact and Add Relationship Subflow</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <flowName>Account_Screen_Add_Contact_and_Add_Relationship_Subflow</flowName>
+        <inputAssignments>
+            <name>varAccountId</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>varAction</name>
+            <value>
+                <stringValue>Add Contact</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>recordId</name>
         <dataType>String</dataType>
