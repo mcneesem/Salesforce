@@ -213,7 +213,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account_Relationship__c.Account_Relationship_Id__c</field>
+        <field>Account_Relationship__c.Account_Relationship_ID_18__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1448,7 +1448,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>NSP_Employee_Split__c.Opportunity_Credit_Id__c</field>
+        <field>NSP_Employee_Split__c.Opportunity_Credit_ID_18__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
