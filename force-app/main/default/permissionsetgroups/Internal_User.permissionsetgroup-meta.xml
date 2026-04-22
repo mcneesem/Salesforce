@@ -23,7 +23,6 @@
     <permissionSets>DNB_Connect_Fields_Edit_Access</permissionSets>
     <permissionSets>Enforce_Termination_Reason_Rules</permissionSets>
     <permissionSets>Implementation_Profile_Read_Only</permissionSets>
-    <permissionSets>Required_Editable_Fields</permissionSets>
     <permissionSets>Label_Access</permissionSets>
     <permissionSets>NSP_Payroll_Data_Sheet_Read_Only</permissionSets>
     <permissionSets>Named_Account_Group_Edit_Access</permissionSets>
@@ -33,6 +32,7 @@
     <permissionSets>Purchased_Product_Visibility</permissionSets>
     <permissionSets>Request_CTM_and_Employee_Orientation_Meeting_Detail</permissionSets>
     <permissionSets>Request_Employee_Orientation_Meeting_Detail</permissionSets>
+    <permissionSets>Required_Editable_Fields</permissionSets>
     <permissionSets>Required_Reporting_Fields</permissionSets>
     <permissionSets>Required_Reporting_Objects</permissionSets>
     <permissionSets>Termination_Revision_Access</permissionSets>
