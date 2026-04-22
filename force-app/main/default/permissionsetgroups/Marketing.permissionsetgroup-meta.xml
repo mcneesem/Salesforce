@@ -9,7 +9,6 @@
     <permissionSets>Marketing_Object_Permissions</permissionSets>
     <permissionSets>Marketing_Record_Type_Assignments</permissionSets>
     <permissionSets>Marketing_System_Permissions</permissionSets>
-    <permissionSets>Marketing_Tab_Access</permissionSets>
     <permissionSets>Marketing_Visualforce_Page_Access</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
