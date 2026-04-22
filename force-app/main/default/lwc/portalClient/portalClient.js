@@ -32,5 +32,10 @@ export default class PortalClient extends LightningElement {
             this.bar = undefined;
         }
     }
+
+    get projectId() {
+        return ( this.projects ? this.projects[0]?.fields?.Id?.value : undefined );
+    }
+
 }
 //

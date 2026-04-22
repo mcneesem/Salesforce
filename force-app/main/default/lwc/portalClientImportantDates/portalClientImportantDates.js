@@ -11,6 +11,7 @@ import TIMEZONESIDKEY_FIELD from "@salesforce/schema/Portal_Client__c.TimeZoneSi
 
 export default class PortalClientImportantDates extends LightningElement {
     @api recordId;
+    @api projectId;
 
     fields;
     @wire(getObjectInfo, {

@@ -2,8 +2,8 @@
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>All</fullName>
     <columns>NAME</columns>
-    <columns>Client_Number__c</columns>
     <columns>Account__c</columns>
+    <columns>Client_Number__c</columns>
     <columns>TimeZoneSidKey__c</columns>
     <columns>Effective_Date__c</columns>
     <columns>Benefits_Effective_Date__c</columns>
