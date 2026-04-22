@@ -260,23 +260,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Fault_Element_Get_Portal_Clients</name>
-        <label>Set Fault Element : Get_Portal_Clients</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>FaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Get_Portal_Clients</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Set_Fault_Element_Get_Portal_Project</name>
         <label>Set Fault Element : Get_Portal_Project</label>
         <locationX>0</locationX>
@@ -447,28 +430,6 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Portal_Client_Record_Exists</name>
-        <label>Portal Client Record Exists?</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Yes_Record_Exist</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>recordPortalClient</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_Portal_Project</targetReference>
-            </connector>
-            <label>Yes : Record Exist</label>
-        </rules>
-    </decisions>
-    <decisions>
         <description>Select Operation Path :
 If source has record and no target record then Add Team Member
 if Source has record changed and target has record then update
@@ -536,14 +497,14 @@ if Source has Set Value to null and Target has valid record then delete</descrip
             <name>Yes_Delete_team_member</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>f_ippositioncontact</leftValueReference>
+                <leftValueReference>r_portalteammember</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>r_portalteammember</leftValueReference>
+                <leftValueReference>f_ippositioncontact</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -626,7 +587,7 @@ if Source has Set Value to null and Target has valid record then delete</descrip
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_Portal_Client</targetReference>
+                <targetReference>Get_Portal_Project</targetReference>
             </connector>
             <label>Yes : Valid IP</label>
         </rules>
@@ -659,12 +620,14 @@ if Source has Set Value to null and Target has valid record then delete</descrip
         <description>Contact associated to current IP Position</description>
         <name>f_ippositioncontact</name>
         <dataType>String</dataType>
-        <expression> CASE( {!Loop_Each_Positions}, &quot;Project Manager (Main Point of Contact)&quot;, {!recordImplProfile.NSP_Project_Manager__c},
-&quot;Orientation Representative&quot;, {!recordImplProfile.NSP_Orientation_Rep__c},
-&quot;Payroll Implementation&quot;, {!recordImplProfile.NSP_Payroll_Specialist__c},
-&quot;HR Implementation&quot;, {!recordImplProfile.NSP_HR_Quality_Support_Team_Member__c},
-&quot;Time and Attendance&quot;, {!recordImplProfile.NSP_ITA_Analyst__c},
-null
+        <expression>CASE(
+	{!Loop_Each_Positions},
+	&quot;Project Manager (Main Point of Contact)&quot;, {!recordImplProfile.NSP_Project_Manager__c},
+	&quot;Orientation Representative&quot;, {!recordImplProfile.NSP_Orientation_Rep__c},
+	&quot;Payroll Implementation&quot;, {!recordImplProfile.NSP_Payroll_Specialist__c},
+	&quot;HR Implementation&quot;, {!recordImplProfile.NSP_HR_Quality_Support_Team_Member__c},
+	&quot;Time and Attendance&quot;, {!recordImplProfile.NSP_ITA_Analyst__c},
+	null
 )</expression>
     </formulas>
     <interviewLabel>Implementation Profile - Subflow - Handle Portal Team Members {!$Flow.CurrentDateTime}</interviewLabel>
@@ -798,31 +761,6 @@ null
         <queriedFields>Account__c</queriedFields>
     </recordLookups>
     <recordLookups>
-        <name>Get_Portal_Client</name>
-        <label>Get Portal Client</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Portal_Client_Record_Exists</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Set_Fault_Element_Get_Portal_Clients</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Account__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordImplProfile.Account__c</elementReference>
-            </value>
-        </filters>
-        <object>Portal_Client__c</object>
-        <outputReference>recordPortalClient</outputReference>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>Account__c</queriedFields>
-    </recordLookups>
-    <recordLookups>
         <description>Get Portal Project</description>
         <name>Get_Portal_Project</name>
         <label>Get Portal Project</label>
@@ -898,22 +836,6 @@ null
     </subflows>
     <variables>
         <name>currentItem_Filter_Each_Portal_Position</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Portal_Team_Member__c</objectType>
-    </variables>
-    <variables>
-        <name>currentItem_Filter_Team_Members_for_Each_Portal_Client_Record</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Portal_Team_Member__c</objectType>
-    </variables>
-    <variables>
-        <name>currentItem_Filter_Team_Members_Target</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
@@ -1020,14 +942,5 @@ HR Client Implementation Team Member</description>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Implementation_Profile__c</objectType>
-    </variables>
-    <variables>
-        <description>Portal Client Record</description>
-        <name>recordPortalClient</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Portal_Client__c</objectType>
     </variables>
 </Flow>
