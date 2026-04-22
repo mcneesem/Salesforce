@@ -3,6 +3,59 @@
     <apiVersion>66.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
+        <name>Assign_chosen_Contact_and_Account_to_varACRToCreate</name>
+        <label>Assign chosen Contact and Account to varACRToCreate</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varACRtoCreate.ContactId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>WhichContactDoYouWantToLink_DataTable.firstSelectedRow.ContactId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varACRtoCreate.AccountId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varNewAccountId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varExistingContactName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>WhichContactDoYouWantToLink_DataTable.firstSelectedRow.Contact_Name__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Please_Update_AccountContactRelation_Info_for_this_Account_Screen</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Existing_Contact_Id_to_varACRToCreate</name>
+        <label>Assign Existing Contact Id to varACRToCreate</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varACRtoCreate.ContactId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varExistingContactId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varACRtoCreate.AccountId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varAccountId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Please_Update_AccountContactRelation_Info_for_this_Account_Screen</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_inputs_to_varAccountContactRelation</name>
         <label>Assign inputs to varAccountContactRelation</label>
         <locationX>0</locationX>
@@ -119,47 +172,10 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_new_Account_Id_and_Contact_Id</name>
-        <label>Assign new Account Id and Contact Id</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>varAccountId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>AccountLookup.recordId</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varExistingContactId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>WhichContactDoYouWantToLink_DataTable.firstSelectedRow.ContactId</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Please_Update_AccountContactRelation_Info_for_this_Account_Screen</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Assign_values_to_varACRtoCreate</name>
         <label>Assign values to varACRtoCreate</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>varACRtoCreate.AccountId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>varAccountId</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varACRtoCreate.ContactId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>varExistingContactId</elementReference>
-            </value>
-        </assignmentItems>
         <assignmentItems>
             <assignToReference>varACRtoCreate.NSP_Work_Phone__c</assignToReference>
             <operator>Assign</operator>
@@ -327,22 +343,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_varExistingContactId</name>
-        <label>Assign varExistingContactId</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>varExistingContactId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>ContactLookup.recordId</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Get_Existing_Contact_ACR_records_related_to_current_Account</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Assign_varFaultElement_Create_Contact</name>
         <label>Assign varFaultElement - Create_Contact</label>
         <locationX>0</locationX>
@@ -486,14 +486,14 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>AccountLookup.recordId</leftValueReference>
+                <leftValueReference>varNewAccountId</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assign_new_Account_Id_and_Contact_Id</targetReference>
+                <targetReference>Assign_chosen_Contact_and_Account_to_varACRToCreate</targetReference>
             </connector>
             <label>Contact and Account were chosen</label>
         </rules>
@@ -511,14 +511,21 @@
             <name>Existing_Contact_was_chosen</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>ContactLookup.recordId</leftValueReference>
+                <leftValueReference>varExistingContactId</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>varExistingContactId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>003</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>Assign_varExistingContactId</targetReference>
+                <targetReference>Get_Existing_Contact_ACR_records_related_to_current_Account</targetReference>
             </connector>
             <label>Existing Contact was chosen</label>
         </rules>
@@ -529,7 +536,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Please_Update_AccountContactRelation_Info_for_this_Account_Screen</targetReference>
+            <targetReference>Assign_Existing_Contact_Id_to_varACRToCreate</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No conflicting AccountContactRelation record found</defaultConnectorLabel>
         <rules>
@@ -1030,15 +1037,16 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>varExistingContactId</elementReference>
-                </value>
-            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <outputParameters>
+                <assignToReference>varExistingContactId</assignToReference>
+                <name>recordId</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>varExistingContactName</assignToReference>
+                <name>recordName</name>
+            </outputParameters>
             <styleProperties>
                 <verticalAlignment>
                     <stringValue>top</stringValue>
@@ -1191,12 +1199,6 @@
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>varNewAccountId</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
                 <name>required</name>
                 <value>
                     <booleanValue>true</booleanValue>
@@ -1204,7 +1206,10 @@
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <outputParameters>
+                <assignToReference>varAccountId</assignToReference>
+                <name>recordId</name>
+            </outputParameters>
             <styleProperties>
                 <verticalAlignment>
                     <stringValue>top</stringValue>
@@ -1406,7 +1411,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>ExistingContactRelatedtoCurrentAccount_DisplayText</name>
-            <fieldText>&lt;p&gt;{!ContactLookup.recordName} is now related to this Account.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;{!varExistingContactName} is now related to this Account.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -1466,7 +1471,7 @@
         </connector>
         <fields>
             <name>ContactToBeLinked_DisplayText</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Enter the information for {!ContactLookup.recordName} relevant to this Account.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Enter the information for {!varExistingContactName} relevant to the Account.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -1795,6 +1800,13 @@
     </variables>
     <variables>
         <name>varExistingContactId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varExistingContactName</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
