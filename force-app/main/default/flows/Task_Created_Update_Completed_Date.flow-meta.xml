@@ -21,7 +21,7 @@
             <assignToReference>$Record.NSP_Completed_Date__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>TodayDate</elementReference>
+                <elementReference>$Flow.CurrentDate</elementReference>
             </value>
         </assignmentItems>
     </assignments>
@@ -34,7 +34,7 @@
             <assignToReference>$Record.RecordTypeId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>idTaskEloquaRT</elementReference>
+                <stringValue>0124x000000yRvTAAU</stringValue>
             </value>
         </assignmentItems>
     </assignments>
@@ -55,13 +55,6 @@
                     <stringValue>Completed</stringValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Eloqua_Task_RT</stringValue>
-                </rightValue>
-            </conditions>
             <connector>
                 <targetReference>Update_Completed_Date</targetReference>
             </connector>
@@ -77,20 +70,23 @@
                     <stringValue>Open</stringValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Eloqua_Task_RT</stringValue>
-                </rightValue>
-            </conditions>
             <connector>
                 <targetReference>Nullify_Completed_Date</targetReference>
             </connector>
             <label>isStatusOpen</label>
         </rules>
+    </decisions>
+    <decisions>
+        <name>Is_Task_Eloqua</name>
+        <label>Is Task Eloqua?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Is_Completed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Task Is Not Eloqua</defaultConnectorLabel>
         <rules>
-            <name>ifEloquaRecord</name>
+            <name>Yes</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.CreatedBy.FirstName</leftValueReference>
@@ -109,16 +105,10 @@
             <connector>
                 <targetReference>Update_Record_Type</targetReference>
             </connector>
-            <label>ifEloquaRecord</label>
+            <label>Yes</label>
         </rules>
     </decisions>
     <environments>Default</environments>
-    <formulas>
-        <description>This Formula is used to store today&apos;s date.</description>
-        <name>TodayDate</name>
-        <dataType>Date</dataType>
-        <expression>Today()</expression>
-    </formulas>
     <interviewLabel>Task - Created - Update Completed Date {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Task - Created - Update Completed Date</label>
     <processMetadataValues>
@@ -144,7 +134,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Is_Completed</targetReference>
+            <targetReference>Is_Task_Eloqua</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -173,14 +163,4 @@
         <triggerType>RecordBeforeSave</triggerType>
     </start>
     <status>Draft</status>
-    <variables>
-        <name>idTaskEloquaRT</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <stringValue>0124x000000yRvTAAU</stringValue>
-        </value>
-    </variables>
 </Flow>
