@@ -2,76 +2,12 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>66.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
-    <assignments>
-        <name>Assign_recordId_to_varAccountId</name>
-        <label>Assign recordId to varAccountId</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>varAccountId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Is_varAccountId_populated</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_varAccountId_and_varAction</name>
-        <label>Assign varAccountId and varAction</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>varAction</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Add Contact</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Account_Screen_Add_Contact_and_Add_Relationship_Subflow</targetReference>
-        </connector>
-    </assignments>
     <customProperties>
         <name>ScreenProgressIndicator</name>
         <value>
             <stringValue>{&quot;location&quot;:&quot;top&quot;,&quot;type&quot;:&quot;simple&quot;}</stringValue>
         </value>
     </customProperties>
-    <decisions>
-        <name>Is_varAccountId_populated</name>
-        <label>Is varAccountId populated?</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>No_recordId_Screen</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>varAccountId is missing</defaultConnectorLabel>
-        <rules>
-            <name>Yes_varAccountId_is_populated</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>varAccountId</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>varAccountId</leftValueReference>
-                <operator>StartsWith</operator>
-                <rightValue>
-                    <stringValue>001</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Assign_varAccountId_and_varAction</targetReference>
-            </connector>
-            <label>Yes - varAccountId is populated</label>
-        </rules>
-    </decisions>
     <description>Screen flow triggered from custom &quot;Add Contact&quot; button on Account record in Seller Experience app to create a new Contact and update the auto-created AccountContactRelationship record.</description>
     <environments>Default</environments>
     <interviewLabel>Account - Screen - Add Contact {!$Flow.CurrentDateTime}</interviewLabel>
@@ -124,48 +60,15 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Assign_recordId_to_varAccountId</targetReference>
+            <targetReference>No_recordId_Screen</targetReference>
         </connector>
     </start>
     <status>Draft</status>
-    <subflows>
-        <name>Account_Screen_Add_Contact_and_Add_Relationship_Subflow</name>
-        <label>Account - Screen - Add Contact and Add Relationship Subflow</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <flowName>Account_Screen_Add_Contact_and_Add_Relationship_Subflow</flowName>
-        <inputAssignments>
-            <name>varAccountId</name>
-            <value>
-                <elementReference>varAccountId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>varAction</name>
-            <value>
-                <elementReference>varAction</elementReference>
-            </value>
-        </inputAssignments>
-    </subflows>
     <variables>
         <name>recordId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varAccountId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>true</isOutput>
-    </variables>
-    <variables>
-        <name>varAction</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>true</isOutput>
     </variables>
 </Flow>

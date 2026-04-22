@@ -566,12 +566,19 @@
         <defaultConnectorLabel>varAccountId or varAction are incorrect</defaultConnectorLabel>
         <rules>
             <name>Yes_varAccountId_and_varAction_are_populated</name>
-            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+            <conditionLogic>1 AND 2 AND (3 OR 4)</conditionLogic>
             <conditions>
                 <leftValueReference>varAccountId</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>varAccountId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>001</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
