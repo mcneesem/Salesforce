@@ -3,7 +3,7 @@
     <fullName>Primary_Termination_Reason</fullName>
     <active>true</active>
     <errorConditionFormula>AND(
-  NOT($Permission.Bypass_Termination_Reason_Rules) ,
+  NOT( $Permission.Bypass_Termination_Reason_Rules ) ,
   Account__r.WO_Asset__r.NSP_Written_Term_recd__c ,
   ( TEXT( NSP_Type__c ) = &quot;Renewal Probability&quot; ) ,
   OR(
