@@ -200,6 +200,20 @@ private class SandboxHealthControllerTest {
     }
 
     @IsTest
+    private static void testRequiredLabels() {
+        // Even if no custom metadata exists or access is restricted, the controller should not throw
+        Test.startTest();
+        Map<String,String> expectedStage = SandboxHealthController.requiredLabels( 'stage' );
+        Map<String,String> expectedTest = SandboxHealthController.requiredLabels( 'test' );
+        Map<String,String> expectedMerge = SandboxHealthController.requiredLabels( 'merge' );
+        Test.stopTest();
+
+        System.assertEquals( expectedStage.get( 'NSP_FTA_Base_URL' ) , 'https://stageportalapps.insperity.com/financialcomparison/financialanalysis/' , 'Values should match' );
+        System.assertEquals( expectedTest.get( 'NSP_FTA_Base_URL' ) , 'https://testportalapps.insperity.com/financialcomparison/financialanalysis/' , 'Values should match' );
+        System.assertEquals( expectedMerge.get( 'NSP_FTA_Base_URL' ) , 'https://devportalapps.insperity.com/financialcomparison/financialanalysis/' , 'Values should match' );
+    }
+
+    @IsTest
     private static void testCustomMetadata_grouping_structural_presence() {
         // Even if no custom metadata exists or access is restricted, the controller should not throw
         Test.startTest();
@@ -413,5 +427,52 @@ private class SandboxHealthControllerTest {
             System.assertNotEquals(null, res.sections, 'Sections must not be null for standard user');
             // Not asserting sizes or particular statuses; read-only code should still return structured output
         }
+    }
+
+    @IsTest
+    private static void testVerifyExternalIdObjects_allRecordsValid() {
+        // Update the existing test Account from setupData to have an External ID
+        Account existingAcc = [SELECT Id, NSP_External_Id__c FROM Account WHERE Name = 'TestAccount' LIMIT 1];
+        existingAcc.NSP_External_Id__c = 'EXT-SETUP';
+        update existingAcc;
+
+        // Create additional test Account with External ID populated
+        Account acc = new Account(
+            Name = 'Test Account with ExternalId',
+            NSP_External_Id__c = 'EXT-12345'
+        );
+        insert acc;
+
+        // Configure OrgSettings to check Account
+        OrgSettings__c orgSettings = OrgSettings__c.getOrgDefaults();
+        // Assuming OrgSettings has a field like ExternalIdObjects__c or similar
+        // We'll use dynamic field assignment to be flexible
+        Map<String, Schema.SObjectField> fieldsMap = Schema.SObjectType.OrgSettings__c.fields.getMap();
+        for (String fieldName : fieldsMap.keySet()) {
+            if (fieldName.toLowerCase().contains('externalidobjects')) {
+                orgSettings.put(fieldName, 'Account');
+                break;
+            }
+        }
+        upsert orgSettings;
+
+        Test.startTest();
+        SandboxHealthController.Section s = SandboxHealthController.verifyExternalIdObjects();
+        Test.stopTest();
+
+        System.assertNotEquals(null, s, 'Section should not be null');
+        assertValidSection(s);
+
+        // Should have at least one check for Account
+        Boolean foundAccountCheck = false;
+        for (SandboxHealthController.Check c : s.checks) {
+            if (c.key == 'extid_Account') {
+                foundAccountCheck = true;
+                System.assertEquals(SandboxHealthController.STATUS.PASS.name(), c.status, 'Account check should PASS when all records have External ID');
+                System.assertEquals('0', c.actual, 'Should have 0 records with blank External ID');
+                break;
+            }
+        }
+        System.assert(foundAccountCheck, 'Should have check for Account object');
     }
 }
