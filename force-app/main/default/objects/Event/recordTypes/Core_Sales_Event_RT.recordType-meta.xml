@@ -669,6 +669,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>HR360 Solution</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HRCore Solution</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HRScale</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Lunch</fullName>
             <default>false</default>
         </values>
@@ -677,7 +689,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Performance Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Performance Management and Time %26 Attendance</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Solution Alignment Meeting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Time and Attendance</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1781,6 +1805,14 @@
         </values>
         <values>
             <fullName>Open</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Requested</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scheduled</fullName>
             <default>false</default>
         </values>
     </picklistValues>
