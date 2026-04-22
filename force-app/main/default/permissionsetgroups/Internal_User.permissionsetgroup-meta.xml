@@ -21,7 +21,6 @@
     <permissionSets>Case_Guidance_Access</permissionSets>
     <permissionSets>DNB_Connect_Components_access_Insperity</permissionSets>
     <permissionSets>DNB_Connect_Fields_Edit_Access</permissionSets>
-    <permissionSets>Enforce_Termination_Reason_Rules</permissionSets>
     <permissionSets>Implementation_Profile_Read_Only</permissionSets>
     <permissionSets>Label_Access</permissionSets>
     <permissionSets>NSP_Payroll_Data_Sheet_Read_Only</permissionSets>
