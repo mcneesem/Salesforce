@@ -217,9 +217,7 @@ public with sharing class NSP_AccountContactServiceHelper {
 
     // assigns Project Community Permissions to User
     private static void assignUserPerm( Set<Id> userIdSet , Set<Id> permIdSet ) {
-        if ( false ) {
-            NSP_AccountContactServiceHelper.assignUserPermFuture( userIdSet , permIdSet);
-        }
+        NSP_AccountContactServiceHelper.assignUserPermFuture( userIdSet , permIdSet);
     }
 
     @future
@@ -265,10 +263,9 @@ public with sharing class NSP_AccountContactServiceHelper {
     }
 
     private static void assignPermissionControl( Set<Id> userSet ) {
-        if ( false ) {
-            NSP_AccountContactServiceHelper.assignPermissionControlFuture( userSet );
-        }
+        NSP_AccountContactServiceHelper.assignPermissionControlFuture( userSet );
     }
+
     @future
     private static void assignPermissionControlFuture( Set<Id> userSet ) {
         try {
@@ -300,9 +297,7 @@ public with sharing class NSP_AccountContactServiceHelper {
     }
 
     private static void removePermissionControlForDeactivatedUsers( Set<Id> deactivateUserId ) {
-        if ( false ) {
-            NSP_AccountContactServiceHelper.removePermissionControlForDeactivatedUsersInternal( deactivateUserId );
-        }
+        NSP_AccountContactServiceHelper.removePermissionControlForDeactivatedUsersInternal( deactivateUserId );
     }
     private static void removePermissionControlForDeactivatedUsersInternal( Set<Id> deactivateUserId ) {
         String permissionControlQuery = new NSP_QueryBuilder(

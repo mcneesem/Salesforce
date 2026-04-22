@@ -15,7 +15,7 @@ public with sharing class NSP_portalUserUpdate implements Queueable {
         Set<Id> permissionIdSet
         )
     {
-        if ( false && ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) ) {
+        if ( Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() ) ) {
             System.enqueueJob(
                 new NSP_portalUserUpdate(
                     userIdSet ,
