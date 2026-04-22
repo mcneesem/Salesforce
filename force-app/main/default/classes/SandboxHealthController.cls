@@ -1,5 +1,5 @@
 public with sharing class SandboxHealthController {
-    // test w/ SandboxHealthControllerTest (80%)
+    // test w/ SandboxHealthControllerTest (81%)
 
     static final string STRING_INVALID = '.invalid';
     static final string STRING_RECORDS = 'Records presence';
@@ -1011,6 +1011,7 @@ public with sharing class SandboxHealthController {
         }
     }
 
+    @TestVisible
     private static Section verifyExternalIdObjects() {
         Boolean skipProcessing = false;
         Section s = new Section();
@@ -1066,6 +1067,7 @@ public with sharing class SandboxHealthController {
     }
 
     // Placeholder required labels. These align with NSP_PrepSandbox.doCLabels() and doEmailCLabels() examples.
+    @TestVisible
     private static Map<String, String> requiredLabels(String sandbox) {
         Map<String, String> m = new Map<String, String>();
         // Baseline placeholders
