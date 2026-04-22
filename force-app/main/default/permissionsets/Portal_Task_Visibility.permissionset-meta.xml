@@ -18,11 +18,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Portal_Task__c.Portal_Client__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Portal_Task__c.Project_Task__c</field>
         <readable>true</readable>
     </fieldPermissions>
