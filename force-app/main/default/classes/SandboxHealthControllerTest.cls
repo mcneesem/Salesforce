@@ -242,7 +242,7 @@ private class SandboxHealthControllerTest {
      */
     @TestSetup
     private static void setupData() {
-        Account account = New Account( Name = 'TestAccount' , AccountNumber = '12345' , NSP_AIMS_Client__c = '500' );
+        Account account = New Account( Name = 'TestAccount' , AccountNumber = '12345' , NSP_AIMS_Client__c = '500' , NSP_External_Id__c = 'EXT-12345' );
         insert account;
     }
 
@@ -431,22 +431,8 @@ private class SandboxHealthControllerTest {
 
     @IsTest
     private static void testVerifyExternalIdObjects_allRecordsValid() {
-        // Update the existing test Account from setupData to have an External ID
-        Account existingAcc = [SELECT Id, NSP_External_Id__c FROM Account WHERE Name = 'TestAccount' LIMIT 1];
-        existingAcc.NSP_External_Id__c = 'EXT-SETUP';
-        update existingAcc;
-
-        // Create additional test Account with External ID populated
-        Account acc = new Account(
-            Name = 'Test Account with ExternalId',
-            NSP_External_Id__c = 'EXT-12345'
-        );
-        insert acc;
-
         // Configure OrgSettings to check Account
         OrgSettings__c orgSettings = OrgSettings__c.getOrgDefaults();
-        // Assuming OrgSettings has a field like ExternalIdObjects__c or similar
-        // We'll use dynamic field assignment to be flexible
         Map<String, Schema.SObjectField> fieldsMap = Schema.SObjectType.OrgSettings__c.fields.getMap();
         for (String fieldName : fieldsMap.keySet()) {
             if (fieldName.toLowerCase().contains('externalidobjects')) {
