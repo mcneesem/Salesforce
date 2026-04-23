@@ -119,6 +119,9 @@ private class SandboxHealthControllerTest {
 
     @IsTest
     private static void testUserTriggerSettings_section_present() {
+        String sandbox = System.DomainParser.parse( URL.getOrgDomainUrl() ).getSandboxName();
+        String[] pipelineOrgs = new String[] { 'merge' , 'test' , 'stage' };
+        Boolean isPipeline = pipelineOrgs.contains( sandbox.toLowerCase() );
         UserTriggerSettings__c uts = UserTriggerSettings__c.getOrgDefaults();
         uts.AllowedAdmins__c = null;
         uts.BccAddresses__c = null;
@@ -129,9 +132,13 @@ private class SandboxHealthControllerTest {
         Test.stopTest();
 
         SandboxHealthController.Section s = findSectionByKey(res.sections, 'UserTriggerSettings__c');
-        System.assertNotEquals(null, s, 'User Trigger Settings section should exist');
-        assertValidSection(s);
-        assertAllowedStatus(s.status);
+        if ( !isPipeline ) {
+            System.assertNotEquals(null, s, 'User Trigger Settings section should exist');
+            assertValidSection(s);
+            assertAllowedStatus(s.status);
+        } else {
+            System.assertEquals(null, s, 'User Trigger Settings section should not exist');
+        }
     }
 
     @IsTest
