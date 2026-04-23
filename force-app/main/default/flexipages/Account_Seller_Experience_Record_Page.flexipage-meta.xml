@@ -271,6 +271,26 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
+                            <value>Account.Add_Contact_Screen_Flow</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Account_Screen_Add_Contact_and_Add_Relationship}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Account.Add_Relationship_Screen_Flow</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Account_Screen_Add_Contact_and_Add_Relationship}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
                             <value>CustomButton.Account.NSP_Generate_Document</value>
                         </valueListItems>
                         <valueListItems>
@@ -549,12 +569,6 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
-                            <value>NewContact</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>AddRelation</value>
-                        </valueListItems>
-                        <valueListItems>
                             <value>MassAddToCampaign</value>
                         </valueListItems>
                     </valueList>
@@ -766,7 +780,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>required</value>
+                    <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Website</fieldItem>
                 <identifier>RecordWebsiteField</identifier>
