@@ -348,6 +348,10 @@ public without sharing class NSP_ContactRollupController {
             recordId
             );
 
+            if(String.isBlank(acrFilter)) {
+
+            }
+
         if(String.isNotBlank(acrFilter) &&
         queryResults != null &&
         !queryResults?.isEmpty()
@@ -617,20 +621,16 @@ public without sharing class NSP_ContactRollupController {
         Integer offSetCount,
         Integer offSetLimit
     ) {
-        List<SObject> paginatedResults = records;
+        List<SObject> paginatedResults = new List<SObject>();
 
         // Apply pagination only if valid params are provided
-        if (offSetCount != null && offSetLimit != null && records != null && !records.isEmpty()) {
-            paginatedResults = new List<SObject>();
+        // Handle case where offsetCount is less than or equal to records size
+        if (offSetCount != null && offSetLimit != null && records != null && !records.isEmpty() && offSetCount <= records.size()) {
+            Integer endIndex = Math.min(offSetCount + offSetLimit, records.size());
 
-            // Handle case where offsetCount is less than or equal to records size
-            if (offSetCount <= records.size()) {
-                Integer endIndex = Math.min(offSetCount + offSetLimit, records.size());
-
-                // Extract paginated subset - no redundant bounds check needed (Math.min handles it)
-                for (Integer i = offSetCount; i < endIndex; i++) {
-                    paginatedResults.add(records[i]);
-                }
+            // Extract paginated subset - no redundant bounds check needed (Math.min handles it)
+            for (Integer i = offSetCount; i < endIndex; i++) {
+                paginatedResults.add(records[i]);
             }
         }
 
