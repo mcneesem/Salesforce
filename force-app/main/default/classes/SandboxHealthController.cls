@@ -70,6 +70,7 @@ public with sharing class SandboxHealthController {
         @AuraEnabled public String sandboxName;
         @AuraEnabled public String orgId;
         @AuraEnabled public String instance;
+        @AuraEnabled public Boolean isPipeline;
         @AuraEnabled public Boolean isSandbox;
         @AuraEnabled public Datetime evaluatedAt;
     }
@@ -82,10 +83,12 @@ public with sharing class SandboxHealthController {
 
         // Org context
         String sandbox = System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName();
+        String[] pipelineOrgs = new String[] { 'merge' , 'test' , 'stage' };
         res.sandboxName = sandbox;
         Organization orgInfo = [SELECT Id, InstanceName, IsSandbox FROM Organization WHERE Id != null LIMIT 1];
         res.orgId = orgInfo.Id;
         res.instance = orgInfo.InstanceName;
+        res.isPipeline = pipelineOrgs.contains( sandbox.toLowerCase() ) ? true : false;
         res.isSandbox = orgInfo.IsSandbox;
 
         if ( !res.isSandbox ) {
@@ -116,7 +119,9 @@ public with sharing class SandboxHealthController {
             res.sections.add( verifyOrgSettings( sandbox ) );
             res.sections.add( verifyProjectCreationSettings() );
             res.sections.add( verifySalesTeamEmailSettings() );
-            res.sections.add( verifyUserTriggerSettings() );
+            if ( !res.isPipeline ) {
+                res.sections.add( verifyUserTriggerSettings() );
+            }
             res.sections.add( verifyWingspanSettings() );
 
             // Other checks
@@ -957,42 +962,25 @@ public with sharing class SandboxHealthController {
             for ( String f : orgFields ) {
                 if ( ( f != null )
                   && ( f.toLowerCase().contains( 'externalidobjects' ) ) ) {
-                    try {
-                        String val = (String) orgSettings.get( f );
-                        if ( String.isNotBlank( val ) ) {
-                            for ( String entry : val.split( ',' ) ) {
-                                String obj = entry.trim();
-                                if ( String.isNotBlank( obj )
-                                  && !names.contains( obj ) ) {
-                                    names.add(obj);
-                                }
-                            }
-                        }
-                    } catch ( Exception ex ) {
-                    }
+                    String val = (String) orgSettings.get( f );
+                    names = parseExternalIdField( names , val );
                 }
             }
         }
         return names;
     }
 
-    private static List<Check> buildExternalIdReadWarnings(OrgSettings__c orgSettings) {
-        // Single-return implementation: always return warns at method end.
-        List<Check> warns = new List<Check>();
-        if ( orgSettings != null ) {
-            Set<String> orgFields = Schema.SObjectType.OrgSettings__c.fields.getMap().keySet();
-            for ( String f : orgFields ) {
-                if ( ( f != null )
-                  && ( f.toLowerCase().contains( 'externalidobjects' ) ) ) {
-                    try {
-                        String ignore = (String) orgSettings.get( f );
-                    } catch ( Exception ex ) {
-                        warns.add( newWarn( 'extid_field_err_' + f , f , 'Readable' , 'error' , 'Unable to read OrgSettings__c.' + f + ': ' + ex.getMessage() ) );
-                    }
+    private static List<String> parseExternalIdField( List<String> names , String val ) {
+        if ( String.isNotBlank( val ) ) {
+            for ( String entry : val.split( ',' ) ) {
+                String obj = entry.trim();
+                if ( String.isNotBlank( obj )
+                    && !names.contains( obj ) ) {
+                    names.add(obj);
                 }
             }
         }
-        return warns;
+        return names;
     }
 
     private static void evaluateExternalIdForObject(Section target, String objName) {
@@ -1004,7 +992,8 @@ public with sharing class SandboxHealthController {
             if ( cnt == 0 ) {
                 target.checks.add( newPass( key , label , 'No blank NSP_External_Id__c' , '0' , 'No records with blank ExternalId' ) );
             } else {
-                target.checks.add( newFail( key , label , 'No blank NSP_External_Id__c' , String.valueOf(cnt) , cnt + ' records with blank NSP_External_Id__c' ) );
+                String msgSub = ( cnt == 1 ) ? 'record' : 'records';
+                target.checks.add( newFail( key , label , 'No blank NSP_External_Id__c' , String.valueOf(cnt) , cnt + ' ' + msgSub + ' with blank NSP_External_Id__c' ) );
             }
         } catch (Exception ex) {
             target.checks.add( newWarn( key , label , 'Validated' , 'unavailable' , 'Unable to validate ' + objName + ': ' + ex.getMessage() ) );
@@ -1031,12 +1020,6 @@ public with sharing class SandboxHealthController {
             List<Check> fieldWarns = new List<Check>();
             List<String> objNames = new List<String>();
             if ( !skipProcessing ) {
-                fieldWarns = buildExternalIdReadWarnings( orgSettings );
-                if ( !fieldWarns.isEmpty() ) {
-                    s.checks.addAll( fieldWarns );
-                }
-
-                // get object names (may be empty)
                 objNames = getExternalIdObjectNames( orgSettings );
                 if ( objNames.isEmpty() ) {
                     s.checks.add( newWarn( 'extid_none_configured' , 'ExternalId object list' , 'At least one configured' , 'None' , 'No OrgSettings__c fields containing \"externalidobjects\" with values were found' ) );
@@ -1211,16 +1194,20 @@ public with sharing class SandboxHealthController {
                     }
                     byLabel.get( lbl ).add( c );
                 }
-                List<String> labels = new List<String>( byLabel.keySet() );
-                labels.sort();
-                List<Check> sorted = new List<Check>();
-                for ( String lbl : labels ) {
-                    sorted.addAll( byLabel.get( lbl ) );
-                }
-                s.checks = sorted;
+                s.checks = sortSectionChecks( byLabel );
             }
-            s.status = calculateSectionStatus( s.checks );
+            s.status = SandboxHealthController.calculateSectionStatus( s.checks );
         }
         return s;
+    }
+
+    private static List<Check> sortSectionChecks( Map<String, List<Check>> byLabel ) {
+        List<String> labels = new List<String>( byLabel.keySet() );
+        labels.sort();
+        List<Check> sorted = new List<Check>();
+        for ( String lbl : labels ) {
+            sorted.addAll( byLabel.get( lbl ) );
+        }
+        return sorted;
     }
 }
