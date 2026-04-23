@@ -51,10 +51,10 @@
             <label>Completed</label>
         </rules>
     </decisions>
-    <description>If the NSP Status field is changed, update the custom &quot;Completed Date&quot;</description>
+    <description>DEPRECATED - If the NSP Status field is changed, update the custom &quot;Completed Date&quot;</description>
     <environments>Default</environments>
     <interviewLabel>Event - Before Save - Status Changed {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Event - Before Save - Status Changed</label>
+    <label>DEPRECATED - Event - Before Save - Status Changed</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -80,7 +80,7 @@
         <connector>
             <targetReference>What_is_the_new_status</targetReference>
         </connector>
-        <filterLogic>or</filterLogic>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>NSP_Status__c</field>
             <operator>IsChanged</operator>
@@ -88,12 +88,8 @@
                 <booleanValue>true</booleanValue>
             </value>
         </filters>
-        <filters>
-            <field>NSP_Status__c</field>
-            <operator>NotEqualTo</operator>
-        </filters>
         <object>Event</object>
-        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
     <status>Draft</status>
