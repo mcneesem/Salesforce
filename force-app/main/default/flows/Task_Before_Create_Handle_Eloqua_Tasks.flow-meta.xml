@@ -109,8 +109,8 @@
         </rules>
     </decisions>
     <environments>Default</environments>
-    <interviewLabel>Task Before Create Handle Eloqua Tasks {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Task Before Create Handle Eloqua Tasks</label>
+    <interviewLabel>Task - Before Create - Handle Eloqua Tasks {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Task - Before Create - Handle Eloqua Tasks</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
