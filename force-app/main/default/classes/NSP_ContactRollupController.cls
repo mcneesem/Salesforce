@@ -26,11 +26,9 @@ public without sharing class NSP_ContactRollupController {
     private static Map<String, Schema.SObjectField> subClientContactFieldMap {
         private get {
             if (subClientContactFieldMap == null) {
-                subClientContactFieldMap = new Map<String, Schema.SObjectField>();
-                for (Schema.SObjectField field : subClientContactFieldsToCheck) {
-                    subClientContactFieldMap.put(field.getDescribe().getName(), field);
-                }
+                subClientContactFieldMap =  Schema.SObjectType.NSP_Sub_Client_Contact__c.fields.getMap();
             }
+
             return subClientContactFieldMap;
         }
         private set;
@@ -624,11 +622,15 @@ public without sharing class NSP_ContactRollupController {
         // Apply pagination only if valid params are provided
         if (offSetCount != null && offSetLimit != null && records != null && !records.isEmpty()) {
             paginatedResults = new List<SObject>();
-            Integer endIndex = Math.min(offSetCount + offSetLimit, records.size());
 
-            // Extract paginated subset - no redundant bounds check needed (Math.min handles it)
-            for (Integer i = offSetCount; i < endIndex; i++) {
-                paginatedResults.add(records[i]);
+            // Handle case where offsetCount is less than or equal to records size
+            if (offSetCount <= records.size()) {
+                Integer endIndex = Math.min(offSetCount + offSetLimit, records.size());
+
+                // Extract paginated subset - no redundant bounds check needed (Math.min handles it)
+                for (Integer i = offSetCount; i < endIndex; i++) {
+                    paginatedResults.add(records[i]);
+                }
             }
         }
 
