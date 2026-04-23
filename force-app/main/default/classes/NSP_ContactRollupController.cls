@@ -186,7 +186,7 @@ public without sharing class NSP_ContactRollupController {
     // @return: NSP_Sub_Client_Contact__c object with specified fields set to true
     private static NSP_Sub_Client_Contact__c buildFilterTemplate( String subClientFilter ) {
         NSP_Sub_Client_Contact__c filterTemplate = NSP_ContactRollupController.getSubClientContactObj();
-        subClientFilter = ( String.isNotBlank( subClientFilter ) : subClientFilter : '' );
+        subClientFilter = ( String.isNotBlank( subClientFilter ) ? subClientFilter : '' );
         List<String> filterFields = subClientFilter.split( ',' );
         if ( !filterFields.isEmpty() ) {
             for ( String fieldName : filterFields ) {
@@ -360,77 +360,80 @@ public without sharing class NSP_ContactRollupController {
         List<AccountContactRelation> filteredResults = new List<AccountContactRelation>();
         List<AccountContactRelation> queryResults = NSP_ContactRollupController.getAccountContactRelationshipRecords(
             recordId
-            );
-
-        if(String.isNotBlank(acrFilter) &&
-        queryResults != null &&
-        !queryResults?.isEmpty()
-        ) {
+        );
+        if ( String.isNotBlank( acrFilter )
+            && ( queryResults != null )
+            && !queryResults?.isEmpty()
+            )
+        {
             AccountContactRelation acrTempRec = new AccountContactRelation(
-                NSP_Service_Roles__c = NULL,
-                NSP_Support_Role__c = NULL,
-                HRScale_Client_Roles__c = NULL,
-                Client_Communication_Contact__c = false
+                NSP_Service_Roles__c=null ,
+                NSP_Support_Role__c=null ,
+                HRScale_Client_Roles__c=null ,
+                Client_Communication_Contact__c=false
             );
-
-            acrTempRec = NSP_ContactRollupController.parseAcrFilter(acrFilter, acrTempRec);
-            for(AccountContactRelation acr : queryResults) {
-                if(NSP_ContactRollupController.parseAccountContactRelationRec(acr, acrTempRec)) {
-                    filteredResults.add(acr);
+            acrTempRec = NSP_ContactRollupController.parseAcrFilter(
+                acrFilter ,
+                acrTempRec
+            );
+            for ( AccountContactRelation acr : queryResults ) {
+                if ( NSP_ContactRollupController.parseAccountContactRelationRec( acr , acrTempRec ) ) {
+                    filteredResults.add( acr );
                 }
             }
         }
-
-        if(filteredResults != null && !filteredResults?.isEmpty()) {
+        if ( ( filteredResults != null ) && !filteredResults?.isEmpty() ) {
             queryResults = filteredResults;
         }
-
         // Apply pagination to the results
-        queryResults = (List<AccountContactRelation>) NSP_ContactRollupController.applyPagination(
-            (List<SObject>) queryResults,
-            offSetCount,
+        queryResults = (List<AccountContactRelation>)NSP_ContactRollupController.applyPagination(
+            (List<SObject>)queryResults ,
+            offSetCount ,
             offSetLimit
         );
-
         return NSP_ContactRollupController.getACRRecords(
-            queryResults,
+            queryResults ,
             resultsMap
-            );
-        }
+        );
+    }
 
-     // @description Retrieves AccountContactRelation records without any additional filter criteria.
-     //              This method returns all ACR records for a given account where at least one role field
-     //              (NSP_Service_Roles__c, NSP_Support_Role__c, HRScale_Client_Roles__c) is populated or
-     //              the Client_Communication_Contact__c flag is true. Terminated employees are excluded.
-     //              This is the default query method when no ACR filter is provided by the user.
-     // @param recordId The Account Id to filter AccountContactRelation records
-     // @param offSetCount The number of records to skip for pagination
-     // @param offSetLimit The maximum number of records to return
-     // @return List<AccountContactRelation> A list of AccountContactRelation records meeting the default criteria
-    private static List<AccountContactRelation> getAccountContactRelationshipRecords(String recordId)
-    {
+    // @description Retrieves AccountContactRelation records without any additional filter criteria.
+    //              This method returns all ACR records for a given account where at least one role field
+    //              (NSP_Service_Roles__c, NSP_Support_Role__c, HRScale_Client_Roles__c) is populated or
+    //              the Client_Communication_Contact__c flag is true. Terminated employees are excluded.
+    //              This is the default query method when no ACR filter is provided by the user.
+    // @param recordId The Account Id to filter AccountContactRelation records
+    // @param offSetCount The number of records to skip for pagination
+    // @param offSetLimit The maximum number of records to return
+    // @return List<AccountContactRelation> A list of AccountContactRelation records meeting the default criteria
+    private static List<AccountContactRelation> getAccountContactRelationshipRecords( String recordId ) {
         List<AccountContactRelation> returnList = [
             SELECT
-            AccountId , Account.Name ,
-            ContactId , Contact.FirstName ,
-            Contact.LastName , Contact.Name ,
-            Client_Communication_Contact__c ,
-            NSP_Service_Roles__c , NSP_Support_Role__c ,
-            HRScale_Client_Roles__c , Contact.NSP_Preferred_First_Name__c ,
-            NSP_Job_Title__c , NSP_Employee_Status__c ,
-            NSP_Work_Phone__c , NSP_Work_email__c
-            FROM
-            AccountContactRelation
-            WHERE
-            ( AccountId = :recordId )
-            AND
-            NSP_Employee_Status__c != 'TERMINATED'
-            AND
-            (
-                NSP_Service_Roles__c != NULL OR
-                NSP_Support_Role__c != NULL OR
-                HRScale_Client_Roles__c != NULL OR
-                Client_Communication_Contact__c = TRUE
+                AccountId ,
+                Account.Name ,
+                ContactId ,
+                Contact.FirstName ,
+                Contact.LastName ,
+                Contact.Name ,
+                Client_Communication_Contact__c ,
+                NSP_Service_Roles__c ,
+                NSP_Support_Role__c ,
+                HRScale_Client_Roles__c ,
+                Contact.NSP_Preferred_First_Name__c ,
+                NSP_Job_Title__c ,
+                NSP_Employee_Status__c ,
+                NSP_Work_Phone__c ,
+                NSP_Work_email__c
+            FROM AccountContactRelation
+            WHERE (
+                ( AccountId = :recordId )
+                AND ( NSP_Employee_Status__c != 'TERMINATED' )
+                AND (
+                    ( NSP_Service_Roles__c != null )
+                    OR ( NSP_Support_Role__c != null )
+                    OR ( HRScale_Client_Roles__c != null )
+                    OR ( Client_Communication_Contact__c = true )
+                )
             )
             WITH SECURITY_ENFORCED
             ORDER BY Contact.Name ASC
@@ -439,88 +442,108 @@ public without sharing class NSP_ContactRollupController {
         return returnList;
     }
 
-     // @description Parses a filter string and applies the conditions to an AccountContactRelation record.
-     //              The filter string contains multiple conditions separated by ' AND ', where each condition
-     //              can be either an INCLUDES operation (for multi-select picklists) or an equality operation
-     //              (for boolean fields). This method delegates to handleIncludesCondition and
-     //              handleEqualityBooleanCondition for processing specific condition types.
-     // @param acrFilter A string containing filter conditions in the format:
-     //                  "FieldName INCLUDES (value)" or "FieldName = value" separated by ' AND '
-     //                  Example: "NSP_Service_Roles__c INCLUDES (Service Manager) AND Client_Communication_Contact__c = true"
-     // @param acrRec The AccountContactRelation record to populate with parsed filter values
-     // @return AccountContactRelation The updated AccountContactRelation record with applied filter values
-    private static AccountContactRelation parseAcrFilter(String acrFilter,
-    AccountContactRelation acrRec)
+    // @description Parses a filter string and applies the conditions to an AccountContactRelation record.
+    //              The filter string contains multiple conditions separated by ' AND ', where each condition
+    //              can be either an INCLUDES operation (for multi-select picklists) or an equality operation
+    //              (for boolean fields). This method delegates to handleIncludesCondition and
+    //              handleEqualityBooleanCondition for processing specific condition types.
+    // @param acrFilter A string containing filter conditions in the format:
+    //                  "FieldName INCLUDES (value)" or "FieldName = value" separated by ' AND '
+    //                  Example: "NSP_Service_Roles__c INCLUDES (Service Manager) AND Client_Communication_Contact__c = true"
+    // @param acrRec The AccountContactRelation record to populate with parsed filter values
+    // @return AccountContactRelation The updated AccountContactRelation record with applied filter values
+    private static AccountContactRelation parseAcrFilter(
+        String acrFilter ,
+        AccountContactRelation acrRec
+        )
     {
-
         List<String> conditions = null;
-        if(String.isNotBlank(acrFilter)) {
-            conditions = acrFilter.split(' AND ');
+        if ( String.isNotBlank( acrFilter ) ) {
+            conditions = acrFilter.split( ' AND ' );
         }
-
-        if(conditions != null && !conditions?.isEmpty()) {
-            for(String condition : conditions) {
-                if(condition.contains(includesStringValue)) {
-                    acrRec = NSP_ContactRollupController.handleIncludesCondition(condition, acrRec);
+        if ( ( conditions != null ) && !conditions?.isEmpty() ) {
+            for( String condition : conditions ) {
+                if ( condition.contains( includesStringValue ) ) {
+                    acrRec = NSP_ContactRollupController.handleIncludesCondition(
+                        condition ,
+                        acrRec
+                    );
                 }
-
-                if(condition.contains(' = ')) {
-                    acrRec = NSP_ContactRollupController.handleEqualityBooleanCondition(condition, acrRec);
+                if ( condition.contains( ' = ' ) ) {
+                    acrRec = NSP_ContactRollupController.handleEqualityBooleanCondition(
+                        condition ,
+                        acrRec
+                    );
                 }
             }
         }
-
         return acrRec;
     }
 
-     // @description Handles INCLUDES conditions for multi-select picklist fields in filter parsing.
-     //              Extracts the field name and value from a condition string formatted as "FieldName INCLUDES (value)",
-     //              validates the field exists in the AccountContactRelation schema, and sets the value on the record.
-     //              This is used for filtering multi-select picklists like NSP_Service_Roles__c, NSP_Support_Role__c,
-     //              and HRScale_Client_Roles__c.
-     // @param condition A string in the format "FieldName INCLUDES (value)"
-     //                  Example: "NSP_Service_Roles__c INCLUDES (Service Manager)"
-     // @param acrRec The AccountContactRelation record to update with the parsed field value
-     // @return AccountContactRelation The updated AccountContactRelation record with the INCLUDES field value set
-    private static AccountContactRelation handleIncludesCondition(String condition,
-    AccountContactRelation acrRec)
+    // @description Handles INCLUDES conditions for multi-select picklist fields in filter parsing.
+    //              Extracts the field name and value from a condition string formatted as "FieldName INCLUDES (value)",
+    //              validates the field exists in the AccountContactRelation schema, and sets the value on the record.
+    //              This is used for filtering multi-select picklists like NSP_Service_Roles__c, NSP_Support_Role__c,
+    //              and HRScale_Client_Roles__c.
+    // @param condition A string in the format "FieldName INCLUDES (value)"
+    //                  Example: "NSP_Service_Roles__c INCLUDES (Service Manager)"
+    // @param acrRec The AccountContactRelation record to update with the parsed field value
+    // @return AccountContactRelation The updated AccountContactRelation record with the INCLUDES field value set
+    private static AccountContactRelation handleIncludesCondition(
+        String condition ,
+        AccountContactRelation acrRec
+        )
     {
-        if(String.isNotBlank(condition) && condition.contains(includesStringValue)) {
-            string key = condition.substringBefore(includesStringValue).trim();
-            string value = condition.substringBetween('(' , ')').trim();
-            if(acrFieldMap!= null && !acrFieldMap?.isEmpty() && acrFieldMap.containsKey(key)) {
-                acrRec.put(acrFieldMap.get(key), value);
-            }
-        }
-
-        return acrRec;
-    }
-
-     // @description Handles equality conditions for boolean fields in filter parsing.
-     //              Extracts the field name and boolean value from a condition string formatted as "FieldName = value",
-     //              validates the field exists in the AccountContactRelation schema and the value is a valid boolean
-     //              (true/false), then sets the boolean value on the record. This is primarily used for filtering
-     //              the Client_Communication_Contact__c checkbox field.
-     // @param condition A string in the format "FieldName = value" where value is 'true' or 'false'
-     //                  Example: "Client_Communication_Contact__c = true"
-     // @param acrRec The AccountContactRelation record to update with the parsed boolean field value
-     // @return AccountContactRelation The updated AccountContactRelation record with the equality field value set
-    private static AccountContactRelation handleEqualityBooleanCondition(String condition,
-    AccountContactRelation acrRec)
-    {
-
-        String key = condition.substringBefore('=').trim();
-        String value = condition.substringAfter('=').trim();
-        if (acrFieldMap!= null && !acrFieldMap?.isEmpty() && acrFieldMap.containsKey(key) &&
-        String.isNotBlank(value) &&
-        (
-            value.equalsIgnoreCase('true') ||
-            value.equalsIgnoreCase('false')
+        if ( String.isNotBlank( condition )
+            && condition.contains( includesStringValue )
             )
-        ) {
-            acrRec.put(acrFieldMap.get(key), Boolean.valueOf(value));
+        {
+            String key = condition.substringBefore( includesStringValue ).trim();
+            String value = condition.substringBetween( '(' , ')' ).trim();
+            if ( ( acrFieldMap != null )
+                && !acrFieldMap?.isEmpty()
+                && acrFieldMap.containsKey( key )
+                )
+            {
+                acrRec.put(
+                    acrFieldMap.get( key ) ,
+                    value
+                );
+            }
         }
+        return acrRec;
+    }
 
+    // @description Handles equality conditions for boolean fields in filter parsing.
+    //              Extracts the field name and boolean value from a condition string formatted as "FieldName = value",
+    //              validates the field exists in the AccountContactRelation schema and the value is a valid boolean
+    //              (true/false), then sets the boolean value on the record. This is primarily used for filtering
+    //              the Client_Communication_Contact__c checkbox field.
+    // @param condition A string in the format "FieldName = value" where value is 'true' or 'false'
+    //                  Example: "Client_Communication_Contact__c = true"
+    // @param acrRec The AccountContactRelation record to update with the parsed boolean field value
+    // @return AccountContactRelation The updated AccountContactRelation record with the equality field value set
+    private static AccountContactRelation handleEqualityBooleanCondition(
+        String condition ,
+        AccountContactRelation acrRec
+        )
+    {
+        String key = condition.substringBefore( '=' ).trim();
+        String value = condition.substringAfter( '=' ).trim();
+        if ( ( acrFieldMap != null )
+            && !acrFieldMap?.isEmpty()
+            && acrFieldMap.containsKey( key )
+            && String.isNotBlank( value )
+            && ( value.equalsIgnoreCase( 'true' )
+                || value.equalsIgnoreCase( 'false' )
+                )
+            )
+        {
+            acrRec.put(
+                acrFieldMap.get( key ) ,
+                Boolean.valueOf( value )
+            );
+        }
         return acrRec;
     }
 
@@ -529,50 +552,46 @@ public without sharing class NSP_ContactRollupController {
     // @param acr: The AccountContactRelation record to validate
     // @param acrTempRec: The filter criteria record
     // @return: Boolean - true if all filters pass, false otherwise
-    private static Boolean parseAccountContactRelationRec(AccountContactRelation acr, AccountContactRelation acrTempRec) {
-        Boolean returnFlag = true;
-
-        // Apply filter for NSP_Service_Roles__c if not null
-        if (
-            (String.isNotBlank(acrTempRec.NSP_Service_Roles__c)) &&
-            (
-                (String.isBlank(acr.NSP_Service_Roles__c)) ||
-                (!acrTempRec.NSP_Service_Roles__c.contains(acr.NSP_Service_Roles__c))
-            )
-            ) {
-                returnFlag = false;
-        }
-
-        // Apply filter for NSP_Support_Role__c if not null
-        if (
-            (String.isNotBlank(acrTempRec.NSP_Support_Role__c)) &&
-        (
-            (String.isBlank(acr.NSP_Support_Role__c)) ||
-            (!acrTempRec.NSP_Support_Role__c.contains(acr.NSP_Support_Role__c))
+    private static Boolean parseAccountContactRelationRec(
+        AccountContactRelation acr ,
+        AccountContactRelation acrTempRec
         )
-        ) {
+    {
+        Boolean returnFlag = true;
+        // Apply filter for NSP_Service_Roles__c if not null
+        if ( String.isNotBlank( acrTempRec.NSP_Service_Roles__c )
+            && ( String.isBlank( acr.NSP_Service_Roles__c )
+                || !acrTempRec.NSP_Service_Roles__c.contains( acr.NSP_Service_Roles__c )
+                )
+            )
+        {
             returnFlag = false;
         }
-
-        // Apply filter for HRScale_Client_Roles__c if not null
-        if (
-            (String.isNotBlank(acrTempRec.HRScale_Client_Roles__c)) &&
-            (
-                (String.isBlank(acr.HRScale_Client_Roles__c)) ||
-                (!acrTempRec.HRScale_Client_Roles__c.contains(acr.HRScale_Client_Roles__c))
+        // Apply filter for NSP_Support_Role__c if not null
+        if ( String.isNotBlank( acrTempRec.NSP_Support_Role__c )
+            && ( String.isBlank(acr.NSP_Support_Role__c)
+                || !acrTempRec.NSP_Support_Role__c.contains( acr.NSP_Support_Role__c )
+                )
             )
-            ) {
-                returnFlag = false;
-            }
-
+        {
+            returnFlag = false;
+        }
+        // Apply filter for HRScale_Client_Roles__c if not null
+        if ( String.isNotBlank( acrTempRec.HRScale_Client_Roles__c )
+            && ( String.isBlank( acr.HRScale_Client_Roles__c )
+                || !acrTempRec.HRScale_Client_Roles__c.contains( acr.HRScale_Client_Roles__c )
+                )
+            )
+        {
+            returnFlag = false;
+        }
         // Apply filter for Client_Communication_Contact__c if true
-        if (
-            (acrTempRec.Client_Communication_Contact__c == true) &&
-            (acr.Client_Communication_Contact__c != true)
-            ) {
-                returnFlag = false;
-            }
-
+        if ( ( acrTempRec.Client_Communication_Contact__c == true )
+            && ( acr.Client_Communication_Contact__c != true )
+            )
+        {
+            returnFlag = false;
+        }
         return returnFlag;
     }
 
@@ -627,23 +646,27 @@ public without sharing class NSP_ContactRollupController {
     // @param offSetLimit: Maximum number of records to return per page
     // @return: Paginated list of SObject records, or original list if pagination params are null/invalid
     private static List<SObject> applyPagination(
-        List<SObject> records,
-        Integer offSetCount,
+        List<SObject> records ,
+        Integer offSetCount ,
         Integer offSetLimit
-    ) {
+        )
+    {
         List<SObject> paginatedResults = new List<SObject>();
-
         // Apply pagination only if valid params are provided
         // Handle case where offsetCount is less than or equal to records size
-        if (offSetCount != null && offSetLimit != null && records != null && !records.isEmpty() && offSetCount <= records.size()) {
-            Integer endIndex = Math.min(offSetCount + offSetLimit, records.size());
-
+        if ( ( offSetCount != null )
+            && ( offSetLimit != null )
+            && ( records != null )
+            && !records.isEmpty()
+            && ( offSetCount <= records.size() )
+            )
+        {
+            Integer endIndex = Math.min( ( offSetCount + offSetLimit ) , records.size() );
             // Extract paginated subset - no redundant bounds check needed (Math.min handles it)
-            for (Integer i = offSetCount; i < endIndex; i++) {
-                paginatedResults.add(records[i]);
+            for ( Integer i=offSetCount ; i < endIndex ; i++ ) {
+                paginatedResults.add( records[i] );
             }
         }
-
         return paginatedResults;
     }
 
