@@ -250,12 +250,7 @@ public without sharing class NSP_ContactRollupController {
             // Iterate through static field list - no list recreation overhead
             for ( Schema.SObjectField field : NSP_ContactRollupController.subClientContactFieldsToCheck ) {
                 // Early exit on first failed match for optimal performance
-                if ( sccTemp.containsKey( field )
-                    && ( sccTemp.get( field ) == true )
-                    && scc.containsKey( field )
-                    && ( scc.get( field ) != true )
-                    )
-                {
+                if ( ( sccTemp.get( field ) == true ) && ( scc.get( field ) != true ) ) {
                     returnFlag = false;
                 }
             }
