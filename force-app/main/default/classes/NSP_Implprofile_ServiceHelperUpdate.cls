@@ -40,7 +40,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
     private static final String PAYROLL_JOBCOSTING_FN = 'Special_Payroll_Needs_Job_Costing';
     private static final String PAYROLL_REGISTER_FN= 'Payroll_Register';
     private static final String GARNISHMENT_FN= 'Garnishments';
-    private static final String TAX_LEVIES_FN= 'Levies';
+    //private static final String TAX_LEVIES_FN= 'Levies';//Garnishment sub task and levies removed
     private static final String POST_DEDUCTION_FN= 'Post_tax_deductions';
     private static final String RETIRE_PLAN_FN='retirementPlan';
     private static final String POSTTAX_LOANS_FN= 'Post_tax_deductions_NY_WSEE';
@@ -55,8 +55,8 @@ public class NSP_Implprofile_ServiceHelperUpdate {
     private static final String COBRA_FORM_NOT_COLLECTED_FN= 'COBRA_Form_Followup';
     private static final String LOA_INFO_FN= 'Missing_LOA_forms';
     private static final String MISSING_LOA_FN=  'Missing_LOA_Info';
-    private static final String SUBTASK_GARNISH_FN='garnishSubtask';
-    private static final String SUBTASK_LEVIES_FN='leviesSubtask';
+    //private static final String SUBTASK_GARNISH_FN='garnishSubtask';//Garnishment sub task and levies removed
+    //private static final String SUBTASK_LEVIES_FN='leviesSubtask';//Garnishment sub task and levies removed
     private static final String INTERNAL_DISCOVERY_FN ='NSP_Internal_Discovery';
     private static final String ONSITE_DISCOVERY_FN ='NSP_Onsite_Discovery';
     private static final String CSP_HCFSA_FSO ='CSP_HCFSA_FSO';
@@ -93,17 +93,17 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                 EEO_FILING_FN , CLIENT_HANDBOOK_FN , EDC_FN ,
                 PAYROLL_LOCATIONS_FN , PAYROLL_DEPARTMENTS_FN ,
                 PAYROLL_JOBCOSTING_FN , PAYROLL_REGISTER_FN ,
-                GARNISHMENT_FN , TAX_LEVIES_FN , POST_DEDUCTION_FN ,
+                GARNISHMENT_FN , POST_DEDUCTION_FN ,
                 RETIRE_PLAN_FN , POSTTAX_LOANS_FN , SPECIAL_RELABEL_FN ,
                 REPORT_Integra_FN , REPORT_Custom401k_FN ,
                 REPORT_JOBCOSTING_FN , INTEGRA_RESPONSE ,
                 REPORT_OTHER_FN , COBRA_FN , LOA_INFO_FN ,
                 MISSING_LOA_FN , COBRA_FORM_COLLECTED_FN ,
-                COBRA_FORM_NOT_COLLECTED_FN , SUBTASK_GARNISH_FN ,
-                SUBTASK_LEVIES_FN , INTERNAL_DISCOVERY_FN ,
+                COBRA_FORM_NOT_COLLECTED_FN ,
+                INTERNAL_DISCOVERY_FN ,
                 ONSITE_DISCOVERY_FN ,
                 enrollFee_FN ,enrollFee_Subtask_FN, DATA_VERIFICATION,FLSA_EXEMPTION_REVIEW
-            }
+            }//Garnishment sub task and levies removed
         );
     }
     public NSP_Implprofile_ServiceHelperUpdate(Id ipRecord, String automationName){
@@ -262,7 +262,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             checkforPayrollJobCosting(ipRec, existingRec);
             checkforPayrollRegister(ipRec, existingRec);
             checkforGarnishments(ipRec, existingRec);
-            checkforTaxLevies(ipRec, existingRec);
+            //checkforTaxLevies(ipRec, existingRec);//Garnishment sub task and levies removed
             checkforPostDeduction(ipRec, existingRec);
             checkforRetPlan(ipRec, existingRec);
             checkforPostTaxLoans(ipRec, existingRec);
@@ -277,8 +277,8 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             checkforLOAInfo(ipRec,existingRec);
             checkforCOBRAForm(ipRec,existingRec,COBRA_FORM_COLLECTED_FN,NSP_ServiceConstants.YES);
             checkforCOBRAForm(ipRec,existingRec,COBRA_FORM_NOT_COLLECTED_FN,NSP_ServiceConstants.NO);
-            checkforGarnishmentSubtask(ipRec, existingRec);
-            checkforTaxLeviesSubtask(ipRec, existingRec);
+            //checkforGarnishmentSubtask(ipRec, existingRec);//Garnishment sub task and levies removed
+            //checkforTaxLeviesSubtask(ipRec, existingRec);//Garnishment sub task and levies removed
             checkInternalDiscovery(ipRec, existingRec);
             checkOnsiteDiscovery(ipRec, existingRec);
             checkEnrollFee(ipRec, existingRec);
@@ -509,7 +509,8 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         }
     }
 
-    private void checkforGarnishmentSubtask(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
+    //Garnishment sub task and levies removed
+    /*private void checkforGarnishmentSubtask(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
         if (automationsToExecute.contains(SUBTASK_GARNISH_FN)
             && newRec != null
             && newRec.RecordTypeId == ipFSORecordTypeId
@@ -558,7 +559,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         {
             updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, SUBTASK_LEVIES_FN);
         }
-    }
+    }*/
 
     private void checkforPostDeduction(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
         if (automationsToExecute.contains(POST_DEDUCTION_FN)
@@ -879,7 +880,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             createProjecttaskforPayrollJobCosting(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
             createProjecttaskforPayrollRegister(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
             createProjecttaskforGarnishment(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
-            createProjecttaskforTaxlevis(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
+            //createProjecttaskforTaxlevis(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);//Garnishment sub task and levies removed
             createProjecttaskforPostDeduction(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
             createProjecttaskforRetplan(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
             createProjecttaskforPosttaxded(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
@@ -893,8 +894,8 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             createProjecttaskforLOAInfo(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
             createProjecttaskforMissingLOA(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
             createProjectTaskForCOBRAForm(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
-            createSubtaskforGarnishments(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
-            createSubtaskforLevies(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
+            //createSubtaskforGarnishments(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);//Garnishment sub task and levies removed
+            //createSubtaskforLevies(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);//Garnishment sub task and levies removed
             createProjecttaskforEnrollFee(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
             createSubtaskforEnrollment(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
             createProjectTaskForDataVerification(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
@@ -1447,7 +1448,8 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         }
     }
 
-    // TAX_LEVIES_FN refactored
+    //Garnishment sub task and levies removed
+    /*// TAX_LEVIES_FN refactored
     private  void createProjecttaskforTaxlevis(
         String automation ,
         NSP_ProjectTask_Automation__mdt pta ,
@@ -1473,7 +1475,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                 );
             }
         }
-    }
+    }*/
 
     // POST_DEDUCTION_FN refactored
     private  void createProjecttaskforPostDeduction(
@@ -1901,8 +1903,8 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         }
     }
 
-// SUBTASK_GARNISH_FN
-    private  void createSubtaskforGarnishments(
+// SUBTASK_GARNISH_FN  //Garnishment sub task and levies removed
+    /*private  void createSubtaskforGarnishments(
         String automation ,
         NSP_ProjectTask_Automation__mdt pta ,
         pse__Proj__c proj ,
@@ -2034,7 +2036,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             eachProjectTask.pse__Hierarchy_Depth__c = 1;
         }
         return eachProjectTask;
-    }
+    }*/
 
     private pse__Project_Task__c createProjectTaskfromIP( pse__Proj__c project , String category , Id ipRecId , String milestoneKey ) {
         Id projectTaskPEORecordTypeId = Schema.SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE).getRecordTypeId();

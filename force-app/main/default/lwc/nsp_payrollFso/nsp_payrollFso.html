@@ -776,6 +776,7 @@
       ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
 
+<!-- Garnishment sub task and levies removed
     <c-nsp_employee-data
       if:true={visibility.Do_any_EEs_have_garnishments__emp}
       title="Employee Name(s):"
@@ -785,6 +786,7 @@
       rl-fields={empDataRlFields.Do_any_EEs_have_garnishments__c}
       read-only-mode={readOnlyMode}>
     </c-nsp_employee-data>
+-->
 
     <c-nsp_selection-box
       disabled={disabledFields.Do_any_EEs_have_tax_levies__c}
@@ -796,7 +798,7 @@
       onchange={handleValueChange}
       ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
-
+<!-- Garnishment sub task and levies removed
     <c-nsp_employee-data
       if:true={visibility.NSP_List_Employee_Names_Levies__c}
       title="Employee Name(s):"
@@ -806,7 +808,7 @@
       rl-fields={empDataRlFields.Do_any_EEs_have_tax_levies__c}
       read-only-mode={readOnlyMode}>
     </c-nsp_employee-data>
-
+-->
     <c-nsp_selection-box
       disabled={disabledFields.Past_employees_crntly_getting_severance__c}
       label={label.receivingSeverancePayments}
