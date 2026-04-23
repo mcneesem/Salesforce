@@ -10,7 +10,7 @@
     <height>600</height>
     <isResizable>true</isResizable>
     <linkType>url</linkType>
-    <masterLabel>Leave Self Service</masterLabel>
+    <masterLabel>Leave Portal</masterLabel>
     <openType>newWindow</openType>
     <position>none</position>
     <protected>false</protected>
