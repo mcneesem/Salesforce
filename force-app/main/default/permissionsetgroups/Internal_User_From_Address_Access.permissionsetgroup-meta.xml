@@ -4,7 +4,6 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>Internal User (From Address Access)</label>
     <permissionSets>Email_to_Case_Routing_Address_Client_Sponsored_Plans</permissionSets>
-    <permissionSets>Email_to_Case_Routing_Address_Contact_Center</permissionSets>
     <permissionSets>Email_to_Case_Routing_Address_Customer_Success</permissionSets>
     <permissionSets>Email_to_Case_Routing_Address_Educational_Assistance</permissionSets>
     <permissionSets>Email_to_Case_Routing_Address_Employment_Screening</permissionSets>
