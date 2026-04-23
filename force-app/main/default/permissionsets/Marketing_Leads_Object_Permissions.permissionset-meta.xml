@@ -121,12 +121,4 @@
         <tab>NSP_Tier_Tracking__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
-    <tabSettings>
-        <tab>SBQQ__PriceAction__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
-        <tab>sbaa__ApprovalCondition__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
 </PermissionSet>
