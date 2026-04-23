@@ -133,6 +133,7 @@
             <label>Yes : Valid recordId</label>
         </rules>
     </decisions>
+    <description>Account Action : Create Portal Client</description>
     <environments>Default</environments>
     <interviewLabel>Account - Action - Create Portal Client {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Account - Action - Create Portal Client</label>
@@ -296,7 +297,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>ExisitsMessage</name>
-            <fieldText>&lt;p&gt;Portal Client already exists  - {!Get_Account.Name}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Portal Client already exists  - {!Get_Portal_Client.Name}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
