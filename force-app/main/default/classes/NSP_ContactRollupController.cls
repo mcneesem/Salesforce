@@ -34,7 +34,6 @@ public without sharing class NSP_ContactRollupController {
         private set;
     }
 
-
     private static Map<String, Schema.SObjectField> acrFieldMap {
         private get {
             if( acrFieldMap == null ) {
@@ -46,7 +45,6 @@ public without sharing class NSP_ContactRollupController {
 
         private set;
     }
-
 
     //
     // @description: Contact - Roll up visibility of all Contact roles at the Account Page from AccountContactRelation and SubClientContacts
@@ -72,7 +70,7 @@ public without sharing class NSP_ContactRollupController {
             if (allFilters != null && allFilters.size() > 0) {
                 //fetch filtered result of ACR and Sub clients combined together based on all filters[] passed to regex expression
                 String regex = '^';
-                for (string filter: allFilters) {
+                for (String filter: allFilters) {
                     regex = regex + '(?=.*\\b' + filter + '\\b)';
                 }
                 regex = regex + '.*$';
@@ -101,100 +99,107 @@ public without sharing class NSP_ContactRollupController {
     // @param subClientFilter: Comma-separated list of field API names to filter by
     // @return: Updated results map with sub-client contact data
     public static Map<Id,ResultWrapper> getSubClientContacts(
-        String recordId,
-        Map<Id,ResultWrapper> resultsMap,
-        Integer offSetCount,
-        Integer offSetLimit,
+        String recordId ,
+        Map<Id,ResultWrapper> resultsMap ,
+        Integer offSetCount ,
+        Integer offSetLimit ,
         String subClientFilter
-    ) {
+        )
+    {
         // Retrieve all sub-client contacts for the account
-        List<NSP_Sub_Client_Contact__c> queryResults = NSP_ContactRollupController.getQueryResultsOfSCC(recordId);
-
+        List<NSP_Sub_Client_Contact__c> queryResults = NSP_ContactRollupController.getQueryResultsOfSCC( recordId );
         // When there is sub client filter
-        if (
-            (
-                queryResults != null &&
-                !queryResults.isEmpty()) &&
-            (String.isNotBlank(subClientFilter))
-            ) {
-            NSP_Sub_Client_Contact__c filterTemplate = NSP_ContactRollupController.buildFilterTemplate(subClientFilter);
-            queryResults = NSP_ContactRollupController.applySubClientFilter(queryResults, filterTemplate);
+        if ( ( queryResults != null )
+            && !queryResults.isEmpty()
+            && String.isNotBlank( subClientFilter )
+            )
+        {
+            NSP_Sub_Client_Contact__c filterTemplate = NSP_ContactRollupController.buildFilterTemplate( subClientFilter );
+            queryResults = NSP_ContactRollupController.applySubClientFilter(
+                queryResults ,
+                filterTemplate
+            );
         }
-
         // Apply pagination to the results
-        queryResults = (List<NSP_Sub_Client_Contact__c>) NSP_ContactRollupController.applyPagination(
-            (List<SObject>) queryResults,
-            offSetCount,
+        queryResults = (List<NSP_Sub_Client_Contact__c>)NSP_ContactRollupController.applyPagination(
+            (List<SObject>)queryResults ,
+            offSetCount ,
             offSetLimit
         );
-
-        return NSP_ContactRollupController.getSubClientContactRecords(queryResults, resultsMap, recordId);
+        return NSP_ContactRollupController.getSubClientContactRecords(
+            queryResults ,
+            resultsMap ,
+            recordId
+        );
     }
 
     // @description : Fetch sub client contact records based on default filters
     // @params: recordId, offSetCount, offSetLimit, paidNonPaidValues
     // @return : List<NSP_Sub_Client_Contact__c>
-    private static List<NSP_Sub_Client_Contact__c> getQueryResultsOfSCC(string recordId) {
-        List<NSP_Sub_Client_Contact__c> returnList = [
+    private static List<NSP_Sub_Client_Contact__c> getQueryResultsOfSCC( String recordId ) {
+        return [
             SELECT
-            Id, Name, NSP_Sub_Client__c,
-            NSP_Sub_Client__r.Name, NSP_Contact__r.Name,
-            NSP_Sub_Client__r.NSP_Account__r.Name, NSP_Sub_Client__r.NSP_Account__c,
-            NSP_Contact__r.firstName, NSP_Contact__r.lastName,
-            NSP_Contact__r.NSP_Preferred_First_Name__c, NSP_Contact__c,
-            NSP_On_Site_Supervisor__c, NSP_Payroll_Contact__c,
-            NSP_Client_Leave_Administrator__c, NSP_WC_Contact__c,
-            NSP_HR_Contact__c, NSP_Benefits_Contact__c,
-            NSP_Background_Contact__c, NSP_Unemployment_Contact__c,
-            NSP_Paid_Non_Paid__c, NSP_Employee_Status__c
-            FROM
-            NSP_Sub_Client_Contact__c
-            WHERE
-            NSP_Sub_Client__r.NSP_Account__c =: recordId
-            AND
-            NSP_Paid_Non_Paid__c IN :NSP_ContactRollupController.paidNonPaidValues
-            AND
-            NSP_Employee_Status__c != 'Terminated'
-            AND
-            NSP_Paid_Non_Paid__c != 'Inactive Non-Paid User'
-            AND (
-                NSP_On_Site_Supervisor__c = true
-                OR
-                NSP_Payroll_Contact__c = true
-                OR
-                NSP_Client_Leave_Administrator__c = true
-                OR
-                NSP_WC_Contact__c = true
-                OR
-                NSP_HR_Contact__c = true
-                OR
-                NSP_Benefits_Contact__c = true
-                OR
-                NSP_Background_Contact__c = true
-                OR
-                NSP_Unemployment_Contact__c = true
+                Id ,
+                Name ,
+                NSP_Sub_Client__c ,
+                NSP_Sub_Client__r.Name ,
+                NSP_Contact__r.Name ,
+                NSP_Sub_Client__r.NSP_Account__r.Name ,
+                NSP_Sub_Client__r.NSP_Account__c ,
+                NSP_Contact__r.FirstName ,
+                NSP_Contact__r.LastName ,
+                NSP_Contact__r.NSP_Preferred_First_Name__c ,
+                NSP_Contact__c ,
+                NSP_On_Site_Supervisor__c ,
+                NSP_Payroll_Contact__c ,
+                NSP_Client_Leave_Administrator__c ,
+                NSP_WC_Contact__c ,
+                NSP_HR_Contact__c ,
+                NSP_Benefits_Contact__c ,
+                NSP_Background_Contact__c ,
+                NSP_Unemployment_Contact__c ,
+                NSP_Paid_Non_Paid__c ,
+                NSP_Employee_Status__c
+            FROM NSP_Sub_Client_Contact__c
+            WHERE (
+                ( NSP_Sub_Client__r.NSP_Account__c = :recordId )
+                AND ( NSP_Paid_Non_Paid__c IN :NSP_ContactRollupController.paidNonPaidValues )
+                AND ( NSP_Employee_Status__c != 'Terminated' )
+                AND ( NSP_Paid_Non_Paid__c != 'Inactive Non-Paid User' )
+                AND (
+                    ( NSP_On_Site_Supervisor__c = true )
+                    OR ( NSP_Payroll_Contact__c = true )
+                    OR ( NSP_Client_Leave_Administrator__c = true )
+                    OR ( NSP_WC_Contact__c = true )
+                    OR ( NSP_HR_Contact__c = true )
+                    OR ( NSP_Benefits_Contact__c = true )
+                    OR ( NSP_Background_Contact__c = true )
+                    OR ( NSP_Unemployment_Contact__c = true )
+                )
             )
-            ORDER BY
-            NSP_Contact__r.Name ASC
+            ORDER BY NSP_Contact__r.Name ASC
         ];
-
-        return returnList;
     }
 
     // @description: Builds a filter template object based on comma-separated field names
     // @param subClientFilter: Comma-separated list of field API names
     // @return: NSP_Sub_Client_Contact__c object with specified fields set to true
-    private static NSP_Sub_Client_Contact__c buildFilterTemplate(String subClientFilter) {
+    private static NSP_Sub_Client_Contact__c buildFilterTemplate( String subClientFilter ) {
         NSP_Sub_Client_Contact__c filterTemplate = NSP_ContactRollupController.getSubClientContactObj();
-        List<String> filterFields = subClientFilter.split(',');
-
-        for (String fieldName : filterFields) {
-            String trimmedField = fieldName.trim();
-            if (String.isNotBlank(trimmedField) && subClientContactFieldMap.containsKey(trimmedField)) {
-                filterTemplate.put(subClientContactFieldMap.get(trimmedField), true);
+        subClientFilter = ( String.isNotBlank( subClientFilter ) : subClientFilter : '' );
+        List<String> filterFields = subClientFilter.split( ',' );
+        if ( !filterFields.isEmpty() ) {
+            for ( String fieldName : filterFields ) {
+                String trimmedField = fieldName.trim();
+                if ( String.isNotBlank( trimmedField )
+                    && subClientContactFieldMap.containsKey( trimmedField ) ) {
+                    filterTemplate.put(
+                        subClientContactFieldMap.get( trimmedField ) ,
+                        true
+                    );
+                }
             }
         }
-
         return filterTemplate;
     }
 
@@ -203,12 +208,10 @@ public without sharing class NSP_ContactRollupController {
     // @return: NSP_Sub_Client_Contact__c with all boolean fields initialized to false
     private static NSP_Sub_Client_Contact__c getSubClientContactObj() {
         NSP_Sub_Client_Contact__c tempObj = new NSP_Sub_Client_Contact__c();
-
         // Initialize all fields from the static list to false
-        for (Schema.SObjectField field : subClientContactFieldsToCheck) {
-            tempObj.put(field, false);
+        for ( Schema.SObjectField field : NSP_ContactRollupController.subClientContactFieldsToCheck ) {
+            tempObj.put( field , false );
         }
-
         return tempObj;
     }
 
@@ -217,17 +220,18 @@ public without sharing class NSP_ContactRollupController {
     // @param filterTemplate: Template with filter criteria
     // @return: Filtered list of contacts
     private static List<NSP_Sub_Client_Contact__c> applySubClientFilter(
-        List<NSP_Sub_Client_Contact__c> contacts,
+        List<NSP_Sub_Client_Contact__c> records ,
         NSP_Sub_Client_Contact__c filterTemplate
-    ) {
+        )
+    {
         List<NSP_Sub_Client_Contact__c> filteredResults = new List<NSP_Sub_Client_Contact__c>();
-
-        for (NSP_Sub_Client_Contact__c contact : contacts) {
-            if (NSP_ContactRollupController.parseSubClientContactRec(contact, filterTemplate)) {
-                filteredResults.add(contact);
+        if ( ( records != null ) && !records.isEmpty() ) {
+            for ( NSP_Sub_Client_Contact__c record : records ) {
+                if ( NSP_ContactRollupController.parseSubClientContactRec( record , filterTemplate ) ) {
+                    filteredResults.add( record );
+                }
             }
         }
-
         return filteredResults;
     }
 
@@ -236,16 +240,26 @@ public without sharing class NSP_ContactRollupController {
     // @param scc: The NSP_Sub_Client_Contact__c record to validate
     // @param sccTemp: The template record containing filter criteria (fields set to true require matching)
     // @return: Boolean - true if all filter criteria are met, false otherwise
-    private static Boolean parseSubClientContactRec(NSP_Sub_Client_Contact__c scc, NSP_Sub_Client_Contact__c sccTemp) {
+    private static Boolean parseSubClientContactRec(
+        NSP_Sub_Client_Contact__c scc ,
+        NSP_Sub_Client_Contact__c sccTemp
+        )
+    {
         Boolean returnFlag = true;
-        // Iterate through static field list - no list recreation overhead
-        for (Schema.SObjectField field : subClientContactFieldsToCheck) {
-            // Early exit on first failed match for optimal performance
-            if (sccTemp.get(field) == true && scc.get(field) != true) {
-                returnFlag = false;
+        if ( ( scc != null ) && ( sccTemp != null ) ) {
+            // Iterate through static field list - no list recreation overhead
+            for ( Schema.SObjectField field : NSP_ContactRollupController.subClientContactFieldsToCheck ) {
+                // Early exit on first failed match for optimal performance
+                if ( sccTemp.containsKey( field )
+                    && ( sccTemp.get( field ) == true )
+                    && scc.containsKey( field )
+                    && ( scc.get( field ) != true )
+                    )
+                {
+                    returnFlag = false;
+                }
             }
         }
-
         return returnFlag;
     }
 
@@ -333,7 +347,7 @@ public without sharing class NSP_ContactRollupController {
     // @description : get account based record AccountContactRelation records
     // @param  recordId of Account,
     // @param  Map<Id,ResultWrapper> contact and allACR's and SubClientContacts
-    // @return string
+    // @return String
     //
     private static Map<Id,ResultWrapper> getACR(
         String recordId ,
@@ -634,18 +648,16 @@ public without sharing class NSP_ContactRollupController {
     }
 
     //
-    // @description : all the roles will be concatenated to one string
-    // @param  NSP_Sub_Client_Contact__c, string
-    // @return string
+    // @description : all the roles will be concatenated to one String
+    // @param  NSP_Sub_Client_Contact__c, String
+    // @return String
     //
-    public static string getUpdatedRoles(String allRoles, NSP_Sub_Client_Contact__c subClientCont) {
-        List < string > lstRoles = new List < string > ();
-        if (allRoles != null) {
-            lstRoles.addAll(allRoles?.split('; '));
+    public static String getUpdatedRoles( String allRoles , NSP_Sub_Client_Contact__c subClientCont ) {
+        List<String> lstRoles = new List<String>();
+        if ( allRoles != null ) {
+            lstRoles.addAll( allRoles?.split( '; ' ) );
         }
-
-        string sobjectApiName = 'NSP_Sub_Client_Contact__c';
-
+        String sobjectApiName = 'NSP_Sub_Client_Contact__c';
         if (subClientCont.NSP_On_Site_Supervisor__c && !lstRoles.Contains(getfieldLabel('NSP_On_Site_Supervisor__c', sobjectApiName))) {
             lstRoles.add(getfieldLabel('NSP_On_Site_Supervisor__c', sobjectApiName));
         }
@@ -670,7 +682,7 @@ public without sharing class NSP_ContactRollupController {
         if (subClientCont.NSP_Unemployment_Contact__c && !lstRoles.Contains(getfieldLabel('NSP_Unemployment_Contact__c', sobjectApiName))) {
             lstRoles.add(getfieldLabel('NSP_Unemployment_Contact__c', sobjectApiName));
         }
-        return string.join(lstRoles, '; ');
+        return String.join(lstRoles, '; ');
     }
 
     //
