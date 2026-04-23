@@ -82,13 +82,13 @@ public with sharing class SandboxHealthController {
         res.evaluatedAt = System.now();
 
         // Org context
-        String sandbox = System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName();
+        String sandbox = System.DomainParser.parse( URL.getOrgDomainUrl() ).getSandboxName();
         String[] pipelineOrgs = new String[] { 'merge' , 'test' , 'stage' };
         res.sandboxName = sandbox;
         Organization orgInfo = [SELECT Id, InstanceName, IsSandbox FROM Organization WHERE Id != null LIMIT 1];
         res.orgId = orgInfo.Id;
         res.instance = orgInfo.InstanceName;
-        res.isPipeline = pipelineOrgs.contains( sandbox.toLowerCase() ) ? true : false;
+        res.isPipeline = pipelineOrgs.contains( sandbox.toLowerCase() );
         res.isSandbox = orgInfo.IsSandbox;
 
         if ( !res.isSandbox ) {
@@ -1017,7 +1017,6 @@ public with sharing class SandboxHealthController {
             }
 
             // gather warnings about unreadable fields (only if we have orgSettings)
-            List<Check> fieldWarns = new List<Check>();
             List<String> objNames = new List<String>();
             if ( !skipProcessing ) {
                 objNames = getExternalIdObjectNames( orgSettings );
