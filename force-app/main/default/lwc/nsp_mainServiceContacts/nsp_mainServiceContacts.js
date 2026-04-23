@@ -377,30 +377,30 @@ export default class Nsp_mainServiceContacts extends NavigationMixin(LightningEl
 
         //ACR filters
         let aCRFilter = [];
-        let serviceRoles = '(\'' + this.serviceRoles?.join('\',\'') + '\')';
-        let supportRoles = '(\'' + this.supportRoles?.join('\',\'') + '\')';
-        let hrScaleClientRoles = '(\'' + this.hrScaleClientRoles?.join('\',\'') + '\')';
+        let serviceRoles = '(' + this.serviceRoles?.join(';') + ')';
+        let supportRoles = '(' + this.supportRoles?.join(';') + ')';
+        let hrScaleClientRoles = '(' + this.hrScaleClientRoles?.join(';') + ')';
 
-        if ( this.isClientCommunicationContactACRfilter ) {
-            aCRFilter.push( Client_Communication_Contact_FIELD.fieldApiName + ' = true' )
+        if (this.isClientCommunicationContactACRfilter) {
+            aCRFilter.push(Client_Communication_Contact_FIELD.fieldApiName + ' = true')
         }
-        if ( this.serviceRoles?.length ) {
-            aCRFilter.push( SERVICEROLE_FIELD.fieldApiName + ' INCLUDES ' + serviceRoles )
+        if (this.serviceRoles?.length) {
+            aCRFilter.push(SERVICEROLE_FIELD.fieldApiName + ' INCLUDES ' + serviceRoles)
         }
-        if ( this.supportRoles?.length ) {
-            aCRFilter.push( SUPPORTROLE_FIELD.fieldApiName + ' INCLUDES ' + supportRoles )
+        if (this.supportRoles?.length) {
+            aCRFilter.push(SUPPORTROLE_FIELD.fieldApiName + ' INCLUDES ' + supportRoles)
         }
-        if ( this.hrScaleClientRoles?.length ) {
-            aCRFilter.push( HRSCALECLIENTROLE_FIELD.fieldApiName + " INCLUDES " + hrScaleClientRoles );
+        if (this.hrScaleClientRoles?.length) {
+            aCRFilter.push(HRSCALECLIENTROLE_FIELD.fieldApiName + " INCLUDES " + hrScaleClientRoles);
         }
 
         //SubClient filters
         let subCFilter = []
         for (let x of this.value) {
-            subCFilter.push(x + ' = true')
+            subCFilter.push(x)
         }
         //Assign Values to the varaiable, prepare condition
-        this.subClientFilter = subCFilter.join(' AND ');
+        this.subClientFilter = subCFilter.join(' , ');
         this.acrFilter = aCRFilter.join(' AND ');
 
         this.offSetCount = 0;
