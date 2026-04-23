@@ -348,10 +348,6 @@ public without sharing class NSP_ContactRollupController {
             recordId
             );
 
-            if(String.isBlank(acrFilter)) {
-
-            }
-
         if(String.isNotBlank(acrFilter) &&
         queryResults != null &&
         !queryResults?.isEmpty()
