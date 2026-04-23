@@ -204,6 +204,13 @@
                 <elementReference>Referral_existingContact</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varACRtoCreate.Contact_Type__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Contact_Type_existingContact</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Create_New_AccountContactRelation</targetReference>
         </connector>
