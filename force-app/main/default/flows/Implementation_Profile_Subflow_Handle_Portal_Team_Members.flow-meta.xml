@@ -621,13 +621,13 @@ if Source has Set Value to null and Target has valid record then delete</descrip
         <name>f_ippositioncontact</name>
         <dataType>String</dataType>
         <expression>CASE(
-	{!Loop_Each_Positions},
-	&quot;Project Manager (Main Point of Contact)&quot;, {!recordImplProfile.NSP_Project_Manager__c},
-	&quot;Orientation Representative&quot;, {!recordImplProfile.NSP_Orientation_Rep__c},
-	&quot;Payroll Implementation&quot;, {!recordImplProfile.NSP_Payroll_Specialist__c},
-	&quot;HR Implementation&quot;, {!recordImplProfile.NSP_HR_Quality_Support_Team_Member__c},
-	&quot;Time and Attendance&quot;, {!recordImplProfile.NSP_ITA_Analyst__c},
-	null
+  {!Loop_Each_Positions},
+  &quot;Project Manager (Main Point of Contact)&quot;, {!recordImplProfile.NSP_Project_Manager__c},
+  &quot;Orientation Representative&quot;, {!recordImplProfile.NSP_Orientation_Rep__c},
+  &quot;Payroll Implementation&quot;, {!recordImplProfile.NSP_Payroll_Specialist__c},
+  &quot;HR Implementation&quot;, {!recordImplProfile.NSP_HR_Quality_Support_Team_Member__c},
+  &quot;Time and Attendance&quot;, {!recordImplProfile.NSP_ITA_Analyst__c},
+  null
 )</expression>
     </formulas>
     <interviewLabel>Implementation Profile - Subflow - Handle Portal Team Members {!$Flow.CurrentDateTime}</interviewLabel>
