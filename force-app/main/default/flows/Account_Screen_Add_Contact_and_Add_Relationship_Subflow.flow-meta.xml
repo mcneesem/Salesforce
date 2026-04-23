@@ -1207,7 +1207,7 @@
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
-                <assignToReference>varAccountId</assignToReference>
+                <assignToReference>varNewAccountId</assignToReference>
                 <name>recordId</name>
             </outputParameters>
             <styleProperties>
