@@ -344,32 +344,32 @@ Create if not exist and if exists create project to support multiple project to 
             <label>Yes : Valid Inputs</label>
         </rules>
     </decisions>
-    <description>ADO-519976 - Client Portal Automation</description>
+    <description>New Client Portal: Portal Project Creation</description>
     <environments>Default</environments>
     <formulas>
         <name>f_portalProjectName</name>
         <dataType>String</dataType>
         <expression>IF(
-	NOT(ISBLANK({!Get_Project_Record.Id})),
-	&quot;New Client&quot;
-		+&quot; - &quot;
-		+ TEXT(MONTH(({!Get_Project_Record.pse__Start_Date__c})))
-		+ &quot;.&quot;
-		+ TEXT(DAY(({!Get_Project_Record.pse__Start_Date__c})))
-		+ &quot;.&quot;
-		+ TEXT(YEAR(({!Get_Project_Record.pse__Start_Date__c})))
-		+ &quot; - &quot;
-		+{!Get_Project_Record.pse__Account__r.Name},
-		&quot;&quot;
+  NOT(ISBLANK({!Get_Project_Record.Id})),
+  &quot;New Client&quot;
+    +&quot; - &quot;
+    + TEXT(MONTH(({!Get_Project_Record.pse__Start_Date__c})))
+    + &quot;.&quot;
+    + TEXT(DAY(({!Get_Project_Record.pse__Start_Date__c})))
+    + &quot;.&quot;
+    + TEXT(YEAR(({!Get_Project_Record.pse__Start_Date__c})))
+    + &quot; - &quot;
+    +{!Get_Project_Record.pse__Account__r.Name},
+  &quot;&quot;
 )</expression>
     </formulas>
     <formulas>
         <name>f_showhidePortalProject</name>
         <dataType>String</dataType>
         <expression>IF(
-{!Get_Project_Record.NSP_Visible_to_Client__c},
-&quot;Active&quot;,
-&quot;Hidden&quot;
+  {!Get_Project_Record.NSP_Visible_to_Client__c},
+  &quot;Active&quot;,
+  &quot;Hidden&quot;
 )</expression>
     </formulas>
     <interviewLabel>Project - Subflow - Create Portal Project {!$Flow.CurrentDateTime}</interviewLabel>
