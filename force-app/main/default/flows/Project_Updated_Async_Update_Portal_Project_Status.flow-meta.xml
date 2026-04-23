@@ -65,8 +65,8 @@
         <name>f_showhidePortalProject</name>
         <dataType>String</dataType>
         <expression>IF(
-  {!$Record.NSP_Visible_to_Client__c},
-  &quot;Active&quot;,
+  {!$Record.NSP_Visible_to_Client__c} ,
+  &quot;Active&quot; ,
   &quot;Hidden&quot;
 )</expression>
     </formulas>
@@ -216,13 +216,5 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>recordPortalProject</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Portal_Project__c</objectType>
     </variables>
 </Flow>
