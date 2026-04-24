@@ -469,7 +469,7 @@
         </connector>
         <fields>
             <name>Prepare_Display_Text</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgba(0, 0, 0, 0.06); font-size: 12px; font-family: Menlo, Consolas, &amp;quot;Courier New&amp;quot;, monospace; color: rgba(0, 0, 0, 0.9);&quot;&gt;Prepare: {!Get_Contacts_Related_To_Account_Contact_Relationship.Portal_Alias__c}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Prepare: {!Get_Contacts_Related_To_Account_Contact_Relationship.Portal_Alias__c}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
