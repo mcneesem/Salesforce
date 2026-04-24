@@ -2668,21 +2668,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Sales_Engineer__c</picklist>
-        <values>
-            <fullName>WO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>WX</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Workday</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>Subject</picklist>
         <values>
             <fullName>Call</fullName>
