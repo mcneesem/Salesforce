@@ -536,16 +536,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Buying_Role__c</fieldItem>
-                <identifier>RecordNSP_Buying_Role_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Influence_Type__c</fieldItem>
                 <identifier>RecordNSP_Influence_Type_cField</identifier>
             </fieldInstance>
@@ -572,26 +562,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.pse__Employment_Status_Effective_Date__c</fieldItem>
                 <identifier>Recordpse_Employment_Status_Effective_Date_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.pse__Start_Date__c</fieldItem>
-                <identifier>Recordpse_Start_Date_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.pse__Last_Date__c</fieldItem>
-                <identifier>Recordpse_Last_Date_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-081a41fd-f407-4297-880a-c088e26bab67</name>
@@ -926,6 +896,23 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.LastModifiedById</fieldItem>
                 <identifier>RecordLastModifiedByIdField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>required</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.CurrencyIsoCode</fieldItem>
+                <identifier>RecordCurrencyIsoCodeField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-3d2afba9-34e1-4c45-9085-e7961aa32cb3</name>
