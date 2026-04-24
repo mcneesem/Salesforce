@@ -74,14 +74,14 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>missingElement</assignToReference>
+            <assignToReference>errorElement</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Missing AccountContactRelation.ContactId</stringValue>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Default_Screen</targetReference>
+            <targetReference>Error_Screen</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -90,14 +90,14 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>missingElement</assignToReference>
+            <assignToReference>errorElement</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Missing Contact Based on Contact Id</stringValue>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Default_Screen</targetReference>
+            <targetReference>Error_Screen</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -106,7 +106,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>missingElement</assignToReference>
+            <assignToReference>errorElement</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>User Record is already provisioned for this contact</stringValue>
@@ -119,14 +119,14 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>missingElement</assignToReference>
+            <assignToReference>errorElement</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Missing Record Id</stringValue>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Default_Screen</targetReference>
+            <targetReference>Error_Screen</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -409,8 +409,8 @@
         <inputReference>Get_Contacts_Related_To_Account_Contact_Relationship</inputReference>
     </recordUpdates>
     <screens>
-        <name>Default_Screen</name>
-        <label>Default Screen</label>
+        <name>Error_Screen</name>
+        <label>Error Screen</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <allowBack>false</allowBack>
@@ -418,7 +418,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>Missing_Record_Id_Screen</name>
-            <fieldText>&lt;p&gt;{!missingElement}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;{!errorElement}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -544,6 +544,16 @@
         </inputAssignments>
     </subflows>
     <variables>
+        <name>errorElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
+    <variables>
         <name>faultElement</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -562,16 +572,6 @@
         <scale>0</scale>
         <value>
             <numberValue>0.0</numberValue>
-        </value>
-    </variables>
-    <variables>
-        <name>missingElement</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <stringValue></stringValue>
         </value>
     </variables>
     <variables>
