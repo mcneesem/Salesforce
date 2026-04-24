@@ -332,8 +332,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn('uts_query', 'Access', 'Queryable', 'Error', 'Unable to read UserTriggerSettings__c: ' + e.getMessage()));
         }
 
-        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
-        return s;
+        return SandboxHealthController.finalizeSection( s );
     }
 
     // 9) Contract_Termination_Settings__c (org defaults clears AutoTerminationEmailAddresses__c)
@@ -351,8 +350,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn('cts_query', 'Access', 'Queryable', 'Error', 'Unable to read Contract_Termination_Settings__c: ' + e.getMessage()));
         }
 
-        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
-        return s;
+        return SandboxHealthController.finalizeSection( s );
     }
 
     // 10) NVMContactWorld__Settings__c (org defaults sets clientId based on sandbox)
@@ -381,8 +379,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn('nvm_query', 'Access', 'Queryable', 'Error', 'Unable to read NVMContactWorld__Settings__c: ' + e.getMessage()));
         }
 
-        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
-        return s;
+        return SandboxHealthController.finalizeSection( s );
     }
 
     // 11) Sales_Team_Email_Settings__c (org defaults with specific values, many .invalid)
@@ -403,8 +400,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn( 'stes_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read Sales_Team_Email_Settings__c: ' + e.getMessage() ) );
         }
 
-        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
-        return s;
+        return SandboxHealthController.finalizeSection( s );
     }
 
     // 12) ProjectCreationSettings__c (org defaults with specific DefaultRegionId__c)
@@ -428,8 +424,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn( 'pcs_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to verify ProjectCreationSettings__c' ) );
         }
 
-        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
-        return s;
+        return SandboxHealthController.finalizeSection( s );
     }
 
     // ========== Custom Metadata Sections (verification only, user-mode) ==========
@@ -461,8 +456,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn( 'ds_signers_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read NSP_DocuSign_Signers__mdt: ' + e.getMessage() ) );
         }
 
-        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
-        return s;
+        return SandboxHealthController.finalizeSection( s );
     }
 
     // 2) DocuSignRESTSettings__mdt (from doCMetadata)
@@ -550,8 +544,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn( 'ds_rest_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read DocuSignRESTSettings__mdt: ' + e.getMessage() ) );
         }
 
-        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
-        return s;
+        return SandboxHealthController.finalizeSection( s );
     }
 
     // 3) NSP_PEO_Implementations__mdt (from doCMetadata)
@@ -587,8 +580,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn( 'peo_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read NSP_PEO_Implementations__mdt: ' + e.getMessage() ) );
         }
 
-        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
-        return s;
+        return SandboxHealthController.finalizeSection( s );
     }
 
     // 4) NSP_Retirement_Services__mdt (from doCMetadata)
@@ -617,8 +609,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn( 'ret_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read NSP_Retirement_Services__mdt: ' + e.getMessage() ) );
         }
 
-        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
-        return s;
+        return SandboxHealthController.finalizeSection( s );
     }
 
     // 5) NSP_ProjectTemplateMapping__mdt (from doCMetadataSvc)
@@ -646,8 +637,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn('tmpl_query', 'Access', 'Queryable', 'Error', 'Unable to read NSP_ProjectTemplateMapping__mdt: ' + e.getMessage()));
         }
 
-        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
-        return s;
+        return SandboxHealthController.finalizeSection( s );
     }
 
     // 6) Template_Key_and_Id_Mapping__mdt (from doCMetadataSvc)
@@ -675,8 +665,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn( 'tmplkey_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read Template_Key_and_Id_Mapping__mdt: ' + e.getMessage() ) );
         }
 
-        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
-        return s;
+        return SandboxHealthController.finalizeSection( s );
     }
 
     private static Check templCheck( String tmplName , String key , String label , String actual ) {
@@ -950,8 +939,7 @@ public with sharing class SandboxHealthController {
             }
         }
 
-        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
-        return s;
+        return SandboxHealthController.finalizeSection( s );
     }
 
     // ========== ExternalId objects verification (based on OrgSettings fields containing 'externalidobjects') ==========
@@ -1201,12 +1189,34 @@ public with sharing class SandboxHealthController {
     }
 
     private static List<Check> sortSectionChecks( Map<String, List<Check>> byLabel ) {
-        List<String> labels = new List<String>( byLabel.keySet() );
-        labels.sort();
-        List<Check> sorted = new List<Check>();
-        for ( String lbl : labels ) {
-            sorted.addAll( byLabel.get( lbl ) );
+        // Separate checks by status
+        Map<String, Map<String, List<Check>>> byStatusAndLabel = new Map<String, Map<String, List<Check>>>{
+            STATUS.FAIL.name() => new Map<String, List<Check>>(),
+            STATUS.WARN.name() => new Map<String, List<Check>>(),
+            STATUS.PASS.name() => new Map<String, List<Check>>()
+        };
+
+        // Group checks by status, then by label
+        for ( String lbl : byLabel.keySet() ) {
+            for ( Check c : byLabel.get( lbl ) ) {
+                String status = ( c.status == null ) ? STATUS.WARN.name() : c.status;
+                if ( !byStatusAndLabel.get( status ).containsKey( lbl ) ) {
+                    byStatusAndLabel.get( status ).put( lbl , new List<Check>() );
+                }
+                byStatusAndLabel.get( status ).get( lbl ).add( c );
+            }
         }
+
+        // Sort and build final list: FAIL, then WARN, then PASS (each alphabetically)
+        List<Check> sorted = new List<Check>();
+        for ( String status : new String[] { STATUS.FAIL.name() , STATUS.WARN.name() , STATUS.PASS.name() } ) {
+            List<String> labels = new List<String>( byStatusAndLabel.get( status ).keySet() );
+            labels.sort();
+            for ( String lbl : labels ) {
+                sorted.addAll( byStatusAndLabel.get( status ).get( lbl ) );
+            }
+        }
+
         return sorted;
     }
 }
