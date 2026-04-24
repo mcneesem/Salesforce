@@ -669,18 +669,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>HR360 Solution</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HRCore Solution</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HRScale</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Lunch</fullName>
             <default>false</default>
         </values>
@@ -689,19 +677,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Performance Management</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Performance Management and Time %26 Attendance</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Solution Alignment Meeting</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Time and Attendance</fullName>
             <default>false</default>
         </values>
         <values>
@@ -726,10 +702,6 @@
         <values>
             <fullName>Core Sales</fullName>
             <default>true</default>
-        </values>
-        <values>
-            <fullName>Demo</fullName>
-            <default>false</default>
         </values>
         <values>
             <fullName>Mid Market</fullName>
