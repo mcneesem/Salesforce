@@ -1,10 +1,11 @@
 <apex:page showHeader="false" sidebar="false" standardController="AccountContactRelation">
-    <apex:includeLightning />    
-    <div id="LightningComponentid" />    
+    <h1>DEPRECATED</h1>
+    <apex:includeLightning />
+    <div id="LightningComponentid" />
     <script>
     $Lightning.use("c:nsp_acrEditFormApp", function() {
         $Lightning.createComponent("c:nsp_acrEditForm",
-          { 
+          {
             "recordId" : "{!$CurrentPage.parameters.Id}"
           },
           "LightningComponentid",

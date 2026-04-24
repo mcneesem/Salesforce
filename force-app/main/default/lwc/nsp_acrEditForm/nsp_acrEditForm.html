@@ -1,20 +1,21 @@
 <template>
-    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+    <h1>DEPRECATED</h1>
+    <div class="slds-hide slds-modal__content slds-p-around_medium" id="modal-content-id-1">
     <lightning-record-edit-form object-api-name="AccountContactRelation" record-id={recordId} onsuccess={hideSuccess}>
         <lightning-messages>
         </lightning-messages>
-        
+
         <lightning-accordion allow-multiple-sections-open active-section-name={activeSections} >
-                   
+
         <lightning-accordion-section  name="A" label="Account Contact Relationship Information">
-            
+
                 <div class="slds-grid">
                     <div class="slds-col slds-size_1-of-2">
-                    <lightning-input-field field-name='ContactId' read-only={isReadOnly}></lightning-input-field>                        
-                    <lightning-input-field field-name='NSP_Job_Title__c' read-only={isReadOnly}></lightning-input-field>                        
+                    <lightning-input-field field-name='ContactId' read-only={isReadOnly}></lightning-input-field>
+                    <lightning-input-field field-name='NSP_Job_Title__c' read-only={isReadOnly}></lightning-input-field>
                     <lightning-input-field field-name='NSP_Work_Phone__c' read-only={isReadOnly}></lightning-input-field>
                     <lightning-input-field field-name='NSP_Work_Email__c' read-only={isReadOnly}></lightning-input-field>
-        
+
                     </div>
                     <div class="slds-col slds-size_1-of-2 section-spacing">
                         <lightning-input-field field-name='AccountId' read-only={isReadOnly}></lightning-input-field>
@@ -24,9 +25,9 @@
                          <template if:false={isReadOnly}>
                             <lightning-input-field field-name='NSP_Employee_Status__c'></lightning-input-field>
                          </template>
-                        <lightning-input-field field-name='NSP_Status_Date__c' read-only={isReadOnly}></lightning-input-field>                           
-                        <lightning-input-field field-name='NSP_Owner__c'></lightning-input-field>                            
-                        <lightning-input-field field-name='NSP_Is_Primary__c'></lightning-input-field>                           
+                        <lightning-input-field field-name='NSP_Status_Date__c' read-only={isReadOnly}></lightning-input-field>
+                        <lightning-input-field field-name='NSP_Owner__c'></lightning-input-field>
+                        <lightning-input-field field-name='NSP_Is_Primary__c'></lightning-input-field>
                     </div>
                 </div>
         </lightning-accordion-section>
@@ -35,82 +36,80 @@
 
             <div class="slds-grid">
                 <div class="slds-col slds-size_1-of-2">
-                <lightning-input-field field-name='NSP_Community_Access__c'></lightning-input-field>                        
-    
                 </div>
-                <div class="slds-col slds-size_1-of-2 section-spacing">                      
+                <div class="slds-col slds-size_1-of-2 section-spacing">
                 </div>
             </div>
 
         </lightning-accordion-section>
-    
+
 
         <lightning-accordion-section name="B"  label="Service Roles">
 
                 <div class="slds-grid">
                     <div class="slds-col slds-size_1-of-2">
-                    <lightning-input-field field-name='NSP_Service_Roles__c'></lightning-input-field>                        
-                    <lightning-input-field field-name='NSP_KIP_Perspective_of_Relationship__c'></lightning-input-field>                        
+                    <lightning-input-field field-name='NSP_Service_Roles__c'></lightning-input-field>
+                    <lightning-input-field field-name='NSP_KIP_Perspective_of_Relationship__c'></lightning-input-field>
                     <lightning-input-field field-name='NSP_KDMs_Perspective_of_Relationship__c'></lightning-input-field>
-        
+
                     </div>
                     <div class="slds-col slds-size_1-of-2 section-spacing">
                         <lightning-input-field field-name='NSP_Active_Influencer__c'></lightning-input-field>
-                        <lightning-input-field field-name='NSP_Influence_Level__c'></lightning-input-field>                         
+                        <lightning-input-field field-name='NSP_Influence_Level__c'></lightning-input-field>
                     </div>
                 </div>
-        
+
 
         </lightning-accordion-section>
 
         <lightning-accordion-section  name="C" label="Support Roles">
-            
+
                 <div class="slds-grid">
                     <div class="slds-col slds-size_1-of-2">
-                    <lightning-input-field field-name='NSP_Support_Role__c'></lightning-input-field>             
+                    <lightning-input-field field-name='NSP_Support_Role__c'></lightning-input-field>
                     </div>
-                    <div class="slds-col slds-size_1-of-2">                        
+                    <div class="slds-col slds-size_1-of-2">
                     </div>
                 </div>
         </lightning-accordion-section>
         <lightning-accordion-section  name="D" label="Sales Roles">
-            
+
                 <div class="slds-grid">
                     <div class="slds-col slds-size_1-of-2">
-                    <lightning-input-field field-name='Roles' read-only={isRoleReadOnly}></lightning-input-field>             
+                    <lightning-input-field field-name='Roles' read-only={isRoleReadOnly}></lightning-input-field>
                     </div>
-                    <div class="slds-col slds-size_1-of-2 section-spacing">   
-                    <lightning-input-field field-name='Relationship_Strength__c' read-only={isRelStrengthReadOnly}></lightning-input-field>                                  
+                    <div class="slds-col slds-size_1-of-2 section-spacing">
+                    <lightning-input-field field-name='Relationship_Strength__c' read-only={isRelStrengthReadOnly}></lightning-input-field>
                     </div>
                 </div>
         </lightning-accordion-section>
         <lightning-accordion-section name="E" label="Relationship Status">
-            
+
                 <div class="slds-grid">
                     <div class="slds-col slds-size_1-of-2">
-                    <lightning-input-field field-name='StartDate'></lightning-input-field>             
+                    <lightning-input-field field-name='StartDate'></lightning-input-field>
                     </div>
-                    <div class="slds-col slds-size_1-of-2 section-spacing">   
-                    <lightning-input-field field-name='EndDate'></lightning-input-field>                                  
+                    <div class="slds-col slds-size_1-of-2 section-spacing">
+                    <lightning-input-field field-name='EndDate'></lightning-input-field>
                     </div>
                 </div>
         </lightning-accordion-section>
         <lightning-accordion-section name="F" label="System Information">
-            
+
                 <div class="slds-grid">
                     <div class="slds-col slds-size_1-of-2">
-                    <lightning-input-field field-name='CreatedById'></lightning-input-field>             
+                    <lightning-input-field field-name='CreatedById'></lightning-input-field>
                     </div>
-                    <div class="slds-col slds-size_1-of-2 section-spacing">   
+                    <div class="slds-col slds-size_1-of-2 section-spacing">
                     <lightning-input-field field-name='LastModifiedById'></lightning-input-field>
-                    <lightning-input-field field-name='CurrencyIsoCode'></lightning-input-field>                                                                    
+                    <lightning-input-field field-name='CurrencyIsoCode'></lightning-input-field>
                     </div>
                 </div>
         </lightning-accordion-section>
 
     </lightning-accordion>
-    
-    
+
+
         <footer class="slds-modal__footer">
         <div class="center-div">
         <lightning-button class="slds-m-top_small"
@@ -123,6 +122,6 @@
         </lightning-button>
         </div>
     </footer>
-    </lightning-record-edit-form>  
-</div>
+    </lightning-record-edit-form>
+    </div>
 </template>
