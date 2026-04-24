@@ -83,70 +83,70 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>event.OwnerId</assignToReference>
+            <assignToReference>record.OwnerId</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>chooseDemoOwner</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>event.Description</assignToReference>
+            <assignToReference>record.Description</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Notes</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>event.StartDateTime</assignToReference>
+            <assignToReference>record.StartDateTime</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Seller.startDateTime</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>event.EndDateTime</assignToReference>
+            <assignToReference>record.EndDateTime</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Seller.endDateTime</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>event.WhatId</assignToReference>
+            <assignToReference>record.WhatId</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Get_Opportunity.Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>event.NSP_Status__c</assignToReference>
+            <assignToReference>record.NSP_Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>status</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>event.Subject</assignToReference>
+            <assignToReference>record.Subject</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>{!SelectProduct.selectedProductLabel} Demo</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>event.NSP_Event_Subtype__c</assignToReference>
+            <assignToReference>record.NSP_Event_Subtype__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>SelectProduct.selectedProductLabel</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>event.NSP_Event_Type__c</assignToReference>
+            <assignToReference>record.NSP_Event_Type__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Demo</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>event.RecordTypeId</assignToReference>
+            <assignToReference>record.RecordTypeId</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>012Oy000008uixpIAA</stringValue>
@@ -653,6 +653,30 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <name>Fault_Error</name>
+        <label>Fault Error</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>ErrorMessage</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Get_Records_Error</name>
         <label>Get Records Error</label>
         <locationX>0</locationX>
@@ -824,7 +848,7 @@
         <inputAssignments>
             <name>event</name>
             <value>
-                <elementReference>event</elementReference>
+                <elementReference>record</elementReference>
             </value>
         </inputAssignments>
     </subflows>
@@ -833,6 +857,9 @@
         <label>Fault Handler Subflow</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <connector>
+            <targetReference>Fault_Error</targetReference>
+        </connector>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
@@ -864,19 +891,19 @@
         </value>
     </variables>
     <variables>
-        <name>event</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Event</objectType>
-    </variables>
-    <variables>
         <name>faultElement</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>record</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Event</objectType>
     </variables>
     <variables>
         <name>recordId</name>

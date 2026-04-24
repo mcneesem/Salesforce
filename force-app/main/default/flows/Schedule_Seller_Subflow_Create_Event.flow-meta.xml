@@ -7,12 +7,15 @@
         <label>Field null check</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>MissingInput</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Not_null</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>event</leftValueReference>
+                <leftValueReference>record</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -22,6 +25,28 @@
                 <targetReference>Create_Event</targetReference>
             </connector>
             <label>Not null</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Record_not_null</name>
+        <label>Record not null</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Not_null_Id</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>record.Id</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>RedirectToEventRecord</targetReference>
+            </connector>
+            <label>Not null Id</label>
         </rules>
     </decisions>
     <environments>Default</environments>
@@ -52,12 +77,12 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>RedirectToEventRecord</targetReference>
+            <targetReference>Record_not_null</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Fault_Handler_Subflow</targetReference>
         </faultConnector>
-        <inputReference>event</inputReference>
+        <inputReference>record</inputReference>
     </recordCreates>
     <runInMode>SystemModeWithSharing</runInMode>
     <screens>
@@ -85,6 +110,30 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>MissingInput</name>
+        <label>MissingInput</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>ErrorMessageInput</name>
+            <fieldText>&lt;p&gt;Missing record input.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>RedirectToEventRecord</name>
         <label>RedirectToEventRecord</label>
         <locationX>0</locationX>
@@ -99,7 +148,7 @@
             <inputParameters>
                 <name>recordId</name>
                 <value>
-                    <elementReference>event.Id</elementReference>
+                    <elementReference>record.Id</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -154,7 +203,7 @@
         </inputAssignments>
     </subflows>
     <variables>
-        <name>event</name>
+        <name>record</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
