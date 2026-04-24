@@ -15,6 +15,7 @@ export default class PortalTeamMemberList extends LightningElement {
             'Portal_Team_Member__c.Contact__c' ,
             'Portal_Team_Member__c.Contact_Name__c' ,
             'Portal_Team_Member__c.Position__c' ,
+            'Portal_Team_Member__c.Portal_Guidance__c' ,
         ] ,
         sortBy: [ 'Portal_Team_Member__c.Rank__c' ]
     })

@@ -1,0 +1,63 @@
+<template>
+    <lightning-layout multiple-rows>
+        <lightning-layout-item size="12" padding="around-medium" class="background-color-white">
+            <lightning-layout>
+                <lightning-layout-item>
+                    <template lwc:if={records}>
+                        <div class="combobox-text-medium">
+                            <lightning-combobox
+                                name="selector"
+                                label="Portal Clients"
+                                variant="label-hidden"
+                                placeholder="Select Portal Client"
+                                value={recordId}
+                                options={records}
+                                onchange={handleChange}
+                                class="combobox-color-border"
+                                >
+                            </lightning-combobox>
+                        </div>
+                    </template>
+                </lightning-layout-item>
+            </lightning-layout>
+        </lightning-layout-item>
+        <lightning-layout-item size="12">
+            <template lwc:if={isLoading}>
+                <div class="slds-is-relative slds-m-top_x-large">
+                    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                </div>
+            </template>
+            <template lwc:else>
+                <lightning-layout>
+                    <template lwc:if={showVerticalNavigation}>
+                        <lightning-layout-item flexibility="no-grow, no-shrink" class="background-color-white">
+                            <lightning-vertical-navigation selected-item={selectedItem}>
+                                <template lwc:if={navigationItems}>
+                                    <template for:each={navigationItems} for:item="navigationItem">
+                                        <lightning-vertical-navigation-item-icon
+                                            key={navigationItem.name}
+                                            label={navigationItem.label}
+                                            name={navigationItem.name}
+                                            icon-name={navigationItem.iconName}
+                                            class="list-style-type-none"
+                                            >
+                                        </lightning-vertical-navigation-item-icon>
+                                    </template>
+                                </template>
+                            </lightning-vertical-navigation>
+                        </lightning-layout-item>
+                    </template>
+                    <lightning-layout-item padding="around-medium">
+                        <template lwc:if={recordId}>
+                            <lightning-layout>
+                                <lightning-layout-item>
+                                    <c-portal-client record-id={recordId}></c-portal-client>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                        </template>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </template>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>

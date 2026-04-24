@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Use_Portal_Access</name>
+    </customPermissions>
+    <description>Grants the Custom Permission to use the &quot;Portal Access&quot; Screen Flow.</description>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Portal_Access</flow>
+    </flowAccesses>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Use Portal Access</label>
+</PermissionSet>

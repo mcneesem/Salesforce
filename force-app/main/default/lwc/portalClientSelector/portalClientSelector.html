@@ -1,25 +1,32 @@
 <template>
     <lightning-card title="New Client Portal">
         <lightning-layout multiple-rows>
-            <lightning-layout-item size="12" padding="around-small">
-                <template lwc:if={records}>
-                    <lightning-combobox
-                        name="selector"
-                        label="Portal Clients"
-                        variant="label-hidden"
-                        placeholder="Select Portal Client"
-                        value={recordId}
-                        options={records}
-                        onchange={handleChange}
-                        >
-                    </lightning-combobox>
-                </template>
-            </lightning-layout-item>
-            <lightning-layout-item size="12" padding="around-small">
-                <template lwc:if={recordId}>
-                    <c-portal-client record-id={recordId}></c-portal-client>
-                </template>
-            </lightning-layout-item>
+            <template lwc:if={records}>
+                <lightning-layout-item size="12" padding="around-small">
+                    <lightning-layout>
+                        <lightning-layout-item>
+                            <div class="combobox-text-medium">
+                                <lightning-combobox
+                                    name="selector"
+                                    label="Portal Clients"
+                                    variant="label-hidden"
+                                    placeholder="Select Portal Client"
+                                    value={recordId}
+                                    options={records}
+                                    onchange={handleChange}
+                                    class="combobox-color-border"
+                                    >
+                                </lightning-combobox>
+                            </div>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-layout-item>
+            </template>
+            <template lwc:if={recordId}>
+                <lightning-layout-item size="12" padding="around-small">
+                        <c-portal-client record-id={recordId}></c-portal-client>
+                </lightning-layout-item>
+            </template>
         </lightning-layout>
     </lightning-card>
 </template>

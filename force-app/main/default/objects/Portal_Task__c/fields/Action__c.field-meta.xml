@@ -15,6 +15,21 @@
                 <default>false</default>
                 <label>File</label>
             </value>
+            <value>
+                <fullName>Date</fullName>
+                <default>false</default>
+                <label>Date</label>
+            </value>
+            <value>
+                <fullName>DateTime</fullName>
+                <default>false</default>
+                <label>Date/Time</label>
+            </value>
+            <value>
+                <fullName>Integer</fullName>
+                <default>false</default>
+                <label>Integer</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

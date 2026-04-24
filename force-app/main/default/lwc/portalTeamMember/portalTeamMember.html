@@ -3,6 +3,7 @@
         <lightning-layout>
             <lightning-layout-item size="6" padding="around-small">
                 {record.fields.Position__c.value}
+                <c-portal-guidance variant="helptext" record-id={record.fields.Portal_Guidance__c.value}></c-portal-guidance>
             </lightning-layout-item>
             <lightning-layout-item size="6" padding="around-small">
                 <div class="slds-text-align_right">

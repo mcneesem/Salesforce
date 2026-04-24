@@ -1,0 +1,12 @@
+<template>
+    <template lwc:if={recordId}>
+        <template lwc:if={record}>
+            <template lwc:if={isHelpText}>
+                &nbsp;<c-helptext content={record.fields.Help_Text__c.value}></c-helptext>
+            </template>
+            <template lwc:if={isRichText}>
+                <lightning-formatted-rich-text value={record.fields.Rich_Text__c.value}></lightning-formatted-rich-text>
+            </template>
+        </template>
+    </template>
+</template>

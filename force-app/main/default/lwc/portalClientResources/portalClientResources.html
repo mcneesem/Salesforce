@@ -1,14 +1,15 @@
 <template>
     <lightning-card title="Resources">
         <div class="slds-p-around_medium">
-            <ul>
-                <li class="slds-p-around_medium">Client Email Instructions</li>
-                <li class="slds-p-around_medium">Insperity Implementation Roadmap</li>
-                <li class="slds-p-around_medium">Onboarding FAQs</li>
-                <li class="slds-p-around_medium">Deductible Credit Form</li>
-                <li class="slds-p-around_medium">Appllicable Benefits Book</li>
-                <li class="slds-p-around_medium">Benefits at a Glance</li>
-            </ul>
+            <template lwc:if={records}>
+                <lightning-layout multiple-rows>
+                    <template for:each={records} for:item="record">
+                        <lightning-layout-item key={record.fields.Id.value} size="12">
+                            <c-portal-resource record={record}></c-portal-resource>
+                        </lightning-layout-item>
+                    </template>
+                </lightning-layout>
+            </template>
         </div>
     </lightning-card>
 </template>

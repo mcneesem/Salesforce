@@ -146,8 +146,15 @@ export default class PortalFileListModal extends LightningModal {
     get actions() {
         if ( !this._actions ) {
             let local = [];
+            //if ( !this.isCommunity ) {
+            //    local.push( { label: 'Preview (Internal)' , name: 'preview' } );
+            //}
             local.push( { label: 'Preview' , name: 'previewExternal' } );
             local.push( { label: 'Download' , name: 'download' } );
+            //if ( !this.isCommunity ) {
+            //    local.push( { label: 'View File Details' , name: 'details' } );
+            //}
+            //local.push( { label: 'Upload New Version' , name: 'uploadExternal' } );
             local.push( { label: 'Delete' , name: 'deleteExternal' } );
             this._actions = local;
         }
@@ -162,11 +169,20 @@ export default class PortalFileListModal extends LightningModal {
         const actionName = event?.detail?.action?.name;
         const row = event?.detail?.row;
         switch ( actionName ) {
+            case 'preview':
+                this.preview( row );
+                break;
             case 'previewExternal':
                 this.previewExternal( row );
                 break;
             case 'download':
                 this.download( row );
+                break;
+            case 'details':
+                this.details( row );
+                break;
+            case 'uploadExternal':
+                this.uploadExternal( row );
                 break;
             case 'deleteExternal':
                 this.deleteExternal( row );
@@ -187,6 +203,24 @@ export default class PortalFileListModal extends LightningModal {
 
     pageReference;
 
+    // "File Preview"
+    // ~ navigate to standard internal File Preview Page...
+    preview( row ) {
+        const local = this.documentIds;
+        if ( row?.documentId && local ) {
+            this.pageReference = {
+                type: 'standard__namedPage' ,
+                attributes: {
+                    pageName: "filePreview",
+                } ,
+                state: {
+                    recordIds: local ,
+                    selectedRecordId: row.documentId ,
+                } ,
+            };
+        }
+    }
+
     // "File Download"
     // ~ navigate to standard internal File Download Page...
     download( row ) {
@@ -195,6 +229,20 @@ export default class PortalFileListModal extends LightningModal {
                 type: 'standard__webPage' ,
                 attributes: {
                     url: ( this.isCommunity ? './sfsites/c' : '' ) + '/sfc/servlet.shepherd/document/download/' + row.documentId ,
+                } ,
+            };
+        }
+    }
+
+    // "View File Details"
+    // ~ navigate to standard internal Content Document Record Page...
+    details( row ) {
+        if ( row?.documentId ) {
+            this.pageReference = {
+                type: 'standard__recordPage' ,
+                attributes: {
+                    recordId: row.documentId ,
+                    actionName: 'view' ,
                 } ,
             };
         }
@@ -217,6 +265,22 @@ export default class PortalFileListModal extends LightningModal {
                 state: {
                     recordIds: local ,
                     selectedRecordId: row.documentId ,
+                } ,
+            };
+        }
+    }
+
+    // "Upload New Version"
+    // ~ navigate to custom external Upload New Version Modal...
+    uploadExternal( row ) {
+        if ( row?.documentId ) {
+            this.pageReference = {
+                type: 'external__uploadNewVersion' ,
+                attributes: {
+                    pageName: "uploadNewVersion",
+                } ,
+                state: {
+                    recordId: row.documentId ,
                 } ,
             };
         }
