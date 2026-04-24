@@ -11,7 +11,7 @@
             <assignToReference>getContactCollectionCount</assignToReference>
             <operator>AssignCount</operator>
             <value>
-                <elementReference>Get_Contacts_With_Portal_Alias_As_Not_Null</elementReference>
+                <elementReference>Get_All_Portal_Contacts</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -36,18 +36,35 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Fault_Element_For_Get_Account_Contact_Relationship_Record</name>
-        <label>Set Fault Element For Get Account Contact Relationship Record</label>
+        <name>Set_Fault_Element_For_Get_Account_Contact_Relationship</name>
+        <label>Set Fault Element For Get Account Contact Relationship</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Get_Account_Contact_Relationship_Record_Based_On_Record_Id</stringValue>
+                <stringValue>Get_Account_Contact_Relationship</stringValue>
             </value>
         </assignmentItems>
         <connector>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_For_Get_All_Portal_Contacts</name>
+        <label>Set Fault Element For Get All Portal Contacts</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_All_Portal_Contacts</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
@@ -60,12 +77,29 @@
             <assignToReference>faultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Get_Contacts_Related_To_Account_Contact_Relationship</stringValue>
+                <stringValue>Get_Contact</stringValue>
             </value>
         </assignmentItems>
         <connector>
             <isGoTo>true</isGoTo>
             <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Error_For_Error_Screen</name>
+        <label>Set Fault Error For Error Screen</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>errorElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Error_Screen</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -101,19 +135,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Missing_Element_For_Portal_Alias_Value</name>
-        <label>Set Missing Element For Portal Alias Value</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>errorElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>User Record is already provisioned for this contact</stringValue>
-            </value>
-        </assignmentItems>
-    </assignments>
-    <assignments>
         <name>Set_Missing_Element_For_Record_Id</name>
         <label>Set Missing Element For Record Id</label>
         <locationX>0</locationX>
@@ -135,14 +156,14 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>Get_Contacts_Related_To_Account_Contact_Relationship.Portal_Alias__c</assignToReference>
+            <assignToReference>Get_Contact.Portal_Alias__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>setPortalAliasName</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_Contact_Related_To_ACR</targetReference>
+            <targetReference>Update_Contact</targetReference>
         </connector>
     </assignments>
     <customProperties>
@@ -171,7 +192,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_Account_Contact_Relationship_Record_Based_On_Record_Id</targetReference>
+                <targetReference>Get_Account_Contact_Relationship</targetReference>
             </connector>
             <label>Valid Record Id</label>
         </rules>
@@ -189,21 +210,21 @@
             <name>Valid_Account_Contact_Relationship_Record</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Account_Contact_Relationship_Record_Based_On_Record_Id</leftValueReference>
+                <leftValueReference>Get_Account_Contact_Relationship</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Get_Account_Contact_Relationship_Record_Based_On_Record_Id.ContactId</leftValueReference>
+                <leftValueReference>Get_Account_Contact_Relationship.ContactId</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_Contacts_Related_To_Account_Contact_Relationship</targetReference>
+                <targetReference>Get_Contact</targetReference>
             </connector>
             <label>Valid Account Contact Relationship Record</label>
         </rules>
@@ -221,8 +242,8 @@
             <name>Valid_Contacts</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Contacts_Related_To_Account_Contact_Relationship</leftValueReference>
-                <operator>IsNull</operator>
+                <leftValueReference>Get_Contact</leftValueReference>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -246,14 +267,14 @@
             <name>Valid_Contacts_With_Portal_Names</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Contacts_With_Portal_Alias_As_Not_Null</leftValueReference>
+                <leftValueReference>Get_All_Portal_Contacts</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Get_Contacts_With_Portal_Alias_As_Not_Null</leftValueReference>
+                <leftValueReference>Get_All_Portal_Contacts</leftValueReference>
                 <operator>IsEmpty</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -271,21 +292,21 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Set_Missing_Element_For_Portal_Alias_Value</targetReference>
+            <targetReference>Prepare_Screen</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Blank_Portal_Alias_Value</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Contacts_Related_To_Account_Contact_Relationship.Portal_Alias__c</leftValueReference>
+                <leftValueReference>Get_Contact.Portal_Alias__c</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_Contacts_With_Portal_Alias_As_Not_Null</targetReference>
+                <targetReference>Get_All_Portal_Contacts</targetReference>
             </connector>
             <label>Blank Portal Alias Value</label>
         </rules>
@@ -295,7 +316,7 @@
     <formulas>
         <name>setPortalAliasName</name>
         <dataType>String</dataType>
-        <expression>LEFT(LOWER({!Get_Account_Contact_Relationship_Record_Based_On_Record_Id.Contact.LastName}), 20) &amp; &quot;.&quot; &amp; LPAD(TEXT({!getContactCollectionCount} + 1), 9 , &quot;0&quot;)</expression>
+        <expression>LEFT(LOWER({!Get_Account_Contact_Relationship.Contact.LastName}), 20) &amp; &quot;.&quot; &amp; LPAD(TEXT({!getContactCollectionCount} + 1), 9 , &quot;0&quot;)</expression>
     </formulas>
     <interviewLabel>Portal Access {!$Flow.CurrentDateTime}</interviewLabel>
     <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
@@ -320,8 +341,8 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
-        <name>Get_Account_Contact_Relationship_Record_Based_On_Record_Id</name>
-        <label>Get Account Contact Relationship Record Based On Record Id</label>
+        <name>Get_Account_Contact_Relationship</name>
+        <label>Get Account Contact Relationship</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
@@ -329,7 +350,7 @@
             <targetReference>Validate_Account_Contact_Relationship_Record</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Set_Fault_Element_For_Get_Account_Contact_Relationship_Record</targetReference>
+            <targetReference>Set_Fault_Element_For_Get_Account_Contact_Relationship</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -346,41 +367,17 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Get_Contacts_Related_To_Account_Contact_Relationship</name>
-        <label>Get Contacts Related To Account Contact Relationship</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Validate_Contact_Records_Related_To_Account_Contact_Relation</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Set_Fault_Element_For_Get_Contact_Record</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Account_Contact_Relationship_Record_Based_On_Record_Id.ContactId</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Contact</object>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>Portal_Alias__c</queriedFields>
-        <queriedFields>LastName</queriedFields>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_Contacts_With_Portal_Alias_As_Not_Null</name>
-        <label>Get Contacts With Portal Alias As Not Null</label>
+        <name>Get_All_Portal_Contacts</name>
+        <label>Get All Portal Contacts</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Validate_Contacts_With_Portal_Names</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_For_Get_All_Portal_Contacts</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Portal_Alias__c</field>
@@ -395,9 +392,36 @@
         <queriedFields>Portal_Alias__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>Get_Contact</name>
+        <label>Get Contact</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Validate_Contact_Records_Related_To_Account_Contact_Relation</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_For_Get_Contact_Record</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Account_Contact_Relationship.ContactId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Contact</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Portal_Alias__c</queriedFields>
+        <queriedFields>LastName</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
-        <name>Update_Contact_Related_To_ACR</name>
-        <label>Update Contact Related To ACR</label>
+        <name>Update_Contact</name>
+        <label>Update Contact</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
@@ -406,7 +430,7 @@
         <faultConnector>
             <targetReference>Set_Fault_Element_For_Contact_Update</targetReference>
         </faultConnector>
-        <inputReference>Get_Contacts_Related_To_Account_Contact_Relationship</inputReference>
+        <inputReference>Get_Contact</inputReference>
     </recordUpdates>
     <screens>
         <name>Error_Screen</name>
@@ -469,7 +493,7 @@
         </connector>
         <fields>
             <name>Prepare_Display_Text</name>
-            <fieldText>&lt;p&gt;Prepare: {!Get_Contacts_Related_To_Account_Contact_Relationship.Portal_Alias__c}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Prepare: {!Get_Contact.Portal_Alias__c}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -523,6 +547,9 @@
         <label>Insperity Fault Handler Subflow</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <connector>
+            <targetReference>Set_Fault_Error_For_Error_Screen</targetReference>
+        </connector>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
