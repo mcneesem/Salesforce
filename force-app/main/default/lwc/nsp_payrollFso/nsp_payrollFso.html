@@ -776,16 +776,6 @@
       ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
 
-    <c-nsp_employee-data
-      if:true={visibility.Do_any_EEs_have_garnishments__emp}
-      title="Employee Name(s):"
-      records={empData.Do_any_EEs_have_garnishments__c}
-      fields={empTableFields.Do_any_EEs_have_garnishments__c}
-      parent-field="Do_any_EEs_have_garnishments__c"
-      rl-fields={empDataRlFields.Do_any_EEs_have_garnishments__c}
-      read-only-mode={readOnlyMode}>
-    </c-nsp_employee-data>
-
     <c-nsp_selection-box
       disabled={disabledFields.Do_any_EEs_have_tax_levies__c}
       label={label.doAnyEEsHaveTaxLevies}
@@ -796,16 +786,6 @@
       onchange={handleValueChange}
       ondblclick={handleDoubleClick}>
     </c-nsp_selection-box>
-
-    <c-nsp_employee-data
-      if:true={visibility.NSP_List_Employee_Names_Levies__c}
-      title="Employee Name(s):"
-      records={empData.Do_any_EEs_have_tax_levies__c}
-      fields={empTableFields.Do_any_EEs_have_tax_levies__c}
-      parent-field="Do_any_EEs_have_tax_levies__c"
-      rl-fields={empDataRlFields.Do_any_EEs_have_tax_levies__c}
-      read-only-mode={readOnlyMode}>
-    </c-nsp_employee-data>
 
     <c-nsp_selection-box
       disabled={disabledFields.Past_employees_crntly_getting_severance__c}
