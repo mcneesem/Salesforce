@@ -56,6 +56,28 @@
         </connector>
     </assignments>
     <decisions>
+        <name>Check_From_Email_Address</name>
+        <label>Check From Email Address</label>
+        <locationX>506</locationX>
+        <locationY>600</locationY>
+        <defaultConnectorLabel>From Address is wx.tax@insperity.com</defaultConnectorLabel>
+        <rules>
+            <name>From_Address_is_not_wx_tax_insperity_com</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SuppliedEmail</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>wx.tax@insperity.com</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_Notification_1</targetReference>
+            </connector>
+            <label>From Address is not wx.tax@insperity.com</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_Queue</name>
         <label>Check Queue</label>
         <locationX>539</locationX>
