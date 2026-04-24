@@ -133,6 +133,10 @@
                 <behavior>Edit</behavior>
                 <field>Sub_Product_Attribute__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Price_Rule_Override__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
