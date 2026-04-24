@@ -58,3 +58,4 @@ Seasonal_Pricing__c
 SBQQ__RequiredBy__c
 Has_Seasonal_Price_Table__c
 Get_Seasonal_Price_Table__c
+Override_Scholarship_Discounts__c
