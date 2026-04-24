@@ -19,22 +19,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Contact_Records_Default_Count</name>
-        <label>Set Contact Records Default Count</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>getContactCollectionCount</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <numberValue>0.0</numberValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Set_Portal_Alias_Name_On_Contact</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Set_Fault_Element_For_Contact_Update</name>
         <label>Set Fault Element For Contact Update</label>
         <locationX>0</locationX>
@@ -85,6 +69,67 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Set_Messing_Element_For_Account_Contact_Relationship_Rec</name>
+        <label>Set Messing Element For Account Contact Relationship Rec</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>missingElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Missing AccountContactRelation.ContactId</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Default_Screen</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Missing_Element_For_Get_Contacts_Related_To_ACR</name>
+        <label>Set Missing Element For Get Contacts Related To ACR</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>missingElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Missing Contact Based on Contact Id</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Default_Screen</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Missing_Element_For_Portal_Alias_Value</name>
+        <label>Set Missing Element For Portal Alias Value</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>missingElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>User Record is already provisioned for this contact</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Set_Missing_Element_For_Record_Id</name>
+        <label>Set Missing Element For Record Id</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>missingElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Missing Record Id</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Default_Screen</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_Portal_Alias_Name_On_Contact</name>
         <label>Set Portal Alias Name On Contact</label>
         <locationX>0</locationX>
@@ -111,6 +156,9 @@
         <label>Check For Record Id</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Set_Missing_Element_For_Record_Id</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Valid_Record_Id</name>
@@ -133,6 +181,9 @@
         <label>Validate Account Contact Relationship Record</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Set_Messing_Element_For_Account_Contact_Relationship_Rec</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Valid_Account_Contact_Relationship_Record</name>
@@ -158,32 +209,28 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Validate_Contact_And_Portal_Alias</name>
-        <label>Validate Contact And Portal Alias</label>
+        <name>Validate_Contact_Records_Related_To_Account_Contact_Relation</name>
+        <label>Validate Contact Records Related To Account Contact Relation</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Set_Missing_Element_For_Get_Contacts_Related_To_ACR</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Valid_Contact_And_Portal_Name</name>
+            <name>Valid_Contacts</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Contacts_Related_To_Account_Contact_Relationship</leftValueReference>
-                <operator>IsBlank</operator>
+                <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>Get_Contacts_Related_To_Account_Contact_Relationship.Portal_Alias__c</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
             <connector>
-                <targetReference>Get_Contacts_With_Portal_Alias_As_Not_Null</targetReference>
+                <targetReference>Validate_Portal_Alias_From_Contact</targetReference>
             </connector>
-            <label>Valid Contact And Portal Name</label>
+            <label>Valid Contacts</label>
         </rules>
     </decisions>
     <decisions>
@@ -192,12 +239,19 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Set_Contact_Records_Default_Count</targetReference>
+            <targetReference>Set_Portal_Alias_Name_On_Contact</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Valid_Contacts_With_Portal_Names</name>
             <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Contacts_With_Portal_Alias_As_Not_Null</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <conditions>
                 <leftValueReference>Get_Contacts_With_Portal_Alias_As_Not_Null</leftValueReference>
                 <operator>IsEmpty</operator>
@@ -209,6 +263,31 @@
                 <targetReference>Set_Contact_Records_Count</targetReference>
             </connector>
             <label>Valid Contacts With Portal Names</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Validate_Portal_Alias_From_Contact</name>
+        <label>Validate Portal Alias From Contact</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Set_Missing_Element_For_Portal_Alias_Value</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Blank_Portal_Alias_Value</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Contacts_Related_To_Account_Contact_Relationship.Portal_Alias__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Contacts_With_Portal_Alias_As_Not_Null</targetReference>
+            </connector>
+            <label>Blank Portal Alias Value</label>
         </rules>
     </decisions>
     <description>Portal Access</description>
@@ -273,7 +352,7 @@
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Validate_Contact_And_Portal_Alias</targetReference>
+            <targetReference>Validate_Contact_Records_Related_To_Account_Contact_Relation</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Set_Fault_Element_For_Get_Contact_Record</targetReference>
@@ -330,6 +409,30 @@
         <inputReference>Get_Contacts_Related_To_Account_Contact_Relationship</inputReference>
     </recordUpdates>
     <screens>
+        <name>Default_Screen</name>
+        <label>Default Screen</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Missing_Record_Id_Screen</name>
+            <fieldText>&lt;p&gt;{!missingElement}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Permit_Screen</name>
         <label>Permit Screen</label>
         <locationX>0</locationX>
@@ -366,7 +469,7 @@
         </connector>
         <fields>
             <name>Prepare_Display_Text</name>
-            <fieldText>&lt;p&gt;{!Get_Contacts_Related_To_Account_Contact_Relationship.Portal_Alias__c}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgba(0, 0, 0, 0.06); font-size: 12px; font-family: Menlo, Consolas, &amp;quot;Courier New&amp;quot;, monospace; color: rgba(0, 0, 0, 0.9);&quot;&gt;Prepare: {!Get_Contacts_Related_To_Account_Contact_Relationship.Portal_Alias__c}&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -457,6 +560,19 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>missingElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
     </variables>
     <variables>
         <name>recordId</name>
