@@ -96,7 +96,7 @@
                         <valueListItems>
                             <value>Opportunity.NSP_GenerateDoc</value>
                             <visibilityRule>
-                                <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
+                                <booleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6</booleanFilter>
                                 <criteria>
                                     <leftValue>{!$User.Profile.Name}</leftValue>
                                     <operator>CONTAINS</operator>
@@ -121,6 +121,11 @@
                                     <leftValue>{!$Permission.CustomPermission.Opportunity_Closed_Won_NCS_User}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>PEO Service</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -177,7 +182,7 @@
                         <valueListItems>
                             <value>CustomButton.Opportunity.NSP_Send_for_Signature_CPQ</value>
                             <visibilityRule>
-                                <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
+                                <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
                                 <criteria>
                                     <leftValue>{!$User.Profile.Name}</leftValue>
                                     <operator>EQUAL</operator>
@@ -197,6 +202,11 @@
                                     <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>PEO Service</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
