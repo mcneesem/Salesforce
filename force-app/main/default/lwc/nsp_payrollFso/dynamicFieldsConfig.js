@@ -161,23 +161,6 @@ const DYNAMIC_FIELDS = {
       dependentFields: ["EEO_name_phone_contact_email_for_info__c"],
     },
   ],
-  /*Do_any_EEs_have_garnishments__c: [ //Garnishment sub task and levies removed
-    {
-      expValue: ["Yes"],
-      dependentFields: [
-        "Do_any_EEs_have_garnishments__emp",
-      ],
-    },
-  ],
-  Do_any_EEs_have_tax_levies__c: [
-    {
-      expValue: ["Yes"],
-      dependentFields: [
-        "NSP_List_Employee_Names_Levies__c",
-        "NSP_Documents_Collected_Leviesd__c",
-      ],
-    },
-  ],*/
   Past_employees_crntly_getting_severance__c: [
     {
       expValue: ["Yes"],
