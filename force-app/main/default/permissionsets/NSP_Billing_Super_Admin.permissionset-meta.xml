@@ -13189,7 +13189,7 @@
         <field>SBQQ__Quote__c.NSP_WX_WA_Enrollment_Fee__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__Quote__c.Price_Rule_Override__c</field>
         <readable>true</readable>
