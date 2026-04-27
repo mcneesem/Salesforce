@@ -259,6 +259,19 @@
             <componentInstance>
                 <componentName>salesVisualIndicator</componentName>
                 <identifier>c_salesVisualIndicator2</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Current_Provider__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Workday</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Sales_Account_Indicator}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <name>Facet-5a13c276-01a5-44dc-96c7-5a049702a188</name>
@@ -351,13 +364,67 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
+                            <value>Account.One_Time_Sync_Single_Record</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.One_Time_Sync_Single_Record}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
                             <value>CustomButton.Account.NSP_Generate_Document</value>
+                            <visibilityRule>
+                                <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Sales Manager</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Sales Member</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Sales Administrator</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Marketing Channel</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>Account.Manage_Order</value>
                         </valueListItems>
                         <valueListItems>
                             <value>Account.DNB_Connect_Data_Refresh</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.Account.NSP_Detailed_Data</value>
+                            <visibilityRule>
+                                <booleanFilter>1 OR 2</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Detailed_Data_Access}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>Account.Manage_PCM_Firms</value>
@@ -370,19 +437,40 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
-                            <value>CustomButton.Account.NSP_Detailed_Data</value>
+                            <value>Account.Add_team_member</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>CustomButton.Account.Send_For_Signature</value>
+                            <value>Edit</value>
                         </valueListItems>
                         <valueListItems>
                             <value>Account.NSP_Update_NAICS_SIC</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Account.Add_team_member</value>
+                            <value>Account.Referral_Log</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>FeedItem.ContentNote</value>
+                            <value>Account.New_Address</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Global.NewTask</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Global.LogACall</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>PrintableView</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>ChangeRecordType</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.Account.blng__PaymentVirtualTerminal</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Account.DunningManual</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.Account.blng__CreditCenter</value>
                         </valueListItems>
                         <valueListItems>
                             <value>Account.Same_DUNS_New_FEIN</value>
@@ -395,7 +483,34 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
-                            <value>ChangeRecordType</value>
+                            <value>Account.Request_CTM_and_Employee_Orientation_Meeting</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Request_CTM_and_Employee_Orientation_Meeting_Detail}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Account.Request_Employee_Orientation_Meeting_Revised</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Request_Employee_Orientation_Meeting_Detail}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Account.Update_Onboarding_Meetings</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Update_Onboarding_Meetings}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -447,7 +562,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>readonly</value>
+                    <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Partner__c</fieldItem>
                 <identifier>RecordNSP_Partner_cField</identifier>
@@ -1304,13 +1419,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.RecordTypeId</fieldItem>
                 <identifier>RecordRecordTypeIdField2</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
-                    </criteria>
-                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2977,12 +3085,8 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentInstanceProperties>
-                    <name>context</name>
-                    <value>RECORD</value>
-                </componentInstanceProperties>
-                <componentName>forceChatter:exposedFeed</componentName>
-                <identifier>forceChatter_exposedFeed</identifier>
+                <componentName>forceChatter:recordFeedContainer</componentName>
+                <identifier>forceChatter_recordFeedContainer</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-f6482f8c-9fdc-4be6-990d-86e185888b89</name>
