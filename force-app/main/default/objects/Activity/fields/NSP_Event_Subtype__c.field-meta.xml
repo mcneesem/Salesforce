@@ -91,6 +91,36 @@
                 <label>WX Proposal</label>
             </value>
             <value>
+                <fullName>HR360 Solution</fullName>
+                <default>false</default>
+                <label>HR360 Solution</label>
+            </value>
+            <value>
+                <fullName>HRCore Solution</fullName>
+                <default>false</default>
+                <label>HRCore Solution</label>
+            </value>
+            <value>
+                <fullName>HRScale</fullName>
+                <default>false</default>
+                <label>HRScale</label>
+            </value>
+            <value>
+                <fullName>Time and Attendance</fullName>
+                <default>false</default>
+                <label>Time and Attendance</label>
+            </value>
+            <value>
+                <fullName>Performance Management</fullName>
+                <default>false</default>
+                <label>Performance Management</label>
+            </value>
+            <value>
+                <fullName>Performance Management / Time &amp; Attendance</fullName>
+                <default>false</default>
+                <label>Performance Management / Time &amp; Attendance</label>
+            </value>
+            <value>
                 <fullName>Email</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -259,6 +289,30 @@
         <valueSettings>
             <controllingFieldValue>Mid Market</controllingFieldValue>
             <valueName>Safety Meeting</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Demo</controllingFieldValue>
+            <valueName>HR360 Solution</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Demo</controllingFieldValue>
+            <valueName>HRCore Solution</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Demo</controllingFieldValue>
+            <valueName>HRScale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Demo</controllingFieldValue>
+            <valueName>Time and Attendance</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Demo</controllingFieldValue>
+            <valueName>Performance Management</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Demo</controllingFieldValue>
+            <valueName>Performance Management / Time &amp; Attendance</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>
