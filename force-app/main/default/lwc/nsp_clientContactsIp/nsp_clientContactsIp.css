@@ -1,8 +1,8 @@
 .addBlackColor{
     color: black;
-    font-weight: 500;
+    font-weight: var(--slds-g-font-weight-5, 500);
 }
 .addBlueColor{
     color: #0000FF;
-    font-weight: 500;
+    font-weight: var(--slds-g-font-weight-5, 500);
 }

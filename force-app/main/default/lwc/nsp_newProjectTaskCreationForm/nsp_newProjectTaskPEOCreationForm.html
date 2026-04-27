@@ -7,7 +7,7 @@
         <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
             <div class="slds-modal__container">
                 <header class="slds-modal__header">
-                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={handleCancel}>
+                    <button class="slds-button slds-button_icon slds-modal__close" title="Close" onclick={handleCancel}>
                         <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small"></lightning-icon>
                         <span class="slds-assistive-text">Close</span>
                     </button>
@@ -35,7 +35,7 @@
                         </lightning-layout-item>
 
                         <lightning-layout-item flexibility="auto" padding="horizontal-medium">
-                            <div class="custom-box section-header-title slds-p-horizontal--small slds-truncate">{peoTaskInfoLabel}</div>
+                            <div class="custom-box section-header-title slds-p-horizontal_small slds-truncate">{peoTaskInfoLabel}</div>
                         </lightning-layout-item>
 
                         <div class="slds-p-around_xx-small">
@@ -104,7 +104,7 @@
 
                         <template if:true={isShowFieldServiceSection}>
                             <lightning-layout-item flexibility="auto" padding="horizontal-medium">
-                                <div class="custom-box section-header-title slds-p-horizontal--small slds-truncate">{fieldServiceInfoLabel}</div>
+                                <div class="custom-box section-header-title slds-p-horizontal_small slds-truncate">{fieldServiceInfoLabel}</div>
                             </lightning-layout-item>
                             <div class="slds-p-around_xx-small">
                                 <lightning-layout multiple-rows="true">

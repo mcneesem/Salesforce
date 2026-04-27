@@ -1,4 +1,4 @@
 .outputText{
     color: black !important;
-    font-weight: 500 !important;
+    font-weight: var(--slds-g-font-weight-5, 500) !important;
 }
