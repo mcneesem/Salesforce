@@ -2,6 +2,7 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>66.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>New Client Portal: Employee Setup Mapping</description>
     <environments>Default</environments>
     <interviewLabel>Project Task - Updated - Async - Populate Portal Task - Employee Setup {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Project Task - Updated - Async - Populate Portal Task - Employee Setup</label>
@@ -27,7 +28,7 @@
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <filterLogic>( 1 AND 2 AND 3 AND ( 4 OR 5 ) AND ( 6 OR 7 OR 8 OR 9 OR 10 OR 11 )  )</filterLogic>
+        <filterLogic>( 1 AND 2 AND 3 AND ( 4 OR 5 ) AND ( 6 OR 7 OR 8 OR 9 OR 10 OR 11 ) )</filterLogic>
         <filters>
             <field>pse__Project__c</field>
             <operator>IsNull</operator>
