@@ -846,7 +846,7 @@
         <locationY>0</locationY>
         <flowName>Schedule_Seller_Subflow_Create_Event</flowName>
         <inputAssignments>
-            <name>event</name>
+            <name>record</name>
             <value>
                 <elementReference>record</elementReference>
             </value>
