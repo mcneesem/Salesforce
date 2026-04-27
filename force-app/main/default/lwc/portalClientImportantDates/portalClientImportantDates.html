@@ -51,7 +51,9 @@
                                         </lightning-layout-item>
                                     </lightning-layout>
                                 </li>
-                                <c-portal-pay-period-carousel record-id={recordId}></c-portal-pay-period-carousel>
+                                <template lwc:if={projectId}>
+                                    <c-portal-pay-period-carousel record-id={projectId}></c-portal-pay-period-carousel>
+                                </template>
                             </ul>
                         </lightning-layout-item>
                         <lightning-layout-item size="12" padding="around-medium">
