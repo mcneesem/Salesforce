@@ -427,6 +427,9 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
+                            <value>FeedItem.PollPost</value>
+                        </valueListItems>
+                        <valueListItems>
                             <value>Account.Manage_PCM_Firms</value>
                             <visibilityRule>
                                 <criteria>
@@ -435,9 +438,6 @@
                                     <rightValue>true</rightValue>
                                 </criteria>
                             </visibilityRule>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Account.Add_team_member</value>
                         </valueListItems>
                         <valueListItems>
                             <value>Edit</value>
@@ -456,6 +456,12 @@
                         </valueListItems>
                         <valueListItems>
                             <value>Global.LogACall</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>FeedItem.TextPost</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>FeedItem.QuestionPost</value>
                         </valueListItems>
                         <valueListItems>
                             <value>PrintableView</value>
