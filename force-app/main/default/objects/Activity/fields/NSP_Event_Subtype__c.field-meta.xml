@@ -116,9 +116,9 @@
                 <label>Performance Management</label>
             </value>
             <value>
-                <fullName>Performance Management and Time &amp; Attendance</fullName>
+                <fullName>Performance Management / Time &amp; Attendance</fullName>
                 <default>false</default>
-                <label>Performance Management and Time &amp; Attendance</label>
+                <label>Performance Management / Time &amp; Attendance</label>
             </value>
             <value>
                 <fullName>Email</fullName>
@@ -312,7 +312,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Demo</controllingFieldValue>
-            <valueName>Performance Management and Time &amp; Attendance</valueName>
+            <valueName>Performance Management / Time &amp; Attendance</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>
