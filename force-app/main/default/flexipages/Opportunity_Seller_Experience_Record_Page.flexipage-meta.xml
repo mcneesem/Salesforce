@@ -475,7 +475,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>daysToShow</name>
-                    <value>60</value>
+                    <value>50</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>earliestRange</name>
@@ -495,7 +495,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>showToday</name>
-                    <value>No</value>
+                    <value>Green</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>timelineParent</name>
@@ -561,6 +561,29 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>flexipage_tab9</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2 AND 3 AND 4</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.StageName}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Closed Won</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.StageName}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Closed Lost</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.StageName}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Closed Won - Outgoing</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.StageName}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Closed Lost - Outgoing</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <name>Facet-33ed746b-987b-45dd-9a6d-f8a65e47d2a8</name>
@@ -1738,7 +1761,7 @@
                 <fieldItem>Record.NSP_Order_Generated__c</fieldItem>
                 <identifier>RecordNSP_Order_Generated_cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8</booleanFilter>
+                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -1778,6 +1801,11 @@
                         <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Applicant Tracking</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Performance Management</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -4008,29 +4036,6 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
                 <identifier>flexipage_tabset4</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3 AND 4</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.StageName}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Closed Won</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.StageName}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Closed Lost</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.StageName}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Closed Won - Outgoing</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.StageName}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Closed Lost - Outgoing</rightValue>
-                    </criteria>
-                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
