@@ -31,6 +31,7 @@
     <permissionSets>Purchased_Product_Visibility</permissionSets>
     <permissionSets>Request_CTM_and_Employee_Orientation_Meeting_Detail</permissionSets>
     <permissionSets>Request_Employee_Orientation_Meeting_Detail</permissionSets>
+    <permissionSets>Required_Editable_Fields</permissionSets>
     <permissionSets>Required_Reporting_Fields</permissionSets>
     <permissionSets>Required_Reporting_Objects</permissionSets>
     <permissionSets>Termination_Revision_Access</permissionSets>
