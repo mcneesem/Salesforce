@@ -489,7 +489,7 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
-                            <value>Account.Request_CTM_and_Employee_Orientation_Meeting</value>
+                            <value>Account.Request_CTM_and_Employee_Orientation_Meeting_Detail</value>
                             <visibilityRule>
                                 <criteria>
                                     <leftValue>{!$Permission.CustomPermission.Request_CTM_and_Employee_Orientation_Meeting_Detail}</leftValue>
@@ -499,7 +499,7 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
-                            <value>Account.Request_Employee_Orientation_Meeting_Revised</value>
+                            <value>Account.Request_an_Employee_Orientation_Meeting_Detail</value>
                             <visibilityRule>
                                 <criteria>
                                     <leftValue>{!$Permission.CustomPermission.Request_Employee_Orientation_Meeting_Detail}</leftValue>
