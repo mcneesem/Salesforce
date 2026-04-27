@@ -3,7 +3,7 @@
     <fullName>NSP_Max_Overdue_Invoice_Date__c</fullName>
     <description>Stores the maximum number of days an invoice is due for an Account</description>
     <externalId>false</externalId>
-    <label>DEPRICATE_Max Overdue Invoice Date</label>
+    <label>DEPRECATE_Max Overdue Invoice Date</label>
     <summarizedField>blng__Invoice__c.blng__DueDate__c</summarizedField>
     <summaryFilterItems>
         <field>blng__Invoice__c.blng__Balance__c</field>
