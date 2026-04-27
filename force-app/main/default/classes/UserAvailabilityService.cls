@@ -219,9 +219,9 @@ public with sharing class UserAvailabilityService {
                 Event processedEvent = e;
                 // Check if this is a Demo event with HR360 Solution subtype
                 // Check if this is a Demo event with any subtype value
-                if ( ( e.NSP_Event_Type__c == 'Demo' )
-                    && ( String.isNotBlank( e.NSP_Event_Subtype__c ) )
-                    && ( e.EndDateTime != null )
+                if ( ( processedEvent.NSP_Event_Type__c == 'Demo' )
+                    && String.isNotBlank( processedEvent.NSP_Event_Subtype__c )
+                    && ( processedEvent.EndDateTime != null )
                     )
                 {
                     // Create new Event with extended EndDateTime (30 minutes buffer)
