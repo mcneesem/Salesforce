@@ -368,6 +368,11 @@
                 <default>false</default>
                 <label>Multiple_Companies_Setup_Fee__c</label>
             </value>
+            <value>
+                <fullName>Has_NoahFace__c</fullName>
+                <default>false</default>
+                <label>Has_NoahFace__c</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

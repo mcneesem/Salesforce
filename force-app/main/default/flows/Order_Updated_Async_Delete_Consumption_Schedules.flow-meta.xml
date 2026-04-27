@@ -588,8 +588,8 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Is_Promo_Product</name>
-        <label>Is Promo Product ?</label>
+        <name>Exclude_Product_Codes</name>
+        <label>Exclude Product Codes?</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
@@ -597,10 +597,10 @@
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Exclude_Promo_Product</name>
+            <name>Excluding_Products</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>$Setup.Consumption_Schedule_Discount_Settings__c.Promo_Product_Codes__c</leftValueReference>
+                <leftValueReference>$Setup.Consumption_Schedule_Discount_Settings__c.Exclude_Deleting_Consumption_Schedules__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
                     <elementReference>Order_Products.Product2.ProductCode</elementReference>
@@ -609,7 +609,7 @@
             <connector>
                 <targetReference>Order_Products</targetReference>
             </connector>
-            <label>Exclude Promo Product</label>
+            <label>Excluding Products</label>
         </rules>
     </decisions>
     <decisions>
@@ -757,7 +757,7 @@
         <collectionReference>Get_Order_Products</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>Is_Promo_Product</targetReference>
+            <targetReference>Exclude_Product_Codes</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>Check_Cat1</targetReference>
