@@ -67,8 +67,8 @@ public without sharing class UserAvailability {
                     Id ,
                     OwnerId ,
                     StartDateTime ,
-                    EndDateTime,
-                    NSP_Event_Subtype__c,
+                    EndDateTime ,
+                    NSP_Event_Subtype__c ,
                     NSP_Event_Type__c
                 FROM Event
                 WHERE (
