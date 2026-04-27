@@ -393,5 +393,199 @@ private class NSP_Implprofile_ServiceHelperUpdate_Test {
         }
     }
 
+    @isTest
+    private static void createLOA_EEs_TaskTest() {
+        Test.startTest();
+
+        List<pse__Proj__c> projectList = [
+            SELECT Id, Name, pse__Project_Type__c
+            FROM pse__Proj__c
+            WHERE TemplateName__c = :Label.FSOImplementationProject
+            LIMIT 1
+        ];
+        System.assertEquals(true, !projectList.isEmpty(), 'Expected test project');
+        pse__Proj__c project = projectList[0];
+
+         List<Implementation_Profile__c> ipList = [
+            SELECT Id, NSP_Project__c, Are_there_any_EEs_on_Leave_of_Absence__c
+            FROM Implementation_Profile__c
+            WHERE NSP_Project__c = :project.Id
+            LIMIT 1
+        ];
+        System.assertEquals(true, !ipList.isEmpty(), 'Expected implementation profile');
+        Implementation_Profile__c ip = ipList[0];
+        ip.Are_there_any_EEs_on_Leave_of_Absence__c = NSP_ServiceConstants.YES;
+        ip.NSP_Form_Completed__c = true;
+        update ip;
+
+        ip.Are_there_any_EEs_on_Leave_of_Absence__c = NSP_ServiceConstants.YES;
+        ip.NSP_Form_Completed__c = true;
+        update ip;
+
+        List<pse__Project_Task__c> projTaskList = [
+            SELECT Id, Name, Implementation_Profile__c
+            FROM pse__Project_Task__c
+            WHERE pse__Project__c = :project.Id
+        ];
+
+        System.assertEquals(true, projTaskList.size() > 0, 'Expected project task(s) to be created');
+
+        Test.stopTest();
+    }
+
+    @isTest
+    private static void createMilestoneForLOATask_shouldCreateMilestoneWithProjectManagerOwner() {
+        List<User> userList = [SELECT Id, Username FROM User WHERE Id != null AND Alias = 'sas' LIMIT 1];
+        System.assertEquals(true, !userList.isEmpty(), 'Expected runAs user');
+        User user = userList[0];
+        System.runAs(user) {
+            List<Contact> contactList  = [SELECT Id, pse__Salesforce_User__c FROM Contact WHERE Name != null LIMIT 1];
+            System.assertEquals(true, !contactList.isEmpty(), 'Expected contact');
+            Contact cc = contactList[0];
+            cc.pse__Salesforce_User__c = user.Id;
+            update cc;
+
+            List<pse__Proj__c> projectList = [
+                SELECT Id, Name
+                FROM pse__Proj__c
+                WHERE TemplateName__c = :Label.FSOImplementationProject
+                LIMIT 1
+            ];
+            System.assertEquals(true, !projectList.isEmpty(), 'Expected project');
+            pse__Proj__c project = projectList[0];
+
+            List<Implementation_Profile__c> ipList = [
+                SELECT Id, NSP_Project__c, NSP_Project_Manager__c,
+                    NSP_HR_Quality_Support_Team_Member__c, NSP_HR_Specialist__c,
+                    Are_there_any_EEs_on_Leave_of_Absence__c, NSP_Form_Completed__c
+                FROM Implementation_Profile__c
+                WHERE NSP_Project__c = :project.Id
+                AND RecordTypeId = :ipFSORecordTypeId
+                LIMIT 1
+            ];
+            System.assertEquals(true, !ipList.isEmpty(), 'Expected FSO implementation profile');
+            Implementation_Profile__c ip = ipList[0];
+
+            NSP_ProjectTask_Automation__mdt pta = NSP_ProjectTask_Automation__mdt.getInstance('leaveAbsenceFSO');
+            System.assertNotEquals(null, pta, 'leaveAbsenceFSO metadata must exist');
+            System.assertNotEquals(null, pta.NSP_Milestone__c, 'Milestone must be configured in metadata');
+
+            List<pse__Milestone__c> oldMilestones = [
+                SELECT Id
+                FROM pse__Milestone__c
+                WHERE pse__Project__c = :project.Id
+                AND Name = :pta.NSP_Milestone__c
+            ];
+            if (!oldMilestones.isEmpty()) {
+                delete oldMilestones;
+            }
+
+            Test.startTest();
+            ip.NSP_Project_Manager__c = cc.Id;
+            ip.NSP_HR_Quality_Support_Team_Member__c = cc.Id;
+            ip.NSP_HR_Specialist__c = cc.Id;
+            ip.Are_there_any_EEs_on_Leave_of_Absence__c = NSP_ServiceConstants.YES;
+            ip.NSP_Form_Completed__c = true;
+            update ip;
+            Test.stopTest();
+
+            List<pse__Milestone__c> milestones = [
+                SELECT Id, Name, OwnerId, pse__Project__c
+                FROM pse__Milestone__c
+                WHERE pse__Project__c = :project.Id
+                AND Name = :pta.NSP_Milestone__c
+            ];
+
+            System.assertEquals(true, milestones.size() > 0, 'Expected milestone to be created');
+            System.assertEquals(
+                user.Id,
+                milestones[0].OwnerId,
+                'Milestone owner should be Project Manager Salesforce user'
+            );
+        }
+    }
+
+    @isTest
+    private static void createMilestoneForLOATask_shouldUpdateExistingMilestoneOwner() {
+        List<User> userList = [SELECT Id, Username FROM User WHERE Id != null AND Alias = 'sas' LIMIT 1];
+        System.assertEquals(true, !userList.isEmpty(), 'Expected runAs user');
+        User user = userList[0];
+        System.runAs(user) {
+            List<Contact> contactList = [SELECT Id, pse__Salesforce_User__c FROM Contact WHERE Name != null LIMIT 1];
+            System.assertEquals(true, !contactList.isEmpty(), 'Expected contact');
+            Contact cc = contactList[0];
+            cc.pse__Salesforce_User__c = user.Id;
+            update cc;
+
+            List<pse__Proj__c> projectList = [
+                SELECT Id, Name, pse__End_Date__c
+                FROM pse__Proj__c
+                WHERE TemplateName__c = :Label.FSOImplementationProject
+                LIMIT 1
+            ];
+            System.assertEquals(true, !projectList.isEmpty(), 'Expected project');
+            pse__Proj__c project = projectList[0];
+
+             List<Implementation_Profile__c> ipList = [
+                SELECT Id, NSP_Project__c, NSP_Project_Manager__c,
+                    NSP_HR_Quality_Support_Team_Member__c, NSP_HR_Specialist__c,
+                    Are_there_any_EEs_on_Leave_of_Absence__c, NSP_Form_Completed__c
+                FROM Implementation_Profile__c
+                WHERE NSP_Project__c = :project.Id
+                AND RecordTypeId = :ipFSORecordTypeId
+                LIMIT 1
+            ];
+            System.assertEquals(true, !ipList.isEmpty(), 'Expected FSO implementation profile');
+            Implementation_Profile__c ip = ipList[0];
+
+            NSP_ProjectTask_Automation__mdt pta = NSP_ProjectTask_Automation__mdt.getInstance('leaveAbsenceFSO');
+            System.assertNotEquals(null, pta, 'leaveAbsenceFSO metadata must exist');
+            System.assertNotEquals(null, pta.NSP_Milestone__c, 'Milestone must be configured in metadata');
+
+            List<pse__Milestone__c> existingList = [
+                SELECT Id, OwnerId
+                FROM pse__Milestone__c
+                WHERE pse__Project__c = :project.Id
+                AND Name = :pta.NSP_Milestone__c
+                LIMIT 1
+            ];
+
+            pse__Milestone__c existingMilestone;
+            if (existingList.isEmpty()) {
+                existingMilestone = new pse__Milestone__c(
+                    Name = pta.NSP_Milestone__c,
+                    pse__Project__c = project.Id,
+                    pse__Target_Date__c = project.pse__End_Date__c
+                );
+                insert existingMilestone;
+            } else {
+                existingMilestone = existingList[0];
+            }
+
+            Test.startTest();
+            ip.NSP_Project_Manager__c = cc.Id;
+            ip.NSP_HR_Quality_Support_Team_Member__c = cc.Id;
+            ip.NSP_HR_Specialist__c = cc.Id;
+            ip.Are_there_any_EEs_on_Leave_of_Absence__c = NSP_ServiceConstants.YES;
+            ip.NSP_Form_Completed__c = true;
+            update ip;
+            Test.stopTest();
+
+            List<pse__Milestone__c> refreshedMilestoneList = [
+                SELECT Id, OwnerId, Name
+                FROM pse__Milestone__c
+                WHERE Id = :existingMilestone.Id
+                LIMIT 1
+            ];
+            System.assertEquals(true, !refreshedMilestoneList.isEmpty(), 'Expected refreshed milestone');
+            existingMilestone = refreshedMilestoneList[0];
+
+            System.assertEquals(
+                user.Id,
+                existingMilestone.OwnerId,
+                'Existing milestone owner should be updated to Project Manager Salesforce user'
+            );
+        }
+    }
 }
 //

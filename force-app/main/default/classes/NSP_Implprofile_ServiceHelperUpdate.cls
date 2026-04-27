@@ -52,8 +52,8 @@ public class NSP_Implprofile_ServiceHelperUpdate {
     private static final String COBRA_FN= 'Missing_COBRA_Names';
     private static final String COBRA_FORM_COLLECTED_FN=  'Verify_COBRA_eligibility';
     private static final String COBRA_FORM_NOT_COLLECTED_FN= 'COBRA_Form_Followup';
-    private static final String LOA_INFO_FN= 'Missing_LOA_forms';
-    private static final String MISSING_LOA_FN=  'Missing_LOA_Info';
+    private List<pse__Milestone__c> milestonesToUpdate = new List<pse__Milestone__c>();
+    private static final String LOA_EEs_TASK_FN = 'leaveAbsenceFSO';
     private static final String INTERNAL_DISCOVERY_FN ='NSP_Internal_Discovery';
     private static final String ONSITE_DISCOVERY_FN ='NSP_Onsite_Discovery';
     private static final String CSP_HCFSA_FSO ='CSP_HCFSA_FSO';
@@ -94,10 +94,9 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                 RETIRE_PLAN_FN , POSTTAX_LOANS_FN , SPECIAL_RELABEL_FN ,
                 REPORT_Integra_FN , REPORT_Custom401k_FN ,
                 REPORT_JOBCOSTING_FN , INTEGRA_RESPONSE ,
-                REPORT_OTHER_FN , COBRA_FN , LOA_INFO_FN ,
-                MISSING_LOA_FN , COBRA_FORM_COLLECTED_FN ,
-                COBRA_FORM_NOT_COLLECTED_FN ,
-                INTERNAL_DISCOVERY_FN ,
+                REPORT_OTHER_FN , COBRA_FN , LOA_EEs_TASK_FN ,
+                COBRA_FORM_COLLECTED_FN ,
+                COBRA_FORM_NOT_COLLECTED_FN , INTERNAL_DISCOVERY_FN ,
                 ONSITE_DISCOVERY_FN ,
                 enrollFee_FN ,enrollFee_Subtask_FN, DATA_VERIFICATION,FLSA_EXEMPTION_REVIEW
             }
@@ -177,6 +176,9 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             'finish:upsertResults' ,
             upsertResults
         );
+        if (!this.milestonesToUpdate.isEmpty()) {
+            Database.update(this.milestonesToUpdate, false);
+        }
         recToInsert.sort();
         for (SObject rec : recToInsert) {
             if(rec.getSObjectType() == Schema.pse__Project_Task__c.getSObjectType()){
@@ -269,8 +271,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             checkforReportingOther(ipRec, existingRec);
             checkforReportingIntegraResponse(ipRec, existingRec);
             checkforCOBRA(ipRec, existingRec);
-            checkforLOAInfo(ipRec,existingRec);
-            checkforLOAInfo(ipRec,existingRec);
+            checkforEEsOnLOA(ipRec, existingRec);
             checkforCOBRAForm(ipRec,existingRec,COBRA_FORM_COLLECTED_FN,NSP_ServiceConstants.YES);
             checkforCOBRAForm(ipRec,existingRec,COBRA_FORM_NOT_COLLECTED_FN,NSP_ServiceConstants.NO);
             checkInternalDiscovery(ipRec, existingRec);
@@ -278,6 +279,20 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             checkEnrollFee(ipRec, existingRec);
             checkDataVerification(ipRec, existingRec);
             checkFlsaExemptionReview(ipRec, existingRec);
+        }
+    }
+
+    private void checkforEEsOnLOA(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
+        if (automationsToExecute.contains(LOA_EEs_TASK_FN)
+            && newRec != null
+            && newRec.RecordTypeId == ipFSORecordTypeId
+            && newRec.Are_there_any_EEs_on_Leave_of_Absence__c == NSP_ServiceConstants.YES
+            && (existingRec == null
+                || newRec.NSP_Form_Completed__c
+                || newRec.Are_there_any_EEs_on_Leave_of_Absence__c != existingRec.Are_there_any_EEs_on_Leave_of_Absence__c
+               )
+        ) {
+                updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, LOA_EEs_TASK_FN);
         }
     }
 
@@ -717,37 +732,6 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         }
     }
 
-    private void checkforLOAInfo(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
-        if ( (automationsToExecute.contains(MISSING_LOA_FN) || automationsToExecute.contains(LOA_INFO_FN))
-            && newRec != null
-            && newRec.RecordTypeId == ipFSORecordTypeId
-            && newRec.NSP_Project__c != null
-            && (existingRec == null
-                || newRec.NSP_Form_Completed__c
-                || newRec.Do_you_have_the_LOA_information__c != existingRec.Do_you_have_the_LOA_information__c
-                )
-            )
-        {
-            // Check if LOA information is missing
-            if (newRec.Do_you_have_the_LOA_information__c == NSP_ServiceConstants.NO) {
-                updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, MISSING_LOA_FN);
-            }
-            // Check if LOA information is provided and employee details are not null
-            if (newRec.Do_you_have_the_LOA_information__c == NSP_ServiceConstants.YES
-                && String.isNotBlank(newRec.NSP_Employee_Details_On_LOA__c)
-                )
-            {
-                List<String> employeeNames = newRec.NSP_Employee_Details_On_LOA__c.split(',');
-                for (String empName : employeeNames) {
-                    String[] parts = empName.trim().split('~');
-                    if (parts.size() > 2 && parts[2] == NSP_ServiceConstants.NO) {
-                        updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, LOA_INFO_FN);
-                        break;
-                    }
-                }
-            }
-        }
-    }
 
     private void updateEligibleRecordsMap(Map<String, Set<Id>> automationMap, Id recId, String fnName){
         Set<Id> relevantRecords = automationMap.get(fnName);
@@ -777,12 +761,58 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         }
     }
 
+    private Id getMilestoneOwnerIdFromMetadata(
+        NSP_ProjectTask_Automation__mdt pta,
+        Implementation_Profile__c ipwithValue
+    ) {
+        Id ownerId = null;
+        if (pta != null && ipwithValue != null && String.isNotBlank(pta.Milestone_Owner_Type__c)) {
+            Map<String, Id> ownerByType = this.buildMilestoneOwnerMap(ipwithValue);
+            if (ownerByType != null && ownerByType.containsKey(pta.Milestone_Owner_Type__c)) {
+                Id tempOwnerId = ownerByType.get(pta.Milestone_Owner_Type__c);
+                if (tempOwnerId != null) {
+                    ownerId = tempOwnerId;
+                }
+            }
+        }
+        return ownerId;
+    }
+
+    private Map<String, Id> buildMilestoneOwnerMap(Implementation_Profile__c ipwithValue) {
+        Map<String, Id> ownerByType = new Map<String, Id>();
+        if (ipwithValue != null) {
+            ownerByType.put('ProjectManager', getSalesforceUserId(ipwithValue.NSP_Project_Manager__r));
+            ownerByType.put('PayrollSpecialist', getSalesforceUserId(ipwithValue.NSP_Payroll_Specialist__r));
+            ownerByType.put('Client Liaison', getSalesforceUserId(ipwithValue.NSP_Client_Liaison__r));
+            ownerByType.put('Payroll Supervisor', getSalesforceUserId(ipwithValue.NSP_Payroll_Supervisor__r));
+            ownerByType.put('Manager,HR Services', getSalesforceUserId(ipwithValue.NSP_Manager_HR_Services__r));
+            ownerByType.put('HR Specialist', getSalesforceUserId(ipwithValue.NSP_HR_Specialist__r));
+            ownerByType.put('OT Representative', getSalesforceUserId(ipwithValue.NSP_OT_Representative__r));
+            ownerByType.put('Orientation Coordinator', getSalesforceUserId(ipwithValue.NSP_Orientation_Coordinator__r));
+            ownerByType.put('HR Client Implementation Team Member', getSalesforceUserId(ipwithValue.NSP_HR_Quality_Support_Team_Member__r));
+            ownerByType.put('Client Implementation Coordinator', getSalesforceUserId(ipwithValue.NSP_Onboarding_Specialist_Coordinator__r));
+            ownerByType.put('ITA Manager', getSalesforceUserId(ipwithValue.NSP_ITA_Project_Manager__r));
+            ownerByType.put('Orientation Planner', getSalesforceUserId(ipwithValue.NSP_Orientation_Planner__r));
+            ownerByType.put('ITA Analyst', getSalesforceUserId(ipwithValue.NSP_ITA_Analyst__r));
+        }
+        return ownerByType;
+    }
+
+    private Id getSalesforceUserId(SObject relatedRecord) {
+        Id userId = null;
+        if (relatedRecord != null) {
+            userId = (Id) relatedRecord.get('pse__Salesforce_User__c');
+        }
+        return userId;
+    }
+
     //Creates the Milestones for each of the Project Tasks
-    private String createMilestoneForProjectTask(pse__Proj__c proj,NSP_ProjectTask_Automation__mdt pta) {
+    private String createMilestoneForProjectTask(pse__Proj__c proj,NSP_ProjectTask_Automation__mdt pta,Implementation_Profile__c ipwithValue) {
         String milestoneKey;
         if(proj != null && pta != null){
             Id milestoneId = getMilestoneId(proj.pse__Milestones__r,pta.NSP_Milestone__c);
             milestoneKey = proj.Id + '~' + pta.NSP_Milestone__c;
+            Id milestoneOwnerId = this.getMilestoneOwnerIdFromMetadata(pta, ipwithValue);
             if(milestoneId == null && !mileStonesToInsert.containsKey(milestoneKey)){
                 pse__Milestone__c eachMilestone = new pse__Milestone__c(
                     Name=pta.NSP_Milestone__c,
@@ -790,7 +820,17 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                     pse__Project__c=proj.Id,
                     pse__Target_Date__c=proj.pse__End_Date__c
                 );
+                if (milestoneOwnerId != null) {
+                    eachMilestone.OwnerId = milestoneOwnerId;
+                }
                 mileStonesToInsert.put(milestoneKey, eachMilestone);
+            }else if (milestoneId != null && milestoneOwnerId != null) {
+                this.milestonesToUpdate.add(
+                    new pse__Milestone__c(
+                        Id = milestoneId,
+                        OwnerId = milestoneOwnerId
+                    )
+                );
             }
         }
         return milestoneKey;
@@ -832,8 +872,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             createProjecttaskforIntegraResponse(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
             createProjecttaskforReportingOther(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
             createProjecttaskforCOBRA(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
-            createProjecttaskforLOAInfo(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
-            createProjecttaskforMissingLOA(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
+            createProjecttaskforEEsOnLOA(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
             createProjectTaskForCOBRAForm(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
             createProjecttaskforEnrollFee(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
             createSubtaskforEnrollment(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
@@ -864,7 +903,6 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                 eachProjecttask.pse__Work_Calendar__c = workCalendarId;
             }
         }
-
     }
 
     private Id getProjectTaskId(pse__Proj__c proj, String projectTaskName){
@@ -878,6 +916,34 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             }
         }
         return projectTaskId;
+    }
+
+    //Task for EEs On LOA
+    private void createProjecttaskforEEsOnLOA(
+        String automation ,
+        NSP_ProjectTask_Automation__mdt pta, pse__Proj__c proj ,
+        Id ipRecId ,
+        Implementation_Profile__c ipwithValue ,
+        Id workCalendarId
+        )
+    {
+        if(automation == LOA_EEs_TASK_FN){
+            pse__Project_Task__c eachProjecttask = genericPMTask(proj,pta,ipRecId,ipwithValue,workCalendarId);
+            NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(automation);
+            if(eachProjecttask != null && ipa != null && ipwithValue != null){
+                eachProjecttask.Implementation_Profile__c = ipwithValue.id;
+                eachProjecttask.NSP_Detail__c = 'Leave Letters/Forms';
+                projectTaskToInsertList.add(eachProjecttask);
+                ipAutomationRecords.add(
+                    createIPAutomation(
+                        ipRecId,
+                        ipa.NSP_Automation_Name__c,
+                        ipa.NSP_Method_Name__c,
+                        ipa.NSP_Section__c,NSP_ServiceConstants.FSOProfile
+                    )
+                );
+            }
+        }
     }
 
 //Health Care FSA - Task
@@ -1033,7 +1099,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         Id workCalendarId
         )
     {
-        String milestoneKey = createMilestoneForProjectTask(proj, pta);
+        String milestoneKey = this.createMilestoneForProjectTask(proj, pta, ipwithValue);
         pse__Project_Task__c eachProjecttask = createProjectTaskfromIP(proj,  pta.NSP_Category__c,ipRecId,milestoneKey);
         genericProjectTask(proj,eachProjecttask, pta, workCalendarId);
         if(ipwithValue != null
@@ -1055,7 +1121,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         Id workCalendarId
         )
     {
-        String milestoneKey = createMilestoneForProjectTask(proj, pta);
+        String milestoneKey = this.createMilestoneForProjectTask(proj, pta, ipwithValue);
         pse__Project_Task__c eachProjecttask = createProjectTaskfromIP(proj,  pta.NSP_Category__c,ipRecId,milestoneKey);
         genericProjectTask(proj,eachProjecttask, pta, workCalendarId);
         if(ipwithValue != null
@@ -1077,7 +1143,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         Id workCalendarId
         )
     {
-        String milestoneKey = createMilestoneForProjectTask(proj, pta);
+        String milestoneKey = this.createMilestoneForProjectTask(proj, pta, ipwithValue);
         pse__Project_Task__c eachProjecttask = createProjectTaskfromIP(proj,  pta.NSP_Category__c,ipRecId,milestoneKey);
         genericProjectTask(proj,eachProjecttask, pta, workCalendarId);
         if(ipwithValue != null
@@ -1099,7 +1165,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         Id workCalendarId
         )
     {
-        String milestoneKey = createMilestoneForProjectTask(proj, pta);
+        String milestoneKey = this.createMilestoneForProjectTask(proj, pta, ipwithValue);
         pse__Project_Task__c eachProjecttask = null;
         if(pta != null){
             eachProjecttask = createProjectTaskfromIP(proj,  pta.NSP_Category__c,ipRecId,milestoneKey);
@@ -1667,7 +1733,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         }
     }
 
-        // COBRA_FN refactored
+    // COBRA_FN refactored
     private  void createProjecttaskforCOBRA(
         String automation ,
         NSP_ProjectTask_Automation__mdt pta ,
@@ -1744,75 +1810,6 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             }
         }
     }
-
-    // LOA_INFO_FN
-    private  void createProjecttaskforLOAInfo(
-        String automation ,
-        NSP_ProjectTask_Automation__mdt pta ,
-        pse__Proj__c proj ,
-        Id ipRecId ,
-        Implementation_Profile__c ipwithValue ,
-        Id workCalendarId
-        )
-    {
-        if(automation == LOA_INFO_FN ){
-            pse__Project_Task__c eachProjecttask = null;
-            NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(automation);
-            Implementation_Profile__c ipRec = newIPs.get(ipRecId);
-            List<String> lstNamesEmployees = new List<String>();
-            if(ipa != null && ipRec != null && !String.isBlank(ipRec.NSP_Employee_Details_On_LOA__c)) {
-                lstNamesEmployees = ipRec.NSP_Employee_Details_On_LOA__c.split(',');
-                for(String emplyName : lstNamesEmployees){
-                    lstNamesEmployees = emplyName?.trim().split('~');
-                    if(lstNamesEmployees[2] == NSP_ServiceConstants.NO){
-                        eachProjecttask = genericPMTask(proj,pta,ipRecId,ipwithValue,workCalendarId);
-                        if(eachProjecttask != null){
-                            eachProjecttask.Name = NSP_ServiceConstants.EMPLOYEE_LOA_INFO_YES.replace('<WSEE Name>',lstNamesEmployees[0]);
-                            eachProjecttask.NSP_Detail__c=NSP_ServiceConstants.LOADETAILS;
-                            projectTaskToInsertList.add(eachProjecttask);
-                        }
-                    }
-                }
-                ipAutomationRecords.add(
-                    createIPAutomation(
-                        ipRecId,
-                        ipa.NSP_Automation_Name__c,
-                        ipa.NSP_Method_Name__c,
-                        ipa.NSP_Section__c,NSP_ServiceConstants.FSOProfile
-                    )
-                );
-            }
-        }
-    }
-
-    // MISSING_LOA_FN
-    private  void createProjecttaskforMissingLOA(
-        String automation ,
-        NSP_ProjectTask_Automation__mdt pta ,
-        pse__Proj__c proj ,
-        Id ipRecId ,
-        Implementation_Profile__c ipwithValue ,
-        Id workCalendarId
-        )
-    {
-        if(automation == MISSING_LOA_FN ){
-            pse__Project_Task__c eachProjecttask = genericPMTask(proj,pta,ipRecId,ipwithValue,workCalendarId);
-            NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(automation);
-            if(eachProjecttask != null && ipa != null) {
-                eachProjecttask.NSP_Detail__c=NSP_ServiceConstants.LOADETAILS;
-                projectTaskToInsertList.add(eachProjecttask);
-                ipAutomationRecords.add(
-                    createIPAutomation(
-                        ipRecId,
-                        ipa.NSP_Automation_Name__c,
-                        ipa.NSP_Method_Name__c,
-                        ipa.NSP_Section__c,NSP_ServiceConstants.FSOProfile
-                    )
-                );
-            }
-        }
-    }
-
     private pse__Project_Task__c createProjectTaskfromIP( pse__Proj__c project , String category , Id ipRecId , String milestoneKey ) {
         Id projectTaskPEORecordTypeId = Schema.SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE).getRecordTypeId();
         pse__Project_Task__c eachProjectTask = new pse__Project_Task__c();
@@ -1857,6 +1854,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                     NSP_HR_Specialist__c ,
                     NSP_HR_Specialist__r.NSP_Work_email__c ,
                     NSP_Client_Liaison__r.NSP_Work_email__c ,
+                	NSP_Client_Liaison__r.pse__Salesforce_User__c,
                     NSP_OT_Representative__r.NSP_Work_email__c ,
                     NSP_Transition_Specialist__r.NSP_Work_email__c ,
                     NSP_Payroll_Specialist__r.NSP_Work_email__c ,
@@ -1876,7 +1874,15 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                     NSP_Old_Benefits_Package__c ,
                     Benefits_Package__c ,
                     NSP_Old_Effective_Date_EPLI__c ,
-                    NSP_Old_Insperity_Ben_effective_date__c
+                    NSP_Old_Insperity_Ben_effective_date__c,
+                	NSP_Payroll_Supervisor__r.pse__Salesforce_User__c,
+                    NSP_Manager_HR_Services__r.pse__Salesforce_User__c,
+                    NSP_HR_Specialist__r.pse__Salesforce_User__c,
+                    NSP_OT_Representative__r.pse__Salesforce_User__c,
+                    NSP_Orientation_Coordinator__r.pse__Salesforce_User__c,
+                    NSP_ITA_Project_Manager__r.pse__Salesforce_User__c,
+                    NSP_Orientation_Planner__r.pse__Salesforce_User__c,
+                    NSP_ITA_Analyst__r.pse__Salesforce_User__c
                 FROM Implementation_Profile__c
                 WHERE ( Id IN :ipIds )
             ]
