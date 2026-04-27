@@ -85,8 +85,8 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
                         contactNewMap.put(acr.Id,newMap.get(acr.Id));
                     }
                     // Added as part of STY-02840
-                    if((acr.isDirect == true && (acr.NSP_Work_Phone__c != null && oldACR.NSP_Work_Phone__c != acr.NSP_Work_Phone__c || 
-                        acr.NSP_Work_Email__c != null && oldACR.NSP_Work_Email__c != acr.NSP_Work_Email__c ||
+                    if((acr.isDirect == true && (oldACR.NSP_Work_Phone__c != acr.NSP_Work_Phone__c || 
+                        oldACR.NSP_Work_Email__c != acr.NSP_Work_Email__c ||
                         oldACR.NSP_Employee_Status__c != acr.NSP_Employee_Status__c ||
                         oldACR.NSP_Status_Date__c != acr.NSP_Status_Date__c ||
                         oldACR.NSP_Job_Title__c != acr.NSP_Job_Title__c)) ||
@@ -238,7 +238,6 @@ public with sharing class NSP_AccountContactRelationTriggerHelper {
                     contactIdSet.add(accConObj.ContactId);
                 }
         }
-        updateJobTitleofContact(contactIdSet);
     }
 
     public void updateJobTitleofContact( Set<Id> contactIdset ) {
