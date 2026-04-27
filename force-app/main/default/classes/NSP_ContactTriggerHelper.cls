@@ -198,8 +198,8 @@ public with sharing class NSP_ContactTriggerHelper {
                         {
                             clientRefernceContactList.add(conObj);
                         }
-                        if ( ( conObj.NSP_Work_Phone__c != null && ( oldContact.NSP_Work_Phone__c != conObj.NSP_Work_Phone__c ) )
-                            || ( conObj.NSP_Work_email__c != null && ( oldContact.NSP_Work_email__c != conObj.NSP_Work_email__c ) )
+                        if ( (oldContact.NSP_Work_Phone__c != conObj.NSP_Work_Phone__c )
+                            || ( oldContact.NSP_Work_email__c != conObj.NSP_Work_email__c ) 
                             || ( oldContact.NSP_Employee_Status__c != conObj.NSP_Employee_Status__c )
                             || ( oldContact.NSP_Status_Date__c != conObj.NSP_Status_Date__c )
                             || ( oldContact.NSP_Job_Title__c != conObj.NSP_Job_Title__c )
