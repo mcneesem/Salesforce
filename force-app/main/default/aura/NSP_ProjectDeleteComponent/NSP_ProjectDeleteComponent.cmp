@@ -6,14 +6,14 @@
         <lightning:spinner aura:id="deleteSpinner" class="slds-hide"/>
         <aura:if isTrue="{!v.isAllowedDelete}">
             <lightning:card iconName="action:delete" title="Delete Record">
-                <div class="slds-p-horizontal--small" > <p> <b> Note: </b> {!$Label.c.NSP_Before_project_delete_alert_message}</p>  </div>
+                <div class="slds-p-horizontal_small" > <p> <b> Note: </b> {!$Label.c.NSP_Before_project_delete_alert_message}</p>  </div>
                 <br/>
-                <div class="slds-p-horizontal--small">
+                <div class="slds-p-horizontal_small">
                     <lightning:button label="Delete Record" variant="destructive" onclick="{!c.handleDeleteRecord}"/>
                 </div>
             </lightning:card>
             <aura:set attribute="else">
-                <div class="slds-p-horizontal--small" > <p>{!$Label.c.NSP_project_delete_allowed_error}</p></div>
+                <div class="slds-p-horizontal_small" > <p>{!$Label.c.NSP_project_delete_allowed_error}</p></div>
             </aura:set>
         </aura:if>
         
