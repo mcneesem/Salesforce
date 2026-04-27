@@ -1,6 +1,6 @@
 // intentionally `without sharing` to ensure that LWC/scheduleSelle has access to all Event records...
 public without sharing class UserAvailability {
-    // test w/ UserAvailabilityTest (80%)
+    // test w/ UserAvailabilityTest (95%)
 
     private List<Event> busy = new List<Event>();
     private List<Event> fused = new List<Event>();
@@ -67,7 +67,9 @@ public without sharing class UserAvailability {
                     Id ,
                     OwnerId ,
                     StartDateTime ,
-                    EndDateTime
+                    EndDateTime,
+                	NSP_Event_Subtype__c,
+                	NSP_Event_Type__c
                 FROM Event
                 WHERE (
                     ( OwnerId IN :ownerIds )
