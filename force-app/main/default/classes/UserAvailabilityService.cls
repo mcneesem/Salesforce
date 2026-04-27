@@ -225,14 +225,7 @@ public with sharing class UserAvailabilityService {
                     )
                 {
                     // Create new Event with extended EndDateTime (30 minutes buffer)
-                    processedEvent = new Event(
-                        Id = e.Id ,
-                        OwnerId = e.OwnerId ,
-                        StartDateTime = e.StartDateTime ,
-                        EndDateTime = e.EndDateTime.addMinutes( 30 ) ,
-                        NSP_Event_Type__c = e.NSP_Event_Type__c,
-                        NSP_Event_Subtype__c = e.NSP_Event_Subtype__c
-                    );
+                    processedEvent.EndDateTime = processedEvent.EndDateTime.addMinutes( 30 );
                 }
                 processedEvents.add( processedEvent );
             }
