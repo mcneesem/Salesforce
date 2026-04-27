@@ -28,7 +28,7 @@
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <filterLogic>( 1 AND 2 AND 3 AND ( 4 OR 5 OR 6 OR 7 OR 8 OR 9 ) )</filterLogic>
+        <filterLogic>( ( 1 AND 2 AND 3 ) AND ( 4 OR 5 OR 6 OR 7 OR 8 OR 9 ) )</filterLogic>
         <filters>
             <field>pse__Project__c</field>
             <operator>IsNull</operator>
@@ -44,10 +44,10 @@
             </value>
         </filters>
         <filters>
-            <field>NSP_Visible_to_Client__c</field>
+            <field>Template_Name__c</field>
             <operator>EqualTo</operator>
             <value>
-                <booleanValue>true</booleanValue>
+                <stringValue>FSO - Implementation</stringValue>
             </value>
         </filters>
         <filters>
@@ -89,7 +89,7 @@
             <field>Name</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>CSP Client Authorization/Cafeteria Plan Documentation Collected</stringValue>
+                <stringValue>CSP Client Authorization/Cafeteria Plan documentation collected</stringValue>
             </value>
         </filters>
         <object>pse__Project_Task__c</object>
