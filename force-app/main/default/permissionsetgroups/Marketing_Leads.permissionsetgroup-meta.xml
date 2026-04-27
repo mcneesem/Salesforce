@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Group of Permission Sets to be granted to Marketing Leads profile users.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Marketing Leads</label>
+    <permissionSets>Marketing_Leads_Apex_Access</permissionSets>
+    <permissionSets>Marketing_Leads_Assigned_Apps</permissionSets>
+    <permissionSets>Marketing_Leads_Field_Permissions</permissionSets>
+    <permissionSets>Marketing_Leads_Object_Permissions</permissionSets>
+    <permissionSets>Marketing_Leads_Record_Type_Assignments</permissionSets>
+    <permissionSets>Marketing_Leads_System_Permissions</permissionSets>
+    <permissionSets>Marketing_Leads_Visualforce_Page_Access</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>
