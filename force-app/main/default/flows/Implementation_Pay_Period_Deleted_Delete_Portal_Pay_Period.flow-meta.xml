@@ -134,7 +134,7 @@
             <label>Valid IP Record</label>
         </rules>
     </decisions>
-    <description>New Client Portal : Delete Portal Pay Period</description>
+    <description>New Client Portal: Delete Portal Pay Period</description>
     <environments>Default</environments>
     <interviewLabel>Implementation Pay Period - Deleted - Delete Portal Pay Period {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Implementation Pay Period - Deleted - Delete Portal Pay Period</label>
