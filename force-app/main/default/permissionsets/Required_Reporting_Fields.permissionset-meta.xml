@@ -2478,6 +2478,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SBQQ__QuoteLine__c.Override_Scholarship_Discounts__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SBQQ__QuoteLine__c.Promo_Applicable_Product__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2514,6 +2519,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__Quote__c.NSP_Has_Timestar_Hardware__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__Quote__c.Price_Rule_Override__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
