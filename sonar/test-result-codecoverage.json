@@ -6864,7 +6864,7 @@
   {
     "id": "01p4x00000NS3kxAAD",
     "name": "NSP_AccountContactRelationTriggerHandler",
-    "totalLines": 15,
+    "totalLines": 11,
     "lines": {
       "8": 1,
       "17": 1,
@@ -6876,14 +6876,10 @@
       "40": 1,
       "41": 1,
       "44": 1,
-      "55": 1,
-      "56": 1,
-      "57": 1,
-      "58": 0,
-      "60": 1
+      "55": 1
     },
-    "totalCovered": 14,
-    "coveredPercent": 93
+    "totalCovered": 11,
+    "coveredPercent": 100
   },
   {
     "id": "01p4x00000NS3mDAAT",
@@ -13168,7 +13164,7 @@
   {
     "id": "01p4x00000NS3lIAAT",
     "name": "NSP_ContactTriggerHelper",
-    "totalLines": 277,
+    "totalLines": 276,
     "lines": {
       "13": 1,
       "14": 1,
@@ -13445,10 +13441,9 @@
       "545": 1,
       "549": 1,
       "550": 1,
-      "553": 1,
-      "554": 1
+      "553": 1
     },
-    "totalCovered": 267,
+    "totalCovered": 266,
     "coveredPercent": 96
   },
   {
@@ -49837,7 +49832,7 @@
   {
     "id": "01p4x00000VMCTWAA5",
     "name": "NSP_Implprofile_ServiceHelperUpdate",
-    "totalLines": 1544,
+    "totalLines": 1543,
     "lines": {
       "8": 1,
       "9": 1,
@@ -51381,8 +51376,7 @@
       "2780": 1,
       "2789": 1,
       "2790": 1,
-      "2791": 0,
-      "2792": 0
+      "2791": 0
     },
     "totalCovered": 1306,
     "coveredPercent": 84
