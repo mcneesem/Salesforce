@@ -108,17 +108,17 @@
                                     <rightValue>Sales Support</rightValue>
                                 </criteria>
                                 <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Opportunity_Docusign_Service_Actions}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                                <criteria>
                                     <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!$Permission.CustomPermission.Opportunity_Closed_Won_NCS_User}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>true</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.Opportunity_Docusign_Service_Actions}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
                                 </criteria>
@@ -189,12 +189,12 @@
                                     <rightValue>Sales Member</rightValue>
                                 </criteria>
                                 <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
+                                    <leftValue>{!$Permission.CustomPermission.Opportunity_Docusign_Service_Actions}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
                                 </criteria>
                                 <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.Opportunity_Docusign_Service_Actions}</leftValue>
+                                    <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
                                 </criteria>
