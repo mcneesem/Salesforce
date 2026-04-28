@@ -123,9 +123,9 @@
                                     <rightValue>true</rightValue>
                                 </criteria>
                                 <criteria>
-                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <leftValue>{!$Permission.CustomPermission.Opportunity_Docusign_Service_Actions}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>PEO Service</rightValue>
+                                    <rightValue>true</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -204,9 +204,9 @@
                                     <rightValue>true</rightValue>
                                 </criteria>
                                 <criteria>
-                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <leftValue>{!$Permission.CustomPermission.Opportunity_Docusign_Service_Actions}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>PEO Service</rightValue>
+                                    <rightValue>true</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
