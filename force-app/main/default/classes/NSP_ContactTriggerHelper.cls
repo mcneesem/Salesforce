@@ -177,13 +177,10 @@ public with sharing class NSP_ContactTriggerHelper {
     // @return void
     //
     public void afterUpdateDirector( Map<Id,Contact> newMap , Map<Id,Contact> oldMap ) {
-        //Modified as part of SOQL fix 228901
-        String loggedInUserProfileName;
         List<Contact> queueNewContact = new List<Contact>();
-        Map<Id, Contact> queueOldMap = new Map<Id, Contact>();
+        Map<Id,Contact> queueOldMap = new Map<Id,Contact>();
         Set<Id> processedContact = new Set<Id>();
-
-        loggedInUserProfileName = getLoggedInUserProfileName();
+        String loggedInUserProfileName = getLoggedInUserProfileName();
         try {
             //Modified as part of SOQL fix 228901
             if ( loggedInUserProfileName != null && !INT_DM_PROFILES.contains(loggedInUserProfileName) ){
@@ -196,10 +193,10 @@ public with sharing class NSP_ContactTriggerHelper {
                             && conObj.NSP_Client_Reference__c
                             )
                         {
-                            clientRefernceContactList.add(conObj);
+                            clientRefernceContactList.add( conObj );
                         }
-                        if ( ( conObj.NSP_Work_Phone__c != null && ( oldContact.NSP_Work_Phone__c != conObj.NSP_Work_Phone__c ) )
-                            || ( conObj.NSP_Work_email__c != null && ( oldContact.NSP_Work_email__c != conObj.NSP_Work_email__c ) )
+                        if ( ( oldContact.NSP_Work_Phone__c != conObj.NSP_Work_Phone__c )
+                            || ( oldContact.NSP_Work_email__c != conObj.NSP_Work_email__c )
                             || ( oldContact.NSP_Employee_Status__c != conObj.NSP_Employee_Status__c )
                             || ( oldContact.NSP_Status_Date__c != conObj.NSP_Status_Date__c )
                             || ( oldContact.NSP_Job_Title__c != conObj.NSP_Job_Title__c )
