@@ -4,6 +4,7 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>PEO Service</label>
     <permissionSets>Checklist_View_All</permissionSets>
+    <permissionSets>Opportunity_Docusign_Service_Actions</permissionSets>
     <permissionSets>PEO_Service_Apex_Access</permissionSets>
     <permissionSets>PEO_Service_Assigned_Apps</permissionSets>
     <permissionSets>PEO_Service_Custom_Metadata_Types</permissionSets>
