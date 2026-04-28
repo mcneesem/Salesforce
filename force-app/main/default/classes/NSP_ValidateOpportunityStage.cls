@@ -250,8 +250,8 @@ public with sharing class NSP_ValidateOpportunityStage {
                 }
             }
             if ( ( valObjectAgs != null )
-                && NSP_ValidateOpportunityStage.checkCondition( valObjectAgs.get( val.Field__c ) , valValue , val.Operation__c )
-               )
+                && NSP_ValidateOpportunityStage.checkCondition( valObjectAgs.get(val.Field__c) , valValue , val.Operation__c )
+                )
             {
                 passCheckCount++;
             }
