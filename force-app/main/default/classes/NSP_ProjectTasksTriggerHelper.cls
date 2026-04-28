@@ -2368,17 +2368,6 @@ public class NSP_ProjectTasksTriggerHelper {
                     ccEmails.addAll(mapAccTeamEmails.get(proj.NSP_AccountId__c));
                     proj.NSP_CC_Emails__c = String.join(ccEmails, ',');
                 }
-                if(mapAccTeamCLHR.containsKey(NSP_ServiceConstants.BUS_TEAM_HRSP_CL)){
-                    proj.NSP_Client_Liaison_Name__c = mapAccTeamCLHR?.get(NSP_ServiceConstants.BUS_TEAM_HRSP_CL)?.NSP_First_Name__c +' '+mapAccTeamCLHR?.get(NSP_ServiceConstants.BUS_TEAM_HRSP_CL)?.NSP_Last_Name__c;
-                    proj.NSP_Client_Liaison_Email__c = mapAccTeamCLHR?.get(NSP_ServiceConstants.BUS_TEAM_HRSP_CL)?.NSP_Email__c;
-                    proj.NSP_HR_Specialist_Name__c = mapAccTeamCLHR?.get(NSP_ServiceConstants.BUS_TEAM_HRSP_CL)?.NSP_First_Name__c +' '+mapAccTeamCLHR?.get(NSP_ServiceConstants.BUS_TEAM_HRSP_CL)?.NSP_Last_Name__c;
-                    proj.NSP_HR_Specialist_Email__c =  mapAccTeamCLHR?.get(NSP_ServiceConstants.BUS_TEAM_HRSP_CL)?.NSP_Email__c;
-                }else if(mapAccTeamCLHR.containsKey(NSP_ServiceConstants.CLIENT_LIAISION) || mapAccTeamCLHR.containsKey(NSP_ServiceConstants.HRSpecialist)){
-                    proj.NSP_Client_Liaison_Name__c = mapAccTeamCLHR?.get(NSP_ServiceConstants.CLIENT_LIAISION)?.NSP_First_Name__c +' '+mapAccTeamCLHR?.get(NSP_ServiceConstants.CLIENT_LIAISION)?.NSP_Last_Name__c;
-                    proj.NSP_Client_Liaison_Email__c = mapAccTeamCLHR?.get(NSP_ServiceConstants.CLIENT_LIAISION)?.NSP_Email__c;
-                    proj.NSP_HR_Specialist_Name__c = mapAccTeamCLHR?.get(NSP_ServiceConstants.HRSpecialist)?.NSP_First_Name__c +' '+mapAccTeamCLHR?.get(NSP_ServiceConstants.HRSpecialist)?.NSP_Last_Name__c;
-                    proj.NSP_HR_Specialist_Email__c =  mapAccTeamCLHR?.get(NSP_ServiceConstants.HRSpecialist)?.NSP_Email__c;
-                }
             }
         } catch ( Exception e ) {
             NSP_ProjectTasksTriggerHelper.handleException(
