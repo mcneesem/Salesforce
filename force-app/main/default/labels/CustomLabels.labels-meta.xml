@@ -991,7 +991,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ApprovalSubmitterGroups</shortDescription>
-        <value>NSP_CSS,NSP_Recruiting_Services,NSP_Retail_Sales,NSP_SE_Group_1,NSP_SE_Group_2,NSP_SE_MidMarket,NSP_Talent_Connect,NSG_Inside_Sales,NSP_SE_Group_3,NSP_CPQ_Admin,NSP_Support_Renewal_Specialists,NSP_Retirement_Services,NSP_HR_Consulting,NSP_WS_Consulting,NSP_Learning_and_Development,NSP_Finance_Users_Edit_Access_Group,NSP_iSolved_Service,CPQ_Compensation_Services</value>
+        <value>NSP_CSS,NSP_Recruiting_Services,NSP_Retail_Sales,NSP_SE_Group_1,NSP_SE_Group_2,NSP_SE_MidMarket,NSP_Talent_Connect,NSG_Inside_Sales,NSP_SE_Group_3,NSP_CPQ_Admin,NSP_Support_Renewal_Specialists,NSP_Retirement_Services,NSP_HR_Consulting,NSP_WS_Consulting,NSP_Learning_and_Development,NSP_Finance_Users_Edit_Access_Group,NSP_iSolved_Service,CPQ_Compensation_Services,I9Assist_CPQ</value>
     </labels>
     <labels>
         <fullName>NSP_Approve_Primary_Quote</fullName>
