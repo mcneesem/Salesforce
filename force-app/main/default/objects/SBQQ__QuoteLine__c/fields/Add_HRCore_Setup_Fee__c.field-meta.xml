@@ -6,7 +6,7 @@
   AND(
     ( NSP_ActionType__c = &quot;Add Product&quot; ) ,
     ( SBQQ__Quote__r.NSP_TransactionType__c = &quot;Amendment/Supplemental&quot; ) ,
-    (  CONTAINS( $Label.HRCore_Setup_Fee_Products , SBQQ__ProductCode__c) )
+    ( CONTAINS( $Label.HRCore_Setup_Fee_Products , SBQQ__ProductCode__c) )
   ) ,
   true ,
   false
