@@ -2034,6 +2034,10 @@
     </customPermissions>
     <customPermissions>
         <enabled>true</enabled>
+        <name>Opportunity_Docusign_Service_Actions</name>
+    </customPermissions>
+    <customPermissions>
+        <enabled>true</enabled>
         <name>Services_Opportunity_Owner</name>
     </customPermissions>
     <customSettingAccesses>
