@@ -6814,4 +6814,11 @@ Climate (Full): https://nexus.insperity.com/groups/38605/posts/3272612-climate-p
         <shortDescription>nsp Associate Client subplan History</shortDescription>
         <value>Associate a Plan History Record With This Client</value>
     </labels>
+    <labels>
+        <fullName>HRCore_Setup_Fee_Products</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>HRCore Setup Fee Products</shortDescription>
+        <value>HCMiSolvedTime,HCMBenAdmin,HCMCOBRAAdmin,HCMFringeBenAdmin,HCMLeaveAdmin,HCMiSolvedHire,HCMLearnDev,HCMPM,HCMPSB,HCMEVERIFYIntegration</value>
+    </labels>
 </CustomLabels>

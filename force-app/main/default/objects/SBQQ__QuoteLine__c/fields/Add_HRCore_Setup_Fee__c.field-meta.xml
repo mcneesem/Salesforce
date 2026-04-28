@@ -6,25 +6,7 @@
   AND(
     ( NSP_ActionType__c = &quot;Add Product&quot; ) ,
     ( SBQQ__Quote__r.NSP_TransactionType__c = &quot;Amendment/Supplemental&quot; ) ,
-    IF(
-      (
-        CASE(
-          SBQQ__ProductCode__c ,
-          &quot;HCMiSolvedTime&quot; , 1 ,
-          &quot;HCMBenAdmin&quot; , 1 ,
-          &quot;HCMCOBRAAdmin&quot; , 1 ,
-          &quot;HCMFringeBenAdmin&quot; , 1 ,
-          &quot;HCMLeaveAdmin&quot; , 1 ,
-          &quot;HCMiSolvedHire&quot; , 1 ,
-          &quot;HCMLearnDev&quot; , 1 ,
-          &quot;HCMPM&quot; , 1 ,
-          &quot;HCMPSB&quot; , 1 ,
-        0
-        ) &gt; 0
-      ) ,
-      true ,
-      false
-    )
+    (  CONTAINS( $Label.HRCore_Setup_Fee_Products , SBQQ__ProductCode__c) )
   ) ,
   true ,
   false
