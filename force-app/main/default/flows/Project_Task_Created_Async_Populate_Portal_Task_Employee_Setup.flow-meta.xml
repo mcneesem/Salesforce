@@ -44,10 +44,10 @@
             </value>
         </filters>
         <filters>
-            <field>NSP_Visible_to_Client__c</field>
+            <field>Template_Name__c</field>
             <operator>EqualTo</operator>
             <value>
-                <booleanValue>true</booleanValue>
+                <stringValue>FSO - Implementation</stringValue>
             </value>
         </filters>
         <filters>
@@ -68,7 +68,7 @@
             <field>Name</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Cell Phone Stipend</stringValue>
+                <stringValue>Cell Phone Reimbursements</stringValue>
             </value>
         </filters>
         <filters>
