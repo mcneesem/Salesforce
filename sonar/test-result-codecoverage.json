@@ -5583,7 +5583,7 @@
   {
     "id": "01p4x00000NS3nBAAT",
     "name": "NSP_UserTriggerHelper",
-    "totalLines": 468,
+    "totalLines": 463,
     "lines": {
       "4": 1,
       "11": 1,
@@ -6048,13 +6048,8 @@
       "910": 1,
       "911": 1,
       "912": 1,
-      "913": 1,
-      "914": 1,
-      "915": 1,
-      "921": 1,
-      "922": 1
     },
-    "totalCovered": 385,
+    "totalCovered": 380,
     "coveredPercent": 82
   },
   {
