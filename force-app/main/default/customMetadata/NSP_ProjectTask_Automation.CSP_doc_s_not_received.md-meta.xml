@@ -3,10 +3,6 @@
     <label>CSP_DOCS_FSO</label>
     <protected>false</protected>
     <values>
-        <field>Milestone_Owner_Type__c</field>
-        <value xsi:nil="true"/>
-    </values>
-    <values>
         <field>NSP_Category__c</field>
         <value xsi:type="xsd:string">Client Sponsored Plans</value>
     </values>
