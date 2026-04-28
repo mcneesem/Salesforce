@@ -475,7 +475,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>daysToShow</name>
-                    <value>50</value>
+                    <value>30</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>earliestRange</name>
