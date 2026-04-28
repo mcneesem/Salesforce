@@ -552,10 +552,7 @@ public with sharing class NSP_ValidateOpportunityStage {
     private static void evaluateQuoteExistingQuote( Opportunity opp , SBQQ__Quote__c primaryQuote ){
         try {
             if ( primaryQuote?.SBQQ__Status__c != NSP_SalesConstants.APPROVAL_STATUS_APPROVED ){
-                NSP_ValidateOpportunityStage.addValError(
-                    opp ,
-                    System.Label.NSP_Approve_Primary_Quote
-                );
+                opp.addError( System.Label.NSP_Approve_Primary_Quote );
             } else if ( !test.isRunningTest()
                 && opp.StageName.equals( NSP_SalesConstants.CLOSED_WON )
                 && ( ( opp.NSP_PrimaryProduct__c != primaryQuote?.NSP_Opportunity_Primary_Product__c )
@@ -584,10 +581,7 @@ public with sharing class NSP_ValidateOpportunityStage {
             {
                 if ( opp.SBQQ__PrimaryQuote__c != null && primaryQuote != null ) {
                     if ( primaryQuote.SBQQ__Status__c != NSP_SalesConstants.APPROVAL_STATUS_APPROVED ) {
-                        NSP_ValidateOpportunityStage.addValError(
-                            opp ,
-                            System.Label.NSP_Approve_Primary_Quote
-                        );
+                        opp.addError(System.Label.NSP_Approve_Primary_Quote);
                     } else if ( opp.StageName.equals( NSP_SalesConstants.CLOSED_WON )
                         && ( ( opp.NSP_PrimaryProduct__c != primaryQuote.NSP_Opportunity_Primary_Product__c )
                             || ( opp.NSP_Client_For_Life__c != primaryQuote.NSP_Client_For_Life__c ) )
@@ -599,6 +593,7 @@ public with sharing class NSP_ValidateOpportunityStage {
                         );
                     }
                 } else {
+
                     NSP_ValidateOpportunityStage.addValError(
                         opp ,
                         System.Label.NSP_AddPrimaryQuote
