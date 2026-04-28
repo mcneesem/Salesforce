@@ -113,8 +113,8 @@
     </decisions>
     <description>Create zero dollar invoice lines</description>
     <environments>Default</environments>
-    <interviewLabel>Create zero dollar invoice lines {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Create zero dollar invoice lines</label>
+    <interviewLabel>DEPRECATED - Create zero dollar invoice lines {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>DEPRECATED - Create zero dollar invoice lines</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -189,5 +189,5 @@
         <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
 </Flow>
