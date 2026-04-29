@@ -4396,16 +4396,6 @@
                 <identifier>RecordNSP_Risk_Status_Date_cField</identifier>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Max_Overdue_Invoice_Date__c</fieldItem>
-                <identifier>RecordNSP_Max_Overdue_Invoice_Date_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
         <name>Facet-d1489a31-39d0-4ae1-8768-ab3a7bf432f1</name>
         <type>Facet</type>
     </flexiPageRegions>
