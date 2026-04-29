@@ -64,7 +64,7 @@ public with sharing class AutomateOpportunityStage {
                 updateOptyList = AutomateOpportunityStage.getUpdateOptyList( stageAutoOptyList );
                 // Update Opportunity Stages
                 if ( !updateOptyList.isEmpty() ) {
-                    List<Database.SaveResult> results = Database.update( stageAutoOptyList , false );
+                    List<Database.SaveResult> results = Database.update( updateOptyList , false );
                     NSP_ErrorLogHandler.logResults(
                         AutomateOpportunityStage.class.getName() ,
                         'automateOpportunityStage:update' ,
