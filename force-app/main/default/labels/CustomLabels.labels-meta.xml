@@ -479,6 +479,13 @@
         <value>TESImplementationSupport@insperity.com</value>
     </labels>
     <labels>
+        <fullName>HRCore_Setup_Fee_Products</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>HRCore Setup Fee Products</shortDescription>
+        <value>HCMiSolvedTime,HCMBenAdmin,HCMCOBRAAdmin,HCMFringeBenAdmin,HCMLeaveAdmin,HCMiSolvedHire,HCMLearnDev,HCMPM,HCMPSB,HCMEVERIFYIntegration</value>
+    </labels>
+    <labels>
         <fullName>HSA</fullName>
         <language>en_US</language>
         <protected>false</protected>
