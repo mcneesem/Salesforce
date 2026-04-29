@@ -128,6 +128,7 @@ public with sharing class SandboxHealthController {
             res.sections.add( verifyImageDocuments() );
             res.sections.add( verifyQueuesEmailSuffix() );
             res.sections.add( verifyCspTrustedSites() );
+            // res.sections.add(verifyWorkflowAlertCcEmails());
         }
 
         return res;
@@ -1149,6 +1150,121 @@ public with sharing class SandboxHealthController {
         }
 
         return SandboxHealthController.finalizeSection( email );
+    }
+
+    @AuraEnabled
+    public static Section verifyWorkflowAlertCcEmails() {
+        Section s = new Section();
+        s.key = 'workflowAlertEmails';
+        s.label = 'Workflow Alert CC Emails';
+        s.category = 'SECURITY';
+        s.checks = new List<Check>();
+
+        try {
+            // Tooling API–safe SOQL (no FullName)
+            String soql =
+                'SELECT Id, CcEmails, Description ' +
+                'FROM WorkflowAlert ' +
+                'WHERE CcEmails != null';
+
+            HttpRequest req = new HttpRequest();
+            req.setEndpoint(
+                'callout:ToolingAPI_Metadata_RO/services/data/v60.0/tooling/query' +
+                '?q=' + EncodingUtil.urlEncode(soql, 'UTF-8')
+            );
+            req.setMethod('GET');
+
+            HttpResponse res = new Http().send(req);
+
+            if (res.getStatusCode() == 200) {
+                Map<String, Object> payload =
+                    (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
+                List<Object> records =
+                    (List<Object>) payload.get('records');
+
+                if (records == null || records.isEmpty()) {
+                    // No alerts with CCs → WARN (same pattern as Email Labels)
+                    s.checks.add(
+                        newWarn(
+                            'wfalert_none',
+                            'Workflow Alerts',
+                            'At least one',
+                            'None',
+                            'No WorkflowAlert records with CC emails found'
+                        )
+                    );
+                } else {
+                    for (Object r : records) {
+                        Map<String, Object> rec = (Map<String, Object>) r;
+                        String alertId = (String) rec.get('Id');
+                        String descVal = (String) rec.get('Description');
+                        Object ccVal = rec.get('CcEmails');
+
+                        Boolean allInvalid = true;
+                        String actualValue = String.valueOf(ccVal);
+
+                        if (ccVal != null) {
+                            for (String email : actualValue.split('[,;\r\n]+')) {
+                                email = email.trim();
+                                if (String.isBlank(email)) {
+                                    continue;
+                                }
+                                if (!email.endsWith(STRING_INVALID)) {
+                                    allInvalid = false;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (allInvalid) {
+                            s.checks.add(
+                                newPass(
+                                    'wfalert_' + alertId,
+                                    descVal,
+                                    'All CC emails end with ' + STRING_INVALID,
+                                    actualValue,
+                                    'CC emails are invalidated'
+                                )
+                            );
+                        } else {
+                            s.checks.add(
+                                newFail(
+                                    'wfalert_' + alertId,
+                                    descVal,
+                                    'All CC emails end with ' + STRING_INVALID,
+                                    actualValue,
+                                    'One or more CC emails are not invalidated'
+                                )
+                            );
+                        }
+                    }
+                }
+            } else {
+                // Tooling API failure
+                s.checks.add(
+                    newFail(
+                        'wfalert_http',
+                        'Workflow Alerts',
+                        'HTTP 200',
+                        String.valueOf(res.getStatusCode()),
+                        'Tooling API error: ' + res.getBody()
+                    )
+                );
+            }
+        } catch (Exception e) {
+            s.checks.add(
+                newWarn(
+                    'wfalert_exception',
+                    'Workflow Alerts',
+                    'Evaluated',
+                    'Error',
+                    e.getMessage()
+                )
+            );
+        }
+
+        // ✅ single return, section status auto-calculated
+        return finalizeSection(s);
     }
 
     private static Map<String, Id> mTmplId {

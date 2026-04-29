@@ -1,26 +1,32 @@
 import { LightningElement, wire } from 'lwc';
 import getHealth from '@salesforce/apex/SandboxHealthController.getHealth';
+import verifyWorkflowAlertCcEmails
+    from '@salesforce/apex/SandboxHealthController.verifyWorkflowAlertCcEmails';
 import { refreshApex } from '@salesforce/apex';
 
 export default class SandboxHealth extends LightningElement {
     activeSections = [];
+    activeChildSections = [];
     sections = [];
     context = { sandboxName: '', instance: '' };
     evaluatedAtDisplay = '';
     error = '';
     loading = true;
 
-    // Track child active sections for nested accordion (e.g., Custom Settings children)
-    activeChildSections = [];
+    // Guard flag to prevent infinite re-render loops
+    workflowSectionLoaded = false;
 
-    // Wire to Apex (cacheable)
-    // Capture wired result so we can refresh later if needed
+    // Track wired result for refresh
     _wiredResult;
 
+    // ----------------------------
+    // Wire: cacheable Apex method
+    // ----------------------------
     @wire(getHealth)
     wiredHealth(value) {
         this._wiredResult = value;
         const { error, data } = value;
+
         if (data) {
             this.applyData(data);
         } else if (error) {
@@ -29,41 +35,59 @@ export default class SandboxHealth extends LightningElement {
         this.loading = false;
     }
 
-    handleToggle(event) {
-        this.activeSections = event?.detail?.openSections;
-    }
+    // ----------------------------
+    // Apply cached health data
+    // ----------------------------
+    applyData(data) {
+        this.setContext(data);
+        this.setTimestamp(data);
 
-    handleToggleAll() {
-        if ( this.hasAnyTopOpen() ) {
-            this.collapseAll();
-        } else {
-            this.expandAll();
+        const raw = this.toArray(data?.sections);
+        const decorated = raw.map((s) => this.decorateSection(s));
+        const buckets = this.bucketSections(decorated);
+        const grouped = this.buildGroupedSections(buckets);
+
+        // Reset sections from cached data
+        this.sections = grouped;
+        this.initChildActivesIfEmpty();
+        this.initTopActivesIfEmpty();
+
+        // Load Tooling API section exactly once per refresh
+        if (!this.workflowSectionLoaded) {
+            this.workflowSectionLoaded = true;
+            this.loadWorkflowAlertSection();
         }
     }
 
-    hasAnyTopOpen() {
-        return Array.isArray(this.activeSections) && this.activeSections.length > 0;
+    // ----------------------------
+    // Imperative Tooling API call
+    // ----------------------------
+    async loadWorkflowAlertSection() {
+        try {
+            const section = await verifyWorkflowAlertCcEmails();
+            if (!section) {
+                return;
+            }
+
+            const decorated = this.decorateSection(section);
+
+            // Append without mutating existing array
+            this.sections = [...this.sections, decorated];
+        } catch (err) {
+            // Do not break the page for verification failures
+            // Optional: surface as WARN UI element later
+            // eslint-disable-next-line no-console
+            console.warn('Workflow Alert CC Email verification failed', err);
+        }
     }
 
-    collapseAll() {
-        this.activeSections = [];
-        this.activeChildSections = [];
-    }
-
-    expandAll() {
-        const top = Array.isArray(this.sections) ? this.sections : [];
-        this.activeSections = top.map(s => s.key);
-        this.activeChildSections = this.collectAllChildNames(top);
-    }
-
-    get toggleIcon() {
-        return (!this.activeSections || this.activeSections.length === 0) ? 'utility:add' : 'utility:dash';
-    }
-
+    // ----------------------------
+    // Refresh handler
+    // ----------------------------
     handleRefresh() {
-        // Prefer refreshApex on the wired result to bust LDS cache, fallback to imperative call
         this.loading = true;
         this.error = '';
+        this.workflowSectionLoaded = false;
 
         if (this._wiredResult) {
             refreshApex(this._wiredResult)
@@ -82,7 +106,6 @@ export default class SandboxHealth extends LightningElement {
                     this.loading = false;
                 });
         } else {
-            // Fallback: call Apex imperatively
             getHealth()
                 .then((data) => {
                     this.applyData(data);
@@ -96,6 +119,45 @@ export default class SandboxHealth extends LightningElement {
         }
     }
 
+    // ----------------------------
+    // UI helpers
+    // ----------------------------
+    handleToggle(event) {
+        this.activeSections = event?.detail?.openSections;
+    }
+
+    handleToggleAll() {
+        if (this.hasAnyTopOpen()) {
+            this.collapseAll();
+        } else {
+            this.expandAll();
+        }
+    }
+
+    hasAnyTopOpen() {
+        return Array.isArray(this.activeSections) && this.activeSections.length > 0;
+    }
+
+    collapseAll() {
+        this.activeSections = [];
+        this.activeChildSections = [];
+    }
+
+    expandAll() {
+        const top = Array.isArray(this.sections) ? this.sections : [];
+        this.activeSections = top.map((s) => s.key);
+        this.activeChildSections = this.collectAllChildNames(top);
+    }
+
+    get toggleIcon() {
+        return (!this.activeSections || this.activeSections.length === 0)
+            ? 'utility:add'
+            : 'utility:dash';
+    }
+
+    // ----------------------------
+    // Section decoration
+    // ----------------------------
     decorateSection(sec) {
         const checks = (sec?.checks || []).map((c) => ({
             ...c,
@@ -112,85 +174,85 @@ export default class SandboxHealth extends LightningElement {
         };
     }
 
+    // ----------------------------
+    // Bucketing & grouping
+    // ----------------------------
     isCustomSettings(sec) {
-        const cat = (sec?.category || '').toString().toLowerCase();
-        return (cat === 'custom_settings' );
+        return (sec?.category || '').toLowerCase() === 'custom_settings';
     }
 
     isCustomMetadata(sec) {
-        const cat = (sec?.category || '').toString().toLowerCase();
-        return ( cat === 'custom_metadata' );
+        return (sec?.category || '').toLowerCase() === 'custom_metadata';
     }
 
     isCustomLabels(sec) {
-        const cat = (sec?.category || '').toString().toLowerCase();
-        return ( cat === 'labels' );
+        return (sec?.category || '').toLowerCase() === 'labels';
     }
 
     bucketSections(sections) {
-        const buckets = { others: [] , customSettings: [] , customMetadata: [] , customLabels: [] };
+        const buckets = {
+            others: [],
+            customSettings: [],
+            customMetadata: [],
+            customLabels: []
+        };
+
         for (const s of sections) {
             if (this.isCustomSettings(s)) {
                 buckets.customSettings.push(s);
-            }
-            else if ( this.isCustomMetadata(s) ) {
+            } else if (this.isCustomMetadata(s)) {
                 buckets.customMetadata.push(s);
-            }
-            else if ( this.isCustomLabels(s) ) {
+            } else if (this.isCustomLabels(s)) {
                 buckets.customLabels.push(s);
-            }
-            else {
+            } else {
                 buckets.others.push(s);
             }
         }
         return buckets;
     }
 
-    deriveStatus( children ) {
-        let derStat = 'PASS';
-        const st = children.map((s) => s.status);
-        if ( st.includes( 'FAIL' ) ) {
-            derStat = 'FAIL';
-        }
-        if ( st.includes( 'WARN' ) ) {
-            derStat = 'WARN';
-        }
-        return derStat;
+    deriveStatus(children) {
+        let status = 'PASS';
+        const statuses = children.map((s) => s.status);
+        if (statuses.includes('FAIL')) status = 'FAIL';
+        else if (statuses.includes('WARN')) status = 'WARN';
+        return status;
     }
 
-    makeParent( key , label , kids , prefix ) {
+    makeParent(key, label, kids, prefix) {
         const parent = this.decorateSection({
             key,
             label,
             status: this.deriveStatus(kids),
             checks: []
         });
-        parent.children = kids.map((c) => ({ ...c, name: `${prefix}-${c.key || c.label}` }));
+        parent.children = kids.map((c) => ({
+            ...c,
+            name: `${prefix}-${c.key || c.label}`
+        }));
         return parent;
     }
 
-    buildGroupedSections({ others , customSettings , customMetadata , customLabels }) {
+    buildGroupedSections({ others, customSettings, customMetadata, customLabels }) {
         const out = [...others];
-        if ( customSettings.length ) {
-            out.unshift( this.makeParent( 'CUSTOM_SETTINGS' , 'Custom Settings' , customSettings , 'CS' ) );
+        if (customSettings.length) {
+            out.unshift(this.makeParent('CUSTOM_SETTINGS', 'Custom Settings', customSettings, 'CS'));
         }
-        if ( customMetadata.length ) {
-            out.unshift( this.makeParent( 'CUSTOM_METADATA' , 'Custom Metadata' , customMetadata , 'CM' ) );
+        if (customMetadata.length) {
+            out.unshift(this.makeParent('CUSTOM_METADATA', 'Custom Metadata', customMetadata, 'CM'));
         }
-        if ( customLabels.length ) {
-            out.unshift( this.makeParent( 'CUSTOM_LABELS' , 'Custom Labels' , customLabels , 'CL' ) );
+        if (customLabels.length) {
+            out.unshift(this.makeParent('CUSTOM_LABELS', 'Custom Labels', customLabels, 'CL'));
         }
         return out;
     }
 
-    collectAllChildNames( sections ) {
+    collectAllChildNames(sections) {
         const names = [];
-        for ( const s of sections ) {
-            if ( s && Array.isArray( s.children ) ) {
+        for (const s of sections) {
+            if (Array.isArray(s.children)) {
                 for (const c of s.children) {
-                    if ( c?.name ) {
-                        names.push( c.name );
-                    }
+                    if (c?.name) names.push(c.name);
                 }
             }
         }
@@ -198,74 +260,59 @@ export default class SandboxHealth extends LightningElement {
     }
 
     initChildActivesIfEmpty() {
-        if (!this.activeChildSections || this.activeChildSections.length === 0) {
+        if (!Array.isArray(this.activeChildSections)) {
             this.activeChildSections = [];
         }
     }
 
-    // Ensure top-level accordion starts collapsed if unset
     initTopActivesIfEmpty() {
-        if (!this.activeSections || this.activeSections.length === 0) {
+        if (!Array.isArray(this.activeSections)) {
             this.activeSections = [];
         }
     }
 
-    // --- Refactored to reduce cognitive complexity ---
-    applyData(data) {
-        this.setContext(data);
-        this.setTimestamp(data);
-
-        const raw = this.toArray(data?.sections);
-        const decorated = raw.map((s) => this.decorateSection(s));
-        const buckets = this.bucketSections(decorated);
-        const grouped = this.buildGroupedSections(buckets); // adds parents when needed
-
-        this.sections = grouped;
-        this.initChildActivesIfEmpty();
-        this.initTopActivesIfEmpty();
+    // ----------------------------
+    // Context helpers
+    // ----------------------------
+    toArray(x) {
+        return Array.isArray(x) ? x : [];
     }
 
-    toArray( x ) {
-        return Array.isArray( x ) ? x : [];
-    }
-
-    setContext( data ) {
+    setContext(data) {
         this.context = {
             sandboxName: data?.sandboxName || '',
             instance: data?.instance || ''
         };
     }
 
-    setTimestamp( data ) {
+    setTimestamp(data) {
         try {
-            const dt = data?.evaluatedAt ? new Date( data.evaluatedAt ) : new Date();
+            const dt = data?.evaluatedAt ? new Date(data.evaluatedAt) : new Date();
             this.evaluatedAtDisplay = dt.toLocaleString();
-        } catch (e) {
+        } catch {
             this.evaluatedAtDisplay = '';
         }
     }
 
-    normalizeError( err ) {
-        let normErr = '';
-        if ( !err ) {
-            normErr = 'Unexpected error';
+    // ----------------------------
+    // Error normalization
+    // ----------------------------
+    normalizeError(err) {
+        if (!err) return 'Unexpected error';
+
+        if (Array.isArray(err.body)) {
+            return err.body.map((e) => e.message).join(', ');
         }
-        else if ( Array.isArray( err.body ) ) {
-            normErr = err.body.map( ( e ) => e.message ).join(', ');
+        if (err.body?.message) {
+            return err.body.message;
         }
-        else if ( err.body && typeof err.body.message === 'string' ) {
-            normErr = err.body.message;
+        if (err.message) {
+            return err.message;
         }
-        else if ( typeof err.message === 'string' ) {
-            normErr = err.message;
+        try {
+            return JSON.stringify(err);
+        } catch {
+            return 'Unexpected error';
         }
-        else {
-            try {
-                normErr = JSON.stringify( err );
-            } catch (e) {
-                normErr = 'Unexpected error';
-            }
-        }
-        return normErr;
     }
 }
