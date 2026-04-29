@@ -790,10 +790,6 @@
                 <behavior>Edit</behavior>
                 <field>NSP_Risk_Status_Date__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NSP_Max_Overdue_Invoice_Date__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
