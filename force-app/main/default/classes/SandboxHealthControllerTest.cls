@@ -119,6 +119,9 @@ private class SandboxHealthControllerTest {
 
     @IsTest
     private static void testUserTriggerSettings_section_present() {
+        String sandbox = System.DomainParser.parse( URL.getOrgDomainUrl() ).getSandboxName();
+        String[] pipelineOrgs = new String[] { 'merge' , 'test' , 'stage' };
+        Boolean isPipeline = pipelineOrgs.contains( sandbox.toLowerCase() );
         UserTriggerSettings__c uts = UserTriggerSettings__c.getOrgDefaults();
         uts.AllowedAdmins__c = null;
         uts.BccAddresses__c = null;
@@ -129,9 +132,13 @@ private class SandboxHealthControllerTest {
         Test.stopTest();
 
         SandboxHealthController.Section s = findSectionByKey(res.sections, 'UserTriggerSettings__c');
-        System.assertNotEquals(null, s, 'User Trigger Settings section should exist');
-        assertValidSection(s);
-        assertAllowedStatus(s.status);
+        if ( !isPipeline ) {
+            System.assertNotEquals(null, s, 'User Trigger Settings section should exist');
+            assertValidSection(s);
+            assertAllowedStatus(s.status);
+        } else {
+            System.assertEquals(null, s, 'User Trigger Settings section should not exist');
+        }
     }
 
     @IsTest
@@ -200,6 +207,20 @@ private class SandboxHealthControllerTest {
     }
 
     @IsTest
+    private static void testRequiredLabels() {
+        // Even if no custom metadata exists or access is restricted, the controller should not throw
+        Test.startTest();
+        Map<String,String> expectedStage = SandboxHealthController.requiredLabels( 'stage' );
+        Map<String,String> expectedTest = SandboxHealthController.requiredLabels( 'test' );
+        Map<String,String> expectedMerge = SandboxHealthController.requiredLabels( 'merge' );
+        Test.stopTest();
+
+        System.assertEquals( expectedStage.get( 'NSP_FTA_Base_URL' ) , 'https://stageportalapps.insperity.com/financialcomparison/financialanalysis/' , 'Values should match' );
+        System.assertEquals( expectedTest.get( 'NSP_FTA_Base_URL' ) , 'https://testportalapps.insperity.com/financialcomparison/financialanalysis/' , 'Values should match' );
+        System.assertEquals( expectedMerge.get( 'NSP_FTA_Base_URL' ) , 'https://devportalapps.insperity.com/financialcomparison/financialanalysis/' , 'Values should match' );
+    }
+
+    @IsTest
     private static void testCustomMetadata_grouping_structural_presence() {
         // Even if no custom metadata exists or access is restricted, the controller should not throw
         Test.startTest();
@@ -228,7 +249,7 @@ private class SandboxHealthControllerTest {
      */
     @TestSetup
     private static void setupData() {
-        Account account = New Account( Name = 'TestAccount' , AccountNumber = '12345' , NSP_AIMS_Client__c = '500' );
+        Account account = New Account( Name = 'TestAccount' , AccountNumber = '12345' , NSP_AIMS_Client__c = '500' , NSP_External_Id__c = 'EXT-12345' );
         insert account;
     }
 
@@ -413,5 +434,38 @@ private class SandboxHealthControllerTest {
             System.assertNotEquals(null, res.sections, 'Sections must not be null for standard user');
             // Not asserting sizes or particular statuses; read-only code should still return structured output
         }
+    }
+
+    @IsTest
+    private static void testVerifyExternalIdObjects_allRecordsValid() {
+        // Configure OrgSettings to check Account
+        OrgSettings__c orgSettings = OrgSettings__c.getOrgDefaults();
+        Map<String, Schema.SObjectField> fieldsMap = Schema.SObjectType.OrgSettings__c.fields.getMap();
+        for (String fieldName : fieldsMap.keySet()) {
+            if (fieldName.toLowerCase().contains('externalidobjects')) {
+                orgSettings.put(fieldName, 'Account');
+                break;
+            }
+        }
+        upsert orgSettings;
+
+        Test.startTest();
+        SandboxHealthController.Section s = SandboxHealthController.verifyExternalIdObjects();
+        Test.stopTest();
+
+        System.assertNotEquals(null, s, 'Section should not be null');
+        assertValidSection(s);
+
+        // Should have at least one check for Account
+        Boolean foundAccountCheck = false;
+        for (SandboxHealthController.Check c : s.checks) {
+            if (c.key == 'extid_Account') {
+                foundAccountCheck = true;
+                System.assertEquals(SandboxHealthController.STATUS.PASS.name(), c.status, 'Account check should PASS when all records have External ID');
+                System.assertEquals('0', c.actual, 'Should have 0 records with blank External ID');
+                break;
+            }
+        }
+        System.assert(foundAccountCheck, 'Should have check for Account object');
     }
 }
