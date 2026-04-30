@@ -51,6 +51,23 @@
         </connector>
     </assignments>
     <assignments>
+        <description>Assign portal task id</description>
+        <name>Assign_Portal_Task_Id</name>
+        <label>Assign Portal Task Id</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>r_portaltask_to_update.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Loop_For_Each_Portal_Task.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Which_Field_Updated</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <description>Update record to collection</description>
         <name>Assign_Update_Collection</name>
         <label>Assign : Update Collection</label>
@@ -281,7 +298,7 @@
         <collectionReference>rc_portaltasks</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>Which_Field_Updated</targetReference>
+            <targetReference>Assign_Portal_Task_Id</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>Valid_Update</targetReference>
