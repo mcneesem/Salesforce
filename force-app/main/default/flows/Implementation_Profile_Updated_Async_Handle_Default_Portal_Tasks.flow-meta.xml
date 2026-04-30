@@ -9,13 +9,6 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>r_portaltask_to_update.Id</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Loop_For_Each_Portal_Task.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>r_portaltask_to_update.Value_Date__c</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -32,13 +25,6 @@
         <label>Assign IP : FEIN</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>r_portaltask_to_update.Id</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Loop_For_Each_Portal_Task.Id</elementReference>
-            </value>
-        </assignmentItems>
         <assignmentItems>
             <assignToReference>r_portaltask_to_update.Value_Text__c</assignToReference>
             <operator>Assign</operator>
