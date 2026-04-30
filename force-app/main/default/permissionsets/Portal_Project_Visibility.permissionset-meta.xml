@@ -3,7 +3,22 @@
     <description>Grants Tab Visibility, View All Object Permissions, and Read Field Permissions for Portal Project (Portal_Project__c).</description>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Portal_Project__c.Benefits_Effective_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Portal_Project__c.Benefits_Waiting_Period_c__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Portal_Project__c.Completed_Portal_Tasks__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Portal_Project__c.Effective_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
