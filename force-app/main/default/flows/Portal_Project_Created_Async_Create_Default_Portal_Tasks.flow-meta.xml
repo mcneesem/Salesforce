@@ -72,7 +72,7 @@
             <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
-    <description>Create default portal tasks</description>
+    <description>New Client Portal: Create Default Portal Tasks</description>
     <environments>Default</environments>
     <interviewLabel>Portal Project - Created - Async - Create Default Portal Tasks {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Portal Project - Created - Async - Create Default Portal Tasks</label>

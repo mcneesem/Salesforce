@@ -57,7 +57,7 @@
             <label>Yes : Valid Project</label>
         </rules>
     </decisions>
-    <description>Update Portal Project</description>
+    <description>New Client Portal: Update Portal Project</description>
     <environments>Default</environments>
     <formulas>
         <description>Convert Picklist Value to Number</description>

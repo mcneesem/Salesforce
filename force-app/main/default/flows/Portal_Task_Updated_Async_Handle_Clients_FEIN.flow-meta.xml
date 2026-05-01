@@ -55,7 +55,7 @@
             <label>Update IP</label>
         </rules>
     </decisions>
-    <description>Handle IP Clients FEIN</description>
+    <description>New Client Portal: Handle Clients FEIN</description>
     <environments>Default</environments>
     <interviewLabel>Portal Task - Updated - Async - Handle Clients FEIN {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Portal Task - Updated - Async - Handle Clients FEIN</label>

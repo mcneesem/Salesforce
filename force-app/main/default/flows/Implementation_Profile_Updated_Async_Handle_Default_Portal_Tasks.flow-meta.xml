@@ -272,7 +272,7 @@
             <label>FEIN</label>
         </rules>
     </decisions>
-    <description>Handle Default Portal Tasks</description>
+    <description>New Client Portal: Handle Default Portal Tasks</description>
     <environments>Default</environments>
     <interviewLabel>Implementation Profile - Updated - Async - Handle Default Portal Tasks {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Implementation Profile - Updated - Async - Handle Default Portal Tasks</label>
