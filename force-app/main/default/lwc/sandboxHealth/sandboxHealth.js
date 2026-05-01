@@ -1,7 +1,7 @@
 import { LightningElement, wire } from 'lwc';
 import getHealth from '@salesforce/apex/SandboxHealthController.getHealth';
-import verifyWorkflowAlertCcEmails
-    from '@salesforce/apex/SandboxHealthController.verifyWorkflowAlertCcEmails';
+import verifyWFACcEmails from '@salesforce/apex/SandboxHealthController.verifyWorkflowAlertCcEmails';
+import verifyE2CAddresses from '@salesforce/apex/SandboxHealthController.verifyE2CAddresses';
 import { refreshApex } from '@salesforce/apex';
 
 export default class SandboxHealth extends LightningElement {
@@ -15,6 +15,7 @@ export default class SandboxHealth extends LightningElement {
 
     // Guard flag to prevent infinite re-render loops
     workflowSectionLoaded = false;
+    e2cSectionLoaded = false;
 
     // Track wired result for refresh
     _wiredResult;
@@ -52,10 +53,14 @@ export default class SandboxHealth extends LightningElement {
         this.initChildActivesIfEmpty();
         this.initTopActivesIfEmpty();
 
-        // Load Tooling API section exactly once per refresh
-        if (!this.workflowSectionLoaded) {
+        // Load Tooling API sections exactly once per refresh
+        if ( !this.workflowSectionLoaded ) {
             this.workflowSectionLoaded = true;
             this.loadWorkflowAlertSection();
+        }
+        if ( !this.e2cSectionLoaded ) {
+            this.e2cSectionLoaded = true;
+            this.loadE2CSection();
         }
     }
 
@@ -64,11 +69,10 @@ export default class SandboxHealth extends LightningElement {
     // ----------------------------
     async loadWorkflowAlertSection() {
         try {
-            const section = await verifyWorkflowAlertCcEmails();
+            const section = await verifyWFACcEmails();
             if (!section) {
                 return;
             }
-
             const decorated = this.decorateSection(section);
 
             // Append without mutating existing array
@@ -76,8 +80,22 @@ export default class SandboxHealth extends LightningElement {
         } catch (err) {
             // Do not break the page for verification failures
             // Optional: surface as WARN UI element later
-            // eslint-disable-next-line no-console
             console.warn('Workflow Alert CC Email verification failed', err);
+        }
+    }
+
+    async loadE2CSection() {
+        try {
+            const section = await verifyE2CAddresses();
+            if (!section) {
+                return;
+            }
+            const decorated = this.decorateSection(section);
+
+            // Append without mutating existing array
+            this.sections = [...this.sections, decorated];
+        } catch (err) {
+            console.warn('E2C verification failed', err);
         }
     }
 
@@ -88,6 +106,7 @@ export default class SandboxHealth extends LightningElement {
         this.loading = true;
         this.error = '';
         this.workflowSectionLoaded = false;
+        this.e2cSectionLoaded = false;
 
         if (this._wiredResult) {
             refreshApex(this._wiredResult)

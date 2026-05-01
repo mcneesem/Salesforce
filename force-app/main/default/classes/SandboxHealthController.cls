@@ -83,12 +83,13 @@ public with sharing class SandboxHealthController {
 
         // Org context
         String sandbox = System.DomainParser.parse( URL.getOrgDomainUrl() ).getSandboxName();
+               sandbox = ( sandbox != null ) ? sandbox.toLowerCase() : '' ;
         String[] pipelineOrgs = new String[] { 'merge' , 'test' , 'stage' };
         res.sandboxName = sandbox;
         Organization orgInfo = [SELECT Id, InstanceName, IsSandbox FROM Organization WHERE Id != null LIMIT 1];
         res.orgId = orgInfo.Id;
         res.instance = orgInfo.InstanceName;
-        res.isPipeline = pipelineOrgs.contains( sandbox.toLowerCase() );
+        res.isPipeline = pipelineOrgs.contains( sandbox );
         res.isSandbox = orgInfo.IsSandbox;
 
         if ( !res.isSandbox ) {
@@ -1263,9 +1264,186 @@ public with sharing class SandboxHealthController {
             );
         }
 
-        // ✅ single return, section status auto-calculated
         return finalizeSection(s);
     }
+
+    @AuraEnabled
+    public static Section verifyE2CAddresses() {
+        Section s = new Section();
+        s.key = 'emailToCaseAddresses';
+        s.label = 'Email-to-Case Routing Addresses';
+        s.category = 'SECURITY';
+        s.checks = new List<Check>();
+
+        try {
+            // -----------------------------------------------------------------
+            // Guard: Metadata API requires Modify Metadata or Modify All Data
+            // This method is invoked from LWC and uses MetadataService, which
+            // authenticates using the current user's UI session.
+            // -----------------------------------------------------------------
+            String sandbox = System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName();
+            String sb = (sandbox == null) ? '' : sandbox.trim().toLowerCase();
+
+            // Same sandbox → CSV column mapping as NSP_PrepSandbox.doE2CAddresses
+            Map<String, Integer> orgColumnIndex = new Map<String, Integer>{
+                'merge' => 1,
+                'test'  => 2,
+                'stage' => 3
+            };
+
+            if (!orgColumnIndex.containsKey(sb)) {
+                s.checks.add(
+                    newWarn(
+                        'e2c_skip',
+                        'Email-to-Case',
+                        'Sandbox supported',
+                        sandbox,
+                        'Sandbox not configured for Email-to-Case verification'
+                    )
+                );
+            } else {
+                // ---------------------------------------------------------
+                // Load expected routing addresses from the same CSV
+                // ---------------------------------------------------------
+                StaticResource sr =
+                    [SELECT Body FROM StaticResource WHERE Name = 'EmailToCaseAddresses'];
+                String csv = sr.Body.toString();
+
+                Integer col = orgColumnIndex.get(sb);
+                Map<String, String> expectedByRoutingName = new Map<String, String>();
+
+                for (String row : csv.split('\n')) {
+                    String[] cells = row.split(',');
+                    if (cells.size() > col && String.isNotBlank(cells[0])) {
+                        expectedByRoutingName.put(
+                            cells[0].trim(),
+                            cells[col].trim()
+                        );
+                    }
+                }
+
+                // ---------------------------------------------------------
+                // Read CaseSettings via MetadataService (session-based)
+                // ---------------------------------------------------------
+                MetadataService.MetadataPort service = new MetadataService.MetadataPort();
+                service.SessionHeader = new MetadataService.SessionHeader_element();
+                service.SessionHeader.sessionId = UserInfo.getSessionId();
+
+                // Get the org domain URL (always available)
+                Url orgUrl = URL.getOrgDomainUrl();
+
+                // Extract host, e.g. "myorg--test.my.salesforce.com"
+                String host = orgUrl.getHost();
+
+                // Convert My Domain host to instance host
+                // "myorg--test.my.salesforce.com" → "myorg--test.salesforce.com"
+                if (host.endsWith('.my.salesforce.com')) {
+                    host = host.replace('.my.salesforce.com', '.salesforce.com');
+                }
+
+                // Rebuild base instance URL
+                String instanceBaseUrl = orgUrl.getProtocol() + '://' + host;
+
+                // Set Metadata SOAP endpoint (API version example: 60.0)
+                service.endpoint_x =
+                    instanceBaseUrl + '/services/Soap/m/60.0';
+
+                MetadataService.CaseSettings cS =
+                    (MetadataService.CaseSettings)
+                        service.readMetadata(
+                            'CaseSettings',
+                            new String[] { 'Settings' }
+                        ).getRecords()[0];
+
+                // Now safely access:
+                MetadataService.EmailToCaseSettings e2c = cS?.emailToCase;
+                MetadataService.EmailToCaseRoutingAddress[] routes = e2c?.routingAddresses;
+
+                if ( routes == null || routes.isEmpty() ) {
+                    s.checks.add(
+                        newWarn(
+                            'e2c_none',
+                            'Email-to-Case',
+                            'At least one routing address',
+                            'None',
+                            'No Email-to-Case routing addresses found in metadata'
+                        )
+                    );
+                } else {
+                    Set<String> seenRoutes = new Set<String>();
+
+                    for (MetadataService.EmailToCaseRoutingAddress route : routes) {
+                        String routingName = route.routingName;
+                        String actual = route.emailAddress;
+                        String expected = expectedByRoutingName.get(routingName);
+
+                        seenRoutes.add(routingName);
+
+                        if (expected == null) {
+                            s.checks.add(
+                                newWarn(
+                                    'e2c_unmanaged_' + routingName,
+                                    routingName,
+                                    'Configured in CSV',
+                                    actual,
+                                    'Routing address not managed by EmailToCaseAddresses CSV'
+                                )
+                            );
+                        } else if (actual == expected) {
+                            s.checks.add(
+                                newPass(
+                                    'e2c_' + routingName,
+                                    routingName,
+                                    expected,
+                                    actual,
+                                    'Email-to-Case address matches expected value'
+                                )
+                            );
+                        } else {
+                            s.checks.add(
+                                newFail(
+                                    'e2c_' + routingName,
+                                    routingName,
+                                    expected,
+                                    actual,
+                                    'Email-to-Case address does not match expected value'
+                                )
+                            );
+                        }
+                    }
+
+                    // Detect missing expected routing addresses
+                    for (String expectedRoute : expectedByRoutingName.keySet()) {
+                        if (!seenRoutes.contains(expectedRoute)) {
+                            s.checks.add(
+                                newFail(
+                                    'e2c_missing_' + expectedRoute,
+                                    expectedRoute,
+                                    'Routing address present',
+                                    'Missing',
+                                    'Expected Email-to-Case routing address not found'
+                                )
+                            );
+                        }
+                    }
+                }
+
+            }
+        } catch (Exception e) {
+            s.checks.add(
+                newWarn(
+                    'e2c_exception',
+                    'Email-to-Case',
+                    'Evaluated',
+                    'Error',
+                    e.getMessage()
+                )
+            );
+        }
+
+        return finalizeSection(s);
+    }
+
 
     private static Map<String, Id> mTmplId {
         // Get map of Project Template names and IDs (based on NSP_PrepSandbox.doTmpls_mdt)
