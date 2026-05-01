@@ -408,10 +408,10 @@
             </value>
         </filters>
         <filters>
-            <field>Record_Type_Name__c</field>
+            <field>RecordTypeId</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>FSO</stringValue>
+                <stringValue>0124x0000019l9GAAQ</stringValue>
             </value>
         </filters>
         <filters>
