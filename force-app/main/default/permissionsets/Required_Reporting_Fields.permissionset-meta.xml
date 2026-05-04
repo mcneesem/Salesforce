@@ -1368,6 +1368,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_Address__c.Workday_Reference_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Amendment_Checklist__c.Allows_ER_LTPT__c</field>
         <readable>true</readable>
     </fieldPermissions>
