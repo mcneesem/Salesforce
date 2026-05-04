@@ -124,6 +124,16 @@
         <sortField>First_Pay_Date__c</sortField>
         <sortOrder>Asc</sortOrder>
     </relatedLists>
+    <relatedLists>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <fields>NAME</fields>
+        <fields>EndDateTime__c</fields>
+        <fields>StartDateTime__c</fields>
+        <fields>TimeZoneSidKey__c</fields>
+        <relatedList>Portal_Event__c.Portal_Project__c</relatedList>
+        <sortField>StartDateTime__c</sortField>
+        <sortOrder>Asc</sortOrder>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>
