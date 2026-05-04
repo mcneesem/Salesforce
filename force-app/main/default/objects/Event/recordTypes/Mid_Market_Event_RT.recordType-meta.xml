@@ -713,6 +713,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Demo</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Mid Market</fullName>
             <default>true</default>
         </values>
