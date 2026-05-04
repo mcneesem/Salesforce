@@ -1501,7 +1501,7 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Preferred_style_of_communication__c</fieldItem>
+                <fieldItem>Record.Preferred_Style_Of_Communication__c</fieldItem>
                 <identifier>RecordPreferred_style_of_communication_cField</identifier>
                 <visibilityRule>
                     <criteria>
