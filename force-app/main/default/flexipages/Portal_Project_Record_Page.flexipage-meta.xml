@@ -86,6 +86,36 @@
                 <identifier>RecordStatus_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Benefits_Effective_Date__c</fieldItem>
+                <identifier>RecordBenefits_Effective_Date_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Benefits_Waiting_Period_c__c</fieldItem>
+                <identifier>RecordBenefits_Waiting_Period_c_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Effective_Date__c</fieldItem>
+                <identifier>RecordEffective_Date_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-24b54787-cd32-4783-9349-9f01c35952de</name>
         <type>Facet</type>
     </flexiPageRegions>
