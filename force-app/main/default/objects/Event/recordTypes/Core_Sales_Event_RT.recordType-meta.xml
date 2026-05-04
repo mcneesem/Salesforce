@@ -1779,14 +1779,6 @@
             <fullName>Open</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>Requested</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Scheduled</fullName>
-            <default>false</default>
-        </values>
     </picklistValues>
     <picklistValues>
         <picklist>NSP_Sub_Activity__c</picklist>
