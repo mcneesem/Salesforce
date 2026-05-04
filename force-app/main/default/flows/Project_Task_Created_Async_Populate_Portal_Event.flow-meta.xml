@@ -116,7 +116,7 @@
         <locationY>0</locationY>
         <flowName>Project_Task_Subflow_Populate_Portal_Event</flowName>
         <inputAssignments>
-            <name>projectTaskRec</name>
+            <name>recordProjectTask</name>
             <value>
                 <elementReference>$Record</elementReference>
             </value>

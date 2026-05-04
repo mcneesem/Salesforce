@@ -3,7 +3,7 @@
     <apiVersion>66.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <environments>Default</environments>
-    <interviewLabel>Project Task - Updated- Async - Populate Portal Event {!$Flow.CurrentDateTime}</interviewLabel>
+    <interviewLabel>Project Task - Updated - Async - Populate Portal Event {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Project Task - Updated- Async - Populate Portal Event</label>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -130,7 +130,7 @@
         <locationY>0</locationY>
         <flowName>Project_Task_Subflow_Populate_Portal_Event</flowName>
         <inputAssignments>
-            <name>projectTaskRec</name>
+            <name>recordProjectTask</name>
             <value>
                 <elementReference>$Record</elementReference>
             </value>

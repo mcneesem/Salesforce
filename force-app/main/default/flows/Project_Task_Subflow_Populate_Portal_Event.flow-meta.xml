@@ -8,7 +8,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>portalEvent.Id</assignToReference>
+            <assignToReference>recordPortalEvent.Id</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Get_Portal_Events.Id</elementReference>
@@ -24,35 +24,35 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>portalEvent.Portal_Project__c</assignToReference>
+            <assignToReference>recordPortalEvent.Portal_Project__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Get_Portal_Project.Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>portalEvent.Project_Task__c</assignToReference>
+            <assignToReference>recordPortalEvent.Project_Task__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>projectTaskRec.Id</elementReference>
+                <elementReference>recordProjectTask.Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>portalEvent.EndDateTime__c</assignToReference>
+            <assignToReference>recordPortalEvent.EndDateTime__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>projectTaskRec.pse__End_Date_Time__c</elementReference>
+                <elementReference>recordProjectTask.pse__End_Date_Time__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>portalEvent.StartDateTime__c</assignToReference>
+            <assignToReference>recordPortalEvent.StartDateTime__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>projectTaskRec.pse__Start_Date_Time__c</elementReference>
+                <elementReference>recordProjectTask.pse__Start_Date_Time__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>portalEvent.Name</assignToReference>
+            <assignToReference>recordPortalEvent.Name</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>portalEventName</elementReference>
@@ -154,14 +154,7 @@
             <name>Valid_Upsert</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>portalEvent</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>portalEvent</leftValueReference>
+                <leftValueReference>recordPortalEvent</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -182,13 +175,6 @@
         <rules>
             <name>Valid_Portal_Event_Name</name>
             <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>portalEventName</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
             <conditions>
                 <leftValueReference>portalEventName</leftValueReference>
                 <operator>IsBlank</operator>
@@ -213,13 +199,6 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Portal_Project</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_Portal_Project</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -241,15 +220,15 @@
             <name>Valid_Project_Task</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>projectTaskRec</leftValueReference>
-                <operator>IsNull</operator>
+                <leftValueReference>recordProjectTask</leftValueReference>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>projectTaskRec.pse__Project__c</leftValueReference>
-                <operator>IsNull</operator>
+                <leftValueReference>recordProjectTask.pse__Project__c</leftValueReference>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -266,7 +245,7 @@
         <dataType>String</dataType>
         <expression>
             CASE(
-            {!projectTaskRec.Name},
+            {!recordProjectTask.Name},
             &quot;Client Transition Meeting - PM&quot; , &quot;Client Transition Meeting&quot;,
             &quot;New Client - EE OT Meeting&quot; , &quot;Employee Orientation&quot;,
             &quot;Configuration Call&quot; , &quot;Configuration Call&quot;,
@@ -308,7 +287,7 @@
         <faultConnector>
             <targetReference>Set_Fault_Element_For_Upsert</targetReference>
         </faultConnector>
-        <inputReference>portalEvent</inputReference>
+        <inputReference>recordPortalEvent</inputReference>
     </recordCreates>
     <recordLookups>
         <name>Get_Portal_Events</name>
@@ -359,7 +338,7 @@
             <field>Project__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>projectTaskRec.pse__Project__c</elementReference>
+                <elementReference>recordProjectTask.pse__Project__c</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -411,7 +390,7 @@
         </value>
     </variables>
     <variables>
-        <name>portalEvent</name>
+        <name>recordPortalEvent</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
@@ -419,7 +398,7 @@
         <objectType>Portal_Event__c</objectType>
     </variables>
     <variables>
-        <name>projectTaskRec</name>
+        <name>recordProjectTask</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
