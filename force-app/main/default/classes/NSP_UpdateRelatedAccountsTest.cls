@@ -1,30 +1,42 @@
-//
-// @Description: This class is used to cover the NSP_UpdateRelatedAccounts Class.
-// @createdDate: 01/25/2022
-// @story/Defect : DF-01058
-//
-@isTest(SeeAllData=false)
+@isTest
 private class NSP_UpdateRelatedAccountsTest {     
     private static final string ACCOUNT_NAME = 'Test Account';
-    private static LeadConversionSettings__c settings = LeadConversionSettings__c.getOrgDefaults();
 
-    @testSetup private static void testData() {
+    @testSetup
+    private static void testData() {
         Account accoutObject = new Account();
         Id partnerRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('NSP_Partner_Client').getRecordTypeId();
-        settings = settings == null ? LeadConversionSettings__c.getOrgDefaults() : settings;
-        accoutObject.Name = ACCOUNT_NAME;
+        //
+        LeadConversionSettings__c leadSettings = LeadConversionSettings__c.getOrgDefaults();
+        leadSettings.Is_Enabled_SOQL_Fix__c = true;
+        upsert leadSettings;
+        //
+        accoutObject.Name = NSP_UpdateRelatedAccountsTest.ACCOUNT_NAME;
         accoutObject.recordTypeId=partnerRecordTypeId;
         database.insert(accoutObject);
+        //
+        AccountTriggerSettings__c accountSettings = AccountTriggerSettings__c.getOrgDefaults();
+        accountSettings.IsEnabledFuture__c = true;
+        accountSettings.IsEnabledQueueable__c = true;
+        accountSettings.DelayMinutes__c = 10;
+        upsert accountSettings;
     }
 
-    @isTest private static void updateRelatedAccountsTestOld() {
-        settings.Is_Enabled_SOQL_Fix__c = false;
-        upsert settings;
+    @isTest
+    private static void updateRelatedAccountsTestOld() {
+        AccountTriggerSettings__c accountSettings = AccountTriggerSettings__c.getOrgDefaults();
+        accountSettings.IsEnabledQueueable__c = false;
+        upsert accountSettings;
+        //
+        LeadConversionSettings__c leadSettings = LeadConversionSettings__c.getOrgDefaults();
+        leadSettings.Is_Enabled_SOQL_Fix__c = false;
+        upsert leadSettings;
+        //
         set<String> accIdSet = new set<String>();
         Account acc = [
             SELECT Id , NSP_Last_Updated__c 
             FROM Account
-            WHERE Name = :ACCOUNT_NAME
+            WHERE Name = :NSP_UpdateRelatedAccountsTest.ACCOUNT_NAME
         ];
         accIdSet.add(acc.Id);
         Test.startTest();
@@ -34,23 +46,22 @@ private class NSP_UpdateRelatedAccountsTest {
         Account assertAcc = [
             SELECT Id , NSP_Last_Updated__c 
             FROM Account
-            WHERE Name = :ACCOUNT_NAME
+            WHERE Name = :NSP_UpdateRelatedAccountsTest.ACCOUNT_NAME
         ];
-        system.assertEquals(assertDate, assertAcc.NSP_Last_Updated__c);
+        System.assertEquals(assertDate, assertAcc.NSP_Last_Updated__c);
         //
         // for additional code coverage...
         NSP_UpdateRelatedAccounts.updateAccountStatus( accIdSet );
         NSP_UpdateRelatedAccounts.testHandleException( null , 'methodName' );
     }
 
-    @isTest private static void updateRelatedAccountsTestNew() {
-        settings.Is_Enabled_SOQL_Fix__c = true;
-        upsert settings;
+    @isTest
+    private static void updateRelatedAccountsTestNew() {
         set<String> accIdSet = new set<String>();
         Account acc = [
             SELECT Id , NSP_Last_Updated__c 
             FROM Account
-            WHERE Name = :ACCOUNT_NAME
+            WHERE Name = :NSP_UpdateRelatedAccountsTest.ACCOUNT_NAME
         ];
         accIdSet.add(acc.Id);
         Test.startTest();
@@ -60,9 +71,9 @@ private class NSP_UpdateRelatedAccountsTest {
         Account assertAcc = [
             SELECT Id , NSP_Last_Updated__c 
             FROM Account
-            WHERE Name = :ACCOUNT_NAME
+            WHERE Name = :NSP_UpdateRelatedAccountsTest.ACCOUNT_NAME
         ];
-        system.assertEquals(assertDate, assertAcc.NSP_Last_Updated__c);
+        System.assertEquals(assertDate, assertAcc.NSP_Last_Updated__c);
         //
         // for additional code coverage...
         NSP_UpdateRelatedAccounts.updateAccountStatus( accIdSet );
