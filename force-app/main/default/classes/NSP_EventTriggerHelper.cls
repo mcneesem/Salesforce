@@ -31,11 +31,12 @@ public with sharing class NSP_EventTriggerHelper {
                 }
                 evt.Creator_Title__c = NSP_EventTriggerHelper.userTitle; // ADO-504540
                 Id eventRecordTypeId = evt.RecordTypeId;
-                
-                if( eventRecordTypeId == NSP_EventTriggerHelper.coreSalesEventRecordType
-                   && NSP_EventTriggerHelper.isServiceEvent( evt ) ) {
-                       eventRecordTypeId = NSP_EventTriggerHelper.coreServiceEventRecordType;
-                   }
+                if ( ( eventRecordTypeId == NSP_EventTriggerHelper.coreSalesEventRecordType )
+                    && NSP_EventTriggerHelper.isServiceEvent( evt )
+                    )
+                {
+                    eventRecordTypeId = NSP_EventTriggerHelper.coreServiceEventRecordType;
+                }
                 evt.RecordTypeId = eventRecordTypeId;
             }
             this.updateEventSales( newList , null );
