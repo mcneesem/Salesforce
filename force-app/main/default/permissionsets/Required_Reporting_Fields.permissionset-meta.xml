@@ -773,7 +773,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Case.Preferred_style_of_communication__c</field>
+        <field>Case.Preferred_Style_Of_Communication__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
