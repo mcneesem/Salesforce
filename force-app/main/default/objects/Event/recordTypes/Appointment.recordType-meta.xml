@@ -650,6 +650,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Demo</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Discovery Call</fullName>
             <default>false</default>
         </values>
