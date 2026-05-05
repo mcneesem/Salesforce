@@ -10,6 +10,7 @@
     <permissionSets>Portal_Project_Visibility</permissionSets>
     <permissionSets>Portal_Task_Visibility</permissionSets>
     <permissionSets>Portal_Team_Member_Visibility</permissionSets>
+    <permissionSets>View_Error_Panel</permissionSets>
     <permissionSets>View_Portal_Preview</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

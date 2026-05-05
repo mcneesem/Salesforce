@@ -2,11 +2,11 @@
     <template lwc:if={record}>
         <lightning-layout>
             <lightning-layout-item size="6" padding="around-small">
-                {record.fields.Position__c.value}
+                {position}
             </lightning-layout-item>
             <lightning-layout-item size="6" padding="around-small">
                 <div class="slds-text-align_right">
-                    {record.fields.Contact_Name__c.value}
+                    {name}
                 </div>
             </lightning-layout-item>
         </lightning-layout>

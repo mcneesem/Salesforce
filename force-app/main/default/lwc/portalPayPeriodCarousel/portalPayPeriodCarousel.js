@@ -23,7 +23,7 @@ export default class PortalPayPeriodCarousel extends LightningElement {
         if ( data ) {
             this.records = data.records;
             if ( this.records ) {
-                this.indicators = this.rebuildIndicators( this.records[0].fields.Id.value );
+                this.indicators = this.rebuildIndicators( this.records[0]?.fields?.Id?.value );
             }
             this.isPaused = false;
             this.error = undefined;
@@ -50,7 +50,7 @@ export default class PortalPayPeriodCarousel extends LightningElement {
                         if ( this.records.length > ( this.activePanelIndex + 1 ) ) {
                             nextIndex = ( this.activePanelIndex + 1 );
                         }
-                        this.indicators = this.rebuildIndicators( this.records[nextIndex].fields.Id.value );
+                        this.indicators = this.rebuildIndicators( this.records[nextIndex]?.fields?.Id?.value );
                     }
                 }.bind( this ) ,
                 ( 5 * 1000 ) // refresh once per 5 seconds ( 1 minute == 60 seconds == 60000 milliseconds )
@@ -121,13 +121,13 @@ export default class PortalPayPeriodCarousel extends LightningElement {
                 function( record ) {
                     let cssClass = "slds-carousel__indicator-action";
                     let tabIndex = "-1";
-                    if ( record.fields.Id.value == this.activePanelDatasetId ) {
+                    if ( record?.fields?.Id?.value == this.activePanelDatasetId ) {
                         cssClass = "slds-carousel__indicator-action slds-is-active";
                         tabIndex = "0";
                     }
                     return {
-                        id : record.fields.Id.value ,
-                        title : record.fields.Id.value ,
+                        id : record?.fields?.Id?.value ,
+                        title : record?.fields?.Id?.value ,
                         cssClass : cssClass ,
                         tabIndex : tabIndex ,
                     };

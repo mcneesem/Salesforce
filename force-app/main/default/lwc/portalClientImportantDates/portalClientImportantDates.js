@@ -10,8 +10,8 @@ import EFFECTIVE_DATE_FIELD from "@salesforce/schema/Portal_Client__c.Effective_
 import TIMEZONESIDKEY_FIELD from "@salesforce/schema/Portal_Client__c.TimeZoneSidKey__c";
 
 export default class PortalClientImportantDates extends LightningElement {
-    @api recordId;
-    @api projectId;
+    @api recordId; // is-a Portal_Client__c.Id
+    @api projectId; // is-a Portal_Project__c.Id
 
     fields;
     @wire(getObjectInfo, {
@@ -30,7 +30,7 @@ export default class PortalClientImportantDates extends LightningElement {
     }
 
     error;
-    record;
+    record; // is-a Portal_Client__c
     @wire(getRecord, {
         recordId: "$recordId" ,
         fields: [
@@ -58,5 +58,6 @@ export default class PortalClientImportantDates extends LightningElement {
     get rightColumnSize() {
         return "5";
     }
+
 }
 //
