@@ -667,31 +667,49 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         }
     }
 
-    private void checkforCOBRATakeoverForm(Implementation_Profile__c newRec, Implementation_Profile__c existingRec){
-        if (automationsToExecute.contains(COBRA_TAKEOVER_FORM) && newRec != null
+    private void checkForCobraTakeoverForm(
+        Implementation_Profile__c newRec ,
+        Implementation_Profile__c existingRec
+        )
+    {
+        if ( this.automationsToExecute.contains( NSP_Implprofile_ServiceHelperUpdate.COBRA_TAKEOVER_FORM )
+            && newRec != null
             && newRec.RecordTypeId == ipFSORecordTypeId
             && newRec.Participants_on_COBRA_eligibility_period__c == NSP_ServiceConstants.YES
-            && (existingRec == null
+            && ( ( existingRec == null )
                 || newRec.NSP_Form_Completed__c
-                || newRec.Participants_on_COBRA_eligibility_period__c != existingRec.Participants_on_COBRA_eligibility_period__c
+                || ( newRec.Participants_on_COBRA_eligibility_period__c != existingRec.Participants_on_COBRA_eligibility_period__c )
                 )
             ) 
         {
-            updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, COBRA_TAKEOVER_FORM);
+            this.updateEligibleRecordsMap(
+                this.ipRecordsByAutomation ,
+                newRec.Id ,
+                NSP_Implprofile_ServiceHelperUpdate.COBRA_TAKEOVER_FORM
+            );
         }
     }
 
-    private void checkforCOBRAReceivedForm(Implementation_Profile__c newRec, Implementation_Profile__c existingRec){
-        if (automationsToExecute.contains(COBRA_FORM_RECEIVED) && newRec != null
-            && newRec.RecordTypeId == ipFSORecordTypeId
-            && newRec.Participants_on_COBRA_eligibility_period__c == NSP_ServiceConstants.YES
-            && (existingRec == null
+    private void checkForCobraReceivedForm(
+        Implementation_Profile__c newRec ,
+        Implementation_Profile__c existingRec
+        )
+    {
+        if ( this.automationsToExecute.contains( NSP_Implprofile_ServiceHelperUpdate.COBRA_FORM_RECEIVED )
+            && ( newRec != null )
+            && ( newRec.RecordTypeId == NSP_Implprofile_ServiceHelperUpdate.ipFSORecordTypeId )
+            && ( newRec.Participants_on_COBRA_eligibility_period__c == NSP_ServiceConstants.YES )
+            && ( ( existingRec == null )
                 || newRec.NSP_Form_Completed__c
-                || newRec.Participants_on_COBRA_eligibility_period__c != existingRec.Participants_on_COBRA_eligibility_period__c
+                || ( newRec.Participants_on_COBRA_eligibility_period__c != existingRec.Participants_on_COBRA_eligibility_period__c )
                 )
-            ) 
+            )
         {
-            updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, COBRA_FORM_RECEIVED);
+            this.updateEligibleRecordsMap(
+                this.ipRecordsByAutomation ,
+                newRec.Id ,
+                NSP_Implprofile_ServiceHelperUpdate.COBRA_FORM_RECEIVED
+            );
         }
     }
 
@@ -1682,12 +1700,17 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         Id workCalendarId
         )
     {
-        if(automation == COBRA_FORM_RECEIVED){
-            pse__Project_Task__c eachProjecttask = genericPMTask(proj,pta,ipRecId,ipwithValue,workCalendarId);
-            if (eachProjecttask != null) {
-                
-                projectTaskToInsertList.add(eachProjecttask);
-                }
+        if ( automation == NSP_Implprofile_ServiceHelperUpdate.COBRA_FORM_RECEIVED ){
+            pse__Project_Task__c eachProjecttask = this.genericPMTask(
+                proj ,
+                pta ,
+                ipRecId ,
+                ipwithValue ,
+                workCalendarId
+            );
+            if ( eachProjecttask != null ) {
+                this.projectTaskToInsertList.add( eachProjecttask );
+            }
         }
     }
 
