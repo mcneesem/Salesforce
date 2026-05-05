@@ -88,7 +88,7 @@ public with sharing class SandboxHealthController {
         Organization orgInfo = [SELECT Id, InstanceName, IsSandbox FROM Organization WHERE Id != null LIMIT 1];
         res.orgId = orgInfo.Id;
         res.instance = orgInfo.InstanceName;
-        res.isPipeline = pipelineOrgs.contains( sandbox.toLowerCase() );
+        res.isPipeline = ( String.isNotBlank( sandbox ) ? pipelineOrgs.contains( sandbox.toLowerCase() ) : false );
         res.isSandbox = orgInfo.IsSandbox;
 
         if ( !res.isSandbox ) {
