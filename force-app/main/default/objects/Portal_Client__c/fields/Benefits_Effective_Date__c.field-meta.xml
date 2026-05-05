@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Benefits_Effective_Date__c</fullName>
+    <description>DEPRECATED See Portal_Project__c.Benefits_Effective_Date__c</description>
     <encryptionScheme>None</encryptionScheme>
     <label>Benefits Effective Date</label>
     <required>false</required>
