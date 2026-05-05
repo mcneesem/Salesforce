@@ -2649,7 +2649,13 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         pse__Project_Task__c pt
         )
     {
-        pse__Project_Task__c eachProjectTask = this.genericPMTask(proj, pta, ipRecId, ipWithValue, workCalendarId);
+        pse__Project_Task__c eachProjectTask = this.genericPMTask(
+            proj,
+            pta,
+            ipRecId,
+            ipWithValue,
+            workCalendarId
+        );
         if (eachProjectTask != null && pt != null && pt.Id != null ) {
             eachProjectTask.pse__Parent_Task__c = pt.Id;
             eachProjectTask.pse__Hierarchy_Depth__c = 1;
