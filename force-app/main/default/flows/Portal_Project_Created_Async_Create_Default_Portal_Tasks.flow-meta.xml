@@ -3,25 +3,9 @@
     <apiVersion>66.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
-        <name>Assign_Task_Collection</name>
-        <label>Assign : Task Collection</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>rc_portaltasks</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>r_portaltask_BusInceptionDate</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Create_Default_Portal_Task</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <description>Set default values for Business Inception Date</description>
-        <name>Assign_Task_Default_Values</name>
-        <label>Assign : Task Default Values</label>
+        <name>Assign_Task_Business_Inception_Date</name>
+        <label>Assign Task : Business Inception Date</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
@@ -53,6 +37,60 @@
             </value>
         </assignmentItems>
         <connector>
+            <targetReference>Assign_Task_Regular_Rate_of_Pay</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Task_Collection</name>
+        <label>Assign : Task Collection</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>rc_portaltasks</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>r_portaltask_BusInceptionDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>rc_portaltasks</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>r_portaltask_regrateofpay</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Default_Portal_Task</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Set default values for Regular Rate of Pay</description>
+        <name>Assign_Task_Regular_Rate_of_Pay</name>
+        <label>Assign Task : Regular Rate of Pay</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>r_portaltask_regrateofpay.Name</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Regular Rate of Pay</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>r_portaltask_regrateofpay.Portal_Project__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>r_portaltask_regrateofpay.Type__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Employee Setup</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
             <targetReference>Assign_Task_Collection</targetReference>
         </connector>
     </assignments>
@@ -72,7 +110,7 @@
             <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
-    <description>New Client Portal: Create Default Portal Tasks</description>
+    <description>Create default portal tasks</description>
     <environments>Default</environments>
     <interviewLabel>Portal Project - Created - Async - Create Default Portal Tasks {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Portal Project - Created - Async - Create Default Portal Tasks</label>
@@ -128,7 +166,7 @@
         <recordTriggerType>Create</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Assign_Task_Default_Values</targetReference>
+                <targetReference>Assign_Task_Business_Inception_Date</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
@@ -171,6 +209,15 @@
     <variables>
         <description>Business Inception Date Portal Task</description>
         <name>r_portaltask_BusInceptionDate</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Portal_Task__c</objectType>
+    </variables>
+    <variables>
+        <description>Regular Rate of Pay</description>
+        <name>r_portaltask_regrateofpay</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
