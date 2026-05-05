@@ -1,6 +1,6 @@
 <template>
     <template lwc:if={error}>
-        error: {error}<br/>
+        <c-error-panel error={error} parent="c-portal-team-member-preview"></c-error-panel>
     </template>
     <template lwc:if={record}>
         <c-portal-team-member record={record}></c-portal-team-member>
