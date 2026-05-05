@@ -1,4 +1,22 @@
 <template>
     <lightning-card title="Meetings List">
+        <div class="slds-is-relative">
+            <template lwc:if={records}>
+                <lightning-layout>
+                    <lightning-layout-item size="12" padding="around-small">
+                        <ul>
+                            <template for:each={records} for:item="record">
+                                <li key={record.fields.Id.value}>
+                                    <c-portal-event record={record}></c-portal-event>
+                                </li>
+                            </template>
+                        </ul>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </template>
+            <template lwc:else>
+                <lightning-spinner alternative-text="Loading" size="x-small"></lightning-spinner>
+            </template>
+        </div>
     </lightning-card>
 </template>
