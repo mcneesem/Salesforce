@@ -66,6 +66,16 @@
                 <identifier>RecordNameField3</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.TimeZoneSidKey__c</fieldItem>
+                <identifier>RecordTimeZoneSidKey__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-c8c6d57b-5e8e-4fb8-aee3-3b79b1ba82bb</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -115,78 +125,6 @@
             </componentInstance>
         </itemInstances>
         <name>Facet-1a1cb645-aa76-4e18-bb03-23a6f19c65c9</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Effective_Date__c</fieldItem>
-                <identifier>RecordEffective_Date__cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.TimeZoneSidKey__c</fieldItem>
-                <identifier>RecordTimeZoneSidKey__cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-a2625a5a-6020-41de-aa70-76d209102d2b</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Benefits_Effective_Date__c</fieldItem>
-                <identifier>RecordBenefits_Effective_Date__cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Benefits_Waiting_Period__c</fieldItem>
-                <identifier>RecordBenefits_Waiting_Period__cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-4c31267e-012d-41f4-a0e7-19fa75b3204d</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-a2625a5a-6020-41de-aa70-76d209102d2b</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:column</componentName>
-                <identifier>flexipage_column</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-4c31267e-012d-41f4-a0e7-19fa75b3204d</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:column</componentName>
-                <identifier>flexipage_column6</identifier>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-76ce538d-90a4-4917-98c9-c7f940c673ad</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -258,24 +196,6 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection2</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>columns</name>
-                    <value>Facet-76ce538d-90a4-4917-98c9-c7f940c673ad</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>horizontalAlignment</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>label</name>
-                    <value>Important Dates</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:fieldSection</componentName>
-                <identifier>flexipage_fieldSection</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>

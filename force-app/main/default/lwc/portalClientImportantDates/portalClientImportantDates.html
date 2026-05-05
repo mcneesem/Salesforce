@@ -10,11 +10,11 @@
                                     <lightning-layout>
                                         <lightning-layout-item size={leftColumnSize} padding="around-small">
                                             Insperity Effective Date&nbsp;*&nbsp;
-                                            <c-helptext content={fields.Effective_Date__c.inlineHelpText}></c-helptext>
+                                            <c-helptext content={effectiveDateHelpText}></c-helptext>
                                         </lightning-layout-item>
                                         <lightning-layout-item size={rightColumnSize} padding="around-small">
                                             <lightning-formatted-date-time
-                                                value={record.fields.Effective_Date__c.value}
+                                                value={effectiveDate}
                                                 month="long"
                                                 day="2-digit"
                                                 year="numeric"
@@ -31,7 +31,7 @@
                                         </lightning-layout-item>
                                         <lightning-layout-item size={rightColumnSize} padding="around-small">
                                             <lightning-formatted-date-time
-                                                value={record.fields.Benefits_Effective_Date__c.value}
+                                                value={benefitsEffectiveDate}
                                                 month="long"
                                                 day="2-digit"
                                                 year="numeric"
@@ -47,7 +47,7 @@
                                             Insperity Benefits Waiting Period
                                         </lightning-layout-item>
                                         <lightning-layout-item size={rightColumnSize} padding="around-small">
-                                            {record.fields.Benefits_Waiting_Period__c.value}&nbsp;Days
+                                            {benefitsWaitingPeriod}&nbsp;Days
                                         </lightning-layout-item>
                                     </lightning-layout>
                                 </li>
