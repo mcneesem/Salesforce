@@ -49,8 +49,8 @@ public class NSP_Implprofile_ServiceHelperUpdate {
     private static final String REPORT_JOBCOSTING_FN= 'Job_Costing_Reports';
     private static final String INTEGRA_RESPONSE= 'Integra_Responses_Smartsheet' ;
     private static final String REPORT_OTHER_FN='Custom_Report';
-    private static final String COBRA_TAKEOVER_FORM= 'COBRA_Takeover_Form';
-    private static final String COBRA_FORM_RECEIVED= 'COBRA_Form_Received';
+    private static final String COBRA_TAKEOVER_FORM = 'COBRA_Takeover_Form';
+    private static final String COBRA_FORM_RECEIVED = 'COBRA_Form_Received';
     private static final String LOA_INFO_FN= 'Missing_LOA_forms';
     private static final String MISSING_LOA_FN=  'Missing_LOA_Info';
     private static final String INTERNAL_DISCOVERY_FN ='NSP_Internal_Discovery';
@@ -93,11 +93,17 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                 RETIRE_PLAN_FN , POSTTAX_LOANS_FN , SPECIAL_RELABEL_FN ,
                 REPORT_Integra_FN , REPORT_Custom401k_FN ,
                 REPORT_JOBCOSTING_FN , INTEGRA_RESPONSE ,
-                REPORT_OTHER_FN , LOA_INFO_FN ,
+                REPORT_OTHER_FN ,
+                LOA_INFO_FN ,
                 MISSING_LOA_FN ,
                 INTERNAL_DISCOVERY_FN ,
                 ONSITE_DISCOVERY_FN ,
-                enrollFee_FN ,enrollFee_Subtask_FN, DATA_VERIFICATION,FLSA_EXEMPTION_REVIEW, COBRA_TAKEOVER_FORM, COBRA_FORM_RECEIVED
+                enrollFee_FN ,
+                enrollFee_Subtask_FN ,
+                DATA_VERIFICATION ,
+                FLSA_EXEMPTION_REVIEW ,
+                COBRA_TAKEOVER_FORM ,
+                COBRA_FORM_RECEIVED
             }
         );
     }
@@ -273,8 +279,8 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             checkEnrollFee(ipRec, existingRec);
             checkDataVerification(ipRec, existingRec);
             checkFlsaExemptionReview(ipRec, existingRec);
-            checkforCOBRATakeoverForm(ipRec,existingRec);
-            checkforCOBRAReceivedForm(ipRec,existingRec);
+            checkForCobraTakeoverForm(ipRec, existingRec);
+            checkForCobraReceivedForm(ipRec, existingRec);
         }
     }
 
@@ -673,14 +679,14 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         )
     {
         if ( this.automationsToExecute.contains( NSP_Implprofile_ServiceHelperUpdate.COBRA_TAKEOVER_FORM )
-            && newRec != null
-            && newRec.RecordTypeId == ipFSORecordTypeId
-            && newRec.Participants_on_COBRA_eligibility_period__c == NSP_ServiceConstants.YES
+            && ( newRec != null )
+            && ( newRec.RecordTypeId == NSP_Implprofile_ServiceHelperUpdate.ipFSORecordTypeId )
+            && ( newRec.Participants_on_COBRA_eligibility_period__c == NSP_ServiceConstants.YES )
             && ( ( existingRec == null )
                 || newRec.NSP_Form_Completed__c
                 || ( newRec.Participants_on_COBRA_eligibility_period__c != existingRec.Participants_on_COBRA_eligibility_period__c )
                 )
-            ) 
+            )
         {
             this.updateEligibleRecordsMap(
                 this.ipRecordsByAutomation ,
@@ -835,8 +841,8 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             createProjectTaskForFlsaExemptionReview(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
             emailNotifyInternalDiscovery(automation,ipRecId);
             emailNotifyOnsiteDiscovery(automation,ipRecId);
-            createProjecttaskforCOBRATakeoverForm(automation,pta,proj,ipRecId,ipwithValue,workCalendarId); 
-            createProjecttaskforCOBRAFormReceived(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
+            createProjectTaskForCobraTakeoverForm(automation,pta,proj,ipRecId,ipwithValue,workCalendarId); 
+            createProjectTaskForCobraFormReceived(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
         }
     }
 
@@ -1663,7 +1669,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         }
     }
 
-    private  void createProjecttaskforCOBRATakeoverForm(
+    private void createProjectTaskForCobraTakeoverForm(
         String automation ,
         NSP_ProjectTask_Automation__mdt pta ,
         pse__Proj__c proj ,
@@ -1672,26 +1678,31 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         Id workCalendarId
         )
     {
-        if(automation == COBRA_TAKEOVER_FORM){
-
-            pse__Project_Task__c eachProjecttask = genericPMTask(proj,pta,ipRecId,ipwithValue,workCalendarId);
-            NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(automation);
-            if (eachProjecttask != null && ipa != null ) {
-                
-                projectTaskToInsertList.add(eachProjecttask);
-                ipAutomationRecords.add(
-                    createIPAutomation(
-                        ipRecId,
-                        ipa.NSP_Automation_Name__c,
-                        ipa.NSP_Method_Name__c,
-                        ipa.NSP_Section__c,NSP_ServiceConstants.FSOProfile
+        if ( automation == COBRA_TAKEOVER_FORM ) {
+            pse__Project_Task__c eachProjecttask = this.genericPMTask(
+                proj ,
+                pta ,
+                ipRecId ,
+                ipwithValue ,
+                workCalendarId
+            );
+            NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance( automation );
+            if ( ( eachProjecttask != null ) && ( ipa != null ) ) {
+                this.projectTaskToInsertList.add( eachProjecttask );
+                this.ipAutomationRecords.add(
+                    NSP_Implprofile_ServiceHelperUpdate.createIPAutomation(
+                        ipRecId ,
+                        ipa.NSP_Automation_Name__c ,
+                        ipa.NSP_Method_Name__c ,
+                        ipa.NSP_Section__c ,
+                        NSP_ServiceConstants.FSOProfile
                     )
                 );
             }
         }
     }
-    
-    private  void createProjecttaskforCOBRAFormReceived(
+
+    private void createProjectTaskForCobraFormReceived(
         String automation ,
         NSP_ProjectTask_Automation__mdt pta ,
         pse__Proj__c proj ,
@@ -1700,7 +1711,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         Id workCalendarId
         )
     {
-        if ( automation == NSP_Implprofile_ServiceHelperUpdate.COBRA_FORM_RECEIVED ){
+        if ( automation == NSP_Implprofile_ServiceHelperUpdate.COBRA_FORM_RECEIVED ) {
             pse__Project_Task__c eachProjecttask = this.genericPMTask(
                 proj ,
                 pta ,
