@@ -800,7 +800,10 @@ public class NSP_Implprofile_ServiceHelperUpdate {
 
     private Id getSalesforceUserId(SObject relatedRecord) {
         Id userId = null;
-        if (relatedRecord != null) {
+        if ( ( relatedRecord != null )
+            && ( relatedRecord.getPopulatedFieldsAsMap().containsKey( 'pse__Salesforce_User__c' )
+            )
+        {
             userId = (Id) relatedRecord.get('pse__Salesforce_User__c');
         }
         return userId;
@@ -1854,7 +1857,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                     NSP_HR_Specialist__c ,
                     NSP_HR_Specialist__r.NSP_Work_email__c ,
                     NSP_Client_Liaison__r.NSP_Work_email__c ,
-                	NSP_Client_Liaison__r.pse__Salesforce_User__c,
+                    NSP_Client_Liaison__r.pse__Salesforce_User__c,
                     NSP_OT_Representative__r.NSP_Work_email__c ,
                     NSP_Transition_Specialist__r.NSP_Work_email__c ,
                     NSP_Payroll_Specialist__r.NSP_Work_email__c ,
@@ -1875,7 +1878,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                     Benefits_Package__c ,
                     NSP_Old_Effective_Date_EPLI__c ,
                     NSP_Old_Insperity_Ben_effective_date__c,
-                	NSP_Payroll_Supervisor__r.pse__Salesforce_User__c,
+                    NSP_Payroll_Supervisor__r.pse__Salesforce_User__c,
                     NSP_Manager_HR_Services__r.pse__Salesforce_User__c,
                     NSP_HR_Specialist__r.pse__Salesforce_User__c,
                     NSP_OT_Representative__r.pse__Salesforce_User__c,
