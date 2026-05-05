@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>66.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_Portal_Task_Portal_Guidance</name>
+        <label>Assign Portal Task : Portal Guidance</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Portal_Guidance__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Portal_Guidance.Id</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_Portal_Guidance</name>
+        <label>Set Fault Element : Get_Portal_Guidance</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>FaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Portal_Guidance</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Valid_Portal_Guidance</name>
+        <label>Valid Portal Guidance?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Valid_Portal_Guidance</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Portal_Guidance</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Portal_Task_Portal_Guidance</targetReference>
+            </connector>
+            <label>Yes : Valid Portal Guidance</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Valid_Record</name>
+        <label>Valid Record?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Valid_Record</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>f_portal_guidance_api</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Portal_Guidance</targetReference>
+            </connector>
+            <label>Yes : Valid Record</label>
+        </rules>
+    </decisions>
+    <description>Link Portal Guidance to Portal Task</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>Get the API Name based on the Task Name</description>
+        <name>f_portal_guidance_api</name>
+        <dataType>String</dataType>
+        <expression>CASE(
+  UPPER(TRIM({!$Record.Name})),
+  &quot;FEDERAL EMPLOYER IDENTIFICATION NUMBER (FEIN)&quot;,
+  &quot;FEDERAL_EMPLOYER_IDENTIFICATION_NUMBER&quot;,
+  /* default */
+  UPPER(SUBSTITUTE({!$Record.Name}, &quot; &quot;, &quot;_&quot;))
+)</expression>
+    </formulas>
+    <interviewLabel>Portal Task - Before Save - Populate Portal Guidance {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Portal Task - Before Save - Populate Portal Guidance</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Get the Portal Guidance based on the Portal Task Name</description>
+        <name>Get_Portal_Guidance</name>
+        <label>Get Portal Guidance</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Valid_Portal_Guidance</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_Portal_Guidance</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>API_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>f_portal_guidance_api</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Portal_Guidance__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Valid_Record</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Portal_Project__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>Portal_Task__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Draft</status>
+    <variables>
+        <name>FaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>
