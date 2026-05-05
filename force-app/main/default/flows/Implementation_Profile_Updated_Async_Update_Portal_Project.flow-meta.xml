@@ -113,7 +113,7 @@
         <queriedFields>Id</queriedFields>
         <queriedFields>Effective_Date__c</queriedFields>
         <queriedFields>Benefits_Effective_Date__c</queriedFields>
-        <queriedFields>Benefits_Waiting_Period_c__c</queriedFields>
+        <queriedFields>Benefits_Waiting_Period__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
@@ -140,7 +140,7 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Benefits_Waiting_Period_c__c</field>
+            <field>Benefits_Waiting_Period__c</field>
             <value>
                 <elementReference>f_benefits_waiting_period</elementReference>
             </value>
