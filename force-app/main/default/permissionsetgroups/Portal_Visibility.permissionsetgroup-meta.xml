@@ -8,6 +8,7 @@
     <permissionSets>Portal_Event_Visibility</permissionSets>
     <permissionSets>Portal_Pay_Period_Visibility</permissionSets>
     <permissionSets>Portal_Project_Visibility</permissionSets>
+    <permissionSets>Portal_Resource_Visibility</permissionSets>
     <permissionSets>Portal_Task_Visibility</permissionSets>
     <permissionSets>Portal_Team_Member_Visibility</permissionSets>
     <permissionSets>View_Error_Panel</permissionSets>
