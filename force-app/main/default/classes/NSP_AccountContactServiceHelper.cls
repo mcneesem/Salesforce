@@ -283,14 +283,14 @@ public with sharing class NSP_AccountContactServiceHelper {
                 List<Database.UpsertResult> results = Database.upsert( lstpermControl , false );
                 NSP_ErrorLogHandler.logResults(
                     NSP_AccountContactServiceHelper.class.getName() ,
-                    'assignPermissionControl:upsert' ,
+                    'assignPermissionControlFuture:upsert' ,
                     results
                 );
             }
         } catch ( Exception e ) {
             NSP_ErrorLogHandler.logException(
                 NSP_AccountContactServiceHelper.class.getName() ,
-                'assignPermissionControl' ,
+                'assignPermissionControlFuture' ,
                 e
             );
         }
@@ -299,6 +299,7 @@ public with sharing class NSP_AccountContactServiceHelper {
     private static void removePermissionControlForDeactivatedUsers( Set<Id> deactivateUserId ) {
         NSP_AccountContactServiceHelper.removePermissionControlForDeactivatedUsersInternal( deactivateUserId );
     }
+
     private static void removePermissionControlForDeactivatedUsersInternal( Set<Id> deactivateUserId ) {
         String permissionControlQuery = new NSP_QueryBuilder(
                 'pse__Permission_Control__c' ,
@@ -311,7 +312,7 @@ public with sharing class NSP_AccountContactServiceHelper {
         Database.DeleteResult[] results = Database.delete( lstRecords , false );
         NSP_ErrorLogHandler.logResults(
             NSP_AccountContactServiceHelper.class.getName() ,
-            'removePermissionControlForDeactivatedUsers' ,
+            'removePermissionControlForDeactivatedUsersInternal' ,
             results
         );
     }

@@ -1,25 +1,17 @@
-import { LightningElement , api , wire } from "lwc";
+import { LightningElement , api } from "lwc";
 import LightningConfirm from "lightning/confirm";
 import { NavigationMixin } from "lightning/navigation";
 import Toast from "lightning/toast";
-import { deleteRecord , getRecords , updateRecord } from "lightning/uiRecordApi";
+import { deleteRecord , updateRecord } from "lightning/uiRecordApi";
 import PortalFileListModal from "c/portalFileListModal";
 import PortalFilePreviewModal from "c/portalFilePreviewModal";
 import { refreshApex } from "@salesforce/apex";
-import getPortalLinks from "@salesforce/apex/PortalClientSelector.getPortalLinks";
-import CONTENTDOCUMENTLINK_ID_FIELD from "@salesforce/schema/ContentDocumentLink.Id";
-import CONTENTDOCUMENTLINK_CONTENTDOCUMENTID_FIELD from "@salesforce/schema/ContentDocumentLink.ContentDocumentId";
-import CONTENTDOCUMENTLINK_CONTENTDOCUMENT_CONTENTSIZE_FIELD from "@salesforce/schema/ContentDocumentLink.ContentDocument.ContentSize";
-import CONTENTDOCUMENTLINK_CONTENTDOCUMENT_FILETYPE_FIELD from "@salesforce/schema/ContentDocumentLink.ContentDocument.FileType";
-import CONTENTDOCUMENTLINK_CONTENTDOCUMENT_OWNERID_FIELD from "@salesforce/schema/ContentDocumentLink.ContentDocument.OwnerId";
-import CONTENTDOCUMENTLINK_CONTENTDOCUMENT_OWNER_NAME_FIELD from "@salesforce/schema/ContentDocumentLink.ContentDocument.Owner.Name";
-import CONTENTDOCUMENTLINK_CONTENTDOCUMENT_TITLE_FIELD from "@salesforce/schema/ContentDocumentLink.ContentDocument.Title";
-import CONTENTDOCUMENTLINK_CONTENTDOCUMENT_LASTMODIFIEDDATE_FIELD from "@salesforce/schema/ContentDocumentLink.ContentDocument.LastModifiedDate";
 import PORTAL_TASK_ID_FIELD from "@salesforce/schema/Portal_Task__c.Id";
 import PORTAL_TASK_VALUE_DATE_FIELD from "@salesforce/schema/Portal_Task__c.Value_Date__c";
 import PORTAL_TASK_VALUE_DATETIME_FIELD from "@salesforce/schema/Portal_Task__c.Value_DateTime__c";
 import PORTAL_TASK_VALUE_INTEGER_FIELD from "@salesforce/schema/Portal_Task__c.Value_Integer__c";
 import PORTAL_TASK_VALUE_TEXT_FIELD from "@salesforce/schema/Portal_Task__c.Value_Text__c";
+import viewErrorPanel from "@salesforce/customPermission/View_Error_Panel";
 
 export default class PortalTask extends NavigationMixin(LightningElement) {
 
@@ -190,6 +182,7 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
                     errorMessage = JSON.stringify( error );
                 }
                 this.showToastError( errorLabel , errorMessage );
+                this.handleLogInfo( 'handleSave' , JSON.stringify( error ) );
             }
             this.isSaving = false;
         }
@@ -250,7 +243,11 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
     //
 
     get isErrorDebugger() {
-        return false;
+        return ( viewErrorPanel === true );
+    }
+
+    handleLogInfo( log , message ) {
+        // suppress logging failures...
     }
 
     //
@@ -273,62 +270,10 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
         return ( this.recordId ? this.recordId : undefined );
     }
 
-    error;
-    parameterObject; // is-a { recordIds: [...] , fields: [...] }
-    wiredPortalLinksInfo;
-    @wire( getPortalLinks , { linkedEntityId: "$parentRecordId" } )
-    wiredPortalLinks( value ) {
-        this.wiredPortalLinksInfo = value;
-        const { error , data } = value;
-        if ( data ) {
-            // reduce the getPortalLinks wire response data to an array of ContentDocumentLink.Id values...
-            // ~ data is-a List<ContentDocumentLink>
-            const linkIds = data.map(
-                function( link ) {
-                    return link.Id;
-                }
-            );
-            if ( linkIds?.length > 0 ) {
-                this.links = undefined; // continue showing loading spinner...
-            } else {
-                this.links = []; // show 0-count file icon...
-            }
-            // populate the parameter object for the getRecords wire...
-            this.parameterObject = [
-                {
-                    recordIds: linkIds ,
-                    fields: [
-                        CONTENTDOCUMENTLINK_ID_FIELD ,
-                        CONTENTDOCUMENTLINK_CONTENTDOCUMENTID_FIELD ,
-                        CONTENTDOCUMENTLINK_CONTENTDOCUMENT_CONTENTSIZE_FIELD ,
-                        CONTENTDOCUMENTLINK_CONTENTDOCUMENT_FILETYPE_FIELD ,
-                        CONTENTDOCUMENTLINK_CONTENTDOCUMENT_OWNERID_FIELD ,
-                        CONTENTDOCUMENTLINK_CONTENTDOCUMENT_OWNER_NAME_FIELD ,
-                        CONTENTDOCUMENTLINK_CONTENTDOCUMENT_TITLE_FIELD ,
-                        CONTENTDOCUMENTLINK_CONTENTDOCUMENT_LASTMODIFIEDDATE_FIELD ,
-                    ] ,
-                }
-            ];
-            this.error = undefined;
-        } else if ( error ) {
-            this.error = error;
-            this.parameterObject = undefined;
-        }
-    }
-
     links;
-    @wire( getRecords , { records: "$parameterObject" } )
-    wiredRecords( { error , data } ) {
-        if ( data ) {
-            this.links = data?.results?.map(
-                function( record ) {
-                    return record?.result;
-                }
-            );
-            this.error = undefined;
-        } else if ( error ) {
-            this.error = error;
-            this.links = undefined;
+    handleLoaded( event ) {
+        if ( event ) {
+            this.links = event?.detail;
         }
     }
 
@@ -452,6 +397,7 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
                     errorMessage = JSON.stringify( error );
                 }
                 this.showToastError( errorLabel , errorMessage );
+                this.handleLogInfo( 'handleDeleteRecord' , JSON.stringify( error ) );
             }
             await this.refresh();
             this.isDeleting = false;

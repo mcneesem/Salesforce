@@ -23,7 +23,9 @@ export default class PortalClient extends LightningElement {
             this.projects = data.records;
             // for now...  only show the progress bar for the first "New Client" project...
             if ( this.projects?.length > 0 ) {
-                this.bar = this.projects.find( project => project.fields.Name.value.startsWith( 'New Client' ) );
+                let firstNewClientProject = this.projects.find( project => project.fields.Name.value.startsWith( 'New Client' ) );
+                this.bar = firstNewClientProject;
+                this.projects = [ firstNewClientProject ];
             }
             this.error = undefined;
         } else if ( error ) {
@@ -35,6 +37,10 @@ export default class PortalClient extends LightningElement {
 
     get projectId() {
         return ( this.projects ? this.projects[0]?.fields?.Id?.value : undefined );
+    }
+
+    get hasContent() {
+        return ( this.recordId && this.projectId );
     }
 
 }
