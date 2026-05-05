@@ -126,13 +126,6 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Portal_Events</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_Portal_Events</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -243,19 +236,17 @@
     <formulas>
         <name>portalEventName</name>
         <dataType>String</dataType>
-        <expression>
-            CASE(
-            {!recordProjectTask.Name},
-            &quot;Client Transition Meeting - PM&quot; , &quot;Client Transition Meeting&quot;,
-            &quot;New Client - EE OT Meeting&quot; , &quot;Employee Orientation&quot;,
-            &quot;Configuration Call&quot; , &quot;Configuration Call&quot;,
-            &quot;Time &amp; Attendance Training&quot; , &quot;Time &amp; Attendance Training&quot;,
-            &quot;Enrollment Administrator Training&quot; , &quot;Enrollment Administrator Training&quot;,
-            &quot;Transition To Service&quot; , &quot;Client Transition To Service&quot;,
-            &quot;Premier Training&quot; , &quot;Insperity Premier/Payroll Training&quot;,
-            &quot;&quot;
-            )
-        </expression>
+        <expression>CASE(
+  {!recordProjectTask.Name} ,
+  &quot;Client Transition Meeting - PM&quot; , &quot;Client Transition Meeting&quot; ,
+  &quot;New Client - EE OT Meeting&quot; , &quot;Employee Orientation&quot; ,
+  &quot;Configuration Call&quot; , &quot;Configuration Call&quot; ,
+  &quot;Time &amp; Attendance Training&quot; , &quot;Time &amp; Attendance Training&quot; ,
+  &quot;Enrollment Administrator Training&quot; , &quot;Enrollment Administrator Training&quot; ,
+  &quot;Transition To Service&quot; , &quot;Client Transition To Service&quot; ,
+  &quot;Premier Training&quot; , &quot;Insperity Premier/Payroll Training&quot; ,
+  &quot;&quot;
+)</expression>
     </formulas>
     <interviewLabel>Project Task - Subflow - Populate Portal Event {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Project Task - Subflow - Populate Portal Event</label>
