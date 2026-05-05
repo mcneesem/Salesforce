@@ -29,7 +29,7 @@ private class SandboxHealthControllerTest {
             SandboxHealthController.STATUS.WARN.name(),
             SandboxHealthController.STATUS.FAIL.name()
         };
-        //System.assert(allowed.contains(status), 'Unexpected status value: ' + status);
+        System.assert(allowed.contains(status), 'Unexpected status value: ' + status);
     }
 
     @IsTest
@@ -45,9 +45,9 @@ private class SandboxHealthControllerTest {
         Test.stopTest();
 
         SandboxHealthController.Section s = findSectionByKey(res.sections, 'OrgSettings__c');
-        //System.assertNotEquals(null, s, 'Org Settings section should exist');
+        System.assertNotEquals(null, s, 'Org Settings section should exist');
         assertValidSection(s);
-        //assertAllowedStatus(s.status);
+        assertAllowedStatus(s.status);
     }
 
     @IsTest
@@ -62,9 +62,9 @@ private class SandboxHealthControllerTest {
         Test.stopTest();
 
         SandboxHealthController.Section s = findSectionByKey(res.sections, 'NSP_GoogleRecaptchaSettings__c');
-        //System.assertNotEquals(null, s, 'Google reCAPTCHA Settings section should exist');
+        System.assertNotEquals(null, s, 'Google reCAPTCHA Settings section should exist');
         assertValidSection(s);
-        //assertAllowedStatus(s.status);
+        assertAllowedStatus(s.status);
     }
 
     @IsTest
@@ -80,9 +80,9 @@ private class SandboxHealthControllerTest {
         Test.stopTest();
 
         SandboxHealthController.Section s = findSectionByKey(res.sections, 'NSP_Docusign_Account_Details__c');
-        //System.assertNotEquals(null, s, 'Docusign Account Details section should exist');
+        System.assertNotEquals(null, s, 'Docusign Account Details section should exist');
         assertValidSection(s);
-        //assertAllowedStatus(s.status);
+        assertAllowedStatus(s.status);
     }
 
     @IsTest
@@ -96,9 +96,9 @@ private class SandboxHealthControllerTest {
         Test.stopTest();
 
         SandboxHealthController.Section s = findSectionByKey(res.sections, 'NSP_Environment_Details__c');
-        //System.assertNotEquals(null, s, 'Environment Details section should exist');
+        System.assertNotEquals(null, s, 'Environment Details section should exist');
         assertValidSection(s);
-        //assertAllowedStatus(s.status);
+        assertAllowedStatus(s.status);
     }
 
     @IsTest
@@ -112,16 +112,13 @@ private class SandboxHealthControllerTest {
         Test.stopTest();
 
         SandboxHealthController.Section s = findSectionByKey(res.sections, 'BoxFileRequest__c');
-        //System.assertNotEquals(null, s, 'Box File Request section should exist');
+        System.assertNotEquals(null, s, 'Box File Request section should exist');
         assertValidSection(s);
-        //assertAllowedStatus(s.status);
+        assertAllowedStatus(s.status);
     }
 
     @IsTest
     private static void testUserTriggerSettings_section_present() {
-        String sandbox = System.DomainParser.parse( URL.getOrgDomainUrl() ).getSandboxName();
-        String[] pipelineOrgs = new String[] { 'merge' , 'test' , 'stage' };
-        Boolean isPipeline = pipelineOrgs.contains( sandbox?.toLowerCase() );
         UserTriggerSettings__c uts = UserTriggerSettings__c.getOrgDefaults();
         uts.AllowedAdmins__c = null;
         uts.BccAddresses__c = null;
@@ -132,13 +129,9 @@ private class SandboxHealthControllerTest {
         Test.stopTest();
 
         SandboxHealthController.Section s = findSectionByKey(res.sections, 'UserTriggerSettings__c');
-        if ( !isPipeline ) {
-            //System.assertNotEquals(null, s, 'User Trigger Settings section should exist');
-            assertValidSection(s);
-            //assertAllowedStatus(s.status);
-        } else {
-            System.assertEquals(null, s, 'User Trigger Settings section should not exist');
-        }
+        System.assertNotEquals(null, s, 'User Trigger Settings section should exist');
+        assertValidSection(s);
+        assertAllowedStatus(s.status);
     }
 
     @IsTest
@@ -152,9 +145,9 @@ private class SandboxHealthControllerTest {
         Test.stopTest();
 
         SandboxHealthController.Section s = findSectionByKey(res.sections, 'Contract_Termination_Settings__c');
-        //System.assertNotEquals(null, s, 'Contract Termination Settings section should exist');
+        System.assertNotEquals(null, s, 'Contract Termination Settings section should exist');
         assertValidSection(s);
-        //assertAllowedStatus(s.status);
+        assertAllowedStatus(s.status);
     }
 
     @IsTest
@@ -171,9 +164,9 @@ private class SandboxHealthControllerTest {
         Test.stopTest();
 
         SandboxHealthController.Section s = findSectionByKey(res.sections, 'Sales_Team_Email_Settings__c');
-        //System.assertNotEquals(null, s, 'Sales Team Email Settings section should exist');
+        System.assertNotEquals(null, s, 'Sales Team Email Settings section should exist');
         assertValidSection(s);
-        //assertAllowedStatus(s.status);
+        assertAllowedStatus(s.status);
     }
 
     @IsTest
@@ -188,9 +181,9 @@ private class SandboxHealthControllerTest {
         Test.stopTest();
 
         SandboxHealthController.Section s = findSectionByKey(res.sections, 'NVMContactWorld__Settings__c');
-        //System.assertNotEquals(null, s, 'NVM ContactWorld Settings section should exist');
+        System.assertNotEquals(null, s, 'NVM ContactWorld Settings section should exist');
         assertValidSection(s);
-        //assertAllowedStatus(s.status);
+        assertAllowedStatus(s.status);
     }
 
     @IsTest
@@ -201,23 +194,9 @@ private class SandboxHealthControllerTest {
         Test.stopTest();
 
         SandboxHealthController.Section s = findSectionByKey(res.sections, 'imageDocuments');
-        //System.assertNotEquals(null, s, 'Image Documents section should exist');
+        System.assertNotEquals(null, s, 'Image Documents section should exist');
         assertValidSection(s);
-        //assertAllowedStatus(s.status);
-    }
-
-    @IsTest
-    private static void testRequiredLabels() {
-        // Even if no custom metadata exists or access is restricted, the controller should not throw
-        Test.startTest();
-        Map<String,String> expectedStage = SandboxHealthController.requiredLabels( 'stage' );
-        Map<String,String> expectedTest = SandboxHealthController.requiredLabels( 'test' );
-        Map<String,String> expectedMerge = SandboxHealthController.requiredLabels( 'merge' );
-        Test.stopTest();
-
-        System.assertEquals( expectedStage.get( 'NSP_FTA_Base_URL' ) , 'https://stageportalapps.insperity.com/financialcomparison/financialanalysis/' , 'Values should match' );
-        System.assertEquals( expectedTest.get( 'NSP_FTA_Base_URL' ) , 'https://testportalapps.insperity.com/financialcomparison/financialanalysis/' , 'Values should match' );
-        System.assertEquals( expectedMerge.get( 'NSP_FTA_Base_URL' ) , 'https://devportalapps.insperity.com/financialcomparison/financialanalysis/' , 'Values should match' );
+        assertAllowedStatus(s.status);
     }
 
     @IsTest
@@ -249,7 +228,7 @@ private class SandboxHealthControllerTest {
      */
     @TestSetup
     private static void setupData() {
-        Account account = New Account( Name = 'TestAccount' , AccountNumber = '12345' , NSP_AIMS_Client__c = '500' , NSP_External_Id__c = 'EXT-12345' );
+        Account account = New Account( Name = 'TestAccount' , AccountNumber = '12345' , NSP_AIMS_Client__c = '500' );
         insert account;
     }
 
@@ -280,37 +259,37 @@ private class SandboxHealthControllerTest {
                 break;
             }
         }
-        //System.assertNotEquals(null, target, 'Queues Email Suffix section should be present');
+        System.assertNotEquals(null, target, 'Queues Email Suffix section should be present');
 
         // Build a map of checks by label (queue name)
-        //Map<String, SandboxHealthController.Check> byLabel = new Map<String, SandboxHealthController.Check>();
-        //for (SandboxHealthController.Check c : target.checks) {
-        //    byLabel.put(c.label, c);
-        //}
+        Map<String, SandboxHealthController.Check> byLabel = new Map<String, SandboxHealthController.Check>();
+        for (SandboxHealthController.Check c : target.checks) {
+            byLabel.put(c.label, c);
+        }
 
-        //System.assert(byLabel.containsKey(passQueue.Name), 'PASS queue check should exist');
-        //System.assert(byLabel.containsKey(failQueue.Name), 'FAIL queue check should exist');
+        System.assert(byLabel.containsKey(passQueue.Name), 'PASS queue check should exist');
+        System.assert(byLabel.containsKey(failQueue.Name), 'FAIL queue check should exist');
 
-        //System.assertEquals(SandboxHealthController.STATUS.PASS.name(), byLabel.get(passQueue.Name).status, 'PASS queue should PASS');
-        //System.assertEquals(SandboxHealthController.STATUS.FAIL.name(), byLabel.get(failQueue.Name).status, 'FAIL queue should FAIL');
+        System.assertEquals(SandboxHealthController.STATUS.PASS.name(), byLabel.get(passQueue.Name).status, 'PASS queue should PASS');
+        System.assertEquals(SandboxHealthController.STATUS.FAIL.name(), byLabel.get(failQueue.Name).status, 'FAIL queue should FAIL');
 
         // With at least one FAIL, section should be FAIL
-        //System.assertEquals(SandboxHealthController.STATUS.FAIL.name(), target.status, 'Section should be FAIL when any queue fails');
+        System.assertEquals(SandboxHealthController.STATUS.FAIL.name(), target.status, 'Section should be FAIL when any queue fails');
     }
 
     /**
      * Helper: Validate that a Section has required shape.
      */
     private static void assertValidSection(SandboxHealthController.Section s) {
-        //System.assertNotEquals(null, s, 'Section must not be null');
-        //System.assert(!String.isBlank(s.key), 'Section.key should be set');
-        //System.assert(!String.isBlank(s.label), 'Section.label should be set');
-        //System.assertNotEquals(null, s.checks, 'Section.checks should not be null');
-        //System.assert(!String.isBlank(s.status), 'Section.status should be set');
+        System.assertNotEquals(null, s, 'Section must not be null');
+        System.assert(!String.isBlank(s.key), 'Section.key should be set');
+        System.assert(!String.isBlank(s.label), 'Section.label should be set');
+        System.assertNotEquals(null, s.checks, 'Section.checks should not be null');
+        System.assert(!String.isBlank(s.status), 'Section.status should be set');
         // Category is optional but if present, it should be non-blank string
-        //if (s.category != null) {
-        //    System.assert(!String.isBlank(s.category), 'Section.category should not be blank if provided');
-        //}
+        if (s.category != null) {
+            System.assert(!String.isBlank(s.category), 'Section.category should not be blank if provided');
+        }
     }
 
     /**
@@ -363,7 +342,7 @@ private class SandboxHealthControllerTest {
             }
         }
 
-        //System.assert(sawImageDocs, 'Expected Image Documents section to be present');
+        System.assert(sawImageDocs, 'Expected Image Documents section to be present');
     }
 
     /**
@@ -434,38 +413,5 @@ private class SandboxHealthControllerTest {
             System.assertNotEquals(null, res.sections, 'Sections must not be null for standard user');
             // Not asserting sizes or particular statuses; read-only code should still return structured output
         }
-    }
-
-    @IsTest
-    private static void testVerifyExternalIdObjects_allRecordsValid() {
-        // Configure OrgSettings to check Account
-        OrgSettings__c orgSettings = OrgSettings__c.getOrgDefaults();
-        Map<String, Schema.SObjectField> fieldsMap = Schema.SObjectType.OrgSettings__c.fields.getMap();
-        for (String fieldName : fieldsMap.keySet()) {
-            if (fieldName.toLowerCase().contains('externalidobjects')) {
-                orgSettings.put(fieldName, 'Account');
-                break;
-            }
-        }
-        upsert orgSettings;
-
-        Test.startTest();
-        SandboxHealthController.Section s = SandboxHealthController.verifyExternalIdObjects();
-        Test.stopTest();
-
-        System.assertNotEquals(null, s, 'Section should not be null');
-        assertValidSection(s);
-
-        // Should have at least one check for Account
-        Boolean foundAccountCheck = false;
-        for (SandboxHealthController.Check c : s.checks) {
-            if (c.key == 'extid_Account') {
-                foundAccountCheck = true;
-                System.assertEquals(SandboxHealthController.STATUS.PASS.name(), c.status, 'Account check should PASS when all records have External ID');
-                System.assertEquals('0', c.actual, 'Should have 0 records with blank External ID');
-                break;
-            }
-        }
-        System.assert(foundAccountCheck, 'Should have check for Account object');
     }
 }
