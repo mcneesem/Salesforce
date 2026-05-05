@@ -4,7 +4,7 @@
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <environments>Default</environments>
     <interviewLabel>Project Task - Updated - Async - Populate Portal Event {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Project Task - Updated- Async - Populate Portal Event</label>
+    <label>Project Task - Updated - Async - Populate Portal Event</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
