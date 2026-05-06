@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Exclude_Deleting_Consumption_Schedules__c</fullName>
+    <description>List the products codes that need to exclude from deleting the consumption schedules</description>
+    <encryptionScheme>None</encryptionScheme>
+    <inlineHelpText>product codes to exclude deleting consumption schedules</inlineHelpText>
+    <label>Exclude Deleting Consumption Schedules</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

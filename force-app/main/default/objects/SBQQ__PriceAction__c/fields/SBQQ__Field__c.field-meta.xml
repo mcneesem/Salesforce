@@ -522,6 +522,11 @@
                 <default>false</default>
                 <label>Has_SMS__c</label>
             </value>
+            <value>
+                <fullName>Has_NoahFace__c</fullName>
+                <default>false</default>
+                <label>Has_NoahFace__c</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Quote</controllingFieldValue>
@@ -739,6 +744,10 @@
             <controllingFieldValue>Quote</controllingFieldValue>
             <controllingFieldValue>Quote Line</controllingFieldValue>
             <valueName>Has_SMS__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <valueName>Has_NoahFace__c</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Quote Line</controllingFieldValue>

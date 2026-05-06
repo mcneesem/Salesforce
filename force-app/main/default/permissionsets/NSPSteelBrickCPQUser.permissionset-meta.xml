@@ -2034,6 +2034,10 @@
     </customPermissions>
     <customPermissions>
         <enabled>true</enabled>
+        <name>Opportunity_Docusign_Service_Actions</name>
+    </customPermissions>
+    <customPermissions>
+        <enabled>true</enabled>
         <name>Services_Opportunity_Owner</name>
     </customPermissions>
     <customSettingAccesses>
@@ -7504,6 +7508,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__Quote__c.Has_Legacy_1099_Product_Text__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Quote__c.Has_NoahFace__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

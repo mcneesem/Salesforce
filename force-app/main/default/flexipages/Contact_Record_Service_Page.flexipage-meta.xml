@@ -2125,6 +2125,16 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Client_Original_Hired_Date__c</fieldItem>
+                <identifier>RecordClient_Original_Hired_Date_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-75bc1418-ca6f-4f1d-ab5f-cff7d0e91ecf</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -3385,6 +3395,26 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.LastModifiedById</fieldItem>
                 <identifier>RecordLastModifiedByIdField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Portal_Phone__c</fieldItem>
+                <identifier>RecordPortal_Phone_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Portal_Email__c</fieldItem>
+                <identifier>RecordPortal_Email_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-2cb53231-50e7-457f-baf6-a82f1b1f7b15</name>

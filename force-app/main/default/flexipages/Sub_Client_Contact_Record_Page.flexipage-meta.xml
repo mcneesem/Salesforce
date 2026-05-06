@@ -304,6 +304,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Insperity_Hire_Date__c</fieldItem>
+                <identifier>RecordInsperity_Hire_Date_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.Benefits_Original_Hire_Date__c</fieldItem>
                 <identifier>RecordBenefits_Original_Hire_Date__cField</identifier>
             </fieldInstance>

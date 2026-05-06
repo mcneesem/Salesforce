@@ -2126,6 +2126,16 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Client_Original_Hired_Date__c</fieldItem>
+                <identifier>RecordClient_Original_Hired_Date_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-75bc1418-ca6f-4f1d-ab5f-cff7d0e91ecf</name>
         <type>Facet</type>
     </flexiPageRegions>

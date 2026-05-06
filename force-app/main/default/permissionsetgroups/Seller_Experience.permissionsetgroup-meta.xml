@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Permissions needed for users to work in the Seller Experience Application</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Seller Experience</label>
+    <permissionSets>Account_Screen_Add_Contact_and_Add_Relationship</permissionSets>
+    <permissionSets>Assign_App_Seller_Experience</permissionSets>
+    <permissionSets>bmpyrckt__Timeline_User</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

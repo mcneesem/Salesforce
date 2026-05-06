@@ -108,9 +108,9 @@
                                     <rightValue>Sales Support</rightValue>
                                 </criteria>
                                 <criteria>
-                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <leftValue>{!$Permission.CustomPermission.Opportunity_Docusign_Service_Actions}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>BPS Service</rightValue>
+                                    <rightValue>true</rightValue>
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>
@@ -189,9 +189,9 @@
                                     <rightValue>Sales Member</rightValue>
                                 </criteria>
                                 <criteria>
-                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <leftValue>{!$Permission.CustomPermission.Opportunity_Docusign_Service_Actions}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>BPS Service</rightValue>
+                                    <rightValue>true</rightValue>
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!$Permission.CustomPermission.Admin_Layout_Access}</leftValue>

@@ -104,6 +104,23 @@
         </connector>
     </assignments>
     <assignments>
+        <description>if IP Created Successfully then associate project with IP else create portal project without association</description>
+        <name>Set_IP_Record_Id</name>
+        <label>Set : IP Record Id</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>ipRecordId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_IP_Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Set_Portal_Project_Fields</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <description>Set Portal Client fields to create the portal client record</description>
         <name>Set_Portal_Client_Fields</name>
         <label>Set Portal Client Fields</label>
@@ -113,28 +130,21 @@
             <assignToReference>recordPortalClient.Account__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_IP_Record.Account__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>recordPortalClient.Implementation_Profile__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_IP_Record.Id</elementReference>
+                <elementReference>Get_Project_Record.pse__Account__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>recordPortalClient.Name</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_IP_Record.Account__r.Name</elementReference>
+                <elementReference>Get_Project_Record.pse__Account__r.Name</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>recordPortalClient.Client_Number__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_IP_Record.Account__r.NSP_AIMS_Client__c</elementReference>
+                <elementReference>Get_Project_Record.pse__Account__r.NSP_AIMS_Client__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -167,16 +177,33 @@
                 <elementReference>Get_Project_Record.Id</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordPortalProject.Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>f_showhidePortalProject</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordPortalProject.Implementation_Profile__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ipRecordId</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Create_Portal_Project</targetReference>
         </connector>
     </assignments>
     <decisions>
-        <description>Verify if Implementation Profile Record Exists</description>
+        <description>Verify if IP Exists then associate Portal Project with IP else create portal project without IP association</description>
         <name>IP_Exists</name>
         <label>IP Exists ?</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Set_Portal_Project_Fields</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Yes_IP_Exist</name>
@@ -188,15 +215,8 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>Get_IP_Record.Account__c</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
             <connector>
-                <targetReference>Get_Portal_Client</targetReference>
+                <targetReference>Set_IP_Record_Id</targetReference>
             </connector>
             <label>Yes : IP Exist</label>
         </rules>
@@ -225,17 +245,20 @@
     </decisions>
     <decisions>
         <description>Validate if portal client record already exists .
-Create if not exists else skip create record</description>
+Create if not exist and if exists create project to support multiple project to portal client</description>
         <name>Portal_Client_Exists</name>
         <label>Portal Client Exists ?</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Get_Portal_Project</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>No_Portal_Client_Exist</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Portal_Client</leftValueReference>
+                <leftValueReference>recordPortalClient</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -264,7 +287,7 @@ Create if not exists else skip create record</description>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Set_Portal_Project_Fields</targetReference>
+                <targetReference>Get_IP_Record</targetReference>
             </connector>
             <label>No Portal Project Exist</label>
         </rules>
@@ -285,8 +308,15 @@ Create if not exists else skip create record</description>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Get_Project_Record.pse__Account__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>Get_IP_Record</targetReference>
+                <targetReference>Get_Portal_Client</targetReference>
             </connector>
             <label>Yes : Project Exists</label>
         </rules>
@@ -319,7 +349,28 @@ Create if not exists else skip create record</description>
     <formulas>
         <name>f_portalProjectName</name>
         <dataType>String</dataType>
-        <expression>IF(NOT(ISBLANK({!Get_Project_Record.Id})), &quot;New Client &quot;+&quot; &quot; + {!Get_Project_Record.pse__Account__r.Name}, &quot;&quot;)</expression>
+        <expression>IF(
+  NOT( ISBLANK( {!Get_Project_Record.Id} ) ) ,
+  &quot;New Client&quot;
+    + &quot; - &quot;
+    + TEXT( MONTH( ( {!Get_Project_Record.pse__Start_Date__c} ) ) )
+    + &quot;.&quot;
+    + TEXT( DAY( ( {!Get_Project_Record.pse__Start_Date__c} ) ) )
+    + &quot;.&quot;
+    + TEXT( YEAR( ( {!Get_Project_Record.pse__Start_Date__c} ) ) )
+    + &quot; - &quot;
+    + {!Get_Project_Record.pse__Account__r.Name} ,
+  &quot;&quot;
+)</expression>
+    </formulas>
+    <formulas>
+        <name>f_showhidePortalProject</name>
+        <dataType>String</dataType>
+        <expression>IF(
+  {!Get_Project_Record.NSP_Visible_to_Client__c} ,
+  &quot;Active&quot; ,
+  &quot;Hidden&quot;
+)</expression>
     </formulas>
     <interviewLabel>Project - Subflow - Create Portal Project {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Project - Subflow - Create Portal Project</label>
@@ -356,6 +407,7 @@ Create if not exists else skip create record</description>
         <inputReference>recordPortalClient</inputReference>
     </recordCreates>
     <recordCreates>
+        <description>Create Portal Project</description>
         <name>Create_Portal_Project</name>
         <label>Create Portal Project</label>
         <locationX>0</locationX>
@@ -366,7 +418,7 @@ Create if not exists else skip create record</description>
         <inputReference>recordPortalProject</inputReference>
     </recordCreates>
     <recordLookups>
-        <description>Get Implementation Profile Record</description>
+        <description>Get Implementation Profile Record . Validating just to see if IP got created successfully.</description>
         <name>Get_IP_Record</name>
         <label>Get IP Record</label>
         <locationX>0</locationX>
@@ -397,7 +449,7 @@ Create if not exists else skip create record</description>
         <label>Get Portal Client</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Portal_Client_Exists</targetReference>
         </connector>
@@ -406,22 +458,16 @@ Create if not exists else skip create record</description>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>Implementation_Profile__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_IP_Record.Id</elementReference>
-            </value>
-        </filters>
-        <filters>
             <field>Account__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_IP_Record.Account__c</elementReference>
+                <elementReference>Get_Project_Record.pse__Account__c</elementReference>
             </value>
         </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Portal_Client__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <outputReference>recordPortalClient</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Name</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_Portal_Project</name>
@@ -445,9 +491,12 @@ Create if not exists else skip create record</description>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Portal_Project__c</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Name</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <description>Validate if Service Project is created successfully.</description>
         <name>Get_Project_Record</name>
         <label>Get Project Record</label>
         <locationX>0</locationX>
@@ -472,6 +521,8 @@ Create if not exists else skip create record</description>
         <queriedFields>Id</queriedFields>
         <queriedFields>pse__Account__c</queriedFields>
         <queriedFields>Name</queriedFields>
+        <queriedFields>NSP_Visible_to_Client__c</queriedFields>
+        <queriedFields>pse__Start_Date__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
@@ -510,6 +561,13 @@ Create if not exists else skip create record</description>
     </subflows>
     <variables>
         <name>faultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ipRecordId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
