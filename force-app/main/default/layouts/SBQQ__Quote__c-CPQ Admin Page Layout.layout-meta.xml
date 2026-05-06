@@ -125,6 +125,10 @@
                 <behavior>Edit</behavior>
                 <field>Has_Promo__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Has_NoahFace__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

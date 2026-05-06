@@ -3,23 +3,6 @@
     <apiVersion>65.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
-        <description>Extract all Portal Client IDs into text collection</description>
-        <name>Assign_Portal_Client_Id_s</name>
-        <label>Assign : Portal Client Id&apos;s</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>portalclient_ids</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>Loop_Multiple_Portal_Clients.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Loop_Multiple_Portal_Clients</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Set_Fault_Element_Delete_Pay_Periods</name>
         <label>Set Fault Element : Delete_Pay_Periods</label>
         <locationX>0</locationX>
@@ -36,15 +19,15 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Fault_Element_Get_All_Portal_Pay_Periods</name>
-        <label>Set Fault Element : Get_All_Portal_Pay_Periods</label>
+        <name>Set_Fault_Element_Get_Portal_Pay_Period</name>
+        <label>Set Fault Element : Get_Portal_Pay_Period</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Get_All_Portal_Pay_Periods</stringValue>
+                <stringValue>Get_Portal_Pay_Period</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -53,15 +36,15 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Fault_Element_Get_Portal_Clients</name>
-        <label>Set Fault Element : Get_Portal_Clients</label>
+        <name>Set_Fault_Element_Get_Portal_Project</name>
+        <label>Set Fault Element : Get_Portal_Project</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>FaultElement</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Get_Portal_Clients</stringValue>
+                <stringValue>Get_Portal_Project</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -70,25 +53,17 @@
         </connector>
     </assignments>
     <decisions>
-        <description>Validate if collection is not empty</description>
-        <name>Pay_Period_Exists</name>
-        <label>Pay Period Exists?</label>
+        <name>Valid_Portal_Pay_Period</name>
+        <label>Valid Portal Pay Period ?</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Yes_Pay_Period_Exist</name>
+            <name>Yes_Valid_Portal_Pay_Period</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>rc_all_pay_periords</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>rc_all_pay_periords</leftValueReference>
-                <operator>IsEmpty</operator>
+                <leftValueReference>Get_Portal_Pay_Period</leftValueReference>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -96,37 +71,30 @@
             <connector>
                 <targetReference>Delete_Pay_Periods</targetReference>
             </connector>
-            <label>Yes : Pay Period Exist</label>
+            <label>Yes : Valid Portal Pay Period</label>
         </rules>
     </decisions>
     <decisions>
-        <description>Validate if collection is not empty</description>
-        <name>Portal_Client_Record_Exists</name>
-        <label>Portal Client Record Exists?</label>
+        <description>Validate the portal project</description>
+        <name>Valid_Portal_Project</name>
+        <label>Valid Portal Project ?</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Yes_Record_Exist</name>
+            <name>Yes_Valid_Portal_Project</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>rc_portal_clients</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>rc_portal_clients</leftValueReference>
-                <operator>IsEmpty</operator>
+                <leftValueReference>Get_Portal_Project</leftValueReference>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Loop_Multiple_Portal_Clients</targetReference>
+                <targetReference>Get_Portal_Pay_Period</targetReference>
             </connector>
-            <label>Yes : Record Exist</label>
+            <label>Yes : Valid Portal Project</label>
         </rules>
     </decisions>
     <decisions>
@@ -153,31 +121,23 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.NSP_Implementation_Profile__r.NSP_Project__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>Get_Portal_Clients</targetReference>
+                <targetReference>Get_Portal_Project</targetReference>
             </connector>
             <label>Valid IP Record</label>
         </rules>
     </decisions>
-    <description>12/11/2025 - AZD-500803</description>
+    <description>New Client Portal: Delete Portal Pay Period</description>
     <environments>Default</environments>
     <interviewLabel>Implementation Pay Period - Deleted - Delete Portal Pay Period {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Implementation Pay Period - Deleted - Delete Portal Pay Period</label>
-    <loops>
-        <description>Assuming we have multiple PCs for given Account</description>
-        <name>Loop_Multiple_Portal_Clients</name>
-        <label>Loop : Multiple Portal Clients</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <collectionReference>rc_portal_clients</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>Assign_Portal_Client_Id_s</targetReference>
-        </nextValueConnector>
-        <noMoreValuesConnector>
-            <targetReference>Get_All_Portal_Pay_Periods</targetReference>
-        </noMoreValuesConnector>
-    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -205,27 +165,27 @@
         <faultConnector>
             <targetReference>Set_Fault_Element_Delete_Pay_Periods</targetReference>
         </faultConnector>
-        <inputReference>rc_all_pay_periords</inputReference>
+        <inputReference>r_portalpayperiod</inputReference>
     </recordDeletes>
     <recordLookups>
-        <description>Retrieve Pay Period records for all Portal Client IDs into collection</description>
-        <name>Get_All_Portal_Pay_Periods</name>
-        <label>Get All Portal Pay Periods</label>
+        <description>Portal Pay Period</description>
+        <name>Get_Portal_Pay_Period</name>
+        <label>Get Portal Pay Period</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Pay_Period_Exists</targetReference>
+            <targetReference>Valid_Portal_Pay_Period</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Set_Fault_Element_Get_All_Portal_Pay_Periods</targetReference>
+            <targetReference>Set_Fault_Element_Get_Portal_Pay_Period</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>Portal_Client__c</field>
-            <operator>In</operator>
+            <field>Portal_Project__c</field>
+            <operator>EqualTo</operator>
             <value>
-                <elementReference>portalclient_ids</elementReference>
+                <elementReference>Get_Portal_Project.Id</elementReference>
             </value>
         </filters>
         <filters>
@@ -236,34 +196,42 @@
             </value>
         </filters>
         <object>Portal_Pay_Period__c</object>
-        <outputReference>rc_all_pay_periords</outputReference>
+        <outputReference>r_portalpayperiod</outputReference>
         <queriedFields>Id</queriedFields>
+        <queriedFields>Name</queriedFields>
     </recordLookups>
     <recordLookups>
-        <description>Retrieve Portal Clients Records for given parent account, assuming multiple PC records may exists</description>
-        <name>Get_Portal_Clients</name>
-        <label>Get Portal Clients</label>
+        <name>Get_Portal_Project</name>
+        <label>Get Portal Project</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Portal_Client_Record_Exists</targetReference>
+            <targetReference>Valid_Portal_Project</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Set_Fault_Element_Get_Portal_Clients</targetReference>
+            <targetReference>Set_Fault_Element_Get_Portal_Project</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>Account__c</field>
+            <field>Implementation_Profile__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>$Record.NSP_Implementation_Profile__r.Account__c</elementReference>
+                <elementReference>$Record.NSP_Implementation_Profile__c</elementReference>
             </value>
         </filters>
-        <object>Portal_Client__c</object>
-        <outputReference>rc_portal_clients</outputReference>
+        <filters>
+            <field>Project__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.NSP_Implementation_Profile__r.NSP_Project__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Portal_Project__c</object>
         <queriedFields>Id</queriedFields>
-        <queriedFields>Account__c</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
         <locationX>0</locationX>
@@ -277,6 +245,13 @@
             <operator>IsNull</operator>
             <value>
                 <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Project_Template__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>FSO - Implementation</stringValue>
             </value>
         </filters>
         <object>Implementation_Pay_Period__c</object>
@@ -317,29 +292,11 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <description>Collection of Portal Client ID&apos;s</description>
-        <name>portalclient_ids</name>
-        <dataType>String</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <description>Pay Periods for all Portal Client ID&apos;s for an triggering IP account</description>
-        <name>rc_all_pay_periords</name>
+        <name>r_portalpayperiod</name>
         <dataType>SObject</dataType>
-        <isCollection>true</isCollection>
+        <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Portal_Pay_Period__c</objectType>
-    </variables>
-    <variables>
-        <description>Portal Clients record collection</description>
-        <name>rc_portal_clients</name>
-        <dataType>SObject</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Portal_Client__c</objectType>
     </variables>
 </Flow>

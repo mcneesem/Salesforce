@@ -28,10 +28,10 @@
             <lightning:buttonIcon iconName="utility:refresh" onclick="{!c.init}" 
                                   alternativeText="Refresh the list of interviews" />
         </aura:set>
-     <table class="slds-table slds-table--bordered slds-table--cell-buffer 
+     <table class="slds-table slds-table_bordered slds-table_cell-buffer 
         slds-table_fixed-layout">
        <thead>
-          <tr class="slds-text-heading--label">
+          <tr class="slds-text-heading_label">
              <th scope="col"><div class="slds-truncate">Interview Label</div></th>
              <th scope="col"><div class="slds-truncate">Pause Reason</div></th>
              <th scope="col"><div class="slds-truncate">Paused Date</div></th> 

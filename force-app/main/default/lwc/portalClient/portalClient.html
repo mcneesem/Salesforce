@@ -9,9 +9,11 @@
                 </template>
                 <lightning-layout-item size="12" padding="horizontal-small">
                     <lightning-tabset>
-                        <lightning-tab label="Home">
-                            <c-portal-client-tab-home record-id={recordId}></c-portal-client-tab-home>
-                        </lightning-tab>
+                        <template lwc:if={projectId}>
+                            <lightning-tab label="Overview">
+                                <c-portal-client-tab-home record-id={recordId} project-id={projectId}></c-portal-client-tab-home>
+                            </lightning-tab>
+                        </template>
                         <template lwc:if={projects}>
                             <template for:each={projects} for:item="project">
                                 <lightning-tab label={project.fields.Label__c.value} key={project.fields.Id.value}>

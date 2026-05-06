@@ -59,7 +59,7 @@
 
 .THIS ul.nsp-standard-list.data-list.equal label {
   width: 220px;
-  font-weight: bold;
+  font-weight: var(--slds-g-font-weight-bold, bold);
   padding-right: 10px;
   display: inline-block;
   float: left;

@@ -4,13 +4,13 @@
 }
 
 .THIS .gfs-font-style{
-    font-family: var(--lwc-fontFamily,-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol');
+    font-family: var(--slds-g-font-family-base, var(--lwc-fontFamily, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'));
     font-size: 9pt;
 }
 
 .THIS .guidance-title{
     text-align: center;
     padding-bottom: 10px;
-    font-weight: 600;
+    font-weight: var(--slds-g-font-weight-6, 600);
     font-size: 1.3em;
 }

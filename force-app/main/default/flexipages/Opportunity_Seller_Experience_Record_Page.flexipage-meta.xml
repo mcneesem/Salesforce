@@ -63,11 +63,21 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_PrimaryProduct__c</fieldItem>
                 <identifier>RecordNSP_PrimaryProduct_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Sub_Product__c</fieldItem>
+                <identifier>RecordNSP_Sub_Product_cField2</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.Has_Primary_Product__c}</leftValue>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
+                        <rightValue>Insurance Services</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -80,6 +90,22 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Account_Segment__c</fieldItem>
                 <identifier>RecordNSP_Account_Segment_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.MidMarket_National_Account__c</fieldItem>
+                <identifier>RecordMidMarket_National_Account_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.MidMarket_National_Account__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -204,39 +230,6 @@
                         <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
                         <operator>NE</operator>
                         <rightValue>Retirement Services</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Sub_Product__c</fieldItem>
-                <identifier>RecordNSP_Sub_Product_cField2</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Insurance Services</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.MidMarket_National_Account__c</fieldItem>
-                <identifier>RecordMidMarket_National_Account_cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.MidMarket_National_Account__c}</leftValue>
-                        <operator>NE</operator>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -481,6 +474,125 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>daysToShow</name>
+                    <value>30</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>earliestRange</name>
+                    <value>3</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>iconStyle</name>
+                    <value>Square</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>latestRange</name>
+                    <value>0.25</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>preferredHeight</name>
+                    <value>1 - Smallest</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showToday</name>
+                    <value>Green</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>timelineParent</name>
+                    <value>Default_Picklist_Value</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>timelineTitle</name>
+                    <value>Timeline</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>zoomTo</name>
+                    <value>Current Date</value>
+                </componentInstanceProperties>
+                <componentName>bmpyrckt:timeline</componentName>
+                <identifier>bmpyrckt_timeline</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-cd3e0fd7-6f58-49f0-a48b-15b4d09224f4</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentName>NSP_OpportunityGuidanceForSuccess</componentName>
+                <identifier>c_NSP_OpportunityGuidanceForSuccess</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-2a1ed062-737c-4e95-aeec-21670c94d18e</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>active</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-cd3e0fd7-6f58-49f0-a48b-15b4d09224f4</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Timeline</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab10</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>active</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-2a1ed062-737c-4e95-aeec-21670c94d18e</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Guidance for Success</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab9</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2 AND 3 AND 4</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.StageName}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Closed Won</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.StageName}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Closed Lost</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.StageName}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Closed Won - Outgoing</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.StageName}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Closed Lost - Outgoing</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-33ed746b-987b-45dd-9a6d-f8a65e47d2a8</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>parentFieldApiName</name>
                     <value>Opportunity.Id</value>
                 </componentInstanceProperties>
@@ -577,16 +689,6 @@
                     <name>uiBehavior</name>
                     <value>required</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Name</fieldItem>
-                <identifier>RecordNameField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>required</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.StageName</fieldItem>
                 <identifier>RecordStageNameField</identifier>
             </fieldInstance>
@@ -649,8 +751,80 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Number_of_Employees__c</fieldItem>
-                <identifier>RecordNSP_Number_of_Employees_cField</identifier>
+                <fieldItem>Record.Closed_Lost_Group__c</fieldItem>
+                <identifier>RecordClosed_Lost_Group_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Lost_Reason__c</fieldItem>
+                <identifier>RecordNSP_Lost_Reason_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Sub_Reason_Lost__c</fieldItem>
+                <identifier>RecordSub_Reason_Lost_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-91183cd3-6f5f-4ee4-a9d0-403411019663</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Product_Recommendation_Outcome__c</fieldItem>
+                <identifier>RecordProduct_Recommendation_Outcome_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-0dd2bd00-0bf5-44d1-9604-846a976dcbc5</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-91183cd3-6f5f-4ee4-a9d0-403411019663</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column25</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-0dd2bd00-0bf5-44d1-9604-846a976dcbc5</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column26</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-607f9db8-8748-46c2-b4df-7bad097c1d4f</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>required</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Name</fieldItem>
+                <identifier>RecordNameField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -671,6 +845,33 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Type</fieldItem>
                 <identifier>RecordTypeField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Exception_Credit_Amount__c</fieldItem>
+                <identifier>RecordNSP_Exception_Credit_Amount_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Type}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Client Growth Credit</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_AddonType__c</fieldItem>
+                <identifier>RecordNSP_AddonType_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -705,7 +906,7 @@
                 <fieldItem>Record.Source__c</fieldItem>
                 <identifier>RecordSource_cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2</booleanFilter>
+                    <booleanFilter>1 OR 2 OR 3</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -715,6 +916,11 @@
                         <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Retirement Services</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Insurance Services</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -728,7 +934,7 @@
                 <fieldItem>Record.Client_Type__c</fieldItem>
                 <identifier>RecordClient_Type_cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2</booleanFilter>
+                    <booleanFilter>1 OR 2 OR 3</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -739,43 +945,10 @@
                         <operator>EQUAL</operator>
                         <rightValue>Retirement Services</rightValue>
                     </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_AddonType__c</fieldItem>
-                <identifier>RecordNSP_AddonType_cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>(1 AND 2) OR (3 AND (4 OR 5))</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Existing Product</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Retirement Services</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>New Product</rightValue>
-                    </criteria>
                     <criteria>
                         <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>WX</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>WA</rightValue>
+                        <rightValue>Insurance Services</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -789,7 +962,7 @@
                 <fieldItem>Record.NSP_CAM_Type__c</fieldItem>
                 <identifier>RecordNSP_CAM_Type_cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR ((2 OR 3) AND 4)</booleanFilter>
+                    <booleanFilter>(1 OR ((2 OR 3) AND 4) ) OR (1 AND 5)</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_AddonType__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -810,14 +983,13 @@
                         <operator>EQUAL</operator>
                         <rightValue>WX_WA CAM</rightValue>
                     </criteria>
+                    <criteria>
+                        <leftValue>{!Record.StageName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Closed Lost</rightValue>
+                    </criteria>
                 </visibilityRule>
             </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentName>flexipage:blankSpace</componentName>
-                <identifier>flexipage_blankSpace</identifier>
-            </componentInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
@@ -825,24 +997,19 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_TransitionType__c</fieldItem>
-                <identifier>RecordNSP_TransitionType_cField</identifier>
+                <fieldItem>Record.CAM_New_EEs_Added__c</fieldItem>
+                <identifier>RecordCAM_New_EEs_Added_cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3</booleanFilter>
+                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
-                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Insurance Services</rightValue>
+                        <leftValue>{!Record.NSP_AddonType__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>WX_WA CAM</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <leftValue>{!Record.StageName}</leftValue>
                         <operator>NE</operator>
-                        <rightValue>Contractor Management</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Retirement Services</rightValue>
+                        <rightValue>Closed Lost</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -856,7 +1023,7 @@
                 <fieldItem>Record.NSP_PrimaryCompetitor__c</fieldItem>
                 <identifier>RecordNSP_PrimaryCompetitor_cField2</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3</booleanFilter>
+                    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
                         <operator>NE</operator>
@@ -871,6 +1038,26 @@
                         <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
                         <operator>NE</operator>
                         <rightValue>Retirement Services</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Time &amp; Attendance</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Performance Management</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Applicant Tracking</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Organizational Planning</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -885,8 +1072,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Total_EEs_All_Companies__c</fieldItem>
-                <identifier>RecordNSP_Total_EEs_All_Companies_cField</identifier>
+                <fieldItem>Record.NSP_Number_of_Employees__c</fieldItem>
+                <identifier>RecordNSP_Number_of_Employees_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -898,10 +1085,16 @@
                 <fieldItem>Record.NSP_Primary_Contact__c</fieldItem>
                 <identifier>RecordNSP_Primary_Contact_cField</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
                         <operator>NE</operator>
-                        <rightValue>Insurance Services</rightValue>
+                        <rightValue>Learning &amp; Development</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Has_Primary_Product__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>false</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -940,6 +1133,16 @@
             </fieldInstance>
         </itemInstances>
         <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Sales_Office__c</fieldItem>
+                <identifier>RecordNSP_Sales_Office_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
             <componentInstance>
                 <componentName>flexipage:blankSpace</componentName>
                 <identifier>flexipage_blankSpace2</identifier>
@@ -954,7 +1157,7 @@
                 <fieldItem>Record.Leadership_Attendance__c</fieldItem>
                 <identifier>RecordLeadership_Attendance_cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5</booleanFilter>
+                    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
                         <operator>NE</operator>
@@ -979,6 +1182,11 @@
                         <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
                         <operator>NE</operator>
                         <rightValue>WA</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Applicant Tracking</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -992,7 +1200,7 @@
                 <fieldItem>Record.Discovery_Call_Debriefed__c</fieldItem>
                 <identifier>RecordDiscovery_Call_Debriefed_cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5</booleanFilter>
+                    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
                         <operator>NE</operator>
@@ -1017,6 +1225,11 @@
                         <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
                         <operator>NE</operator>
                         <rightValue>WA</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Applicant Tracking</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1116,16 +1329,6 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.CampaignId</fieldItem>
-                <identifier>RecordCampaignIdField2</identifier>
-            </fieldInstance>
-        </itemInstances>
         <name>Facet-4d5789db-9d33-431b-919f-e6394534bf1c</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -1170,40 +1373,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_DC_SetDate__c</fieldItem>
-                <identifier>RecordNSP_DC_SetDate_cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Retirement Services</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_DC_SetTime__c</fieldItem>
-                <identifier>RecordNSP_DC_SetTime_cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Retirement Services</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Product_Interest__c</fieldItem>
                 <identifier>RecordNSP_Product_Interest_cField</identifier>
                 <visibilityRule>
@@ -1213,6 +1382,16 @@
                         <rightValue>Retirement Services</rightValue>
                     </criteria>
                 </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.CampaignId</fieldItem>
+                <identifier>RecordCampaignIdField2</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-efad8506-d7ff-41f6-8681-841078a5a40a</name>
@@ -1393,6 +1572,34 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_WetSignature__c</fieldItem>
                 <identifier>RecordNSP_WetSignature_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Contractor Management</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Organizational Planning</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Retirement Services</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Time &amp; Attendance</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Performance Management</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1413,6 +1620,34 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Has_Primary_Quote__c</fieldItem>
                 <identifier>RecordNSP_Has_Primary_Quote_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>WX</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>WA</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Contractor Management</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Organizational Planning</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Retirement Services</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1423,6 +1658,39 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Fee_Inclusive__c</fieldItem>
                 <identifier>RecordFee_Inclusive_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Contractor Management</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Organizational Planning</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Retirement Services</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Applicant Tracking</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>WX</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>WA</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-7eeb4fe4-25a5-45b5-aa5f-ee246d5f9f86</name>
@@ -1435,8 +1703,26 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Signed_Delivery_Order__c</fieldItem>
-                <identifier>RecordNSP_Signed_Delivery_Order_cField</identifier>
+                <fieldItem>Record.NSP_Signed_Delivery_Order_Date__c</fieldItem>
+                <identifier>RecordNSP_Signed_Delivery_Order_Date_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2 OR 3</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Time &amp; Attendance</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Performance Management</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Applicant Tracking</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1445,8 +1731,15 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Order_Generated__c</fieldItem>
-                <identifier>RecordNSP_Order_Generated_cField</identifier>
+                <fieldItem>Record.NSP_Signed_Delivery_Order__c</fieldItem>
+                <identifier>RecordNSP_Signed_Delivery_Order_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Recruiting Services</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1465,8 +1758,122 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Order_Generated__c</fieldItem>
+                <identifier>RecordNSP_Order_Generated_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Retirement Services</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Contractor Management</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Organizational Planning</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>WX</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>WA</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HRScale</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Time &amp; Attendance</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Applicant Tracking</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Performance Management</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Billing_Account__c</fieldItem>
+                <identifier>RecordNSP_Billing_Account_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2 OR 3</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Time &amp; Attendance</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Performance Management</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Applicant Tracking</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Selected_Template__c</fieldItem>
+                <identifier>RecordNSP_Selected_Template_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2 OR 3</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Time &amp; Attendance</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Performance Management</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Applicant Tracking</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.Notes_to_Finance__c</fieldItem>
-                <identifier>RecordNotes_to_Finance_cField</identifier>
+                <identifier>RecordNotes_to_Finance_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-5a082fa7-8602-42d3-ac4c-e6640db96a7f</name>
@@ -1635,6 +2042,88 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_BackOutRequestor__c</fieldItem>
+                <identifier>RecordNSP_BackOutRequestor_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_BackOutDate__c</fieldItem>
+                <identifier>RecordNSP_BackOutDate_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Back_Out_By__c</fieldItem>
+                <identifier>RecordNSP_Back_Out_By_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-aa0070c0-6c2a-412e-af95-6f0d53e7d677</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_BackOutReason__c</fieldItem>
+                <identifier>RecordNSP_BackOutReason_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Back_Out__c</fieldItem>
+                <identifier>RecordNSP_Back_Out_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-9b2a5e7f-b3c1-4770-8b64-14e37d24c1c9</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-aa0070c0-6c2a-412e-af95-6f0d53e7d677</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column23</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-9b2a5e7f-b3c1-4770-8b64-14e37d24c1c9</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column24</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-571564c1-049c-4765-93b8-6004e1a3bedc</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.OwnerId</fieldItem>
@@ -1649,16 +2138,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Opportunity_Owner_Role__c</fieldItem>
                 <identifier>RecordNSP_Opportunity_Owner_Role_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Sales_Office__c</fieldItem>
-                <identifier>RecordNSP_Sales_Office_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-57470206-110c-49cc-8ee0-8b84e3da5dd2</name>
@@ -1726,7 +2205,7 @@
                 <componentName>flexipage:tabset</componentName>
                 <identifier>flexipage_tabset</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6</booleanFilter>
+                    <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.StageName}</leftValue>
                         <operator>EQUAL</operator>
@@ -1741,16 +2220,6 @@
                         <leftValue>{!Record.StageName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Closing</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.StageName}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Closed Lost</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.StageName}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Closed Won</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.StageName}</leftValue>
@@ -1787,6 +2256,31 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>columns</name>
+                    <value>Facet-607f9db8-8748-46c2-b4df-7bad097c1d4f</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Closed Lost</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection13</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.StageName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Closed Lost</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
                     <value>Facet-8de2c2a8-2aa1-4a76-a1d8-672918141e34</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -1795,7 +2289,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
-                    <value>Opportunity Overview</value>
+                    <value>Opportunity Details</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection</identifier>
@@ -1817,6 +2311,29 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection2</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2 AND 3 AND 4</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Insurance Services</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Time &amp; Attendance</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Performance Management</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Applicant Tracking</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -1836,40 +2353,30 @@
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection4</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7</booleanFilter>
+                    <booleanFilter>(1 OR 2 OR 3 OR 5) AND 4</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Insurance Services</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>WX</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>WA</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Contractor Management</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Retirement Services</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Has_Primary_Product__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
+                        <rightValue>WO</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>WS</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HRScale</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.NSP_Opportunity_ID_18__c}</leftValue>
                         <operator>NE</operator>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.StageName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Closed Lost</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -1891,7 +2398,7 @@
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection3</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6</booleanFilter>
+                    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
                         <operator>NE</operator>
@@ -1921,6 +2428,11 @@
                         <leftValue>{!Record.NSP_Opportunity_ID_18__c}</leftValue>
                         <operator>NE</operator>
                     </criteria>
+                    <criteria>
+                        <leftValue>{!Record.StageName}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Closed Lost</rightValue>
+                    </criteria>
                 </visibilityRule>
             </componentInstance>
         </itemInstances>
@@ -1940,28 +2452,6 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection5</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3 AND 4</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Insurance Services</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Contractor Management</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Has_Primary_Product__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Opportunity_ID_18__c}</leftValue>
-                        <operator>NE</operator>
-                    </criteria>
-                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -1981,7 +2471,7 @@
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection6</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5</booleanFilter>
+                    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7 AND 8 AND 9</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
                         <operator>NE</operator>
@@ -2005,6 +2495,51 @@
                     <criteria>
                         <leftValue>{!Record.NSP_Opportunity_ID_18__c}</leftValue>
                         <operator>NE</operator>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Organizational Planning</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Time &amp; Attendance</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Performance Management</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_PrimaryProduct__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Applicant Tracking</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
+                    <value>Facet-571564c1-049c-4765-93b8-6004e1a3bedc</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Backout</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection12</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.StageName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Closed Won</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -2348,16 +2883,10 @@
                 <identifier>RecordNSP_Merge_On_Demand_Template_Selection_cField</identifier>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Customer_Signer__c</fieldItem>
-                <identifier>RecordNSP_Customer_Signer_cField2</identifier>
-            </fieldInstance>
-        </itemInstances>
+        <name>Facet-b540cfab-52a6-4689-82de-39036be7ab74</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
@@ -2376,60 +2905,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Legals_Counter_Signer__c</fieldItem>
                 <identifier>RecordLegals_Counter_Signer_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-b540cfab-52a6-4689-82de-39036be7ab74</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_MOD_Document_Signed__c</fieldItem>
-                <identifier>RecordNSP_MOD_Document_Signed_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_BPA__c</fieldItem>
-                <identifier>RecordNSP_BPA_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_RM__c</fieldItem>
-                <identifier>RecordNSP_RM_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_DA_User__c</fieldItem>
-                <identifier>RecordNSP_DA_User_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_DM_User__c</fieldItem>
-                <identifier>RecordNSP_DM_User_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-17a32b91-1f19-42f9-8c0b-731bbf89e854</name>
@@ -2569,6 +3044,78 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.NSP_ForecastPercent__c</fieldItem>
+                <identifier>RecordNSP_ForecastPercent_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>required</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.ForecastCategoryName</fieldItem>
+                <identifier>RecordForecastCategoryNameField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-9ykzwz6jr2q</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Forecast__c</fieldItem>
+                <identifier>RecordNSP_Forecast_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Forecast_Status__c</fieldItem>
+                <identifier>RecordNSP_Forecast_Status_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-70ck2v1t9zr</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-9ykzwz6jr2q</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column27</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-70ck2v1t9zr</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column28</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-4fxvi3y5vcc</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NSP_CountAsSale__c</fieldItem>
                 <identifier>RecordNSP_CountAsSale_cField</identifier>
             </fieldInstance>
@@ -2617,6 +3164,16 @@
                 <identifier>RecordPromotion_Code_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Re_book__c</fieldItem>
+                <identifier>RecordNSP_Re_book_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-6d4ee518-19d6-463d-94ba-c871ce6748e8</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -2663,6 +3220,186 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Schedule_B_Enrollment_Fee__c</fieldItem>
                 <identifier>RecordNSP_Schedule_B_Enrollment_Fee_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_CollectedAtBooking__c</fieldItem>
+                <identifier>RecordNSP_CollectedAtBooking_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.StageName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Closed Won</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Calculated_Enrollment_Fee__c</fieldItem>
+                <identifier>RecordNSP_Calculated_Enrollment_Fee_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.StageName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Closed Won</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_InsperityFee__c</fieldItem>
+                <identifier>RecordNSP_InsperityFee_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.StageName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Closed Won</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_EnrollmentFeeDiscount__c</fieldItem>
+                <identifier>RecordNSP_EnrollmentFeeDiscount_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.StageName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Closed Won</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Total_EF_Due_Reps__c</fieldItem>
+                <identifier>RecordNSP_Total_EF_Due_Reps_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.StageName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Closed Won</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_1_6_OfScheduleB__c</fieldItem>
+                <identifier>RecordNSP_1_6_OfScheduleB_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.StageName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Closed Won</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_WaivedInsperityFee__c</fieldItem>
+                <identifier>RecordNSP_WaivedInsperityFee_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.StageName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Closed Won</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_InsperityFeePercent__c</fieldItem>
+                <identifier>RecordNSP_InsperityFeePercent_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.StageName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Closed Won</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_1stPayInvoiceDate__c</fieldItem>
+                <identifier>RecordNSP_1stPayInvoiceDate_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.StageName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Closed Won</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_1stPayDateActiveEmployees__c</fieldItem>
+                <identifier>RecordNSP_1stPayDateActiveEmployees_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.StageName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Closed Won</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_EnrollmentFeeNotes__c</fieldItem>
+                <identifier>RecordNSP_EnrollmentFeeNotes_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-10c7d971-0502-4f8c-be22-9c4d765a5a1c</name>
@@ -2729,6 +3466,29 @@
                 <identifier>RecordNSP_Enrollment_Fee_Payment_6_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>flexipage:blankSpace</componentName>
+                <identifier>flexipage_blankSpace</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Partner__c</fieldItem>
+                <identifier>RecordNSP_Partner_cField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.StageName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Closed Won</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-09f2b54b-5137-4b81-b903-c33a1b3e773d</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -2757,6 +3517,41 @@
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
+                    <value>Facet-4fxvi3y5vcc</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Forecast Details</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection14</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2 AND 3</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.StageName}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Closed Lost</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.StageName}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Closed Won</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Opportunity_ID_18__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
@@ -2931,7 +3726,7 @@
                             <value>NSP_Enrollment_Fee__c</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>NSP_Office_Assignment__c</value>
+                            <value>NSP_Sales_Office__c</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -2955,21 +3750,86 @@
                 <identifier>lst_dynamicRelatedList2</identifier>
             </componentInstance>
         </itemInstances>
-        <name>Facet-hrvp4h73u4</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>PreviewStyle</name>
-                    <value>Popup</value>
+                    <name>actionNames</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>New</value>
+                        </valueListItems>
+                    </valueList>
                 </componentInstanceProperties>
-                <componentName>bloomfirex:search</componentName>
-                <identifier>bloomfirex_search</identifier>
+                <componentInstanceProperties>
+                    <name>adminFilters</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>maxRecordsToDisplay</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Opportunity.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>Assets__r</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListDisplayType</name>
+                    <value>ADVGRID</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListFieldAliases</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>ASSET.NAME</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>ASSET.SERIAL_NUMBER</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>ASSET.INSTALL_DATE</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>ACCOUNT.NAME</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CONTACT.NAME</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>PRODUCT2.NAME</value>
+                        </valueListItems>
+                    </valueList>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListLabel</name>
+                    <value>Assets Related List</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>sortFieldAlias</name>
+                    <value>__DEFAULT__</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>sortFieldOrder</name>
+                    <value>Default</value>
+                </componentInstanceProperties>
+                <componentName>lst:dynamicRelatedList</componentName>
+                <identifier>lst_dynamicRelatedList8</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.StageName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Closed Won</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
-        <name>Facet-e5da2ebe-a16d-45d1-8d30-427a7521ea8b</name>
+        <name>Facet-hrvp4h73u4</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -3149,20 +4009,6 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-e5da2ebe-a16d-45d1-8d30-427a7521ea8b</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>title</name>
-                    <value>Sales Coach</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:tab</componentName>
-                <identifier>customTab4</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
                     <value>Facet-57b9c850-1040-4880-a5c2-02400f001bc2</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -3180,8 +4026,16 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>NSP_OpportunityGuidanceForSuccess</componentName>
-                <identifier>c_NSP_OpportunityGuidanceForSuccess</identifier>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Tabs</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>tabs</name>
+                    <value>Facet-33ed746b-987b-45dd-9a6d-f8a65e47d2a8</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tabset</componentName>
+                <identifier>flexipage_tabset4</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -3243,15 +4097,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relatedListComponentOverride</name>
-                    <value>NONE</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>rowsToDisplay</name>
-                    <value>10</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>showActionBar</name>
-                    <value>true</value>
+                    <value>GRID</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
                 <identifier>force_relatedListSingleContainer2</identifier>
@@ -3283,11 +4129,51 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>runtime_sales_cadence:cadenceStepsCard</componentName>
+                <identifier>runtime_sales_cadence_cadenceStepsCard</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-96a667cc-15ea-43c5-9d1f-8afeb96d5058</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
                 <componentName>forceChatter:recordFeedContainer</componentName>
                 <identifier>forceChatter_recordFeedContainer</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-62bf8034-18de-48b5-b88f-b4cd18890bfc</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Opportunity.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>AttachedContentDocuments</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListComponentOverride</name>
+                    <value>GRID</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>rowsToDisplay</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer4</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-c1783dd6-a1ba-41c8-9142-3699fed0468f</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -3331,6 +4217,20 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
+                    <value>Facet-96a667cc-15ea-43c5-9d1f-8afeb96d5058</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Standard.Tab.engagement</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab7</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
                     <value>Facet-62bf8034-18de-48b5-b88f-b4cd18890bfc</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -3339,6 +4239,20 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>collaborateTab</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-c1783dd6-a1ba-41c8-9142-3699fed0468f</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Files</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab8</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-dde378d0-41fd-4860-b600-64ae00e3f820</name>

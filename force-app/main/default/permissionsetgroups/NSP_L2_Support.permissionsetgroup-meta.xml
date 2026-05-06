@@ -28,7 +28,6 @@
     <permissionSets>Opportunity_Management</permissionSets>
     <permissionSets>Partner_Access</permissionSets>
     <permissionSets>Program_Agreement_Functionality</permissionSets>
-    <permissionSets>Read_Permission_on_all_Fields</permissionSets>
     <permissionSets>Report_export_and_print_access</permissionSets>
     <permissionSets>Sales_Service_Object_Permission</permissionSets>
     <permissionSets>User_Management</permissionSets>

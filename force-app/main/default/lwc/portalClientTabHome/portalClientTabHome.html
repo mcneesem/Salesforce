@@ -7,10 +7,14 @@
             <lightning-layout-item size="12">
                 <lightning-layout multiple-rows>
                     <lightning-layout-item size="12" medium-device-size="7" padding="around-small">
-                        <c-portal-team-member-list record-id={recordId}></c-portal-team-member-list>
+                        <template lwc:if={projectId}>
+                            <c-portal-team-member-list record-id={projectId}></c-portal-team-member-list>
+                        </template>
                     </lightning-layout-item>
                     <lightning-layout-item size="12" medium-device-size="5" padding="around-small">
-                        <c-portal-client-important-dates record-id={recordId}></c-portal-client-important-dates>
+                        <template lwc:if={projectId}>
+                            <c-portal-client-important-dates record-id={recordId} project-id={projectId}></c-portal-client-important-dates>
+                        </template>
                     </lightning-layout-item>
                 </lightning-layout>
             </lightning-layout-item>

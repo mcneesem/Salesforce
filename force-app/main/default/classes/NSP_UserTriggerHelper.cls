@@ -1,5 +1,5 @@
 public with sharing class NSP_UserTriggerHelper {
-    // test w/ NSP_UserTriggerHelper_Test (81%)
+    // test w/ NSP_UserTriggerHelper_Test (82%)
 
     public static boolean syncAccountQueueExecuted = false;
 
@@ -242,19 +242,11 @@ public with sharing class NSP_UserTriggerHelper {
         if(!serviceProfileUserIdSet.isEmpty()){
             addtoServiceProfilePublicGroup(serviceProfileUserIdSet);
         }
-
-        if(!mapContactIdUserId.isEmpty()){
-            NSP_portalUserSharing queableObj = new NSP_portalUserSharing(mapContactIdUserId);
-            if(Limits.getQueueableJobs() != Limits.getLimitQueueableJobs()) {
-                System.enqueueJob(queableObj);
-             }
+        NSP_portalUserSharing.enqueueJob( mapContactIdUserId );
+        if ( !lstUserToAssignFSLPermissions.isEmpty() ) {
+            //send it to queueable method to assign permissionset
+            this.processUserPermissions( lstUserToAssignFSLPermissions , null );
         }
-
-         if(!lstUserToAssignFSLPermissions.isEmpty()){
-             //send it to queueable method to assign permissionset
-             processUserPermissions(lstUserToAssignFSLPermissions, null);
-         }
-
     }
 
     //
@@ -326,15 +318,8 @@ public with sharing class NSP_UserTriggerHelper {
         if(!userIdUserMap.isEmpty()){
            assignPSAPermission(userIdUserMap);
         }
-
-        if(!mapContactIdUserId.isEmpty()){
-            NSP_portalUserSharing queableObj = new NSP_portalUserSharing(mapContactIdUserId);
-            if(Limits.getQueueableJobs() != Limits.getLimitQueueableJobs()) {
-               System.enqueueJob(queableObj);
-            }
-        }
-
-        syncToAccount(newMap.Values(), oldMap);
+        NSP_portalUserSharing.enqueueJob( mapContactIdUserId );
+        this.syncToAccount( newMap.values() , oldMap );
     }
 
     //

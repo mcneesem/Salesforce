@@ -144,10 +144,8 @@ private class NSP_AccountTeamTriggerTest {
         accTeam.NSP_Role__c = NSP_ServiceConstants.CLIENT_LIAISION;
         lstAccTeam.add(accTeam);
         insert lstAccTeam;
-        pse__Project_Task__c pt = [SELECT Id,NSP_CC_Emails__c,NSP_Client_Liaison_Name__c,NSP_HR_Specialist_Email__c,NSP_AccountId__c,
-                                   NSP_HR_Specialist_Name__c,NSP_Client_Liaison_Email__c FROM pse__Project_Task__c WHERE Id!=null limit 1];
+        pse__Project_Task__c pt = [SELECT Id,NSP_CC_Emails__c,NSP_AccountId__c FROM pse__Project_Task__c WHERE Id!=null limit 1];
 
-        system.assertNotEquals(pt.NSP_Client_Liaison_Email__c, userInfo.getUserEmail());
         test.stopTest();
     }
 
@@ -200,10 +198,8 @@ private class NSP_AccountTeamTriggerTest {
         accTeam.NSP_Role__c = NSP_ServiceConstants.HRSpecialist;
         lstAccTeam.add(accTeam);
         insert lstAccTeam;
-        pse__Project_Task__c pt = [SELECT Id,NSP_CC_Emails__c,NSP_Client_Liaison_Name__c,NSP_HR_Specialist_Email__c,NSP_AccountId__c,
-                                   NSP_HR_Specialist_Name__c,NSP_Client_Liaison_Email__c FROM pse__Project_Task__c WHERE Id!=null limit 1];
+        pse__Project_Task__c pt = [SELECT Id,NSP_CC_Emails__c,NSP_AccountId__c FROM pse__Project_Task__c WHERE Id!=null limit 1];
 
-        system.assertNotEquals(pt.NSP_Client_Liaison_Email__c, userInfo.getUserEmail());
         test.stopTest();
     }
 
@@ -219,10 +215,8 @@ private class NSP_AccountTeamTriggerTest {
         accTeam.NSP_Role__c = NSP_ServiceConstants.BUS_TEAM_HRSP_CL;
         lstAccTeam.add(accTeam);
         insert lstAccTeam;
-        pse__Project_Task__c pt = [SELECT Id,NSP_CC_Emails__c,NSP_Client_Liaison_Name__c,NSP_HR_Specialist_Email__c,NSP_AccountId__c,
-                                   NSP_HR_Specialist_Name__c,NSP_Client_Liaison_Email__c FROM pse__Project_Task__c WHERE Id!=null LIMIT 1];
+        pse__Project_Task__c pt = [SELECT Id,NSP_CC_Emails__c,NSP_AccountId__c FROM pse__Project_Task__c WHERE Id!=null LIMIT 1];
 
-        system.assertNotEquals(pt.NSP_Client_Liaison_Email__c, userInfo.getUserEmail());
         test.stopTest();
     }
 

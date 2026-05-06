@@ -4,5 +4,5 @@
     width:100%;
     text-align:center;
     top: calc(50% + 1.5rem);
-    font-weight:bold;
+    font-weight:var(--slds-g-font-weight-bold, bold);
 }

@@ -8,6 +8,6 @@
         </wave-wave-dashboard-lwc>
     </template>
     <template lwc:elseif={error}>
-        <c-error-panel errors={error}></c-error-panel>
+        <c-error-panel error={error} parent="c-crm-analytics-dashboard-wrapper"></c-error-panel>
     </template>
 </template>

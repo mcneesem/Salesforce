@@ -1,5 +1,5 @@
 public with sharing class UserAvailabilityService {
-    // test w/ UserAvailabilityServiceTest (90%)
+    // test w/ UserAvailabilityServiceTest (86%)
 
     //Returns the available days based on Business Hours for the given skill...
     @AuraEnabled(cacheable=true)
@@ -211,6 +211,28 @@ public with sharing class UserAvailabilityService {
         return matrix;
     }
 
+    // Add 30-minute buffer to Demo events with NSP_Event_Subtype__c 
+    private static List<Event> addBufferToEvents( List<Event> events ) {
+        List<Event> processedEvents = new List<Event>();
+        if ( ( events != null ) && !events.isEmpty() ) {
+            for ( Event e : events ) {
+                Event processedEvent = e;
+                // Check if this is a Demo event with HR360 Solution subtype
+                // Check if this is a Demo event with any subtype value
+                if ( ( processedEvent.NSP_Event_Type__c == 'Demo' )
+                    && String.isNotBlank( processedEvent.NSP_Event_Subtype__c )
+                    && ( processedEvent.EndDateTime != null )
+                    )
+                {
+                    // Create new Event with extended EndDateTime (30 minutes buffer)
+                    processedEvent.EndDateTime = processedEvent.EndDateTime.addMinutes( 30 );
+                }
+                processedEvents.add( processedEvent );
+            }
+        }
+        return processedEvents;
+    }
+
     //Get total availability of users that are added to the Schedule Seller Permission Set
     @AuraEnabled(cacheable=true)
     public static List<List<Integer>> getAggregateCountsMatrix( String skill, String timeZone ) {
@@ -229,6 +251,7 @@ public with sharing class UserAvailabilityService {
             userIds ,
             window
         );
+        events = UserAvailabilityService.addBufferToEvents( events );
         if ( ( events != null ) && !events.isEmpty() ) {
             for ( Event e : events ) {
                 if ( !busyByUser.containsKey( e.OwnerId ) ) {
@@ -416,6 +439,8 @@ public with sharing class UserAvailabilityService {
             userIds ,
             window
         );
+        // Apply 30-min buffer to Demo events
+        overlapping = UserAvailabilityService.addBufferToEvents( overlapping );
         // Ensure every user exists in the map (so busyByUser.get(uid) isn't null)
         Map<Id,List<Event>> busyByUser = UserAvailabilityService.initializeBusyUserMap( userIds );
         if ( ( overlapping != null ) && !overlapping.isEmpty() ) {

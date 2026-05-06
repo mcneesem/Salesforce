@@ -8,6 +8,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.Days_Since_Termination__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.Google_News__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -133,6 +138,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.Termination_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.Total_Assets__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -209,6 +219,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>AccountContactRelation.Workday_Employee_URL__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Relationship__c.Account_Relationship_ID_18__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1103,6 +1118,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Implementation_Pay_Period__c.Project_Template__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Lead.Account_Assignment_Method__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1439,6 +1459,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>NSP_Client_Sub_Plan_History__c.Asset_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_Employee_Split__c.Opportunity_Credit_ID_18__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2238,6 +2263,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>OrderItem.Free_Periods_End_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>OrderItem.Pricing_Model__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2468,6 +2498,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SBQQ__QuoteLine__c.Override_Scholarship_Discounts__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SBQQ__QuoteLine__c.Promo_Applicable_Product__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2493,6 +2528,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SBQQ__Quote__c.Has_NoahFace__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SBQQ__Quote__c.Has_Promo__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2504,6 +2544,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__Quote__c.NSP_Has_Timestar_Hardware__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__Quote__c.Price_Rule_Override__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

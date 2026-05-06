@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Custom Permission for giving special admin access for overriding discount fields on Quotes through custom script</description>
+    <isLicensed>false</isLicensed>
+    <label>Override Scholarship Discounts</label>
+</CustomPermission>
