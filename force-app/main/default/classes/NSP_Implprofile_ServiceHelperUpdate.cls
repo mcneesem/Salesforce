@@ -99,7 +99,8 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                 MISSING_LOA_FN , COBRA_FORM_COLLECTED_FN ,
                 COBRA_FORM_NOT_COLLECTED_FN ,
                 INTERNAL_DISCOVERY_FN ,
-                ONSITE_DISCOVERY_FN , CSP_DOCS_FSO,
+                ONSITE_DISCOVERY_FN ,
+                CSP_DOCS_FSO ,
                 enrollFee_FN ,enrollFee_Subtask_FN, DATA_VERIFICATION,FLSA_EXEMPTION_REVIEW
             }
         );
@@ -333,44 +334,59 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         }
     }
 
-    private void checkForClientSposoredPlan(Implementation_Profile__c newRec, Implementation_Profile__c existingRec){
-        if(automationsToExecute.contains(CSP_DOCS_FSO)
-           && newRec != null
-           && newRec.RecordTypeId == ipFSORecordTypeId
-           && newRec.Spnsrd_pln_when_Insperity_hndles_payroll__c != null
-           && (existingRec == null
+    private void checkForClientSposoredPlan(
+        Implementation_Profile__c newRec ,
+        Implementation_Profile__c existingRec
+        )
+    {
+        if ( this.automationsToExecute.contains( NSP_Implprofile_ServiceHelperUpdate.CSP_DOCS_FSO )
+            && ( newRec != null )
+            && ( newRec.RecordTypeId == NSP_Implprofile_ServiceHelperUpdate.ipFSORecordTypeId )
+            && ( newRec.Spnsrd_pln_when_Insperity_hndles_payroll__c != null )
+            && ( ( existingRec == null )
                 || newRec.NSP_Form_Completed__c
-                || newRec.Spnsrd_pln_when_Insperity_hndles_payroll__c == NSP_ServiceConstants.YES
-              )
+                || ( newRec.Spnsrd_pln_when_Insperity_hndles_payroll__c == NSP_ServiceConstants.YES )
+                )
             )
         {
-            updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, CSP_DOCS_FSO);
+            this.updateEligibleRecordsMap(
+                this.ipRecordsByAutomation ,
+                newRec.Id ,
+                NSP_Implprofile_ServiceHelperUpdate.CSP_DOCS_FSO
+            );
         }
     }
 
-    private void checkForClientSposoredPlanSubTask(Implementation_Profile__c newRec, Implementation_Profile__c existingRec){
-        if(automationsToExecute.contains(CT_SPONSORED_PLAN_FN)
-           && newRec != null
-           && newRec.RecordTypeId == ipFSORecordTypeId
-           && newRec.Spnsrd_pln_when_Insperity_hndles_payroll__c == NSP_ServiceConstants.YES
-           && newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c != null
-           && (
-                newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.HCFSA)
-                || newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.HSA)
-                || newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.DCFSA)
-                || newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.MEDICAL)
-                || newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.DENTAL)
-                || newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.VISION)
-               )
-           && (existingRec == null
+    private void checkForClientSposoredPlanSubTask(
+        Implementation_Profile__c newRec ,
+        Implementation_Profile__c existingRec
+        )
+    {
+        if ( this.automationsToExecute.contains( NSP_Implprofile_ServiceHelperUpdate.CT_SPONSORED_PLAN_FN )
+            && ( newRec != null )
+            && ( newRec.RecordTypeId == NSP_Implprofile_ServiceHelperUpdate.ipFSORecordTypeId )
+            && ( newRec.Spnsrd_pln_when_Insperity_hndles_payroll__c == NSP_ServiceConstants.YES )
+            && ( newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c != null )
+            && ( newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains( NSP_ServiceConstants.HCFSA )
+                || newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains( NSP_ServiceConstants.HSA )
+                || newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains( NSP_ServiceConstants.DCFSA )
+                || newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains( NSP_ServiceConstants.MEDICAL )
+                || newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains( NSP_ServiceConstants.DENTAL )
+                || newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains( NSP_ServiceConstants.VISION )
+                )
+            && ( ( existingRec == null )
                 || newRec.NSP_Form_Completed__c
-                || newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c != existingRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c)
+                || ( newRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c != existingRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c )
+                )
             )
         {
-           updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, CT_SPONSORED_PLAN_FN);
+           this.updateEligibleRecordsMap(
+               this.ipRecordsByAutomation ,
+               newRec.Id ,
+               NSP_Implprofile_ServiceHelperUpdate.CT_SPONSORED_PLAN_FN
+            );
         }
     }
-
 
     private void checkforReceivedCertificate(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
         if (automationsToExecute.contains(GENERAL_LIABILITY_FN)
@@ -899,7 +915,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
     }
 
    // Client Sposored Plan FSA - automation
-    private  void createProjectTaskForClientSposoredPlan(
+    private void createProjectTaskForClientSposoredPlan(
         String automation ,
         NSP_ProjectTask_Automation__mdt pta ,
         pse__Proj__c proj ,
@@ -908,31 +924,41 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         Id workCalendarId
         )
     {
-        if(automation == CSP_DOCS_FSO){
-            pse__Project_Task__c eachProjecttask = genericPMTask(proj,pta,ipRecId,ipwithValue,workCalendarId);
-            NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(automation);
-            if(eachProjecttask != null && ipa != null && ipwithValue != null){
+        if ( automation == NSP_Implprofile_ServiceHelperUpdate.CSP_DOCS_FSO ) {
+            pse__Project_Task__c eachProjecttask = this.genericPMTask(
+                proj ,
+                pta ,
+                ipRecId ,
+                ipwithValue ,
+                workCalendarId
+            );
+            NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance( automation );
+            if ( ( eachProjecttask != null )
+                && ( ipa != null )
+                && ( ipwithValue != null )
+                )
+            {
                 eachProjecttask.Implementation_Profile__c = ipwithValue.id;
-                projectTaskToInsertList.add(eachProjecttask);
-                ipAutomationRecords.add(
-                    createIPAutomation(
-                        ipRecId,
-                        ipa.NSP_Automation_Name__c,
-                        ipa.NSP_Method_Name__c,
-                        ipa.NSP_Section__c,NSP_ServiceConstants.FSOProfile
+                this.projectTaskToInsertList.add( eachProjecttask );
+                this.ipAutomationRecords.add(
+                    NSP_Implprofile_ServiceHelperUpdate.createIPAutomation(
+                        ipRecId ,
+                        ipa.NSP_Automation_Name__c ,
+                        ipa.NSP_Method_Name__c ,
+                        ipa.NSP_Section__c ,
+                        NSP_ServiceConstants.FSOProfile
                     )
                 );
             }
         }
     }
 
-
    //Health Care FSA - Task
     private void createTaskForHealthCareFSA(
         pse__Proj__c proj ,
         Id ipRecId ,
         Implementation_Profile__c ipwithValue ,
-        Id workCalendarId,
+        Id workCalendarId ,
         pse__Project_Task__c pt
         )
     {
@@ -945,7 +971,14 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             )
         {
             NSP_ProjectTask_Automation__mdt pta =  NSP_ProjectTask_Automation__mdt.getInstance(CSP_HCFSA_FSO);
-            eachProjecttask = this.createSubtaskCspDocsNotReceivedRecord(proj, pta, ipRecId, ipWithValue, workCalendarId, pt);
+            eachProjecttask = this.createSubtaskCspDocsNotReceivedRecord(
+                proj ,
+                pta ,
+                ipRecId ,
+                ipWithValue ,
+                workCalendarId ,
+                pt
+            );
         }
         if(eachProjecttask != null){
             projectTaskToInsertList.add(eachProjecttask);
@@ -957,7 +990,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         pse__Proj__c proj ,
         Id ipRecId ,
         Implementation_Profile__c ipwithValue ,
-        Id workCalendarId,
+        Id workCalendarId ,
         pse__Project_Task__c pt
         )
     {
@@ -970,7 +1003,14 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             )
         {
             NSP_ProjectTask_Automation__mdt pta =  NSP_ProjectTask_Automation__mdt.getInstance(CSP_HSA_FSO);
-            eachProjecttask = this.createSubtaskCspDocsNotReceivedRecord(proj, pta, ipRecId, ipWithValue, workCalendarId, pt);
+            eachProjecttask = this.createSubtaskCspDocsNotReceivedRecord(
+                proj ,
+                pta ,
+                ipRecId ,
+                ipWithValue ,
+                workCalendarId ,
+                pt
+            );
         }
         if(eachProjecttask != null){
             projectTaskToInsertList.add(eachProjecttask);
@@ -982,7 +1022,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         pse__Proj__c proj ,
         Id ipRecId ,
         Implementation_Profile__c ipwithValue ,
-        Id workCalendarId,
+        Id workCalendarId ,
         pse__Project_Task__c pt
         )
     {
@@ -995,7 +1035,14 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             )
         {
             NSP_ProjectTask_Automation__mdt pta =  NSP_ProjectTask_Automation__mdt.getInstance(CSP_DCFSA_FSO);
-            eachProjecttask = this.createSubtaskCspDocsNotReceivedRecord(proj, pta, ipRecId, ipWithValue, workCalendarId, pt);
+            eachProjecttask = this.createSubtaskCspDocsNotReceivedRecord(
+                proj ,
+                pta ,
+                ipRecId ,
+                ipWithValue ,
+                workCalendarId ,
+                pt
+            );
         }
         if(eachProjecttask != null){
             projectTaskToInsertList.add(eachProjecttask);
@@ -1007,7 +1054,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         pse__Proj__c proj ,
         Id ipRecId ,
         Implementation_Profile__c ipwithValue ,
-        Id workCalendarId,
+        Id workCalendarId ,
         pse__Project_Task__c pt
         )
     {
@@ -1020,7 +1067,14 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             )
         {
             NSP_ProjectTask_Automation__mdt pta =  NSP_ProjectTask_Automation__mdt.getInstance(CSP_MEDICAL_FSO);
-            eachProjecttask = this.createSubtaskCspDocsNotReceivedRecord(proj, pta, ipRecId, ipWithValue, workCalendarId, pt);
+            eachProjecttask = this.createSubtaskCspDocsNotReceivedRecord(
+                proj ,
+                pta ,
+                ipRecId ,
+                ipWithValue ,
+                workCalendarId ,
+                pt
+            );
         }
         if(eachProjecttask != null){
             projectTaskToInsertList.add(eachProjecttask);
@@ -1032,7 +1086,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         pse__Proj__c proj ,
         Id ipRecId ,
         Implementation_Profile__c ipwithValue ,
-        Id workCalendarId,
+        Id workCalendarId ,
         pse__Project_Task__c pt
         )
     {
@@ -1045,7 +1099,14 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             )
         {
             NSP_ProjectTask_Automation__mdt pta =  NSP_ProjectTask_Automation__mdt.getInstance(CSP_DENTAL_FSO);
-            eachProjecttask = this.createSubtaskCspDocsNotReceivedRecord(proj, pta, ipRecId, ipWithValue, workCalendarId, pt);
+            eachProjecttask = this.createSubtaskCspDocsNotReceivedRecord(
+                proj ,
+                pta ,
+                ipRecId ,
+                ipWithValue ,
+                workCalendarId ,
+                pt
+            );
         }
         if(eachProjecttask != null){
             projectTaskToInsertList.add(eachProjecttask);
@@ -1057,7 +1118,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         pse__Proj__c proj ,
         Id ipRecId ,
         Implementation_Profile__c ipwithValue ,
-        Id workCalendarId,
+        Id workCalendarId ,
         pse__Project_Task__c pt
         )
     {
@@ -1070,7 +1131,14 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             )
         {
             NSP_ProjectTask_Automation__mdt pta =  NSP_ProjectTask_Automation__mdt.getInstance(CSP_VISION_FSO);
-            eachProjecttask = this.createSubtaskCspDocsNotReceivedRecord(proj, pta, ipRecId, ipWithValue, workCalendarId, pt);
+            eachProjecttask = this.createSubtaskCspDocsNotReceivedRecord(
+                proj ,
+                pta ,
+                ipRecId ,
+                ipWithValue ,
+                workCalendarId ,
+                pt
+            );
         }
         if(eachProjecttask != null){
             projectTaskToInsertList.add(eachProjecttask);
@@ -1838,7 +1906,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
     }
 
     // Client Sposored Plan Type FSA - atuomation
-    private  void createSubtaskforClientSposoredPlan(
+    private void createSubtaskforClientSposoredPlan(
         String automation ,
         pse__Proj__c proj ,
         Id ipRecId ,
@@ -1846,24 +1914,24 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         Id workCalendarId
         )
     {
-        if ( proj != null && automation == CT_SPONSORED_PLAN_FN
+        if ( ( proj != null )
+            && ( automation == NSP_Implprofile_ServiceHelperUpdate.CT_SPONSORED_PLAN_FN )
             && ( proj.pse__Project_Tasks__r != null )
             && !proj.pse__Project_Tasks__r.isEmpty()
            )
         {
-            for( pse__Project_Task__c pt : proj.pse__Project_Tasks__r) {
-                if ( pt.Name == 'CSP Client Authorization/Cafeteria Plan documentation collected') {
-                    this.createTaskForHealthCareFSA(proj,ipRecId,ipwithValue,workCalendarId,pt);
-                    this.createTaskForHSA(proj,ipRecId,ipwithValue,workCalendarId,pt);
-                    this.createTaskForDependentCareFSA(proj,ipRecId,ipwithValue,workCalendarId,pt);
-                    this.createTaskForMedical(proj,ipRecId,ipwithValue,workCalendarId,pt);
-                    this.createTaskForDental(proj,ipRecId,ipwithValue,workCalendarId,pt);
-                    this.createTaskForVision(proj,ipRecId,ipwithValue,workCalendarId,pt);
+            for ( pse__Project_Task__c pt : proj.pse__Project_Tasks__r ) {
+                if ( pt.Name == 'CSP Client Authorization/Cafeteria Plan documentation collected' ) {
+                    this.createTaskForHealthCareFSA( proj , ipRecId , ipwithValue , workCalendarId , pt );
+                    this.createTaskForHSA( proj , ipRecId , ipwithValue , workCalendarId , pt );
+                    this.createTaskForDependentCareFSA( proj , ipRecId , ipwithValue , workCalendarId , pt );
+                    this.createTaskForMedical( proj , ipRecId , ipwithValue , workCalendarId , pt );
+                    this.createTaskForDental( proj , ipRecId , ipwithValue , workCalendarId , pt );
+                    this.createTaskForVision( proj , ipRecId , ipwithValue , workCalendarId , pt );
                 }
             }
         }
     }
-
 
     private pse__Project_Task__c createProjectTaskfromIP( pse__Proj__c project , String category , Id ipRecId , String milestoneKey ) {
         Id projectTaskPEORecordTypeId = Schema.SObjectType.pse__Project_Task__c.getRecordTypeInfosByDeveloperName().get(NSP_ServiceConstants.PROJECT_TASK_PEO_RECORDTYPE).getRecordTypeId();
