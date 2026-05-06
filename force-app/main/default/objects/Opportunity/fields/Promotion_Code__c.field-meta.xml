@@ -17,6 +17,11 @@
                 <label>NCI-RS</label>
             </value>
             <value>
+                <fullName>2026 Q2 Kicker</fullName>
+                <default>false</default>
+                <label>2026 Q2 Kicker</label>
+            </value>
+            <value>
                 <fullName>2026 2-Year Agreement</fullName>
                 <default>false</default>
                 <label>2026 2-Year Agreement</label>
