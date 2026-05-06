@@ -821,7 +821,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
     private Id getSalesforceUserId( SObject relatedRecord ) {
         Id userId = null;
         if ( ( relatedRecord != null )
-            && ( relatedRecord.getPopulatedFieldsAsMap().containsKey( 'pse__Salesforce_User__c' )
+            && relatedRecord.getPopulatedFieldsAsMap().containsKey( 'pse__Salesforce_User__c' )
             )
         {
             userId = (Id)relatedRecord.get( 'pse__Salesforce_User__c' );
