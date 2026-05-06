@@ -20,6 +20,7 @@ public class NSP_ProjectTasksTriggerHelper {
     private static final String HSA_OPTUM_NO_MM='NSP_HSA_No_Optum';
     private static final String HSA_OPTUM_MM='HSA_Optum';
     private List<pse__Project_Task__c> cspSubTaskList = new List<pse__Project_Task__c>();
+
     //
     // Iterates throught the list of new pse__Project_Task__c and passes the required attributes to other methods.
     // @param projectTaskNewMap Map of New project.
@@ -168,41 +169,43 @@ public class NSP_ProjectTasksTriggerHelper {
             createSubtask(levies, LEVIESTASK);
         }
         //Create CSP Child Project Tasks
-        this.createCspFsoChildTasks(listProjectTasks);
+        this.createCspFsoChildTasks( listProjectTasks );
     }
 
-    private void createCspFsoChildTasks ( List<pse__Project_Task__c> projectTasks ){
+    private void createCspFsoChildTasks( List<pse__Project_Task__c> projectTasks ) {
         Map<Id,pse__Project_Task__c> idProjectTask = new Map<Id,pse__Project_Task__c>();
         if ( ( projectTasks != null )
             && !projectTasks.isEmpty()
-           )
+            )
         {
-            for( pse__Project_Task__c pt :  projectTasks ) {
-                if ( pt.Name == 'CSP Client Authorization/Cafeteria Plan documentation collected'
-                    && pt.Implementation_Profile__c != null
+            for ( pse__Project_Task__c pt :  projectTasks ) {
+                if ( ( pt.Name == 'CSP Client Authorization/Cafeteria Plan documentation collected' )
+                    && ( pt.Implementation_Profile__c != null )
                     )
                 {
-                    idProjectTask.put( pt.Implementation_Profile__c, pt );
+                    idProjectTask.put( pt.Implementation_Profile__c , pt );
                 }
             }
         }
         this.processCspTypeProjectTasks( idProjectTask );
     }
 
-    private void processCspTypeProjectTasks(  Map<Id,pse__Project_Task__c> idProjecttask ){
-        if ( idProjecttask != null && !idProjecttask.isEmpty() ){
+    private void processCspTypeProjectTasks( Map<Id,pse__Project_Task__c> idProjecttask ) {
+        if ( ( idProjecttask != null ) && !idProjecttask.isEmpty() ) {
             Map<Id,Implementation_Profile__c> implMap = this.fetchImplementationProfiles( idProjecttask.keySet() );
-            if ( implMap != null ){
-                for( pse__Project_Task__c pt :  idProjecttask.values() ) {
-                    if ( pt.Implementation_Profile__c != null && implMap.containsKey( pt.Implementation_Profile__c ) ) {
-                        Implementation_Profile__c ipRec =  implMap.get( pt.Implementation_Profile__c );
-                        this.evaluateCspTypesForProjectTask(pt,ipRec);
+            if ( implMap != null ) {
+                for ( pse__Project_Task__c pt : idProjecttask.values() ) {
+                    if ( ( pt.Implementation_Profile__c != null )
+                        && implMap.containsKey( pt.Implementation_Profile__c )
+                        )
+                    {
+                        Implementation_Profile__c ipRec = implMap.get( pt.Implementation_Profile__c );
+                        this.evaluateCspTypesForProjectTask( pt , ipRec );
                     }
                 }
             }
         }
-
-        if ( this.cspSubTaskList != null && !this.cspSubTaskList.isEmpty() ) {
+        if ( ( this.cspSubTaskList != null ) && !this.cspSubTaskList.isEmpty() ) {
             List<Database.SaveResult> insertChildResults = Database.insert( this.cspSubTaskList , false );
             NSP_ErrorLogHandler.logResults(
                 NSP_ProjectTasksTriggerHelper.class.getName() ,
@@ -212,40 +215,43 @@ public class NSP_ProjectTasksTriggerHelper {
         }
     }
 
-    private void evaluateCspTypesForProjectTask(pse__Project_Task__c pt, Implementation_Profile__c ipRec ) {
-        if ( ipRec != null &&String.isNotBlank(ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c)) {
-            if ( ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.HCFSA)) {
-                this.buildCspFsoChildTask(pt, 'CSP_HCFSA_FSO');
+    private void evaluateCspTypesForProjectTask( pse__Project_Task__c pt , Implementation_Profile__c ipRec ) {
+        if ( ( ipRec != null )
+            && String.isNotBlank( ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c )
+            )
+        {
+            if ( ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains( NSP_ServiceConstants.HCFSA ) ) {
+                this.buildCspFsoChildTask( pt , 'CSP_HCFSA_FSO' );
             }
-            if ( ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.HSA)) {
-                this.buildCspFsoChildTask(pt, 'CSP_HSA_FSO');
+            if ( ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains( NSP_ServiceConstants.HSA ) ) {
+                this.buildCspFsoChildTask( pt , 'CSP_HSA_FSO' );
             }
-            if ( ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.DCFSA)) {
-                this.buildCspFsoChildTask(pt, 'CSP_DCFSA_FSO');
+            if ( ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains( NSP_ServiceConstants.DCFSA ) ) {
+                this.buildCspFsoChildTask( pt , 'CSP_DCFSA_FSO' );
             }
-            if ( ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.MEDICAL)) {
-                this.buildCspFsoChildTask(pt, 'CSP_MEDICAL_FSO');
+            if ( ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains( NSP_ServiceConstants.MEDICAL ) ) {
+                this.buildCspFsoChildTask( pt , 'CSP_MEDICAL_FSO' );
             }
-            if ( ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.DENTAL)) {
-                this.buildCspFsoChildTask(pt, 'CSP_DENTAL_FSO');
+            if ( ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains( NSP_ServiceConstants.DENTAL ) ) {
+                this.buildCspFsoChildTask( pt , 'CSP_DENTAL_FSO' );
             }
-            if ( ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.VISION)) {
-                this.buildCspFsoChildTask(pt, 'CSP_VISION_FSO');
+            if ( ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains( NSP_ServiceConstants.VISION ) ) {
+                this.buildCspFsoChildTask( pt , 'CSP_VISION_FSO' );
             }
         }
     }
 
-    private void buildCspFsoChildTask(pse__Project_Task__c pt , String automation ){
+    private void buildCspFsoChildTask( pse__Project_Task__c pt , String automation ) {
         pse__Project_Task__c eachProjectTask = new pse__Project_Task__c();
-        if( String.isNotBlank(automation) ){
-            NSP_ProjectTask_Automation__mdt pta =  NSP_ProjectTask_Automation__mdt.getInstance(automation);
-            if ( pta != null && pt != null ){
-                eachProjectTask.RecordTypeId= pt.RecordTypeId;
-                eachProjectTask.OwnerId= pt.OwnerId;
+        if ( String.isNotBlank( automation ) ) {
+            NSP_ProjectTask_Automation__mdt pta = NSP_ProjectTask_Automation__mdt.getInstance( automation );
+            if ( ( pta != null ) && ( pt != null ) ) {
+                eachProjectTask.RecordTypeId = pt.RecordTypeId;
+                eachProjectTask.OwnerId = pt.OwnerId;
                 eachProjecttask.Name = pta.NSP_Task_Name__c;
                 eachProjecttask.pse__Order__c = pta.Order__c;
                 eachProjecttask.Task_Order__c = pta.Task_Order__c;
-                eachProjectTask.NSP_Category__c=pta.NSP_Category__c;
+                eachProjectTask.NSP_Category__c = pta.NSP_Category__c;
                 eachProjecttask.NSP_Sub_Category__c = pta.NSP_Sub_Category__c;
                 eachProjectTask.NSP_Visible_to_Client__c = pta.Visible_to_Client__c;
                 eachProjectTask.pse__Status__c = NSP_ServiceConstants.PROJECT_TASK_NOT_STARTED;
@@ -253,7 +259,7 @@ public class NSP_ProjectTasksTriggerHelper {
                 eachProjectTask.pse__Project__c = pt.pse__Project__c;
                 eachProjecttask.NSP_Implementation_Account_Id__c = pt.NSP_Implementation_Account_Id__c;
                 eachProjecttask.NSP_Implementation_Profile_Account__c = pt.NSP_Implementation_Profile_Account__c;
-                eachProjectTask.pse__End_Date_Time__c= pt.pse__End_Date_Time__c;
+                eachProjectTask.pse__End_Date_Time__c = pt.pse__End_Date_Time__c;
                 eachProjectTask.pse__Parent_Task__c = pt.Id;
                 eachProjectTask.pse__Hierarchy_Depth__c = 1;
                 eachProjecttask.pse__Milestone__c = pt.pse__Milestone__c;
@@ -261,22 +267,24 @@ public class NSP_ProjectTasksTriggerHelper {
                 eachProjecttask.Implementation_Profile__c = pt.Implementation_Profile__c;
             }
         }
-        if( eachProjecttask != null ){
-            this.cspSubTaskList.add(eachProjecttask);
+        if ( eachProjecttask != null ) {
+            this.cspSubTaskList.add( eachProjecttask );
         }
     }
 
     private Map<Id,Implementation_Profile__c> fetchImplementationProfiles( Set<Id> ipRecordIds ){
         Map<Id,Implementation_Profile__c> implMap = new Map<Id,Implementation_Profile__c>();
-        if ( ipRecordIds != null && !ipRecordIds.isEmpty() ) {
-            implMap = new Map<Id, Implementation_Profile__c> ( [
-                SELECT
-                    Id ,
-                    Pre_tax_Client_Sponsored_Plan_CSP_Type__c,
-                    NSP_Project_Manager__r.pse__Salesforce_User__c
-                FROM Implementation_Profile__c
-                WHERE ( Id IN : ipRecordIds )
-            ] );
+        if ( ( ipRecordIds != null ) && !ipRecordIds.isEmpty() ) {
+            implMap = new Map<Id,Implementation_Profile__c> (
+                [
+                    SELECT
+                        Id ,
+                        Pre_tax_Client_Sponsored_Plan_CSP_Type__c ,
+                        NSP_Project_Manager__r.pse__Salesforce_User__c
+                    FROM Implementation_Profile__c
+                    WHERE ( Id IN : ipRecordIds )
+                ]
+            );
         }
         return implMap;
     }
