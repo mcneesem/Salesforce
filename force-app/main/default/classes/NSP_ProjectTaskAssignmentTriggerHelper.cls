@@ -71,6 +71,7 @@ public with sharing class NSP_ProjectTaskAssignmentTriggerHelper {
         Map<Id,Id> mapUserIdContactId = new Map<Id,Id>();
         Map<Id,Id> projectTaskWithCreatedOwner = new Map<Id,Id>();
         Map<Id,Id> projectTaskWithOwner = new Map<Id,Id>();
+        Set<String> existingPTACombinations = new Set<String>();
         for ( pse__Project_Task__c pTask : Database.query( NSP_ProjectTaskAssignmentTriggerHelper.getProjectTaskQuery( projectTaskIds , peoRecordTypeId , bpsRecordTypeId ) ) ) {
             // populating Project Task Map
             projTaskMap.put( pTask.Id , pTask );
@@ -95,6 +96,9 @@ public with sharing class NSP_ProjectTaskAssignmentTriggerHelper {
         for ( pse__Project_Task_Assignment__c projTaskAssign : Database.query( NSP_ProjectTaskAssignmentTriggerHelper.getProjectTaskAssignQuery( projectTaskIds , peoRecordTypeId , bpsRecordTypeId ) ) ) {
             //project task owner to updated to created user if their is no primary accteam or role
             projectTaskWithCreatedOwner.put( projTaskAssign.pse__Project_Task__c , currentUserId );
+            if ( projTaskAssign.pse__Project_Task__c != null && projTaskAssign.pse__Resource_Role__c != null && projTaskAssign.pse__Resource__c != null ) {
+                existingPTACombinations.add( String.valueOf( projTaskAssign.pse__Project_Task__c ) + '|' + String.valueOf( projTaskAssign.pse__Resource_Role__c ) + '|' + String.valueOf( projTaskAssign.pse__Resource__c ) );
+            }
             if ( projTaskMap.containsKey( projTaskAssign.pse__Project_Task__c )
                 && mapAccIdAccTeamList?.containsKey( projTaskMap.get( projTaskAssign.pse__Project_Task__c )?.pse__Project__r.pse__Account__c )
                 )
@@ -113,21 +117,31 @@ public with sharing class NSP_ProjectTaskAssignmentTriggerHelper {
                         && !mapPTA.containsKey( projTaskAssign.Id )
                         )
                     {
-                        //assigning the resource that exists in the accountTeam user and matches with Contact salesforce User.
-                        mapPTA.put( projTaskAssign.Id , projTaskAssign );
-                        projTaskAssign.pse__Resource__c = mapUserIdContactId.get( accTeam.NSP_User__c );
-                        lstPtAToUpdate.add( projTaskAssign );
+                        Id resourceContactId = mapUserIdContactId.get( accTeam.NSP_User__c );
+                        String ptaKey = String.valueOf( projTaskAssign.pse__Project_Task__c ) + '|' + String.valueOf( projTaskAssign.pse__Resource_Role__c ) + '|' + String.valueOf( resourceContactId );
+                        if ( !existingPTACombinations.contains( ptaKey ) ) {
+                            //assigning the resource that exists in the accountTeam user and matches with Contact salesforce User.
+                            mapPTA.put( projTaskAssign.Id , projTaskAssign );
+                            projTaskAssign.pse__Resource__c = resourceContactId;
+                            lstPtAToUpdate.add( projTaskAssign );
+                            existingPTACombinations.add( ptaKey );
+                        }
                     } else if ( projTaskAssign.pse__Resource_Role__c == accTeam.NSP_Role__c ) {
-                        //if there is role in PTA matching with Accteam, and Acc team exists multiple records with it
-                        //then creating other PTA's matching the same role from acc team.
-                        lstPtAToUpdate.add(
-                            new pse__Project_Task_Assignment__c(
-                                pse__Resource_Role__c=projTaskAssign.pse__Resource_Role__c ,
-                                pse__Project_Task__c=projTaskAssign.pse__Project_Task__c ,
-                                NSP_Priority__c=projTaskAssign.NSP_Priority__c ,
-                                pse__Resource__c=mapUserIdContactId.get( accTeam.NSP_User__c )
-                            )
-                        );
+                        Id resourceContactId = mapUserIdContactId.get( accTeam.NSP_User__c );
+                        String ptaKey = String.valueOf( projTaskAssign.pse__Project_Task__c ) + '|' + String.valueOf( projTaskAssign.pse__Resource_Role__c ) + '|' + String.valueOf( resourceContactId );
+                        if ( !existingPTACombinations.contains( ptaKey ) ) {
+                            //if there is role in PTA matching with Accteam, and Acc team exists multiple records with it
+                            //then creating other PTA's matching the same role from acc team.
+                            lstPtAToUpdate.add(
+                                new pse__Project_Task_Assignment__c(
+                                    pse__Resource_Role__c=projTaskAssign.pse__Resource_Role__c ,
+                                    pse__Project_Task__c=projTaskAssign.pse__Project_Task__c ,
+                                    NSP_Priority__c=projTaskAssign.NSP_Priority__c ,
+                                    pse__Resource__c=resourceContactId
+                                )
+                            );
+                            existingPTACombinations.add( ptaKey );
+                        }
                     }
                 }
             }
