@@ -203,37 +203,37 @@ public class NSP_ProjectTasksTriggerHelper {
         }
 
         if ( this.cspSubTaskList != null && !this.cspSubTaskList.isEmpty() ) {
-             List<Database.SaveResult> insertChildResults = Database.insert( this.cspSubTaskList , false );
-             NSP_ErrorLogHandler.logResults(
-                 NSP_ProjectTasksTriggerHelper.class.getName() ,
-                 'processCspTypeProjectTasks' ,
-                 insertChildResults
-           );
-       }
+            List<Database.SaveResult> insertChildResults = Database.insert( this.cspSubTaskList , false );
+            NSP_ErrorLogHandler.logResults(
+                NSP_ProjectTasksTriggerHelper.class.getName() ,
+                'processCspTypeProjectTasks' ,
+                insertChildResults
+            );
+        }
     }
 
-   private void evaluateCspTypesForProjectTask(pse__Project_Task__c pt, Implementation_Profile__c ipRec ) {
-       if ( ipRec != null &&String.isNotBlank(ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c)) {
-           if ( ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.HCFSA)) {
-               this.buildCspFsoChildTask(pt, 'CSP_HCFSA_FSO');
-           }
-           if ( ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.HSA)) {
-               this.buildCspFsoChildTask(pt, 'CSP_HSA_FSO');
-           }
-           if ( ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.DCFSA)) {
-               this.buildCspFsoChildTask(pt, 'CSP_DCFSA_FSO');
-           }
-           if ( ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.MEDICAL)) {
-               this.buildCspFsoChildTask(pt, 'CSP_MEDICAL_FSO');
-           }
-           if ( ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.DENTAL)) {
-               this.buildCspFsoChildTask(pt, 'CSP_DENTAL_FSO');
-           }
-           if ( ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.VISION)) {
-               this.buildCspFsoChildTask(pt, 'CSP_VISION_FSO');
-           }
-       }
-   }
+    private void evaluateCspTypesForProjectTask(pse__Project_Task__c pt, Implementation_Profile__c ipRec ) {
+        if ( ipRec != null &&String.isNotBlank(ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c)) {
+            if ( ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.HCFSA)) {
+                this.buildCspFsoChildTask(pt, 'CSP_HCFSA_FSO');
+            }
+            if ( ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.HSA)) {
+                this.buildCspFsoChildTask(pt, 'CSP_HSA_FSO');
+            }
+            if ( ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.DCFSA)) {
+                this.buildCspFsoChildTask(pt, 'CSP_DCFSA_FSO');
+            }
+            if ( ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.MEDICAL)) {
+                this.buildCspFsoChildTask(pt, 'CSP_MEDICAL_FSO');
+            }
+            if ( ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.DENTAL)) {
+                this.buildCspFsoChildTask(pt, 'CSP_DENTAL_FSO');
+            }
+            if ( ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.VISION)) {
+                this.buildCspFsoChildTask(pt, 'CSP_VISION_FSO');
+            }
+        }
+    }
 
     private void buildCspFsoChildTask(pse__Project_Task__c pt , String automation ){
         pse__Project_Task__c eachProjectTask = new pse__Project_Task__c();
