@@ -157,7 +157,6 @@ private class NSP_Implprofile_ServiceHelperUpdate_Test {
             Contact cc =[SELECT Id from Contact WHERE Name != null limit 1];
             pse__Proj__c project = [SELECT Id, Name FROM pse__Proj__c WHERE TemplateName__c=:label.FSOImplementationProject LIMIT 1];
             Implementation_Profile__c ip = [SELECT Id, NSP_Project__c, NSP_Project__r.Name FROM Implementation_Profile__c WHERE NSP_Project__c =:project.Id LIMIT 1];
-
             ip.Spnsrd_pln_when_Insperity_hndles_payroll__c='Yes';
             ip.Sponsored_plan_contribution_type__c='Pre-Tax';
             ip.Pre_tax_Client_Sponsored_Plan_CSP_Type__c = 'Health Care Flexible Spending Account (HCFSA);Health Savings Account;Dependent Care Flexible Spending Account (DCFSA);Medical (Pretax);Dental (Pretax);Vision (Pretax)';
@@ -179,6 +178,7 @@ private class NSP_Implprofile_ServiceHelperUpdate_Test {
             ip.Have_name_s_of_COBRA_takeovr_employees__c= NSP_ServiceConstants.NO;
             ip.NSP_Form_Completed__c = true;
             ip.Do_you_have_the_LOA_information__c= NSP_ServiceConstants.NO;
+            ip.Are_there_any_EEs_on_Leave_of_Absence__c = 'Yes';
             ip.NSP_Project_Manager__c = cc.Id ;
             Test.startTest();
             update  ip;
