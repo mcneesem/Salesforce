@@ -1,0 +1,9 @@
+<template>
+    <template lwc:if={recordId}>
+        Default: <c-portal-guidance record-id={recordId}></c-portal-guidance>
+        <br/>
+        Help Text: <c-portal-guidance variant="helptext" record-id={recordId}></c-portal-guidance>
+        <br/>
+        Rich Text: <c-portal-guidance variant="richtext" record-id={recordId}></c-portal-guidance>
+    </template>
+</template>

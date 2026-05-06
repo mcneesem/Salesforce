@@ -9,6 +9,7 @@
     <columns>Due_Date__c</columns>
     <columns>Action__c</columns>
     <columns>Status__c</columns>
+    <columns>Portal_Guidance__c</columns>
     <columns>CREATEDBY_USER</columns>
     <columns>CREATED_DATE</columns>
     <columns>UPDATEDBY_USER</columns>
