@@ -19,7 +19,7 @@ public class NSP_ProjectTasksTriggerHelper {
     private static final String LINE_BREAK = '<br/><br/>';
     private static final String HSA_OPTUM_NO_MM='NSP_HSA_No_Optum';
     private static final String HSA_OPTUM_MM='HSA_Optum';
-	private List<pse__Project_Task__c> cspSubTaskList = new List<pse__Project_Task__c>();
+    private List<pse__Project_Task__c> cspSubTaskList = new List<pse__Project_Task__c>();
     //
     // Iterates throught the list of new pse__Project_Task__c and passes the required attributes to other methods.
     // @param projectTaskNewMap Map of New project.
@@ -177,15 +177,11 @@ public class NSP_ProjectTasksTriggerHelper {
             && !projectTasks.isEmpty()
            )
         {
-
-            System.debug('project task trigger helpert loop enter');
             for( pse__Project_Task__c pt :  projectTasks ) {
-                  System.debug('pt>>>>>>>'+pt);
                 if ( pt.Name == 'CSP Client Authorization/Cafeteria Plan documentation collected'
                     && pt.Implementation_Profile__c != null
-                   )
+                    )
                 {
-
                     idProjectTask.put( pt.Implementation_Profile__c, pt );
                 }
             }
@@ -200,24 +196,22 @@ public class NSP_ProjectTasksTriggerHelper {
                 for( pse__Project_Task__c pt :  idProjecttask.values() ) {
                     if ( pt.Implementation_Profile__c != null && implMap.containsKey( pt.Implementation_Profile__c ) ) {
                         Implementation_Profile__c ipRec =  implMap.get( pt.Implementation_Profile__c );
-                        System.debug('evaluateCspTypesForProjectTask>>>>>>>'+pt);
                         this.evaluateCspTypesForProjectTask(pt,ipRec);
                     }
                 }
             }
-
         }
+
         if ( this.cspSubTaskList != null && !this.cspSubTaskList.isEmpty() ) {
              List<Database.SaveResult> insertChildResults = Database.insert( this.cspSubTaskList , false );
-             system.debug('result>>>>>>>>>'+insertChildResults);
              NSP_ErrorLogHandler.logResults(
                  NSP_ProjectTasksTriggerHelper.class.getName() ,
                  'processCspTypeProjectTasks' ,
                  insertChildResults
            );
        }
-
     }
+
    private void evaluateCspTypesForProjectTask(pse__Project_Task__c pt, Implementation_Profile__c ipRec ) {
        if ( ipRec != null &&String.isNotBlank(ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c)) {
            if ( ipRec.Pre_tax_Client_Sponsored_Plan_CSP_Type__c.contains(NSP_ServiceConstants.HCFSA)) {
