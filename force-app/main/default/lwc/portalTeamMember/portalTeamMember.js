@@ -7,6 +7,10 @@ export default class PortalTeamMember extends LightningElement {
         return this.record?.fields?.Position__c?.value;
     }
 
+    get guidanceId() {
+        return this.record?.fields?.Portal_Guidance__c?.value;
+    }
+
     get name() {
         return this.record?.fields?.Contact_Name__c?.value;
     }
