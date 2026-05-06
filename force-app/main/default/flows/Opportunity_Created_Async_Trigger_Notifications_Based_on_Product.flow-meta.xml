@@ -2,8 +2,8 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
         <description>Checks if the Opportunity Owner has been granted the Customer Success Specialist Custom Permission</description>
-        <name>Recipient_Check</name>
-        <label>Recipient Check</label>
+        <name>Check_Owner_Permission_Customer_Success_Specialist</name>
+        <label>Check Owner Permission Customer Success Specialist</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <actionName>CustomPermissionController</actionName>
@@ -39,7 +39,7 @@
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
-            <targetReference>Recipient_Check</targetReference>
+            <targetReference>Check_Owner_Permission_Customer_Success_Specialist</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Assign_Fault_Element_Send_Email_Primary_Product_is_HRCore</targetReference>
@@ -299,7 +299,7 @@
             <name>Owner_has_Customer_Success_Specialist_Permission</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Recipient_Check.hasPermission</leftValueReference>
+                <leftValueReference>Check_Owner_Permission_Customer_Success_Specialist.hasPermission</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -314,7 +314,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Recipient_Check</targetReference>
+            <targetReference>Check_Owner_Permission_Customer_Success_Specialist</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -384,7 +384,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Recipient_Check</targetReference>
+            <targetReference>Check_Owner_Permission_Customer_Success_Specialist</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
