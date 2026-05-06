@@ -1671,7 +1671,7 @@ Implementation profile related to the account of the created asset
 
         // check accountIDset not empty
         if(!accountIdSet.isEmpty()){
-            for(NSP_Account_Team__c team : [SELECT Id,NSP_Account__c, NSP_Role__c, NSP_User__c
+            for(NSP_Account_Team__c team : [SELECT Id,NSP_Account__c, NSP_Role__c, NSP_User__c, NSP_User__r.Email
                                             FROM NSP_Account_Team__c
                                             WHERE NSP_Account__c IN: accountIdSet
                                             AND (NSP_Role__c =: NSP_ServiceConstants.BUS_TEAM_HRSP_CL
@@ -1681,26 +1681,28 @@ Implementation profile related to the account of the created asset
                                                  OR NSP_Role__c =: NSP_ServiceConstants.MANAGER_HRSERVICES
                                                  OR NSP_Role__c =: NSP_ServiceConstants.EXECUTIVE)]){
                                                      //Adding Payroll related role users to list
-                                                     if(team.NSP_Role__c == NSP_ServiceConstants.PAYROLL_SPECIALIST
-                                                        || team.NSP_Role__c == NSP_ServiceConstants.PAYROLL_SUPERVISOR){
-                                                            payrollRolesUsers.add(team.NSP_User__c);
+                                                     if( (team.NSP_Role__c == NSP_ServiceConstants.PAYROLL_SPECIALIST
+                                                        || team.NSP_Role__c == NSP_ServiceConstants.PAYROLL_SUPERVISOR)
+                                                        && ( team?.NSP_User__r?.Email != null) ){
+                                                            payrollRolesUsers.add(team.NSP_User__r.Email);
                                                         }
                                                      //Adding Other role users to list
-                                                     if(team.NSP_Role__c == NSP_ServiceConstants.CLIENT_LIAISION
+                                                     if( (team.NSP_Role__c == NSP_ServiceConstants.CLIENT_LIAISION
                                                         || team.NSP_Role__c == NSP_ServiceConstants.MANAGER_HRSERVICES
                                                         || team.NSP_Role__c == NSP_ServiceConstants.EXECUTIVE
-                                                        || team.NSP_Role__c == NSP_ServiceConstants.BUS_TEAM_HRSP_CL) {
-                                                            otherRolesUsers.add(team.NSP_User__c);
+                                                        || team.NSP_Role__c == NSP_ServiceConstants.BUS_TEAM_HRSP_CL)
+                                                        && ( team?.NSP_User__r?.Email != null )) {
+                                                            otherRolesUsers.add(team.NSP_User__r.Email);
                                                         }
                                                  }
         }
 
         //Sending email to payroll role users
-        if(!payrollRolesUsers.isEmpty()){
+        if(payrollRolesUsers != null && !payrollRolesUsers.isEmpty()){
             sendMail(assetIdSet, accountIdSet, ASSET_TERMINATION_PAYROLL_TEMPLATE, payrollRolesUsers);
         }
         //Sending email to other role users
-        if(!otherRolesUsers.isEmpty()){
+        if(otherRolesUsers != null && !otherRolesUsers.isEmpty()){
             sendMail(assetIdSet, accountIdSet, ASSET_TERMINATION_OTHER_ROLE_TEMPLATE, otherRolesUsers);
         }
     }
