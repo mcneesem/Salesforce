@@ -1,3 +1,6 @@
 import { LightningElement } from 'lwc';
 
-export default class PortalClientResources extends LightningElement {}
+export default class PortalClientResources extends LightningElement {
+    // DEPRECATED
+}
+//
