@@ -20,7 +20,7 @@
                         </template>
                         {name}
                         <template lwc:if={hasGuidance}>
-                            PENDING GUIDANCE
+                            <c-portal-guidance variant="helptext" record-id={record.fields.Portal_Guidance__c.value}></c-portal-guidance>
                         </template>
                     </lightning-layout-item>
                     <template lwc:if={isParent}>
@@ -41,6 +41,7 @@
                                 name="fileUploader"
                                 record-id={record.fields.Id.value}
                                 onuploadfinished={handleUploadFinished}
+                                disabled={isInputDisabled}
                                 variant="label-hidden"
                                 class="relative-up_small"
                                 multiple
@@ -185,7 +186,7 @@
                 <template lwc:if={showBody}>
                     <lightning-layout-item size="12" padding="around-medium">
                         <template lwc:if={hasGuidance}>
-                            PENDING GUIDANCE
+                            <c-portal-guidance variant="richtext" record-id={record.fields.Portal_Guidance__c.value}></c-portal-guidance>
                         </template>
                         <template lwc:if={isParent}>
                             <c-portal-task-list variant="child" parent-record-id={record.fields.Id.value}></c-portal-task-list>

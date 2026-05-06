@@ -82,6 +82,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Portal_Guidance__c</fieldItem>
+                <identifier>RecordPortal_Guidance__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.Parent_Portal_Task__c</fieldItem>
                 <identifier>RecordParent_Portal_Task__cField</identifier>
             </fieldInstance>
