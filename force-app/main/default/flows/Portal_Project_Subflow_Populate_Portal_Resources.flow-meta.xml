@@ -132,6 +132,10 @@
                 <stringValue>Get_Documents_Links</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow_Flow</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Set_Fault_Element_For_Get_Portal_Library</name>
@@ -145,6 +149,10 @@
                 <stringValue>Get_Portal_Library</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow_Flow</targetReference>
+        </connector>
     </assignments>
     <decisions>
         <name>Check_Content_Document_Links</name>
@@ -180,6 +188,9 @@
         <label>Validate Content Document</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Iterate_Over_Portal_Resources</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Valid_Content_Document</name>
@@ -434,6 +445,13 @@
             <operator>EqualTo</operator>
             <value>
                 <elementReference>Iterate_Over_Portal_Resources.Name</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Id</field>
+            <operator>In</operator>
+            <value>
+                <elementReference>Content_Document_Ids</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
