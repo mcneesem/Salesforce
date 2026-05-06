@@ -42,6 +42,15 @@
                 <stringValue>AllUsers</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>Set_Content_Document_Links</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Content_Document_Links</name>
+        <label>Set Content Document Links</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>contentDocumentLinks</assignToReference>
             <operator>Add</operator>
@@ -197,7 +206,7 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Content_Document</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
