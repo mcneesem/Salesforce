@@ -504,16 +504,6 @@
                 <identifier>RecordNSP_Disability_Submission_Date_cField</identifier>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Other_Submission_Date__c</fieldItem>
-                <identifier>RecordOther_Submission_Date_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
         <name>Facet-de0514d4-0888-4f21-8581-6907521d8309</name>
         <type>Facet</type>
     </flexiPageRegions>
