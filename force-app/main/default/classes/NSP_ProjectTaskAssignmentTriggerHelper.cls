@@ -97,7 +97,9 @@ public with sharing class NSP_ProjectTaskAssignmentTriggerHelper {
             //project task owner to updated to created user if their is no primary accteam or role
             projectTaskWithCreatedOwner.put( projTaskAssign.pse__Project_Task__c , currentUserId );
             if ( projTaskAssign.pse__Project_Task__c != null && projTaskAssign.pse__Resource_Role__c != null && projTaskAssign.pse__Resource__c != null ) {
-                existingPTACombinations.add( String.valueOf( projTaskAssign.pse__Project_Task__c ) + '|' + String.valueOf( projTaskAssign.pse__Resource_Role__c ) + '|' + String.valueOf( projTaskAssign.pse__Resource__c ) );
+                existingPTACombinations.add( projTaskAssign.pse__Project_Task__c + '|' +  
+                                            projTaskAssign.pse__Resource_Role__c + '|' + 
+                                            projTaskAssign.pse__Resource__c );
             }
             if ( projTaskMap.containsKey( projTaskAssign.pse__Project_Task__c )
                 && mapAccIdAccTeamList?.containsKey( projTaskMap.get( projTaskAssign.pse__Project_Task__c )?.pse__Project__r.pse__Account__c )
@@ -128,7 +130,9 @@ public with sharing class NSP_ProjectTaskAssignmentTriggerHelper {
                         }
                     } else if ( projTaskAssign.pse__Resource_Role__c == accTeam.NSP_Role__c ) {
                         Id resourceContactId = mapUserIdContactId.get( accTeam.NSP_User__c );
-                        String ptaKey = String.valueOf( projTaskAssign.pse__Project_Task__c ) + '|' + String.valueOf( projTaskAssign.pse__Resource_Role__c ) + '|' + String.valueOf( resourceContactId );
+                        String ptaKey =  ( projTaskAssign.pse__Project_Task__c + '|' +  
+                                          projTaskAssign.pse__Resource_Role__c  + '|' + 
+                                          resourceContactId );
                         if ( !existingPTACombinations.contains( ptaKey ) ) {
                             //if there is role in PTA matching with Accteam, and Acc team exists multiple records with it
                             //then creating other PTA's matching the same role from acc team.
