@@ -50,6 +50,13 @@
                 <elementReference>portalTaskName</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>r_portal_task_to_upsert.Action__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>portalTaskAction</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Valid_Portal_Task_Record</targetReference>
         </connector>
@@ -102,6 +109,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>recordProjectTask.pse__End_Date_Time__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>r_portal_task_to_upsert.Action__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>portalTaskAction</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -402,6 +416,32 @@
     <description>New Client Portal: Portal Task Mapping</description>
     <environments>Default</environments>
     <formulas>
+        <name>portalTaskAction</name>
+        <dataType>String</dataType>
+        <expression>CASE(
+  {!portalTaskName} ,
+  &quot;Employee Data Collection&quot; , &quot;File&quot; ,
+  &quot;Federal Employer Identification Number (FEIN)&quot; , &quot;Text&quot; ,
+  &quot;Current / Prior Payroll Report Samples&quot; , &quot;Upload Information&quot; ,
+  &quot;Job Costing / Labor Allocation Setup Information&quot; , &quot;File&quot; ,
+  &quot;YTD Gross Wages Report&quot; , &quot;File&quot; ,
+  &quot;Time Off Policies / Handbook&quot; , &quot;File&quot; ,
+  &quot;Form 8973&quot; , &quot;Docusign&quot; ,
+  &quot;General Auto Liability Certificate of Coverage&quot; , &quot;File&quot; ,
+  &quot;Company Logo&quot; , &quot;File&quot; ,
+  &quot;Direct Debit Agreement&quot; , &quot;Docusign&quot; ,
+  &quot;User Access Roles Request Form&quot; , &quot;Docusign&quot; ,
+  &quot;Client Sponsored Plans&quot; , &quot;Upload Information&quot; ,
+  &quot;Employee Deductions&quot; , &quot;File&quot; ,
+  &quot;Outside Record Keeper (Retirement Plan) Deductions&quot; , &quot;File&quot; ,
+  &quot;Cell Phone Stipends&quot; , &quot;File&quot; ,
+  &quot;Garnishments&quot; , &quot;File&quot; ,
+  &quot;COBRA Takeover&quot; , &quot;File&quot; ,
+  &quot;LOA Information&quot; , &quot;File&quot; ,
+  &quot;&quot;
+)</expression>
+    </formulas>
+    <formulas>
         <name>portalTaskName</name>
         <dataType>String</dataType>
         <expression>CASE(
@@ -413,8 +453,7 @@
   &quot;YTD Gross Wage Report Provided&quot; , &quot;YTD Gross Wages Report&quot; ,
   &quot;PTO, paid sick leave, or other accrual policy received&quot; , &quot;Time Off Policies / Handbook&quot; ,
   &quot;Generate Form 8973&quot; , &quot;Form 8973&quot; ,
-  &quot;General/Auto Liability Certificate of Coverage&quot; ,
-  &quot;General Auto Liability Certificate of Coverage&quot; ,
+  &quot;General/Auto Liability Certificate of Coverage&quot; , &quot;General Auto Liability Certificate of Coverage&quot; ,
   &quot;Company Logo Collected&quot; , &quot;Company Logo&quot; ,
   &quot;Direct Debit Agreement&quot; , &quot;Direct Debit Agreement&quot; ,
   &quot;Client User Access&quot; , &quot;User Access Roles Request Form&quot; ,
@@ -433,8 +472,8 @@
         <dataType>String</dataType>
         <expression>IF(
   {!recordProjectTask.Is_Completed__c} ,
-  &apos;Completed&apos; ,
-  &apos;Pending&apos;
+  &quot;Completed&quot; ,
+  &quot;Pending&quot;
 )</expression>
     </formulas>
     <formulas>
