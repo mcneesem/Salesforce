@@ -177,6 +177,23 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Set_Fault_Element_Get_Contact_Account</name>
+        <label>Set Fault Element: Get_Contact_Account</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Contact_Account</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_Fault_Element_Get_Portal_Client</name>
         <label>Set Fault Element: Get_Portal_Client</label>
         <locationX>0</locationX>
@@ -203,6 +220,23 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>Get_Portal_User</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Get_Portal_Users</name>
+        <label>Set Fault Element: Get_Portal_Users</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>faultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Get_Portal_Users</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -239,6 +273,10 @@
                 <stringValue>Update_Contact_Certinia</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Set_Portal_Alias_Name_On_Contact</name>
@@ -332,9 +370,84 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Check_Portal_Alias</targetReference>
+                <targetReference>Check_Contact_Account</targetReference>
             </connector>
             <label>Found Contact</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Contact_Account</name>
+        <label>Check Contact Account</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Error_Screen_Contact_Must_Have_Account</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_Contact_Account</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>recordContact.AccountId</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Contact_Account</targetReference>
+            </connector>
+            <label>Has Contact Account</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Contact_Account_Owner</name>
+        <label>Check Contact Account Owner</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Check_Portal_Alias</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_Contact_Account_Owner</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Contact_Account.OwnerId</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Contact_Account_Owner_Role</targetReference>
+            </connector>
+            <label>Has Contact Account Owner</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Contact_Account_Owner_Role</name>
+        <label>Check Contact Account Owner Role</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Error_Screen_Account_Owner_Must_Have_Role</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_Contact_Account_Owner_Role</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Contact_Account.Owner.UserRoleId</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Portal_Alias</targetReference>
+            </connector>
+            <label>Has Contact Account Owner Role</label>
         </rules>
     </decisions>
     <decisions>
@@ -608,6 +721,31 @@
             <label>Valid Contacts With Portal Names</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Verify_Contact_Account</name>
+        <label>Verify Contact Account</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Check_Portal_Alias</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Found_Contact_Account</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Contact_Account</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Contact_Account_Owner</targetReference>
+            </connector>
+            <label>Found Contact Account</label>
+        </rules>
+    </decisions>
     <description>New Client Portal: Portal Access</description>
     <environments>Default</environments>
     <formulas>
@@ -749,10 +887,35 @@
         <object>Contact</object>
         <outputReference>recordContact</outputReference>
         <queriedFields>Id</queriedFields>
-        <queriedFields>Portal_Alias__c</queriedFields>
+        <queriedFields>AccountId</queriedFields>
         <queriedFields>LastName</queriedFields>
+        <queriedFields>Portal_Alias__c</queriedFields>
         <queriedFields>NSP_Preferred_First_Name__c</queriedFields>
         <queriedFields>pse__Salesforce_User__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Contact_Account</name>
+        <label>Get Contact Account</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Verify_Contact_Account</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_Contact_Account</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordContact.AccountId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
         <name>Get_Portal_Client</name>
@@ -819,6 +982,9 @@
         <connector>
             <targetReference>Check_Prior_Provisioning</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Get_Portal_Users</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>ContactId</field>
@@ -863,6 +1029,54 @@
         <inputReference>recordContact</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithSharing</runInMode>
+    <screens>
+        <name>Error_Screen_Account_Owner_Must_Have_Role</name>
+        <label>Error Screen: Account Owner Must Have Role</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Error_Message_Account_Owner_Must_Have_Role</name>
+            <fieldText>&lt;p&gt;Error: Account Owner Must Have Role (&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!Get_Contact_Account.Id}, {!Get_Contact_Account.OwnerId}&lt;/span&gt;).&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Error_Screen_Contact_Must_Have_Account</name>
+        <label>Error Screen: Contact Must Have Account</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Error_Message_Contact_Must_Have_Account</name>
+            <fieldText>&lt;p&gt;Error: Contact Must Have Account ({!recordContact.Id}).&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
     <screens>
         <name>Error_Screen_Flow_FaultMessage</name>
         <label>Error Screen: Flow FaultMessage</label>

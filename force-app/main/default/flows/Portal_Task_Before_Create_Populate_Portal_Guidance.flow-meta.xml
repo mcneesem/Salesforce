@@ -60,7 +60,7 @@
             <name>Yes_Valid_Record</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>f_portal_guidance_api</leftValueReference>
+                <leftValueReference>portalGuidanceApiName</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -76,22 +76,34 @@
     <environments>Default</environments>
     <formulas>
         <description>Get the API Name based on the Task Name</description>
-        <name>f_portal_guidance_api</name>
+        <name>portalGuidanceApiName</name>
         <dataType>String</dataType>
-        <expression>UPPER(
-  SUBSTITUTE(
-    SUBSTITUTE(
-      SUBSTITUTE(
-        {!$Record.Name},
-        &quot; &quot;,
-        &quot;_&quot;
-      ),
-      &quot;(&quot;,
-      &quot;&quot;
-    ),
-    &quot;)&quot;,
-    &quot;&quot;
-  )
+        <expression>CASE(
+  {!$Record.Name} ,
+  &quot;Employee Data Collection&quot; , &quot;EMPLOYEE_DATA_COLLECTION&quot; ,
+  &quot;Federal Employer Identification Number (FEIN)&quot; , &quot;FEDERAL_EMPLOYER_IDENTIFICATION_NUMBER&quot; ,
+  &quot;Current / Prior Payroll Report Samples&quot; , &quot;CURRENT_PRIOR_PAYROLL_REPORT_SAMPLES&quot; ,
+  &quot;Job Costing / Labor Allocation Setup Information&quot; , &quot;JOB_COSTING_LABOR_ALLOCATION_SETUP&quot; ,
+  &quot;YTD Gross Wages Report&quot; , &quot;YTD_GROSS_WAGES_REPORT&quot; ,
+  &quot;Time Off Policies / Handbook&quot; , &quot;TIME_OFF_POLICIES_HANDBOOK&quot; ,
+  &quot;Business Inception Date&quot; , &quot;BUSINESS_INCEPTION_DATE&quot; ,
+  &quot;Form 8973&quot; , &quot;FORM_8973&quot; ,
+  &quot;General Auto Liability Certificate of Coverage&quot; , &quot;GENERAL_AUTO_LIABILITY_CERTIFICATE&quot; ,
+  &quot;Company Logo&quot; , &quot;COMPANY_LOGO&quot; ,
+  &quot;Direct Debit Agreement&quot; , &quot;DIRECT_DEBIT_AGREEMENT&quot; ,
+  &quot;User Access Roles Request Form&quot; , &quot;USER_ACCESS_ROLES_REQUEST_FORM&quot; ,
+  &quot;Client Sponsored Plans&quot; , &quot;CLIENT_SPONSORED_PLANS&quot; ,
+  &quot;Core Policy Handbook&quot; , &quot;CORE_POLICY_HANDBOOK&quot; ,
+  &quot;Employee Payroll Documentation&quot; , &quot;EMPLOYEE_PAYROLL_DOCUMENTATION&quot; ,
+  &quot;Employee Deductions&quot; , &quot;EMPLOYEE_DEDUCTIONS&quot; ,
+  &quot;Outside Record Keeper (Retirement Plan) Deductions&quot; , &quot;OUTSIDE_RECORD_KEEPER_DEDUCTIONS&quot; ,
+  &quot;Cell Phone Stipends&quot; , &quot;CELL_PHONE_STIPENDS&quot; ,
+  &quot;Garnishments&quot; , &quot;GARNISHMENTS&quot; ,
+  &quot;COBRA Takeover&quot; , &quot;COBRA_TAKEOVER&quot; ,
+  &quot;LOA Information&quot; , &quot;LOA_INFORMATION&quot; ,
+  &quot;Additional Documentation&quot; , &quot;ADDITIONAL_DOCUMENTATION&quot; ,
+  &quot;Regular Rate Of Pay&quot; , &quot;REGULAR_RATE_OF_PAY&quot; ,
+  &quot;&quot;
 )</expression>
     </formulas>
     <interviewLabel>Portal Task - Before Create - Populate Portal Guidance {!$Flow.CurrentDateTime}</interviewLabel>
@@ -133,7 +145,7 @@
             <field>API_Name__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>f_portal_guidance_api</elementReference>
+                <elementReference>portalGuidanceApiName</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>

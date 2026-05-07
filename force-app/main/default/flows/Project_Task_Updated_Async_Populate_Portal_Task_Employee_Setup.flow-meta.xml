@@ -44,7 +44,7 @@
             </value>
         </filters>
         <filters>
-            <field>Template_Name__c</field>
+            <field>Template_Name_Formula__c</field>
             <operator>EqualTo</operator>
             <value>
                 <stringValue>FSO - Implementation</stringValue>
