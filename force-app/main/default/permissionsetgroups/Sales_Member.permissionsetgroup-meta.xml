@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Group of Permission Sets to be granted to Sales Member profile users.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Sales Member</label>
+    <permissionSets>Sales_Member_Apex_Access</permissionSets>
+    <permissionSets>Sales_Member_Assigned_Apps</permissionSets>
+    <permissionSets>Sales_Member_Custom_Metadata_Types</permissionSets>
+    <permissionSets>Sales_Member_Field_Permissions</permissionSets>
+    <permissionSets>Sales_Member_Flow_Access</permissionSets>
+    <permissionSets>Sales_Member_Object_Permissions</permissionSets>
+    <permissionSets>Sales_Member_Record_Type_Assignments</permissionSets>
+    <permissionSets>Sales_Member_System_Permissions</permissionSets>
+    <permissionSets>Sales_Member_Visualforce_Page_Access</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>
