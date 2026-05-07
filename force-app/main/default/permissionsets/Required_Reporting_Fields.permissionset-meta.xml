@@ -1618,6 +1618,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NSP_Pricing_Table__c.Block_Price__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NSP_Pricing_Table__c.IsPricingActive__c</field>
         <readable>true</readable>
     </fieldPermissions>

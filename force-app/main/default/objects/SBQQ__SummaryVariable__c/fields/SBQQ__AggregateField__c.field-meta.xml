@@ -162,6 +162,11 @@
                 <default>false</default>
                 <label>NSP_Minimum_Fee_Discount_Amt__c</label>
             </value>
+            <value>
+                <fullName>NSP_Active_W2_Employees__c</fullName>
+                <default>false</default>
+                <label>NSP_Active_W2_Employees__c</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
