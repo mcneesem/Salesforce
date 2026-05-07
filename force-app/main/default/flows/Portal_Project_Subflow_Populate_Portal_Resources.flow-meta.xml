@@ -3,19 +3,35 @@
     <apiVersion>66.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
+        <name>Add_Static_Resource_HR360_Employee_Administration_Guide</name>
+        <label>Add: Static Resource: HR360 Employee Administration Guide</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>Portal_Resource_Collection</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>recordPortalResource</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Portal_Resources</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Content_Document_Link_Mapping</name>
         <label>Content Document Link Mapping</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>contentDocumentLink.ContentDocumentId</assignToReference>
+            <assignToReference>recordContentDocumentLink.ContentDocumentId</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Get_Content_Document.Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>contentDocumentLink.LinkedEntityId</assignToReference>
+            <assignToReference>recordContentDocumentLink.LinkedEntityId</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Iterate_Over_Portal_Resources.Id</elementReference>
@@ -29,14 +45,14 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>contentDocumentLink.ShareType</assignToReference>
+            <assignToReference>recordContentDocumentLink.ShareType</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>V</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>contentDocumentLink.Visibility</assignToReference>
+            <assignToReference>recordContentDocumentLink.Visibility</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>AllUsers</stringValue>
@@ -55,7 +71,7 @@
             <assignToReference>contentDocumentLinks</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>contentDocumentLink</elementReference>
+                <elementReference>recordContentDocumentLink</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -161,6 +177,36 @@
         <connector>
             <isGoTo>true</isGoTo>
             <targetReference>Insperity_Fault_Handler_Subflow_Flow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Static_Resource_HR360_Employee_Administration_Guide</name>
+        <label>Build: Static Resource: HR360 Employee Administration Guide</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>recordPortalResource.Name</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>HR360 Employee Administration Guide</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordPortalResource.Portal_Project__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordPortalProject.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordPortalResource.Link_URL__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>https://share.articulate.com/9kKBWL5f3ypRx4dJzwYYb</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_Static_Resource_HR360_Employee_Administration_Guide</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -372,7 +418,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Create_Portal_Resources</targetReference>
+                <targetReference>Static_Resource_HR360_Employee_Administration_Guide</targetReference>
             </connector>
             <label>Valid Portal Resource Collection</label>
         </rules>
@@ -630,14 +676,6 @@
         </transformValues>
     </transforms>
     <variables>
-        <name>contentDocumentLink</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>ContentDocumentLink</objectType>
-    </variables>
-    <variables>
         <name>contentDocumentLinks</name>
         <dataType>SObject</dataType>
         <isCollection>true</isCollection>
@@ -656,11 +694,27 @@
         </value>
     </variables>
     <variables>
+        <name>recordContentDocumentLink</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>ContentDocumentLink</objectType>
+    </variables>
+    <variables>
         <name>recordPortalProject</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>Portal_Project__c</objectType>
+    </variables>
+    <variables>
+        <name>recordPortalResource</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Portal_Resource__c</objectType>
     </variables>
 </Flow>

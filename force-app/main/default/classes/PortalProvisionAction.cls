@@ -64,6 +64,12 @@ public without sharing class PortalProvisionAction {
         Contact record = PortalProvisionAction.selectContact( relation?.ContactId );
         if ( record == null ) {
             response = 'Missing Contact (Id=' + relation?.ContactId + ')';
+        } else if ( String.isBlank( record.AccountId ) ) {
+            response = 'Contact Must Have Account (Id=' + record.Id + ')';
+        } else if ( String.isBlank( record.Account.OwnerId ) ) {
+            response = 'Contact Account Must Have Owner (AccountId=' + record.AccountId + ')';
+        } else if ( String.isBlank( record.Account.Owner.UserRoleId ) ) {
+            response = 'Account Owner Must Have Role (AccountId=' + record.AccountId + ', Account.OwnerId=' + record.Account.OwnerId + ')';
         } else if ( String.isBlank( record.LastName ) ) {
             response = 'Missing Last Name (Id=' + record.Id + ')';
         } else if ( String.isBlank( record.NSP_Preferred_First_Name__c ) ) {
@@ -71,7 +77,7 @@ public without sharing class PortalProvisionAction {
         } else if ( String.isBlank( record.Portal_Alias__c ) ) {
             response = 'Missing Portal Alias (Id=' + record.Id + ')';
         } else if ( !PortalProvisionAction.validatePortalAlias( record.Portal_Alias__c ) ) {
-            response = 'Invalid Portal Alias (Id=' + record.Id + ')';
+            response = 'Invalid Portal Alias (Id=' + record.Id + ', Portal_Alias__c=' + record.Portal_Alias__c + ')';
         } else if ( ( record.Users != null ) && !record.Users.isEmpty() ) {
             response = 'Portal User already provisioned (Id=' + record.Users[0].Id + ')';
         } else {
@@ -136,6 +142,8 @@ public without sharing class PortalProvisionAction {
                 SELECT
                     Id ,
                     AccountId ,
+                    Account.OwnerId ,
+                    Account.Owner.UserRoleId ,
                     Portal_Alias__c ,
                     NSP_Preferred_First_Name__c ,
                     LastName ,
