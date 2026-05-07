@@ -314,7 +314,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Check_Owner_Permission_Customer_Success_Specialist</targetReference>
+            <targetReference>Recipients_Check</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
