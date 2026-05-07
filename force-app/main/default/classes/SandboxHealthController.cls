@@ -80,14 +80,14 @@ public with sharing class SandboxHealthController {
         return SandboxHealthController.getHealth( false );
     }
 
-    public static HealthResult getHealth( Boolean mockSandbox ) {
+    public static HealthResult getHealth( Boolean isMockSandbox ) {
         HealthResult res = new HealthResult();
         res.sections = new List<Section>();
         res.evaluatedAt = System.now();
 
         // Org context
         String sandbox = System.DomainParser.parse( URL.getOrgDomainUrl() ).getSandboxName();
-               sandbox = ( sandbox != null ) ? sandbox.toLowerCase() : '' ;
+        sandbox = ( String.isNotBlank( sandbox ) ? sandbox.toLowerCase() : '' );
 
         String[] pipelineOrgs = new String[] { 'merge' , 'test' , 'stage' };
         res.sandboxName = sandbox;
@@ -95,7 +95,7 @@ public with sharing class SandboxHealthController {
         res.orgId = orgInfo.Id;
         res.instance = orgInfo.InstanceName;
         res.isPipeline = pipelineOrgs.contains( sandbox );
-        res.isSandbox = ( mockSandbox ) ? mockSandbox : orgInfo.IsSandbox;
+        res.isSandbox = ( ( isMockSandbox ) ? isMockSandbox : orgInfo.IsSandbox );
 
         if ( !res.isSandbox ) {
             res.sections.add( verifyExternalIdObjects() );
@@ -170,7 +170,7 @@ public with sharing class SandboxHealthController {
                 DocuSign_Settings__c row = DocuSign_Settings__c.getValues( keyVal );
                 resolvedAccount = ( row == null ) ? null : row.AccountNumber__c;
                 resolvedClmBase = ( row == null ) ? null : row.CLMBaseUrl__c;
-                Boolean expectedEnabled = !String.isBlank( sandbox ) && sandbox.startsWith( keyVal.left(3).toLowerCase() );
+                Boolean expectedEnabled = String.isNotBlank( sandbox ) && sandbox.startsWith( keyVal.left(3).toLowerCase() );
                 s.checks.add( checkBool( 'dss_enabled' , keyVal + ' IsEnabled__c' , expectedEnabled , row != null && row.IsEnabled__c ) );
             }
         } catch ( Exception e ) {
