@@ -648,6 +648,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Case.HRCore_Region__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Case.Is_Archived__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -764,6 +769,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.Payroll_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Preferred_Style_Of_Communication__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
