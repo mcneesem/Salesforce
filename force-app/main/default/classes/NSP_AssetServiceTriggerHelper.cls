@@ -1708,7 +1708,7 @@ Implementation profile related to the account of the created asset
             }
         }
         //Sending email to payroll role users
-        if ( && !payrollRolesUsers?.isEmpty() ) {
+        if ( !payrollRolesUsers?.isEmpty() ) {
             this.sendMail(
                 assetIdSet ,
                 accountIdSet ,
