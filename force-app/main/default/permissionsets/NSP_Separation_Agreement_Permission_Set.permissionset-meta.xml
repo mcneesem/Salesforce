@@ -16,16 +16,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.NSP_Due_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.Priority</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>NSP_ReportRequest__c.COBRA_Amount_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -36,13 +26,8 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>NSP_ReportRequest__c.Employee_Status__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>NSP_ReportRequest__c.Is_No_Rehire_Clause_Required__c</field>
-        <readable>true</readable>
+        <field>NSP_ReportRequest__c.Has_no_rehire_clause__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -52,6 +37,26 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_ReportRequest__c.Is_Rehire_Clause_Required__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_ReportRequest__c.Is_No_Rehire_Clause_Required__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.NSP_Due_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Priority</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_ReportRequest__c.NSP_Sub_Client__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -690,6 +695,12 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>NSP_ReportRequest__c.NSP_Report_Type_Actual__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+   
+    <fieldPermissions>
         <editable>true</editable>
         <field>NSP_ReportRequest__c.NSP_Question10_MatrixSubCategories__c</field>
         <readable>true</readable>
@@ -850,11 +861,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>NSP_ReportRequest__c.NSP_Report_Type_Actual__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>NSP_ReportRequest__c.NSP_RequestingMultipleEmployees__c</field>
         <readable>true</readable>
@@ -887,6 +893,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_ReportRequest__c.NSP_Segment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NSP_ReportRequest__c.NSP_Sub_Client__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -927,11 +938,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_ReportRequest__c.NSP_StatusOfAgreement__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>NSP_ReportRequest__c.NSP_Sub_Client__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1031,11 +1037,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>NSP_ReportRequest__c.Num_Of_Weeks_Count__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>NSP_ReportRequest__c.Performance_Specialist__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1046,27 +1047,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>NSP_ReportRequest__c.Sub_Client_Contact_Address__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>NSP_ReportRequest__c.Sub_Client_Contact__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NSP_ReportRequest__c.Sub_Client_Number__c</field>
+        <field>NSP_ReportRequest__c.Num_Of_Weeks_Count__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_ReportRequest__c.Through_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NSP_ReportRequest__c.Work_State__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
@@ -1078,7 +1064,6 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>NSP_ReportRequest__c</object>
-        <viewAllFields>false</viewAllFields>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <recordTypeVisibilities>
