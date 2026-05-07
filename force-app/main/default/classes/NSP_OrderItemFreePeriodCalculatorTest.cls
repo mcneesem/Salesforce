@@ -1,20 +1,14 @@
-/**
- * @description       :
- * @author            : Manikandan M
- * @group             :
- * @last modified on  : 01-24-2023
- * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
- **/
 @isTest
-private class NSP_OrderItemFreePeriodCalculatorTest{
+private class NSP_OrderItemFreePeriodCalculatorTest {
+
     @testSetup
-    private static void testSetup(){
+    private static void testSetup() {
 
         Order_Settings__c sett = new Order_Settings__c();
         sett.EffectiveDateStartOfMonth__c = true;
         insert sett;
 
-       NSP_InvoiceTriggerHandler.TriggerDisabled = true;
+        NSP_InvoiceTriggerHandler.TriggerDisabled = true;
         NSP_AccountTriggerHandler.TriggerDisabled = true;
         NSP_OrderItemTriggerHandler.TriggerDisabled = true;
         NSP_OrderTriggerHandler.TriggerDisabled = true;
@@ -86,7 +80,7 @@ private class NSP_OrderItemFreePeriodCalculatorTest{
     }
 
     @isTest
-    private static void testNSPOrderItemFreePeriodCalculator(){
+    private static void testNSPOrderItemFreePeriodCalculator() {
 
         Test.startTest();
 
@@ -109,9 +103,24 @@ private class NSP_OrderItemFreePeriodCalculatorTest{
                                               From blng__Invoice__c WHERE Id!= null LIMIT 10];
         invoiceList[0].blng__InvoiceStatus__c = 'Posted';
         Update invoiceList;
-        List<Blng__InvoiceLine__c> invLineList = [Select Id, blng__BillingFrequency__c, blng__ChargeType__c, blng__OrderProduct__c, blng__OrderProduct__r.NSP_Total_Free_Periods__c, blng__OrderProduct__r.NSP_Free_Periods_Available__c,blng__Invoice__c
-                                                  From Blng__InvoiceLine__c WHERE Id!= null  LIMIT 10];
-        NSP_OrderItemFreePeriodCalculator.updateFreePeriodFlow(new List<String>{ invLineList[0]?.blng__Invoice__c });
+        List<Blng__InvoiceLine__c> invLineList = [
+            SELECT
+                Id ,
+                blng__BillingFrequency__c ,
+                blng__ChargeType__c ,
+                blng__OrderProduct__c ,
+                blng__OrderProduct__r.NSP_Total_Free_Periods__c ,
+                blng__OrderProduct__r.NSP_Free_Periods_Available__c ,
+                blng__Invoice__c
+            FROM Blng__InvoiceLine__c
+            WHERE ( Id != null )
+            LIMIT 10
+        ];
+        NSP_OrderItemFreePeriodCalculator.updateFreePeriodFlow(
+            new List<String>{
+                invLineList[0]?.blng__Invoice__c
+            }
+        );
 
         blng__UsageSummary__c usageSummaryRecord  = new blng__UsageSummary__c(blng__Account__c = objaccount.Id,blng__OrderProduct__c = orderItemList[0].Id,blng__MatchingId__c = '123',blng__MatchingAttribute__c = 'Each',blng__UnitOfMeasure__c = 'None',blng__Status__c = 'New',blng__Source__c = 'External',blng__SummaryStartDate__c = Date.today().addDays(-15),blng__SummaryEndDate__c = Date.today().addDays(15),blng__Order__c = ordList[0].Id );
         insert usageSummaryRecord;
@@ -122,3 +131,4 @@ private class NSP_OrderItemFreePeriodCalculatorTest{
     }
 
 }
+//
