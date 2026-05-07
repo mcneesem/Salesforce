@@ -1,6 +1,6 @@
 <template>
     <div class="slds-box">
-        
+
     <lightning-spinner data-id="spinner" variant="brand" class="slds-hide"></lightning-spinner>
     <lightning-record-edit-form object-api-name="NSP_ReportRequest__c" record-id={reReqId} onsubmit ={handleSubmit} onsuccess={handleSuccess}  onload={handleOnload}>
     <lightning-messages></lightning-messages>
@@ -25,21 +25,28 @@
 <div style="display:none">
 <lightning-input-field  class="slds-p-vertical_medium"  data-fname="WSEEName"  field-name='NSP_WSEE__c' required	value={WSEE}  ></lightning-input-field>
 </div>
-  <div class="slds-p-vertical_medium slds-form-element_horizontal" >
-    <lightning-input-field  id="NSP_WSEE_SubClient_Parent_Client_if_None"  disabled field-name="NSP_WSEE_SubClient_Parent_Client_if_None__c" 
-        value={subClientNumber}>
-    </lightning-input-field>
-  </div>
+
+    <div class="slds-p-vertical_medium slds-form-element_horizontal">
+        <lightning-combobox
+            name="NSP_Sub_Client__c"
+            label="Sub Client where EE works/worked"
+            value={NSP_Sub_Client__c}
+            options={subClientOptions}
+            onchange={handleChange}>
+        </lightning-combobox>
+    </div>
+
+    <lightning-input-field  field-name="Sub_Client_Number__c"  value={Sub_Client_Number__c} style="display:none"></lightning-input-field>
 
     <lightning-input-field class="slds-p-vertical_medium NSP_DOB__c" field-name="NSP_DOB__c"   value={dateOfBirth} disabled ></lightning-input-field>
 
-    <lightning-input-field class="slds-p-vertical_medium NSP_WorkState__c" field-name="NSP_WorkState__c"   value={MailingState} disabled ></lightning-input-field>
+    <lightning-input-field class="slds-p-vertical_medium" field-name="Work_State__c"   value={Work_State__c} disabled ></lightning-input-field>
 
-    <lightning-input-field class="slds-p-vertical_medium NSP_Employee_Status__c" field-name="NSP_Employee_Status__c"   disabled  value={employeeStatus} ></lightning-input-field>
+    <lightning-input-field class="slds-p-vertical_medium" label="Employee Status"  field-name="Employee_Status__c"  value={employeeStatus} disabled></lightning-input-field>
 
     <lightning-input-field class="slds-p-vertical_medium NSP_Termination_Date__c" field-name="NSP_Termination_Date__c" disabled={readOnlyTerminationDate} value={terminationDate} required ></lightning-input-field>
-    
-    <div class="slds-p-around_small"> 
+
+    <div class="slds-p-around_small">
         <div class="slds-form-element slds-form-element_stacked  slds-form-element_horizontal">
             <span class="slds-form-element__label">Age range is</span>
             <div class="slds-form-element__control">
@@ -62,17 +69,17 @@
                   type="radio">
                   </lightning-radio-group>
                 </div>
-                <lightning-input-field  class="slds-hidden NSP_WSEE_SameUnit_as_Others_Last_90_days__c"  style='display:none' 
+                <lightning-input-field  class="slds-hidden NSP_WSEE_SameUnit_as_Others_Last_90_days__c"  style='display:none'
                  required={NSP_WSEE_SameUnit_as_Others_Last_90_days}
-                 field-name="NSP_WSEE_SameUnit_as_Others_Last_90_days__c" 
+                 field-name="NSP_WSEE_SameUnit_as_Others_Last_90_days__c"
                  value={NSP_WSEE_SameUnit_as_Others_Last_90_days__c}>
-                </lightning-input-field>      
+                </lightning-input-field>
             </div>
-            <div class="slds-form-element__label  slds-p-vertical_medium NSP_WSEE_SameUnit_as_Others_Last_90_days__c" style="display:none"> 
+            <div class="slds-form-element__label  slds-p-vertical_medium NSP_WSEE_SameUnit_as_Others_Last_90_days__c" style="display:none">
                 Exhibits A/B must be prepared listing job titles, decisional unit, eligibility factors, and age of the employees affected and not affected by the layoff.
-            </div>  
+            </div>
         </div>
-            
+
                <template if:true={ReasonforSeparationValues.data}>
                 <div class="slds-form-element slds-form-element_horizontal">
                 <lightning-radio-group name="NSP_Reason_for_Separation__c"
@@ -87,7 +94,7 @@
                 <lightning-input-field style='display:none' field-name="NSP_Reason_for_Separation__c" id="internalClient" value={NSP_Reason_for_Separation__c} required class="slds-hidden"></lightning-input-field>
 
                 </template>
-            
+
 
                     <div class="slds-form-element slds-form-element_horizontal">
                     <lightning-radio-group name="NSP_Was_Separation_Involuntary__c"
@@ -100,7 +107,7 @@
                         </lightning-radio-group>
                         <lightning-input-field style='display:none' field-name="NSP_Was_Separation_Involuntary__c" value={NSP_Was_Separation_Involuntary__c} required class="slds-hidden"></lightning-input-field>
                     </div>
-            
+
             <div class="slds-var-p-vertical_medium   slds-form-element_horizontal">
             <label class="slds-form-element__label " for="ConsiderationAmountmin" ><span class="slds-required" >*</span>
                 Consideration Amount (Must be at least two weeks salary </label>
@@ -123,7 +130,7 @@
                         </lightning-radio-group>
                         <lightning-input-field style='display:none' field-name="NSP_CSC_matter_for_any_WSEE__c" value={NSP_CSC_matter_for_any_WSEE__c} required class="slds-hidden"></lightning-input-field>
                     </div>
-                    
+
 
                 <div class="slds-p-vertical_medium">
                     <div class="slds-form-element slds-form-element_horizontal">
@@ -139,7 +146,7 @@
                     </div>
                     <lightning-input-field style='display:none' field-name="NSP_IsThisWSEEon_any_LOA_Type_beside_TLO__c" value={NSP_IsThisWSEEon_any_LOA_Type_beside_TLO__c}  required variant="label-hidden" ></lightning-input-field>
                 </div>
-    
+
                  <!--  conditional rendering -->
 
                     <div class="slds-p-vertical_medium slds-form-element_horizontal NSP_IsThisWSEEon_any_LOA_Type_beside_TLO__c" style='display:none' >
@@ -162,7 +169,7 @@
 
             <div class="slds-p-vertical_medium">
                 <div class="slds-form-element slds-form-element_horizontal">
-                <lightning-radio-group name="NSP_CSC_matter_for_any_WSEE__c" class="NSP_CSC_matter_for_any_WSEE__c" 
+                <lightning-radio-group name="NSP_CSC_matter_for_any_WSEE__c" class="NSP_CSC_matter_for_any_WSEE__c"
                     data-fname="NSP_CSC_matter_for_any_WSEE__c"
                     label="Is there a CSC matter for any WSEE listed on the spreadsheet?"
                     options={pickValueYesNo}
@@ -208,28 +215,28 @@
             <c-wizard-file-upload re-req-id={reReqId} onfileaction={findFileSize}> </c-wizard-file-upload>
           </div>
                   <!-- File Upload End here -->
-            <div style="display:none"> 
+            <div style="display:none">
                     <lightning-input-field class="slds-hidden" data-fname="LastSavedPageNumber"  field-name="NSP_LastSavedPageNumber__c" variant="label-hidden" value={pageNumber} >
-                    </lightning-input-field> 
+                    </lightning-input-field>
             </div>
         </lightning-layout-item>
        </lightning-layout>
- 
+
        <div class="slds-m-top_medium slds-align_absolute-center slds-p-around_medium">
-        <lightning-button variant="brand" label="Previous" 
+        <lightning-button variant="brand" label="Previous"
         class="slds-m-top_small slds-m-left_small"
         onclick={handlePrev}
         >
         </lightning-button>
-  
+
         <lightning-button
         class="slds-m-top_small slds-m-left_small"
         label="Save and Exit"
         onclick={handleSave}>
       </lightning-button>
-  
+
       <lightning-button variant="brand" label="Next"
-      class="slds-m-top_small slds-m-left_small" 
+      class="slds-m-top_small slds-m-left_small"
       type="submit" >
     </lightning-button>
 

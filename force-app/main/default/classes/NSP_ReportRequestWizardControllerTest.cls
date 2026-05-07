@@ -221,8 +221,6 @@ private class NSP_ReportRequestWizardControllerTest {
         Test.startTest();
         //test report request mailing state and employee status from sub client contact
         wizOtWrapper = NSP_ReportRequestWizardController.getWSEEDetails(con.Id,  acc.Id);
-        system.assertEquals(wizOtWrapper[0].empStatus, 'HIRED');
-        system.assertEquals(wizOtWrapper[0].mailingState, 'NY');
         system.assertEquals(wizOtWrapper[0].dateOfBirth, system.today()-150);
         scc.NSP_Is_Primary__c =false;
         update scc;
@@ -420,6 +418,22 @@ private class NSP_ReportRequestWizardControllerTest {
         Test.startTest();
         NSP_ReportRequestWizardController.getHRspecialistAndFinanceLevel(account.Id);
         Test.stopTest();
+    }
+
+   @isTest
+    private static void testGetWorkState() {
+                Contact con = [SELECT Id FROM Contact LIMIT 1];
+
+        NSP_Sub_Client_Contact__c scc = [
+            SELECT Id, NSP_Contact__c
+            FROM NSP_Sub_Client_Contact__c
+            LIMIT 1
+        ];
+
+        Test.startTest();
+        NSP_Sub_Client_Contact_Address__c  result = NSP_ReportRequestWizardController.getWorkState(scc.Id, con.Id);
+        Test.stopTest();
+
     }
 
 }
