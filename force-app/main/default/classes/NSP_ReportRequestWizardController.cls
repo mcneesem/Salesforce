@@ -6,11 +6,11 @@ public with sharing class NSP_ReportRequestWizardController {
     @AuraEnabled
     public static List<NSP_ReportRequest__c> getReportRequestList(String recordTypeIds ) {
         try {
-            String userId = UserInfo.getUserId();
-            return [SELECT Id,Name,NSP_Employee_Status__c, NSP_ClientName__c, NSP_ClientName__r.Name,NSP_ReportPlace__c,NSP_columsToBeTotaled__c,NSP_ListAdditionalClients_subAccounts__c,NSP_ReportName__c,
-                    RecordTypeId,NSP_HowIsReportUsed__c,NSP_InternalClientReport__c,NSP_Existing_NewReport__c,NSP_NeedcolumnHeading__c,NSP_HowToSort__c,
-                    NSP_ReportType__c,RecordType.DeveloperName,CreatedDate,NSP_LastSavedPageNumber__c  FROM NSP_ReportRequest__c WHERE RecordTypeId = : recordTypeIds AND NSP_IsDraft__c = true  AND OwnerId =:userId WITH SECURITY_ENFORCED ORDER BY CreatedDate DESC LIMIT 100 ];
-        } catch (Exception excep) {
+         String userId = UserInfo.getUserId();
+        return [SELECT Id,Name, NSP_ClientName__c, NSP_ClientName__r.Name,NSP_ReportPlace__c,NSP_columsToBeTotaled__c,NSP_ListAdditionalClients_subAccounts__c,NSP_ReportName__c,
+        RecordTypeId,NSP_HowIsReportUsed__c,NSP_InternalClientReport__c,NSP_Existing_NewReport__c,NSP_NeedcolumnHeading__c,NSP_HowToSort__c,
+        NSP_ReportType__c,RecordType.DeveloperName,CreatedDate,NSP_LastSavedPageNumber__c  FROM NSP_ReportRequest__c WHERE RecordTypeId = : recordTypeIds AND NSP_IsDraft__c = true  AND OwnerId =:userId WITH SECURITY_ENFORCED ORDER BY CreatedDate DESC LIMIT 100 ];
+         } catch (Exception excep) {
             throw new AuraHandledException(excep.getMessage());
         }
     }
@@ -18,33 +18,33 @@ public with sharing class NSP_ReportRequestWizardController {
     @AuraEnabled
     public static list<contentversion> releatedFiles(String idParent){
         list<id> lstConDocs = new list<id>();
-        try {
-            for(ContentDocumentLink cntLink : [Select Id, ContentDocumentId From ContentDocumentLink WHERE LinkedEntityId =:idParent]) {
-                lstConDocs.add(cntLink.ContentDocumentId);
-            }
-            if(!lstConDocs.isEmpty()) {
-                return [SELECT Id, Title, ContentDocumentId ,PathOnClient,CreatedDate,FileExtension FROM ContentVersion WHERE ContentDocumentId IN :lstConDocs WITH SECURITY_ENFORCED LIMIT 100 ];
-            }
-            else {
-                return new List<contentversion>();
-            }
-        } catch (Exception excep) {
-            throw new AuraHandledException(excep.getMessage());
+    try {
+        for(ContentDocumentLink cntLink : [Select Id, ContentDocumentId From ContentDocumentLink WHERE LinkedEntityId =:idParent]) {
+            lstConDocs.add(cntLink.ContentDocumentId);
         }
+        if(!lstConDocs.isEmpty()) {
+            return [SELECT Id, Title, ContentDocumentId ,PathOnClient,CreatedDate,FileExtension FROM ContentVersion WHERE ContentDocumentId IN :lstConDocs WITH SECURITY_ENFORCED LIMIT 100 ];
+        }
+        else {
+            return new List<contentversion>();
+        }
+      } catch (Exception excep) {
+        throw new AuraHandledException(excep.getMessage());
+    }
     }
 
     @AuraEnabled(cacheable=true)
     public static String getInternalAccountId(){
-
+        
         try {
             if( String.isNotBlank(System.Label.NSP_Insperity_Account)){
                 Id insperityAccountId = test.isRunningTest() ? null : System.Label.NSP_Insperity_Account;
                 return insperityAccountId;
             }
-            return null;
-        } catch (Exception excep) {
-            throw new AuraHandledException(excep.getMessage());
-        }
+              return null;
+          } catch (Exception excep) {
+              throw new AuraHandledException(excep.getMessage());
+          }
     }
 
     @AuraEnabled(cacheable=true)
@@ -71,13 +71,13 @@ public with sharing class NSP_ReportRequestWizardController {
             String financeLevel,segment,region = NOT_FOUND;
             List <String> assetFields = new List <String> {
                 'Id' ,
-                    'AccountId' ,
-                    'NSP_Service_Region__c' ,
-                    'NSP_Account_Status__c' ,
-                    'toLabel(NSP_Financial_Guidelines__c)' ,
-                    'NSP_Client_Segment_type__c'
-                    };
-                        jSONmap = getAccountTeamUsers( accountID );
+                'AccountId' ,
+                'NSP_Service_Region__c' ,
+                'NSP_Account_Status__c' ,
+                'toLabel(NSP_Financial_Guidelines__c)' ,
+                'NSP_Client_Segment_type__c'
+            };
+            jSONmap = getAccountTeamUsers( accountID );
             // fetch credit level, service region and client segment type from wo asset associated with client name selected
             String assetQuery = new NSP_QueryBuilder( 'Asset' , assetFields )
                 .addFilter( 'RecordTypeId' , WO_ASSET )
@@ -91,7 +91,7 @@ public with sharing class NSP_ReportRequestWizardController {
                 financeLevel= asset[0].NSP_Financial_Guidelines__c;
                 if ( NSP_ServiceConstants.ASSET_ACTIVE_STATUS.equalsIgnoreCase( asset[0]?.NSP_Account_Status__c )
                     || NSP_ServiceConstants.TERMINATED.equalsIgnoreCase( asset[0]?.NSP_Account_Status__c )
-                   )
+                    )
                 {
                     segment=asset[0].NSP_Client_Segment_type__c;
                 }
@@ -113,22 +113,22 @@ public with sharing class NSP_ReportRequestWizardController {
         String userId, psUserId = NOT_FOUND;
         Set<String> roles = new Set<String>{
             'HR Specialist' ,
-                'Bus. Team-HRSp/CL' ,
-                'Performance Specialist'
-                };
-                    //fetch Primary HR specialist from Account team associated with the accountid
-                    List<NSP_Account_Team__c> accountTeam = [
-                        SELECT
-                        Id , NSP_Primary__c ,
-                        NSP_User__r.Name , NSP_User__c ,
-                        NSP_Role__c , NSP_Account__c
-                        FROM NSP_Account_Team__c
-                        WHERE (
-                            NSP_Account__c = :accountID
-                            AND NSP_Role__c = :roles
-                            AND NSP_User__c != null
-                        )
-                    ];
+            'Bus. Team-HRSp/CL' ,
+            'Performance Specialist'
+        };
+        //fetch Primary HR specialist from Account team associated with the accountid
+        List<NSP_Account_Team__c> accountTeam = [
+            SELECT
+                Id , NSP_Primary__c ,
+                NSP_User__r.Name , NSP_User__c ,
+                NSP_Role__c , NSP_Account__c
+            FROM NSP_Account_Team__c
+            WHERE (
+                NSP_Account__c = :accountID 
+                AND NSP_Role__c = :roles
+                AND NSP_User__c != null
+            )
+        ];
         //Map HR specialist of wizard output to Account team HR Specialist
         if ( !accountTeam?.isEmpty() ) {
             for ( NSP_Account_Team__c accTeam : accountTeam ) {
@@ -156,7 +156,7 @@ public with sharing class NSP_ReportRequestWizardController {
         String returnValue = userId;
         if ( NSP_ServiceConstants.PERFOMANCE_SPECIALIST.equalsIgnoreCase(role)
             && ( isPrimary || NOT_FOUND.equalsIgnoreCase(userID) )
-           )
+            )
         {
             returnValue = accountTeamUser;
         }
@@ -168,7 +168,7 @@ public with sharing class NSP_ReportRequestWizardController {
         String returnValue = userId;
         if ( ( NSP_ServiceConstants.HRSpecialist.equalsIgnoreCase(role) || NSP_ServiceConstants.BUS_TEAM_HRSP_CL.equalsIgnoreCase(role) )
             && ( isPrimary || NOT_FOUND.equalsIgnoreCase( userID ) )
-           )
+            )
         {
             returnValue = accountTeamUser;
         }
@@ -178,14 +178,14 @@ public with sharing class NSP_ReportRequestWizardController {
     @AuraEnabled(cacheable=true)
     public static List<AccountContactRelation> retrieveContactRecords (String accountId ) {
         try {
-            //Contact[] contacts  =  [SELECT Name, Email from Contact WHERE AccountId =:accountId];
-            //fetch related contacts instead of direct contacts
-            AccountContactRelation [] acrs = [SELECT ContactId, Contact.name, Contact.NSP_Work_email__c, NSP_Work_Email__c  from AccountContactRelation WHERE AccountId =:accountId];
-            if(!acrs.isEmpty()){
-                return acrs;
-            }else {
-                return new List<AccountContactRelation> () ;
-            }
+        //Contact[] contacts  =  [SELECT Name, Email from Contact WHERE AccountId =:accountId];
+        //fetch related contacts instead of direct contacts
+        AccountContactRelation [] acrs = [SELECT ContactId, Contact.name, Contact.NSP_Work_email__c, NSP_Work_Email__c  from AccountContactRelation WHERE AccountId =:accountId];
+        if(!acrs.isEmpty()){
+            return acrs;
+        }else {
+            return new List<AccountContactRelation> () ;
+        }
         } catch (Exception excep) {
             throw new AuraHandledException(excep.getMessage());
         }
@@ -197,22 +197,18 @@ public with sharing class NSP_ReportRequestWizardController {
     // @param : String contactID, String accountID
     // @modifiedDate : 12/09/2022
     // @return List<wizardOutputWrapper>
-
-    @AuraEnabled
+    //
+     @AuraEnabled
     public static List<WizardOutputWrapper> getWSEEDetails(String contactID, String accountId) {
         try {
-
             List<WizardOutputWrapper> wizardOutputWrapperList = new List<WizardOutputWrapper>();
-
             WizardOutputWrapper wizOtWrapper = new WizardOutputWrapper();
-
             // Set default values
             wizOtWrapper.empStatus = null;
             wizOtWrapper.terminationDate = null;
             wizOtWrapper.subClientNum = null;
-
+            
             if (String.isNotBlank(contactID)) {
-
                 // Fetch contact details
                 List<Contact> conList = [
                     SELECT Id,
@@ -222,84 +218,61 @@ public with sharing class NSP_ReportRequestWizardController {
                     WHERE Id = :contactID
                     LIMIT 1
                 ];
-
                 if (!conList.isEmpty()) {
-
                     Contact contact = conList[0];
-
                     // Map DOB from contact
                     wizOtWrapper = setAndGetContactFields(contact, wizOtWrapper);
                 }
-
                 if (String.isNotBlank(accountId)) {
-
                     // Fetch related sub client contacts
-                    List<NSP_Sub_Client_Contact__c> accSubClientContList = [
-                        SELECT Id,
-                        NSP_Is_Primary__c,
-                        NSP_Employee_Status__c,
-                        NSP_Status_Date__c,
-                        NSP_AIMS_Sub_Client__c,
-                        NSP_Sub_Client__c,
-                        NSP_Sub_Client__r.NSP_Account__c,
-                        NSP_Sub_Client__r.Name
-                        FROM NSP_Sub_Client_Contact__c
-                        WHERE NSP_Contact__c = :contactID
-                        AND NSP_Sub_Client__r.NSP_Account__c = :accountId
-                        AND NSP_Sub_Client__c != null
-                    ];
-
+                    List<NSP_Sub_Client_Contact__c> accSubClientContList = [ SELECT Id, NSP_Is_Primary__c,
+                                                                            NSP_Employee_Status__c,
+                                                                            NSP_Status_Date__c,
+                                                                            NSP_AIMS_Sub_Client__c,
+                                                                            NSP_Sub_Client__c,
+                                                                            NSP_Sub_Client__r.NSP_Account__c,
+                                                                            NSP_Sub_Client__r.Name
+                                                                            FROM NSP_Sub_Client_Contact__c
+                                                                            WHERE NSP_Contact__c = :contactID
+                                                                            AND NSP_Sub_Client__r.NSP_Account__c = :accountId
+                                                                            AND NSP_Sub_Client__c != null   ];
                     if (!accSubClientContList.isEmpty()) {
-                    wizOtWrapper =NSP_ReportRequestWizardController.setAndGetSubClinetContactFields(wizOtWrapper,accSubClientContList);
+                        wizOtWrapper = NSP_ReportRequestWizardController.setAndGetSubClinetContactFields(wizOtWrapper,accSubClientContList);
                     }
                 }
-
                 wizardOutputWrapperList.add(wizOtWrapper);
             }
-
             return wizardOutputWrapperList;
-
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
     }
-
-
+    
+    
     @AuraEnabled
-    public static NSP_Sub_Client_Contact_Address__c getWorkState(
-        String subClientContactId,
-        String contactID
-    ) {
-
+    public static NSP_Sub_Client_Contact_Address__c getWorkState(String subClientContactId,String contactID) {
         NSP_Sub_Client_Contact_Address__c sccAddress;
-
-        if (String.isNotBlank(subClientContactId) && String.isNotBlank(contactID)) {
-
-                List<NSP_Sub_Client_Contact_Address__c> sccAddressList = [
-                    SELECT NSP_State__c,
-                    NSP_Sub_Client_Contact__c
-                    FROM NSP_Sub_Client_Contact_Address__c
-                    WHERE NSP_Sub_Client_Contact__r.NSP_Contact__c = :contactID
-                    AND NSP_Sub_Client_Contact__c = :subClientContactId
-                    LIMIT 1
-                ];
-
-                if (!sccAddressList.isEmpty()) {
-                    sccAddress = sccAddressList[0];
-                }
+        if (String.isNotBlank(subClientContactId) &&  String.isNotBlank(contactID)) {
+            List<NSP_Sub_Client_Contact_Address__c> sccAddressList = [SELECT NSP_State__c, NSP_Sub_Client_Contact__c
+                                                                      FROM NSP_Sub_Client_Contact_Address__c
+                                                                      WHERE NSP_Sub_Client_Contact__r.NSP_Contact__c = :contactID
+                                                                      AND NSP_Sub_Client_Contact__c = :subClientContactId
+                                                                      LIMIT 1  ];
+            if (!sccAddressList.isEmpty()) {
+                sccAddress = sccAddressList[0];
             }
-
+        }
         return sccAddress;
     }
-
     //== Set and get Sub Clinet Contact Fields
     private static WizardOutputWrapper setAndGetSubClinetContactFields( WizardOutputWrapper wizOtWrapper,List<NSP_Sub_Client_Contact__c> subclientContacts ) {
-
+        
         if (subclientContacts != null && !subclientContacts.isEmpty()) {
             wizOtWrapper.subclientContacts = subclientContacts;
         }
         return wizOtWrapper;
     }
+
 
     //== Set and Get Contact field mapping
     private static WizardOutputWrapper setAndGetContactFields(Contact contact, WizardOutputWrapper wizOtWrapper)
@@ -317,28 +290,28 @@ public with sharing class NSP_ReportRequestWizardController {
     }
 
     /**
-* @MethodName: getActiveEmployeeCount
-* @Description: This method fetch unique active employee count from WO asset
-* @param :  String accountID
-* @createdDate : 12/14/2022
-* @return Boolean true if the employee count is greater than 45
-*/
+	* @MethodName: getActiveEmployeeCount
+	* @Description: This method fetch unique active employee count from WO asset 
+	* @param :  String accountID
+	* @createdDate : 12/14/2022
+	* @return Boolean true if the employee count is greater than 45                       
+	*/
     @AuraEnabled
     public static Boolean getActiveEmployeeCount ( String accountId){
         try{
             List<String> assetFields = new List<String> {'Id', 'AccountId',
-                'NSP_Unique_Active_Employee__c'};
-                    //return true if asset associated to account has unique active employees greater than or equal to 45
-                    String assetQuery = new NSP_QueryBuilder(
-                        'Asset',
-                        assetFields)
-                    .addFilter('AccountId', String.escapeSingleQuotes(accountID))
-                    .addFilter('RecordTypeId', WO_ASSET)
-                    .setSecurityEnforce(false)
-                    .build();
+                                    					'NSP_Unique_Active_Employee__c'};
+            //return true if asset associated to account has unique active employees greater than or equal to 45
+            String assetQuery = new NSP_QueryBuilder(
+                	 			'Asset',
+                	 			assetFields)
+                     			.addFilter('AccountId', String.escapeSingleQuotes(accountID))
+                	 			.addFilter('RecordTypeId', WO_ASSET)
+                                .setSecurityEnforce(false)
+                     			.build();
             assetQuery += ' AND NSP_Unique_Active_Employee__c!=NULL AND NSP_Unique_Active_Employee__c >=  10 ORDER BY LastModifiedDate ASC LIMIT 1' ;
             List<Asset> assetList = Database.query(assetQuery);
-
+    
             if(assetList.size()>0){
                 return true;
             }
@@ -358,7 +331,7 @@ public with sharing class NSP_ReportRequestWizardController {
         @AuraEnabled
         public Date terminationDate{get;set;}
         @AuraEnabled
-        public Set<String> subClientNum{get;set;}
+        public String subClientNum{get;set;}
         @AuraEnabled
         public String contactName{get;set;}
         @AuraEnabled
@@ -367,66 +340,66 @@ public with sharing class NSP_ReportRequestWizardController {
 
     @AuraEnabled
     public static String getHRspecialist(String accountID){
-        try {
-            String userId;
-            NSP_Account_Team__c[] accountTeam =[SELECT Id, NSP_User__r.Name, NSP_User__c, NSP_Role__c,NSP_Account__c FROM NSP_Account_Team__c
-                                                WHERE NSP_Role__c ='HR Specialist' AND NSP_Account__c =:accountID AND NSP_User__c !=null  ORDER BY LastModifiedDate ASC LIMIT 1];
-            if(accountTeam.size()>0){
-                userId= accountTeam[0].NSP_User__c;
-            }
-            return userId;
-        } catch (Exception excep) {
-            throw new AuraHandledException(excep.getMessage());
+    try {
+        String userId;
+        NSP_Account_Team__c[] accountTeam =[SELECT Id, NSP_User__r.Name, NSP_User__c, NSP_Role__c,NSP_Account__c FROM NSP_Account_Team__c 
+        WHERE NSP_Role__c ='HR Specialist' AND NSP_Account__c =:accountID AND NSP_User__c !=null  ORDER BY LastModifiedDate ASC LIMIT 1];
+        if(accountTeam.size()>0){
+            userId= accountTeam[0].NSP_User__c;
         }
+    return userId;
+      } catch (Exception excep) {
+          throw new AuraHandledException(excep.getMessage());
+      }
     }
 
     @AuraEnabled
     public static String getAIMSfromPEOasset(String accountID){
-        try {
-            String aimsNumb;
-            Asset[] assetList =[SELECT NSP_Client__c, RecordType.DeveloperName, CreatedDate FROM Asset
-                                WHERE NSP_Client__c != null AND RecordType.DeveloperName ='WO' AND AccountId =: accountID ORDER BY CreatedDate DESC  LIMIT 1];
+    try {
+        String aimsNumb;
+        Asset[] assetList =[SELECT NSP_Client__c, RecordType.DeveloperName, CreatedDate FROM Asset 
+            WHERE NSP_Client__c != null AND RecordType.DeveloperName ='WO' AND AccountId =: accountID ORDER BY CreatedDate DESC  LIMIT 1];
 
             if(assetList.size()>0){
                 aimsNumb= assetList[0].NSP_Client__c;
             }
-            return aimsNumb;
-        } catch (Exception excep) {
-            throw new AuraHandledException(excep.getMessage());
-        }
+        return aimsNumb;
+          } catch (Exception excep) {
+              throw new AuraHandledException(excep.getMessage());
+          }
 
     }
 
     /**
-* @MethodName: getAccountWoAsset
-* @Description: This method fetch wo-asset associated to account
-* @param :  String accountID
-* @createdDate : 03/23/2023
-* @return string assetId of wo-asset recordType assosiated with given accountId
-*/
-
+	* @MethodName: getAccountWoAsset
+	* @Description: This method fetch wo-asset associated to account 
+	* @param :  String accountID
+	* @createdDate : 03/23/2023
+	* @return string assetId of wo-asset recordType assosiated with given accountId                      
+	*/
+    
     @AuraEnabled
     public static String getAccountWoAsset(String accountId){
-        try {
-            String woAsset = '';
-            List<String> assetFields = new List<String> {'Id', 'AccountId', 'RecordTypeId'};
-                //return true if recordtype of asset is wo-asset associated to account
-                String assetQuery = new NSP_QueryBuilder(
-                    'Asset',
-                    assetFields)
-                .addFilter('AccountId', String.escapeSingleQuotes(accountId))
-                .addFilter('RecordTypeId', WO_ASSET)
-                .addLimit(1)
-                .setSecurityEnforce(false)
-                .build();
+    try {
+         String woAsset = '';
+           List<String> assetFields = new List<String> {'Id', 'AccountId', 'RecordTypeId'};
+            //return true if recordtype of asset is wo-asset associated to account 
+            String assetQuery = new NSP_QueryBuilder(
+                	 			'Asset',
+                	 			assetFields)
+                     			.addFilter('AccountId', String.escapeSingleQuotes(accountId))
+                	 			.addFilter('RecordTypeId', WO_ASSET)
+                                .addLimit(1)
+                                .setSecurityEnforce(false)
+                     			.build();
             List<Asset> assetList = Database.query(assetQuery);
             if(assetList.size()>0){
                 woAsset= assetList[0].Id;
             }
-            return woAsset;
-        } catch (Exception exc) {
-            throw new AuraHandledException(exc.getMessage());
-        }
+        return woAsset;
+          } catch (Exception exc) {
+              throw new AuraHandledException(exc.getMessage());
+          }
 
     }
 
@@ -457,10 +430,10 @@ public with sharing class NSP_ReportRequestWizardController {
                 List<ContentDocumentLink> lstConDocs = new List<ContentDocumentLink>();
                 // Getting the content document links related to Report Request record for content document ID
                 for ( ContentDocumentLink cntLink : [
-                    SELECT Id , ContentDocumentId , ShareType , Visibility
-                    FROM ContentDocumentLink
-                    WHERE LinkedEntityId = :request.ID
-                ]
+                            SELECT Id , ContentDocumentId , ShareType , Visibility 
+                            FROM ContentDocumentLink
+                            WHERE LinkedEntityId = :request.ID
+                        ]
                     )
                 {
                     lstConDocs.add(
