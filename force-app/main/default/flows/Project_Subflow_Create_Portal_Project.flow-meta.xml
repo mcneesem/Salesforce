@@ -191,6 +191,13 @@
                 <elementReference>ipRecordId</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordPortalProject.Label__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Progress</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Create_Portal_Project</targetReference>
         </connector>
