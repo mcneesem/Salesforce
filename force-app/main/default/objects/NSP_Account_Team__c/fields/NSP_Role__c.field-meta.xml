@@ -346,6 +346,16 @@
                 <default>false</default>
                 <label>Insurance Services</label>
             </value>
+            <value>
+                <fullName>HRScale HCM &amp; Comp Analyst</fullName>
+                <default>false</default>
+                <label>HRScale HCM &amp; Comp Analyst</label>
+            </value>
+            <value>
+                <fullName>HRScale Time &amp; Absence Analyst</fullName>
+                <default>false</default>
+                <label>HRScale Time &amp; Absence Analyst</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
