@@ -16,7 +16,7 @@ export default class PortalEventList extends LightningElement {
             'Portal_Event__c.EndDateTime__c' ,
             'Portal_Event__c.TimeZoneSidKey__c' ,
         ] ,
-        sortBy: [ 'Portal_Event__c.StartDateTime__c' ]
+        sortBy: [ 'Portal_Event__c.StartDateTime__c' , 'Portal_Event__c.Name' ]
     })
     listInfo({ error, data }) {
         if ( data ) {

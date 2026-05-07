@@ -7,11 +7,6 @@
     <description>Grants Tab Visibility, View All Object Permissions, and Read Field Permissions for Portal Client (Portal_Client__c).</description>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Contact.Portal_Alias__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Portal_Client__c.Account__c</field>
         <readable>true</readable>
     </fieldPermissions>

@@ -12,6 +12,7 @@
     <permissionSets>Portal_Resource_Visibility</permissionSets>
     <permissionSets>Portal_Task_Visibility</permissionSets>
     <permissionSets>Portal_Team_Member_Visibility</permissionSets>
+    <permissionSets>Use_Portal_Access</permissionSets>
     <permissionSets>View_Error_Panel</permissionSets>
     <permissionSets>View_Portal_Preview</permissionSets>
     <status>Updated</status>

@@ -5,9 +5,6 @@
     <columns>Account__c</columns>
     <columns>Client_Number__c</columns>
     <columns>TimeZoneSidKey__c</columns>
-    <columns>Effective_Date__c</columns>
-    <columns>Benefits_Effective_Date__c</columns>
-    <columns>Benefits_Waiting_Period__c</columns>
     <columns>CREATEDBY_USER</columns>
     <columns>CREATED_DATE</columns>
     <columns>UPDATEDBY_USER</columns>
