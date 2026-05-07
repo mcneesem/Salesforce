@@ -44,58 +44,6 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>parentFieldApiName</name>
-                    <value>NSP_ReportRequest__c.Id</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedListApiName</name>
-                    <value>Histories</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedListComponentOverride</name>
-                    <value>ADVGRID</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>rowsToDisplay</name>
-                    <value>10</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>showActionBar</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer2</identifier>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-4f067290-3fd3-4f22-baad-4e695359b760</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>active</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-4f067290-3fd3-4f22-baad-4e695359b760</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>title</name>
-                    <value>Standard.Tab.relatedLists</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:tab</componentName>
-                <identifier>flexipage_tab4</identifier>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-f1c2357a-2f33-4d61-b482-60144d5f8be2</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
@@ -103,16 +51,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NSP_Date_Requested__c</fieldItem>
                 <identifier>RecordNSP_Date_Requested_cField2</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Employee_Status__c</fieldItem>
-                <identifier>RecordEmployee_Status__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-u7l7vua2pnt</name>
@@ -292,8 +230,15 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Sub_Client__c</fieldItem>
-                <identifier>RecordNSP_Sub_Client_cField4</identifier>
+                <fieldItem>Record.NSP_WSEE_SubClient_Parent_Client_if_None__c</fieldItem>
+                <identifier>RecordNSP_WSEE_SubClient_Parent_Client_if_None_cField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_RequestingMultipleEmployees__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Yes</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -302,12 +247,12 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Sub_Client_Number__c</fieldItem>
-                <identifier>RecordSub_Client_Number_cField</identifier>
+                <fieldItem>Record.NSP_Sub_Client__c</fieldItem>
+                <identifier>RecordNSP_Sub_Client_cField3</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.NSP_RequestingMultipleEmployees__c}</leftValue>
-                        <operator>NE</operator>
+                        <operator>EQUAL</operator>
                         <rightValue>Yes</rightValue>
                     </criteria>
                 </visibilityRule>
@@ -424,8 +369,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Work_State__c</fieldItem>
-                <identifier>RecordWork_State_cField</identifier>
+                <fieldItem>Record.NSP_WorkState__c</fieldItem>
+                <identifier>RecordNSP_WorkState_cField2</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.NSP_RequestingMultipleEmployees__c}</leftValue>
@@ -441,8 +386,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Employee_Status__c</fieldItem>
-                <identifier>RecordEmployee_Status_cField</identifier>
+                <fieldItem>Record.NSP_Employee_Status__c</fieldItem>
+                <identifier>RecordNSP_Employee_Status_cField3</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.NSP_RequestingMultipleEmployees__c}</leftValue>
@@ -467,26 +412,6 @@
                         <rightValue>Yes</rightValue>
                     </criteria>
                 </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Sub_Client_Contact_Address__c</fieldItem>
-                <identifier>RecordSub_Client_Contact_Address_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Sub_Client_Contact__c</fieldItem>
-                <identifier>RecordSub_Client_Contact_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-6n7zmgcw3hi</name>
@@ -2127,18 +2052,49 @@
                     <name>uiBehavior</name>
                     <value>readonly</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Sub_Client__c</fieldItem>
-                <identifier>RecordNSP_Sub_Client_cField5</identifier>
+                <fieldItem>Record.NSP_WSEE_SubClient_Parent_Client_if_None__c</fieldItem>
+                <identifier>RecordNSP_WSEE_SubClient_Parent_Client_if_None_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_RequestingMultipleEmployees__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Yes</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Sub_Client_Number__c</fieldItem>
-                <identifier>RecordSub_Client_Number_cField2</identifier>
+                <fieldItem>Record.NSP_Sub_Client__c</fieldItem>
+                <identifier>RecordNSP_Sub_Client_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_RequestingMultipleEmployees__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Yes</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_TotalAgreementsRequested__c</fieldItem>
+                <identifier>RecordNSP_TotalAgreementsRequested_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NSP_RequestingMultipleEmployees__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Yes</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2233,10 +2189,10 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Work_State__c</fieldItem>
-                <identifier>RecordWork_State_cField2</identifier>
+                <fieldItem>Record.NSP_WorkState__c</fieldItem>
+                <identifier>RecordNSP_WorkState_cField</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.NSP_RequestingMultipleEmployees__c}</leftValue>
@@ -2250,10 +2206,10 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Employee_Status__c</fieldItem>
-                <identifier>RecordEmployee_Status_cField2</identifier>
+                <fieldItem>Record.NSP_Employee_Status__c</fieldItem>
+                <identifier>RecordNSP_Employee_Status_cField2</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.NSP_RequestingMultipleEmployees__c}</leftValue>
@@ -3731,20 +3687,6 @@
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>label</name>
-                    <value>Tabs</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>tabs</name>
-                    <value>Facet-f1c2357a-2f33-4d61-b482-60144d5f8be2</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:tabset</componentName>
-                <identifier>flexipage_tabset</identifier>
-            </componentInstance>
-        </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
