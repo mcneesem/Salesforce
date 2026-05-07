@@ -75,20 +75,6 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>varAccountContactRelation.NSP_Work_Phone__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>newContact_Phone.value</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varAccountContactRelation.NSP_Work_Email__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>newContact_Email.value</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>varAccountContactRelation.Roles</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -167,6 +153,27 @@
                 <elementReference>newContact_Title</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varContact.NSP_Work_Phone__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>newContact_Phone.value</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varContact.NSP_Work_email__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>newContact_Email.value</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varContact.NSP_Job_Title__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>newContact_Title</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Create_Contact</targetReference>
         </connector>
@@ -209,6 +216,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Contact_Type_existingContact</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varACRtoCreate.NSP_Job_Title__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Job_Title_existingContact</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -1017,7 +1031,7 @@
             <inputParameters>
                 <name>fieldApiName</name>
                 <value>
-                    <stringValue>ContactId</stringValue>
+                    <stringValue>NSP_Customer_Signer__c</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1029,7 +1043,7 @@
             <inputParameters>
                 <name>objectApiName</name>
                 <value>
-                    <stringValue>Case</stringValue>
+                    <stringValue>Opportunity</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1534,6 +1548,22 @@
             </styleProperties>
         </fields>
         <fields>
+            <name>Job_Title_existingContact</name>
+            <dataType>String</dataType>
+            <fieldText>Job Title</fieldText>
+            <fieldType>InputField</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>false</isRequired>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>6</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <fields>
             <name>Contact_Type_existingContact</name>
             <choiceReferences>contactType_AccountContactRelationPicklist</choiceReferences>
             <dataType>String</dataType>
@@ -1551,11 +1581,10 @@
             </styleProperties>
         </fields>
         <fields>
-            <name>Roles_existingContact</name>
-            <choiceReferences>roles_AccountContactRelationMultiPicklist</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Roles</fieldText>
-            <fieldType>MultiSelectPicklist</fieldType>
+            <name>Referral_existingContact</name>
+            <dataType>Boolean</dataType>
+            <fieldText>Referral?</fieldText>
+            <fieldType>InputField</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <styleProperties>
@@ -1568,10 +1597,11 @@
             </styleProperties>
         </fields>
         <fields>
-            <name>Referral_existingContact</name>
-            <dataType>Boolean</dataType>
-            <fieldText>Referral?</fieldText>
-            <fieldType>InputField</fieldType>
+            <name>Roles_existingContact</name>
+            <choiceReferences>roles_AccountContactRelationMultiPicklist</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Roles</fieldText>
+            <fieldType>MultiSelectPicklist</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <styleProperties>
