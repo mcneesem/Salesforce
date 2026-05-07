@@ -116,10 +116,10 @@ public class TermFormLookUpsQueueable implements Queueable {
         }
         if ( !updateTermForm.isEmpty() ) {
             try {
-                Database.SaveResult[] results = Database.update(updateTermForm, false);
+                List<Database.SaveResult> results = Database.update( updateTermForm , false );
                 NSP_ErrorLogHandler.logResults(
                     TermFormLookUpsQueueable.class.getName() ,
-                    'execute' ,
+                    'execute:update' ,
                     results
                 );
             } catch ( Exception e ) {
