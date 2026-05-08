@@ -1169,13 +1169,13 @@
             <inputParameters>
                 <name>columns</name>
                 <value>
-                    <stringValue>[{&quot;apiName&quot;:&quot;Contact_Name__c&quot;,&quot;guid&quot;:&quot;column-c089&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;sortable&quot;:false,&quot;label&quot;:&quot;Contact Name&quot;,&quot;type&quot;:&quot;customRichText&quot;},{&quot;apiName&quot;:&quot;NSP_Job_Title__c&quot;,&quot;guid&quot;:&quot;column-7b58&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:1,&quot;sortable&quot;:false,&quot;label&quot;:&quot;Job Title&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;Roles&quot;,&quot;guid&quot;:&quot;column-990e&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:2,&quot;sortable&quot;:false,&quot;label&quot;:&quot;Roles&quot;,&quot;type&quot;:&quot;customRichText&quot;}]</stringValue>
+                    <stringValue>[{&quot;apiName&quot;:&quot;Contact_Name__c&quot;,&quot;guid&quot;:&quot;column-c089&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;sortable&quot;:false,&quot;label&quot;:&quot;Contact Name&quot;,&quot;type&quot;:&quot;customRichText&quot;},{&quot;apiName&quot;:&quot;Roles&quot;,&quot;guid&quot;:&quot;column-990e&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:1,&quot;sortable&quot;:false,&quot;label&quot;:&quot;Roles&quot;,&quot;type&quot;:&quot;customRichText&quot;}]</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>columnReferences</name>
                 <value>
-                    <complexValue>{&quot;dataType&quot;:&quot;SObject&quot;,&quot;objectType&quot;:&quot;AccountContactRelation&quot;,&quot;fieldReferences&quot;:[&quot;Contact_Name__c&quot;,&quot;NSP_Job_Title__c&quot;,&quot;Roles&quot;],&quot;elementReference&quot;:&quot;collectionCurrentAccountACRs&quot;}</complexValue>
+                    <complexValue>{&quot;dataType&quot;:&quot;SObject&quot;,&quot;objectType&quot;:&quot;AccountContactRelation&quot;,&quot;fieldReferences&quot;:[&quot;Contact_Name__c&quot;,&quot;Roles&quot;],&quot;elementReference&quot;:&quot;collectionCurrentAccountACRs&quot;}</complexValue>
                     <complexValueType>ComplexObjectFieldDetails</complexValueType>
                 </value>
             </inputParameters>
