@@ -6,5 +6,5 @@
     </customPermissions>
     <description>Grants the Custom Permission to bypass the Restrict_Schedule_Seller_Events Validation Rule.</description>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Restrict Schedule Seller Events</label>
+    <label>Bypass Restrict Schedule Seller Events</label>
 </PermissionSet>
