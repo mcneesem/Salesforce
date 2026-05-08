@@ -4,7 +4,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import NSP_Reason_for_Separation from '@salesforce/schema/NSP_ReportRequest__c.NSP_Reason_for_Separation__c';
 import getWSEEDetails from '@salesforce/apex/NSP_ReportRequestWizardController.getWSEEDetails';
 import getWorkState from '@salesforce/apex/NSP_ReportRequestWizardController.getWorkState';
-import { getRecord, updateRecord } from 'lightning/uiRecordApi'; 
+import { getRecord, updateRecord } from 'lightning/uiRecordApi';
 import { refreshApex } from '@salesforce/apex';
 
 const FIELDS = [
@@ -54,7 +54,7 @@ subClientContactId='';
 subClientContactAddress;
 
 get findAge(){
-  
+
     let startDateInput =  this.template.querySelector('lightning-input-field.NSP_DOB__c')!=null?
     this.template.querySelector('lightning-input-field.NSP_DOB__c').value : null;
 
@@ -69,14 +69,14 @@ get findAge(){
     let endDate  = new Date(endDateInput);
 
     // get difference between two date;
-    let difference=endDate - startDate.getTime(); 
+    let difference=endDate - startDate.getTime();
 
-    let  ageDate = new Date(difference); 
+    let  ageDate = new Date(difference);
     let age = Math.abs(ageDate.getUTCFullYear() - 1970);
         if(age >= 40)
         {
         this.template.querySelector('div.AgeOverForty')!=null?
-        ( this.template.querySelector('div.AgeOverForty').style.display='',this.NSP_WSEE_SameUnit_as_Others_Last_90_days = true ) : ''; 
+        ( this.template.querySelector('div.AgeOverForty').style.display='',this.NSP_WSEE_SameUnit_as_Others_Last_90_days = true ) : '';
         this.NSP_Age_Range_Is__c=  'Over 40'
             return this.NSP_Age_Range_Is__c ;
         } else {
@@ -91,11 +91,11 @@ get findAge(){
             this.NSP_Age_Range_Is__c = 'Under 40'
             return this.NSP_Age_Range_Is__c ;
         }
-     } 
+     }
      else {
         return this.NSP_Age_Range_Is__c;
      }
-    
+
 
 }
 
@@ -106,7 +106,7 @@ fieldsData
 pickValueYesNo = [
     { "attributes": null, "label": "No", "value": "No" },
     { "attributes": null, "label": "Yes", "value": "Yes"}
-    
+
   ];
 
 
@@ -124,10 +124,10 @@ pickValueYesNo = [
                 this.readOnlyTerminationDate = true;
             }
         }
-        
+
     }
 
-    
+
 
 
 @wire(getPicklistValues, {
@@ -157,13 +157,13 @@ handleOnload(event){
                     (this.template.querySelector("lightning-radio-group.NSP_CSC_matter_for_any_WSEE__c").value = 'No', this.isDisable = true , this.NSP_CSC_matter_for_any_WSEE__c ='No'):null;
 
                     this.template.querySelector("lightning-radio-group.NSP_IsThisWSEEon_any_LOA_Type_beside_TLO__c")!= null ?
-                    (this.template.querySelector("lightning-radio-group.NSP_IsThisWSEEon_any_LOA_Type_beside_TLO__c").value = 'No', this.isDisable = true , this.NSP_IsThisWSEEon_any_LOA_Type_beside_TLO__c ='No'):null; 
+                    (this.template.querySelector("lightning-radio-group.NSP_IsThisWSEEon_any_LOA_Type_beside_TLO__c").value = 'No', this.isDisable = true , this.NSP_IsThisWSEEon_any_LOA_Type_beside_TLO__c ='No'):null;
                 }
-                 
+
             }
 
             this.handleOnloadSubClient(this.fieldsData);
-            
+
             if(this.isOnloaded){
 
                 if( this.fieldsData?.NSP_WSEE__c?.value !=null && this.fieldsData?.NSP_WSEE__c?.value.length >14 ){
@@ -172,18 +172,18 @@ handleOnload(event){
                     }
 
                 if(this.ReasonforSeparationValues.data != null )
-                    { 
+                    {
                         for (let key in this.fieldsData) {
-                            if( this.fieldsData[key]!= null && this.fieldsData[key].value !=null 
+                            if( this.fieldsData[key]!= null && this.fieldsData[key].value !=null
                                 && this.fieldsData[key].value != '' && this.currentPageFields.includes(key)){
                                     this[key]=this.fieldsData[key].value;
                                     this.fieldValue.currentTarget.name = key ;
-                                    this.fieldValue.currentTarget.value = this.fieldsData[key].value; 
+                                    this.fieldValue.currentTarget.value = this.fieldsData[key].value;
 
                                     this.handleChange(this.fieldValue);
                             }
                         }
-                        if((this.IsMultipleEmployee && this.template.querySelector("lightning-radio-group.NSP_WSEE_SameUnit_as_Others_Last_90_days__c") !=null && 
+                        if((this.IsMultipleEmployee && this.template.querySelector("lightning-radio-group.NSP_WSEE_SameUnit_as_Others_Last_90_days__c") !=null &&
                         this.template.querySelector("div.NSP_IsThisWSEEon_any_LOA_Type_beside_TLO__c")!= null ) ||  ( !this.IsMultipleEmployee &&
                             this.template.querySelector("div.NSP_IsThisWSEEon_any_LOA_Type_beside_TLO__c")!= null && this.fieldsData.NSP_IsThisWSEEon_any_LOA_Type_beside_TLO__c != null
                         )){
@@ -191,7 +191,7 @@ handleOnload(event){
                         }
                    }
                 }
-            
+
        }
    }
 }
@@ -221,7 +221,7 @@ async handleSubClientChange(event){
             console.error(error);
         });
     }
-    
+
 }
 
 handleChange(event){
@@ -231,7 +231,7 @@ handleChange(event){
     }
 
     if(event.currentTarget.name == 'NSP_WSEE_SameUnit_as_Others_Last_90_days__c' && event.currentTarget.value != null ){
-        
+
         if(this.template.querySelector("div.NSP_WSEE_SameUnit_as_Others_Last_90_days__c") !=null){
             if(this[event.currentTarget.name] =='Yes' ){
                 this.template.querySelector("div.NSP_WSEE_SameUnit_as_Others_Last_90_days__c").style.display='';
@@ -242,7 +242,7 @@ handleChange(event){
     }
 
     if(event.currentTarget.name == 'NSP_IsThisWSEEon_any_LOA_Type_beside_TLO__c' && event.currentTarget.value != null ){
-        
+
         if(this.template.querySelector("div.NSP_IsThisWSEEon_any_LOA_Type_beside_TLO__c") !=null){
             if(this[event.currentTarget.name] =='Yes' ){
                 this.template.querySelector("div.NSP_IsThisWSEEon_any_LOA_Type_beside_TLO__c").style.display='';
@@ -255,7 +255,7 @@ handleChange(event){
             }
         }
     }
-  
+
     if( event.currentTarget.fieldName == "NSP_WSEE__c" ){
         if(event.currentTarget.value != null && event.currentTarget.value.length > 14 ){
             this.handleContactLookup(event.currentTarget.value);
@@ -267,8 +267,8 @@ handleChange(event){
             this.terminationDate = null;
         }
     }
-    
-    if(event.currentTarget.name == 'NSP_Sub_Client__c'){ 
+
+    if(event.currentTarget.name == 'NSP_Sub_Client__c'){
       this.handleSubClientChange(event);
     }
 
@@ -280,14 +280,14 @@ async handleSubClientSelection(value) {
         if ( subClientContact != null ){
             this.employeeStatus= subClientContact.NSP_Employee_Status__c;
 
-            if ( subClientContact.NSP_Employee_Status__c != null 
+            if ( subClientContact.NSP_Employee_Status__c != null
                 && subClientContact.NSP_Employee_Status__c === 'TERMINATED'
                 && subClientContact.NSP_Status_Date__c != null
                )
             {
                 this.terminationDate = subClientContact.NSP_Status_Date__c;
                 this.readOnlyTerminationDate = true;
-            }else{ 
+            }else{
                 this.readOnlyTerminationDate = false;
                 this.terminationDate = null;
             }
@@ -304,7 +304,7 @@ async handleWorkState(subclientContact){
                 subClientContactId: subclientContact.Id,
                 contactID: this.WSEE
             });
-            this.subClientContactAddress = result?.Id; 
+            this.subClientContactAddress = result?.Id;
         } catch(error){
 
             this.dispatchEvent(
@@ -317,7 +317,7 @@ async handleWorkState(subclientContact){
         }
     }
 }
-    
+
 handleSave(event) {
     this.isSaveClick=true;
     this.template.querySelector('lightning-record-edit-form').submit();
@@ -345,7 +345,7 @@ handleSuccess(event){
         {
             this.clientName=value;
         }
-    }     
+    }
   }
 
 handleContactLookup(recordId) {
@@ -356,7 +356,7 @@ handleContactLookup(recordId) {
             if(result && result.length>0){
                 this.handleSubclientOptions(result[0].subclientContacts); //  get drop down values
                 this.contactName = result[0].contactName;
-                
+
                 if(result[0].dateOfBirth != null){
                     this.dateOfBirth =  result[0].dateOfBirth ;
                     this.readOnlyDob=true;
@@ -390,7 +390,7 @@ handleContactLookup(recordId) {
     }
 }
 // This method is used to prepare dropdown options for Sub Client
-handleSubclientOptions(subclientContacts){  
+handleSubclientOptions(subclientContacts){
 
     let subClientOptions = [];
     let seenLabels = new Set(); // avoid duplicate
@@ -402,7 +402,7 @@ handleSubclientOptions(subclientContacts){
             this.subClientContactMap.set(element.NSP_Sub_Client__c,element);
             if (!seenLabels.has(label)) { // avoid duplicates
                 seenLabels.add(label);
-                
+
                 subClientOptions.push({
                     label: label,
                     value: value
@@ -440,7 +440,7 @@ handlelookupRecord(event){
         this.employeeStatus = null;
         this.terminationDate = null;
         this.contactName ='';
-        this.WSEE = null; 
+        this.WSEE = null;
         this.NSP_Sub_Client__c = null;
         this.subClientOptions = [];
         this.subClientContactMap = new Map();
@@ -449,8 +449,8 @@ handlelookupRecord(event){
 }
 
     handleSubmit( event ) {
-       
-        event.preventDefault(); 
+
+        event.preventDefault();
         const fields = { ...event.detail.fields };
         fields.NSP_Sub_Client__c = this.NSP_Sub_Client__c;
         this.template.querySelector('lightning-record-edit-form').submit(fields);
