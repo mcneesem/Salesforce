@@ -788,7 +788,7 @@
                             <value>CONTACT.FULL_NAME</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>CONTACT.TITLE</value>
+                            <value>NSP_Job_Title__c</value>
                         </valueListItems>
                         <valueListItems>
                             <value>ACCCONRELATION.ROLES</value>
