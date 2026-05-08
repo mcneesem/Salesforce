@@ -162,9 +162,7 @@ handleOnload(event){
                  
             }
 
-            if ( this.WSEE && this.fieldsData.NSP_Sub_Client__c?.value != null ) { 
-                     this.NSP_Sub_Client__c = this.fieldsData.NSP_Sub_Client__c.value;
-            }
+            this.handleOnloadSubClient(this.fieldsData);
             
             if(this.isOnloaded){
 
@@ -198,74 +196,81 @@ handleOnload(event){
    }
 }
 
-async handleChange(event){
+handleOnloadSubClient( data ){
+    if ( this.WSEE &&  this.data?.NSP_Sub_Client__c?.value != null  ){
+        this.NSP_Sub_Client__c = this.data.NSP_Sub_Client__c.value;
+    }
+}
 
-    if(event.currentTarget.name == 'NSP_Sub_Client__c'){  // passing subclientnumber and  subclientname
-
-      const value = event.detail.value;
-      this.NSP_Sub_Client__c = value;
-      await this.handleSubClientSelection(value);
-
-      const fields = {
+async handleSubClientChange(event){
+    if ( event?.detail?.value != null )
+    {
+        this.NSP_Sub_Client__c = event?.detail?.value;
+        await this.handleSubClientSelection( this.NSP_Sub_Client__c );
+        const fields = {
             Id: this.reReqId,
             NSP_Sub_Client__c: this.NSP_Sub_Client__c,
             Sub_Client_Contact__c: this.subClientContactId,
             Sub_Client_Contact_Address__c : this.subClientContactAddress
         };
         updateRecord({ fields })
-            .then(() => {
-                return refreshApex(this.wiredResult);
-            })
-            .catch(error => {
-                console.error(error);
-            });
-        
+        .then(() => {
+            return refreshApex(this.wiredResult);
+        })
+        .catch(error => {
+            console.error(error);
+        });
     }
-    const name = event?.currentTarget?.name;
-    const pvalue = event?.detail?.value ?? event?.currentTarget?.value;
-    const fname = event?.currentTarget?.fieldName;
+    
+}
 
-    if(this.currentPageFields.includes(name)){
-        this[name] = pvalue;
-    } 
+handleChange(event){
 
-    if(name == 'NSP_WSEE_SameUnit_as_Others_Last_90_days__c' && pvalue != null ){
-        
-    if(this.template.querySelector("div.NSP_WSEE_SameUnit_as_Others_Last_90_days__c") !=null){
-        if(this[name] =='Yes' ){
-          this.template.querySelector("div.NSP_WSEE_SameUnit_as_Others_Last_90_days__c").style.display='';
-      }else{
-        this.template.querySelector("div.NSP_WSEE_SameUnit_as_Others_Last_90_days__c").style.display='none';
-      }
+    if(this.currentPageFields.includes(event.currentTarget.name)){
+        this[event.currentTarget.name] = event.currentTarget.value;
     }
-  }
 
-  if(name == 'NSP_IsThisWSEEon_any_LOA_Type_beside_TLO__c' && pvalue != null ){
+    if(event.currentTarget.name == 'NSP_WSEE_SameUnit_as_Others_Last_90_days__c' && event.currentTarget.value != null ){
         
-    if(this.template.querySelector("div.NSP_IsThisWSEEon_any_LOA_Type_beside_TLO__c") !=null){
-        if(this[name] =='Yes' ){
-          this.template.querySelector("div.NSP_IsThisWSEEon_any_LOA_Type_beside_TLO__c").style.display='';
-          this.NSP_HR_COEAdvisortermWSEELOA = true;
-      }else{
-        this.template.querySelector("div.NSP_IsThisWSEEon_any_LOA_Type_beside_TLO__c").style.display='none';
-        this.template.querySelector("lightning-input-field.NSP_IsThisWSEEon_any_LOA_Type_beside_TLO__c").value=null;
-        this.NSP_HR_COEAdvisortermWSEELOA__c = null;
-        this.NSP_HR_COEAdvisortermWSEELOA = false
-      }
+        if(this.template.querySelector("div.NSP_WSEE_SameUnit_as_Others_Last_90_days__c") !=null){
+            if(this[event.currentTarget.name] =='Yes' ){
+                this.template.querySelector("div.NSP_WSEE_SameUnit_as_Others_Last_90_days__c").style.display='';
+            }else{
+                this.template.querySelector("div.NSP_WSEE_SameUnit_as_Others_Last_90_days__c").style.display='none';
+            }
+        }
     }
-  }
+
+    if(event.currentTarget.name == 'NSP_IsThisWSEEon_any_LOA_Type_beside_TLO__c' && event.currentTarget.value != null ){
+        
+        if(this.template.querySelector("div.NSP_IsThisWSEEon_any_LOA_Type_beside_TLO__c") !=null){
+            if(this[event.currentTarget.name] =='Yes' ){
+                this.template.querySelector("div.NSP_IsThisWSEEon_any_LOA_Type_beside_TLO__c").style.display='';
+                this.NSP_HR_COEAdvisortermWSEELOA = true;
+            }else{
+                this.template.querySelector("div.NSP_IsThisWSEEon_any_LOA_Type_beside_TLO__c").style.display='none';
+                this.template.querySelector("lightning-input-field.NSP_IsThisWSEEon_any_LOA_Type_beside_TLO__c").value=null;
+                this.NSP_HR_COEAdvisortermWSEELOA__c = null;
+                this.NSP_HR_COEAdvisortermWSEELOA = false
+            }
+        }
+    }
   
-  if( fname == "NSP_WSEE__c" ){
-    if(pvalue != null && pvalue.length > 14 ){
-        this.handleContactLookup(pvalue);
-    }else{
-        this.MailingState = null;
-        this.dateOfBirth=null;
-        this.employeeStatus = null;
-        this.terminationDate = null;
+    if( event.currentTarget.fieldName == "NSP_WSEE__c" ){
+        if(event.currentTarget.value != null && event.currentTarget.value.length > 14 ){
+            this.handleContactLookup(event.currentTarget.value);
+        }else{
+            this.MailingState = null;
+            this.dateOfBirth=null;
+            this.subClientNumber = null;
+            this.employeeStatus = null;
+            this.terminationDate = null;
+        }
     }
-
-   }
+    
+    if(event.currentTarget.name == 'NSP_Sub_Client__c'){ 
+      this.handleSubClientChange(event);
+    }
 
   }
 
