@@ -13964,25 +13964,25 @@
         <layout>EmailMessage-Email Message Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Event-Schedule Seller</layout>
-        <recordType>Event.Schedule_Seller</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>EnhancedLetterhead-Enhanced Letterhead Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Entitlement-Entitlement Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Event-Core Sales Events Layouts</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Event-Core Sales Events Layout 0322</layout>
         <recordType>Event.Core_Sales_Event_RT</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Event-Core Sales Events Layouts</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>Event-Mid Market Sales 0322</layout>
         <recordType>Event.Mid_Market_Event_RT</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Event-Schedule Seller</layout>
+        <recordType>Event.Schedule_Seller</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>FeedItem-Feed Item Layout</layout>
