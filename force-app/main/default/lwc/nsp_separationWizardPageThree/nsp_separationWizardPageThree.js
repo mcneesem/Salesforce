@@ -3,12 +3,25 @@ import { getPicklistValues } from 'lightning/uiObjectInfoApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import NSP_Reason_for_Separation from '@salesforce/schema/NSP_ReportRequest__c.NSP_Reason_for_Separation__c';
 import getWSEEDetails from '@salesforce/apex/NSP_ReportRequestWizardController.getWSEEDetails';
+import getWorkState from '@salesforce/apex/NSP_ReportRequestWizardController.getWorkState';
+import { getRecord, updateRecord } from 'lightning/uiRecordApi'; 
+import { refreshApex } from '@salesforce/apex';
+
+const FIELDS = [
+    'NSP_ReportRequest__c.Id',
+    'NSP_ReportRequest__c.NSP_Sub_Client__c',
+    'NSP_ReportRequest__c.Employee_Status__c',
+    'NSP_ReportRequest__c.Sub_Client_Number__c',
+    'NSP_ReportRequest__c.Work_State__c',
+    'NSP_ReportRequest__c.Sub_Client_Contact__c',
+    'NSP_ReportRequest__c.Sub_Client_Contact_Address__c'
+];
+
 export default class nsp_separationWizardPageThree extends LightningElement {
 @api reReqId;
 recordTypeId ='012000000000000AAA' ;
 MailingState;
 dateOfBirth;
-subClientNumber;
 employeeStatus;
 terminationDate;
 readOnlyTerminationDate=false;
@@ -25,6 +38,8 @@ NSP_Reason_for_Separation__c;
 NSP_CSC_matter_for_any_WSEE__c;
 NSP_IsThisWSEEon_any_LOA_Type_beside_TLO__c;
 NSP_HR_COEAdvisortermWSEELOA__c;
+NSP_Sub_Client__c;
+Work_State__c;
 isOnloaded = true;
 fieldValue =  { currentTarget : { name :'', value :''} };
 clientName;
@@ -32,7 +47,11 @@ WSEE='';
 contactName='';
 isOnloadCalled =false;
 currentPageFields=['NSP_WSEE_SameUnit_as_Others_Last_90_days__c','NSP_Was_Separation_Involuntary__c','NSP_Reason_for_Separation__c',
-'NSP_CSC_matter_for_any_WSEE__c','NSP_IsThisWSEEon_any_LOA_Type_beside_TLO__c','NSP_HR_COEAdvisortermWSEELOA__c'];
+'NSP_CSC_matter_for_any_WSEE__c','NSP_IsThisWSEEon_any_LOA_Type_beside_TLO__c','NSP_HR_COEAdvisortermWSEELOA__c','NSP_Sub_Client__c','NSP_Sub_Client__r.NSP_Account__c', 'NSP_Sub_Client__r.Name' ];
+subClientOptions = [];
+subClientContactMap = new Map();
+subClientContactId='';
+subClientContactAddress;
 
 get findAge(){
   
@@ -90,17 +109,28 @@ pickValueYesNo = [
     
   ];
 
+ @wire(getRecord, {
+        recordId: '$reReqId',
+        fields: FIELDS
+        })
+    reportRequest({data,error}){
+        if(data?.fields?.NSP_Sub_Client__c?.value != null ){
+            this.NSP_Sub_Client__c = data?.fields?.NSP_Sub_Client__c?.value;
+        }
+        if(data?.fields?.Employee_Status__c?.value != null ){
+            this.Employee_Status__c = data?.fields?.Employee_Status__c?.value;
+            if(this.Employee_Status__c === 'TERMINATED'){
+                this.readOnlyTerminationDate = true;
+            }
+        }
+        
+    }
 
 @wire(getPicklistValues, {
     recordTypeId: '$recordTypeId' ,
     fieldApiName: NSP_Reason_for_Separation
 })
 ReasonforSeparationValues;
-
-
-
-
-
     connectedCallback() {
         // only populated to appease sonar...
     }
@@ -127,6 +157,8 @@ handleOnload(event){
                 }
                  
             }
+
+            this.handleOnloadSubClient(this.fieldsData);
             
             if(this.isOnloaded){
 
@@ -158,6 +190,34 @@ handleOnload(event){
             
        }
    }
+}
+
+handleOnloadSubClient( data ){
+    if ( this.WSEE &&  this.data?.NSP_Sub_Client__c?.value != null  ){
+        this.NSP_Sub_Client__c = this.data.NSP_Sub_Client__c.value;
+    }
+}
+
+async handleSubClientChange(event){
+    if ( event?.detail?.value != null )
+    {
+        this.NSP_Sub_Client__c = event?.detail?.value;
+        await this.handleSubClientSelection( this.NSP_Sub_Client__c );
+        const fields = {
+            Id: this.reReqId,
+            NSP_Sub_Client__c: this.NSP_Sub_Client__c,
+            Sub_Client_Contact__c: this.subClientContactId,
+            Sub_Client_Contact_Address__c : this.subClientContactAddress
+        };
+        updateRecord({ fields })
+        .then(() => {
+            return refreshApex(this.wiredResult);
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    }
+    
 }
 
 handleChange(event){
@@ -201,10 +261,56 @@ handleChange(event){
         this.employeeStatus = null;
         this.terminationDate = null;
     }
+
+    if(event.currentTarget.name == 'NSP_Sub_Client__c'){ 
+      this.handleSubClientChange(event);
+    }
 }
 
-  }
+async handleSubClientSelection(value) {
+    if (value != null && this.subClientContactMap?.has(value)){
+        let subClientContact = this.subClientContactMap.get(value);
+        if ( subClientContact != null ){
+            this.employeeStatus= subClientContact.NSP_Employee_Status__c;
 
+            if ( subClientContact.NSP_Employee_Status__c != null 
+                && subClientContact.NSP_Employee_Status__c === 'TERMINATED'
+                && subClientContact.NSP_Status_Date__c != null
+               )
+            {
+                this.terminationDate = subClientContact.NSP_Status_Date__c;
+                this.readOnlyTerminationDate = true;
+            }else{ 
+                this.readOnlyTerminationDate = false;
+                this.terminationDate = null;
+            }
+            await this.handleWorkState( subClientContact );
+        }
+    }
+}
+
+async handleWorkState(subclientContact){
+    if(subclientContact?.Id){
+        this.subClientContactId = subclientContact.Id;
+        try {
+            const result = await getWorkState({
+                subClientContactId: subclientContact.Id,
+                contactID: this.WSEE
+            });
+            this.subClientContactAddress = result?.Id; 
+        } catch(error){
+
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error!!',
+                    message: error.body?.message || error.message,
+                    variant: 'error'
+                })
+            );
+        }
+    }
+}
+ 
 handleSave(event) {
     this.isSaveClick=true;
     this.template.querySelector('lightning-record-edit-form').submit();
@@ -241,15 +347,8 @@ handleContactLookup(recordId) {
             accountId:  this.clientName })
         .then((result) => {
             if(result && result.length>0){
+                this.handleSubclientOptions(result[0].subclientContacts); 
                 this.contactName = result[0].contactName;
-            
-                this.MailingState =  result[0].mailingState != 'Not Found'? result[0].mailingState :'';
-                if(result[0].mailingState!=null){
-                    this.readOnlyWorkState=true;
-                }
-                else{
-                    this.readOnlyWorkState=false;
-                }
                 
                 if(result[0].dateOfBirth != null){
                     this.dateOfBirth =  result[0].dateOfBirth ;
@@ -258,21 +357,6 @@ handleContactLookup(recordId) {
                 else{
                     this.readOnlyDob=false;
                 }
-                
-                if(result[0].subClientNum != null ){
-                    this.subClientNumber = result[0].subClientNum;
-                }
-                if(result[0].empStatus != null){
-                    this.employeeStatus = result[0].empStatus;
-                }
-                if(result[0].terminationDate != null){
-                    this.terminationDate = result[0].terminationDate;
-                    this.readOnlyTerminationDate = true;
-                }else{
-                    
-                    this.readOnlyTerminationDate = false;
-                }
-                
                 this.error = undefined;
             }
         })
@@ -289,6 +373,38 @@ handleContactLookup(recordId) {
     }
 }
 
+handleSubclientOptions(subclientContacts){  
+
+    let subClientOptions = [];
+    let seenLabels = new Set(); 
+
+    if(subclientContacts != null){
+        subclientContacts.forEach(element => {
+            let label = element.NSP_Sub_Client__r.Name +','+' '+element.NSP_AIMS_Sub_Client__c;
+            let value = element.NSP_Sub_Client__c;
+            this.subClientContactMap.set(element.NSP_Sub_Client__c,element);
+            if (!seenLabels.has(label)) { 
+                seenLabels.add(label);
+                
+                subClientOptions.push({
+                    label: label,
+                    value: value
+                });
+            }
+        });
+    }
+    this.subClientOptions = subClientOptions;
+
+    if (this.subClientOptions.length === 1) {
+        this.NSP_Sub_Client__c = this.subClientOptions[0].value;
+
+        this.handleChange({
+            currentTarget: {name: 'NSP_Sub_Client__c'},
+            detail: {value: this.NSP_Sub_Client__c}
+        });
+    }
+}
+
 handlelookupRecord(event){
     let selectedRecord = event.detail.recId;
     this.WSEE=selectedRecord;
@@ -298,15 +414,22 @@ handlelookupRecord(event){
     else{
         this.MailingState = null;
         this.dateOfBirth=null;
-        this.subClientNumber = null;
         this.employeeStatus = null;
         this.terminationDate = null;
         this.contactName ='';
+        this.WSEE = null; 
+        this.NSP_Sub_Client__c = null;
+        this.subClientOptions = [];
+        this.subClientContactMap = new Map();
     }
 
 }
 
-    handleSubmit( event ) {
+    handleSubmit( event ) {   
+        event.preventDefault(); 
+        const fields = { ...event.detail.fields };
+        fields.NSP_Sub_Client__c = this.NSP_Sub_Client__c;
+        this.template.querySelector('lightning-record-edit-form').submit(fields);
         // only populated to appease sonar...
     }
 
