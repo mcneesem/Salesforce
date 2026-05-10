@@ -265,6 +265,7 @@ handleChange(event){
     if(event.currentTarget.name == 'NSP_Sub_Client__c'){ 
       this.handleSubClientChange(event);
     }
+  }
 }
 
 async handleSubClientSelection(value) {
@@ -288,6 +289,8 @@ async handleSubClientSelection(value) {
         }
     }
 }
+
+
 
 async handleWorkState(subclientContact){
     if(subclientContact?.Id){

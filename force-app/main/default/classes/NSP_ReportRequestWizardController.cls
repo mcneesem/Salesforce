@@ -239,8 +239,10 @@ public with sharing class NSP_ReportRequestWizardController {
                     if (!accSubClientContList.isEmpty()) {
                         wizOtWrapper = NSP_ReportRequestWizardController.setAndGetSubClinetContactFields(wizOtWrapper,accSubClientContList);
                     }
+                    if(wizOtWrapper !=null){
+                        wizardOutputWrapperList.add(wizOtWrapper);
+                    }
                 }
-                wizardOutputWrapperList.add(wizOtWrapper);
             }
             return wizardOutputWrapperList;
         } catch (Exception e) {
@@ -251,7 +253,7 @@ public with sharing class NSP_ReportRequestWizardController {
     
     @AuraEnabled
     public static NSP_Sub_Client_Contact_Address__c getWorkState(String subClientContactId,String contactID) {
-        NSP_Sub_Client_Contact_Address__c sccAddress;
+        NSP_Sub_Client_Contact_Address__c sccAddress = null;
         if (String.isNotBlank(subClientContactId) &&  String.isNotBlank(contactID)) {
             List<NSP_Sub_Client_Contact_Address__c> sccAddressList = [SELECT NSP_State__c, NSP_Sub_Client_Contact__c
                                                                       FROM NSP_Sub_Client_Contact_Address__c
@@ -267,7 +269,7 @@ public with sharing class NSP_ReportRequestWizardController {
     //== Set and get Sub Clinet Contact Fields
     private static WizardOutputWrapper setAndGetSubClinetContactFields( WizardOutputWrapper wizOtWrapper,List<NSP_Sub_Client_Contact__c> subclientContacts ) {
         
-        if (subclientContacts != null && !subclientContacts.isEmpty()) {
+        if (wizOtWrapper != null && subclientContacts != null && !subclientContacts.isEmpty()) {
             wizOtWrapper.subclientContacts = subclientContacts;
         }
         return wizOtWrapper;
