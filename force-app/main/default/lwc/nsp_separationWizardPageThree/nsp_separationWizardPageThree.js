@@ -220,24 +220,17 @@ async handleSubClientChange(event){
     
 }
 
-handleChange(event){
-    if(this.currentPageFields.includes(event.currentTarget.name)){
-        this[event.currentTarget.name] = event.currentTarget.value;
-    }
-
-    if(event.currentTarget.name == 'NSP_WSEE_SameUnit_as_Others_Last_90_days__c' && event.currentTarget.value != null ){
-        
-    if(this.template.querySelector("div.NSP_WSEE_SameUnit_as_Others_Last_90_days__c") !=null){
+handleWSEESameUnit90days(event){
+if(this.template.querySelector("div.NSP_WSEE_SameUnit_as_Others_Last_90_days__c") !=null){
         if(this[event.currentTarget.name] =='Yes' ){
           this.template.querySelector("div.NSP_WSEE_SameUnit_as_Others_Last_90_days__c").style.display='';
       }else{
         this.template.querySelector("div.NSP_WSEE_SameUnit_as_Others_Last_90_days__c").style.display='none';
       }
     }
-  }
+}
 
-  if(event.currentTarget.name == 'NSP_IsThisWSEEon_any_LOA_Type_beside_TLO__c' && event.currentTarget.value != null ){
-        
+handleWSEEBeasideLOA(event){
     if(this.template.querySelector("div.NSP_IsThisWSEEon_any_LOA_Type_beside_TLO__c") !=null){
         if(this[event.currentTarget.name] =='Yes' ){
           this.template.querySelector("div.NSP_IsThisWSEEon_any_LOA_Type_beside_TLO__c").style.display='';
@@ -249,6 +242,19 @@ handleChange(event){
         this.NSP_HR_COEAdvisortermWSEELOA = false
       }
     }
+}
+
+handleChange(event){
+    if(this.currentPageFields.includes(event.currentTarget.name)){
+        this[event.currentTarget.name] = event.currentTarget.value;
+    }
+
+    if(event.currentTarget.name == 'NSP_WSEE_SameUnit_as_Others_Last_90_days__c' && event.currentTarget.value != null ){
+     this.handleWSEESameUnit90days(event);
+    }
+
+  if(event.currentTarget.name == 'NSP_IsThisWSEEon_any_LOA_Type_beside_TLO__c' && event.currentTarget.value != null ){
+    this.handleWSEEBeasideLOA(event);
   }
   
   if( event.currentTarget.fieldName == "NSP_WSEE__c" ){
