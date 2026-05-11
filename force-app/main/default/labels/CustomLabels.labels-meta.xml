@@ -483,7 +483,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>HRCore Setup Fee Products</shortDescription>
-        <value>HCMiSolvedTime,HCMBenAdmin,HCMCOBRAAdmin,HCMFringeBenAdmin,HCMLeaveAdmin,HCMiSolvedHire,HCMLearnDev,HCMPM,HCMPSB,HCMEVERIFYIntegration</value>
+        <value>HCMiSolvedTime,HCMBenAdmin,HCMCOBRAAdmin,HCMFringeBenAdmin,HCMLeaveAdmin,HCMiSolvedHire,HCMLearnDev,HCMPM,HCMPSB,HCMEVERIFYIntegration,HCMRETIntegration</value>
     </labels>
     <labels>
         <fullName>HSA</fullName>
