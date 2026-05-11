@@ -7,17 +7,12 @@
     <description>Grants Tab Visibility, View All Object Permissions, and Read Field Permissions for Portal Client (Portal_Client__c).</description>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Contact.Portal_Alias__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Portal_Client__c.Account__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Portal_Client__c.Benefits_Effective_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Portal_Client__c.Benefits_Waiting_Period__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -27,7 +22,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Portal_Client__c.Effective_Date__c</field>
+        <field>Portal_Client__c.Implementation_Profile__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

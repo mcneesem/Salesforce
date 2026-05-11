@@ -76,6 +76,16 @@
                 <identifier>RecordPortal_Project_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Project_Task__c</fieldItem>
+                <identifier>RecordProject_Task_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-562f0425-894c-4326-bf87-dd9348e2f07a</name>
         <type>Facet</type>
     </flexiPageRegions>
