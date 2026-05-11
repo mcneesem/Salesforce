@@ -3,7 +3,7 @@
     <fullName>Has_E_Verify__c</fullName>
     <defaultValue>false</defaultValue>
     <label>Has E-Verify</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>
