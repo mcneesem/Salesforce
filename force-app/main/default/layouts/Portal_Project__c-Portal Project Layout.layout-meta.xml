@@ -100,8 +100,9 @@
         <fields>NAME</fields>
         <fields>Type__c</fields>
         <fields>Due_Date__c</fields>
+        <fields>Rank__c</fields>
         <relatedList>Portal_Task__c.Portal_Project__c</relatedList>
-        <sortField>Due_Date__c</sortField>
+        <sortField>Rank__c</sortField>
         <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
@@ -130,7 +131,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00hOx00000FZ27x</masterLabel>
+        <masterLabel>00hPb00000BIOK6</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
