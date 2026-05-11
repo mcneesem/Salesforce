@@ -523,18 +523,6 @@
                 <label>Has_SMS__c</label>
             </value>
             <value>
-                <fullName>Has_NoahFace__c</fullName>
-                <default>false</default>
-                <label>Has_NoahFace__c</label>
-            </value>
-<<<<<<< HEAD
-=======
-            <value>
-                <fullName>NSP_Active_W2_Employees__c</fullName>
-                <default>false</default>
-                <label>NSP_Active_W2_Employees__c</label>
-            </value>
-            <value>
                 <fullName>Has_Employee_Navigator__c</fullName>
                 <default>false</default>
                 <label>Has_Employee_Navigator__c</label>
@@ -544,7 +532,16 @@
                 <default>false</default>
                 <label>Has_E_Verify__c</label>
             </value>
->>>>>>> afbaaa6a2a (552799_ProjectTemplateMapping)
+            <value>
+                <fullName>Has_NoahFace__c</fullName>
+                <default>false</default>
+                <label>Has_NoahFace__c</label>
+            </value>
+            <value>
+                <fullName>NSP_Active_W2_Employees__c</fullName>
+                <default>false</default>
+                <label>NSP_Active_W2_Employees__c</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Quote</controllingFieldValue>
