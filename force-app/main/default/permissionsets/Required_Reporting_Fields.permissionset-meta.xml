@@ -128,6 +128,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.RecordTypeName</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.Sales_Data_Collection_Score__c</field>
         <readable>true</readable>
     </fieldPermissions>
