@@ -3,6 +3,7 @@
     <fullName>Benefits_Waiting_Period__c</fullName>
     <description>Days</description>
     <externalId>false</externalId>
+    <inlineHelpText>Days</inlineHelpText>
     <label>Benefits Waiting Period</label>
     <precision>18</precision>
     <required>false</required>
