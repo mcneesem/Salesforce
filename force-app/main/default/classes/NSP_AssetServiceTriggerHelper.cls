@@ -39,8 +39,6 @@ public class NSP_AssetServiceTriggerHelper {
     private static final Id CPQ_ASSET_RECORDTYPE_ID = NSP_GenericRecordType.getRecordTypeId(ASSET, 'NSP_CPQ_Asset');
     private static final Id PERFORM_SMART_ASSET = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE,NSP_ServiceConstants.PERFORMANCE_ASSET );
     private static final Id INTEGRA_ASSET = NSP_GenericRecordType.getRecordTypeId(NSP_ServiceConstants.ASSET_SOBJECT_TYPE,NSP_ServiceConstants.INTEGRA );
-    private static final String ASSET_TERMINATION_PAYROLL_TEMPLATE = 'Asset_Termination_Payroll';
-    private static final String ASSET_TERMINATION_OTHER_ROLE_TEMPLATE = 'Asset_Termination_Other';
     private static final String RSAP = 'Relationship Strategy Action Plan';
     private static final Id hardWareRecordTypeId = NSP_GenericRecordType.getRecordTypeId(ASSET, 'Hardware_Asset');
     private static final String errorMessage = System.Label.NSP_Error_Message_Without_CreateAsset_PermSet_On_Asset;
@@ -1658,50 +1656,74 @@ Implementation profile related to the account of the created asset
         }
     }
 
-    /**************************************************************************
-* MethodName    : sendRetentionStrategyTerminationEmail
-* Description   : This method is used to send email to particular
-*                 Account Team roles after asset update
-* Params        : Map<Id, sObject> newMap, Map<Id, sObject> oldMap
-* **************************************************************************/
-    public void sendRetentionStrategyTerminationEmail(Set<Id> assetIdSet, Set<Id> accountIdSet){
-        //Variable Declaration
+    //
+    // MethodName : sendRetentionStrategyTerminationEmail
+    // Description : This method is used to send email to particular Account Team roles after asset update
+    // Params : Map<Id, sObject> newMap, Map<Id, sObject> oldMap
+    //
+    public void sendRetentionStrategyTerminationEmail( Set<Id> assetIdSet , Set<Id> accountIdSet ) {
         List<String> payrollRolesUsers = new List<String>();
         List<String> otherRolesUsers = new List<String>();
-
-        // check accountIDset not empty
-        if(!accountIdSet.isEmpty()){
-            for(NSP_Account_Team__c team : [SELECT Id,NSP_Account__c, NSP_Role__c, NSP_User__c
-                                            FROM NSP_Account_Team__c
-                                            WHERE NSP_Account__c IN: accountIdSet
-                                            AND (NSP_Role__c =: NSP_ServiceConstants.BUS_TEAM_HRSP_CL
-                                                 OR NSP_Role__c =: NSP_ServiceConstants.PAYROLL_SPECIALIST
-                                                 OR NSP_Role__c =: NSP_ServiceConstants.PAYROLL_SUPERVISOR
-                                                 OR NSP_Role__c =: NSP_ServiceConstants.CLIENT_LIAISION
-                                                 OR NSP_Role__c =: NSP_ServiceConstants.MANAGER_HRSERVICES
-                                                 OR NSP_Role__c =: NSP_ServiceConstants.EXECUTIVE)]){
-                                                     //Adding Payroll related role users to list
-                                                     if(team.NSP_Role__c == NSP_ServiceConstants.PAYROLL_SPECIALIST
-                                                        || team.NSP_Role__c == NSP_ServiceConstants.PAYROLL_SUPERVISOR){
-                                                            payrollRolesUsers.add(team.NSP_User__c);
-                                                        }
-                                                     //Adding Other role users to list
-                                                     if(team.NSP_Role__c == NSP_ServiceConstants.CLIENT_LIAISION
-                                                        || team.NSP_Role__c == NSP_ServiceConstants.MANAGER_HRSERVICES
-                                                        || team.NSP_Role__c == NSP_ServiceConstants.EXECUTIVE
-                                                        || team.NSP_Role__c == NSP_ServiceConstants.BUS_TEAM_HRSP_CL) {
-                                                            otherRolesUsers.add(team.NSP_User__c);
-                                                        }
-                                                 }
+        if ( !accountIdSet?.isEmpty() ) {
+            for ( NSP_Account_Team__c team : [
+                        SELECT
+                            Id ,
+                            NSP_Account__c ,
+                            NSP_Role__c ,
+                            NSP_User__c ,
+                            NSP_User__r.Email
+                        FROM NSP_Account_Team__c
+                        WHERE (
+                            ( NSP_Account__c IN :accountIdSet )
+                            AND ( NSP_User__c != null )
+                            AND ( NSP_User__r.Email != null )
+                            AND (
+                                ( NSP_Role__c = :NSP_ServiceConstants.BUS_TEAM_HRSP_CL )
+                                OR ( NSP_Role__c = :NSP_ServiceConstants.PAYROLL_SPECIALIST )
+                                OR ( NSP_Role__c = :NSP_ServiceConstants.PAYROLL_SUPERVISOR )
+                                OR ( NSP_Role__c = :NSP_ServiceConstants.CLIENT_LIAISION )
+                                OR ( NSP_Role__c = :NSP_ServiceConstants.MANAGER_HRSERVICES )
+                                OR ( NSP_Role__c = :NSP_ServiceConstants.EXECUTIVE )
+                            )
+                        )
+                    ]
+                )
+            {
+                if ( String.isNotBlank( team?.NSP_User__r?.Email ) ) {
+                    if ( ( team.NSP_Role__c == NSP_ServiceConstants.PAYROLL_SPECIALIST )
+                        || ( team.NSP_Role__c == NSP_ServiceConstants.PAYROLL_SUPERVISOR )
+                        )
+                    {
+                        payrollRolesUsers.add( team.NSP_User__r.Email );
+                    }
+                    if ( ( team.NSP_Role__c == NSP_ServiceConstants.CLIENT_LIAISION )
+                        || ( team.NSP_Role__c == NSP_ServiceConstants.MANAGER_HRSERVICES )
+                        || ( team.NSP_Role__c == NSP_ServiceConstants.EXECUTIVE )
+                        || ( team.NSP_Role__c == NSP_ServiceConstants.BUS_TEAM_HRSP_CL )
+                        )
+                    {
+                        otherRolesUsers.add( team.NSP_User__r.Email );
+                    }
+                }
+            }
         }
-
         //Sending email to payroll role users
-        if(!payrollRolesUsers.isEmpty()){
-            sendMail(assetIdSet, accountIdSet, ASSET_TERMINATION_PAYROLL_TEMPLATE, payrollRolesUsers);
+        if ( !payrollRolesUsers?.isEmpty() ) {
+            this.sendMail(
+                assetIdSet ,
+                accountIdSet ,
+                'Asset_Termination_Payroll' ,
+                payrollRolesUsers
+            );
         }
         //Sending email to other role users
-        if(!otherRolesUsers.isEmpty()){
-            sendMail(assetIdSet, accountIdSet, ASSET_TERMINATION_OTHER_ROLE_TEMPLATE, otherRolesUsers);
+        if ( !otherRolesUsers?.isEmpty() ) {
+            this.sendMail(
+                assetIdSet ,
+                accountIdSet ,
+                'Asset_Termination_Other' ,
+                otherRolesUsers
+            );
         }
     }
 
