@@ -5,7 +5,7 @@
     <encryptionScheme>None</encryptionScheme>
     <externalId>true</externalId>
     <label>API Name</label>
-    <length>50</length>
+    <length>40</length>
     <required>false</required>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>

@@ -37,7 +37,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Assign_Task_Regular_Rate_of_Pay</targetReference>
+            <targetReference>Assign_Task_Regular_Rate_Of_Pay</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -64,16 +64,16 @@
         </connector>
     </assignments>
     <assignments>
-        <description>Set default values for Regular Rate of Pay</description>
-        <name>Assign_Task_Regular_Rate_of_Pay</name>
-        <label>Assign Task : Regular Rate of Pay</label>
+        <description>Set default values for Regular Rate Of Pay</description>
+        <name>Assign_Task_Regular_Rate_Of_Pay</name>
+        <label>Assign Task : Regular Rate Of Pay</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>r_portaltask_regrateofpay.Name</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Regular Rate of Pay</stringValue>
+                <stringValue>Regular Rate Of Pay</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
