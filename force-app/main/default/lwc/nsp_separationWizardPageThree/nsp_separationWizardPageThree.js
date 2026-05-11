@@ -267,11 +267,10 @@ handleChange(event){
         this.employeeStatus = null;
         this.terminationDate = null;
     }
-
-    if(event.currentTarget.name == 'NSP_Sub_Client__c'){ 
-      this.handleSubClientChange(event);
-    }
   }
+    if(event.currentTarget.name == 'NSP_Sub_Client__c'){ 
+        this.handleSubClientChange(event);
+    }
 }
 
 async handleSubClientSelection(value) {
