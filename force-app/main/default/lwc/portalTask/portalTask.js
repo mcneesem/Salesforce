@@ -96,7 +96,7 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
         // only created to appease sonar...
     }
     get hasGuidance() {
-        return false;
+        return ( this.record?.fields?.Portal_Guidance__c?.value );
     }
     get isCompleted() {
         return ( this.record?.fields?.Status__c?.value === "Completed" );
@@ -189,7 +189,7 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
     }
 
     get isInputDisabled() {
-        return this.isLoading;
+        return ( this.isLoading || this.isCompleted );
     }
 
     get saveButtonVariant() {

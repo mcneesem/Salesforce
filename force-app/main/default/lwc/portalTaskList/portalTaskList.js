@@ -36,6 +36,7 @@ export default class PortalTaskList extends LightningElement {
             'Portal_Task__c.Action__c' ,
             'Portal_Task__c.Due_Date__c' ,
             'Portal_Task__c.Parent_Portal_Task__c' ,
+            'Portal_Task__c.Portal_Guidance__c' ,
             'Portal_Task__c.Portal_Project__c' ,
             'Portal_Task__c.Status__c' ,
             'Portal_Task__c.Type__c' ,
