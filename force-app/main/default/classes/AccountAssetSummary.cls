@@ -113,7 +113,7 @@ public with sharing class AccountAssetSummary {
                     acc.WO_Asset__c = latestWOAsset.Id;
                 }
                 if ( ( acc.WX_Asset__c == null ) && ( latestWXAsset != null ) ) {
-                    acc.WX_Asset__c = latestWOAsset.Id;
+                    acc.WX_Asset__c = latestWXAsset.Id;
                 }
                 for ( Asset asset : accRecord.Assets ) {
                     Boolean isActiveOrOnboarding = (
