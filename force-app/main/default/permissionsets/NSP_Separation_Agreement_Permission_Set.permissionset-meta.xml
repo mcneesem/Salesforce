@@ -704,7 +704,6 @@
         <field>NSP_ReportRequest__c.NSP_Report_Type_Actual__c</field>
         <readable>true</readable>
     </fieldPermissions>
-
     <fieldPermissions>
         <editable>true</editable>
         <field>NSP_ReportRequest__c.NSP_Question10_MatrixSubCategories__c</field>
