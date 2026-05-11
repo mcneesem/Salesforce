@@ -1,6 +1,6 @@
 <template>
-    <template lwc:if={recordId}>
-        <lightning-card title="Onboarding Tracker">
+    <template lwc:if={hasContent}>
+        <lightning-card class="background-color-white">
             <lightning-layout multiple-rows>
                 <template lwc:if={bar}>
                     <lightning-layout-item size="12" padding="around-small" key={bar.fields.Id.value}>

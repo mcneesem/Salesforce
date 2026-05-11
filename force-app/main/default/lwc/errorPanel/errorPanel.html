@@ -1,26 +1,12 @@
 <template>
-    <template if:true={error}>
-        <lightning-card icon-name="utility:error">
-            <h1 slot="title">{title}</h1>
-            <!--
-            <template if:true={error.body}>
-                <div>
-                    caused by: {error.body.exceptionType}: {error.body.message}<br/>
-                    <template if:true={error.body.stackTrace}>
-                        <br/>
-                        {error.body.stackTrace}<br/>
-                    </template>
-                </div>
-            </template>
-            -->
-        </lightning-card>
-        <!--
-        status :: {error.status}<br/>
-        exceptionType :: {error.body.exceptionType}<br/>
-        message :: {error.body.message}<br/>
-        isUserDefinedException :: {error.body.isUserDefinedException}<br/>
-        stackTrace :: {error.body.stackTrace}<br/>
-        header :: {error.header}<br/>
-        -->
+    <template lwc:if={hasPermission}>
+        <template lwc:if={error}>
+            <lightning-card icon-name="utility:error">
+                <h1 slot="title">{title}</h1>
+                <template lwc:if={body}>
+                    <div>{body}</div>
+                </template>
+            </lightning-card>
+        </template>
     </template>
 </template>

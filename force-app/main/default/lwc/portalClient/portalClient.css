@@ -6,3 +6,7 @@
     --dxp-s-link-text-decoration-hover: none;
     --dxp-s-link-text-decoration-focus: none;
 }
+
+.background-color-white {
+    background-color: white;
+}

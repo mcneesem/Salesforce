@@ -2,7 +2,7 @@ import { LightningElement , api , wire } from 'lwc';
 import { getRelatedListRecords } from 'lightning/uiRelatedListApi';
 
 export default class PortalTeamMemberList extends LightningElement {
-    @api recordId;
+    @api recordId; // is-a Portal_Project__c.Id
 
     error;
     records;
