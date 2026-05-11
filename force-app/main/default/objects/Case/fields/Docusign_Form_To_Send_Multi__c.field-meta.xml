@@ -17,6 +17,11 @@
                 <label>Acknowledgment of Receipt of Wages</label>
             </value>
             <value>
+                <fullName>Acknowledgment of Receipt of Bonus</fullName>
+                <default>false</default>
+                <label>Acknowledgment of Receipt of Bonus</label>
+            </value>
+            <value>
                 <fullName>Agreement to Automate Payroll</fullName>
                 <default>false</default>
                 <label>Agreement to Automate Payroll</label>
@@ -225,11 +230,6 @@
                 <fullName>Void/Lost/Stolen Check Reissue Auth</fullName>
                 <default>false</default>
                 <label>Void/Lost/Stolen Check Reissue Auth</label>
-            </value>
-            <value>
-                <fullName>Acknowledgment of Receipt of Bonus</fullName>
-                <default>false</default>
-                <label>Acknowledgment of Receipt of Bonus</label>
             </value>
             <value>
                 <fullName>FLSA Test for Exemption (including IL)</fullName>
