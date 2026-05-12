@@ -117,17 +117,8 @@ public with sharing class NSP_ProjectTaskAssignmentTriggerHelper {
                         mapPTA.put( projTaskAssign.Id , projTaskAssign );
                         projTaskAssign.pse__Resource__c = mapUserIdContactId.get( accTeam.NSP_User__c );
                         lstPtAToUpdate.add( projTaskAssign );
-                    } else if ( projTaskAssign.pse__Resource_Role__c == accTeam.NSP_Role__c ) {
-                        //if there is role in PTA matching with Accteam, and Acc team exists multiple records with it
-                        //then creating other PTA's matching the same role from acc team.
-                        lstPtAToUpdate.add(
-                            new pse__Project_Task_Assignment__c(
-                                pse__Resource_Role__c=projTaskAssign.pse__Resource_Role__c ,
-                                pse__Project_Task__c=projTaskAssign.pse__Project_Task__c ,
-                                NSP_Priority__c=projTaskAssign.NSP_Priority__c ,
-                                pse__Resource__c=mapUserIdContactId.get( accTeam.NSP_User__c )
-                            )
-                        );
+                        // Break after first match to ensure only ONE team member per role per account
+                        break;
                     }
                 }
             }
