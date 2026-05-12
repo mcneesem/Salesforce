@@ -1,0 +1,16 @@
+:host .combobox-color-border {
+    --slds-c-input-color-border: transparent;
+}
+
+.combobox-text-medium {
+    font-size: var(--slds-g-font-scale-3);
+    line-height: var(--slds-g-font-lineheight-1);
+}
+
+.list-style-type-none {
+    list-style-type: none;
+}
+
+.background-color-white {
+    background-color: white;
+}

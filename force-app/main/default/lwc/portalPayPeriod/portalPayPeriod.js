@@ -3,7 +3,7 @@ import { getObjectInfo } from "lightning/uiObjectInfoApi";
 import PORTAL_PAY_PERIOD_OBJECT from "@salesforce/schema/Portal_Pay_Period__c";
 
 export default class PortalPayPeriod extends LightningElement {
-    @api record;
+    @api record; // is-a Portal_Pay_Period__c
     error;
 
     fields;
@@ -25,8 +25,13 @@ export default class PortalPayPeriod extends LightningElement {
     get leftColumnSize() {
         return "7";
     }
+
     get rightColumnSize() {
         return "5";
+    }
+
+    get hasFirstPayPeriod() {
+        return ( this.record?.fields?.First_Pay_Period_Start__c?.value && this.record?.fields?.First_Pay_Period_End__c?.value );
     }
 
 }

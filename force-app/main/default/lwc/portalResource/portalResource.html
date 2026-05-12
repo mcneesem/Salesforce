@@ -1,0 +1,23 @@
+<template>
+    <template lwc:if={record}>
+        <c-portal-related-files linked-entity-id={parentRecordId} onloaded={handleLoaded}></c-portal-related-files>
+        <template lwc:if={hasResource}>
+            <lightning-layout class="slds-no-wrap">
+                <lightning-layout-item alignment-bump="right" class="slds-has-flexi-truncate">
+                    <div class="slds-truncate slds-m-bottom_small">
+                        <a
+                            href="javascript:void(0);"
+                            data-id={parentRecordId}
+                            data-contentdocumentid={contentDocumentId}
+                            data-linkurl={linkUrl}
+                            onclick={handleClick}
+                            target="_blank"
+                            >
+                            {title}
+                        </a>
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout>
+        </template>
+    </template>
+</template>

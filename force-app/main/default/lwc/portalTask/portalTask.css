@@ -5,3 +5,8 @@ ul > li:first-child {
 ul > li {
   border-bottom: 0.0625rem solid rgb(201, 201, 201);
 }
+
+.relative-up_small {
+    position: relative;
+    top: -0.75rem;
+}
