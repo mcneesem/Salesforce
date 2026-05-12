@@ -201,6 +201,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Acknowledgment of Receipt of Bonus</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Agreement to Automate Payroll</fullName>
             <default>false</default>
         </values>
