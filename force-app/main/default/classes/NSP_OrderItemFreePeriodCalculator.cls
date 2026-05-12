@@ -1,6 +1,6 @@
 // calculates OrderItem free period
 public class NSP_OrderItemFreePeriodCalculator {
-    // test w/ NSP_OrderItemFreePeriodCalculatorTest (93%)
+    // test w/ NSP_OrderItemFreePeriodCalculatorTest (95%)
 
     private NSP_OrderItemFreePeriodCalculator () {
     }
@@ -14,7 +14,7 @@ public class NSP_OrderItemFreePeriodCalculator {
     private static void evaluateFreePeriodInvoiceLine( List<String> invoiceIdSet ) {
         Set<String> invoicelinesId = new Set<String>();
         for ( blng__InvoiceLine__c invLine : [
-                    SELECT 
+                    SELECT
                         Id ,
                         blng__BillingFrequency__c ,
                         blng__ChargeType__c
