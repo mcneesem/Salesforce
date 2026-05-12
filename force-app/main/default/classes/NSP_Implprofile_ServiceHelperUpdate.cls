@@ -40,7 +40,6 @@ public class NSP_Implprofile_ServiceHelperUpdate {
     private static final String PAYROLL_JOBCOSTING_FN = 'Special_Payroll_Needs_Job_Costing';
     private static final String PAYROLL_REGISTER_FN= 'Payroll_Register';
     private static final String GARNISHMENT_FN= 'Garnishments';
-    private static final String TAX_LEVIES_FN= 'Levies';
     private static final String POST_DEDUCTION_FN= 'Post_tax_deductions';
     private static final String RETIRE_PLAN_FN='retirementPlan';
     private static final String POSTTAX_LOANS_FN= 'Post_tax_deductions_NY_WSEE';
@@ -55,8 +54,6 @@ public class NSP_Implprofile_ServiceHelperUpdate {
     private static final String COBRA_FORM_NOT_COLLECTED_FN= 'COBRA_Form_Followup';
     private static final String LOA_INFO_FN= 'Missing_LOA_forms';
     private static final String MISSING_LOA_FN=  'Missing_LOA_Info';
-    private static final String SUBTASK_GARNISH_FN='garnishSubtask';
-    private static final String SUBTASK_LEVIES_FN='leviesSubtask';
     private static final String INTERNAL_DISCOVERY_FN ='NSP_Internal_Discovery';
     private static final String ONSITE_DISCOVERY_FN ='NSP_Onsite_Discovery';
     private static final String CSP_HCFSA_FSO ='CSP_HCFSA_FSO';
@@ -93,14 +90,14 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                 EEO_FILING_FN , CLIENT_HANDBOOK_FN , EDC_FN ,
                 PAYROLL_LOCATIONS_FN , PAYROLL_DEPARTMENTS_FN ,
                 PAYROLL_JOBCOSTING_FN , PAYROLL_REGISTER_FN ,
-                GARNISHMENT_FN , TAX_LEVIES_FN , POST_DEDUCTION_FN ,
+                GARNISHMENT_FN , POST_DEDUCTION_FN ,
                 RETIRE_PLAN_FN , POSTTAX_LOANS_FN , SPECIAL_RELABEL_FN ,
                 REPORT_Integra_FN , REPORT_Custom401k_FN ,
                 REPORT_JOBCOSTING_FN , INTEGRA_RESPONSE ,
                 REPORT_OTHER_FN , COBRA_FN , LOA_INFO_FN ,
                 MISSING_LOA_FN , COBRA_FORM_COLLECTED_FN ,
-                COBRA_FORM_NOT_COLLECTED_FN , SUBTASK_GARNISH_FN ,
-                SUBTASK_LEVIES_FN , INTERNAL_DISCOVERY_FN ,
+                COBRA_FORM_NOT_COLLECTED_FN ,
+                INTERNAL_DISCOVERY_FN ,
                 ONSITE_DISCOVERY_FN ,
                 enrollFee_FN ,enrollFee_Subtask_FN, DATA_VERIFICATION,FLSA_EXEMPTION_REVIEW
             }
@@ -262,7 +259,6 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             checkforPayrollJobCosting(ipRec, existingRec);
             checkforPayrollRegister(ipRec, existingRec);
             checkforGarnishments(ipRec, existingRec);
-            checkforTaxLevies(ipRec, existingRec);
             checkforPostDeduction(ipRec, existingRec);
             checkforRetPlan(ipRec, existingRec);
             checkforPostTaxLoans(ipRec, existingRec);
@@ -277,8 +273,6 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             checkforLOAInfo(ipRec,existingRec);
             checkforCOBRAForm(ipRec,existingRec,COBRA_FORM_COLLECTED_FN,NSP_ServiceConstants.YES);
             checkforCOBRAForm(ipRec,existingRec,COBRA_FORM_NOT_COLLECTED_FN,NSP_ServiceConstants.NO);
-            checkforGarnishmentSubtask(ipRec, existingRec);
-            checkforTaxLeviesSubtask(ipRec, existingRec);
             checkInternalDiscovery(ipRec, existingRec);
             checkOnsiteDiscovery(ipRec, existingRec);
             checkEnrollFee(ipRec, existingRec);
@@ -506,57 +500,6 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             )
         {
             updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, GARNISHMENT_FN);
-        }
-    }
-
-    private void checkforGarnishmentSubtask(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
-        if (automationsToExecute.contains(SUBTASK_GARNISH_FN)
-            && newRec != null
-            && newRec.RecordTypeId == ipFSORecordTypeId
-            && newRec.Do_any_EEs_have_garnishments__c == NSP_ServiceConstants.YES
-            && String.isNotBlank(newRec.NSP_Employee_Names_List_garnishments__c)
-            && (existingRec == null
-                || newRec.NSP_Form_Completed__c
-                || newRec.Do_any_EEs_have_garnishments__c != existingRec.Do_any_EEs_have_garnishments__c
-                || newRec.NSP_Employee_Names_List_garnishments__c != existingRec.NSP_Employee_Names_List_garnishments__c
-                || newRec.NSP_Documents_garnishments__c != existingRec.NSP_Documents_garnishments__c
-               )
-            )
-        {
-            updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, SUBTASK_GARNISH_FN);
-        }
-    }
-
-    private void checkforTaxLevies(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
-        if (automationsToExecute.contains(TAX_LEVIES_FN)
-            && newRec != null
-            && newRec.RecordTypeId == ipFSORecordTypeId
-            && newRec.Do_any_EEs_have_tax_levies__c == NSP_ServiceConstants.YES
-            && (existingRec == null
-                || newRec.NSP_Form_Completed__c
-                || newRec.Do_any_EEs_have_tax_levies__c != existingRec.Do_any_EEs_have_tax_levies__c
-               )
-            )
-        {
-            updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, TAX_LEVIES_FN);
-        }
-    }
-
-    private void checkforTaxLeviesSubtask(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
-        if (automationsToExecute.contains(SUBTASK_LEVIES_FN)
-            && newRec != null
-            && newRec.RecordTypeId == ipFSORecordTypeId
-            && newRec.Do_any_EEs_have_tax_levies__c == NSP_ServiceConstants.YES
-            && String.isNotBlank(newRec.NSP_List_Employee_Names_Levies__c)
-            && (existingRec == null
-                || newRec.NSP_Form_Completed__c
-                || newRec.Do_any_EEs_have_tax_levies__c != existingRec.Do_any_EEs_have_tax_levies__c
-                || newRec.NSP_List_Employee_Names_Levies__c != existingRec.NSP_List_Employee_Names_Levies__c
-                || newRec.NSP_Documents_Collected_Leviesd__c != existingRec.NSP_Documents_Collected_Leviesd__c
-               )
-            )
-        {
-            updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, SUBTASK_LEVIES_FN);
         }
     }
 
@@ -879,7 +822,6 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             createProjecttaskforPayrollJobCosting(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
             createProjecttaskforPayrollRegister(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
             createProjecttaskforGarnishment(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
-            createProjecttaskforTaxlevis(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
             createProjecttaskforPostDeduction(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
             createProjecttaskforRetplan(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
             createProjecttaskforPosttaxded(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
@@ -893,8 +835,6 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             createProjecttaskforLOAInfo(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
             createProjecttaskforMissingLOA(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
             createProjectTaskForCOBRAForm(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
-            createSubtaskforGarnishments(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
-            createSubtaskforLevies(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
             createProjecttaskforEnrollFee(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
             createSubtaskforEnrollment(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
             createProjectTaskForDataVerification(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
@@ -1447,34 +1387,6 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         }
     }
 
-    // TAX_LEVIES_FN refactored
-    private  void createProjecttaskforTaxlevis(
-        String automation ,
-        NSP_ProjectTask_Automation__mdt pta ,
-        pse__Proj__c proj ,
-        Id ipRecId ,
-        Implementation_Profile__c ipwithValue ,
-        Id workCalendarId
-        )
-    {
-        if(automation == TAX_LEVIES_FN){
-            pse__Project_Task__c eachProjecttask = genericPMTask(proj,pta,ipRecId,ipwithValue,workCalendarId);
-            NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(automation);
-            if(eachProjecttask != null && ipa != null && ipwithValue != null){
-                eachProjecttask.Implementation_Profile__c = ipwithValue.id;
-                projectTaskToInsertList.add(eachProjecttask);
-                ipAutomationRecords.add(
-                    createIPAutomation(
-                        ipRecId,
-                        ipa.NSP_Automation_Name__c,
-                        ipa.NSP_Method_Name__c,
-                        ipa.NSP_Section__c,NSP_ServiceConstants.FSOProfile
-                    )
-                );
-            }
-        }
-    }
-
     // POST_DEDUCTION_FN refactored
     private  void createProjecttaskforPostDeduction(
         String automation ,
@@ -1899,141 +1811,6 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                 );
             }
         }
-    }
-
-// SUBTASK_GARNISH_FN
-    private  void createSubtaskforGarnishments(
-        String automation ,
-        NSP_ProjectTask_Automation__mdt pta ,
-        pse__Proj__c proj ,
-        Id ipRecId ,
-        Implementation_Profile__c ipwithValue ,
-        Id workCalendarId
-        )
-    {
-        if(automation == SUBTASK_GARNISH_FN ){
-            Map<String, String> documentMap = getDocumentMapForGarnish(ipRecId);
-            if (proj != null && documentMap != null && !documentMap.isEmpty()) {
-                for (pse__Project_Task__c pt : proj.pse__Project_Tasks__r) {
-                    if (pt.Name == NSP_ServiceConstants.GARNISHMENT) {
-                        for (String documentKey : documentMap.keySet()) {
-                            if (documentMap.get(documentKey) == NSP_ServiceConstants.NOTCOLLECTED) {
-                                pse__Project_Task__c subTask = createSubtaskGarnishRecord(proj, pta, ipRecId, ipWithValue, workCalendarId, pt, documentKey);
-                                if (subTask != null) {
-                                    projectTaskToInsertList.add(subTask);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private Map<String, String> getDocumentMapForGarnish(Id ipRecId) {
-        Map<String, String> documentMap = new Map<String, String>();
-        Implementation_Profile__c ipRec = newIPs.get(ipRecId);
-        if (ipRec!= null && String.isNotBlank(ipRec.NSP_Documents_garnishments__c)) {
-            List<String> documentList = ipRec.NSP_Documents_garnishments__c.split(',');
-            if (!documentList.isEmpty()) {
-                for (String documents : documentList) {
-                    List<String> documentSplit = documents.split('~');
-                    if (documentSplit.size() == 2) {
-                        String documentKey = documentSplit[0].trim();
-                        String documentValue = documentSplit[1].trim();
-                        documentMap.put(documentKey, documentValue);
-                    }
-                }
-            }
-        }
-        return documentMap;
-    }
-
-    private pse__Project_Task__c createSubtaskGarnishRecord(
-        pse__Proj__c proj,
-        NSP_ProjectTask_Automation__mdt pta,
-        Id ipRecId,
-        Implementation_Profile__c ipWithValue,
-        Id workCalendarId,
-        pse__Project_Task__c pt,
-        String documentKey
-        )
-    {
-        pse__Project_Task__c eachProjectTask = genericPMTask(proj, pta, ipRecId, ipWithValue, workCalendarId);
-        if (eachProjectTask != null) {
-            eachProjectTask.Name = documentKey + NSP_ServiceConstants.GARNISHDOC;
-            eachProjectTask.pse__Parent_Task__c = pt.Id;
-            eachProjectTask.pse__Hierarchy_Depth__c = 1;
-        }
-        return eachProjectTask;
-    }
-
-    private void createSubtaskforLevies(
-        String automation,
-        NSP_ProjectTask_Automation__mdt pta,
-        pse__Proj__c proj,
-        Id ipRecId,
-        Implementation_Profile__c ipWithValue,
-        Id workCalendarId
-        )
-    {
-        if (automation == SUBTASK_LEVIES_FN) {
-            Map<String, String> documentMap = getDocumentMapForLevies(ipRecId);
-            if (proj != null && documentMap != null && !documentMap.isEmpty()) {
-                for (pse__Project_Task__c pt : proj.pse__Project_Tasks__r) {
-                    if (pt.Name == NSP_ServiceConstants.LEVIEIS) {
-                        for (String documentKey : documentMap.keySet()) {
-                            if (documentMap.get(documentKey) == NSP_ServiceConstants.NOTCOLLECTED) {
-                                pse__Project_Task__c subTask = createSubtaskRecordForLevies(proj, pta, ipRecId, ipWithValue, workCalendarId, pt, documentKey);
-                                if (subTask != null) {
-                                    projectTaskToInsertList.add(subTask);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private Map<String, String> getDocumentMapForLevies(Id ipRecId) {
-        Map<String, String> documentMap = new Map<String, String>();
-        if(ipRecId != null){
-            Implementation_Profile__c ipRec = newIPs.get(ipRecId);
-            if (ipRec != null && !String.isBlank(ipRec.NSP_List_Employee_Names_Levies__c)) {
-                List<String> documentList = ipRec.Document_Levies__c.split(',');
-                if (!documentList.isEmpty()) {
-                    for (String documents : documentList) {
-                        List<String> documentSplit = documents.split('~');
-                        if (documentSplit.size() == 2) {
-                            String documentKey = documentSplit[0].trim();
-                            String documentValue = documentSplit[1].trim();
-                            documentMap.put(documentKey, documentValue);
-                        }
-                    }
-                }
-            }
-        }
-        return documentMap;
-    }
-
-    private pse__Project_Task__c createSubtaskRecordForLevies(
-        pse__Proj__c proj,
-        NSP_ProjectTask_Automation__mdt pta,
-        Id ipRecId,
-        Implementation_Profile__c ipWithValue,
-        Id workCalendarId,
-        pse__Project_Task__c pt,
-        String documentKey
-        )
-    {
-        pse__Project_Task__c eachProjectTask = genericPMTask(proj, pta, ipRecId, ipWithValue, workCalendarId);
-        if (eachProjectTask != null) {
-            eachProjectTask.Name = documentKey + NSP_ServiceConstants.LEVYDOC;
-            eachProjectTask.pse__Parent_Task__c = pt.Id;
-            eachProjectTask.pse__Hierarchy_Depth__c = 1;
-        }
-        return eachProjectTask;
     }
 
     private pse__Project_Task__c createProjectTaskfromIP( pse__Proj__c project , String category , Id ipRecId , String milestoneKey ) {
