@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>COBRA Form Not Collected FSO</label>
+    <label>CSP_DOCS_FSO</label>
     <protected>false</protected>
     <values>
         <field>NSP_Category__c</field>
-        <value xsi:type="xsd:string">COBRA</value>
+        <value xsi:type="xsd:string">Client Sponsored Plans</value>
     </values>
     <values>
         <field>NSP_Milestone__c</field>
-        <value xsi:type="xsd:string">Benefits</value>
+        <value xsi:type="xsd:string">System Setup</value>
     </values>
     <values>
         <field>NSP_Sub_Category__c</field>
-        <value xsi:type="xsd:string">Takeover Verifi &amp; Submission</value>
+        <value xsi:type="xsd:string">Documentation</value>
     </values>
     <values>
         <field>NSP_Task_Name__c</field>
-        <value xsi:type="xsd:string">Need COBRA Takeover Form: &lt;WSEE Name&gt;</value>
+        <value xsi:type="xsd:string">CSP Client Authorization/Cafeteria Plan documentation collected</value>
     </values>
     <values>
         <field>Order__c</field>
-        <value xsi:type="xsd:double">88.0</value>
+        <value xsi:type="xsd:double">24.0</value>
     </values>
     <values>
         <field>Task_Order__c</field>
-        <value xsi:type="xsd:double">88.0</value>
+        <value xsi:type="xsd:double">24.0</value>
     </values>
     <values>
         <field>Visible_to_Client__c</field>
-        <value xsi:type="xsd:boolean">false</value>
+        <value xsi:type="xsd:boolean">true</value>
     </values>
 </CustomMetadata>
