@@ -49,9 +49,8 @@ public class NSP_Implprofile_ServiceHelperUpdate {
     private static final String REPORT_JOBCOSTING_FN= 'Job_Costing_Reports';
     private static final String INTEGRA_RESPONSE= 'Integra_Responses_Smartsheet' ;
     private static final String REPORT_OTHER_FN='Custom_Report';
-    private static final String COBRA_FN= 'Missing_COBRA_Names';
-    private static final String COBRA_FORM_COLLECTED_FN=  'Verify_COBRA_eligibility';
-    private static final String COBRA_FORM_NOT_COLLECTED_FN= 'COBRA_Form_Followup';
+    private static final String COBRA_TAKEOVER_FORM = 'COBRA_Takeover_Form';
+    private static final String COBRA_FORM_RECEIVED = 'COBRA_Form_Received';
     private static final String LOA_INFO_FN= 'Missing_LOA_forms';
     private static final String MISSING_LOA_FN=  'Missing_LOA_Info';
     private static final String INTERNAL_DISCOVERY_FN ='NSP_Internal_Discovery';
@@ -94,12 +93,17 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                 RETIRE_PLAN_FN , POSTTAX_LOANS_FN , SPECIAL_RELABEL_FN ,
                 REPORT_Integra_FN , REPORT_Custom401k_FN ,
                 REPORT_JOBCOSTING_FN , INTEGRA_RESPONSE ,
-                REPORT_OTHER_FN , COBRA_FN , LOA_INFO_FN ,
-                MISSING_LOA_FN , COBRA_FORM_COLLECTED_FN ,
-                COBRA_FORM_NOT_COLLECTED_FN ,
+                REPORT_OTHER_FN ,
+                LOA_INFO_FN ,
+                MISSING_LOA_FN ,
                 INTERNAL_DISCOVERY_FN ,
                 ONSITE_DISCOVERY_FN ,
-                enrollFee_FN ,enrollFee_Subtask_FN, DATA_VERIFICATION,FLSA_EXEMPTION_REVIEW
+                enrollFee_FN ,
+                enrollFee_Subtask_FN ,
+                DATA_VERIFICATION ,
+                FLSA_EXEMPTION_REVIEW ,
+                COBRA_TAKEOVER_FORM ,
+                COBRA_FORM_RECEIVED
             }
         );
     }
@@ -268,16 +272,15 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             checkforReportingCustom(ipRec, existingRec);
             checkforReportingOther(ipRec, existingRec);
             checkforReportingIntegraResponse(ipRec, existingRec);
-            checkforCOBRA(ipRec, existingRec);
             checkforLOAInfo(ipRec,existingRec);
             checkforLOAInfo(ipRec,existingRec);
-            checkforCOBRAForm(ipRec,existingRec,COBRA_FORM_COLLECTED_FN,NSP_ServiceConstants.YES);
-            checkforCOBRAForm(ipRec,existingRec,COBRA_FORM_NOT_COLLECTED_FN,NSP_ServiceConstants.NO);
             checkInternalDiscovery(ipRec, existingRec);
             checkOnsiteDiscovery(ipRec, existingRec);
             checkEnrollFee(ipRec, existingRec);
             checkDataVerification(ipRec, existingRec);
             checkFlsaExemptionReview(ipRec, existingRec);
+            checkForCobraTakeoverForm(ipRec, existingRec);
+            checkForCobraReceivedForm(ipRec, existingRec);
         }
     }
 
@@ -670,50 +673,49 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         }
     }
 
-    private void checkforCOBRA(Implementation_Profile__c newRec, Implementation_Profile__c existingRec) {
-        if (automationsToExecute.contains(COBRA_FN)
-            && newRec != null
-            && newRec.RecordTypeId == ipFSORecordTypeId
-            && newRec.Have_name_s_of_COBRA_takeovr_employees__c != null
-            && newRec.Have_name_s_of_COBRA_takeovr_employees__c == NSP_ServiceConstants.NO
-            && (existingRec == null
+    private void checkForCobraTakeoverForm(
+        Implementation_Profile__c newRec ,
+        Implementation_Profile__c existingRec
+        )
+    {
+        if ( this.automationsToExecute.contains( NSP_Implprofile_ServiceHelperUpdate.COBRA_TAKEOVER_FORM )
+            && ( newRec != null )
+            && ( newRec.RecordTypeId == NSP_Implprofile_ServiceHelperUpdate.ipFSORecordTypeId )
+            && ( newRec.Participants_on_COBRA_eligibility_period__c == NSP_ServiceConstants.YES )
+            && ( ( existingRec == null )
                 || newRec.NSP_Form_Completed__c
-                || newRec.Have_name_s_of_COBRA_takeovr_employees__c != existingRec.Have_name_s_of_COBRA_takeovr_employees__c
+                || ( newRec.Participants_on_COBRA_eligibility_period__c != existingRec.Participants_on_COBRA_eligibility_period__c )
                 )
             )
         {
-            updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, COBRA_FN);
+            this.updateEligibleRecordsMap(
+                this.ipRecordsByAutomation ,
+                newRec.Id ,
+                NSP_Implprofile_ServiceHelperUpdate.COBRA_TAKEOVER_FORM
+            );
         }
     }
 
-    private void checkforCOBRAForm(
-        Implementation_Profile__c newRec,
-        Implementation_Profile__c existingRec,
-        String formType,
-        String expectedValue
-    ){
-        if (automationsToExecute.contains(formType)
-            && newRec != null
-            && newRec.RecordTypeId == ipFSORecordTypeId
-            && newRec.Have_name_s_of_COBRA_takeovr_employees__c == NSP_ServiceConstants.YES
-            && (String.isNotBlank(newRec.NSP_COBRA_Takeover_Emp_Details__c))
-            && (existingRec == null
+    private void checkForCobraReceivedForm(
+        Implementation_Profile__c newRec ,
+        Implementation_Profile__c existingRec
+        )
+    {
+        if ( this.automationsToExecute.contains( NSP_Implprofile_ServiceHelperUpdate.COBRA_FORM_RECEIVED )
+            && ( newRec != null )
+            && ( newRec.RecordTypeId == NSP_Implprofile_ServiceHelperUpdate.ipFSORecordTypeId )
+            && ( newRec.Participants_on_COBRA_eligibility_period__c == NSP_ServiceConstants.YES )
+            && ( ( existingRec == null )
                 || newRec.NSP_Form_Completed__c
-                || newRec.Have_name_s_of_COBRA_takeovr_employees__c != existingRec.Have_name_s_of_COBRA_takeovr_employees__c
+                || ( newRec.Participants_on_COBRA_eligibility_period__c != existingRec.Participants_on_COBRA_eligibility_period__c )
                 )
             )
         {
-            List<String> employeeNames = newRec.NSP_COBRA_Takeover_Emp_Details__c.split(',');
-            for (String employee : employeeNames) {
-                String[] parts = employee.split('~');
-                if (parts.size() > 1) {
-                    String value = parts[1];
-                    if (expectedValue == value) {
-                        updateEligibleRecordsMap(ipRecordsByAutomation, newRec.Id, formType);
-                        break;
-                    }
-                }
-            }
+            this.updateEligibleRecordsMap(
+                this.ipRecordsByAutomation ,
+                newRec.Id ,
+                NSP_Implprofile_ServiceHelperUpdate.COBRA_FORM_RECEIVED
+            );
         }
     }
 
@@ -831,16 +833,16 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             createProjecttaskforReportingJob(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
             createProjecttaskforIntegraResponse(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
             createProjecttaskforReportingOther(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
-            createProjecttaskforCOBRA(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
             createProjecttaskforLOAInfo(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
             createProjecttaskforMissingLOA(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
-            createProjectTaskForCOBRAForm(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
             createProjecttaskforEnrollFee(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
             createSubtaskforEnrollment(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
             createProjectTaskForDataVerification(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
             createProjectTaskForFlsaExemptionReview(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
             emailNotifyInternalDiscovery(automation,ipRecId);
             emailNotifyOnsiteDiscovery(automation,ipRecId);
+            createProjectTaskForCobraTakeoverForm(automation,pta,proj,ipRecId,ipwithValue,workCalendarId); 
+            createProjectTaskForCobraFormReceived(automation,pta,proj,ipRecId,ipwithValue,workCalendarId);
         }
     }
 
@@ -1667,8 +1669,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         }
     }
 
-        // COBRA_FN refactored
-    private  void createProjecttaskforCOBRA(
+    private void createProjectTaskForCobraTakeoverForm(
         String automation ,
         NSP_ProjectTask_Automation__mdt pta ,
         pse__Proj__c proj ,
@@ -1677,31 +1678,31 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         Id workCalendarId
         )
     {
-        if(automation == COBRA_FN){
-            pse__Project_Task__c eachProjecttask = genericPMTask(proj,pta,ipRecId,ipwithValue,workCalendarId);
-            NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(automation);
-            Implementation_Profile__c ipRec = newIPs.get(ipRecId);
-            if (eachProjecttask != null && ipa != null ) {
-                if(ipRec.Have_name_s_of_COBRA_takeovr_employees__c == NSP_ServiceConstants.NO){
-                    eachProjecttask.Name = NSP_ServiceConstants.COBRA_MISSING_NAMES;
-                }else{
-                    eachProjecttask.Name = NSP_ServiceConstants.COBRATask;
-                }
-                projectTaskToInsertList.add(eachProjecttask);
-                ipAutomationRecords.add(
-                    createIPAutomation(
-                        ipRecId,
-                        ipa.NSP_Automation_Name__c,
-                        ipa.NSP_Method_Name__c,
-                        ipa.NSP_Section__c,NSP_ServiceConstants.FSOProfile
+        if ( automation == COBRA_TAKEOVER_FORM ) {
+            pse__Project_Task__c eachProjecttask = this.genericPMTask(
+                proj ,
+                pta ,
+                ipRecId ,
+                ipwithValue ,
+                workCalendarId
+            );
+            NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance( automation );
+            if ( ( eachProjecttask != null ) && ( ipa != null ) ) {
+                this.projectTaskToInsertList.add( eachProjecttask );
+                this.ipAutomationRecords.add(
+                    NSP_Implprofile_ServiceHelperUpdate.createIPAutomation(
+                        ipRecId ,
+                        ipa.NSP_Automation_Name__c ,
+                        ipa.NSP_Method_Name__c ,
+                        ipa.NSP_Section__c ,
+                        NSP_ServiceConstants.FSOProfile
                     )
                 );
             }
         }
     }
 
-    // COBRA_FORM_COLLECTED_FN , COBRA_FORM_NOT_COLLECTED_FN refactored
-    private  void createProjectTaskForCOBRAForm(
+    private void createProjectTaskForCobraFormReceived(
         String automation ,
         NSP_ProjectTask_Automation__mdt pta ,
         pse__Proj__c proj ,
@@ -1710,37 +1711,16 @@ public class NSP_Implprofile_ServiceHelperUpdate {
         Id workCalendarId
         )
     {
-        if(automation == COBRA_FORM_COLLECTED_FN || automation == COBRA_FORM_NOT_COLLECTED_FN ){
-            String yesOrNoConstant;
-            String formCollectedTemplate;
-            pse__Project_Task__c eachProjecttask = null;
-            NSP_Implementation_Automations__mdt ipa = NSP_Implementation_Automations__mdt.getInstance(automation);
-            Implementation_Profile__c ipRec = newIPs.get(ipRecId);
-            yesOrNoConstant = (automation == COBRA_FORM_COLLECTED_FN) ? NSP_ServiceConstants.YES : NSP_ServiceConstants.NO;
-            formCollectedTemplate = (automation == COBRA_FORM_COLLECTED_FN) ? NSP_ServiceConstants.COBRA_FORM_COLLECTED_YES : NSP_ServiceConstants.COBRA_FORM_COLLECTED_NO;
-            List<String> lstNamesEmployees = new List<String>();
-            if(ipa != null && ipRec != null && !String.isBlank(ipRec.NSP_COBRA_Takeover_Emp_Details__c)){
-                lstNamesEmployees = ipRec.NSP_COBRA_Takeover_Emp_Details__c.split(',');
-                if(lstNamesEmployees != null && lstNamesEmployees.size() > 0){
-                    for(String empName : lstNamesEmployees){
-                        List<String> empDetails = empName?.split('~');
-                        if(empDetails.size() > 1 && empDetails[1] == yesOrNoConstant){
-                            eachProjecttask = genericPMTask(proj,pta,ipRecId,ipwithValue,workCalendarId);
-                            if(eachProjecttask != null){
-                                eachProjectTask.Name = formCollectedTemplate.replace('<WSEE Name>', empDetails[0]);
-                                projectTaskToInsertList.add(eachProjecttask);
-                            }
-                        }
-                    }
-                }
-                ipAutomationRecords.add(
-                    createIPAutomation(
-                        ipRecId,
-                        ipa.NSP_Automation_Name__c,
-                        ipa.NSP_Method_Name__c,
-                        ipa.NSP_Section__c,NSP_ServiceConstants.FSOProfile
-                    )
-                );
+        if ( automation == NSP_Implprofile_ServiceHelperUpdate.COBRA_FORM_RECEIVED ) {
+            pse__Project_Task__c eachProjecttask = this.genericPMTask(
+                proj ,
+                pta ,
+                ipRecId ,
+                ipwithValue ,
+                workCalendarId
+            );
+            if ( eachProjecttask != null ) {
+                this.projectTaskToInsertList.add( eachProjecttask );
             }
         }
     }
