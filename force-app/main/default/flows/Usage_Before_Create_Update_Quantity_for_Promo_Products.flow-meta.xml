@@ -25,14 +25,14 @@
             <name>Promo</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>$Record.blng__UsageSummary__r.blng__OrderProduct__c</leftValueReference>
+                <leftValueReference>Get_Order_Product</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record.blng__UsageSummary__r.blng__OrderProduct__r.Product2Id</leftValueReference>
+                <leftValueReference>Get_Order_Product.Product2Id</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -42,7 +42,7 @@
                 <leftValueReference>$Setup.Consumption_Schedule_Discount_Settings__c.Promo_Product_Codes__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <elementReference>$Record.blng__UsageSummary__r.blng__OrderProduct__r.Product2.ProductCode</elementReference>
+                    <elementReference>Get_Order_Product.Product2.ProductCode</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -52,6 +52,15 @@
         </rules>
     </decisions>
     <environments>Default</environments>
+    <formulas>
+        <name>ExtractMatchingID</name>
+        <dataType>String</dataType>
+        <expression>MID(
+  {!$Record.blng__MatchingId__c},
+  FIND(&quot;_&quot;, {!$Record.blng__MatchingId__c}) + 1,
+  FIND(&quot;_&quot;, {!$Record.blng__MatchingId__c}, FIND(&quot;_&quot;, {!$Record.blng__MatchingId__c}) + 1) - FIND(&quot;_&quot;, {!$Record.blng__MatchingId__c}) - 1
+)</expression>
+    </formulas>
     <formulas>
         <name>NegativeQuantity</name>
         <dataType>Number</dataType>
@@ -79,15 +88,36 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <start>
+    <recordLookups>
+        <name>Get_Order_Product</name>
+        <label>Get Order Product</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Is_Promo</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>blng__UsageSummary__c</field>
+            <field>OrderItemNumber</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>ExtractMatchingID</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>OrderItem</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Order_Product</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>blng__MatchingId__c</field>
             <operator>IsNull</operator>
             <value>
                 <booleanValue>false</booleanValue>
