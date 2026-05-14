@@ -120,8 +120,9 @@ private class SandboxHealthControllerTest {
     @IsTest
     private static void testUserTriggerSettings_section_present() {
         String sandbox = System.DomainParser.parse( URL.getOrgDomainUrl() ).getSandboxName();
+        sandbox = ( String.isNotBlank( sandbox ) ? sandbox.toLowerCase() : '' );
         String[] pipelineOrgs = new String[] { 'merge' , 'test' , 'stage' };
-        Boolean isPipeline = pipelineOrgs.contains( sandbox.toLowerCase() );
+        Boolean isPipeline = pipelineOrgs.contains( sandbox );
         UserTriggerSettings__c uts = UserTriggerSettings__c.getOrgDefaults();
         uts.AllowedAdmins__c = null;
         uts.BccAddresses__c = null;
