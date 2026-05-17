@@ -303,7 +303,7 @@ async handleWorkState(subclientContact){
         try {
             const result = await getWorkState({
                 subClientContactId: subclientContact.Id,
-                contactID: this.WSEE
+                contactId: this.WSEE
             });
             this.subClientContactAddress = result?.Id; 
         } catch(error){
@@ -351,7 +351,7 @@ handleSuccess(event){
 
 handleContactLookup(recordId) {
     if(recordId != null && recordId.length > 14  ){
-        getWSEEDetails({ contactID : recordId,
+        getWSEEDetails({ contactId : recordId,
             accountId:  this.clientName })
         .then((result) => {
             if(result && result.length>0){
