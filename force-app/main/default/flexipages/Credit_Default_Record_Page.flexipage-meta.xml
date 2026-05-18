@@ -407,6 +407,16 @@
                 <identifier>RecordPayroll_Supervisor_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Approver__c</fieldItem>
+                <identifier>RecordApprover_PS_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-73d22741-cc81-45e2-9c14-d1e86125cd54</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -541,6 +551,11 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>actionNames</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>New</value>
+                        </valueListItems>
+                    </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>adminFilters</name>

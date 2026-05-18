@@ -37,6 +37,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Credit_Default_Pay_Period__c.Sub_Client_Pay_Group__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Credit_Default_Sub_Client__c.Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -48,6 +53,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Credit_Default__c.Account__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Credit_Default__c.Approver__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
