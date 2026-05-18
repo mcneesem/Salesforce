@@ -14,3 +14,7 @@
     font-weight: var(--slds-g-font-weight-6, 600);
     font-size: 1.3em;
 }
+
+.THIS .guidance-text{
+    column-count: 2;
+}
