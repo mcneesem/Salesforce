@@ -3,17 +3,18 @@
     <aura:attribute name="opportunityRecord" type="Opportunity" />
     <aura:attribute name="guidanceMessage" type="String" />
     <aura:handler name="change" value="{!v.opportunityRecord}" action="{!c.onRecordChange}" />
-    <force:recordData aura:id="recordLoader"
-                      recordId="{!v.recordId}"
-                      fields="StageName, NSP_PrimaryProduct__c,NSP_Number_of_Employees__c,NSP_Account_Segment__c"
-                      targetFields="{!v.opportunityRecord}"
-                      />
+    <force:recordData
+        aura:id="recordLoader"
+        recordId="{!v.recordId}"
+        fields="StageName, NSP_PrimaryProduct__c,NSP_Number_of_Employees__c,NSP_Account_Segment__c"
+        targetFields="{!v.opportunityRecord}"
+        />
     <lightning:card>
         <div class="slds-m-left_x-small slds-text-longform">
             <aura:if isTrue="{!v.guidanceMessage}">
                 <span class="gfs-font-style preserve-spaces slds-text-body_regular">
-			        <p class="guidance-text">{!v.guidanceMessage}</p>
-	        	</span>
+                    <p class="guidance-text">{!v.guidanceMessage}</p>
+                </span>
             </aura:if>
         </div>
     </lightning:card>
