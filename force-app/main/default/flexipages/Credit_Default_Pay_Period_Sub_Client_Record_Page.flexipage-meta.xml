@@ -80,20 +80,10 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>readonly</value>
+                    <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Name</fieldItem>
-                <identifier>RecordNameField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>required</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Credit_Default_Pay_Period__c</fieldItem>
-                <identifier>RecordCredit_Default_Pay_Period_cField</identifier>
+                <fieldItem>Record.Sub_Client__c</fieldItem>
+                <identifier>RecordSub_Client_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-15b72b5e-0b07-4455-80e1-75e2bc6ee053</name>
@@ -104,10 +94,10 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>required</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.CurrencyIsoCode</fieldItem>
-                <identifier>RecordCurrencyIsoCodeField</identifier>
+                <fieldItem>Record.Credit_Default_Pay_Period__c</fieldItem>
+                <identifier>RecordCredit_Default_Pay_Period_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-a92d5c11-4dff-42e6-a590-cd82fcbd2644</name>

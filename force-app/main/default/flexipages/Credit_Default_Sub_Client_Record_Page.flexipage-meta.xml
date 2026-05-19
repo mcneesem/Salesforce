@@ -80,20 +80,10 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>readonly</value>
+                    <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Name</fieldItem>
-                <identifier>RecordNameField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>required</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Credit_Default__c</fieldItem>
-                <identifier>RecordCredit_Default_cField</identifier>
+                <fieldItem>Record.Sub_Client__c</fieldItem>
+                <identifier>RecordSub_Client_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-1edaf616-b050-428d-901c-c4d6645870d6</name>
@@ -104,13 +94,13 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>required</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.CurrencyIsoCode</fieldItem>
-                <identifier>RecordCurrencyIsoCodeField</identifier>
+                <fieldItem>Record.Credit_Default__c</fieldItem>
+                <identifier>RecordCredit_Default_cField</identifier>
             </fieldInstance>
         </itemInstances>
-        <name>Facet-94a20528-9f56-41bb-856b-408b6d9a2668</name>
+        <name>Facet-6aa87546-8d29-4ab7-ac28-02fcba0c7340</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -128,7 +118,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-94a20528-9f56-41bb-856b-408b6d9a2668</value>
+                    <value>Facet-6aa87546-8d29-4ab7-ac28-02fcba0c7340</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
                 <identifier>flexipage_column2</identifier>

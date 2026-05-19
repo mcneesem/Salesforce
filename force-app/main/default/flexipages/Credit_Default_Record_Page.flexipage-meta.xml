@@ -144,8 +144,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.FDM_Phone_Number__c</fieldItem>
-                <identifier>RecordFDM_Phone_Number_cField</identifier>
+                <fieldItem>Record.FDM_Work_Email__c</fieldItem>
+                <identifier>RecordFDM_Work_Email_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -168,8 +168,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.FDM_Work_Email__c</fieldItem>
-                <identifier>RecordFDM_Work_Email_cField</identifier>
+                <fieldItem>Record.FDM_Phone_Number__c</fieldItem>
+                <identifier>RecordFDM_Phone_Number_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -403,16 +403,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Payroll_Supervisor__c</fieldItem>
-                <identifier>RecordPayroll_Supervisor_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.Approver__c</fieldItem>
                 <identifier>RecordApprover_PS_cField</identifier>
             </fieldInstance>
@@ -580,6 +570,12 @@
                     <name>relatedListFieldAliases</name>
                     <valueList>
                         <valueListItems>
+                            <value>Sub_Client__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>AIMS_Sub_Client_Number__c</value>
+                        </valueListItems>
+                        <valueListItems>
                             <value>Status__c</value>
                         </valueListItems>
                     </valueList>
@@ -744,6 +740,9 @@
                     <valueList>
                         <valueListItems>
                             <value>Payroll_Cycle__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Sub_Client_Pay_Group__c</value>
                         </valueListItems>
                         <valueListItems>
                             <value>Payroll_Date__c</value>

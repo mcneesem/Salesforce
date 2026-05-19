@@ -42,6 +42,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Credit_Default_Sub_Client__c.AIMS_Sub_Client_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Credit_Default_Sub_Client__c.Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
