@@ -158,16 +158,6 @@ public class NSP_InvoiceEmailMessageService {
         String targetObjId;
         String templateId;
         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-        /*
-        if(inv.NSP_Payment_Method_Count__c > 0) {
-            templateId=ACHTEMPLATEID;
-        }
-        else if (inv.NSP_Payment_Method_Count__c == 0){
-            templateId=PAYMENTTEMPLATEID;
-        }
-        else {
-            //do nothing
-        }*/
 
         //DF-05491-Added on 04Aug
         Boolean isCreditCard = false;
@@ -180,6 +170,28 @@ public class NSP_InvoiceEmailMessageService {
                 isACH = true;
             }
         }
+
+        templateId = getTemplateId(isACH, isCreditCard, inv, invLine);
+
+        targetObjId = inv.blng__BillToContact__c;
+        if(inv.NSP_Send_Email__c && inv.NSP_Bill_To_Email__c!=NULL) {
+           toAddressList.addAll(inv.NSP_Bill_To_Email__c.split(','));
+        }
+        else {
+        toAddressList.add(inv.blng__BillToContact__r.Email);
+        }
+        if(templateId!=null && targetObjId!=null) {
+
+            mail = NSP_GenericEmailUtility.generateSingleMessageWithTemplate(templateId,inv.Id,targetObjId,orgWideId,toAddressList, null, null, null);
+            mail.setSaveAsActivity(true);
+
+        }
+
+        return mail;
+    }
+
+    private static String getTemplateId(Boolean isACH,Boolean isCreditCard,blng__Invoice__c inv,blng__InvoiceLine__c invLine){
+        String templateId;
         //Payment Method Link and is ACH--
         if(isACH && inv.NSP_Legal_Entity_Internal__c == NSP_BillingConstants.WX_LEGAL_ENTITY_NAME){
             templateId = ACH_WX_TEMPLATEID;
@@ -199,24 +211,10 @@ public class NSP_InvoiceEmailMessageService {
         }
         //No Payment Method Link
         else{
-            templateId=PAYMENTTEMPLATEID;
+            templateId = PAYMENTTEMPLATEID;
         }
 
-        targetObjId = inv.blng__BillToContact__c;
-        if(inv.NSP_Send_Email__c && inv.NSP_Bill_To_Email__c!=NULL) {
-           toAddressList.addAll(inv.NSP_Bill_To_Email__c.split(','));
-        }
-        else {
-        toAddressList.add(inv.blng__BillToContact__r.Email);
-        }
-        if(templateId!=null && targetObjId!=null) {
-
-            mail = NSP_GenericEmailUtility.generateSingleMessageWithTemplate(templateId,inv.Id,targetObjId,orgWideId,toAddressList, null, null, null);
-            mail.setSaveAsActivity(true);
-
-        }
-
-        return mail;
+        return templateId;
     }
 
     // Method to get invoice records
