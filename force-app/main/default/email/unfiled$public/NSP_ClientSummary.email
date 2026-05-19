@@ -31,24 +31,22 @@ After processing your final payroll outside of Insperity, provide a year-to-date
 <p><strong>F1 or J1 Visa</strong><br/>
 Provide a copy of the respective visa for:</p>
 <c:NSP_EmployeeVisaCmp currentRecordId="{!relatedTo.Id}"/>
-
 </apex:outputPanel>
+
+<apex:outputPanel rendered="{!CONTAINS(relatedTo.Do_any_EEs_have_tax_levies__c, 'Yes')}">
+<p><strong>Tax Levies</strong><br/>
+1. Contact the levying agency for each employee with a levy.<br/>
+2. Inform the levying agency that you are no longer paying wages to the employee.<br/>
+3. Indicate that the tax levy must be transferred to Insperity.<br/>
+4. Send the revised levy to <b>Insperity Attn: Garnishment Department, 19001 Crescent Springs Dr., Kingwood, TX 77339, Fax: 866-309-1267.</b></p>
+<c:NSP_EmployeeLeviesCmp currentRecordId="{!relatedTo.Id}"/>
+</apex:outputPanel> 
 
 <apex:outputPanel rendered="{!AND(CONTAINS(relatedTo.Do_any_EEs_have_garnishments__c,'Yes'),
      IF(relatedTo.NSP_Employee_Names_List_garnishments__c!=Null,True,FALSE))}">
 <p><strong>Garnishment Court Order</strong><br/>
 Provide the most recent garnishment for:</p>
 <c:NSP_EmployeeGarnishmentCmp currentRecordId="{!relatedTo.Id}"/>
-</apex:outputPanel>
-
-<apex:outputPanel rendered="{!AND(CONTAINS(relatedTo.Do_any_EEs_have_tax_levies__c,'Yes'),
-     IF(relatedTo.NSP_List_Employee_Names_Levies__c!=Null,True,FALSE))}">
-<p><strong>Tax Levies</strong><br/>
-1. Contact the levying agency for the employee(s) listed below.<br/>
-2. Inform the levying agency that you are no longer paying wages to the employee.<br/>
-3. Indicate that the tax levy must be transferred to Insperity.<br/>
-4. Send the revised levy to <b>Insperity Attn: Garnishment Department, 19001 Crescent Springs Dr., Kingwood, TX 77339, Fax: 866-309-1267.</b></p>
-<c:NSP_EmployeeLeviesCmp currentRecordId="{!relatedTo.Id}"/>
 </apex:outputPanel>
 
 <apex:outputPanel rendered="{!OR(
