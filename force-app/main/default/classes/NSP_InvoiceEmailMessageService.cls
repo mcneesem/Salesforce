@@ -143,93 +143,140 @@ public class NSP_InvoiceEmailMessageService {
         return isInvEmailCheck;
     }
 
-
-/**
-* Single static method to generate emails.
-* @param  Invoice object
-* @return Single Email Messages - Messaging.SingleEmailMessage object
-* @Author Rakesh Das
-* @Since November 2022
-*/
-
-    public static Messaging.SingleEmailMessage generateInvoiceEmail(blng__Invoice__c inv,blng__InvoiceLine__c invLine, String orgWideId) {
-
+    //
+    // Single static method to generate emails.
+    // @param  Invoice object
+    // @return Single Email Messages - Messaging.SingleEmailMessage object
+    // @Author Rakesh Das
+    // @Since November 2022
+    //
+    public static Messaging.SingleEmailMessage generateInvoiceEmail(
+        blng__Invoice__c inv ,
+        blng__InvoiceLine__c invLine ,
+        String orgWideId
+        )
+    {
         List<String> toAddressList = New List<String>();
         String targetObjId;
         String templateId;
         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-
-        //DF-05491-Added on 04Aug
         Boolean isCreditCard = false;
-    	Boolean isACH = false;
-        if(invLine!=null && invLine.NSP_Payment_Method__c!=null){
-            if(!isCreditCard && invLine.NSP_Payment_Method__r.blng__PaymentType__c == 'Credit Card'){
+        Boolean isACH = false;
+        if ( ( invLine != null ) && ( invLine.NSP_Payment_Method__c != null ) ) {
+            if ( !isCreditCard
+                && ( invLine.NSP_Payment_Method__r.blng__PaymentType__c == 'Credit Card' )
+                )
+            {
                 isCreditCard = true;
             }
-            if(!isACH && invLine.NSP_Payment_Method__r.blng__PaymentType__c == 'ACH'){
+            if ( !isACH
+                && ( invLine.NSP_Payment_Method__r.blng__PaymentType__c == 'ACH' )
+                )
+            {
                 isACH = true;
             }
         }
-
-        templateId = NSP_InvoiceEmailMessageService.getTemplateId(isACH, isCreditCard, inv, invLine);
-
+        templateId = NSP_InvoiceEmailMessageService.getTemplateId(
+            isACH ,
+            isCreditCard ,
+            inv ,
+            invLine
+        );
         targetObjId = inv.blng__BillToContact__c;
-        if(inv.NSP_Send_Email__c && inv.NSP_Bill_To_Email__c!=NULL) {
-           toAddressList.addAll(inv.NSP_Bill_To_Email__c.split(','));
+        if ( inv.NSP_Send_Email__c
+            && String.isNotBlank( inv.NSP_Bill_To_Email__c )
+            )
+        {
+           toAddressList.addAll( inv.NSP_Bill_To_Email__c.split( ',' ) );
+        } else {
+            toAddressList.add( inv.blng__BillToContact__r.Email );
         }
-        else {
-        toAddressList.add(inv.blng__BillToContact__r.Email);
+        if ( ( templateId != null ) && ( targetObjId != null ) ) {
+            mail = NSP_GenericEmailUtility.generateSingleMessageWithTemplate(
+                templateId ,
+                inv.Id ,
+                targetObjId ,
+                orgWideId ,
+                toAddressList ,
+                null ,
+                null ,
+                null
+            );
+            mail.setSaveAsActivity( true );
         }
-        if(templateId!=null && targetObjId!=null) {
-
-            mail = NSP_GenericEmailUtility.generateSingleMessageWithTemplate(templateId,inv.Id,targetObjId,orgWideId,toAddressList, null, null, null);
-            mail.setSaveAsActivity(true);
-
-        }
-
         return mail;
     }
 
-    private static String getTemplateId(Boolean isACH,Boolean isCreditCard,blng__Invoice__c inv,blng__InvoiceLine__c invLine){
-        String templateId;
-        //Payment Method Link and is ACH--
-        if(isACH && inv.NSP_Legal_Entity_Internal__c == NSP_BillingConstants.WX_LEGAL_ENTITY_NAME){
-            templateId = NSP_InvoiceEmailMessageService.ACH_WX_TEMPLATEID;
-            if(invLine.NSP_Order_Product_Type__c == CONTRACTOR_MANAGEMENT_PRODUCT_TYPE){
-              templateId = NSP_InvoiceEmailMessageService.CONTRACTOR_MANAGEMENT_TEMPLATEID;
-            }
-        }
-        else if(isACH && inv.NSP_Legal_Entity_Internal__c == NSP_BillingConstants.RET_LEGAL_ENTITY_NAME){
-            templateId = NSP_InvoiceEmailMessageService.ACH_RET_TEMPLATEID;
-        }
-        else if (isACH){
+    private static String getTemplateId(
+        Boolean isACH ,
+        Boolean isCreditCard ,
+        blng__Invoice__c inv ,
+        blng__InvoiceLine__c invLine
+        )
+    {
+        //No Payment Method Link
+        String templateId = NSP_InvoiceEmailMessageService.PAYMENTTEMPLATEID;
+        if ( isACH ) {
+            //Payment Method Link and is ACH
             templateId = NSP_InvoiceEmailMessageService.ACHTEMPLATEID;
-        }
-        //Payment Method Link and is Credit Card
-        else if (isCreditCard){
+            if ( inv.NSP_Legal_Entity_Internal__c == NSP_BillingConstants.WX_LEGAL_ENTITY_NAME ) {
+                templateId = NSP_InvoiceEmailMessageService.ACH_WX_TEMPLATEID;
+                if ( invLine.NSP_Order_Product_Type__c == CONTRACTOR_MANAGEMENT_PRODUCT_TYPE ) {
+                    templateId = NSP_InvoiceEmailMessageService.CONTRACTOR_MANAGEMENT_TEMPLATEID;
+                }
+            } else if ( inv.NSP_Legal_Entity_Internal__c == NSP_BillingConstants.RET_LEGAL_ENTITY_NAME ) {
+                templateId = NSP_InvoiceEmailMessageService.ACH_RET_TEMPLATEID;
+            }
+        } else if ( isCreditCard ) {
+            //Payment Method Link and is Credit Card
             templateId = NSP_InvoiceEmailMessageService.CREDITCARD_TEMPLATEID;
         }
-        //No Payment Method Link
-        else{
-            templateId = NSP_InvoiceEmailMessageService.PAYMENTTEMPLATEID;
-        }
-
         return templateId;
     }
 
     // Method to get invoice records
-    public static List<blng__Invoice__c> getInvoiceRecsById (List<String> invoiceIds) {
+    public static List<blng__Invoice__c> getInvoiceRecsById( List<String> invoiceIds ) {
         List<blng__Invoice__c> invRecs;
         try {
-            invRecs = [SELECT Id,NSP_Legal_Entity_Internal__c, NSP_Payment_Method_Count__c, NSP_Invoice_Email_Sent__c, NSP_Send_Email__c,
-                       blng__InvoiceStatus__c, blng__BillToContact__c, blng__BillToContact__r.Email, LastModifiedById, LastModifiedBy.UserName,
-                       blng__Account__c, blng__Account__r.Name, NSP_Bdgt_Quote_First_Invoice__c, NSP_Bill_To_Email__c,
-                       NSP_Physical_Mail_Opt_In__c, blng__Balance__c,NSP_NoOfInvoiceLines__c,NSP_PartialPeriodApplLines__c,(SELECT name,id,NSP_Payment_Method__c,NSP_Payment_Method__r.blng__PaymentType__c,NSP_Order_Product_Type__c FROM blng__InvoiceInvoiceLines__r LIMIT 1) FROM blng__Invoice__c WHERE Id IN:invoiceIds AND blng__InvoiceStatus__c = 'Posted' AND NSP_Invoice_Email_Sent__c= FALSE ];
-
-
-        }
-        catch(Exception ex){
-            NSP_InvoiceEmailMessageService.handleException(ex ,'getInvoiceRecsById');
+            invRecs = [
+                SELECT
+                    Id ,
+                    NSP_Legal_Entity_Internal__c ,
+                    NSP_Payment_Method_Count__c ,
+                    NSP_Invoice_Email_Sent__c ,
+                    NSP_Send_Email__c ,
+                    blng__InvoiceStatus__c ,
+                    blng__BillToContact__c ,
+                    blng__BillToContact__r.Email ,
+                    LastModifiedById ,
+                    LastModifiedBy.UserName ,
+                    blng__Account__c ,
+                    blng__Account__r.Name ,
+                    NSP_Bdgt_Quote_First_Invoice__c ,
+                    NSP_Bill_To_Email__c ,
+                    NSP_Physical_Mail_Opt_In__c ,
+                    blng__Balance__c ,
+                    NSP_NoOfInvoiceLines__c ,
+                    NSP_PartialPeriodApplLines__c ,
+                    (
+                        SELECT
+                            Id ,
+                            Name ,
+                            NSP_Payment_Method__c ,
+                            NSP_Payment_Method__r.blng__PaymentType__c ,
+                            NSP_Order_Product_Type__c
+                        FROM blng__InvoiceInvoiceLines__r
+                        LIMIT 1
+                    )
+                FROM blng__Invoice__c
+                WHERE (
+                    ( Id IN :invoiceIds )
+                    AND ( blng__InvoiceStatus__c = 'Posted' )
+                    AND ( NSP_Invoice_Email_Sent__c = false )
+                )
+            ];
+        } catch( Exception e ) {
+            NSP_InvoiceEmailMessageService.handleException( e , 'getInvoiceRecsById' );
         }
         return invRecs;
     }
