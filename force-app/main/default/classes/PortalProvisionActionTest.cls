@@ -4,9 +4,30 @@ private class PortalProvisionActionTest {
     @testSetup
     private static void setupData() {
         //
+        Portal_Access_Settings__c settings = Portal_Access_Settings__c.getOrgDefaults();
+        settings.IsEnabled__c = true;
+        settings.IsDryRun__c = true;
+        settings.CommunityProfileId__c = '00e4x0000013MV2AAM'; // Customer Community Plus
+        settings.MembershipPermissionSetName__c = 'Portal_Site_Access';
+        settings.AllowedPermissionSetNames__c = 'Portal_Site_Access\r\nPortal_Use_File_Actions';
+        upsert settings;
+        //
         Account sharedAccount = new Account();
         sharedAccount.Name = 'sharedAccountName';
-        insert sharedAccount;
+        //
+        List<User> deploymentManagers = [
+            SELECT Id
+            FROM User
+            WHERE ( Id = '0054x0000056lRZAAY' )
+            LIMIT 1
+        ];
+        Assert.isNotNull( deploymentManagers , 'Null Deployment Manager query results.' );
+        Assert.isTrue( ( deploymentManagers.size() > 0 ) , 'No Deployment Manager query results.' );
+        Assert.isTrue( ( deploymentManagers.size() == 1 ) , 'Incorrect Deployment Manager query results.' );
+        User deploymentManager = deploymentManagers[0];
+        System.runas( deploymentManager ) {
+            insert sharedAccount;
+        }
         //
         Contact sharedContact = new Contact();
         sharedContact.AccountId = sharedAccount.Id;

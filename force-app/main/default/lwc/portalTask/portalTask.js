@@ -5,7 +5,6 @@ import Toast from "lightning/toast";
 import { deleteRecord , updateRecord } from "lightning/uiRecordApi";
 import PortalFileListModal from "c/portalFileListModal";
 import PortalFilePreviewModal from "c/portalFilePreviewModal";
-import { refreshApex } from "@salesforce/apex";
 import PORTAL_TASK_ID_FIELD from "@salesforce/schema/Portal_Task__c.Id";
 import PORTAL_TASK_VALUE_DATE_FIELD from "@salesforce/schema/Portal_Task__c.Value_Date__c";
 import PORTAL_TASK_VALUE_DATETIME_FIELD from "@salesforce/schema/Portal_Task__c.Value_DateTime__c";
@@ -31,6 +30,7 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
         } else if ( this.showInputText ) {
             this.recordValue = this.record?.fields?.Value_Text__c?.value;
         }
+        this.modified();
     }
 
     _recordValue; // is-an ANY ~ populated from various Portal_Task__c.Value_***__c fields...
@@ -100,6 +100,9 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
     }
     get isCompleted() {
         return ( this.record?.fields?.Status__c?.value === "Completed" );
+    }
+    get isCompletedProject() {
+        return this.isCompleted;
     }
 
     @api variant;
@@ -189,7 +192,7 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
     }
 
     get isInputDisabled() {
-        return ( this.isLoading || this.isCompleted );
+        return ( this.isLoading || this.isCompletedProject );
     }
 
     get saveButtonVariant() {
@@ -292,12 +295,13 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
     handleUploadFinished( event ) {
         if ( event?.detail?.files?.length ) {
             this.showToastSuccess( "Success" , "File Uploaded" );
-            this.refresh();
+            this.modified();
         }
     }
 
-    async refresh() {
-        await refreshApex( this.wiredPortalLinksInfo );
+    modstamp; // is-a timestamp in milliseconds
+    modified() {
+        this.modstamp = Date.now();
     }
 
     get name() {
@@ -313,6 +317,7 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
                     size: "large" ,
                     description: "Displays linked files." ,
                     links: this.links ,
+                    disabled: this.isInputDisabled ,
                     onnavigate: ( e ) => {
                         this.handleNavigate( e );
                     } ,
@@ -399,7 +404,7 @@ export default class PortalTask extends NavigationMixin(LightningElement) {
                 this.showToastError( errorLabel , errorMessage );
                 this.handleLogInfo( 'handleDeleteRecord' , JSON.stringify( error ) );
             }
-            await this.refresh();
+            this.modified();
             this.isDeleting = false;
         }
     }

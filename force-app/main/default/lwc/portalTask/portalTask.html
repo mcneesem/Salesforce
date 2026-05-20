@@ -1,6 +1,6 @@
 <template>
     <template lwc:if={record}>
-        <c-portal-related-files linked-entity-id={parentRecordId} onloaded={handleLoaded}></c-portal-related-files>
+        <c-portal-related-files linked-entity-id={parentRecordId} onloaded={handleLoaded} modstamp={modstamp}></c-portal-related-files>
         <lightning-layout multiple-rows>
             <lightning-layout-item size="12" padding="around-small">
                 <lightning-layout onclick={handleClickAccordion} onkeydown={handleKeyDown}>

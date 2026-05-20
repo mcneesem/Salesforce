@@ -1,6 +1,7 @@
 import { LightningElement , api , wire } from 'lwc';
 import { getRecords } from "lightning/uiRecordApi";
 import getPortalLinks from "@salesforce/apex/PortalClientSelector.getPortalLinks";
+import { refreshApex } from "@salesforce/apex";
 import CONTENTDOCUMENTLINK_ID_FIELD from "@salesforce/schema/ContentDocumentLink.Id";
 import CONTENTDOCUMENTLINK_CONTENTDOCUMENTID_FIELD from "@salesforce/schema/ContentDocumentLink.ContentDocumentId";
 import CONTENTDOCUMENTLINK_CONTENTDOCUMENT_CONTENTSIZE_FIELD from "@salesforce/schema/ContentDocumentLink.ContentDocument.ContentSize";
@@ -85,6 +86,25 @@ export default class PortalRelatedFiles extends LightningElement {
             this.error = error;
             this.links = undefined;
         }
+    }
+
+    _modstamp; // is-a timestamp in milliseconds
+    @api
+    get modstamp() {
+        return this._modstamp;
+    };
+    set modstamp( value ) {
+        let isModified = (
+            this._modstamp
+            && ( this._modstamp != value )
+        );
+        this._modstamp = value;
+        if ( isModified ) {
+            this.refresh();
+        }
+    };
+    async refresh() {
+        await refreshApex( this.wiredPortalLinksInfo );
     }
 
 }

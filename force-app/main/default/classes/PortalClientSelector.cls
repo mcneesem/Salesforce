@@ -1,5 +1,5 @@
 public with sharing class PortalClientSelector {
-    // test w/ PortalClientSelectorTest (87%)
+    // test w/ PortalClientSelectorTest (86%)
 
     @AuraEnabled(cacheable=true)
     public static List<Portal_Client__c> getPortalClients() {
@@ -10,8 +10,10 @@ public with sharing class PortalClientSelector {
                 Id IN (
                     SELECT Portal_Client__c
                     FROM Portal_Project__c
+                    WHERE ( Status__c = 'Active' )
                 )
             )
+            ORDER BY CreatedDate ASC
         ];
     }
 

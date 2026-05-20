@@ -1,519 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <actionCalls>
-        <name>Provision_Portal_User</name>
-        <label>Provision Portal User</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <actionName>PortalProvisionAction</actionName>
-        <actionType>apex</actionType>
-        <connector>
-            <targetReference>Check_Portal_User_Id</targetReference>
-        </connector>
-        <flowTransactionModel>Automatic</flowTransactionModel>
-        <inputParameters>
-            <name>recordId</name>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </inputParameters>
-        <nameSegment>PortalProvisionAction</nameSegment>
-        <offset>0</offset>
-        <outputParameters>
-            <assignToReference>portalUserErrorMessage</assignToReference>
-            <name>errorMessage</name>
-        </outputParameters>
-        <outputParameters>
-            <assignToReference>portalUserId</assignToReference>
-            <name>userId</name>
-        </outputParameters>
-    </actionCalls>
     <apiVersion>66.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
-    <assignments>
-        <name>Populate_Contact_Salesforce_User_Certinia</name>
-        <label>Populate Contact Salesforce User (Certinia)</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>recordContact.pse__Salesforce_User__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>recordPortalUser.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Update_Contact_Certinia</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Populate_Portal_Client</name>
-        <label>Populate Portal Client</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>recordPortalClient.Account__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Account.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>recordPortalClient.Client_Number__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Account.NSP_AIMS_Client__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>recordPortalClient.Name</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Account.Name</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Create_Portal_Client</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_Contact_Records_Count</name>
-        <label>Set Contact Records Count</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>getContactCollectionCount</assignToReference>
-            <operator>AssignCount</operator>
-            <value>
-                <elementReference>Get_All_Portal_Contacts</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Set_Portal_Alias_Name_On_Contact</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_Fault_Element_Check_Contact</name>
-        <label>Set Fault Element: Check_Contact</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>faultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Check_Contact</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_Fault_Element_Create_Portal_Client</name>
-        <label>Set Fault Element: Create_Portal_Client</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>faultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Create_Portal_Client</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_Fault_Element_Get_Account</name>
-        <label>Set Fault Element: Get_Account</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>faultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Get_Account</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_Fault_Element_Get_Account_Contact_Relationship</name>
-        <label>Set Fault Element: Get_Account_Contact_Relationship</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>faultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Get_Account_Contact_Relationship</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_Fault_Element_Get_All_Portal_Contacts</name>
-        <label>Set Fault Element: Get_All_Portal_Contacts</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>faultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Get_All_Portal_Contacts</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_Fault_Element_Get_Contact_Account</name>
-        <label>Set Fault Element: Get_Contact_Account</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>faultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Get_Contact_Account</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_Fault_Element_Get_Portal_Client</name>
-        <label>Set Fault Element: Get_Portal_Client</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>faultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Get_Portal_Client</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_Fault_Element_Get_Portal_User</name>
-        <label>Set Fault Element: Get_Portal_User</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>faultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Get_Portal_User</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_Fault_Element_Get_Portal_Users</name>
-        <label>Set Fault Element: Get_Portal_Users</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>faultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Get_Portal_Users</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_Fault_Element_Update_Contact</name>
-        <label>Set Fault Element: Update_Contact</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>faultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Update_Contact</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_Fault_Element_Update_Contact_Certinia</name>
-        <label>Set Fault Element: Update_Contact_Certinia</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>faultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Update_Contact_Certinia</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_Portal_Alias_Name_On_Contact</name>
-        <label>Set Portal Alias Name On Contact</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>recordContact.Portal_Alias__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>buildPortalAlias</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Update_Contact</targetReference>
-        </connector>
-    </assignments>
     <customProperties>
         <name>ScreenProgressIndicator</name>
         <value>
             <stringValue>{&quot;location&quot;:&quot;top&quot;,&quot;type&quot;:&quot;simple&quot;}</stringValue>
         </value>
     </customProperties>
-    <decisions>
-        <name>Check_Account</name>
-        <label>Check Account</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Get_Contact</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Found_Account</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Account</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_Portal_Client</targetReference>
-            </connector>
-            <label>Found Account</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Check_Account_Contact_Relationship</name>
-        <label>Check Account Contact Relationship</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Error_Screen_Missing_Account_Contact_Relationship</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Has_Account_Contact_Relationship</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Account_Contact_Relationship</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Check_Work_Email</targetReference>
-            </connector>
-            <label>Has Account Contact Relationship</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Check_Contact</name>
-        <label>Check Contact</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Prepare_Screen</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Found_Contact</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>recordContact</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Check_Contact_Account</targetReference>
-            </connector>
-            <label>Found Contact</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Check_Contact_Account</name>
-        <label>Check Contact Account</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Error_Screen_Contact_Must_Have_Account</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Has_Contact_Account</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>recordContact.AccountId</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_Contact_Account</targetReference>
-            </connector>
-            <label>Has Contact Account</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Check_Contact_Account_Owner</name>
-        <label>Check Contact Account Owner</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Check_Portal_Alias</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Has_Contact_Account_Owner</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Contact_Account.OwnerId</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Check_Contact_Account_Owner_Role</targetReference>
-            </connector>
-            <label>Has Contact Account Owner</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Check_Contact_Account_Owner_Role</name>
-        <label>Check Contact Account Owner Role</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Error_Screen_Account_Owner_Must_Have_Role</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Has_Contact_Account_Owner_Role</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Contact_Account.Owner.UserRoleId</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Check_Portal_Alias</targetReference>
-            </connector>
-            <label>Has Contact Account Owner Role</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Check_Contact_Certinia</name>
-        <label>Check Contact (Certinia)</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Permit_Screen</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Requires_Update_Certinia</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>recordPortalUser</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>recordContact</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>recordContact.pse__Salesforce_User__c</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Populate_Contact_Salesforce_User_Certinia</targetReference>
-            </connector>
-            <label>Requires Update (Certinia)</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Check_Input</name>
-        <label>Check Input</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Error_Screen_Missing_Record_Id</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Valid_Input</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>recordId</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_Account_Contact_Relationship</targetReference>
-            </connector>
-            <label>Valid Input</label>
-        </rules>
-    </decisions>
     <decisions>
         <name>Check_Permission</name>
         <label>Check Permission</label>
@@ -534,227 +28,79 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Check_Input</targetReference>
+                <targetReference>Portal_Access_Prepare</targetReference>
             </connector>
             <label>Has Permission</label>
         </rules>
     </decisions>
     <decisions>
-        <name>Check_Portal_Alias</name>
-        <label>Check Portal Alias</label>
+        <name>Check_Permit_Success</name>
+        <label>Check Permit Success</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Get_All_Portal_Contacts</targetReference>
-        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Has_Portal_Alias</name>
+            <name>Is_Permit_Success</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>recordContact.Portal_Alias__c</leftValueReference>
-                <operator>IsBlank</operator>
+                <leftValueReference>isSuccessPermit</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Prepare_Screen</targetReference>
+                <targetReference>Portal_Access_Notify</targetReference>
             </connector>
-            <label>Has Portal Alias</label>
+            <label>Is Permit Success</label>
         </rules>
     </decisions>
     <decisions>
-        <name>Check_Portal_Client</name>
-        <label>Check Portal Client</label>
+        <name>Check_Prepare_Success</name>
+        <label>Check Prepare Success</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Populate_Portal_Client</targetReference>
-        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Found_Portal_Client</name>
+            <name>Is_Prepare_Success</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>recordPortalClient</leftValueReference>
-                <operator>IsBlank</operator>
+                <leftValueReference>isSuccessPrepare</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_Contact</targetReference>
+                <targetReference>Portal_Access_Provision</targetReference>
             </connector>
-            <label>Found Portal Client</label>
+            <label>Is Prepare Success</label>
         </rules>
     </decisions>
     <decisions>
-        <name>Check_Portal_User</name>
-        <label>Check Portal User</label>
+        <name>Check_Provision_Success</name>
+        <label>Check Provision Success</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Error_Screen_Missing_Portal_User</targetReference>
-        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Has_Portal_User</name>
+            <name>Is_Provision_Success</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>recordPortalUser</leftValueReference>
-                <operator>IsBlank</operator>
+                <leftValueReference>isSuccessProvision</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Provision_Screen</targetReference>
+                <targetReference>Portal_Access_Permit</targetReference>
             </connector>
-            <label>Has Portal User</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Check_Portal_User_Id</name>
-        <label>Check Portal User Id</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Error_Screen_Missing_Portal_User_Id</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Has_Portal_User_Id</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>portalUserId</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_Portal_User</targetReference>
-            </connector>
-            <label>Has Portal User Id</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Check_Prior_Provisioning</name>
-        <label>Check Prior Provisioning</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Provision_Portal_User</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Already_Provisioned</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>recordPortalUser</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Provision_Screen</targetReference>
-            </connector>
-            <label>Already Provisioned</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Check_Work_Email</name>
-        <label>Check Work Email</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Error_Screen_Missing_Work_Email</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Has_Work_Email</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Account_Contact_Relationship.NSP_Work_Email__c</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_Account</targetReference>
-            </connector>
-            <label>Has Work Email</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Validate_Contacts_With_Portal_Names</name>
-        <label>Validate Contacts With Portal Names</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Set_Portal_Alias_Name_On_Contact</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Valid_Contacts_With_Portal_Names</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_All_Portal_Contacts</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_All_Portal_Contacts</leftValueReference>
-                <operator>IsEmpty</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Set_Contact_Records_Count</targetReference>
-            </connector>
-            <label>Valid Contacts With Portal Names</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Verify_Contact_Account</name>
-        <label>Verify Contact Account</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Check_Portal_Alias</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Found_Contact_Account</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Contact_Account</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Check_Contact_Account_Owner</targetReference>
-            </connector>
-            <label>Found Contact Account</label>
+            <label>Is Provision Success</label>
         </rules>
     </decisions>
     <description>New Client Portal: Portal Access</description>
     <environments>Default</environments>
-    <formulas>
-        <name>buildPortalAlias</name>
-        <dataType>String</dataType>
-        <expression>LEFT( LOWER( {!recordContact.LastName} ) , 20 )
-&amp; &quot;.&quot;
-&amp; LPAD( TEXT( {!getContactCollectionCount} + 1 ) , 9 , &quot;0&quot; )</expression>
-    </formulas>
     <interviewLabel>Portal Access {!$Flow.CurrentDateTime}</interviewLabel>
     <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Portal Access</label>
@@ -777,566 +123,18 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
-    <recordCreates>
-        <name>Create_Portal_Client</name>
-        <label>Create Portal Client</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>Get_Contact</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Set_Fault_Element_Create_Portal_Client</targetReference>
-        </faultConnector>
-        <inputReference>recordPortalClient</inputReference>
-    </recordCreates>
-    <recordLookups>
-        <name>Get_Account</name>
-        <label>Get Account</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Check_Account</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Set_Fault_Element_Get_Account</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Account_Contact_Relationship.AccountId</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Account</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_Account_Contact_Relationship</name>
-        <label>Get Account Contact Relationship</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Check_Account_Contact_Relationship</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Set_Fault_Element_Get_Account_Contact_Relationship</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>AccountContactRelation</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_All_Portal_Contacts</name>
-        <label>Get All Portal Contacts</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Validate_Contacts_With_Portal_Names</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Set_Fault_Element_Get_All_Portal_Contacts</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Portal_Alias__c</field>
-            <operator>IsNull</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>false</getFirstRecordOnly>
-        <object>Contact</object>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>Portal_Alias__c</queriedFields>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_Contact</name>
-        <label>Get Contact</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Check_Contact</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Set_Fault_Element_Check_Contact</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Account_Contact_Relationship.ContactId</elementReference>
-            </value>
-        </filters>
-        <object>Contact</object>
-        <outputReference>recordContact</outputReference>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>AccountId</queriedFields>
-        <queriedFields>LastName</queriedFields>
-        <queriedFields>Portal_Alias__c</queriedFields>
-        <queriedFields>NSP_Preferred_First_Name__c</queriedFields>
-        <queriedFields>pse__Salesforce_User__c</queriedFields>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_Contact_Account</name>
-        <label>Get Contact Account</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Verify_Contact_Account</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Set_Fault_Element_Get_Contact_Account</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordContact.AccountId</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Account</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_Portal_Client</name>
-        <label>Get Portal Client</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Check_Portal_Client</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Set_Fault_Element_Get_Portal_Client</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Account__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Account.Id</elementReference>
-            </value>
-        </filters>
-        <object>Portal_Client__c</object>
-        <outputReference>recordPortalClient</outputReference>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>Account__c</queriedFields>
-        <queriedFields>Client_Number__c</queriedFields>
-        <queriedFields>Name</queriedFields>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_Portal_User</name>
-        <label>Get Portal User</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Check_Portal_User</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Set_Fault_Element_Get_Portal_User</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>portalUserId</elementReference>
-            </value>
-        </filters>
-        <object>User</object>
-        <outputReference>recordPortalUser</outputReference>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>Username</queriedFields>
-        <queriedFields>Name</queriedFields>
-        <queriedFields>Alias</queriedFields>
-        <queriedFields>CommunityNickname</queriedFields>
-        <queriedFields>Email</queriedFields>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_Portal_Users</name>
-        <label>Get Portal Users</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Check_Prior_Provisioning</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Set_Fault_Element_Get_Portal_Users</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>ContactId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordContact.Id</elementReference>
-            </value>
-        </filters>
-        <object>User</object>
-        <outputReference>recordPortalUser</outputReference>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>Username</queriedFields>
-        <queriedFields>Name</queriedFields>
-        <queriedFields>Alias</queriedFields>
-        <queriedFields>CommunityNickname</queriedFields>
-        <queriedFields>Email</queriedFields>
-    </recordLookups>
-    <recordUpdates>
-        <name>Update_Contact</name>
-        <label>Update Contact</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>Prepare_Screen</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Set_Fault_Element_Update_Contact</targetReference>
-        </faultConnector>
-        <inputReference>recordContact</inputReference>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Update_Contact_Certinia</name>
-        <label>Update Contact (Certinia)</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>Permit_Screen</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Set_Fault_Element_Update_Contact_Certinia</targetReference>
-        </faultConnector>
-        <inputReference>recordContact</inputReference>
-    </recordUpdates>
-    <runInMode>SystemModeWithSharing</runInMode>
-    <screens>
-        <name>Error_Screen_Account_Owner_Must_Have_Role</name>
-        <label>Error Screen: Account Owner Must Have Role</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <fields>
-            <name>Error_Message_Account_Owner_Must_Have_Role</name>
-            <fieldText>&lt;p&gt;Error: Account Owner Must Have Role (&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!Get_Contact_Account.Id}, {!Get_Contact_Account.OwnerId}&lt;/span&gt;).&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <styleProperties>
-                <verticalAlignment>
-                    <stringValue>top</stringValue>
-                </verticalAlignment>
-                <width>
-                    <stringValue>12</stringValue>
-                </width>
-            </styleProperties>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
-        <name>Error_Screen_Contact_Must_Have_Account</name>
-        <label>Error Screen: Contact Must Have Account</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <fields>
-            <name>Error_Message_Contact_Must_Have_Account</name>
-            <fieldText>&lt;p&gt;Error: Contact Must Have Account ({!recordContact.Id}).&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <styleProperties>
-                <verticalAlignment>
-                    <stringValue>top</stringValue>
-                </verticalAlignment>
-                <width>
-                    <stringValue>12</stringValue>
-                </width>
-            </styleProperties>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
-        <name>Error_Screen_Flow_FaultMessage</name>
-        <label>Error Screen: Flow FaultMessage</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <fields>
-            <name>Error_Message_Flow_FaultMessage</name>
-            <fieldText>&lt;p&gt;Flow Fault: {!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <styleProperties>
-                <verticalAlignment>
-                    <stringValue>top</stringValue>
-                </verticalAlignment>
-                <width>
-                    <stringValue>12</stringValue>
-                </width>
-            </styleProperties>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
-        <name>Error_Screen_Missing_Account_Contact_Relationship</name>
-        <label>Error Screen: Missing Account Contact Relationship</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <fields>
-            <name>Error_Message_Missing_Account_Contact_Relationship</name>
-            <fieldText>&lt;p&gt;Error: Missing Account Contact Relationship ({!recordId}).&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <styleProperties>
-                <verticalAlignment>
-                    <stringValue>top</stringValue>
-                </verticalAlignment>
-                <width>
-                    <stringValue>12</stringValue>
-                </width>
-            </styleProperties>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
+    <runInMode>DefaultMode</runInMode>
     <screens>
         <name>Error_Screen_Missing_Permission</name>
         <label>Error Screen: Missing Permission</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <allowBack>true</allowBack>
+        <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
+        <allowPause>false</allowPause>
         <fields>
             <name>Error_Message_Missing_Permission</name>
-            <fieldText>&lt;p&gt;Error: Missing permission.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <styleProperties>
-                <verticalAlignment>
-                    <stringValue>top</stringValue>
-                </verticalAlignment>
-                <width>
-                    <stringValue>12</stringValue>
-                </width>
-            </styleProperties>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
-        <name>Error_Screen_Missing_Portal_User</name>
-        <label>Error Screen: Missing Portal User</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <fields>
-            <name>Error_Message_Missing_Portal_User</name>
-            <fieldText>&lt;p&gt;Error: Missing Portal User (&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!portalUserId})&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <styleProperties>
-                <verticalAlignment>
-                    <stringValue>top</stringValue>
-                </verticalAlignment>
-                <width>
-                    <stringValue>12</stringValue>
-                </width>
-            </styleProperties>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
-        <name>Error_Screen_Missing_Portal_User_Id</name>
-        <label>Error Screen: Missing Portal User Id</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <fields>
-            <name>Error_Message_Missing_Portal_User_Id</name>
-            <fieldText>&lt;p&gt;Error: Missing Portal User Id&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!portalUserErrorMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <styleProperties>
-                <verticalAlignment>
-                    <stringValue>top</stringValue>
-                </verticalAlignment>
-                <width>
-                    <stringValue>12</stringValue>
-                </width>
-            </styleProperties>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
-        <name>Error_Screen_Missing_Record_Id</name>
-        <label>Error Screen: Missing Record Id</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <fields>
-            <name>Error_Message_Missing_Record_Id</name>
-            <fieldText>&lt;p&gt;Error: Missing recordId.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <styleProperties>
-                <verticalAlignment>
-                    <stringValue>top</stringValue>
-                </verticalAlignment>
-                <width>
-                    <stringValue>12</stringValue>
-                </width>
-            </styleProperties>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
-        <name>Error_Screen_Missing_Work_Email</name>
-        <label>Error Screen: Missing Work Email</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <fields>
-            <name>Error_Message_Missing_Work_Email</name>
-            <fieldText>&lt;p&gt;Error: Missing Work Email ({!recordId}).&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <styleProperties>
-                <verticalAlignment>
-                    <stringValue>top</stringValue>
-                </verticalAlignment>
-                <width>
-                    <stringValue>12</stringValue>
-                </width>
-            </styleProperties>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
-        <name>Notify_Screen</name>
-        <label>Notify Screen</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <fields>
-            <name>Notify_Display_Text</name>
-            <fieldText>&lt;p&gt;Notify&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <styleProperties>
-                <verticalAlignment>
-                    <stringValue>top</stringValue>
-                </verticalAlignment>
-                <width>
-                    <stringValue>12</stringValue>
-                </width>
-            </styleProperties>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
-        <name>Permit_Screen</name>
-        <label>Permit Screen</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>Notify_Screen</targetReference>
-        </connector>
-        <fields>
-            <name>Permit_Display_Text</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Permit&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Portal User (Id={!recordPortalUser.Id})&lt;/p&gt;&lt;p&gt;- Full Name: {!recordPortalUser.Name}&lt;/p&gt;&lt;p&gt;- Username: {!recordPortalUser.Username}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Portal Contact (Id={!recordContact.Id})&lt;/p&gt;&lt;p&gt;- Portal Alias: {!recordContact.Portal_Alias__c}&lt;/p&gt;&lt;p&gt;- Salesforce User: &lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!recordContact.pse__Salesforce_User__c}&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <styleProperties>
-                <verticalAlignment>
-                    <stringValue>top</stringValue>
-                </verticalAlignment>
-                <width>
-                    <stringValue>12</stringValue>
-                </width>
-            </styleProperties>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
-        <name>Prepare_Screen</name>
-        <label>Prepare Screen</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>Get_Portal_Users</targetReference>
-        </connector>
-        <fields>
-            <name>Prepare_Display_Text</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Prepare&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Account Contact Relation (Id={!recordId})&lt;/p&gt;&lt;p&gt;- Work Email: {!Get_Account_Contact_Relationship.NSP_Work_Email__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Portal Client &lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;(Id=&lt;/span&gt;{!recordPortalClient.Id})&lt;/p&gt;&lt;p&gt;- Name&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;: {!recordPortalClient.Name} &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Portal Contact &lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;(Id={!recordContact.Id})&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;- &lt;/span&gt;Portal Alias: &lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!recordContact.Portal_Alias__c}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;- &lt;/span&gt;Preferred First Name: &lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!recordContact.NSP_Preferred_First_Name__c}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;- &lt;/span&gt;Last Name: &lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!recordContact.LastName}&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <styleProperties>
-                <verticalAlignment>
-                    <stringValue>top</stringValue>
-                </verticalAlignment>
-                <width>
-                    <stringValue>12</stringValue>
-                </width>
-            </styleProperties>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
-        <name>Provision_Screen</name>
-        <label>Provision Screen</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>Check_Contact_Certinia</targetReference>
-        </connector>
-        <fields>
-            <name>Provision_Display_Text</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Provision&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Portal User (Id={!recordPortalUser.Id})&lt;/p&gt;&lt;p&gt;- Full Name: {!recordPortalUser.Name}&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;- &lt;/span&gt;Username: {!recordPortalUser.Username}&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;- &lt;/span&gt;Alias: {!recordPortalUser.Alias}&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;- &lt;/span&gt;Nickname: {!recordPortalUser.CommunityNickname}&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;- &lt;/span&gt;Email: {!recordPortalUser.Email}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Flow: Portal Access&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Error: Missing permission.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -1359,32 +157,81 @@
     </start>
     <status>Draft</status>
     <subflows>
-        <name>Insperity_Fault_Handler_Subflow</name>
-        <label>Insperity Fault Handler Subflow</label>
+        <name>Portal_Access_Notify</name>
+        <label>Portal Access - Notify</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <flowName>Portal_Access_Notify</flowName>
+        <inputAssignments>
+            <name>recordId</name>
+            <value>
+                <elementReference>portalUserId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Portal_Access_Permit</name>
+        <label>Portal Access - Permit</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Error_Screen_Flow_FaultMessage</targetReference>
+            <targetReference>Check_Permit_Success</targetReference>
         </connector>
-        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <flowName>Portal_Access_Permit</flowName>
         <inputAssignments>
-            <name>faultElement</name>
+            <name>recordId</name>
             <value>
-                <elementReference>faultElement</elementReference>
+                <elementReference>portalUserId</elementReference>
             </value>
         </inputAssignments>
+        <outputAssignments>
+            <assignToReference>isSuccessPermit</assignToReference>
+            <name>isSuccess</name>
+        </outputAssignments>
+    </subflows>
+    <subflows>
+        <name>Portal_Access_Prepare</name>
+        <label>Portal Access - Prepare</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Check_Prepare_Success</targetReference>
+        </connector>
+        <flowName>Portal_Access_Prepare</flowName>
         <inputAssignments>
-            <name>faultFlow</name>
+            <name>recordId</name>
             <value>
-                <stringValue>Portal_Access</stringValue>
+                <elementReference>recordId</elementReference>
             </value>
         </inputAssignments>
+        <outputAssignments>
+            <assignToReference>isSuccessPrepare</assignToReference>
+            <name>isSuccess</name>
+        </outputAssignments>
+    </subflows>
+    <subflows>
+        <name>Portal_Access_Provision</name>
+        <label>Portal Access - Provision</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Check_Provision_Success</targetReference>
+        </connector>
+        <flowName>Portal_Access_Provision</flowName>
         <inputAssignments>
-            <name>faultMessage</name>
+            <name>recordId</name>
             <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
+                <elementReference>recordId</elementReference>
             </value>
         </inputAssignments>
+        <outputAssignments>
+            <assignToReference>isSuccessProvision</assignToReference>
+            <name>isSuccess</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>portalUserId</assignToReference>
+            <name>portalUserId</name>
+        </outputAssignments>
     </subflows>
     <variables>
         <name>faultElement</name>
@@ -1397,24 +244,33 @@
         </value>
     </variables>
     <variables>
-        <name>getContactCollectionCount</name>
-        <dataType>Number</dataType>
+        <name>isSuccessPermit</name>
+        <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
-        <scale>0</scale>
         <value>
-            <numberValue>0.0</numberValue>
+            <booleanValue>false</booleanValue>
         </value>
     </variables>
     <variables>
-        <name>portalUserErrorMessage</name>
-        <dataType>String</dataType>
+        <name>isSuccessPrepare</name>
+        <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <value>
-            <stringValue></stringValue>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>isSuccessProvision</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
         </value>
     </variables>
     <variables>
@@ -1428,14 +284,6 @@
         </value>
     </variables>
     <variables>
-        <name>recordContact</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Contact</objectType>
-    </variables>
-    <variables>
         <name>recordId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -1444,21 +292,5 @@
         <value>
             <stringValue></stringValue>
         </value>
-    </variables>
-    <variables>
-        <name>recordPortalClient</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Portal_Client__c</objectType>
-    </variables>
-    <variables>
-        <name>recordPortalUser</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>User</objectType>
     </variables>
 </Flow>
