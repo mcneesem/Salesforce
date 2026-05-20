@@ -171,7 +171,7 @@ public class NSP_InvoiceEmailMessageService {
             }
         }
 
-        templateId = getTemplateId(isACH, isCreditCard, inv, invLine);
+        templateId = NSP_InvoiceEmailMessageService.getTemplateId(isACH, isCreditCard, inv, invLine);
 
         targetObjId = inv.blng__BillToContact__c;
         if(inv.NSP_Send_Email__c && inv.NSP_Bill_To_Email__c!=NULL) {
@@ -194,24 +194,24 @@ public class NSP_InvoiceEmailMessageService {
         String templateId;
         //Payment Method Link and is ACH--
         if(isACH && inv.NSP_Legal_Entity_Internal__c == NSP_BillingConstants.WX_LEGAL_ENTITY_NAME){
-            templateId = ACH_WX_TEMPLATEID;
+            templateId = NSP_InvoiceEmailMessageService.ACH_WX_TEMPLATEID;
             if(invLine.NSP_Order_Product_Type__c == CONTRACTOR_MANAGEMENT_PRODUCT_TYPE){
-              templateId = CONTRACTOR_MANAGEMENT_TEMPLATEID;
+              templateId = NSP_InvoiceEmailMessageService.CONTRACTOR_MANAGEMENT_TEMPLATEID;
             }
         }
         else if(isACH && inv.NSP_Legal_Entity_Internal__c == NSP_BillingConstants.RET_LEGAL_ENTITY_NAME){
-            templateId = ACH_RET_TEMPLATEID;
+            templateId = NSP_InvoiceEmailMessageService.ACH_RET_TEMPLATEID;
         }
         else if (isACH){
-            templateId = ACHTEMPLATEID;
+            templateId = NSP_InvoiceEmailMessageService.ACHTEMPLATEID;
         }
         //Payment Method Link and is Credit Card
         else if (isCreditCard){
-            templateId = CREDITCARD_TEMPLATEID;
+            templateId = NSP_InvoiceEmailMessageService.CREDITCARD_TEMPLATEID;
         }
         //No Payment Method Link
         else{
-            templateId = PAYMENTTEMPLATEID;
+            templateId = NSP_InvoiceEmailMessageService.PAYMENTTEMPLATEID;
         }
 
         return templateId;
