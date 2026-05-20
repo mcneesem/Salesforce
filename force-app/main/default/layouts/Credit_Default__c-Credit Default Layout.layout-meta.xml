@@ -145,10 +145,6 @@
         <editHeading>true</editHeading>
         <label>Approver</label>
         <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Payroll_Supervisor__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns/>
         <style>TwoColumnsLeftToRight</style>
