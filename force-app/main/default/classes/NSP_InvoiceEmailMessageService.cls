@@ -224,7 +224,7 @@ public class NSP_InvoiceEmailMessageService {
             invRecs = [SELECT Id,NSP_Legal_Entity_Internal__c, NSP_Payment_Method_Count__c, NSP_Invoice_Email_Sent__c, NSP_Send_Email__c,
                        blng__InvoiceStatus__c, blng__BillToContact__c, blng__BillToContact__r.Email, LastModifiedById, LastModifiedBy.UserName,
                        blng__Account__c, blng__Account__r.Name, NSP_Bdgt_Quote_First_Invoice__c, NSP_Bill_To_Email__c,
-                       NSP_Physical_Mail_Opt_In__c, blng__Balance__c,NSP_NoOfInvoiceLines__c,NSP_PartialPeriodApplLines__c,(SELECT name,id,NSP_Payment_Method__c,NSP_Payment_Method__r.blng__PaymentType__c,NSP_Order_Product_Type__c FROM blng__InvoiceInvoiceLines__r) FROM blng__Invoice__c WHERE Id IN:invoiceIds AND blng__InvoiceStatus__c = 'Posted' AND NSP_Invoice_Email_Sent__c= FALSE ];
+                       NSP_Physical_Mail_Opt_In__c, blng__Balance__c,NSP_NoOfInvoiceLines__c,NSP_PartialPeriodApplLines__c,(SELECT name,id,NSP_Payment_Method__c,NSP_Payment_Method__r.blng__PaymentType__c,NSP_Order_Product_Type__c FROM blng__InvoiceInvoiceLines__r LIMIT 1) FROM blng__Invoice__c WHERE Id IN:invoiceIds AND blng__InvoiceStatus__c = 'Posted' AND NSP_Invoice_Email_Sent__c= FALSE ];
 
 
         }
