@@ -114,6 +114,9 @@
                     <elementReference>$Record.CreatedById</elementReference>
                 </rightValue>
             </conditions>
+            <connector>
+                <targetReference>Outbound_Email_custom_setting_check</targetReference>
+            </connector>
             <label>Contains Creator</label>
         </rules>
     </decisions>
@@ -143,32 +146,13 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Check_Bypass</name>
-        <label>Check Bypass</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Check_Owner_User_vs_Queue</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Has_Bypass</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Setup.NSP_Trigger_Switch__c.NSP_Service_Case__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <label>Has Bypass</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Check_Group_Email</name>
         <label>Check Group Email</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Outbound_Email_custom_setting_check</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Has_Group_Email</name>
@@ -198,6 +182,9 @@
         <label>Check Owner: User vs Queue</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Outbound_Email_custom_setting_check</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Is_User</name>
@@ -263,6 +250,9 @@
                     <elementReference>$Record.CreatedById</elementReference>
                 </rightValue>
             </conditions>
+            <connector>
+                <targetReference>Outbound_Email_custom_setting_check</targetReference>
+            </connector>
             <label>Owner Is Creator</label>
         </rules>
     </decisions>
@@ -271,6 +261,9 @@
         <label>check service user</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Outbound_Email_custom_setting_check</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>is_service_user</name>
@@ -543,7 +536,7 @@
         <recordTriggerType>Create</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Check_Bypass</targetReference>
+                <targetReference>Check_Owner_User_vs_Queue</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
