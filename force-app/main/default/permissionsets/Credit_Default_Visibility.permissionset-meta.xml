@@ -57,7 +57,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Credit_Default__c.Account__c</field>
+        <field>Credit_Default__c.Account_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -133,11 +133,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Credit_Default__c.Other_Client_Info_Credit_Should_Know__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Credit_Default__c.Payroll_Supervisor__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
