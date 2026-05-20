@@ -166,10 +166,10 @@
             <name>Is_Enforced</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>$Permission.Enforce_Termination_Reason_Rules</leftValueReference>
+                <leftValueReference>$Permission.Bypass_Termination_Reason_Rules</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>

@@ -24,6 +24,10 @@
                 <behavior>Required</behavior>
                 <field>Portal_Project__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Portal_Guidance__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

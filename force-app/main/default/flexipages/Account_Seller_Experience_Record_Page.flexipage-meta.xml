@@ -45,71 +45,13 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Partner_Lifecycle__c</fieldItem>
-                <identifier>RecordNSP_Partner_Lifecycle_cField</identifier>
+                <fieldItem>Record.Named_Account_Group_Owner__c</fieldItem>
+                <identifier>RecordNamed_Account_Group_Owner_cField</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.RecordTypeName__c}</leftValue>
+                        <leftValue>{!Record.Named_Account_Group_Owner__r.IsActive}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>NSP_Partner_Client</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.iSolved_ID__c</fieldItem>
-                <identifier>RecordiSolved_ID_cField2</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.iSolved_ID__c}</leftValue>
-                        <operator>NE</operator>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_AIMS_Client__c</fieldItem>
-                <identifier>RecordNSP_AIMS_Client_cField2</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.PEO_TES_Client_Status__c}</leftValue>
-                        <operator>NE</operator>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_AIMS_Client__c}</leftValue>
-                        <operator>NE</operator>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_AIMS_First_Pay_Date__c</fieldItem>
-                <identifier>RecordNSP_AIMS_First_Pay_Date_cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.PEO_TES_Client_Status__c}</leftValue>
-                        <operator>NE</operator>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.NSP_AIMS_Client__c}</leftValue>
-                        <operator>NE</operator>
+                        <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -140,201 +82,78 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Named_Account_Group_Owner__c</fieldItem>
-                <identifier>RecordNamed_Account_Group_Owner_cField</identifier>
+                <fieldItem>Record.NSP_Account_Segment__c</fieldItem>
+                <identifier>RecordNSP_Account_Segment_cField3</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NumberOfEmployees</fieldItem>
+                <identifier>RecordNumberOfEmployeesField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Industry</fieldItem>
+                <identifier>RecordIndustryField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Phone</fieldItem>
+                <identifier>RecordPhoneField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Website</fieldItem>
+                <identifier>RecordWebsiteField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.BillingAddress</fieldItem>
+                <identifier>RecordBillingAddressField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Partner_Lifecycle__c</fieldItem>
+                <identifier>RecordNSP_Partner_Lifecycle_cField</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.Named_Account_Group_Owner__r.IsActive}</leftValue>
+                        <leftValue>{!Record.RecordTypeName__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.PEO_TES_Client_Status__c</fieldItem>
-                <identifier>RecordPEO_TES_Client_Status_cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.PEO_TES_Client_Status__c}</leftValue>
-                        <operator>NE</operator>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NSP_Active_Assets__c</fieldItem>
-                <identifier>RecordNSP_Active_Assets_cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.PEO_TES_Client_Status__c}</leftValue>
-                        <operator>NE</operator>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Has_Active_Assets__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.ParentId</fieldItem>
-                <identifier>RecordParentIdField2</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Parent.NSP_Account_Id__c}</leftValue>
-                        <operator>NE</operator>
+                        <rightValue>NSP_Partner_Client</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-e3a0b5c8-c3b4-4e22-8855-453a5f6d374a</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>daysToShow</name>
-                    <value>30</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>earliestRange</name>
-                    <value>3</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>iconStyle</name>
-                    <value>Square</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>latestRange</name>
-                    <value>0.25</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>preferredHeight</name>
-                    <value>1 - Smallest</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>showToday</name>
-                    <value>Green</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>timelineParent</name>
-                    <value>Default_Picklist_Value</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>timelineTitle</name>
-                    <value>Timeline</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>zoomTo</name>
-                    <value>Current Date</value>
-                </componentInstanceProperties>
-                <componentName>bmpyrckt:timeline</componentName>
-                <identifier>bmpyrckt_timeline</identifier>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-b6d909c0-e28d-420b-9f23-e1813bced312</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentName>salesVisualIndicator</componentName>
-                <identifier>c_salesVisualIndicator2</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.NSP_Current_Provider__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Workday</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!$Permission.CustomPermission.Sales_Account_Indicator}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-5a13c276-01a5-44dc-96c7-5a049702a188</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentName>nsp_visualIndicator</componentName>
-                <identifier>c_nsp_visualIndicator2</identifier>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-c8e66b34-3dc3-4bcc-9376-22a6c9777d38</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-b6d909c0-e28d-420b-9f23-e1813bced312</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>title</name>
-                    <value>Standard.Tab.timeline</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:tab</componentName>
-                <identifier>flexipage_tab17</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>active</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-5a13c276-01a5-44dc-96c7-5a049702a188</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>title</name>
-                    <value>Sales &amp; Data</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:tab</componentName>
-                <identifier>flexipage_tab15</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-c8e66b34-3dc3-4bcc-9376-22a6c9777d38</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>title</name>
-                    <value>Client</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:tab</componentName>
-                <identifier>flexipage_tab16</identifier>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-b4c7f456-c75d-4abd-be8b-dc4c085bc3f8</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -536,22 +355,137 @@
                 <identifier>record_flexipage_dynamicHighlights</identifier>
             </componentInstance>
         </itemInstances>
+        <name>header</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>label</name>
-                    <value>Tabs</value>
+                    <name>daysToShow</name>
+                    <value>30</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>tabs</name>
-                    <value>Facet-b4c7f456-c75d-4abd-be8b-dc4c085bc3f8</value>
+                    <name>earliestRange</name>
+                    <value>3</value>
                 </componentInstanceProperties>
-                <componentName>flexipage:tabset</componentName>
-                <identifier>flexipage_tabset4</identifier>
+                <componentInstanceProperties>
+                    <name>iconStyle</name>
+                    <value>Square</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>latestRange</name>
+                    <value>0.25</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>preferredHeight</name>
+                    <value>1 - Smallest</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showToday</name>
+                    <value>Green</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>timelineParent</name>
+                    <value>Default_Picklist_Value</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>timelineTitle</name>
+                    <value>Timeline</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>zoomTo</name>
+                    <value>Current Date</value>
+                </componentInstanceProperties>
+                <componentName>bmpyrckt:timeline</componentName>
+                <identifier>bmpyrckt_timeline</identifier>
             </componentInstance>
         </itemInstances>
-        <name>header</name>
-        <type>Region</type>
+        <name>Facet-b274a812-2693-45a0-9d3a-8133e78d0ec3</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentName>salesVisualIndicator</componentName>
+                <identifier>c_salesVisualIndicator2</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_Current_Provider__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Workday</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Sales_Account_Indicator}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-6454b065-997a-49e8-b989-57ea2f8ee9bd</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentName>nsp_visualIndicator</componentName>
+                <identifier>c_nsp_visualIndicator2</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-64cd2719-cb8e-4acf-ab8f-a884c453dfe4</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>active</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-b274a812-2693-45a0-9d3a-8133e78d0ec3</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Timeline</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab19</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-6454b065-997a-49e8-b989-57ea2f8ee9bd</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Sales &amp; Data</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab20</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-64cd2719-cb8e-4acf-ab8f-a884c453dfe4</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Client</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab21</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-1b7b6088-165f-445d-9f13-7085fbc3edcd</name>
+        <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
         <itemInstances>
@@ -588,7 +522,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>readonly</value>
+                    <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.MidMarket_National_Account__c</fieldItem>
                 <identifier>RecordMidMarket_National_Account_cField</identifier>
@@ -788,7 +722,7 @@
                             <value>CONTACT.FULL_NAME</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>CONTACT.TITLE</value>
+                            <value>NSP_Job_Title__c</value>
                         </valueListItems>
                         <valueListItems>
                             <value>ACCCONRELATION.ROLES</value>
@@ -2961,6 +2895,20 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>tabs</name>
+                    <value>Facet-1b7b6088-165f-445d-9f13-7085fbc3edcd</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tabset</componentName>
+                <identifier>flexipage_tabset5</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Tabs</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>tabs</name>
                     <value>Facet-1e15ed39-0ca6-44bf-80cf-5d979ed3e931</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
@@ -2972,30 +2920,195 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>hideHeader</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentName>force:relatedListQuickLinksContainer</componentName>
-                <identifier>force_relatedListQuickLinksContainer</identifier>
-            </componentInstance>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.PEO_TES_Client_Status__c</fieldItem>
+                <identifier>RecordPEO_TES_Client_Status_cField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.PEO_TES_Client_Status__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
         </itemInstances>
-        <name>Facet-dbb93370-8e44-4a70-bbde-cfe7f219d3f4</name>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_Active_Assets__c</fieldItem>
+                <identifier>RecordNSP_Active_Assets_cField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Has_Active_Assets__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_AIMS_Client__c</fieldItem>
+                <identifier>RecordNSP_AIMS_Client_cField3</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_AIMS_Client__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.PEO_TES_Client_Status__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NSP_AIMS_First_Pay_Date__c</fieldItem>
+                <identifier>RecordNSP_AIMS_First_Pay_Date_cField2</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_AIMS_Client__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.PEO_TES_Client_Status__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.iSolved_ID__c</fieldItem>
+                <identifier>RecordiSolved_ID_cField3</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.iSolved_ID__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-87da81a2-f735-4967-ad33-d618bd641223</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>displayOption</name>
-                    <value>BOTH</value>
+                    <name>body</name>
+                    <value>Facet-87da81a2-f735-4967-ad33-d618bd641223</value>
                 </componentInstanceProperties>
-                <componentName>runtime_sales_merge:mergeCandidatesPreviewCard</componentName>
-                <identifier>runtime_sales_merge_mergeCandidatesPreviewCard</identifier>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column25</identifier>
             </componentInstance>
         </itemInstances>
-        <name>Facet-8c4907c1-6bb2-47d9-994d-4d79e4ff6b4c</name>
+        <name>Facet-061105bf-e625-4e3b-9ac7-a03b1f76dd51</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
+                    <value>Facet-061105bf-e625-4e3b-9ac7-a03b1f76dd51</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Information</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection13</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-0a4f4bee-9d81-4646-b46e-e43cedf8c6b0</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>actionNames</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>adminFilters</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>maxRecordsToDisplay</name>
+                    <value>5</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Account.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>NSP_Account_Teams__r</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListDisplayType</name>
+                    <value>ADVGRID</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListFieldAliases</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>NSP_Role__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>NSP_First_Name__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>NSP_Last_Name__c</value>
+                        </valueListItems>
+                    </valueList>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListLabel</name>
+                    <value>Account Teams</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>sortFieldAlias</name>
+                    <value>NSP_Role__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>sortFieldOrder</name>
+                    <value>Descending</value>
+                </componentInstanceProperties>
+                <componentName>lst:dynamicRelatedList</componentName>
+                <identifier>lst_dynamicRelatedList</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-65c822d9-d3ca-42bd-ae46-8bfbb5232039</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -3003,35 +3116,49 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>active</name>
-                    <value>false</value>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-dbb93370-8e44-4a70-bbde-cfe7f219d3f4</value>
+                    <value>Facet-0a4f4bee-9d81-4646-b46e-e43cedf8c6b0</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>title</name>
-                    <value>Standard.Tab.relatedLists</value>
+                    <value>Client</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
-                <identifier>flexipage_tab8</identifier>
+                <identifier>flexipage_tab15</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-8c4907c1-6bb2-47d9-994d-4d79e4ff6b4c</value>
+                    <value>Facet-65c822d9-d3ca-42bd-ae46-8bfbb5232039</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>title</name>
-                    <value>Duplicates</value>
+                    <value>Service Account Teams</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
-                <identifier>flexipage_tab9</identifier>
+                <identifier>flexipage_tab16</identifier>
             </componentInstance>
         </itemInstances>
-        <name>Facet-adfacd7c-873a-4a7c-bff7-9f9384adcbf6</name>
+        <name>Facet-48d27996-791c-4985-824a-9afa91e949d2</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>showLegacyActivityComposer</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentName>runtime_sales_activities:activityPanel</componentName>
+                <identifier>runtime_sales_activities_activityPanel</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-024f8f47-ef23-4cc8-a23a-ae930695c905</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -3062,20 +3189,6 @@
             </componentInstance>
         </itemInstances>
         <name>Facet-44cdc94e-6c38-4c9d-933f-35c5ea91f8b2</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>showLegacyActivityComposer</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentName>runtime_sales_activities:activityPanel</componentName>
-                <identifier>runtime_sales_activities_activityPanel</identifier>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-024f8f47-ef23-4cc8-a23a-ae930695c905</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -3112,19 +3225,9 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-44cdc94e-6c38-4c9d-933f-35c5ea91f8b2</value>
+                    <name>active</name>
+                    <value>true</value>
                 </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>title</name>
-                    <value>Standard.Tab.crisisCenterNotes</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:tab</componentName>
-                <identifier>flexipage_tab10</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
                     <value>Facet-024f8f47-ef23-4cc8-a23a-ae930695c905</value>
@@ -3135,6 +3238,20 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>flexipage_tab7</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-44cdc94e-6c38-4c9d-933f-35c5ea91f8b2</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Standard.Tab.crisisCenterNotes</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab10</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -3192,41 +3309,117 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>displayOption</name>
+                    <value>BOTH</value>
+                </componentInstanceProperties>
+                <componentName>runtime_sales_merge:mergeCandidatesPreviewCard</componentName>
+                <identifier>runtime_sales_merge_mergeCandidatesPreviewCard</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>hideHeader</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListQuickLinksContainer</componentName>
+                <identifier>force_relatedListQuickLinksContainer</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Tabs</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>tabs</name>
-                    <value>Facet-adfacd7c-873a-4a7c-bff7-9f9384adcbf6</value>
+                    <value>Facet-48d27996-791c-4985-824a-9afa91e949d2</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
-                <identifier>flexipage_tabset2</identifier>
+                <identifier>flexipage_tabset4</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2 OR 3</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NSP_AIMS_Client__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.iSolved_ID__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Has_Active_Assets__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentInstanceProperties>
+                    <name>actionNames</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>adminFilters</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>OPPORTUNITY.STAGE_NAME|NOT_EQUAL|[&quot;Closed Won&quot;,&quot;Closed Lost&quot;,&quot;Closed Won - Outgoing&quot;,&quot;Closed Lost - Outgoing&quot;]</value>
+                        </valueListItems>
+                    </valueList>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>maxRecordsToDisplay</name>
+                    <value>5</value>
+                </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>parentFieldApiName</name>
                     <value>Account.Id</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relatedListApiName</name>
-                    <value>AccountTeamMembers</value>
+                    <value>Opportunities</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>relatedListComponentOverride</name>
+                    <name>relatedListDisplayType</name>
                     <value>ADVGRID</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>rowsToDisplay</name>
-                    <value>6</value>
+                    <name>relatedListFieldAliases</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>OPPORTUNITY.NAME</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>OPPORTUNITY.STAGE_NAME</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>NSP_PrimaryProduct__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>OPPORTUNITY.CLOSE_DATE</value>
+                        </valueListItems>
+                    </valueList>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListLabel</name>
+                    <value>Open Opportunities</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>showActionBar</name>
                     <value>true</value>
                 </componentInstanceProperties>
-                <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer2</identifier>
+                <componentInstanceProperties>
+                    <name>sortFieldAlias</name>
+                    <value>OPPORTUNITY.LAST_UPDATE</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>sortFieldOrder</name>
+                    <value>Descending</value>
+                </componentInstanceProperties>
+                <componentName>lst:dynamicRelatedList</componentName>
+                <identifier>lst_dynamicRelatedList6</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>

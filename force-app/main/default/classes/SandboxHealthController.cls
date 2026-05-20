@@ -1,5 +1,5 @@
 public with sharing class SandboxHealthController {
-    // test w/ SandboxHealthControllerTest (80%)
+    // test w/ SandboxHealthControllerTest (81%)
 
     static final string STRING_INVALID = '.invalid';
     static final string STRING_RECORDS = 'Records presence';
@@ -70,54 +70,71 @@ public with sharing class SandboxHealthController {
         @AuraEnabled public String sandboxName;
         @AuraEnabled public String orgId;
         @AuraEnabled public String instance;
+        @AuraEnabled public Boolean isPipeline;
         @AuraEnabled public Boolean isSandbox;
         @AuraEnabled public Datetime evaluatedAt;
     }
 
     @AuraEnabled( cacheable=true )
     public static HealthResult getHealth() {
+        return SandboxHealthController.getHealth( false );
+    }
+
+    public static HealthResult getHealth( Boolean isMockSandbox ) {
         HealthResult res = new HealthResult();
         res.sections = new List<Section>();
         res.evaluatedAt = System.now();
 
         // Org context
-        String sandbox = System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName();
+        String sandbox = System.DomainParser.parse( URL.getOrgDomainUrl() ).getSandboxName();
+        sandbox = ( String.isNotBlank( sandbox ) ? sandbox.toLowerCase() : '' );
+
+        String[] pipelineOrgs = new String[] { 'merge' , 'test' , 'stage' };
         res.sandboxName = sandbox;
         Organization orgInfo = [SELECT Id, InstanceName, IsSandbox FROM Organization WHERE Id != null LIMIT 1];
         res.orgId = orgInfo.Id;
         res.instance = orgInfo.InstanceName;
-        res.isSandbox = orgInfo.IsSandbox;
+        res.isPipeline = pipelineOrgs.contains( sandbox );
+        res.isSandbox = ( ( isMockSandbox ) ? isMockSandbox : orgInfo.IsSandbox );
 
-        // Labels
-        res.sections.add( verifyAppCustomLabels( sandbox ) );
-        res.sections.add( verifyEmailCustomLabels() );
+        if ( !res.isSandbox ) {
+            res.sections.add( verifyExternalIdObjects() );
+        } else {
+            // Custom Labels
+            res.sections.add( verifyAppCustomLabels( sandbox ) );
+            res.sections.add( verifyEmailCustomLabels() );
 
-        // Custom Settings checks (from doCSettings and doCSettings2)
-        // Resolve DocuSign context first to get expected downstream values
-        DocuSignContext dsCtx = verifyDocuSignSettings( sandbox );
-        res.sections.add( dsCtx.section );
-        res.sections.add( verifyWingspanSettings() );
-        res.sections.add( verifyGoogleRecaptchaSettings( sandbox ) );
-        res.sections.add( verifyDocusignAccountDetails( dsCtx.accountNumber , dsCtx.clmBaseUrl ) );
-        res.sections.add( verifyOrgSettings( sandbox ) );
-        res.sections.add( verifyEnvironmentDetails( sandbox ) );
-        res.sections.add( verifyBoxFileRequest() );
-        res.sections.add( verifyUserTriggerSettings() );
-        res.sections.add( verifyContractTerminationSettings() );
-        res.sections.add( verifyNVMContactWorldSettings( sandbox ) );
-        res.sections.add( verifySalesTeamEmailSettings() );
-        res.sections.add( verifyProjectCreationSettings() );
-        // Custom Metadata checks (from doCMetadata and doCMetadataSvc)
-        res.sections.add( verifyDocuSignSignersMetadata( sandbox ) );
-        res.sections.add( verifyDocuSignRESTMetadata( sandbox ) );
-        res.sections.add( verifyPEOMetadata( sandbox ) );
-        res.sections.add( verifyRetirementServicesMetadata() );
-        res.sections.add( verifyProjectTemplateMappingMetadata() );
-        res.sections.add( verifyTemplateKeyAndIdMappingMetadata() );
-        // Other checks
-        res.sections.add( verifyImageDocuments() );
-        res.sections.add( verifyQueuesEmailSuffix() );
-        res.sections.add( verifyCspTrustedSites() );
+            // Custom Metadata checks (from doCMetadata and doCMetadataSvc)
+            res.sections.add( verifyDocuSignRESTMetadata( sandbox ) );
+            res.sections.add( verifyDocuSignSignersMetadata( sandbox ) );
+            res.sections.add( verifyPEOMetadata( sandbox ) );
+            res.sections.add( verifyProjectTemplateMappingMetadata() );
+            res.sections.add( verifyRetirementServicesMetadata() );
+            res.sections.add( verifyTemplateKeyAndIdMappingMetadata() );
+
+            // Custom Settings checks (from doCSettings and doCSettings2)
+            res.sections.add( verifyBoxFileRequest() );
+            // Resolve DocuSign context to get expected downstream values
+            DocuSignContext dsCtx = verifyDocuSignSettings( sandbox );
+            res.sections.add( verifyContractTerminationSettings() );
+            res.sections.add( verifyDocusignAccountDetails( dsCtx.accountNumber , dsCtx.clmBaseUrl ) );
+            res.sections.add( dsCtx.section );
+            res.sections.add( verifyEnvironmentDetails( sandbox ) );
+            res.sections.add( verifyGoogleRecaptchaSettings( sandbox ) );
+            res.sections.add( verifyNVMContactWorldSettings( sandbox ) );
+            res.sections.add( verifyOrgSettings( sandbox ) );
+            res.sections.add( verifyProjectCreationSettings() );
+            res.sections.add( verifySalesTeamEmailSettings() );
+            if ( !res.isPipeline ) {
+                res.sections.add( verifyUserTriggerSettings() );
+            }
+            res.sections.add( verifyWingspanSettings() );
+
+            // Other checks
+            res.sections.add( verifyImageDocuments() );
+            res.sections.add( verifyQueuesEmailSuffix() );
+            res.sections.add( verifyCspTrustedSites() );
+        }
 
         return res;
     }
@@ -153,7 +170,7 @@ public with sharing class SandboxHealthController {
                 DocuSign_Settings__c row = DocuSign_Settings__c.getValues( keyVal );
                 resolvedAccount = ( row == null ) ? null : row.AccountNumber__c;
                 resolvedClmBase = ( row == null ) ? null : row.CLMBaseUrl__c;
-                Boolean expectedEnabled = !String.isBlank( sandbox ) && sandbox.toLowerCase().startsWith( keyVal.left(3).toLowerCase() );
+                Boolean expectedEnabled = String.isNotBlank( sandbox ) && sandbox.startsWith( keyVal.left(3).toLowerCase() );
                 s.checks.add( checkBool( 'dss_enabled' , keyVal + ' IsEnabled__c' , expectedEnabled , row != null && row.IsEnabled__c ) );
             }
         } catch ( Exception e ) {
@@ -189,8 +206,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn( 'wss_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read Wingspan_Settings__c: ' + e.getMessage() ) );
         }
 
-        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
-        return s;
+        return SandboxHealthController.finalizeSection( s );
     }
 
     // 3) NSP_GoogleRecaptchaSettings__c (org defaults set SiteKey and SiteUrl)
@@ -212,8 +228,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn( 'rec_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read NSP_GoogleRecaptchaSettings__c: ' + e.getMessage() ) );
         }
 
-        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
-        return s;
+        return SandboxHealthController.finalizeSection( s );
     }
 
     // 4) NSP_Docusign_Account_Details__c (org defaults optionally set when values available)
@@ -226,14 +241,13 @@ public with sharing class SandboxHealthController {
 
         try {
             NSP_Docusign_Account_Details__c def = NSP_Docusign_Account_Details__c.getOrgDefaults();
-            s.checks.add( checkExact( 'dad_acct' , 'Docusign_Account_Id__c' , expectedAccountId , ( def == null ) ? null : def.Docusign_Account_Id__c ) );
             s.checks.add( checkExact( 'dad_clm' , 'CLM_Base_URL__c' , expectedClmBaseUrl , ( def == null ) ? null : def.CLM_Base_URL__c ) );
+            s.checks.add( checkExact( 'dad_acct' , 'Docusign_Account_Id__c' , expectedAccountId , ( def == null ) ? null : def.Docusign_Account_Id__c ) );
         } catch ( Exception e ) {
             s.checks.add( newWarn( 'dad_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read NSP_Docusign_Account_Details__c: ' + e.getMessage() ) );
         }
 
-        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
-        return s;
+        return SandboxHealthController.finalizeSection( s );
     }
 
     // 5) OrgSettings__c (org defaults mirror org context)
@@ -253,7 +267,7 @@ public with sharing class SandboxHealthController {
                 s.checks.add( checkExact( 'org_instance' , 'Instance__c' , orgInfo.InstanceName.toLowerCase() , orgset.Instance__c));
                 s.checks.add( checkBool( 'org_is_sbx' , 'IsSandbox__c' , orgInfo.IsSandbox , orgset.IsSandbox__c));
                 s.checks.add( checkExact( 'org_id' , 'OrgId__c' , orgInfo.Id , orgset.OrgId__c));
-                s.checks.add( checkExact( 'org_sb_api' , 'SandboxApiName__c' , sandbox.toLowerCase() , orgset.SandboxApiName__c));
+                s.checks.add( checkExact( 'org_sb_api' , 'SandboxApiName__c' , sandbox , orgset.SandboxApiName__c));
                 s.checks.add( checkExact( 'org_sb_name' , 'SandboxName__c' , sandbox , orgset.SandboxName__c));
             } else {
                 s.checks.add( newWarn('org_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read ' + ( ( orgset != null ) ? 'Organization' : 'OrgSettings__c' ) ) );
@@ -262,8 +276,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn('org_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to verify OrgSettings__c: ' + e.getMessage() ) );
         }
 
-        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
-        return s;
+        return SandboxHealthController.finalizeSection( s );
     }
 
     // 6) NSP_Environment_Details__c (org defaults NSP_Detailed_Data__c branch by sandbox)
@@ -288,8 +301,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn( 'env_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read NSP_Environment_Details__c: ' + e.getMessage() ) );
         }
 
-        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
-        return s;
+        return SandboxHealthController.finalizeSection( s );
     }
 
     // 7) BoxFileRequest__c (org defaults has BoxTemplateFolderId__c hardcoded)
@@ -307,8 +319,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn( 'box_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read BoxFileRequest__c: ' + e.getMessage() ) );
         }
 
-        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
-        return s;
+        return SandboxHealthController.finalizeSection( s );
     }
 
     // 8) UserTriggerSettings__c (org defaults cleared to nulls)
@@ -327,8 +338,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn('uts_query', 'Access', 'Queryable', 'Error', 'Unable to read UserTriggerSettings__c: ' + e.getMessage()));
         }
 
-        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
-        return s;
+        return SandboxHealthController.finalizeSection( s );
     }
 
     // 9) Contract_Termination_Settings__c (org defaults clears AutoTerminationEmailAddresses__c)
@@ -346,8 +356,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn('cts_query', 'Access', 'Queryable', 'Error', 'Unable to read Contract_Termination_Settings__c: ' + e.getMessage()));
         }
 
-        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
-        return s;
+        return SandboxHealthController.finalizeSection( s );
     }
 
     // 10) NVMContactWorld__Settings__c (org defaults sets clientId based on sandbox)
@@ -376,8 +385,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn('nvm_query', 'Access', 'Queryable', 'Error', 'Unable to read NVMContactWorld__Settings__c: ' + e.getMessage()));
         }
 
-        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
-        return s;
+        return SandboxHealthController.finalizeSection( s );
     }
 
     // 11) Sales_Team_Email_Settings__c (org defaults with specific values, many .invalid)
@@ -398,8 +406,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn( 'stes_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read Sales_Team_Email_Settings__c: ' + e.getMessage() ) );
         }
 
-        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
-        return s;
+        return SandboxHealthController.finalizeSection( s );
     }
 
     // 12) ProjectCreationSettings__c (org defaults with specific DefaultRegionId__c)
@@ -423,8 +430,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn( 'pcs_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to verify ProjectCreationSettings__c' ) );
         }
 
-        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
-        return s;
+        return SandboxHealthController.finalizeSection( s );
     }
 
     // ========== Custom Metadata Sections (verification only, user-mode) ==========
@@ -456,8 +462,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn( 'ds_signers_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read NSP_DocuSign_Signers__mdt: ' + e.getMessage() ) );
         }
 
-        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
-        return s;
+        return SandboxHealthController.finalizeSection( s );
     }
 
     // 2) DocuSignRESTSettings__mdt (from doCMetadata)
@@ -545,8 +550,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn( 'ds_rest_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read DocuSignRESTSettings__mdt: ' + e.getMessage() ) );
         }
 
-        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
-        return s;
+        return SandboxHealthController.finalizeSection( s );
     }
 
     // 3) NSP_PEO_Implementations__mdt (from doCMetadata)
@@ -582,8 +586,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn( 'peo_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read NSP_PEO_Implementations__mdt: ' + e.getMessage() ) );
         }
 
-        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
-        return s;
+        return SandboxHealthController.finalizeSection( s );
     }
 
     // 4) NSP_Retirement_Services__mdt (from doCMetadata)
@@ -612,8 +615,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn( 'ret_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read NSP_Retirement_Services__mdt: ' + e.getMessage() ) );
         }
 
-        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
-        return s;
+        return SandboxHealthController.finalizeSection( s );
     }
 
     // 5) NSP_ProjectTemplateMapping__mdt (from doCMetadataSvc)
@@ -641,8 +643,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn('tmpl_query', 'Access', 'Queryable', 'Error', 'Unable to read NSP_ProjectTemplateMapping__mdt: ' + e.getMessage()));
         }
 
-        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
-        return s;
+        return SandboxHealthController.finalizeSection( s );
     }
 
     // 6) Template_Key_and_Id_Mapping__mdt (from doCMetadataSvc)
@@ -670,8 +671,7 @@ public with sharing class SandboxHealthController {
             s.checks.add( newWarn( 'tmplkey_query' , 'Access' , 'Queryable' , 'Error' , 'Unable to read Template_Key_and_Id_Mapping__mdt: ' + e.getMessage() ) );
         }
 
-        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
-        return s;
+        return SandboxHealthController.finalizeSection( s );
     }
 
     private static Check templCheck( String tmplName , String key , String label , String actual ) {
@@ -727,8 +727,7 @@ public with sharing class SandboxHealthController {
             ));
         }
 
-        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
-        return s;
+        return SandboxHealthController.finalizeSection( s );
     }
 
     // ---------- Small helpers to build checks ----------
@@ -862,9 +861,7 @@ public with sharing class SandboxHealthController {
             ) );
         }
 
-        // Set section status after all checks are processed
-        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
-        return s;
+        return SandboxHealthController.finalizeSection( s );
     }
 
     // Required image Documents created by NSP_PrepSandbox.doImageDocs()
@@ -948,11 +945,105 @@ public with sharing class SandboxHealthController {
             }
         }
 
-        s.status = SandboxHealthController.calculateSectionStatus( s.checks );
-        return s;
+        return SandboxHealthController.finalizeSection( s );
+    }
+
+    // ========== ExternalId objects verification (based on OrgSettings fields containing 'externalidobjects') ==========
+    private static List<String> getExternalIdObjectNames( OrgSettings__c orgSettings ) {
+        List<String> names = new List<String>();
+        if ( orgSettings != null ) {
+            Set<String> orgFields = Schema.SObjectType.OrgSettings__c.fields.getMap().keySet();
+            for ( String f : orgFields ) {
+                if ( ( f != null )
+                  && ( f.toLowerCase().contains( 'externalidobjects' ) ) ) {
+                    String val = (String) orgSettings.get( f );
+                    names = parseExternalIdField( names , val );
+                }
+            }
+        }
+        return names;
+    }
+
+    private static List<String> parseExternalIdField( List<String> names , String val ) {
+        if ( String.isNotBlank( val ) ) {
+            for ( String entry : val.split( ',' ) ) {
+                String obj = entry.trim();
+                if ( String.isNotBlank( obj )
+                    && !names.contains( obj ) ) {
+                    names.add(obj);
+                }
+            }
+        }
+        return names;
+    }
+
+    private static void evaluateExternalIdForObject(Section target, String objName) {
+        String key = 'extid_' + objName;
+        String label = objName;
+        try {
+            String soql = 'SELECT count() FROM ' + objName + ' WHERE NSP_External_Id__c = null';
+            Integer cnt = Database.countQuery( soql );
+            if ( cnt == 0 ) {
+                target.checks.add( newPass( key , label , 'No blank NSP_External_Id__c' , '0' , 'No records with blank ExternalId' ) );
+            } else {
+                String msgSub = ( cnt == 1 ) ? 'record' : 'records';
+                target.checks.add( newFail( key , label , 'No blank NSP_External_Id__c' , String.valueOf(cnt) , cnt + ' ' + msgSub + ' with blank NSP_External_Id__c' ) );
+            }
+        } catch (Exception ex) {
+            target.checks.add( newWarn( key , label , 'Validated' , 'unavailable' , 'Unable to validate ' + objName + ': ' + ex.getMessage() ) );
+        }
+    }
+
+    @TestVisible
+    private static Section verifyExternalIdObjects() {
+        Boolean skipProcessing = false;
+        Section s = new Section();
+        s.key = 'externalIdObjects';
+        s.label = 'ExternalId Objects';
+        s.category = 'DATA_QUALITY';
+        s.checks = new List<Check>();
+
+        try {
+            OrgSettings__c orgSettings = OrgSettings__c.getOrgDefaults();
+            if ( orgSettings == null ) {
+                s.checks.add( newWarn( 'extid_orgsettings_missing' , 'OrgSettings__c' , 'Configured' , 'none' , 'OrgSettings__c.getOrgDefaults() returned null' ) );
+                skipProcessing = true;
+            }
+
+            // gather warnings about unreadable fields (only if we have orgSettings)
+            List<String> objNames = new List<String>();
+            if ( !skipProcessing ) {
+                objNames = getExternalIdObjectNames( orgSettings );
+                if ( objNames.isEmpty() ) {
+                    s.checks.add( newWarn( 'extid_none_configured' , 'ExternalId object list' , 'At least one configured' , 'None' , 'No OrgSettings__c fields containing \"externalidobjects\" with values were found' ) );
+                    skipProcessing = true;
+                }
+            }
+
+            // If not skipped, evaluate each object
+            if ( !skipProcessing ) {
+                List<Check> perObjectChecks = new List<Check>();
+                for ( String objName : objNames ) {
+                    Section tmpSec = new Section();
+                    tmpSec.checks = new List<Check>();
+                    evaluateExternalIdForObject( tmpSec , objName );
+                    if ( tmpSec.checks != null && !tmpSec.checks.isEmpty() ) {
+                        perObjectChecks.addAll( tmpSec.checks );
+                    }
+                }
+                if ( !perObjectChecks.isEmpty() ) {
+                    s.checks.addAll( perObjectChecks );
+                }
+            }
+        } catch (Exception e) {
+            s.checks.add( newWarn( 'extid_unexpected' , 'ExternalId Objects' , 'Validated' , 'Error' , 'Unexpected error: ' + e.getMessage() ) );
+        }
+
+        return SandboxHealthController.finalizeSection( s );
     }
 
     // Placeholder required labels. These align with NSP_PrepSandbox.doCLabels() and doEmailCLabels() examples.
+    @TestVisible
     private static Map<String, String> requiredLabels(String sandbox) {
         Map<String, String> m = new Map<String, String>();
         // Baseline placeholders
@@ -1018,10 +1109,8 @@ public with sharing class SandboxHealthController {
                 core.checks.add( checkExact( 'label_' + lblName , lblName , exp , act ) );
             }
         }
-        // Set section status for core labels
-        core.status = SandboxHealthController.calculateSectionStatus( core.checks );
 
-        return core;
+        return SandboxHealthController.finalizeSection( core );
     }
 
     private static Section verifyEmailCustomLabels() {
@@ -1064,10 +1153,8 @@ public with sharing class SandboxHealthController {
 
             email.checks.add( checkSuffix( 'email_label_' + lblName , lblName , STRING_INVALID , actual , true) );
         }
-        // Set section status for email labels
-        email.status = SandboxHealthController.calculateSectionStatus( email.checks );
 
-        return email;
+        return SandboxHealthController.finalizeSection( email );
     }
 
     private static Map<String, Id> mTmplId {
@@ -1085,5 +1172,57 @@ public with sharing class SandboxHealthController {
             return mTmplId;
         }
         private set;
+    }
+
+    // Finalize a section: sort checks by label (alphabetical, null-safe) and set status
+    private static Section finalizeSection( Section s ) {
+        if ( s != null ) {
+            if ( s.checks != null && !s.checks.isEmpty() ) {
+                // Group checks by label to ensure stable grouping for identical labels
+                Map<String, List<Check>> byLabel = new Map<String, List<Check>>();
+                for ( Check c : s.checks ) {
+                    String lbl = ( c.label == null ) ? '' : c.label;
+                    if ( !byLabel.containsKey( lbl ) ) {
+                        byLabel.put( lbl , new List<Check>() );
+                    }
+                    byLabel.get( lbl ).add( c );
+                }
+                s.checks = sortSectionChecks( byLabel );
+            }
+            s.status = SandboxHealthController.calculateSectionStatus( s.checks );
+        }
+        return s;
+    }
+
+    private static List<Check> sortSectionChecks( Map<String, List<Check>> byLabel ) {
+        // Separate checks by status
+        Map<String, Map<String, List<Check>>> byStatusAndLabel = new Map<String, Map<String, List<Check>>>{
+            STATUS.FAIL.name() => new Map<String, List<Check>>(),
+            STATUS.WARN.name() => new Map<String, List<Check>>(),
+            STATUS.PASS.name() => new Map<String, List<Check>>()
+        };
+
+        // Group checks by status, then by label
+        for ( String lbl : byLabel.keySet() ) {
+            for ( Check c : byLabel.get( lbl ) ) {
+                String status = ( c.status == null ) ? STATUS.WARN.name() : c.status;
+                if ( !byStatusAndLabel.get( status ).containsKey( lbl ) ) {
+                    byStatusAndLabel.get( status ).put( lbl , new List<Check>() );
+                }
+                byStatusAndLabel.get( status ).get( lbl ).add( c );
+            }
+        }
+
+        // Sort and build final list: FAIL, then WARN, then PASS (each alphabetically)
+        List<Check> sorted = new List<Check>();
+        for ( String status : new String[] { STATUS.FAIL.name() , STATUS.WARN.name() , STATUS.PASS.name() } ) {
+            List<String> labels = new List<String>( byStatusAndLabel.get( status ).keySet() );
+            labels.sort();
+            for ( String lbl : labels ) {
+                sorted.addAll( byStatusAndLabel.get( status ).get( lbl ) );
+            }
+        }
+
+        return sorted;
     }
 }

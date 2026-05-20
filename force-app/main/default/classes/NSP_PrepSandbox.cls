@@ -554,7 +554,7 @@ global class NSP_PrepSandbox implements SandboxPostCopy {
                 allMetadataList.add(new List<MetadataService.Metadata>());
                 for (MetadataService.Metadata wfaMeta : readResult.records) {
                     MetadataService.WorkflowAlert wfa = (MetadataService.WorkflowAlert) wfaMeta;
-                    wfa.ccEmails = (!Test.isRunningTest()) ? invalidateEmailArray(wfa.ccEmails).split(',') : invalidateEmailArray(new String[]{'test@insperity.com'}).split(',');
+                    wfa.ccEmails = (!Test.isRunningTest()) ? invalidateEmailArray(wfa.ccEmails).split('[,;\r\n]+') : invalidateEmailArray(new String[]{'test@insperity.com'}).split(',');
                     allMetadataList[i].add(wfa);
                 }
             }

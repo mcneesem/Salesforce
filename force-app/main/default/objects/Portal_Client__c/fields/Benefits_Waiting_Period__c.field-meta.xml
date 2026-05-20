@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Benefits_Waiting_Period__c</fullName>
-    <description>Days</description>
+    <description>DEPRECATED See Portal_Project__c.Benefits_Waiting_Period__c
+Days</description>
     <externalId>false</externalId>
     <label>Benefits Waiting Period</label>
     <precision>18</precision>

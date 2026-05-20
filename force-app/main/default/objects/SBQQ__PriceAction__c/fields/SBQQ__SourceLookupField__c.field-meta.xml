@@ -92,6 +92,11 @@
                 <default>false</default>
                 <label>NSP_Retail_Price__c</label>
             </value>
+            <value>
+                <fullName>Block_Price__c</fullName>
+                <default>false</default>
+                <label>Block_Price__c</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

@@ -537,6 +537,11 @@
                 <default>false</default>
                 <label>Western Partners</label>
             </value>
+            <value>
+                <fullName>143</fullName>
+                <default>false</default>
+                <label>PPD Investments</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

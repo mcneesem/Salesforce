@@ -41,7 +41,7 @@ private class SandboxHealthControllerTest {
         upsert def;
 
         Test.startTest();
-        SandboxHealthController.HealthResult res = SandboxHealthController.getHealth();
+        SandboxHealthController.HealthResult res = SandboxHealthController.getHealth( true );
         Test.stopTest();
 
         SandboxHealthController.Section s = findSectionByKey(res.sections, 'OrgSettings__c');
@@ -58,7 +58,7 @@ private class SandboxHealthControllerTest {
         upsert rec;
 
         Test.startTest();
-        SandboxHealthController.HealthResult res = SandboxHealthController.getHealth();
+        SandboxHealthController.HealthResult res = SandboxHealthController.getHealth( true );
         Test.stopTest();
 
         SandboxHealthController.Section s = findSectionByKey(res.sections, 'NSP_GoogleRecaptchaSettings__c');
@@ -76,7 +76,7 @@ private class SandboxHealthControllerTest {
         upsert dad;
 
         Test.startTest();
-        SandboxHealthController.HealthResult res = SandboxHealthController.getHealth();
+        SandboxHealthController.HealthResult res = SandboxHealthController.getHealth( true );
         Test.stopTest();
 
         SandboxHealthController.Section s = findSectionByKey(res.sections, 'NSP_Docusign_Account_Details__c');
@@ -92,7 +92,7 @@ private class SandboxHealthControllerTest {
         upsert env;
 
         Test.startTest();
-        SandboxHealthController.HealthResult res = SandboxHealthController.getHealth();
+        SandboxHealthController.HealthResult res = SandboxHealthController.getHealth( true );
         Test.stopTest();
 
         SandboxHealthController.Section s = findSectionByKey(res.sections, 'NSP_Environment_Details__c');
@@ -108,7 +108,7 @@ private class SandboxHealthControllerTest {
         upsert box;
 
         Test.startTest();
-        SandboxHealthController.HealthResult res = SandboxHealthController.getHealth();
+        SandboxHealthController.HealthResult res = SandboxHealthController.getHealth( true );
         Test.stopTest();
 
         SandboxHealthController.Section s = findSectionByKey(res.sections, 'BoxFileRequest__c');
@@ -119,19 +119,27 @@ private class SandboxHealthControllerTest {
 
     @IsTest
     private static void testUserTriggerSettings_section_present() {
+        String sandbox = System.DomainParser.parse( URL.getOrgDomainUrl() ).getSandboxName();
+        sandbox = ( String.isNotBlank( sandbox ) ? sandbox.toLowerCase() : '' );
+        String[] pipelineOrgs = new String[] { 'merge' , 'test' , 'stage' };
+        Boolean isPipeline = pipelineOrgs.contains( sandbox );
         UserTriggerSettings__c uts = UserTriggerSettings__c.getOrgDefaults();
         uts.AllowedAdmins__c = null;
         uts.BccAddresses__c = null;
         upsert uts;
 
         Test.startTest();
-        SandboxHealthController.HealthResult res = SandboxHealthController.getHealth();
+        SandboxHealthController.HealthResult res = SandboxHealthController.getHealth( true );
         Test.stopTest();
 
         SandboxHealthController.Section s = findSectionByKey(res.sections, 'UserTriggerSettings__c');
-        System.assertNotEquals(null, s, 'User Trigger Settings section should exist');
-        assertValidSection(s);
-        assertAllowedStatus(s.status);
+        if ( !isPipeline ) {
+            System.assertNotEquals(null, s, 'User Trigger Settings section should exist');
+            assertValidSection(s);
+            assertAllowedStatus(s.status);
+        } else {
+            System.assertEquals(null, s, 'User Trigger Settings section should not exist');
+        }
     }
 
     @IsTest
@@ -141,7 +149,7 @@ private class SandboxHealthControllerTest {
         upsert cts;
 
         Test.startTest();
-        SandboxHealthController.HealthResult res = SandboxHealthController.getHealth();
+        SandboxHealthController.HealthResult res = SandboxHealthController.getHealth( true );
         Test.stopTest();
 
         SandboxHealthController.Section s = findSectionByKey(res.sections, 'Contract_Termination_Settings__c');
@@ -160,7 +168,7 @@ private class SandboxHealthControllerTest {
         upsert stes;
 
         Test.startTest();
-        SandboxHealthController.HealthResult res = SandboxHealthController.getHealth();
+        SandboxHealthController.HealthResult res = SandboxHealthController.getHealth( true );
         Test.stopTest();
 
         SandboxHealthController.Section s = findSectionByKey(res.sections, 'Sales_Team_Email_Settings__c');
@@ -177,7 +185,7 @@ private class SandboxHealthControllerTest {
         upsert nvm;
 
         Test.startTest();
-        SandboxHealthController.HealthResult res = SandboxHealthController.getHealth();
+        SandboxHealthController.HealthResult res = SandboxHealthController.getHealth( true );
         Test.stopTest();
 
         SandboxHealthController.Section s = findSectionByKey(res.sections, 'NVMContactWorld__Settings__c');
@@ -190,13 +198,27 @@ private class SandboxHealthControllerTest {
     private static void testImageDocuments_section_tolerates_absence() {
         // Do not insert any Document rows; controller should WARN/FAIL gracefully without exceptions
         Test.startTest();
-        SandboxHealthController.HealthResult res = SandboxHealthController.getHealth();
+        SandboxHealthController.HealthResult res = SandboxHealthController.getHealth( true );
         Test.stopTest();
 
         SandboxHealthController.Section s = findSectionByKey(res.sections, 'imageDocuments');
         System.assertNotEquals(null, s, 'Image Documents section should exist');
         assertValidSection(s);
         assertAllowedStatus(s.status);
+    }
+
+    @IsTest
+    private static void testRequiredLabels() {
+        // Even if no custom metadata exists or access is restricted, the controller should not throw
+        Test.startTest();
+        Map<String,String> expectedStage = SandboxHealthController.requiredLabels( 'stage' );
+        Map<String,String> expectedTest = SandboxHealthController.requiredLabels( 'test' );
+        Map<String,String> expectedMerge = SandboxHealthController.requiredLabels( 'merge' );
+        Test.stopTest();
+
+        System.assertEquals( expectedStage.get( 'NSP_FTA_Base_URL' ) , 'https://stageportalapps.insperity.com/financialcomparison/financialanalysis/' , 'Values should match' );
+        System.assertEquals( expectedTest.get( 'NSP_FTA_Base_URL' ) , 'https://testportalapps.insperity.com/financialcomparison/financialanalysis/' , 'Values should match' );
+        System.assertEquals( expectedMerge.get( 'NSP_FTA_Base_URL' ) , 'https://devportalapps.insperity.com/financialcomparison/financialanalysis/' , 'Values should match' );
     }
 
     @IsTest
@@ -228,7 +250,7 @@ private class SandboxHealthControllerTest {
      */
     @TestSetup
     private static void setupData() {
-        Account account = New Account( Name = 'TestAccount' , AccountNumber = '12345' , NSP_AIMS_Client__c = '500' );
+        Account account = New Account( Name = 'TestAccount' , AccountNumber = '12345' , NSP_AIMS_Client__c = '500' , NSP_External_Id__c = 'EXT-12345' );
         insert account;
     }
 
@@ -248,7 +270,7 @@ private class SandboxHealthControllerTest {
         insert new List<Group>{ passQueue, failQueue };
 
         Test.startTest();
-        SandboxHealthController.HealthResult res = SandboxHealthController.getHealth();
+        SandboxHealthController.HealthResult res = SandboxHealthController.getHealth( true );
         Test.stopTest();
 
         // Find the Queues Email Suffix section
@@ -299,7 +321,7 @@ private class SandboxHealthControllerTest {
     @IsTest
     private static void testGetHealth_smoke() {
         Test.startTest();
-        SandboxHealthController.HealthResult res = SandboxHealthController.getHealth();
+        SandboxHealthController.HealthResult res = SandboxHealthController.getHealth( true );
         Test.stopTest();
 
         System.assertNotEquals(null, res, 'Result must not be null');
@@ -413,5 +435,38 @@ private class SandboxHealthControllerTest {
             System.assertNotEquals(null, res.sections, 'Sections must not be null for standard user');
             // Not asserting sizes or particular statuses; read-only code should still return structured output
         }
+    }
+
+    @IsTest
+    private static void testVerifyExternalIdObjects_allRecordsValid() {
+        // Configure OrgSettings to check Account
+        OrgSettings__c orgSettings = OrgSettings__c.getOrgDefaults();
+        Map<String, Schema.SObjectField> fieldsMap = Schema.SObjectType.OrgSettings__c.fields.getMap();
+        for (String fieldName : fieldsMap.keySet()) {
+            if (fieldName.toLowerCase().contains('externalidobjects')) {
+                orgSettings.put(fieldName, 'Account');
+                break;
+            }
+        }
+        upsert orgSettings;
+
+        Test.startTest();
+        SandboxHealthController.Section s = SandboxHealthController.verifyExternalIdObjects();
+        Test.stopTest();
+
+        System.assertNotEquals(null, s, 'Section should not be null');
+        assertValidSection(s);
+
+        // Should have at least one check for Account
+        Boolean foundAccountCheck = false;
+        for (SandboxHealthController.Check c : s.checks) {
+            if (c.key == 'extid_Account') {
+                foundAccountCheck = true;
+                System.assertEquals(SandboxHealthController.STATUS.PASS.name(), c.status, 'Account check should PASS when all records have External ID');
+                System.assertEquals('0', c.actual, 'Should have 0 records with blank External ID');
+                break;
+            }
+        }
+        System.assert(foundAccountCheck, 'Should have check for Account object');
     }
 }

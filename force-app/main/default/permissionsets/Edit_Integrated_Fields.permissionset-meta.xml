@@ -61,6 +61,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>NSP_Address__c.Workday_Reference_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>NSP_Payroll__c.DCAA_Detail_With_Job_Costing__c</field>
         <readable>true</readable>
     </fieldPermissions>

@@ -50,6 +50,13 @@
                 <elementReference>Userchoices</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Scheduled</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>User_Id_null_check</targetReference>
         </connector>
@@ -71,19 +78,82 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Fault_Element_AssignMent_Create_Event</name>
-        <label>Fault Element AssignMent Create Event</label>
+        <name>Event_Field_Assignment</name>
+        <label>Event Field Assignment</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>faultElement</assignToReference>
+            <assignToReference>record.OwnerId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Create_Event</stringValue>
+                <elementReference>chooseDemoOwner</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>record.Description</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Notes</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>record.StartDateTime</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Seller.startDateTime</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>record.EndDateTime</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Seller.endDateTime</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>record.WhatId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Opportunity.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>record.NSP_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>status</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>record.Subject</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>{!SelectProduct.selectedProductLabel} Demo</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>record.NSP_Event_Subtype__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>SelectProduct.selectedProductLabel</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>record.NSP_Event_Type__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Demo</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>record.RecordTypeId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>012Oy000008uixpIAA</stringValue>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Fault_Handler_Subflow</targetReference>
+            <targetReference>Create_Event_Subflow</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -116,7 +186,6 @@
             </value>
         </assignmentItems>
         <connector>
-            <isGoTo>true</isGoTo>
             <targetReference>Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
@@ -135,6 +204,22 @@
         <connector>
             <isGoTo>true</isGoTo>
             <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Status_Assignment</name>
+        <label>Status Assignment</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Requested</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>User_Id_null_check</targetReference>
         </connector>
     </assignments>
     <choices>
@@ -230,7 +315,7 @@
         <choiceText>Performance Management</choiceText>
         <dataType>String</dataType>
         <value>
-            <stringValue>Schedule_Seller_Performance_Management</stringValue>
+            <stringValue>Schedule_Seller_Performance</stringValue>
         </value>
     </choices>
     <choices>
@@ -338,7 +423,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Create_Event</targetReference>
+                <targetReference>Event_Field_Assignment</targetReference>
             </connector>
             <label>User Id not null</label>
         </rules>
@@ -396,7 +481,7 @@
             <targetReference>Demo_Owner_Automatically_Assigned</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>User_Id_null_check</targetReference>
+            <targetReference>Status_Assignment</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -418,56 +503,6 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
-    <recordCreates>
-        <name>Create_Event</name>
-        <label>Create Event</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>RedirectToEventRecord</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Fault_Element_AssignMent_Create_Event</targetReference>
-        </faultConnector>
-        <inputAssignments>
-            <field>EndDateTime</field>
-            <value>
-                <elementReference>Seller.endDateTime</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NSP_Event_Type__c</field>
-            <value>
-                <stringValue>Demo</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>OwnerId</field>
-            <value>
-                <elementReference>chooseDemoOwner</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>StartDateTime</field>
-            <value>
-                <elementReference>Seller.startDateTime</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Subject</field>
-            <value>
-                <stringValue>{!SelectProduct.selectedProductLabel} Demo</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>WhatId</field>
-            <value>
-                <elementReference>Get_Opportunity.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Event</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
     <recordLookups>
         <name>Get_Opportunity</name>
         <label>Get Opportunity</label>
@@ -519,6 +554,7 @@
         <object>User</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <runInMode>DefaultMode</runInMode>
     <screens>
         <name>Availability_Matrix</name>
         <label>Availability Matrix</label>
@@ -626,7 +662,7 @@
         <allowPause>true</allowPause>
         <fields>
             <name>ErrorMessage</name>
-            <fieldText>&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -686,39 +722,6 @@
             </styleProperties>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>RedirectToEventRecord</name>
-        <label>RedirectToEventRecord</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <fields>
-            <name>RedirectToEvent</name>
-            <extensionName>c:navigateToRecord</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>Create_Event.Id</elementReference>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-            <styleProperties>
-                <verticalAlignment>
-                    <stringValue>top</stringValue>
-                </verticalAlignment>
-                <width>
-                    <stringValue>12</stringValue>
-                </width>
-            </styleProperties>
-        </fields>
-        <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>
@@ -810,6 +813,21 @@
                 </width>
             </styleProperties>
         </fields>
+        <fields>
+            <name>Notes</name>
+            <fieldText>Notes</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>false</isRequired>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
@@ -821,6 +839,19 @@
         </connector>
     </start>
     <status>Draft</status>
+    <subflows>
+        <name>Create_Event_Subflow</name>
+        <label>Create Event Subflow</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <flowName>Schedule_Seller_Subflow_Create_Event</flowName>
+        <inputAssignments>
+            <name>record</name>
+            <value>
+                <elementReference>record</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
@@ -867,10 +898,25 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>record</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Event</objectType>
+    </variables>
+    <variables>
         <name>recordId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>status</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
 </Flow>

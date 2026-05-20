@@ -30,6 +30,10 @@
                 <behavior>Edit</behavior>
                 <field>NSP_Milestone__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Milestone_Owner_Type__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

@@ -127,7 +127,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Has_NoahFace__c</field>
+                <field>Has_Employee_Navigator__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Has_E_Verify__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
