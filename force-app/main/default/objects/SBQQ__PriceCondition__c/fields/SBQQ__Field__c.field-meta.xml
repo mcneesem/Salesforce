@@ -378,6 +378,16 @@
                 <default>false</default>
                 <label>Price_Rule_Override__c</label>
             </value>
+            <value>
+                <fullName>Has_E_Verify__c</fullName>
+                <default>false</default>
+                <label>Has_E_Verify__c</label>
+            </value>
+            <value>
+                <fullName>Has_Employee_Navigator__c</fullName>
+                <default>false</default>
+                <label>Has_Employee_Navigator__c</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

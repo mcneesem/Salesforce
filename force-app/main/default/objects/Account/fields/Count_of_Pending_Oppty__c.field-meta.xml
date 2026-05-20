@@ -7,7 +7,7 @@
     <summaryFilterItems>
         <field>Opportunity.StageName</field>
         <operation>equals</operation>
-        <value>Discovery, Analysis, Proposal, Closing</value>
+        <value>Discovery, Analysis, Proposal, Closing, Prospecting, Data Collection, Booking</value>
     </summaryFilterItems>
     <summaryForeignKey>Opportunity.AccountId</summaryForeignKey>
     <summaryOperation>count</summaryOperation>

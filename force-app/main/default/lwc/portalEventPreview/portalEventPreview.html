@@ -1,0 +1,13 @@
+<template>
+    <template lwc:if={error}>
+        <c-error-panel error={error} parent="c-portal-event-preview"></c-error-panel>
+    </template>
+    <template lwc:if={record}>
+        <c-portal-event record={record}></c-portal-event>
+    </template>
+    <template lwc:else>
+        <template lwc:if={recordId}>
+            recordId: {recordId}<br/>
+        </template>
+    </template>
+</template>

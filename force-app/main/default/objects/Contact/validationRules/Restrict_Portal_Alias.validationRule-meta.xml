@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_Portal_Alias</fullName>
+    <active>true</active>
+    <description>Prevent changes to Contact.Portal_Alias__c after the unique key has been established.</description>
+    <errorConditionFormula>AND(
+  NOT( $Permission.Bypass_Restrict_Portal_Alias ) ,
+  ISCHANGED( Portal_Alias__c ) ,
+  NOT( ISBLANK( PRIORVALUE( Portal_Alias__c ) ) )
+)</errorConditionFormula>
+    <errorDisplayField>Portal_Alias__c</errorDisplayField>
+    <errorMessage>Not allowed to change Portal Alias.</errorMessage>
+</ValidationRule>

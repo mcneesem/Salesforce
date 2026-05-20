@@ -45,7 +45,12 @@
     <tabs>Portal_Team_Member__c</tabs>
     <tabs>Portal_Pay_Period__c</tabs>
     <tabs>Portal_Task__c</tabs>
+    <tabs>Portal_Event__c</tabs>
+    <tabs>Portal_Guidance__c</tabs>
+    <tabs>Portal_Resource__c</tabs>
     <tabs>Implementation_Profile__c</tabs>
+    <tabs>pse__Proj__c</tabs>
+    <tabs>standard-Account</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Portal_Preview_UtilityBar</utilityBar>
 </CustomApplication>

@@ -2,9 +2,9 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Portal_Alias__c</fullName>
     <caseSensitive>false</caseSensitive>
-    <description>It is a combination of Last Name and the 9 digit unique number</description>
+    <description>It is a combination of Last Name and the 9 digit unique number.</description>
     <encryptionScheme>None</encryptionScheme>
-    <externalId>false</externalId>
+    <externalId>true</externalId>
     <label>Portal Alias</label>
     <length>30</length>
     <required>false</required>

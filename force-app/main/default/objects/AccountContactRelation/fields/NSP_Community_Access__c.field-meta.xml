@@ -3,7 +3,7 @@
     <fullName>NSP_Community_Access__c</fullName>
     <description>This field is created as a part of STY-03658</description>
     <externalId>false</externalId>
-    <label>Community Access</label>
+    <label>DEPRECATED Community Access</label>
     <required>false</required>
     <type>MultiselectPicklist</type>
     <valueSet>

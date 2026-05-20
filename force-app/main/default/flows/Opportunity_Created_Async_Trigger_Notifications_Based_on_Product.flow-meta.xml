@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Apex_CheckUserPermissionController</name>
-        <label>Apex-Check User Permission</label>
-        <locationX>654</locationX>
-        <locationY>384</locationY>
+        <description>Checks if the Opportunity Owner has been granted the Customer Success Specialist Custom Permission</description>
+        <name>Check_Owner_Permission_Customer_Success_Specialist</name>
+        <label>Check Owner Permission Customer Success Specialist</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <actionName>CustomPermissionController</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -27,15 +28,211 @@
             </value>
         </inputParameters>
         <nameSegment>CustomPermissionController</nameSegment>
+        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
-        <versionSegment>1</versionSegment>
     </actionCalls>
-    <apiVersion>61.0</apiVersion>
+    <actionCalls>
+        <name>Send_Email_Primary_Product_is_HRCore</name>
+        <label>Send Email - Primary Product is HRCore</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <connector>
+            <targetReference>Check_Owner_Permission_Customer_Success_Specialist</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_Fault_Element_Send_Email_Primary_Product_is_HRCore</targetReference>
+        </faultConnector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailAddressesArray</name>
+            <value>
+                <elementReference>RecipientAddresses</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>bccRecipientAddressCollection</name>
+            <value>
+                <elementReference>BccAddresses</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderType</name>
+            <value>
+                <stringValue>CurrentUser</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>composeEmailContent</name>
+            <value>
+                <stringValue>True</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <elementReference>EmailSubject</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>HRCoreEmail</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>useLineBreaks</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>relatedRecordId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>logEmailOnSend</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
+        <versionString>1.0.1</versionString>
+    </actionCalls>
+    <actionCalls>
+        <name>Split_String_Bcc_Email_Addresses</name>
+        <label>Split String Bcc Email Addresses</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>StringSplitterAction</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Does_StrategicSales_Email_Exist</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_Fault_Element_Split_String_Bcc_Email_Addresses</targetReference>
+        </faultConnector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>inputSeparator</name>
+            <value>
+                <stringValue>\r\n</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>inputString</name>
+            <value>
+                <elementReference>$Setup.Sales_Team_Email_Settings__c.BccEmailAddress__c</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>StringSplitterAction</nameSegment>
+        <offset>0</offset>
+        <outputParameters>
+            <assignToReference>BccAddresses</assignToReference>
+            <name>resultList</name>
+        </outputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>Split_String_Strategic_Sales_Email_Address</name>
+        <label>Split String Strategic Sales Email Address</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>StringSplitterAction</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Recipients_Check</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_Fault_Element_Split_String_Strategic_Sales_Email_Address</targetReference>
+        </faultConnector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>inputSeparator</name>
+            <value>
+                <stringValue>\r\n</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>inputString</name>
+            <value>
+                <elementReference>$Setup.Sales_Team_Email_Settings__c.StrategicSalesEmailAddress__c</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>StringSplitterAction</nameSegment>
+        <offset>0</offset>
+        <outputParameters>
+            <assignToReference>RecipientAddresses</assignToReference>
+            <name>resultList</name>
+        </outputParameters>
+    </actionCalls>
+    <apiVersion>65.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_Fault_Element_Send_Email_Primary_Product_is_HRCore</name>
+        <label>Assign Fault Element Send Email - Primary Product is HRCore</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Send_Email_Primary_Product_is_HRCore</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_Split_String_Bcc_Email_Addresses</name>
+        <label>Assign Fault Element Split String Bcc Email Addresses</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Split_String_Bcc_Email_Addresses</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Element_Split_String_Strategic_Sales_Email_Address</name>
+        <label>Assign Fault Element Split String Strategic Sales Email Address</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Split_String_Strategic_Sales_Email_Address</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
     <assignments>
         <name>Assign_varFaultElement_Apex_Check_User_Permission</name>
         <label>Assign varFaultElement - Apex Check User Permission</label>
-        <locationX>1512</locationX>
-        <locationY>492</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -50,8 +247,8 @@
     <assignments>
         <name>Assign_varFaultElement_Get_Public_Group_Members</name>
         <label>Assign varFaultElement - Get Public Group Members</label>
-        <locationX>1248</locationX>
-        <locationY>708</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>varFaultElement</assignToReference>
             <operator>Assign</operator>
@@ -65,32 +262,35 @@
         </connector>
     </assignments>
     <decisions>
-        <name>Bypass_Opportunity_Email_Alerts_Custom_Permission_check</name>
-        <label>Bypass Opportunity Email Alerts Custom Permission check</label>
-        <locationX>423</locationX>
-        <locationY>276</locationY>
+        <name>Does_BccEmailAddress_Exist</name>
+        <label>Does BccEmailAddress Exist ?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Apex_CheckUserPermissionController</targetReference>
+            <targetReference>Does_StrategicSales_Email_Exist</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>No Bypass</defaultConnectorLabel>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>User_has_bypass_permission</name>
+            <name>Bcc_Email_Exists</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>$Permission.Bypass_Opportunity_Email_Alerts</leftValueReference>
-                <operator>EqualTo</operator>
+                <leftValueReference>$Setup.Sales_Team_Email_Settings__c.BccEmailAddress__c</leftValueReference>
+                <operator>IsBlank</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
-            <label>User has bypass permission</label>
+            <connector>
+                <targetReference>Split_String_Bcc_Email_Addresses</targetReference>
+            </connector>
+            <label>Bcc Email Exists</label>
         </rules>
     </decisions>
     <decisions>
         <name>Does_owner_have_CSS_Perm</name>
         <label>Does owner have CSS Perm?</label>
-        <locationX>654</locationX>
-        <locationY>492</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnector>
             <targetReference>Get_Public_Group_Members</targetReference>
         </defaultConnector>
@@ -99,7 +299,7 @@
             <name>Owner_has_Customer_Success_Specialist_Permission</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Apex_CheckUserPermissionController.hasPermission</leftValueReference>
+                <leftValueReference>Check_Owner_Permission_Customer_Success_Specialist.hasPermission</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -109,11 +309,36 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Does_StrategicSales_Email_Exist</name>
+        <label>Does StrategicSales Email Exist ?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Recipients_Check</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Email_Exists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Sales_Team_Email_Settings__c.StrategicSalesEmailAddress__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Split_String_Strategic_Sales_Email_Address</targetReference>
+            </connector>
+            <label>Email Exists</label>
+        </rules>
+    </decisions>
+    <decisions>
         <description>If Opty owner HAS the custom permission for &quot;Customer Success Specialist&quot; then the email should NOT be sent</description>
         <name>HCM_Lead_Specialist_Email_needed</name>
         <label>HCM Lead Specialist Email needed?</label>
-        <locationX>852</locationX>
-        <locationY>708</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnectorLabel>Do Not Send HCM Email</defaultConnectorLabel>
         <rules>
             <name>Notify_MidMarket_Team_of_WX_WA_Opty</name>
@@ -131,8 +356,67 @@
             <label>Notify MidMarket Team of WX/WA Opty</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Outbound_Email_custom_setting_check</name>
+        <label>Outbound Email custom setting check</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Does_BccEmailAddress_Exist</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Send outbound email</defaultConnectorLabel>
+        <rules>
+            <name>IsEnabledOutbound_false</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Email_Deliverability_Settings__c.IsEnabledOutbound__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>IsEnabledOutbound = false</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Recipients_Check</name>
+        <label>Recipients Check</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Check_Owner_Permission_Customer_Success_Specialist</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Recipients_Exist</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>RecipientAddresses</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>RecipientAddresses</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_Email_Primary_Product_is_HRCore</targetReference>
+            </connector>
+            <label>Recipients Exist</label>
+        </rules>
+    </decisions>
     <description>Sends an email to HCM Leads Specialist email for WX/WA Opty created</description>
     <environments>Default</environments>
+    <formulas>
+        <name>OpportunityURL</name>
+        <dataType>String</dataType>
+        <expression>{!$User.Server_URL__c} &amp; {!$Record.Id}</expression>
+    </formulas>
     <interviewLabel>Opportunity - Created - Async - {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Opportunity - Created - Async - Trigger Notifications Based on Product</label>
     <processMetadataValues>
@@ -157,8 +441,8 @@
     <recordLookups>
         <name>Get_Public_Group_Members</name>
         <label>Get Public Group Members</label>
-        <locationX>852</locationX>
-        <locationY>600</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>HCM_Lead_Specialist_Email_needed</targetReference>
@@ -200,7 +484,7 @@
         <queriedFields>Id</queriedFields>
     </recordLookups>
     <start>
-        <locationX>50</locationX>
+        <locationX>0</locationX>
         <locationY>0</locationY>
         <filterLogic>(1 OR 2) AND 3 AND 4</filterLogic>
         <filters>
@@ -235,7 +519,7 @@
         <recordTriggerType>Create</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Bypass_Opportunity_Email_Alerts_Custom_Permission_check</targetReference>
+                <targetReference>Outbound_Email_custom_setting_check</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
@@ -245,8 +529,8 @@
     <subflows>
         <name>Fault_Handler_Subflow</name>
         <label>Fault Handler Subflow</label>
-        <locationX>1512</locationX>
-        <locationY>600</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <flowName>Insperity_Fault_Handler_Subflow</flowName>
         <inputAssignments>
             <name>faultElement</name>
@@ -270,8 +554,8 @@
     <subflows>
         <name>Opportunity_Subflow_Email_Alerts_HCM_Email</name>
         <label>Opportunity - Subflow - Email Alerts - HCM Email</label>
-        <locationX>720</locationX>
-        <locationY>816</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <flowName>Opportunity_Subflow_Email_Alerts</flowName>
         <inputAssignments>
             <name>opportunityId</name>
@@ -286,6 +570,23 @@
             </value>
         </inputAssignments>
     </subflows>
+    <textTemplates>
+        <name>EmailSubject</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>{!$Record.Name} is Now HRCore with {!$Record.NSP_Number_of_Employees__c} employees!</text>
+    </textTemplates>
+    <textTemplates>
+        <name>HRCoreEmail</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>&lt;p&gt;&lt;span style=&quot;font-size: 14px; font-family: verdana;&quot;&gt;Hello!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; font-family: verdana;&quot;&gt;We are excited to inform you that &lt;a href=&quot;{!OpportunityURL}&quot;&gt; {!$Record.Name} &lt;/a&gt; has been updated to be a HRCore fit with {!$Record.NSP_Number_of_Employees__c} employees.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; font-family: verdana;&quot;&gt;Please take the necessary actions to ensure the appropriate seller is assigned to the opportunity.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; font-family: verdana;&quot;&gt;Let’s go win!&lt;/span&gt;&lt;/p&gt;</text>
+    </textTemplates>
+    <variables>
+        <name>BccAddresses</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>collectionGroupMembers</name>
         <dataType>SObject</dataType>
@@ -293,6 +594,13 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>GroupMember</objectType>
+    </variables>
+    <variables>
+        <name>RecipientAddresses</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>varFaultElement</name>

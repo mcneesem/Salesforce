@@ -9,25 +9,30 @@
                             <c-helptext content={fields.First_Pay_Period_Start__c.inlineHelpText}></c-helptext>
                         </lightning-layout-item>
                         <lightning-layout-item size={rightColumnSize} padding="around-small">
-                            <lightning-formatted-date-time
-                                value={record.fields.First_Pay_Period_Start__c.value}
-                                month="long"
-                                day="2-digit"
-                                time-zone="UTC"
-                                >
-                            </lightning-formatted-date-time>&nbsp;-&nbsp;
-                            <lightning-formatted-date-time
-                                value={record.fields.First_Pay_Period_End__c.value}
-                                day="2-digit"
-                                time-zone="UTC"
-                                >
-                            </lightning-formatted-date-time>,&nbsp;
-                            <lightning-formatted-date-time
-                                value={record.fields.First_Pay_Period_End__c.value}
-                                year="numeric"
-                                time-zone="UTC"
-                                >
-                            </lightning-formatted-date-time>
+                            <template lwc:if={hasFirstPayPeriod}>
+                                <lightning-formatted-date-time
+                                    value={record.fields.First_Pay_Period_Start__c.value}
+                                    month="long"
+                                    day="2-digit"
+                                    time-zone="UTC"
+                                    >
+                                </lightning-formatted-date-time>&nbsp;-&nbsp;
+                                <lightning-formatted-date-time
+                                    value={record.fields.First_Pay_Period_End__c.value}
+                                    day="2-digit"
+                                    time-zone="UTC"
+                                    >
+                                </lightning-formatted-date-time>,&nbsp;
+                                <lightning-formatted-date-time
+                                    value={record.fields.First_Pay_Period_End__c.value}
+                                    year="numeric"
+                                    time-zone="UTC"
+                                    >
+                                </lightning-formatted-date-time>
+                            </template>
+                            <template lwc:else>
+                                &nbsp;
+                            </template>
                         </lightning-layout-item>
                     </lightning-layout>
                 </li>

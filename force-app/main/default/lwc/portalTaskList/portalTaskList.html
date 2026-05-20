@@ -28,7 +28,7 @@
                         <ul>
                             <template for:each={records} for:item="record">
                                 <li key={record.fields.Id.value}>
-                                    <c-portal-task record={record} variant={variant}></c-portal-task>
+                                    <c-portal-task record={record} variant={variant} save-variant="auto"></c-portal-task>
                                 </li>
                             </template>
                         </ul>

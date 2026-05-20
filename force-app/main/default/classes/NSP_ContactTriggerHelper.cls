@@ -445,6 +445,7 @@ public with sharing class NSP_ContactTriggerHelper {
                             ContactId IN :contactIdSet
                             AND isDirect = true
                             AND CreatedBy.ProfileId != :integrationUser[0].Id
+                            AND LastModifiedBy.ProfileId != :integrationUser[0].Id
                         )
                     ]
                 )

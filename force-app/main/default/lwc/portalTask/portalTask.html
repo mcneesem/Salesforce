@@ -1,9 +1,10 @@
 <template>
     <template lwc:if={record}>
+        <c-portal-related-files linked-entity-id={parentRecordId} onloaded={handleLoaded}></c-portal-related-files>
         <lightning-layout multiple-rows>
             <lightning-layout-item size="12" padding="around-small">
                 <lightning-layout onclick={handleClickAccordion} onkeydown={handleKeyDown}>
-                    <lightning-layout-item size={titleSize}>
+                    <lightning-layout-item size={titleSize} onclick={handleClickTitle} onkeydown={handleKeyDown}>
                         <template lwc:if={isParent}>
                             <template lwc:if={hasBody}>
                                 <template lwc:if={showBody}>
@@ -17,7 +18,10 @@
                                 <lightning-icon icon-name="utility:chevronright" size="xx-small" alternative-text="Indicates Guidance"></lightning-icon>&nbsp;
                             </template>
                         </template>
-                        {record.fields.Name.value}
+                        {name}
+                        <template lwc:if={hasGuidance}>
+                            <c-portal-guidance variant="helptext" record-id={record.fields.Portal_Guidance__c.value}></c-portal-guidance>
+                        </template>
                     </lightning-layout-item>
                     <template lwc:if={isParent}>
                         <lightning-layout-item size="2">
@@ -31,34 +35,143 @@
                             </lightning-formatted-date-time>
                         </lightning-layout-item>
                     </template>
-                    <lightning-layout-item size="3">
-                        <template lwc:if={showFileUpload}>
+                    <lightning-layout-item size="3" onclick={handleClickAction} onkeydown={handleKeyDown}>
+                        <template lwc:if={showFileUploadInput}>
                             <lightning-file-upload
-                                label={record.fields.Action__c.value}
                                 name="fileUploader"
                                 record-id={record.fields.Id.value}
-                                onclick={handleClickUpload}
-                                onkeydown={handleKeyDown}
                                 onuploadfinished={handleUploadFinished}
+                                disabled={isInputDisabled}
                                 variant="label-hidden"
+                                class="relative-up_small"
                                 multiple
                                 >
                             </lightning-file-upload>
                         </template>
+                        <template lwc:elseif={showDocusignInput}>
+                            Docusign&nbsp;<c-helptext content="You will be directed to Docusign for this item. Once verified, the status will show as completed."></c-helptext>
+                        </template>
+                        <template lwc:elseif={showValueInput}>
+                            <lightning-layout>
+                                <template lwc:if={showInputDate}>
+                                    <lightning-layout-item flexibility="auto" class="slds-m-bottom_xx-small">
+                                        <lightning-input
+                                            type="date"
+                                            label={name}
+                                            value={recordValue}
+                                            onchange={handleChangeInput}
+                                            onfocus={handleFocusInput}
+                                            onblur={handleBlurInput}
+                                            variant="label-hidden"
+                                            disabled={isInputDisabled}
+                                            date-style="short"
+                                            style="max-width: 14.375rem;"
+                                            >
+                                        </lightning-input>
+                                    </lightning-layout-item>
+                                </template>
+                                <template lwc:elseif={showInputDateTime}>
+                                    <lightning-layout-item flexibility="auto">
+                                        <lightning-input
+                                            type="datetime"
+                                            label={name}
+                                            value={recordValue}
+                                            onchange={handleChangeInput}
+                                            onfocus={handleFocusInput}
+                                            onblur={handleBlurInput}
+                                            variant="label-hidden"
+                                            disabled={isInputDisabled}
+                                            date-style="short"
+                                            time-style="short"
+                                            style="max-width: 14.375rem;"
+                                            >
+                                        </lightning-input>
+                                    </lightning-layout-item>
+                                </template>
+                                <template lwc:elseif={showInputInteger}>
+                                    <lightning-layout-item flexibility="auto">
+                                        <lightning-input
+                                            type="number"
+                                            label={name}
+                                            value={recordValue}
+                                            step="1"
+                                            onchange={handleChangeInput}
+                                            onfocus={handleFocusInput}
+                                            onblur={handleBlurInput}
+                                            variant="label-hidden"
+                                            disabled={isInputDisabled}
+                                            style="max-width: 14.375rem;"
+                                            >
+                                        </lightning-input>
+                                    </lightning-layout-item>
+                                </template>
+                                <template lwc:elseif={showInputText}>
+                                    <lightning-layout-item flexibility="auto">
+                                        <lightning-input
+                                            type="text"
+                                            label={name}
+                                            value={recordValue}
+                                            step="1"
+                                            max-length="10"
+                                            onchange={handleChangeInput}
+                                            onfocus={handleFocusInput}
+                                            onblur={handleBlurInput}
+                                            variant="label-hidden"
+                                            disabled={isInputDisabled}
+                                            style="max-width: 14.375rem;"
+                                            >
+                                        </lightning-input>
+                                    </lightning-layout-item>
+                                </template>
+                                <template lwc:if={showSaveButtonIcon}>
+                                    <lightning-layout-item flexibility="auto, no-grow">
+                                        <lightning-button-icon
+                                            title="Save"
+                                            icon-name="utility:save"
+                                            onclick={handleClickSave}
+                                            class="slds-m-left_x-small"
+                                            variant={saveButtonVariant}
+                                            disabled={isSaveDisabled}
+                                            >
+                                        </lightning-button-icon>
+                                    </lightning-layout-item>
+                                </template>
+                            </lightning-layout>
+                            <template lwc:if={showSaveButton}>
+                                <lightning-layout horizontal-align="end">
+                                    <lightning-layout-item>
+                                        <lightning-button
+                                            label="Save"
+                                            onclick={handleClickSave}
+                                            variant={saveButtonVariant}
+                                            disabled={isSaveDisabled}
+                                            >
+                                        </lightning-button>
+                                    </lightning-layout-item>
+                                </lightning-layout>
+                            </template>
+                        </template>
                         <template lwc:else>
-                            {record.fields.Action__c.value}
+                            {action}
                         </template>
                     </lightning-layout-item>
-                    <lightning-layout-item size="1" onclick={handleClickFiles} onkeydown={handleKeyDown}>
-                        <template lwc:if={isLoading}>
-                            <div class="slds-is-relative slds-size_1-of-2 slds-m-top_x-small">
-                                <lightning-spinner alternative-text="Loading" size="xx-small"></lightning-spinner>
-                            </div>
-                        </template>
-                        <template lwc:else>
-                            <lightning-icon icon-name="utility:form" size="xx-small" alternative-text="Uploaded Files"></lightning-icon>&nbsp;({totalRelatedFiles})
-                        </template>
-                    </lightning-layout-item>
+                    <template lwc:if={showRelatedFiles}>
+                        <lightning-layout-item size="1" onclick={handleClickFiles} onkeydown={handleKeyDown}>
+                            <template lwc:if={isLoading}>
+                                <div class="slds-is-relative slds-size_1-of-2 slds-m-top_x-small">
+                                    <lightning-spinner alternative-text="Loading" size="xx-small"></lightning-spinner>
+                                </div>
+                            </template>
+                            <template lwc:else>
+                                <lightning-icon icon-name="utility:form" size="xx-small" alternative-text="Uploaded Files"></lightning-icon>&nbsp;({totalRelatedFiles})
+                            </template>
+                        </lightning-layout-item>
+                    </template>
+                    <template lwc:else>
+                        <lightning-layout-item size="1">
+                            &nbsp;
+                        </lightning-layout-item>
+                    </template>
                     <lightning-layout-item size="1">
                         <template lwc:if={isCompleted}>
                             <lightning-icon icon-name="utility:check" size="xx-small" variant="success" alternative-text="Indicates Completed"></lightning-icon>
@@ -73,7 +186,7 @@
                 <template lwc:if={showBody}>
                     <lightning-layout-item size="12" padding="around-medium">
                         <template lwc:if={hasGuidance}>
-                            PENDING GUIDANCE
+                            <c-portal-guidance variant="richtext" record-id={record.fields.Portal_Guidance__c.value}></c-portal-guidance>
                         </template>
                         <template lwc:if={isParent}>
                             <c-portal-task-list variant="child" parent-record-id={record.fields.Id.value}></c-portal-task-list>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>EEs on LOA</label>
+    <protected>false</protected>
+    <values>
+        <field>NSP_Automation_Name__c</field>
+        <value xsi:type="xsd:string">EEs on LOA</value>
+    </values>
+    <values>
+        <field>NSP_Automation_Order__c</field>
+        <value xsi:type="xsd:double">8.0</value>
+    </values>
+    <values>
+        <field>NSP_Class_Name__c</field>
+        <value xsi:type="xsd:string">NSP_Implprofile_ServiceHelperUpdate</value>
+    </values>
+    <values>
+        <field>NSP_IP_Record_Type_IP__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>NSP_IP_Record_Type__c</field>
+        <value xsi:type="xsd:string">FSO</value>
+    </values>
+    <values>
+        <field>NSP_Method_Name__c</field>
+        <value xsi:type="xsd:string">leaveAbsenceFSO</value>
+    </values>
+    <values>
+        <field>NSP_Section__c</field>
+        <value xsi:type="xsd:string">Benefits</value>
+    </values>
+    <values>
+        <field>NSP_Type_of_Automation__c</field>
+        <value xsi:type="xsd:string">PROJECT TASK CREATION</value>
+    </values>
+    <values>
+        <field>Sort_Order__c</field>
+        <value xsi:type="xsd:double">8.0</value>
+    </values>
+</CustomMetadata>
