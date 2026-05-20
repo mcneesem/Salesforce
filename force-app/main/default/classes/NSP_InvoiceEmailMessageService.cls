@@ -1,17 +1,8 @@
-/**
-* @description  : Dunnvoice Email Service Class to customize invoice emails sent from Apex
-* @author Rakesh Das
-* @date 11/28/2022
-* Name : NSP_InvoiceEmailMessageService
-*/
-
 public class NSP_InvoiceEmailMessageService {
     // test w/ NSP_InvoiceEmailMessageServiceTest (84%)
 
-    private NSP_InvoiceEmailMessageService(){
-
+    private NSP_InvoiceEmailMessageService() {
     }
-
 
     public static final String ACHTEMPLATEID = NSP_GenericEmailUtility.getTemplateIdFromDevName('NSP_SendEmailforACH');
     public static final String PAYMENTTEMPLATEID = NSP_GenericEmailUtility.getTemplateIdFromDevName('NSP_SendInvoiceLink');
@@ -21,26 +12,21 @@ public class NSP_InvoiceEmailMessageService {
     public static final String CONTRACTOR_MANAGEMENT_TEMPLATEID = NSP_GenericEmailUtility.getTemplateIdFromDevName('Contractor_Management_Inv_Email_Template');
     public static final String CONTRACTOR_MANAGEMENT_PRODUCT_TYPE = 'Contractor Management';
 
-
-/**
-* Invocable Method that can be called from Flows
-* @param  List of String - Invoice Id from flow
-* @return void
-* @Author Rakesh Das
-* @Since November 2022
-*/
+    //
+    // Invocable Method that can be called from Flows
+    // @param  List of String - Invoice Id from flow
+    // @return void
+    //
     @InvocableMethod(label='Send Invoice Email' description='Sends invoice emails on posting')
-    public static void sendInvoiceEmail(List<String> invoiceIds) {
+    public static void sendInvoiceEmail( List<String> invoiceIds ) {
         sendInvoiceEmails(invoiceIds);
     }
 
-/**
-* Single static method called via Flow / Batch to send invoice emails. Depends on generateInvoiceEmails for email generation.
-* @param  List of String - Invoice Ids
-* @return void
-* @Author Rakesh Das
-* @Since November 2022
-*/
+    //
+    // Single static method called via Flow / Batch to send invoice emails. Depends on generateInvoiceEmails for email generation.
+    // @param  List of String - Invoice Ids
+    // @return void
+    //
     public static void sendInvoiceEmails(List<String> invoiceIds) {
         Integer ecount = 0; // count of emails sent
         List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
@@ -48,17 +34,14 @@ public class NSP_InvoiceEmailMessageService {
         if(emails.size()>0) {
             ecount = NSP_GenericEmailUtility.sendSingleEmailMessages(emails,false); //method to send emails.
         }
-        //return ecount;
     }
 
-/**
-* Single static method to generate invoice emails.
-* @param  List of List of String - Invoice Ids
-* @return List of Email Messages - List of Messaging.SingleEmailMessage objects
-* @Author Rakesh Das
-* @Since November 2022
-*/
-    public static List<Messaging.SingleEmailMessage> generateInvoiceEmails(List<String> invoiceIds) {
+    //
+    // Single static method to generate invoice emails.
+    // @param  List of List of String - Invoice Ids
+    // @return List of Email Messages - List of Messaging.SingleEmailMessage objects
+    //
+    public static List<Messaging.SingleEmailMessage> generateInvoiceEmails( List<String> invoiceIds ) {
         List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
 
         OrgWideEmailAddress orgWidAddress = NSP_GenericEmailUtility.getOrgWideAddress( System.label.NSP_no_reply );
@@ -88,7 +71,6 @@ public class NSP_InvoiceEmailMessageService {
                     if( isEmailCheck ) {
                         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
                         mail = generateInvoiceEmail(inv, invoiceToinvLineMap.get(inv.Id),orgWidAddress.Id);
-                        //mail.setSaveAsActivity(true);
                         //Linking Invoice to update
 
                         if (mail != null ){
@@ -104,27 +86,26 @@ public class NSP_InvoiceEmailMessageService {
                     invcToUpdate.add(invUpd);
                 }
             }
-
             if(invcToUpdate.size() >0) {
-                //update invcToUpdate;
                 NSP_InvoiceTriggerHandler.TriggerDisabled = true;
                 List<Database.SaveResult> res = Database.update(invcToUpdate,false);
-                NSP_ErrorLogHandler.logSaveResultsException('NSP_InvoiceEmailMessageService', 'generateInvoiceEmails', res);
+                NSP_ErrorLogHandler.logResults(
+                    NSP_InvoiceEmailMessageService.class.getName() ,
+                    'generateInvoiceEmails:update' ,
+                    res
+                );
             }
 
         }
         return emails;
     }
 
-/**
-* Single static method to check criterias for sending invoice emails.
-* @param  Invoice object
-* @return Boolean
-* @Author Rakesh Das
-* @Since November 2022
-*/
-    public static Boolean evaluateInvoiceEmailCriterias (blng__Invoice__c inv) {
-
+    //
+    // Single static method to check criterias for sending invoice emails.
+    // @param  Invoice object
+    // @return Boolean
+    //
+    public static Boolean evaluateInvoiceEmailCriterias( blng__Invoice__c inv ) {
         Boolean isInvEmailCheck = false;
         DocuSignRESTSettings__mdt callbackUserName = DocuSignRESTSettings__mdt.getInstance('NSP_Docusign_Callback_Username');
         if(
@@ -147,8 +128,6 @@ public class NSP_InvoiceEmailMessageService {
     // Single static method to generate emails.
     // @param  Invoice object
     // @return Single Email Messages - Messaging.SingleEmailMessage object
-    // @Author Rakesh Das
-    // @Since November 2022
     //
     public static Messaging.SingleEmailMessage generateInvoiceEmail(
         blng__Invoice__c inv ,
@@ -312,4 +291,6 @@ public class NSP_InvoiceEmailMessageService {
             e
         );
     }
+
 }
+//
