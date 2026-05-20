@@ -1,5 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Prevent DmlExceptions: INSUFFICIENT_ACCESS_OR_READONLY: insufficient access rights on object id.</description>
+        <name>Update_Related_Accounts</name>
+        <label>Update Related Accounts</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>NSP_UpdateRelatedAccounts</actionName>
+        <actionType>apex</actionType>
+        <faultConnector>
+            <targetReference>Assign_varFaultElement_Update_Related_Accounts</targetReference>
+        </faultConnector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>accountId</name>
+            <value>
+                <elementReference>varAccount.Id</elementReference>
+                <inputConfiguratorMode>Resource</inputConfiguratorMode>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>action</name>
+            <value>
+                <inputConfiguratorMode>Resource</inputConfiguratorMode>
+                <stringValue>updateRelatedAccounts</stringValue>
+            </value>
+        </inputParameters>
+        <nameSegment>NSP_UpdateRelatedAccounts</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
     <apiVersion>64.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
@@ -77,7 +106,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_Account</targetReference>
+            <targetReference>Update_Related_Accounts</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -248,23 +277,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_varFaultElement_Update_Account</name>
-        <label>Assign varFaultElement - Update Account</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>varFaultElement</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Update_Account</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Fault_Handler_Subflow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Assign_varFaultElement_Update_Lead_Record</name>
         <label>Assign varFaultElement - Update Lead Record</label>
         <locationX>0</locationX>
@@ -308,6 +320,23 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>Update_Opportunity_Discovery_Call_Created_and_Open</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_varFaultElement_Update_Related_Accounts</name>
+        <label>Assign varFaultElement - Update_Related_Accounts</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Update_Related_Accounts</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -1282,16 +1311,6 @@
             <field>RecordId</field>
         </outputAssignments>
     </recordLookups>
-    <recordUpdates>
-        <name>Update_Account</name>
-        <label>Update Account</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <faultConnector>
-            <targetReference>Assign_varFaultElement_Update_Account</targetReference>
-        </faultConnector>
-        <inputReference>varAccount</inputReference>
-    </recordUpdates>
     <recordUpdates>
         <name>Update_Lead_Record</name>
         <label>Update Lead Record</label>
