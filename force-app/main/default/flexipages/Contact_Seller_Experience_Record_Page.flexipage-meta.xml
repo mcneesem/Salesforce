@@ -428,6 +428,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Phone</fieldItem>
                 <identifier>RecordPhoneField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.OneTrust_Opt_Out__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>false</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -438,6 +445,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.MobilePhone</fieldItem>
                 <identifier>RecordMobilePhoneField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.OneTrust_Opt_Out__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>false</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -448,6 +462,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Email</fieldItem>
                 <identifier>RecordEmailField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.OneTrust_Opt_Out__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>false</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1020,9 +1041,15 @@
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection5</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.NSP_Contact_ID_18__c}</leftValue>
                         <operator>NE</operator>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.OneTrust_Opt_Out__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>false</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
