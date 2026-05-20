@@ -2,6 +2,29 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>66.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_Default_Tasks</name>
+        <label>Assign : Default Tasks</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>tc_DefaultTasks</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Insperity Client Authorization</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>tc_DefaultTasks</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Cafeteria Plan Documentation</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Portal_Project_Subflow_Create_Default_Portal_Tasks</targetReference>
+        </connector>
+    </assignments>
     <environments>Default</environments>
     <interviewLabel>Portal Task - Created - Async - Populate Sub Portal Tasks {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Portal Task - Created - Async - Populate Sub Portal Tasks</label>
@@ -39,7 +62,7 @@
         <recordTriggerType>Create</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Portal_Task_Subflow_Populate_Sub_Portal_Tasks</targetReference>
+                <targetReference>Assign_Default_Tasks</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
@@ -47,16 +70,32 @@
     </start>
     <status>Draft</status>
     <subflows>
-        <name>Portal_Task_Subflow_Populate_Sub_Portal_Tasks</name>
-        <label>Portal Task - Subflow - Populate Sub Portal Tasks</label>
+        <description>This Subflow referred In -
+Portal_Project_Created_Async_Create_Default_Portal_Tasks</description>
+        <name>Portal_Project_Subflow_Create_Default_Portal_Tasks</name>
+        <label>Portal Project - Subflow - Create Default Portal Tasks</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <flowName>Portal_Task_Subflow_Populate_Sub_Portal_Tasks</flowName>
+        <flowName>Portal_Project_Subflow_Create_Default_Portal_Tasks</flowName>
         <inputAssignments>
-            <name>recordPortalTask</name>
+            <name>portalProjectId_In</name>
             <value>
-                <elementReference>$Record</elementReference>
+                <elementReference>$Record.Portal_Project__r.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>tc_DefaultTasks_In</name>
+            <value>
+                <elementReference>tc_DefaultTasks</elementReference>
             </value>
         </inputAssignments>
     </subflows>
+    <variables>
+        <description>Collection of default tasks</description>
+        <name>tc_DefaultTasks</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
 </Flow>

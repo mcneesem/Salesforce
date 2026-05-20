@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>66.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Add_Portal_Task_Collection</name>
+        <label>Add Portal Task Collection</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>rc_portaltasks</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Map_Default_Tasks_to_Portal_Tasks</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>For_Each_Default_Task</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fault_Element_Create_Default_Portal_Task</name>
+        <label>Set Fault Element : Create_Default_Portal_Task</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>FaultElement</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Create_Default_Portal_Task</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <description>New Client Portal: Create Default Portal Tasks - Subflow</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>f_defaulttasks_action</name>
+        <dataType>String</dataType>
+        <expression>CASE(
+  TRIM( {!For_Each_Default_Task}),
+    &quot;Business Inception Date&quot;, &quot;Date&quot;,
+    &quot;Regular Rate Of Pay&quot;, &quot;&quot;,
+    &quot;Additional Documentation&quot;, &quot;&quot;,
+    &quot;Employee Payroll Documentation&quot;, &quot;&quot;,
+    &quot;IRS Assignment Letter&quot;, &quot;File&quot;,
+    &quot;Insperity Client Authorization&quot;, &quot;Docusign&quot;,
+    &quot;Cafeteria Plan Documentation&quot;, &quot;File&quot;,
+    &quot;&quot;
+)</expression>
+    </formulas>
+    <formulas>
+        <name>f_defaulttasks_status</name>
+        <dataType>String</dataType>
+        <expression>CASE(
+  TRIM( {!For_Each_Default_Task}),
+    &quot;Regular Rate Of Pay&quot;, &quot;Completed&quot;,
+    &quot;Additional Documentation&quot;, &quot;Completed&quot;,
+    &quot;Pending&quot;
+)</expression>
+    </formulas>
+    <formulas>
+        <name>f_defaulttasks_type</name>
+        <dataType>String</dataType>
+        <expression>CASE(
+  TRIM( {!For_Each_Default_Task}),
+    &quot;Business Inception Date&quot;, &quot;Company Setup&quot;,
+    &quot;Regular Rate Of Pay&quot;, &quot;Employee Setup&quot;,
+    &quot;Additional Documentation&quot;, &quot;System Setup&quot;,
+    &quot;Employee Payroll Documentation&quot;, &quot;Employee Setup&quot;,
+    &quot;IRS Assignment Letter&quot;, &quot;Pre-Transition Setup&quot;,
+    &quot;Insperity Client Authorization&quot;, &quot;Company Setup&quot;,
+    &quot;Cafeteria Plan Documentation&quot;, &quot;Company Setup&quot;,
+    &quot;&quot;
+)</expression>
+    </formulas>
+    <formulas>
+        <name>f_portalproject_id</name>
+        <dataType>String</dataType>
+        <expression>{!portalProjectId_In}</expression>
+    </formulas>
+    <interviewLabel>Portal Project - Subflow - Create Default Portal Tasks {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Portal Project - Subflow - Create Default Portal Tasks</label>
+    <loops>
+        <name>For_Each_Default_Task</name>
+        <label>For Each : Default Task</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <collectionReference>tc_DefaultTasks_In</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Map_Default_Tasks_to_Portal_Tasks</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Create_Default_Portal_Task</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <description>Create Business Inception Date</description>
+        <name>Create_Default_Portal_Task</name>
+        <label>Create Default Portal Task</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <faultConnector>
+            <targetReference>Set_Fault_Element_Create_Default_Portal_Task</targetReference>
+        </faultConnector>
+        <inputReference>rc_portaltasks</inputReference>
+    </recordCreates>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>For_Each_Default_Task</targetReference>
+        </connector>
+    </start>
+    <status>Draft</status>
+    <subflows>
+        <description>Fault Handler</description>
+        <name>Insperity_Fault_Handler_Subflow</name>
+        <label>Insperity Fault Handler Subflow</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <flowName>Insperity_Fault_Handler_Subflow</flowName>
+        <inputAssignments>
+            <name>faultElement</name>
+            <value>
+                <elementReference>FaultElement</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultFlow</name>
+            <value>
+                <stringValue>Portal_Project_Subflow_Create_Default_Portal_Tasks</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>faultMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <transforms>
+        <name>Map_Default_Tasks_to_Portal_Tasks</name>
+        <label>Map : Default Tasks to Portal Tasks</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Add_Portal_Task_Collection</targetReference>
+        </connector>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <objectType>Portal_Task__c</objectType>
+        <scale>0</scale>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <transformValues>
+            <transformValueActions>
+                <outputFieldApiName>Name</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>For_Each_Default_Task</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>Action__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>f_defaulttasks_action</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>Portal_Project__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>f_portalproject_id</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>Status__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>f_defaulttasks_status</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>Type__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>f_defaulttasks_type</elementReference>
+                </value>
+            </transformValueActions>
+        </transformValues>
+    </transforms>
+    <variables>
+        <name>FaultElement</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Portal Project Record Id as Input to Subflow</description>
+        <name>portalProjectId_In</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>rc_portaltasks</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Portal_Task__c</objectType>
+    </variables>
+    <variables>
+        <description>Text Collection of default tasks</description>
+        <name>tc_DefaultTasks_In</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>
