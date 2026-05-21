@@ -38,7 +38,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Validate_Before_Update</targetReference>
+            <targetReference>Proceed_to_Update</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -140,7 +140,7 @@
             <name>Create</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>OperationType</leftValueReference>
+                <leftValueReference>operationType</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Create</stringValue>
@@ -155,7 +155,7 @@
             <name>Update</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>OperationType</leftValueReference>
+                <leftValueReference>operationType</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Update</stringValue>
@@ -190,13 +190,13 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Validate_Before_Update</name>
-        <label>Validate Before Update</label>
+        <name>Proceed_to_Update</name>
+        <label>Proceed to Update?</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Valid_Upsert</name>
+            <name>Yes_Update_Portal_Event</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>recordPortalEvent</leftValueReference>
@@ -208,7 +208,7 @@
             <connector>
                 <targetReference>Update_Portal_Event</targetReference>
             </connector>
-            <label>Valid Upsert</label>
+            <label>Yes : Update Portal Event</label>
         </rules>
     </decisions>
     <decisions>
@@ -336,7 +336,6 @@
         <label>Update Portal Event</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <doesUpsert>true</doesUpsert>
         <faultConnector>
             <targetReference>Set_Fault_Element_Update_Portal_Event</targetReference>
         </faultConnector>
@@ -495,7 +494,7 @@
     </variables>
     <variables>
         <description>Defines the Create or Update Operation</description>
-        <name>OperationType</name>
+        <name>operationType</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>

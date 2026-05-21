@@ -113,7 +113,7 @@
             </value>
         </filters>
         <object>pse__Project_Task__c</object>
-        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <connector>
                 <targetReference>Project_Task_Subflow_Populate_Portal_Event</targetReference>
