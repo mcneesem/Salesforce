@@ -52,22 +52,17 @@ Public without sharing class EntitySubscriptionRetentionJob implements ISelfSche
 
     //Batchable
     public Database.QueryLocator start(Database.BatchableContext bc) {
-        Integer days = 0;
-        if ( EntitySubscriptionRetentionJob.settings != null ) {
-            days = (Integer)EntitySubscriptionRetentionJob.settings.SoqlDaysLimitCases__c ;
-        }
-		Date thresholdDate = Date.today().addDays(-days);
         return Database.getQueryLocator([
-			SELECT Id
-			FROM EntitySubscription
-			WHERE ParentId IN (
-				SELECT Id
-				FROM Case
-				WHERE IsClosed = true
-				AND ClosedDate <= :thresholdDate
-			)
-			ORDER BY CreatedDate ASC
-		]);
+            SELECT Id
+            FROM EntitySubscription
+            WHERE ParentId IN (
+                SELECT Id
+                FROM Case
+                WHERE IsClosed = true
+                AND ClosedDate <= :EntitySubscriptionRetentionJob.caseClosedDateTime
+            )
+            ORDER BY CreatedDate ASC
+        ]);
     }
 
     public void execute(Database.BatchableContext bc, List<EntitySubscription> scope) {
@@ -143,4 +138,36 @@ Public without sharing class EntitySubscriptionRetentionJob implements ISelfSche
         private set;
     }
 
+    // translates soqlDaysLimitCases into a specific DateTime value...
+    private static DateTime caseClosedDateTime {
+        private get {
+            if ( caseClosedDateTime == null ) {
+                caseClosedDateTime = System.now().addDays( -1 * EntitySubscriptionRetentionJob.soqlDaysLimitCases );
+            }
+            return caseClosedDateTime;
+        }
+        private set;
+    }
+
+    // how far back (in days) should be queried???
+    private static Integer soqlDaysLimitCases {
+        private get {
+            if ( soqlDaysLimitCases == null ) {
+                Integer local = 30;
+                if ( ( EntitySubscriptionRetentionJob.settings != null )
+                    && ( EntitySubscriptionRetentionJob.settings.SoqlDaysLimitCases__c != null )
+                    )
+                {
+                    local = EntitySubscriptionRetentionJob.settings.SoqlDaysLimitCases__c.intValue();
+                }
+                // limit must be non-negative...
+                if ( local < 0 ) {
+                    local = 0;
+                }
+                soqlDaysLimitCases = local;
+            }
+            return soqlDaysLimitCases;
+        }
+        private set;
+    }
 }
