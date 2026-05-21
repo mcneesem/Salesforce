@@ -257,6 +257,7 @@ export default class nsp_separationWizardPageThree extends LightningElement {
                 this.subClientNumber = null;
                 this.employeeStatus = null;
                 this.terminationDate = null;
+                this.Work_State__c =null;
             }
         }
         if(event.currentTarget.name == 'NSP_Sub_Client__c'){
@@ -293,7 +294,8 @@ export default class nsp_separationWizardPageThree extends LightningElement {
                     subClientContactId: subclientContact.Id,
                     contactId: this.WSEE
                 });
-                this.subClientContactAddress = result?.Id;
+                this.subClientContactAddress = result?.Id??null;
+                this.Work_State__c = result?.NSP_State__c ?? null;
             } catch(error){
                 this.dispatchEvent(
                     new ShowToastEvent({
@@ -408,6 +410,7 @@ export default class nsp_separationWizardPageThree extends LightningElement {
             this.contactName ='';
             this.WSEE = null;
             this.NSP_Sub_Client__c = null;
+            this.Work_State__c = null;
             this.subClientOptions = [];
             this.subClientContactMap = new Map();
         }
