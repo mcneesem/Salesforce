@@ -114,9 +114,6 @@
                     <elementReference>$Record.CreatedById</elementReference>
                 </rightValue>
             </conditions>
-            <connector>
-                <targetReference>Outbound_Email_custom_setting_check</targetReference>
-            </connector>
             <label>Contains Creator</label>
         </rules>
     </decisions>
@@ -150,9 +147,6 @@
         <label>Check Group Email</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Outbound_Email_custom_setting_check</targetReference>
-        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Has_Group_Email</name>
@@ -182,9 +176,6 @@
         <label>Check Owner: User vs Queue</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Outbound_Email_custom_setting_check</targetReference>
-        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Is_User</name>
@@ -250,9 +241,6 @@
                     <elementReference>$Record.CreatedById</elementReference>
                 </rightValue>
             </conditions>
-            <connector>
-                <targetReference>Outbound_Email_custom_setting_check</targetReference>
-            </connector>
             <label>Owner Is Creator</label>
         </rules>
     </decisions>
@@ -261,9 +249,6 @@
         <label>check service user</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Outbound_Email_custom_setting_check</targetReference>
-        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>is_service_user</name>
