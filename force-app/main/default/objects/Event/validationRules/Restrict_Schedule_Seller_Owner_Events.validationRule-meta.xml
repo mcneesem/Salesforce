@@ -13,5 +13,5 @@
     ISCHANGED( Description )
   )
 )</errorConditionFormula>
-    <errorMessage>You are not allowed to modify this field for Schedule Seller Events.</errorMessage>
+    <errorMessage>Only Event Owner is allowed to modify this field for Schedule Seller Events.</errorMessage>
 </ValidationRule>
