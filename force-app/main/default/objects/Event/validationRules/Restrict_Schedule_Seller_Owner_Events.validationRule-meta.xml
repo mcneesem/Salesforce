@@ -7,7 +7,7 @@
   NOT( $Permission.Bypass_Restrict_Schedule_Seller_Events ) ,
   ( RecordType.DeveloperName = &apos;Schedule_Seller&apos; ) ,
   NOT( ISNEW() ) ,
-  NOT( Owner:User.Id =  $User.Id ) ,
+  NOT( Owner:User.Id = $User.Id ) ,
   OR(
     ISCHANGED( NSP_Status__c ) ,
     ISCHANGED( Description )
