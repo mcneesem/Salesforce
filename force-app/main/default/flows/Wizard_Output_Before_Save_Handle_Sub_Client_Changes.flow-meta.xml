@@ -29,6 +29,19 @@
         </assignmentItems>
     </assignments>
     <assignments>
+        <name>Depopulate_Sub_client_Contact_Address</name>
+        <label>Depopulate Sub client Contact Address</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Sub_Client_Contact_Address__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
         <name>Populate_Sub_Client_Contact_Address</name>
         <label>Populate Sub Client Contact Address</label>
         <locationX>0</locationX>
@@ -100,6 +113,9 @@
         <label>Check Sub Client Contact Address</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Depopulate_Sub_client_Contact_Address</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Not_Empty</name>
