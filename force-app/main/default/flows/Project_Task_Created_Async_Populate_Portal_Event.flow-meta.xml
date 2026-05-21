@@ -116,7 +116,7 @@
         <locationY>0</locationY>
         <flowName>Project_Task_Subflow_Populate_Portal_Event</flowName>
         <inputAssignments>
-            <name>OperationType</name>
+            <name>operationType</name>
             <value>
                 <stringValue>Create</stringValue>
             </value>
