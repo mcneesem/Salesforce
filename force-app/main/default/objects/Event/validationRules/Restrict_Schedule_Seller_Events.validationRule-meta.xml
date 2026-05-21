@@ -4,19 +4,18 @@
     <active>true</active>
     <description>Restrict editing fields: Assigned To, Start and End for Schedule_Seller record type.</description>
     <errorConditionFormula>AND(
- RecordType.DeveloperName = 'Schedule_Seller' ,
- NOT( ISNEW() ) ,
- NOT( $Permission.Bypass_Restrict_Schedule_Seller_Events ) ,
- OR( 
-  ISCHANGED( OwnerId ) ,
-  ISCHANGED( ActivityDateTime ) ,
-  ISCHANGED( DurationInMinutes ) ,
-  ISCHANGED( NSP_Event_Type__c ) ,
-  ISCHANGED( NSP_Event_Subtype__c ) ,
-  ISCHANGED( Subject ) ,
-  ISCHANGED( WhatId )
-
- )
+  NOT( $Permission.Bypass_Restrict_Schedule_Seller_Events ) ,
+  ( RecordType.DeveloperName = 'Schedule_Seller' ) ,
+  NOT( ISNEW() ) ,
+  OR(
+    ISCHANGED( OwnerId ) ,
+    ISCHANGED( ActivityDateTime ) ,
+    ISCHANGED( DurationInMinutes ) ,
+    ISCHANGED( NSP_Event_Type__c ) ,
+    ISCHANGED( NSP_Event_Subtype__c ) ,
+    ISCHANGED( Subject ) ,
+    ISCHANGED( WhatId )
+  )
 )</errorConditionFormula>
     <errorMessage>You are not allowed to modify this field for Schedule Seller Events.</errorMessage>
 </ValidationRule>
