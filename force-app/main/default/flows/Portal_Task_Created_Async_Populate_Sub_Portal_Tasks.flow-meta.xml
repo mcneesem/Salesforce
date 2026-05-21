@@ -8,14 +8,14 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>tc_DefaultTasks</assignToReference>
+            <assignToReference>defaultTaskNames</assignToReference>
             <operator>Add</operator>
             <value>
                 <stringValue>Insperity Client Authorization</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>tc_DefaultTasks</assignToReference>
+            <assignToReference>defaultTaskNames</assignToReference>
             <operator>Add</operator>
             <value>
                 <stringValue>Cafeteria Plan Documentation</stringValue>
@@ -78,21 +78,21 @@ Portal_Project_Created_Async_Create_Default_Portal_Tasks</description>
         <locationY>0</locationY>
         <flowName>Portal_Project_Subflow_Create_Default_Portal_Tasks</flowName>
         <inputAssignments>
-            <name>portalProjectId_In</name>
+            <name>defaultTaskNames</name>
             <value>
-                <elementReference>$Record.Portal_Project__r.Id</elementReference>
+                <elementReference>defaultTaskNames</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>tc_DefaultTasks_In</name>
+            <name>portalProjectId</name>
             <value>
-                <elementReference>tc_DefaultTasks</elementReference>
+                <elementReference>$Record.Portal_Project__r.Id</elementReference>
             </value>
         </inputAssignments>
     </subflows>
     <variables>
         <description>Collection of default tasks</description>
-        <name>tc_DefaultTasks</name>
+        <name>defaultTaskNames</name>
         <dataType>String</dataType>
         <isCollection>true</isCollection>
         <isInput>false</isInput>

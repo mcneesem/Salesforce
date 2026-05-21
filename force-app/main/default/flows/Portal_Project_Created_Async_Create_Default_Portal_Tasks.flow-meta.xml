@@ -8,35 +8,35 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>tc_DefaultTasks</assignToReference>
+            <assignToReference>defaultTaskNames</assignToReference>
             <operator>Add</operator>
             <value>
                 <stringValue>Business Inception Date</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>tc_DefaultTasks</assignToReference>
+            <assignToReference>defaultTaskNames</assignToReference>
             <operator>Add</operator>
             <value>
                 <stringValue>Regular Rate Of Pay</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>tc_DefaultTasks</assignToReference>
+            <assignToReference>defaultTaskNames</assignToReference>
             <operator>Add</operator>
             <value>
                 <stringValue>Additional Documentation</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>tc_DefaultTasks</assignToReference>
+            <assignToReference>defaultTaskNames</assignToReference>
             <operator>Add</operator>
             <value>
                 <stringValue>Employee Payroll Documentation</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>tc_DefaultTasks</assignToReference>
+            <assignToReference>defaultTaskNames</assignToReference>
             <operator>Add</operator>
             <value>
                 <stringValue>IRS Assignment Letter</stringValue>
@@ -105,30 +105,30 @@
         <locationY>0</locationY>
         <flowName>Portal_Project_Subflow_Create_Default_Portal_Tasks</flowName>
         <inputAssignments>
-            <name>portalProjectId_In</name>
+            <name>defaultTaskNames</name>
+            <value>
+                <elementReference>defaultTaskNames</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>portalProjectId</name>
             <value>
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputAssignments>
-        <inputAssignments>
-            <name>tc_DefaultTasks_In</name>
-            <value>
-                <elementReference>tc_DefaultTasks</elementReference>
-            </value>
-        </inputAssignments>
     </subflows>
     <variables>
-        <name>FaultElement</name>
+        <description>Collection of default tasks</description>
+        <name>defaultTaskNames</name>
         <dataType>String</dataType>
-        <isCollection>false</isCollection>
+        <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <description>Collection of default tasks</description>
-        <name>tc_DefaultTasks</name>
+        <name>FaultElement</name>
         <dataType>String</dataType>
-        <isCollection>true</isCollection>
+        <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
