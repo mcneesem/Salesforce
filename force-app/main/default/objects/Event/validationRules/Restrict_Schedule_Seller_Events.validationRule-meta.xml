@@ -5,7 +5,7 @@
     <description>Restrict editing fields: Assigned To, Start and End for Schedule_Seller record type.</description>
     <errorConditionFormula>AND(
   NOT( $Permission.Bypass_Restrict_Schedule_Seller_Events ) ,
-  ( RecordType.DeveloperName = 'Schedule_Seller' ) ,
+  ( RecordType.DeveloperName = &apos;Schedule_Seller&apos; ) ,
   NOT( ISNEW() ) ,
   OR(
     ISCHANGED( OwnerId ) ,
