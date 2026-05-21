@@ -66,6 +66,13 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.Portal_Project__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Get_Parent_Task</targetReference>
             </connector>
@@ -80,15 +87,15 @@
         <dataType>String</dataType>
         <expression>CASE(
   {!$Record.Name},
-    &quot;Employee Deductions&quot;, &quot;Employee Payroll Documentation&quot;,
-    &quot;Outside Record Keeper (Retirement Plan) Deductions&quot;, &quot;Employee Payroll Documentation&quot;,
-    &quot;Cell Phone reimbursements&quot;, &quot;Employee Payroll Documentation&quot;,
-    &quot;Garnishments&quot;, &quot;Employee Payroll Documentation&quot;,
-    &quot;COBRA Takeover&quot;, &quot;Employee Payroll Documentation&quot;,
-    &quot;LOA Information&quot;, &quot;Employee Payroll Documentation&quot;,
-    &quot;Insperity Client Authorization&quot;, &quot;Client Sponsored Plans&quot;,
-    &quot;Cafeteria Plan Documentation&quot;, &quot;Client Sponsored Plans&quot;,
-&quot;&quot;
+  &quot;Employee Deductions&quot;, &quot;Employee Payroll Documentation&quot;,
+  &quot;Outside Record Keeper (Retirement Plan) Deductions&quot;, &quot;Employee Payroll Documentation&quot;,
+  &quot;Cell Phone reimbursements&quot;, &quot;Employee Payroll Documentation&quot;,
+  &quot;Garnishments&quot;, &quot;Employee Payroll Documentation&quot;,
+  &quot;COBRA Takeover&quot;, &quot;Employee Payroll Documentation&quot;,
+  &quot;LOA Information&quot;, &quot;Employee Payroll Documentation&quot;,
+  &quot;Insperity Client Authorization&quot;, &quot;Client Sponsored Plans&quot;,
+  &quot;Cafeteria Plan Documentation&quot;, &quot;Client Sponsored Plans&quot;,
+  &quot;&quot;
 )</expression>
     </formulas>
     <interviewLabel>Portal Task Before Create Populate Parent Portal Task {!$Flow.CurrentDateTime}</interviewLabel>

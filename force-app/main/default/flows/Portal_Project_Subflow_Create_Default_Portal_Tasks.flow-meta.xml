@@ -34,6 +34,36 @@
             <targetReference>Insperity_Fault_Handler_Subflow</targetReference>
         </connector>
     </assignments>
+    <decisions>
+        <description>Validate Input argument</description>
+        <name>Valid_Input</name>
+        <label>Valid Input?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Valid_Input</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>defaultTaskNames</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>defaultTaskNames</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>For_Each_Default_Task</targetReference>
+            </connector>
+            <label>Yes : Valid Input</label>
+        </rules>
+    </decisions>
     <description>New Client Portal: Create Default Portal Tasks - Subflow</description>
     <environments>Default</environments>
     <formulas>
@@ -41,14 +71,14 @@
         <dataType>String</dataType>
         <expression>CASE(
   TRIM( {!For_Each_Default_Task}),
-    &quot;Business Inception Date&quot;, &quot;Date&quot;,
-    &quot;Regular Rate Of Pay&quot;, &quot;&quot;,
-    &quot;Additional Documentation&quot;, &quot;&quot;,
-    &quot;Employee Payroll Documentation&quot;, &quot;&quot;,
-    &quot;IRS Assignment Letter&quot;, &quot;File&quot;,
-    &quot;Insperity Client Authorization&quot;, &quot;Docusign&quot;,
-    &quot;Cafeteria Plan Documentation&quot;, &quot;File&quot;,
-    &quot;&quot;
+  &quot;Business Inception Date&quot;, &quot;Date&quot;,
+  &quot;Regular Rate Of Pay&quot;, &quot;&quot;,
+  &quot;Additional Documentation&quot;, &quot;&quot;,
+  &quot;Employee Payroll Documentation&quot;, &quot;&quot;,
+  &quot;IRS Assignment Letter&quot;, &quot;File&quot;,
+  &quot;Insperity Client Authorization&quot;, &quot;Docusign&quot;,
+  &quot;Cafeteria Plan Documentation&quot;, &quot;File&quot;,
+  &quot;&quot;
 )</expression>
     </formulas>
     <formulas>
@@ -56,9 +86,9 @@
         <dataType>String</dataType>
         <expression>CASE(
   TRIM( {!For_Each_Default_Task}),
-    &quot;Regular Rate Of Pay&quot;, &quot;Completed&quot;,
-    &quot;Additional Documentation&quot;, &quot;Completed&quot;,
-    &quot;Pending&quot;
+  &quot;Regular Rate Of Pay&quot;, &quot;Completed&quot;,
+  &quot;Additional Documentation&quot;, &quot;Completed&quot;,
+  &quot;Pending&quot;
 )</expression>
     </formulas>
     <formulas>
@@ -66,20 +96,20 @@
         <dataType>String</dataType>
         <expression>CASE(
   TRIM( {!For_Each_Default_Task}),
-    &quot;Business Inception Date&quot;, &quot;Company Setup&quot;,
-    &quot;Regular Rate Of Pay&quot;, &quot;Employee Setup&quot;,
-    &quot;Additional Documentation&quot;, &quot;System Setup&quot;,
-    &quot;Employee Payroll Documentation&quot;, &quot;Employee Setup&quot;,
-    &quot;IRS Assignment Letter&quot;, &quot;Pre-Transition Setup&quot;,
-    &quot;Insperity Client Authorization&quot;, &quot;Company Setup&quot;,
-    &quot;Cafeteria Plan Documentation&quot;, &quot;Company Setup&quot;,
-    &quot;&quot;
+  &quot;Business Inception Date&quot;, &quot;Company Setup&quot;,
+  &quot;Regular Rate Of Pay&quot;, &quot;Employee Setup&quot;,
+  &quot;Additional Documentation&quot;, &quot;System Setup&quot;,
+  &quot;Employee Payroll Documentation&quot;, &quot;Employee Setup&quot;,
+  &quot;IRS Assignment Letter&quot;, &quot;Pre-Transition Setup&quot;,
+  &quot;Insperity Client Authorization&quot;, &quot;Company Setup&quot;,
+  &quot;Cafeteria Plan Documentation&quot;, &quot;Company Setup&quot;,
+  &quot;&quot;
 )</expression>
     </formulas>
     <formulas>
         <name>f_portalproject_id</name>
         <dataType>String</dataType>
-        <expression>{!portalProjectId_In}</expression>
+        <expression>{!portalProjectId}</expression>
     </formulas>
     <interviewLabel>Portal Project - Subflow - Create Default Portal Tasks {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Portal Project - Subflow - Create Default Portal Tasks</label>
@@ -88,7 +118,7 @@
         <label>For Each : Default Task</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <collectionReference>tc_DefaultTasks_In</collectionReference>
+        <collectionReference>defaultTaskNames</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>Map_Default_Tasks_to_Portal_Tasks</targetReference>
@@ -131,7 +161,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>For_Each_Default_Task</targetReference>
+            <targetReference>Valid_Input</targetReference>
         </connector>
     </start>
     <status>Draft</status>
@@ -213,6 +243,14 @@
         </transformValues>
     </transforms>
     <variables>
+        <description>Text Collection of default tasks</description>
+        <name>defaultTaskNames</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>FaultElement</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -221,7 +259,7 @@
     </variables>
     <variables>
         <description>Portal Project Record Id as Input to Subflow</description>
-        <name>portalProjectId_In</name>
+        <name>portalProjectId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
@@ -234,13 +272,5 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Portal_Task__c</objectType>
-    </variables>
-    <variables>
-        <description>Text Collection of default tasks</description>
-        <name>tc_DefaultTasks_In</name>
-        <dataType>String</dataType>
-        <isCollection>true</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
     </variables>
 </Flow>
