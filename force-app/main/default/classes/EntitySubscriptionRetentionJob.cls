@@ -1,15 +1,16 @@
-Public without sharing class EntitySubscriptionRetentionJob implements ISelfSchedulable, Schedulable, Callable, IJobRunnable, Database.Batchable<SObject> {
+Public without sharing class EntitySubscriptionRetentionJob implements ISelfSchedulable , Schedulable , Callable , IJobRunnable , Database.Batchable<SObject> {
     // test w/ EntitySubscriptionRetentionJobTest (80%)
-    public String query;
 
-    //Constructor
-    public EntitySubscriptionRetentionJob(){
-
+    //
+    // argument-free constructor is required to be "runnable"...
+    //
+    public EntitySubscriptionRetentionJob() {
     }
 
-
-    //ISelfSchedulable
-    public static String schedule(){
+    //
+    // ISelfSchedulable
+    //
+    public static String schedule() {
         String suffix = '';
         if ( Test.isRunningTest() ) {
             suffix = ' ~ TEST';
@@ -21,15 +22,17 @@ Public without sharing class EntitySubscriptionRetentionJob implements ISelfSche
         );
     }
 
-
-    //Schedulable
-    public void execute(SchedulableContext sc){
+    //
+    // Schedulable
+    //
+    public void execute( SchedulableContext sc ) {
         this.call( 'run' , null );
     }
 
-
-    //Callable
-    public Object call( String action, Map<String, Object> args){
+    //
+    // Callable
+    //
+    public Object call( String action , Map<String,Object> args ) {
         Object response = null;
         if ( action == 'run' ) {
             response = this.run();
@@ -37,8 +40,9 @@ Public without sharing class EntitySubscriptionRetentionJob implements ISelfSche
         return response;
     }
 
-
+    //
     // IJobRunnable
+    //
     public Id run(){
         Id response = null;
         if ( EntitySubscriptionRetentionJob.isEnabled ) {
@@ -50,38 +54,51 @@ Public without sharing class EntitySubscriptionRetentionJob implements ISelfSche
         return response;
     }
 
-    //Batchable
-    public Database.QueryLocator start(Database.BatchableContext bc) {
-        return Database.getQueryLocator([
-            SELECT Id
-            FROM EntitySubscription
-            WHERE ParentId IN (
+    //
+    // Batchable
+    //
+    public Database.QueryLocator start( Database.BatchableContext bc ) {
+        return Database.getQueryLocator(
+            [
                 SELECT Id
-                FROM Case
-                WHERE IsClosed = true
-                AND ClosedDate <= :EntitySubscriptionRetentionJob.caseClosedDateTime
-            )
-            ORDER BY CreatedDate ASC
-        ]);
+                FROM EntitySubscription
+                WHERE ParentId IN (
+                    SELECT Id
+                    FROM Case
+                    WHERE (
+                        ( IsClosed = true )
+                        AND ( ClosedDate <= :EntitySubscriptionRetentionJob.caseClosedDateTime )
+                    )
+                )
+                ORDER BY CreatedDate ASC
+            ]
+        );
     }
 
-    public void execute(Database.BatchableContext bc, List<EntitySubscription> scope) {
-        if(scope != null && !scope.isEmpty()){
-            try{
+    public void execute( Database.BatchableContext bc , List<EntitySubscription> scope ) {
+        try {
+            if ( EntitySubscriptionRetentionJob.isEnabled
+                && ( scope != null )
+                && !scope.isEmpty()
+                )
+            {
                 List<Database.DeleteResult> results = Database.delete( scope , false );
                 NSP_ErrorLogHandler.logResults(
                     EntitySubscriptionRetentionJob.class.getName() ,
                     'execute:delete' ,
                     results
                 );
-            }catch( Exception e ){
-                NSP_ErrorLogHandler.logException(EntitySubscriptionRetentionJob.class.getName() ,'execute' ,  e);
             }
+        } catch( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                EntitySubscriptionRetentionJob.class.getName() ,
+                'execute' ,
+                e
+            );
         }
     }
 
-    public void finish(Database.BatchableContext bc) {
-        // Finish logic here
+    public void finish( Database.BatchableContext bc ) {
     }
 
     //
@@ -138,17 +155,6 @@ Public without sharing class EntitySubscriptionRetentionJob implements ISelfSche
         private set;
     }
 
-    // translates soqlDaysLimitCases into a specific DateTime value...
-    private static DateTime caseClosedDateTime {
-        private get {
-            if ( caseClosedDateTime == null ) {
-                caseClosedDateTime = System.now().addDays( -1 * EntitySubscriptionRetentionJob.soqlDaysLimitCases );
-            }
-            return caseClosedDateTime;
-        }
-        private set;
-    }
-
     // how far back (in days) should be queried???
     private static Integer soqlDaysLimitCases {
         private get {
@@ -170,4 +176,17 @@ Public without sharing class EntitySubscriptionRetentionJob implements ISelfSche
         }
         private set;
     }
+
+    // translates soqlDaysLimitCases into a specific DateTime value...
+    private static DateTime caseClosedDateTime {
+        private get {
+            if ( caseClosedDateTime == null ) {
+                caseClosedDateTime = System.now().addDays( -1 * EntitySubscriptionRetentionJob.soqlDaysLimitCases );
+            }
+            return caseClosedDateTime;
+        }
+        private set;
+    }
+
 }
+//
