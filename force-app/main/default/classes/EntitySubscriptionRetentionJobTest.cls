@@ -1,17 +1,15 @@
 @isTest
 private class EntitySubscriptionRetentionJobTest {
-    private static final String PRIMARY_CONTACT_FIRSTNAME = 'Curie';
-    private static final String CONTACT_DEFAULT_TESTFACTORY = 'NSP_TestDataFactory.ContactDefaultsLight';
 
-    @TestSetup
-    static void setupData(){
+    @testSetup
+    private static void setupData() {
         Account insAcc = (Account)NSP_TestExtendedDataFactory.createSObject(new Account(), 'NSP_TestDataFactory.AccountDefaults', false);
         insAcc.Name = System.Label.NSP_Insperity_Account;
         insert insAcc;
 
-        Contact insPriCon = (Contact)NSP_TestExtendedDataFactory.createSObject(new Contact(), CONTACT_DEFAULT_TESTFACTORY, false);
+        Contact insPriCon = (Contact)NSP_TestExtendedDataFactory.createSObject(new Contact(), 'NSP_TestDataFactory.ContactDefaultsLight', false);
         insPriCon.AccountId = insAcc.Id;
-        insPriCon.FirstName = 'INS ' + PRIMARY_CONTACT_FIRSTNAME;
+        insPriCon.FirstName = 'INS ' + 'Curie';
         insert insPriCon;
 
         EntitySubscriptionRetentionJobSettings__c settings = EntitySubscriptionRetentionJobSettings__c.getOrgDefaults();
@@ -31,17 +29,18 @@ private class EntitySubscriptionRetentionJobTest {
         es.ParentId =  insCase.Id;
         es.subscriberId = UserInfo.getUserId();
         insert es;
-
     }
 
     @isTest
-    static void myUnitTest() {
-
-
+    private static void myUnitTest() {
+        Test.startTest();
         EntitySubscriptionRetentionJob.schedule();
         EntitySubscriptionRetentionJob caseBatch = new EntitySubscriptionRetentionJob() ;
         caseBatch.run();
         caseBatch.call(null, null);
         Database.executeBatch(new EntitySubscriptionRetentionJob());
+        Test.stopTest();
     }
+
 }
+//
