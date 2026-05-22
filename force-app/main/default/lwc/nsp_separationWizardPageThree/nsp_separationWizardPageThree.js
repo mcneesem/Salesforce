@@ -294,8 +294,18 @@ export default class nsp_separationWizardPageThree extends LightningElement {
                     subClientContactId: subclientContact.Id,
                     contactId: this.WSEE
                 });
-                this.subClientContactAddress = result?.Id??null;
-                this.Work_State__c = result?.NSP_State__c ?? null;
+
+                if (result?.Id) {
+                    this.subClientContactAddress = result.Id;
+                } else {
+                    this.subClientContactAddress = null;
+                }
+
+                if (result?.NSP_State__c) {
+                    this.Work_State__c = result.NSP_State__c;
+                } else {
+                    this.Work_State__c = null;
+                }
             } catch(error){
                 this.dispatchEvent(
                     new ShowToastEvent({
