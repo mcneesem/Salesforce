@@ -4,6 +4,8 @@ import ID_FIELD from "@salesforce/schema/Portal_Task__c.Id";
 import NAME_FIELD from "@salesforce/schema/Portal_Task__c.Name";
 import ACTION_FIELD from "@salesforce/schema/Portal_Task__c.Action__c";
 import DUE_DATE_FIELD from "@salesforce/schema/Portal_Task__c.Due_Date__c";
+import IS_EDITABLE_FIELD from "@salesforce/schema/Portal_Task__c.Is_Editable__c";
+import HAS_PROJECT_TASK_FIELD from "@salesforce/schema/Portal_Task__c.Has_Project_Task__c";
 import PARENT_PORTAL_TASK_FIELD from "@salesforce/schema/Portal_Task__c.Parent_Portal_Task__c";
 import PORTAL_GUIDANCE_FIELD from "@salesforce/schema/Portal_Task__c.Portal_Guidance__c";
 import PORTAL_PROJECT_FIELD from "@salesforce/schema/Portal_Task__c.Portal_Project__c";
@@ -26,6 +28,8 @@ export default class PortalTaskPreview extends LightningElement {
             NAME_FIELD ,
             ACTION_FIELD ,
             DUE_DATE_FIELD ,
+            IS_EDITABLE_FIELD ,
+            HAS_PROJECT_TASK_FIELD ,
             PARENT_PORTAL_TASK_FIELD ,
             PORTAL_GUIDANCE_FIELD ,
             PORTAL_PROJECT_FIELD ,

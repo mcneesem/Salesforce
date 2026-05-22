@@ -184,6 +184,38 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Set_Has_Non_Setup_DML_Contact</name>
+        <label>Set Has Non-Setup DML (Contact)</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>hasNonSetupDML</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Has_Non_Setup_DML</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Has_Non_Setup_DML_Portal_Client</name>
+        <label>Set Has Non-Setup DML (Portal Client)</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>hasNonSetupDML</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Contact</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_Output_isSuccess</name>
         <label>Set Output: isSuccess</label>
         <locationX>0</locationX>
@@ -274,7 +306,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Prepare_Screen</targetReference>
+            <targetReference>Check_Has_Non_Setup_DML</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -369,6 +401,32 @@
         </rules>
     </decisions>
     <decisions>
+        <description>Must show any Screen after non-setup DML (Portal Client, Contact) to break the Apex transaction threads before the setup DML (User, Permission Set Assignment) in the next step.</description>
+        <name>Check_Has_Non_Setup_DML</name>
+        <label>Check Has Non-Setup DML</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Set_Output_isSuccess</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_Non_Setup_DML</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hasNonSetupDML</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Prepare_Screen</targetReference>
+            </connector>
+            <label>Has Non-Setup DML</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_Input</name>
         <label>Check Input</label>
         <locationX>0</locationX>
@@ -438,7 +496,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Prepare_Screen</targetReference>
+                <targetReference>Check_Has_Non_Setup_DML</targetReference>
             </connector>
             <label>Has Portal Alias</label>
         </rules>
@@ -585,7 +643,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_Contact</targetReference>
+            <targetReference>Set_Has_Non_Setup_DML_Portal_Client</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Set_Fault_Element_Create_Portal_Client</targetReference>
@@ -752,7 +810,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Prepare_Screen</targetReference>
+            <targetReference>Set_Has_Non_Setup_DML_Contact</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Set_Fault_Element_Update_Contact</targetReference>
@@ -770,7 +828,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>Error_Message_Account_Owner_Must_Have_Role</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Flow: Portal Access - Prepare&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Error: Account Owner Must Have Role (&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!Get_Contact_Account.Id}, {!Get_Contact_Account.OwnerId}&lt;/span&gt;).&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Prepare: Error: Account Owner Must Have Role ({!Get_Contact_Account.Id}, {!Get_Contact_Account.OwnerId}).&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -794,7 +852,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>Error_Message_Contact_Must_Have_Account</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Flow: Portal Access - Prepare&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Error: Contact Must Have Account ({!recordContact.Id}).&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Prepare: Error: Contact Must Have Account ({!recordContact.Id}).&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -818,7 +876,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>Error_Message_Flow_FaultMessage</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Flow: Portal Access - Prepare&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Flow Fault: {!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Prepare: Flow Fault: {!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -842,7 +900,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>Error_Message_Missing_Account_Contact_Relationship</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Flow: Portal Access - Prepare&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Error: Missing Account Contact Relationship ({!recordId}).&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Prepare: Error: Missing Account Contact Relationship ({!recordId}).&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -866,7 +924,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>Error_Message_Missing_Permission</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Flow: Portal Access - Prepare&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Error: Missing permission.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Prepare: Error: Missing permission.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -890,7 +948,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>Error_Message_Missing_Record_Id</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Flow: Portal Access - Prepare&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Error: Missing recordId.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Prepare: Error: Missing recordId.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -914,7 +972,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>Error_Message_Missing_Work_Email</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Flow: Portal Access - Prepare&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Error: Missing Work Email ({!recordId}).&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Prepare: Error: Missing Work Email ({!recordId}).&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -1010,6 +1068,16 @@
         <scale>0</scale>
         <value>
             <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>hasNonSetupDML</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
         </value>
     </variables>
     <variables>

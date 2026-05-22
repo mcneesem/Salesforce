@@ -1,6 +1,6 @@
 // intentionally `without sharing` to see all AccountContactRelations, Contacts, and Users for successful provisioning...
 public without sharing class PortalProvisionAction {
-    // test w/ PortalProvisionActionTest (89%)
+    // test w/ PortalProvisionActionTest (88%)
 
     private static String UNKNOWN_PROVISIONING_ERROR = 'Unknown Provisioning Error';
 
@@ -146,6 +146,7 @@ public without sharing class PortalProvisionAction {
                     Account.Owner.UserRoleId ,
                     Portal_Alias__c ,
                     NSP_Preferred_First_Name__c ,
+                    pse__Salesforce_User__c ,
                     LastName ,
                     (
                         SELECT Id
@@ -298,6 +299,7 @@ public without sharing class PortalProvisionAction {
                 response = portalUser.Id;
                 PortalProvisionAction.grantPortalSiteAccess( portalUser );
                 PortalProvisionAction.setPortalPassword( portalUser );
+                PortalProvisionAction.linkCertiniaContact( portalUser.ContactId , portalUser.Id );
             }
             if ( PortalProvisionAction.isDryRun ) {
                 System.debug( ' ~ PortalProvisionAction.createPortalUser ~ ROLLBACK ~ ' + sp );
@@ -330,6 +332,56 @@ public without sharing class PortalProvisionAction {
     private static void setPortalPassword( User portalUser ) {
         if ( portalUser != null ) {
             System.setPassword( portalUser.Id , 'Insperity1!!' ); // default portal password...
+        }
+    }
+
+    // Link Certinia Contact
+    // ~ call in future to prevent MIXED_DML_OPERATION...
+    private static void linkCertiniaContact( Id portalContactId , Id portalUserId ) {
+        if ( !System.isFuture() // prevent AsyncExceptions...
+            && Limits.getFutureCalls() < Limits.getLimitFutureCalls() // prevent LimitExceptions...
+            )
+        {
+            PortalProvisionAction.linkCertiniaContactFuture( portalContactId , portalUserId );
+        }
+    }
+
+    // Link Certinia Contact
+    // ~ populate Contact.pse__Salesforce_User__c...
+    @future
+    private static void linkCertiniaContactFuture( Id portalContactId , Id portalUserId ) {
+        try {
+            if ( ( portalContactId != null )
+                && ( portalContactId.getSObjectType() == Contact.getSObjectType() )
+                && ( portalUserId != null )
+                && ( portalUserId.getSObjectType() == User.getSObjectType() )
+                )
+            {
+                Contact record = PortalProvisionAction.selectContact( portalContactId );
+                if ( ( record != null ) && ( record.pse__Salesforce_User__c != portalUserId ) ) {
+                    Savepoint sp = Database.setSavepoint();
+                    Contact portalContact = new Contact(
+                        Id=portalContactId ,
+                        pse__Salesforce_User__c=portalUserId
+                    );
+                    List<Database.SaveResult> results = Database.update( new List<Contact>{ portalContact } , false );
+                    NSP_ErrorLogHandler.logResults(
+                        PortalProvisionAction.class.getName() ,
+                        'linkCertiniaContact:update' ,
+                        results
+                    );
+                    if ( PortalProvisionAction.isDryRun ) {
+                        System.debug( ' ~ PortalProvisionAction.linkCertiniaContact ~ ROLLBACK ~ ' + sp );
+                        Database.rollback( sp );
+                    }
+                }
+            }
+        } catch ( Exception e ) {
+            NSP_ErrorLogHandler.logException(
+                PortalProvisionAction.class.getName() ,
+                'linkCertiniaContact' ,
+                e
+            );
         }
     }
 
