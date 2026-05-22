@@ -27,11 +27,19 @@ After processing your final payroll outside of Insperity, provide a year-to-date
 
 <apex:outputPanel rendered="{!AND(CONTAINS(relatedTo.Client_have_any_EEs_on_F1_or_J1_Visa_s__c,'Yes'),
      OR(IF(relatedTo.NSP_EE_Name__c!=Null,True,FALSE),
-     IF(relatedTo.EE_Visa_Type__c!=Null,True,FALSE)))}">    
+     IF(relatedTo.EE_Visa_Type__c!=Null,True,FALSE)))}">
 <p><strong>F1 or J1 Visa</strong><br/>
 Provide a copy of the respective visa for:</p>
 <c:NSP_EmployeeVisaCmp currentRecordId="{!relatedTo.Id}"/>
+</apex:outputPanel>
 
+<apex:outputPanel rendered="{!CONTAINS(relatedTo.Do_any_EEs_have_tax_levies__c, 'Yes')}">
+<p><strong>Tax Levies</strong><br/>
+1. Contact the levying agency for each employee with a levy.<br/>
+2. Inform the levying agency that you are no longer paying wages to the employee.<br/>
+3. Indicate that the tax levy must be transferred to Insperity.<br/>
+4. Send the revised levy to <b>Insperity Attn: Garnishment Department, 19001 Crescent Springs Dr., Kingwood, TX 77339, Fax: 866-309-1267.</b></p>
+<c:NSP_EmployeeLeviesCmp currentRecordId="{!relatedTo.Id}"/>
 </apex:outputPanel>
 
 <apex:outputPanel rendered="{!AND(CONTAINS(relatedTo.Do_any_EEs_have_garnishments__c,'Yes'),
@@ -39,16 +47,6 @@ Provide a copy of the respective visa for:</p>
 <p><strong>Garnishment Court Order</strong><br/>
 Provide the most recent garnishment for:</p>
 <c:NSP_EmployeeGarnishmentCmp currentRecordId="{!relatedTo.Id}"/>
-</apex:outputPanel>
-
-<apex:outputPanel rendered="{!AND(CONTAINS(relatedTo.Do_any_EEs_have_tax_levies__c,'Yes'),
-     IF(relatedTo.NSP_List_Employee_Names_Levies__c!=Null,True,FALSE))}">
-<p><strong>Tax Levies</strong><br/>
-1. Contact the levying agency for the employee(s) listed below.<br/>
-2. Inform the levying agency that you are no longer paying wages to the employee.<br/>
-3. Indicate that the tax levy must be transferred to Insperity.<br/>
-4. Send the revised levy to <b>Insperity Attn: Garnishment Department, 19001 Crescent Springs Dr., Kingwood, TX 77339, Fax: 866-309-1267.</b></p>
-<c:NSP_EmployeeLeviesCmp currentRecordId="{!relatedTo.Id}"/>
 </apex:outputPanel>
 
 <apex:outputPanel rendered="{!OR(
@@ -88,7 +86,7 @@ The below state(s) require unemployment wages and taxes to be reported under the
 <apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'TN')}"><li>Tennessee</li></apex:outputPanel>
 <apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'VT')}"><li>Vermont</li></apex:outputPanel>
 <apex:outputPanel rendered="{!CONTAINS(relatedTo.Employees_work_in_the_following_states__c ,'WA')}"><li>Washington**</li></apex:outputPanel>
-<p><strong>**Paid Family Medical Leave (PFML)</strong> - These states also require Insperity to file our client’s name and EIN for PFML reporting.</p>  
+<p><strong>**Paid Family Medical Leave (PFML)</strong> - These states also require Insperity to file our client’s name and EIN for PFML reporting.</p>
 </apex:outputPanel>
 
 
@@ -109,7 +107,7 @@ Review the following resources to understand your responsibilities regarding Reg
 {!relatedTo.NSP_Payroll_Specialist__r.Name}<br/>
 {!relatedTo.NSP_Payroll_Specialist__r.NSP_Job_Title__c}<br/>
 {!relatedTo.NSP_Payroll_Specialist__r.NSP_Work_email__c}</p>
-<c:InsperityEmailFooter ></c:InsperityEmailFooter> 
+<c:InsperityEmailFooter ></c:InsperityEmailFooter>
 </body>
 </html>
 </messaging:HtmlEmailBody>
