@@ -58,9 +58,14 @@ export default class ScheduleSellerProductSelector extends LightningElement {
     // ~ Custom Permission: add new Custom Permission
     // ~ Apex: UserAvailabilityService.getStepMinutes() (add to the map)
     // ~ LWC: scheduleSellerProductSelector.productOptions() (add to the map)
+    // ~ Activity Object:
+    //   ~ Add picklist value to Activity.NSP_Event_Subtype__c
+    //   ~ Add picklist value to NSP_Event_Type__c controlling field (dependency matrix)
+    // ~ Record Type: Add picklist value to Schedule_Seller RT in Event Object
     // ~ Custom Metadata:
     //   ~ Schedule_Seller_Time_Slot__mdt.Product__c (add picklist value)
     //   ~ Schedule_Seller_Time_Slot__mdt (Time Slots) – add records
+    //   ~ Schedule_Seller_Time_Slot__mdt create list views for new Product
     //
     get productOptions() {
         // Define base options per segment
@@ -85,7 +90,9 @@ export default class ScheduleSellerProductSelector extends LightningElement {
         const extended = [
             { label: 'Time and Attendance' , value: 'Schedule_Seller_Time_Attendance' } ,
             { label: 'Performance Management' , value: 'Schedule_Seller_Performance_Management' } ,
-            { label: 'Performance Management / Time & Attendance' , value: 'Schedule_Seller_Performance_Management_Time_Attendance' }
+            { label: 'Performance Management / Time & Attendance' , value: 'Schedule_Seller_Performance_Management_Time_Attendance' } ,
+            { label: 'Applicant Tracking' , value: 'Schedule_Seller_Applicant_Tracking' } ,
+            { label: 'Organizational Planning' , value: 'Schedule_Seller_Organizational_Planning' }
         ];
         // Pick base list by segment
         let base = baseBySeg.Default;

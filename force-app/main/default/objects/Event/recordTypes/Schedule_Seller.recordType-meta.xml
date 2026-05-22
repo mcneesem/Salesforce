@@ -645,6 +645,10 @@
     <picklistValues>
         <picklist>NSP_Event_Subtype__c</picklist>
         <values>
+            <fullName>Applicant Tracking</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>HR360 Solution</fullName>
             <default>false</default>
         </values>
@@ -654,6 +658,10 @@
         </values>
         <values>
             <fullName>HRScale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Organizational Planning</fullName>
             <default>false</default>
         </values>
         <values>

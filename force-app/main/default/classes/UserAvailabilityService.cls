@@ -211,7 +211,7 @@ public with sharing class UserAvailabilityService {
         return matrix;
     }
 
-    // Add 30-minute buffer to Demo events with NSP_Event_Subtype__c 
+    // Add 30-minute buffer to Demo events with NSP_Event_Subtype__c
     private static List<Event> addBufferToEvents( List<Event> events ) {
         List<Event> processedEvents = new List<Event>();
         if ( ( events != null ) && !events.isEmpty() ) {
@@ -401,7 +401,9 @@ public with sharing class UserAvailabilityService {
             'Schedule_Seller_HRScale_MidMarket' => 120 ,
             'Schedule_Seller_HR360_Enterprise' => 90 ,
             'Schedule_Seller_HRCore_Enterprise' => 90 ,
-            'Schedule_Seller_Performance_Management_Time_Attendance' => 60
+            'Schedule_Seller_Performance_Management_Time_Attendance' => 60 ,
+            'Schedule_Seller_Applicant_Tracking' => 30 ,
+            'Schedule_Seller_Organizational_Planning' => 30
         };
         //
         Integer stepMinutes = 60;

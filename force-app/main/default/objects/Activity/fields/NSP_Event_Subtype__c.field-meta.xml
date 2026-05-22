@@ -121,6 +121,16 @@
                 <label>Performance Management / Time &amp; Attendance</label>
             </value>
             <value>
+                <fullName>Applicant Tracking</fullName>
+                <default>false</default>
+                <label>Applicant Tracking</label>
+            </value>
+            <value>
+                <fullName>Organizational Planning</fullName>
+                <default>false</default>
+                <label>Organizational Planning</label>
+            </value>
+            <value>
                 <fullName>Email</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -313,6 +323,14 @@
         <valueSettings>
             <controllingFieldValue>Demo</controllingFieldValue>
             <valueName>Performance Management / Time &amp; Attendance</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Demo</controllingFieldValue>
+            <valueName>Applicant Tracking</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Demo</controllingFieldValue>
+            <valueName>Organizational Planning</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>
