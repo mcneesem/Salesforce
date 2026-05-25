@@ -51,7 +51,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
     private static final String REPORT_OTHER_FN='Custom_Report';
     private static final String COBRA_TAKEOVER_FORM = 'COBRA_Takeover_Form';
     private static final String COBRA_FORM_RECEIVED = 'COBRA_Form_Received';
-    private List<pse__Milestone__c> milestonesToUpdate = new List<pse__Milestone__c>();
+    private Map<String, pse__Milestone__c> milestonesToUpdate = new Map<String, pse__Milestone__c>();
     private static final String LOA_EEs_TASK_FN = 'leaveAbsenceFSO';
     private static final String INTERNAL_DISCOVERY_FN ='NSP_Internal_Discovery';
     private static final String ONSITE_DISCOVERY_FN ='NSP_Onsite_Discovery';
@@ -183,7 +183,7 @@ public class NSP_Implprofile_ServiceHelperUpdate {
             upsertResults
         );
         if ( !this.milestonesToUpdate.isEmpty() ) {
-            Database.update( this.milestonesToUpdate , false );
+            Database.update( this.milestonesToUpdate.values() , false );
         }
         recToInsert.sort();
         for (SObject rec : recToInsert) {
@@ -884,8 +884,8 @@ public class NSP_Implprofile_ServiceHelperUpdate {
                     eachMilestone.OwnerId = milestoneOwnerId;
                 }
                 this.mileStonesToInsert.put( milestoneKey , eachMilestone );
-            } else if ( ( milestoneId != null ) && ( milestoneOwnerId != null ) ) {
-                this.milestonesToUpdate.add(
+            } else if ( ( milestoneId != null ) && ( milestoneOwnerId != null ) && !this.milestonesToUpdate.containsKey( milestoneKey ) ) {
+                this.milestonesToUpdate.put( milestoneKey,
                     new pse__Milestone__c(
                         Id=milestoneId ,
                         OwnerId=milestoneOwnerId
